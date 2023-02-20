@@ -1,5 +1,7 @@
+import { Link } from "react-router-dom";
 import { FormValues } from "./types";
-import { BtnPrim, BtnSec, Separator, TextInput } from "components/registration";
+import { Field } from "components/form";
+import { Separator } from "components/registration";
 import useSubmit from "./useSubmit";
 
 export default function Form({ classes = "" }: { classes?: string }) {
@@ -14,31 +16,30 @@ export default function Form({ classes = "" }: { classes?: string }) {
         Enter your registration reference to resume where you left off
       </p>
 
-      <TextInput<FormValues>
+      <Field<FormValues>
         name="reference"
         label="Registration reference"
         placeholder="e.g. 00000000-0000-0000-0000-000000000000"
         classes={{ container: "mt-8 mx-0 sm:mx-24" }}
       />
 
-      <BtnPrim
+      <button
         type="submit"
-        className="mt-8 mx-0 sm:mx-24"
+        className="mt-8 mx-0 sm:mx-24 btn-orange btn-reg"
         disabled={isSubmitting}
       >
         Resume
-      </BtnPrim>
+      </button>
       <Separator classes="my-11 mx-0 sm:mx-24 before:mr-2 after:ml-2">
         OR
       </Separator>
-      <BtnSec
-        as="link"
-        className="mx-0 sm:mx-24"
+      <Link
+        className="mx-0 sm:mx-24 btn-outline-filled btn-reg"
         to=".."
         aria-disabled={isSubmitting}
       >
         Register new account
-      </BtnSec>
+      </Link>
     </form>
   );
 }

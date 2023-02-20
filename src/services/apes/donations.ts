@@ -7,7 +7,6 @@ import {
 import { createAuthToken } from "helpers";
 import { IS_TEST } from "constants/env";
 import { apes } from "./apes";
-import { apesTags } from "./tags";
 
 type DonationResult = {
   Items: Donation[];
@@ -31,7 +30,7 @@ const donations_api = apes.injectEndpoints({
       },
     }),
     donations: builder.query<Donation[], DonationsQueryParams>({
-      providesTags: [{ type: apesTags.donations }],
+      providesTags: ["donations"],
       query: ({ id, ...rest }) => {
         return {
           url: `v3/donation/${id}${IS_TEST ? "/testnet" : ""}`,

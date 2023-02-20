@@ -1,16 +1,12 @@
+import { Link } from "react-router-dom";
 import { FormValues as FV } from "../types";
-import Checkbox from "components/Checkbox";
+import ActivityCountries from "components/ActivityCountries";
+import CountrySelector from "components/CountrySelector";
 import ExtLink from "components/ExtLink";
 import { Selector } from "components/Selector";
-import { Label } from "components/form";
-import {
-  BtnPrim,
-  BtnSec,
-  FileDropzone,
-  LoadText,
-  TextInput,
-  checkBoxStyle,
-} from "components/registration";
+import { CheckField, Field, Label } from "components/form";
+import { FileDropzone, LoadText } from "components/registration";
+import { APP_NAME } from "constants/common";
 import { unsdgs } from "constants/unsdgs";
 import { TERMS_OF_USE } from "constants/urls";
 import { steps } from "../../../routes";
@@ -27,10 +23,10 @@ export default function Form() {
     <form className="w-full" onSubmit={submit}>
       <Level num={1} />
       <p className="mt-2 text-sm">
-        Your organization is eligible to create its endowment. Donors can donate
-        funds through your organization’s landing page on Angel Protocol’s
+        {`Your organization is eligible to create its endowment. Donors can donate
+        funds through your organization’s landing page on ${APP_NAME}’s
         interface. Your organization is not displayed on the marketplace and
-        cannot be found through the search bar.
+        cannot be found through the search bar.`}
       </p>
       <Label className="mt-8 mb-2" required>
         Your proof of identity
@@ -39,7 +35,7 @@ export default function Form() {
         name="proofOfIdentity"
         tooltip={fileTooltip}
       />
-      <TextInput<FV>
+      <Field<FV>
         name="website"
         label="Website of your organization"
         required
@@ -62,6 +58,20 @@ export default function Form() {
         name="sdgs"
         options={sdgOptions}
       />
+      <Label className="mt-6 mb-2" required>
+        Select the country your organization is headquartered in
+      </Label>
+      <CountrySelector<FV, "hqCountry">
+        fieldName="hqCountry"
+        placeholder="Select a country"
+        classes={{
+          container: "px-4 bg-orange-l6 dark:bg-blue-d7",
+          input: "text-sm py-3.5",
+          error: "field-error",
+        }}
+      />
+      <Label className="mt-6 mb-2">Active countries</Label>
+      <ActivityCountries<FV, "activeInCountries"> name="activeInCountries" />
 
       <Separator classes="my-8" />
 
@@ -105,25 +115,24 @@ export default function Form() {
         <Radio value="No" />
       </div>
       <Separator classes="my-8" />
-      <Checkbox<FV>
+      <CheckField<FV>
         name="hasAuthority"
         required
         classes={{
-          container: "text-sm mb-3",
-          checkbox: checkBoxStyle + " self-start sm:self-center",
+          container: "check-field-reg text-sm mb-3",
+          input: "checkbox-reg self-start sm:self-center",
           error: "mt-1",
         }}
       >
-        By checking this box, you declare that you have the authority to create
-        an endowment in the name of {data.contact.orgName} through Angel
-        Protocol
-      </Checkbox>
-      <Checkbox<FV>
+        {`By checking this box, you declare that you have the authority to create
+        an endowment in the name of {data.contact.orgName} through ${APP_NAME}`}
+      </CheckField>
+      <CheckField<FV>
         name="hasAgreedToTerms"
         required
         classes={{
-          container: "text-sm",
-          checkbox: checkBoxStyle + " self-start sm:self-center",
+          container: "check-field-reg text-sm",
+          input: "self-start sm:self-center",
           error: "mt-1",
         }}
       >
@@ -132,24 +141,23 @@ export default function Form() {
         <ExtLink className="underline text-orange" href={TERMS_OF_USE}>
           Terms & Conditions
         </ExtLink>
-      </Checkbox>
+      </CheckField>
       <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
-        <BtnSec
+        <Link
           aria-disabled={isSubmitting}
-          as="link"
           to={`../${steps.contact}`}
           state={data.init}
-          className="py-3 min-w-[8rem] text-center"
+          className="py-3 min-w-[8rem] btn-outline-filled btn-reg"
         >
           Back
-        </BtnSec>
-        <BtnPrim
+        </Link>
+        <button
           disabled={isSubmitting}
           type="submit"
-          className="py-3 min-w-[8rem] text-center"
+          className="py-3 min-w-[8rem] btn-orange btn-reg"
         >
           <LoadText isLoading={isSubmitting}>Continue</LoadText>
-        </BtnPrim>
+        </button>
       </div>
     </form>
   );

@@ -1,4 +1,3 @@
-import { ethers } from "ethers";
 import { Keplr } from "@keplr-wallet/types";
 
 export interface Dwindow extends Window {
@@ -10,8 +9,6 @@ export interface Dwindow extends Window {
   BinanceChain?: any;
   keplr?: Keplr;
 }
-
-export interface Web3Provider extends ethers.providers.Web3Provider {}
 
 /*** EIP1193 spec https://eips.ethereum.org/EIPS/eip-1193*/
 interface RequestArguments {

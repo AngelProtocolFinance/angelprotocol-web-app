@@ -26,7 +26,7 @@ export default function Votes(props: { proposalId: number; classes?: string }) {
         </TableSection>
         <TableSection
           type="tbody"
-          rowClass="border border-gray-l2 dark:border-bluegray divide-x divide-gray-l2 dark:divide-bluegray hover:bg-blue hover:bg-blue/10 mb-6 sm:mb-0 flex flex-row flex-wrap sm:flex-no-wrap"
+          rowClass="border border-prim divide-x divide-prim hover:bg-blue hover:bg-blue/10 mb-6 sm:mb-0 flex flex-row flex-wrap sm:flex-no-wrap"
         >
           {votes.map((vote, i) => (
             <Cells

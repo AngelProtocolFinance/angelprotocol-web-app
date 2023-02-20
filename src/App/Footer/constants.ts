@@ -1,4 +1,5 @@
-import { IconTypes } from "components/Icon";
+import { IconType } from "components/Icon";
+import { BASE_DOMAIN, DAPP_DOMAIN } from "constants/common";
 import { LITEPAPER } from "constants/urls";
 
 type SocialMedia =
@@ -12,7 +13,7 @@ type SocialMedia =
   | "Instagram";
 
 type SocialMediaLinks = {
-  [index in SocialMedia]: { iconType: IconTypes; link: string };
+  [index in SocialMedia]: { iconType: IconType; link: string };
 };
 
 export const SOCIAL_MEDIA_LINKS: SocialMediaLinks = {
@@ -63,36 +64,30 @@ export const SECTIONS_DATA: Section[] = [
     title: "Products",
     links: [
       {
-        text: "For Non-profit orgs.",
-        href: "https://angelprotocol.io/non-profit-organizations/",
-      },
-      { text: "For Donors", href: "https://angelprotocol.io/donors/" },
-      {
-        text: "For Changemakers",
-        href: "https://angelprotocol.io/changemakers/",
-      },
-      { text: "For Investors", href: "https://angelprotocol.io/investors/" },
-      {
-        text: "For CSR Partners",
-        href: "https://angelprotocol.io/csr-partners/",
+        text: "Non-profits",
+        href: `${BASE_DOMAIN}`,
       },
       {
-        text: "For Giftcards",
-        href: "https://app.angelprotocol.io/gift",
+        text: "Giving Partners (CSR)",
+        href: `${BASE_DOMAIN}/csr-partners/`,
       },
+      { text: "Impact Board", href: `${DAPP_DOMAIN}/leaderboard/` },
+      // {
+      //   text: "For Giftcards",
+      //   href: "https://app.angel.giving/gift",
+      // },
     ],
   },
   {
     title: "About",
     links: [
-      { text: "About us", href: "https://angelprotocol.io/about/" },
+      { text: "About us", href: `${BASE_DOMAIN}/about-angel-giving/` },
       {
         text: "Meet the team",
-        href: "https://angelprotocol.io/about/#:~:text=MEET%20THE%20TEAM-,Operations,-DUFFY%20CASEY",
+        href: `${BASE_DOMAIN}/about/#:~:text=MEET%20THE%20TEAM-`,
       },
-      { text: "News", href: "https://angelprotocol.io/news/" },
-      { text: "Stories", href: "https://angelprotocol.io/stories/" },
-      { text: "Careers", href: "https://angelprotocol.io/careers/" },
+      { text: "News", href: `${BASE_DOMAIN}/news/` },
+      { text: "Careers", href: `${BASE_DOMAIN}/careers/` },
     ],
   },
   {
@@ -108,11 +103,11 @@ export const SECTIONS_DATA: Section[] = [
     links: [
       {
         text: "Privacy policy",
-        href: "https://angelprotocol.io/privacy-policy/",
+        href: `${BASE_DOMAIN}/privacy-policy/`,
       },
       {
         text: "Terms of Use",
-        href: "https://angelprotocol.io/terms-of-use/",
+        href: `${BASE_DOMAIN}/terms-of-use/`,
       },
     ],
   },

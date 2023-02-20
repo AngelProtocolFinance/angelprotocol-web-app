@@ -41,8 +41,7 @@ export default function Preview(props: ProposalMeta) {
     /** _account */
     case "acc_withdraw":
       return <Withdraw {...props.data} />;
-    case "acc_profile":
-      return <DiffTable diffSet={props.data} />;
+
     case "acc_endow_status":
       return <EndowmentStatusUpdate {...props.data} />;
 

@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Country, CountryOption } from "./types";
+import { Country, CountryInRegion, CountryOption, Regions } from "./types";
 
 export const countriesApi = createApi({
   reducerPath: "countriesApi",
@@ -23,6 +23,26 @@ export const countriesApi = createApi({
           .sort((a, b) => a.name.localeCompare(b.name));
       },
     }),
+    regions: builder.query<Regions, unknown>({
+      query: () => ({
+        url: "all",
+        params: { fields: "name,region" },
+      }),
+      transformResponse(res: CountryInRegion[]) {
+        const result = res.reduce((result, curr) => {
+          result[curr.region] ||= [];
+          result[curr.region].push(curr.name.common);
+          return result;
+        }, {} as Regions);
+
+        //sort countries
+        for (const region in result) {
+          result[region].sort();
+        }
+
+        return result;
+      },
+    }),
     countryFlag: builder.query<string, string>({
       query: (
         countryName /**should come from previously selected country*/
@@ -38,4 +58,5 @@ export const countriesApi = createApi({
   }),
 });
 
-export const { useCountriesQuery, useLazyCountryFlagQuery } = countriesApi;
+export const { useCountriesQuery, useLazyCountryFlagQuery, useRegionsQuery } =
+  countriesApi;

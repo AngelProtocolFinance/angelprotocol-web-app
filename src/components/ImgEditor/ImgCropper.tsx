@@ -2,6 +2,7 @@ import { Dialog } from "@headlessui/react";
 import Cropper from "cropperjs";
 import "cropperjs/dist/cropper.min.css";
 import { useCallback, useRef } from "react";
+import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 
 type Props = {
@@ -11,6 +12,8 @@ type Props = {
 };
 
 export default function ImgCropper({ preview, aspect: [x, y], onSave }: Props) {
+  const { closeModal } = useModalContext();
+
   const cropperRef = useRef<Cropper>();
 
   const imgRef = useCallback(
@@ -31,6 +34,7 @@ export default function ImgCropper({ preview, aspect: [x, y], onSave }: Props) {
     if (cropperRef.current) {
       cropperRef.current.getCroppedCanvas().toBlob((blob) => {
         onSave(blob);
+        closeModal();
       });
     }
   }

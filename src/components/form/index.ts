@@ -1,3 +1,3 @@
 export * from "./Label";
-export * from "./TextInput";
-export * from "./TextArea";
+export * from "./Field";
+export { CheckField } from "./CheckField";

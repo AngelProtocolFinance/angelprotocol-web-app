@@ -10,9 +10,7 @@ export default function Beneficiary({ classes = "" }: { classes?: string }) {
   } = useFormContext<WithdrawValues>();
 
   return (
-    <div
-      className={`${classes} relative grid border-b border-gray-l2 dark:border-bluegray`}
-    >
+    <div className={`${classes} relative grid border-b border-prim`}>
       <label
         htmlFor={id}
         className="font-bold font-heading text-sm uppercase mb-2"

@@ -1,5 +1,4 @@
-import { SdgGroups, Sort } from "types/aws";
-import { CapitalizedEndowmentType, EndowmentTier } from "types/contracts";
+import { FilterState, SdgGroups } from "./types";
 import { UNSDG_NUMS } from "types/lists";
 
 export const SDG_GROUPS: {
@@ -39,25 +38,30 @@ export const SDG_GROUPS: {
   },
 ];
 
-type State = {
-  isOpen: boolean;
-  searchText: string;
-  endow_types: CapitalizedEndowmentType[];
-  sort?: Sort;
-  //geography
-  sdgGroups: SdgGroups;
-  kyc_only: boolean[];
-  tiers: Exclude<EndowmentTier, "Level1">[];
-};
-
-export const initialState: State = {
+export const initialState: FilterState = {
   sdgGroups: SDG_GROUPS.reduce(
     (prev, curr) => ({ ...prev, [curr.key]: [...curr.options] }),
     {} as SdgGroups
   ),
+  region: { activities: {}, headquarters: {} },
   isOpen: false,
   searchText: "",
   endow_types: ["Charity"],
+  endow_designation: ["Religious Non-Profit", "Non-Profit"],
   kyc_only: [true, false],
-  tiers: ["Level3"],
+  tiers: ["Level2", "Level3"],
+};
+
+export const clearedState: FilterState = {
+  sdgGroups: SDG_GROUPS.reduce(
+    (prev, curr) => ({ ...prev, [curr.key]: [] }),
+    {} as SdgGroups
+  ),
+  region: { activities: {}, headquarters: {} },
+  isOpen: false,
+  searchText: "",
+  endow_types: ["Charity"],
+  endow_designation: [],
+  kyc_only: [],
+  tiers: ["Level2", "Level3"],
 };

@@ -1,4 +1,4 @@
-import { TransactionRequest } from "@ethersproject/abstract-provider";
+import { TransactionRequest } from "@ethersproject/providers";
 import { CreateTxOptions } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { CountryOption } from "services/types";
@@ -14,7 +14,7 @@ export type DonationRecipient = {
 
 export type DonationDetails = {
   token: TokenWithAmount;
-  pctLiquidSplit: string;
+  pctLiquidSplit: number; // <input range value transformed to number via onChange
 
   //meta
   chainId: string;

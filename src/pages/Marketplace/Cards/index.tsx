@@ -1,54 +1,10 @@
-import {
-  updateAWSQueryData,
-  useEndowmentsQuery,
-  useLazyEndowmentsQuery,
-} from "services/aws/aws";
-import { QueryLoader } from "components/admin";
-import { useGetter, useSetter } from "store/accessors";
+import QueryLoader from "components/QueryLoader";
 import Card from "./Card";
+import useCards from "./useCards";
 
 export default function Cards({ classes = "" }: { classes?: string }) {
-  const dispatch = useSetter();
-  const { sdgGroups, endow_types, sort, searchText, kyc_only, tiers } =
-    useGetter((state) => state.component.marketFilter);
-
-  const { isLoading, data, isError, originalArgs } = useEndowmentsQuery({
-    query: searchText,
-    sort,
-    endow_types,
-    tiers,
-    sdgGroups,
-    kyc_only,
-    start: 0,
-  });
-
-  const [loadMore, { isLoading: isLoadingNextPage }] = useLazyEndowmentsQuery();
-
-  async function loadNextPage() {
-    //button is hidden when there's no more
-    if (
-      data?.ItemCutoff &&
-      originalArgs /** cards won't even show if no initial query is made */
-    ) {
-      const { data: newEndowRes } = await loadMore({
-        ...originalArgs,
-        start: data.ItemCutoff + 1,
-      });
-
-      if (newEndowRes) {
-        //pessimistic update to original cache data
-        dispatch(
-          updateAWSQueryData("endowments", originalArgs, (prevResult) => {
-            prevResult.Items.push(...newEndowRes.Items);
-            prevResult.ItemCutoff = newEndowRes.ItemCutoff;
-          })
-        );
-      }
-    }
-  }
-
-  const hasMore = !!data?.ItemCutoff;
-
+  const { hasMore, isLoading, isLoadingNextPage, loadNextPage, data, isError } =
+    useCards();
   return (
     <QueryLoader
       queryState={{

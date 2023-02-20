@@ -14,7 +14,7 @@ export default function WithdrawTabs({ tokens_on_hand }: EndowmentBalance) {
       className="mt-6 justify-self-center"
       defaultIndex={type === "locked" ? 1 : 0}
     >
-      <Tab.List className="grid grid-cols-2 rounded mb-1 overflow-hidden border border-gray-l2 dark:border-bluegray p-0.5">
+      <Tab.List className="grid grid-cols-2 rounded mb-1 overflow-hidden border border-prim p-0.5">
         {tabs.map((t) => (
           <Tab
             key={t}
@@ -30,7 +30,7 @@ export default function WithdrawTabs({ tokens_on_hand }: EndowmentBalance) {
           </Tab>
         ))}
       </Tab.List>
-      <Tab.Panels className="w-full max-w-md border rounded border-gray-l2 dark:border-bluegray">
+      <Tab.Panels className="w-full max-w-md border rounded border-prim">
         {tabs.map((t) => (
           <Tab.Panel key={t}>
             <Withdrawer balance={tokens_on_hand[t]} type={t} />

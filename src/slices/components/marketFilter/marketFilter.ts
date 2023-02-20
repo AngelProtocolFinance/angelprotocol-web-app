@@ -1,13 +1,18 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Sort } from "types/aws";
+import { RegionType, Sort } from "./types";
+import { EndowDesignation } from "types/aws";
 import { CapitalizedEndowmentType } from "types/contracts";
 import { UNSDG_NUMS } from "types/lists";
-import { initialState } from "./constants";
+import { clearedState, initialState } from "./constants";
 
 const marketFilter = createSlice({
   name: "marketFilter",
   initialState,
   reducers: {
+    clear: (state) => {
+      // clears everything except isOpen && sortKey
+      return { ...clearedState, isOpen: state.isOpen, sortKey: state.sort };
+    },
     reset: (state) => {
       //reset everything except isOpen && sortKey
       return { ...initialState, isOpen: state.isOpen, sortKey: state.sort };
@@ -19,6 +24,17 @@ const marketFilter = createSlice({
       }: PayloadAction<{ group: number; sdgs: UNSDG_NUMS[] }>
     ) => {
       state.sdgGroups[group] = sdgs;
+    },
+    setRegions: (
+      state,
+      {
+        payload: { type, value },
+      }: PayloadAction<{
+        type: RegionType;
+        value: { region: string; countries: string[] };
+      }>
+    ) => {
+      state.region[type][value.region] = value.countries;
     },
     setSearchText: (state, { payload }: PayloadAction<string>) => {
       state.searchText = payload;
@@ -35,6 +51,12 @@ const marketFilter = createSlice({
     ) => {
       state.endow_types = payload;
     },
+    setDesignations: (
+      state,
+      { payload }: PayloadAction<EndowDesignation[]>
+    ) => {
+      state.endow_designation = payload;
+    },
     toggle(state) {
       state.isOpen = !state.isOpen;
     },
@@ -43,9 +65,12 @@ const marketFilter = createSlice({
 
 export const {
   setSdgs,
+  setRegions,
+  clear,
   reset,
   toggle,
   setTypes,
+  setDesignations,
   setSort,
   setKYCOnly,
   setSearchText,

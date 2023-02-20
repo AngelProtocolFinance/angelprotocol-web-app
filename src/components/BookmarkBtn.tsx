@@ -1,18 +1,18 @@
 import { PropsWithChildren, useRef, useState } from "react";
-import { useProfileQuery, useToggleBookmarkMutation } from "services/aws/aws";
+import { EndowmentBookmark } from "types/aws";
+import {
+  useToggleBookmarkMutation,
+  useWalletProfileQuery,
+} from "services/aws/aws";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import Popup from "components/Popup";
 import Tooltip from "components/Tooltip";
 
-type Props = PropsWithChildren<{
-  id: number;
-  name: string;
-  logo: string;
-}>;
+type Props = PropsWithChildren<Pick<EndowmentBookmark, "endowId">>;
 
-export default function BookmarkBtn({ id, name, logo, children }: Props) {
+export default function BookmarkBtn({ endowId, children }: Props) {
   const [isHovered, setHovered] = useState(false);
   const ref = useRef<HTMLButtonElement>(null);
 
@@ -21,7 +21,7 @@ export default function BookmarkBtn({ id, name, logo, children }: Props) {
     data,
     isLoading: isProfileLoading,
     isFetching,
-  } = useProfileQuery(wallet?.address!, {
+  } = useWalletProfileQuery(wallet?.address!, {
     skip: !wallet,
   });
   const { showModal } = useModalContext();
@@ -30,17 +30,20 @@ export default function BookmarkBtn({ id, name, logo, children }: Props) {
   const isLoading =
     isProfileLoading || isFetching || isToggling || isWalletLoading;
 
-  const bookMark = data?.endowments?.find((d) => d.id === id);
-  const isBookmarked = bookMark !== undefined;
+  const bookmark = data?.bookmarks?.find((d) => d.endowId === endowId);
+  const isBookmarked = bookmark !== undefined;
 
   async function toogleBookmark() {
     if (!wallet) {
       showModal(Popup, { message: "Connect wallet to edit bookmark" });
       return;
     }
-    const res = bookMark
-      ? await toggle({ type: "delete", ...bookMark, wallet: wallet.address })
-      : await toggle({ type: "add", name, id, logo, wallet: wallet.address });
+
+    const res = await toggle({
+      endowId,
+      type: isBookmarked ? "delete" : "add",
+      wallet: wallet.address,
+    });
 
     if ("error" in res) {
       showModal(Popup, { message: "Failed to save bookmark" });
@@ -53,6 +56,7 @@ export default function BookmarkBtn({ id, name, logo, children }: Props) {
       <button
         ref={ref}
         type="button"
+        aria-label="Add to favorites button"
         onClick={toogleBookmark}
         disabled={isLoading}
         className={`flex items-center gap-1 ${

@@ -5,7 +5,7 @@ export const chainIds: { [key in Chains]: string } = IS_TEST
   ? {
       binance: "97",
       ethereum: "5",
-      juno: "uni-5",
+      juno: "uni-6",
       polygon: "80001",
       terra: "pisco-1",
     }

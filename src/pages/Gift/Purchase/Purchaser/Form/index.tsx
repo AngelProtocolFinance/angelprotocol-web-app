@@ -1,11 +1,10 @@
 import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import { FormValues as FV } from "../types";
-import { BtnPrim, BtnSec } from "components/gift";
+import TokenField from "components/TokenField";
 import { setDetails } from "slices/gift";
 import { appRoutes } from "constants/routes";
-import Amount from "./Amount";
-import AmountOptions from "./AmountOptions";
 import Recipient from "./Recipient";
 
 export default function Form({ classes = "" }) {
@@ -30,22 +29,28 @@ export default function Form({ classes = "" }) {
       className={`grid rounded-md w-full ${classes}`}
       autoComplete="off"
     >
-      <Amount />
-      <AmountOptions classes="mt-3" />
+      <TokenField<FV, "token">
+        name="token"
+        tokens={getValues("tokens")}
+        label="Enter the donation amount:"
+        scale={[10, 20, 50, 100, 250]}
+      />
+
       <Recipient classes="mt-8" />
 
       <div className="grid grid-cols-2 gap-5 font-body mt-8 md:mt-12">
-        <BtnSec as="link" to={`${appRoutes.profile}/1`}>
+        <Link className="btn-outline btn-gift" to={`${appRoutes.profile}/1`}>
           Cancel
-        </BtnSec>
-        <BtnPrim
+        </Link>
+        <button
+          className="btn-orange btn-gift"
           disabled={
             !isValid || (wasCompleted ? false : !isDirty) || isSubmitting
           }
           type="submit"
         >
           Continue
-        </BtnPrim>
+        </button>
       </div>
     </form>
   );

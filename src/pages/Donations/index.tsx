@@ -4,11 +4,12 @@ import { Donation, DonationsQueryParams } from "types/aws";
 import { useDonationsQuery } from "services/apes";
 import CsvExporter from "components/CsvExporter";
 import Icon from "components/Icon";
-import { QueryLoader } from "components/admin";
+import QueryLoader from "components/QueryLoader";
 import useDebouncer from "hooks/useDebouncer";
 import { isEmpty } from "helpers";
 import Filter from "./Filter";
 import MobileTable from "./MobileTable";
+import NoDonations from "./NoDonations";
 import Table from "./Table";
 
 export default function Donations() {
@@ -44,14 +45,14 @@ export default function Donations() {
       </h1>
       <CsvExporter
         aria-disabled={isLoading || isError || isDebouncing || isEmpty(data)}
-        classes="max-lg:row-start-5 max-lg:col-span-full lg:justify-self-end btn btn-orange px-8 py-3 rounded  aria-disabled:pointer-events-none aria-disabled:bg-gray-l2 dark:aria-disabled:bg-gray"
+        classes="max-lg:row-start-5 max-lg:col-span-full lg:justify-self-end btn-orange px-8 py-3"
         headers={csvHeaders}
         data={data}
         filename="donations.csv"
       >
         Export to CSV
       </CsvExporter>
-      <div className="relative flex gap-x-3 items-center border border-gray-l2 dark:border-bluegray w-full bg-white dark:bg-blue-d6 rounded">
+      <div className="relative flex gap-x-3 items-center border border-prim w-full bg-white dark:bg-blue-d6 rounded">
         <Icon
           type="Search"
           size={24}
@@ -77,7 +78,7 @@ export default function Donations() {
         messages={{
           loading: "Loading donations..",
           error: "Failed to get donations",
-          empty: "No donations found",
+          empty: <NoDonations classes="mt-8 place-self-center col-span-full" />,
         }}
       >
         {(donations) => (

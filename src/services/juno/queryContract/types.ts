@@ -20,7 +20,6 @@ import {
   InquiredMember,
   PageOptions,
   Polls,
-  ProfileResponse,
   Proposal,
   QueryRes as Q,
   RegistrarConfig,
@@ -119,11 +118,6 @@ export interface ContractQueries {
     args: { id: number };
     res: Q<EndowmentBalance>;
     result: EndowmentBalance;
-  };
-  accProfile: {
-    args: { id: number };
-    res: Q<ProfileResponse>;
-    result: ProfileResponse;
   };
 }
 

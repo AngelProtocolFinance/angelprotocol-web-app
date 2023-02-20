@@ -1,5 +1,5 @@
+import { Link } from "react-router-dom";
 import { RegStep } from "pages/Registration/types";
-import { BtnSec } from "components/registration";
 import { useRegState } from "../StepGuard";
 
 type TStep = Exclude<RegStep, 4>;
@@ -22,21 +22,20 @@ export default function Step({
     <div
       className={`py-6 pl-2 pr-4 grid grid-cols-[1fr_auto_auto] items-center border-b ${
         num === 1 ? "border-t" : ""
-      } border-gray-l2 dark:border-bluegray `}
+      } border-prim `}
     >
       <p className="mr-auto text-left">{title[num]}</p>
 
       <p className="text-green font-semibold max-sm:row-start-2">{status}</p>
 
-      <BtnSec
-        as="link"
+      <Link
         to={`../${num}`}
-        className="min-w-[8rem] ml-6 max-sm:row-span-2"
+        className="min-w-[8rem] ml-6 max-sm:row-span-2 btn-outline-filled btn-reg"
         aria-disabled={disabled}
         state={init}
       >
         Update
-      </BtnSec>
+      </Link>
     </div>
   );
 }

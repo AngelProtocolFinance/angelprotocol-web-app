@@ -1,7 +1,7 @@
 import { DiffSet } from "types/utils";
 import ImageWrapper from "components/ImageWrapper";
 import TableSection, { Cells } from "components/TableSection";
-import { IPFS_GATEWAY } from "helpers";
+import { bucketURL } from "helpers/uploadFiles";
 import PreviewContainer from "./common/PreviewContainer";
 
 export default function DiffTable<T extends object>(props: {
@@ -13,7 +13,7 @@ export default function DiffTable<T extends object>(props: {
         <TableSection type="thead" rowClass="">
           <Cells
             type="th"
-            cellClass="text-right p-2 uppercase text-xs font-heading border-r border-gray-l2 dark:border-bluegray"
+            cellClass="text-right p-2 uppercase text-xs font-heading border-r border-prim"
             dual
           >
             <></>
@@ -21,17 +21,14 @@ export default function DiffTable<T extends object>(props: {
             <>to</>
           </Cells>
         </TableSection>
-        <TableSection
-          type="tbody"
-          rowClass="border-b border-gray-l2 dark:border-bluegray"
-        >
+        <TableSection type="tbody" rowClass="border-b border-prim">
           {props.diffSet.map(([key, prev, next]) => (
             <Cells
               type="td"
-              cellClass="text-right p-2 border-r border-gray-l2 dark:border-bluegray truncate max-w-2xl"
+              cellClass="text-right p-2 border-r border-prim truncate max-w-2xl"
               dual
               key={key as string} //T is a normal object with string keys
-              verticalHeaderClass="uppercase text-xs text-left p-2 pl-0 font-heading border-r border-gray-l2 dark:border-bluegray"
+              verticalHeaderClass="uppercase text-xs text-left p-2 pl-0 font-heading border-r border-prim"
             >
               <>{(key as string).replace(/_/g, " ")}</>
               {createColumn(prev)}
@@ -51,7 +48,7 @@ function createColumn<T extends object>(value: T[keyof T]): JSX.Element {
 
   // if the string value starts with the IPFS gateway URL value, this is surely a file
   // the user has uploaded and a preview should be displayed
-  if (typeof value === "string" && value.startsWith(IPFS_GATEWAY)) {
+  if (typeof value === "string" && value.startsWith(bucketURL)) {
     return (
       <ImageWrapper
         src={value}

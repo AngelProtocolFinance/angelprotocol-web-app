@@ -4,6 +4,7 @@ import { FormValues as FV } from "./types";
 import Icon from "components/Icon";
 import CurrencyDropdown from "./CurrencyDropdown";
 import DateInput from "./DateInput";
+import DonationStatusDropdown from "./DonationStatusDropdown";
 import NetworkDropdown from "./NetworkDropdown";
 
 type Props = {
@@ -18,9 +19,9 @@ const Form: FC<Props> = ({ onReset, submit, classes = "" }) => {
       as="form"
       onSubmit={submit}
       onReset={onReset}
-      className={`${classes} grid content-start gap-4 w-full rounded border border-gray-l2 dark:border-bluegray bg-white dark:bg-blue-d5`}
+      className={`${classes} grid content-start gap-4 w-full rounded border border-prim bg-white dark:bg-blue-d5`}
     >
-      <div className="lg:hidden relative text-[1.25rem] px-4 py-3 -mb-4  font-bold uppercase">
+      <div className="lg:hidden relative text-[1.25rem] px-4 py-3 -mb-4 font-bold uppercase">
         <span className="text-orange">Filters</span>
         <Popover.Button className="absolute top-1/2 -translate-y-1/2 right-2">
           <Icon type="Close" size={33} />
@@ -34,9 +35,10 @@ const Form: FC<Props> = ({ onReset, submit, classes = "" }) => {
       </div>
 
       <NetworkDropdown classes="px-4 lg:px-6" />
-      <CurrencyDropdown classes="px-4 lg:px-6 max-lg:mb-4" />
+      <CurrencyDropdown classes="px-4 lg:px-6" />
+      <DonationStatusDropdown classes="px-4 lg:px-6 max-lg:mb-4" />
 
-      <div className="max-lg:row-start-2 flex gap-x-4 items-center justify-between max-lg:px-4 max-lg:py-3 p-6 lg:mt-2 bg-orange-l6 dark:bg-blue-d7 border-y lg:border-t border-gray-l2 dark:border-bluegray">
+      <div className="max-lg:row-start-2 flex gap-x-4 items-center justify-between max-lg:px-4 max-lg:py-3 p-6 lg:mt-2 bg-orange-l6 dark:bg-blue-d7 border-y lg:border-t border-prim">
         <h3 className="font-bold uppercase lg:hidden">Filter by</h3>
         <button
           type="reset"

@@ -1,4 +1,4 @@
-import { errors } from "ethers";
+import { ErrorCode as errors } from "@ethersproject/logger";
 import { logger } from "helpers";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 

@@ -1,5 +1,5 @@
 import { AccountType } from "types/contracts";
-import { apesTags, invalidateApesTags } from "services/apes";
+import { invalidateApesTags } from "services/apes";
 import { useModalContext } from "contexts/ModalContext";
 import { TxPrompt } from "components/Prompt";
 import { useSetter } from "store/accessors";
@@ -10,6 +10,7 @@ import {
   idParamToNum,
   logger,
 } from "helpers";
+import { EMAIL_SUPPORT } from "constants/common";
 import { APIs } from "constants/urls";
 
 type ProposalInfo = {
@@ -48,8 +49,7 @@ export default function useLogWithdrawProposal(successMeta?: TxSuccessMeta) {
 
       if (!response.ok) {
         return showModal(TxPrompt, {
-          error:
-            "Failed to log created withdraw proposal. Contact support@angelprotocol.io",
+          error: `Failed to log created withdraw proposal. Contact ${EMAIL_SUPPORT}`,
         });
       }
 
@@ -58,12 +58,11 @@ export default function useLogWithdrawProposal(successMeta?: TxSuccessMeta) {
         tx: { hash: res.transactionHash, chainID: chain.chain_id },
       });
 
-      dispatch(invalidateApesTags([apesTags.withdraw_logs]));
+      dispatch(invalidateApesTags(["withdraw_logs"]));
     } catch (err) {
       logger.error(err);
       showModal(TxPrompt, {
-        error:
-          "Failed to log created withdraw proposal. Contact support@angelprotocol.io",
+        error: `Failed to log created withdraw proposal. Contact ${EMAIL_SUPPORT}`,
       });
     }
   }

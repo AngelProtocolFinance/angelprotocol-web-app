@@ -1,6 +1,6 @@
 import { useAdminResources } from "pages/Admin/Guard";
 import { useBalanceQuery } from "services/juno/account";
-import { QueryLoader } from "components/admin";
+import QueryLoader from "components/QueryLoader";
 import Transactions from "./Transactions";
 import WithdrawTabs from "./WithdrawTabs";
 
@@ -20,7 +20,7 @@ export default function Withdraws() {
         {(balance) => <WithdrawTabs {...balance} />}
       </QueryLoader>
 
-      <h3 className="uppercase font-extrabold text-2xl mt-6 border-t border-gray-l2 dark:border-bluegray pt-2">
+      <h3 className="uppercase font-extrabold text-2xl mt-6 border-t border-prim pt-2">
         Transactions
       </h3>
       <Transactions />

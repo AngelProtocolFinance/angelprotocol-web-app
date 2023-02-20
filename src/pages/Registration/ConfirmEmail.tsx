@@ -4,7 +4,6 @@ import { useRequestEmailMutation } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import Popup from "components/Popup";
-import { BtnPrim } from "components/registration";
 import { handleMutationResult } from "helpers";
 
 export default function ConfirmEmail({ classes = "" }: { classes?: string }) {
@@ -22,6 +21,8 @@ export default function ConfirmEmail({ classes = "" }: { classes?: string }) {
     return <Navigate to={".."} />;
   }
 
+  const openIntercom = () => (window as any).Intercom("show");
+
   const { email, reference } = initReg;
 
   return (
@@ -32,12 +33,12 @@ export default function ConfirmEmail({ classes = "" }: { classes?: string }) {
         Confirm your email address
       </h1>
 
-      <p className="text-center text-white/75 mb-8 w-full text-lg">
+      <p className="text-center text-gray-d1 dark:text-gray-l2 mb-8 w-full text-lg">
         We sent an email to <span className="font-semibold">{email}</span>.
         Please confirm your email by clicking on the link in the message.
       </p>
-      <BtnPrim
-        className="w-full max-w-[26.25rem] mb-4"
+      <button
+        className="w-full max-w-[26.25rem] mb-4 btn-orange btn-donate"
         onClick={async () => {
           handleMutationResult(
             await requestEmail({ uuid: reference, email }),
@@ -50,14 +51,15 @@ export default function ConfirmEmail({ classes = "" }: { classes?: string }) {
         disabled={isLoading}
       >
         Resend verification email
-      </BtnPrim>
+      </button>
 
-      <h3 className="font-bold mb-2 text-center">
-        Having trouble receiving our confirmation emails?
-      </h3>
-      <p className="text-center text-white/75 mb-8 w-full text-lg">
-        Contact us at: support@angelprotocol.io
-      </p>
+      <button
+        type="button"
+        className="text-sm text-orange hover:text-orange-l2 underline decoration-1"
+        onClick={openIntercom}
+      >
+        Having trouble receiving our emails?
+      </button>
     </div>
   );
 }

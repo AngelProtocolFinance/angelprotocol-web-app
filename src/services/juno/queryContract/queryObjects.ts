@@ -90,7 +90,4 @@ export const queryObject: {
   accBalance({ id }) {
     return { balance: { id } };
   },
-  accProfile({ id }) {
-    return { get_profile: { id } };
-  },
 };
