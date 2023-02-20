@@ -1,4 +1,3 @@
-import { PropsWithChildren } from "react";
 import { AccountType } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useAssetQuery } from "services/juno/account";
@@ -18,13 +17,13 @@ export default function Balances({ type }: { type: AccountType }) {
       {({ total, free, invested, symbol }) => (
         <div className="grid grid-cols-3 gap-6">
           <Amount title="Total value" symbol={symbol}>
-            {humanize(total, 2)}
+            {total}
           </Amount>
           <Amount title="Invested balances" symbol={symbol}>
-            {humanize(invested, 2)}
+            {invested}
           </Amount>
           <Amount title="Free balances" symbol={symbol}>
-            {humanize(free, 2)}
+            {free}
           </Amount>
         </div>
       )}
@@ -32,10 +31,14 @@ export default function Balances({ type }: { type: AccountType }) {
   );
 }
 
-function Amount({
-  classes = "",
-  ...props
-}: PropsWithChildren<{ classes?: string; title: string; symbol: string }>) {
+type Props = {
+  classes?: string;
+  title: string;
+  symbol: string;
+  children: number;
+};
+
+function Amount({ classes = "", ...props }: Props) {
   return (
     <div
       className={
@@ -47,7 +50,7 @@ function Amount({
         {props.title}
       </p>
       <span className="font-bold text-xl font-heading">
-        {props.children}{" "}
+        {humanize(props.children, 2)}{" "}
         <span className="text-xs font-normal">{props.symbol}</span>
       </span>
     </div>
