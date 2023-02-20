@@ -1,9 +1,9 @@
-import banner from "@/assets/images/hero.png";
 import { QueryLoader, Seo } from "@ap/components";
 import { APP_NAME, DAPP_DOMAIN } from "@ap/constants";
 import { idParamToNum } from "@ap/helpers";
 import { useProfileQuery } from "@ap/services/aws";
 import { useParams } from "react-router-dom";
+import banner from "assets/images/hero.png";
 import Content from "./Content";
 
 export default function Donate() {

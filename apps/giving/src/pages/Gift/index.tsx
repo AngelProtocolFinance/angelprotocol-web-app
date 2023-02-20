@@ -1,5 +1,5 @@
-import banner from "@/assets/images/hero.png";
 import { Navigate, Route, Routes } from "react-router-dom";
+import banner from "assets/images/hero.png";
 import Claim from "./Claim";
 import Mailer from "./Mailer";
 import Purchase from "./Purchase";

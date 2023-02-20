@@ -1,8 +1,8 @@
-import defaultIcon from "@/assets/images/angelprotocol-horiz-blu.png";
 import { Cells } from "@ap/components";
 import { appRoutes } from "@ap/constants";
 import { Link } from "react-router-dom";
 import { LeaderboardEntry } from "@ap/types/aws";
+import defaultIcon from "assets/images/angelprotocol-horiz-blu.png";
 import Amount from "./Amount";
 import projectFunds from "./projectFunds";
 

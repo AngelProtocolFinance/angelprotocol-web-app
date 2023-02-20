@@ -1,6 +1,6 @@
-import keplrWalletLogo from "@/assets/icons/wallets/keplr.png";
 import { useErrorContext } from "@ap/contexts";
 import { useSetWallet } from "@ap/contexts/wallet-context";
+import keplrWalletLogo from "assets/icons/wallets/keplr.png";
 
 export default function KeplrConnector() {
   const { connections } = useSetWallet();

@@ -1,4 +1,4 @@
-import { appRoutes, chainOptions, unsdgs } from "@ap/constants";
+import { appRoutes, chainOptions } from "@ap/constants";
 import { ModalContext } from "@ap/contexts";
 import WalletContext from "@ap/contexts/wallet-context";
 import { useScrollTop } from "@ap/hooks";
@@ -7,15 +7,15 @@ import { lazy } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Layout from "./Layout";
 
-const Admin = lazy(() => import("@/pages/Admin"));
-const Profile = lazy(() => import("@/pages/Profile"));
-const Donations = lazy(() => import("@/pages/Donations"));
-const Leaderboard = lazy(() => import("@/pages/Leaderboard"));
-const Marketplace = lazy(() => import("@/pages/Marketplace"));
-const Registration = lazy(() => import("@/pages/Registration"));
-const Donate = lazy(() => import("@/pages/Donate"));
-const Gift = lazy(() => import("@/pages/Gift"));
-const DonateWidget = lazy(() => import("@/pages/DonateWidget"));
+const Admin = lazy(() => import("../pages/Admin"));
+const Profile = lazy(() => import("../pages/Profile"));
+const Donations = lazy(() => import("../pages/Donations"));
+const Leaderboard = lazy(() => import("../pages/Leaderboard"));
+const Marketplace = lazy(() => import("../pages/Marketplace"));
+const Registration = lazy(() => import("../pages/Registration"));
+const Donate = lazy(() => import("../pages/Donate"));
+const Gift = lazy(() => import("../pages/Gift"));
+const DonateWidget = lazy(() => import("../pages/DonateWidget"));
 
 export default function App() {
   const location = useLocation();

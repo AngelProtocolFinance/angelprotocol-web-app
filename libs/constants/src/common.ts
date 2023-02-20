@@ -1,5 +1,5 @@
-import angelProtocolLogo from "@/assets/images/angelgiving-H-logo-beta-wht.svg";
 import { LogoProps } from "@ap/components";
+import angelProtocolLogo from "assets/images/angelgiving-H-logo-beta-wht.svg";
 
 // CONFIGURE THE CONSTANTS BELOW TO DISPLAY THE DESIRED REPEATING TEXT/IMAGES THROUGHOUT THE APP
 export const APP_NAME = "Angel Giving";
