@@ -19,12 +19,16 @@ export interface BalanceInfo {
   liquid: GenericBalance;
 }
 
-type VaultWithBalance = [string /** vauld addr */, string /** vault balance */];
+export interface DonationsReceived {
+  locked: number;
+  liquid: number;
+}
 
-export interface EndowmentBalance {
+export interface EndowmentState {
   tokens_on_hand: BalanceInfo;
-  invested_liquid: VaultWithBalance[];
-  invested_locked: VaultWithBalance[];
+  donations_received: DonationsReceived;
+  closing_endowment: boolean;
+  closing_beneficiary?: string;
 }
 
 interface RebalanceDetails {
@@ -136,6 +140,8 @@ export interface InvestPayload {
   acct_type: AccountType;
   vaults: [string /**vault addr */, Asset][];
 }
+
+type VaultWithBalance = [string /**vault addr */, string /**balance */];
 
 export interface RedeemPayload {
   id: number;
