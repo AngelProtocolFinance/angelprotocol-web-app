@@ -3,13 +3,12 @@ import { useDonationsQuery } from "services/apes";
 import QueryLoader from "components/QueryLoader";
 import Table from "./Table";
 
-export default function Contributions() {
+export default function DonationsTable({ classes = "" }) {
   const { id } = useAdminResources();
   const queryState = useDonationsQuery({ id: id.toString() });
 
   return (
-    <div>
-      <h2 className="text-[2rem] font-bold mb-10">Contributions</h2>
+    <div className={classes}>
       <QueryLoader
         queryState={queryState}
         messages={{
