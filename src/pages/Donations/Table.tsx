@@ -75,7 +75,8 @@ export default function Table({ donations, classes = "" }: TableProps) {
       </TableSection>
       <TableSection
         type="tbody"
-        rowClass="even:bg-orange-l6 dark:even:bg-blue-d7 divide-x divide-prim"
+        rowClass="even:bg-orange-l6 dark:odd:bg-blue-d6 dark:even:bg-blue-d7 divide-x divide-prim"
+        selectedClass="bg-orange-l5 dark:bg-blue-d4"
       >
         {sorted.map((row) => (
           <Cells key={row.hash} type="td" cellClass="p-3 border-t border-prim">
