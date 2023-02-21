@@ -3,8 +3,9 @@ import { useModalContext } from "@ap/contexts";
 import { useAdminResources } from "@ap/contexts/admin";
 import { useGetWallet } from "@ap/contexts/wallet-context";
 import { CW3Review } from "@ap/contracts";
-import { genDiffMeta, getPayloadDiff, getTagPayloads } from "@ap/helpers";
+import { genDiffMeta, getPayloadDiff } from "@ap/helpers";
 import useCosmosTxSender from "@ap/hooks/use-cosmos-tx-sender";
+import { getTagPayloads } from "@ap/services/juno";
 import { useFormContext } from "react-hook-form";
 import {
   CW3ConfigValues,

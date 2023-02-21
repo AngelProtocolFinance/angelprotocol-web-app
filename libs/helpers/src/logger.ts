@@ -15,7 +15,7 @@ export const logger: Logger = IS_TEST
       log: (...data) => console.log(...data),
     }
   : {
-      error: (_) => {},
-      info: (_) => {},
-      log: (_) => {},
+      error: () => {},
+      info: () => {},
+      log: () => {},
     };

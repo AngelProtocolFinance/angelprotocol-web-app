@@ -12,3 +12,4 @@ export * from "./indexFund";
 export * from "./juno";
 export * from "./registrar";
 export * from "./tags";
+export * from "./getTagPayloads";

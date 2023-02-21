@@ -3,8 +3,9 @@ import { useModalContext } from "@ap/contexts";
 import { useAdminResources } from "@ap/contexts/admin";
 import { useGetWallet } from "@ap/contexts/wallet-context";
 import { Account, CW3 } from "@ap/contracts";
-import { cleanObject, getTagPayloads } from "@ap/helpers";
+import { cleanObject } from "@ap/helpers";
 import useCosmosTxSender from "@ap/hooks/use-cosmos-tx-sender";
+import { getTagPayloads } from "@ap/services/juno";
 import { useFormContext } from "react-hook-form";
 import { EndowmentStatusMeta, EndowmentUpdateValues } from "@ap/types/admin";
 import {
