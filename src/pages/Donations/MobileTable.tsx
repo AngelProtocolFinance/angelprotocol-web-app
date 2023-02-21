@@ -23,11 +23,15 @@ export default function MobileTable({ donations, classes = "" }: TableProps) {
           <Disclosure
             key={index}
             as="div"
-            className="even:bg-orange-l6 dark:even:bg-blue-d7 w-full border-b border-prim"
+            className="even:bg-orange-l6 dark:odd:bg-blue-d6 dark:even:bg-blue-d7 w-full border-b border-prim"
           >
-            <Disclosure.Button className="w-full grid grid-cols-8 border-b last:border-0 border-prim divide-x divide-prim">
-              {({ open }) => (
-                <>
+            {({ open }) => (
+              <>
+                <Disclosure.Button
+                  className={`${
+                    open ? "bg-orange-l5 dark:bg-blue-d4" : ""
+                  } w-full grid grid-cols-8 border-b last:border-0 border-prim divide-x divide-prim`}
+                >
                   <DrawerIcon
                     size={25.5}
                     className={`${open ? "text-orange" : ""} place-self-center`}
@@ -39,41 +43,41 @@ export default function MobileTable({ donations, classes = "" }: TableProps) {
                   <div className="col-span-3 p-4 text-left text-sm">
                     {new Date(row.date).toLocaleDateString()}
                   </div>
-                </>
-              )}
-            </Disclosure.Button>
-            <Disclosure.Panel className="w-full font-work">
-              <Row title="Network">{row.chainName}</Row>
-              <Row title="Currency">{row.symbol}</Row>
-              <Row title="Amount">{humanize(row.amount, 3)}</Row>
-              <Row title="USD Value">{`$${humanize(row.usdValue, 2)}`}</Row>
-              <Row title="TX Hash">{maskAddress(row.hash)}</Row>
-              <Row title="Status">
-                <div
-                  className={`${
-                    row.donationFinalized
-                      ? "bg-green"
-                      : "bg-gray-d1 dark:bg-gray"
-                  } font-body text-white px-2 py-0.5 rounded`}
-                >
-                  {row.donationFinalized ? "RECEIVED" : "PENDING"}
-                </div>
-              </Row>
-              <Row title="Receipt">
-                <button
-                  className="block"
-                  onClick={() =>
-                    showKYCForm({
-                      type: "post-donation",
-                      txHash: row.hash,
-                      classes: "grid gap-5",
-                    })
-                  }
-                >
-                  <Icon type="FatArrowDownload" className=" text-2xl" />
-                </button>
-              </Row>
-            </Disclosure.Panel>
+                </Disclosure.Button>
+                <Disclosure.Panel className="w-full font-work">
+                  <Row title="Network">{row.chainName}</Row>
+                  <Row title="Currency">{row.symbol}</Row>
+                  <Row title="Amount">{humanize(row.amount, 3)}</Row>
+                  <Row title="USD Value">{`$${humanize(row.usdValue, 2)}`}</Row>
+                  <Row title="TX Hash">{maskAddress(row.hash)}</Row>
+                  <Row title="Status">
+                    <div
+                      className={`${
+                        row.donationFinalized
+                          ? "bg-green"
+                          : "bg-gray-d1 dark:bg-gray"
+                      } font-body text-white px-2 py-0.5 rounded`}
+                    >
+                      {row.donationFinalized ? "RECEIVED" : "PENDING"}
+                    </div>
+                  </Row>
+                  <Row title="Receipt">
+                    <button
+                      className="block"
+                      onClick={() =>
+                        showKYCForm({
+                          type: "post-donation",
+                          txHash: row.hash,
+                          classes: "grid gap-5",
+                        })
+                      }
+                    >
+                      <Icon type="FatArrowDownload" className=" text-2xl" />
+                    </button>
+                  </Row>
+                </Disclosure.Panel>
+              </>
+            )}
           </Disclosure>
         ))}
       </div>
