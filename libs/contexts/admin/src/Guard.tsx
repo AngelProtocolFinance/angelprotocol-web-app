@@ -3,7 +3,7 @@ import { useAdminResourcesQuery } from "@ap/services/juno";
 import { ReactNode, createContext, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { AdminParams } from "@ap/types/admin";
-import { AdminResources } from "libs/types/services/src/services";
+import { AdminResources } from "@ap/types/services";
 import Prompt from "./Prompt";
 
 export default function Guard(props: {

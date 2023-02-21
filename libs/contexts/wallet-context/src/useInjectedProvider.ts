@@ -146,8 +146,9 @@ export default function useInjectedProvider(
   const connect = async () => {
     const dwindow = window as Dwindow;
 
+    const { name, logo, installUrl } = WALLET_METADATA[providerId];
     if (!getProvider(providerId)) {
-      throw new WalletNotInstalledError(providerId);
+      throw new WalletNotInstalledError({ name, logo, installURL: installUrl });
     }
 
     try {

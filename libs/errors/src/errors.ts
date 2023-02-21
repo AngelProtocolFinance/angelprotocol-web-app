@@ -1,6 +1,4 @@
 import { EMAIL_SUPPORT, EXPECTED_NETWORK_TYPE } from "@ap/constants";
-import { WALLET_METADATA } from "@ap/contexts/wallet-context";
-import { WithoutInstallers } from "@ap/contexts/wallet-context";
 import { Chain } from "@ap/types/aws";
 
 export const AP_ERROR_DISCRIMINATOR = "AP_ERROR_DISCRIMINATOR";
@@ -123,14 +121,12 @@ export class TxResultFail extends Error {
   }
 }
 
+type WalletMeta = { name: string; installURL: string; logo: string };
 export class WalletNotInstalledError extends APError {
-  providerId: WithoutInstallers;
-  constructor(providerId: WithoutInstallers) {
-    super(
-      "WalletNotInstalledError",
-      `Wallet ${WALLET_METADATA[providerId].name} not installed`
-    );
-    this.providerId = providerId;
+  meta: WalletMeta;
+  constructor(meta: WalletMeta) {
+    super("WalletNotInstalledError", `Wallet ${meta.name} not installed`);
+    this.meta = meta;
   }
 }
 

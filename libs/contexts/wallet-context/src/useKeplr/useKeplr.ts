@@ -12,6 +12,7 @@ import { WALLET_METADATA } from "../constants";
 import { retrieveUserAction, saveUserAction } from "../helpers";
 import { juno_test_chain_info } from "./chains";
 
+const { name, logo, installUrl } = WALLET_METADATA.keplr;
 const SUPPORTED_CHAINS: BaseChain[] = IS_TEST
   ? [
       { chain_id: chainIDs.junoTest, chain_name: "Juno Testnet" },
@@ -73,7 +74,7 @@ export default function useKeplr() {
 
   const connect = async () => {
     if (!dwindow.keplr) {
-      throw new WalletNotInstalledError("keplr");
+      throw new WalletNotInstalledError({ name, logo, installURL: installUrl });
     }
 
     try {
@@ -99,7 +100,7 @@ export default function useKeplr() {
 
   const switchChain = async (chainId: chainIDs) => {
     if (!dwindow.keplr) {
-      throw new WalletNotInstalledError("keplr");
+      throw new WalletNotInstalledError({ name, logo, installURL: installUrl });
     }
 
     try {
