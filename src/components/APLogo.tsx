@@ -1,4 +1,4 @@
-import angelProtocolLogo from "assets/images/angelgiving-H-logo-beta-wht.png";
+import angelProtocolLogo from "assets/images/angelgiving-H-logo-beta-wht.svg";
 import { BASE_DOMAIN } from "constants/common";
 
 export default function APLogo({ className = "" }) {
