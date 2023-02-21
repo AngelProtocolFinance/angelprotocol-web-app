@@ -4,7 +4,7 @@ import {
   CountryInRegion,
   CountryOption,
   Regions,
-} from "libs/types/services/src/services";
+} from "@ap/types/services";
 
 export const countriesApi = createApi({
   reducerPath: "countriesApi",
