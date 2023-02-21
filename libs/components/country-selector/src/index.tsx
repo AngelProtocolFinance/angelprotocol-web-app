@@ -9,7 +9,7 @@ import {
   useController,
   useFormContext,
 } from "react-hook-form";
-import { CountryOption } from "libs/types/services/src/services";
+import { CountryOption } from "@ap/types/services";
 import Options from "./Options";
 import unknownFlag from "./assets/unknown-flag.jpeg";
 
