@@ -1,4 +1,5 @@
-import { Cells, ExtLink, HeaderButton, TableSection } from "@ap/components";
+import { Cells, ExtLink, TableSection } from "@ap/components";
+import HeaderButton from "@ap/components/header-btn";
 import Icon from "@ap/components/icon";
 import { useKYC } from "@ap/components/kyc";
 import { appRoutes } from "@ap/constants";

@@ -1,7 +1,6 @@
 export { default as Breadcrumbs } from "./Breadcrumbs";
 export { default as ContentLoader } from "./ContentLoader";
 export { default as ExtLink } from "./ExtLink";
-export { HeaderButton } from "./HeaderButton";
 export { default as IFrame } from "./IFrame";
 export { default as KadoModal } from "./KadoModal";
 export { default as Loader } from "./Loader";

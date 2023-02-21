@@ -1,0 +1,16 @@
+{
+  "name": "components-header-btn",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/components/header-btn/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/components/header-btn/**/*.{ts,tsx,js,jsx}"]
+      }
+    }
+  }
+}

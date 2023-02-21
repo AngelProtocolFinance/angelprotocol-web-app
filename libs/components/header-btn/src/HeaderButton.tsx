@@ -1,7 +1,7 @@
 import Icon from "@ap/components/icon";
 import { SortDirection, SortKey } from "@ap/hooks/use-sort";
 
-export function HeaderButton(
+export default function HeaderButton(
   props: React.ButtonHTMLAttributes<HTMLButtonElement> & {
     _sortDirection: SortDirection;
     _sortKey: SortKey;

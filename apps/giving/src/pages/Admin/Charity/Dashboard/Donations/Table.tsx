@@ -1,5 +1,6 @@
-import { Cells, ExtLink, HeaderButton, TableSection } from "@ap/components";
+import { Cells, ExtLink, TableSection } from "@ap/components";
 import CsvExporter from "@ap/components/csv-exporter";
+import HeaderButton from "@ap/components/header-btn";
 import Icon from "@ap/components/icon";
 import { getTxUrl, humanize, maskAddress } from "@ap/helpers";
 import useSort from "@ap/hooks/use-sort";
