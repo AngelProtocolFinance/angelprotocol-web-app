@@ -1,5 +1,5 @@
-import { useErrorContext } from "@ap/contexts";
 import { useAdminResources } from "@ap/contexts/admin";
+import { useErrorContext } from "@ap/contexts/error-context";
 import { useGetWallet } from "@ap/contexts/wallet-context";
 import { CW3, IndexFund } from "@ap/contracts";
 import useCosmosTxSender from "@ap/hooks/use-cosmos-tx-sender";

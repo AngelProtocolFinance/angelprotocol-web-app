@@ -1,7 +1,7 @@
 import Prompt from "@ap/components/prompt";
 import { chainIds } from "@ap/constants";
 import { useModalContext } from "@ap/contexts";
-import { useErrorContext } from "@ap/contexts";
+import { useErrorContext } from "@ap/contexts/error-context";
 import { handleMutationResult } from "@ap/helpers";
 import { useSubmitMutation } from "@ap/services/aws";
 import { Navigate } from "react-router-dom";

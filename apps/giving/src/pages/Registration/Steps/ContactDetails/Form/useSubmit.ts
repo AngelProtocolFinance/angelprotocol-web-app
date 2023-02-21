@@ -1,4 +1,4 @@
-import { useErrorContext } from "@ap/contexts";
+import { useErrorContext } from "@ap/contexts/error-context";
 import { handleMutationResult } from "@ap/helpers";
 import { useUpdateRegMutation } from "@ap/services/aws";
 import { SubmitHandler, useFormContext } from "react-hook-form";

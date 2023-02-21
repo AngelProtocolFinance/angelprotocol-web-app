@@ -1,5 +1,5 @@
 import { GENERIC_ERROR_MESSAGE } from "@ap/constants";
-import { useErrorContext } from "@ap/contexts";
+import { useErrorContext } from "@ap/contexts/error-context";
 import { useUpdateRegMutation } from "@ap/services/aws";
 import { useRegState } from "../StepGuard";
 

@@ -2,7 +2,7 @@ import Icon from "@ap/components/icon";
 import Prompt from "@ap/components/prompt";
 import { APP_NAME, appRoutes } from "@ap/constants";
 import { useModalContext } from "@ap/contexts";
-import { useErrorContext } from "@ap/contexts";
+import { useErrorContext } from "@ap/contexts/error-context";
 import { handleMutationResult, logger } from "@ap/helpers";
 import { useRequestEmailMutation } from "@ap/services/aws";
 import jwtDecode from "jwt-decode";

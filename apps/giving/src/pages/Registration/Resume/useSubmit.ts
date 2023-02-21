@@ -1,4 +1,4 @@
-import { useErrorContext } from "@ap/contexts";
+import { useErrorContext } from "@ap/contexts/error-context";
 import { storeRegistrationReference } from "@ap/helpers";
 import { useLazyRegQuery } from "@ap/services/aws";
 import { useFormContext } from "react-hook-form";
