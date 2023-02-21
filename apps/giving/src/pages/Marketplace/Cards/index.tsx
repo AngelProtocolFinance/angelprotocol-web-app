@@ -1,4 +1,4 @@
-import { QueryLoader } from "@ap/components";
+import QueryLoader from "@ap/components/query-loader";
 import Card from "./Card";
 import useCards from "./useCards";
 

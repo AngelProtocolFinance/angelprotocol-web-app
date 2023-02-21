@@ -1,4 +1,4 @@
-import { QueryLoader } from "@ap/components";
+import QueryLoader from "@ap/components/query-loader";
 import { useRegionsQuery } from "@ap/services/countries";
 import { setRegions } from "@ap/slices/market-filter";
 import { RegionType } from "@ap/slices/market-filter";

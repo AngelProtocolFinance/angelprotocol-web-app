@@ -1,4 +1,4 @@
-import { QueryLoader } from "@ap/components";
+import QueryLoader from "@ap/components/query-loader";
 import { useAdminResources } from "@ap/contexts/admin";
 import { useProposalsQuery } from "@ap/services/juno";
 import Balances from "../common/Balances";

@@ -1,4 +1,4 @@
-import { QueryLoader } from "@ap/components";
+import QueryLoader from "@ap/components/query-loader";
 import { Selector, selectorButtonStyle } from "@ap/components/selector";
 import { useChainsQuery } from "@ap/services/apes";
 import { FormValues as FV } from "./types";

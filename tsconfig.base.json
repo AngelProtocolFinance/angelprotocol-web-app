@@ -58,6 +58,9 @@
       "@ap/components/img-wrapper": [
         "libs/components/img-wrapper/src/index.ts"
       ],
+      "@ap/components/query-loader": [
+        "libs/components/query-loader/src/index.ts"
+      ],
       "@ap/constants": ["libs/constants/src/index.ts"],
       "@ap/assets": ["libs/assets/src/index.ts"],
       "@ap/contexts": ["libs/contexts/src/index.ts"],

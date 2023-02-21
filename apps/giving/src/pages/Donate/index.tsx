@@ -1,5 +1,6 @@
 import { hero } from "@ap/assets";
-import { QueryLoader, Seo } from "@ap/components";
+import { Seo } from "@ap/components";
+import QueryLoader from "@ap/components/query-loader";
 import { APP_NAME, DAPP_DOMAIN } from "@ap/constants";
 import { idParamToNum } from "@ap/helpers";
 import { useProfileQuery } from "@ap/services/aws";

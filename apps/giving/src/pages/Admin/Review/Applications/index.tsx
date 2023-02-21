@@ -1,4 +1,4 @@
-import { QueryLoader } from "@ap/components";
+import QueryLoader from "@ap/components/query-loader";
 import { useEndowmentApplicationsQuery } from "@ap/services/aws";
 import { useGetter } from "@ap/store";
 import ApplicationsTable from "./Table";

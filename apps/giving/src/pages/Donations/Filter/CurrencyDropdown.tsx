@@ -1,4 +1,4 @@
-import { QueryLoader } from "@ap/components";
+import QueryLoader from "@ap/components/query-loader";
 import { Selector, selectorButtonStyle } from "@ap/components/selector";
 import { junoAddrPattern, terraAddrPattern } from "@ap/schemas";
 import { useCurrenciesQuery } from "@ap/services/apes";

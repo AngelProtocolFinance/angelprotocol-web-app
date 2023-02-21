@@ -1,5 +1,5 @@
-import { QueryLoader } from "@ap/components";
 import { Field } from "@ap/components/form";
+import QueryLoader from "@ap/components/query-loader";
 import { APP_NAME } from "@ap/constants";
 import { useAdminResources } from "@ap/contexts/admin";
 import { useLatestBlockQuery } from "@ap/services/juno";

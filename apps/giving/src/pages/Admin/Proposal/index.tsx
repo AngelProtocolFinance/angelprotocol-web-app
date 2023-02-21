@@ -1,6 +1,6 @@
-import { QueryLoader } from "@ap/components";
 import { DetailLabel, Status } from "@ap/components/admin";
 import Icon from "@ap/components/icon";
+import QueryLoader from "@ap/components/query-loader";
 import { useAdminResources } from "@ap/contexts/admin";
 import { useGetWallet } from "@ap/contexts/wallet-context";
 import { useProposalDetailsQuery } from "@ap/services/juno";

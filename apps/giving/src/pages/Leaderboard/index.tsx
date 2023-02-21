@@ -1,4 +1,5 @@
-import { QueryLoader, Seo } from "@ap/components";
+import { Seo } from "@ap/components";
+import QueryLoader from "@ap/components/query-loader";
 import { APP_NAME, DAPP_DOMAIN } from "@ap/constants";
 import { useLeaderboardsQuery } from "@ap/services/aws";
 import DonationMetrics from "./DonationMetrics";

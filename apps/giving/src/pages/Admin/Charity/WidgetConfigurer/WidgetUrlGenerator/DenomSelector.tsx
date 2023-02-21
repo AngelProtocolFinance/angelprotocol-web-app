@@ -1,4 +1,4 @@
-import { QueryLoader } from "@ap/components";
+import QueryLoader from "@ap/components/query-loader";
 import { Selector } from "@ap/components/selector";
 import { useTokensQuery } from "@ap/services/apes";
 import { FormValues } from "../schema";
