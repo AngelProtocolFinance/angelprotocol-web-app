@@ -1,7 +1,7 @@
 {
-  "name": "components-img-wrapper",
+  "name": "components-query-loader",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/components/img-wrapper/src",
+  "sourceRoot": "libs/components/query-loader/src",
   "projectType": "library",
   "tags": [],
   "targets": {
@@ -9,7 +9,9 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/components/img-wrapper/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": [
+          "libs/components/query-loader/**/*.{ts,tsx,js,jsx}"
+        ]
       }
     }
   }
