@@ -16,9 +16,7 @@ export default function Table({ donations, classes = "" }: TableProps) {
   const showKYCForm = useKYC();
 
   return (
-    <table
-      className={`${classes} w-full text-sm rounded outline outline-gray-l2 dark:outline-bluegray`}
-    >
+    <table className={`${classes} w-full text-sm rounded border border-prim`}>
       <TableSection
         type="thead"
         rowClass="bg-orange-l6 dark:bg-blue-d7 rounded divide-x divide-prim"
