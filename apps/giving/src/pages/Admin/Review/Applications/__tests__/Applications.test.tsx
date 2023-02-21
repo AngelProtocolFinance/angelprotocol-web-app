@@ -6,7 +6,7 @@ import AppWrapper from "../../../../../test/AppWrapper";
 const mockEndowmentApplicationsQuery = jest.fn();
 const mockAdminContext = jest.fn();
 
-jest.mock("@ap/services/aws", () => ({
+jest.mock("libs/services/aws/src/registration", () => ({
   __esModule: true,
   useEndowmentApplicationsQuery: () => mockEndowmentApplicationsQuery(),
 }));

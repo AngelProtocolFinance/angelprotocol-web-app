@@ -12,7 +12,7 @@ const mockMetrics: DonationsMetricList = {
   donations_total_amount: 0,
 };
 
-jest.mock("@ap/services/aws", () => ({
+jest.mock("libs/services/aws/src/business_metrics", () => ({
   __esModule: true,
   useMetricsListQuery: () => ({
     data: mockMetrics,
@@ -20,7 +20,7 @@ jest.mock("@ap/services/aws", () => ({
 }));
 
 const mockUpdate: Update = { last_update: "", endowments: [] };
-jest.mock("@ap/services/aws", () => ({
+jest.mock("libs/services/aws/src/leaderboard", () => ({
   __esModule: true,
   useLeaderboardsQuery: () => ({
     data: mockUpdate,
