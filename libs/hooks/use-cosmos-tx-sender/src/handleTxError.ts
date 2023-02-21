@@ -16,7 +16,7 @@ import {
   TxUnspecifiedError,
   UserDenied,
 } from "@terra-money/wallet-provider";
-import { TxError } from "./types";
+import { TxError } from "@ap/types/services";
 
 export default function handleTxError(
   error: any,

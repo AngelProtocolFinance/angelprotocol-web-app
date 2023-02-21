@@ -3,8 +3,8 @@ import { WalletState } from "@ap/contexts/wallet-context";
 import { TransactionRequest } from "@ethersproject/providers";
 import { CreateTxOptions } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
-import { CountryOption } from "@ap/types/services";
 import { TokenWithAmount, TxOptions } from "@ap/types/slices";
+import { CountryOption } from "libs/types/services/src/services";
 
 export type DonationRecipient = {
   id: number;

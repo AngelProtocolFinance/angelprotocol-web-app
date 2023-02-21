@@ -2,7 +2,7 @@ import { IS_TEST, contracts, denoms, symbols } from "@ap/constants";
 import { condenseToNum } from "@ap/helpers";
 import { Args, Res, Result } from "./queryContract/types";
 import { AccountType, EndowmentEntry } from "@ap/types/contracts";
-import { EndowmentAsset } from "@ap/types/services";
+import { EndowmentAsset } from "libs/types/services/src/services";
 import { junoApi } from "./juno";
 import { queryContract } from "./queryContract";
 import { genQueryPath } from "./queryContract/genQueryPath";

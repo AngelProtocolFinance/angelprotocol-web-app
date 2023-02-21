@@ -3,7 +3,11 @@ import { condenseToNum, idParamToNum } from "@ap/helpers";
 import { isJunoAddress } from "@ap/schemas";
 import { Args } from "./queryContract/types";
 import { CW3Config } from "@ap/types/contracts";
-import { AdminResources, ProposalDetails, Vault } from "@ap/types/services";
+import {
+  AdminResources,
+  ProposalDetails,
+  Vault,
+} from "libs/types/services/src/services";
 import { junoApi } from "./juno";
 import { queryContract } from "./queryContract";
 import {

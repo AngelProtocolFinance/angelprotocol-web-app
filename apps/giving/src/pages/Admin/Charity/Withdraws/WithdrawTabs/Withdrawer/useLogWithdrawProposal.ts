@@ -7,10 +7,10 @@ import {
   idParamToNum,
   logger,
 } from "@ap/helpers";
-import { TxOnSuccess, TxSuccessMeta } from "@ap/hooks/use-cosmos-tx-sender";
 import { invalidateApesTags } from "@ap/services/apes";
 import { useSetter } from "@ap/store";
 import { AccountType } from "@ap/types/contracts";
+import { TxOnSuccess, TxSuccessMeta } from "@ap/types/services";
 
 type ProposalInfo = {
   endowment_multisig: string;

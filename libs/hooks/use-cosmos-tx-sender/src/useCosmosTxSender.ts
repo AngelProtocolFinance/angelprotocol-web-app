@@ -6,7 +6,7 @@ import { extractFeeAmount } from "@ap/helpers";
 import { invalidateApesTags } from "@ap/services/apes";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Tx, TxArgs } from "./types";
+import { Tx, TxArgs } from "@ap/types/services";
 import { TxOptions } from "@ap/types/slices";
 import handleTxError from "./handleTxError";
 
