@@ -1,5 +1,5 @@
-import { LogoProps } from "@ap/components";
 import Icon from "@ap/components/icon";
+import { LogoProps } from "@ap/components/logo";
 import { useModalContext } from "@ap/contexts";
 import { SCREEN_LG, useHandleScreenResize } from "@ap/hooks";
 import { Link } from "../../types";

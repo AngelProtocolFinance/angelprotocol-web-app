@@ -1,4 +1,4 @@
-import { Logo } from "@ap/components";
+import Logo from "@ap/components/logo";
 import { Steps } from "@ap/components/steps";
 import WalletSuite from "@ap/components/wallet-suite";
 import { getPossessiveForm } from "@ap/helpers";

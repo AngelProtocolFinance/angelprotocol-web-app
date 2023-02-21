@@ -1,5 +1,5 @@
-import { Logo, LogoProps } from "@ap/components";
 import Icon from "@ap/components/icon";
+import Logo, { LogoProps } from "@ap/components/logo";
 import { useModalContext } from "@ap/contexts";
 import { createNavLinkStyler } from "@ap/helpers";
 import { Dialog } from "@headlessui/react";

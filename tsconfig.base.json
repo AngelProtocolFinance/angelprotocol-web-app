@@ -38,6 +38,7 @@
         "libs/components/csv-exporter/src/index.ts"
       ],
       "@ap/components/form": ["libs/components/form/src/index.ts"],
+      "@ap/components/logo": ["libs/components/logo/src/index.ts"],
       "@ap/components/steps": ["libs/components/steps/src/index.tsx"],
       "@ap/components/token-field": [
         "libs/components/token-field/src/index.ts"

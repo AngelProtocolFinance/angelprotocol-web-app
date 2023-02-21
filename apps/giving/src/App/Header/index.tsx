@@ -1,4 +1,4 @@
-import { DEFAULT_LOGO, Logo, LogoProps } from "@ap/components";
+import Logo, { DEFAULT_LOGO, LogoProps } from "@ap/components/logo";
 import WalletSuite from "@ap/components/wallet-suite";
 import { appRoutes } from "@ap/constants";
 import { useEffect, useRef, useState } from "react";

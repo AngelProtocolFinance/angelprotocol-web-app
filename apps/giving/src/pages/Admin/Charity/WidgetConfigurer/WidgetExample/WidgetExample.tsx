@@ -1,4 +1,4 @@
-import { DEFAULT_LOGO, Logo } from "@ap/components";
+import Logo from "@ap/components/logo";
 import { getPossessiveForm } from "@ap/helpers";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
