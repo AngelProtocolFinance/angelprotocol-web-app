@@ -12,7 +12,8 @@ import {
   WalletStatus,
   useWallet,
 } from "@terra-money/wallet-provider";
-import { Connection, ProviderId, ProviderInfo } from "./types";
+import { Connection, ProviderInfo } from "./types";
+import { ProviderId } from "@ap/types";
 import { BaseChain } from "@ap/types/aws";
 
 const SUPPORTED_CHAINS: BaseChain[] = IS_TEST

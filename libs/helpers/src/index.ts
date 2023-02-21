@@ -16,5 +16,4 @@ export * from "./maskAddress";
 export * from "./theme";
 export * from "./toBase64";
 export * from "./registration";
-export * from "./keplr";
 export * from "./uploadFiles";

@@ -81,6 +81,7 @@
       ],
       "@ap/contracts": ["libs/contracts/src/index.ts"],
       "@ap/helpers": ["libs/helpers/src/index.ts"],
+      "@ap/helpers/keplr": ["libs/helpers/keplr/src/index.ts"],
       "@ap/hooks": ["libs/hooks/src/index.ts"],
       "@ap/hooks/use-cosmos-tx-sender": [
         "libs/hooks/use-cosmos-tx-sender/src/index.ts"

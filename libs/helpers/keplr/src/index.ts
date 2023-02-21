@@ -1,10 +1,9 @@
 import { JUNO_LCD, WC_BRIDGE } from "@ap/constants";
-import { ProviderId } from "@ap/contexts/wallet-context";
 import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 import { fromHex, toBase64 } from "@cosmjs/encoding";
 import { KeplrWalletConnectV1 } from "@keplr-wallet/wc-client";
 import WalletConnect from "@walletconnect/client/";
-import { Dwindow } from "@ap/types";
+import { Dwindow, ProviderId } from "@ap/types";
 
 export const connector = new WalletConnect({
   bridge: WC_BRIDGE,

@@ -1,0 +1,15 @@
+{
+  "name": "helpers-keplr",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/helpers/keplr/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/helpers/keplr/**/*.ts"]
+      }
+    }
+  }
+}

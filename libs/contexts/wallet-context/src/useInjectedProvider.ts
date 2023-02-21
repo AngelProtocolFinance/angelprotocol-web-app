@@ -9,12 +9,13 @@ import {
 import { getProvider } from "@ap/helpers";
 import { formatUnits } from "@ethersproject/units";
 import { useCallback, useEffect, useState } from "react";
-import { Connection, ProviderId, ProviderInfo } from "./types";
+import { Connection, ProviderInfo } from "./types";
 import {
   AccountChangeHandler,
   ChainChangeHandler,
   Dwindow,
   InjectedProvider,
+  ProviderId,
 } from "@ap/types";
 import { BaseChain } from "@ap/types/aws";
 import { WALLET_METADATA } from "./constants";

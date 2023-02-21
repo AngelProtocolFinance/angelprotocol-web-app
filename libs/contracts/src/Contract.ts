@@ -6,7 +6,8 @@ import {
   WalletDisconnectedError,
   WrongChainError,
 } from "@ap/errors";
-import { getKeplrClient, logger, toBase64 } from "@ap/helpers";
+import { logger, toBase64 } from "@ap/helpers";
+import { getKeplrClient } from "@ap/helpers/keplr";
 import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
 import { toUtf8 } from "@cosmjs/encoding";
 import { EncodeObject } from "@cosmjs/proto-signing";

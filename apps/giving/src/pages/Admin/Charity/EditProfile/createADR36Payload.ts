@@ -1,5 +1,6 @@
 import { WalletState } from "@ap/contexts/wallet-context";
-import { getKeplr, toBase64 } from "@ap/helpers";
+import { toBase64 } from "@ap/helpers";
+import { getKeplr } from "@ap/helpers/keplr";
 import { ADR36Payload } from "@ap/types/aws";
 
 export async function createADR36Payload(
