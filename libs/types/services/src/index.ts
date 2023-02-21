@@ -1,6 +1,4 @@
 import { TxArgs } from "@ap/hooks/use-cosmos-tx-sender";
-import { PayloadAction } from "@reduxjs/toolkit";
-import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import {
   AdminVoteInfo,
   CW3Config,
@@ -9,9 +7,6 @@ import {
   ReviewCW3Config,
   YieldVault,
 } from "@ap/types/contracts";
-
-export type Tag = TagDescription<string>;
-export type TagPayload = PayloadAction<Tag[], string>;
 
 export type ContractQueryArgs<T = object> = {
   address: string;

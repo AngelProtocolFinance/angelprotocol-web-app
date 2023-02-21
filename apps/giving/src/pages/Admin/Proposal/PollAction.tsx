@@ -10,8 +10,9 @@ import {
   useLatestBlockQuery,
 } from "@ap/services/juno";
 import React, { ReactNode, useMemo } from "react";
+import { TagPayload } from "@ap/types";
 import { ProposalMeta } from "@ap/types/admin";
-import { ProposalDetails, TagPayload } from "@ap/types/services";
+import { ProposalDetails } from "@ap/types/services";
 import Voter from "./Voter";
 
 export default function PollAction(props: ProposalDetails) {

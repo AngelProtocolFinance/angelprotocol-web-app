@@ -6,8 +6,8 @@ import {
   invalidateJunoTags,
   registrarTags,
 } from "@ap/services/juno";
+import { TagPayload } from "@ap/types";
 import { ProposalMeta } from "@ap/types/admin";
-import { TagPayload } from "@ap/types/services";
 
 export function getTagPayloads(type?: ProposalMeta["type"]): TagPayload[] {
   const _tags = [...defaultProposalTags];
