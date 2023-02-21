@@ -1,6 +1,6 @@
+import { placeholderBanner } from "@ap/assets";
 import React, { useRef, useState } from "react";
-import Loader from "./Loader";
-import placeHolderImage from "./assets/home-banner.jpg";
+import Loader from "../../src/Loader";
 
 export default function ImageWrapper({
   className,
@@ -9,7 +9,7 @@ export default function ImageWrapper({
   const [isLoading, setLoading] = useState(true);
   const imageRef = useRef<HTMLImageElement>(null);
   const handleImageLoadError = () => {
-    imageRef.current?.setAttribute("src", placeHolderImage);
+    imageRef.current?.setAttribute("src", placeholderBanner);
   };
   const handleLoad = () => {
     setLoading(false);
@@ -26,7 +26,7 @@ export default function ImageWrapper({
       <img
         {...rest}
         //setting src to undefined doesn't trigger load error
-        src={rest.src || placeHolderImage}
+        src={rest.src || placeholderBanner}
         alt={rest.alt}
         className={`${className} ${isLoading ? "hidden" : "block"}`}
         onError={handleImageLoadError}

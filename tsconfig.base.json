@@ -55,6 +55,9 @@
       "@ap/components/prompt": ["libs/components/prompt/src/index.ts"],
       "@ap/components/status": ["libs/components/status/src/index.ts"],
       "@ap/components/selector": ["libs/components/selector/src/index.ts"],
+      "@ap/components/img-wrapper": [
+        "libs/components/img-wrapper/src/index.ts"
+      ],
       "@ap/constants": ["libs/constants/src/index.ts"],
       "@ap/assets": ["libs/assets/src/index.ts"],
       "@ap/contexts": ["libs/contexts/src/index.ts"],
