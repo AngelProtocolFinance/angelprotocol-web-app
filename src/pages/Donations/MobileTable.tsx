@@ -44,7 +44,7 @@ export default function MobileTable({ donations, classes = "" }: TableProps) {
                     {new Date(row.date).toLocaleDateString()}
                   </div>
                 </Disclosure.Button>
-                <Disclosure.Panel className="w-full font-work">
+                <Disclosure.Panel className="w-full font-work divide-y divide-prim">
                   <Row title="Network">{row.chainName}</Row>
                   <Row title="Currency">{row.symbol}</Row>
                   <Row title="Amount">{humanize(row.amount, 3)}</Row>
@@ -85,9 +85,15 @@ export default function MobileTable({ donations, classes = "" }: TableProps) {
   );
 }
 
-function Row({ title, children }: PropsWithChildren<{ title: string }>) {
+function Row({
+  className = "",
+  title,
+  children,
+}: PropsWithChildren<{ className?: string; title: string }>) {
   return (
-    <div className="flex justify-between p-4">
+    <div
+      className={`flex justify-between p-4 odd:bg-white even:bg-orange-l6 dark:bg-blue-d7 ${className}`}
+    >
       <span className="font-bold uppercase">{title}</span>
       {children}
     </div>
