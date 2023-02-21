@@ -1,9 +1,9 @@
+import { hero } from "@ap/assets";
 import { QueryLoader, Seo } from "@ap/components";
 import { APP_NAME, DAPP_DOMAIN } from "@ap/constants";
 import { idParamToNum } from "@ap/helpers";
 import { useProfileQuery } from "@ap/services/aws";
 import { useParams } from "react-router-dom";
-import banner from "assets/images/hero.png";
 import Content from "./Content";
 
 export default function Donate() {
@@ -15,7 +15,7 @@ export default function Donate() {
     <section className="grid content-start w-full font-work min-h-screen sm:min-h-[900px] pb-20">
       <div
         style={{
-          backgroundImage: `url('${queryState.data?.image || banner}')`,
+          backgroundImage: `url('${queryState.data?.image || hero}')`,
         }}
         className="relative overlay w-full object-cover h-72 bg-center bg-cover"
       />

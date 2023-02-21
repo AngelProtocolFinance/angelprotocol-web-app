@@ -15,11 +15,7 @@
         "baseHref": "/",
         "main": "apps/giving/src/index.tsx",
         "tsConfig": "apps/giving/tsconfig.app.json",
-        "assets": ["apps/giving/src/favicon.png", {
-          "input":"assets",
-          "glob": "**/*",
-          "output": "apps/giving/src/assets"
-        }],
+        "assets": ["apps/giving/src/favicon.png"],
         "styles": ["apps/giving/src/index.css"],
         "scripts": [],
         "isolatedConfig": true,
@@ -40,7 +36,6 @@
           "namedChunks": false,
           "extractLicenses": true,
           "vendorChunk": false
-          
         }
       }
     },

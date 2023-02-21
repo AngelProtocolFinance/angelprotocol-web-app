@@ -1,4 +1,4 @@
-import { ERC20Abi } from "@ap/constants";
+import { ERC20Abi } from "@ap/assets";
 import { WalletState } from "@ap/contexts/wallet-context";
 import { Contract } from "@ap/contracts";
 import { getProvider, logger } from "@ap/helpers";

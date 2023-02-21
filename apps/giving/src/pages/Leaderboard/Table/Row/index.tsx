@@ -1,8 +1,8 @@
+import { apHorizBlue } from "@ap/assets";
 import { Cells } from "@ap/components";
 import { appRoutes } from "@ap/constants";
 import { Link } from "react-router-dom";
 import { LeaderboardEntry } from "@ap/types/aws";
-import defaultIcon from "assets/images/angelprotocol-horiz-blu.png";
 import Amount from "./Amount";
 import projectFunds from "./projectFunds";
 
@@ -17,8 +17,8 @@ export default function Row({
   return (
     <Cells type="td" cellClass="first:pl-4 last:pr-4 py-3">
       <img
-        src={charity_logo || defaultIcon}
-        onError={(e) => e.currentTarget.setAttribute("src", defaultIcon)}
+        src={charity_logo || apHorizBlue}
+        onError={(e) => e.currentTarget.setAttribute("src", apHorizBlue)}
         loading="lazy"
         alt=""
         className={`h-16 aspect-video rounded object-contain border border-gray-l3  dark:border-none dark:bg-white p-2`}

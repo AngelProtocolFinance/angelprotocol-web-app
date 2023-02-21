@@ -1,6 +1,6 @@
+import { keplrIcon } from "@ap/assets";
 import { useErrorContext } from "@ap/contexts";
 import { useSetWallet } from "@ap/contexts/wallet-context";
-import keplrWalletLogo from "assets/icons/wallets/keplr.png";
 
 export default function KeplrConnector() {
   const { connections } = useSetWallet();
@@ -22,11 +22,7 @@ export default function KeplrConnector() {
       onClick={handleConnect}
       className="flex items-center border border-prim w-full p-4 rounded"
     >
-      <img
-        src={keplrWalletLogo}
-        alt=""
-        className="w-8 h-8 object-contain mr-4"
-      />
+      <img src={keplrIcon} alt="" className="w-8 h-8 object-contain mr-4" />
       <span className="font-heading font-bold text-lg">Keplr</span>
     </button>
   );

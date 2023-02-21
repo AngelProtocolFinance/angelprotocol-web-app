@@ -1,6 +1,6 @@
+import { alliance } from "@ap/assets";
 import { AllianceEditMeta } from "@ap/types/admin";
 import { AllianceMember } from "@ap/types/contracts";
-import defaultIcon from "assets/icons/angel-alliance.png";
 import Header from "./common/Header";
 import PreviewContainer from "./common/PreviewContainer";
 
@@ -40,7 +40,7 @@ function Member(props: AllianceMember) {
   return (
     <div className="flex items-center gap-2 p-0.5">
       <img
-        src={props.logo || defaultIcon}
+        src={props.logo || alliance}
         className="w-6 h-6 object-contain"
         alt=""
       />

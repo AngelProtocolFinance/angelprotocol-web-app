@@ -56,6 +56,7 @@
       "@ap/components/status": ["libs/components/status/src/index.ts"],
       "@ap/components/selector": ["libs/components/selector/src/index.ts"],
       "@ap/constants": ["libs/constants/src/index.ts"],
+      "@ap/assets": ["libs/assets/src/index.ts"],
       "@ap/contexts": ["libs/contexts/src/index.ts"],
       "@ap/store": ["libs/store/src/index.ts"],
       "@ap/errors": ["libs/errors/src/index.ts"],

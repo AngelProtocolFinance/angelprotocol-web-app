@@ -1,6 +1,6 @@
+import { bhmHero } from "@ap/assets";
 import { ExtLink } from "@ap/components";
 import { SUBDOMAIN_BUILDER } from "@ap/constants";
-import heroImage from "assets/images/bhm-hero.png";
 
 export default function Hero({ classes = "" }: { classes?: string }) {
   return (
@@ -14,7 +14,7 @@ export default function Hero({ classes = "" }: { classes?: string }) {
         </span>
       </h1>
       <img
-        src={heroImage}
+        src={bhmHero}
         alt=""
         className="order-3 row-span-2 self-end w-[420px] aspect-square"
       />

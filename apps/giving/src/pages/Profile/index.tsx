@@ -1,7 +1,7 @@
+import { placeholderBanner } from "@ap/assets";
 import { idParamToNum } from "@ap/helpers";
 import { useProfileQuery } from "@ap/services/aws";
 import { useParams } from "react-router-dom";
-import placeholderBanner from "assets/images/placeholder-banner.png";
 import Body from "./Body";
 import Logo from "./Logo";
 import PageError from "./PageError";

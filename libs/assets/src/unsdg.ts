@@ -1,0 +1,17 @@
+export { default as clean_water } from "./assets/icons/unsdg/clean_water.png";
+export { default as climate } from "./assets/icons/unsdg/climate.png";
+export { default as consumption } from "./assets/icons/unsdg/consumption.png";
+export { default as decent_work } from "./assets/icons/unsdg/decent_work.png";
+export { default as education } from "./assets/icons/unsdg/education.png";
+export { default as energy } from "./assets/icons/unsdg/energy.png";
+export { default as gender_equality } from "./assets/icons/unsdg/gender_equality.png";
+export { default as good_health } from "./assets/icons/unsdg/good_health.png";
+export { default as industry } from "./assets/icons/unsdg/industry.png";
+export { default as inequalities } from "./assets/icons/unsdg/inequalities.png";
+export { default as justice } from "./assets/icons/unsdg/justice.png";
+export { default as life_land } from "./assets/icons/unsdg/life_land.png";
+export { default as life_water } from "./assets/icons/unsdg/life_water.png";
+export { default as no_poverty } from "./assets/icons/unsdg/no_poverty.png";
+export { default as partnership } from "./assets/icons/unsdg/partnership.png";
+export { default as sustainable } from "./assets/icons/unsdg/sustainable_communities.png";
+export { default as zero_hunger } from "./assets/icons/unsdg/zero_hunger.png";

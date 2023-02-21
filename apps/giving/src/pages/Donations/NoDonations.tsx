@@ -1,4 +1,4 @@
-import not_found from "assets/images/not-found.png";
+import { notFound } from "@ap/assets";
 
 export default function NoDonations({ classes = "" }) {
   return (
@@ -7,7 +7,7 @@ export default function NoDonations({ classes = "" }) {
     >
       <img
         alt="someone looking for an object"
-        src={not_found}
+        src={notFound}
         className="max-sm:place-self-center sm:col-start-2 sm:row-start-1 sm:row-span-2 rounded-full w-48 object-cover object-center"
       />
       <h3 className="font-bold text-lg self-end">No donations found.</h3>

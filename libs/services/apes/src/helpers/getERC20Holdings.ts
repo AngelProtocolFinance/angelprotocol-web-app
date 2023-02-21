@@ -1,4 +1,4 @@
-import { ERC20Abi } from "@ap/constants";
+import { ERC20Abi } from "@ap/assets";
 import { formatUnits } from "@ethersproject/units";
 import { Multicall } from "ethereum-multicall";
 import { CallContext } from "ethereum-multicall/dist/esm/models";

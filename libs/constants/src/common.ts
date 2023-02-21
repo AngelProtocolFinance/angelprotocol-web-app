@@ -1,5 +1,5 @@
+import { angelGivingLogo } from "@ap/assets";
 import { LogoProps } from "@ap/components";
-import angelProtocolLogo from "assets/images/angelgiving-H-logo-beta-wht.svg";
 
 // CONFIGURE THE CONSTANTS BELOW TO DISPLAY THE DESIRED REPEATING TEXT/IMAGES THROUGHOUT THE APP
 export const APP_NAME = "Angel Giving";
@@ -14,6 +14,6 @@ export const GENERIC_ERROR_MESSAGE = `An error occurred. Please get in touch wit
 
 export const LOGO: LogoProps = {
   href: "https://angelprotocol.io/",
-  src: angelProtocolLogo,
+  src: angelGivingLogo,
   title: "Go to Marketing page",
 };

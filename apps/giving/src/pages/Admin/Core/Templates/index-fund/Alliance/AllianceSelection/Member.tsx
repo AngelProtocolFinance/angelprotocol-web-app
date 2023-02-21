@@ -1,8 +1,8 @@
+import { alliance } from "@ap/assets";
 import { Cells } from "@ap/components";
 import Icon from "@ap/components/icon";
 import { AllianceMemberWithFlags } from "@ap/slices/admin";
 import React from "react";
-import defaultIcon from "assets/icons/angel-alliance.png";
 import useMember from "./useMember";
 
 export default function Member(props: AllianceMemberWithFlags) {
@@ -22,7 +22,7 @@ export default function Member(props: AllianceMemberWithFlags) {
       }`}
     >
       <img
-        src={props.edits?.logo || props.logo || defaultIcon}
+        src={props.edits?.logo || props.logo || alliance}
         alt=""
         className="w-8 h-8 object-contain"
       />

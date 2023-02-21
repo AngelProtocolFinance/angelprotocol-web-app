@@ -4,16 +4,6 @@
   "sourceRoot": "libs/constants/src",
   "projectType": "library",
   "targets": {
-    "build": {
-      "executor": "@nrwl/js:swc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/libs/constants",
-        "tsConfig": "libs/constants/tsconfig.lib.json",
-        "assets": ["libs/constants/src/assets","libs/constants/src/abi/ERC20.json"],
-        "swcrc": "configs/lib.swcrc"
-      }
-    },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],

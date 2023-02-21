@@ -1,7 +1,4 @@
-import haloIcon from "./assets/tokens/halo_outline.png";
-import junoIcon from "./assets/tokens/juno.svg";
-import unknownTokenIcon from "./assets/tokens/token.svg";
-import usdcIcon from "./assets/tokens/usdc.svg";
+import { haloIcon, junoIcon, tokenIcon, usdcIcon } from "@ap/assets";
 import { IS_TEST } from "./env";
 
 export enum denoms {
@@ -40,6 +37,6 @@ const _tokens: { [key in denoms]: CoinAsset } = {
 
 export const tokens: { [index: string]: CoinAsset } = new Proxy(_tokens, {
   get(target, key: denoms) {
-    return target[key] ?? { icon: unknownTokenIcon, symbol: "Token" };
+    return target[key] ?? { icon: tokenIcon, symbol: "Token" };
   },
 });
