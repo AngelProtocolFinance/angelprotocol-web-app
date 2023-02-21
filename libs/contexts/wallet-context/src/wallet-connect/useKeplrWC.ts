@@ -1,5 +1,5 @@
 import { chainIds } from "@ap/constants";
-import { useErrorContext } from "@ap/contexts/error-context";
+import { useErrorContext } from "@ap/errors";
 import { connector as ctor, getKeplrWCClient } from "@ap/helpers/keplr";
 import { KeplrQRCodeModalV1 } from "@keplr-wallet/wc-qrcode-modal";
 import { useEffect, useState } from "react";

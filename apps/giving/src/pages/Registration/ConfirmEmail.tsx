@@ -1,6 +1,6 @@
 import Prompt from "@ap/components/prompt";
 import { useModalContext } from "@ap/contexts";
-import { useErrorContext } from "@ap/contexts/error-context";
+import { useErrorContext } from "@ap/errors";
 import { handleMutationResult } from "@ap/helpers";
 import { useRequestEmailMutation } from "@ap/services/aws";
 import { Navigate, useLocation } from "react-router-dom";

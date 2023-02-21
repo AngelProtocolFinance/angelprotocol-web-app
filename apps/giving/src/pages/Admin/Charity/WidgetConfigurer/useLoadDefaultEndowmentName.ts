@@ -1,4 +1,4 @@
-import { useErrorContext } from "@ap/contexts/error-context";
+import { useErrorContext } from "@ap/errors";
 import { useLazyProfileQuery } from "@ap/services/aws";
 import { useEffect } from "react";
 

@@ -1,5 +1,5 @@
 import Icon from "@ap/components/icon";
-import { useErrorContext } from "@ap/contexts/error-context";
+import { useErrorContext } from "@ap/errors";
 import { useNewsletterSubscribeMutation } from "@ap/services/aws";
 import { ErrorMessage } from "@hookform/error-message";
 import { yupResolver } from "@hookform/resolvers/yup";

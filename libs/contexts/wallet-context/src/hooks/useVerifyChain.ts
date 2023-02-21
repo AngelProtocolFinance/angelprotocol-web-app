@@ -1,5 +1,5 @@
 import { EXPECTED_NETWORK_TYPE } from "@ap/constants";
-import { useErrorContext } from "@ap/contexts/error-context";
+import { useErrorContext } from "@ap/errors";
 import { WalletDisconnectedError, WrongNetworkError } from "@ap/errors";
 import { useCallback, useEffect } from "react";
 import { Chain } from "@ap/types/aws";

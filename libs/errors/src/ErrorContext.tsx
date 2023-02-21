@@ -1,11 +1,6 @@
 import Prompt from "@ap/components/prompt";
 import { GENERIC_ERROR_MESSAGE } from "@ap/constants";
 import { useModalContext } from "@ap/contexts";
-import {
-  APError,
-  AP_ERROR_DISCRIMINATOR,
-  WalletNotInstalledError,
-} from "@ap/errors";
 import { logger } from "@ap/helpers";
 import {
   PropsWithChildren,
@@ -14,6 +9,11 @@ import {
   useContext,
 } from "react";
 import InstallWallet from "./InstallWalletContent";
+import {
+  APError,
+  AP_ERROR_DISCRIMINATOR,
+  WalletNotInstalledError,
+} from "./errors";
 
 type State = { handleError: (error: any, displayMessage?: string) => void };
 

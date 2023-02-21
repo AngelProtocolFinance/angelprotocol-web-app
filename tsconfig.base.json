@@ -73,9 +73,6 @@
       "@ap/store": ["libs/store/src/index.ts"],
       "@ap/errors": ["libs/errors/src/index.ts"],
       "@ap/contexts/admin": ["libs/contexts/admin/src/index.ts"],
-      "@ap/contexts/error-context": [
-        "libs/contexts/error-context/src/index.ts"
-      ],
       "@ap/contexts/wallet-context": [
         "libs/contexts/wallet-context/src/index.ts"
       ],
