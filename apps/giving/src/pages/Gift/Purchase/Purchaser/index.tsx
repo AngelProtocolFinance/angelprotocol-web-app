@@ -9,7 +9,7 @@ import Form from "./Form";
 import { schema } from "./schema";
 
 export default function Purchaser({
-  classes = "",
+  classes,
   wallet,
   ...state
 }: WithWallet<FormStep> & { classes?: string }) {

@@ -5,7 +5,7 @@ import { AccountType } from "@ap/types/contracts";
 import Field from "./Field";
 
 type Props = { classes?: string; type: AccountType };
-export default function Fields({ classes = "", type }: Props) {
+export default function Fields({ type }: Props) {
   const { watch } = useFormContext<FV>();
   const { fields, remove } = useFieldArray<FV>({
     name: "allocations", // unique name for your Field Array

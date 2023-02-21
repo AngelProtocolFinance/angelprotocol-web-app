@@ -277,7 +277,7 @@ const getContext = createContext<State>(initialState);
 const setContext = createContext<Setters>({
   connections: [],
   disconnect: async () => {},
-  switchChain: async (_) => {},
+  switchChain: async () => {},
 });
 
 export const useSetWallet = () => useContext(setContext);
