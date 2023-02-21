@@ -1,4 +1,5 @@
-import { BookmarkBtn, Tooltip } from "@ap/components";
+import { Tooltip } from "@ap/components";
+import BookmarkBtn from "@ap/components/bookmark-btn";
 import Icon from "@ap/components/icon";
 import { appRoutes, unsdgs } from "@ap/constants";
 import { isEmpty } from "@ap/helpers";

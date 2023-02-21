@@ -1,5 +1,5 @@
 import { angelGivingLogo } from "@ap/assets";
-import ExtLink from "../../src/ExtLink";
+import { ExtLink } from "@ap/components";
 
 export type LogoProps = {
   href?: string;

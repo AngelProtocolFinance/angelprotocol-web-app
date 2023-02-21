@@ -1,5 +1,3 @@
-export { default as ActivityCountries } from "./ActivityCountries";
-export { default as BookmarkBtn } from "./BookmarkBtn";
 export { default as Breadcrumbs } from "./Breadcrumbs";
 export { default as ContentLoader } from "./ContentLoader";
 export { default as ExtLink } from "./ExtLink";

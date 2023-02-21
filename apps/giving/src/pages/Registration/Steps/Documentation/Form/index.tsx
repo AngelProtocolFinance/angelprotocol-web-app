@@ -1,8 +1,8 @@
-import { ActivityCountries, ExtLink } from "@ap/components";
+import { ExtLink } from "@ap/components";
 import CountrySelector from "@ap/components/country-selector";
 import { CheckField, Field, Label } from "@ap/components/form";
 import { FileDropzone, LoadText } from "@ap/components/registration";
-import { Selector } from "@ap/components/selector";
+import { AcitivityCountries, Selector } from "@ap/components/selector";
 import { APP_NAME, TERMS_OF_USE, unsdgs } from "@ap/constants";
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "../types";
@@ -68,7 +68,7 @@ export default function Form() {
         }}
       />
       <Label className="mt-6 mb-2">Active countries</Label>
-      <ActivityCountries<FV, "activeInCountries"> name="activeInCountries" />
+      <AcitivityCountries<FV, "activeInCountries"> name="activeInCountries" />
 
       <Separator classes="my-8" />
 

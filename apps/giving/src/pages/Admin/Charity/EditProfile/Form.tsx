@@ -1,10 +1,9 @@
-import { ActivityCountries } from "@ap/components";
 import CountrySelector from "@ap/components/country-selector";
 import { Field, Label } from "@ap/components/form";
 import Icon from "@ap/components/icon";
 import ImgEditor from "@ap/components/img-editor";
 import { RichTextEditor } from "@ap/components/rich-text";
-import { Selector } from "@ap/components/selector";
+import { AcitivityCountries, Selector } from "@ap/components/selector";
 import { appRoutes, unsdgs } from "@ap/constants";
 import { PropsWithChildren } from "react";
 import { Link } from "react-router-dom";
@@ -124,7 +123,7 @@ export default function Form() {
           }}
         />
         <Label className="-mb-4">Active countries</Label>
-        <ActivityCountries<FV, "active_in_countries">
+        <AcitivityCountries<FV, "active_in_countries">
           name="active_in_countries"
           classes={{
             container: "bg-white dark:bg-blue-d6 px-4 py-3",

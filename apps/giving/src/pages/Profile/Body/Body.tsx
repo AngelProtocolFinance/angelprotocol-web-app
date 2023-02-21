@@ -1,4 +1,5 @@
-import { BookmarkBtn, Breadcrumbs, ExtLink, Seo } from "@ap/components";
+import { Breadcrumbs, ExtLink, Seo } from "@ap/components";
+import BookmarkBtn from "@ap/components/bookmark-btn";
 import Icon from "@ap/components/icon";
 import { APP_NAME, DAPP_DOMAIN, appRoutes } from "@ap/constants";
 import { useProfileContext } from "../ProfileContext";

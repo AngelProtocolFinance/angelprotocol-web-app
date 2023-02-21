@@ -1,6 +1,6 @@
 import { placeholderBanner } from "@ap/assets";
+import { Loader } from "@ap/components";
 import React, { useRef, useState } from "react";
-import Loader from "../../src/Loader";
 
 export default function ImageWrapper({
   className,
