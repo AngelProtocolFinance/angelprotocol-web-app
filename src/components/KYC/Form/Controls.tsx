@@ -65,7 +65,12 @@ export default function Controls({
           Continue
         </button>
       ) : (
-        <button className="btn-orange btn-donate" type="button" onClick={skip}>
+        <button
+          className="btn-orange btn-donate"
+          type="button"
+          onClick={skip}
+          disabled={!hasAgreedToTerms}
+        >
           Continue
         </button>
       )}
