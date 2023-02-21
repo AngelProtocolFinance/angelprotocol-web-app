@@ -1,4 +1,4 @@
-import { KadoModal } from "@ap/components";
+import KadoModal from "@ap/components/kado-modal";
 import { useModalContext } from "@ap/contexts";
 import { DonationState, SliceState } from "@ap/slices/donation";
 import { useCallback } from "react";

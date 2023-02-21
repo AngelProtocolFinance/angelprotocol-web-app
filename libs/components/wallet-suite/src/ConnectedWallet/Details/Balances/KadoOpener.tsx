@@ -1,4 +1,4 @@
-import { KadoModal } from "@ap/components";
+import KadoModal from "@ap/components/kado-modal";
 import { useModalContext } from "@ap/contexts";
 
 export default function KadoOpener() {

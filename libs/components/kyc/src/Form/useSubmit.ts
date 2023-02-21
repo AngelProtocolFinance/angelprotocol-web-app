@@ -1,4 +1,3 @@
-import { Popup } from "@ap/components";
 import Prompt from "@ap/components/prompt";
 import { useModalContext } from "@ap/contexts";
 import { useRequestReceiptMutation } from "@ap/services/apes";
@@ -31,8 +30,9 @@ export default function useSubmit(props: Props) {
       });
 
       if ("error" in response) {
-        showModal(Popup, {
-          message: "Failed to send receipt request. Please try again later.",
+        showModal(Prompt, {
+          type: "error",
+          children: "Failed to send receipt request. Please try again later.",
         });
         return;
       }

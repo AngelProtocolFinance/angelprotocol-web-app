@@ -1,4 +1,4 @@
-import { Popup } from "@ap/components";
+import Prompt from "@ap/components/prompt";
 import { useModalContext } from "@ap/contexts";
 import { useErrorContext } from "@ap/contexts";
 import { handleMutationResult } from "@ap/helpers";
@@ -44,7 +44,10 @@ export default function ConfirmEmail({ classes = "" }: { classes?: string }) {
             await requestEmail({ uuid: reference, email }),
             handleError,
             () => {
-              showModal(Popup, { message: "Email verification sent!" });
+              showModal(Prompt, {
+                type: "success",
+                children: "Email verification sent!",
+              });
             }
           );
         }}

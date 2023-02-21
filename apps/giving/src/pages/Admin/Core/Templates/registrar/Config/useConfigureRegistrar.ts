@@ -1,4 +1,4 @@
-import { Popup } from "@ap/components";
+import Prompt from "@ap/components/prompt";
 import { useModalContext } from "@ap/contexts";
 import { useAdminResources } from "@ap/contexts/admin";
 import { useGetWallet } from "@ap/contexts/wallet-context";
@@ -34,7 +34,7 @@ export default function useConfigureRegistrar() {
     const diff = getPayloadDiff(initialConfigPayload, data);
     const diffEntries = Object.entries(diff) as [Key, Value][];
     if (diffEntries.length <= 0) {
-      showModal(Popup, { message: "no changes detected" });
+      showModal(Prompt, { children: "no changes detected" });
       return;
     }
     //convert presentational decimal to floating point string

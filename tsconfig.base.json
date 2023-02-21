@@ -43,6 +43,7 @@
         "libs/components/bookmark-btn/src/index.ts"
       ],
       "@ap/components/header-btn": ["libs/components/header-btn/src/index.ts"],
+      "@ap/components/kado-modal": ["libs/components/kado-modal/src/index.ts"],
       "@ap/components/steps": ["libs/components/steps/src/index.tsx"],
       "@ap/components/token-field": [
         "libs/components/token-field/src/index.ts"

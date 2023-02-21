@@ -1,0 +1,16 @@
+{
+  "name": "components-kado-modal",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/components/kado-modal/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/components/kado-modal/**/*.{ts,tsx,js,jsx}"]
+      }
+    }
+  }
+}

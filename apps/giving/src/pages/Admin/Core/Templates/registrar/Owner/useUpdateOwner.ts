@@ -1,4 +1,4 @@
-import { Popup } from "@ap/components";
+import Prompt from "@ap/components/prompt";
 import { useModalContext } from "@ap/contexts";
 import { useAdminResources } from "@ap/contexts/admin";
 import { useGetWallet } from "@ap/contexts/wallet-context";
@@ -21,7 +21,7 @@ export default function useUpdateOwner() {
   async function updateOwner(data: RegistrarOwnerValues) {
     //check for changes
     if (data.initialOwner === data.new_owner) {
-      showModal(Popup, { message: "no changes detected" });
+      showModal(Prompt, { children: "no changes detected" });
       return;
     }
 

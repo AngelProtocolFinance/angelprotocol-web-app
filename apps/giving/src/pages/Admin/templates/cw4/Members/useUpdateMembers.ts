@@ -1,4 +1,4 @@
-import { Popup } from "@ap/components";
+import Prompt from "@ap/components/prompt";
 import { useModalContext } from "@ap/contexts";
 import { useAdminResources } from "@ap/contexts/admin";
 import { useGetWallet } from "@ap/contexts/wallet-context";
@@ -44,7 +44,7 @@ export default function useUpdateMembers() {
     );
 
     if (to_remove.length <= 0 && to_add.length <= 0) {
-      showModal(Popup, { message: "No member changes" });
+      showModal(Prompt, { type: "error", children: "No member changes" });
       return;
     }
     const cw3Contract = new CW3(wallet, cw3);

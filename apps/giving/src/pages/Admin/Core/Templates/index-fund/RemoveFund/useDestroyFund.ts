@@ -1,4 +1,4 @@
-import { Popup } from "@ap/components";
+import Prompt from "@ap/components/prompt";
 import { useModalContext } from "@ap/contexts";
 import { useAdminResources } from "@ap/contexts/admin";
 import { useGetWallet } from "@ap/contexts/wallet-context";
@@ -19,7 +19,7 @@ export default function useDestroyFund() {
 
   async function destroyFund(data: FundDestroyValues) {
     if (data.fundId === "") {
-      showModal(Popup, { message: "Please select fund to remove" });
+      showModal(Prompt, { children: "Please select fund to remove" });
       return;
     }
     const indexFundContract = new IndexFund(wallet);

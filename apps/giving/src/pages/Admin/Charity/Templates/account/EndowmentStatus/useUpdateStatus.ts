@@ -1,4 +1,4 @@
-import { Popup } from "@ap/components";
+import Prompt from "@ap/components/prompt";
 import { useModalContext } from "@ap/contexts";
 import { useAdminResources } from "@ap/contexts/admin";
 import { useGetWallet } from "@ap/contexts/wallet-context";
@@ -23,16 +23,18 @@ export default function useUpdateStatus() {
 
   async function updateStatus(data: EndowmentUpdateValues) {
     if (!data.prevStatus) {
-      showModal(Popup, { message: "Endowment not found" });
+      showModal(Prompt, { children: "Endowment not found" });
       return;
     } else if (data.prevStatus === "Closed") {
-      showModal(Popup, { message: "Endowment is closed and can't be changed" });
+      showModal(Prompt, {
+        children: "Endowment is closed and can't be changed",
+      });
       //only review team can change status from "Inactive"
       //NOTE: if this template will be used other than Charity: further check authority
     } else {
       const prevStatusNum = endowmentStatus[data.prevStatus];
       if (+data.status === prevStatusNum) {
-        showModal(Popup, { message: "New status same as previous status" });
+        showModal(Prompt, { children: "New status same as previous status" });
         return;
       }
     }

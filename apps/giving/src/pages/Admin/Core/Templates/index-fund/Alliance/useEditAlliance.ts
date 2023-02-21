@@ -1,4 +1,4 @@
-import { Popup } from "@ap/components";
+import Prompt from "@ap/components/prompt";
 import { useModalContext } from "@ap/contexts";
 import { useAdminResources } from "@ap/contexts/admin";
 import { useGetWallet } from "@ap/contexts/wallet-context";
@@ -31,7 +31,7 @@ export default function useEditAlliance() {
     );
 
     if (markedMembers.length <= 0) {
-      showModal(Popup, { message: "No member changes" });
+      showModal(Prompt, { children: "No member changes" });
       return;
     }
 

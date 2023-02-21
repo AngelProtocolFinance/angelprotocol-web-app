@@ -1,3 +1,4 @@
+import { IFrame } from "@ap/components";
 import Icon from "@ap/components/icon";
 import { KADO_API_KEY, chainIDs } from "@ap/constants";
 import { useModalContext } from "@ap/contexts";
@@ -7,7 +8,6 @@ import { invalidateApesTags } from "@ap/services/apes";
 import { Dialog } from "@headlessui/react";
 import { useCallback } from "react";
 import { useDispatch } from "react-redux";
-import IFrame from "./IFrame";
 
 type KADO_NETWORK_VALUES = "ethereum" | "juno" | "terra";
 

@@ -1,4 +1,4 @@
-import { Popup } from "@ap/components";
+import Prompt from "@ap/components/prompt";
 import { useModalContext } from "@ap/contexts";
 import { MouseEventHandler } from "react";
 import { DropzoneOptions } from "react-dropzone";
@@ -60,7 +60,7 @@ export default function useImgEditor<T extends FieldValues, K extends keyof T>({
 
   function handleCropResult(blob: Blob | null, originalFile: File) {
     if (!blob) {
-      showModal(Popup, { message: "Failed to crop image" });
+      showModal(Prompt, { children: "Failed to crop image", type: "error" });
       return;
     }
     const cropped = URL.createObjectURL(blob);
