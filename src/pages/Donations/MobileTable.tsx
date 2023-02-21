@@ -12,13 +12,13 @@ export default function MobileTable({ donations, classes = "" }: TableProps) {
 
   return (
     <div className={`${classes} border border-prim rounded`}>
-      <div className="grid items-center grid-cols-8 uppercase text-xs font-bold bg-orange-l6 dark:bg-blue-d7 border-b border-prim divide-x divide-prim rounded">
-        <div />
-        <div className="col-start-2 col-span-4 p-4">Recipient</div>
-        <div className="col-span-3 p-4">Date</div>
+      <div className="grid items-center grid-cols-[auto_1fr_auto] h-12 uppercase text-xs font-bold bg-orange-l6 dark:bg-blue-d7 border-b border-prim divide-x divide-prim rounded">
+        <div className="w-12" />
+        <div className="p-4">Recipient</div>
+        <div className="p-4 w-28 text-center">Date</div>
       </div>
 
-      <div className="col-span-full text-sm">
+      <div className="text-sm">
         {sorted.map((row, index) => (
           <Disclosure
             key={index}
@@ -30,17 +30,19 @@ export default function MobileTable({ donations, classes = "" }: TableProps) {
                 <Disclosure.Button
                   className={`${
                     open ? "bg-orange-l5 dark:bg-blue-d4" : ""
-                  } w-full grid grid-cols-8 border-b last:border-0 border-prim divide-x divide-prim`}
+                  } w-full h-12 grid grid-cols-[auto_1fr_auto] border-b last:border-0 border-prim divide-x divide-prim`}
                 >
                   <DrawerIcon
-                    size={25.5}
-                    className={`${open ? "text-orange" : ""} place-self-center`}
+                    size={24}
+                    className={`${
+                      open ? "text-orange" : ""
+                    } w-12 place-self-center`}
                     isOpen={open}
                   />
-                  <p className="text-sm col-span-4 p-4 text-left h-full">
+                  <p className="text-sm p-4 text-left h-full truncate">
                     {row.charityName}
                   </p>
-                  <div className="col-span-3 p-4 text-left text-sm">
+                  <div className="p-4 text-center text-sm w-28">
                     {new Date(row.date).toLocaleDateString()}
                   </div>
                 </Disclosure.Button>
@@ -72,7 +74,7 @@ export default function MobileTable({ donations, classes = "" }: TableProps) {
                         })
                       }
                     >
-                      <Icon type="FatArrowDownload" className=" text-2xl" />
+                      <Icon type="FatArrowDownload" className="text-2xl" />
                     </button>
                   </Row>
                 </Disclosure.Panel>
