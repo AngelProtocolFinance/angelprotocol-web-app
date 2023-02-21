@@ -1,6 +1,5 @@
 export * from "./gov/gov";
 export * from "./gov/placeholders";
-export * from "./gov/queriers";
 export * from "./lp";
 export * from "./lp/placeholders";
 export * from "./queryContract/index";
