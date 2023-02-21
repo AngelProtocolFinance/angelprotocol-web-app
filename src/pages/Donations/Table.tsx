@@ -16,14 +16,16 @@ export default function Table({ donations, classes = "" }: TableProps) {
   const showKYCForm = useKYC();
 
   return (
-    <table className={`${classes} w-full text-sm rounded border border-prim`}>
+    <table
+      className={`${classes} w-full text-sm rounded border border-separate border-spacing-0 border-prim`}
+    >
       <TableSection
         type="thead"
-        rowClass="bg-orange-l6 dark:bg-blue-d7 rounded divide-x divide-prim"
+        rowClass="bg-orange-l6 dark:bg-blue-d7 divide-x divide-prim"
       >
         <Cells
           type="th"
-          cellClass="px-3 py-4 text-xs uppercase font-semibold text-left"
+          cellClass="px-3 py-4 text-xs uppercase font-semibold text-left first:rounded-tl last:rounded-tr"
         >
           <HeaderButton
             onClick={handleHeaderClick("charityName")}
@@ -73,10 +75,10 @@ export default function Table({ donations, classes = "" }: TableProps) {
       </TableSection>
       <TableSection
         type="tbody"
-        rowClass="even:bg-orange-l6 dark:even:bg-blue-d7 divide-x divide-prim border-t border-prim"
+        rowClass="even:bg-orange-l6 dark:even:bg-blue-d7 divide-x divide-prim"
       >
         {sorted.map((row) => (
-          <Cells key={row.hash} type="td" cellClass="p-3">
+          <Cells key={row.hash} type="td" cellClass="p-3 border-t border-prim">
             <Link
               to={`${appRoutes.profile}/${row.id}`}
               className="flex items-center justify-between gap-1 cursor-pointer text-sm hover:underline"
