@@ -11,19 +11,6 @@
       "options": {
         "lintFilePatterns": ["libs/components/prompt/**/*.{ts,tsx,js,jsx}"]
       }
-    },
-    "build": {
-      "executor": "@nrwl/rollup:rollup",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/libs/components/prompt",
-        "tsConfig": "libs/components/prompt/tsconfig.lib.json",
-        "project": "libs/components/prompt/package.json",
-        "entryFile": "libs/components/prompt/src/index.ts",
-        "external": ["react/jsx-runtime"],
-        "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
-        "compiler": "swc"
-      }
     }
   }
 }

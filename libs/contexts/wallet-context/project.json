@@ -13,20 +13,6 @@
           "libs/contexts/wallet-context/**/*.{ts,tsx,js,jsx}"
         ]
       }
-    },
-    "build": {
-      "executor": "@nrwl/rollup:rollup",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/libs/contexts/wallet-context",
-        "tsConfig": "libs/contexts/wallet-context/tsconfig.lib.json",
-        "project": "libs/contexts/wallet-context/package.json",
-        "entryFile": "libs/contexts/wallet-context/src/index.ts",
-        "external": ["react/jsx-runtime"],
-        "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
-        "compiler": "swc",
-        "assets": ["libs/contexts/wallet-context/src/assets"]
-      }
     }
   }
 }

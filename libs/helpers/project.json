@@ -4,16 +4,6 @@
   "sourceRoot": "libs/helpers/src",
   "projectType": "library",
   "targets": {
-    "build": {
-      "executor": "@nrwl/js:swc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/libs/helpers",
-        "main": "libs/helpers/src/index.ts",
-        "tsConfig": "libs/helpers/tsconfig.lib.json",
-        "swcrc": "configs/lib.swcrc"
-      }
-    },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],

@@ -11,20 +11,6 @@
       "options": {
         "lintFilePatterns": ["libs/errors/**/*.{ts,tsx,js,jsx}"]
       }
-    },
-    "build": {
-      "executor": "@nrwl/rollup:rollup",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/libs/errors",
-        "tsConfig": "libs/errors/tsconfig.lib.json",
-        "project": "libs/errors/package.json",
-        "entryFile": "libs/errors/src/index.ts",
-        "external": ["react/jsx-runtime"],
-        "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
-        "compiler": "swc"
-      }
     }
-    
   }
 }

@@ -9,21 +9,9 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/components/country-selector/**/*.{ts,tsx,js,jsx}"]
-      }
-    },
-    "build": {
-      "executor": "@nrwl/rollup:rollup",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/libs/components/country-selector",
-        "tsConfig": "libs/components/country-selector/tsconfig.lib.json",
-        "project": "libs/components/country-selector/package.json",
-        "entryFile": "libs/components/country-selector/src/index.tsx",
-        "external": ["react/jsx-runtime"],
-        "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
-        "compiler": "swc",
-        "assets":["libs/components/country-selector/src/assets"]
+        "lintFilePatterns": [
+          "libs/components/country-selector/**/*.{ts,tsx,js,jsx}"
+        ]
       }
     }
   }

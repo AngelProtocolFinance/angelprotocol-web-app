@@ -4,16 +4,6 @@
   "sourceRoot": "libs/types/widget/src",
   "projectType": "library",
   "targets": {
-    "build": {
-      "executor": "@nrwl/js:swc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/libs/types/widget",
-        "main": "libs/types/widget/src/index.ts",
-        "tsConfig": "libs/types/widget/tsconfig.lib.json",
-        "swcrc": "configs/lib.swcrc"
-      }
-    },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],

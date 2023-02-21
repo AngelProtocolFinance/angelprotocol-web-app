@@ -4,16 +4,6 @@
   "sourceRoot": "libs/slices/gift/src",
   "projectType": "library",
   "targets": {
-    "build": {
-      "executor": "@nrwl/js:swc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/libs/slices/gift",
-        "main": "libs/slices/gift/src/index.ts",
-        "tsConfig": "libs/slices/gift/tsconfig.lib.json",
-        "swcrc": "configs/lib.swcrc"
-      }
-    },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],

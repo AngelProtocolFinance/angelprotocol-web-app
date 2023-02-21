@@ -4,16 +4,6 @@
   "sourceRoot": "libs/slices/admin/src",
   "projectType": "library",
   "targets": {
-    "build": {
-      "executor": "@nrwl/js:swc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/libs/slices/admin",
-        "main": "libs/slices/admin/src/index.ts",
-        "tsConfig": "libs/slices/admin/tsconfig.lib.json",
-        "swcrc": "configs/lib.swcrc"
-      }
-    },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],

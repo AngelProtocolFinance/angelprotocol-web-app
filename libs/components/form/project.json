@@ -11,19 +11,6 @@
       "options": {
         "lintFilePatterns": ["libs/components/form/**/*.{ts,tsx,js,jsx}"]
       }
-    },
-    "build": {
-      "executor": "@nrwl/rollup:rollup",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/libs/components/form",
-        "tsConfig": "libs/components/form/tsconfig.lib.json",
-        "project": "libs/components/form/package.json",
-        "entryFile": "libs/components/form/src/index.ts",
-        "external": ["react/jsx-runtime"],
-        "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
-        "compiler": "swc"
-      }
     }
   }
 }

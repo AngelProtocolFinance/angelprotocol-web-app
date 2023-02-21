@@ -13,19 +13,6 @@
           "libs/hooks/use-cosmos-tx-sender/**/*.{ts,tsx,js,jsx}"
         ]
       }
-    },
-    "build": {
-      "executor": "@nrwl/rollup:rollup",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/libs/hooks/use-cosmos-tx-sender",
-        "tsConfig": "libs/hooks/use-cosmos-tx-sender/tsconfig.lib.json",
-        "project": "libs/hooks/use-cosmos-tx-sender/package.json",
-        "entryFile": "libs/hooks/use-cosmos-tx-sender/src/index.ts",
-        "external": ["react/jsx-runtime"],
-        "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
-        "compiler": "swc"
-      }
     }
   }
 }

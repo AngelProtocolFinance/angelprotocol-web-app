@@ -11,19 +11,6 @@
       "options": {
         "lintFilePatterns": ["libs/components/admin/**/*.{ts,tsx,js,jsx}"]
       }
-    },
-    "build": {
-      "executor": "@nrwl/rollup:rollup",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/libs/components/admin",
-        "tsConfig": "libs/components/admin/tsconfig.lib.json",
-        "project": "libs/components/admin/package.json",
-        "entryFile": "libs/components/admin/src/index.ts",
-        "external": ["react/jsx-runtime"],
-        "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
-        "compiler": "swc"
-      }
     }
   }
 }

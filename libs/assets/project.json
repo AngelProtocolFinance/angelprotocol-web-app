@@ -4,16 +4,6 @@
   "sourceRoot": "libs/assets/src",
   "projectType": "library",
   "targets": {
-    "build": {
-      "executor": "@nrwl/js:swc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/libs/assets",
-        "tsConfig": "libs/assets/tsconfig.lib.json",
-        "assets": ["libs/assets/src/assets"],
-        "swcrc": "configs/lib.swcrc"
-      }
-    },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],

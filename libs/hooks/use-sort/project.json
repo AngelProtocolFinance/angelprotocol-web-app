@@ -11,19 +11,6 @@
       "options": {
         "lintFilePatterns": ["libs/hooks/use-sort/**/*.{ts,tsx,js,jsx}"]
       }
-    },
-    "build": {
-      "executor": "@nrwl/rollup:rollup",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/libs/hooks/use-sort",
-        "tsConfig": "libs/hooks/use-sort/tsconfig.lib.json",
-        "project": "libs/hooks/use-sort/package.json",
-        "entryFile": "libs/hooks/use-sort/src/index.ts",
-        "external": ["react/jsx-runtime"],
-        "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
-        "compiler": "swc"
-      }
     }
   }
 }

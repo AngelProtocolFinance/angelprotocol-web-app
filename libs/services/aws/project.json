@@ -4,16 +4,6 @@
   "sourceRoot": "libs/services/aws/src",
   "projectType": "library",
   "targets": {
-    "build": {
-      "executor": "@nrwl/js:swc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/libs/services/aws",
-        "main": "libs/services/aws/src/index.ts",
-        "tsConfig": "libs/services/aws/tsconfig.lib.json",
-        "swcrc": "configs/lib.swcrc"
-      }
-    },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],

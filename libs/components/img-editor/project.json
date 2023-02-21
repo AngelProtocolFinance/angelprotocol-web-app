@@ -11,19 +11,6 @@
       "options": {
         "lintFilePatterns": ["libs/components/img-editor/**/*.{ts,tsx,js,jsx}"]
       }
-    },
-    "build": {
-      "executor": "@nrwl/rollup:rollup",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/libs/components/img-editor",
-        "tsConfig": "libs/components/img-editor/tsconfig.lib.json",
-        "project": "libs/components/img-editor/package.json",
-        "entryFile": "libs/components/img-editor/src/index.ts",
-        "external": ["react/jsx-runtime"],
-        "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
-        "compiler": "swc"
-      }
     }
   }
 }

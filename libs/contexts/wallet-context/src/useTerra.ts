@@ -1,3 +1,4 @@
+import { terraExtensionIcon } from "@ap/assets";
 import { IS_TEST, chainIDs } from "@ap/constants";
 import {
   ManualChainSwitchRequiredError,
@@ -13,7 +14,6 @@ import {
 } from "@terra-money/wallet-provider";
 import { Connection, ProviderId, ProviderInfo } from "./types";
 import { BaseChain } from "@ap/types/aws";
-import station_icon from "./assets/terra-extension.jpg";
 
 const SUPPORTED_CHAINS: BaseChain[] = IS_TEST
   ? [{ chain_id: chainIDs.terraTest, chain_name: "Terra Testnet" }]
@@ -66,7 +66,7 @@ export default function useTerra() {
 
   const wcConnection: Connection = {
     name: "Terra Station Mobile",
-    logo: station_icon,
+    logo: terraExtensionIcon,
     async connect() {
       connect(ConnectType.WALLETCONNECT);
     },

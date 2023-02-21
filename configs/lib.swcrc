@@ -14,12 +14,13 @@
     "externalHelpers": true,
     "loose": true
   },
+  "minify": true,
   "module": {
     "type": "commonjs",
     "strict": true,
     "noInterop": true
   },
-  "sourceMaps": true,
+  "sourceMaps": false,
   "exclude": [
     "jest.config.ts",
     ".*\\.spec.tsx?$",

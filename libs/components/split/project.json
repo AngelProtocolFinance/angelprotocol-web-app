@@ -11,19 +11,6 @@
       "options": {
         "lintFilePatterns": ["libs/components/split/**/*.{ts,tsx,js,jsx}"]
       }
-    },
-    "build": {
-      "executor": "@nrwl/rollup:rollup",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/libs/components/split",
-        "tsConfig": "libs/components/split/tsconfig.lib.json",
-        "project": "libs/components/split/package.json",
-        "entryFile": "libs/components/split/src/index.ts",
-        "external": ["react/jsx-runtime"],
-        "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
-        "compiler": "swc"
-      }
     }
   }
 }

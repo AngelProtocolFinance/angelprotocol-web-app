@@ -1,11 +1,13 @@
+import {
+  binanceIcon,
+  keplrIcon,
+  metamaskIcon,
+  tokenIcon,
+  xdefiIcon,
+} from "@ap/assets";
 import { EXPECTED_NETWORK_TYPE, IS_TEST, chainIDs } from "@ap/constants";
 import { WithoutInstallers } from "./types";
 import { BaseChain, Chain } from "@ap/types/aws";
-import binanceWalletIcon from "./assets/binance.png";
-import keplrIcon from "./assets/keplr.png";
-import metamaskIcon from "./assets/metamask.png";
-import tokenLogo from "./assets/token.svg";
-import xdefiIcon from "./assets/xdefi.jpg";
 
 export const WALLET_METADATA: {
   [key in WithoutInstallers]: {
@@ -15,7 +17,7 @@ export const WALLET_METADATA: {
   };
 } = {
   "binance-wallet": {
-    logo: binanceWalletIcon,
+    logo: binanceIcon,
     installUrl: "https://www.bnbchain.org/en/binance-wallet",
     name: "Binance Wallet",
   },
@@ -58,7 +60,7 @@ export const placeholderChain: Chain = {
   native_currency: {
     type: "placeholder",
     symbol: "NATIVE",
-    logo: tokenLogo,
+    logo: tokenIcon,
     decimals: 18,
     balance: 0,
     approved: true,
@@ -73,7 +75,7 @@ export const placeholderChain: Chain = {
     {
       type: "placeholder",
       symbol: "TOKEN",
-      logo: tokenLogo,
+      logo: tokenIcon,
       decimals: 18,
       balance: 0,
       approved: true,

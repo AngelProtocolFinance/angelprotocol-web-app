@@ -12,19 +12,7 @@
         "lintFilePatterns": ["libs/components/copier/**/*.{ts,tsx,js,jsx}"]
       }
     },
-    "build": {
-      "executor": "@nrwl/rollup:rollup",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/libs/components/copier",
-        "tsConfig": "libs/components/copier/tsconfig.lib.json",
-        "project": "libs/components/copier/package.json",
-        "entryFile": "libs/components/copier/src/index.ts",
-        "external": ["react/jsx-runtime"],
-        "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
-        "compiler": "swc"
-      }
-    },
+
     "test": {
       "executor": "@nrwl/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],

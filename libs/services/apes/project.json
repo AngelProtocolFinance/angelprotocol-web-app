@@ -4,16 +4,6 @@
   "sourceRoot": "libs/services/apes/src",
   "projectType": "library",
   "targets": {
-    "build": {
-      "executor": "@nrwl/js:swc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/libs/services/apes",
-        "main": "libs/services/apes/src/index.ts",
-        "tsConfig": "libs/services/apes/tsconfig.lib.json",
-        "swcrc": "configs/lib.swcrc"
-      }
-    },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],

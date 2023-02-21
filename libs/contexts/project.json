@@ -11,20 +11,6 @@
       "options": {
         "lintFilePatterns": ["libs/contexts/**/*.{ts,tsx,js,jsx}"]
       }
-    },
-    "build": {
-      "executor": "@nrwl/rollup:rollup",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/libs/contexts",
-        "tsConfig": "libs/contexts/tsconfig.lib.json",
-        "project": "libs/contexts/package.json",
-        "entryFile": "libs/contexts/src/index.ts",
-        "external": ["react/jsx-runtime"],
-        "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
-        "compiler": "swc"
-      }
     }
-    
   }
 }
