@@ -1,5 +1,5 @@
 import { Loader, Seo } from "@ap/components";
-import { LOGO, appRoutes } from "@ap/constants";
+import { appRoutes } from "@ap/constants";
 import { Suspense } from "react";
 import { Outlet } from "react-router-dom";
 import { Link } from "./types";
@@ -19,7 +19,7 @@ export default function Layout() {
   return (
     <div className="grid grid-rows-[auto_1fr_auto]">
       <Seo /> {/* Load all defaults for SEO meta tags */}
-      <Header classes="sticky top-0 z-20" links={HEADER_LINKS} logo={LOGO} />
+      <Header classes="sticky top-0 z-20" links={HEADER_LINKS} />
       <Suspense fallback={<LoaderComponent />}>
         <Outlet />
       </Suspense>

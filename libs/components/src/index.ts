@@ -9,7 +9,7 @@ export { default as ImageWrapper } from "./ImageWrapper";
 export { default as KadoModal } from "./KadoModal";
 export { default as Loader } from "./Loader";
 export { default as LoaderRing } from "./LoaderRing";
-export { default as Logo, type LogoProps } from "./Logo";
+export { default as Logo, type LogoProps, DEFAULT_LOGO } from "./Logo";
 export { default as LogoPlaceholder } from "./LogoPlaceholder";
 export { default as Popup } from "./Popup";
 export { default as QueryLoader } from "./QueryLoader";

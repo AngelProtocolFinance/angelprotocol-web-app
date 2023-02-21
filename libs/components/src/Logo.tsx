@@ -1,3 +1,4 @@
+import { angelGivingLogo } from "@ap/assets";
 import ExtLink from "./ExtLink";
 
 export type LogoProps = {
@@ -6,9 +7,15 @@ export type LogoProps = {
   title?: string;
 };
 
-type Props = { className?: string; logo: LogoProps };
+export const DEFAULT_LOGO: LogoProps = {
+  href: "https://angelprotocol.io/",
+  src: angelGivingLogo,
+  title: "Go to Marketing page",
+};
 
-export default function Logo({ className, logo }: Props) {
+type Props = { className?: string; logo?: LogoProps };
+
+export default function Logo({ className, logo = DEFAULT_LOGO }: Props) {
   return (
     <ExtLink href={logo.href} title={logo.title} className={className}>
       <img src={logo.src} alt="" className="w-full h-full" />

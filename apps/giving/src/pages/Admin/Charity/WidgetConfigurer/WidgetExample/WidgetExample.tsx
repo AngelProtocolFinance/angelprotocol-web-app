@@ -1,5 +1,4 @@
-import { Logo } from "@ap/components";
-import { LOGO } from "@ap/constants";
+import { DEFAULT_LOGO, Logo } from "@ap/components";
 import { getPossessiveForm } from "@ap/helpers";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
@@ -64,7 +63,7 @@ export default function WidgetExample({ trigger }: { trigger: boolean }) {
           </section>
         </div>
         <footer className="flex justify-center items-center h-20 w-full bg-blue">
-          <Logo className="w-20" logo={LOGO} />
+          <Logo className="w-20" />
         </footer>
       </div>
     </div>

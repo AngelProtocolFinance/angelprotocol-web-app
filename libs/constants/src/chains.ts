@@ -1,4 +1,4 @@
-import { DAPP_DOMAIN } from "@ap/constants";
+import { DAPP_DOMAIN } from "./common";
 
 export enum chainIDs {
   junoMain = "juno-1",

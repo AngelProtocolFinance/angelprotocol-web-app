@@ -5,7 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { DonateValues } from "./types";
 import { TokenWithAmount } from "@ap/types/slices";
-import { ConfigParams } from "..";
+import { ConfigParams } from "@ap/types/widget";
 import Form from "./Form";
 import { schema } from "./schema";
 

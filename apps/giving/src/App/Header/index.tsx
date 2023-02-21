@@ -1,4 +1,4 @@
-import { Logo, LogoProps } from "@ap/components";
+import { DEFAULT_LOGO, Logo, LogoProps } from "@ap/components";
 import WalletSuite from "@ap/components/wallet-suite";
 import { appRoutes } from "@ap/constants";
 import { useEffect, useRef, useState } from "react";
@@ -9,9 +9,9 @@ import DesktopNav from "./DesktopNav";
 import { Opener as MobileNavOpener } from "./MobileNav";
 import ThemeToggle from "./ThemeToggle";
 
-type Props = { classes: string; links: Link[]; logo: LogoProps };
+type Props = { classes: string; links: Link[]; logo?: LogoProps };
 
-export default function Header({ classes, links, logo }: Props) {
+export default function Header({ classes, links, logo = DEFAULT_LOGO }: Props) {
   const location = useLocation();
   const isScrolledRef = useRef<boolean>(false);
   const [isScrolled, setIsScrolled] = useState(false);

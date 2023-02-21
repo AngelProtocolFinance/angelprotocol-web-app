@@ -8,10 +8,10 @@ import {
 } from "@ap/slices/donation";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { ConfigParams } from "@ap/types/widget";
 import Donater from "./Donater";
 import Result from "./Result";
 import Submit from "./Submit";
-import { ConfigParams } from "./index";
 
 export default function CurrentStep(props: ConfigParams) {
   const state = useSelector((state: SliceState) => state.donation);

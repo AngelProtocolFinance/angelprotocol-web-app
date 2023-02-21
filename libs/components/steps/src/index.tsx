@@ -3,15 +3,9 @@ import { useModalContext } from "@ap/contexts";
 import { DonationState, SliceState } from "@ap/slices/donation";
 import { useCallback } from "react";
 import { useSelector } from "react-redux";
+import { ConfigParams } from "@ap/types/widget";
 import CurrentStep from "./CurrentStep";
 import Progress from "./Progress";
-
-export type ConfigParams = {
-  hideAdvOpts?: boolean;
-  unfoldAdvOpts?: boolean;
-  liquidPct?: number;
-  availCurrs?: string[];
-};
 
 type Props = { className?: string } & ConfigParams;
 
