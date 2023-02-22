@@ -6,6 +6,7 @@ import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
 import useCosmosTxSender from "hooks/useCosmosTxSender";
 import { scaleToStr } from "helpers";
+import { getTagPayloads } from "helpers/admin";
 
 export default function useSubmit(vault: string, type: AccountType) {
   const { cw3, id, propMeta } = useAdminResources();
@@ -32,6 +33,7 @@ export default function useSubmit(vault: string, type: AccountType) {
     await sendTx({
       msgs: [proposal],
       ...propMeta,
+      tagPayloads: getTagPayloads(propMeta.willExecute && "acc_redeem"),
     });
   }
 
