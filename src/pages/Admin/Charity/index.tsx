@@ -75,7 +75,7 @@ function createLinkGroups(endowId: number): LinkGroup[] {
         LINKS[adminRoutes.proposals],
         {
           ...LINKS[adminRoutes.widget_config],
-          to: `${LINKS[adminRoutes.widget_config].to}/${endowId}`,
+          to: `${LINKS[adminRoutes.widget_config].to}`,
         },
       ],
     },

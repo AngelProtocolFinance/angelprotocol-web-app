@@ -9,8 +9,12 @@ import useLoadDefaultEndowmentName from "./useLoadDefaultEndowmentName";
 const NO_ID_MESSAGE = "Please select an organization";
 
 export default function useWidgetConfigurer() {
-  const { endowId: id } = useParams<{ endowId: string }>();
-  const endowId = idParamToNum(id);
+  const { endowId: id, id: adminId } = useParams<{
+    endowId: string;
+    id: string;
+  }>();
+  //if no endow-id passed, use admin-id
+  const endowId = idParamToNum(id || adminId);
 
   const [updateTriggered, setUpdateTriggered] = useState(false);
 
