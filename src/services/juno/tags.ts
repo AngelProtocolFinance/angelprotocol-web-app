@@ -7,6 +7,7 @@ export const rootTags = [
   "account",
   "registrar",
   "custom",
+  "vault",
 ] as const;
 
 type JunoTag = typeof rootTags[number];

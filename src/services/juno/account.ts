@@ -1,11 +1,7 @@
 import { Args, Res, Result } from "./queryContract/types";
-import { EndowmentAsset } from "services/types";
-import { AccountType, EndowmentEntry } from "types/contracts";
+import { EndowmentEntry } from "types/contracts";
 import { accountTags } from "services/juno/tags";
-import { condenseToNum } from "helpers";
 import { contracts } from "constants/contracts";
-import { IS_TEST } from "constants/env";
-import { denoms, symbols } from "constants/tokens";
 import { junoApi } from ".";
 import { queryContract } from "./queryContract";
 import { genQueryPath } from "./queryContract/genQueryPath";
@@ -35,30 +31,10 @@ export const account_api = junoApi.injectEndpoints({
         return res.data;
       },
     }),
-    asset: builder.query<
-      EndowmentAsset,
-      Args<"accState"> & { type: AccountType }
-    >({
-      providesTags: [{ type: "account", id: accountTags.state }],
-      query: ({ type, ...args }) => genQueryPath("accState", args, accounts),
-      transformResponse: (res: Res<"accState">, meta, { type }) => {
-        const { tokens_on_hand } = res.data;
-
-        const denom = IS_TEST ? denoms.ujunox : denoms.axlusdc;
-        const coin = tokens_on_hand[type].native.find(
-          (t) => t.denom === denom
-        ) || { denom, amount: "0" };
-
-        const free = condenseToNum(coin.amount);
-        const total = free + 0;
-
-        return { free, invested: 0, total, symbol: symbols[denom] };
-      },
-    }),
   }),
 });
 
-export const { useStateQuery, useEndowmentsQuery, useAssetQuery } = account_api;
+export const { useStateQuery, useEndowmentsQuery } = account_api;
 
 async function getEndowments(
   limit: 50,
