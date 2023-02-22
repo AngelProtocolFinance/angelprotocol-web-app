@@ -23,7 +23,7 @@ export type RegistrarConfig = {
   owner: string;
   applications_review: string;
   applications_impact_review: string;
-  index_fund_contract?: string;
+  index_fund?: string;
   accounts_contract?: string;
   treasury: string;
   rebalance: RebalanceDetails;

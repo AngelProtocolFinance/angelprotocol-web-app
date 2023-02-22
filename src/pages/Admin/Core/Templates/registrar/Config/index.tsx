@@ -22,7 +22,7 @@ function RegistrarConfigContext(props: RegistrarConfig) {
 
   const initialConfigPayload: Partial<RegistrarConfigPayload> = {
     accounts_contract: props.accounts_contract,
-    index_fund_contract: props.index_fund_contract, //addr
+    index_fund_contract: props.index_fund, //addr
     treasury: props.treasury, //addr
     split_max: pctSplitLiqMax,
     split_min: pctSplitLiqMin,
@@ -32,6 +32,9 @@ function RegistrarConfigContext(props: RegistrarConfig) {
     charity_shares_contract: props.charity_shares_contract,
     applications_review: props.applications_review,
     applications_impact_review: props.applications_impact_review,
+    swaps_router: props.swaps_router,
+    cw3_code: props.cw3_code,
+    cw4_code: props.cw4_code,
   };
 
   const methods = useForm<RegistrarConfigValues>({

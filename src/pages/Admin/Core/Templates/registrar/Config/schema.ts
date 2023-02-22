@@ -22,6 +22,8 @@ const shape: SchemaShape<RegistrarConfigValues> = {
   split_default: percentString,
   split_max: percentString,
   split_min: percentString,
+  cw3_code: positiveNumber,
+  cw4_code: positiveNumber,
 };
 
 export const schema = Yup.object(shape);

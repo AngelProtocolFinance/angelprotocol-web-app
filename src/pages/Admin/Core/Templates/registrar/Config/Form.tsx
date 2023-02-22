@@ -59,18 +59,6 @@ export default function Form() {
           label="Accounts"
           name="accounts_contract"
         />
-        <Field<RV> classes="field-admin-sec" label="treasury" name="treasury" />
-        <Field<RV> classes="field-admin-sec" label="Halo" name="halo_token" />
-        <Field<RV>
-          classes="field-admin-sec"
-          label="Governance"
-          name="gov_contract"
-        />
-        <Field<RV>
-          classes="field-admin-sec"
-          label="Charity Shares"
-          name="charity_shares_contract"
-        />
         <Field<RV>
           classes="field-admin-sec"
           label="Charity Applications Review"
@@ -85,6 +73,17 @@ export default function Form() {
           classes="field-admin-sec"
           label="Swaps Router"
           name="swaps_router"
+        />
+        <Field<RV> classes="field-admin-sec" label="Halo" name="halo_token" />
+        <Field<RV>
+          classes="field-admin-sec"
+          label="Governance"
+          name="gov_contract"
+        />
+        <Field<RV>
+          classes="field-admin-sec"
+          label="Charity Shares"
+          name="charity_shares_contract"
         />
       </GroupContainer>
 
