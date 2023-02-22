@@ -31,7 +31,5 @@ module.exports = composePlugins(withNx(), withReact(), (config, context) => {
     })
   );
 
-  console.log(config);
-
   return config;
 });
