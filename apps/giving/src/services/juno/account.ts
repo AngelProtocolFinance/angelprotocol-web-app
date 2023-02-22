@@ -28,44 +28,37 @@ export const account_api = junoApi.injectEndpoints({
         };
       },
     }),
-    balance: builder.query<Result<"accBalance">, Args<"accBalance">>({
-      providesTags: [{ type: "account", id: accountTags.balance }],
-      query: (args) => genQueryPath("accBalance", args, accounts),
-      transformResponse: (res: Res<"accBalance">) => {
+    state: builder.query<Result<"accState">, Args<"accState">>({
+      providesTags: [{ type: "account", id: accountTags.state }],
+      query: (args) => genQueryPath("accState", args, accounts),
+      transformResponse: (res: Res<"accState">) => {
         return res.data;
       },
     }),
     asset: builder.query<
       EndowmentAsset,
-      Args<"accBalance"> & { type: AccountType }
+      Args<"accState"> & { type: AccountType }
     >({
-      providesTags: [{ type: "account", id: accountTags.balance }],
-      query: ({ type, ...args }) => genQueryPath("accBalance", args, accounts),
-      transformResponse: (res: Res<"accBalance">, meta, { type }) => {
-        const { tokens_on_hand, invested_liquid, invested_locked } = res.data;
+      providesTags: [{ type: "account", id: accountTags.state }],
+      query: ({ type, ...args }) => genQueryPath("accState", args, accounts),
+      transformResponse: (res: Res<"accState">, meta, { type }) => {
+        const { tokens_on_hand } = res.data;
 
         const denom = IS_TEST ? denoms.ujunox : denoms.axlusdc;
         const coin = tokens_on_hand[type].native.find(
           (t) => t.denom === denom
         ) || { denom, amount: "0" };
 
-        const investments =
-          type === "liquid" ? invested_liquid : invested_locked;
-
-        const invested = condenseToNum(
-          investments.reduce((sum, [_, balance]) => +balance + sum, 0)
-        );
         const free = condenseToNum(coin.amount);
-        const total = free + invested;
+        const total = free + 0;
 
-        return { free, invested, total, symbol: symbols[denom] };
+        return { free, invested: 0, total, symbol: symbols[denom] };
       },
     }),
   }),
 });
 
-export const { useBalanceQuery, useEndowmentsQuery, useAssetQuery } =
-  account_api;
+export const { useStateQuery, useEndowmentsQuery, useAssetQuery } = account_api;
 
 async function getEndowments(
   limit: 50,
