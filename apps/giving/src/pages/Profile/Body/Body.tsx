@@ -38,28 +38,24 @@ export default function Body() {
             </div>
             <p className="w-full font-normal text-lg">{profile.tagline}</p>
           </div>
-          {(profile.hq.country || profile.url) && (
-            <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-center w-full font-semibold text-base">
-              {profile.hq.country && (
-                <span className="flex items-center gap-2 uppercase">
-                  <Icon type="MapPin" className="h-6 w-6 text-orange" />
-                  {profile.hq.country}
-                </span>
-              )}
-              {profile.url && (
-                <span className="flex items-center gap-2">
-                  <Icon type="Globe" className="h-6 w-6 text-orange" />
-                  <ExtLink
-                    href={profile.url}
-                    title="organization website"
-                    className="cursor-pointer underline decoration-1 hover:text-orange hover:decoration-2"
-                  >
-                    {profile.url.replace(/^https?:\/\//i, "")}
-                  </ExtLink>
-                </span>
-              )}
-            </div>
-          )}
+          <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-center w-full font-semibold text-base">
+            <span className="flex items-center gap-2 uppercase">
+              <Icon type="MapPin" className="h-6 w-6 text-orange" />
+              {profile.hq_country}
+            </span>
+            {profile.url && (
+              <span className="flex items-center gap-2">
+                <Icon type="Globe" className="h-6 w-6 text-orange" />
+                <ExtLink
+                  href={profile.url}
+                  title="organization website"
+                  className="cursor-pointer underline decoration-1 hover:text-orange hover:decoration-2"
+                >
+                  {profile.url.replace(/^https?:\/\//i, "")}
+                </ExtLink>
+              </span>
+            )}
+          </div>
         </div>
 
         <GeneralInfo className="order-4 lg:col-span-2 w-full h-full" />

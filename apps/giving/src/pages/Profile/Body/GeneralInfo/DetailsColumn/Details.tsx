@@ -4,6 +4,7 @@ import { useProfileContext } from "../../../ProfileContext";
 
 export default function Details() {
   const profile = useProfileContext();
+  const { active_in_countries = [] } = profile;
 
   return (
     <>
@@ -14,9 +15,9 @@ export default function Details() {
         <Detail title="address">{profile.street_address}</Detail>
       )}
       <Detail title="active in">
-        {isEmpty(profile.active_in_countries)
-          ? profile.hq.country
-          : profile.active_in_countries.join(", ")}
+        {isEmpty(active_in_countries)
+          ? profile.hq_country
+          : active_in_countries.join(", ")}
       </Detail>
       {/* <Detail title="endowment address">
         <span className="flex items-center gap-4 w-full">

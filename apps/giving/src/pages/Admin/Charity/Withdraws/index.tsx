@@ -1,12 +1,12 @@
 import QueryLoader from "@ap/components/query-loader";
 import { useAdminResources } from "@ap/contexts/admin";
-import { useBalanceQuery } from "@ap/services/juno";
+import { useStateQuery } from "@ap/services/juno";
 import Transactions from "./Transactions";
 import WithdrawTabs from "./WithdrawTabs";
 
 export default function Withdraws() {
   const { id } = useAdminResources();
-  const queryState = useBalanceQuery({ id });
+  const queryState = useStateQuery({ id });
 
   return (
     <div className="grid content-start font-work">

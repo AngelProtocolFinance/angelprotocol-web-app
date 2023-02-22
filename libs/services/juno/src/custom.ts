@@ -132,19 +132,17 @@ export const customApi = junoApi.injectEndpoints({
     vaults: builder.query<Vault[], Args<"regVaultList"> & { endowId: number }>({
       providesTags: [
         { type: "registrar", id: registrarTags.vault_list },
-        { type: "account", id: accountTags.balance },
+        { type: "account", id: accountTags.state },
       ],
       async queryFn({ endowId, ...args }) {
         const [vaultsRes, balances] = await Promise.all([
           queryContract("regVaultList", contracts.registrar, args),
-          queryContract("accBalance", contracts.accounts, { id: endowId }),
+          queryContract("accState", contracts.accounts, { id: endowId }),
         ]);
 
-        const { invested_liquid, invested_locked, tokens_on_hand } = balances;
+        const { tokens_on_hand } = balances;
         const { native, cw20 } = tokens_on_hand[args.acct_type || "liquid"];
         const balMap: { [index: string]: number | undefined } = [
-          ...invested_liquid,
-          ...invested_locked,
           ...native.map((n) => [n.denom, n.amount]),
           ...cw20.map((c) => [c.address, c.amount]),
         ].reduce(

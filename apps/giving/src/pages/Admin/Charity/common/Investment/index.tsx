@@ -2,9 +2,16 @@ import { useModalContext } from "@ap/contexts";
 import { humanize, maskAddress } from "@ap/helpers";
 import { Vault } from "@ap/types/services";
 import Investor from "./Investor";
+import Redeemer from "./Redeemer";
 
-export default function Investment(props: Vault) {
+type Action = "invest" | "redeem";
+
+export default function Investment({
+  action,
+  ...props
+}: Vault & { action: Action }) {
   const { address, invested, symbol } = props;
+
   const { showModal } = useModalContext();
 
   return (
@@ -21,10 +28,12 @@ export default function Investment(props: Vault) {
         </div>
         <button
           type="button"
-          onClick={() => showModal(Investor, props)}
+          onClick={() =>
+            showModal(action === "invest" ? Investor : Redeemer, props)
+          }
           className="btn-outline-filled px-8 py-2"
         >
-          invest
+          {action}
         </button>
       </div>
     </div>

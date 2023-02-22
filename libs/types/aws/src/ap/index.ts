@@ -3,8 +3,8 @@ import { CapitalizedEndowmentType } from "@ap/types/contracts";
 import { Keplr } from "@keplr-wallet/types";
 
 type EndowmentBase = {
-  hq: { country?: string; city?: string };
-  active_in_countries: string[];
+  hq_country: string;
+  active_in_countries?: string[];
   categories: { sdgs: UNSDG_NUMS[] };
   id: number;
   image: string;

@@ -8,24 +8,23 @@ import { Link } from "react-router-dom";
 import { UNSDG_NUMS } from "@ap/types";
 import { EndowmentCard } from "@ap/types/aws";
 
-const PLACEHOLDER_CITY = "City";
 const PLACEHOLDER_TAGLINE = " ";
 
 export default function Card({
-  active_in_countries,
+  active_in_countries = [],
   name,
   image,
   id,
   endow_type,
   categories: { sdgs },
   tagline,
-  hq,
+  hq_country,
   kyc_donors_only,
 }: EndowmentCard) {
   return (
     <div className="relative overflow-clip dark:bg-blue-d6 rounded-lg border border-prim hover:border-blue dark:hover:border-blue">
       <div className="absolute top-[14px] left-[14px] right-[14px] flex justify-between gap-3">
-        <p className="bg-orange-l1 text-gray-d3 font-semibold text-2xs rounded-sm uppercase px-2 py-0.5 font-heading">
+        <p className="bg-orange-l1 text-white font-semibold text-2xs rounded-sm uppercase px-2 py-0.5 font-heading">
           {endow_type === "Charity" ? "Non-profit" : "For-profit"}
         </p>
         {kyc_donors_only && <KYCIcon className="ml-auto" />}
@@ -55,16 +54,13 @@ export default function Card({
           ) : null}
           {/* HQ & ACTIVE-IN COUNTRIES */}
           <div className="text-gray-d1 dark:text-gray text-sm">
-            {hq.country && (
-              <p>
-                <span className="font-semibold">HQ:</span> {hq.country}
-                {hq.city && hq.city !== PLACEHOLDER_CITY ? `, ${hq.city}` : ""}
-              </p>
-            )}
+            <p>
+              <span className="font-semibold">HQ:</span> {hq_country}
+            </p>
             <p className="line-clamp-2">
               <span className="font-semibold">Active in:</span>{" "}
               {isEmpty(active_in_countries)
-                ? hq.country
+                ? hq_country
                 : active_in_countries.join(" ,")}
             </p>
           </div>

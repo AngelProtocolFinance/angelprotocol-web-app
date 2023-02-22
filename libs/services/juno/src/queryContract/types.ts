@@ -6,10 +6,10 @@ import {
   CW4Member,
   CW20Balance,
   CW20Info,
-  EndowmentBalance,
   EndowmentDetails,
   EndowmentEntry,
   EndowmentQueryOptions,
+  EndowmentState,
   FundDetails,
   GenericBalance,
   GovConfig,
@@ -114,10 +114,10 @@ export interface ContractQueries {
     res: Q<EndowmentDetails>;
     result: EndowmentDetails;
   };
-  accBalance: {
+  accState: {
     args: { id: number };
-    res: Q<EndowmentBalance>;
-    result: EndowmentBalance;
+    res: Q<EndowmentState>;
+    result: EndowmentState;
   };
 }
 

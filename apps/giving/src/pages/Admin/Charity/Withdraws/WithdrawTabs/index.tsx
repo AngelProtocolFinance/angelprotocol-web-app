@@ -1,11 +1,11 @@
 import { Tab } from "@headlessui/react";
 import { useLocation } from "react-router-dom";
-import { AccountType, EndowmentBalance } from "@ap/types/contracts";
+import { AccountType, EndowmentState } from "@ap/types/contracts";
 import { accountTypeDisplayValue } from "../../../constants";
 import Withdrawer from "./Withdrawer";
 
 const tabs: AccountType[] = ["liquid", "locked"];
-export default function WithdrawTabs({ tokens_on_hand }: EndowmentBalance) {
+export default function WithdrawTabs({ tokens_on_hand }: EndowmentState) {
   const { state } = useLocation(); //state is set from dashboard withdraw link
   const type = state as AccountType;
   return (
