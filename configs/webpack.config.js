@@ -1,5 +1,6 @@
 const { ProvidePlugin } = require("webpack");
 const { composePlugins, withNx } = require("@nrwl/webpack");
+const SizePlugin = require("size-plugin");
 const { withReact } = require("@nrwl/react");
 
 // Nx plugins for webpack.
@@ -8,8 +9,9 @@ module.exports = composePlugins(withNx(), withReact(), (config, context) => {
   // e.g. `config.plugins.push(new MyPlugin())`
   const isProd = context.configuration === "production";
 
-  if (!isProd) {
-    config.stats = "errors-warnings";
+  config.stats = "errors-warnings";
+  if (isProd) {
+    config.plugins.push(new SizePlugin({ writeFile: false }));
   }
 
   config.resolve.fallback = {

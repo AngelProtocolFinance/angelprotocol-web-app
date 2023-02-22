@@ -11,6 +11,5 @@
         "lintFilePatterns": ["libs/constants/**/*.ts"]
       }
     }
-  },
-  "tags": []
+  }
 }
