@@ -1,8 +1,6 @@
-import { useMemo } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { LinkGroup } from "../Sidebar/types";
 import { adminRoutes } from "constants/routes";
-import { useAdminResources } from "../Guard";
 import Layout from "../Layout";
 import Proposal from "../Proposal";
 import Proposals from "../Proposals";
@@ -19,14 +17,35 @@ import WidgetConfigurer from "./WidgetConfigurer";
 import Withdraws from "./Withdraws";
 import { settings } from "./routes";
 
+const LINK_GROUPS: LinkGroup[] = [
+  {
+    links: [
+      LINKS[adminRoutes.index],
+      LINKS[adminRoutes.withdraws],
+      LINKS[adminRoutes.contributions],
+    ],
+  },
+  {
+    title: "Invest",
+    links: [LINKS[adminRoutes.invest], LINKS[adminRoutes.settings]],
+  },
+  { title: "Profile", links: [LINKS[adminRoutes.edit_profile]] },
+  {
+    title: "Manage",
+    links: [
+      LINKS[adminRoutes.proposals],
+      // {
+      //   ...LINKS[adminRoutes.widget_config],
+      //   to: `${LINKS[adminRoutes.widget_config].to}/${endowId}`,
+      // },
+    ],
+  },
+];
+
 export default function Charity() {
-  const { id } = useAdminResources();
-
-  const linkGroups = useMemo(() => createLinkGroups(id), [id]);
-
   return (
     <Routes>
-      <Route element={<Layout linkGroups={linkGroups} />}>
+      <Route element={<Layout linkGroups={LINK_GROUPS} />}>
         <Route path={`${adminRoutes.proposal}/:id`} element={<Proposal />} />
         <Route path={adminRoutes.proposals} element={<Proposals />} />
         <Route path={`${adminRoutes.templates}/*`} element={<Templates />} />
@@ -54,31 +73,4 @@ export default function Charity() {
       </Route>
     </Routes>
   );
-}
-
-function createLinkGroups(endowId: number): LinkGroup[] {
-  return [
-    {
-      links: [
-        LINKS[adminRoutes.index],
-        LINKS[adminRoutes.withdraws],
-        LINKS[adminRoutes.contributions],
-      ],
-    },
-    {
-      title: "Invest",
-      links: [LINKS[adminRoutes.invest], LINKS[adminRoutes.settings]],
-    },
-    { title: "Profile", links: [LINKS[adminRoutes.edit_profile]] },
-    {
-      title: "Manage",
-      links: [
-        LINKS[adminRoutes.proposals],
-        {
-          ...LINKS[adminRoutes.widget_config],
-          to: `${LINKS[adminRoutes.widget_config].to}/${endowId}`,
-        },
-      ],
-    },
-  ];
 }
