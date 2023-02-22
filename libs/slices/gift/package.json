@@ -1,6 +1,5 @@
 {
   "name": "@ap/slices/gift",
   "sideEffects": false,
-  "version": "0.0.1",
-  "type": "commonjs"
+  "type": "module"
 }

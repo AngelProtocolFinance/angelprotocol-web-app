@@ -1,5 +1,5 @@
 {
   "name": "@ap/hooks/use-cosmos-tx-sender",
   "sideEffects": false,
-  "version": "0.0.1"
+  "type": "module"
 }

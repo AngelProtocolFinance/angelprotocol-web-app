@@ -1,5 +1,5 @@
 {
   "name": "@ap/components/split",
   "sideEffects": false,
-  "version": "0.0.1"
+  "type": "module"
 }

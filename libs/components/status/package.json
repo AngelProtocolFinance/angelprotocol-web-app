@@ -1,5 +1,5 @@
 {
   "name": "@ap/components/status",
   "sideEffects": false,
-  "version": "0.0.1"
+  "type": "module"
 }
