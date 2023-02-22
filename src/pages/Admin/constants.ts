@@ -43,74 +43,109 @@ export const proposalShape: SchemaShape<ProposalBase> = {
   description: stringByteSchema(4, 1024),
 };
 
-type SIDEBAR_ROUTES = Exclude<
-  adminRoutes,
-  adminRoutes.proposal | adminRoutes.templates
->;
+const {
+  proposal,
+  templates: templatesRoute,
+  account,
+  ...restAdminRoutes
+} = adminRoutes;
+
+const sidebarRoutes = {
+  ...restAdminRoutes,
+  liquidAccount: `${account}/liquid`,
+  lockedAccount: `${account}/locked`,
+};
 
 const _to: keyof Link = "to";
 
-export const LINKS: { [key in SIDEBAR_ROUTES]: Link & { [_to]: key } } = {
-  [adminRoutes.index]: {
-    title: "Dashboard",
-    to: adminRoutes.index,
+export const LINKS: {
+  [key in keyof typeof sidebarRoutes]: Link & { [_to]: string };
+} = {
+  liquidAccount: {
+    title: "Liquid Account",
+    to: sidebarRoutes.liquidAccount,
+    icon: {
+      type: "WaterDrop",
+      size: 24,
+    },
+  },
+  lockedAccount: {
+    title: "Locked Account",
+    to: sidebarRoutes.lockedAccount,
+    icon: {
+      type: "Lock",
+      size: 24,
+    },
+  },
+  index_review: {
+    title: "Applications",
+    to: sidebarRoutes.index_review,
     icon: {
       type: "Dashboard",
       size: 24,
     },
     end: true,
   },
-  [adminRoutes.withdraws]: {
+  index: {
+    title: "Dashboard",
+    to: sidebarRoutes.index,
+    icon: {
+      type: "Dashboard",
+      size: 24,
+    },
+    end: true,
+  },
+  withdraws: {
     title: "Withdraw",
-    to: adminRoutes.withdraws,
+    to: sidebarRoutes.withdraws,
     icon: {
       type: "MoneyBill",
       size: 24,
     },
   },
-  [adminRoutes.contributions]: {
+  contributions: {
     title: "Contributions",
-    to: adminRoutes.contributions,
+    to: sidebarRoutes.contributions,
     icon: {
       type: "DollarCircle",
       size: 24,
     },
   },
-  [adminRoutes.invest]: {
+  invest: {
     title: "Invest Dashboard",
-    to: adminRoutes.invest,
+    to: sidebarRoutes.invest,
     icon: {
       type: "Analytics",
       size: 24,
     },
   },
-  [adminRoutes.settings]: {
+  settings: {
     title: "Settings",
-    to: adminRoutes.settings,
+    to: sidebarRoutes.settings,
     icon: {
       type: "PermDataSettings",
       size: 24,
     },
   },
-  [adminRoutes.edit_profile]: {
+  edit_profile: {
     title: "Edit Profile",
-    to: adminRoutes.edit_profile,
+    to: sidebarRoutes.edit_profile,
     icon: {
       type: "User",
       size: 24,
     },
   },
-  [adminRoutes.proposals]: {
+  proposals: {
     title: "Decision Center",
-    to: adminRoutes.proposals,
+    to: sidebarRoutes.proposals,
     icon: {
       type: "ClipboardCheck",
       size: 24,
     },
   },
-  [adminRoutes.widget_config]: {
+  widget_config: {
     title: "Widget Configuration",
-    to: adminRoutes.widget_config,
+    to: sidebarRoutes.widget_config,
     icon: {
       type: "Widget",
       size: 24,
@@ -121,30 +156,6 @@ export const LINKS: { [key in SIDEBAR_ROUTES]: Link & { [_to]: key } } = {
 // THESE WILL BE THE APPROPRIATE ICONS TO USE FOR FUTURE PAGES
 // TODO: REMOVE ONCE ALL ARE MOVED INTO `LINKS` ABOVE.
 //   const linkGroups: LinkGroup[] = [
-//     {
-//       links: [],
-//     },
-//     {
-//       title: "Invest",
-//       links: [
-//         {
-//           icon: {
-//             type: "WaterDrop",
-//             size: 24,
-//           },
-//           title: "Liquid Account",
-//           to: `${rootPath}${routes.liquid_account}`,
-//         },
-//         {
-//           icon: {
-//             type: "Lock",
-//             size: 24,
-//           },
-//           title: "Locked Account",
-//           to: `${rootPath}${routes.locked_account}`,
-//         },
-//       ],
-//     },
 //     {
 //       title: "Profile",
 //       links: [

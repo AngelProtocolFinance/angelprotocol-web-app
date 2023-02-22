@@ -9,8 +9,8 @@ import Applications from "./Applications";
 import Templates from "./Templates";
 
 const LINK_GROUPS: LinkGroup[] = [
-  { links: [LINKS[adminRoutes.index]] },
-  { title: "Manage", links: [LINKS[adminRoutes.proposals]] },
+  { links: [LINKS.index] },
+  { title: "Manage", links: [LINKS.proposals] },
 ];
 
 export default function Review() {

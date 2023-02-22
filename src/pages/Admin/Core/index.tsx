@@ -8,7 +8,7 @@ import { LINKS } from "../constants";
 import Templates from "./Templates";
 
 const LINK_GROUPS: LinkGroup[] = [
-  { title: "Manage", links: [LINKS[adminRoutes.proposals]] },
+  { title: "Manage", links: [LINKS.proposals] },
 ];
 
 export default function Core() {

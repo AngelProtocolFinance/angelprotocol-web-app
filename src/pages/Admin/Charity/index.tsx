@@ -19,17 +19,18 @@ import { settings } from "./routes";
 
 const LINK_GROUPS: LinkGroup[] = [
   {
-    links: [
-      LINKS[adminRoutes.index],
-      LINKS[adminRoutes.withdraws],
-      LINKS[adminRoutes.contributions],
-    ],
+    links: [LINKS.index, LINKS.withdraws, LINKS.contributions],
   },
   {
     title: "Invest",
-    links: [LINKS[adminRoutes.invest], LINKS[adminRoutes.settings]],
+    links: [
+      LINKS.invest,
+      LINKS.liquidAccount,
+      LINKS.lockedAccount,
+      LINKS.settings,
+    ],
   },
-  { title: "Profile", links: [LINKS[adminRoutes.edit_profile]] },
+  { title: "Profile", links: [LINKS.edit_profile] },
   {
     title: "Manage",
     links: [
