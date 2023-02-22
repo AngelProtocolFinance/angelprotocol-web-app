@@ -9,9 +9,9 @@ export default function Header() {
     <div
       className={`flex flex-col gap-1 w-full py-6 px-5 border-b border-prim ${
         type === "ap"
-          ? "bg-orange-l2 dark:bg-blue-d4"
+          ? "dark:bg-blue-d4"
           : type === "review"
-          ? "bg-gray-l2 dark:bg-bluegray"
+          ? "dark:bg-bluegray"
           : ""
       }`}
     >
