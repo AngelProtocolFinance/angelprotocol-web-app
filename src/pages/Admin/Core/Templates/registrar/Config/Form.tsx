@@ -21,27 +21,10 @@ export default function Form() {
         name="description"
         required
       />
-      <Label className="-mb-4 font-bold">Latest accounts wasm code</Label>
+      <Label className="-mb-4 font-bold">Latest wasm codes</Label>
       <GroupContainer>
-        <Field<RV>
-          classes="field-admin-sec"
-          label="Accounts code id"
-          name="accounts_code_id"
-        />
-      </GroupContainer>
-
-      <Label className="-mb-4 font-bold">Default Donation splits</Label>
-      <GroupContainer>
-        <Field<RV>
-          classes="field-admin-sec"
-          label="Tax rate ( % )"
-          name="tax_rate"
-        />
-        <Field<RV>
-          classes="field-admin-sec"
-          label="Default vault"
-          name="default_vault"
-        />
+        <Field<RV> classes="field-admin-sec" label="CW3 Code" name="cw3_code" />
+        <Field<RV> classes="field-admin-sec" label="CW4 Code" name="cw4_code" />
       </GroupContainer>
 
       <Label className="-mb-4 font-bold">Vault Setting</Label>
@@ -73,14 +56,10 @@ export default function Form() {
         <Field<RV> classes="field-admin-sec" label="Treasury" name="treasury" />
         <Field<RV>
           classes="field-admin-sec"
-          label="Guardians"
-          name="guardians_multisig_addr"
+          label="Accounts"
+          name="accounts_contract"
         />
-        <Field<RV>
-          classes="field-admin-sec"
-          label="Endowment owners"
-          name="endowment_owners_group_addr"
-        />
+        <Field<RV> classes="field-admin-sec" label="treasury" name="treasury" />
         <Field<RV> classes="field-admin-sec" label="Halo" name="halo_token" />
         <Field<RV>
           classes="field-admin-sec"
@@ -89,8 +68,23 @@ export default function Form() {
         />
         <Field<RV>
           classes="field-admin-sec"
-          label="Charity shares"
+          label="Charity Shares"
           name="charity_shares_contract"
+        />
+        <Field<RV>
+          classes="field-admin-sec"
+          label="Charity Applications Review"
+          name="applications_review"
+        />
+        <Field<RV>
+          classes="field-admin-sec"
+          label="Impact Applications Review"
+          name="applications_impact_review"
+        />
+        <Field<RV>
+          classes="field-admin-sec"
+          label="Swaps Router"
+          name="swaps_router"
         />
       </GroupContainer>
 

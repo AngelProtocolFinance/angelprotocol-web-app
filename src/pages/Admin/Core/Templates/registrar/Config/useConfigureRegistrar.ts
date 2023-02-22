@@ -42,10 +42,6 @@ export default function useConfigureRegistrar() {
     //convert presentational decimal to floating point string
     const finalPayload: RegistrarConfigPayload = {
       ...diff,
-      tax_rate: diff.tax_rate && `${+diff.tax_rate / 100}`,
-      split_default: diff.split_default && `${+diff.split_default / 100}`,
-      split_max: diff.split_max && `${+diff.split_max / 100}`,
-      split_min: diff.split_min && `${+diff.split_min / 100}`,
     };
 
     const registrarContract = new Registrar(wallet);
