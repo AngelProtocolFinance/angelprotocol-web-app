@@ -24,9 +24,10 @@ export default function useSidebarOpener(linkGroups: LinkGroup[]) {
 
   useHandleScreenResize(
     (screenSize) => screenSize >= SCREEN_MD && closeModal(),
-    50,
-    {},
-    { shouldAttachListener: isModalOpen }
+    {
+      debounceTime: 50,
+      shouldAttachListener: isModalOpen,
+    }
   );
 
   const open = () => showModal(ToggleableSidebar, { linkGroups });
