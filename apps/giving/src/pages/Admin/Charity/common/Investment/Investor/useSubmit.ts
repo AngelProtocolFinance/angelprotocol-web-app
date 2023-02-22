@@ -3,6 +3,7 @@ import { useGetWallet } from "@ap/contexts/wallet-context";
 import { Account, CW3 } from "@ap/contracts";
 import { scaleToStr } from "@ap/helpers";
 import useCosmosTxSender from "@ap/hooks/use-cosmos-tx-sender";
+import { getTagPayloads } from "@ap/services/juno";
 import { FormValues } from "./types";
 import { AccountType } from "@ap/types/contracts";
 
@@ -39,6 +40,7 @@ export default function useSubmit(vault: string, type: AccountType) {
     await sendTx({
       msgs: [proposal],
       ...propMeta,
+      tagPayloads: getTagPayloads(propMeta.willExecute && "acc_invest"),
     });
   }
 

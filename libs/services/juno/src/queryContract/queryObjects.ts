@@ -90,4 +90,9 @@ export const queryObject: {
   accState({ id }) {
     return { state: { id } };
   },
+
+  /** vault */
+  vaultBalance({ endowment_id }) {
+    return { balance: { endowment_id } };
+  },
 };

@@ -119,6 +119,12 @@ export interface ContractQueries {
     res: Q<EndowmentState>;
     result: EndowmentState;
   };
+
+  vaultBalance: {
+    args: { endowment_id: number };
+    res: Q<string>;
+    result: string;
+  };
 }
 
 export type ContractQueryTypes = keyof ContractQueries;

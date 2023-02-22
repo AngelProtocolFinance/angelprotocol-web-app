@@ -76,11 +76,17 @@ export type CountryOption = {
 
 export type Regions = { [region: string]: string[] };
 
-export type EndowmentAsset = {
+export type EndowmentAssets = {
+  liquid: AssetSummary;
+  locked: AssetSummary;
+};
+
+export type AssetSummary = {
   symbol: string;
   free: number;
   invested: number;
   total: number;
+  vaults: Vault[];
 };
 
 export type Vault = YieldVault & {

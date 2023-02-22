@@ -2,16 +2,16 @@ import { ContentLoader } from "@ap/components";
 import QueryLoader from "@ap/components/query-loader";
 import { useAdminResources } from "@ap/contexts/admin";
 import { humanize } from "@ap/helpers";
-import { useAssetQuery } from "@ap/services/juno";
+import { useAssetsQuery } from "@ap/services/juno";
 import { AccountType } from "@ap/types/contracts";
 
 export default function Balances({ type }: { type: AccountType }) {
   const { id } = useAdminResources();
-  const queryState = useAssetQuery({ id, type });
+  const { data, ...rest } = useAssetsQuery({ endowId: id });
 
   return (
     <QueryLoader
-      queryState={queryState}
+      queryState={{ data: data && data[type], ...rest }}
       messages={{ loading: <Skeleton />, error: "Failed to get balances" }}
     >
       {({ total, free, invested, symbol }) => (
