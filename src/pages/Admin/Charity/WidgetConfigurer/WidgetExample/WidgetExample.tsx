@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import Logo from "components/Logo";
 import { getPossessiveForm } from "helpers";
-import { LOGO } from "constants/common";
+import { AP_LOGO } from "constants/common";
 import { FormValues } from "../schema";
 import Donater from "./Donater";
 
@@ -64,7 +64,7 @@ export default function WidgetExample({ trigger }: { trigger: boolean }) {
           </section>
         </div>
         <footer className="flex justify-center items-center h-20 w-full bg-blue">
-          <Logo className="w-20" logo={LOGO} />
+          <Logo className="w-20" logo={AP_LOGO} />
         </footer>
       </div>
     </div>

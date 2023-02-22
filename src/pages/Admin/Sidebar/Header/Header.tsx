@@ -1,5 +1,5 @@
 import Logo from "components/Logo";
-import { LOGO } from "constants/common";
+import { AP_LOGO } from "constants/common";
 import { useAdminResources } from "../../Guard";
 import CharityHeader from "./CharityHeader";
 
@@ -19,7 +19,7 @@ export default function Header() {
         <CharityHeader />
       ) : (
         <>
-          <Logo className="w-32" logo={LOGO} />
+          <Logo className="w-32" logo={AP_LOGO} />
           <h5 className="text-sm text-white font-bold truncate mt-2">
             {type === "ap"
               ? "Angel Giving Team Admin"
