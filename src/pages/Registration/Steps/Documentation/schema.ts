@@ -6,6 +6,7 @@ import { FileObject } from "types/aws";
 import { Asset } from "components/registration";
 import { genFileSchema } from "schemas/file";
 import { requiredString } from "schemas/string";
+import { MAX_SDGS } from "constants/unsdgs";
 
 export const MB_LIMIT = 25;
 const VALID_MIME_TYPES = [
@@ -31,7 +32,9 @@ export const schema = Yup.object().shape<SchemaShape<FormValues>>({
   proofOfIdentity: Yup.object().shape(genAssetShape(true)),
   proofOfRegistration: Yup.object().shape(genAssetShape(true)),
   website: Yup.string().required("required").url("invalid url"),
-  sdgs: Yup.array().min(1, "required"),
+  sdgs: Yup.array()
+    .min(1, "required")
+    .max(MAX_SDGS, `maximum ${MAX_SDGS} selections allowed`),
   hqCountry: Yup.object().shape<SchemaShape<CountryOption>>({
     name: requiredString,
   }),
