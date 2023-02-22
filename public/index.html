@@ -106,10 +106,42 @@
             var s = d.createElement("script");
             s.type = "text/javascript";
             s.async = true;
+            s.onload = async function () {
+              const offset = 100;
+              const initDelay = 200;
+              const debounceTime = 200;
+              //wait a bit to initialize launcher after loading script
+              await new Promise((r) => setTimeout(r, initDelay));
+              const launcher = document.querySelector(".intercom-launcher");
+
+              function debounce(callback) {
+                let timeout;
+                const debounced = (args) => {
+                  if (timeout) {
+                    window.clearTimeout(timeout);
+                  }
+                  timeout = window.setTimeout(() => {
+                    callback.apply(null, args);
+                  }, debounceTime);
+                };
+                return debounced;
+              }
+              const intercomHandleScroll = debounce(function () {
+                launcher.style.display =
+                  window.innerHeight + window.scrollY >=
+                  document.body.offsetHeight - offset
+                    ? "none"
+                    : "block";
+              });
+              window.addEventListener("scroll", intercomHandleScroll, {
+                passive: true,
+              });
+            };
             s.src = "https://widget.intercom.io/widget/fh3v40sb";
             var x = d.getElementsByTagName("script")[0];
             x.parentNode.insertBefore(s, x);
           };
+
           if (document.readyState === "complete") {
             l();
           } else if (w.attachEvent) {
