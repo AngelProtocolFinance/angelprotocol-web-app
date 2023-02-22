@@ -3,7 +3,7 @@ import ContentLoader from "components/ContentLoader";
 import Icon from "components/Icon";
 import APLogo from "components/Logo";
 import Logo from "components/Logo";
-import { useAdminResources } from "../Guard";
+import { useAdminResources } from "../../Guard";
 
 export default function Header() {
   const { type } = useAdminResources();
