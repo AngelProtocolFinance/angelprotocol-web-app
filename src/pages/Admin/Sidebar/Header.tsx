@@ -16,7 +16,7 @@ export default function Header() {
   } = useProfileQuery(id, { skip: !isCharity });
 
   return (
-    <div className="flex flex-col gap-3 w-full py-6 px-5 border-b border-prim">
+    <div className="flex flex-col gap-1 w-full py-6 px-5 border-b border-prim">
       <div className="flex justify-between">
         {isCharity ? (
           <Logo
@@ -41,26 +41,24 @@ export default function Header() {
           ))}
       </div>
 
-      <div className="grid gap-1">
-        <h5 className="text-sm font-bold truncate">
-          {isCharity ? (
-            isLoading ? (
-              <ContentLoader className="h-5 w-full" />
-            ) : isError || !profile ? (
-              "Error loading endowment name"
-            ) : (
-              profile.name
-            )
-          ) : type === "ap" ? (
-            "Angel Giving Team Admin"
+      <h5 className="text-sm font-bold truncate mt-2">
+        {isCharity ? (
+          isLoading ? (
+            <ContentLoader className="h-5 w-full" />
+          ) : isError || !profile ? (
+            "Error loading endowment name"
           ) : (
-            "Charity Applications Review"
-          )}
-        </h5>
-        {/* <span className="text-xs truncate">
+            profile.name
+          )
+        ) : type === "ap" ? (
+          "Angel Giving Team Admin"
+        ) : (
+          "Charity Applications Review"
+        )}
+      </h5>
+      {/* <span className="text-xs truncate">
             juno1rhaasmvq6t3a607ua90ufrr8srkr08lxauqnpz
           </span> */}
-      </div>
     </div>
   );
 }
