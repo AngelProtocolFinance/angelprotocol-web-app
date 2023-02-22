@@ -1,3 +1,4 @@
+import { unknownFlag } from "@ap/assets";
 import Icon, { DrawerIcon } from "@ap/components/icon";
 import { useLazyCountryFlagQuery } from "@ap/services/countries";
 import { Combobox } from "@headlessui/react";
@@ -11,7 +12,6 @@ import {
 } from "react-hook-form";
 import { CountryOption } from "@ap/types/services";
 import Options from "./Options";
-import unknownFlag from "./assets/unknown-flag.jpeg";
 
 type BaseFormShape = { [index: string]: CountryOption };
 
