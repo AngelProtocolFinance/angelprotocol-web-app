@@ -1,4 +1,5 @@
 {
   "name": "@ap/contexts/wallet-context",
+  "sideEffects": false,
   "version": "0.0.1"
 }

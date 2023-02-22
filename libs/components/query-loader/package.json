@@ -1,4 +1,5 @@
 {
   "name": "@ap/components/query-loader",
+  "sideEffects": false,
   "version": "0.0.1"
 }

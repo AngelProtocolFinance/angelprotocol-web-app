@@ -1,4 +1,5 @@
 {
   "name": "@ap/components/img-editor",
+  "sideEffects": false,
   "version": "0.0.1"
 }

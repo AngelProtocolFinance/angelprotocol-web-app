@@ -1,4 +1,5 @@
 {
   "name": "@ap/hooks/use-sort",
+  "sideEffects": false,
   "version": "0.0.1"
 }

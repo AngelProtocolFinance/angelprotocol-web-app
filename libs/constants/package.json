@@ -1,5 +1,6 @@
 {
   "name": "@ap/constants",
+  "sideEffects": false,
   "version": "0.0.1",
-  "type": "commonjs"
+  "type": "module"
 }

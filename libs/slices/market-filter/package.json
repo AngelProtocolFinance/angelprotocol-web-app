@@ -1,5 +1,6 @@
 {
   "name": "@ap/slices/market-filter",
+  "sideEffects": false,
   "version": "0.0.1",
   "type": "commonjs"
 }

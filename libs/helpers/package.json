@@ -1,5 +1,6 @@
 {
   "name": "@ap/helpers",
+  "sideEffects": false,
   "version": "0.0.1",
   "type": "commonjs"
 }
