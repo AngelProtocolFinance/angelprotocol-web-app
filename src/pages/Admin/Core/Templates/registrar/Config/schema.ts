@@ -9,26 +9,21 @@ const contractAddrSchema = contractAddr.nullable();
 
 const shape: SchemaShape<RegistrarConfigValues> = {
   ...proposalShape,
-  //accounts code id
-  accounts_code_id: positiveNumber,
 
-  //splits
-  split_default: percentString,
-  split_max: percentString,
-  split_min: percentString,
-
-  //vault settings
-  tax_rate: percentString,
-  default_vault: contractAddrSchema,
-
-  //contracts
+  accounts_contract: contractAddrSchema,
   index_fund_contract: contractAddrSchema,
   treasury: contractAddrSchema,
-  guardians_multisig_addr: contractAddrSchema,
-  endowment_owners_group_addr: contractAddrSchema,
   halo_token: contractAddrSchema,
   gov_contract: contractAddrSchema,
   charity_shares_contract: contractAddrSchema,
+  applications_review: contractAddrSchema,
+  applications_impact_review: contractAddrSchema,
+  swaps_router: contractAddrSchema,
+  split_default: percentString,
+  split_max: percentString,
+  split_min: percentString,
+  cw3_code: positiveNumber,
+  cw4_code: positiveNumber,
 };
 
 export const schema = Yup.object(shape);
