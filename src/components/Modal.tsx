@@ -11,7 +11,7 @@ const Modal: FC<any> = (props) => (
     leaveFrom="opacity-100"
     leaveTo="opacity-0"
   >
-    <Dialog.Panel {...props}>{props.children}</Dialog.Panel>
+    <Dialog.Panel {...props} />
   </Transition.Child>
 );
 
