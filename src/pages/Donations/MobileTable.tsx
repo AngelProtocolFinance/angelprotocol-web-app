@@ -29,7 +29,7 @@ export default function MobileTable({ donations, classes = "" }: TableProps) {
               <Disclosure.Button
                 className={`${
                   open ? "bg-orange-l5 dark:bg-blue-d4" : ""
-                } w-full h-12 grid grid-cols-[auto_1fr_auto] border-b last:border-0 border-prim divide-x divide-prim`}
+                } w-full grid grid-cols-[auto_1fr_auto] border-b last:border-0 border-prim divide-x divide-prim`}
               >
                 <DrawerIcon
                   size={24}
