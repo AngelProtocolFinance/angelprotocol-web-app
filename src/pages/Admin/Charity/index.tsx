@@ -33,13 +33,7 @@ const LINK_GROUPS: LinkGroup[] = [
   { title: "Profile", links: [LINKS.edit_profile] },
   {
     title: "Manage",
-    links: [
-      LINKS[adminRoutes.proposals],
-      // {
-      //   ...LINKS[adminRoutes.widget_config],
-      //   to: `${LINKS[adminRoutes.widget_config].to}/${endowId}`,
-      // },
-    ],
+    links: [LINKS[adminRoutes.proposals]],
   },
 ];
 
