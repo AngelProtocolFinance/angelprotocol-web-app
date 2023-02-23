@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import Logo from "components/Logo";
 import { getPossessiveForm } from "helpers";
-import { LOGO } from "constants/common";
+import { AP_LOGO } from "constants/common";
 import { FormValues } from "../schema";
 import Donater from "./Donater";
 
@@ -16,7 +16,7 @@ export default function WidgetExample({ trigger }: { trigger: boolean }) {
   const endowName = formValues.endowIdName.name || "ENDOWMENT_NAME";
 
   return (
-    <div className="h-full overflow-y-auto scroller w-full xl:w-5/6 max-h-[800px] border border-gray-l2 rounded text-gray-d2 bg-white">
+    <div className="h-full overflow-y-auto scroller w-full max-h-[800px] border border-gray-l2 rounded text-gray-d2 bg-white">
       <div className="grid grid-rows-[1fr_auto] gap-10 h-full">
         <div className="flex flex-col gap-3 max-w-3xl h-full mx-auto px-5">
           <header className="flex justify-center items-center gap-10 w-full h-24 z-10">
@@ -64,7 +64,7 @@ export default function WidgetExample({ trigger }: { trigger: boolean }) {
           </section>
         </div>
         <footer className="flex justify-center items-center h-20 w-full bg-blue">
-          <Logo className="w-20" logo={LOGO} />
+          <Logo className="w-20" logo={AP_LOGO} />
         </footer>
       </div>
     </div>

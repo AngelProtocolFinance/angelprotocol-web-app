@@ -12,7 +12,7 @@ export const SEO_IMAGE =
 export const EMAIL_SUPPORT = "support@angelgiving.io";
 export const GENERIC_ERROR_MESSAGE = `An error occurred. Please get in touch with ${EMAIL_SUPPORT} if the problem persists.`;
 
-export const LOGO: LogoProps = {
+export const AP_LOGO: LogoProps = {
   href: "https://angelprotocol.io/",
   src: angelProtocolLogo,
   title: "Go to Marketing page",

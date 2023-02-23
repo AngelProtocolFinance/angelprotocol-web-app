@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import { Link } from "./types";
 import Loader from "components/Loader";
 import Seo from "components/Seo";
-import { LOGO } from "constants/common";
+import { AP_LOGO } from "constants/common";
 import { appRoutes } from "constants/routes";
 import Footer from "./Footer";
 import Header from "./Header";
@@ -21,7 +21,7 @@ export default function Layout() {
   return (
     <div className="grid grid-rows-[auto_1fr_auto]">
       <Seo /> {/* Load all defaults for SEO meta tags */}
-      <Header classes="sticky top-0 z-20" links={HEADER_LINKS} logo={LOGO} />
+      <Header classes="sticky top-0 z-20" links={HEADER_LINKS} logo={AP_LOGO} />
       <Suspense fallback={<LoaderComponent />}>
         <Outlet />
       </Suspense>

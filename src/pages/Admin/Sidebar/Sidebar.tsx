@@ -6,7 +6,6 @@ import { createNavLinkStyler } from "helpers";
 import Header from "./Header";
 
 type Props = {
-  endowId: number;
   className?: string;
   linkGroups: LinkGroup[];
   onChange?: (link: Link) => void;
@@ -15,9 +14,9 @@ type Props = {
 export default function Sidebar(props: Props) {
   return (
     <div
-      className={`flex flex-col w-72 sm:w-64 h-full bg-white dark:bg-blue-d6 border-r border-prim ${props.className}`}
+      className={`flex flex-col w-72 md:w-64 h-full bg-white dark:bg-blue-d6 border-r border-prim ${props.className}`}
     >
-      <Header endowId={props.endowId} />
+      <Header />
 
       <div className="flex flex-col py-3">
         {props.linkGroups.map((group) => (
@@ -29,6 +28,7 @@ export default function Sidebar(props: Props) {
             )}
             {group.links.map((link) => (
               <NavLink
+                end={link.end}
                 key={`nav_link-${link.to}`}
                 to={link.to}
                 className={linkClassName}

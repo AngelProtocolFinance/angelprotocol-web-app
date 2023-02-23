@@ -31,18 +31,20 @@ export enum profileRoutes {
   governance = "governance",
 }
 
-export enum adminRoutes {
+export const adminRoutes = {
   //base routes
-  index = "",
-  proposal = "proposal",
-  proposals = "proposals",
-  templates = "templates",
-  widget_config = "widget-config",
+  index_review: "",
+  index: "",
+  proposal: "proposal",
+  proposals: "proposals",
+  templates: "templates",
+  widget_config: "widget-config",
+  contributions: "contributions",
 
   //charity
-  edit_profile = "edit-profile",
-  withdraws = "withdraws",
-  settings = "settings",
-  invest = "invest-dashboard",
-  account = "account",
-}
+  edit_profile: "edit-profile",
+  withdraws: "withdraws",
+  settings: "settings",
+  invest: "invest-dashboard",
+  account: "account",
+} as const;
