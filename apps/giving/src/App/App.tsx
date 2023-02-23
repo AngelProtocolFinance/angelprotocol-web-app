@@ -17,6 +17,8 @@ const Donate = lazy(() => import("../pages/Donate"));
 const Gift = lazy(() => import("../pages/Gift"));
 const DonateWidget = lazy(() => import("../pages/DonateWidget"));
 
+console.log("some test change");
+
 export default function App() {
   const location = useLocation();
   useScrollTop(location.pathname);
