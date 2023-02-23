@@ -93,19 +93,7 @@ export default function ModalContext(
               aria-hidden="true"
             />
           </Transition.Child>
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-300"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div>
-              {state?.Modal /** should always be wrapped with Dialog.Panel */}
-            </div>
-          </Transition.Child>
+          {state?.Modal /** should always be wrapped with Panel */}
         </Dialog>
       </Transition>
       {props.children}

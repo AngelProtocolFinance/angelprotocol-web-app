@@ -1,14 +1,14 @@
-import { Dialog } from "@headlessui/react";
 import { useModalContext } from "contexts/ModalContext";
 import APLogo from "components/APLogo";
 import Icon from "components/Icon";
+import Panel from "components/Panel";
 import { adminMobileNavId } from "../constants";
 import Links from "./Links";
 
 export default function Menu() {
   const { closeModal } = useModalContext();
   return (
-    <Dialog.Panel
+    <Panel
       as="div"
       className="fixed top-0 inset-x-0 z-10 bg-blue dark:bg-blue-d5 flex flex-col gap-4 shadow-lg pb-8"
     >
@@ -28,6 +28,6 @@ export default function Menu() {
           id={adminMobileNavId}
         />
       </div>
-    </Dialog.Panel>
+    </Panel>
   );
 }
