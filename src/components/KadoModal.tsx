@@ -1,4 +1,3 @@
-import { Dialog } from "@headlessui/react";
 import { useCallback } from "react";
 import { invalidateApesTags } from "services/apes";
 import { useModalContext } from "contexts/ModalContext";
@@ -34,7 +33,7 @@ export default function KadoModal() {
 
   return (
     <Modal className="fixed inset-0 sm:fixed-center z-10 flex flex-col sm:w-[500px] sm:h-[700px] bg-gray-l5 dark:bg-blue-d6 sm:border border-prim sm:rounded">
-      <Dialog.Title
+      <Modal.Title
         as="h3"
         className="relative w-full pl-4 px-4 sm:px-0 py-4 sm:py-6 bg-orange-l6 border-b border-prim rounded-t font-heading font-black sm:font-bold sm:text-center text-xl text-orange sm:text-gray-d2 dark:text-white uppercase sm:normal-case dark:bg-blue-d7 "
       >
@@ -45,7 +44,7 @@ export default function KadoModal() {
         >
           <Icon type="Close" className="w-8 sm:w-7 h-8 sm:h-7" />
         </button>
-      </Dialog.Title>
+      </Modal.Title>
       <IFrame
         src={`https://app.kado.money?apiKey=${KADO_API_KEY}&onPayCurrency=USD&onRevCurrency=USDC&onPayAmount=100${onToAddress}&cryptoList=USDC${network}&product=BUY&networkList=ethereum,juno,terra`}
         className="w-full h-full border-none rounded-b"
