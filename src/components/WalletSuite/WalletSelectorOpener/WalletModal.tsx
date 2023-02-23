@@ -1,8 +1,7 @@
-import { Dialog } from "@headlessui/react";
 import { useModalContext } from "contexts/ModalContext";
 import { useSetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
-import Panel from "components/Panel";
+import Modal from "components/Modal";
 import Connector from "./Connector";
 
 export default function WalletModal() {
@@ -10,10 +9,10 @@ export default function WalletModal() {
   const { connections } = useSetWallet();
 
   return (
-    <Panel className="fixed inset-0 sm:fixed-center z-20 grid sm:items-center w-full sm:max-w-lg h-full sm:h-fit sm:border border-prim sm:rounded bg-gray-l6 text-gray-d2 dark:bg-blue-d6  dark:text-white shadow-[0_0_60px_rgba(0,0,0,0.3)]">
-      <Dialog.Title
+    <Modal className="fixed inset-0 sm:fixed-center z-20 grid sm:items-center w-full sm:max-w-lg h-full sm:h-fit sm:border border-prim sm:rounded bg-gray-l6 text-gray-d2 dark:bg-blue-d6  dark:text-white shadow-[0_0_60px_rgba(0,0,0,0.3)]">
+      <Modal.Title
         as="h3"
-        className="relative w-full pl-4 px-4 sm:px-0 py-4 sm:py-6 bg-orange-l6 border-b border-prim font-heading font-black sm:font-bold sm:text-center text-xl text-orange sm:text-inherit uppercase sm:capitalize dark:bg-blue-d7 "
+        className="relative rounded-t w-full pl-4 px-4 sm:px-0 py-4 sm:py-6 bg-orange-l6 border-b border-prim font-heading font-black sm:font-bold sm:text-center text-xl text-orange sm:text-inherit uppercase sm:capitalize dark:bg-blue-d7 "
       >
         Connect Wallet
         <button
@@ -22,7 +21,7 @@ export default function WalletModal() {
         >
           <Icon type="Close" className="w-8 sm:w-7 h-8 sm:h-7" />
         </button>
-      </Dialog.Title>
+      </Modal.Title>
       <div className="flex flex-col items-center gap-4 sm:gap-6 p-6 sm:p-8 dark:p-8 w-full sm:max-h-[492px] overflow-y-auto scroller">
         <p className="font-work sm:font-heading font-semibold sm:font-bold text-center text-base sm:text-lg">
           Select one of the available wallets to continue
@@ -32,6 +31,6 @@ export default function WalletModal() {
             connections.map((conn) => <Connector key={conn.name} {...conn} />)}
         </div>
       </div>
-    </Panel>
+    </Modal>
   );
 }
