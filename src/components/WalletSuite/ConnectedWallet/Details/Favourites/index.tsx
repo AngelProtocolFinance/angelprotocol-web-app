@@ -4,9 +4,13 @@ import Favourite from "./Favourite";
 
 const MAX_ELEMENTS_TO_DISPLAY = 7;
 
-type Props = { bookmarks: EndowmentBookmark[] | undefined; isError: boolean };
+type Props = {
+  bookmarks: EndowmentBookmark[] | undefined;
+  isError: boolean;
+  isLoading: boolean;
+};
 
-export default function Favourites({ bookmarks, isError }: Props) {
+export default function Favourites({ bookmarks, isError, isLoading }: Props) {
   return (
     <div className="flex flex-col gap-3 max-h-[244px] flex-1 p-4 border-b border-prim">
       <h3 className="flex justify-between gap-2 font-heading">
@@ -25,7 +29,7 @@ export default function Favourites({ bookmarks, isError }: Props) {
         </Link> */}
       </h3>
       <QueryLoader
-        queryState={{ data: bookmarks, isError: isError, isLoading: false }}
+        queryState={{ data: bookmarks, isError: isError, isLoading: isLoading }}
         messages={{
           empty: "No favourites",
           error: "Failed to get favorite organisations.",
