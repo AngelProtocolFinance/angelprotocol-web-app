@@ -1,7 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import React, { FC } from "react";
 
-const Panel: FC<any> = (props) => (
+const Modal: FC<any> = (props) => (
   <Transition.Child
     as={React.Fragment}
     enter="transform ease-out duration-300"
@@ -15,4 +15,4 @@ const Panel: FC<any> = (props) => (
   </Transition.Child>
 );
 
-export default Panel as typeof Dialog.Panel;
+export default Modal as typeof Dialog.Panel;

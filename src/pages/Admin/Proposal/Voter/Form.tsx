@@ -1,5 +1,5 @@
 import { VoteValues as V } from "./types";
-import Panel from "components/Panel";
+import Modal from "components/Modal";
 import Reason from "./Reason";
 import VoteOption from "./VoteOption";
 import useVote from "./useVote";
@@ -7,7 +7,7 @@ import useVote from "./useVote";
 export default function Form() {
   const { vote, isSubmitDisabled, isSending } = useVote();
   return (
-    <Panel
+    <Modal
       as="form"
       onSubmit={vote}
       className="w-full max-w-md fixed-center z-20 font-work text-gray-d2 dark:text-white bg-white dark:bg-blue-d6 border border-prim -mt-4 grid p-4 pt-4 rounded"
@@ -26,6 +26,6 @@ export default function Form() {
       >
         {isSending ? "Submitting.." : "Proceed"}
       </button>
-    </Panel>
+    </Modal>
   );
 }

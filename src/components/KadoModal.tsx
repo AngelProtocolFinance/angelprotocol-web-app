@@ -9,7 +9,7 @@ import { logger } from "helpers";
 import { chainIDs } from "constants/chains";
 import { KADO_API_KEY } from "constants/env";
 import IFrame from "./IFrame";
-import Panel from "./Panel";
+import Modal from "./Modal";
 
 type KADO_NETWORK_VALUES = "ethereum" | "juno" | "terra";
 
@@ -33,7 +33,7 @@ export default function KadoModal() {
     : `&network=${getKadoNetworkValue(wallet.chain.chain_id)}`;
 
   return (
-    <Panel className="fixed inset-0 sm:fixed-center z-10 flex flex-col sm:w-[500px] sm:h-[700px] bg-gray-l5 dark:bg-blue-d6 sm:border border-prim sm:rounded">
+    <Modal className="fixed inset-0 sm:fixed-center z-10 flex flex-col sm:w-[500px] sm:h-[700px] bg-gray-l5 dark:bg-blue-d6 sm:border border-prim sm:rounded">
       <Dialog.Title
         as="h3"
         className="relative w-full pl-4 px-4 sm:px-0 py-4 sm:py-6 bg-orange-l6 border-b border-prim rounded-t font-heading font-black sm:font-bold sm:text-center text-xl text-orange sm:text-gray-d2 dark:text-white uppercase sm:normal-case dark:bg-blue-d7 "
@@ -52,7 +52,7 @@ export default function KadoModal() {
         title="Buy with Kado"
         onLoad={handleOnLoad}
       />
-    </Panel>
+    </Modal>
   );
 }
 
