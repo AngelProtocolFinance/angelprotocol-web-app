@@ -12,9 +12,9 @@ export default function DonationsTable({ classes = "" }) {
       <QueryLoader
         queryState={queryState}
         messages={{
-          loading: "Fetching contributions..",
-          error: "Failed to get contributions",
-          empty: "No contributions found",
+          loading: "Fetching donations..",
+          error: "Failed to get donations",
+          empty: "No donations found",
         }}
       >
         {(donations) => <Table donations={donations} />}
