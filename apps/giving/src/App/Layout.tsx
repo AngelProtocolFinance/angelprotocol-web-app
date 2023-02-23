@@ -17,7 +17,7 @@ const HEADER_LINKS: Link[] = [
 
 export default function Layout() {
   return (
-    <div className="grid grid-rows-[auto_1fr_auto]">
+    <div className="grid grid-rows-[auto_1fr_auto] ">
       <Seo /> {/* Load all defaults for SEO meta tags */}
       <Header classes="sticky top-0 z-20" links={HEADER_LINKS} />
       <Suspense fallback={<LoaderComponent />}>

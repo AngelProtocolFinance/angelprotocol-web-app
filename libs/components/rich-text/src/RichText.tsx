@@ -1,8 +1,6 @@
 import Quill from "quill";
-import "quill/dist/quill.snow.css";
 import { useCallback, useState } from "react";
 import { Props } from "./types";
-import "./richtext.css";
 
 export default function RichText(props: Props) {
   const [numChars, setNumChars] = useState(0);
