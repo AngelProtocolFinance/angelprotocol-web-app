@@ -11,7 +11,7 @@ export default function MobileTable({ donations, classes = "" }: TableProps) {
   const showKYCForm = useKYC();
 
   return (
-    <div className={`${classes} border border-prim rounded`}>
+    <div className={`${classes} border border-prim rounded-t`}>
       <div className="grid items-center grid-cols-[auto_1fr_auto] h-12 uppercase text-xs font-bold bg-orange-l6 dark:bg-blue-d7 border-b border-prim divide-x divide-prim rounded-t">
         <div className="w-12" />
         <div className="p-4">Recipient</div>
@@ -22,7 +22,7 @@ export default function MobileTable({ donations, classes = "" }: TableProps) {
         <Disclosure
           key={index}
           as="div"
-          className="text-sm odd:bg-orange-l6 dark:even:bg-blue-d6 dark:odd:bg-blue-d7 w-full border-b last:border-0 border-prim last:rounded-b"
+          className="text-sm odd:bg-orange-l6 dark:even:bg-blue-d6 dark:odd:bg-blue-d7 w-full border-b last:border-0 border-prim"
         >
           {({ open }) => (
             <>
