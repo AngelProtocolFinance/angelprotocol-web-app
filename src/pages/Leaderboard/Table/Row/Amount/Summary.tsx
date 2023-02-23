@@ -1,12 +1,12 @@
-import { Dialog } from "@headlessui/react";
 import { useModalContext } from "contexts/ModalContext";
+import Panel from "components/Panel";
 import { humanize } from "helpers";
 import { AmountProps } from ".";
 
 export default function Summary({ locked, liquid, type }: AmountProps) {
   const { closeModal } = useModalContext();
   return (
-    <Dialog.Panel className="grid content-start bg-gray-l5 dark:bg-blue-d5 text-gray-d2 border border-prim dark:text-white font-work fixed-center z-20 p-8 rounded-2xl shadow-lg max-w-md">
+    <Panel className="grid content-start bg-gray-l5 dark:bg-blue-d5 text-gray-d2 border border-prim dark:text-white font-work fixed-center z-20 p-8 rounded-2xl shadow-lg max-w-md">
       <Amount title="principal" value={locked} />
       <Amount title="impact" value={liquid} />
       <button
@@ -17,7 +17,7 @@ export default function Summary({ locked, liquid, type }: AmountProps) {
       </button>
       <Text type={type} title="Principal" />
       <Text type={type} title="Impact" />
-    </Dialog.Panel>
+    </Panel>
   );
 }
 
