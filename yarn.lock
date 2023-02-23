@@ -3520,6 +3520,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@nrwl/nx-cloud@npm:latest":
+  version: 15.1.0
+  resolution: "@nrwl/nx-cloud@npm:15.1.0"
+  dependencies:
+    axios: ^0.21.2
+    chalk: 4.1.0
+    dotenv: ~10.0.0
+    fs-extra: ^10.1.0
+    node-machine-id: ^1.1.12
+    strip-json-comments: ^3.1.1
+    tar: 6.1.11
+    yargs-parser: ">=21.0.1"
+  bin:
+    nx-cloud: bin/nx-cloud.js
+  checksum: 9774f961e509503fe14455d677e6eb808b0e7beaeb7e9a286aafcc6ecc08c1cdab24686850656b6e1eeb7db854c3dc2da9e508f7e3667e0c26dec81277c4f584
+  languageName: node
+  linkType: hard
+
 "@nrwl/nx-darwin-arm64@npm:15.7.0":
   version: 15.7.0
   resolution: "@nrwl/nx-darwin-arm64@npm:15.7.0"
@@ -6000,6 +6018,7 @@ __metadata:
     "@nrwl/jest": 15.7.0
     "@nrwl/js": ^15.7.0
     "@nrwl/linter": 15.7.0
+    "@nrwl/nx-cloud": latest
     "@nrwl/react": ^15.7.0
     "@nrwl/webpack": 15.7.0
     "@nrwl/workspace": ^15.7.0
@@ -7350,6 +7369,16 @@ __metadata:
   version: 0.12.0
   resolution: "caseless@npm:0.12.0"
   checksum: b43bd4c440aa1e8ee6baefee8063b4850fd0d7b378f6aabc796c9ec8cb26d27fb30b46885350777d9bd079c5256c0e1329ad0dc7c2817e0bb466810ebb353751
+  languageName: node
+  linkType: hard
+
+"chalk@npm:4.1.0":
+  version: 4.1.0
+  resolution: "chalk@npm:4.1.0"
+  dependencies:
+    ansi-styles: ^4.1.0
+    supports-color: ^7.1.0
+  checksum: 5561c7b4c063badee3e16d04bce50bd033e1be1bf4c6948639275683ffa7a1993c44639b43c22b1c505f0f813a24b1889037eb182546b48946f9fe7cdd0e7d13
   languageName: node
   linkType: hard
 
@@ -10292,7 +10321,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fs-extra@npm:^10.0.0":
+"fs-extra@npm:^10.0.0, fs-extra@npm:^10.1.0":
   version: 10.1.0
   resolution: "fs-extra@npm:10.1.0"
   dependencies:
@@ -13757,6 +13786,13 @@ __metadata:
   version: 0.4.0
   resolution: "node-int64@npm:0.4.0"
   checksum: d0b30b1ee6d961851c60d5eaa745d30b5c95d94bc0e74b81e5292f7c42a49e3af87f1eb9e89f59456f80645d679202537de751b7d72e9e40ceea40c5e449057e
+  languageName: node
+  linkType: hard
+
+"node-machine-id@npm:^1.1.12":
+  version: 1.1.12
+  resolution: "node-machine-id@npm:1.1.12"
+  checksum: e23088a0fb4a77a1d6484b7f09a22992fd3e0054d4f2e427692b4c7081e6cf30118ba07b6113b6c89f1ce46fd26ec5ab1d76dcaf6c10317717889124511283a5
   languageName: node
   linkType: hard
 
@@ -17397,7 +17433,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tar@npm:^6.1.11, tar@npm:^6.1.2":
+"tar@npm:6.1.11, tar@npm:^6.1.11, tar@npm:^6.1.2":
   version: 6.1.11
   resolution: "tar@npm:6.1.11"
   dependencies:
@@ -18867,7 +18903,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yargs-parser@npm:21.1.1, yargs-parser@npm:^21.0.1, yargs-parser@npm:^21.1.1":
+"yargs-parser@npm:21.1.1, yargs-parser@npm:>=21.0.1, yargs-parser@npm:^21.0.1, yargs-parser@npm:^21.1.1":
   version: 21.1.1
   resolution: "yargs-parser@npm:21.1.1"
   checksum: ed2d96a616a9e3e1cc7d204c62ecc61f7aaab633dcbfab2c6df50f7f87b393993fe6640d017759fe112d0cb1e0119f2b4150a87305cc873fd90831c6a58ccf1c

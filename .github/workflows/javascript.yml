@@ -1,29 +1,28 @@
-name: JavaScript
+name: CI
+
 on:
   push:
+
 jobs:
-  lint-tests:
-    name: "Lint and test the codebase"
-    environment: production
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out repo
-        uses: actions/checkout@v2
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: "16"
-          cache: "yarn"
-      - name: Install dependencies
-        run: yarn install
-      - name: Lint codebase
-        run: yarn run lint
-      - name: Test codebase
-        run: yarn run test --watchAll=false --coverage --json --outputFile ./codecov-report.json
-        env:
-          NX_JUNO_LCD_NODE: ${{ secrets.REACT_APP_JUNO_LCD_NODE }}
-          NX_INFURA_ID: ${{ secrets.REACT_APP_INFURA_ID }}
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+  main:
+    name: Nx Cloud - Main Job
+    env:
+      NX_JUNO_LCD_NODE: ${{ secrets.REACT_APP_JUNO_LCD_NODE }}
+      NX_INFURA_ID: ${{ secrets.REACT_APP_INFURA_ID }}
+    uses: nrwl/ci/.github/workflows/nx-cloud-main.yml@v0.11.3
+    with:
+      number-of-agents: 3
+      init-commands: |
+        yarn exec nx-cloud start-ci-run --stop-agents-after="build" --agent-count=3
+      parallel-commands: |
+        yarn exec nx-cloud record -- yarn exec nx format:check
+      parallel-commands-on-agents: |
+        yarn exec nx affected --target=lint --parallel=3
+        yarn exec nx affected --target=test --parallel=3 --ci --code-coverage
+        yarn exec nx affected --target=build --parallel=3
+
+  agents:
+    name: Nx Cloud - Agents
+    uses: nrwl/ci/.github/workflows/nx-cloud-agents.yml@v0.11.3
+    with:
+      number-of-agents: 3
