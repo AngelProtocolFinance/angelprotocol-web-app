@@ -1,4 +1,5 @@
 {
+  "extends": "./tsconfig.paths.json",
   "compileOnSave": false,
   "compilerOptions": {
     "allowJs": false,
@@ -24,83 +25,7 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
-    "target": "es2015",
-    "paths": {
-      "@/*": ["apps/giving/src/*"],
-      "@ap/components": ["libs/components/src/index.ts"],
-      "@ap/components/admin": ["libs/components/admin/src/index.ts"],
-      "@ap/components/registration": [
-        "libs/components/registration/src/index.ts"
-      ],
-      "@ap/components/copier": ["libs/components/copier/src/index.ts"],
-      "@ap/components/icon": ["libs/components/icon/src/index.ts"],
-      "@ap/components/csv-exporter": [
-        "libs/components/csv-exporter/src/index.ts"
-      ],
-      "@ap/components/form": ["libs/components/form/src/index.ts"],
-      "@ap/components/logo": ["libs/components/logo/src/index.ts"],
-      "@ap/components/bookmark-btn": [
-        "libs/components/bookmark-btn/src/index.ts"
-      ],
-      "@ap/components/header-btn": ["libs/components/header-btn/src/index.ts"],
-      "@ap/components/kado-modal": ["libs/components/kado-modal/src/index.ts"],
-      "@ap/components/steps": ["libs/components/steps/src/index.tsx"],
-      "@ap/components/token-field": [
-        "libs/components/token-field/src/index.ts"
-      ],
-      "@ap/components/img-editor": ["libs/components/img-editor/src/index.ts"],
-      "@ap/components/rich-text": ["libs/components/rich-text/src/index.ts"],
-      "@ap/components/split": ["libs/components/split/src/index.ts"],
-      "@ap/components/wallet-suite": [
-        "libs/components/wallet-suite/src/index.tsx"
-      ],
-      "@ap/components/country-selector": [
-        "libs/components/country-selector/src/index.tsx"
-      ],
-      "@ap/components/kyc": ["libs/components/kyc/src/index.ts"],
-      "@ap/components/prompt": ["libs/components/prompt/src/index.ts"],
-      "@ap/components/status": ["libs/components/status/src/index.ts"],
-      "@ap/components/selector": ["libs/components/selector/src/index.ts"],
-      "@ap/components/img-wrapper": [
-        "libs/components/img-wrapper/src/index.ts"
-      ],
-      "@ap/components/query-loader": [
-        "libs/components/query-loader/src/index.ts"
-      ],
-      "@ap/constants": ["libs/constants/src/index.ts"],
-      "@ap/assets": ["libs/assets/src/index.ts"],
-      "@ap/contexts": ["libs/contexts/src/index.ts"],
-      "@ap/store": ["libs/store/src/index.ts"],
-      "@ap/errors": ["libs/errors/src/index.ts"],
-      "@ap/contexts/admin": ["libs/contexts/admin/src/index.ts"],
-      "@ap/contexts/wallet-context": [
-        "libs/contexts/wallet-context/src/index.ts"
-      ],
-      "@ap/contracts": ["libs/contracts/src/index.ts"],
-      "@ap/helpers": ["libs/helpers/src/index.ts"],
-      "@ap/helpers/keplr": ["libs/helpers/keplr/src/index.ts"],
-      "@ap/hooks": ["libs/hooks/src/index.ts"],
-      "@ap/hooks/use-cosmos-tx-sender": [
-        "libs/hooks/use-cosmos-tx-sender/src/index.ts"
-      ],
-      "@ap/hooks/use-sort": ["libs/hooks/use-sort/src/index.ts"],
-      "@ap/schemas": ["libs/schemas/src/index.ts"],
-      "@ap/services/apes": ["libs/services/apes/src/index.ts"],
-      "@ap/services/aws": ["libs/services/aws/src/index.ts"],
-      "@ap/services/countries": ["libs/services/countries/src/index.ts"],
-      "@ap/services/juno": ["libs/services/juno/src/index.ts"],
-      "@ap/slices/admin": ["libs/slices/admin/src/index.ts"],
-      "@ap/slices/donation": ["libs/slices/donation/src/index.ts"],
-      "@ap/slices/gift": ["libs/slices/gift/src/index.ts"],
-      "@ap/slices/market-filter": ["libs/slices/market-filter/src/index.ts"],
-      "@ap/types": ["libs/types/src/index.ts"],
-      "@ap/types/aws": ["libs/types/aws/src/index.ts"],
-      "@ap/types/slices": ["libs/types/slices/src/index.ts"],
-      "@ap/types/admin": ["libs/types/admin/src/index.ts"],
-      "@ap/types/widget": ["libs/types/widget/src/index.ts"],
-      "@ap/types/contracts": ["libs/types/contracts/src/index.ts"],
-      "@ap/types/services": ["libs/types/services/src/index.ts"]
-    }
+    "target": "es2015"
   },
   "exclude": ["node_modules", "tmp"]
 }
