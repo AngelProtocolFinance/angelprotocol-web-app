@@ -77,7 +77,6 @@ export type RegistrarConfigPayload = {
   halo_token?: string;
   gov_contract?: string;
   charity_shares_contract?: string;
-  rebalance?: RebalanceDetails;
   cw3_code?: number;
   cw4_code?: number;
   accepted_tokens_native?: string[];

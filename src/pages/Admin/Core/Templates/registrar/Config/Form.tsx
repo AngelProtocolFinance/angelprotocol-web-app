@@ -87,6 +87,22 @@ export default function Form() {
         />
       </GroupContainer>
 
+      <Label className="-mb-4 font-bold">
+        Accepted Tokens (comma separated list of values)
+      </Label>
+      <GroupContainer>
+        <Field<RV>
+          classes="field-admin-sec"
+          label="Native Tokens"
+          name="accepted_tokens_native"
+        />
+        <Field<RV>
+          classes="field-admin-sec"
+          label="CW20 Tokens"
+          name="accepted_tokens_cw20"
+        />
+      </GroupContainer>
+
       <Submitter type="submit" _classes="mt-4" disabled={isSubmitDisabled}>
         Submit
       </Submitter>

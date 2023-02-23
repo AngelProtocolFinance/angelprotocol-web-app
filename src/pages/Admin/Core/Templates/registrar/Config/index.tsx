@@ -35,6 +35,8 @@ function RegistrarConfigContext(props: RegistrarConfig) {
     swaps_router: props.swaps_router,
     cw3_code: props.cw3_code,
     cw4_code: props.cw4_code,
+    accepted_tokens_native: props.accepted_tokens.native,
+    accepted_tokens_cw20: props.accepted_tokens.cw20,
   };
 
   const methods = useForm<RegistrarConfigValues>({

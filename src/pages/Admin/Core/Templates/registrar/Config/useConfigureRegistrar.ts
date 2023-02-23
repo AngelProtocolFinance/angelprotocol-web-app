@@ -35,13 +35,17 @@ export default function useConfigureRegistrar() {
     //check for changes
     const diff = getPayloadDiff(initialConfigPayload, data);
     const diffEntries = Object.entries(diff) as [Key, Value][];
-    if (diffEntries.length <= 0) {
+    if (diffEntries.length === 0) {
       showModal(Popup, { message: "no changes detected" });
       return;
     }
+
     //convert presentational decimal to floating point string
     const finalPayload: RegistrarConfigPayload = {
       ...diff,
+      split_default: diff.split_default && `${+diff.split_default / 100}`,
+      split_max: diff.split_max && `${+diff.split_max / 100}`,
+      split_min: diff.split_min && `${+diff.split_min / 100}`,
     };
 
     const registrarContract = new Registrar(wallet);

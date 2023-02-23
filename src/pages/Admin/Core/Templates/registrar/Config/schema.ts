@@ -1,6 +1,7 @@
 import * as Yup from "yup";
 import { RegistrarConfigValues } from "pages/Admin/types";
 import { SchemaShape } from "schemas/types";
+import { AcceptedTokens, RebalanceDetails } from "types/contracts/registrar";
 import { percentString, positiveNumber } from "schemas/number";
 import { contractAddr } from "schemas/string";
 import { proposalShape } from "../../../../constants";
