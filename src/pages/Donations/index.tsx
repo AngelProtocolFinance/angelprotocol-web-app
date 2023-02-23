@@ -95,7 +95,7 @@ export default function Donations() {
             <button
               type="button"
               onClick={() => console.log("clicked")}
-              className="uppercase text-sm font-bold border-x border-b border-prim rounded-b h-12 mb-4"
+              className="uppercase text-sm font-bold border-x border-b border-prim rounded-b h-12 mb-4 hover:bg-orange-l5 dark:hover:bg-blue-d3 active:bg-orange-l4 dark:active:bg-blue-d2"
             >
               Load More
             </button>
