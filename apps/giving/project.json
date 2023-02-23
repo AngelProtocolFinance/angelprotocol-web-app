@@ -23,7 +23,7 @@
             "output": "assets"
           }
         ],
-        "styles": ["apps/giving/src/index.css"],
+        "styles": ["styles/index.css"],
         "scripts": [],
         "isolatedConfig": true,
         "webpackConfig": "configs/webpack.config.js",

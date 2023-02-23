@@ -1,0 +1,15 @@
+@import "tailwindcss/base";
+@import "base.css";
+/** component layers*/
+@import "tailwindcss/components";
+@import "components.base.css";
+@import "components.css";
+@import "components.page.css";
+
+/** third party components*/
+@import "third-party.quill.css";
+
+/** utilities layers*/
+@import "utils.css";
+@import "tailwindcss/utilities";
+@import "tailwindcss/variants";
