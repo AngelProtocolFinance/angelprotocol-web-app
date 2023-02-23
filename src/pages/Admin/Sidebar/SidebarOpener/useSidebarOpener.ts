@@ -16,9 +16,14 @@ const DEFAULT_LINK: Link = {
 export default function useSidebarOpener(linkGroups: LinkGroup[]) {
   const currPath = useLocation().pathname;
 
-  const activeLink = linkGroups
-    .flatMap((g) => g.links)
-    .find((link) => !!matchPath(`${ADMIN_ROUTE}${link.to}`, currPath));
+  const activeLink =
+    linkGroups
+      .flatMap((g) => g.links)
+      .find((link) => {
+        const rootPath = `${ADMIN_ROUTE}${link.to}`;
+        const match = matchPath(`${rootPath}/*`, currPath);
+        return match && !!matchPath(rootPath, match.pathnameBase);
+      }) ?? DEFAULT_LINK;
 
   const { showModal, closeModal, isModalOpen } = useModalContext();
 
@@ -32,5 +37,5 @@ export default function useSidebarOpener(linkGroups: LinkGroup[]) {
 
   const open = () => showModal(ToggleableSidebar, { linkGroups });
 
-  return { open, activeLink: activeLink ?? DEFAULT_LINK };
+  return { open, activeLink };
 }
