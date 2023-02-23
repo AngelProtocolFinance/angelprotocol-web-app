@@ -4,11 +4,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "nx run giving:build",
-    "start": "nx run giving:serve",
-    "test": "nx run giving:test",
-    "lint": "nx run giving:lint",
-    "format": "yarn run prettier --write 'src/**/*.{ts,tsx}'"
+    "build:giving": "nx run giving:build",
+    "start:giving": "nx run giving:serve",
+    "test:giving": "nx run giving:test",
+    "lint:giving": "nx run giving:lint",
+    "lint:all": "nx run-many --all --target=lint",
+    "test:all": "nx run-many --all --target=test",
+    "format": "yarn run prettier --write '{apps,libs}/**/*.{ts,tsx}'"
   },
   "eslintConfig": {
     "extends": [

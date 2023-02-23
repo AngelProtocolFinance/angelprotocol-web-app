@@ -10,12 +10,6 @@
 1. create `.env` file at the root of the project and add the following entries
 
 ```yaml
-# discard to generate source-maps to use in "yarn analyze"
- GENERATE_SOURCEMAP=<TRUE | FALSE>
-
-# port used by development server
- PORT=<port number>
-
  NX_NETWORK=<LOCAL | TESTNET | MAINNET>
  NX_JUNO_LCD_NODE=<juno lcd>
 
@@ -31,4 +25,26 @@ NX_JUNO_RPC_OVERRIDE=http://localhost:26657
  NX_KADO_API_KEY
  NX_INFURA_ID
 
+```
+
+## Commands 
+install dependencies
+```
+yarn
+```
+
+start development server for a `project` - where project is `giving | (..future..)`
+
+```
+yarn start:<project>
+```
+
+lint a `project` - where project is `giving | all`
+```
+yarn lint:<project>
+```
+
+test a `project` - where project is `giving | all`
+```
+yarn test:<project>
 ```

@@ -49,6 +49,7 @@
       "executor": "@nrwl/webpack:dev-server",
       "defaultConfiguration": "development",
       "options": {
+        "port": 4200,
         "buildTarget": "giving:build",
         "hmr": true
       },
