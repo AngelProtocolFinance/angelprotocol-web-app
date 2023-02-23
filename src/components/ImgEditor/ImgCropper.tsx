@@ -1,9 +1,9 @@
-import { Dialog } from "@headlessui/react";
 import Cropper from "cropperjs";
 import "cropperjs/dist/cropper.min.css";
 import { useCallback, useRef } from "react";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
+import Panel from "components/Panel";
 
 type Props = {
   preview: string;
@@ -40,7 +40,7 @@ export default function ImgCropper({ preview, aspect: [x, y], onSave }: Props) {
   }
 
   return (
-    <Dialog.Panel className="grid grid-rows-[auto_1fr] fixed-center z-20 max-w-[90vmax] max-h-[90vmin] border-2 rounded-sm">
+    <Panel className="grid grid-rows-[auto_1fr] fixed-center z-20 max-w-[90vmax] max-h-[90vmin] border-2 rounded-sm">
       <div className="bg-white flex items-center justify-end gap-2 p-1">
         <button
           type="button"
@@ -51,6 +51,6 @@ export default function ImgCropper({ preview, aspect: [x, y], onSave }: Props) {
         </button>
       </div>
       <img ref={imgRef} src={preview} className="w-full" alt="banner" />
-    </Dialog.Panel>
+    </Panel>
   );
 }
