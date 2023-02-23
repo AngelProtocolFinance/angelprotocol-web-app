@@ -2,13 +2,13 @@ import { humanize } from "helpers";
 import { useProfileContext } from "../../../ProfileContext";
 
 export default function Balances() {
-  const { total_liq, total_lock, overall } = useProfileContext();
+  const { on_hand_liq, on_hand_lock, on_hand_overall } = useProfileContext();
 
   return (
     <div className="flex flex-col items-center gap-4 w-full">
-      <Balance title="Total Value" amount={overall} />
-      <Balance title="Total Endowment Account" amount={total_lock} />
-      <Balance title="Total Current Account" amount={total_liq} />
+      <Balance title="Total Value" amount={on_hand_overall} />
+      <Balance title="Total Endowment Account" amount={on_hand_lock} />
+      <Balance title="Total Current Account" amount={on_hand_liq} />
     </div>
   );
 }
