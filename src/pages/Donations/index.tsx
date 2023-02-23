@@ -83,16 +83,23 @@ export default function Donations() {
         }}
       >
         {(donations) => (
-          <>
+          <div className="grid col-span-full">
             <Table
               donations={donations}
-              classes="hidden max-lg:my-4 lg:table col-span-full"
+              classes="hidden max-lg:mt-4 lg:table"
             />
             <MobileTable
               donations={donations}
-              classes="lg:hidden max-lg:my-4 col-span-full"
+              classes="lg:hidden max-lg:mt-4"
             />
-          </>
+            <button
+              type="button"
+              onClick={() => console.log("clicked")}
+              className="uppercase text-sm font-bold border-x border-b border-prim rounded-b h-12 mb-4"
+            >
+              Load More
+            </button>
+          </div>
         )}
       </QueryLoader>
     </div>
