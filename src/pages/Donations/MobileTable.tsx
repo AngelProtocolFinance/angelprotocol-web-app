@@ -12,7 +12,7 @@ export default function MobileTable({ donations, classes = "" }: TableProps) {
 
   return (
     <div className={`${classes} border border-prim rounded`}>
-      <div className="grid items-center grid-cols-[auto_1fr_auto] h-12 uppercase text-xs font-bold bg-orange-l6 dark:bg-blue-d7 border-b border-prim divide-x divide-prim rounded">
+      <div className="grid items-center grid-cols-[auto_1fr_auto] h-12 uppercase text-xs font-bold bg-orange-l6 dark:bg-blue-d7 border-b border-prim divide-x divide-prim rounded-t">
         <div className="w-12" />
         <div className="p-4">Recipient</div>
         <div className="p-4 w-28 text-center">Date</div>
@@ -22,7 +22,7 @@ export default function MobileTable({ donations, classes = "" }: TableProps) {
         <Disclosure
           key={index}
           as="div"
-          className="text-sm odd:bg-orange-l6 dark:even:bg-blue-d6 dark:odd:bg-blue-d7 w-full border-b last:border-0 border-prim"
+          className="text-sm odd:bg-orange-l6 dark:even:bg-blue-d6 dark:odd:bg-blue-d7 w-full border-b last:border-0 border-prim last:rounded-b"
         >
           {({ open }) => (
             <>
