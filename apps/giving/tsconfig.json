@@ -4,8 +4,6 @@
     "target": "es5",
     "noEmit": true
   },
-  "files": [],
-  "include": [],
   "references": [
     {
       "path": "./tsconfig.app.json"

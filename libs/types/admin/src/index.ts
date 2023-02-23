@@ -16,7 +16,6 @@ import {
 
 export type AdminParams = { id: string; type: string /**AccountType */ };
 export type ProposalParams = { id: string };
-
 export type Templates =
   //index fund
   | "if_alliance"
