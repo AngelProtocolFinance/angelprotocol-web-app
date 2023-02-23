@@ -9,7 +9,7 @@ import Applications from "./Applications";
 import Templates from "./Templates";
 
 const LINK_GROUPS: LinkGroup[] = [
-  { links: [LINKS.index] },
+  { links: [LINKS.index_review] },
   { title: "Manage", links: [LINKS.proposals] },
 ];
 
