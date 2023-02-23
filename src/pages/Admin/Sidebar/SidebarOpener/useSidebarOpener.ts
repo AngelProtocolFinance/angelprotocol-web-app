@@ -16,14 +16,18 @@ const DEFAULT_LINK: Link = {
 export default function useSidebarOpener(linkGroups: LinkGroup[]) {
   const currPath = useLocation().pathname;
 
+  // Explanation for the `reduce()` part:
+  // Since `matchPath` returns all paths that match the pattern and that
+  // includes all the parent paths, but we want to return only the "first parent" link
+  // (the one with more path segments), we can find that "first parent" by simply checking the
+  // `to` field length -> higher the length, more "recent" the parrent
   const activeLink =
     linkGroups
       .flatMap((g) => g.links)
-      .find((link) => {
-        const rootPath = `${ADMIN_ROUTE}${link.to}`;
-        const match = matchPath(`${rootPath}/*`, currPath);
-        return match && !!matchPath(rootPath, match.pathnameBase);
-      }) ?? DEFAULT_LINK;
+      .filter((link) => !!matchPath(`${ADMIN_ROUTE}${link.to}/*`, currPath))
+      .reduce((prev, curr) =>
+        prev.to.length > curr.to.length ? prev : curr
+      ) ?? DEFAULT_LINK;
 
   const { showModal, closeModal, isModalOpen } = useModalContext();
 
