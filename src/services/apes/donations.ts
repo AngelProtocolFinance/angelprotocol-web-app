@@ -29,16 +29,13 @@ const donations_api = apes.injectEndpoints({
         };
       },
     }),
-    donations: builder.query<Donation[], DonationsQueryParams>({
+    donations: builder.query<DonationResult, DonationsQueryParams>({
       providesTags: ["donations"],
       query: ({ id, ...rest }) => {
         return {
           url: `v3/donation/${id}${IS_TEST ? "/testnet" : ""}`,
           params: rest,
         };
-      },
-      transformResponse(res: DonationResult) {
-        return res.Items;
       },
     }),
     currencies: builder.query<Token[], void>({

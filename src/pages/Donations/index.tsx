@@ -24,8 +24,9 @@ export default function Donations() {
 
   const queryState = useDonationsQuery(params, {
     skip: !address,
-    selectFromResult({ data = [], ...rest }) {
-      const filtered = data.filter(({ kycData, ...flatFields }) =>
+    selectFromResult({ data, ...rest }) {
+      const allDonations = data?.Items ?? [];
+      const filtered = allDonations.filter(({ kycData, ...flatFields }) =>
         Object.values(flatFields)
           .reduce<string>((result, val) => `${val}` + result, "")
           .toLocaleLowerCase()
