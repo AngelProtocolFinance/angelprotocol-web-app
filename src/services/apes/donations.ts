@@ -48,4 +48,9 @@ export const {
   useRequestReceiptMutation,
   useDonationsQuery,
   useCurrenciesQuery,
+
+  endpoints: {
+    donations: { useLazyQuery: useLazyDonationsQuery },
+  },
+  util: { updateQueryData: updateDonationsQueryData },
 } = donations_api;

@@ -62,6 +62,7 @@ export type DonationsQueryParams = {
   chainName?: string;
   denomination?: string;
   status?: string;
+  start?: number; //to load next page, set start to ItemCutOff + 1
 };
 
 type TxDetails = FiatTx | CryptoTx;
