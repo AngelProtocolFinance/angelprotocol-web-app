@@ -4,7 +4,7 @@ import { TableProps } from "./types";
 import Icon, { DrawerIcon } from "components/Icon";
 import useKYC from "components/KYC/useKYC";
 import useSort from "hooks/useSort";
-import { humanize, maskAddress } from "helpers";
+import { humanize } from "helpers";
 
 export default function MobileTable({ donations, classes = "" }: TableProps) {
   const { sorted } = useSort(donations);
@@ -50,7 +50,7 @@ export default function MobileTable({ donations, classes = "" }: TableProps) {
                 <Row title="Currency">{row.symbol}</Row>
                 <Row title="Amount">{humanize(row.amount, 3)}</Row>
                 <Row title="USD Value">{`$${humanize(row.usdValue, 2)}`}</Row>
-                <Row title="TX Hash">{maskAddress(row.hash)}</Row>
+                <Row title="TX Hash">{row.hash}</Row>
                 <Row title="Status">
                   <div
                     className={`${
@@ -95,7 +95,7 @@ function Row({
       className={`flex justify-between p-4 odd:bg-white even:bg-orange-l6 dark:bg-blue-d7 ${className}`}
     >
       <span className="font-bold uppercase">{title}</span>
-      {children}
+      <span className="truncate max-w-[167px]">{children}</span>
     </div>
   );
 }

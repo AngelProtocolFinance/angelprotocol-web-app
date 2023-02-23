@@ -6,7 +6,7 @@ import Icon from "components/Icon";
 import useKYC from "components/KYC/useKYC";
 import TableSection, { Cells } from "components/TableSection";
 import useSort from "hooks/useSort";
-import { getTxUrl, humanize, maskAddress } from "helpers";
+import { getTxUrl, humanize } from "helpers";
 import { appRoutes } from "constants/routes";
 
 export default function Table({ donations, classes = "" }: TableProps) {
@@ -79,7 +79,11 @@ export default function Table({ donations, classes = "" }: TableProps) {
         selectedClass="bg-orange-l5 dark:bg-blue-d4"
       >
         {sorted.map((row) => (
-          <Cells key={row.hash} type="td" cellClass="p-3 border-t border-prim">
+          <Cells
+            key={row.hash}
+            type="td"
+            cellClass="p-3 border-t border-prim max-w-[256px] truncate"
+          >
             <Link
               to={`${appRoutes.profile}/${row.id}`}
               className="flex items-center justify-between gap-1 cursor-pointer text-sm hover:underline"
@@ -96,7 +100,7 @@ export default function Table({ donations, classes = "" }: TableProps) {
               href={getTxUrl(row.chainId, row.hash)}
               className="text-center text-angel-blue cursor-pointer uppercase text-sm"
             >
-              {maskAddress(row.hash)}
+              {row.hash}
             </ExtLink>
             <div className="text-center text-white">
               <span
