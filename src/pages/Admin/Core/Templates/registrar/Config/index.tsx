@@ -16,25 +16,27 @@ export default function Config() {
 }
 
 function RegistrarConfigContext(props: RegistrarConfig) {
-  const pctTaxRate = `${+props.tax_rate * 100}`;
   const pctSplitLiqMax = `${+props.split_to_liquid.max * 100}`;
   const pctSplitLiqMin = `${+props.split_to_liquid.min * 100}`;
   const pctSplitLiqDefault = `${+props.split_to_liquid.default * 100}`;
 
   const initialConfigPayload: Partial<RegistrarConfigPayload> = {
-    accounts_code_id: props.accounts_code_id,
+    accounts_contract: props.accounts_contract,
     index_fund_contract: props.index_fund, //addr
     treasury: props.treasury, //addr
-    tax_rate: pctTaxRate,
-    default_vault: props.default_vault,
-    guardians_multisig_addr: props.guardians_multisig_addr,
-    endowment_owners_group_addr: props.endowment_owners_group_addr,
     split_max: pctSplitLiqMax,
     split_min: pctSplitLiqMin,
     split_default: pctSplitLiqDefault,
     halo_token: props.halo_token,
     gov_contract: props.gov_contract,
     charity_shares_contract: props.charity_shares_contract,
+    applications_review: props.applications_review,
+    applications_impact_review: props.applications_impact_review,
+    swaps_router: props.swaps_router,
+    cw3_code: props.cw3_code,
+    cw4_code: props.cw4_code,
+    accepted_tokens_native: props.accepted_tokens.native,
+    accepted_tokens_cw20: props.accepted_tokens.cw20,
   };
 
   const methods = useForm<RegistrarConfigValues>({
