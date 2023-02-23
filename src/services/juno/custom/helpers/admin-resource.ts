@@ -10,14 +10,21 @@ import { customApi } from "../custom";
 export const AP_ID = 0;
 export const REVIEWER_ID = 0.5;
 
+const CONTRACTS = {
+  AP: {
+    cw3: contracts.cw3ApTeam,
+    cw4: contracts.cw4GrpApTeam,
+    type: "ap",
+  },
+  REVIEWER: {
+    cw3: contracts.cw3ReviewTeam,
+    cw4: contracts.cw4GrpReviewTeam,
+    type: "review",
+  },
+};
+
 export function getCWs(id: number) {
-  //TODO: atm, only two admin types, refactor this once > 2
-  //charities doesn't have hardcoded cws, so only test for AP_ID && REVIEWER_ID
-  const cw3 = id === AP_ID ? contracts.cw3ApTeam : contracts.cw3ReviewTeam;
-  const cw4 =
-    id === AP_ID ? contracts.cw4GrpApTeam : contracts.cw4GrpReviewTeam;
-  const type: AdminResources["type"] = id === AP_ID ? "ap" : "review";
-  return { cw3, cw4, type };
+  return isAp(id) ? CONTRACTS.AP : CONTRACTS.REVIEWER;
 }
 
 export function isAp(id: number) {
@@ -41,41 +48,26 @@ export async function getMeta(
   ]);
 
   const numVoters = votersRes.voters.length;
-
+  const tagPayloads = [customApi.util.invalidateTags(defaultProposalTags)];
   const willExecute =
     /** single member */
     numVoters === 1 ||
     /** multiple members but threshold is lte 1/members given that execution is not required */
     (!config.require_execution &&
       Number(config.threshold.absolute_percentage.percentage) <= 1 / numVoters);
-
-  const tagPayloads = [customApi.util.invalidateTags(defaultProposalTags)];
-
-  const meta = willExecute
-    ? {
-        willExecute,
-        successMeta: {
-          message: "Successful transaction",
-          link: {
-            url: `${appRoutes.admin}/${endowId}`,
-            description: "Go to admin home",
-          },
-        },
-        tagPayloads,
-        isAuthorized: !!voter.weight,
-      }
-    : {
-        willExecute: undefined,
-        successMeta: {
-          message: "Proposal successfully created",
-          link: {
-            url: `${appRoutes.admin}/${endowId}/${adminRoutes.proposals}`,
-            description: "Go to proposals",
-          },
-        },
-        tagPayloads,
-        isAuthorized: !!voter.weight,
-      };
+  const url = willExecute
+    ? `${appRoutes.admin}/${endowId}`
+    : `${appRoutes.admin}/${endowId}/${adminRoutes.proposals}`;
+  const description = willExecute ? "Go to admin home" : "Go to proposals";
+  const message = willExecute
+    ? "Successful transaction"
+    : "Proposal successfully created";
+  const meta = {
+    willExecute,
+    successMeta: { message, link: { url, description } },
+    tagPayloads,
+    isAuthorized: !!voter.weight,
+  };
 
   return [meta, config];
 }
