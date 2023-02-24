@@ -9,10 +9,28 @@
       }
     }
   },
+
+  "namedInputs": {
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "production": [
+      "default",
+      "!{projectRoot}/.eslintrc.json",
+      "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
+      "!{projectRoot}/tsconfig.spec.json",
+      "!{projectRoot}/jest.config.[jt]s"
+    ],
+    "assets": [
+      "{workspaceRoot}/styles/**/*",
+      "{workspaceRoot}/configs/tailwind.config.json",
+      "{workspaceRoot}/libs/assets/src/**/*"
+    ],
+    "sharedGlobals": ["{workspaceRoot}/babel.config.json"]
+  },
+
   "targetDefaults": {
     "build": {
       "dependsOn": ["^build"],
-      "inputs": ["production", "^production"]
+      "inputs": ["production", "^production", "assets"]
     },
     "lint": {
       "inputs": ["default", "{workspaceRoot}/.eslintrc.json"]
@@ -25,17 +43,7 @@
       ]
     }
   },
-  "namedInputs": {
-    "default": ["{projectRoot}/**/*", "sharedGlobals"],
-    "production": [
-      "default",
-      "!{projectRoot}/.eslintrc.json",
-      "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
-      "!{projectRoot}/tsconfig.spec.json",
-      "!{projectRoot}/jest.config.[jt]s"
-    ],
-    "sharedGlobals": ["{workspaceRoot}/babel.config.json"]
-  },
+
   "workspaceLayout": {
     "appsDir": "apps",
     "libsDir": "libs"
