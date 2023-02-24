@@ -1,10 +1,16 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { Donation, DonationsQueryParams } from "types/aws";
-import { useDonationsQuery } from "services/apes";
+import {
+  updateDonationsQueryData,
+  useDonationsQuery,
+  useLazyDonationsQuery,
+} from "services/apes";
 import CsvExporter from "components/CsvExporter";
 import Icon from "components/Icon";
+import LoaderRing from "components/LoaderRing";
 import QueryLoader from "components/QueryLoader";
+import { useSetter } from "store/accessors";
 import useDebouncer from "hooks/useDebouncer";
 import { isEmpty } from "helpers";
 import Filter from "./Filter";
@@ -15,6 +21,8 @@ import Table from "./Table";
 export default function Donations() {
   const { address } = useParams<{ address: string }>();
 
+  const dispatch = useSetter();
+
   const [query, setQuery] = useState<string>("");
   const [debouncedQuery, isDebouncing] = useDebouncer(query, 500);
 
@@ -24,30 +32,71 @@ export default function Donations() {
 
   const queryState = useDonationsQuery(params, {
     skip: !address,
-    selectFromResult({ data = [], ...rest }) {
-      const filtered = data.filter(({ kycData, ...flatFields }) =>
+    selectFromResult({ data, ...rest }) {
+      if (!data?.Items) {
+        return { data, ...rest };
+      }
+
+      const filtered = data?.Items.filter(({ kycData, ...flatFields }) =>
         Object.values(flatFields)
           .reduce<string>((result, val) => `${val}` + result, "")
           .toLocaleLowerCase()
           .includes(debouncedQuery.toLocaleLowerCase())
       );
 
-      return { data: filtered, ...rest };
+      return {
+        data: { Items: filtered, ItemCutoff: data.ItemCutoff },
+        ...rest,
+      };
     },
   });
 
-  const { isLoading, isError, data } = queryState;
+  const { isLoading, isError, data, originalArgs } = queryState;
+
+  const [loadMore, { isLoading: isLoadingNextPage }] = useLazyDonationsQuery();
+
+  async function loadNextPage() {
+    //button is hidden when there's no more
+    if (
+      data?.ItemCutoff &&
+      originalArgs /** cards won't even show if no initial query is made */
+    ) {
+      const { data: newEndowRes } = await loadMore({
+        ...originalArgs,
+        start: data.ItemCutoff + 1,
+      });
+
+      if (newEndowRes) {
+        //pessimistic update to original cache data
+        dispatch(
+          updateDonationsQueryData("donations", originalArgs, (prevResult) => {
+            prevResult.Items.push(...newEndowRes.Items);
+            prevResult.ItemCutoff = newEndowRes.ItemCutoff;
+          })
+        );
+      }
+    }
+  }
+
+  const hasMore = !!data?.ItemCutoff;
 
   return (
     <div className="grid grid-cols-[1fr_auto] content-start gap-y-4 lg:gap-y-8 lg:gap-x-3 relative padded-container pt-8 lg:pt-20 pb-8">
-      <h1 className="text-3xl font-bold max-lg:text-center max-lg:col-span-full max-lg:mb-4">
+      <h1 className="text-3xl font-bold max-lg:font-work max-lg:text-center max-lg:col-span-full max-lg:mb-4">
         My Donations
       </h1>
       <CsvExporter
-        aria-disabled={isLoading || isError || isDebouncing || isEmpty(data)}
+        aria-disabled={
+          isLoading ||
+          isLoadingNextPage ||
+          isError ||
+          isDebouncing ||
+          !data?.Items ||
+          isEmpty(data.Items)
+        }
         classes="max-lg:row-start-5 max-lg:col-span-full lg:justify-self-end btn-orange px-8 py-3"
         headers={csvHeaders}
-        data={data}
+        data={data?.Items || []}
         filename="donations.csv"
       >
         Export to CSV
@@ -68,13 +117,17 @@ export default function Donations() {
         />
       </div>
       <Filter
-        isDisabled={isLoading || isError || isDebouncing}
+        isDisabled={isLoading || isLoadingNextPage || isError || isDebouncing}
         setParams={setParams}
         donorAddress={address || ""}
         classes="max-lg:col-span-full max-lg:w-full"
       />
       <QueryLoader
-        queryState={{ ...queryState, isLoading: isLoading || isDebouncing }}
+        queryState={{
+          data: data?.Items,
+          isLoading: isLoading || isDebouncing,
+          isError,
+        }}
         messages={{
           loading: "Loading donations..",
           error: "Failed to get donations",
@@ -82,16 +135,30 @@ export default function Donations() {
         }}
       >
         {(donations) => (
-          <>
+          <div className="grid col-span-full">
             <Table
               donations={donations}
-              classes="hidden max-lg:my-4 lg:table col-span-full"
+              classes="hidden max-lg:mt-4 lg:table"
             />
             <MobileTable
               donations={donations}
-              classes="lg:hidden max-lg:my-4 col-span-full"
+              classes="lg:hidden max-lg:mt-4"
             />
-          </>
+            <button
+              type="button"
+              onClick={loadNextPage}
+              disabled={isLoading || isLoadingNextPage || isError || !hasMore}
+              className="flex items-center justify-center gap-3 uppercase text-sm font-bold border-x border-b border-prim rounded-b h-12 mb-4 hover:bg-orange-l5 dark:hover:bg-blue-d3 active:bg-orange-l4 dark:active:bg-blue-d2 disabled:bg-gray-l3 disabled:text-gray aria-disabled:bg-gray-l3 aria-disabled:dark:bg-bluegray disabled:dark:bg-bluegray"
+            >
+              {isLoadingNextPage ? (
+                <>
+                  <LoaderRing thickness={10} classes="w-6" /> Loading...
+                </>
+              ) : (
+                "Load More"
+              )}
+            </button>
+          </div>
         )}
       </QueryLoader>
     </div>
