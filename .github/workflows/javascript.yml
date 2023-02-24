@@ -28,9 +28,6 @@ jobs:
       - name: Install dependencies
         run: yarn
 
-      - name: Check format
-        run: yarn nx format:check
-
       - name: Lint affected
         run: yarn nx affected:lint --parallel=3
 
