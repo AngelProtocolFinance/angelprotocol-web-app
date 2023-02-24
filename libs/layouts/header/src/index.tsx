@@ -9,9 +9,19 @@ import DesktopNav from "./DesktopNav";
 import { Opener as MobileNavOpener } from "./MobileNav";
 import ThemeToggle from "./ThemeToggle";
 
-type Props = { classes: string; links: Link[]; logo?: LogoProps };
+type Props = {
+  classes: string;
+  links: Link[];
+  logo?: LogoProps;
+  relative?: true; // relative bg
+};
 
-export default function Header({ classes, links, logo = DEFAULT_LOGO }: Props) {
+export default function Header({
+  classes,
+  links,
+  logo = DEFAULT_LOGO,
+  relative,
+}: Props) {
   const location = useLocation();
   const isScrolledRef = useRef<boolean>(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -31,9 +41,11 @@ export default function Header({ classes, links, logo = DEFAULT_LOGO }: Props) {
   }, []);
 
   const bg =
-    !hasBanner(location) || isScrolled ? "bg-blue dark:bg-blue-d3" : "";
+    !hasBanner(location) || isScrolled || relative
+      ? "bg-blue dark:bg-blue-d3"
+      : "";
 
-  const mb = hasBanner(location) ? "-mb-[6.5rem]" : "mb-0";
+  const mb = hasBanner(location) && !relative ? "-mb-[6.5rem]" : "mb-0";
 
   return (
     <header

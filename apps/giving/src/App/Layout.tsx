@@ -5,7 +5,6 @@ import Footer from "@ap/layouts/footer";
 import Header from "@ap/layouts/header";
 import { Suspense } from "react";
 import { Outlet } from "react-router-dom";
-import { GROUPS_DATA, SOCIAL_MEDIA_LINKS } from "./constants";
 
 const HEADER_LINKS: Link[] = [
   { title: "Marketplace", href: appRoutes.index },
@@ -23,7 +22,7 @@ export default function Layout() {
       <Suspense fallback={<LoaderComponent />}>
         <Outlet />
       </Suspense>
-      <Footer linkGroups={GROUPS_DATA} socials={SOCIAL_MEDIA_LINKS} />
+      <Footer />
     </div>
   );
 }
