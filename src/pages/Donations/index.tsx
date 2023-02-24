@@ -13,7 +13,6 @@ import { useSetter } from "store/accessors";
 import useDebouncer from "hooks/useDebouncer";
 import { isEmpty } from "helpers";
 import Filter from "./Filter";
-import LoadMoreBtn from "./LoadMoreBtn";
 import MobileTable from "./MobileTable";
 import NoDonations from "./NoDonations";
 import Table from "./Table";
@@ -140,18 +139,19 @@ export default function Donations() {
             <Table
               donations={donations}
               classes="hidden max-lg:mt-4 lg:table"
+              hasMore={hasMore}
+              onLoadMore={loadNextPage}
+              disabled={isLoadingOrError}
+              isLoading={isLoadingNextPage}
             />
             <MobileTable
               donations={donations}
               classes="lg:hidden max-lg:mt-4"
+              hasMore={hasMore}
+              onLoadMore={loadNextPage}
+              disabled={isLoadingOrError}
+              isLoading={isLoadingNextPage}
             />
-            {hasMore && (
-              <LoadMoreBtn
-                onLoadMore={loadNextPage}
-                disabled={isLoadingOrError}
-                isLoading={isLoadingNextPage}
-              />
-            )}
           </div>
         )}
       </QueryLoader>
