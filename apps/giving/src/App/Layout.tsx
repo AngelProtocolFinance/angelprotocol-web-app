@@ -1,10 +1,10 @@
 import { Loader, Seo } from "@ap/components";
 import { appRoutes } from "@ap/constants";
+import { Link } from "@ap/layouts";
+import Footer from "@ap/layouts/footer";
+import Header from "@ap/layouts/header";
 import { Suspense } from "react";
 import { Outlet } from "react-router-dom";
-import { Link } from "./types";
-import Footer from "./Footer";
-import Header from "./Header";
 import { GROUPS_DATA, SOCIAL_MEDIA_LINKS } from "./constants";
 
 const HEADER_LINKS: Link[] = [

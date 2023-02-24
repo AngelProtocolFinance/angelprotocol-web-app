@@ -2,7 +2,7 @@ import Icon from "@ap/components/icon";
 import { LogoProps } from "@ap/components/logo";
 import { useModalContext } from "@ap/contexts";
 import { SCREEN_LG, useHandleScreenResize } from "@ap/hooks";
-import { Link } from "../../types";
+import { Link } from "@ap/layouts";
 import Menu from "./Menu";
 
 type Props = { classes: string; links: Link[]; logo: LogoProps };

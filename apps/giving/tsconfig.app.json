@@ -1,5 +1,5 @@
 {
   "extends": "./tsconfig.json",
   "exclude": ["jest.config.ts", "src/**/*.test.ts", "src/**/*.test.tsx"],
-  "include": ["src/**/*.ts", "src/**/*.tsx"]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "../../libs/layouts/src/types.ts"]
 }

@@ -2,9 +2,9 @@ import Icon from "@ap/components/icon";
 import Logo, { LogoProps } from "@ap/components/logo";
 import { useModalContext } from "@ap/contexts";
 import { createNavLinkStyler } from "@ap/helpers";
+import { Link } from "@ap/layouts";
 import { Dialog } from "@headlessui/react";
 import { NavLink } from "react-router-dom";
-import { Link } from "../../types";
 import ThemeToggle from "../ThemeToggle";
 
 export default function Menu({

@@ -1,0 +1,16 @@
+{
+  "name": "layouts-footer",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/layouts/footer/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/layouts/footer/**/*.{ts,tsx,js,jsx}"]
+      }
+    }
+  }
+}

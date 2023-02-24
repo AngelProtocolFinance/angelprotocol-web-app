@@ -1,0 +1,5 @@
+{
+  "name": "@ap/layouts/header",
+  "sideEffects": false,
+  "type": "module"
+}

@@ -1,5 +1,5 @@
 import { BASE_DOMAIN, LITEPAPER } from "@ap/constants";
-import { LinkGroup, SocialMediaLink } from "./types";
+import { LinkGroup, SocialMediaLink } from "@ap/layouts";
 
 export const SOCIAL_MEDIA_LINKS: SocialMediaLink[] = [
   {

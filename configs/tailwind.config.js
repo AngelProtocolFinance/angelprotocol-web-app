@@ -7,6 +7,7 @@ module.exports = {
     // "apps/giving/src/**/*.{ts,tsx,html}",
     "libs/contexts/**/*.{ts,tsx}",
     "libs/components/**/*.{ts,tsx}",
+    "libs/layouts/**/*.{ts,tsx}",
     "libs/errors/**/*.{ts,tsx}",
   ],
   theme: {

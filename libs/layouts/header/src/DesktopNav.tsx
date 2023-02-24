@@ -1,6 +1,6 @@
 import { createNavLinkStyler } from "@ap/helpers";
+import { Link } from "@ap/layouts";
 import { NavLink } from "react-router-dom";
-import { Link } from "../types";
 
 type Props = { classes: string; links: Link[] };
 

@@ -1,6 +1,6 @@
 import { APP_NAME } from "@ap/constants";
+import { LinkGroup, SocialMediaLink } from "@ap/layouts";
 import { memo } from "react";
-import { LinkGroup, SocialMediaLink } from "../types";
 import Links from "./Links";
 import Newsletter from "./Newsletter";
 import Socials from "./Socials";
