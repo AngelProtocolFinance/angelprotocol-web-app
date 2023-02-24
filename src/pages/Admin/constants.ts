@@ -54,12 +54,14 @@ const sidebarRoutes = {
   ...restAdminRoutes,
   liquidAccount: `${account}/liquid`,
   lockedAccount: `${account}/locked`,
-};
+} as const;
+
+type SidebarRoutes = typeof sidebarRoutes;
 
 const _to: keyof Link = "to";
 
 export const LINKS: {
-  [key in keyof typeof sidebarRoutes]: Link & { [_to]: string };
+  [key in keyof SidebarRoutes]: Link & { [_to]: SidebarRoutes[key] };
 } = {
   liquidAccount: {
     title: "Liquid Account",
