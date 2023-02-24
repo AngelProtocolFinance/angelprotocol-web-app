@@ -8,7 +8,7 @@ import Header from "./Header";
 type Props = {
   className?: string;
   linkGroups: LinkGroup[];
-  onChange?: (link: Link) => void;
+  onChange?: () => void;
 };
 
 export default function Sidebar(props: Props) {
