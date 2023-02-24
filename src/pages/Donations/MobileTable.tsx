@@ -96,14 +96,14 @@ export default function MobileTable({
             )}
           </Disclosure>
         ))}
+        {hasMore && (
+          <LoadMoreBtn
+            onLoadMore={onLoadMore}
+            disabled={disabled}
+            isLoading={isLoading}
+          />
+        )}
       </div>
-      {hasMore && (
-        <LoadMoreBtn
-          onLoadMore={onLoadMore}
-          disabled={disabled}
-          isLoading={isLoading}
-        />
-      )}
     </>
   );
 }

@@ -84,7 +84,7 @@ export default function Donations() {
             />
             <MobileTable
               donations={donations}
-              classes="lg:hidden max-lg:mt-4"
+              classes="lg:hidden max-lg:my-4"
               hasMore={hasMore}
               onLoadMore={loadNextPage}
               disabled={isLoadingOrError}
