@@ -53,7 +53,8 @@ export default function Donations() {
 
   const { isLoading, isError, data, originalArgs } = queryState;
 
-  const [loadMore, { isLoading: isLoadingNextPage }] = useLazyDonationsQuery();
+  const [loadMore, { isLoading: isLoadingNextPage, isError: isErrorNextPage }] =
+    useLazyDonationsQuery();
 
   async function loadNextPage() {
     //button is hidden when there's no more
@@ -90,6 +91,7 @@ export default function Donations() {
           isLoading ||
           isLoadingNextPage ||
           isError ||
+          isErrorNextPage ||
           isDebouncing ||
           !data?.Items ||
           isEmpty(data.Items)
@@ -108,7 +110,7 @@ export default function Donations() {
           className="text-gray-d2 dark:text-gray absolute top-1/2 -translate-y-1/2 left-3"
         />
         <input
-          disabled={isError}
+          disabled={isError || isErrorNextPage}
           className="p-3 pl-10 placeholder:text-gray-d1 dark:placeholder:text-gray bg-transparent w-full outline-none disabled:bg-gray-l2 dark:disabled:bg-bluegray-d1"
           type="text"
           placeholder="Search donations..."
@@ -117,7 +119,13 @@ export default function Donations() {
         />
       </div>
       <Filter
-        isDisabled={isLoading || isLoadingNextPage || isError || isDebouncing}
+        isDisabled={
+          isLoading ||
+          isLoadingNextPage ||
+          isError ||
+          isErrorNextPage ||
+          isDebouncing
+        }
         setParams={setParams}
         donorAddress={address || ""}
         classes="max-lg:col-span-full max-lg:w-full"
@@ -126,7 +134,7 @@ export default function Donations() {
         queryState={{
           data: data?.Items,
           isLoading: isLoading || isDebouncing,
-          isError,
+          isError: isError || isErrorNextPage,
         }}
         messages={{
           loading: "Loading donations..",
@@ -147,7 +155,9 @@ export default function Donations() {
             {hasMore && (
               <LoadMoreBtn
                 onLoadMore={loadNextPage}
-                disabled={isLoading || isLoadingNextPage || isError}
+                disabled={
+                  isLoading || isLoadingNextPage || isError || isErrorNextPage
+                }
                 isLoading={isLoadingNextPage}
               />
             )}
