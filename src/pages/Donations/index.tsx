@@ -8,6 +8,7 @@ import {
 } from "services/apes";
 import CsvExporter from "components/CsvExporter";
 import Icon from "components/Icon";
+import LoaderRing from "components/LoaderRing";
 import QueryLoader from "components/QueryLoader";
 import { useSetter } from "store/accessors";
 import useDebouncer from "hooks/useDebouncer";
@@ -124,7 +125,7 @@ export default function Donations() {
       <QueryLoader
         queryState={{
           data: data?.Items,
-          isLoading: isLoading || isLoadingNextPage || isDebouncing,
+          isLoading: isLoading || isDebouncing,
           isError,
         }}
         messages={{
@@ -147,9 +148,16 @@ export default function Donations() {
               type="button"
               onClick={loadNextPage}
               disabled={isLoading || isLoadingNextPage || isError || !hasMore}
-              className="uppercase text-sm font-bold border-x border-b border-prim rounded-b h-12 mb-4 hover:bg-orange-l5 dark:hover:bg-blue-d3 active:bg-orange-l4 dark:active:bg-blue-d2"
+              className="flex items-center justify-center gap-3 uppercase text-sm font-bold border-x border-b border-prim rounded-b h-12 mb-4 hover:bg-orange-l5 dark:hover:bg-blue-d3 active:bg-orange-l4 dark:active:bg-blue-d2"
             >
-              Load More
+              {!isLoadingNextPage ? (
+                <>
+                  <LoaderRing thickness={10} classes="w-6" />
+                  <p className="text-center">Loading...</p>
+                </>
+              ) : (
+                "Load More"
+              )}
             </button>
           </div>
         )}
