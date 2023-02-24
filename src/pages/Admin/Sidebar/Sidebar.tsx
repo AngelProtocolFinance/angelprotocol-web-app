@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { Link, LinkGroup } from "./types";
+import { LinkGroup } from "./types";
 import Icon from "components/Icon";
 import { createNavLinkStyler } from "helpers";
 import Header from "./Header";
@@ -11,15 +11,19 @@ type Props = {
   onChange?: () => void;
 };
 
-export default function Sidebar(props: Props) {
+export default function Sidebar({
+  className = "",
+  linkGroups,
+  onChange = () => {},
+}: Props) {
   return (
     <div
-      className={`flex flex-col w-72 md:w-64 h-full bg-white dark:bg-blue-d6 border-r border-prim ${props.className}`}
+      className={`flex flex-col w-72 md:w-64 h-full bg-white dark:bg-blue-d6 border-r border-prim ${className}`}
     >
       <Header />
 
       <div className="flex flex-col py-3">
-        {props.linkGroups.map((group) => (
+        {linkGroups.map((group) => (
           <React.Fragment key={`link_group-${group.title}`}>
             {group.title && (
               <h6 className="pt-5 px-5 pb-1 font-bold text-xs uppercase text-gray-l1 tracking-wide">
@@ -32,7 +36,7 @@ export default function Sidebar(props: Props) {
                 key={`nav_link-${link.to}`}
                 to={link.to}
                 className={linkClassName}
-                onClick={() => props.onChange && props.onChange(link)}
+                onClick={onChange}
               >
                 <Icon {...link.icon} />
                 {link.title}
