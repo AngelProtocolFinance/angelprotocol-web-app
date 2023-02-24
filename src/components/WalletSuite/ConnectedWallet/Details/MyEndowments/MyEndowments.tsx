@@ -1,5 +1,5 @@
 import { EndowmentBookmark } from "types/aws";
-import Logo from "components/Logo";
+import Image from "components/Image";
 import Links from "./Links";
 
 type Props = { endowments: EndowmentBookmark[] };
@@ -15,7 +15,7 @@ export default function MyEndowments({ endowments }: Props) {
           key={`my-endow-${endowment.endowId}`}
           className="grid grid-cols-[auto_1fr] gap-3"
         >
-          <Logo src={endowment.logo} className="w-10 h-10" />
+          <Image src={endowment.logo} className="w-10 h-10" />
 
           <div className="grid items-center">
             <Name value={endowment.name} />

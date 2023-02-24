@@ -7,7 +7,7 @@ type Props = {
   className?: string;
 };
 
-export default function Logo({ src, className }: Props) {
+export default function Image({ src, className }: Props) {
   const [isLoading, setLoading] = useState(!!src);
 
   return (
