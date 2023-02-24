@@ -9,7 +9,7 @@ export default function useSubmit() {
 
   const navigate = useNavigate();
 
-  const submit: SubmitHandler<any> = async (fv) => {
+  const submit: SubmitHandler<any> = async () => {
     navigate("../step2"); // go to latest step
   };
 
