@@ -10,26 +10,30 @@ import { customApi } from "../custom";
 export const AP_ID = 0;
 export const REVIEWER_ID = 0.5;
 
-const CONTRACTS = {
-  AP: {
+type Admins = AdminResources["type"];
+const _charity: Admins = "charity";
+type CWs = {
+  [key: number]:
+    | {
+        cw3: string;
+        cw4: string;
+        type: Exclude<Admins, typeof _charity>;
+      }
+    | undefined;
+};
+
+export const apCWs: CWs = {
+  [AP_ID]: {
     cw3: contracts.cw3ApTeam,
     cw4: contracts.cw4GrpApTeam,
     type: "ap",
   },
-  REVIEWER: {
-    cw3: contracts.cw3ReviewTeam,
-    cw4: contracts.cw4GrpReviewTeam,
-    type: "review",
+  [REVIEWER_ID]: {
+    cw3: contracts.cw3ApTeam,
+    cw4: contracts.cw4GrpApTeam,
+    type: "ap",
   },
 };
-
-export function getCWs(id: number) {
-  return isAp(id) ? CONTRACTS.AP : CONTRACTS.REVIEWER;
-}
-
-export function isAp(id: number) {
-  return id === AP_ID || id === REVIEWER_ID;
-}
 
 export async function getMeta(
   endowId: number,
