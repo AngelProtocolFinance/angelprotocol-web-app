@@ -8,6 +8,10 @@
     "start:giving": "nx run giving:serve",
     "test:giving": "nx run giving:test",
     "lint:giving": "nx run giving:lint",
+    "build:ast": "nx run ast:build",
+    "start:ast": "nx run ast:serve",
+    "test:ast": "nx run ast:test",
+    "lint:ast": "nx run ast:lint",
     "lint:all": "nx run-many --all --target=lint",
     "test:all": "nx run-many --all --target=test",
     "format": "yarn run prettier --write '{apps,libs}/**/*.{ts,tsx}'"
