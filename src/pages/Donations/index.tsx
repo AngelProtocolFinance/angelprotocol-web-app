@@ -1,91 +1,29 @@
-import { useState } from "react";
-import { useParams } from "react-router-dom";
-import { Donation, DonationsQueryParams } from "types/aws";
-import {
-  updateDonationsQueryData,
-  useDonationsQuery,
-  useLazyDonationsQuery,
-} from "services/apes";
+import { Donation } from "types/aws";
 import CsvExporter from "components/CsvExporter";
 import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
-import { useSetter } from "store/accessors";
-import useDebouncer from "hooks/useDebouncer";
 import { isEmpty } from "helpers";
 import Filter from "./Filter";
 import MobileTable from "./MobileTable";
 import NoDonations from "./NoDonations";
 import Table from "./Table";
+import useDonations from "./useDonations";
 
 export default function Donations() {
-  const { address } = useParams<{ address: string }>();
+  const {
+    address,
+    data,
+    hasMore,
+    isError,
+    isLoading,
+    isLoadingNextPage,
+    query,
+    loadNextPage,
+    onQueryChange,
+    setParams,
+  } = useDonations();
 
-  const dispatch = useSetter();
-
-  const [query, setQuery] = useState<string>("");
-  const [debouncedQuery, isDebouncing] = useDebouncer(query, 500);
-
-  const [params, setParams] = useState<DonationsQueryParams>({
-    id: address || "",
-  });
-
-  const queryState = useDonationsQuery(params, {
-    skip: !address,
-    selectFromResult({ data, ...rest }) {
-      if (!data?.Items) {
-        return { data, ...rest };
-      }
-
-      const filtered = data?.Items.filter(({ kycData, ...flatFields }) =>
-        Object.values(flatFields)
-          .reduce<string>((result, val) => `${val}` + result, "")
-          .toLocaleLowerCase()
-          .includes(debouncedQuery.toLocaleLowerCase())
-      );
-
-      return {
-        data: { Items: filtered, ItemCutoff: data.ItemCutoff },
-        ...rest,
-      };
-    },
-  });
-
-  const { isLoading, isError, data, originalArgs } = queryState;
-
-  const [loadMore, { isLoading: isLoadingNextPage, isError: isErrorNextPage }] =
-    useLazyDonationsQuery();
-
-  async function loadNextPage() {
-    //button is hidden when there's no more
-    if (
-      data?.ItemCutoff &&
-      originalArgs /** cards won't even show if no initial query is made */
-    ) {
-      const { data: newEndowRes } = await loadMore({
-        ...originalArgs,
-        start: data.ItemCutoff + 1,
-      });
-
-      if (newEndowRes) {
-        //pessimistic update to original cache data
-        dispatch(
-          updateDonationsQueryData("donations", originalArgs, (prevResult) => {
-            prevResult.Items.push(...newEndowRes.Items);
-            prevResult.ItemCutoff = newEndowRes.ItemCutoff;
-          })
-        );
-      }
-    }
-  }
-
-  const hasMore = !!data?.ItemCutoff;
-
-  const isLoadingOrError =
-    isLoading ||
-    isLoadingNextPage ||
-    isError ||
-    isErrorNextPage ||
-    isDebouncing;
+  const isLoadingOrError = isLoading || isLoadingNextPage || isError;
 
   return (
     <div className="grid grid-cols-[1fr_auto] content-start gap-y-4 lg:gap-y-8 lg:gap-x-3 relative padded-container pt-8 lg:pt-20 pb-8">
@@ -108,12 +46,12 @@ export default function Donations() {
           className="text-gray-d2 dark:text-gray absolute top-1/2 -translate-y-1/2 left-3"
         />
         <input
-          disabled={isError || isErrorNextPage}
+          disabled={isError}
           className="p-3 pl-10 placeholder:text-gray-d1 dark:placeholder:text-gray bg-transparent w-full outline-none disabled:bg-gray-l2 dark:disabled:bg-bluegray-d1"
           type="text"
           placeholder="Search donations..."
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(e) => onQueryChange(e.target.value)}
         />
       </div>
       <Filter
@@ -125,8 +63,8 @@ export default function Donations() {
       <QueryLoader
         queryState={{
           data: data?.Items,
-          isLoading: isLoading || isDebouncing,
-          isError: isError || isErrorNextPage,
+          isLoading: isLoading,
+          isError: isError,
         }}
         messages={{
           loading: "Loading donations..",
