@@ -2,6 +2,7 @@ import {
   AiFillCaretLeft,
   AiFillCheckCircle,
   AiFillHeart,
+  AiFillSecurityScan,
   AiFillYoutube,
   AiOutlineDislike,
   AiOutlineEdit,
@@ -16,10 +17,10 @@ import {
   AiOutlineUpload,
 } from "react-icons/ai";
 import {
-  BiArrowBack,
   BiBold,
   BiCheck,
   BiChevronDown,
+  BiChevronRight,
   BiChevronUp,
   BiGlobe,
   BiItalic,
@@ -36,6 +37,7 @@ import {
 } from "react-icons/bs";
 import { CgArrowsExchangeAltV, CgUndo } from "react-icons/cg";
 import {
+  FaClipboardCheck,
   FaClock,
   FaCog,
   FaDiscord,
@@ -57,10 +59,15 @@ import {
 import { FcSafe } from "react-icons/fc";
 import { FiMenu, FiMoon } from "react-icons/fi";
 import { GiPieChart, GiTwoCoins } from "react-icons/gi";
-import { GoDash, GoLinkExternal } from "react-icons/go";
+import { GoDash, GoLinkExternal, GoSync } from "react-icons/go";
 import { GrFacebookOption } from "react-icons/gr";
 import { ImDroplet, ImFilePicture } from "react-icons/im";
-import { IoMdDownload, IoMdLock, IoMdSettings } from "react-icons/io";
+import {
+  IoMdDownload,
+  IoMdListBox,
+  IoMdLock,
+  IoMdSettings,
+} from "react-icons/io";
 import {
   IoClose,
   IoCloseCircle,
@@ -69,7 +76,11 @@ import {
   IoWarning,
 } from "react-icons/io5";
 import {
+  MdAccountBalanceWallet,
+  MdAnalytics,
   MdCardGiftcard,
+  MdFactCheck,
+  MdImage,
   MdOutlineAdminPanelSettings,
   MdOutlineArrowBackIosNew,
   MdOutlineArrowForwardIos,
@@ -78,16 +89,22 @@ import {
   MdOutlineFileDownload,
   MdOutlineFilterAlt,
   MdOutlineUploadFile,
+  MdPermDataSetting,
+  MdSpaceDashboard,
+  MdWaterDrop,
+  MdWidgets,
 } from "react-icons/md";
-import { RiMapPin2Line } from "react-icons/ri";
+import { RiMapPin2Line, RiMoneyDollarCircleFill } from "react-icons/ri";
 import { SiHiveBlockchain } from "react-icons/si";
 import { TiArrowUnsorted } from "react-icons/ti";
 import { VscLoading, VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
 
 export const icons = {
+  AccountBalanceWallet: MdAccountBalanceWallet,
   Admin: FaUsersCog,
   AdminPanel: MdOutlineAdminPanelSettings,
-  ArrowBack: BiArrowBack,
+  Analytics: MdAnalytics,
+  ArrowRight: BiChevronRight,
   ArrowDown: BiChevronDown,
   ArrowUp: BiChevronUp,
   Back: MdOutlineArrowBackIosNew,
@@ -96,6 +113,7 @@ export const icons = {
   CaretLeft: AiFillCaretLeft,
   Check: BiCheck,
   CheckCircle: AiFillCheckCircle,
+  ClipboardCheck: FaClipboardCheck,
   Clock: FaClock,
   Close: IoClose,
   CloseCircle: IoCloseCircle,
@@ -104,8 +122,10 @@ export const icons = {
   Copy: MdOutlineContentCopy,
   Crop: IoCrop,
   Dash: GoDash,
+  Dashboard: MdSpaceDashboard,
   Discord: FaDiscord,
   Dislike: AiOutlineDislike,
+  DollarCircle: RiMoneyDollarCircleFill,
   Down: VscTriangleDown,
   Edit: AiOutlineEdit,
   Email: MdOutlineEmail,
@@ -118,6 +138,7 @@ export const icons = {
   EyeInvisible: AiOutlineEyeInvisible,
   Facebook: GrFacebookOption,
   FacebookCircle: FaFacebook,
+  FactCheck: MdFactCheck,
   FatArrowDownload: IoMdDownload,
   FileDownload: MdOutlineFileDownload,
   FileUpload: MdOutlineUploadFile,
@@ -129,6 +150,7 @@ export const icons = {
   HeartFill: AiFillHeart,
   HeartOutline: AiOutlineHeart,
   HourglassSplit: BsHourglassSplit,
+  Image: MdImage,
   Info: AiOutlineInfoCircle,
   Instagram: FaInstagram,
   Italic: BiItalic,
@@ -136,6 +158,7 @@ export const icons = {
   Linkedin: FaLinkedin,
   LinkedinIn: FaLinkedinIn,
   Liquid: ImDroplet,
+  ListBox: IoMdListBox,
   ListOl: FaListOl,
   ListUl: FaListUl,
   Loading: VscLoading,
@@ -146,6 +169,7 @@ export const icons = {
   MoneyBill: FaMoneyBillWave,
   Moon: FiMoon,
   Parachute: FaParachuteBox,
+  PermDataSettings: MdPermDataSetting,
   Picture: ImFilePicture,
   PieChart: GiPieChart,
   Plus: AiOutlinePlus,
@@ -153,9 +177,11 @@ export const icons = {
   Safe: FcSafe,
   Save: BiSave,
   Search: BiSearchAlt2,
+  SecurityScan: AiFillSecurityScan,
   Settings: IoMdSettings,
   StopWatch: FaStopwatch,
   Sun: BiSun,
+  Sync: GoSync,
   Telegram: FaTelegramPlane,
   Tiktok: FaTiktok,
   Twitter: BsTwitter,
@@ -166,6 +192,8 @@ export const icons = {
   User: FaUserCircle,
   Wallet: IoWalletSharp,
   Warning: IoWarning,
+  WaterDrop: MdWaterDrop,
+  Widget: MdWidgets,
   Youtube: AiFillYoutube,
 } as const;
 

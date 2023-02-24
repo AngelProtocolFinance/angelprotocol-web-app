@@ -3,17 +3,12 @@ import { useDonationsQuery } from "services/apes";
 import QueryLoader from "components/QueryLoader";
 import Table from "./Table";
 
-// import DonationsTable from "./DonationsTable";
-
-export default function Donations({ classes = "" }: { classes?: string }) {
+export default function DonationsTable({ classes = "" }) {
   const { id } = useAdminResources();
   const queryState = useDonationsQuery({ id: id.toString() });
 
   return (
-    <div className={`grid grid-rows-[auto_1fr] ${classes}`}>
-      <h1 className="text-2xl font-extrabold uppercase mb-2">
-        Received donations
-      </h1>
+    <div className={classes}>
       <QueryLoader
         queryState={queryState}
         messages={{
