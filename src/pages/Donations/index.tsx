@@ -8,12 +8,12 @@ import {
 } from "services/apes";
 import CsvExporter from "components/CsvExporter";
 import Icon from "components/Icon";
-import LoaderRing from "components/LoaderRing";
 import QueryLoader from "components/QueryLoader";
 import { useSetter } from "store/accessors";
 import useDebouncer from "hooks/useDebouncer";
 import { isEmpty } from "helpers";
 import Filter from "./Filter";
+import LoadMoreBtn from "./LoadMoreBtn";
 import MobileTable from "./MobileTable";
 import NoDonations from "./NoDonations";
 import Table from "./Table";
@@ -145,20 +145,11 @@ export default function Donations() {
               classes="lg:hidden max-lg:mt-4"
             />
             {hasMore && (
-              <button
-                type="button"
-                onClick={loadNextPage}
+              <LoadMoreBtn
+                onLoadMore={loadNextPage}
                 disabled={isLoading || isLoadingNextPage || isError}
-                className="flex items-center justify-center gap-3 uppercase text-sm font-bold border-x border-b border-prim rounded-b h-12 mb-4 hover:bg-orange-l5 dark:hover:bg-blue-d3 active:bg-orange-l4 dark:active:bg-blue-d2 disabled:bg-gray-l3 disabled:text-gray aria-disabled:bg-gray-l3 aria-disabled:dark:bg-bluegray disabled:dark:bg-bluegray"
-              >
-                {isLoadingNextPage ? (
-                  <>
-                    <LoaderRing thickness={10} classes="w-6" /> Loading...
-                  </>
-                ) : (
-                  "Load More"
-                )}
-              </button>
+                isLoading={isLoadingNextPage}
+              />
             )}
           </div>
         )}
