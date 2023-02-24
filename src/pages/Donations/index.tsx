@@ -81,21 +81,20 @@ export default function Donations() {
 
   const hasMore = !!data?.ItemCutoff;
 
+  const isLoadingOrError =
+    isLoading ||
+    isLoadingNextPage ||
+    isError ||
+    isErrorNextPage ||
+    isDebouncing;
+
   return (
     <div className="grid grid-cols-[1fr_auto] content-start gap-y-4 lg:gap-y-8 lg:gap-x-3 relative padded-container pt-8 lg:pt-20 pb-8">
       <h1 className="text-3xl font-bold max-lg:font-work max-lg:text-center max-lg:col-span-full max-lg:mb-4">
         My Donations
       </h1>
       <CsvExporter
-        aria-disabled={
-          isLoading ||
-          isLoadingNextPage ||
-          isError ||
-          isErrorNextPage ||
-          isDebouncing ||
-          !data?.Items ||
-          isEmpty(data.Items)
-        }
+        aria-disabled={isLoadingOrError || !data?.Items || isEmpty(data.Items)}
         classes="max-lg:row-start-5 max-lg:col-span-full lg:justify-self-end btn-orange px-8 py-3"
         headers={csvHeaders}
         data={data?.Items || []}
@@ -119,13 +118,7 @@ export default function Donations() {
         />
       </div>
       <Filter
-        isDisabled={
-          isLoading ||
-          isLoadingNextPage ||
-          isError ||
-          isErrorNextPage ||
-          isDebouncing
-        }
+        isDisabled={isLoadingOrError}
         setParams={setParams}
         donorAddress={address || ""}
         classes="max-lg:col-span-full max-lg:w-full"
@@ -155,9 +148,7 @@ export default function Donations() {
             {hasMore && (
               <LoadMoreBtn
                 onLoadMore={loadNextPage}
-                disabled={
-                  isLoading || isLoadingNextPage || isError || isErrorNextPage
-                }
+                disabled={isLoadingOrError}
                 isLoading={isLoadingNextPage}
               />
             )}
