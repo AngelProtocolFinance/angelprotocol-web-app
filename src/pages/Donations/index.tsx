@@ -152,8 +152,7 @@ export default function Donations() {
             >
               {isLoadingNextPage ? (
                 <>
-                  <LoaderRing thickness={10} classes="w-6" />
-                  <p className="text-center">Loading...</p>
+                  <LoaderRing thickness={10} classes="w-6" /> Loading...
                 </>
               ) : (
                 "Load More"
