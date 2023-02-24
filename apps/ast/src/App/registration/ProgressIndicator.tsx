@@ -28,7 +28,7 @@ export default function ProgressIndicator({ classes = "" }) {
     <div className={`py-4 pl-6 pr-4 ${classes} dark:text-gray`}>
       <div className="relative">
         <Step classes="relative" isDone={true} isCurr={true}>
-          Step1
+          About
         </Step>
         <button
           className="absolute top-1/2 -right-5 transform -translate-y-1/2 md:hidden"

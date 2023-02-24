@@ -9,7 +9,7 @@ export default function Layout() {
         classes="sticky top-0 z-20"
         links={[
           { href: "/", title: "Dashboard" },
-          { href: "/register", title: "Register" },
+          { href: "/register/step1", title: "Register" },
         ]}
         relative
       />
