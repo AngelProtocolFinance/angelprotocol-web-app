@@ -150,7 +150,7 @@ export default function Donations() {
               disabled={isLoading || isLoadingNextPage || isError || !hasMore}
               className="flex items-center justify-center gap-3 uppercase text-sm font-bold border-x border-b border-prim rounded-b h-12 mb-4 hover:bg-orange-l5 dark:hover:bg-blue-d3 active:bg-orange-l4 dark:active:bg-blue-d2 disabled:bg-gray-l3 disabled:text-gray aria-disabled:bg-gray-l3 aria-disabled:dark:bg-bluegray disabled:dark:bg-bluegray"
             >
-              {!isLoadingNextPage ? (
+              {isLoadingNextPage ? (
                 <>
                   <LoaderRing thickness={10} classes="w-6" />
                   <p className="text-center">Loading...</p>
