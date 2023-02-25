@@ -53,7 +53,7 @@ export function useEVMWC() {
           });
         }
       );
-      WCP.wc.on(WC_EVENT.disconnect, (error) => {
+      WCP.wc.on(WC_EVENT.disconnect, () => {
         setWalletState({ status: "disconnected", connect });
       });
     } catch (err) {

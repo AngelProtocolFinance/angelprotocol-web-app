@@ -1,7 +1,7 @@
-import { adminTags } from "@giving/services/juno/tags";
 import { Res, Result, WithAddrArgs } from "./queryContract/types";
 import { junoApi } from ".";
 import { genQueryPath } from "./queryContract/genQueryPath";
+import { adminTags } from "./tags";
 
 export const cw4Api = junoApi.injectEndpoints({
   endpoints: (builder) => ({

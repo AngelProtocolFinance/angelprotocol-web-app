@@ -1,11 +1,7 @@
 import { contracts } from "@giving/constants/contracts";
 import { condenseToNum, idParamToNum } from "@giving/helpers";
+import { AdminResources, EndowmentAssets, ProposalDetails } from "../../types";
 import { Args } from "../queryContract/types";
-import {
-  AdminResources,
-  EndowmentAssets,
-  ProposalDetails,
-} from "@giving/services/types";
 import { junoApi } from "..";
 import { queryContract } from "../queryContract";
 import { accountTags, adminTags, registrarTags } from "../tags";
@@ -137,7 +133,7 @@ export const customApi = junoApi.injectEndpoints({
         { type: "registrar", id: registrarTags.vault_list },
         { type: "account", id: accountTags.state },
       ],
-      async queryFn({ endowId, ...args }, api, extraOptions, baseQuery) {
+      async queryFn({ endowId, ...args }) {
         const [{ vaults }, accState] = await Promise.all([
           queryContract("regVaultList", contracts.registrar, args),
           queryContract("accState", contracts.accounts, { id: endowId }),

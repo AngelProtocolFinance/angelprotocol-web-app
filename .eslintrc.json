@@ -47,7 +47,11 @@
         "@typescript-eslint/no-non-null-asserted-optional-chain": "off",
         "@typescript-eslint/no-loss-of-precision": "off",
         "react/jsx-no-useless-fragment": "off",
-        "no-case-declarations": "off"
+        "no-case-declarations": "off",
+        "@typescript-eslint/no-unused-vars": [
+          "error",
+          { "ignoreRestSiblings": true }
+        ]
       }
     }
   ]

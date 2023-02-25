@@ -1,8 +1,8 @@
 import { condenseToNum } from "@giving/helpers";
-import { govTags } from "@giving/services/juno/tags";
 import { Res, Result, WithAddrArgs } from "./queryContract/types";
 import { junoApi } from ".";
 import { genQueryPath } from "./queryContract/genQueryPath";
+import { govTags } from "./tags";
 
 export const cw20Api = junoApi.injectEndpoints({
   endpoints: (builder) => ({
