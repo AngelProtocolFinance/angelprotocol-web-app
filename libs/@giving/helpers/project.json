@@ -1,6 +1,7 @@
 {
   "name": "giving-helpers",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/@giving/helpers/src",
   "projectType": "library",
 
   "targets": {

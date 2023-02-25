@@ -1,10 +1,10 @@
+import { useErrorContext } from "@giving/errors";
 import { handleMutationResult } from "@giving/helpers";
 import { useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { InitReg } from "../types";
 import { FormValues } from "./types";
 import { useNewApplicationMutation } from "services/aws/registration";
-import { useErrorContext } from "contexts/ErrorContext";
 import routes from "../routes";
 
 export default function useSubmit() {

@@ -1,5 +1,5 @@
 import keplrWalletLogo from "@giving/assets/icons/wallets/keplr.png";
-import { useErrorContext } from "contexts/ErrorContext";
+import { useErrorContext } from "@giving/errors";
 import { useSetWallet } from "contexts/WalletContext";
 
 export default function KeplrConnector() {

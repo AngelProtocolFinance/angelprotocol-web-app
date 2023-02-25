@@ -1,6 +1,6 @@
+import { useErrorContext } from "@giving/errors";
 import { useState } from "react";
 import { Connection } from "contexts/WalletContext/types";
-import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import ContentLoader from "components/ContentLoader";
 

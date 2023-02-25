@@ -1,3 +1,5 @@
+import Prompt from "";
+import { useModalContext } from "";
 import { GENERIC_ERROR_MESSAGE } from "@giving/constants/common";
 import { logger } from "@giving/helpers";
 import {
@@ -6,14 +8,12 @@ import {
   useCallback,
   useContext,
 } from "react";
-import Prompt from "components/Prompt";
+import InstallWallet from "./InstallWalletContent";
 import {
   APError,
   AP_ERROR_DISCRIMINATOR,
   WalletNotInstalledError,
-} from "errors/errors";
-import { useModalContext } from "../ModalContext";
-import InstallWallet from "./InstallWalletContent";
+} from "./errors";
 
 type State = { handleError: (error: any, displayMessage?: string) => void };
 
@@ -42,7 +42,7 @@ export default function ErrorContext(props: PropsWithChildren) {
         if (error instanceof WalletNotInstalledError) {
           showModal(Prompt, {
             headline: "Install Wallet",
-            children: <InstallWallet providerId={error.providerId} />,
+            children: <InstallWallet providerId={error.meta} />,
           });
         } else {
           showModal(Prompt, {

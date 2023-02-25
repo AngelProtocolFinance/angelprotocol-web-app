@@ -1,8 +1,6 @@
 import { EMAIL_SUPPORT } from "@giving/constants/common";
 import { EXPECTED_NETWORK_TYPE } from "@giving/constants/env";
 import { Chain } from "@giving/types/aws";
-import { WithoutInstallers } from "contexts/WalletContext/types";
-import { WALLET_METADATA } from "contexts/WalletContext/constants";
 
 export const AP_ERROR_DISCRIMINATOR = "AP_ERROR_DISCRIMINATOR";
 
@@ -23,7 +21,6 @@ export abstract class APError extends Error implements IAPError {
       name: this.name,
       message: this.message,
       stack: this.stack,
-      cause: this.cause,
       discriminator: this.discriminator,
     };
   }
@@ -125,17 +122,14 @@ export class TxResultFail extends Error {
   }
 }
 
+export type WalletMeta = { name: string; installURL: string; logo: string };
 export class WalletNotInstalledError extends APError {
-  providerId: WithoutInstallers;
-  constructor(providerId: WithoutInstallers) {
-    super(
-      "WalletNotInstalledError",
-      `Wallet ${WALLET_METADATA[providerId].name} not installed`
-    );
-    this.providerId = providerId;
+  meta: WalletMeta;
+  constructor(meta: WalletMeta) {
+    super("WalletNotInstalledError", `Wallet ${meta.name} not installed`);
+    this.meta = meta;
   }
 }
-
 export class WalletError extends APError {
   //based on EIP1193 error spec
   code: number;

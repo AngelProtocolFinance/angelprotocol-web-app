@@ -2,6 +2,11 @@ import station_icon from "@giving/assets/icons/wallets/terra-extension.jpg";
 import { chainIDs } from "@giving/constants/chains";
 import { IS_TEST } from "@giving/constants/env";
 import {
+  ManualChainSwitchRequiredError,
+  UnsupportedChainError,
+  WalletDisconnectedError,
+} from "@giving/errors";
+import {
   ConnectType,
   Installation,
   Connection as TerraConnection,
@@ -10,11 +15,6 @@ import {
 } from "@terra-money/wallet-provider";
 import { Connection, ProviderId, ProviderInfo } from "./types";
 import { BaseChain } from "@giving/types/aws";
-import {
-  ManualChainSwitchRequiredError,
-  UnsupportedChainError,
-  WalletDisconnectedError,
-} from "errors/errors";
 
 const SUPPORTED_CHAINS: BaseChain[] = IS_TEST
   ? [{ chain_id: chainIDs.terraTest, chain_name: "Terra Testnet" }]

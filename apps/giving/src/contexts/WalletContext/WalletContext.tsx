@@ -1,5 +1,6 @@
 import { chainIDs } from "@giving/constants/chains";
 import { IS_MOBILE, IS_TEST } from "@giving/constants/env";
+import { WalletDisconnectedError } from "@giving/errors";
 import {
   PropsWithChildren,
   createContext,
@@ -10,7 +11,6 @@ import {
 import { Connection, ProviderId, ProviderStatus } from "./types";
 import { BaseChain, Chain, TokenWithBalance } from "@giving/types/aws";
 import { useChainQuery } from "services/apes";
-import { WalletDisconnectedError } from "errors/errors";
 import {
   BNB_WALLET_SUPPORTED_CHAINS,
   EVM_SUPPORTED_CHAINS,

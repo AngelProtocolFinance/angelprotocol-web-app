@@ -2,6 +2,13 @@ import { formatUnits } from "@ethersproject/units";
 import { chainIDs } from "@giving/constants/chains";
 import { GENERIC_ERROR_MESSAGE } from "@giving/constants/common";
 import { EIPMethods } from "@giving/constants/ethereum";
+import {
+  UnexpectedStateError,
+  UnsupportedChainError,
+  WalletDisconnectedError,
+  WalletError,
+  WalletNotInstalledError,
+} from "@giving/errors";
 import { getProvider } from "@giving/helpers";
 import { useCallback, useEffect, useState } from "react";
 import { Connection, ProviderId, ProviderInfo } from "./types";
@@ -12,13 +19,6 @@ import {
   Dwindow,
   InjectedProvider,
 } from "@giving/types/ethereum";
-import {
-  UnexpectedStateError,
-  UnsupportedChainError,
-  WalletDisconnectedError,
-  WalletError,
-  WalletNotInstalledError,
-} from "errors/errors";
 import { WALLET_METADATA } from "./constants";
 import {
   checkXdefiPriority,

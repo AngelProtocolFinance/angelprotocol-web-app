@@ -1,13 +1,14 @@
 {
-  "name": "giving-types",
+  "name": "errors",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/@giving/errors/src",
   "projectType": "library",
   "targets": {
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/@giving/types/**/*.ts"]
+        "lintFilePatterns": ["libs/errors/**/*.{ts,tsx,js,jsx}"]
       }
     }
   }

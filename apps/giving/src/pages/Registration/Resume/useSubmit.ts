@@ -1,9 +1,9 @@
+import { useErrorContext } from "@giving/errors";
 import { storeRegistrationReference } from "@giving/helpers";
 import { useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { FormValues } from "./types";
 import { useLazyRegQuery } from "services/aws/registration";
-import { useErrorContext } from "contexts/ErrorContext";
 import { getRegistrationState } from "../Steps/getRegistrationState";
 import routes from "../routes";
 

@@ -1,8 +1,8 @@
+import { useErrorContext } from "@giving/errors";
 import { ErrorMessage } from "@hookform/error-message";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useNewsletterSubscribeMutation } from "services/aws/hubspot";
-import { useErrorContext } from "contexts/ErrorContext";
 import Icon from "components/Icon";
 import { FormValues, schema } from "./schema";
 

@@ -1,6 +1,6 @@
+import { useErrorContext } from "@giving/errors";
 import { useEffect } from "react";
 import { useLazyProfileQuery } from "services/aws/aws";
-import { useErrorContext } from "contexts/ErrorContext";
 
 export default function useLoadDefaultEndowmentName(
   endowId: number,

@@ -1,15 +1,15 @@
 import { chainIDs } from "@giving/constants/chains";
 import { GENERIC_ERROR_MESSAGE } from "@giving/constants/common";
 import { IS_TEST } from "@giving/constants/env";
-import { useEffect, useState } from "react";
-import { Connection, ProviderInfo } from "../types";
-import { BaseChain } from "@giving/types/aws";
-import { Dwindow } from "@giving/types/ethereum";
 import {
   UnsupportedChainError,
   WalletError,
   WalletNotInstalledError,
-} from "errors/errors";
+} from "@giving/errors";
+import { useEffect, useState } from "react";
+import { Connection, ProviderInfo } from "../types";
+import { BaseChain } from "@giving/types/aws";
+import { Dwindow } from "@giving/types/ethereum";
 import { WALLET_METADATA } from "../constants";
 import { retrieveUserAction, saveUserAction } from "../helpers";
 import { juno_test_chain_info } from "./chains";

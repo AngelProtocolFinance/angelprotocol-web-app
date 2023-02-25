@@ -1,5 +1,13 @@
 import { TimeoutError } from "@cosmjs/stargate";
 import { GENERIC_ERROR_MESSAGE } from "@giving/constants/common";
+import {
+  CosmosTxSimulationFail,
+  LogApplicationUpdateError,
+  LogDonationFail,
+  TxResultFail,
+  UnexpectedStateError,
+  WalletDisconnectedError,
+} from "@giving/errors";
 import { logger } from "@giving/helpers";
 import {
   CreateTxFailed,
@@ -9,14 +17,6 @@ import {
   UserDenied,
 } from "@terra-money/wallet-provider";
 import { TxError } from "./types";
-import {
-  CosmosTxSimulationFail,
-  LogApplicationUpdateError,
-  LogDonationFail,
-  TxResultFail,
-  UnexpectedStateError,
-  WalletDisconnectedError,
-} from "errors/errors";
 
 export default function handleTxError(
   error: any,

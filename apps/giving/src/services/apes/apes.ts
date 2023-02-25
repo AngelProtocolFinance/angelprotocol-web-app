@@ -5,6 +5,7 @@ import {
   JUNO_RPC_OVERRIDE,
 } from "@giving/constants/env";
 import { APIs } from "@giving/constants/urls";
+import { UnsupportedChainError } from "@giving/errors";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
   BaseChain,
@@ -13,7 +14,6 @@ import {
   Token,
   WithdrawLog,
 } from "@giving/types/aws";
-import { UnsupportedChainError } from "errors/errors";
 import { fetchBalances } from "./helpers/fetchBalances";
 
 export const apes = createApi({
