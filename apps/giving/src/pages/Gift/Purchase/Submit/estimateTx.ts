@@ -1,4 +1,5 @@
 import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
+import { contracts } from "@giving/constants/contracts";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { Estimate } from "./types";
 import { WalletState } from "contexts/WalletContext";
@@ -6,7 +7,6 @@ import { SubmitStep } from "slices/gift";
 import CW20 from "contracts/CW20";
 import GiftCard from "contracts/GiftCard";
 import { extractFeeAmount, logger, scaleToStr } from "helpers";
-import { contracts } from "constants/contracts";
 
 export async function estimateTx({
   details: { token, recipient },

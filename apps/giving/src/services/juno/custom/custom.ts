@@ -1,3 +1,4 @@
+import { contracts } from "@giving/constants/contracts";
 import { Args } from "../queryContract/types";
 import {
   AdminResources,
@@ -5,7 +6,6 @@ import {
   ProposalDetails,
 } from "services/types";
 import { condenseToNum, idParamToNum } from "helpers";
-import { contracts } from "constants/contracts";
 import { junoApi } from "..";
 import { queryContract } from "../queryContract";
 import { accountTags, adminTags, registrarTags } from "../tags";

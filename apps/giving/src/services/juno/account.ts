@@ -1,7 +1,7 @@
+import { contracts } from "@giving/constants/contracts";
 import { Args, Res, Result } from "./queryContract/types";
 import { EndowmentEntry } from "@giving/types/contracts";
 import { accountTags } from "services/juno/tags";
-import { contracts } from "constants/contracts";
 import { junoApi } from ".";
 import { queryContract } from "./queryContract";
 import { genQueryPath } from "./queryContract/genQueryPath";

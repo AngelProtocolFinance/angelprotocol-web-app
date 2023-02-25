@@ -1,10 +1,10 @@
+import { JUNO_LCD } from "@giving/constants/env";
 import {
   BaseQueryFn,
   createApi,
   fetchBaseQuery,
   retry,
 } from "@reduxjs/toolkit/query/react";
-import { JUNO_LCD } from "constants/env";
 import { rootTags } from "./tags";
 
 const customBaseQuery: BaseQueryFn = retry(

@@ -1,3 +1,5 @@
+import { APP_NAME } from "@giving/constants/common";
+import { appRoutes } from "@giving/constants/routes";
 import jwtDecode from "jwt-decode";
 import { PropsWithChildren } from "react";
 import { Location, Navigate, useLocation } from "react-router-dom";
@@ -10,8 +12,6 @@ import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import Popup from "components/Popup";
 import { handleMutationResult, logger } from "helpers";
-import { APP_NAME } from "constants/common";
-import { appRoutes } from "constants/routes";
 import routes, { steps } from "./routes";
 
 type JwtData = InitApplication & {

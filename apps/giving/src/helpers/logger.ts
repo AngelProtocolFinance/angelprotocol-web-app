@@ -1,4 +1,4 @@
-import { IS_TEST } from "constants/env";
+import { IS_TEST } from "@giving/constants/env";
 
 type Logger = {
   error: (...data: any[]) => void;

@@ -1,10 +1,10 @@
+import { appRoutes } from "@giving/constants/routes";
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { FormValues, OnDonation } from "../types";
 import { useSetter } from "store/accessors";
 import { setKYC, setStep } from "slices/donation";
-import { appRoutes } from "constants/routes";
 
 export default function Controls({
   classes = "",

@@ -1,4 +1,4 @@
-import { BASE_DOMAIN } from "constants/common";
+import { BASE_DOMAIN } from "./common";
 
 export const APIs = {
   aws: "https://kpnxz5rzo2.execute-api.us-east-1.amazonaws.com",

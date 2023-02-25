@@ -1,5 +1,5 @@
+import { appRoutes } from "@giving/constants/routes";
 import { Link } from "react-router-dom";
-import { appRoutes } from "constants/routes";
 
 export default function Links({ endowmentId }: { endowmentId: number }) {
   return (

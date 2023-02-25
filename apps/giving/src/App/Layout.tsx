@@ -1,10 +1,10 @@
+import { LOGO } from "@giving/constants/common";
+import { appRoutes } from "@giving/constants/routes";
 import { Suspense } from "react";
 import { Outlet } from "react-router-dom";
 import { Link } from "./types";
 import Loader from "components/Loader";
 import Seo from "components/Seo";
-import { LOGO } from "constants/common";
-import { appRoutes } from "constants/routes";
 import Footer from "./Footer";
 import Header from "./Header";
 import { GROUPS_DATA, SOCIAL_MEDIA_LINKS } from "./constants";

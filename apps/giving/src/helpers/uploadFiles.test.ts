@@ -1,4 +1,4 @@
-import { APIs } from "constants/urls";
+import { APIs } from "@giving/constants/urls";
 import { Bucket, bucketURL, uploadFiles } from "./uploadFiles";
 
 const TIME_STAMP = 123456789;

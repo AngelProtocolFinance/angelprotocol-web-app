@@ -3,10 +3,10 @@ import binanceWalletIcon from "@giving/assets/icons/wallets/binance.png";
 import keplrIcon from "@giving/assets/icons/wallets/keplr.png";
 import metamaskIcon from "@giving/assets/icons/wallets/metamask.png";
 import xdefiIcon from "@giving/assets/icons/wallets/xdefi.jpg";
+import { chainIDs } from "@giving/constants/chains";
+import { EXPECTED_NETWORK_TYPE, IS_TEST } from "@giving/constants/env";
 import { WithoutInstallers } from "./types";
 import { BaseChain, Chain } from "@giving/types/aws";
-import { chainIDs } from "constants/chains";
-import { EXPECTED_NETWORK_TYPE, IS_TEST } from "constants/env";
 
 export const WALLET_METADATA: {
   [key in WithoutInstallers]: {

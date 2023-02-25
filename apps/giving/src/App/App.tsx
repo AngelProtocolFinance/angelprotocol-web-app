@@ -1,22 +1,22 @@
+import { chainOptions } from "@giving/constants/chainOptions";
+import { appRoutes } from "@giving/constants/routes";
 import { WalletProvider } from "@terra-money/wallet-provider";
 import { lazy } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import ModalContext from "contexts/ModalContext";
 import WalletContext from "contexts/WalletContext";
 import useScrollTop from "hooks/useScrollTop";
-import { chainOptions } from "constants/chainOptions";
-import { appRoutes } from "constants/routes";
 import Layout from "./Layout";
 
-const Admin = lazy(() => import("pages/Admin"));
-const Profile = lazy(() => import("pages/Profile"));
-const Donations = lazy(() => import("pages/Donations"));
-const Leaderboard = lazy(() => import("pages/Leaderboard"));
-const Marketplace = lazy(() => import("pages/Marketplace"));
-const Registration = lazy(() => import("pages/Registration"));
-const Donate = lazy(() => import("pages/Donate"));
-const Gift = lazy(() => import("pages/Gift"));
-const DonateWidget = lazy(() => import("pages/DonateWidget"));
+const Admin = lazy(() => import("../pages/Admin"));
+const Profile = lazy(() => import("../pages/Profile"));
+const Donations = lazy(() => import("../pages/Donations"));
+const Leaderboard = lazy(() => import("../pages/Leaderboard"));
+const Marketplace = lazy(() => import("../pages/Marketplace"));
+const Registration = lazy(() => import("../pages/Registration"));
+const Donate = lazy(() => import("../pages/Donate"));
+const Gift = lazy(() => import("../pages/Gift"));
+const DonateWidget = lazy(() => import("../pages/DonateWidget"));
 
 export default function App() {
   const location = useLocation();

@@ -1,3 +1,4 @@
+import { APP_NAME } from "@giving/constants/common";
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { WithdrawValues as WV } from "./types";
@@ -6,7 +7,6 @@ import { useAdminResources } from "pages/Admin/Guard";
 import { useLatestBlockQuery } from "services/juno";
 import QueryLoader from "components/QueryLoader";
 import { Field } from "components/form";
-import { APP_NAME } from "constants/common";
 import Warning from "./Warning";
 
 export default function Submit() {

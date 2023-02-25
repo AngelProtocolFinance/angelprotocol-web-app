@@ -1,3 +1,4 @@
+import { appRoutes } from "@giving/constants/routes";
 import { SubmitHandler, useFormContext } from "react-hook-form";
 import { FormValues as FV, FlatFormValues } from "./types";
 import { EndowmentProfileUpdate } from "@giving/types/aws";
@@ -10,7 +11,6 @@ import { TxPrompt } from "components/Prompt";
 import { isEmpty } from "helpers";
 import { getPayloadDiff } from "helpers/admin";
 import { getFullURL, uploadFiles } from "helpers/uploadFiles";
-import { appRoutes } from "constants/routes";
 import { createADR36Payload } from "./createADR36Payload";
 
 // import optimizeImage from "./optimizeImage";

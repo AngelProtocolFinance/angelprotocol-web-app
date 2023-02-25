@@ -27,7 +27,8 @@
     "target": "es2015",
     "paths": {
       "@giving/assets/*": ["libs/@giving/assets/src/*"],
-      "@giving/types/*": ["libs/@giving/types/src/*"]
+      "@giving/types/*": ["libs/@giving/types/src/*"],
+      "@giving/constants/*": ["libs/@giving/constants/src/*"]
     }
   },
   "exclude": ["node_modules", "tmp"]

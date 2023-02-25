@@ -1,4 +1,7 @@
 import { formatUnits } from "@ethersproject/units";
+import { chainIDs } from "@giving/constants/chains";
+import { GENERIC_ERROR_MESSAGE } from "@giving/constants/common";
+import { EIPMethods } from "@giving/constants/ethereum";
 import { useCallback, useEffect, useState } from "react";
 import { Connection, ProviderId, ProviderInfo } from "./types";
 import { BaseChain } from "@giving/types/aws";
@@ -16,9 +19,6 @@ import {
   WalletError,
   WalletNotInstalledError,
 } from "errors/errors";
-import { chainIDs } from "constants/chains";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
-import { EIPMethods } from "constants/ethereum";
 import { WALLET_METADATA } from "./constants";
 import {
   checkXdefiPriority,

@@ -1,3 +1,4 @@
+import { unsdgs } from "@giving/constants/unsdgs";
 import { Combobox as HuiCombobox } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import React, { useState } from "react";
@@ -7,7 +8,6 @@ import { useEndowmentIdNamesQuery } from "services/aws/aws";
 import { DrawerIcon } from "components/Icon";
 import QueryLoader from "components/QueryLoader";
 import useDebouncer from "hooks/useDebouncer";
-import { unsdgs } from "constants/unsdgs";
 import { FormValues } from "../../schema";
 
 const containerStyle =

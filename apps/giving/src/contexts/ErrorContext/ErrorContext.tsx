@@ -1,3 +1,4 @@
+import { GENERIC_ERROR_MESSAGE } from "@giving/constants/common";
 import {
   PropsWithChildren,
   createContext,
@@ -11,7 +12,6 @@ import {
   AP_ERROR_DISCRIMINATOR,
   WalletNotInstalledError,
 } from "errors/errors";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { useModalContext } from "../ModalContext";
 import InstallWallet from "./InstallWalletContent";
 

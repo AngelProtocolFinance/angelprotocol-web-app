@@ -1,11 +1,11 @@
 import { Coin } from "@cosmjs/proto-signing";
 import { JsonRpcProvider } from "@ethersproject/providers";
 import { formatUnits } from "@ethersproject/units";
+import { contracts } from "@giving/constants/contracts";
 import { BalMap } from "./types";
 import { FetchedChain, Token, TokenWithBalance } from "@giving/types/aws";
 import { queryContract } from "services/juno/queryContract";
 import { condenseToNum } from "helpers";
-import { contracts } from "constants/contracts";
 import { getERC20Holdings } from "./getERC20Holdings";
 
 type CosmosBalances = { balances: Coin[] };

@@ -1,3 +1,4 @@
+import { LOGO } from "@giving/constants/common";
 import { useEffect } from "react";
 import Logo from "components/Logo";
 import WalletSuite from "components/WalletSuite";
@@ -5,7 +6,6 @@ import { Steps } from "components/donation";
 import { useSetter } from "store/accessors";
 import { setRecipient } from "slices/donation";
 import { getPossessiveForm } from "helpers";
-import { LOGO } from "constants/common";
 import useWidgetParams from "./useWidgetParams";
 
 export default function InnerComponent(props: {

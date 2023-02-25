@@ -1,7 +1,7 @@
+import { contracts } from "@giving/constants/contracts";
 import { ApplicationVote } from "@giving/types/contracts";
 import { ReviewCW3ConfigPayload } from "@giving/types/contracts";
 import { WalletState } from "contexts/WalletContext/WalletContext";
-import { contracts } from "constants/contracts";
 import CW3 from ".";
 
 export default class CW3Review extends CW3 {

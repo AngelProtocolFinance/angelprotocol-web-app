@@ -1,6 +1,6 @@
+import { APP_NAME } from "@giving/constants/common";
 import { memo } from "react";
 import { LinkGroup, SocialMediaLink } from "../types";
-import { APP_NAME } from "constants/common";
 import Links from "./Links";
 import Newsletter from "./Newsletter";
 import Socials from "./Socials";

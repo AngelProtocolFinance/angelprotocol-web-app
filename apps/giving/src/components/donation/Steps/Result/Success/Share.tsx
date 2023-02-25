@@ -1,10 +1,10 @@
+import { DAPP_DOMAIN } from "@giving/constants/common";
 import { Dialog } from "@headlessui/react";
 import { useCallback, useState } from "react";
 import { useModalContext } from "contexts/ModalContext";
 import ExtLink from "components/ExtLink";
 import Icon, { IconType } from "components/Icon";
 import { DonationRecipient } from "slices/donation";
-import { DAPP_DOMAIN } from "constants/common";
 
 export type SocialMedia = Extract<
   IconType,

@@ -1,7 +1,7 @@
+import { tokens } from "@giving/constants/tokens";
 import { WithdrawMeta } from "pages/Admin/types";
 import TableSection, { Cells } from "components/TableSection";
 import { condense, humanize } from "helpers";
-import { tokens } from "constants/tokens";
 import KeyValue from "./common/KeyValue";
 import PreviewContainer from "./common/PreviewContainer";
 

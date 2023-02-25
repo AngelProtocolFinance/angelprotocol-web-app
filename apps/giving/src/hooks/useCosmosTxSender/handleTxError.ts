@@ -1,4 +1,5 @@
 import { TimeoutError } from "@cosmjs/stargate";
+import { GENERIC_ERROR_MESSAGE } from "@giving/constants/common";
 import {
   CreateTxFailed,
   Timeout,
@@ -16,7 +17,6 @@ import {
   UnexpectedStateError,
   WalletDisconnectedError,
 } from "errors/errors";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
 
 export default function handleTxError(
   error: any,

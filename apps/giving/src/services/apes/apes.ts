@@ -1,3 +1,10 @@
+import { chainIds } from "@giving/constants/chainIds";
+import {
+  IS_TEST,
+  JUNO_LCD_OVERRIDE,
+  JUNO_RPC_OVERRIDE,
+} from "@giving/constants/env";
+import { APIs } from "@giving/constants/urls";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
   BaseChain,
@@ -7,9 +14,6 @@ import {
   WithdrawLog,
 } from "@giving/types/aws";
 import { UnsupportedChainError } from "errors/errors";
-import { chainIds } from "constants/chainIds";
-import { IS_TEST, JUNO_LCD_OVERRIDE, JUNO_RPC_OVERRIDE } from "constants/env";
-import { APIs } from "constants/urls";
 import { fetchBalances } from "./helpers/fetchBalances";
 
 export const apes = createApi({

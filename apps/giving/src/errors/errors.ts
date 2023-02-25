@@ -1,8 +1,8 @@
+import { EMAIL_SUPPORT } from "@giving/constants/common";
+import { EXPECTED_NETWORK_TYPE } from "@giving/constants/env";
 import { Chain } from "@giving/types/aws";
 import { WithoutInstallers } from "contexts/WalletContext/types";
 import { WALLET_METADATA } from "contexts/WalletContext/constants";
-import { EMAIL_SUPPORT } from "constants/common";
-import { EXPECTED_NETWORK_TYPE } from "constants/env";
 
 export const AP_ERROR_DISCRIMINATOR = "AP_ERROR_DISCRIMINATOR";
 

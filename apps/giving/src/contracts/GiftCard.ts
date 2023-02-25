@@ -1,8 +1,8 @@
 import { Coin } from "@cosmjs/proto-signing";
+import { contracts } from "@giving/constants/contracts";
 import { Asset } from "@giving/types/contracts";
 import { TokenWithAmount } from "@giving/types/slices";
 import { roundDown, scaleToStr } from "helpers";
-import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 
 export default class GiftCard extends Contract {

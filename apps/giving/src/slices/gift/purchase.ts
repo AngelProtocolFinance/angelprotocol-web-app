@@ -1,11 +1,11 @@
+import { EMAIL_SUPPORT } from "@giving/constants/common";
+import { APIs } from "@giving/constants/urls";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { TxOptions } from "@giving/types/slices";
 import { invalidateApesTags } from "services/apes";
 import { WalletState } from "contexts/WalletContext";
 import Contract from "contracts/Contract";
 import { createAuthToken, getWasmAttribute, logger } from "helpers";
-import { EMAIL_SUPPORT } from "constants/common";
-import { APIs } from "constants/urls";
 import gift, { GiftDetails, TxStatus, setTxStatus } from "./index";
 
 type Args = {

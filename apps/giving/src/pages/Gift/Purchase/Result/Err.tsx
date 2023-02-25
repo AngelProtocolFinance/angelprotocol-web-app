@@ -1,8 +1,8 @@
+import { appRoutes } from "@giving/constants/routes";
 import { Link } from "react-router-dom";
 import Icon from "components/Icon";
 import { useSetter } from "store/accessors";
 import { TError, setStep } from "slices/gift";
-import { appRoutes } from "constants/routes";
 
 export default function Err({ error }: TError) {
   const dispatch = useSetter();

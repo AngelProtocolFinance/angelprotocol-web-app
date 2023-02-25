@@ -1,3 +1,5 @@
+import { APP_NAME, DAPP_DOMAIN } from "@giving/constants/common";
+import { unsdgs } from "@giving/constants/unsdgs";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FlatFormValues, FormValues } from "./types";
@@ -6,8 +8,6 @@ import { useAdminResources } from "pages/Admin/Guard";
 import { useProfileQuery } from "services/aws/aws";
 import Seo from "components/Seo";
 import { FormError, FormSkeleton } from "components/admin";
-import { APP_NAME, DAPP_DOMAIN } from "constants/common";
-import { unsdgs } from "constants/unsdgs";
 import Form from "./Form";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import { schema } from "./schema";

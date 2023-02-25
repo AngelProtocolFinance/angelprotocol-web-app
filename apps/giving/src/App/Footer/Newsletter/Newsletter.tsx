@@ -1,4 +1,4 @@
-import { BASE_DOMAIN } from "constants/common";
+import { BASE_DOMAIN } from "@giving/constants/common";
 import SubscriptionForm from "./SubscriptionForm";
 
 export default function Newsletter() {

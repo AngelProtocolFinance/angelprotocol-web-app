@@ -1,3 +1,4 @@
+import { appRoutes } from "@giving/constants/routes";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -9,7 +10,6 @@ import { useSetter } from "store/accessors";
 import { SubmitStep, setStep } from "slices/donation";
 import { sendDonation } from "slices/donation/sendDonation";
 import { humanize } from "helpers";
-import { appRoutes } from "constants/routes";
 import { estimateDonation } from "./estimateDonation";
 import getBreakdown from "./getBreakdown";
 

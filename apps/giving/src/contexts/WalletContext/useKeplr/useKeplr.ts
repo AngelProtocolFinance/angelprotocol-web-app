@@ -1,3 +1,6 @@
+import { chainIDs } from "@giving/constants/chains";
+import { GENERIC_ERROR_MESSAGE } from "@giving/constants/common";
+import { IS_TEST } from "@giving/constants/env";
 import { useEffect, useState } from "react";
 import { Connection, ProviderInfo } from "../types";
 import { BaseChain } from "@giving/types/aws";
@@ -7,9 +10,6 @@ import {
   WalletError,
   WalletNotInstalledError,
 } from "errors/errors";
-import { chainIDs } from "constants/chains";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
-import { IS_TEST } from "constants/env";
 import { WALLET_METADATA } from "../constants";
 import { retrieveUserAction, saveUserAction } from "../helpers";
 import { juno_test_chain_info } from "./chains";

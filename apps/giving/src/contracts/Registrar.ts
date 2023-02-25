@@ -1,8 +1,8 @@
+import { contracts } from "@giving/constants/contracts";
 import {
   RegistrarConfigPayload,
   RegistrarOwnerPayload,
 } from "@giving/types/contracts";
-import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 
 export default class Registrar extends Contract {

@@ -1,8 +1,8 @@
+import { IS_TEST } from "@giving/constants/env";
+import { APIs } from "@giving/constants/urls";
 import { TxLogPayload } from "@giving/types/aws";
 import { createAuthToken } from "helpers";
 import { LogDonationFail } from "errors/errors";
-import { IS_TEST } from "constants/env";
-import { APIs } from "constants/urls";
 
 //log donation, with optional receipt
 const logDonation = async (payload: TxLogPayload) => {

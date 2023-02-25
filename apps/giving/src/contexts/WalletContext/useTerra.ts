@@ -1,4 +1,6 @@
 import station_icon from "@giving/assets/icons/wallets/terra-extension.jpg";
+import { chainIDs } from "@giving/constants/chains";
+import { IS_TEST } from "@giving/constants/env";
 import {
   ConnectType,
   Installation,
@@ -13,8 +15,6 @@ import {
   UnsupportedChainError,
   WalletDisconnectedError,
 } from "errors/errors";
-import { chainIDs } from "constants/chains";
-import { IS_TEST } from "constants/env";
 
 const SUPPORTED_CHAINS: BaseChain[] = IS_TEST
   ? [{ chain_id: chainIDs.terraTest, chain_name: "Terra Testnet" }]

@@ -1,3 +1,4 @@
+import { appRoutes } from "@giving/constants/routes";
 import { useEffect, useRef } from "react";
 import Breadcrumbs from "components/Breadcrumbs";
 import { Steps } from "components/donation";
@@ -7,7 +8,6 @@ import {
   DonationState,
   setRecipient,
 } from "slices/donation";
-import { appRoutes } from "constants/routes";
 
 export default function Content(props: DonationRecipient) {
   const dispatch = useSetter();

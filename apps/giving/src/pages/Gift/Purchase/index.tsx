@@ -1,11 +1,11 @@
+import { chainIds } from "@giving/constants/chainIds";
+import { APP_NAME } from "@giving/constants/common";
+import { IS_TEST } from "@giving/constants/env";
 import { useEffect } from "react";
 import { useGetWallet } from "contexts/WalletContext";
 import { ErrorStatus, LoadingStatus } from "components/Status";
 import { useGetter, useSetter } from "store/accessors";
 import { GiftState, resetDetails } from "slices/gift";
-import { chainIds } from "constants/chainIds";
-import { APP_NAME } from "constants/common";
-import { IS_TEST } from "constants/env";
 import Progress from "./Progress";
 import Purchaser from "./Purchaser";
 import Result from "./Result";

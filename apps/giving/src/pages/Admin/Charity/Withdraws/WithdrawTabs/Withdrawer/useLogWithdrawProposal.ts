@@ -1,3 +1,5 @@
+import { EMAIL_SUPPORT } from "@giving/constants/common";
+import { APIs } from "@giving/constants/urls";
 import { AccountType } from "@giving/types/contracts";
 import { invalidateApesTags } from "services/apes";
 import { useModalContext } from "contexts/ModalContext";
@@ -10,8 +12,6 @@ import {
   idParamToNum,
   logger,
 } from "helpers";
-import { EMAIL_SUPPORT } from "constants/common";
-import { APIs } from "constants/urls";
 
 type ProposalInfo = {
   endowment_multisig: string;

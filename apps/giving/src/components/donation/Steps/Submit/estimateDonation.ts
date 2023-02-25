@@ -1,6 +1,7 @@
 import { Contract } from "@ethersproject/contracts";
 import { TransactionRequest, Web3Provider } from "@ethersproject/providers";
 import { formatUnits, parseUnits } from "@ethersproject/units";
+import { ap_wallets } from "@giving/constants/ap_wallets";
 import { Coin, MsgExecuteContract, MsgSend } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import ERC20Abi from "abi/ERC20.json";
@@ -11,7 +12,6 @@ import Account from "contracts/Account";
 import CW20 from "contracts/CW20";
 import GiftCard from "contracts/GiftCard";
 import { extractFeeAmount, getProvider, logger, scaleToStr } from "helpers";
-import { ap_wallets } from "constants/ap_wallets";
 import estimateTerraFee from "./estimateTerraFee";
 import getBreakdown from "./getBreakdown";
 

@@ -1,3 +1,5 @@
+import { appRoutes } from "@giving/constants/routes";
+import { unsdgs } from "@giving/constants/unsdgs";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { EndowmentCard } from "@giving/types/aws";
@@ -6,8 +8,6 @@ import BookmarkBtn from "components/BookmarkBtn";
 import Icon from "components/Icon";
 import Tooltip from "components/Tooltip";
 import { isEmpty } from "helpers";
-import { appRoutes } from "constants/routes";
-import { unsdgs } from "constants/unsdgs";
 
 const PLACEHOLDER_TAGLINE = " ";
 

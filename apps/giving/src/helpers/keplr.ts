@@ -1,11 +1,11 @@
 import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 import { fromHex, toBase64 } from "@cosmjs/encoding";
+import { JUNO_LCD } from "@giving/constants/env";
+import { WC_BRIDGE } from "@giving/constants/urls";
 import { KeplrWalletConnectV1 } from "@keplr-wallet/wc-client";
 import WalletConnect from "@walletconnect/client/";
 import { Dwindow } from "@giving/types/ethereum";
 import { ProviderId } from "contexts/WalletContext/types";
-import { JUNO_LCD } from "constants/env";
-import { WC_BRIDGE } from "constants/urls";
 
 export const connector = new WalletConnect({
   bridge: WC_BRIDGE,

@@ -1,3 +1,5 @@
+import { appRoutes } from "@giving/constants/routes";
+import { unsdgs } from "@giving/constants/unsdgs";
 import { PropsWithChildren } from "react";
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "./types";
@@ -9,8 +11,6 @@ import ImgEditor from "components/ImgEditor";
 import { RichTextEditor } from "components/RichText";
 import { Selector } from "components/Selector";
 import { Field, Label } from "components/form";
-import { appRoutes } from "constants/routes";
-import { unsdgs } from "constants/unsdgs";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import { VALID_MIME_TYPES } from "./schema";
 import useEditProfile from "./useEditProfile";

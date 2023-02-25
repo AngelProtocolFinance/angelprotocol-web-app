@@ -1,7 +1,7 @@
+import { contracts } from "@giving/constants/contracts";
 import Decimal from "decimal.js";
 import { Airdrops } from "@giving/types/aws";
 import { condense } from "helpers";
-import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 import Gov from "./Gov";
 
