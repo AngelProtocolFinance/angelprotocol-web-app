@@ -1,7 +1,7 @@
+import { maskAddress } from "@giving/helpers";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { FormValues as FV } from "../types";
 import { AccountType } from "@giving/types/contracts";
-import { maskAddress } from "helpers";
 import Field from "./Field";
 
 type Props = { classes?: string; type: AccountType };

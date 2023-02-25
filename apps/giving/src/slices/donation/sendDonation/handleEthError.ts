@@ -1,6 +1,6 @@
 import { ErrorCode as errors } from "@ethersproject/logger";
 import { GENERIC_ERROR_MESSAGE } from "@giving/constants/common";
-import { logger } from "helpers";
+import { logger } from "@giving/helpers";
 
 /** TODO: use this with sendDonation */
 export default function handleEthError(error: any, handler: any) {

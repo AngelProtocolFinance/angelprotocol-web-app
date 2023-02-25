@@ -1,5 +1,5 @@
+import { toBase64 } from "@giving/helpers";
 import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
-import { toBase64 } from "helpers";
 import { queryObject } from "./queryObjects";
 
 export function genQueryPath<T extends QT>(

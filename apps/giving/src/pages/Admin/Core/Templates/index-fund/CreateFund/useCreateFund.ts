@@ -1,3 +1,4 @@
+import { condense, roundDown } from "@giving/helpers";
 import { cleanObject } from "@giving/helpers/cleanObject";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
@@ -9,7 +10,6 @@ import { useGetter } from "store/accessors";
 import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
 import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
-import { condense, roundDown } from "helpers";
 import { INIT_SPLIT } from ".";
 
 export default function useCreateFund() {

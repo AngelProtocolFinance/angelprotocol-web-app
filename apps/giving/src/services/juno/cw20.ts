@@ -1,6 +1,6 @@
+import { condenseToNum } from "@giving/helpers";
 import { Res, Result, WithAddrArgs } from "./queryContract/types";
 import { govTags } from "services/juno/tags";
-import { condenseToNum } from "helpers";
 import { junoApi } from "./";
 import { genQueryPath } from "./queryContract/genQueryPath";
 

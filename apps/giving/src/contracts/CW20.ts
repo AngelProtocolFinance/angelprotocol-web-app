@@ -1,5 +1,5 @@
+import { scaleToStr, toBase64 } from "@giving/helpers";
 import { WalletState } from "contexts/WalletContext";
-import { scaleToStr, toBase64 } from "helpers";
 import Contract from "./Contract";
 
 export default class CW20 extends Contract {

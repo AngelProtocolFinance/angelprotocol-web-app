@@ -1,6 +1,7 @@
 import { APP_NAME } from "@giving/constants/common";
 import { appRoutes } from "@giving/constants/routes";
 import { APIs } from "@giving/constants/urls";
+import { createAuthToken } from "@giving/helpers";
 import { useFormContext } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "./types";
@@ -9,7 +10,6 @@ import Prompt from "components/Prompt";
 import { RichTextEditor } from "components/RichText";
 import { Label } from "components/form";
 import { Field } from "components/form";
-import { createAuthToken } from "helpers";
 
 export default function Form({ classes = "" }) {
   const { handleSubmit, reset } = useFormContext<FV>();

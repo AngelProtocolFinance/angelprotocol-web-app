@@ -1,11 +1,11 @@
 import { appRoutes } from "@giving/constants/routes";
+import { logger } from "@giving/helpers";
 import { Popover } from "@headlessui/react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useWalletProfileQuery } from "services/aws/aws";
 import { WalletState, useSetWallet } from "contexts/WalletContext";
 import LoaderRing from "components/LoaderRing";
-import { logger } from "helpers";
 import Address from "./Address";
 import AdminLinks from "./AdminLinks";
 import Balances from "./Balances";

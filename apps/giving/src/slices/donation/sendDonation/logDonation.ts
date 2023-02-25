@@ -1,7 +1,7 @@
 import { IS_TEST } from "@giving/constants/env";
 import { APIs } from "@giving/constants/urls";
+import { createAuthToken } from "@giving/helpers";
 import { TxLogPayload } from "@giving/types/aws";
-import { createAuthToken } from "helpers";
 import { LogDonationFail } from "errors/errors";
 
 //log donation, with optional receipt

@@ -1,5 +1,6 @@
 import { chainIDs } from "@giving/constants/chains";
 import { KADO_API_KEY } from "@giving/constants/env";
+import { logger } from "@giving/helpers";
 import { Dialog } from "@headlessui/react";
 import { useCallback } from "react";
 import { invalidateApesTags } from "services/apes";
@@ -7,7 +8,6 @@ import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import { useSetter } from "store/accessors";
-import { logger } from "helpers";
 import IFrame from "./IFrame";
 
 type KADO_NETWORK_VALUES = "ethereum" | "juno" | "terra";

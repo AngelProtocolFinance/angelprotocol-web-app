@@ -1,8 +1,8 @@
 import { DAPP_DOMAIN } from "@giving/constants/common";
 import { IS_TEST } from "@giving/constants/env";
 import { appRoutes } from "@giving/constants/routes";
+import { isEmpty } from "@giving/helpers";
 import { URL_PARAMS, UrlParamValues } from "pages/DonateWidget";
-import { isEmpty } from "helpers";
 import { FormValues } from "./schema";
 
 const APP_URL = IS_TEST ? "http://localhost:4200" : `${DAPP_DOMAIN}`;

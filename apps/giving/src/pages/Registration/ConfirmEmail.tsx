@@ -1,10 +1,10 @@
+import { handleMutationResult } from "@giving/helpers";
 import { Navigate, useLocation } from "react-router-dom";
 import { InitReg } from "./types";
 import { useRequestEmailMutation } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import Popup from "components/Popup";
-import { handleMutationResult } from "helpers";
 
 export default function ConfirmEmail({ classes = "" }: { classes?: string }) {
   /** going to this page should only be thru Signup or Resume

@@ -2,6 +2,7 @@
   "name": "giving-helpers",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
+
   "targets": {
     "lint": {
       "executor": "@nrwl/linter:eslint",

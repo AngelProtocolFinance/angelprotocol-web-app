@@ -1,7 +1,7 @@
+import { humanize } from "@giving/helpers";
 import { Dialog } from "@headlessui/react";
 import { Airdrops } from "@giving/types/aws";
 import Icon from "components/Icon";
-import { humanize } from "helpers";
 import useClaimAirdrop from "./useClaimAirdrop";
 
 export default function Catcher(props: { airdrops: Airdrops }) {

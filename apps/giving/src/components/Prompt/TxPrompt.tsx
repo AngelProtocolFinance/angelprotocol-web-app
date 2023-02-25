@@ -1,3 +1,4 @@
+import { getTxUrl } from "@giving/helpers";
 import { useNavigate } from "react-router-dom";
 import { Props as PromptProps } from "./types";
 import { useModalContext } from "contexts/ModalContext";
@@ -8,7 +9,6 @@ import {
   isLoading,
   isSuccess,
 } from "hooks/useCosmosTxSender";
-import { getTxUrl } from "helpers";
 import Prompt from "./Prompt";
 
 export function TxPrompt(props: TxState) {

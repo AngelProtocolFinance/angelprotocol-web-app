@@ -1,11 +1,11 @@
 import { chainIds } from "@giving/constants/chainIds";
 import { APP_NAME } from "@giving/constants/common";
 import { appRoutes } from "@giving/constants/routes";
+import { getTxUrl } from "@giving/helpers";
 import { Link } from "react-router-dom";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import { GiftCard, TxResult } from "slices/gift";
-import { getTxUrl } from "helpers";
 import { routes } from "../../routes";
 import { hashKey } from "../constants";
 

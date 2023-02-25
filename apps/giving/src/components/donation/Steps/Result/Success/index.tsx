@@ -1,9 +1,9 @@
 import { appRoutes } from "@giving/constants/routes";
+import { getTxUrl, humanize } from "@giving/helpers";
 import { Link } from "react-router-dom";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import { TxStep } from "slices/donation";
-import { getTxUrl, humanize } from "helpers";
 import Share, { SocialMedia } from "./Share";
 
 export default function Success({

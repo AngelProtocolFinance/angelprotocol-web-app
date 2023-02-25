@@ -1,5 +1,5 @@
+import { isPrevDark, setToDarkMode, setToLightMode } from "@giving/helpers";
 import { useEffect } from "react";
-import { isPrevDark, setToDarkMode, setToLightMode } from "helpers";
 import ApiKeyChecker from "./ApiKeyChecker";
 import EndowmentLoader from "./EndowmentLoader";
 import InnerComponent from "./InnerComponent";

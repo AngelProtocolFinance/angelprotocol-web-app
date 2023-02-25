@@ -2,6 +2,7 @@ import { formatUnits } from "@ethersproject/units";
 import { chainIDs } from "@giving/constants/chains";
 import { GENERIC_ERROR_MESSAGE } from "@giving/constants/common";
 import { EIPMethods } from "@giving/constants/ethereum";
+import { getProvider } from "@giving/helpers";
 import { useCallback, useEffect, useState } from "react";
 import { Connection, ProviderId, ProviderInfo } from "./types";
 import { BaseChain } from "@giving/types/aws";
@@ -11,7 +12,6 @@ import {
   Dwindow,
   InjectedProvider,
 } from "@giving/types/ethereum";
-import { getProvider } from "helpers";
 import {
   UnexpectedStateError,
   UnsupportedChainError,

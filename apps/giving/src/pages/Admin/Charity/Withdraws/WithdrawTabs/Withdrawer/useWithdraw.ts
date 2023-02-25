@@ -1,5 +1,6 @@
 import { ap_wallets } from "@giving/constants/ap_wallets";
 import { chainIds } from "@giving/constants/chainIds";
+import { scaleToStr } from "@giving/helpers";
 import { useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";
 import { Asset } from "@giving/types/contracts";
@@ -10,7 +11,6 @@ import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Account from "contracts/Account";
 import CW3Endowment from "contracts/CW3/CW3Endowment";
 import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
-import { scaleToStr } from "helpers";
 import useLogWithdrawProposal from "./useLogWithdrawProposal";
 
 export default function useWithdraw() {

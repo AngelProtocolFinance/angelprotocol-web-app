@@ -1,3 +1,4 @@
+import { extractFeeAmount } from "@giving/helpers";
 import { useState } from "react";
 import { Tx, TxArgs } from "./types";
 import { TxOptions } from "@giving/types/slices";
@@ -8,7 +9,6 @@ import Popup from "components/Popup";
 import { TxPrompt } from "components/Prompt";
 import { useSetter } from "store/accessors";
 import Contract from "contracts/Contract";
-import { extractFeeAmount } from "helpers";
 import handleTxError from "./handleTxError";
 
 type Sender = (args: TxArgs) => Promise<void>;

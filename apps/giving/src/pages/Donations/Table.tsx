@@ -1,4 +1,5 @@
 import { appRoutes } from "@giving/constants/routes";
+import { getTxUrl, humanize, maskAddress } from "@giving/helpers";
 import { Link } from "react-router-dom";
 import { TableProps } from "./types";
 import ExtLink from "components/ExtLink";
@@ -7,7 +8,6 @@ import Icon from "components/Icon";
 import useKYC from "components/KYC/useKYC";
 import TableSection, { Cells } from "components/TableSection";
 import useSort from "hooks/useSort";
-import { getTxUrl, humanize, maskAddress } from "helpers";
 
 export default function Table({ donations, classes = "" }: TableProps) {
   const { handleHeaderClick, sorted, sortDirection, sortKey } =

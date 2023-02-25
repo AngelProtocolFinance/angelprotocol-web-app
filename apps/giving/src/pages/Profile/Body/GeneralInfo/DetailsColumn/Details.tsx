@@ -1,12 +1,12 @@
+import { isEmpty } from "@giving/helpers";
 import { PropsWithChildren } from "react";
 import { useProfileContext } from "pages/Profile/ProfileContext";
-import { isEmpty } from "helpers";
 
 // import { chainIds } from "@giving/constants/chainIds";
 // import Copier from "components/Copier";
 // import ExtLink from "components/ExtLink";
 // import Icon from "components/Icon";
-// import { getAddressUrl, maskAddress } from "helpers";
+// import { getAddressUrl, maskAddress } from "@giving/helpers";
 
 export default function Details() {
   const profile = useProfileContext();

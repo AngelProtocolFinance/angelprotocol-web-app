@@ -1,6 +1,6 @@
+import { humanize, roundDownToNum } from "@giving/helpers";
 import Decimal from "decimal.js";
 import { AmountOptionsProps } from "./types";
-import { humanize, roundDownToNum } from "helpers";
 
 export default function Steps({
   scale,

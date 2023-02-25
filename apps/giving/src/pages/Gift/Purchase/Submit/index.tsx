@@ -1,4 +1,5 @@
 import { appRoutes } from "@giving/constants/routes";
+import { humanize } from "@giving/helpers";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Estimate } from "./types";
@@ -8,7 +9,6 @@ import { ErrorStatus, LoadingStatus } from "components/Status";
 import { useSetter } from "store/accessors";
 import { SubmitStep, setStep } from "slices/gift";
 import { purchase } from "slices/gift/purchase";
-import { humanize } from "helpers";
 import { estimateTx } from "./estimateTx";
 
 type EstimateStatus = Estimate | "loading" | "error";

@@ -1,7 +1,7 @@
+import { idParamToNum } from "@giving/helpers";
 import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import { idParamToNum } from "helpers";
 import createWidgerUrl from "./createWidgerUrl";
 import { FormValues } from "./schema";
 import useLoadDefaultEndowmentName from "./useLoadDefaultEndowmentName";

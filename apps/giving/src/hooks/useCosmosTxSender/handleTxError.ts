@@ -1,5 +1,6 @@
 import { TimeoutError } from "@cosmjs/stargate";
 import { GENERIC_ERROR_MESSAGE } from "@giving/constants/common";
+import { logger } from "@giving/helpers";
 import {
   CreateTxFailed,
   Timeout,
@@ -8,7 +9,6 @@ import {
   UserDenied,
 } from "@terra-money/wallet-provider";
 import { TxError } from "./types";
-import { logger } from "helpers";
 import {
   CosmosTxSimulationFail,
   LogApplicationUpdateError,

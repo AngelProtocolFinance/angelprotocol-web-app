@@ -1,4 +1,5 @@
 import { GENERIC_ERROR_MESSAGE } from "@giving/constants/common";
+import { logger } from "@giving/helpers";
 import {
   PropsWithChildren,
   createContext,
@@ -6,7 +7,6 @@ import {
   useContext,
 } from "react";
 import Prompt from "components/Prompt";
-import { logger } from "helpers";
 import {
   APError,
   AP_ERROR_DISCRIMINATOR,

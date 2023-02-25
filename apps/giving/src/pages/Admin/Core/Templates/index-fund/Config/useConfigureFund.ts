@@ -1,3 +1,4 @@
+import { scaleToStr } from "@giving/helpers";
 import { genDiffMeta, getPayloadDiff } from "@giving/helpers/admin";
 import { cleanObject } from "@giving/helpers/cleanObject";
 import { useFormContext } from "react-hook-form";
@@ -10,7 +11,6 @@ import Popup from "components/Popup";
 import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
 import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
-import { scaleToStr } from "helpers";
 
 type Key = keyof FundConfig;
 type Value = FundConfig[Key];

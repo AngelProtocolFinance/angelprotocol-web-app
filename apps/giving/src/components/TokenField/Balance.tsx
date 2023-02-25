@@ -1,6 +1,6 @@
+import { humanize } from "@giving/helpers";
 import { BalanceProps } from "./types";
 import Icon from "components/Icon";
-import { humanize } from "helpers";
 
 export default function Balance({
   token,

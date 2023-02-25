@@ -1,10 +1,10 @@
+import { condenseToStr } from "@giving/helpers";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FundConfig, IndexFundConfig } from "@giving/types/contracts";
 import { FundConfigValues } from "pages/Admin/types";
 import { useIndexFundConfigQuery } from "services/juno/indexFund";
 import { FormError, FormSkeleton } from "components/admin";
-import { condenseToStr } from "helpers";
 import Form from "./Form";
 import { schema } from "./schema";
 

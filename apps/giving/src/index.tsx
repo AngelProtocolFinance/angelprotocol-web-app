@@ -1,10 +1,10 @@
+import { initTheme } from "@giving/helpers";
 import { StrictMode, Suspense, lazy } from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import Loader from "components/Loader";
 import { store } from "store/store";
-import { initTheme } from "helpers";
 import ErrorBoundary from "errors/ErrorBoundary";
 import "./index.css";
 

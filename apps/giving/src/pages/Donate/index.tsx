@@ -1,10 +1,10 @@
 import banner from "@giving/assets/images/hero.png";
 import { APP_NAME, DAPP_DOMAIN } from "@giving/constants/common";
+import { idParamToNum } from "@giving/helpers";
 import { useParams } from "react-router-dom";
 import { useProfileQuery } from "services/aws/aws";
 import QueryLoader from "components/QueryLoader";
 import Seo from "components/Seo";
-import { idParamToNum } from "helpers";
 import Content from "./Content";
 
 export default function Donate() {

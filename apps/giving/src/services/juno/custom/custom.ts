@@ -1,11 +1,11 @@
 import { contracts } from "@giving/constants/contracts";
+import { condenseToNum, idParamToNum } from "@giving/helpers";
 import { Args } from "../queryContract/types";
 import {
   AdminResources,
   EndowmentAssets,
   ProposalDetails,
 } from "services/types";
-import { condenseToNum, idParamToNum } from "helpers";
 import { junoApi } from "..";
 import { queryContract } from "../queryContract";
 import { accountTags, adminTags, registrarTags } from "../tags";
