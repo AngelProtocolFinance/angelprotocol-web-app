@@ -1,3 +1,4 @@
+import Popup from "@giving/components/Popup";
 import { contracts } from "@giving/constants/contracts";
 import { axlUSDCDenom, denoms, tokens } from "@giving/constants/tokens";
 import { scaleToStr } from "@giving/helpers";
@@ -9,7 +10,6 @@ import { FundSendValues } from "@giving/types/pages/admin";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
-import Popup from "components/Popup";
 import CW3 from "contracts/CW3";
 import CW20 from "contracts/CW20";
 import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";

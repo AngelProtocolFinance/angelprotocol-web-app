@@ -32,7 +32,8 @@
       "@giving/schemas/*": ["libs/@giving/schemas/src/*"],
       "@giving/helpers": ["libs/@giving/helpers/src/index.ts"],
       "@giving/errors": ["libs/@giving/errors/src/index.ts"],
-      "@giving/helpers/*": ["libs/@giving/helpers/src/*"]
+      "@giving/helpers/*": ["libs/@giving/helpers/src/*"],
+      "@giving/components/*": ["libs/@giving/components/src/*"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -1,7 +1,7 @@
+import Icon from "@giving/components/Icon";
 import { humanize, isEmpty } from "@giving/helpers";
 import { useMemo } from "react";
 import { TokenWithBalance } from "@giving/types/aws";
-import Icon from "components/Icon";
 import KadoOpener from "./KadoOpener";
 
 type Props = {

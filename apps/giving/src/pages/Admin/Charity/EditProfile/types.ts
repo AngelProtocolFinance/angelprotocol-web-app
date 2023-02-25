@@ -1,8 +1,8 @@
+import { ImgLink } from "@giving/components/ImgEditor";
+import { OptionType } from "@giving/components/Selector";
 import { EndowmentProfileUpdate } from "@giving/types/aws";
 import { UNSDG_NUMS } from "@giving/types/lists";
 import { CountryOption } from "services/types";
-import { ImgLink } from "components/ImgEditor";
-import { OptionType } from "components/Selector";
 
 type K = keyof EndowmentProfileUpdate;
 const _logo: K = "logo";

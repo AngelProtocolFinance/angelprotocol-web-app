@@ -1,8 +1,8 @@
+import Logo from "@giving/components/Logo";
 import { LOGO } from "@giving/constants/common";
 import { getPossessiveForm } from "@giving/helpers";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import Logo from "components/Logo";
 import { FormValues } from "../schema";
 import Donater from "./Donater";
 

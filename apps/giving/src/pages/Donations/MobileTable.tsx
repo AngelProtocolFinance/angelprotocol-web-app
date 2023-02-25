@@ -1,9 +1,9 @@
+import Icon, { DrawerIcon } from "@giving/components/Icon";
+import useKYC from "@giving/components/KYC/useKYC";
 import { humanize, maskAddress } from "@giving/helpers";
 import { Disclosure } from "@headlessui/react";
 import { PropsWithChildren } from "react";
 import { TableProps } from "./types";
-import Icon, { DrawerIcon } from "components/Icon";
-import useKYC from "components/KYC/useKYC";
 import useSort from "hooks/useSort";
 
 export default function MobileTable({ donations, classes = "" }: TableProps) {

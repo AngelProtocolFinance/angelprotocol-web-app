@@ -1,6 +1,6 @@
+import Icon, { DrawerIcon } from "@giving/components/Icon";
 import { Listbox } from "@headlessui/react";
 import { EndowmentsSortKey } from "@giving/types/aws";
-import Icon, { DrawerIcon } from "components/Icon";
 import { useGetter, useSetter } from "store/accessors";
 import { Sort, setSort } from "slices/components/marketFilter";
 

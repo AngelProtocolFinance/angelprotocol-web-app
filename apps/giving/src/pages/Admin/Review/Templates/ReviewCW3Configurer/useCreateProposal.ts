@@ -1,3 +1,4 @@
+import Popup from "@giving/components/Popup";
 import {
   genDiffMeta,
   getPayloadDiff,
@@ -12,7 +13,6 @@ import {
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import Popup from "components/Popup";
 import CW3Review from "contracts/CW3/CW3Review";
 import useCosmosTxSender from "hooks/useCosmosTxSender";
 

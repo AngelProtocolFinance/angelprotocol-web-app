@@ -1,4 +1,4 @@
-import { IconType } from "components/Icon";
+import { IconType } from "@giving/components/Icon";
 
 export type Link = {
   title: string;

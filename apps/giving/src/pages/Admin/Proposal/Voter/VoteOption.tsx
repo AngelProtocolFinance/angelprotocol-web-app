@@ -1,6 +1,6 @@
+import Icon from "@giving/components/Icon";
 import { useFormContext } from "react-hook-form";
 import { Vote } from "@giving/types/contracts";
-import Icon from "components/Icon";
 
 type VoteOptionContextType = { vote: Vote };
 export default function VoteOption<T extends VoteOptionContextType>(

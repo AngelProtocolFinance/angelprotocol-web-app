@@ -1,5 +1,4 @@
 import { APP_NAME, DAPP_DOMAIN, SEO_IMAGE } from "@giving/constants/common";
-import React from "react";
 import { Helmet } from "react-helmet";
 
 type Props = {

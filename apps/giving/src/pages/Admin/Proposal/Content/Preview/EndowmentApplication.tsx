@@ -1,7 +1,7 @@
+import ExtLink from "@giving/components/ExtLink";
+import Icon from "@giving/components/Icon";
 import { PropsWithChildren } from "react";
 import { EndowmentProposal, FileObject } from "@giving/types/aws";
-import ExtLink from "components/ExtLink";
-import Icon from "components/Icon";
 import PreviewContainer from "./common/PreviewContainer";
 
 export default function EndowmentApplication(props: EndowmentProposal) {

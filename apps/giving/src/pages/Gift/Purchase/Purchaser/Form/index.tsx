@@ -1,9 +1,9 @@
+import TokenField from "@giving/components/TokenField";
 import { appRoutes } from "@giving/constants/routes";
 import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "../types";
-import TokenField from "components/TokenField";
 import { setDetails } from "slices/gift";
 import Recipient from "./Recipient";
 

@@ -1,5 +1,5 @@
+import QueryLoader from "@giving/components/QueryLoader";
 import { useRegionsQuery } from "services/countries";
-import QueryLoader from "components/QueryLoader";
 import { useGetter, useSetter } from "store/accessors";
 import { setRegions } from "slices/components/marketFilter";
 import { RegionType } from "slices/components/marketFilter";

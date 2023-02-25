@@ -1,11 +1,11 @@
+import Icon from "@giving/components/Icon";
+import { LoadingStatus } from "@giving/components/Status";
+import TokenField from "@giving/components/TokenField";
 import { Dialog } from "@headlessui/react";
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
 import { Vault } from "services/types";
 import { useModalContext } from "contexts/ModalContext";
-import Icon from "components/Icon";
-import { LoadingStatus } from "components/Status";
-import TokenField from "components/TokenField";
 import useSubmit from "./useSubmit";
 
 export default function Form({ acct_type = "liquid", address }: Vault) {

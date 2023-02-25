@@ -1,3 +1,4 @@
+import Popup from "@giving/components/Popup";
 import { getTagPayloads } from "@giving/helpers/admin";
 import { cleanObject } from "@giving/helpers/cleanObject";
 import { useFormContext } from "react-hook-form";
@@ -14,7 +15,6 @@ import {
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
-import Popup from "components/Popup";
 import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
 import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";

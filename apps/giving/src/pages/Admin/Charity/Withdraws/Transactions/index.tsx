@@ -1,6 +1,6 @@
+import QueryLoader from "@giving/components/QueryLoader";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useWithdrawLogsQuery } from "services/apes";
-import QueryLoader from "components/QueryLoader";
 import List from "./List";
 import Table from "./Table";
 

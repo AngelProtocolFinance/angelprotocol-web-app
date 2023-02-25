@@ -1,6 +1,6 @@
+import { FormContainer, Submitter } from "@giving/components/admin";
+import { Field, Label } from "@giving/components/form";
 import { FundDestroyValues as FD } from "@giving/types/pages/admin";
-import { FormContainer, Submitter } from "components/admin";
-import { Field, Label } from "components/form";
 import FundSelection from "../FundSelection";
 import useDestroyFund from "./useDestroyFund";
 

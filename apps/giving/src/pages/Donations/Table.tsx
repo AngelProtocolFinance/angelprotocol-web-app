@@ -1,12 +1,12 @@
+import ExtLink from "@giving/components/ExtLink";
+import { HeaderButton } from "@giving/components/HeaderButton";
+import Icon from "@giving/components/Icon";
+import useKYC from "@giving/components/KYC/useKYC";
+import TableSection, { Cells } from "@giving/components/TableSection";
 import { appRoutes } from "@giving/constants/routes";
 import { getTxUrl, humanize, maskAddress } from "@giving/helpers";
 import { Link } from "react-router-dom";
 import { TableProps } from "./types";
-import ExtLink from "components/ExtLink";
-import { HeaderButton } from "components/HeaderButton";
-import Icon from "components/Icon";
-import useKYC from "components/KYC/useKYC";
-import TableSection, { Cells } from "components/TableSection";
 import useSort from "hooks/useSort";
 
 export default function Table({ donations, classes = "" }: TableProps) {

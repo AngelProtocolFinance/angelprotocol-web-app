@@ -1,6 +1,6 @@
+import TableSection, { Cells } from "@giving/components/TableSection";
 import { Path } from "react-hook-form";
 import { FundIdContext } from "@giving/types/pages/admin";
-import TableSection, { Cells } from "components/TableSection";
 import useFundSelection from "./useFundSelection";
 
 export default function FundSelection<T extends FundIdContext>(props: {

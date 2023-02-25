@@ -1,3 +1,5 @@
+import Seo from "@giving/components/Seo";
+import { FormError, FormSkeleton } from "@giving/components/admin";
 import { APP_NAME, DAPP_DOMAIN } from "@giving/constants/common";
 import { unsdgs } from "@giving/constants/unsdgs";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -6,8 +8,6 @@ import { FlatFormValues, FormValues } from "./types";
 import { EndowmentProfile } from "@giving/types/aws";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useProfileQuery } from "services/aws/aws";
-import Seo from "components/Seo";
-import { FormError, FormSkeleton } from "components/admin";
 import Form from "./Form";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import { schema } from "./schema";

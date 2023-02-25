@@ -1,3 +1,4 @@
+import { Asset } from "@giving/components/registration";
 import { genFileSchema } from "@giving/schemas/file";
 import { requiredString } from "@giving/schemas/string";
 import * as Yup from "yup";
@@ -5,7 +6,6 @@ import { FormValues } from "./types";
 import { SchemaShape } from "@giving/schemas/types";
 import { FileObject } from "@giving/types/aws";
 import { CountryOption } from "services/types";
-import { Asset } from "components/registration";
 
 export const MB_LIMIT = 25;
 const VALID_MIME_TYPES = [

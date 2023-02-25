@@ -1,9 +1,9 @@
+import { Field, Label } from "@giving/components/form";
 import { RadioGroup } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import { Fragment } from "react";
 import { useController } from "react-hook-form";
 import { EndowmentUpdateValues as V } from "@giving/types/pages/admin";
-import { Field, Label } from "components/form";
 
 const types: V["beneficiaryType"][] = ["wallet", "index fund", "endowment"];
 

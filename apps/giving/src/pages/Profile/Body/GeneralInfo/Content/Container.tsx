@@ -1,5 +1,5 @@
+import Icon from "@giving/components/Icon";
 import { PropsWithChildren, useState } from "react";
-import Icon from "components/Icon";
 
 type Props = PropsWithChildren<{
   title: string;

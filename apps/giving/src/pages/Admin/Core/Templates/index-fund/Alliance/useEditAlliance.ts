@@ -1,3 +1,4 @@
+import Popup from "@giving/components/Popup";
 import { useFormContext } from "react-hook-form";
 import { AllianceMember as AM, EmbeddedWasmMsg } from "@giving/types/contracts";
 import {
@@ -7,7 +8,6 @@ import {
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
-import Popup from "components/Popup";
 import { useGetter } from "store/accessors";
 import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";

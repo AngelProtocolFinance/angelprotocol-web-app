@@ -1,9 +1,9 @@
+import Icon from "@giving/components/Icon";
 import { Dialog } from "@headlessui/react";
 import Cropper from "cropperjs";
 import "cropperjs/dist/cropper.min.css";
 import { useCallback, useRef } from "react";
 import { useModalContext } from "contexts/ModalContext";
-import Icon from "components/Icon";
 
 type Props = {
   preview: string;

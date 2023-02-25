@@ -1,4 +1,4 @@
-import Copier from "components/Copier";
+import Copier from "@giving/components/Copier";
 
 export default function Address({ value }: { value: string }) {
   return (

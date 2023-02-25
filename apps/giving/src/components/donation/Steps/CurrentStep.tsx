@@ -1,7 +1,7 @@
+import KYC from "@giving/components/KYC";
+import Status, { LoadingStatus } from "@giving/components/Status";
 import { useEffect } from "react";
 import { useGetWallet } from "contexts/WalletContext";
-import KYC from "components/KYC";
-import Status, { LoadingStatus } from "components/Status";
 import { useGetter, useSetter } from "store/accessors";
 import { resetDetails } from "slices/donation";
 import { ConfigParams } from "..";

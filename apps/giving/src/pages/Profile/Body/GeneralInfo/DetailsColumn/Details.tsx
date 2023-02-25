@@ -3,9 +3,9 @@ import { PropsWithChildren } from "react";
 import { useProfileContext } from "pages/Profile/ProfileContext";
 
 // import { chainIds } from "@giving/constants/chainIds";
-// import Copier from "components/Copier";
-// import ExtLink from "components/ExtLink";
-// import Icon from "components/Icon";
+// import Copier from "@giving/components/Copier";
+// import ExtLink from "@giving/components/ExtLink";
+// import Icon from "@giving/components/Icon";
 // import { getAddressUrl, maskAddress } from "@giving/helpers";
 
 export default function Details() {

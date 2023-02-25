@@ -1,7 +1,7 @@
+import ExtLink from "@giving/components/ExtLink";
+import { Cells } from "@giving/components/TableSection";
 import { maskAddress } from "@giving/helpers";
 import { WithdrawLog } from "@giving/types/aws";
-import ExtLink from "components/ExtLink";
-import { Cells } from "components/TableSection";
 import Amount from "../Amount";
 import Status from "../Status";
 import { explorerUrls } from "../constants";

@@ -1,11 +1,11 @@
+import Icon from "@giving/components/Icon";
+import { DetailLabel } from "@giving/components/admin";
 import { useState } from "react";
 import {
   EmbeddedBankMsg,
   EmbeddedWasmMsg,
   Proposal,
 } from "@giving/types/contracts";
-import Icon from "components/Icon";
-import { DetailLabel } from "components/admin";
 import Preview from "./Preview";
 
 export default function Content(props: Proposal) {

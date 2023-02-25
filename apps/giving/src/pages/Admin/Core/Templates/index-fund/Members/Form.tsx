@@ -1,7 +1,11 @@
+import Loader from "@giving/components/Loader";
+import {
+  FormContainer,
+  GroupContainer,
+  Submitter,
+} from "@giving/components/admin";
+import { Field, Label } from "@giving/components/form";
 import { FundUpdateValues as FV } from "@giving/types/pages/admin";
-import Loader from "components/Loader";
-import { FormContainer, GroupContainer, Submitter } from "components/admin";
-import { Field, Label } from "components/form";
 import FundSelection from "../FundSelection";
 import Adder from "./Adder";
 import Member from "./Member";

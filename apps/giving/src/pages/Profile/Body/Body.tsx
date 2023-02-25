@@ -1,10 +1,10 @@
+import BookmarkBtn from "@giving/components/BookmarkBtn";
+import Breadcrumbs from "@giving/components/Breadcrumbs";
+import ExtLink from "@giving/components/ExtLink";
+import Icon from "@giving/components/Icon";
+import Seo from "@giving/components/Seo";
 import { APP_NAME, DAPP_DOMAIN } from "@giving/constants/common";
 import { appRoutes } from "@giving/constants/routes";
-import BookmarkBtn from "components/BookmarkBtn";
-import Breadcrumbs from "components/Breadcrumbs";
-import ExtLink from "components/ExtLink";
-import Icon from "components/Icon";
-import Seo from "components/Seo";
 import { useProfileContext } from "../ProfileContext";
 import DonateButton from "./DonateButton";
 import GeneralInfo from "./GeneralInfo";

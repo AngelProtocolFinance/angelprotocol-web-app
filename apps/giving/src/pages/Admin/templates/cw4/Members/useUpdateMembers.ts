@@ -1,3 +1,4 @@
+import Popup from "@giving/components/Popup";
 import { getTagPayloads } from "@giving/helpers/admin";
 import { useFormContext } from "react-hook-form";
 import { CW4Member } from "@giving/types/contracts";
@@ -8,7 +9,6 @@ import {
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
-import Popup from "components/Popup";
 import { useGetter } from "store/accessors";
 import CW3 from "contracts/CW3";
 import CW4 from "contracts/CW4";

@@ -1,5 +1,5 @@
+import QueryLoader from "@giving/components/QueryLoader";
 import { useEndowmentApplicationsQuery } from "services/aws/registration";
-import QueryLoader from "components/QueryLoader";
 import { useGetter } from "store/accessors";
 import ApplicationsTable from "./Table";
 

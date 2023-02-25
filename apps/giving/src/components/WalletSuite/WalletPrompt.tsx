@@ -1,5 +1,5 @@
+import Icon from "@giving/components/Icon";
 import { useModalContext } from "contexts/ModalContext";
-import Icon from "components/Icon";
 
 export default function WalletPrompt(props: { message: string }) {
   const { closeModal } = useModalContext();

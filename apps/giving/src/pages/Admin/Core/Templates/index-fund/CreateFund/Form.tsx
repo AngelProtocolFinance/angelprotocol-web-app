@@ -1,7 +1,7 @@
+import { DivContainer, Submitter } from "@giving/components/admin";
+import { CheckField, Field, Label } from "@giving/components/form";
 import { useFormContext } from "react-hook-form";
 import { FundCreatorValues as V } from "@giving/types/pages/admin";
-import { DivContainer, Submitter } from "components/admin";
-import { CheckField, Field, Label } from "components/form";
 import { INIT_SPLIT } from ".";
 import MemberAdder from "./MemberAdder";
 import useCreateFund from "./useCreateFund";

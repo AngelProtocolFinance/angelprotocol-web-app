@@ -1,7 +1,7 @@
+import QueryLoader from "@giving/components/QueryLoader";
+import Seo from "@giving/components/Seo";
 import { APP_NAME, DAPP_DOMAIN } from "@giving/constants/common";
 import { useLeaderboardsQuery } from "services/aws/leaderboard";
-import QueryLoader from "components/QueryLoader";
-import Seo from "components/Seo";
 import DonationMetrics from "./DonationMetrics";
 import Table from "./Table";
 

@@ -1,5 +1,5 @@
+import QueryLoader from "@giving/components/QueryLoader";
 import { EndowmentBookmark } from "@giving/types/aws";
-import QueryLoader from "components/QueryLoader";
 import Favourite from "./Favourite";
 
 const MAX_ELEMENTS_TO_DISPLAY = 7;

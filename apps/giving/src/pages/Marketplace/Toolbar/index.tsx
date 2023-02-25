@@ -1,4 +1,4 @@
-import Icon from "components/Icon";
+import Icon from "@giving/components/Icon";
 import { useGetter, useSetter } from "store/accessors";
 import { toggle } from "slices/components/marketFilter";
 import Search from "./Search";

@@ -1,7 +1,7 @@
+import QueryLoader from "@giving/components/QueryLoader";
+import { Selector, selectorButtonStyle } from "@giving/components/Selector";
 import { FormValues as FV } from "./types";
 import { useChainsQuery } from "services/apes";
-import QueryLoader from "components/QueryLoader";
-import { Selector, selectorButtonStyle } from "components/Selector";
 
 export default function NetworkDropdown({ classes = "" }) {
   const queryState = useChainsQuery("");

@@ -1,7 +1,7 @@
+import Breadcrumbs from "@giving/components/Breadcrumbs";
+import { Steps } from "@giving/components/donation";
 import { appRoutes } from "@giving/constants/routes";
 import { useEffect, useRef } from "react";
-import Breadcrumbs from "components/Breadcrumbs";
-import { Steps } from "components/donation";
 import { useGetter, useSetter } from "store/accessors";
 import {
   DonationRecipient,

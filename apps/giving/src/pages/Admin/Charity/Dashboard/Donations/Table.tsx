@@ -1,10 +1,10 @@
+import CsvExporter from "@giving/components/CsvExporter";
+import ExtLink from "@giving/components/ExtLink";
+import { HeaderButton } from "@giving/components/HeaderButton";
+import Icon from "@giving/components/Icon";
+import TableSection, { Cells } from "@giving/components/TableSection";
 import { getTxUrl, humanize, maskAddress } from "@giving/helpers";
 import { Donation, KYCData } from "@giving/types/aws";
-import CsvExporter from "components/CsvExporter";
-import ExtLink from "components/ExtLink";
-import { HeaderButton } from "components/HeaderButton";
-import Icon from "components/Icon";
-import TableSection, { Cells } from "components/TableSection";
 import useSort from "hooks/useSort";
 
 export default function Table(props: { donations: Donation[] }) {

@@ -1,10 +1,10 @@
+import ExtLink from "@giving/components/ExtLink";
+import { CheckField, Field } from "@giving/components/form";
+import { Separator } from "@giving/components/registration";
 import { APP_NAME } from "@giving/constants/common";
 import { PRIVACY_POLICY } from "@giving/constants/urls";
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "./types";
-import ExtLink from "components/ExtLink";
-import { CheckField, Field } from "components/form";
-import { Separator } from "components/registration";
 import routes from "../routes";
 import useSubmit from "./useSubmit";
 

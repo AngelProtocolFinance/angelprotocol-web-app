@@ -1,5 +1,5 @@
+import Icon from "@giving/components/Icon";
 import { PropsWithChildren } from "react";
-import Icon from "components/Icon";
 
 export default function Warning({
   classes = "",

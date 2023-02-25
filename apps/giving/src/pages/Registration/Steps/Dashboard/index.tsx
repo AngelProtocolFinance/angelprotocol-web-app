@@ -1,3 +1,4 @@
+import Prompt from "@giving/components/Prompt";
 import { chainIds } from "@giving/constants/chainIds";
 import { useErrorContext } from "@giving/errors";
 import { handleMutationResult } from "@giving/helpers";
@@ -6,7 +7,6 @@ import { CompleteRegistration } from "pages/Registration/types";
 import routes from "pages/Registration/routes";
 import { useSubmitMutation } from "services/aws/registration";
 import { useModalContext } from "contexts/ModalContext";
-import Prompt from "components/Prompt";
 import { useRegState, withStepGuard } from "../StepGuard";
 import EndowmentStatus from "./EndowmentStatus";
 import Step from "./Step";

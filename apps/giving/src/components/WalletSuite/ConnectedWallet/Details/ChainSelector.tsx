@@ -1,9 +1,9 @@
+import Icon, { DrawerIcon } from "@giving/components/Icon";
 import { chainIDs } from "@giving/constants/chains";
 import { useErrorContext } from "@giving/errors";
 import { Listbox } from "@headlessui/react";
 import { BaseChain } from "@giving/types/aws";
 import { WalletState, useSetWallet } from "contexts/WalletContext";
-import Icon, { DrawerIcon } from "components/Icon";
 
 const SELECTOR_STYLE =
   "flex justify-between items-center w-full p-4 pl-3 font-normal font-body text-sm";

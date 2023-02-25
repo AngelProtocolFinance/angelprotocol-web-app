@@ -1,9 +1,9 @@
+import Icon from "@giving/components/Icon";
 import { tokens } from "@giving/constants/tokens";
 import { humanize } from "@giving/helpers";
 import { ErrorMessage } from "@hookform/error-message";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";
-import Icon from "components/Icon";
 
 export default function Amounts() {
   const {

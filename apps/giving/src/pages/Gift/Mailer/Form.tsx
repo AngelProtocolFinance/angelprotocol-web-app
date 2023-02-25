@@ -1,3 +1,7 @@
+import Prompt from "@giving/components/Prompt";
+import { RichTextEditor } from "@giving/components/RichText";
+import { Label } from "@giving/components/form";
+import { Field } from "@giving/components/form";
 import { APP_NAME } from "@giving/constants/common";
 import { appRoutes } from "@giving/constants/routes";
 import { APIs } from "@giving/constants/urls";
@@ -6,10 +10,6 @@ import { useFormContext } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "./types";
 import { useModalContext } from "contexts/ModalContext";
-import Prompt from "components/Prompt";
-import { RichTextEditor } from "components/RichText";
-import { Label } from "components/form";
-import { Field } from "components/form";
 
 export default function Form({ classes = "" }) {
   const { handleSubmit, reset } = useFormContext<FV>();

@@ -1,4 +1,4 @@
-import Icon from "components/Icon";
+import Icon from "@giving/components/Icon";
 import { useSetter } from "store/accessors";
 import { clear, reset, toggle } from "slices/components/marketFilter";
 import Designations from "./Designations";

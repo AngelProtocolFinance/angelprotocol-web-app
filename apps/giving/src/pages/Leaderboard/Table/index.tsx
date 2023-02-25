@@ -1,5 +1,5 @@
+import TableSection, { Cells } from "@giving/components/TableSection";
 import { LeaderboardEntry } from "@giving/types/aws";
-import TableSection, { Cells } from "components/TableSection";
 import Row from "./Row";
 
 type Props = {

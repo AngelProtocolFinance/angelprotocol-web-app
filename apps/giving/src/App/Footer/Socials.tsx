@@ -1,6 +1,6 @@
+import ExtLink from "@giving/components/ExtLink";
+import Icon from "@giving/components/Icon";
 import { SocialMediaLink } from "../types";
-import ExtLink from "components/ExtLink";
-import Icon from "components/Icon";
 
 type Props = { links: SocialMediaLink[] };
 

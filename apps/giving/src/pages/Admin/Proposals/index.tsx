@@ -1,5 +1,5 @@
+import Icon from "@giving/components/Icon";
 import { useState } from "react";
-import Icon from "components/Icon";
 import { useGetter } from "store/accessors";
 import ProposalCard from "./ProposalCard";
 import Toolbar from "./Toolbar";

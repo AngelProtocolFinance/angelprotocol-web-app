@@ -1,3 +1,6 @@
+import BookmarkBtn from "@giving/components/BookmarkBtn";
+import Icon from "@giving/components/Icon";
+import Tooltip from "@giving/components/Tooltip";
 import { appRoutes } from "@giving/constants/routes";
 import { unsdgs } from "@giving/constants/unsdgs";
 import { isEmpty } from "@giving/helpers";
@@ -5,9 +8,6 @@ import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { EndowmentCard } from "@giving/types/aws";
 import { UNSDG_NUMS } from "@giving/types/lists";
-import BookmarkBtn from "components/BookmarkBtn";
-import Icon from "components/Icon";
-import Tooltip from "components/Tooltip";
 
 const PLACEHOLDER_TAGLINE = " ";
 

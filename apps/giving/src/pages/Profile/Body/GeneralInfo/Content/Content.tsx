@@ -1,5 +1,5 @@
+import RichText from "@giving/components/RichText";
 import { useProfileContext } from "pages/Profile/ProfileContext";
-import RichText from "components/RichText";
 import Container from "./Container";
 
 export default function Content() {

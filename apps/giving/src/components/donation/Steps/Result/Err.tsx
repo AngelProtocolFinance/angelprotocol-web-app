@@ -1,6 +1,6 @@
+import Icon from "@giving/components/Icon";
 import { appRoutes } from "@giving/constants/routes";
 import { Link } from "react-router-dom";
-import Icon from "components/Icon";
 import { useSetter } from "store/accessors";
 import { setStep } from "slices/donation";
 

@@ -1,7 +1,7 @@
+import Seo from "@giving/components/Seo";
 import { APP_NAME, DAPP_DOMAIN } from "@giving/constants/common";
 import { Suspense, lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import Seo from "components/Seo";
 import Signup from "./Signup";
 import routes from "./routes";
 

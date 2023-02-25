@@ -1,9 +1,9 @@
+import { Selector } from "@giving/components/Selector";
+import { Field, Label } from "@giving/components/form";
+import { LoadText } from "@giving/components/registration";
 import { APP_NAME } from "@giving/constants/common";
 import { FormValues as FV } from "../types";
 import { ContactRoles, ReferralMethods } from "@giving/types/aws";
-import { Selector } from "components/Selector";
-import { Field, Label } from "components/form";
-import { LoadText } from "components/registration";
 import { referralOptions, roleOptions } from "../constants";
 import useSubmit from "./useSubmit";
 

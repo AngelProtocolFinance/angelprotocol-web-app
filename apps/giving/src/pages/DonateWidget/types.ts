@@ -1,3 +1,3 @@
-import { ConfigParams } from "components/donation/Steps";
+import { ConfigParams } from "@giving/components/donation/Steps";
 
 export type UrlParamValues = ConfigParams & { hideText: boolean };

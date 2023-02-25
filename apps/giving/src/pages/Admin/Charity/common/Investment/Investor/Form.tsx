@@ -1,7 +1,7 @@
+import TokenField from "@giving/components/TokenField";
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
 import { Vault } from "services/types";
-import TokenField from "components/TokenField";
 import TxModal from "../../TxModal";
 import useSubmit from "./useSubmit";
 

@@ -1,10 +1,10 @@
+import Popup from "@giving/components/Popup";
 import { useFormContext } from "react-hook-form";
 import { OwnerUpdateMeta } from "@giving/types/pages/admin";
 import { IndexFundOwnerValues } from "@giving/types/pages/admin";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
-import Popup from "components/Popup";
 import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
 import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";

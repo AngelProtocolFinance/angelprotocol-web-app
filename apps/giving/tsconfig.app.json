@@ -5,5 +5,11 @@
     "../../node_modules/@nrwl/react/typings/image.d.ts"
   ],
   "exclude": ["jest.config.ts", "src/**/*.test.ts", "src/**/*.test.tsx"],
-  "include": ["src/**/*.ts", "src/**/*.tsx"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "../../libs/@giving/components/src/Loader.tsx",
+    "../../libs/@giving/components/src/Breadcrumbs.tsx",
+    "../../libs/@giving/components/src/IFrame.tsx"
+  ]
 }

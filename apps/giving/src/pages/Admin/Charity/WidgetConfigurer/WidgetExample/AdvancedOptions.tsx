@@ -1,7 +1,7 @@
+import Icon from "@giving/components/Icon";
 import { humanize } from "@giving/helpers";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { placeholderChain } from "contexts/WalletContext/constants";
-import Icon from "components/Icon";
 
 const SPLIT_AMOUNT = `${placeholderChain.tokens[0].symbol} ${humanize(0, 5)}`;
 

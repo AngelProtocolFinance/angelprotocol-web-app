@@ -1,4 +1,5 @@
-import ExtLink from "components/ExtLink";
+import { LogoProps } from "@giving/types/components/logo";
+import ExtLink from "./ExtLink";
 
 type Props = { className?: string; logo: LogoProps };
 

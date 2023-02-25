@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { DonateValues } from "../types";
-import Icon from "components/Icon";
-import Split from "components/Split";
+import Icon from "../../../../Icon";
+import Split from "../../../../Split";
 
 type Props = { classes?: string; unfold?: boolean };
 

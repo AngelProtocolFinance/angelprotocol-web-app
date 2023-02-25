@@ -1,8 +1,8 @@
+import Icon from "@giving/components/Icon";
+import { LoadingStatus } from "@giving/components/Status";
 import { Dialog } from "@headlessui/react";
 import { FormHTMLAttributes } from "react";
 import { useModalContext } from "contexts/ModalContext";
-import Icon from "components/Icon";
-import { LoadingStatus } from "components/Status";
 
 type Props = FormHTMLAttributes<HTMLFormElement> & {
   isSending: boolean;

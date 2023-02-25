@@ -1,9 +1,9 @@
+import Logo from "@giving/components/Logo";
+import WalletSuite from "@giving/components/WalletSuite";
+import { Steps } from "@giving/components/donation";
 import { LOGO } from "@giving/constants/common";
 import { getPossessiveForm } from "@giving/helpers";
 import { useEffect } from "react";
-import Logo from "components/Logo";
-import WalletSuite from "components/WalletSuite";
-import { Steps } from "components/donation";
 import { useSetter } from "store/accessors";
 import { setRecipient } from "slices/donation";
 import useWidgetParams from "./useWidgetParams";

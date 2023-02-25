@@ -1,5 +1,5 @@
+import Icon from "@giving/components/Icon";
 import { MemberCopy } from "slices/admin/types";
-import Icon from "components/Icon";
 import { useSetter } from "store/accessors";
 import {
   toggleDeleteExistingMember,

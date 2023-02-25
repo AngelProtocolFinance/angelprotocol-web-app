@@ -7,7 +7,7 @@ import {
   useController,
   useFormContext,
 } from "react-hook-form";
-import Icon, { DrawerIcon } from "components/Icon";
+import Icon, { DrawerIcon } from "./Icon";
 
 type ValKey = string | number;
 

@@ -1,3 +1,4 @@
+import { TxPrompt } from "@giving/components/Prompt";
 import { EMAIL_SUPPORT } from "@giving/constants/common";
 import { APIs } from "@giving/constants/urls";
 import {
@@ -9,7 +10,6 @@ import {
 import { AccountType } from "@giving/types/contracts";
 import { invalidateApesTags } from "services/apes";
 import { useModalContext } from "contexts/ModalContext";
-import { TxPrompt } from "components/Prompt";
 import { useSetter } from "store/accessors";
 import { TxOnSuccess, TxSuccessMeta } from "hooks/useCosmosTxSender";
 

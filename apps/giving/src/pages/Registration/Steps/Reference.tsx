@@ -1,5 +1,5 @@
+import Icon, { DrawerIcon } from "@giving/components/Icon";
 import { ReactElement, cloneElement, useState } from "react";
-import Icon, { DrawerIcon } from "components/Icon";
 
 type Props = {
   id: string;

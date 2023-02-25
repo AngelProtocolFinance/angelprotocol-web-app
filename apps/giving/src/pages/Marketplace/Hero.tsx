@@ -1,6 +1,6 @@
 import heroImage from "@giving/assets/images/bhm-hero.png";
+import ExtLink from "@giving/components/ExtLink";
 import { SUBDOMAIN_BUILDER } from "@giving/constants/common";
-import ExtLink from "components/ExtLink";
 
 export default function Hero({ classes = "" }: { classes?: string }) {
   return (

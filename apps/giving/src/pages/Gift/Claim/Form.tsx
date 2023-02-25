@@ -1,3 +1,5 @@
+import Icon from "@giving/components/Icon";
+import Prompt from "@giving/components/Prompt";
 import { chainIds } from "@giving/constants/chainIds";
 import { APP_NAME } from "@giving/constants/common";
 import { appRoutes } from "@giving/constants/routes";
@@ -9,8 +11,6 @@ import { Link } from "react-router-dom";
 import { FormValues as FV } from "./types";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
-import Icon from "components/Icon";
-import Prompt from "components/Prompt";
 
 export default function Form({ classes = "" }) {
   const {

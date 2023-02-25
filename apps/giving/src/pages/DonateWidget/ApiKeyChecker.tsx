@@ -1,5 +1,5 @@
+import QueryLoader from "@giving/components/QueryLoader";
 import { PropsWithChildren } from "react";
-import QueryLoader from "components/QueryLoader";
 
 export default function ApiKeyChecker(props: PropsWithChildren) {
   // const search = useLocation().search;

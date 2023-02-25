@@ -1,9 +1,9 @@
+import Popup from "@giving/components/Popup";
+import Prompt from "@giving/components/Prompt";
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV, Props } from "../types";
 import { useRequestReceiptMutation } from "services/apes";
 import { useModalContext } from "contexts/ModalContext";
-import Popup from "components/Popup";
-import Prompt from "components/Prompt";
 import { useSetter } from "store/accessors";
 import { setKYC } from "slices/donation";
 

@@ -1,9 +1,9 @@
+import Icon from "@giving/components/Icon";
+import { LoadText } from "@giving/components/registration";
 import { MouseEventHandler } from "react";
 import { Link } from "react-router-dom";
 import { RegistrationStatus } from "@giving/types/aws";
 import { steps } from "pages/Registration/routes";
-import Icon from "components/Icon";
-import { LoadText } from "components/registration";
 import { useRegState } from "../StepGuard";
 
 type Props = {

@@ -4,9 +4,9 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { matchRoutes, useLocation } from "react-router-dom";
 import { DonateValues } from "../types";
-import TokenField from "components/TokenField";
 import { useGetter } from "store/accessors";
 import { setDetails } from "slices/donation";
+import TokenField from "../../../../TokenField";
 import AdvancedOptions from "./AdvancedOptions";
 
 export default function Form(props: {

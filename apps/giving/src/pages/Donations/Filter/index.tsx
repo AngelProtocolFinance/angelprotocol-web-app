@@ -1,3 +1,4 @@
+import Icon, { DrawerIcon } from "@giving/components/Icon";
 import { cleanObject } from "@giving/helpers/cleanObject";
 import { Popover } from "@headlessui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -5,7 +6,6 @@ import { FormEventHandler, useRef } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues as FV } from "./types";
 import { DonationsQueryParams } from "@giving/types/aws";
-import Icon, { DrawerIcon } from "components/Icon";
 import Form from "./Form";
 import { schema } from "./schema";
 

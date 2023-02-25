@@ -1,8 +1,8 @@
+import Icon from "@giving/components/Icon";
+import { Cells } from "@giving/components/TableSection";
 import { adminRoutes } from "@giving/constants/routes";
 import { Link } from "react-router-dom";
 import { EndowmentProposal } from "@giving/types/aws";
-import Icon from "components/Icon";
-import { Cells } from "components/TableSection";
 import { statusColors } from "../constants";
 
 export default function AppRow(props: EndowmentProposal) {

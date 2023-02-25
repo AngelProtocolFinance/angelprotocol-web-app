@@ -1,7 +1,11 @@
+import QueryLoader from "@giving/components/QueryLoader";
+import {
+  OptionType,
+  Selector,
+  selectorButtonStyle,
+} from "@giving/components/Selector";
 import { FieldValues, Path } from "react-hook-form";
 import { useCountriesQuery } from "services/countries";
-import QueryLoader from "components/QueryLoader";
-import { OptionType, Selector, selectorButtonStyle } from "components/Selector";
 
 type Props<T extends FieldValues, K extends Path<T>> = {
   name: T[K] extends OptionType<string>[] ? K : never;

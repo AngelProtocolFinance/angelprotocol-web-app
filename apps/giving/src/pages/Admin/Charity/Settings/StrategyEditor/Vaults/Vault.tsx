@@ -1,5 +1,5 @@
+import Icon from "@giving/components/Icon";
 import { maskAddress } from "@giving/helpers";
-import Icon from "components/Icon";
 
 type VaultProps = {
   address: string;

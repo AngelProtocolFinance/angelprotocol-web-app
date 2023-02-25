@@ -1,3 +1,6 @@
+import Icon from "@giving/components/Icon";
+import Popup from "@giving/components/Popup";
+import Tooltip from "@giving/components/Tooltip";
 import { PropsWithChildren, useRef, useState } from "react";
 import { EndowmentBookmark } from "@giving/types/aws";
 import {
@@ -6,9 +9,6 @@ import {
 } from "services/aws/aws";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
-import Icon from "components/Icon";
-import Popup from "components/Popup";
-import Tooltip from "components/Tooltip";
 
 type Props = PropsWithChildren<Pick<EndowmentBookmark, "endowId">>;
 

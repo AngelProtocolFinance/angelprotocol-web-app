@@ -1,9 +1,9 @@
+import Icon from "@giving/components/Icon";
 import { roundDownToNum } from "@giving/helpers";
 import { ErrorMessage } from "@hookform/error-message";
 import { UseFieldArrayRemove, useFormContext } from "react-hook-form";
 import { FormValues } from "../types";
 import { AccountType } from "@giving/types/contracts";
-import Icon from "components/Icon";
 import { PCT_PRECISION } from "../constants";
 
 type Props = {

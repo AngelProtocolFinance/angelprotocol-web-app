@@ -1,9 +1,9 @@
+import QueryLoader from "@giving/components/QueryLoader";
 import { humanize } from "@giving/helpers";
 import { PropsWithChildren } from "react";
 import { AccountType } from "@giving/types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useAssetsQuery } from "services/juno/custom";
-import QueryLoader from "components/QueryLoader";
 
 type Props = { type: AccountType };
 export default function Balance({ type }: Props) {
