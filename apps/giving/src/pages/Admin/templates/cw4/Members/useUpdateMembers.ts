@@ -1,3 +1,4 @@
+import { getTagPayloads } from "@giving/helpers/admin";
 import { useFormContext } from "react-hook-form";
 import { CW4Member } from "@giving/types/contracts";
 import { CW4MemberUpdateMeta, MemberUpdatorValues } from "pages/Admin/types";
@@ -9,7 +10,6 @@ import { useGetter } from "store/accessors";
 import CW3 from "contracts/CW3";
 import CW4 from "contracts/CW4";
 import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
-import { getTagPayloads } from "helpers/admin";
 
 export default function useUpdateMembers() {
   const { trigger, reset, getValues } = useFormContext<MemberUpdatorValues>();

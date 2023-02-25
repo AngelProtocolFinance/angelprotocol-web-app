@@ -11,12 +11,12 @@ import {
   isDeliverTxFailure,
 } from "@cosmjs/stargate";
 import { IS_TEST } from "@giving/constants/env";
+import { getKeplrClient } from "@giving/helpers/keplr";
 import { Chain } from "@giving/types/aws";
 import { EmbeddedBankMsg, EmbeddedWasmMsg } from "@giving/types/contracts";
 import { TxOptions } from "@giving/types/slices";
 import { WalletState } from "contexts/WalletContext";
 import { logger, toBase64 } from "helpers";
-import { getKeplrClient } from "helpers/keplr";
 import {
   CosmosTxSimulationFail,
   TxResultFail,

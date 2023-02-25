@@ -1,3 +1,5 @@
+import { genDiffMeta, getPayloadDiff } from "@giving/helpers/admin";
+import { cleanObject } from "@giving/helpers/cleanObject";
 import { useFormContext } from "react-hook-form";
 import { RegistrarConfigPayload } from "@giving/types/contracts";
 import {
@@ -11,8 +13,6 @@ import Popup from "components/Popup";
 import CW3 from "contracts/CW3";
 import Registrar from "contracts/Registrar";
 import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
-import { genDiffMeta, getPayloadDiff } from "helpers/admin";
-import { cleanObject } from "helpers/cleanObject";
 
 type Key = keyof RegistrarConfigPayload;
 type Value = RegistrarConfigPayload[Key];

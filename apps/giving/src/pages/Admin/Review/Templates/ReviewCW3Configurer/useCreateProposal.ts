@@ -1,3 +1,8 @@
+import {
+  genDiffMeta,
+  getPayloadDiff,
+  getTagPayloads,
+} from "@giving/helpers/admin";
 import { useFormContext } from "react-hook-form";
 import {
   CW3ConfigValues,
@@ -10,7 +15,6 @@ import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
 import CW3Review from "contracts/CW3/CW3Review";
 import useCosmosTxSender from "hooks/useCosmosTxSender";
-import { genDiffMeta, getPayloadDiff, getTagPayloads } from "helpers/admin";
 
 type Key = keyof FormReviewCW3Config;
 type Value = FormReviewCW3Config[Key];

@@ -1,3 +1,5 @@
+import { genDiffMeta, getPayloadDiff } from "@giving/helpers/admin";
+import { cleanObject } from "@giving/helpers/cleanObject";
 import { useFormContext } from "react-hook-form";
 import { FundConfig } from "@giving/types/contracts";
 import { FundConfigUpdateMeta, FundConfigValues } from "pages/Admin/types";
@@ -9,8 +11,6 @@ import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
 import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
 import { scaleToStr } from "helpers";
-import { genDiffMeta, getPayloadDiff } from "helpers/admin";
-import { cleanObject } from "helpers/cleanObject";
 
 type Key = keyof FundConfig;
 type Value = FundConfig[Key];

@@ -28,7 +28,8 @@
     "paths": {
       "@giving/assets/*": ["libs/@giving/assets/src/*"],
       "@giving/types/*": ["libs/@giving/types/src/*"],
-      "@giving/constants/*": ["libs/@giving/constants/src/*"]
+      "@giving/constants/*": ["libs/@giving/constants/src/*"],
+      "@giving/helpers/*": ["libs/@giving/helpers/src/*"]
     }
   },
   "exclude": ["node_modules", "tmp"]
