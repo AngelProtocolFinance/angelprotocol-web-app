@@ -1,5 +1,5 @@
+import banner from "@giving/assets/images/hero.png";
 import { useParams } from "react-router-dom";
-import banner from "assets/images/hero.png";
 import { useProfileQuery } from "services/aws/aws";
 import QueryLoader from "components/QueryLoader";
 import Seo from "components/Seo";

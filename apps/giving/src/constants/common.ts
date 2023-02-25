@@ -1,4 +1,4 @@
-import angelProtocolLogo from "assets/images/angelgiving-H-logo-beta-wht.png";
+import angelProtocolLogo from "@giving/assets/images/angelgiving-H-logo-beta-wht.png";
 import { LogoProps } from "components/Logo";
 
 // CONFIGURE THE CONSTANTS BELOW TO DISPLAY THE DESIRED REPEATING TEXT/IMAGES THROUGHOUT THE APP

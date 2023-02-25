@@ -1,10 +1,10 @@
+import tokenLogo from "@giving/assets/icons/currencies/token.svg";
+import binanceWalletIcon from "@giving/assets/icons/wallets/binance.png";
+import keplrIcon from "@giving/assets/icons/wallets/keplr.png";
+import metamaskIcon from "@giving/assets/icons/wallets/metamask.png";
+import xdefiIcon from "@giving/assets/icons/wallets/xdefi.jpg";
 import { WithoutInstallers } from "./types";
 import { BaseChain, Chain } from "types/aws";
-import tokenLogo from "assets/icons/currencies/token.svg";
-import binanceWalletIcon from "assets/icons/wallets/binance.png";
-import keplrIcon from "assets/icons/wallets/keplr.png";
-import metamaskIcon from "assets/icons/wallets/metamask.png";
-import xdefiIcon from "assets/icons/wallets/xdefi.jpg";
 import { chainIDs } from "constants/chains";
 import { EXPECTED_NETWORK_TYPE, IS_TEST } from "constants/env";
 

@@ -1,6 +1,6 @@
+import defaultIcon from "@giving/assets/images/angelprotocol-horiz-blu.png";
 import { Link } from "react-router-dom";
 import { LeaderboardEntry } from "types/aws";
-import defaultIcon from "assets/images/angelprotocol-horiz-blu.png";
 import { Cells } from "components/TableSection";
 import { appRoutes } from "constants/routes";
 import Amount from "./Amount";

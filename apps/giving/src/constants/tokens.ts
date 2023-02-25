@@ -1,7 +1,7 @@
-import haloIcon from "assets/icons/currencies/halo_outline.png";
-import junoIcon from "assets/icons/currencies/juno.svg";
-import unknownTokenIcon from "assets/icons/currencies/token.svg";
-import usdcIcon from "assets/icons/currencies/usdc.svg";
+import haloIcon from "@giving/assets/icons/currencies/halo_outline.png";
+import junoIcon from "@giving/assets/icons/currencies/juno.svg";
+import unknownTokenIcon from "@giving/assets/icons/currencies/token.svg";
+import usdcIcon from "@giving/assets/icons/currencies/usdc.svg";
 import { IS_TEST } from "./env";
 
 export enum denoms {

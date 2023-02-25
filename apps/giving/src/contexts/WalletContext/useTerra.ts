@@ -1,3 +1,4 @@
+import station_icon from "@giving/assets/icons/wallets/terra-extension.jpg";
 import {
   ConnectType,
   Installation,
@@ -7,7 +8,6 @@ import {
 } from "@terra-money/wallet-provider";
 import { Connection, ProviderId, ProviderInfo } from "./types";
 import { BaseChain } from "types/aws";
-import station_icon from "assets/icons/wallets/terra-extension.jpg";
 import {
   ManualChainSwitchRequiredError,
   UnsupportedChainError,

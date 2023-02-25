@@ -1,4 +1,4 @@
-import not_found from "assets/images/not-found.png";
+import not_found from "@giving/assets/images/not-found.png";
 
 export default function NoDonations({ classes = "" }) {
   return (

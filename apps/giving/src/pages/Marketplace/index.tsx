@@ -1,4 +1,4 @@
-// import banner from "assets/images/bhm-banner.jpg";
+// import banner from "@giving/assets/images/bhm-banner.jpg";
 import { useGetter } from "store/accessors";
 import Cards from "./Cards";
 import Hero from "./Hero";

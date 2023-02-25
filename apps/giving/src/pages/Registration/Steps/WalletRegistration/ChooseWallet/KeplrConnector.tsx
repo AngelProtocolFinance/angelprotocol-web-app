@@ -1,4 +1,4 @@
-import keplrWalletLogo from "assets/icons/wallets/keplr.png";
+import keplrWalletLogo from "@giving/assets/icons/wallets/keplr.png";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useSetWallet } from "contexts/WalletContext";
 

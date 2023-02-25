@@ -1,6 +1,6 @@
+import defaultIcon from "@giving/assets/icons/angel-alliance.png";
 import React from "react";
 import { AllianceMemberWithFlags } from "slices/admin/types";
-import defaultIcon from "assets/icons/angel-alliance.png";
 import Icon from "components/Icon";
 import { Cells } from "components/TableSection";
 import useMember from "./useMember";

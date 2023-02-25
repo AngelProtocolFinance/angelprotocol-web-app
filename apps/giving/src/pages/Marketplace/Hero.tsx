@@ -1,4 +1,4 @@
-import heroImage from "assets/images/bhm-hero.png";
+import heroImage from "@giving/assets/images/bhm-hero.png";
 import ExtLink from "components/ExtLink";
 import { SUBDOMAIN_BUILDER } from "constants/common";
 
