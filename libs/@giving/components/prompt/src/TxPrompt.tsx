@@ -1,10 +1,10 @@
 import ExtLink from "@giving/components/ExtLink";
 import { useModalContext } from "@giving/contexts/modal-context";
 import { getTxUrl } from "@giving/helpers";
-import { isError, isLoading, isSuccess } from "@giving/hooks/useCosmosTxSender";
 import { useNavigate } from "react-router-dom";
 import { Props as PromptProps } from "./types";
-import { TxState } from "@giving/services/types";
+import { isError, isLoading, isSuccess } from "@giving/types/cosmos-tx";
+import { TxState } from "@giving/types/cosmos-tx";
 import Prompt from "./Prompt";
 
 export function TxPrompt(props: TxState) {

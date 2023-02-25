@@ -47,6 +47,9 @@
       "@giving/components/*": ["libs/@giving/components/src/*"],
       "@giving/components/prompt": [
         "libs/@giving/components/prompt/src/index.ts"
+      ],
+      "@giving/components/steps": [
+        "libs/@giving/components/steps/src/index.tsx"
       ]
     }
   },

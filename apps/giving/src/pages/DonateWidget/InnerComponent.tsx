@@ -1,6 +1,6 @@
 import Logo from "@giving/components/Logo";
 import WalletSuite from "@giving/components/WalletSuite";
-import { Steps } from "@giving/components/donation";
+import Steps from "@giving/components/steps";
 import { LOGO } from "@giving/constants/common";
 import { getPossessiveForm } from "@giving/helpers";
 import { setRecipient } from "@giving/slices/donation";

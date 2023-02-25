@@ -3,19 +3,13 @@ import { useModalContext } from "@giving/contexts/modal-context";
 import { DonationState } from "@giving/slices/donation";
 import { useGetter } from "@giving/store";
 import { useCallback } from "react";
+import { ConfigParams } from "@giving/types/pages/widget";
 import CurrentStep from "./CurrentStep";
 import Progress from "./Progress";
 
-export type ConfigParams = {
-  hideAdvOpts?: boolean;
-  unfoldAdvOpts?: boolean;
-  liquidPct?: number;
-  availCurrs?: string[];
-};
-
 type Props = { className?: string } & ConfigParams;
 
-export function Steps({ className = "", ...params }: Props) {
+export default function Steps({ className = "", ...params }: Props) {
   const { showModal } = useModalContext();
   const state = useGetter((state) => state.donation);
 

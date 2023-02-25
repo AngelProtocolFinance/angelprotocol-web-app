@@ -4,7 +4,7 @@ import { useGetWallet } from "@giving/contexts/wallet-context";
 import { resetDetails } from "@giving/slices/donation";
 import { useGetter, useSetter } from "@giving/store";
 import { useEffect } from "react";
-import { ConfigParams } from "..";
+import { ConfigParams } from "@giving/types/pages/widget";
 import Donater from "./Donater";
 import Result from "./Result";
 import Submit from "./Submit";

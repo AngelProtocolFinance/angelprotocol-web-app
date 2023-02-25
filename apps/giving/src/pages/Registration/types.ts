@@ -1,4 +1,3 @@
-import { OptionType } from "@giving/components/Selector";
 import { Asset } from "@giving/components/registration";
 import { CountryOption } from "@giving/services/types";
 import {
@@ -7,6 +6,7 @@ import {
   ReferralMethods,
   RegistrationStatus,
 } from "@giving/types/aws";
+import { OptionType } from "@giving/types/components/selector";
 import { EndowmentTierNum } from "@giving/types/contracts";
 import { UNSDG_NUMS } from "@giving/types/lists";
 import { Optional } from "@giving/types/utils";

@@ -1,5 +1,5 @@
 import Breadcrumbs from "@giving/components/Breadcrumbs";
-import { Steps } from "@giving/components/donation";
+import Steps from "@giving/components/steps";
 import { appRoutes } from "@giving/constants/routes";
 import {
   DonationRecipient,

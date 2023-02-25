@@ -4,8 +4,8 @@ import { FormStep } from "@giving/slices/donation";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { DonateValues } from "./types";
+import { ConfigParams } from "@giving/types/pages/widget";
 import { TokenWithAmount } from "@giving/types/slices";
-import { ConfigParams } from "..";
 import Form from "./Form";
 import { schema } from "./schema";
 

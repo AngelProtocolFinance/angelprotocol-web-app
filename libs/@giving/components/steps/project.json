@@ -1,0 +1,17 @@
+{
+  "name": "giving-components-steps",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/@giving/components/steps/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/@giving/components/steps/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    }
+  }
+}

@@ -1,17 +1,17 @@
+import { URL_PARAMS } from "@giving/constants/widget";
 import { useSearchParams } from "react-router-dom";
-import { UrlParamValues } from "./types";
-import { URL_PARAMS } from "./constants";
+import { WidgetParams } from "@giving/types/pages/widget";
 
-export default function useWidgetParams(): UrlParamValues {
+export default function useWidgetParams(): WidgetParams {
   const [search] = useSearchParams();
   const searchParams = new URLSearchParams(search);
 
-  function get(key: keyof UrlParamValues): boolean {
+  function get(key: keyof WidgetParams): boolean {
     const param = searchParams.get(key);
     return param != null && (param === "" || Boolean(param));
   }
 
-  const result: UrlParamValues = {
+  const result: WidgetParams = {
     hideText: get(URL_PARAMS.hideText),
     hideAdvOpts: get(URL_PARAMS.hideAdvancedOptions),
     unfoldAdvOpts: get(URL_PARAMS.unfoldAdvancedOptions),

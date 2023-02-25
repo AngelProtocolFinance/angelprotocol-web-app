@@ -7,11 +7,11 @@ import {
   useController,
   useFormContext,
 } from "react-hook-form";
+import { OptionType } from "@giving/types/components/selector";
 import Icon, { DrawerIcon } from "./Icon";
 
 type ValKey = string | number;
 
-export type OptionType<V> = { label: string; value: V };
 type Classes = {
   container?: string;
   button?: string;
@@ -21,7 +21,7 @@ type VarOption<M extends boolean, V extends ValKey> = M extends true
   ? OptionType<V>[]
   : OptionType<V>;
 
-interface Props<
+export interface Props<
   T extends FieldValues,
   K extends Path<T>,
   V extends ValKey,

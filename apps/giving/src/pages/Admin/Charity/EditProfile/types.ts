@@ -1,7 +1,7 @@
 import { ImgLink } from "@giving/components/ImgEditor";
-import { OptionType } from "@giving/components/Selector";
 import { CountryOption } from "@giving/services/types";
 import { EndowmentProfileUpdate } from "@giving/types/aws";
+import { OptionType } from "@giving/types/components/selector";
 import { UNSDG_NUMS } from "@giving/types/lists";
 
 type K = keyof EndowmentProfileUpdate;
