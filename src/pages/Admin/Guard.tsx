@@ -1,9 +1,9 @@
 import { ReactNode, createContext, useContext } from "react";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { AdminParams } from "./types";
 import { AdminResources } from "services/types";
 import { useAdminResourcesQuery } from "services/juno/custom";
-import { useModalContext } from "contexts/ModalContext";
 import {
   CosmosWallet,
   isConnected,
@@ -11,7 +11,6 @@ import {
 } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import Loader from "components/Loader";
-import { TxPrompt } from "components/Prompt";
 
 type WalletGetter = () => CosmosWallet | (() => void);
 type Context = AdminResources & { getWallet: WalletGetter };
@@ -19,7 +18,6 @@ type Context = AdminResources & { getWallet: WalletGetter };
 export function Guard(props: {
   children(resources: AdminResources): ReactNode;
 }) {
-  const { showModal } = useModalContext();
   const wallet = useWalletContext();
   const { id } = useParams<AdminParams>();
   const user = isConnected(wallet) ? wallet.address : "";
@@ -40,20 +38,16 @@ export function Guard(props: {
 
   const getWallet: WalletGetter = () => {
     if (!isConnected(wallet)) {
-      return () => showModal(TxPrompt, { error: "Wallet is not connected" });
+      return () => toast.error("Wallet is not connected");
     }
     if (wallet.type !== "cosmos") {
       return () =>
-        showModal(TxPrompt, {
-          error: `${wallet.name} doesn't support JUNO transactions`,
-        });
+        toast.error(`${wallet.name} doesn't support JUNO transactions`);
     }
 
     if (!data.propMeta.isAuthorized) {
       return () =>
-        showModal(TxPrompt, {
-          error: "Wallet is not authorized to perform this action",
-        });
+        toast.error("Wallet is not authorized to perform this action");
     }
 
     return wallet;
