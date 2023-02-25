@@ -1,8 +1,8 @@
 import { contracts } from "@giving/constants/contracts";
 import { adminRoutes, appRoutes } from "@giving/constants/routes";
+import { isJunoAddress } from "@giving/schemas/tests";
 import { AdminResources } from "../../../types";
 import { CW3Config } from "@giving/types/contracts";
-import { isJunoAddress } from "schemas/tests";
 import { queryContract } from "../../queryContract/index";
 import { defaultProposalTags } from "../../tags";
 import { customApi } from "../custom";

@@ -1,6 +1,6 @@
 import * as Yup from "yup";
+import { SchemaShape } from "@giving/schemas/types";
 import { FundDestroyValues } from "@giving/types/pages/admin";
-import { SchemaShape } from "schemas/types";
 import { proposalShape } from "../../../../constants";
 
 const shape: SchemaShape<FundDestroyValues> = {

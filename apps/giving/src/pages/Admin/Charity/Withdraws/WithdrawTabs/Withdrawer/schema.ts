@@ -1,9 +1,9 @@
 import { chainIds } from "@giving/constants/chainIds";
+import { tokenConstraint } from "@giving/schemas/number";
+import { requiredWalletAddr } from "@giving/schemas/string";
 import * as Yup from "yup";
 import { Amount, WithdrawValues as WV } from "./types";
-import { SchemaShape } from "schemas/types";
-import { tokenConstraint } from "schemas/number";
-import { requiredWalletAddr } from "schemas/string";
+import { SchemaShape } from "@giving/schemas/types";
 
 type TVal = Amount["value"];
 type TBal = Amount["balance"];

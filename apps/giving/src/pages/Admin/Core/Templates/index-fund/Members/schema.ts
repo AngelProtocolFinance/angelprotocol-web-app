@@ -1,7 +1,7 @@
+import { requiredContractAddr } from "@giving/schemas/string";
 import * as Yup from "yup";
+import { SchemaShape } from "@giving/schemas/types";
 import { FundUpdateValues } from "@giving/types/pages/admin";
-import { SchemaShape } from "schemas/types";
-import { requiredContractAddr } from "schemas/string";
 import { proposalShape } from "../../../../constants";
 
 const shape: SchemaShape<FundUpdateValues> = {

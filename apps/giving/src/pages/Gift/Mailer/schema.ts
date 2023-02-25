@@ -1,7 +1,7 @@
+import { requiredString } from "@giving/schemas/string";
 import * as Yup from "yup";
 import { FormValues as FV } from "./types";
-import { SchemaShape } from "schemas/types";
-import { requiredString } from "schemas/string";
+import { SchemaShape } from "@giving/schemas/types";
 
 export const schema = Yup.object().shape<SchemaShape<FV>>({
   purchaser: requiredString,

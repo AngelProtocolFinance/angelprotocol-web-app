@@ -1,0 +1,5 @@
+{
+  "name": "@giving/schemas",
+  "sideEffects": false,
+  "type": "module"
+}

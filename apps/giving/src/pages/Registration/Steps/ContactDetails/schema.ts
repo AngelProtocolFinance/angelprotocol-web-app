@@ -1,9 +1,9 @@
+import { requiredString } from "@giving/schemas/string";
 import * as Yup from "yup";
 import { FormValues } from "./types";
+import { SchemaShape } from "@giving/schemas/types";
 import { ContactRoles, ReferralMethods } from "@giving/types/aws";
-import { SchemaShape } from "schemas/types";
 import { OptionType } from "components/Selector";
-import { requiredString } from "schemas/string";
 
 type Key = keyof FormValues;
 const roleKey: Key = "role";

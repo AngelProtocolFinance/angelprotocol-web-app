@@ -1,6 +1,6 @@
 import { DateSchema, date, lazy, object, ref, string } from "yup";
 import { FormValues } from "./types";
-import { SchemaShape } from "schemas/types";
+import { SchemaShape } from "@giving/schemas/types";
 
 const endKey: keyof FormValues = "endDate";
 const startKey: keyof FormValues = "startDate";

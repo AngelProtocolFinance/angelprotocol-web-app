@@ -1,7 +1,7 @@
+import { stringByteSchema } from "@giving/schemas/string";
+import { SchemaShape } from "@giving/schemas/types";
 import { Templates } from "@giving/types/pages/admin";
 import { ProposalBase } from "@giving/types/pages/admin";
-import { SchemaShape } from "schemas/types";
-import { stringByteSchema } from "schemas/string";
 
 export const templates: { [key in Templates]: string } = {
   //index fund

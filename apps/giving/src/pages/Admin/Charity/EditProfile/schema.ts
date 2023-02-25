@@ -1,10 +1,10 @@
+import { genFileSchema } from "@giving/schemas/file";
+import { requiredString, url } from "@giving/schemas/string";
 import * as Yup from "yup";
 import { FormValues } from "./types";
-import { SchemaShape } from "schemas/types";
+import { SchemaShape } from "@giving/schemas/types";
 import { CountryOption } from "services/types";
 import { ImgLink } from "components/ImgEditor";
-import { genFileSchema } from "schemas/file";
-import { requiredString, url } from "schemas/string";
 
 export const VALID_MIME_TYPES = [
   "image/jpeg",
