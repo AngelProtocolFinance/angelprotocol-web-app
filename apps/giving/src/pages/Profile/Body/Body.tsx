@@ -1,8 +1,8 @@
-import BookmarkBtn from "@giving/components/BookmarkBtn";
 import Breadcrumbs from "@giving/components/Breadcrumbs";
 import ExtLink from "@giving/components/ExtLink";
 import Icon from "@giving/components/Icon";
 import Seo from "@giving/components/Seo";
+import BookmarkBtn from "@giving/components/bookmark-btn";
 import { APP_NAME, DAPP_DOMAIN } from "@giving/constants/common";
 import { appRoutes } from "@giving/constants/routes";
 import { useProfileContext } from "../ProfileContext";

@@ -1,6 +1,6 @@
-import BookmarkBtn from "@giving/components/BookmarkBtn";
 import Icon from "@giving/components/Icon";
 import Tooltip from "@giving/components/Tooltip";
+import BookmarkBtn from "@giving/components/bookmark-btn";
 import { appRoutes } from "@giving/constants/routes";
 import { unsdgs } from "@giving/constants/unsdgs";
 import { isEmpty } from "@giving/helpers";

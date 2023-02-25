@@ -50,6 +50,12 @@
       ],
       "@giving/components/steps": [
         "libs/@giving/components/steps/src/index.tsx"
+      ],
+      "@giving/components/kado-modal": [
+        "libs/@giving/components/kado-modal/src/index.ts"
+      ],
+      "@giving/components/bookmark-btn": [
+        "libs/@giving/components/bookmark-btn/src/index.ts"
       ]
     }
   },
