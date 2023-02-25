@@ -1,6 +1,6 @@
+import { useModalContext } from "@giving/contexts/modal-context";
 import { humanize } from "@giving/helpers";
 import { Dialog } from "@headlessui/react";
-import { useModalContext } from "contexts/ModalContext";
 import { AmountProps } from ".";
 
 export default function Summary({ locked, liquid, type }: AmountProps) {

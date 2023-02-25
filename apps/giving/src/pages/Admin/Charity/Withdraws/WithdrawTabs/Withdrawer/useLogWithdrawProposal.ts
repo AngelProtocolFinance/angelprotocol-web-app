@@ -1,6 +1,7 @@
 import { TxPrompt } from "@giving/components/Prompt";
 import { EMAIL_SUPPORT } from "@giving/constants/common";
 import { APIs } from "@giving/constants/urls";
+import { useModalContext } from "@giving/contexts/modal-context";
 import {
   createAuthToken,
   getWasmAttribute,
@@ -9,7 +10,6 @@ import {
 } from "@giving/helpers";
 import { AccountType } from "@giving/types/contracts";
 import { invalidateApesTags } from "services/apes";
-import { useModalContext } from "contexts/ModalContext";
 import { useSetter } from "store/accessors";
 import { TxOnSuccess, TxSuccessMeta } from "hooks/useCosmosTxSender";
 

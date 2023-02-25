@@ -1,9 +1,9 @@
 import Popup from "@giving/components/Popup";
+import { useModalContext } from "@giving/contexts/modal-context";
 import { MouseEventHandler } from "react";
 import { DropzoneOptions } from "react-dropzone";
 import { FieldValues, useController, useFormContext } from "react-hook-form";
 import { ImgLink, Props } from "./types";
-import { useModalContext } from "contexts/ModalContext";
 import ImgCropper from "./ImgCropper";
 
 type Key = keyof ImgLink;

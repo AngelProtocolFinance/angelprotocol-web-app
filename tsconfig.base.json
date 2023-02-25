@@ -35,6 +35,9 @@
       "@giving/contexts/wallet-context": [
         "libs/@giving/contexts/wallet-context/src/index.ts"
       ],
+      "@giving/contexts/modal-context": [
+        "libs/@giving/contexts/modal-context/src/index.ts"
+      ],
       "@giving/helpers/*": ["libs/@giving/helpers/src/*"],
       "@giving/components/*": ["libs/@giving/components/src/*"]
     }

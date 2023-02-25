@@ -1,11 +1,11 @@
 import Icon from "@giving/components/Icon";
 import Logo, { LogoProps } from "@giving/components/Logo";
+import { useModalContext } from "@giving/contexts/modal-context";
 import { createNavLinkStyler } from "@giving/helpers";
 import { Dialog } from "@headlessui/react";
 import ThemeToggle from "App/Header/ThemeToggle";
 import { NavLink } from "react-router-dom";
 import { Link } from "../../types";
-import { useModalContext } from "contexts/ModalContext";
 
 export default function Menu({
   links,

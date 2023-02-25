@@ -1,8 +1,8 @@
 import ExtLink from "@giving/components/ExtLink";
+import { useModalContext } from "@giving/contexts/modal-context";
 import { getTxUrl } from "@giving/helpers";
 import { useNavigate } from "react-router-dom";
 import { Props as PromptProps } from "./types";
-import { useModalContext } from "contexts/ModalContext";
 import {
   TxState,
   isError,

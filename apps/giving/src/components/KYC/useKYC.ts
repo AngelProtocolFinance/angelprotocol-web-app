@@ -1,5 +1,5 @@
+import { useModalContext } from "@giving/contexts/modal-context";
 import { Props } from "./types";
-import { useModalContext } from "contexts/ModalContext";
 import Receipter from "./index";
 
 export default function useKYC() {

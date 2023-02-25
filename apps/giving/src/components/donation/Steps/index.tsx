@@ -1,6 +1,6 @@
 import KadoModal from "@giving/components/KadoModal";
+import { useModalContext } from "@giving/contexts/modal-context";
 import { useCallback } from "react";
-import { useModalContext } from "contexts/ModalContext";
 import { useGetter } from "store/accessors";
 import { DonationState } from "slices/donation";
 import CurrentStep from "./CurrentStep";

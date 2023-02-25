@@ -1,6 +1,7 @@
 import Popup from "@giving/components/Popup";
 import { contracts } from "@giving/constants/contracts";
 import { axlUSDCDenom, denoms, tokens } from "@giving/constants/tokens";
+import { useModalContext } from "@giving/contexts/modal-context";
 import { useGetWallet } from "@giving/contexts/wallet-context";
 import { scaleToStr } from "@giving/helpers";
 import { getTagPayloads } from "@giving/helpers/admin";
@@ -9,7 +10,6 @@ import { EmbeddedBankMsg, EmbeddedWasmMsg } from "@giving/types/contracts";
 import { FundSendMeta } from "@giving/types/pages/admin";
 import { FundSendValues } from "@giving/types/pages/admin";
 import { useAdminResources } from "pages/Admin/Guard";
-import { useModalContext } from "contexts/ModalContext";
 import CW3 from "contracts/CW3";
 import CW20 from "contracts/CW20";
 import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";

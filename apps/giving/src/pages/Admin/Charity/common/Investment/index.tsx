@@ -1,6 +1,6 @@
+import { useModalContext } from "@giving/contexts/modal-context";
 import { humanize, maskAddress } from "@giving/helpers";
 import { Vault } from "services/types";
-import { useModalContext } from "contexts/ModalContext";
 import Investor from "./Investor";
 import Redeemer from "./Redeemer";
 

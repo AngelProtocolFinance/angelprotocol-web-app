@@ -5,11 +5,11 @@ import { Field } from "@giving/components/form";
 import { APP_NAME } from "@giving/constants/common";
 import { appRoutes } from "@giving/constants/routes";
 import { APIs } from "@giving/constants/urls";
+import { useModalContext } from "@giving/contexts/modal-context";
 import { createAuthToken } from "@giving/helpers";
 import { useFormContext } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "./types";
-import { useModalContext } from "contexts/ModalContext";
 
 export default function Form({ classes = "" }) {
   const { handleSubmit, reset } = useFormContext<FV>();

@@ -1,8 +1,4 @@
 {
-  "name": "@giving/constants",
   "sideEffects": false,
-  "type": "module",
-  "files": [
-    "src/**/*"
-  ]
+  "type": "module"
 }

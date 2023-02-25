@@ -1,5 +1,4 @@
 {
-  "name": "@giving/errors",
   "sideEffects": false,
   "type": "module"
 }

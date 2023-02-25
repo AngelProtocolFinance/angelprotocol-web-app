@@ -1,14 +1,14 @@
+import IFrame from "@giving/components/IFrame";
 import Icon from "@giving/components/Icon";
 import { chainIDs } from "@giving/constants/chains";
 import { KADO_API_KEY } from "@giving/constants/env";
+import { useModalContext } from "@giving/contexts/modal-context";
 import { useGetWallet } from "@giving/contexts/wallet-context";
 import { logger } from "@giving/helpers";
 import { Dialog } from "@headlessui/react";
 import { useCallback } from "react";
 import { invalidateApesTags } from "services/apes";
-import { useModalContext } from "contexts/ModalContext";
 import { useSetter } from "store/accessors";
-import IFrame from "../../../../libs/@giving/components/src/IFrame";
 
 type KADO_NETWORK_VALUES = "ethereum" | "juno" | "terra";
 

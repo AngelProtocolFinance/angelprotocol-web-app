@@ -1,6 +1,6 @@
+import { useModalContext } from "@giving/contexts/modal-context";
 import { useCallback } from "react";
 import { Airdrops } from "@giving/types/aws";
-import { useModalContext } from "contexts/ModalContext";
 import Catcher from "./Catcher";
 
 export default function useAirdrop() {

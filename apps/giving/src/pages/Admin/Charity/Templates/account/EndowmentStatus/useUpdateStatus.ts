@@ -1,4 +1,5 @@
 import Popup from "@giving/components/Popup";
+import { useModalContext } from "@giving/contexts/modal-context";
 import { useGetWallet } from "@giving/contexts/wallet-context";
 import { getTagPayloads } from "@giving/helpers/admin";
 import { cleanObject } from "@giving/helpers/cleanObject";
@@ -14,7 +15,6 @@ import {
   EndowmentUpdateValues,
 } from "@giving/types/pages/admin";
 import { useAdminResources } from "pages/Admin/Guard";
-import { useModalContext } from "contexts/ModalContext";
 import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
 import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";

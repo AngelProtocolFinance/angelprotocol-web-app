@@ -1,8 +1,4 @@
 {
-  "name": "@giving/helpers",
   "sideEffects": false,
-  "type": "module",
-  "files": [
-    "src/**/*"
-  ]
+  "type": "module"
 }

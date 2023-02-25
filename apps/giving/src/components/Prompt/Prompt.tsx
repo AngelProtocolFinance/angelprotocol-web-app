@@ -1,6 +1,6 @@
+import { useModalContext } from "@giving/contexts/modal-context";
 import { Dialog } from "@headlessui/react";
 import { Props } from "./types";
-import { useModalContext } from "contexts/ModalContext";
 import Icon from "../Icon";
 import LoaderRing from "../LoaderRing";
 

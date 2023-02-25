@@ -1,4 +1,5 @@
 import Popup from "@giving/components/Popup";
+import { useModalContext } from "@giving/contexts/modal-context";
 import { useGetWallet } from "@giving/contexts/wallet-context";
 import {
   genDiffMeta,
@@ -12,7 +13,6 @@ import {
   FormCW3Config,
 } from "@giving/types/pages/admin";
 import { useAdminResources } from "pages/Admin/Guard";
-import { useModalContext } from "contexts/ModalContext";
 import CW3 from "contracts/CW3";
 import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
 

@@ -1,7 +1,7 @@
 import Icon from "@giving/components/Icon";
 import { LogoProps } from "@giving/components/Logo";
+import { useModalContext } from "@giving/contexts/modal-context";
 import { Link } from "../../types";
-import { useModalContext } from "contexts/ModalContext";
 import useHandleScreenResize, { SCREEN_LG } from "hooks/useHandleScreenResize";
 import Menu from "./Menu";
 

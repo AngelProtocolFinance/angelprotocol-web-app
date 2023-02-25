@@ -1,5 +1,4 @@
 {
-  "name": "@giving/contexts/wallet-context",
   "sideEffects": false,
   "type": "module"
 }

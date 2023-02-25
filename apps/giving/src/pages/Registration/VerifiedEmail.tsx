@@ -2,6 +2,7 @@ import Icon from "@giving/components/Icon";
 import Popup from "@giving/components/Popup";
 import { APP_NAME } from "@giving/constants/common";
 import { appRoutes } from "@giving/constants/routes";
+import { useModalContext } from "@giving/contexts/modal-context";
 import { useErrorContext } from "@giving/errors";
 import { handleMutationResult, logger } from "@giving/helpers";
 import jwtDecode from "jwt-decode";
@@ -11,7 +12,6 @@ import { Link } from "react-router-dom";
 import { InitReg } from "./types";
 import { InitApplication } from "@giving/types/aws";
 import { useRequestEmailMutation } from "services/aws/registration";
-import { useModalContext } from "contexts/ModalContext";
 import routes, { steps } from "./routes";
 
 type JwtData = InitApplication & {
