@@ -10,7 +10,7 @@ import { APP_NAME } from "constants/common";
 import Warning from "./Warning";
 
 export default function Submit() {
-  const { endowment } = useAdminResources();
+  const { endow_type, maturity_height } = useAdminResources<"charity">();
   const {
     getValues,
     formState: { isDirty, isValid, isSubmitting },
@@ -41,7 +41,7 @@ export default function Submit() {
     >
       {(height) => (
         <SubmitWithReason
-          endowment={endowment}
+          endowment={{ endow_type, maturity_height }}
           height={+height}
           isSubmitDisabled={isSubmitDisabled}
         />
@@ -52,7 +52,7 @@ export default function Submit() {
 
 type SubmitWithReasonProps = {
   isSubmitDisabled: boolean;
-  endowment: EndowmentDetails;
+  endowment: Pick<EndowmentDetails, "endow_type" | "maturity_height">;
   height: number;
 };
 

@@ -14,7 +14,7 @@ import { cleanObject } from "helpers/cleanObject";
 type Key = keyof FundConfig;
 type Value = FundConfig[Key];
 export default function useConfigureFund() {
-  const { cw3, propMeta, wallet } = useAdminResources();
+  const { cw3, propMeta, getWallet } = useAdminResources();
   const {
     handleSubmit,
     formState: { isSubmitting, isDirty, isValid },
@@ -36,6 +36,9 @@ export default function useConfigureFund() {
       showModal(Popup, { message: "no changes detected" });
       return;
     }
+
+    const wallet = getWallet();
+    if (typeof wallet === "function") return wallet();
 
     const configUpdateMeta: FundConfigUpdateMeta = {
       type: "if_config",

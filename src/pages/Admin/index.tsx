@@ -11,10 +11,10 @@ export default function Admin() {
         /**modals in this scope can access AdminGuard context value */
         <ModalContext>
           {(() => {
-            switch (resources.role) {
+            switch (resources.type) {
               case "charity":
                 return <Charity />;
-              case "reviewer":
+              case "review":
                 return <Review />;
               default:
                 return <Core />;

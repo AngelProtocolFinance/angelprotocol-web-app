@@ -25,6 +25,7 @@ export default function useCosmosTxSender<T extends boolean = false>(
     msgs,
     tagPayloads,
     onSuccess,
+    isAuthorized,
     successMeta,
   }) => {
     try {
@@ -34,6 +35,12 @@ export default function useCosmosTxSender<T extends boolean = false>(
       if (wallet.type !== "cosmos") {
         return showModal(TxPrompt, {
           error: "Connected wallet doesn't support this transaction",
+        });
+      }
+
+      if (!isAuthorized /** should be explicitly set to true to pass */) {
+        return showModal(TxPrompt, {
+          error: "You are not authorized to make this transaction",
         });
       }
 

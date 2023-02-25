@@ -8,7 +8,7 @@ import Registrar from "contracts/Registrar";
 import useCosmosTxSender from "hooks/useCosmosTxSender";
 
 export default function useUpdateOwner() {
-  const { cw3, propMeta, wallet } = useAdminResources();
+  const { cw3, propMeta, getWallet } = useAdminResources();
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },
@@ -23,6 +23,9 @@ export default function useUpdateOwner() {
       showModal(Popup, { message: "no changes detected" });
       return;
     }
+
+    const wallet = getWallet();
+    if (typeof wallet === "function") return wallet();
 
     const registrarContract = new Registrar(wallet);
     const configUpdateMsg = registrarContract.createEmbeddedOwnerUpdateMsg({

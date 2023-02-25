@@ -16,7 +16,7 @@ import { cleanObject } from "helpers/cleanObject";
 type Key = keyof RegistrarConfigPayload;
 type Value = RegistrarConfigPayload[Key];
 export default function useConfigureRegistrar() {
-  const { cw3, propMeta, wallet } = useAdminResources();
+  const { cw3, propMeta, getWallet } = useAdminResources();
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },
@@ -45,6 +45,9 @@ export default function useConfigureRegistrar() {
       split_max: diff.split_max && `${+diff.split_max / 100}`,
       split_min: diff.split_min && `${+diff.split_min / 100}`,
     };
+
+    const wallet = getWallet();
+    if (typeof wallet === "function") return wallet();
 
     const registrarContract = new Registrar(wallet);
     const configUpdateMsg = registrarContract.createEmbeddedConfigUpdateMsg(

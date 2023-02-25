@@ -12,7 +12,7 @@ import { getTagPayloads } from "helpers/admin";
 
 export default function useUpdateMembers() {
   const { trigger, reset, getValues } = useFormContext<MemberUpdatorValues>();
-  const { cw3, cw4, propMeta, wallet } = useAdminResources();
+  const { cw3, cw4, propMeta, getWallet } = useAdminResources();
   const apCW4Members = useGetter((state) => state.admin.apCW4Members);
   const { showModal } = useModalContext();
   const sendTx = useCosmosTxSender();
@@ -46,6 +46,10 @@ export default function useUpdateMembers() {
       showModal(Popup, { message: "No member changes" });
       return;
     }
+
+    const wallet = getWallet();
+    if (typeof wallet === "function") return wallet();
+
     const cw3Contract = new CW3(wallet, cw3);
     const cw4Contract = new CW4(wallet, cw4);
     const embeddedExecuteMsg = cw4Contract.createEmbeddedUpdateMembersMsg(

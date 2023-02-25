@@ -3,7 +3,7 @@ import { createNavLinkStyler } from "helpers";
 import { templateRoutes as routes } from "../../constants";
 
 const styler = createNavLinkStyler(
-  "px-4 py-1 text-gray-d1 dark:text-gray-l2",
+  "px-4 py-1 text-gray-d1 dark:text-gray-l3",
   "bg-orange-l4 dark:bg-blue-d3 pointer-events-none"
 );
 

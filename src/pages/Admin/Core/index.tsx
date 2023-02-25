@@ -1,11 +1,25 @@
-import Nav from "./Nav";
-import Views from "./Views";
+import { Navigate, Route, Routes } from "react-router-dom";
+import { LinkGroup } from "../Sidebar/types";
+import { adminRoutes } from "constants/routes";
+import Layout from "../Layout";
+import Proposal from "../Proposal";
+import Proposals from "../Proposals";
+import { LINKS } from "../constants";
+import Templates from "./Templates";
+
+const LINK_GROUPS: LinkGroup[] = [
+  { title: "Manage", links: [LINKS.proposals] },
+];
 
 export default function Core() {
   return (
-    <div className="padded-container grid grid-rows-[auto_1fr] pb-8 pt-4 gap-2 font-work">
-      <Nav />
-      <Views />
-    </div>
+    <Routes>
+      <Route element={<Layout linkGroups={LINK_GROUPS} />}>
+        <Route path={`${adminRoutes.proposal}/:id`} element={<Proposal />} />
+        <Route path={adminRoutes.proposals} element={<Proposals />} />
+        <Route path={`${adminRoutes.templates}/*`} element={<Templates />} />
+        <Route index element={<Navigate to={adminRoutes.proposals} />} />
+      </Route>
+    </Routes>
   );
 }

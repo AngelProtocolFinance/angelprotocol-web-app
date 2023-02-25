@@ -102,7 +102,12 @@ export const queryObject: {
   accEndowment({ id }) {
     return { endowment: { id } };
   },
-  accBalance({ id }) {
-    return { balance: { id } };
+  accState({ id }) {
+    return { state: { id } };
+  },
+
+  /** vault */
+  vaultBalance({ endowment_id }) {
+    return { balance: { endowment_id } };
   },
 };

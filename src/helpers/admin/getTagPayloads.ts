@@ -51,10 +51,18 @@ export function getTagPayloads(type?: ProposalMeta["type"]): TagPayload[] {
       });
       break;
 
+    case "acc_invest":
     case "acc_withdraw":
       _tags.push({
         type: "account",
-        id: accountTags.balance,
+        id: accountTags.state,
+      });
+      break;
+
+    case "acc_strategy":
+      _tags.push({
+        type: "account",
+        id: accountTags.endowment,
       });
       break;
 

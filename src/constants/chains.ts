@@ -1,5 +1,10 @@
 import { ConnectedToChainType } from "contexts/WalletContext";
-import { IS_TEST, JUNO_LCD_OVERRIDE, JUNO_RPC_OVERRIDE } from "./env";
+import {
+  INFURA_ID,
+  IS_TEST,
+  JUNO_LCD_OVERRIDE,
+  JUNO_RPC_OVERRIDE,
+} from "./env";
 
 export type Chain = {
   type: ConnectedToChainType["type"]; //to determine which type tx to perform
@@ -11,19 +16,13 @@ export type Chain = {
 
 type ChainRegistry = { [key: string]: Chain };
 
-const infuraId = process.env.REACT_APP_INFURA_ID;
-
 const testnets = {
   "uni-6": {
     type: "cosmos",
     brand: "juno",
     name: "Juno Testnet",
-    lcd:
-      JUNO_LCD_OVERRIDE ||
-      "https://59vigz9r91.execute-api.us-east-1.amazonaws.com/juno/uni-6/lcd",
-    rpc:
-      JUNO_RPC_OVERRIDE ||
-      "https://59vigz9r91.execute-api.us-east-1.amazonaws.com/juno/uni-6/rpc",
+    lcd: JUNO_LCD_OVERRIDE || "https://api.uni.junonetwork.io",
+    rpc: JUNO_RPC_OVERRIDE || "https://rpc.uni.junonetwork.io",
     txExplorer: "https://testnet.ping.pub/juno/tx/",
   },
   "pisco-1": {
@@ -38,7 +37,7 @@ const testnets = {
     type: "evm",
     brand: "ethereum",
     name: "Ethereum Goerli Testnet",
-    rpc: `https://goerli.infura.io/v3/${infuraId}`,
+    rpc: `https://goerli.infura.io/v3/${INFURA_ID}`,
     lcd: "",
     txExplorer: "https://goerli.etherscan.io/tx/",
   },
@@ -81,7 +80,7 @@ const mainnets = {
     type: "evm",
     brand: "ethereum",
     name: "Ethereum Mainnet",
-    rpc: `https://mainnet.infura.io/v3/${infuraId}`,
+    rpc: `https://mainnet.infura.io/v3/${INFURA_ID}`,
     lcd: "",
     txExplorer: "https://etherscan.io/tx/",
   },

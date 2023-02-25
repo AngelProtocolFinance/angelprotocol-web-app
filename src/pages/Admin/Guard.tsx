@@ -3,62 +3,79 @@ import { useParams } from "react-router-dom";
 import { AdminParams } from "./types";
 import { AdminResources } from "services/types";
 import { useAdminResourcesQuery } from "services/juno/custom";
+import { useModalContext } from "contexts/ModalContext";
 import {
-  WithCosmosWallet,
+  CosmosWallet,
   isConnected,
-  isDisconnected,
   useWalletContext,
 } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import Loader from "components/Loader";
+import { TxPrompt } from "components/Prompt";
 
-type State = WithCosmosWallet<AdminResources>;
+type WalletGetter = () => CosmosWallet | (() => void);
+type Context = AdminResources & { getWallet: WalletGetter };
 
 export function Guard(props: {
   children(resources: AdminResources): ReactNode;
 }) {
+  const { showModal } = useModalContext();
   const wallet = useWalletContext();
   const { id } = useParams<AdminParams>();
   const user = isConnected(wallet) ? wallet.address : "";
+
   const { data, isLoading, isError } = useAdminResourcesQuery(
     {
       user,
       endowmentId: id!,
     },
-    { skip: !user || !id }
+    { skip: !id }
   );
 
-  if (wallet === "loading")
-    return <GuardPrompt message="Connecting wallet.." showLoader />;
-
-  if (isDisconnected(wallet))
-    return <GuardPrompt message="Wallet is not connected" />;
-
-  if (wallet.type !== "cosmos")
-    return <GuardPrompt message="Admin doesn't support connected wallet" />;
-
   if (isLoading)
-    return <GuardPrompt message="Checking wallet credentials" showLoader />;
+    return <GuardPrompt message="Getting admin resources" showLoader />;
 
-  if (isError) return <GuardPrompt message="Error getting wallet resoures" />;
+  if (isError || !data)
+    return <GuardPrompt message="Error getting admin resources" />;
 
-  if (!data) return <GuardPrompt message="Unauthorized to view this page" />;
+  const getWallet: WalletGetter = () => {
+    if (!isConnected(wallet)) {
+      return () => showModal(TxPrompt, { error: "Wallet is not connected" });
+    }
+    if (wallet.type !== "cosmos") {
+      return () =>
+        showModal(TxPrompt, {
+          error: `${wallet.name} doesn't support JUNO transactions`,
+        });
+    }
+
+    if (!data.propMeta.isAuthorized) {
+      return () =>
+        showModal(TxPrompt, {
+          error: "Wallet is not authorized to perform this action",
+        });
+    }
+
+    return wallet;
+  };
 
   return (
-    <context.Provider value={{ ...data, wallet }}>
+    <context.Provider value={{ ...data, getWallet }}>
       {props.children(data)}
     </context.Provider>
   );
 }
 
-const context = createContext({} as State);
-export const useAdminResources = (): State => {
+const context = createContext({} as Context);
+export const useAdminResources = <
+  T extends AdminResources["type"] = any
+>(): Extract<AdminResources, { type: T }> & { getWallet: WalletGetter } => {
   const val = useContext(context);
 
   if (Object.entries(val).length <= 0) {
     throw new Error("useAdminResources should only be used inside AdminGuard");
   }
-  return val;
+  return val as any;
 };
 
 function GuardPrompt(props: { message: string; showLoader?: true }) {

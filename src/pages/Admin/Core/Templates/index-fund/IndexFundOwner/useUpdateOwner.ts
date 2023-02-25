@@ -9,7 +9,7 @@ import IndexFund from "contracts/IndexFund";
 import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
 
 export default function useUpdateOwner() {
-  const { cw3, propMeta, wallet } = useAdminResources();
+  const { cw3, propMeta, getWallet } = useAdminResources();
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },
@@ -24,6 +24,9 @@ export default function useUpdateOwner() {
       showModal(Popup, { message: "no changes detected" });
       return;
     }
+
+    const wallet = getWallet();
+    if (typeof wallet === "function") return wallet();
 
     const indexFundContract = new IndexFund(wallet);
     const configUpdateMsg = indexFundContract.createEmbeddedOwnerUpdateMsg({

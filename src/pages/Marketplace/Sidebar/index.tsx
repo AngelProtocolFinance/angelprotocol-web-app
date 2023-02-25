@@ -16,7 +16,7 @@ export default function Sidebar({ classes = "" }: { classes?: string }) {
 
   return (
     <div
-      className={`border border-prim dark:bg-blue-d5 dark:text-white overflow-y-auto md:overflow-hidden md:rounded-md content-start md:h-fit md:w-80 bg-gray-l5 ${classes}`}
+      className={`border border-prim dark:bg-blue-d5 dark:text-white overflow-y-auto md:overflow-hidden md:rounded-md content-start md:h-fit md:w-80 bg-gray-l6 ${classes}`}
     >
       <div className="flex justify-between p-3 items-center md:hidden bg-orange-l6 dark:bg-blue-d7 border-b border-prim">
         <h3 className="text-orange text-xl font-black uppercase">Filters</h3>
@@ -30,7 +30,7 @@ export default function Sidebar({ classes = "" }: { classes?: string }) {
           type="button"
           title="Remove all filter selections."
           onClick={() => dispatch(clear())}
-          className="text-gray-d1 dark:text-gray-l2 text-sm"
+          className="text-gray-d1 dark:text-gray-l3 text-sm"
         >
           Clear Filters
         </button>
@@ -38,7 +38,7 @@ export default function Sidebar({ classes = "" }: { classes?: string }) {
           type="button"
           title="Reset all filters to their default values."
           onClick={() => dispatch(reset())}
-          className="text-gray-d1 dark:text-gray-l2 text-sm"
+          className="text-gray-d1 dark:text-gray-l3 text-sm"
         >
           Reset Filters
         </button>

@@ -18,7 +18,12 @@ export default function ConfirmEmail({ classes = "" }: { classes?: string }) {
     return <Navigate to={".."} />;
   }
 
-  const openIntercom = () => (window as any).Intercom("show");
+  const openIntercom = () => {
+    const w = window as any;
+    if ("Intercom" in w) {
+      w.Intercom("show");
+    }
+  };
 
   const { email, reference } = initReg;
 

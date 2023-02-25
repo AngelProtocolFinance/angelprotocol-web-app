@@ -12,15 +12,19 @@ import Stats from "./Stats";
 import Votes from "./Votes";
 
 export default function Proposal() {
-  const { cw3, wallet } = useAdminResources();
+  const { cw3, getWallet } = useAdminResources();
+
+  const wallet = getWallet();
+  const { address = "" } = typeof wallet !== "function" ? wallet : {};
+
   const params = useParams<ProposalParams>();
   const queryState = useProposalDetailsQuery(
     {
       id: params.id,
       cw3,
-      voter: wallet?.address!,
+      voter: address,
     },
-    { skip: !wallet }
+    { skip: !address }
   );
 
   return (

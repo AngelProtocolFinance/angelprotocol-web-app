@@ -12,7 +12,7 @@ import { cleanObject } from "helpers/cleanObject";
 import { INIT_SPLIT } from ".";
 
 export default function useCreateFund() {
-  const { cw3, propMeta, wallet } = useAdminResources();
+  const { cw3, propMeta, getWallet } = useAdminResources();
   const sendTx = useCosmosTxSender();
   const { trigger, getValues } = useFormContext<FundCreatorValues>();
   const newFundMembers = useGetter((state) => state.admin.newFundMembers);
@@ -32,6 +32,9 @@ export default function useCreateFund() {
     ]);
 
     if (!isValid) return;
+
+    const wallet = getWallet();
+    if (typeof wallet === "function") return wallet();
 
     const title = getValues("title");
     const description = getValues("description");

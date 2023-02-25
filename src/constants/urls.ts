@@ -1,5 +1,5 @@
-import { BASE_DOMAIN } from "constants/common";
 import { chainIds, chains } from "./chains";
+import { BASE_DOMAIN } from "./common";
 import { JUNO_LCD_OVERRIDE } from "./env";
 
 export const APIs = {
@@ -16,5 +16,6 @@ export const PRIVACY_POLICY = `${BASE_DOMAIN}/privacy-policy/`;
 export const SUPPORT =
   "https://share-eu1.hsforms.com/14aljI0OEQje2DDmJiZoLFgetp37";
 
-export const JUNO_LCD = JUNO_LCD_OVERRIDE || chains[chainIds.juno].lcd;
 export const TERMS_OF_USE = `${BASE_DOMAIN}/terms-of-use`;
+
+export const JUNO_LCD = JUNO_LCD_OVERRIDE || chains[chainIds.juno].lcd;

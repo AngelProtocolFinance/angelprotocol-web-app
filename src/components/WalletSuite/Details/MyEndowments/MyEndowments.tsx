@@ -1,7 +1,7 @@
 import { PropsWithChildren } from "react";
 import { useWalletProfileQuery } from "services/aws/aws";
 import { useConnectedWallet } from "contexts/WalletGuard";
-import Logo from "../Logo";
+import Logo from "components/Logo";
 import Links from "./Links";
 
 export default function MyEndowments() {
@@ -29,7 +29,7 @@ export default function MyEndowments() {
           key={endowment.endowId}
           className="grid grid-cols-[auto_1fr] gap-3"
         >
-          <Logo src={endowment.logo} className="w-10 h-10" />
+          <Logo logo={{ src: endowment.logo }} className="w-10 h-10" />
 
           <div className="grid items-center">
             <Name value={endowment.name} />

@@ -16,13 +16,16 @@ export default function useDestroyFund() {
   } = useFormContext<FundDestroyValues>();
   const { showModal } = useModalContext();
   const sendTx = useCosmosTxSender();
-  const { cw3, propMeta, wallet } = useAdminResources();
+  const { cw3, propMeta, getWallet } = useAdminResources();
 
   async function destroyFund(data: FundDestroyValues) {
     if (data.fundId === "") {
       showModal(Popup, { message: "Please select fund to remove" });
       return;
     }
+    const wallet = getWallet();
+    if (typeof wallet === "function") return wallet();
+
     const indexFundContract = new IndexFund(wallet);
     const embeddedRemoveFundMsg = indexFundContract.createEmbeddedRemoveFundMsg(
       +data.fundId

@@ -1,16 +1,28 @@
 import { Suspense } from "react";
 import { Location, Outlet } from "react-router-dom";
+import { Link } from "./types";
 import ErrorBoundary from "components/ErrorBoundary";
 import Loader from "components/Loader";
 import Seo from "components/Seo";
+import { AP_LOGO } from "constants/common";
+import { appRoutes } from "constants/routes";
 import Footer from "./Footer";
 import Header from "./Header";
+import { GROUPS_DATA, SOCIAL_MEDIA_LINKS } from "./constants";
+
+const HEADER_LINKS: Link[] = [
+  { title: "Marketplace", href: appRoutes.index },
+  { title: "Leaderboard", href: appRoutes.leaderboard },
+  { title: "Register", href: appRoutes.register },
+  // NOTE: governance will be reenabled when we relaunch the $HALO token
+  // { title: "Governance", href: appRoutes.govern },
+];
 
 export default function Layout({ key }: Pick<Location, "key">) {
   return (
     <div className="grid grid-rows-[auto_1fr_auto]">
       <Seo /> {/* Load all defaults for SEO meta tags */}
-      <Header classes="sticky top-0 z-20" />
+      <Header classes="sticky top-0 z-20" links={HEADER_LINKS} logo={AP_LOGO} />
       <Suspense fallback={<LoaderComponent />}>
         <ErrorBoundary
           key={key}
@@ -19,7 +31,7 @@ export default function Layout({ key }: Pick<Location, "key">) {
           <Outlet />
         </ErrorBoundary>
       </Suspense>
-      <Footer />
+      <Footer linkGroups={GROUPS_DATA} socials={SOCIAL_MEDIA_LINKS} />
     </div>
   );
 }

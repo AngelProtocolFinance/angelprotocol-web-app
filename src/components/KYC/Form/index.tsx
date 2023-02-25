@@ -11,7 +11,7 @@ import { states } from "./us-states";
 import useSubmit from "./useSubmit";
 
 export const formStyle =
-  "w-full bg-gray-l5 dark:bg-blue-d5 text-gray-d2 dark:text-white font-work";
+  "w-full bg-gray-l6 dark:bg-blue-d5 text-gray-d2 dark:text-white font-work";
 
 export default function Form({ classes = "", ...props }: Props) {
   const {
@@ -84,7 +84,7 @@ export default function Form({ classes = "", ...props }: Props) {
           fieldName="country"
           onReset={() => resetField("usState")}
           classes={{
-            container: "px-4 bg-gray-l5 dark:bg-blue-d6",
+            container: "px-4 bg-gray-l6 dark:bg-blue-d6",
             input: "py-3.5 placeholder:text-sm",
             error: "field-error",
           }}

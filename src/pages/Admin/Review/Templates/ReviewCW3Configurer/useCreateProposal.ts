@@ -15,7 +15,7 @@ type Key = keyof FormReviewCW3Config;
 type Value = FormReviewCW3Config[Key];
 
 export default function useCreateProposal() {
-  const { propMeta, wallet } = useAdminResources();
+  const { propMeta, getWallet } = useAdminResources();
   const {
     getValues,
     handleSubmit,
@@ -40,6 +40,9 @@ export default function useCreateProposal() {
       showModal(Popup, { message: "no changes made" });
       return;
     }
+
+    const wallet = getWallet();
+    if (typeof wallet === "function") return wallet();
 
     const contract = new CW3Review(wallet);
 

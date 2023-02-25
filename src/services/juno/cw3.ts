@@ -5,14 +5,6 @@ import { genQueryPath } from "./queryContract/genQueryPath";
 
 export const cw3Api = junoApi.injectEndpoints({
   endpoints: (builder) => ({
-    //CW3
-    cw3Config: builder.query<Result<"cw3Config">, WithAddrArgs<"cw3Config">>({
-      providesTags: [{ type: "admin", id: adminTags.config }],
-      query: (contract) => genQueryPath("cw3Config", null, contract),
-      transformResponse: (res: Res<"cw3Config">) => {
-        return res.data;
-      },
-    }),
     proposal: builder.query<Result<"cw3Proposal">, WithAddrArgs<"cw3Proposal">>(
       {
         providesTags: [{ type: "admin", id: adminTags.proposal }],
@@ -59,6 +51,5 @@ export const {
   useProposalsQuery,
   useVotesQuery,
   useProposalQuery,
-  useCw3ConfigQuery,
   useReviewCw3ConfigQuery,
 } = cw3Api;

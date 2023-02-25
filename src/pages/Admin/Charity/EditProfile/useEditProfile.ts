@@ -15,7 +15,7 @@ import { createADR36Payload } from "./createADR36Payload";
 // import optimizeImage from "./optimizeImage";
 
 export default function useEditProfile() {
-  const { endowmentId, endowment, wallet } = useAdminResources();
+  const { id, owner, getWallet } = useAdminResources<"charity">();
   const {
     reset,
     handleSubmit,
@@ -35,6 +35,12 @@ export default function useEditProfile() {
     ...newData
   }) => {
     try {
+      /** special case for edit profile: since upload happens prior
+       * to tx submission. Other users of useCosmosTxSender
+       */
+      const wallet = getWallet();
+      if (typeof wallet === "function") return wallet();
+
       const [bannerUrl, logoUrl] = await uploadImgs([image, logo], () => {
         showModal(
           TxPrompt,
@@ -63,8 +69,8 @@ export default function useEditProfile() {
     */
       const updates: Partial<EndowmentProfileUpdate> = {
         ...diff,
-        id: endowmentId,
-        owner: endowment.owner,
+        id,
+        owner,
       };
 
       showModal(
@@ -84,7 +90,7 @@ export default function useEditProfile() {
           message: "Profile successfully updated",
           link: {
             description: "View changes",
-            url: `${appRoutes.profile}/${endowmentId}`,
+            url: `${appRoutes.profile}/${id}`,
           },
         },
       });
@@ -99,7 +105,7 @@ export default function useEditProfile() {
     reset,
     editProfile: handleSubmit(editProfile),
     isSubmitting,
-    id: endowmentId,
+    id,
   };
 }
 

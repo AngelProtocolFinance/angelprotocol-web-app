@@ -7,6 +7,7 @@ export const rootTags = [
   "account",
   "registrar",
   "custom",
+  "vault",
 ] as const;
 
 type JunoTag = typeof rootTags[number];
@@ -47,7 +48,7 @@ export enum accountTags {
   endowment = "endowment",
   endowments = "endowments",
   profile = "profile",
-  balance = "balance",
+  state = "state",
 }
 
 export const defaultProposalTags: FullTagDescription<JunoTag>[] = [

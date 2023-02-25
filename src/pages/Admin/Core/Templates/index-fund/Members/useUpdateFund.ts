@@ -13,7 +13,7 @@ import { contracts } from "constants/contracts";
 
 export default function useUpdateFund() {
   const { trigger, reset, getValues } = useFormContext<FundUpdateValues>();
-  const { cw3, propMeta, wallet } = useAdminResources();
+  const { cw3, propMeta, getWallet } = useAdminResources();
   const [isLoading, setIsLoading] = useState(false);
   const fundMembers = useGetter((state) => state.admin.fundMembers);
   const { handleError } = useErrorHandler("useUpdateFund");
@@ -49,6 +49,10 @@ export default function useUpdateFund() {
       if (toRemove.length <= 0 && toAdd.length <= 0) {
         return handleError("No fund member changes");
       }
+
+      const wallet = getWallet();
+      if (typeof wallet === "function") return wallet();
+
       const indexFundContract = new IndexFund(wallet);
       const embeddedExecuteMsg =
         indexFundContract.createEmbeddedUpdateMembersMsg(

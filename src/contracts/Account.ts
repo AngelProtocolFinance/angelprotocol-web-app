@@ -1,6 +1,8 @@
 import {
   DepositPayload,
   EndowmentSettingsPayload,
+  InvestPayload,
+  RedeemPayload,
   StatusChangePayload,
   UpdateStategyPayload,
   WithdrawPayload,
@@ -29,6 +31,18 @@ export default class Account extends Contract {
   createEmbeddedStrategyUpdateMsg(payload: UpdateStategyPayload) {
     return this.createEmbeddedWasmMsg(Account.address, {
       update_strategies: payload,
+    });
+  }
+
+  createEmbeddedInvestMsg(payload: InvestPayload) {
+    return this.createEmbeddedWasmMsg(Account.address, {
+      vaults_invest: payload,
+    });
+  }
+
+  createEmbeddedRedeemMsg(payload: RedeemPayload) {
+    return this.createEmbeddedWasmMsg(Account.address, {
+      vaults_redeem: payload,
     });
   }
 

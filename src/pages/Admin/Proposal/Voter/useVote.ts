@@ -13,10 +13,13 @@ export default function useVote() {
     handleSubmit,
     formState: { isValid },
   } = useFormContext<VV>();
-  const { cw3, wallet } = useAdminResources();
+  const { cw3, getWallet } = useAdminResources();
   const { sendTx, isSending } = useCosmosTxSender(true);
 
   async function vote({ type, proposalId, vote, reason }: VV) {
+    const wallet = getWallet();
+    if (typeof wallet === "function") return wallet();
+
     let voteMsg: Any;
     if (type === "application") {
       const contract = new CW3Review(wallet);

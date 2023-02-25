@@ -1,12 +1,12 @@
 import { useAdminResources } from "pages/Admin/Guard";
-import { useBalanceQuery } from "services/juno/account";
+import { useStateQuery } from "services/juno/account";
 import QueryLoader from "components/QueryLoader";
 import Transactions from "./Transactions";
 import WithdrawTabs from "./WithdrawTabs";
 
 export default function Withdraws() {
-  const { endowmentId } = useAdminResources();
-  const queryState = useBalanceQuery({ id: endowmentId });
+  const { id } = useAdminResources();
+  const queryState = useStateQuery({ id });
 
   return (
     <div className="grid content-start font-work">

@@ -26,7 +26,6 @@ export default function useSubmit() {
     hasAgreedToTerms,
     sdgs,
     isKYCRequired,
-    level,
     hqCountry,
     activeInCountries,
     ...documents

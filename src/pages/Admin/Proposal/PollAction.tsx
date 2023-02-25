@@ -13,10 +13,15 @@ import Voter from "./Voter";
 export default function PollAction(props: ProposalDetails) {
   const { data: latestBlock = "0" } = useLatestBlockQuery(null);
   const sendTx = useCosmosTxSender();
-  const { cw3, wallet } = useAdminResources();
+  const { cw3, getWallet } = useAdminResources();
   const { showModal } = useModalContext();
 
+  const wallet = getWallet();
+  const { address = "" } = typeof wallet !== "function" ? wallet : {};
+
   async function executeProposal() {
+    if (typeof wallet === "function") return wallet();
+
     const contract = new CW3(wallet, cw3);
     const execMsg = contract.createExecProposalMsg(props.id);
 
@@ -32,8 +37,8 @@ export default function PollAction(props: ProposalDetails) {
       : +latestBlock > props.expires.at_height;
 
   const userVote = useMemo(
-    () => props.votes.find((vote) => vote.voter === wallet?.address),
-    [props.votes, wallet?.address]
+    () => props.votes.find((vote) => vote.voter === address),
+    [props.votes, address]
   );
 
   const EXED = props.status === "executed";

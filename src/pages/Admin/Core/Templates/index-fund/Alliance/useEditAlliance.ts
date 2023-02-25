@@ -11,7 +11,7 @@ import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
 
 export default function useEditAlliance() {
   const { trigger, reset, getValues } = useFormContext<AllianceEditValues>();
-  const { cw3, propMeta, wallet } = useAdminResources();
+  const { cw3, propMeta, getWallet } = useAdminResources();
   const { members: allianceMembers, isEditingMember } = useGetter(
     (state) => state.admin.allianceMembers
   );
@@ -23,6 +23,9 @@ export default function useEditAlliance() {
       shouldFocus: true,
     });
     if (!isValid) return;
+
+    const wallet = getWallet();
+    if (typeof wallet === "function") return wallet();
 
     //check if there are changes
     const markedMembers = allianceMembers.filter(

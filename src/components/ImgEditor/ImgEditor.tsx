@@ -39,7 +39,7 @@ export default function ImgEditor<T extends FieldValues, K extends keyof T>(
     isDragActive
       ? "before:bg-orange-l5/95 before:dark:bg-blue-d6/95"
       : isSubmitting
-      ? "before:bg-gray-l4/95 before:dark:bg-bluegray-d1/95"
+      ? "before:bg-gray-l5/95 before:dark:bg-bluegray-d1/95"
       : ""
   }`;
 
@@ -53,8 +53,8 @@ export default function ImgEditor<T extends FieldValues, K extends keyof T>(
               : "border-prim focus:border-orange-l2 focus:dark:border-blue-d1"
           } ${
             isSubmitting
-              ? "cursor-default bg-gray-l4 dark:bg-bluegray-d1"
-              : "bg-gray-l5 dark:bg-blue-d5 cursor-pointer"
+              ? "cursor-default bg-gray-l5 dark:bg-bluegray-d1"
+              : "bg-gray-l6 dark:bg-blue-d5 cursor-pointer"
           } ${classes?.dropzone ?? ""}`,
           ref,
         })}
@@ -114,7 +114,7 @@ export default function ImgEditor<T extends FieldValues, K extends keyof T>(
 }
 
 const buttonStyle =
-  "cursor-pointer text-white text-lg bg-blue hover:bg-blue-l1 disabled:bg-gray-l1 p-2 m-1 rounded-md shadow-lg";
+  "cursor-pointer text-white text-lg bg-blue hover:bg-blue-l1 disabled:bg-gray-l2 p-2 m-1 rounded-md shadow-lg";
 function IconButton(props: React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return <button {...props} type="button" className={buttonStyle} />;
 }

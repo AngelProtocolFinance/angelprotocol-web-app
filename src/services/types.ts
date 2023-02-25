@@ -6,6 +6,8 @@ import {
   CW3Config,
   EndowmentDetails,
   Proposal,
+  ReviewCW3Config,
+  YieldVault,
 } from "types/contracts";
 import { Coin } from "types/cosmos";
 import { TxArgs } from "hooks/useCosmosTxSender";
@@ -27,18 +29,31 @@ export type EncodedQueryMember = {
   data: string; //base64 encoded msg
 };
 
-export type AdminRoles = "ap" | "reviewer" | "charity";
-export type AdminResources = {
+type Base = {
   cw3: string;
   cw4: string;
-  endowmentId: number;
-  endowment: EndowmentDetails;
-  cw3config: CW3Config;
-  role: AdminRoles;
-  propMeta: Required<Pick<TxArgs, "successMeta" | "tagPayloads">> & {
+  id: number;
+  propMeta: Required<
+    Pick<TxArgs, "successMeta" | "tagPayloads" | "isAuthorized">
+  > & {
     willExecute?: true;
   };
 };
+
+export type APResources = Base & {
+  type: "ap";
+  config: CW3Config;
+};
+export type ReviewResources = Base & {
+  type: "review";
+  config: ReviewCW3Config;
+};
+export type CharityResources = Base & {
+  type: "charity";
+  config: CW3Config;
+} & EndowmentDetails;
+
+export type AdminResources = APResources | ReviewResources | CharityResources;
 
 export type ProposalDetails = Proposal & {
   votes: AdminVoteInfo[];
@@ -70,3 +85,22 @@ export type CosmosBalances = { balances: Coin[] };
 
 export type TokenWithBalance = Token & { balance: number; gift?: number };
 export type Regions = { [region: string]: string[] };
+
+export type EndowmentAssets = {
+  liquid: AssetSummary;
+  locked: AssetSummary;
+};
+
+export type AssetSummary = {
+  symbol: string;
+  free: number;
+  invested: number;
+  total: number;
+  vaults: Vault[];
+};
+
+export type Vault = YieldVault & {
+  balance: number;
+  invested: number;
+  symbol: string;
+};

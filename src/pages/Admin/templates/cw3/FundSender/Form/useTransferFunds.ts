@@ -18,7 +18,7 @@ export default function useTransferFunds() {
     handleSubmit,
     formState: { isSubmitting, isValid, isDirty },
   } = useFormContext<FundSendValues>();
-  const { cw3, propMeta, wallet } = useAdminResources();
+  const { cw3, propMeta, getWallet } = useAdminResources();
   //TODO: use wallet token[] to list amounts to transfer
   const { showModal } = useModalContext();
   const sendTx = useCosmosTxSender();
@@ -34,6 +34,10 @@ export default function useTransferFunds() {
     }
 
     let embeddedMsg: EmbeddedWasmMsg | EmbeddedBankMsg;
+
+    const wallet = getWallet();
+    if (typeof wallet === "function") return wallet();
+
     //this wallet is not even rendered when wallet is disconnected
     const cw20Contract = new CW20(wallet, contracts.halo_token);
     if (data.denom === denoms.halo) {

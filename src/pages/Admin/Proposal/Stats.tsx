@@ -43,7 +43,7 @@ export default function Stats({ votes, threshold }: ProposalDetails) {
         <Stat title="no" value={numNo} pct={pctNo} textColor="text-red-l1" />
       </div>
       <div
-        className="relative mb-8 mt-10 h-4 border border-gray-l2 dark:border-none"
+        className="relative mb-8 mt-10 h-4 border border-gray-l3 dark:border-none"
         style={{
           //prettier-ignore
           background: `linear-gradient(to right, 
