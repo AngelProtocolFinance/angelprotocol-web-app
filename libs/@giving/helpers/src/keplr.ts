@@ -4,7 +4,7 @@ import { JUNO_LCD } from "@giving/constants/env";
 import { WC_BRIDGE } from "@giving/constants/urls";
 import { KeplrWalletConnectV1 } from "@keplr-wallet/wc-client";
 import WalletConnect from "@walletconnect/client/";
-import { ProviderId } from "@giving/contexts/wallet-context/types";
+import { ProviderId } from "@giving/types/contexts/wallet";
 import { Dwindow } from "@giving/types/ethereum";
 
 export const connector = new WalletConnect({

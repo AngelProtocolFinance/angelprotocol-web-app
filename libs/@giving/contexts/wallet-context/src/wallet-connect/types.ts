@@ -1,4 +1,4 @@
-import { ProviderId } from "../types";
+import { ProviderId } from "@giving/types/contexts/wallet";
 
 export type WalletMeta = { logo: string; name: string; providerId: ProviderId };
 type Loading = { status: "loading" };

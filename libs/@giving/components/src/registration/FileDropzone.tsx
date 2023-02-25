@@ -1,5 +1,3 @@
-import ExtLink from "@giving/components/ExtLink";
-import Icon from "@giving/components/Icon";
 import { ErrorMessage } from "@hookform/error-message";
 import { useDropzone } from "react-dropzone";
 import {
@@ -9,6 +7,8 @@ import {
   useFormContext,
 } from "react-hook-form";
 import { FileObject } from "@giving/types/aws";
+import ExtLink from "../ExtLink";
+import Icon from "../Icon";
 
 export type Asset = {
   previews: FileObject[]; //from previous submission

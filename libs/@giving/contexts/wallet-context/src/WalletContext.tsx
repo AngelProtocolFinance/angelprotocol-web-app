@@ -9,8 +9,9 @@ import {
   useContext,
   useMemo,
 } from "react";
-import { Connection, ProviderId, ProviderStatus } from "./types";
+import { Connection, ProviderStatus } from "./types";
 import { BaseChain, Chain, TokenWithBalance } from "@giving/types/aws";
+import { ProviderId } from "@giving/types/contexts/wallet";
 import {
   BNB_WALLET_SUPPORTED_CHAINS,
   EVM_SUPPORTED_CHAINS,

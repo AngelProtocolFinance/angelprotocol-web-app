@@ -11,8 +11,9 @@ import {
 } from "@giving/errors";
 import { getProvider } from "@giving/helpers";
 import { useCallback, useEffect, useState } from "react";
-import { Connection, ProviderId, ProviderInfo } from "./types";
+import { Connection, ProviderInfo } from "./types";
 import { BaseChain } from "@giving/types/aws";
+import { ProviderId } from "@giving/types/contexts/wallet";
 import {
   AccountChangeHandler,
   ChainChangeHandler,

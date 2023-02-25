@@ -1,13 +1,13 @@
-import { invalidateJunoTags } from "@giving/services/juno";
+import { ProposalMeta } from "@giving/types/pages/admin";
+import { TagPayload } from "@giving/types/redux";
+import { invalidateJunoTags } from ".";
 import {
   accountTags,
   adminTags,
   defaultProposalTags,
   indexfundTags,
   registrarTags,
-} from "@giving/services/juno/tags";
-import { TagPayload } from "@giving/services/types";
-import { ProposalMeta } from "@giving/types/pages/admin";
+} from "./tags";
 
 export function getTagPayloads(type?: ProposalMeta["type"]): TagPayload[] {
   const _tags = [...defaultProposalTags];

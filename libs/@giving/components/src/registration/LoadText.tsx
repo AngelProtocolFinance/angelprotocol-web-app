@@ -1,5 +1,5 @@
-import Icon from "@giving/components/Icon";
 import { PropsWithChildren } from "react";
+import Icon from "../Icon";
 
 export function LoadText({
   text = "Submitting...",

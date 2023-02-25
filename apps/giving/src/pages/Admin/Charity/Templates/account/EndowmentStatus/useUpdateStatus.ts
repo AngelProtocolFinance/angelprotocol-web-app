@@ -3,9 +3,9 @@ import { useModalContext } from "@giving/contexts/modal-context";
 import { useGetWallet } from "@giving/contexts/wallet-context";
 import Account from "@giving/contracts/Account";
 import CW3 from "@giving/contracts/CW3";
-import { getTagPayloads } from "@giving/helpers/admin";
 import { cleanObject } from "@giving/helpers/cleanObject";
 import useCosmosTxSender from "@giving/hooks/useCosmosTxSender/useCosmosTxSender";
+import { getTagPayloads } from "@giving/services/juno/getTagPayloads";
 import { useFormContext } from "react-hook-form";
 import {
   Beneficiary,

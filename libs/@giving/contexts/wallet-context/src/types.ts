@@ -1,20 +1,9 @@
 import { chainIDs } from "@giving/constants/chains";
 import { BaseChain } from "@giving/types/aws";
+import { ProviderId } from "@giving/types/contexts/wallet";
 import { WalletState } from "./WalletContext";
 
 export type WithWallet<T> = T & { wallet: WalletState };
-
-export type ProviderId =
-  | "binance-wallet"
-  | "metamask"
-  | "evm-wc"
-  | "xdefi-wallet" //xdefi terra provider
-  | "xdefi-evm" //xdefi evm provider
-  | "leap-wallet"
-  | "station"
-  | "walletconnect"
-  | "keplr-wc"
-  | "keplr";
 
 export type WithoutInstallers = Exclude<
   ProviderId,

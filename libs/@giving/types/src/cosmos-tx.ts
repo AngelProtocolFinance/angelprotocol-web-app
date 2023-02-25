@@ -1,11 +1,7 @@
 import { EncodeObject } from "@cosmjs/proto-signing";
 import { DeliverTxResponse } from "@cosmjs/stargate";
-import { PayloadAction } from "@reduxjs/toolkit";
-import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import { Chain } from "./aws";
-
-export type Tag = TagDescription<string>;
-export type TagPayload = PayloadAction<Tag[], string>;
+import { TagPayload } from "./redux";
 
 export type Tx = { hash: string; chainID: string };
 

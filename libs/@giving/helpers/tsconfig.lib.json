@@ -1,6 +1,6 @@
 {
   "extends": "./tsconfig.json",
 
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "../services/src/juno/getTagPayloads.ts"],
   "exclude": ["jest.config.ts", "src/**/*.test.ts"]
 }

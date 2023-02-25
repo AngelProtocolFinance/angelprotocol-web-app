@@ -1,7 +1,7 @@
 import { contracts } from "@giving/constants/contracts";
 import { registrarTags } from "@giving/services/juno/tags";
 import { Args, Res, Result } from "./queryContract/types";
-import { junoApi } from "./index";
+import { junoApi } from ".";
 import { genQueryPath } from "./queryContract/genQueryPath";
 
 const reg = contracts.registrar;

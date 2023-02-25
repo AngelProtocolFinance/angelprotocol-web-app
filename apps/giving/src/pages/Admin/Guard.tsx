@@ -4,8 +4,8 @@ import { useGetWallet } from "@giving/contexts/wallet-context";
 import { useAdminResourcesQuery } from "@giving/services/juno/custom";
 import { ReactNode, createContext, useContext } from "react";
 import { useParams } from "react-router-dom";
-import { AdminParams } from "./types";
 import { AdminResources } from "@giving/services/types";
+import { AdminParams } from "@giving/types/pages/admin";
 
 export function Guard(props: {
   children(resources: AdminResources): ReactNode;

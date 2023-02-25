@@ -1,6 +1,6 @@
-import ExtLink from "@giving/components/ExtLink";
-import Icon from "@giving/components/Icon";
 import { WalletMeta } from "@giving/types/contexts/wallet";
+import ExtLink from "./ExtLink";
+import Icon from "./Icon";
 
 export default function InstallWallet({ name, logo, installUrl }: WalletMeta) {
   return (
