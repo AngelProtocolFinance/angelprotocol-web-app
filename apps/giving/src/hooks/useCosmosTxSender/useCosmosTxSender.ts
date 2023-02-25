@@ -1,12 +1,12 @@
 import Popup from "@giving/components/Popup";
 import { TxPrompt } from "@giving/components/Prompt";
+import { useGetWallet } from "@giving/contexts/wallet-context";
 import { extractFeeAmount } from "@giving/helpers";
 import { useState } from "react";
 import { Tx, TxArgs } from "./types";
 import { TxOptions } from "@giving/types/slices";
 import { invalidateApesTags } from "services/apes";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
 import { useSetter } from "store/accessors";
 import Contract from "contracts/Contract";
 import handleTxError from "./handleTxError";

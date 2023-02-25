@@ -1,11 +1,11 @@
 import Icon from "@giving/components/Icon";
 import Loader from "@giving/components/Loader";
+import { useGetWallet } from "@giving/contexts/wallet-context";
 import { ReactNode, createContext, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { AdminParams } from "./types";
 import { AdminResources } from "services/types";
 import { useAdminResourcesQuery } from "services/juno/custom";
-import { useGetWallet } from "contexts/WalletContext";
 
 export function Guard(props: {
   children(resources: AdminResources): ReactNode;

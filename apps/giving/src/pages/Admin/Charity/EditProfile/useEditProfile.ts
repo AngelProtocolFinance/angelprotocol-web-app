@@ -1,6 +1,7 @@
 import { ImgLink } from "@giving/components/ImgEditor";
 import { TxPrompt } from "@giving/components/Prompt";
 import { appRoutes } from "@giving/constants/routes";
+import { useGetWallet } from "@giving/contexts/wallet-context";
 import { isEmpty } from "@giving/helpers";
 import { getPayloadDiff } from "@giving/helpers/admin";
 import { getFullURL, uploadFiles } from "@giving/helpers/uploadFiles";
@@ -10,7 +11,6 @@ import { EndowmentProfileUpdate } from "@giving/types/aws";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useEditProfileMutation } from "services/aws/aws";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
 import { createADR36Payload } from "./createADR36Payload";
 
 // import optimizeImage from "./optimizeImage";

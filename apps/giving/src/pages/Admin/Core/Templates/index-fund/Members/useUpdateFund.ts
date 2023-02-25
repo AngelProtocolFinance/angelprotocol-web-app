@@ -1,10 +1,10 @@
+import { useGetWallet } from "@giving/contexts/wallet-context";
 import { useErrorContext } from "@giving/errors";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { FundMemberUpdateMeta } from "@giving/types/pages/admin";
 import { FundUpdateValues } from "@giving/types/pages/admin";
 import { useAdminResources } from "pages/Admin/Guard";
-import { useGetWallet } from "contexts/WalletContext";
 import { useGetter } from "store/accessors";
 import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";

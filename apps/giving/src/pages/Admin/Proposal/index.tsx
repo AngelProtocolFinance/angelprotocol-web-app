@@ -1,11 +1,11 @@
 import Icon from "@giving/components/Icon";
 import QueryLoader from "@giving/components/QueryLoader";
 import { DetailLabel, Status } from "@giving/components/admin";
+import { useGetWallet } from "@giving/contexts/wallet-context";
 import { useParams } from "react-router-dom";
 import { Expiration } from "@giving/types/contracts";
 import { ProposalParams } from "@giving/types/pages/admin";
 import { useProposalDetailsQuery } from "services/juno/custom";
-import { useGetWallet } from "contexts/WalletContext";
 import { useAdminResources } from "../Guard";
 import Content from "./Content";
 import PollAction from "./PollAction";

@@ -11,6 +11,7 @@ import {
   isDeliverTxFailure,
 } from "@cosmjs/stargate";
 import { IS_TEST } from "@giving/constants/env";
+import { WalletState } from "@giving/contexts/wallet-context";
 import {
   CosmosTxSimulationFail,
   TxResultFail,
@@ -22,7 +23,6 @@ import { getKeplrClient } from "@giving/helpers/keplr";
 import { Chain } from "@giving/types/aws";
 import { EmbeddedBankMsg, EmbeddedWasmMsg } from "@giving/types/contracts";
 import { TxOptions } from "@giving/types/slices";
-import { WalletState } from "contexts/WalletContext";
 
 // TODO: uni-6 and juno-1 have diff gas prices for fee display only,
 // actual rate during submission is set by wallet - can be overridden with custom but keplr is buggy when customizing

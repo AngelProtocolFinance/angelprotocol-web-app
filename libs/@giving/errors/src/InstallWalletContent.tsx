@@ -1,13 +1,13 @@
-import ExtLink from "";
-import Icon from "";
-import { WalletMeta } from "./errors";
+import ExtLink from "@giving/components/ExtLink";
+import Icon from "@giving/components/Icon";
+import { WalletMeta } from "@giving/types/contexts/wallet";
 
-export default function InstallWallet({ name, logo, installURL }: WalletMeta) {
+export default function InstallWallet({ name, logo, installUrl }: WalletMeta) {
   return (
     <div className="flex flex-col gap-5 w-full px-4 pt-8 pb-4">
       <ExtLink
         className="border border-blue-l1 dark:border-none dark:bg-blue-d2 hover:bg-blue rounded-2xl p-3 md:p-5 flex items-center"
-        href={installURL}
+        href={installUrl}
       >
         <img
           src={logo}
@@ -23,7 +23,7 @@ export default function InstallWallet({ name, logo, installURL }: WalletMeta) {
             <Icon type="ExternalLink" size={20} />
           </div>
           <p className="text-sm md:text-base text-gray mt-1 truncate w-40 md:w-72">
-            {installURL}
+            {installUrl}
           </p>
         </div>
       </ExtLink>

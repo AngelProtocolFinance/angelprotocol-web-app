@@ -1,10 +1,10 @@
 import { IS_TEST } from "@giving/constants/env";
 import { denoms } from "@giving/constants/tokens";
+import { WithWallet } from "@giving/contexts/wallet-context";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues } from "./types";
 import { TokenWithAmount } from "@giving/types/slices";
-import { WithWallet } from "contexts/WalletContext";
 import { FormStep } from "slices/gift";
 import Form from "./Form";
 import { schema } from "./schema";

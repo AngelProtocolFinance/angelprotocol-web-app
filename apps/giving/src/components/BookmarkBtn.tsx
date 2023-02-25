@@ -1,6 +1,7 @@
 import Icon from "@giving/components/Icon";
 import Popup from "@giving/components/Popup";
 import Tooltip from "@giving/components/Tooltip";
+import { useGetWallet } from "@giving/contexts/wallet-context";
 import { PropsWithChildren, useRef, useState } from "react";
 import { EndowmentBookmark } from "@giving/types/aws";
 import {
@@ -8,7 +9,6 @@ import {
   useWalletProfileQuery,
 } from "services/aws/aws";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
 
 type Props = PropsWithChildren<Pick<EndowmentBookmark, "endowId">>;
 

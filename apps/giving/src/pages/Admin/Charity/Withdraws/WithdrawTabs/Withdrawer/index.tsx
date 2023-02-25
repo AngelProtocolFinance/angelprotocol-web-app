@@ -1,9 +1,9 @@
 import { chainIds } from "@giving/constants/chainIds";
+import { useGetWallet } from "@giving/contexts/wallet-context";
 import { condense, roundDown } from "@giving/helpers";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { Amount, WithdrawValues, WithdrawerProps } from "./types";
-import { useGetWallet } from "contexts/WalletContext";
 import Form from "./Form";
 import { schema } from "./schema";
 

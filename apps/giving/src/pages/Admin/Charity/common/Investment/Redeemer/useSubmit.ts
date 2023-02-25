@@ -1,9 +1,9 @@
+import { useGetWallet } from "@giving/contexts/wallet-context/WalletContext";
 import { scaleToStr } from "@giving/helpers";
 import { getTagPayloads } from "@giving/helpers/admin";
 import { FormValues } from "./types";
 import { AccountType } from "@giving/types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
 import useCosmosTxSender from "hooks/useCosmosTxSender";

@@ -1,12 +1,12 @@
 import { ErrorStatus, LoadingStatus } from "@giving/components/Status";
 import { appRoutes } from "@giving/constants/routes";
+import { WithWallet } from "@giving/contexts/wallet-context";
 import { humanize } from "@giving/helpers";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Estimate } from "./types";
 import { TokenWithAmount } from "@giving/types/slices";
-import { WithWallet } from "contexts/WalletContext";
 import { useSetter } from "store/accessors";
 import { SubmitStep, setStep } from "slices/donation";
 import { sendDonation } from "slices/donation/sendDonation";

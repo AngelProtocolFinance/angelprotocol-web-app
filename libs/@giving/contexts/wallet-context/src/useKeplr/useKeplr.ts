@@ -75,7 +75,7 @@ export default function useKeplr() {
 
   const connect = async () => {
     if (!dwindow.keplr) {
-      throw new WalletNotInstalledError("keplr");
+      throw new WalletNotInstalledError(WALLET_METADATA["keplr"]);
     }
 
     try {
@@ -101,7 +101,7 @@ export default function useKeplr() {
 
   const switchChain = async (chainId: chainIDs) => {
     if (!dwindow.keplr) {
-      throw new WalletNotInstalledError("keplr");
+      throw new WalletNotInstalledError(WALLET_METADATA["keplr"]);
     }
 
     try {

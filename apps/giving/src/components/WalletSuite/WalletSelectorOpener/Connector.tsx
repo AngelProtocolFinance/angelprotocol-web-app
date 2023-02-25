@@ -1,7 +1,7 @@
 import ContentLoader from "@giving/components/ContentLoader";
 import { useErrorContext } from "@giving/errors";
 import { useState } from "react";
-import { Connection } from "contexts/WalletContext/types";
+import { Connection } from "@giving/contexts/wallet-context/types";
 import { useModalContext } from "contexts/ModalContext";
 
 export default function Connector(props: Connection) {

@@ -1,9 +1,9 @@
 import { Label } from "@giving/components/form";
 import { denoms, symbols } from "@giving/constants/tokens";
+import { useGetWallet } from "@giving/contexts/wallet-context";
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import { FundSendValues } from "@giving/types/pages/admin";
-import { useGetWallet } from "contexts/WalletContext";
 import Balance from "./Balance";
 import Denom from "./Denom";
 

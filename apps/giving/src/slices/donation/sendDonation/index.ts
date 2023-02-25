@@ -1,6 +1,7 @@
 import { Contract as EVMContract } from "@ethersproject/contracts";
 import { TransactionResponse, Web3Provider } from "@ethersproject/providers";
 import ERC20Abi from "@giving/assets/abi/ERC20.json";
+import { WalletState } from "@giving/contexts/wallet-context";
 import { getProvider, logger } from "@giving/helpers";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { EstimatedTx, TxStatus } from "../types";
@@ -8,7 +9,6 @@ import { DonateArgs } from "../types";
 import { KYCData } from "@giving/types/aws";
 import { TokenWithAmount } from "@giving/types/slices";
 import { invalidateApesTags } from "services/apes";
-import { WalletState } from "contexts/WalletContext";
 import Contract from "contracts/Contract";
 import donation, { setTxStatus } from "../donation";
 import logDonation from "./logDonation";

@@ -1,10 +1,10 @@
+import { useGetWallet } from "@giving/contexts/wallet-context";
 import { condense } from "@giving/helpers";
 import Decimal from "decimal.js";
 import { useMemo } from "react";
 import { Airdrops } from "@giving/types/aws";
 import { invalidateJunoTags } from "services/juno";
 import { govTags } from "services/juno/tags";
-import { useGetWallet } from "contexts/WalletContext";
 import Airdrop from "contracts/Airdrop";
 import useCosmosTxSender from "hooks/useCosmosTxSender";
 

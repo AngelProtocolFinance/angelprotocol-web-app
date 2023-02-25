@@ -1,6 +1,6 @@
 import { LoadingStatus } from "@giving/components/Status";
+import { useGetWallet } from "@giving/contexts/wallet-context";
 import { useState } from "react";
-import { useGetWallet } from "contexts/WalletContext";
 import { useRegState, withStepGuard } from "../StepGuard";
 import ChooseWallet from "./ChooseWallet";
 import RegisteredWallet from "./RegisteredWallet";

@@ -1,5 +1,6 @@
 import { ap_wallets } from "@giving/constants/ap_wallets";
 import { chainIds } from "@giving/constants/chainIds";
+import { useGetWallet } from "@giving/contexts/wallet-context/WalletContext";
 import { scaleToStr } from "@giving/helpers";
 import { useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";
@@ -7,7 +8,6 @@ import { Asset } from "@giving/types/contracts";
 import { WithdrawMeta } from "@giving/types/pages/admin";
 import { accountTypeDisplayValue } from "pages/Admin/Charity/constants";
 import { useAdminResources } from "pages/Admin/Guard";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Account from "contracts/Account";
 import CW3Endowment from "contracts/CW3/CW3Endowment";
 import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";

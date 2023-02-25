@@ -1,12 +1,12 @@
 import Icon from "@giving/components/Icon";
 import { chainIDs } from "@giving/constants/chains";
 import { KADO_API_KEY } from "@giving/constants/env";
+import { useGetWallet } from "@giving/contexts/wallet-context";
 import { logger } from "@giving/helpers";
 import { Dialog } from "@headlessui/react";
 import { useCallback } from "react";
 import { invalidateApesTags } from "services/apes";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
 import { useSetter } from "store/accessors";
 import IFrame from "../../../../libs/@giving/components/src/IFrame";
 

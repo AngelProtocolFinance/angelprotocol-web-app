@@ -4,13 +4,13 @@ import { chainIds } from "@giving/constants/chainIds";
 import { APP_NAME } from "@giving/constants/common";
 import { appRoutes } from "@giving/constants/routes";
 import { APIs } from "@giving/constants/urls";
+import { useGetWallet } from "@giving/contexts/wallet-context";
 import { createAuthToken } from "@giving/helpers";
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "./types";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
 
 export default function Form({ classes = "" }) {
   const {

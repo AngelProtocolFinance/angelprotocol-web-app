@@ -1,6 +1,7 @@
 import { EMAIL_SUPPORT } from "@giving/constants/common";
 import { EXPECTED_NETWORK_TYPE } from "@giving/constants/env";
 import { Chain } from "@giving/types/aws";
+import { WalletMeta } from "@giving/types/contexts/wallet";
 
 export const AP_ERROR_DISCRIMINATOR = "AP_ERROR_DISCRIMINATOR";
 
@@ -122,7 +123,6 @@ export class TxResultFail extends Error {
   }
 }
 
-export type WalletMeta = { name: string; installURL: string; logo: string };
 export class WalletNotInstalledError extends APError {
   meta: WalletMeta;
   constructor(meta: WalletMeta) {

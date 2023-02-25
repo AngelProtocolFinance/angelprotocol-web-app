@@ -1,7 +1,7 @@
 import { DrawerIcon } from "@giving/components/Icon";
+import { WalletState, useGetWallet } from "@giving/contexts/wallet-context";
 import { maskAddress } from "@giving/helpers";
 import { Popover } from "@headlessui/react";
-import { WalletState, useGetWallet } from "contexts/WalletContext";
 import { COMMON_BUTTON_STYLE } from "../constants";
 import Details from "./Details";
 

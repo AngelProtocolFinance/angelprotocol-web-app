@@ -1,3 +1,4 @@
+import { useGetWallet } from "@giving/contexts/wallet-context";
 import { condense, roundDown } from "@giving/helpers";
 import { cleanObject } from "@giving/helpers/cleanObject";
 import { useState } from "react";
@@ -5,7 +6,6 @@ import { useFormContext } from "react-hook-form";
 import { FundDetails } from "@giving/types/contracts";
 import { CreateFundMeta, FundCreatorValues } from "@giving/types/pages/admin";
 import { useAdminResources } from "pages/Admin/Guard";
-import { useGetWallet } from "contexts/WalletContext";
 import { useGetter } from "store/accessors";
 import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";

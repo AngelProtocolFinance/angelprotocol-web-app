@@ -1,9 +1,9 @@
+import { WithWallet } from "@giving/contexts/wallet-context";
 import { isEmpty } from "@giving/helpers";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { DonateValues } from "./types";
 import { TokenWithAmount } from "@giving/types/slices";
-import { WithWallet } from "contexts/WalletContext";
 import { FormStep } from "slices/donation";
 import { ConfigParams } from "..";
 import Form from "./Form";
