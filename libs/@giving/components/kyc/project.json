@@ -1,0 +1,15 @@
+{
+  "name": "giving-components-kyc",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/@giving/components/kyc/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/@giving/components/kyc/**/*.{ts,tsx,js,jsx}"]
+      }
+    }
+  }
+}

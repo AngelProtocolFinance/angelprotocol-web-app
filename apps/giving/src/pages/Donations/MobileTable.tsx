@@ -1,5 +1,5 @@
 import Icon, { DrawerIcon } from "@giving/components/Icon";
-import useKYC from "@giving/components/KYC/useKYC";
+import { useKYC } from "@giving/components/kyc";
 import { humanize, maskAddress } from "@giving/helpers";
 import useSort from "@giving/hooks/useSort";
 import { Disclosure } from "@headlessui/react";

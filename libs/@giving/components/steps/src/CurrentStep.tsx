@@ -1,5 +1,5 @@
-import KYC from "@giving/components/KYC";
 import Status, { LoadingStatus } from "@giving/components/Status";
+import KYC from "@giving/components/kyc";
 import { useGetWallet } from "@giving/contexts/wallet-context";
 import { resetDetails } from "@giving/slices/donation";
 import { useGetter, useSetter } from "@giving/store";

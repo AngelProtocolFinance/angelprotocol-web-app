@@ -56,7 +56,8 @@
       ],
       "@giving/components/bookmark-btn": [
         "libs/@giving/components/bookmark-btn/src/index.ts"
-      ]
+      ],
+      "@giving/components/kyc": ["libs/@giving/components/kyc/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

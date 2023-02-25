@@ -1,8 +1,8 @@
 import ExtLink from "@giving/components/ExtLink";
 import { HeaderButton } from "@giving/components/HeaderButton";
 import Icon from "@giving/components/Icon";
-import useKYC from "@giving/components/KYC/useKYC";
 import TableSection, { Cells } from "@giving/components/TableSection";
+import { useKYC } from "@giving/components/kyc";
 import { appRoutes } from "@giving/constants/routes";
 import { getTxUrl, humanize, maskAddress } from "@giving/helpers";
 import useSort from "@giving/hooks/useSort";
