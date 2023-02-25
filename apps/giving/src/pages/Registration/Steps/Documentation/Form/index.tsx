@@ -1,7 +1,9 @@
-import ActivityCountries from "@giving/components/ActivityCountries";
-import CountrySelector from "@giving/components/CountrySelector";
 import ExtLink from "@giving/components/ExtLink";
 import { Selector } from "@giving/components/Selector";
+import {
+  ActivityCountries,
+  CountrySelector,
+} from "@giving/components/countries";
 import { CheckField, Field, Label } from "@giving/components/form";
 import { FileDropzone, LoadText } from "@giving/components/registration";
 import { APP_NAME } from "@giving/constants/common";

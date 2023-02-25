@@ -1,0 +1,17 @@
+{
+  "name": "giving-components-img-editor",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/@giving/components/img-editor/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/@giving/components/img-editor/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    }
+  }
+}

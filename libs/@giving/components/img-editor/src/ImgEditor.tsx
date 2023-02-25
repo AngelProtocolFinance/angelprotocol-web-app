@@ -1,9 +1,9 @@
+import Icon from "@giving/components/Icon";
 import { ErrorMessage } from "@hookform/error-message";
 import React from "react";
 import { useDropzone } from "react-dropzone";
 import { FieldValues, useFormContext } from "react-hook-form";
 import { ImgLink, Props } from "./types";
-import Icon from "../Icon";
 import useImgEditor from "./useImgEditor";
 
 type Key = keyof ImgLink;

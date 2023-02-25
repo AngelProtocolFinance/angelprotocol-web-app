@@ -1,7 +1,7 @@
 import ExtLink from "@giving/components/ExtLink";
-import { HeaderButton } from "@giving/components/HeaderButton";
 import Icon from "@giving/components/Icon";
 import TableSection, { Cells } from "@giving/components/TableSection";
+import HeaderButton from "@giving/components/header-btn";
 import { useKYC } from "@giving/components/kyc";
 import { appRoutes } from "@giving/constants/routes";
 import { getTxUrl, humanize, maskAddress } from "@giving/helpers";

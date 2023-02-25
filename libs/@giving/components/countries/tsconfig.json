@@ -1,0 +1,5 @@
+{
+  "files": ["../../../../node_modules/@nrwl/react/typings/image.d.ts"],
+  "extends": "../../../../tsconfig.base.json",
+  "include": ["src/**/*.ts", "src/**/*.tsx"]
+}

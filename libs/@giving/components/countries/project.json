@@ -1,0 +1,17 @@
+{
+  "name": "giving-components-countries",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/@giving/components/countries/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/@giving/components/countries/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    }
+  }
+}

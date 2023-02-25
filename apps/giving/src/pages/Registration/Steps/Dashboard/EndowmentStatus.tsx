@@ -3,7 +3,7 @@ import { LoadText } from "@giving/components/registration";
 import { MouseEventHandler } from "react";
 import { Link } from "react-router-dom";
 import { RegistrationStatus } from "@giving/types/aws";
-import { steps } from "pages/Registration/routes";
+import { steps } from "../../routes";
 import { useRegState } from "../StepGuard";
 
 type Props = {

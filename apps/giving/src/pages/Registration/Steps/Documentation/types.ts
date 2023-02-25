@@ -1,4 +1,4 @@
-import { Documentation } from "pages/Registration/types";
+import { Documentation } from "../../types";
 
 type Key = keyof Documentation;
 const _level: Key = "level";

@@ -61,8 +61,17 @@
       "@giving/components/split": [
         "libs/@giving/components/split/src/index.ts"
       ],
+      "@giving/components/countries": [
+        "libs/@giving/components/countries/src/index.ts"
+      ],
+      "@giving/components/img-editor": [
+        "libs/@giving/components/img-editor/src/index.ts"
+      ],
       "@giving/components/wallet-suite": [
         "libs/@giving/components/wallet-suite/src/index.tsx"
+      ],
+      "@giving/components/header-btn": [
+        "libs/@giving/components/header-btn/src/index.ts"
       ]
     }
   },

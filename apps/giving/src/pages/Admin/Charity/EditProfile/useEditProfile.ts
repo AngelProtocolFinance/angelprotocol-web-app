@@ -1,4 +1,4 @@
-import { ImgLink } from "@giving/components/ImgEditor";
+import { ImgLink } from "@giving/components/img-editor";
 import { TxPrompt } from "@giving/components/prompt";
 import { appRoutes } from "@giving/constants/routes";
 import { useModalContext } from "@giving/contexts/modal-context";

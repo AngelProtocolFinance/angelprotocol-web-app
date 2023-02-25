@@ -1,4 +1,4 @@
-import { ImgLink } from "@giving/components/ImgEditor";
+import { ImgLink } from "@giving/components/img-editor";
 import { genFileSchema } from "@giving/schemas/file";
 import { requiredString, url } from "@giving/schemas/string";
 import * as Yup from "yup";

@@ -1,10 +1,12 @@
-import ActivityCountries from "@giving/components/ActivityCountries";
-import CountrySelector from "@giving/components/CountrySelector";
 import Icon from "@giving/components/Icon";
-import ImgEditor from "@giving/components/ImgEditor";
 import { RichTextEditor } from "@giving/components/RichText";
 import { Selector } from "@giving/components/Selector";
+import {
+  ActivityCountries,
+  CountrySelector,
+} from "@giving/components/countries";
 import { Field, Label } from "@giving/components/form";
+import ImgEditor from "@giving/components/img-editor";
 import { appRoutes } from "@giving/constants/routes";
 import { unsdgs } from "@giving/constants/unsdgs";
 import { PropsWithChildren } from "react";
