@@ -1,6 +1,8 @@
 import Prompt from "@giving/components/prompt";
 import { useModalContext } from "@giving/contexts/modal-context";
 import { useGetWallet } from "@giving/contexts/wallet-context";
+import CW3 from "@giving/contracts/CW3";
+import Registrar from "@giving/contracts/Registrar";
 import { genDiffMeta, getPayloadDiff } from "@giving/helpers/admin";
 import { cleanObject } from "@giving/helpers/cleanObject";
 import useCosmosTxSender from "@giving/hooks/useCosmosTxSender/useCosmosTxSender";
@@ -11,8 +13,6 @@ import {
   RegistrarConfigValues,
 } from "@giving/types/pages/admin";
 import { useAdminResources } from "pages/Admin/Guard";
-import CW3 from "contracts/CW3";
-import Registrar from "contracts/Registrar";
 
 type Key = keyof RegistrarConfigPayload;
 type Value = RegistrarConfigPayload[Key];

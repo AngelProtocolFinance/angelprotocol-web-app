@@ -1,6 +1,8 @@
 import Prompt from "@giving/components/prompt";
 import { useModalContext } from "@giving/contexts/modal-context";
 import { useGetWallet } from "@giving/contexts/wallet-context";
+import Account from "@giving/contracts/Account";
+import CW3 from "@giving/contracts/CW3";
 import { getTagPayloads } from "@giving/helpers/admin";
 import { cleanObject } from "@giving/helpers/cleanObject";
 import useCosmosTxSender from "@giving/hooks/useCosmosTxSender/useCosmosTxSender";
@@ -16,8 +18,6 @@ import {
   EndowmentUpdateValues,
 } from "@giving/types/pages/admin";
 import { useAdminResources } from "pages/Admin/Guard";
-import Account from "contracts/Account";
-import CW3 from "contracts/CW3";
 
 export default function useUpdateStatus() {
   const { handleSubmit } = useFormContext<EndowmentUpdateValues>();

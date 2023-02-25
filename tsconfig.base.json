@@ -33,6 +33,7 @@
       "@giving/slices/*": ["libs/@giving/slices/src/*"],
       "@giving/services/*": ["libs/@giving/services/src/*"],
       "@giving/hooks/*": ["libs/@giving/hooks/src/*"],
+      "@giving/contracts/*": ["libs/@giving/contracts/src/*"],
       "@giving/store": ["libs/@giving/store/src/index.ts"],
       "@giving/helpers": ["libs/@giving/helpers/src/index.ts"],
       "@giving/errors": ["libs/@giving/errors/src/index.ts"],

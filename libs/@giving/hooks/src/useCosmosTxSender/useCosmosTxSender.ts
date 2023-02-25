@@ -2,13 +2,13 @@ import Prompt from "@giving/components/prompt";
 import { TxPrompt } from "@giving/components/prompt";
 import { useModalContext } from "@giving/contexts/modal-context";
 import { useGetWallet } from "@giving/contexts/wallet-context";
+import Contract from "@giving/contracts/Contract";
 import { extractFeeAmount } from "@giving/helpers";
 import { invalidateApesTags } from "@giving/services/apes";
 import { useSetter } from "@giving/store";
 import { useState } from "react";
 import { Tx, TxArgs } from "@giving/services/types";
 import { TxOptions } from "@giving/types/slices";
-import Contract from "contracts/Contract";
 import handleTxError from "./handleTxError";
 
 type Sender = (args: TxArgs) => Promise<void>;

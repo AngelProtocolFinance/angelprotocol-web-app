@@ -1,6 +1,8 @@
 import Prompt from "@giving/components/prompt";
 import { useModalContext } from "@giving/contexts/modal-context";
 import { useGetWallet } from "@giving/contexts/wallet-context";
+import CW3 from "@giving/contracts/CW3";
+import CW4 from "@giving/contracts/CW4";
 import { getTagPayloads } from "@giving/helpers/admin";
 import useCosmosTxSender from "@giving/hooks/useCosmosTxSender/useCosmosTxSender";
 import { useGetter } from "@giving/store";
@@ -11,8 +13,6 @@ import {
   MemberUpdatorValues,
 } from "@giving/types/pages/admin";
 import { useAdminResources } from "pages/Admin/Guard";
-import CW3 from "contracts/CW3";
-import CW4 from "contracts/CW4";
 
 export default function useUpdateMembers() {
   const { trigger, reset, getValues } = useFormContext<MemberUpdatorValues>();

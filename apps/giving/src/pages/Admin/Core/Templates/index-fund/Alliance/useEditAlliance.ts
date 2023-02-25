@@ -1,6 +1,8 @@
 import Prompt from "@giving/components/prompt";
 import { useModalContext } from "@giving/contexts/modal-context";
 import { useGetWallet } from "@giving/contexts/wallet-context";
+import CW3 from "@giving/contracts/CW3";
+import IndexFund from "@giving/contracts/IndexFund";
 import useCosmosTxSender from "@giving/hooks/useCosmosTxSender/useCosmosTxSender";
 import { useGetter } from "@giving/store";
 import { useFormContext } from "react-hook-form";
@@ -10,8 +12,6 @@ import {
   AllianceEditValues,
 } from "@giving/types/pages/admin";
 import { useAdminResources } from "pages/Admin/Guard";
-import CW3 from "contracts/CW3";
-import IndexFund from "contracts/IndexFund";
 
 export default function useEditAlliance() {
   const { trigger, reset, getValues } = useFormContext<AllianceEditValues>();

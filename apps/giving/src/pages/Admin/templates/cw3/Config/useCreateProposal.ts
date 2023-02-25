@@ -1,6 +1,7 @@
 import Prompt from "@giving/components/prompt";
 import { useModalContext } from "@giving/contexts/modal-context";
 import { useGetWallet } from "@giving/contexts/wallet-context";
+import CW3 from "@giving/contracts/CW3";
 import {
   genDiffMeta,
   getPayloadDiff,
@@ -14,7 +15,6 @@ import {
   FormCW3Config,
 } from "@giving/types/pages/admin";
 import { useAdminResources } from "pages/Admin/Guard";
-import CW3 from "contracts/CW3";
 
 type Key = keyof FormCW3Config;
 type Value = FormCW3Config[Key];

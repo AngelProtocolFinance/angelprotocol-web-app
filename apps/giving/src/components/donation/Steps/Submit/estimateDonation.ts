@@ -4,6 +4,9 @@ import { formatUnits, parseUnits } from "@ethersproject/units";
 import ERC20Abi from "@giving/assets/abi/ERC20.json";
 import { ap_wallets } from "@giving/constants/ap_wallets";
 import { WalletState } from "@giving/contexts/wallet-context";
+import Account from "@giving/contracts/Account";
+import CW20 from "@giving/contracts/CW20";
+import GiftCard from "@giving/contracts/GiftCard";
 import {
   extractFeeAmount,
   getProvider,
@@ -14,9 +17,6 @@ import { SubmitStep } from "@giving/slices/donation";
 import { Coin, MsgExecuteContract, MsgSend } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { Estimate } from "./types";
-import Account from "contracts/Account";
-import CW20 from "contracts/CW20";
-import GiftCard from "contracts/GiftCard";
 import estimateTerraFee from "./estimateTerraFee";
 import getBreakdown from "./getBreakdown";
 

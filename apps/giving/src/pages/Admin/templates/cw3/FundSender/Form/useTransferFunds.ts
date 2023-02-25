@@ -3,6 +3,8 @@ import { contracts } from "@giving/constants/contracts";
 import { axlUSDCDenom, denoms, tokens } from "@giving/constants/tokens";
 import { useModalContext } from "@giving/contexts/modal-context";
 import { useGetWallet } from "@giving/contexts/wallet-context";
+import CW3 from "@giving/contracts/CW3";
+import CW20 from "@giving/contracts/CW20";
 import { scaleToStr } from "@giving/helpers";
 import { getTagPayloads } from "@giving/helpers/admin";
 import useCosmosTxSender from "@giving/hooks/useCosmosTxSender/useCosmosTxSender";
@@ -11,8 +13,6 @@ import { EmbeddedBankMsg, EmbeddedWasmMsg } from "@giving/types/contracts";
 import { FundSendMeta } from "@giving/types/pages/admin";
 import { FundSendValues } from "@giving/types/pages/admin";
 import { useAdminResources } from "pages/Admin/Guard";
-import CW3 from "contracts/CW3";
-import CW20 from "contracts/CW20";
 
 export default function useTransferFunds() {
   const {
