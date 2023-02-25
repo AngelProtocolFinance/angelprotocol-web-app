@@ -1,3 +1,3 @@
-import { GiftDetails } from "slices/gift";
+import { GiftDetails } from "@giving/slices/gift";
 
 export type FormValues = GiftDetails;

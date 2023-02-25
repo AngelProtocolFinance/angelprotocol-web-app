@@ -1,10 +1,10 @@
 import TokenField from "@giving/components/TokenField";
 import { appRoutes } from "@giving/constants/routes";
+import { setDetails } from "@giving/slices/gift";
 import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "../types";
-import { setDetails } from "slices/gift";
 import Recipient from "./Recipient";
 
 export default function Form({ classes = "" }) {

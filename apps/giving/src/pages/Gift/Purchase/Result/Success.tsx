@@ -4,8 +4,8 @@ import { chainIds } from "@giving/constants/chainIds";
 import { APP_NAME } from "@giving/constants/common";
 import { appRoutes } from "@giving/constants/routes";
 import { getTxUrl } from "@giving/helpers";
+import { GiftCard, TxResult } from "@giving/slices/gift";
 import { Link } from "react-router-dom";
-import { GiftCard, TxResult } from "slices/gift";
 import { routes } from "../../routes";
 import { hashKey } from "../constants";
 

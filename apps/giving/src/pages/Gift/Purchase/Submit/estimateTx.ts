@@ -2,9 +2,9 @@ import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
 import { contracts } from "@giving/constants/contracts";
 import { WalletState } from "@giving/contexts/wallet-context";
 import { extractFeeAmount, logger, scaleToStr } from "@giving/helpers";
+import { SubmitStep } from "@giving/slices/gift";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { Estimate } from "./types";
-import { SubmitStep } from "slices/gift";
 import CW20 from "contracts/CW20";
 import GiftCard from "contracts/GiftCard";
 

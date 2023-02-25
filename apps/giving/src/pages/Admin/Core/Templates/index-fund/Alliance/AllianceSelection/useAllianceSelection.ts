@@ -1,6 +1,6 @@
 import useDebouncer from "@giving/hooks/useDebouncer";
+import { useGetter } from "@giving/store";
 import { useMemo, useState } from "react";
-import { useGetter } from "store/accessors";
 
 export default function useAllianceSelection() {
   const allianceCopy = useGetter(

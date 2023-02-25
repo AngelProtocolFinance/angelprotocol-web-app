@@ -4,10 +4,10 @@ import { useModalContext } from "@giving/contexts/modal-context";
 import { useGetWallet } from "@giving/contexts/wallet-context";
 import { extractFeeAmount } from "@giving/helpers";
 import { invalidateApesTags } from "@giving/services/apes";
+import { useSetter } from "@giving/store";
 import { useState } from "react";
 import { Tx, TxArgs } from "@giving/services/types";
 import { TxOptions } from "@giving/types/slices";
-import { useSetter } from "store/accessors";
 import Contract from "contracts/Contract";
 import handleTxError from "./handleTxError";
 

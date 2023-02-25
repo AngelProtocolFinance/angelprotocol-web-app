@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { AddressWithFlags } from "slices/admin/types";
+import { AddressWithFlags } from "./types";
 
 const initialState: AddressWithFlags[] = [];
 

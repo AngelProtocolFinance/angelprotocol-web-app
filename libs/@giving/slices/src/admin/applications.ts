@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { ApplicationStatusOptions } from "./types";
+import { ApplicationStatusOptions } from "@giving/services/types";
 
 interface State {
   activeStatus: ApplicationStatusOptions;

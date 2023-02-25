@@ -3,6 +3,7 @@ import { useModalContext } from "@giving/contexts/modal-context";
 import { useGetWallet } from "@giving/contexts/wallet-context";
 import { getTagPayloads } from "@giving/helpers/admin";
 import useCosmosTxSender from "@giving/hooks/useCosmosTxSender/useCosmosTxSender";
+import { useGetter } from "@giving/store";
 import { useFormContext } from "react-hook-form";
 import { CW4Member } from "@giving/types/contracts";
 import {
@@ -10,7 +11,6 @@ import {
   MemberUpdatorValues,
 } from "@giving/types/pages/admin";
 import { useAdminResources } from "pages/Admin/Guard";
-import { useGetter } from "store/accessors";
 import CW3 from "contracts/CW3";
 import CW4 from "contracts/CW4";
 

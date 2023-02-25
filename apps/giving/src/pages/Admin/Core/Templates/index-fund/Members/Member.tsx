@@ -1,10 +1,10 @@
 import Icon from "@giving/components/Icon";
-import { AddressWithFlags } from "slices/admin/types";
-import { useSetter } from "store/accessors";
 import {
   toggleDeleteExistingMember,
   undoAddMember,
-} from "slices/admin/fundMembers";
+} from "@giving/slices/admin/fundMembers";
+import { useSetter } from "@giving/store";
+import { AddressWithFlags } from "@giving/slices/admin/types";
 
 export default function Member(props: AddressWithFlags) {
   const dispatch = useSetter();

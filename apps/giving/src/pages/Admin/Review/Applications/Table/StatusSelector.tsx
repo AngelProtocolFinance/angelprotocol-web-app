@@ -1,9 +1,9 @@
 import Icon from "@giving/components/Icon";
+import { changeSelectedStatus } from "@giving/slices/admin/applications";
+import { useGetter, useSetter } from "@giving/store";
 import { Listbox } from "@headlessui/react";
 import { Fragment } from "react";
-import { ApplicationStatusOptions } from "slices/admin/types";
-import { useGetter, useSetter } from "store/accessors";
-import { changeSelectedStatus } from "slices/admin/applications";
+import { ApplicationStatusOptions } from "@giving/slices/admin/types";
 
 const options: ApplicationStatusOptions[] = [
   "all",

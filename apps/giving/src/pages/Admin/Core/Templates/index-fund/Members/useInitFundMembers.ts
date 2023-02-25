@@ -1,9 +1,9 @@
 import { useFundListQuery } from "@giving/services/juno/indexFund";
+import { setMembers } from "@giving/slices/admin/fundMembers";
+import { useGetter, useSetter } from "@giving/store";
 import { useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
 import { FundUpdateValues } from "@giving/types/pages/admin";
-import { useGetter, useSetter } from "store/accessors";
-import { setMembers } from "slices/admin/fundMembers";
 
 export default function useInitFundMembers() {
   const { watch } = useFormContext<FundUpdateValues>();

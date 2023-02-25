@@ -3,9 +3,9 @@ import WalletSuite from "@giving/components/WalletSuite";
 import { Steps } from "@giving/components/donation";
 import { LOGO } from "@giving/constants/common";
 import { getPossessiveForm } from "@giving/helpers";
+import { setRecipient } from "@giving/slices/donation";
+import { useSetter } from "@giving/store";
 import { useEffect } from "react";
-import { useSetter } from "store/accessors";
-import { setRecipient } from "slices/donation";
 import useWidgetParams from "./useWidgetParams";
 
 export default function InnerComponent(props: {

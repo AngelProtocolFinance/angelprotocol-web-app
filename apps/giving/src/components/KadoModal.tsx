@@ -6,9 +6,9 @@ import { useModalContext } from "@giving/contexts/modal-context";
 import { useGetWallet } from "@giving/contexts/wallet-context";
 import { logger } from "@giving/helpers";
 import { invalidateApesTags } from "@giving/services/apes";
+import { useSetter } from "@giving/store";
 import { Dialog } from "@headlessui/react";
 import { useCallback } from "react";
-import { useSetter } from "store/accessors";
 
 type KADO_NETWORK_VALUES = "ethereum" | "juno" | "terra";
 

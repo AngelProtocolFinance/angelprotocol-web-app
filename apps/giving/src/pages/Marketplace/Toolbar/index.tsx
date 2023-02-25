@@ -1,6 +1,6 @@
 import Icon from "@giving/components/Icon";
-import { useGetter, useSetter } from "store/accessors";
-import { toggle } from "slices/components/marketFilter";
+import { toggle } from "@giving/slices/components/marketFilter";
+import { useGetter, useSetter } from "@giving/store";
 import Search from "./Search";
 
 // import Sorter from "./Sorter";

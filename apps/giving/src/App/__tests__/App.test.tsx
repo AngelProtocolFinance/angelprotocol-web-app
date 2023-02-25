@@ -1,9 +1,9 @@
 import { APP_NAME } from "@giving/constants/common";
+import { store } from "@giving/store";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
 import { DonationsMetricList, Update } from "@giving/types/aws";
-import { store } from "store/store";
 import App from "../App";
 
 const mockMetrics: DonationsMetricList = {

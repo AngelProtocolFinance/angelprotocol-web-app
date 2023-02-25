@@ -1,10 +1,10 @@
 import Icon from "@giving/components/Icon";
-import { MemberCopy } from "slices/admin/types";
-import { useSetter } from "store/accessors";
 import {
   toggleDeleteExistingMember,
   undoAddMember,
-} from "slices/admin/apCW4Members";
+} from "@giving/slices/admin/apCW4Members";
+import { useSetter } from "@giving/store";
+import { MemberCopy } from "@giving/slices/admin/types";
 
 export default function Member(props: MemberCopy) {
   const dispatch = useSetter();

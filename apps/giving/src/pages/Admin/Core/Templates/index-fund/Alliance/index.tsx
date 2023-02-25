@@ -1,11 +1,11 @@
 import { FormError, FormSkeleton } from "@giving/components/admin";
 import { useAllianceMembersQuery } from "@giving/services/juno/indexFund";
+import { setMembers } from "@giving/slices/admin/allianceMembers";
+import { useSetter } from "@giving/store";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { AllianceEditValues } from "@giving/types/pages/admin";
-import { useSetter } from "store/accessors";
-import { setMembers } from "slices/admin/allianceMembers";
 import Form from "./Form";
 import { schema } from "./schema";
 

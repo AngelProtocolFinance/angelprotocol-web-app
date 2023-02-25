@@ -1,11 +1,11 @@
 import { appRoutes } from "@giving/constants/routes";
+import { setDetails } from "@giving/slices/donation";
+import { useGetter } from "@giving/store";
 import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { matchRoutes, useLocation } from "react-router-dom";
 import { DonateValues } from "../types";
-import { useGetter } from "store/accessors";
-import { setDetails } from "slices/donation";
 import TokenField from "../../../../TokenField";
 import AdvancedOptions from "./AdvancedOptions";
 

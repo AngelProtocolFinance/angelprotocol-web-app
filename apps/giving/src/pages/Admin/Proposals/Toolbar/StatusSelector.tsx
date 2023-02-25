@@ -1,6 +1,6 @@
-import { ProposalStatusOptions } from "slices/admin/types";
-import { useGetter, useSetter } from "store/accessors";
-import { changeSelectedStatus } from "slices/admin/proposals";
+import { changeSelectedStatus } from "@giving/slices/admin/proposals";
+import { useGetter, useSetter } from "@giving/store";
+import { ProposalStatusOptions } from "@giving/slices/admin/types";
 
 export default function StatusSelector() {
   const dispatch = useSetter();

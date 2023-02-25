@@ -1,12 +1,12 @@
-import { useFormContext } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import { AllianceEditValues as AV } from "@giving/types/pages/admin";
-import { useGetter } from "store/accessors";
 import {
   addMember,
   saveMemberEdits,
   setIsEditingMember,
-} from "slices/admin/allianceMembers";
+} from "@giving/slices/admin/allianceMembers";
+import { useGetter } from "@giving/store";
+import { useFormContext } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { AllianceEditValues as AV } from "@giving/types/pages/admin";
 
 export default function useAddMember() {
   const { getValues, setError, resetField, trigger } = useFormContext<AV>();

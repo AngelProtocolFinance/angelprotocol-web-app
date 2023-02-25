@@ -1,13 +1,13 @@
 import Breadcrumbs from "@giving/components/Breadcrumbs";
 import { Steps } from "@giving/components/donation";
 import { appRoutes } from "@giving/constants/routes";
-import { useEffect, useRef } from "react";
-import { useGetter, useSetter } from "store/accessors";
 import {
   DonationRecipient,
   DonationState,
   setRecipient,
-} from "slices/donation";
+} from "@giving/slices/donation";
+import { useGetter, useSetter } from "@giving/store";
+import { useEffect, useRef } from "react";
 
 export default function Content(props: DonationRecipient) {
   const dispatch = useSetter();

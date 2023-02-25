@@ -10,8 +10,8 @@ import {
 } from "@giving/helpers";
 import { TxOnSuccess, TxSuccessMeta } from "@giving/hooks/useCosmosTxSender";
 import { invalidateApesTags } from "@giving/services/apes";
+import { useSetter } from "@giving/store";
 import { AccountType } from "@giving/types/contracts";
-import { useSetter } from "store/accessors";
 
 type ProposalInfo = {
   endowment_multisig: string;

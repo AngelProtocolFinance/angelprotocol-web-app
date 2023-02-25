@@ -3,8 +3,8 @@ import {
   useEndowmentCardsQuery,
   useLazyEndowmentCardsQuery,
 } from "@giving/services/aws/aws";
+import { useGetter, useSetter } from "@giving/store";
 import { useMemo } from "react";
-import { useGetter, useSetter } from "store/accessors";
 
 export default function useCards() {
   const dispatch = useSetter();

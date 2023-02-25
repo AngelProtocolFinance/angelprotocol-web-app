@@ -1,4 +1,4 @@
-import { useGetter } from "store/accessors";
+import { useGetter } from "@giving/store";
 
 export default function Progress({ classes = "" }: { classes?: string }) {
   const step = useGetter((state) => state.donation.step);

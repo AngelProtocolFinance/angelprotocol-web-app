@@ -10,10 +10,10 @@ import {
   logger,
   scaleToStr,
 } from "@giving/helpers";
+import { SubmitStep } from "@giving/slices/donation";
 import { Coin, MsgExecuteContract, MsgSend } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { Estimate } from "./types";
-import { SubmitStep } from "slices/donation";
 import Account from "contracts/Account";
 import CW20 from "contracts/CW20";
 import GiftCard from "contracts/GiftCard";

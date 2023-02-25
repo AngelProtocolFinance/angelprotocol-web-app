@@ -2,10 +2,10 @@ import Popup from "@giving/components/Popup";
 import Prompt from "@giving/components/Prompt";
 import { useModalContext } from "@giving/contexts/modal-context";
 import { useRequestReceiptMutation } from "@giving/services/apes";
+import { setKYC } from "@giving/slices/donation";
+import { useSetter } from "@giving/store";
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV, Props } from "../types";
-import { useSetter } from "store/accessors";
-import { setKYC } from "slices/donation";
 
 export default function useSubmit(props: Props) {
   const { reset } = useFormContext<FV>();
