@@ -1,8 +1,8 @@
+import LoaderRing from "@giving/components/LoaderRing";
+import Icon from "@giving/components/icon";
 import { useModalContext } from "@giving/contexts/modal-context";
 import { Dialog } from "@headlessui/react";
 import { Props } from "./types";
-import Icon from "../Icon";
-import LoaderRing from "../LoaderRing";
 
 export default function Prompt({
   type,

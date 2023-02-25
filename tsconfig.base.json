@@ -43,7 +43,10 @@
         "libs/@giving/contexts/modal-context/src/index.ts"
       ],
       "@giving/helpers/*": ["libs/@giving/helpers/src/*"],
-      "@giving/components/*": ["libs/@giving/components/src/*"]
+      "@giving/components/*": ["libs/@giving/components/src/*"],
+      "@giving/components/prompt": [
+        "libs/@giving/components/prompt/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

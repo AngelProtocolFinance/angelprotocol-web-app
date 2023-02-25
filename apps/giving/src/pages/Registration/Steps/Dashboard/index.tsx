@@ -1,4 +1,4 @@
-import Prompt from "@giving/components/Prompt";
+import Prompt from "@giving/components/prompt";
 import { chainIds } from "@giving/constants/chainIds";
 import { useModalContext } from "@giving/contexts/modal-context";
 import { useErrorContext } from "@giving/errors";

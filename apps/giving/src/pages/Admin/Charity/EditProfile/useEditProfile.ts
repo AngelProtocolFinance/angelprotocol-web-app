@@ -1,5 +1,5 @@
 import { ImgLink } from "@giving/components/ImgEditor";
-import { TxPrompt } from "@giving/components/Prompt";
+import { TxPrompt } from "@giving/components/prompt";
 import { appRoutes } from "@giving/constants/routes";
 import { useModalContext } from "@giving/contexts/modal-context";
 import { useGetWallet } from "@giving/contexts/wallet-context";

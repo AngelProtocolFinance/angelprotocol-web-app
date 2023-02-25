@@ -1,4 +1,4 @@
-import { TxPrompt } from "@giving/components/Prompt";
+import { TxPrompt } from "@giving/components/prompt";
 import { EMAIL_SUPPORT } from "@giving/constants/common";
 import { APIs } from "@giving/constants/urls";
 import { useModalContext } from "@giving/contexts/modal-context";
@@ -8,9 +8,9 @@ import {
   idParamToNum,
   logger,
 } from "@giving/helpers";
-import { TxOnSuccess, TxSuccessMeta } from "@giving/hooks/useCosmosTxSender";
 import { invalidateApesTags } from "@giving/services/apes";
 import { useSetter } from "@giving/store";
+import { TxOnSuccess, TxSuccessMeta } from "@giving/services/types";
 import { AccountType } from "@giving/types/contracts";
 
 type ProposalInfo = {

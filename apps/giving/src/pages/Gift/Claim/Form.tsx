@@ -1,5 +1,5 @@
 import Icon from "@giving/components/Icon";
-import Prompt from "@giving/components/Prompt";
+import Prompt from "@giving/components/prompt";
 import { chainIds } from "@giving/constants/chainIds";
 import { APP_NAME } from "@giving/constants/common";
 import { appRoutes } from "@giving/constants/routes";

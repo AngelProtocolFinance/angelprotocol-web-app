@@ -1,7 +1,7 @@
-import Prompt from "@giving/components/Prompt";
 import { RichTextEditor } from "@giving/components/RichText";
 import { Label } from "@giving/components/form";
 import { Field } from "@giving/components/form";
+import Prompt from "@giving/components/prompt";
 import { APP_NAME } from "@giving/constants/common";
 import { appRoutes } from "@giving/constants/routes";
 import { APIs } from "@giving/constants/urls";

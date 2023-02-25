@@ -1,5 +1,5 @@
 import Popup from "@giving/components/Popup";
-import { TxPrompt } from "@giving/components/Prompt";
+import { TxPrompt } from "@giving/components/prompt";
 import { useModalContext } from "@giving/contexts/modal-context";
 import { useGetWallet } from "@giving/contexts/wallet-context";
 import { extractFeeAmount } from "@giving/helpers";

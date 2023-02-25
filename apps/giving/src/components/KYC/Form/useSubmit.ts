@@ -1,5 +1,4 @@
-import Popup from "@giving/components/Popup";
-import Prompt from "@giving/components/Prompt";
+import Prompt from "@giving/components/prompt";
 import { useModalContext } from "@giving/contexts/modal-context";
 import { useRequestReceiptMutation } from "@giving/services/apes";
 import { setKYC } from "@giving/slices/donation";
