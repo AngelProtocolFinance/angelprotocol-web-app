@@ -1,6 +1,6 @@
 import Icon from "@giving/components/Icon";
-import Popup from "@giving/components/Popup";
 import Tooltip from "@giving/components/Tooltip";
+import Prompt from "@giving/components/prompt";
 import { useModalContext } from "@giving/contexts/modal-context";
 import { useGetWallet } from "@giving/contexts/wallet-context";
 import {
@@ -35,7 +35,7 @@ export default function BookmarkBtn({ endowId, children }: Props) {
 
   async function toogleBookmark() {
     if (!wallet) {
-      showModal(Popup, { message: "Connect wallet to edit bookmark" });
+      showModal(Prompt, { children: "Connect wallet to edit bookmark" });
       return;
     }
 
@@ -46,7 +46,7 @@ export default function BookmarkBtn({ endowId, children }: Props) {
     });
 
     if ("error" in res) {
-      showModal(Popup, { message: "Failed to save bookmark" });
+      showModal(Prompt, { children: "Failed to save bookmark" });
     }
   }
 

@@ -1,4 +1,4 @@
-import Popup from "@giving/components/Popup";
+import Prompt from "@giving/components/prompt";
 import { TxPrompt } from "@giving/components/prompt";
 import { useModalContext } from "@giving/contexts/modal-context";
 import { useGetWallet } from "@giving/contexts/wallet-context";
@@ -67,8 +67,8 @@ export default function useCosmosTxSender<T extends boolean = false>(
       );
 
       if (feeAmount > wallet.displayCoin.balance) {
-        return showModal(Popup, {
-          message: "Not enough balance to pay for fees",
+        return showModal(Prompt, {
+          children: "Not enough balance to pay for fees",
         });
       }
 

@@ -1,4 +1,4 @@
-import Popup from "@giving/components/Popup";
+import Prompt from "@giving/components/prompt";
 import { contracts } from "@giving/constants/contracts";
 import { axlUSDCDenom, denoms, tokens } from "@giving/constants/tokens";
 import { useModalContext } from "@giving/contexts/modal-context";
@@ -29,8 +29,8 @@ export default function useTransferFunds() {
     const balance =
       data.denom === axlUSDCDenom ? data.usdBalance : data.haloBalance;
     if (data.amount > balance) {
-      showModal(Popup, {
-        message: `not enough ${tokens[data.denom]} balance`,
+      showModal(Prompt, {
+        children: `not enough ${tokens[data.denom]} balance`,
       });
       return;
     }

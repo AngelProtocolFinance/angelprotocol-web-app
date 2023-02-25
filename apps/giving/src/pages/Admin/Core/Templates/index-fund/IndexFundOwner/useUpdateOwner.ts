@@ -1,4 +1,4 @@
-import Popup from "@giving/components/Popup";
+import Prompt from "@giving/components/prompt";
 import { useModalContext } from "@giving/contexts/modal-context";
 import { useGetWallet } from "@giving/contexts/wallet-context";
 import useCosmosTxSender from "@giving/hooks/useCosmosTxSender/useCosmosTxSender";
@@ -23,7 +23,7 @@ export default function useUpdateOwner() {
   async function updateOwner(data: IndexFundOwnerValues) {
     //check for changes
     if (data.initialOwner === data.new_owner) {
-      showModal(Popup, { message: "no changes detected" });
+      showModal(Prompt, { children: "no changes detected" });
       return;
     }
 

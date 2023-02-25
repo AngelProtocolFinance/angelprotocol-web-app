@@ -30,8 +30,8 @@ export default function useSubmit(props: Props) {
       });
 
       if ("error" in response) {
-        showModal(Popup, {
-          message: "Failed to send receipt request. Please try again later.",
+        showModal(Prompt, {
+          children: "Failed to send receipt request. Please try again later.",
         });
         return;
       }

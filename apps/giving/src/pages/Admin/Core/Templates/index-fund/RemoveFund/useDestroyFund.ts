@@ -1,4 +1,4 @@
-import Popup from "@giving/components/Popup";
+import Prompt from "@giving/components/prompt";
 import { useModalContext } from "@giving/contexts/modal-context";
 import { useGetWallet } from "@giving/contexts/wallet-context";
 import useCosmosTxSender from "@giving/hooks/useCosmosTxSender/useCosmosTxSender";
@@ -20,7 +20,7 @@ export default function useDestroyFund() {
 
   async function destroyFund(data: FundDestroyValues) {
     if (data.fundId === "") {
-      showModal(Popup, { message: "Please select fund to remove" });
+      showModal(Prompt, { children: "Please select fund to remove" });
       return;
     }
     const indexFundContract = new IndexFund(wallet);

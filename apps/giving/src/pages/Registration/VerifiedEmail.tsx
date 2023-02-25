@@ -1,5 +1,5 @@
 import Icon from "@giving/components/Icon";
-import Popup from "@giving/components/Popup";
+import Prompt from "@giving/components/prompt";
 import { APP_NAME } from "@giving/constants/common";
 import { appRoutes } from "@giving/constants/routes";
 import { useModalContext } from "@giving/contexts/modal-context";
@@ -53,7 +53,7 @@ export default function VerifiedEmail({ classes = "" }: { classes?: string }) {
               await requestEmail({ uuid: c.PK, email: c.Email }),
               handleError,
               () => {
-                showModal(Popup, { message: "Email verification sent!" });
+                showModal(Prompt, { children: "Email verification sent!" });
               }
             );
           }}

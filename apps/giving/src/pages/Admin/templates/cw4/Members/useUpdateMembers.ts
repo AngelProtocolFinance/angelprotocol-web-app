@@ -1,4 +1,4 @@
-import Popup from "@giving/components/Popup";
+import Prompt from "@giving/components/prompt";
 import { useModalContext } from "@giving/contexts/modal-context";
 import { useGetWallet } from "@giving/contexts/wallet-context";
 import { getTagPayloads } from "@giving/helpers/admin";
@@ -48,7 +48,7 @@ export default function useUpdateMembers() {
     );
 
     if (to_remove.length <= 0 && to_add.length <= 0) {
-      showModal(Popup, { message: "No member changes" });
+      showModal(Prompt, { children: "No member changes" });
       return;
     }
     const cw3Contract = new CW3(wallet, cw3);

@@ -1,4 +1,4 @@
-import Popup from "@giving/components/Popup";
+import Prompt from "@giving/components/prompt";
 import { useModalContext } from "@giving/contexts/modal-context";
 import { useGetWallet } from "@giving/contexts/wallet-context";
 import {
@@ -41,7 +41,7 @@ export default function usePropose() {
     const diffEntries = Object.entries(diff) as [Key, Value][];
 
     if (diffEntries.length <= 0) {
-      showModal(Popup, { message: "no changes made" });
+      showModal(Prompt, { children: "no changes made" });
       return;
     }
 

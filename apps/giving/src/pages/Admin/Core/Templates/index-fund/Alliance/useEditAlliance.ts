@@ -1,4 +1,4 @@
-import Popup from "@giving/components/Popup";
+import Prompt from "@giving/components/prompt";
 import { useModalContext } from "@giving/contexts/modal-context";
 import { useGetWallet } from "@giving/contexts/wallet-context";
 import useCosmosTxSender from "@giving/hooks/useCosmosTxSender/useCosmosTxSender";
@@ -35,7 +35,7 @@ export default function useEditAlliance() {
     );
 
     if (markedMembers.length <= 0) {
-      showModal(Popup, { message: "No member changes" });
+      showModal(Prompt, { children: "No member changes" });
       return;
     }
 
