@@ -1,7 +1,7 @@
 import { contracts } from "@giving/constants/contracts";
-import { Args, Res, Result } from "../queryContract/types";
-import { junoApi } from "..";
-import { genQueryPath } from "../queryContract/genQueryPath";
+import { Args, Res, Result } from "./queryContract/types";
+import { junoApi } from "./index";
+import { genQueryPath } from "./queryContract/genQueryPath";
 
 export const lp_api = junoApi.injectEndpoints({
   endpoints: (builder) => ({

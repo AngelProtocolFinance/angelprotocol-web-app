@@ -1,6 +1,6 @@
 import { roundDownToNum } from "@giving/helpers";
 import { useMemo } from "react";
-import { ProposalDetails } from "services/types";
+import { ProposalDetails } from "@giving/services/types";
 
 export default function Stats({ votes, threshold }: ProposalDetails) {
   const [numYes, numNo] = useMemo(

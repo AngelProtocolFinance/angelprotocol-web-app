@@ -5,7 +5,7 @@ import { contracts } from "@giving/constants/contracts";
 import { condenseToNum } from "@giving/helpers";
 import { BalMap } from "./types";
 import { FetchedChain, Token, TokenWithBalance } from "@giving/types/aws";
-import { queryContract } from "services/juno/queryContract";
+import { queryContract } from "../../juno/queryContract";
 import { getERC20Holdings } from "./getERC20Holdings";
 
 type CosmosBalances = { balances: Coin[] };

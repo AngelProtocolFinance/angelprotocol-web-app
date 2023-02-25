@@ -1,10 +1,10 @@
+import { useProposalsQuery } from "@giving/services/juno/cw3";
 import { ProposalMeta } from "../types";
 import { PageOptions, Proposal } from "@giving/types/contracts";
 import {
   ProposalGroupOptions,
   ProposalStatusOptions,
 } from "slices/admin/types";
-import { useProposalsQuery } from "services/juno/cw3";
 import { useAdminResources } from "../Guard";
 
 export const NUM_PROPOSALS_PER_PAGE = 5;

@@ -5,13 +5,13 @@ import { appRoutes } from "@giving/constants/routes";
 import { useModalContext } from "@giving/contexts/modal-context";
 import { useErrorContext } from "@giving/errors";
 import { handleMutationResult, logger } from "@giving/helpers";
+import { useRequestEmailMutation } from "@giving/services/aws/registration";
 import jwtDecode from "jwt-decode";
 import { PropsWithChildren } from "react";
 import { Location, Navigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { InitReg } from "./types";
 import { InitApplication } from "@giving/types/aws";
-import { useRequestEmailMutation } from "services/aws/registration";
 import routes, { steps } from "./routes";
 
 type JwtData = InitApplication & {

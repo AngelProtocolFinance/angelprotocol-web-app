@@ -1,11 +1,11 @@
 import { useModalContext } from "@giving/contexts/modal-context";
 import { useGetWallet } from "@giving/contexts/wallet-context";
 import { getTagPayloads } from "@giving/helpers/admin";
+import { invalidateJunoTags, useLatestBlockQuery } from "@giving/services/juno";
+import { defaultProposalTags } from "@giving/services/juno/tags";
 import React, { ReactNode, useMemo } from "react";
+import { ProposalDetails, TagPayload } from "@giving/services/types";
 import { ProposalMeta } from "@giving/types/pages/admin";
-import { ProposalDetails, TagPayload } from "services/types";
-import { invalidateJunoTags, useLatestBlockQuery } from "services/juno";
-import { defaultProposalTags } from "services/juno/tags";
 import CW3 from "contracts/CW3";
 import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
 import { useAdminResources } from "../Guard";

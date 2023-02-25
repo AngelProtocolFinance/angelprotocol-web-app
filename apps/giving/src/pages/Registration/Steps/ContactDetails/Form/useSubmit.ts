@@ -1,9 +1,9 @@
 import { useErrorContext } from "@giving/errors";
 import { handleMutationResult } from "@giving/helpers";
+import { useUpdateRegMutation } from "@giving/services/aws/registration";
 import { SubmitHandler, useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { FormValues as FV } from "../types";
-import { useUpdateRegMutation } from "services/aws/registration";
 import { useRegState } from "../../StepGuard";
 
 export default function useSubmit() {

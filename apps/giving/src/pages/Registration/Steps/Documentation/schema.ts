@@ -4,8 +4,8 @@ import { requiredString } from "@giving/schemas/string";
 import * as Yup from "yup";
 import { FormValues } from "./types";
 import { SchemaShape } from "@giving/schemas/types";
+import { CountryOption } from "@giving/services/types";
 import { FileObject } from "@giving/types/aws";
-import { CountryOption } from "services/types";
 
 export const MB_LIMIT = 25;
 const VALID_MIME_TYPES = [

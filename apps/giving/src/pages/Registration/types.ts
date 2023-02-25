@@ -1,5 +1,6 @@
 import { OptionType } from "@giving/components/Selector";
 import { Asset } from "@giving/components/registration";
+import { CountryOption } from "@giving/services/types";
 import {
   ContactRoles,
   FileObject,
@@ -9,7 +10,6 @@ import {
 import { EndowmentTierNum } from "@giving/types/contracts";
 import { UNSDG_NUMS } from "@giving/types/lists";
 import { Optional } from "@giving/types/utils";
-import { CountryOption } from "services/types";
 
 //REF_ID is global to registration
 export type InitReg = {

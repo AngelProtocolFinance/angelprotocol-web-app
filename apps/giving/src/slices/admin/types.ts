@@ -1,4 +1,3 @@
-import { ApplicationStatus } from "@giving/types/aws";
 import {
   AllianceMember,
   CW4Member,
@@ -23,4 +22,3 @@ export type ProposalGroup = "if" | "cw3" | "cw4" | "reg" | "acc";
 
 export type ProposalGroupOptions = ProposalGroup | "all";
 export type ProposalStatusOptions = ProposalStatus | "all";
-export type ApplicationStatusOptions = ApplicationStatus | "all";

@@ -1,9 +1,9 @@
 import ContentLoader from "@giving/components/ContentLoader";
 import QueryLoader from "@giving/components/QueryLoader";
 import { humanize } from "@giving/helpers";
+import { useAssetsQuery } from "@giving/services/juno/custom";
 import { AccountType } from "@giving/types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
-import { useAssetsQuery } from "services/juno/custom";
 
 export default function Balances({ type }: { type: AccountType }) {
   const { id } = useAdminResources();

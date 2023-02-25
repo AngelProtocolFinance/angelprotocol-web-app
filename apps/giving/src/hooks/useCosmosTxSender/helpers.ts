@@ -1,4 +1,4 @@
-import { TxError, TxLoading, TxState, TxSuccess } from "./types";
+import { TxError, TxLoading, TxState, TxSuccess } from "@giving/services/types";
 
 export function isLoading(state: TxState): state is TxLoading {
   const key: keyof TxLoading = "loading";

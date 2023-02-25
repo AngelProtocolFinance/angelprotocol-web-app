@@ -3,8 +3,8 @@ import QueryLoader from "@giving/components/QueryLoader";
 import Seo from "@giving/components/Seo";
 import { APP_NAME, DAPP_DOMAIN } from "@giving/constants/common";
 import { idParamToNum } from "@giving/helpers";
+import { useProfileQuery } from "@giving/services/aws/aws";
 import { useParams } from "react-router-dom";
-import { useProfileQuery } from "services/aws/aws";
 import Content from "./Content";
 
 export default function Donate() {

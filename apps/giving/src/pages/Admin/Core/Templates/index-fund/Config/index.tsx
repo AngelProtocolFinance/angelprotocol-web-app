@@ -1,10 +1,10 @@
 import { FormError, FormSkeleton } from "@giving/components/admin";
 import { condenseToStr } from "@giving/helpers";
+import { useIndexFundConfigQuery } from "@giving/services/juno/indexFund";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FundConfig, IndexFundConfig } from "@giving/types/contracts";
 import { FundConfigValues } from "@giving/types/pages/admin";
-import { useIndexFundConfigQuery } from "services/juno/indexFund";
 import Form from "./Form";
 import { schema } from "./schema";
 

@@ -7,7 +7,7 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/@giving/constants/**/*.ts"]
+        "lintFilePatterns": ["libs/@giving/schemas/**/*.ts"]
       }
     }
   }

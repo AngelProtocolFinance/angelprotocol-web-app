@@ -1,8 +1,8 @@
 import { IS_TEST } from "@giving/constants/env";
 import { denoms, symbols } from "@giving/constants/tokens";
 import { condenseToNum } from "@giving/helpers";
+import { AssetSummary, Vault } from "../../../types";
 import { AccountType, BalanceInfo, YieldVault } from "@giving/types/contracts";
-import { AssetSummary, Vault } from "services/types";
 
 export type BalMap = { [index: string]: number | undefined };
 

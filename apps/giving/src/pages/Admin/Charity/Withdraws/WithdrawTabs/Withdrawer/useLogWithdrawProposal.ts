@@ -8,8 +8,8 @@ import {
   idParamToNum,
   logger,
 } from "@giving/helpers";
+import { invalidateApesTags } from "@giving/services/apes";
 import { AccountType } from "@giving/types/contracts";
-import { invalidateApesTags } from "services/apes";
 import { useSetter } from "store/accessors";
 import { TxOnSuccess, TxSuccessMeta } from "hooks/useCosmosTxSender";
 

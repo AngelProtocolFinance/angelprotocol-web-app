@@ -1,7 +1,7 @@
 import QueryLoader from "@giving/components/QueryLoader";
+import { useAssetsQuery } from "@giving/services/juno/custom";
 import { AccountType } from "@giving/types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
-import { useAssetsQuery } from "services/juno/custom";
 import Investment from "../common/Investment";
 
 type Props = {

@@ -1,6 +1,6 @@
 import QueryLoader from "@giving/components/QueryLoader";
+import { useDonationsQuery } from "@giving/services/apes";
 import { useAdminResources } from "pages/Admin/Guard";
-import { useDonationsQuery } from "services/apes";
 import Table from "./Table";
 
 // import DonationsTable from "./DonationsTable";

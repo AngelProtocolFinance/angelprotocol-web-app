@@ -5,7 +5,7 @@ import {
   AdminResources,
   EndowmentAssets,
   ProposalDetails,
-} from "services/types";
+} from "@giving/services/types";
 import { junoApi } from "..";
 import { queryContract } from "../queryContract";
 import { accountTags, adminTags, registrarTags } from "../tags";

@@ -4,7 +4,7 @@ import { requiredString, url } from "@giving/schemas/string";
 import * as Yup from "yup";
 import { FormValues } from "./types";
 import { SchemaShape } from "@giving/schemas/types";
-import { CountryOption } from "services/types";
+import { CountryOption } from "@giving/services/types";
 
 export const VALID_MIME_TYPES = [
   "image/jpeg",

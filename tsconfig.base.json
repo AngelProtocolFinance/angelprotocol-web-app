@@ -30,6 +30,7 @@
       "@giving/types/*": ["libs/@giving/types/src/*"],
       "@giving/constants/*": ["libs/@giving/constants/src/*"],
       "@giving/schemas/*": ["libs/@giving/schemas/src/*"],
+      "@giving/services/*": ["libs/@giving/services/src/*"],
       "@giving/helpers": ["libs/@giving/helpers/src/index.ts"],
       "@giving/errors": ["libs/@giving/errors/src/index.ts"],
       "@giving/contexts/wallet-context": [

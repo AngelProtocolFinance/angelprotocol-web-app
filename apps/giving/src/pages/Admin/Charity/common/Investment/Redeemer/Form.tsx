@@ -1,7 +1,7 @@
 import { maskAddress } from "@giving/helpers";
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
-import { Vault } from "services/types";
+import { Vault } from "@giving/services/types";
 import TxModal from "../../TxModal";
 import Amount from "./Amount";
 import useSubmit from "./useSubmit";

@@ -3,12 +3,12 @@ import Popup from "@giving/components/Popup";
 import Tooltip from "@giving/components/Tooltip";
 import { useModalContext } from "@giving/contexts/modal-context";
 import { useGetWallet } from "@giving/contexts/wallet-context";
-import { PropsWithChildren, useRef, useState } from "react";
-import { EndowmentBookmark } from "@giving/types/aws";
 import {
   useToggleBookmarkMutation,
   useWalletProfileQuery,
-} from "services/aws/aws";
+} from "@giving/services/aws/aws";
+import { PropsWithChildren, useRef, useState } from "react";
+import { EndowmentBookmark } from "@giving/types/aws";
 
 type Props = PropsWithChildren<Pick<EndowmentBookmark, "endowId">>;
 

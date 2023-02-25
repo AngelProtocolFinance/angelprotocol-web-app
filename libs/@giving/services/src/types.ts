@@ -1,5 +1,9 @@
+import { EncodeObject } from "@cosmjs/proto-signing";
+import { DeliverTxResponse } from "@cosmjs/stargate";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
+import { ApplicationStatus } from "@giving/types/aws";
+import { Chain } from "@giving/types/aws";
 import {
   AdminVoteInfo,
   CW3Config,
@@ -8,7 +12,8 @@ import {
   ReviewCW3Config,
   YieldVault,
 } from "@giving/types/contracts";
-import { TxArgs } from "hooks/useCosmosTxSender";
+
+export type ApplicationStatusOptions = ApplicationStatus | "all";
 
 export type Tag = TagDescription<string>;
 export type TagPayload = PayloadAction<Tag[], string>;
@@ -98,4 +103,30 @@ export type Vault = YieldVault & {
   balance: number;
   invested: number;
   symbol: string;
+};
+
+export type Tx = { hash: string; chainID: string };
+
+export type TxSuccessMeta = {
+  message: string;
+  link?: { url: string; description: string };
+};
+
+export type TxLoading = { loading: string };
+export type TxError = { error: string; tx?: Tx };
+export type TxSuccess = {
+  success: TxSuccessMeta;
+  tx?: Tx & { rawLog?: string };
+};
+
+export type TxState = TxLoading | TxError | TxSuccess;
+
+export type TxOnSuccess = (res: DeliverTxResponse, chain: Chain) => void;
+
+export type TxArgs = {
+  tagPayloads?: TagPayload[];
+  successMeta?: TxSuccessMeta;
+  isAuthorized?: boolean;
+  msgs: EncodeObject[];
+  onSuccess?(res: DeliverTxResponse, chain: Chain): void;
 };

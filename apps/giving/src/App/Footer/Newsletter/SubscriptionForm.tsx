@@ -1,9 +1,9 @@
 import Icon from "@giving/components/Icon";
 import { useErrorContext } from "@giving/errors";
+import { useNewsletterSubscribeMutation } from "@giving/services/aws/hubspot";
 import { ErrorMessage } from "@hookform/error-message";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { useNewsletterSubscribeMutation } from "services/aws/hubspot";
 import { FormValues, schema } from "./schema";
 
 export default function SubscriptionForm() {

@@ -1,5 +1,5 @@
+import { useVotesQuery } from "@giving/services/juno/cw3";
 import { VotesPageOptions } from "@giving/types/contracts";
-import { useVotesQuery } from "services/juno/cw3";
 import { useAdminResources } from "../../Guard";
 
 //contract.voteList(genVoteListPageOptions(pollId, pageNum))

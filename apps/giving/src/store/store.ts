@@ -1,8 +1,8 @@
+import { apes } from "@giving/services/apes";
+import { aws } from "@giving/services/aws/aws";
+import { countriesApi } from "@giving/services/countries";
+import { junoApi } from "@giving/services/juno";
 import { configureStore } from "@reduxjs/toolkit";
-import { apes } from "services/apes";
-import { aws } from "services/aws/aws";
-import { countriesApi } from "services/countries";
-import { junoApi } from "services/juno";
 import { adminReducer } from "slices/admin";
 import authReducer from "slices/authSlice";
 import { componentReducer } from "slices/components";

@@ -6,11 +6,11 @@ import { useGetWallet } from "@giving/contexts/wallet-context";
 import { isEmpty } from "@giving/helpers";
 import { getPayloadDiff } from "@giving/helpers/admin";
 import { getFullURL, uploadFiles } from "@giving/helpers/uploadFiles";
+import { useEditProfileMutation } from "@giving/services/aws/aws";
 import { SubmitHandler, useFormContext } from "react-hook-form";
 import { FormValues as FV, FlatFormValues } from "./types";
 import { EndowmentProfileUpdate } from "@giving/types/aws";
 import { useAdminResources } from "pages/Admin/Guard";
-import { useEditProfileMutation } from "services/aws/aws";
 import { createADR36Payload } from "./createADR36Payload";
 
 // import optimizeImage from "./optimizeImage";

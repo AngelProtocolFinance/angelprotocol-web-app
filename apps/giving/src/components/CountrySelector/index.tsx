@@ -1,4 +1,5 @@
 import unknownFlag from "@giving/assets/icons/unknown-flag.jpeg";
+import { useLazyCountryFlagQuery } from "@giving/services/countries";
 import { Combobox } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import { useEffect, useState } from "react";
@@ -8,8 +9,7 @@ import {
   useController,
   useFormContext,
 } from "react-hook-form";
-import { CountryOption } from "services/types";
-import { useLazyCountryFlagQuery } from "services/countries";
+import { CountryOption } from "@giving/services/types";
 import Icon, { DrawerIcon } from "../Icon";
 import Options from "./Options";
 

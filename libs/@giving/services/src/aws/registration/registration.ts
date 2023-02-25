@@ -1,5 +1,6 @@
 import { EMAIL_SUPPORT } from "@giving/constants/common";
 import { logger } from "@giving/helpers";
+import { ApplicationStatusOptions } from "../../types";
 import {
   AWSQueryRes,
   ContactUpdateResult,
@@ -11,9 +12,8 @@ import {
   SubmitResult,
   WalletUpdateResult,
 } from "@giving/types/aws";
-import { ApplicationStatusOptions } from "slices/admin/types";
-import { adminTags } from "services/aws/tags";
 import { aws } from "../aws";
+import { adminTags } from "../tags";
 
 const registration_api = aws.injectEndpoints({
   endpoints: (builder) => ({
