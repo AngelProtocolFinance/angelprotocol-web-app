@@ -1,10 +1,11 @@
-import Logo, { LogoProps } from "@giving/components/Logo";
-import WalletSuite from "@giving/components/WalletSuite";
+import Logo from "@giving/components/Logo";
+import WalletSuite from "@giving/components/wallet-suite";
 import { appRoutes } from "@giving/constants/routes";
-import Airdrop from "App/Header/Airdrop";
 import { useEffect, useRef, useState } from "react";
 import { Location, matchRoutes, useLocation } from "react-router-dom";
 import { Link } from "../types";
+import { LogoProps } from "@giving/types/components/logo";
+import Airdrop from "./Airdrop";
 import DesktopNav from "./DesktopNav";
 import { Opener as MobileNavOpener } from "./MobileNav";
 import ThemeToggle from "./ThemeToggle";

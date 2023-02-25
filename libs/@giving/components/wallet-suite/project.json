@@ -1,0 +1,17 @@
+{
+  "name": "giving-components-wallet-suite",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/@giving/components/wallet-suite/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/@giving/components/wallet-suite/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    }
+  }
+}

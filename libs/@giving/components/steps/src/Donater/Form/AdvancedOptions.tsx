@@ -1,7 +1,7 @@
+import Icon from "@giving/components/Icon";
+import Split from "@giving/components/split";
 import { useState } from "react";
 import { DonateValues } from "../types";
-import Icon from "../../../../Icon";
-import Split from "../../../../Split";
 
 type Props = { classes?: string; unfold?: boolean };
 

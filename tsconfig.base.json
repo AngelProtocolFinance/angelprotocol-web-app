@@ -57,7 +57,13 @@
       "@giving/components/bookmark-btn": [
         "libs/@giving/components/bookmark-btn/src/index.ts"
       ],
-      "@giving/components/kyc": ["libs/@giving/components/kyc/src/index.ts"]
+      "@giving/components/kyc": ["libs/@giving/components/kyc/src/index.ts"],
+      "@giving/components/split": [
+        "libs/@giving/components/split/src/index.ts"
+      ],
+      "@giving/components/wallet-suite": [
+        "libs/@giving/components/wallet-suite/src/index.tsx"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

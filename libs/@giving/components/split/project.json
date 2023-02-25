@@ -1,0 +1,17 @@
+{
+  "name": "giving-components-split",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/@giving/components/split/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/@giving/components/split/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    }
+  }
+}
