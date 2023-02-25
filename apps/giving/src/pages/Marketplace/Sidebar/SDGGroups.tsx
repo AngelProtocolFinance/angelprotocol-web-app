@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { UNSDG_NUMS } from "types/lists";
+import { UNSDG_NUMS } from "@giving/types/lists";
 import { useGetter, useSetter } from "store/accessors";
 import { SDG_GROUPS, setSdgs } from "slices/components/marketFilter";
 import { unsdgs } from "constants/unsdgs";

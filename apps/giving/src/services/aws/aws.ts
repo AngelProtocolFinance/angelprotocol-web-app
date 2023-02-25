@@ -7,8 +7,8 @@ import {
   EndowmentsQueryParams,
   PaginatedAWSQueryRes,
   WalletProfile,
-} from "types/aws";
-import { NetworkType } from "types/lists";
+} from "@giving/types/aws";
+import { NetworkType } from "@giving/types/lists";
 import { createAuthToken } from "helpers";
 import { IS_TEST } from "constants/env";
 import { APIs } from "constants/urls";

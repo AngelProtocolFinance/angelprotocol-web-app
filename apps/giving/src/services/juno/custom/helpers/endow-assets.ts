@@ -1,5 +1,5 @@
+import { AccountType, BalanceInfo, YieldVault } from "@giving/types/contracts";
 import { AssetSummary, Vault } from "services/types";
-import { AccountType, BalanceInfo, YieldVault } from "types/contracts";
 import { condenseToNum } from "helpers";
 import { IS_TEST } from "constants/env";
 import { denoms, symbols } from "constants/tokens";

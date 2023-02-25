@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";
+import { Asset } from "@giving/types/contracts";
 import { WithdrawMeta } from "pages/Admin/types";
-import { Asset } from "types/contracts";
 import { accountTypeDisplayValue } from "pages/Admin/Charity/constants";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";

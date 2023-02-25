@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { FundDetails } from "@giving/types/contracts";
 import { CreateFundMeta, FundCreatorValues } from "pages/Admin/types";
-import { FundDetails } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useGetWallet } from "contexts/WalletContext";
 import { useGetter } from "store/accessors";

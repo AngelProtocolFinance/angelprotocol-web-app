@@ -1,4 +1,4 @@
-import { CapitalizedEndowmentType } from "types/contracts";
+import { CapitalizedEndowmentType } from "@giving/types/contracts";
 import { useGetter, useSetter } from "store/accessors";
 import { setTypes } from "slices/components/marketFilter";
 import { FilterOption, FlatFilter } from "./common";

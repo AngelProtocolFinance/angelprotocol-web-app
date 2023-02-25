@@ -6,7 +6,7 @@ import {
   useController,
   useFormContext,
 } from "react-hook-form";
-import { FileObject } from "types/aws";
+import { FileObject } from "@giving/types/aws";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 

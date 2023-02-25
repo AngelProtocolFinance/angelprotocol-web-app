@@ -1,4 +1,4 @@
-import { EndowmentProposal } from "types/aws";
+import { EndowmentProposal } from "@giving/types/aws";
 import TableSection, { Cells } from "components/TableSection";
 import AppRow from "./AppRow";
 import Header from "./Header";

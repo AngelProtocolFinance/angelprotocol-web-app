@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { AccountType } from "types/contracts";
+import { AccountType } from "@giving/types/contracts";
 import AccountTabs from "../common/AccountTabs";
 import { settings } from "../routes";
 

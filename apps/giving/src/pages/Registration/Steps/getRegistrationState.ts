@@ -14,7 +14,7 @@ import {
   SavedRegistration,
   TDocumentation,
   WalletData,
-} from "types/aws";
+} from "@giving/types/aws";
 import { Asset } from "components/registration";
 import { unsdgs } from "constants/unsdgs";
 

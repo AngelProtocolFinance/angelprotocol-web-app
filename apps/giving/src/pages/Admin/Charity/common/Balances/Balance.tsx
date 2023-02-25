@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import { AccountType } from "types/contracts";
+import { AccountType } from "@giving/types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useAssetsQuery } from "services/juno/custom";
 import QueryLoader from "components/QueryLoader";

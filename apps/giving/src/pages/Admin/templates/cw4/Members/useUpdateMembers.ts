@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
+import { CW4Member } from "@giving/types/contracts";
 import { CW4MemberUpdateMeta, MemberUpdatorValues } from "pages/Admin/types";
-import { CW4Member } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";

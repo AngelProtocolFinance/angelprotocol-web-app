@@ -1,4 +1,4 @@
-import { FileObject } from "types/aws";
+import { FileObject } from "@giving/types/aws";
 import { Bucket, bucketURL } from "helpers/uploadFiles";
 import { getFilePreviews } from "./getFilePreviews";
 

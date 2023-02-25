@@ -1,4 +1,4 @@
-import { WithdrawLog } from "types/aws";
+import { WithdrawLog } from "@giving/types/aws";
 import TableSection, { Cells } from "components/TableSection";
 import LogRow from "./LogRow";
 

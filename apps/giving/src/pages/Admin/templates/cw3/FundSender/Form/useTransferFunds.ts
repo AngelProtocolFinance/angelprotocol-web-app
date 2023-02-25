@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
+import { EmbeddedBankMsg, EmbeddedWasmMsg } from "@giving/types/contracts";
 import { FundSendMeta } from "pages/Admin/types";
 import { FundSendValues } from "pages/Admin/types";
-import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";

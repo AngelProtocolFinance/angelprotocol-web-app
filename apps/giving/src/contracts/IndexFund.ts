@@ -3,7 +3,7 @@ import {
   FundConfig,
   FundDetails,
   IndexFundOwnerPayload,
-} from "types/contracts";
+} from "@giving/types/contracts";
 import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 

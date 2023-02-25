@@ -15,7 +15,7 @@ import no_poverty from "@giving/assets/icons/unsdg/no_poverty.png";
 import partnership from "@giving/assets/icons/unsdg/partnership.png";
 import sustainable from "@giving/assets/icons/unsdg/sustainable_communities.png";
 import zero_hunger from "@giving/assets/icons/unsdg/zero_hunger.png";
-import { UNSDG_NUMS } from "types/lists";
+import { UNSDG_NUMS } from "@giving/types/lists";
 
 type S = string;
 

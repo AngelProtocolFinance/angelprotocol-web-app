@@ -3,7 +3,7 @@ import {
   DonationsQueryParams,
   ReceiptPayload,
   Token,
-} from "types/aws";
+} from "@giving/types/aws";
 import { createAuthToken } from "helpers";
 import { IS_TEST } from "constants/env";
 import { apes } from "./apes";

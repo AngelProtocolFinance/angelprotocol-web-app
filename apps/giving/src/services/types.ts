@@ -7,7 +7,7 @@ import {
   Proposal,
   ReviewCW3Config,
   YieldVault,
-} from "types/contracts";
+} from "@giving/types/contracts";
 import { TxArgs } from "hooks/useCosmosTxSender";
 
 export type Tag = TagDescription<string>;

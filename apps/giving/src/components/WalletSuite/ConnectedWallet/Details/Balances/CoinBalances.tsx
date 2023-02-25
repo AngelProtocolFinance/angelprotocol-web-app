@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { TokenWithBalance } from "types/aws";
+import { TokenWithBalance } from "@giving/types/aws";
 import Icon from "components/Icon";
 import { humanize, isEmpty } from "helpers";
 import KadoOpener from "./KadoOpener";

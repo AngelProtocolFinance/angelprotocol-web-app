@@ -4,7 +4,7 @@ import keplrIcon from "@giving/assets/icons/wallets/keplr.png";
 import metamaskIcon from "@giving/assets/icons/wallets/metamask.png";
 import xdefiIcon from "@giving/assets/icons/wallets/xdefi.jpg";
 import { WithoutInstallers } from "./types";
-import { BaseChain, Chain } from "types/aws";
+import { BaseChain, Chain } from "@giving/types/aws";
 import { chainIDs } from "constants/chains";
 import { EXPECTED_NETWORK_TYPE, IS_TEST } from "constants/env";
 

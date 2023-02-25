@@ -1,4 +1,4 @@
-import { AccountType } from "types/contracts";
+import { AccountType } from "@giving/types/contracts";
 import { invalidateApesTags } from "services/apes";
 import { useModalContext } from "contexts/ModalContext";
 import { TxPrompt } from "components/Prompt";

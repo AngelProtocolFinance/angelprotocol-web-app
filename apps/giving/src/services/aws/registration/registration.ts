@@ -1,4 +1,3 @@
-import { ApplicationStatusOptions } from "slices/admin/types";
 import {
   AWSQueryRes,
   ContactUpdateResult,
@@ -9,7 +8,8 @@ import {
   SavedRegistration,
   SubmitResult,
   WalletUpdateResult,
-} from "types/aws";
+} from "@giving/types/aws";
+import { ApplicationStatusOptions } from "slices/admin/types";
 import { adminTags } from "services/aws/tags";
 import { logger } from "helpers";
 import { EMAIL_SUPPORT } from "constants/common";

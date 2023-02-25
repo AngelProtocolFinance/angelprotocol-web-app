@@ -1,6 +1,6 @@
 import { MouseEventHandler } from "react";
 import { Link } from "react-router-dom";
-import { RegistrationStatus } from "types/aws";
+import { RegistrationStatus } from "@giving/types/aws";
 import { steps } from "pages/Registration/routes";
 import Icon from "components/Icon";
 import { LoadText } from "components/registration";

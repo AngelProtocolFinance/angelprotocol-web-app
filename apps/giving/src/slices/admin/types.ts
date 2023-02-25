@@ -1,5 +1,9 @@
-import { ApplicationStatus } from "types/aws";
-import { AllianceMember, CW4Member, ProposalStatus } from "types/contracts";
+import { ApplicationStatus } from "@giving/types/aws";
+import {
+  AllianceMember,
+  CW4Member,
+  ProposalStatus,
+} from "@giving/types/contracts";
 
 export type AllianceMemberWithFlags = AllianceMember & {
   isDeleted: boolean;

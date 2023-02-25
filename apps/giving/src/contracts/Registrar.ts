@@ -1,4 +1,7 @@
-import { RegistrarConfigPayload, RegistrarOwnerPayload } from "types/contracts";
+import {
+  RegistrarConfigPayload,
+  RegistrarOwnerPayload,
+} from "@giving/types/contracts";
 import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 

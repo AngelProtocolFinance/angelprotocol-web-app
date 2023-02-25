@@ -1,4 +1,4 @@
-import { TxLogPayload } from "types/aws";
+import { TxLogPayload } from "@giving/types/aws";
 import { createAuthToken } from "helpers";
 import { LogDonationFail } from "errors/errors";
 import { IS_TEST } from "constants/env";

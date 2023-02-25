@@ -1,4 +1,4 @@
-import { EndowmentBookmark } from "types/aws";
+import { EndowmentBookmark } from "@giving/types/aws";
 import QueryLoader from "components/QueryLoader";
 import Favourite from "./Favourite";
 

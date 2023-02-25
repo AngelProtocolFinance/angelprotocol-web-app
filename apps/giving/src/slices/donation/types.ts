@@ -1,8 +1,8 @@
 import { TransactionRequest } from "@ethersproject/providers";
 import { CreateTxOptions } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
+import { TokenWithAmount, TxOptions } from "@giving/types/slices";
 import { CountryOption } from "services/types";
-import { TokenWithAmount, TxOptions } from "types/slices";
 import { WalletState } from "contexts/WalletContext";
 import { OptionType } from "components/Selector";
 

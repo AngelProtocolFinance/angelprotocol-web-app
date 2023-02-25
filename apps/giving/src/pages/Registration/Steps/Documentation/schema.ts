@@ -1,8 +1,8 @@
 import * as Yup from "yup";
 import { FormValues } from "./types";
+import { FileObject } from "@giving/types/aws";
 import { SchemaShape } from "schemas/types";
 import { CountryOption } from "services/types";
-import { FileObject } from "types/aws";
 import { Asset } from "components/registration";
 import { genFileSchema } from "schemas/file";
 import { requiredString } from "schemas/string";

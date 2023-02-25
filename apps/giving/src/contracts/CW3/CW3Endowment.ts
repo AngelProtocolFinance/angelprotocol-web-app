@@ -1,4 +1,4 @@
-import { WithdrawLockPayload } from "types/contracts";
+import { WithdrawLockPayload } from "@giving/types/contracts";
 import CW3 from ".";
 
 export default class CW3Endowment extends CW3 {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Connection, ProviderInfo } from "../types";
-import { BaseChain } from "types/aws";
-import { Dwindow } from "types/ethereum";
+import { BaseChain } from "@giving/types/aws";
+import { Dwindow } from "@giving/types/ethereum";
 import {
   UnsupportedChainError,
   WalletError,

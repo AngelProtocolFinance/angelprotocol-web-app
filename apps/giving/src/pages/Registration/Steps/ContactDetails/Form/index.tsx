@@ -1,5 +1,5 @@
 import { FormValues as FV } from "../types";
-import { ContactRoles, ReferralMethods } from "types/aws";
+import { ContactRoles, ReferralMethods } from "@giving/types/aws";
 import { Selector } from "components/Selector";
 import { Field, Label } from "components/form";
 import { LoadText } from "components/registration";

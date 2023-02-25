@@ -3,7 +3,7 @@ import { PropsWithChildren } from "react";
 import { Location, Navigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { InitReg } from "./types";
-import { InitApplication } from "types/aws";
+import { InitApplication } from "@giving/types/aws";
 import { useRequestEmailMutation } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";

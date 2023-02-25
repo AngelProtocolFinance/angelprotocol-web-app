@@ -1,4 +1,4 @@
-import { TokenWithAmount } from "types/slices";
+import { TokenWithAmount } from "@giving/types/slices";
 
 export default function getBreakdown(token: TokenWithAmount) {
   const bill = +token.amount;

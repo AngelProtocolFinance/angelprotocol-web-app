@@ -1,7 +1,7 @@
 import { PropsWithChildren } from "react";
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "./types";
-import { UNSDG_NUMS } from "types/lists";
+import { UNSDG_NUMS } from "@giving/types/lists";
 import ActivityCountries from "components/ActivityCountries";
 import CountrySelector from "components/CountrySelector";
 import Icon from "components/Icon";

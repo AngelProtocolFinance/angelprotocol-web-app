@@ -1,5 +1,5 @@
 import { AdminResources } from "../../../types";
-import { CW3Config } from "types/contracts";
+import { CW3Config } from "@giving/types/contracts";
 import { isJunoAddress } from "schemas/tests";
 import { contracts } from "constants/contracts";
 import { adminRoutes, appRoutes } from "constants/routes";

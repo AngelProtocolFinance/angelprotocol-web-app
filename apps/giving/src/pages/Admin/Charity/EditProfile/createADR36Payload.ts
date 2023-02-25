@@ -1,4 +1,4 @@
-import { ADR36Payload } from "types/aws";
+import { ADR36Payload } from "@giving/types/aws";
 import { WalletState } from "contexts/WalletContext";
 import { toBase64 } from "helpers";
 import { getKeplr } from "helpers/keplr";

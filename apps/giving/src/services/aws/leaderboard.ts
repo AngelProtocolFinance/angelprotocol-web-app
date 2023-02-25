@@ -1,4 +1,4 @@
-import { AWSQueryRes, LeaderboardEntry, Update } from "types/aws";
+import { AWSQueryRes, LeaderboardEntry, Update } from "@giving/types/aws";
 import { EXPECTED_NETWORK_TYPE } from "constants/env";
 import { aws } from "./aws";
 

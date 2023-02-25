@@ -1,4 +1,4 @@
-import { WithdrawLog } from "types/aws";
+import { WithdrawLog } from "@giving/types/aws";
 import ExtLink from "components/ExtLink";
 import { Cells } from "components/TableSection";
 import { maskAddress } from "helpers";

@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { TokenWithAmount } from "types/slices";
+import { TokenWithAmount } from "@giving/types/slices";
 
 export type GiftState = FormStep | SubmitStep | TxStep;
 

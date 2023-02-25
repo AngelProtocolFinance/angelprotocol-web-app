@@ -1,4 +1,4 @@
-import { ContactRoles, ReferralMethods } from "types/aws";
+import { ContactRoles, ReferralMethods } from "@giving/types/aws";
 import { OptionType } from "components/Selector";
 
 export const roles: { [key in ContactRoles]: string } = {

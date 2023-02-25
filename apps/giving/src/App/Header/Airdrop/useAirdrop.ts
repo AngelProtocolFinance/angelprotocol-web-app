@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { Airdrops } from "types/aws";
+import { Airdrops } from "@giving/types/aws";
 import { useModalContext } from "contexts/ModalContext";
 import Catcher from "./Catcher";
 

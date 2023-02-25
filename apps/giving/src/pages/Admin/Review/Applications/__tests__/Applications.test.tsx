@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { EndowmentProposal } from "types/aws";
+import { EndowmentProposal } from "@giving/types/aws";
 import AppWrapper from "test/AppWrapper";
 import Applications from "..";
 

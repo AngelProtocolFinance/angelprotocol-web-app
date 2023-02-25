@@ -1,11 +1,11 @@
 import { useFormContext } from "react-hook-form";
-import { EndowmentStatusMeta, EndowmentUpdateValues } from "pages/Admin/types";
 import {
   Beneficiary,
   EndowmentStatus,
   EndowmentStatusNum,
   StatusChangePayload,
-} from "types/contracts";
+} from "@giving/types/contracts";
+import { EndowmentStatusMeta, EndowmentUpdateValues } from "pages/Admin/types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";

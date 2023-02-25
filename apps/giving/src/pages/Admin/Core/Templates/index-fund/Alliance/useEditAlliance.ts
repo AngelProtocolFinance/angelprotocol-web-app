@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
+import { AllianceMember as AM, EmbeddedWasmMsg } from "@giving/types/contracts";
 import { AllianceEditMeta, AllianceEditValues } from "pages/Admin/types";
-import { AllianceMember as AM, EmbeddedWasmMsg } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";

@@ -1,4 +1,4 @@
-import { Dwindow } from "types/ethereum";
+import { Dwindow } from "@giving/types/ethereum";
 import { WalletError, WalletNotInstalledError } from "errors/errors";
 
 export function checkXdefiPriority() {

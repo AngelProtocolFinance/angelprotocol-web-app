@@ -1,4 +1,4 @@
-import { ProposalType, Vote } from "types/contracts";
+import { ProposalType, Vote } from "@giving/types/contracts";
 
 export type VoteValues = {
   vote: Vote;

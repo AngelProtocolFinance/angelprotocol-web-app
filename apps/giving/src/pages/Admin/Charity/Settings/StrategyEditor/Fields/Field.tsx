@@ -1,7 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { UseFieldArrayRemove, useFormContext } from "react-hook-form";
 import { FormValues } from "../types";
-import { AccountType } from "types/contracts";
+import { AccountType } from "@giving/types/contracts";
 import Icon from "components/Icon";
 import { roundDownToNum } from "helpers";
 import { PCT_PRECISION } from "../constants";

@@ -1,4 +1,4 @@
-import { CW4Member } from "types/contracts";
+import { CW4Member } from "@giving/types/contracts";
 import { WalletState } from "contexts/WalletContext";
 import Contract from "./Contract";
 

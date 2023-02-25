@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues } from "./types";
-import { ContactRoles, ReferralMethods } from "types/aws";
+import { ContactRoles, ReferralMethods } from "@giving/types/aws";
 import { OptionType } from "components/Selector";
 import { useRegState, withStepGuard } from "../StepGuard";
 import Form from "./Form";

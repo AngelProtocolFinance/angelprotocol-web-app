@@ -1,4 +1,4 @@
-import { EndowDesignation } from "types/aws";
+import { EndowDesignation } from "@giving/types/aws";
 import { useGetter, useSetter } from "store/accessors";
 import { setDesignations } from "slices/components/marketFilter";
 import { FilterOption, FlatFilter } from "./common";

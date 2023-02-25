@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import { WithdrawLog } from "types/aws";
+import { WithdrawLog } from "@giving/types/aws";
 import ExtLink from "components/ExtLink";
 import { maskAddress } from "helpers";
 import Amount from "../Amount";

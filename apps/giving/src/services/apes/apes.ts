@@ -1,5 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { BaseChain, Chain, FetchedChain, Token, WithdrawLog } from "types/aws";
+import {
+  BaseChain,
+  Chain,
+  FetchedChain,
+  Token,
+  WithdrawLog,
+} from "@giving/types/aws";
 import { UnsupportedChainError } from "errors/errors";
 import { chainIds } from "constants/chainIds";
 import { IS_TEST, JUNO_LCD_OVERRIDE, JUNO_RPC_OVERRIDE } from "constants/env";

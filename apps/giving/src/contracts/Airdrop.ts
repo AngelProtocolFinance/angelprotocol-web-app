@@ -1,5 +1,5 @@
 import Decimal from "decimal.js";
-import { Airdrops } from "types/aws";
+import { Airdrops } from "@giving/types/aws";
 import { condense } from "helpers";
 import { contracts } from "constants/contracts";
 import Contract from "./Contract";

@@ -1,0 +1,8 @@
+{
+  "name": "@giving/types",
+  "sideEffects": false,
+  "type": "module",
+  "files": [
+    "src/**/*"
+  ]
+}

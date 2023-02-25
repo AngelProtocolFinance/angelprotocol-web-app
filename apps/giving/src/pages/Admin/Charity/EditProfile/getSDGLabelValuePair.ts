@@ -1,4 +1,4 @@
-import { UNSDG_NUMS } from "types/lists";
+import { UNSDG_NUMS } from "@giving/types/lists";
 import { OptionType } from "components/Selector";
 
 export const getSDGLabelValuePair = (

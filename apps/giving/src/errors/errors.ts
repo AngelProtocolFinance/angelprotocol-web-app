@@ -1,5 +1,5 @@
+import { Chain } from "@giving/types/aws";
 import { WithoutInstallers } from "contexts/WalletContext/types";
-import { Chain } from "types/aws";
 import { WALLET_METADATA } from "contexts/WalletContext/constants";
 import { EMAIL_SUPPORT } from "constants/common";
 import { EXPECTED_NETWORK_TYPE } from "constants/env";

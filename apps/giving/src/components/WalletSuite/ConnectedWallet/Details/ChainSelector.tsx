@@ -1,5 +1,5 @@
 import { Listbox } from "@headlessui/react";
-import { BaseChain } from "types/aws";
+import { BaseChain } from "@giving/types/aws";
 import { useErrorContext } from "contexts/ErrorContext";
 import { WalletState, useSetWallet } from "contexts/WalletContext";
 import Icon, { DrawerIcon } from "components/Icon";

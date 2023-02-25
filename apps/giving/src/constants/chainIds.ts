@@ -1,4 +1,4 @@
-import { Chains } from "types/lists";
+import { Chains } from "@giving/types/lists";
 import { IS_TEST } from "./env";
 
 export const chainIds: { [key in Chains]: string } = IS_TEST

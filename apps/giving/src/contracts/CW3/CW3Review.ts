@@ -1,5 +1,5 @@
-import { ApplicationVote } from "types/contracts";
-import { ReviewCW3ConfigPayload } from "types/contracts";
+import { ApplicationVote } from "@giving/types/contracts";
+import { ReviewCW3ConfigPayload } from "@giving/types/contracts";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import { contracts } from "constants/contracts";
 import CW3 from ".";

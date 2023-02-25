@@ -1,4 +1,4 @@
-import { AccountType } from "types/contracts";
+import { AccountType } from "@giving/types/contracts";
 
 export const accountTypeDisplayValue: { [key in AccountType]: string } = {
   locked: "endowment",

@@ -7,7 +7,7 @@ import {
   useWallet,
 } from "@terra-money/wallet-provider";
 import { Connection, ProviderId, ProviderInfo } from "./types";
-import { BaseChain } from "types/aws";
+import { BaseChain } from "@giving/types/aws";
 import {
   ManualChainSwitchRequiredError,
   UnsupportedChainError,

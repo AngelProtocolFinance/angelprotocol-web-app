@@ -1,4 +1,4 @@
-import { CW4Member } from "types/contracts";
+import { CW4Member } from "@giving/types/contracts";
 import Icon, { IconType } from "components/Icon";
 
 export default function MemberItem(props: {

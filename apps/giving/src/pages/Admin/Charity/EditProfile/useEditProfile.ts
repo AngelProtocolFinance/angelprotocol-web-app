@@ -1,6 +1,6 @@
 import { SubmitHandler, useFormContext } from "react-hook-form";
 import { FormValues as FV, FlatFormValues } from "./types";
-import { EndowmentProfileUpdate } from "types/aws";
+import { EndowmentProfileUpdate } from "@giving/types/aws";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useEditProfileMutation } from "services/aws/aws";
 import { useModalContext } from "contexts/ModalContext";

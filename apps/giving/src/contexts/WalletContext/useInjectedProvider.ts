@@ -1,13 +1,13 @@
 import { formatUnits } from "@ethersproject/units";
 import { useCallback, useEffect, useState } from "react";
 import { Connection, ProviderId, ProviderInfo } from "./types";
-import { BaseChain } from "types/aws";
+import { BaseChain } from "@giving/types/aws";
 import {
   AccountChangeHandler,
   ChainChangeHandler,
   Dwindow,
   InjectedProvider,
-} from "types/ethereum";
+} from "@giving/types/ethereum";
 import { getProvider } from "helpers";
 import {
   UnexpectedStateError,

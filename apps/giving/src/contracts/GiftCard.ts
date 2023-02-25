@@ -1,6 +1,6 @@
 import { Coin } from "@cosmjs/proto-signing";
-import { Asset } from "types/contracts";
-import { TokenWithAmount } from "types/slices";
+import { Asset } from "@giving/types/contracts";
+import { TokenWithAmount } from "@giving/types/slices";
 import { roundDown, scaleToStr } from "helpers";
 import { contracts } from "constants/contracts";
 import Contract from "./Contract";

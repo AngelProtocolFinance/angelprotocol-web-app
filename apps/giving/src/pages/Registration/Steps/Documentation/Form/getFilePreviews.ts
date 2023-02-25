@@ -1,4 +1,4 @@
-import { FileObject } from "types/aws";
+import { FileObject } from "@giving/types/aws";
 import { Asset } from "components/registration";
 import { getFullURL, uploadFiles } from "helpers/uploadFiles";
 

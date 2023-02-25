@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Tx, TxArgs } from "./types";
-import { TxOptions } from "types/slices";
+import { TxOptions } from "@giving/types/slices";
 import { invalidateApesTags } from "services/apes";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";

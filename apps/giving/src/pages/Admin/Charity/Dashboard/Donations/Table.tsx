@@ -1,4 +1,4 @@
-import { Donation, KYCData } from "types/aws";
+import { Donation, KYCData } from "@giving/types/aws";
 import CsvExporter from "components/CsvExporter";
 import ExtLink from "components/ExtLink";
 import { HeaderButton } from "components/HeaderButton";

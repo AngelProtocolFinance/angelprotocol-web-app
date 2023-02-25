@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { Link } from "react-router-dom";
-import { EndowmentCard } from "types/aws";
-import { UNSDG_NUMS } from "types/lists";
+import { EndowmentCard } from "@giving/types/aws";
+import { UNSDG_NUMS } from "@giving/types/lists";
 import BookmarkBtn from "components/BookmarkBtn";
 import Icon from "components/Icon";
 import Tooltip from "components/Tooltip";

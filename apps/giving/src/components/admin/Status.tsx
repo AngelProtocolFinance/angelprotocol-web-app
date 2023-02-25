@@ -1,4 +1,4 @@
-import { ProposalStatus } from "types/contracts";
+import { ProposalStatus } from "@giving/types/contracts";
 
 export function Status(props: { status: ProposalStatus }) {
   return (

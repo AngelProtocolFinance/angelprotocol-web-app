@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
+import { FundConfig } from "@giving/types/contracts";
 import { FundConfigUpdateMeta, FundConfigValues } from "pages/Admin/types";
-import { FundConfig } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { EndowmentProposal } from "types/aws";
+import { EndowmentProposal } from "@giving/types/aws";
 import Icon from "components/Icon";
 import { Cells } from "components/TableSection";
 import { adminRoutes } from "constants/routes";

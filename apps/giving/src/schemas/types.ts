@@ -1,6 +1,6 @@
 import { AnySchema } from "yup";
 import Lazy from "yup/lib/Lazy";
-import { PartialRecord } from "types/utils";
+import { PartialRecord } from "@giving/types/utils";
 
 export type SchemaShape<T extends object> = PartialRecord<
   keyof T,

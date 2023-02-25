@@ -1,9 +1,9 @@
 import { useFormContext } from "react-hook-form";
+import { RegistrarConfigPayload } from "@giving/types/contracts";
 import {
   RegistrarConfigUpdateMeta,
   RegistrarConfigValues,
 } from "pages/Admin/types";
-import { RegistrarConfigPayload } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";

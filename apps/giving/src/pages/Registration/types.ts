@@ -1,13 +1,13 @@
-import { CountryOption } from "services/types";
 import {
   ContactRoles,
   FileObject,
   ReferralMethods,
   RegistrationStatus,
-} from "types/aws";
-import { EndowmentTierNum } from "types/contracts";
-import { UNSDG_NUMS } from "types/lists";
-import { Optional } from "types/utils";
+} from "@giving/types/aws";
+import { EndowmentTierNum } from "@giving/types/contracts";
+import { UNSDG_NUMS } from "@giving/types/lists";
+import { Optional } from "@giving/types/utils";
+import { CountryOption } from "services/types";
 import { OptionType } from "components/Selector";
 import { Asset } from "components/registration";
 

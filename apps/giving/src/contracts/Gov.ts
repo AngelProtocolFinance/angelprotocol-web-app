@@ -1,4 +1,4 @@
-import { Vote } from "types/contracts";
+import { Vote } from "@giving/types/contracts";
 import { WalletState } from "contexts/WalletContext";
 import { scaleToStr } from "helpers";
 import { contracts } from "constants/contracts";

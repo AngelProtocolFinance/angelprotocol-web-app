@@ -7,7 +7,7 @@ import {
   StatusChangePayload,
   UpdateStategyPayload,
   WithdrawPayload,
-} from "types/contracts";
+} from "@giving/types/contracts";
 import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 

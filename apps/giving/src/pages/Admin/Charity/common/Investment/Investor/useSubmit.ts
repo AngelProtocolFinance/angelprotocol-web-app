@@ -1,5 +1,5 @@
 import { FormValues } from "./types";
-import { AccountType } from "types/contracts";
+import { AccountType } from "@giving/types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Account from "contracts/Account";

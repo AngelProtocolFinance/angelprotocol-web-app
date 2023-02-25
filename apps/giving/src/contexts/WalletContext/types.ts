@@ -1,4 +1,4 @@
-import { BaseChain } from "types/aws";
+import { BaseChain } from "@giving/types/aws";
 import { chainIDs } from "constants/chains";
 import { WalletState } from "./WalletContext";
 
