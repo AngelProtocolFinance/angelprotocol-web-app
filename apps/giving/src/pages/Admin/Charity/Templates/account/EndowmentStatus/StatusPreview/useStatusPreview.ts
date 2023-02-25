@@ -1,8 +1,8 @@
+import useDebouncer from "@giving/hooks/useDebouncer";
 import { useEndowmentsQuery } from "@giving/services/juno/account";
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { EndowmentUpdateValues } from "@giving/types/pages/admin";
-import useDebouncer from "hooks/useDebouncer";
 
 export default function useStatusPreview() {
   const { watch, getFieldState, setValue } =

@@ -4,6 +4,7 @@ import { useGetWallet } from "@giving/contexts/wallet-context";
 import { scaleToStr } from "@giving/helpers";
 import { genDiffMeta, getPayloadDiff } from "@giving/helpers/admin";
 import { cleanObject } from "@giving/helpers/cleanObject";
+import useCosmosTxSender from "@giving/hooks/useCosmosTxSender/useCosmosTxSender";
 import { useFormContext } from "react-hook-form";
 import { FundConfig } from "@giving/types/contracts";
 import {
@@ -13,7 +14,6 @@ import {
 import { useAdminResources } from "pages/Admin/Guard";
 import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
-import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
 
 type Key = keyof FundConfig;
 type Value = FundConfig[Key];

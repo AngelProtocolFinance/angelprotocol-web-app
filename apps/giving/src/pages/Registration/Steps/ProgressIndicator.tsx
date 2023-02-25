@@ -1,9 +1,11 @@
 import { DrawerIcon } from "@giving/components/Icon";
 import { idParamToNum } from "@giving/helpers";
+import useHandleScreenResize, {
+  SCREEN_MD,
+} from "@giving/hooks/useHandleScreenResize";
 import { PropsWithChildren, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { RegStep } from "../types";
-import useHandleScreenResize, { SCREEN_MD } from "hooks/useHandleScreenResize";
 
 type Props = {
   step: RegStep;

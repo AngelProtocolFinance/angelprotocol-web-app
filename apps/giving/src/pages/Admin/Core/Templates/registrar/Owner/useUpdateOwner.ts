@@ -1,6 +1,7 @@
 import Popup from "@giving/components/Popup";
 import { useModalContext } from "@giving/contexts/modal-context";
 import { useGetWallet } from "@giving/contexts/wallet-context";
+import useCosmosTxSender from "@giving/hooks/useCosmosTxSender/useCosmosTxSender";
 import { useFormContext } from "react-hook-form";
 import {
   OwnerUpdateMeta,
@@ -9,7 +10,6 @@ import {
 import { useAdminResources } from "pages/Admin/Guard";
 import CW3 from "contracts/CW3";
 import Registrar from "contracts/Registrar";
-import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
 
 export default function useUpdateOwner() {
   const { cw3, propMeta } = useAdminResources();

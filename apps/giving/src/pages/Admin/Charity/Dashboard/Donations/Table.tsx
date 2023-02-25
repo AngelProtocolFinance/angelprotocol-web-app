@@ -4,8 +4,8 @@ import { HeaderButton } from "@giving/components/HeaderButton";
 import Icon from "@giving/components/Icon";
 import TableSection, { Cells } from "@giving/components/TableSection";
 import { getTxUrl, humanize, maskAddress } from "@giving/helpers";
+import useSort from "@giving/hooks/useSort";
 import { Donation, KYCData } from "@giving/types/aws";
-import useSort from "hooks/useSort";
 
 export default function Table(props: { donations: Donation[] }) {
   const { handleHeaderClick, sorted, sortDirection, sortKey } = useSort(

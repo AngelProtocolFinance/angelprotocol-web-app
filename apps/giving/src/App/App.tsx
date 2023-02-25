@@ -2,10 +2,10 @@ import { chainOptions } from "@giving/constants/chainOptions";
 import { appRoutes } from "@giving/constants/routes";
 import ModalContext from "@giving/contexts/modal-context";
 import WalletContext from "@giving/contexts/wallet-context";
+import useScrollTop from "@giving/hooks/useScrollTop";
 import { WalletProvider } from "@terra-money/wallet-provider";
 import { lazy } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
-import useScrollTop from "hooks/useScrollTop";
 import Layout from "./Layout";
 
 const Admin = lazy(() => import("../pages/Admin"));

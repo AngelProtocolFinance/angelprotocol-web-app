@@ -3,6 +3,7 @@ import { useModalContext } from "@giving/contexts/modal-context";
 import { useGetWallet } from "@giving/contexts/wallet-context";
 import { genDiffMeta, getPayloadDiff } from "@giving/helpers/admin";
 import { cleanObject } from "@giving/helpers/cleanObject";
+import useCosmosTxSender from "@giving/hooks/useCosmosTxSender/useCosmosTxSender";
 import { useFormContext } from "react-hook-form";
 import { RegistrarConfigPayload } from "@giving/types/contracts";
 import {
@@ -12,7 +13,6 @@ import {
 import { useAdminResources } from "pages/Admin/Guard";
 import CW3 from "contracts/CW3";
 import Registrar from "contracts/Registrar";
-import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
 
 type Key = keyof RegistrarConfigPayload;
 type Value = RegistrarConfigPayload[Key];

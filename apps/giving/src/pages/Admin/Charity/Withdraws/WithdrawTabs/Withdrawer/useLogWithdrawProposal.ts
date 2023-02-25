@@ -8,10 +8,10 @@ import {
   idParamToNum,
   logger,
 } from "@giving/helpers";
+import { TxOnSuccess, TxSuccessMeta } from "@giving/hooks/useCosmosTxSender";
 import { invalidateApesTags } from "@giving/services/apes";
 import { AccountType } from "@giving/types/contracts";
 import { useSetter } from "store/accessors";
-import { TxOnSuccess, TxSuccessMeta } from "hooks/useCosmosTxSender";
 
 type ProposalInfo = {
   endowment_multisig: string;

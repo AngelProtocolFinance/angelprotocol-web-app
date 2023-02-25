@@ -5,6 +5,7 @@ import { useModalContext } from "@giving/contexts/modal-context";
 import { useGetWallet } from "@giving/contexts/wallet-context";
 import { scaleToStr } from "@giving/helpers";
 import { getTagPayloads } from "@giving/helpers/admin";
+import useCosmosTxSender from "@giving/hooks/useCosmosTxSender/useCosmosTxSender";
 import { useFormContext } from "react-hook-form";
 import { EmbeddedBankMsg, EmbeddedWasmMsg } from "@giving/types/contracts";
 import { FundSendMeta } from "@giving/types/pages/admin";
@@ -12,7 +13,6 @@ import { FundSendValues } from "@giving/types/pages/admin";
 import { useAdminResources } from "pages/Admin/Guard";
 import CW3 from "contracts/CW3";
 import CW20 from "contracts/CW20";
-import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
 
 export default function useTransferFunds() {
   const {

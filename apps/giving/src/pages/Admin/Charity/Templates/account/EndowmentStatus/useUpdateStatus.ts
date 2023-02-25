@@ -3,6 +3,7 @@ import { useModalContext } from "@giving/contexts/modal-context";
 import { useGetWallet } from "@giving/contexts/wallet-context";
 import { getTagPayloads } from "@giving/helpers/admin";
 import { cleanObject } from "@giving/helpers/cleanObject";
+import useCosmosTxSender from "@giving/hooks/useCosmosTxSender/useCosmosTxSender";
 import { useFormContext } from "react-hook-form";
 import {
   Beneficiary,
@@ -17,7 +18,6 @@ import {
 import { useAdminResources } from "pages/Admin/Guard";
 import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
-import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
 
 export default function useUpdateStatus() {
   const { handleSubmit } = useFormContext<EndowmentUpdateValues>();

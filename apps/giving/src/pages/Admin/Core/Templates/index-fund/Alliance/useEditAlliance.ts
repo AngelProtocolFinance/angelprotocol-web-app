@@ -1,6 +1,7 @@
 import Popup from "@giving/components/Popup";
 import { useModalContext } from "@giving/contexts/modal-context";
 import { useGetWallet } from "@giving/contexts/wallet-context";
+import useCosmosTxSender from "@giving/hooks/useCosmosTxSender/useCosmosTxSender";
 import { useFormContext } from "react-hook-form";
 import { AllianceMember as AM, EmbeddedWasmMsg } from "@giving/types/contracts";
 import {
@@ -11,7 +12,6 @@ import { useAdminResources } from "pages/Admin/Guard";
 import { useGetter } from "store/accessors";
 import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
-import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
 
 export default function useEditAlliance() {
   const { trigger, reset, getValues } = useFormContext<AllianceEditValues>();

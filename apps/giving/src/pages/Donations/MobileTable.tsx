@@ -1,10 +1,10 @@
 import Icon, { DrawerIcon } from "@giving/components/Icon";
 import useKYC from "@giving/components/KYC/useKYC";
 import { humanize, maskAddress } from "@giving/helpers";
+import useSort from "@giving/hooks/useSort";
 import { Disclosure } from "@headlessui/react";
 import { PropsWithChildren } from "react";
 import { TableProps } from "./types";
-import useSort from "hooks/useSort";
 
 export default function MobileTable({ donations, classes = "" }: TableProps) {
   const { sorted } = useSort(donations);

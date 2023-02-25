@@ -1,9 +1,9 @@
 import Icon from "@giving/components/Icon";
+import useDebouncer from "@giving/hooks/useDebouncer";
 import { QueryStatus } from "@reduxjs/toolkit/dist/query";
 import { useEffect, useState } from "react";
 import { useGetter, useSetter } from "store/accessors";
 import { setSearchText } from "slices/components/marketFilter";
-import useDebouncer from "hooks/useDebouncer";
 
 export default function Search({ classes = "" }: { classes?: string }) {
   const dispatch = useSetter();

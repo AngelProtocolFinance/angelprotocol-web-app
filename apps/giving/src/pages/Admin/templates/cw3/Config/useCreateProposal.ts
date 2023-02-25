@@ -6,6 +6,7 @@ import {
   getPayloadDiff,
   getTagPayloads,
 } from "@giving/helpers/admin";
+import useCosmosTxSender from "@giving/hooks/useCosmosTxSender/useCosmosTxSender";
 import { useFormContext } from "react-hook-form";
 import {
   CW3ConfigUpdateMeta,
@@ -14,7 +15,6 @@ import {
 } from "@giving/types/pages/admin";
 import { useAdminResources } from "pages/Admin/Guard";
 import CW3 from "contracts/CW3";
-import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
 
 type Key = keyof FormCW3Config;
 type Value = FormCW3Config[Key];

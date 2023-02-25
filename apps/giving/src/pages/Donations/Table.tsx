@@ -5,9 +5,9 @@ import useKYC from "@giving/components/KYC/useKYC";
 import TableSection, { Cells } from "@giving/components/TableSection";
 import { appRoutes } from "@giving/constants/routes";
 import { getTxUrl, humanize, maskAddress } from "@giving/helpers";
+import useSort from "@giving/hooks/useSort";
 import { Link } from "react-router-dom";
 import { TableProps } from "./types";
-import useSort from "hooks/useSort";
 
 export default function Table({ donations, classes = "" }: TableProps) {
   const { handleHeaderClick, sorted, sortDirection, sortKey } =
