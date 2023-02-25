@@ -1,4 +1,4 @@
-import { FundDestroyValues as FD } from "pages/Admin/types";
+import { FundDestroyValues as FD } from "@giving/types/pages/admin";
 import { FormContainer, Submitter } from "components/admin";
 import { Field, Label } from "components/form";
 import FundSelection from "../FundSelection";

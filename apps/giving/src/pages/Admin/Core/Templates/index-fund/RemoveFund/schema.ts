@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { FundDestroyValues } from "pages/Admin/types";
+import { FundDestroyValues } from "@giving/types/pages/admin";
 import { SchemaShape } from "schemas/types";
 import { proposalShape } from "../../../../constants";
 

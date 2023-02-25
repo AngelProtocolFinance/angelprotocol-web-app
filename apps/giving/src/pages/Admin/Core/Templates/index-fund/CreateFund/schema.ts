@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { FundCreatorValues } from "pages/Admin/types";
+import { FundCreatorValues } from "@giving/types/pages/admin";
 import { SchemaShape } from "schemas/types";
 import { futureDate } from "schemas/date";
 import { requiredPositiveNumber } from "schemas/number";

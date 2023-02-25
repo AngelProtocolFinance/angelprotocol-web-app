@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { MemberUpdatorValues } from "pages/Admin/types";
+import { MemberUpdatorValues } from "@giving/types/pages/admin";
 import { SchemaShape } from "schemas/types";
 import { requiredPositiveNumber } from "schemas/number";
 import { requiredWalletAddr } from "schemas/string";

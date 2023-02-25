@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { Expiration } from "@giving/types/contracts";
-import { ProposalParams } from "pages/Admin/types";
+import { ProposalParams } from "@giving/types/pages/admin";
 import { useProposalDetailsQuery } from "services/juno/custom";
 import { useGetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";

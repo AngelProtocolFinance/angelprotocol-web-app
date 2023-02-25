@@ -1,4 +1,4 @@
-import { SortDirection, SortKey } from "pages/Admin/types";
+import { SortDirection, SortKey } from "@giving/types/pages/admin";
 import Icon from "components/Icon";
 
 export default function Header(

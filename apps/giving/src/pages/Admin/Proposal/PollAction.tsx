@@ -1,6 +1,6 @@
 import { getTagPayloads } from "@giving/helpers/admin";
 import React, { ReactNode, useMemo } from "react";
-import { ProposalMeta } from "pages/Admin/types";
+import { ProposalMeta } from "@giving/types/pages/admin";
 import { ProposalDetails, TagPayload } from "services/types";
 import { invalidateJunoTags, useLatestBlockQuery } from "services/juno";
 import { defaultProposalTags } from "services/juno/tags";

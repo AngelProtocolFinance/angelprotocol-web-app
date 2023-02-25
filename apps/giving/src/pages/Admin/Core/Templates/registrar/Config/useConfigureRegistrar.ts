@@ -5,7 +5,7 @@ import { RegistrarConfigPayload } from "@giving/types/contracts";
 import {
   RegistrarConfigUpdateMeta,
   RegistrarConfigValues,
-} from "pages/Admin/types";
+} from "@giving/types/pages/admin";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";

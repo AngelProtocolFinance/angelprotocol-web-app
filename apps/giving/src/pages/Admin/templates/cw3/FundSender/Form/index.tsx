@@ -1,4 +1,4 @@
-import { FundSendValues as FS } from "pages/Admin/types";
+import { FundSendValues as FS } from "@giving/types/pages/admin";
 import { FormContainer, Submitter } from "components/admin";
 import { Field } from "components/form";
 import Amount from "./Amount";

@@ -3,7 +3,7 @@ import { cleanObject } from "@giving/helpers/cleanObject";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { FundDetails } from "@giving/types/contracts";
-import { CreateFundMeta, FundCreatorValues } from "pages/Admin/types";
+import { CreateFundMeta, FundCreatorValues } from "@giving/types/pages/admin";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useGetWallet } from "contexts/WalletContext";
 import { useGetter } from "store/accessors";

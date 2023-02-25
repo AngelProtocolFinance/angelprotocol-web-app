@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { EndowmentUpdateValues as EPV } from "pages/Admin/types";
+import { EndowmentUpdateValues as EPV } from "@giving/types/pages/admin";
 import { SchemaShape } from "schemas/types";
 import { requiredPositiveNumber } from "schemas/number";
 import { requiredWalletAddr } from "schemas/string";

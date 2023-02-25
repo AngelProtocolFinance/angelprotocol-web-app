@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { FundCreatorValues as V } from "pages/Admin/types";
+import { FundCreatorValues as V } from "@giving/types/pages/admin";
 import { useGetter } from "store/accessors";
 import { addFundMember } from "slices/admin/newFundMembers";
 

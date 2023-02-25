@@ -1,8 +1,8 @@
 import { Contract as EVMContract } from "@ethersproject/contracts";
 import { TransactionResponse, Web3Provider } from "@ethersproject/providers";
+import ERC20Abi from "@giving/assets/abi/ERC20.json";
 import { getProvider, logger } from "@giving/helpers";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import ERC20Abi from "abi/ERC20.json";
 import { EstimatedTx, TxStatus } from "../types";
 import { DonateArgs } from "../types";
 import { KYCData } from "@giving/types/aws";

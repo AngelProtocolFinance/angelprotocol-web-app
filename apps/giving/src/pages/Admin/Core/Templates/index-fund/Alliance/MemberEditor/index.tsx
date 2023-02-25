@@ -1,5 +1,5 @@
 import React from "react";
-import { AllianceEditValues as AV } from "pages/Admin/types";
+import { AllianceEditValues as AV } from "@giving/types/pages/admin";
 import { GroupContainer } from "components/admin";
 import { Field } from "components/form";
 import useEditMember from "./useEditMember";

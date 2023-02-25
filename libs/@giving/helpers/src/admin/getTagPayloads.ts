@@ -1,4 +1,4 @@
-import { ProposalMeta } from "pages/Admin/types";
+import { ProposalMeta } from "@giving/types/pages/admin";
 import { TagPayload } from "services/types";
 import { invalidateJunoTags } from "services/juno";
 import {

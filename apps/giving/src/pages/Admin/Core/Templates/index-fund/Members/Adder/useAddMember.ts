@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { FundUpdateValues } from "pages/Admin/types";
+import { FundUpdateValues } from "@giving/types/pages/admin";
 import { useGetter, useSetter } from "store/accessors";
 import { addMember as _addMember } from "slices/admin/fundMembers";
 

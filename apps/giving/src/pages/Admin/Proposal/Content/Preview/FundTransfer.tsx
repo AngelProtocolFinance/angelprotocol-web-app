@@ -1,6 +1,6 @@
 import { symbols } from "@giving/constants/tokens";
 import { humanize } from "@giving/helpers";
-import { FundSendMeta } from "pages/Admin/types";
+import { FundSendMeta } from "@giving/types/pages/admin";
 import KeyValue from "./common/KeyValue";
 import PreviewContainer from "./common/PreviewContainer";
 

@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
-import { OwnerUpdateMeta } from "pages/Admin/types";
-import { IndexFundOwnerValues } from "pages/Admin/types";
+import { OwnerUpdateMeta } from "@giving/types/pages/admin";
+import { IndexFundOwnerValues } from "@giving/types/pages/admin";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";

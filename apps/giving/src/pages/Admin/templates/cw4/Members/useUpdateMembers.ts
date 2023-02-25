@@ -1,7 +1,10 @@
 import { getTagPayloads } from "@giving/helpers/admin";
 import { useFormContext } from "react-hook-form";
 import { CW4Member } from "@giving/types/contracts";
-import { CW4MemberUpdateMeta, MemberUpdatorValues } from "pages/Admin/types";
+import {
+  CW4MemberUpdateMeta,
+  MemberUpdatorValues,
+} from "@giving/types/pages/admin";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";

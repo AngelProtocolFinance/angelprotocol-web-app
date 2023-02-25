@@ -2,7 +2,7 @@ import { condenseToStr } from "@giving/helpers";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FundConfig, IndexFundConfig } from "@giving/types/contracts";
-import { FundConfigValues } from "pages/Admin/types";
+import { FundConfigValues } from "@giving/types/pages/admin";
 import { useIndexFundConfigQuery } from "services/juno/indexFund";
 import { FormError, FormSkeleton } from "components/admin";
 import Form from "./Form";

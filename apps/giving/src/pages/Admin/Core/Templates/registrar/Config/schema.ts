@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { RegistrarConfigValues } from "pages/Admin/types";
+import { RegistrarConfigValues } from "@giving/types/pages/admin";
 import { SchemaShape } from "schemas/types";
 import { percentString, positiveNumber } from "schemas/number";
 import { contractAddr } from "schemas/string";

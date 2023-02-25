@@ -1,5 +1,5 @@
 import { formatUnits } from "@ethersproject/units";
-import ERC20Abi from "abi/ERC20.json";
+import ERC20Abi from "@giving/assets/abi/ERC20.json";
 import { Multicall } from "ethereum-multicall";
 import { CallContext } from "ethereum-multicall/dist/esm/models";
 import { BalMap } from "./types";

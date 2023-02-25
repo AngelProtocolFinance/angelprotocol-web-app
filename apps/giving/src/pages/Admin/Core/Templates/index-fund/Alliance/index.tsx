@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { AllianceEditValues } from "pages/Admin/types";
+import { AllianceEditValues } from "@giving/types/pages/admin";
 import { useAllianceMembersQuery } from "services/juno/indexFund";
 import { FormError, FormSkeleton } from "components/admin";
 import { useSetter } from "store/accessors";

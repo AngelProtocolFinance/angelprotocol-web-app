@@ -1,4 +1,4 @@
-import { IndexFundOwnerValues as IV } from "pages/Admin/types";
+import { IndexFundOwnerValues as IV } from "@giving/types/pages/admin";
 import { FormContainer, Submitter } from "components/admin";
 import { Field } from "components/form";
 import useUpdateOwner from "./useUpdateOwner";

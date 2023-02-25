@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { RegistrarOwnerValues } from "pages/Admin/types";
+import { RegistrarOwnerValues } from "@giving/types/pages/admin";
 import { SchemaShape } from "schemas/types";
 import { requiredContractAddr } from "schemas/string";
 import { proposalShape } from "../../../../constants";

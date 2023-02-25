@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { FundDestroyValues, RemoveFundMeta } from "pages/Admin/types";
+import { FundDestroyValues, RemoveFundMeta } from "@giving/types/pages/admin";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";

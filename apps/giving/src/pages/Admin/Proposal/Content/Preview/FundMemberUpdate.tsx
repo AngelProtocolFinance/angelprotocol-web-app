@@ -1,4 +1,4 @@
-import { FundMemberUpdateMeta } from "pages/Admin/types";
+import { FundMemberUpdateMeta } from "@giving/types/pages/admin";
 import Header from "./common/Header";
 import KeyValue from "./common/KeyValue";
 import MemberItem from "./common/MemberItem";

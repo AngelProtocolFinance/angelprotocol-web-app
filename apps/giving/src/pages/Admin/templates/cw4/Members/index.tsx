@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { MemberUpdatorValues } from "pages/Admin/types";
+import { MemberUpdatorValues } from "@giving/types/pages/admin";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useMembersQuery } from "services/juno/cw4";
 import { FormError, FormSkeleton } from "components/admin";

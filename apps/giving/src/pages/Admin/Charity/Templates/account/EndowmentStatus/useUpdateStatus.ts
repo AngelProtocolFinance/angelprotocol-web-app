@@ -7,7 +7,10 @@ import {
   EndowmentStatusNum,
   StatusChangePayload,
 } from "@giving/types/contracts";
-import { EndowmentStatusMeta, EndowmentUpdateValues } from "pages/Admin/types";
+import {
+  EndowmentStatusMeta,
+  EndowmentUpdateValues,
+} from "@giving/types/pages/admin";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";

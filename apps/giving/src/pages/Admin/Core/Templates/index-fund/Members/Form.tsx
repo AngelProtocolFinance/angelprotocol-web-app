@@ -1,4 +1,4 @@
-import { FundUpdateValues as FV } from "pages/Admin/types";
+import { FundUpdateValues as FV } from "@giving/types/pages/admin";
 import Loader from "components/Loader";
 import { FormContainer, GroupContainer, Submitter } from "components/admin";
 import { Field, Label } from "components/form";

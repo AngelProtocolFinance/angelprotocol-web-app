@@ -1,6 +1,7 @@
 import { Contract } from "@ethersproject/contracts";
 import { TransactionRequest, Web3Provider } from "@ethersproject/providers";
 import { formatUnits, parseUnits } from "@ethersproject/units";
+import ERC20Abi from "@giving/assets/abi/ERC20.json";
 import { ap_wallets } from "@giving/constants/ap_wallets";
 import {
   extractFeeAmount,
@@ -10,7 +11,6 @@ import {
 } from "@giving/helpers";
 import { Coin, MsgExecuteContract, MsgSend } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
-import ERC20Abi from "abi/ERC20.json";
 import { Estimate } from "./types";
 import { WalletState } from "contexts/WalletContext";
 import { SubmitStep } from "slices/donation";

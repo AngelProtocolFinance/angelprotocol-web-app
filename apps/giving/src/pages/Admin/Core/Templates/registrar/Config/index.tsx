@@ -4,7 +4,7 @@ import {
   RegistrarConfig,
   RegistrarConfigPayload,
 } from "@giving/types/contracts";
-import { RegistrarConfigValues } from "pages/Admin/types";
+import { RegistrarConfigValues } from "@giving/types/pages/admin";
 import { useRegistrarConfigQuery } from "services/juno/registrar";
 import { FormError, FormSkeleton } from "components/admin";
 import Form from "./Form";

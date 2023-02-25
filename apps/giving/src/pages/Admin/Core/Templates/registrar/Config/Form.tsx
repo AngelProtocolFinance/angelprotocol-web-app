@@ -1,4 +1,4 @@
-import { RegistrarConfigValues as RV } from "pages/Admin/types";
+import { RegistrarConfigValues as RV } from "@giving/types/pages/admin";
 import { FormContainer, GroupContainer, Submitter } from "components/admin";
 import { Field, Label } from "components/form";
 import useConfigureRegistrar from "./useConfigureRegistrar";

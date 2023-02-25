@@ -8,7 +8,7 @@ import {
   CW3ConfigUpdateMeta,
   CW3ConfigValues,
   FormCW3Config,
-} from "pages/Admin/types";
+} from "@giving/types/pages/admin";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";

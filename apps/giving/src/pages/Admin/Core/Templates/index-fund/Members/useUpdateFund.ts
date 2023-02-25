@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { FundMemberUpdateMeta } from "pages/Admin/types";
-import { FundUpdateValues } from "pages/Admin/types";
+import { FundMemberUpdateMeta } from "@giving/types/pages/admin";
+import { FundUpdateValues } from "@giving/types/pages/admin";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useGetWallet } from "contexts/WalletContext";

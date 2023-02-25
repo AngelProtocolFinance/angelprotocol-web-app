@@ -1,5 +1,5 @@
-import { Templates } from "pages/Admin/types";
-import { ProposalBase } from "pages/Admin/types";
+import { Templates } from "@giving/types/pages/admin";
+import { ProposalBase } from "@giving/types/pages/admin";
 import { SchemaShape } from "schemas/types";
 import { stringByteSchema } from "schemas/string";
 

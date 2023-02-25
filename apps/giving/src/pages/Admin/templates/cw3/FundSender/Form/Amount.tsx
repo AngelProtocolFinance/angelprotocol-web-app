@@ -1,7 +1,7 @@
 import { denoms, symbols } from "@giving/constants/tokens";
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
-import { FundSendValues } from "pages/Admin/types";
+import { FundSendValues } from "@giving/types/pages/admin";
 import { useGetWallet } from "contexts/WalletContext";
 import { Label } from "components/form";
 import Balance from "./Balance";

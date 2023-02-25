@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { EndowmentProposal } from "@giving/types/aws";
-import { SortDirection, SortKey } from "pages/Admin/types";
+import { SortDirection, SortKey } from "@giving/types/pages/admin";
 
 export default function useSortedApplications(
   applications: EndowmentProposal[]

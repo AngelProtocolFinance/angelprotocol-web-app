@@ -1,4 +1,4 @@
-import { RegistrarOwnerValues as RV } from "pages/Admin/types";
+import { RegistrarOwnerValues as RV } from "@giving/types/pages/admin";
 import { FormContainer, Submitter } from "components/admin";
 import { Field } from "components/form";
 import useUpdateOwner from "./useUpdateOwner";

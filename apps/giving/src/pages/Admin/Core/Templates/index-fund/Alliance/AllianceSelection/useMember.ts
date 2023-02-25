@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { AllianceEditValues } from "pages/Admin/types";
+import { AllianceEditValues } from "@giving/types/pages/admin";
 import { AllianceMemberWithFlags } from "slices/admin/types";
 import { useGetter, useSetter } from "store/accessors";
 import {

@@ -1,4 +1,4 @@
-import { MemberUpdatorValues as T } from "pages/Admin/types";
+import { MemberUpdatorValues as T } from "@giving/types/pages/admin";
 import { GroupContainer } from "components/admin";
 import { Field } from "components/form";
 import useAddMember from "./useAddMember";

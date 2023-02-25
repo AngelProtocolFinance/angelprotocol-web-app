@@ -2,7 +2,7 @@ import { scaleToStr } from "@giving/helpers";
 import { getTagPayloads } from "@giving/helpers/admin";
 import { FormValues } from "./types";
 import { AccountType } from "@giving/types/contracts";
-import { ProposalMeta } from "pages/Admin/types";
+import { ProposalMeta } from "@giving/types/pages/admin";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Account from "contracts/Account";

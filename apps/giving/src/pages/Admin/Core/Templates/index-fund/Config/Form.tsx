@@ -1,4 +1,4 @@
-import { FundConfigValues as FV } from "pages/Admin/types";
+import { FundConfigValues as FV } from "@giving/types/pages/admin";
 import { FormContainer, Submitter } from "components/admin";
 import { Field } from "components/form";
 import useConfigureFund from "./useConfigureFund";
