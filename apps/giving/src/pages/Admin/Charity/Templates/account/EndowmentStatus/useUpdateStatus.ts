@@ -1,4 +1,5 @@
 import Prompt from "@giving/components/prompt";
+import { useAdminResources } from "@giving/contexts/admin";
 import { useModalContext } from "@giving/contexts/modal-context";
 import { useGetWallet } from "@giving/contexts/wallet-context";
 import Account from "@giving/contracts/Account";
@@ -17,7 +18,6 @@ import {
   EndowmentStatusMeta,
   EndowmentUpdateValues,
 } from "@giving/types/pages/admin";
-import { useAdminResources } from "pages/Admin/Guard";
 
 export default function useUpdateStatus() {
   const { handleSubmit } = useFormContext<EndowmentUpdateValues>();

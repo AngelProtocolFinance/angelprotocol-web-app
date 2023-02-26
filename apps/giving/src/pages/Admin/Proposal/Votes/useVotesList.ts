@@ -1,6 +1,6 @@
+import { useAdminResources } from "@giving/contexts/admin";
 import { useVotesQuery } from "@giving/services/juno/cw3";
 import { VotesPageOptions } from "@giving/types/contracts";
-import { useAdminResources } from "../../Guard";
 
 //contract.voteList(genVoteListPageOptions(pollId, pageNum))
 export const VOTES_PER_PAGE = 15;

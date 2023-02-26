@@ -1,3 +1,4 @@
+import { useAdminResources } from "@giving/contexts/admin";
 import { useGetWallet } from "@giving/contexts/wallet-context";
 import CW3 from "@giving/contracts/CW3";
 import IndexFund from "@giving/contracts/IndexFund";
@@ -8,7 +9,6 @@ import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { FundMemberUpdateMeta } from "@giving/types/pages/admin";
 import { FundUpdateValues } from "@giving/types/pages/admin";
-import { useAdminResources } from "pages/Admin/Guard";
 
 export default function useUpdateFund() {
   const { trigger, reset, getValues } = useFormContext<FundUpdateValues>();

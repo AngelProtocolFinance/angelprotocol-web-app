@@ -1,4 +1,5 @@
 import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
+import { useAdminResources } from "@giving/contexts/admin";
 import { useGetWallet } from "@giving/contexts/wallet-context";
 import CW3 from "@giving/contracts/CW3";
 import CW3Review from "@giving/contracts/CW3/CW3Review";
@@ -7,7 +8,6 @@ import { invalidateJunoTags } from "@giving/services/juno";
 import { adminTags } from "@giving/services/juno/tags";
 import { useFormContext } from "react-hook-form";
 import { VoteValues as VV } from "./types";
-import { useAdminResources } from "pages/Admin/Guard";
 
 export default function useVote() {
   const {

@@ -1,6 +1,6 @@
 import QueryLoader from "@giving/components/QueryLoader";
+import { useAdminResources } from "@giving/contexts/admin";
 import { useStateQuery } from "@giving/services/juno/account";
-import { useAdminResources } from "pages/Admin/Guard";
 import Transactions from "./Transactions";
 import WithdrawTabs from "./WithdrawTabs";
 

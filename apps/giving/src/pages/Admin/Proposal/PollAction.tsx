@@ -1,3 +1,4 @@
+import { useAdminResources } from "@giving/contexts/admin";
 import { useModalContext } from "@giving/contexts/modal-context";
 import { useGetWallet } from "@giving/contexts/wallet-context";
 import CW3 from "@giving/contracts/CW3";
@@ -6,9 +7,9 @@ import { invalidateJunoTags, useLatestBlockQuery } from "@giving/services/juno";
 import { getTagPayloads } from "@giving/services/juno/getTagPayloads";
 import { defaultProposalTags } from "@giving/services/juno/tags";
 import React, { ReactNode, useMemo } from "react";
-import { ProposalDetails, TagPayload } from "@giving/services/types";
+import { ProposalDetails } from "@giving/services/types";
 import { ProposalMeta } from "@giving/types/pages/admin";
-import { useAdminResources } from "../Guard";
+import { TagPayload } from "@giving/types/redux";
 import Voter from "./Voter";
 
 export default function PollAction(props: ProposalDetails) {

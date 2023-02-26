@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 import { AdminResources } from "@giving/services/types";
 import { AdminParams } from "@giving/types/pages/admin";
 
-export function Guard(props: {
+export default function Guard(props: {
   children(resources: AdminResources): ReactNode;
 }) {
   const { wallet } = useGetWallet();

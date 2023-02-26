@@ -1,12 +1,12 @@
 import QueryLoader from "@giving/components/QueryLoader";
 import { Field } from "@giving/components/form";
 import { APP_NAME } from "@giving/constants/common";
+import { useAdminResources } from "@giving/contexts/admin";
 import { useLatestBlockQuery } from "@giving/services/juno";
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { WithdrawValues as WV } from "./types";
 import { EndowmentDetails } from "@giving/types/contracts";
-import { useAdminResources } from "pages/Admin/Guard";
 import Warning from "./Warning";
 
 export default function Submit() {

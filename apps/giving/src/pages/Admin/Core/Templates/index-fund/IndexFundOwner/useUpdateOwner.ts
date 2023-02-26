@@ -1,4 +1,5 @@
 import Prompt from "@giving/components/prompt";
+import { useAdminResources } from "@giving/contexts/admin";
 import { useModalContext } from "@giving/contexts/modal-context";
 import { useGetWallet } from "@giving/contexts/wallet-context";
 import CW3 from "@giving/contracts/CW3";
@@ -7,7 +8,6 @@ import useCosmosTxSender from "@giving/hooks/useCosmosTxSender/useCosmosTxSender
 import { useFormContext } from "react-hook-form";
 import { OwnerUpdateMeta } from "@giving/types/pages/admin";
 import { IndexFundOwnerValues } from "@giving/types/pages/admin";
-import { useAdminResources } from "pages/Admin/Guard";
 
 export default function useUpdateOwner() {
   const { cw3, propMeta } = useAdminResources();

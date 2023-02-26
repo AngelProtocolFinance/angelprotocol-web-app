@@ -43,6 +43,7 @@
       "@giving/contexts/modal-context": [
         "libs/@giving/contexts/modal-context/src/index.ts"
       ],
+      "@giving/contexts/admin": ["libs/@giving/contexts/admin/src/index.ts"],
       "@giving/helpers/*": ["libs/@giving/helpers/src/*"],
       "@giving/components/*": ["libs/@giving/components/src/*"],
       "@giving/components/prompt": [

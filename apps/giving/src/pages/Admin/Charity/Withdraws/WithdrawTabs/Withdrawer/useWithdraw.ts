@@ -1,5 +1,6 @@
 import { ap_wallets } from "@giving/constants/ap_wallets";
 import { chainIds } from "@giving/constants/chainIds";
+import { useAdminResources } from "@giving/contexts/admin";
 import { useGetWallet } from "@giving/contexts/wallet-context";
 import Account from "@giving/contracts/Account";
 import CW3Endowment from "@giving/contracts/CW3/CW3Endowment";
@@ -10,7 +11,6 @@ import { WithdrawValues } from "./types";
 import { Asset } from "@giving/types/contracts";
 import { WithdrawMeta } from "@giving/types/pages/admin";
 import { accountTypeDisplayValue } from "pages/Admin/Charity/constants";
-import { useAdminResources } from "pages/Admin/Guard";
 import useLogWithdrawProposal from "./useLogWithdrawProposal";
 
 export default function useWithdraw() {

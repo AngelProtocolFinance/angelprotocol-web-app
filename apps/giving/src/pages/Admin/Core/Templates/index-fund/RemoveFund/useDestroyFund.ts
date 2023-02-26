@@ -1,4 +1,5 @@
 import Prompt from "@giving/components/prompt";
+import { useAdminResources } from "@giving/contexts/admin";
 import { useModalContext } from "@giving/contexts/modal-context";
 import { useGetWallet } from "@giving/contexts/wallet-context";
 import CW3 from "@giving/contracts/CW3";
@@ -6,7 +7,6 @@ import IndexFund from "@giving/contracts/IndexFund";
 import useCosmosTxSender from "@giving/hooks/useCosmosTxSender/useCosmosTxSender";
 import { useFormContext } from "react-hook-form";
 import { FundDestroyValues, RemoveFundMeta } from "@giving/types/pages/admin";
-import { useAdminResources } from "pages/Admin/Guard";
 
 export default function useDestroyFund() {
   const {

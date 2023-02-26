@@ -1,11 +1,11 @@
+import { useAdminResources } from "@giving/contexts/admin";
 import { useProposalsQuery } from "@giving/services/juno/cw3";
-import { ProposalMeta } from "../types";
 import {
   ProposalGroupOptions,
   ProposalStatusOptions,
 } from "@giving/slices/admin/types";
 import { PageOptions, Proposal } from "@giving/types/contracts";
-import { useAdminResources } from "../Guard";
+import { ProposalMeta } from "@giving/types/pages/admin";
 
 export const NUM_PROPOSALS_PER_PAGE = 5;
 export function useFilteredProposals(

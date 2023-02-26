@@ -1,6 +1,7 @@
 import { ImgLink } from "@giving/components/img-editor";
 import { TxPrompt } from "@giving/components/prompt";
 import { appRoutes } from "@giving/constants/routes";
+import { useAdminResources } from "@giving/contexts/admin";
 import { useModalContext } from "@giving/contexts/modal-context";
 import { useGetWallet } from "@giving/contexts/wallet-context";
 import { isEmpty } from "@giving/helpers";
@@ -10,7 +11,6 @@ import { useEditProfileMutation } from "@giving/services/aws/aws";
 import { SubmitHandler, useFormContext } from "react-hook-form";
 import { FormValues as FV, FlatFormValues } from "./types";
 import { EndowmentProfileUpdate } from "@giving/types/aws";
-import { useAdminResources } from "pages/Admin/Guard";
 import { createADR36Payload } from "./createADR36Payload";
 
 // import optimizeImage from "./optimizeImage";

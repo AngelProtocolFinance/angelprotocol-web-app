@@ -1,3 +1,4 @@
+import { useAdminResources } from "@giving/contexts/admin";
 import { useGetWallet } from "@giving/contexts/wallet-context";
 import Account from "@giving/contracts/Account";
 import CW3 from "@giving/contracts/CW3";
@@ -7,7 +8,6 @@ import { getTagPayloads } from "@giving/services/juno/getTagPayloads";
 import { FormValues } from "./types";
 import { AccountType } from "@giving/types/contracts";
 import { ProposalMeta } from "@giving/types/pages/admin";
-import { useAdminResources } from "pages/Admin/Guard";
 
 export default function useSubmit(vault: string, type: AccountType) {
   const { cw3, id, propMeta } = useAdminResources();

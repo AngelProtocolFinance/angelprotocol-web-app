@@ -1,7 +1,7 @@
+import Guard from "@giving/contexts/admin";
 import ModalContext from "@giving/contexts/modal-context";
 import Charity from "./Charity";
 import Core from "./Core";
-import { Guard } from "./Guard";
 import Review from "./Review";
 
 export default function Admin() {

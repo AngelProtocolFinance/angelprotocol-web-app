@@ -1,7 +1,7 @@
 import { adminRoutes } from "@giving/constants/routes";
+import { useAdminResources } from "@giving/contexts/admin";
 import { createNavLinkStyler } from "@giving/helpers";
 import { NavLink } from "react-router-dom";
-import { useAdminResources } from "../Guard";
 
 export default function Nav() {
   const { id } = useAdminResources();

@@ -1,6 +1,7 @@
 import Prompt from "@giving/components/prompt";
 import { contracts } from "@giving/constants/contracts";
 import { axlUSDCDenom, denoms, tokens } from "@giving/constants/tokens";
+import { useAdminResources } from "@giving/contexts/admin";
 import { useModalContext } from "@giving/contexts/modal-context";
 import { useGetWallet } from "@giving/contexts/wallet-context";
 import CW3 from "@giving/contracts/CW3";
@@ -12,7 +13,6 @@ import { useFormContext } from "react-hook-form";
 import { EmbeddedBankMsg, EmbeddedWasmMsg } from "@giving/types/contracts";
 import { FundSendMeta } from "@giving/types/pages/admin";
 import { FundSendValues } from "@giving/types/pages/admin";
-import { useAdminResources } from "pages/Admin/Guard";
 
 export default function useTransferFunds() {
   const {

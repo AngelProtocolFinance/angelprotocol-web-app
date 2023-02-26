@@ -1,3 +1,4 @@
+import { useAdminResources } from "@giving/contexts/admin";
 import { useGetWallet } from "@giving/contexts/wallet-context";
 import CW3 from "@giving/contracts/CW3";
 import IndexFund from "@giving/contracts/IndexFund";
@@ -9,7 +10,6 @@ import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { FundDetails } from "@giving/types/contracts";
 import { CreateFundMeta, FundCreatorValues } from "@giving/types/pages/admin";
-import { useAdminResources } from "pages/Admin/Guard";
 import { INIT_SPLIT } from ".";
 
 export default function useCreateFund() {
