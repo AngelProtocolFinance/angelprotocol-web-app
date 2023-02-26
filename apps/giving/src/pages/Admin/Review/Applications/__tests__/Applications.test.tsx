@@ -1,16 +1,16 @@
 import { render, screen } from "@testing-library/react";
 import { EndowmentProposal } from "@giving/types/aws";
-import AppWrapper from "test/AppWrapper";
 import Applications from "..";
+import AppWrapper from "../../../../../test/AppWrapper";
 
 const mockEndowmentApplicationsQuery = jest.fn();
 const mockAdminContext = jest.fn();
 
-jest.mock("services/aws/registration", () => ({
+jest.mock("libs/@giving/services/aws/registration", () => ({
   __esModule: true,
   useEndowmentApplicationsQuery: () => mockEndowmentApplicationsQuery(),
 }));
-jest.mock("pages/Admin/Guard", () => ({
+jest.mock("libs/@giving/contexts/admin", () => ({
   __esModule: true,
   useAdminResources: () => mockAdminContext(),
 }));
