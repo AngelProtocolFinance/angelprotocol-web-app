@@ -3,8 +3,10 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/giving/src",
   "projectType": "application",
+
   "targets": {
     "build": {
+      "dependsOn": ["styles"],
       "executor": "@nrwl/webpack:webpack",
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
@@ -16,7 +18,7 @@
         "main": "apps/giving/src/index.tsx",
         "tsConfig": "apps/giving/tsconfig.app.json",
         "assets": ["apps/giving/src/favicon.png"],
-        "styles": ["apps/giving/src/index.css"],
+        "styles": ["styles/index.css"],
         "scripts": [],
         "isolatedConfig": true,
         "webpackConfig": "configs/webpack.config.js",

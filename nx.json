@@ -9,18 +9,7 @@
       }
     }
   },
-  "targetDefaults": {
-    "build": {
-      "dependsOn": ["^build"],
-      "inputs": ["production", "^production"]
-    },
-    "lint": {
-      "inputs": ["default", "{workspaceRoot}/.eslintrc.json"]
-    },
-    "test": {
-      "inputs": ["default", "^production", "{workspaceRoot}/configs/jest/jest.preset.js"]
-    }
-  },
+
   "namedInputs": {
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "production": [
@@ -30,8 +19,27 @@
       "!{projectRoot}/tsconfig.spec.json",
       "!{projectRoot}/jest.config.[jt]s"
     ],
-    "sharedGlobals": ["{workspaceRoot}/babel.config.json"]
+
+    "sharedGlobals": ["{workspaceRoot}/babel.config.json"],
+    "styles": [
+      "{workspaceRoot}/styles/**/*",
+      "{workspaceRoot}/configs/tailwind.config.js"
+    ]
   },
+
+  "targetDefaults": {
+    "build": {
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
+    },
+    "lint": {
+      "inputs": ["default", "{workspaceRoot}/.eslintrc.json"]
+    },
+    "test": {
+      "inputs": ["default", "^production", "{workspaceRoot}/configs/jest/**/*"]
+    }
+  },
+
   "workspaceLayout": {
     "appsDir": "apps",
     "libsDir": "libs"

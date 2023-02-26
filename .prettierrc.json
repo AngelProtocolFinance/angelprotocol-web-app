@@ -15,25 +15,6 @@
   "endOfLine": "lf",
   "embeddedLanguageFormatting": "auto",
   "singleAttributePerLine": false,
-  "importOrder": [
-    "types.*",
-    "^assets.*",
-    "^pages.*",
-    "^services.*",
-    "^providers.*",
-    "^contexts.*",
-    "^components.*",
-    "^test.*",
-    "^store.*",
-    "^slices.*",
-    "^contracts.*",
-    "^hooks.*",
-    "^helpers.*",
-    "^schemas.*",
-    "^errors.*",
-    "^constants.*",
-    "^[../]",
-    "^[./]"
-  ],
+  "importOrder": ["^[../]", "^[./]"],
   "importOrderSortSpecifiers": true
 }
