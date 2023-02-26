@@ -26,7 +26,7 @@ export default function Form({ type }: Props) {
     >
       <h3 className="font-bold text-lg mb-6">Update {type} strategy</h3>
 
-      <Fields classes="mt-4" type={type} />
+      <Fields type={type} />
 
       <div className="flex gap-4 my-6 justify-end">
         <button

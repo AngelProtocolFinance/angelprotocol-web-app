@@ -3,7 +3,7 @@ import { adminRoutes } from "@giving/constants/routes";
 import { humanize } from "@giving/helpers";
 import { useLatestBlockQuery } from "@giving/services/juno";
 import { Link } from "react-router-dom";
-import { templates } from "pages/Admin/constants";
+import { templates } from "../../constants";
 import GroupSelector from "./GroupSelector";
 import StatusSelector from "./StatusSelector";
 

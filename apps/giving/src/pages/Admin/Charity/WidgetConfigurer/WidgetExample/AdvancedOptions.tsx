@@ -1,5 +1,5 @@
 import Icon from "@giving/components/Icon";
-import { placeholderChain } from "@giving/contexts/wallet-context/constants";
+import { placeholderChain } from "@giving/contexts/wallet-context";
 import { humanize } from "@giving/helpers";
 import { PropsWithChildren, useEffect, useState } from "react";
 

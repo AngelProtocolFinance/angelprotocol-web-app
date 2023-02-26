@@ -1,10 +1,10 @@
 import Icon from "@giving/components/Icon";
-import { LogoProps } from "@giving/components/Logo";
 import { useModalContext } from "@giving/contexts/modal-context";
 import useHandleScreenResize, {
   SCREEN_LG,
 } from "@giving/hooks/useHandleScreenResize";
 import { Link } from "../../types";
+import { LogoProps } from "@giving/types/components/logo";
 import Menu from "./Menu";
 
 type Props = { classes: string; links: Link[]; logo: LogoProps };

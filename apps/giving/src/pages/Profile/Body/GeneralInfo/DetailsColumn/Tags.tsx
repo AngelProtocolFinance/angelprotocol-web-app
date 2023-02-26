@@ -1,7 +1,7 @@
 import Icon from "@giving/components/Icon";
 import { unsdgs } from "@giving/constants/unsdgs";
 import { PropsWithChildren } from "react";
-import { useProfileContext } from "pages/Profile/ProfileContext";
+import { useProfileContext } from "../../../ProfileContext";
 
 export default function Tags() {
   const profile = useProfileContext();

@@ -1,4 +1,4 @@
-import { ImgLink } from "@giving/components/ImgEditor";
+import { ImgLink } from "@giving/components/img-editor";
 import { CountryOption } from "@giving/services/types";
 import { EndowmentProfileUpdate } from "@giving/types/aws";
 import { OptionType } from "@giving/types/components/selector";

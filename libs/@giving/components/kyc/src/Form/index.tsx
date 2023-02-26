@@ -1,6 +1,6 @@
-import CountrySelector from "@giving/components/CountrySelector";
 import ExtLink from "@giving/components/ExtLink";
 import { Selector } from "@giving/components/Selector";
+import { CountrySelector } from "@giving/components/countries";
 import { CheckField, Field, Label } from "@giving/components/form";
 import { TERMS_OF_USE } from "@giving/constants/urls";
 import { useFormContext } from "react-hook-form";

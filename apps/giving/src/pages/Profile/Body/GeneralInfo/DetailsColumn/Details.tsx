@@ -1,6 +1,6 @@
 import { isEmpty } from "@giving/helpers";
 import { PropsWithChildren } from "react";
-import { useProfileContext } from "pages/Profile/ProfileContext";
+import { useProfileContext } from "../../../ProfileContext";
 
 // import { chainIds } from "@giving/constants/chainIds";
 // import Copier from "@giving/components/Copier";

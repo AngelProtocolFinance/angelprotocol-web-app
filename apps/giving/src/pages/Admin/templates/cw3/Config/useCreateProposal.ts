@@ -3,12 +3,9 @@ import { useAdminResources } from "@giving/contexts/admin";
 import { useModalContext } from "@giving/contexts/modal-context";
 import { useGetWallet } from "@giving/contexts/wallet-context";
 import CW3 from "@giving/contracts/CW3";
-import {
-  genDiffMeta,
-  getPayloadDiff,
-  getTagPayloads,
-} from "@giving/helpers/admin";
+import { genDiffMeta, getPayloadDiff } from "@giving/helpers/admin";
 import useCosmosTxSender from "@giving/hooks/useCosmosTxSender/useCosmosTxSender";
+import { getTagPayloads } from "@giving/services/juno/getTagPayloads";
 import { useFormContext } from "react-hook-form";
 import {
   CW3ConfigUpdateMeta,

@@ -10,7 +10,7 @@ import { useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";
 import { Asset } from "@giving/types/contracts";
 import { WithdrawMeta } from "@giving/types/pages/admin";
-import { accountTypeDisplayValue } from "pages/Admin/Charity/constants";
+import { accountTypeDisplayValue } from "../../../constants";
 import useLogWithdrawProposal from "./useLogWithdrawProposal";
 
 export default function useWithdraw() {

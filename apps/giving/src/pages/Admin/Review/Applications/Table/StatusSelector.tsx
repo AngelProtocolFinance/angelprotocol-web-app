@@ -3,7 +3,7 @@ import { changeSelectedStatus } from "@giving/slices/admin/applications";
 import { useGetter, useSetter } from "@giving/store";
 import { Listbox } from "@headlessui/react";
 import { Fragment } from "react";
-import { ApplicationStatusOptions } from "@giving/slices/admin/types";
+import { ApplicationStatusOptions } from "@giving/services/types";
 
 const options: ApplicationStatusOptions[] = [
   "all",
