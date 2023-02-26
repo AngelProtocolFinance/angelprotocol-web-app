@@ -1,6 +1,6 @@
 import { BASE_DOMAIN } from "@giving/constants/common";
 import { LITEPAPER } from "@giving/constants/urls";
-import { LinkGroup, SocialMediaLink } from "./types";
+import { LinkGroup, SocialMediaLink } from "layouts/types";
 
 export const SOCIAL_MEDIA_LINKS: SocialMediaLink[] = [
   {

@@ -1,18 +1,29 @@
 import Logo from "@giving/components/Logo";
 import WalletSuite from "@giving/components/wallet-suite";
+import { LOGO } from "@giving/constants/common";
 import { appRoutes } from "@giving/constants/routes";
 import { useEffect, useRef, useState } from "react";
 import { Location, matchRoutes, useLocation } from "react-router-dom";
-import { Link } from "../types";
 import { LogoProps } from "@giving/types/components/logo";
+import { Link } from "layouts/types";
 import Airdrop from "./Airdrop";
 import DesktopNav from "./DesktopNav";
 import { Opener as MobileNavOpener } from "./MobileNav";
 import ThemeToggle from "./ThemeToggle";
 
-type Props = { classes: string; links: Link[]; logo: LogoProps };
+type Props = {
+  classes: string;
+  links: Link[];
+  logo?: LogoProps;
+  relative?: true; // relative bg
+};
 
-export default function Header({ classes, links, logo }: Props) {
+export default function Header({
+  classes,
+  links,
+  logo = LOGO,
+  relative,
+}: Props) {
   const location = useLocation();
   const isScrolledRef = useRef<boolean>(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -32,9 +43,11 @@ export default function Header({ classes, links, logo }: Props) {
   }, []);
 
   const bg =
-    !hasBanner(location) || isScrolled ? "bg-blue dark:bg-blue-d3" : "";
+    !hasBanner(location) || isScrolled || relative
+      ? "bg-blue dark:bg-blue-d3"
+      : "";
 
-  const mb = hasBanner(location) ? "-mb-[6.5rem]" : "mb-0";
+  const mb = hasBanner(location) && !relative ? "-mb-[6.5rem]" : "mb-0";
 
   return (
     <header

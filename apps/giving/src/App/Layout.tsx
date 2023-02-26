@@ -2,12 +2,11 @@ import Loader from "@giving/components/Loader";
 import Seo from "@giving/components/Seo";
 import { LOGO } from "@giving/constants/common";
 import { appRoutes } from "@giving/constants/routes";
+import Footer from "layouts/footer";
+import Header from "layouts/header";
 import { Suspense } from "react";
 import { Outlet } from "react-router-dom";
-import { Link } from "./types";
-import Footer from "./Footer";
-import Header from "./Header";
-import { GROUPS_DATA, SOCIAL_MEDIA_LINKS } from "./constants";
+import { Link } from "layouts/types";
 
 const HEADER_LINKS: Link[] = [
   { title: "Marketplace", href: appRoutes.index },
@@ -25,7 +24,7 @@ export default function Layout() {
       <Suspense fallback={<LoaderComponent />}>
         <Outlet />
       </Suspense>
-      <Footer linkGroups={GROUPS_DATA} socials={SOCIAL_MEDIA_LINKS} />
+      <Footer />
     </div>
   );
 }

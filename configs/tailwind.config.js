@@ -4,9 +4,10 @@ const colors = require("tailwindcss/colors");
 module.exports = {
   darkMode: "class",
   content: [
-    "libs/contexts/**/*.{ts,tsx}",
-    "libs/components/**/*.{ts,tsx}",
-    "libs/errors/**/*.{ts,tsx}",
+    "libs/@giving/contexts/**/*.{ts,tsx}",
+    "libs/@giving/components/**/*.{ts,tsx}",
+    "libs/@giving/errors/**/*.{ts,tsx}",
+    "libs/layouts/**/*.{ts,tsx}",
   ],
   theme: {
     colors: {

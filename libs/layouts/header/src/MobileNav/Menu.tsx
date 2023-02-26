@@ -4,8 +4,8 @@ import { useModalContext } from "@giving/contexts/modal-context";
 import { createNavLinkStyler } from "@giving/helpers";
 import { Dialog } from "@headlessui/react";
 import { NavLink } from "react-router-dom";
-import { Link } from "../../types";
 import { LogoProps } from "@giving/types/components/logo";
+import { Link } from "layouts/types";
 import ThemeToggle from "../ThemeToggle";
 
 export default function Menu({

@@ -26,6 +26,10 @@
     "strict": true,
     "target": "es2015",
     "paths": {
+      "layouts/*": ["libs/layouts/src/*"],
+      "layouts/header": ["libs/layouts/header/src/index.tsx"],
+      "layouts/footer": ["libs/layouts/footer/src/index.tsx"],
+
       "@giving/assets/*": ["libs/@giving/assets/src/*"],
       "@giving/types/*": ["libs/@giving/types/src/*"],
       "@giving/constants/*": ["libs/@giving/constants/src/*"],
