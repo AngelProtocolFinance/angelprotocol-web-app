@@ -24,10 +24,8 @@
       },
       "configurations": {
         "development": {
-          "extractLicenses": false,
           "optimization": false,
-          "sourceMap": false,
-          "vendorChunk": true
+          "sourceMap": false
         },
         "production": {
           "optimization": true,
@@ -35,6 +33,7 @@
           "sourceMap": false,
           "namedChunks": false,
           "extractLicenses": true,
+          "progress": true,
           "vendorChunk": false
         }
       }
@@ -43,6 +42,7 @@
       "executor": "@nrwl/webpack:dev-server",
       "defaultConfiguration": "development",
       "options": {
+        "port": 4200,
         "buildTarget": "giving:build",
         "hmr": true
       },
@@ -77,6 +77,5 @@
         }
       }
     }
-  },
-  "tags": []
+  }
 }

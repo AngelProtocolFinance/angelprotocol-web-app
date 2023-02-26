@@ -142,6 +142,7 @@
     "process": "^0.11.10",
     "react-refresh": "^0.10.0",
     "react-test-renderer": "^18.2.0",
+    "size-plugin": "^2.0.2",
     "source-map-explorer": "^2.5.2",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
