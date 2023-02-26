@@ -6,11 +6,11 @@ import AppWrapper from "../../../../../test/AppWrapper";
 const mockEndowmentApplicationsQuery = jest.fn();
 const mockAdminContext = jest.fn();
 
-jest.mock("libs/@giving/services/aws/registration", () => ({
+jest.mock("@giving/services/aws/registration", () => ({
   __esModule: true,
   useEndowmentApplicationsQuery: () => mockEndowmentApplicationsQuery(),
 }));
-jest.mock("libs/@giving/contexts/admin", () => ({
+jest.mock("@giving/contexts/admin", () => ({
   __esModule: true,
   useAdminResources: () => mockAdminContext(),
 }));

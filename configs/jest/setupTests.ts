@@ -36,4 +36,5 @@ Object.defineProperty(window, "matchMedia", {
 global.TextEncoder = TextEncoder;
 (global as any).TextDecoder = TextDecoder; // `global as any` cast required due to (expected) type incompatibility
 global.crypto = new Crypto();
+
 global.fetch = jest.fn();
