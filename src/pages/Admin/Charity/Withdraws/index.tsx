@@ -9,7 +9,8 @@ export default function Withdraws() {
   const queryState = useStateQuery({ id });
 
   return (
-    <div className="grid content-start font-work">
+    <div className="grid gap-6">
+      <h2 className="text-center font-bold text-3xl">Withdraw</h2>
       <QueryLoader
         queryState={queryState}
         messages={{
