@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { CheckField } from "components/form";
+import { MinmaxSlider } from "./MinmaxSlider";
 import useSubmit from "./useSubmit";
 
 export default function Form({ classes = "" }: { classes?: string }) {
@@ -29,6 +30,24 @@ export default function Form({ classes = "" }: { classes?: string }) {
           <span>To liquid</span>
         </div>
         <input type="range" className="range my-4" />
+        <div className="flex justify-between text-sm">
+          <span className="py-2 px-3 border border-prim rounded">50%</span>
+          <span className="py-2 px-3 border border-prim rounded">50%</span>
+        </div>
+      </div>
+      <div className="mb-8 grid content-start border border-prim p-8 rounded">
+        <h3 className="text-xl font-bold mb-8">Default Values</h3>
+        <div className="flex justify-between text-sm">
+          <span>To locked</span>
+          <span>To liquid</span>
+        </div>
+        <MinmaxSlider names={{ min: "min", max: "max" }}>
+          {(min, max) => (
+            <>
+              {min} {max}
+            </>
+          )}
+        </MinmaxSlider>
         <div className="flex justify-between text-sm">
           <span className="py-2 px-3 border border-prim rounded">50%</span>
           <span className="py-2 px-3 border border-prim rounded">50%</span>
