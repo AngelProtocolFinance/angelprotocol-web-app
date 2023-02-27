@@ -1,6 +1,7 @@
 import { WalletProvider } from "@terra-money/wallet-provider";
 import { lazy } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import Launchpad from "pages/Launchpad";
 import ModalContext from "contexts/ModalContext";
 import WalletContext from "contexts/WalletContext";
 import useScrollTop from "hooks/useScrollTop";
@@ -49,6 +50,10 @@ export default function App() {
                 element={<Registration />}
               />
               <Route path={`${appRoutes.gift}/*`} element={<Gift />} />
+              <Route
+                path={`${appRoutes.launchpad}/*`}
+                element={<Launchpad />}
+              />
               <Route index element={<Marketplace />} />
             </Route>
             <Route
