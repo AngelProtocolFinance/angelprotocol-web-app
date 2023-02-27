@@ -18,7 +18,7 @@ export default function Withdrawer({ tokens_on_hand }: EndowmentState) {
       <Tab.List className="grid grid-cols-2 place-items-center gap-1 w-full h-10 p-1 border border-prim rounded-3xl">
         {tabs.map((t) => (
           <Tab
-            key={t}
+            key={`tab-list-${t}`}
             className={({ selected }) =>
               `${
                 selected
@@ -33,7 +33,7 @@ export default function Withdrawer({ tokens_on_hand }: EndowmentState) {
       </Tab.List>
       <Tab.Panels className="w-full max-w-md border rounded border-prim">
         {tabs.map((t) => (
-          <Tab.Panel key={t}>
+          <Tab.Panel key={`tab-panel-${t}`}>
             <WithdrawForm balance={tokens_on_hand[t]} type={t} />
           </Tab.Panel>
         ))}
