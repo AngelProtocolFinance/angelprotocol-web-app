@@ -4,7 +4,7 @@ import ExtLink from "components/ExtLink";
 import { CheckField, Field } from "components/form";
 import { Separator } from "components/registration";
 import { APP_NAME } from "constants/common";
-import { PRIVACY_POLICY } from "constants/urls";
+import { HELP_REGISTRATION, PRIVACY_POLICY } from "constants/urls";
 import routes from "../routes";
 import useSubmit from "./useSubmit";
 
@@ -57,6 +57,13 @@ export default function Form({ classes = "" }: { classes?: string }) {
       >
         Resume your registration
       </Link>
+
+      <ExtLink
+        className="underline text-orange justify-self-center mt-6 text-xs"
+        href={HELP_REGISTRATION}
+      >
+        Need Help?
+      </ExtLink>
     </form>
   );
 }

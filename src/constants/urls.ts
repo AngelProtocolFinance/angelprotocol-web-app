@@ -15,3 +15,5 @@ export const SUPPORT =
   "https://share-eu1.hsforms.com/14aljI0OEQje2DDmJiZoLFgetp37";
 
 export const TERMS_OF_USE = `${BASE_DOMAIN}/terms-of-use`;
+
+export const HELP_REGISTRATION = `https://intercom.help/angel-giving/en/articles/6628120-how-do-i-sign-up-register-as-a-charity`;
