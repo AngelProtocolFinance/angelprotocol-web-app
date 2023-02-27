@@ -38,7 +38,7 @@ export default function Addresses({
         onClick={() =>
           showModal(AddressForm, { onAdd: handleAdd, name: memberName })
         }
-        className="btn-outline-filled min-w-[15rem] justify-self-end text-sm py-3 gap-3 mb-5"
+        className="btn-outline-filled min-w-[13.43rem] justify-self-end text-sm py-3 gap-3 mb-5"
       >
         <Icon type="Plus" />
         <span>Add {memberName}</span>

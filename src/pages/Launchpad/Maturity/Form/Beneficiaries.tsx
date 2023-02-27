@@ -1,20 +1,21 @@
 import { useFieldArray, useFormContext } from "react-hook-form";
-import { CW4Member } from "types/contracts";
+import { Beneficiary } from "../types";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
-import MemberForm from "./MemberForm";
+import { isEmpty } from "helpers";
+import MemberForm from "./AddForm";
 
-const name = "members";
+const name = "beneficiaries";
 
-export default function CW4Members() {
+export default function Beneficiaries() {
   const { showModal } = useModalContext();
   const { fields, append, remove } = useFieldArray({
     name,
   });
 
-  async function handleAdd(member: CW4Member) {
-    append(member);
+  function handleAdd(beneficiary: Beneficiary) {
+    append(beneficiary);
   }
   async function handleRemove(index: number) {
     remove(index);
@@ -22,35 +23,41 @@ export default function CW4Members() {
 
   return (
     <div className="mb-8 grid content-start border border-prim p-8 rounded">
-      <h3 className="text-xl font-bold mb-8">Members</h3>
+      <h3 className="text-xl font-bold mb-8">
+        Beneficiary Whitelist at Maturity
+      </h3>
       <button
         type="button"
         onClick={() => showModal(MemberForm, { onAdd: handleAdd })}
         className="btn-outline-filled justify-self-end text-sm py-3 px-8 gap-3 mb-5"
       >
         <Icon type="Plus" />
-        <span>Add member</span>
+        <span>Add beneficiary</span>
       </button>
-      <table className="table-fixed rounded outline outline-prim">
-        <TableSection
-          type="thead"
-          rowClass="border-b border-prim bg-orange-l6 dark:bg-blue-d7 rounded"
-        >
-          <Cells type="th" cellClass="text-xs uppercase text-left py-3 px-4">
-            <p className="w-80">Member</p>
-            <>Vote weight</>
-            <></>
-          </Cells>
-        </TableSection>
-        <TableSection
-          type="tbody"
-          rowClass="border-b border-prim last:border-none"
-        >
-          {fields.map((field, idx) => (
-            <Row key={field.id} idx={idx} onRemove={handleRemove} />
-          ))}
-        </TableSection>
-      </table>
+      {isEmpty(fields) ? (
+        <p>Multisig wallet is the beneficiary</p>
+      ) : (
+        <table className="table-fixed rounded outline outline-prim">
+          <TableSection
+            type="thead"
+            rowClass="border-b border-prim bg-orange-l6 dark:bg-blue-d7 rounded"
+          >
+            <Cells type="th" cellClass="text-xs uppercase text-left py-3 px-4">
+              <p className="w-80">Member</p>
+              <>Share</>
+              <></>
+            </Cells>
+          </TableSection>
+          <TableSection
+            type="tbody"
+            rowClass="border-b border-prim last:border-none"
+          >
+            {fields.map((field, idx) => (
+              <Row key={field.id} idx={idx} onRemove={handleRemove} />
+            ))}
+          </TableSection>
+        </table>
+      )}
     </div>
   );
 }
@@ -62,11 +69,11 @@ type Props = {
 
 function Row({ idx, onRemove }: Props) {
   const { getValues } = useFormContext();
-  const { addr, weight } = getValues(`${name}.${idx}`);
+  const { addr, share } = getValues(`${name}.${idx}`);
   return (
     <Cells type="td" cellClass="py-3 px-4 text-sm">
       <>{addr}</>
-      <>{weight}</>
+      <>{share}</>
 
       <div className="w-full h-full relative">
         <button

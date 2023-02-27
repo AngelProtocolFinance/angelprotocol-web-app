@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import About from "./About";
 import Layout from "./Layout";
 import Management from "./Management";
+import Maturity from "./Maturity";
 import Whitelists from "./Whitelists";
 
 //Launchpad component
@@ -11,7 +12,7 @@ export default function Launchpad() {
       <Route element={<Layout classes="my-0 md:my-20 justify-self-center" />}>
         <Route path="management" element={<Management />} />
         <Route path="whitelists" element={<Whitelists />} />
-        <Route path="step4" element={<h1>Step 4</h1>} />
+        <Route path="maturity" element={<Maturity />} />
 
         <Route index element={<About />} />
       </Route>

@@ -7,7 +7,7 @@ import { Field } from "components/form";
 type Props = {
   onAdd(member: CW4Member): void;
 };
-export default function MemberForm({ onAdd }: Props) {
+export default function AddForm({ onAdd }: Props) {
   const { closeModal } = useModalContext();
   const methods = useForm();
   const { handleSubmit } = methods;

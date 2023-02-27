@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { CheckField, Field } from "components/form";
-import CW4Members from "./CW4Members";
+import Members from "./Members";
 import useSubmit from "./useSubmit";
 
 export default function Form() {
@@ -16,7 +16,7 @@ export default function Form() {
         decide how many signatories are necessary to execute decisions and how
         long decision requests are open for.
       </p>
-      <CW4Members />
+      <Members />
 
       <div className="content-start border border-prim p-8 rounded">
         <h2 className="font-bold text-center sm:text-left text-xl mb-2">
