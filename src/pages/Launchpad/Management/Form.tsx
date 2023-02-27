@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 import { CheckField, Field } from "components/form";
 import CW4Members from "./CW4Members";
+import useSubmit from "./useSubmit";
 
 export default function Form() {
+  const { submit } = useSubmit();
   return (
-    <form className="w-full bg-white dark:bg-blue-d6">
+    <form onSubmit={submit} className="w-full bg-white dark:bg-blue-d6">
       <h2 className="font-bold text-center sm:text-left text-xl mb-2">
         AIF Management
       </h2>

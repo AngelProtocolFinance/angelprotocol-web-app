@@ -9,7 +9,7 @@ export default function Launchpad() {
     <Routes>
       <Route element={<Layout classes="my-0 md:my-20 justify-self-center" />}>
         <Route path="management" element={<Management />} />
-        <Route path="step3" element={<h1>Step 3</h1>} />
+        <Route path="whitelists" element={<h1>Step 3</h1>} />
         <Route path="step4" element={<h1>Step 4</h1>} />
 
         <Route index element={<About />} />
