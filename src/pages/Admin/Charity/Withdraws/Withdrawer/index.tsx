@@ -31,9 +31,9 @@ export default function Withdrawer({ tokens_on_hand }: EndowmentState) {
           </Tab>
         ))}
       </Tab.List>
-      <Tab.Panels className="w-full max-w-md border rounded border-prim">
+      <Tab.Panels>
         {tabs.map((t) => (
-          <Tab.Panel key={`tab-panel-${t}`}>
+          <Tab.Panel key={`tab-panel-${t}`} className="w-full max-w-md">
             <WithdrawForm balance={tokens_on_hand[t]} type={t} />
           </Tab.Panel>
         ))}
