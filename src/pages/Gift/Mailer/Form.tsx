@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "./types";
@@ -13,13 +12,14 @@ import { appRoutes } from "constants/routes";
 import { APIs } from "constants/urls";
 
 export default function Form({ classes = "" }) {
-  const { handleSubmit, reset } = useFormContext<FV>();
+  const {
+    handleSubmit,
+    reset,
+    formState: { isSubmitting },
+  } = useFormContext<FV>();
   const { showModal } = useModalContext();
 
-  const [isSending, setIsSending] = useState(false);
-
   async function submit({ recipient, secret, message }: FV) {
-    setIsSending(true);
     const res = await fetch(APIs.aws + "/v1/giftcard/send-email", {
       method: "POST",
       headers: { authorization: createAuthToken("angelprotocol-web-app") },
@@ -48,7 +48,6 @@ export default function Form({ classes = "" }) {
         </p>
       ),
     });
-    setIsSending(false);
   }
 
   return (
@@ -95,7 +94,7 @@ export default function Form({ classes = "" }) {
         <button
           className="btn-orange btn-gift"
           type="submit"
-          disabled={isSending}
+          disabled={isSubmitting}
         >
           Submit
         </button>
