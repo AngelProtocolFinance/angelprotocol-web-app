@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
+import { Link } from "react-router-dom";
 import TableSection, { Cells } from "components/TableSection";
 import Toggle from "../../common/Toggle";
 import useSubmit from "./useSubmit";
@@ -14,21 +15,21 @@ export default function Fees() {
         the protocol's treasury. Here, you can set additional fees that will be
         distributed to the address of your choice
       </p>
-      <table className="w-ful table-auto border border-zinc-50/30">
+      <table className="outline outline-1 outline-prim rounded w-full">
         <TableSection
           type="thead"
-          rowClass="border-b divide-x border-zinc-50/30 divide-zinc-50/30"
+          rowClass="uppercase text-xs font-bold border-b border-prim divide-x divide-prim"
         >
-          <Cells type="th" cellClass="p-3 font-medium uppercase text-sm">
+          <Cells type="th" cellClass="px-4 py-3">
             <></>
             <>active</>
-            <>payout address</>
+            <p className="text-left w-80">payout address</p>
             <>rate</>
           </Cells>
         </TableSection>
         <TableSection
           type="tbody"
-          rowClass="divide-x border-b border-zinc-50/30 divide-zinc-50/30"
+          rowClass="border-b border-prim divide-x divide-prim last:border-0"
         >
           <Fee title="withdrawal fee" fieldName="withdrawal" />
           <Fee title="deposit fee" fieldName="deposit" />
@@ -36,13 +37,14 @@ export default function Fees() {
           {/* <Fee title="aum fee" fieldName="aum" /> */}
         </TableSection>
       </table>
-      <button
-        type="button"
-        className="mt-4 justify-self-end"
-        disabled={isSubmitting}
-      >
-        Save
-      </button>
+      <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
+        <Link to={"../splits"} className="py-3 min-w-[8rem] btn-outline-filled">
+          Back
+        </Link>
+        <button type="submit" className="py-3 min-w-[8rem] btn-orange">
+          Continue
+        </button>
+      </div>
     </form>
   );
 }
@@ -68,25 +70,24 @@ function Fee(props: { fieldName: string; title: string }) {
   }, [isActive, props.fieldName, setValue]);
 
   return (
-    <Cells type="td" cellClass={`p-3 ${!isActive ? "bg-zinc-400/10" : ""}`}>
-      <p className="text-xs uppercase">{props.title}</p>
+    <Cells type="td" cellClass="py-3 px-4">
+      <p className="text-sm uppercase font-work">{props.title}</p>
       <Toggle name={`${props.fieldName}.isActive`} />
 
       <input
         disabled={!isActive}
         placeholder="required"
-        className={`w-96 bg-transparent font-mono text-sm ${
-          isAddressError ? "text-rose-400" : "text-emerald-400"
-        } placeholder:text-rose-400/50 focus:outline-none disabled:text-zinc-100/30 disabled:placeholder:text-transparent`}
+        className={`bg-transparent font-mono text-sm ${
+          isAddressError ? "text-red" : "text-green"
+        } placeholder:text-red/50 focus:outline-none disabled:text-white/30 disabled:placeholder:text-transparent`}
         {...register(`${props.fieldName}.payoutAddress`)}
       />
 
       <input
         disabled={!isActive}
-        type="number"
-        className={`w-16 bg-transparent font-mono ${
-          isRateError ? "text-rose-400" : "text-emerald-400"
-        } focus:outline-none disabled:text-zinc-100/30 disabled:text-transparent`}
+        className={`w-6 bg-transparent font-mono ${
+          isRateError ? "text-red" : "text-green"
+        } focus:outline-none disabled:text-white/30`}
         {...register(`${props.fieldName}.rate`)}
       />
     </Cells>
