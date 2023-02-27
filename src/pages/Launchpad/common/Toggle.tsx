@@ -17,7 +17,7 @@ type Props<T extends FV> = PropsWithChildren<{
   required?: boolean;
 }>;
 
-export function Toggle<T extends FV>({
+export default function Toggle<T extends FV>({
   name,
   children,
   disabled,

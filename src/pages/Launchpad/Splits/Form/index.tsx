@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-import { Toggle } from "../../common/Toggle";
+import Toggle from "../../common/Toggle";
 import { MinmaxSlider } from "./MinmaxSlider";
 import useSubmit from "./useSubmit";
 
 export default function Form({ classes = "" }: { classes?: string }) {
-  const { submit, isSubmitting } = useSubmit();
+  const { submit } = useSubmit();
   return (
     <form
       className={`w-full bg-white dark:bg-blue-d6 ${classes}`}
