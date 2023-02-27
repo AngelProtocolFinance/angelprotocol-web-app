@@ -8,8 +8,16 @@ import TableSection, { Cells } from "components/TableSection";
 import useSort from "hooks/useSort";
 import { getTxUrl, humanize } from "helpers";
 import { appRoutes } from "constants/routes";
+import LoadMoreBtn from "./LoadMoreBtn";
 
-export default function Table({ donations, classes = "" }: TableProps) {
+export default function Table({
+  donations,
+  classes = "",
+  disabled,
+  isLoading,
+  hasMore,
+  onLoadMore,
+}: TableProps) {
   const { handleHeaderClick, sorted, sortDirection, sortKey } = useSort(
     donations,
     "date"
@@ -19,7 +27,7 @@ export default function Table({ donations, classes = "" }: TableProps) {
 
   return (
     <table
-      className={`${classes} w-full text-sm rounded-t border border-separate border-spacing-0 border-prim`}
+      className={`${classes} w-full text-sm rounded border border-separate border-spacing-0 border-prim`}
     >
       <TableSection
         type="thead"
@@ -80,53 +88,77 @@ export default function Table({ donations, classes = "" }: TableProps) {
         rowClass="even:bg-orange-l6 dark:odd:bg-blue-d6 dark:even:bg-blue-d7 divide-x divide-prim"
         selectedClass="bg-orange-l5 dark:bg-blue-d4"
       >
-        {sorted.map((row) => (
-          <Cells
-            key={row.hash}
-            type="td"
-            cellClass="p-3 border-t border-prim max-w-[256px] truncate"
-          >
-            <Link
-              to={`${appRoutes.profile}/${row.id}`}
-              className="flex items-center justify-between gap-1 cursor-pointer text-sm hover:underline"
+        {sorted
+          .map((row) => (
+            <Cells
+              key={row.hash}
+              type="td"
+              cellClass={`p-3 border-t border-prim max-w-[256px] truncate ${
+                hasMore ? "" : "first:rounded-bl last:rounded-br"
+              }`}
             >
-              <span className="truncate max-w-[12rem]">{row.charityName}</span>
-              <Icon type="ExternalLink" className="w-5 h-5" />
-            </Link>
-            <>{new Date(row.date).toLocaleDateString()}</>
-            <>{row.chainName}</>
-            <span className="font-body text-sm">{row.symbol}</span>
-            <>{humanize(row.amount, 3)}</>
-            <>{`$${humanize(row.usdValue, 2)}`}</>
-            <ExtLink
-              href={getTxUrl(row.chainId, row.hash)}
-              className="text-center text-angel-blue cursor-pointer uppercase text-sm"
-            >
-              {row.hash}
-            </ExtLink>
-            <div className="text-center text-white">
-              <span
-                className={`${
-                  row.donationFinalized ? "bg-green" : "bg-gray-d1 dark:bg-gray"
-                } font-body px-2 py-0.5 rounded`}
+              <Link
+                to={`${appRoutes.profile}/${row.id}`}
+                className="flex items-center justify-between gap-1 cursor-pointer text-sm hover:underline"
               >
-                {row.donationFinalized ? "RECEIVED" : "PENDING"}
-              </span>
-            </div>
-            <button
-              className="w-full flex justify-center"
-              onClick={() =>
-                showKYCForm({
-                  type: "post-donation",
-                  txHash: row.hash,
-                  classes: "grid gap-5",
-                })
-              }
-            >
-              <Icon type="FatArrowDownload" className="text-2xl" />
-            </button>
-          </Cells>
-        ))}
+                <span className="truncate max-w-[12rem]">
+                  {row.charityName}
+                </span>
+                <Icon type="ExternalLink" className="w-5 h-5" />
+              </Link>
+              <>{new Date(row.date).toLocaleDateString()}</>
+              <>{row.chainName}</>
+              <span className="font-body text-sm">{row.symbol}</span>
+              <>{humanize(row.amount, 3)}</>
+              <>{`$${humanize(row.usdValue, 2)}`}</>
+              <ExtLink
+                href={getTxUrl(row.chainId, row.hash)}
+                className="text-center text-angel-blue cursor-pointer uppercase text-sm"
+              >
+                {row.hash}
+              </ExtLink>
+              <div className="text-center text-white">
+                <span
+                  className={`${
+                    row.donationFinalized
+                      ? "bg-green"
+                      : "bg-gray-d1 dark:bg-gray"
+                  } font-body px-2 py-0.5 rounded`}
+                >
+                  {row.donationFinalized ? "RECEIVED" : "PENDING"}
+                </span>
+              </div>
+              <button
+                className="w-full flex justify-center"
+                onClick={() =>
+                  showKYCForm({
+                    type: "post-donation",
+                    txHash: row.hash,
+                    classes: "grid gap-5",
+                  })
+                }
+              >
+                <Icon type="FatArrowDownload" className="text-2xl" />
+              </button>
+            </Cells>
+          ))
+          .concat(
+            hasMore ? (
+              <td
+                colSpan={9}
+                key="load-more-btn"
+                className="border-t border-prim rounded-b"
+              >
+                <LoadMoreBtn
+                  onLoadMore={onLoadMore}
+                  disabled={disabled}
+                  isLoading={isLoading}
+                />
+              </td>
+            ) : (
+              []
+            )
+          )}
       </TableSection>
     </table>
   );

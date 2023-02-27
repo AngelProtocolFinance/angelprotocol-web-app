@@ -5,13 +5,25 @@ import Icon, { DrawerIcon } from "components/Icon";
 import useKYC from "components/KYC/useKYC";
 import useSort from "hooks/useSort";
 import { humanize } from "helpers";
+import LoadMoreBtn from "./LoadMoreBtn";
 
-export default function MobileTable({ donations, classes = "" }: TableProps) {
+export default function MobileTable({
+  donations,
+  classes = "",
+  disabled,
+  isLoading,
+  hasMore,
+  onLoadMore,
+}: TableProps) {
   const { sorted } = useSort(donations, "date");
   const showKYCForm = useKYC();
 
   return (
-    <div className={`${classes} border border-prim rounded-t`}>
+    <div
+      className={`${classes} border border-prim ${
+        hasMore ? "rounded-t" : "rounded"
+      }`}
+    >
       <div className="grid items-center grid-cols-[auto_1fr_auto] h-12 uppercase text-xs font-bold bg-orange-l6 dark:bg-blue-d7 border-b border-prim divide-x divide-prim rounded-t">
         <div className="w-12" />
         <div className="p-4">Recipient</div>
@@ -22,7 +34,9 @@ export default function MobileTable({ donations, classes = "" }: TableProps) {
         <Disclosure
           key={index}
           as="div"
-          className="text-sm odd:bg-orange-l6 dark:even:bg-blue-d6 dark:odd:bg-blue-d7 w-full border-b last:border-0 border-prim"
+          className={`text-sm odd:bg-orange-l6 dark:even:bg-blue-d6 dark:odd:bg-blue-d7 w-full border-b last:border-0 border-prim ${
+            hasMore ? "" : "last:rounded-b"
+          }`}
         >
           {({ open }) => (
             <>
@@ -62,7 +76,7 @@ export default function MobileTable({ donations, classes = "" }: TableProps) {
                     {row.donationFinalized ? "RECEIVED" : "PENDING"}
                   </div>
                 </Row>
-                <Row title="Receipt">
+                <Row title="Receipt" className="rounded-b">
                   <button
                     className="block"
                     onClick={() =>
@@ -81,6 +95,13 @@ export default function MobileTable({ donations, classes = "" }: TableProps) {
           )}
         </Disclosure>
       ))}
+      {hasMore && (
+        <LoadMoreBtn
+          onLoadMore={onLoadMore}
+          disabled={disabled}
+          isLoading={isLoading}
+        />
+      )}
     </div>
   );
 }
