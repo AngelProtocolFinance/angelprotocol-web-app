@@ -5,9 +5,9 @@ import { FormValues as FV } from "./types";
 import { useModalContext } from "contexts/ModalContext";
 import Prompt from "components/Prompt";
 import { RichTextEditor } from "components/RichText";
-import { Label } from "components/form";
-import { Field } from "components/form";
+import { Field, Label } from "components/form";
 import { createAuthToken } from "helpers";
+import { richTextToHTML } from "helpers/richTextToHtml";
 import { APP_NAME } from "constants/common";
 import { appRoutes } from "constants/routes";
 import { APIs } from "constants/urls";
@@ -18,12 +18,16 @@ export default function Form({ classes = "" }) {
 
   const [isSending, setIsSending] = useState(false);
 
-  async function submit({ recipient, secret }: FV) {
+  async function submit({ recipient, secret, message }: FV) {
     setIsSending(true);
     const res = await fetch(APIs.aws + "/v1/giftcard/send-email", {
       method: "POST",
       headers: { authorization: createAuthToken("angelprotocol-web-app") },
-      body: JSON.stringify({ email: recipient.email, secret }),
+      body: JSON.stringify({
+        email: recipient.email,
+        secret,
+        note: richTextToHTML(JSON.parse(message)),
+      }),
     });
     if (!res.ok) {
       return showModal(Prompt, {
