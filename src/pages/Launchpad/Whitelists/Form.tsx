@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
-import Beneficiaries from "./Beneficiaries";
-import Contributors from "./Contributors";
+import Addresses from "./Addresses";
 import useSubmit from "./useSubmit";
 
 export default function Form() {
@@ -15,9 +14,16 @@ export default function Form() {
         (beneficiaries) from your AIF. You will be able to make changes to those
         lists in the future.
       </p>
-      <Contributors />
-
-      <Beneficiaries />
+      <Addresses
+        memberName="contributor"
+        name="contributors"
+        title="Contributors"
+      />
+      <Addresses
+        memberName="beneficiary"
+        name="beneficiaries"
+        title="Beneficiaries"
+      />
 
       <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
         <Link

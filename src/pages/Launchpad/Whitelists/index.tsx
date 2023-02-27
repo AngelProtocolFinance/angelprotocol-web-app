@@ -4,8 +4,8 @@ import Form from "./Form";
 export default function Whitelists() {
   const methods = useForm({
     defaultValues: {
-      contributors: [],
-      beneficiaries: [],
+      contributors: ["abcd", "efgh", "ijkl"],
+      beneficiaries: ["abcd", "efgh", "ijkl"],
     },
   });
 
