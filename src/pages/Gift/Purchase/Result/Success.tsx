@@ -68,7 +68,7 @@ function EmailCode({ secret }: { secret: string }) {
         </p>
       </div>
       <Link
-        to={`../${routes.mail}`}
+        to={`${routes.mail}`}
         state={{ secret }}
         className="btn-outline-filled text-sm  gap-3.5 w-full sm:w-auto mb-3 mt-8 sm:mb-12 sm:mt-8 "
       >
