@@ -5,7 +5,7 @@ import { accountTypeDisplayValue } from "../../constants";
 import Withdrawer from "./Withdrawer";
 
 const tabs: AccountType[] = ["liquid", "locked"];
-export default function WithdrawTabs({ tokens_on_hand }: EndowmentState) {
+export default function WithdrawForm({ tokens_on_hand }: EndowmentState) {
   const { state } = useLocation(); //state is set from dashboard withdraw link
   const type = state as AccountType;
   return (
