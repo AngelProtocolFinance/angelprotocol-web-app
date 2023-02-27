@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { CheckField } from "components/form";
+import { Toggle } from "../../common/Toggle";
 import { MinmaxSlider } from "./MinmaxSlider";
 import useSubmit from "./useSubmit";
 
@@ -19,9 +19,9 @@ export default function Form({ classes = "" }: { classes?: string }) {
         between your Locked account and your Liquid account. You can deactivate
         that to default to a value that you set or set minimum & maximum values.
       </p>
-      <CheckField name="isSplitCustom" classes={{ container: "my-9 text-sm" }}>
+      <Toggle name="isSplitCustom" classes={{ container: "my-9 text-sm" }}>
         Allow contributors to define a Locked/Liquid Split
-      </CheckField>
+      </Toggle>
 
       <div className="mb-8 grid content-start border border-prim p-8 rounded">
         <h3 className="text-xl font-bold mb-8">Default Values</h3>
