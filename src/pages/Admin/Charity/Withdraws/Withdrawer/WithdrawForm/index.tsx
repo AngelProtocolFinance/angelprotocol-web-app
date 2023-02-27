@@ -7,7 +7,7 @@ import { chainIds } from "constants/chainIds";
 import Form from "./Form";
 import { schema } from "./schema";
 
-export default function Withdrawer({
+export default function WithdrawForm({
   balance: { cw20, native },
   type,
 }: WithdrawerProps) {
