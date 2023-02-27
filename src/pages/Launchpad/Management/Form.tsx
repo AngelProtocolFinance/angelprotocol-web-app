@@ -1,15 +1,10 @@
 import { Link } from "react-router-dom";
 import { Field } from "components/form";
 import CW4Members from "./CW4Members";
-import useSubmit from "./useSubmit";
 
-export default function Management() {
-  const { submit, isSubmitting } = useSubmit();
+export default function Form() {
   return (
-    <form
-      onSubmit={submit}
-      className="my-6 grid w-full max-w-lg content-start justify-self-center"
-    >
+    <form className="w-full bg-white dark:bg-blue-d6">
       <h2 className="font-bold text-center sm:text-left text-xl mb-2">
         AIF Management
       </h2>
@@ -36,18 +31,10 @@ export default function Management() {
       <Field<any> name="percent" label="percent" required />
 
       <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
-        <Link
-          aria-disabled={isSubmitting}
-          to={"../management"}
-          className="py-3 min-w-[8rem] btn-outline-filled"
-        >
+        <Link to={"../"} className="py-3 min-w-[8rem] btn-outline-filled">
           Back
         </Link>
-        <button
-          disabled={isSubmitting}
-          type="submit"
-          className="py-3 min-w-[8rem] btn-orange"
-        >
+        <button type="submit" className="py-3 min-w-[8rem] btn-orange">
           Continue
         </button>
       </div>

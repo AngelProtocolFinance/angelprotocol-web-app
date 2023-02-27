@@ -35,8 +35,6 @@ export default function CW4Members() {
             </Label>
             <input
               {...register(`${name}.${i}.addr`)}
-              disabled={i === 0}
-              className="disabled:cursor-not-allowed disabled:text-zinc-300/50 font-mono text-sm"
               key={field.id} // important to include key with field's id
             />
           </div>
@@ -46,12 +44,15 @@ export default function CW4Members() {
             </Label>
             <input
               {...register(`${name}.${i}.weight`)}
-              className="disabled:text-zinc-100 font-mono text-sm"
               key={field.id} // important to include key with field's id
             />
           </div>
           {i !== 0 && (
-            <button className="absolute -right-8" onClick={handleRemove(i)}>
+            <button
+              type="button"
+              className="absolute -right-8"
+              onClick={handleRemove(i)}
+            >
               --
             </button>
           )}
@@ -68,6 +69,7 @@ export default function CW4Members() {
         </div>
       ))}
       <button
+        type="button"
         onClick={handleAppend}
         className="flex items-center gap-2 justify-self-end text-xs uppercase"
       >
