@@ -29,29 +29,38 @@ export default function Form({ classes = "" }: { classes?: string }) {
           <span>To locked</span>
           <span>To liquid</span>
         </div>
-        <input type="range" className="range my-4" />
-        <div className="flex justify-between text-sm">
-          <span className="py-2 px-3 border border-prim rounded">50%</span>
-          <span className="py-2 px-3 border border-prim rounded">50%</span>
-        </div>
+        <MinmaxSlider
+          names={{ min: "defaultMin", max: "defaultMax" }}
+          hidden="max"
+          hideLabels
+        >
+          {(min, max) => (
+            <div className="flex justify-between text-sm">
+              <span className="py-2 px-3 border border-prim rounded">
+                {max}%
+              </span>
+              <span className="py-2 px-3 border border-prim rounded">
+                {100 - max}%
+              </span>
+            </div>
+          )}
+        </MinmaxSlider>
       </div>
       <div className="mb-8 grid content-start border border-prim p-8 rounded">
-        <h3 className="text-xl font-bold mb-8">Default Values</h3>
+        <h3 className="text-xl font-bold mb-8">Minimums and Maximums</h3>
         <div className="flex justify-between text-sm">
           <span>To locked</span>
           <span>To liquid</span>
         </div>
         <MinmaxSlider names={{ min: "min", max: "max" }}>
           {(min, max) => (
-            <>
-              {min} {max}
-            </>
+            <p className="mt-16">
+              Contributors can decide to allocate{" "}
+              <span className="font-bold">{min}% </span> to{" "}
+              <span className="font-bold">{max}%</span> to the Locked Account
+            </p>
           )}
         </MinmaxSlider>
-        <div className="flex justify-between text-sm">
-          <span className="py-2 px-3 border border-prim rounded">50%</span>
-          <span className="py-2 px-3 border border-prim rounded">50%</span>
-        </div>
       </div>
 
       <div className="grid grid-cols-2 sm:flex gap-2 mt-8">

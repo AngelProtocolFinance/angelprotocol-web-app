@@ -192,6 +192,23 @@
   .field-admin-sec > input {
     @apply border-0 border-b rounded-none bg-transparent p-0 pb-2;
   }
+
+  .range-min,
+  .range-max {
+    @apply appearance-none focus:outline-none;
+  }
+  .range-min::-webkit-slider-thumb {
+    @apply cursor-pointer mt-[14px] appearance-none bg-orange w-5 h-5 rounded-full;
+  }
+  .range-min::-moz-range-thumb {
+    @apply cursor-pointer mt-[14px] appearance-none bg-orange w-5 h-5 rounded-full;
+  }
+  .range-max::-webkit-slider-thumb {
+    @apply cursor-pointer -mt-[14px] appearance-none bg-orange w-5 h-5 rounded-full;
+  }
+  .range-max::-moz-range-thumb {
+    @apply cursor-pointer -mt-[14px] appearance-none bg-orange w-5 h-5 rounded-full;
+  }
 }
 
 @layer utilities {

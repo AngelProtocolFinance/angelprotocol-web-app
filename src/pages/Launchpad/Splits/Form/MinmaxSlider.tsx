@@ -5,6 +5,8 @@ const OVERLAP_WIDTH = 0.1;
 export function MinmaxSlider<T extends FieldValues>(props: {
   names: { min: Path<T>; max: Path<T> };
   children(min: number, max: number): ReactNode;
+  hidden?: "min" | "max";
+  hideLabels?: true;
 }) {
   const {
     field: { value: min, onChange: onMinChange },
@@ -29,46 +31,65 @@ export function MinmaxSlider<T extends FieldValues>(props: {
     onMinChange(min);
   }
 
+  const isClose = max - min < 8;
+
   return (
     <div>
-      {props.children(min, max)}
       <div
-        className="relative my-6 h-10"
+        className="relative my-6 h-4 border border-prim rounded-full"
         style={{
           //prettier-ignore
           background: `linear-gradient(to right, #fafafa30 ${min-OVERLAP_WIDTH}%, 
-            #7dd3fc ${min-OVERLAP_WIDTH}%, #0ea5e9 ${max+OVERLAP_WIDTH}%, 
+            #FFC86F ${min-OVERLAP_WIDTH}%, #FFEFD5 ${max+OVERLAP_WIDTH}%, 
             #fafafa30 ${max+OVERLAP_WIDTH}%)`,
         }}
       >
-        <label
-          className="absolute -bottom-7 text-sm"
-          style={{ left: `${min}%` }}
-        >
-          {min}%
-        </label>
-        <input
-          className={`absolute inset-x-0 top-0 h-0`}
-          type="range"
-          step={1}
-          min={0}
-          max={100}
-          value={max}
-          onChange={handleMaxChange}
-        />
-        <label className="absolute -top-6 text-sm" style={{ left: `${max}%` }}>
-          {max}%
-        </label>
-        <input
-          className="absolute inset-x-0 bottom-0 h-0"
-          type="range"
-          step={1}
-          min={0}
-          max={100}
-          value={min}
-          onChange={handleMinChange}
-        />
+        {props.hidden !== "min" && (
+          <>
+            {!props.hideLabels && !isClose && (
+              <label
+                className="absolute -bottom-7 -ml-1 text-sm"
+                style={{ left: `${min}%` }}
+              >
+                {min}%
+              </label>
+            )}
+            <input
+              id="min"
+              className="range-min absolute inset-x-0 top-0 h-0"
+              type="range"
+              step={1}
+              min={0}
+              max={100}
+              value={max}
+              onChange={handleMaxChange}
+            />
+          </>
+        )}
+        {props.hidden !== "max" && (
+          <>
+            {!props.hideLabels && !isClose && (
+              <label
+                className="absolute -bottom-7 -ml-3 text-sm"
+                style={{ left: `${max}%` }}
+              >
+                {max}%
+              </label>
+            )}
+            <input
+              id="max"
+              className="range-max absolute inset-x-0 bottom-0 h-0"
+              type="range"
+              step={1}
+              min={0}
+              max={100}
+              value={min}
+              onChange={handleMinChange}
+            />
+          </>
+        )}
       </div>
+      {props.children(min, max)}
     </div>
   );
 }
