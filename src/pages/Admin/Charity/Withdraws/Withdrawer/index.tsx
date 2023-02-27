@@ -4,7 +4,11 @@ import { AccountType, EndowmentState } from "types/contracts";
 import { accountTypeDisplayValue } from "../../constants";
 import WithdrawForm from "./WithdrawForm";
 
-const tabs: AccountType[] = ["liquid", "locked"];
+type AccTypeDispVal = typeof accountTypeDisplayValue;
+type AccTypes = keyof AccTypeDispVal;
+type TabEntries = [AccTypes, AccTypeDispVal[AccTypes]][];
+
+const tabEntries = Object.entries(accountTypeDisplayValue) as TabEntries;
 
 export default function Withdrawer({ tokens_on_hand }: EndowmentState) {
   const { state } = useLocation(); //state is set from dashboard withdraw link
@@ -16,9 +20,9 @@ export default function Withdrawer({ tokens_on_hand }: EndowmentState) {
       defaultIndex={type === "locked" ? 1 : 0}
     >
       <Tab.List className="grid grid-cols-2 place-items-center gap-1 w-full h-10 p-1 border border-prim rounded-3xl">
-        {tabs.map((t) => (
+        {tabEntries.map(([accType, value]) => (
           <Tab
-            key={`tab-list-${t}`}
+            key={`tab-list-${accType}`}
             className={({ selected }) =>
               `${
                 selected
@@ -27,14 +31,14 @@ export default function Withdrawer({ tokens_on_hand }: EndowmentState) {
               } rounded-2xl flex items-center justify-center w-full h-full uppercase text-sm font-bold focus:outline-none`
             }
           >
-            {accountTypeDisplayValue[t]}
+            {value}
           </Tab>
         ))}
       </Tab.List>
       <Tab.Panels>
-        {tabs.map((t) => (
-          <Tab.Panel key={`tab-panel-${t}`} className="w-full max-w-md">
-            <WithdrawForm balance={tokens_on_hand[t]} type={t} />
+        {tabEntries.map(([accType]) => (
+          <Tab.Panel key={`tab-panel-${accType}`} className="w-full max-w-md">
+            <WithdrawForm balance={tokens_on_hand[accType]} type={accType} />
           </Tab.Panel>
         ))}
       </Tab.Panels>
