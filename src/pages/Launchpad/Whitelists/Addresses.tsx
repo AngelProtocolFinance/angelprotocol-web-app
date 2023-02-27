@@ -2,15 +2,22 @@ import { useFieldArray, useFormContext } from "react-hook-form";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
+import { isEmpty } from "helpers";
 import AddressForm from "./AddressForm";
 
 type Props = {
   name: string;
   title: string;
   memberName: string;
+  emptyMsg: string;
 };
 
-export default function Addresses({ title, name, memberName }: Props) {
+export default function Addresses({
+  title,
+  name,
+  memberName,
+  emptyMsg,
+}: Props) {
   const { showModal } = useModalContext();
   const { fields, append, remove } = useFieldArray({
     name,
@@ -36,16 +43,25 @@ export default function Addresses({ title, name, memberName }: Props) {
         <Icon type="Plus" />
         <span>Add {memberName}</span>
       </button>
-      <table className="table-fixed rounded outline outline-prim">
-        <TableSection
-          type="tbody"
-          rowClass="border-b border-prim divide-x divide-prim last:border-none"
-        >
-          {fields.map((field, idx) => (
-            <Row key={field.id} idx={idx} onRemove={handleRemove} name={name} />
-          ))}
-        </TableSection>
-      </table>
+      {isEmpty(fields) ? (
+        <p>{emptyMsg}</p>
+      ) : (
+        <table className="table-fixed rounded outline outline-prim">
+          <TableSection
+            type="tbody"
+            rowClass="border-b border-prim divide-x divide-prim last:border-none"
+          >
+            {fields.map((field, idx) => (
+              <Row
+                key={field.id}
+                idx={idx}
+                onRemove={handleRemove}
+                name={name}
+              />
+            ))}
+          </TableSection>
+        </table>
+      )}
     </div>
   );
 }

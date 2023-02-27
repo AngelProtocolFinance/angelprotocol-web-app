@@ -18,11 +18,13 @@ export default function Form() {
         memberName="contributor"
         name="contributors"
         title="Contributors"
+        emptyMsg="Anyone can contribute to your AIF."
       />
       <Addresses
         memberName="beneficiary"
         name="beneficiaries"
         title="Beneficiaries"
+        emptyMsg="Multisig wallet will be the only beneficiary"
       />
 
       <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
