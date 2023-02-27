@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Field } from "components/form";
+import { CheckField, Field } from "components/form";
 import CW4Members from "./CW4Members";
 
 export default function Form() {
@@ -16,19 +16,26 @@ export default function Form() {
       </p>
       <CW4Members />
 
-      <h2 className="font-bold text-center sm:text-left text-xl mb-2">
-        Settings
-      </h2>
-
-      <Field name="time.days" label="Days" required />
-      <Field
-        name="time.hours"
-        label="Hours"
-        classes={{ container: "mt-8 mb-4" }}
-        required
-      />
-
-      <Field<any> name="percent" label="percent" required />
+      <div className="content-start border border-prim p-8 rounded">
+        <h2 className="font-bold text-center sm:text-left text-xl mb-2">
+          Settings
+        </h2>
+        <Field
+          name="threshold"
+          label="Proposal threshold"
+          classes={{ container: "mt-8 mb-4" }}
+          required
+        />
+        <Field
+          name="duration"
+          label="Proposal duration"
+          classes={{ container: "mt-8 mb-4" }}
+          required
+        />
+        <CheckField name="isAutoExecuted" classes={{ container: "mb-4" }}>
+          Auto execute proposals
+        </CheckField>
+      </div>
 
       <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
         <Link to={"../"} className="py-3 min-w-[8rem] btn-outline-filled">

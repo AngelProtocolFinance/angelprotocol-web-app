@@ -44,9 +44,10 @@ export default function CW4Members() {
       <button
         type="button"
         onClick={handleAppend}
-        className="flex items-center gap-2 justify-self-end text-sm uppercase"
+        className="btn-outline-filled justify-self-end text-sm py-3 px-8 gap-3 mt-5"
       >
-        add another member
+        <Icon type="Plus" />
+        <span>Add member</span>
       </button>
     </div>
   );
