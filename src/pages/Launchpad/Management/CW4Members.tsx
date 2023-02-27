@@ -31,10 +31,10 @@ export default function CW4Members() {
         <Icon type="Plus" />
         <span>Add member</span>
       </button>
-      <table className="table-fixed">
+      <table className="table-fixed rounded outline outline-prim">
         <TableSection
           type="thead"
-          rowClass="border-b border-prim bg-orange-l6 dark:bg-blue-d7"
+          rowClass="border-b border-prim bg-orange-l6 dark:bg-blue-d7 rounded"
         >
           <Cells type="th" cellClass="text-xs uppercase text-left py-3 px-4">
             <p className="w-80">Member</p>
@@ -42,7 +42,10 @@ export default function CW4Members() {
             <></>
           </Cells>
         </TableSection>
-        <TableSection type="tbody" rowClass="border-b border-prim">
+        <TableSection
+          type="tbody"
+          rowClass="border-b border-prim last:border-none"
+        >
           {fields.map((field, idx) => (
             <Row key={field.id} idx={idx} onRemove={handleRemove} />
           ))}
@@ -58,30 +61,26 @@ type Props = {
 };
 
 function Row({ idx, onRemove }: Props) {
-  const { register } = useFormContext();
+  const { getValues } = useFormContext();
+  const { addr, weight } = getValues(`${name}.${idx}`);
   return (
-    <Cells type="td" cellClass="relative">
-      <input
-        className="w-full focus:outline-none bg-transparent py-3 px-4 text-sm"
-        {...register(`${name}.${idx}.addr`)}
-      />
+    <Cells type="td" cellClass="py-3 px-4 text-sm">
+      <>{addr}</>
+      <>{weight}</>
 
-      <input
-        className="w-min focus:outline-none bg-transparent py-3 px-4 text-sm"
-        {...register(`${name}.${idx}.weight`)}
-      />
-
-      <button
-        className="text-center absolute-center"
-        type="button"
-        onClick={() => onRemove(idx)}
-      >
-        <Icon
-          type="CloseCircle"
-          size={22}
-          className="text-gray-d1 dark:text-gray"
-        />
-      </button>
+      <div className="w-full h-full relative">
+        <button
+          className="text-center absolute-center"
+          type="button"
+          onClick={() => onRemove(idx)}
+        >
+          <Icon
+            type="CloseCircle"
+            size={22}
+            className="text-gray-d1 dark:text-gray"
+          />
+        </button>
+      </div>
     </Cells>
   );
 }
