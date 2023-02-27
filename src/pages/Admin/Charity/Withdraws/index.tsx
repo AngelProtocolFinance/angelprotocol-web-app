@@ -2,7 +2,7 @@ import { useAdminResources } from "pages/Admin/Guard";
 import { useStateQuery } from "services/juno/account";
 import QueryLoader from "components/QueryLoader";
 import Transactions from "./Transactions";
-import WithdrawForm from "./WithdrawForm";
+import Withdrawer from "./Withdrawer";
 
 export default function Withdraws() {
   const { id } = useAdminResources();
@@ -18,7 +18,7 @@ export default function Withdraws() {
           error: "Failed to load withdraw form",
         }}
       >
-        {(balance) => <WithdrawForm {...balance} />}
+        {(balance) => <Withdrawer {...balance} />}
       </QueryLoader>
 
       <h3 className="uppercase font-extrabold text-2xl mt-6 border-t border-prim pt-2">
