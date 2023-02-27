@@ -1,0 +1,51 @@
+import { Link } from "react-router-dom";
+import { CheckField } from "components/form";
+import useSubmit from "./useSubmit";
+
+export default function Form({ classes = "" }: { classes?: string }) {
+  const { submit, isSubmitting } = useSubmit();
+  return (
+    <form
+      className={`w-full bg-white dark:bg-blue-d6 ${classes}`}
+      onSubmit={submit}
+    >
+      <h2 className="font-bold text-center sm:text-left text-xl mb-2">
+        Split of Contributions
+      </h2>
+      <p className="text-center sm:text-left text-lg text-gray-d1 dark:text-gray">
+        You can set the distribution of the contributions to your AIF. By
+        default, contributors are able to set how their contribution is split
+        between your Locked account and your Liquid account. You can deactivate
+        that to default to a value that you set or set minimum & maximum values.
+      </p>
+      <CheckField name="isSplitCustom" classes={{ container: "my-9 text-sm" }}>
+        Allow contributors to define a Locked/Liquid Split
+      </CheckField>
+
+      <div className="mb-8 grid content-start border border-prim p-8 rounded">
+        <h3 className="text-xl font-bold mb-8">Default Values</h3>
+        <div className="flex justify-between text-sm">
+          <span>To locked</span>
+          <span>To liquid</span>
+        </div>
+        <input type="range" className="range my-4" />
+        <div className="flex justify-between text-sm">
+          <span className="py-2 px-3 border border-prim rounded">50%</span>
+          <span className="py-2 px-3 border border-prim rounded">50%</span>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
+        <Link
+          to={"../maturity"}
+          className="py-3 min-w-[8rem] btn-outline-filled"
+        >
+          Back
+        </Link>
+        <button type="submit" className="py-3 min-w-[8rem] btn-orange">
+          Continue
+        </button>
+      </div>
+    </form>
+  );
+}

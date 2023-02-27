@@ -3,6 +3,7 @@ import About from "./About";
 import Layout from "./Layout";
 import Management from "./Management";
 import Maturity from "./Maturity";
+import Splits from "./Splits";
 import Whitelists from "./Whitelists";
 
 //Launchpad component
@@ -13,6 +14,7 @@ export default function Launchpad() {
         <Route path="management" element={<Management />} />
         <Route path="whitelists" element={<Whitelists />} />
         <Route path="maturity" element={<Maturity />} />
+        <Route path="splits" element={<Splits />} />
 
         <Route index element={<About />} />
       </Route>
