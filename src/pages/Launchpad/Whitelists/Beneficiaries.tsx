@@ -1,36 +1,28 @@
 import { useFieldArray, useFormContext } from "react-hook-form";
-import { CW4Member } from "types/contracts";
-import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
-import MemberForm from "./MemberForm";
 
-const name = "members";
+const defaultValue = "";
+const name = "beneficiaries";
 
-export default function CW4Members() {
-  const { showModal } = useModalContext();
+export default function Beneficiaries() {
+  const { trigger } = useFormContext();
   const { fields, append, remove } = useFieldArray({
     name,
   });
 
-  async function handleAdd(member: CW4Member) {
-    append(member);
+  async function handleAppend() {
+    append(defaultValue);
+    await trigger();
   }
   async function handleRemove(index: number) {
     remove(index);
+    await trigger();
   }
 
   return (
     <div className="mb-8 grid content-start border border-prim p-8 rounded">
-      <h3 className="text-xl font-bold mb-8">Members</h3>
-      <button
-        type="button"
-        onClick={() => showModal(MemberForm, { onAdd: handleAdd })}
-        className="btn-outline-filled justify-self-end text-sm py-3 px-8 gap-3 mb-5"
-      >
-        <Icon type="Plus" />
-        <span>Add member</span>
-      </button>
+      <h3 className="text-xl font-bold mb-8">Beneficiaries</h3>
       <table className="table-fixed">
         <TableSection
           type="thead"
@@ -38,7 +30,6 @@ export default function CW4Members() {
         >
           <Cells type="th" cellClass="text-xs uppercase text-left py-3 px-4">
             <p className="w-80">Member</p>
-            <>Vote weight</>
             <></>
           </Cells>
         </TableSection>
@@ -48,6 +39,15 @@ export default function CW4Members() {
           ))}
         </TableSection>
       </table>
+
+      <button
+        type="button"
+        onClick={handleAppend}
+        className="btn-outline-filled justify-self-end text-sm py-3 px-8 gap-3 mt-5"
+      >
+        <Icon type="Plus" />
+        <span>Add contributor</span>
+      </button>
     </div>
   );
 }
@@ -63,12 +63,7 @@ function Row({ idx, onRemove }: Props) {
     <Cells type="td" cellClass="relative">
       <input
         className="w-full focus:outline-none bg-transparent py-3 px-4 text-sm"
-        {...register(`${name}.${idx}.addr`)}
-      />
-
-      <input
-        className="w-min focus:outline-none bg-transparent py-3 px-4 text-sm"
-        {...register(`${name}.${idx}.weight`)}
+        {...register(`${name}.${idx}`)}
       />
 
       <button
