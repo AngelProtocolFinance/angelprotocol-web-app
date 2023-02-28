@@ -5,7 +5,7 @@ import { FV } from "./types";
 import { SchemaShape } from "schemas/types";
 import { useGetWallet } from "contexts/WalletContext";
 import { useLaunchpad } from "slices/launchpad";
-import { requiredPercentString, requiredPositiveNumber } from "schemas/number";
+import { requiredPercent, requiredPositiveNumber } from "schemas/number";
 import { isJunoAddress } from "schemas/tests";
 import { withStepGuard } from "../withStepGuard";
 import Form from "./Form";
@@ -19,7 +19,7 @@ export default withStepGuard<2>(function Management({ data }) {
       object().shape<SchemaShape<FV>>({
         proposal: object().shape<SchemaShape<FV["proposal"]>>({
           duration: requiredPositiveNumber,
-          threshold: requiredPercentString,
+          threshold: requiredPercent,
         }),
       })
     ),

@@ -39,7 +39,7 @@ export type TFees = {
   earnings: TFee;
 };
 
-type TFee = {
+export type TFee = {
   isActive: boolean;
   receiver: string;
   rate: string /* "1" - "100" */;
