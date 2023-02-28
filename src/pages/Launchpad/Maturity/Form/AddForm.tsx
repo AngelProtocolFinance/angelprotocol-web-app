@@ -1,16 +1,43 @@
 import { Dialog } from "@headlessui/react";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
+import { lazy, number, object, string } from "yup";
+import { SchemaShape } from "schemas/types";
 import { Beneficiary } from "slices/launchpad/types";
 import { useModalContext } from "contexts/ModalContext";
 import { Field } from "components/form";
+import { percentConstraint } from "schemas/number";
+import { requiredWalletAddr } from "schemas/string";
 
 type Props = {
-  //also pass remaning share for validation
+  share: number; //compute at modal opening
+  added: string[]; //map at modal opening
   onAdd(beneficiary: Beneficiary): void;
 };
-export default function AddForm({ onAdd }: Props) {
+
+type FV = Beneficiary;
+export default function AddForm({ onAdd, share, added }: Props) {
+  console.log(share);
   const { closeModal } = useModalContext();
-  const methods = useForm();
+  const methods = useForm<FV>({
+    resolver: yupResolver(
+      object().shape<SchemaShape<FV>>({
+        addr: requiredWalletAddr().notOneOf(added, "address already added"),
+        share: lazy((value) =>
+          value === ""
+            ? string().required("required")
+            : number()
+                .typeError("must be a number")
+                .positive("must be more than 0")
+                .max(100 - share, "total share must not exceed 100%")
+        ),
+      })
+    ),
+    defaultValues: {
+      addr: "",
+      share: "",
+    },
+  });
   const { handleSubmit } = methods;
   return (
     <Dialog.Panel
@@ -25,7 +52,7 @@ export default function AddForm({ onAdd }: Props) {
         <Field name="addr" label="Address" required />
         <Field name="share" label="Share" required />
       </FormProvider>
-      <button type="submit" className="btn btn-orange">
+      <button type="submit" className="btn btn-orange mt-6">
         Add beneficiary
       </button>
     </Dialog.Panel>

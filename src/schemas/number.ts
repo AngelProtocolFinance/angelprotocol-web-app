@@ -11,7 +11,7 @@ const positiveNumberConstraint = Yup.number()
   //.positive treats 0 as negative
   .positive("must be more than 0");
 
-const percentConstraint = Yup.number()
+export const percentConstraint = Yup.number()
   .typeError("invalid: must be a number")
   .positive("must be more than 0")
   .max(100, "invalid: should not be greater than 100");

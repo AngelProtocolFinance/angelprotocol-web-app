@@ -1,4 +1,5 @@
 import { useFieldArray, useFormContext } from "react-hook-form";
+import { FV } from "../types";
 import { Beneficiary } from "slices/launchpad/types";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
@@ -6,10 +7,11 @@ import TableSection, { Cells } from "components/TableSection";
 import { isEmpty } from "helpers";
 import MemberForm from "./AddForm";
 
-const name = "beneficiaries";
+const name: keyof FV = "beneficiaries";
 
 export default function Beneficiaries() {
   const { showModal } = useModalContext();
+  const { getValues } = useFormContext<FV>();
   const { fields, append, remove } = useFieldArray({
     name,
   });
@@ -28,7 +30,16 @@ export default function Beneficiaries() {
       </h3>
       <button
         type="button"
-        onClick={() => showModal(MemberForm, { onAdd: handleAdd })}
+        onClick={() =>
+          showModal(MemberForm, {
+            onAdd: handleAdd,
+            share: getValues("beneficiaries").reduce(
+              (acc, cur) => acc + +cur.share,
+              0
+            ),
+            added: getValues("beneficiaries").map((b) => b.addr),
+          })
+        }
         className="btn-outline-filled justify-self-end text-sm py-3 px-8 gap-3 mb-5"
       >
         <Icon type="Plus" />

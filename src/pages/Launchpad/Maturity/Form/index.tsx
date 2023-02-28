@@ -1,10 +1,16 @@
+import { FormEventHandler } from "react";
+import { FV } from "../types";
 import NavButtons from "pages/Launchpad/common/NavButtons";
 import { Field } from "components/form";
 import Beneficiaries from "./Beneficiaries";
 
-export default function Form({ classes = "" }: { classes?: string }) {
+type Props = {
+  onSubmit: FormEventHandler<HTMLFormElement>;
+};
+
+export default function Form({ onSubmit }: Props) {
   return (
-    <form className={`w-full bg-white dark:bg-blue-d6 ${classes}`}>
+    <form onSubmit={onSubmit} className="w-full bg-white dark:bg-blue-d6">
       <h2 className="font-bold text-center sm:text-left text-xl mb-2">
         Maturity
       </h2>
@@ -13,9 +19,9 @@ export default function Form({ classes = "" }: { classes?: string }) {
         funds from both Liquid account and Locked account can be withdrawn by a
         list of addresses set in advance.
       </p>
-      <Field
+      <Field<FV, "date">
         type="date"
-        name="maturity"
+        name="date"
         label="Maturity date"
         placeholder="DD/MM/YYYY"
         required
