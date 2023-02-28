@@ -2,7 +2,7 @@ import { CW4Member } from "types/contracts";
 
 export type TAbout = { name: string; tagline: string };
 export type TManagement = {
-  members: CW4Member;
+  members: CW4Member[];
   //proposal config defaulted to percentage
   proposal: {
     threshold: number;

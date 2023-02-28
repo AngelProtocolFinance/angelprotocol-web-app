@@ -1,4 +1,5 @@
 import { useFieldArray, useFormContext } from "react-hook-form";
+import { FV } from "./types";
 import { CW4Member } from "types/contracts";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
@@ -9,6 +10,7 @@ const name = "members";
 
 export default function Members() {
   const { showModal } = useModalContext();
+  const { getValues } = useFormContext<FV>();
   const { fields, append, remove } = useFieldArray({
     name,
   });
@@ -25,7 +27,12 @@ export default function Members() {
       <h3 className="text-xl font-bold mb-8">Members</h3>
       <button
         type="button"
-        onClick={() => showModal(AddForm, { onAdd: handleAdd })}
+        onClick={() =>
+          showModal(AddForm, {
+            onAdd: handleAdd,
+            added: getValues("members").map((m) => m.addr),
+          })
+        }
         className="btn-outline-filled justify-self-end text-sm py-3 px-8 gap-3 mb-5"
       >
         <Icon type="Plus" />
