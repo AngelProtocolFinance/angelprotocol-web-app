@@ -1,12 +1,14 @@
+import { FormEventHandler } from "react";
 import { Link } from "react-router-dom";
-import { CheckField, Field } from "components/form";
+import { FV } from "./types";
+import { Field } from "components/form";
+import Toggle from "../common/Toggle";
 import Members from "./Members";
-import useSubmit from "./useSubmit";
 
-export default function Form() {
-  const { submit } = useSubmit();
+type Props = { onSubmit: FormEventHandler<HTMLFormElement> };
+export default function Form({ onSubmit }: Props) {
   return (
-    <form onSubmit={submit} className="w-full bg-white dark:bg-blue-d6">
+    <form onSubmit={onSubmit} className="w-full bg-white dark:bg-blue-d6">
       <h2 className="font-bold text-center sm:text-left text-xl mb-2">
         AIF Management
       </h2>
@@ -20,27 +22,30 @@ export default function Form() {
 
       <div className="content-start border border-prim p-8 rounded">
         <h2 className="font-bold text-center sm:text-left text-xl mb-2">
-          Settings
+          Proposal settings
         </h2>
-        <Field
+        <Field<FV>
           name="threshold"
-          label="Proposal threshold"
+          label="Pass threshold ( % )"
           classes={{ container: "mt-8 mb-4" }}
           required
         />
-        <Field
+        <Field<FV>
           name="duration"
-          label="Proposal duration"
-          classes={{ container: "mt-8 mb-4" }}
+          label="Duration ( hours )"
+          classes={{ container: "mt-8 mb-6" }}
           required
         />
-        <CheckField name="isAutoExecuted" classes={{ container: "mb-4" }}>
-          Auto execute proposals
-        </CheckField>
+        <Toggle<FV>
+          name="isAutoExecute"
+          classes={{ container: "mb-4 text-sm" }}
+        >
+          Auto execute after passing vote
+        </Toggle>
       </div>
 
       <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
-        <Link to={"../"} className="py-3 min-w-[8rem] btn-outline-filled">
+        <Link to={"../."} className="py-3 min-w-[8rem] btn-outline-filled">
           Back
         </Link>
         <button type="submit" className="py-3 min-w-[8rem] btn-orange">

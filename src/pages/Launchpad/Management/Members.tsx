@@ -3,10 +3,12 @@ import { FV } from "./types";
 import { CW4Member } from "types/contracts";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
+import Status from "components/Status";
 import TableSection, { Cells } from "components/TableSection";
+import { isEmpty } from "helpers";
 import AddForm from "./AddForm";
 
-const name = "members";
+const name: keyof FV = "members";
 
 export default function Members() {
   const { showModal } = useModalContext();
@@ -38,26 +40,37 @@ export default function Members() {
         <Icon type="Plus" />
         <span>Add member</span>
       </button>
-      <table className="table-fixed rounded outline outline-prim">
-        <TableSection
-          type="thead"
-          rowClass="border-b border-prim bg-orange-l6 dark:bg-blue-d7 rounded"
+      {isEmpty(fields) ? (
+        <Status
+          icon="Info"
+          iconOptions={{ size: 18 }}
+          classes="text-sm text-gray-l2 dark:text-gray mt-4"
         >
-          <Cells type="th" cellClass="text-xs uppercase text-left py-3 px-4">
-            <p className="w-80">Member</p>
-            <>Vote weight</>
-            <></>
-          </Cells>
-        </TableSection>
-        <TableSection
-          type="tbody"
-          rowClass="border-b border-prim last:border-none"
-        >
-          {fields.map((field, idx) => (
-            <Row key={field.id} idx={idx} onRemove={handleRemove} />
-          ))}
-        </TableSection>
-      </table>
+          No members have been added yet - would be set to the creator of this
+          fund
+        </Status>
+      ) : (
+        <table className="table-fixed rounded outline outline-1 outline-prim">
+          <TableSection
+            type="thead"
+            rowClass="border-b border-prim bg-orange-l6 dark:bg-blue-d7 rounded"
+          >
+            <Cells type="th" cellClass="text-xs uppercase text-left py-3 px-4">
+              <p className="w-80">Member</p>
+              <>Vote weight</>
+              <></>
+            </Cells>
+          </TableSection>
+          <TableSection
+            type="tbody"
+            rowClass="border-b border-prim last:border-none"
+          >
+            {fields.map((field, idx) => (
+              <Row key={field.id} idx={idx} onRemove={handleRemove} />
+            ))}
+          </TableSection>
+        </table>
+      )}
     </div>
   );
 }

@@ -1,3 +1,8 @@
 import { TManagement } from "slices/launchpad/types";
 
-export type FV = TManagement;
+export type FV = {
+  members: TManagement["members"];
+  duration: string;
+  threshold: string;
+  isAutoExecute: boolean;
+};

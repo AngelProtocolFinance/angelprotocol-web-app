@@ -37,7 +37,7 @@ export default function Beneficiaries() {
       {isEmpty(fields) ? (
         <p>Multisig wallet is the beneficiary</p>
       ) : (
-        <table className="table-fixed rounded outline outline-prim">
+        <table className="table-fixed rounded outline outline-1 outline-prim">
           <TableSection
             type="thead"
             rowClass="border-b border-prim bg-orange-l6 dark:bg-blue-d7 rounded"

@@ -46,7 +46,7 @@ export default function Addresses({
       {isEmpty(fields) ? (
         <p>{emptyMsg}</p>
       ) : (
-        <table className="table-fixed rounded outline outline-prim">
+        <table className="table-fixed rounded outline outline-1 outline-prim">
           <TableSection
             type="tbody"
             rowClass="border-b border-prim divide-x divide-prim last:border-none"

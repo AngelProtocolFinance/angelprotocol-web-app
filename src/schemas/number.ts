@@ -8,7 +8,8 @@ export const tokenConstraint = Yup.number()
 
 const positiveNumberConstraint = Yup.number()
   .typeError("invalid: must be a number")
-  .positive("invalid: must be greater than zero");
+  .positive("invalid: can't be negative")
+  .moreThan(0, "invalid: can't be zero");
 
 const percentConstraint = Yup.number()
   .typeError("invalid: must be a number")
@@ -38,9 +39,5 @@ export const positiveNumber = Yup.lazy((value) =>
   value === "" ? Yup.string() : positiveNumberConstraint
 );
 export const percentString = Yup.lazy((value) =>
-  value === ""
-    ? Yup.string()
-    : percentConstraint.isValidSync(value)
-    ? Yup.string()
-    : percentConstraint
+  value === "" ? Yup.string() : percentConstraint
 );
