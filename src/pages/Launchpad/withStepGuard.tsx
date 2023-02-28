@@ -5,6 +5,7 @@ import { useGetter } from "store/accessors";
 
 export type Props = {
   step: Steps;
+  classes?: string;
 };
 
 type StepProps<T extends Steps> = {
@@ -13,7 +14,7 @@ type StepProps<T extends Steps> = {
 };
 
 export function withStepGuard<T extends Steps>(Step: FC<StepProps<T>>) {
-  return function StepGuard({ step, ...props }: Props & StepProps<T>) {
+  return function StepGuard({ step, ...props }: Props) {
     const state = useGetter((state) => state.launchpad);
 
     //if no progress, go to step1

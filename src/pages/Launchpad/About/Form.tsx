@@ -1,12 +1,15 @@
 import { Field } from "components/form";
-import useSubmit from "./useSubmit";
 
-export default function Form({ classes = "" }: { classes?: string }) {
-  const { submit, isSubmitting } = useSubmit();
+type Props = {
+  onSubmit: React.FormEventHandler<HTMLFormElement>;
+  classes?: string;
+};
+
+export default function Form({ classes = "", onSubmit }: Props) {
   return (
     <form
       className={`w-full bg-white dark:bg-blue-d6 ${classes}`}
-      onSubmit={submit}
+      onSubmit={onSubmit}
     >
       <h2 className="font-bold text-center sm:text-left text-xl mb-2">About</h2>
       <p className="text-center sm:text-left text-lg mb-8">
@@ -29,8 +32,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
       />
       <button
         type="submit"
-        className="mt-8 py-3 px-8 w-full sm:w-auto btn-orange btn-reg"
-        disabled={isSubmitting}
+        className="mt-8 py-3 px-8 w-full sm:w-auto btn-orange"
       >
         Continue
       </button>
