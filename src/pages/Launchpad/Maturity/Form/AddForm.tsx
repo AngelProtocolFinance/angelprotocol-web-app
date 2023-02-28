@@ -6,7 +6,6 @@ import { SchemaShape } from "schemas/types";
 import { Beneficiary } from "slices/launchpad/types";
 import { useModalContext } from "contexts/ModalContext";
 import { Field } from "components/form";
-import { percentConstraint } from "schemas/number";
 import { requiredWalletAddr } from "schemas/string";
 
 type Props = {
@@ -17,7 +16,6 @@ type Props = {
 
 type FV = Beneficiary;
 export default function AddForm({ onAdd, share, added }: Props) {
-  console.log(share);
   const { closeModal } = useModalContext();
   const methods = useForm<FV>({
     resolver: yupResolver(

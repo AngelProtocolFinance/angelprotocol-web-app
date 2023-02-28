@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { FV } from "../types";
 import { Beneficiary } from "slices/launchpad/types";
@@ -11,7 +12,7 @@ const name: keyof FV = "beneficiaries";
 
 export default function Beneficiaries() {
   const { showModal } = useModalContext();
-  const { getValues } = useFormContext<FV>();
+  const { watch } = useFormContext<FV>();
   const { fields, append, remove } = useFieldArray({
     name,
   });
@@ -23,6 +24,12 @@ export default function Beneficiaries() {
     remove(index);
   }
 
+  const beneficiaries = watch("beneficiaries");
+  const totalShare = useMemo(
+    () => beneficiaries.reduce((acc, cur) => acc + +cur.share, 0),
+    [beneficiaries]
+  );
+
   return (
     <div className="mb-8 grid content-start border border-prim p-8 rounded">
       <h3 className="text-xl font-bold mb-8">
@@ -33,11 +40,8 @@ export default function Beneficiaries() {
         onClick={() =>
           showModal(MemberForm, {
             onAdd: handleAdd,
-            share: getValues("beneficiaries").reduce(
-              (acc, cur) => acc + +cur.share,
-              0
-            ),
-            added: getValues("beneficiaries").map((b) => b.addr),
+            share: totalShare,
+            added: beneficiaries.map((b) => b.addr),
           })
         }
         className="btn-outline-filled justify-self-end text-sm py-3 px-8 gap-3 mb-5"
@@ -68,6 +72,11 @@ export default function Beneficiaries() {
             ))}
           </TableSection>
         </table>
+      )}
+      {totalShare < 100 && totalShare !== 0 && (
+        <p className="mt-8">
+          {100 - totalShare}% share goes to Multisig wallet
+        </p>
       )}
     </div>
   );
