@@ -1,7 +1,14 @@
+import { FC } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { TManagement } from "slices/launchpad/types";
+import { withStepGuard } from "../withStepGuard";
 import Form from "./Form";
 
-export default function Management() {
+type Props = {
+  data: TManagement | undefined;
+};
+
+const Management: FC<Props> = (props) => {
   const methods = useForm({
     defaultValues: {
       members: [
@@ -15,4 +22,6 @@ export default function Management() {
       <Form />
     </FormProvider>
   );
-}
+};
+
+export default withStepGuard<2>(Management);

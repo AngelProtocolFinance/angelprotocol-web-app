@@ -1,7 +1,7 @@
 import { CW4Member } from "types/contracts";
 
-type About = { name: string; tagline: string };
-type Management = {
+export type TAbout = { name: string; tagline: string };
+export type TManagement = {
   members: CW4Member;
   //proposal config defaulted to percentage
   proposal: {
@@ -11,33 +11,34 @@ type Management = {
   };
 };
 
-type Whitelists = {
+export type TWhitelists = {
   contributors: string[];
   beneficiaries: string[];
 };
 
-type Maturity = {
+export type TMaturity = {
   date: string;
   beneficiaries: string[];
 };
-type Splits =
+export type TSplits =
   | number /** user split not allowed */
   | { default: number; min: number; max: number };
 
-type Fees = {
-  withdrawal: Fee;
-  deposit: Fee;
-  earnings: Fee;
+export type TFees = {
+  withdrawal: TFee;
+  deposit: TFee;
+  earnings: TFee;
 };
-type Fee = { isActive: boolean; receiver: string; rate: number };
+
+type TFee = { isActive: boolean; receiver: string; rate: number };
 
 export type Completed = {
-  1: About;
-  2: Management;
-  3: Whitelists;
-  4: Maturity;
-  5: Splits;
-  6: Fees;
+  1: TAbout;
+  2: TManagement;
+  3: TWhitelists;
+  4: TMaturity;
+  5: TSplits;
+  6: TFees;
 };
 
 type Pending = Partial<Completed>;

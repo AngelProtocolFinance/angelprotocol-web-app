@@ -1,5 +1,5 @@
-import { FC, useEffect, useRef } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { FC } from "react";
+import { Navigate } from "react-router-dom";
 import { Completed, Steps } from "slices/launchpad/types";
 import { useGetter } from "store/accessors";
 
@@ -7,13 +7,14 @@ export type Props = {
   step: Steps;
 };
 
-export function withStepGuard<T extends object>(
-  Step: FC<{ state: Completed[Steps] | undefined }>
-) {
-  return function StepGuard({ step, ...props }: T & Props) {
+type StepProps<T extends Steps> = {
+  data: Completed[T] | undefined;
+  classes?: string;
+};
+
+export function withStepGuard<T extends Steps>(Step: FC<StepProps<T>>) {
+  return function StepGuard({ step, ...props }: Props & StepProps<T>) {
     const state = useGetter((state) => state.launchpad);
-    const navigate = useNavigate();
-    const currRef = useRef(step);
 
     //if no progress, go to step1
     if (state.progress === 0) {
@@ -28,7 +29,7 @@ export function withStepGuard<T extends object>(
     return (
       <Step
         {...props}
-        state={step in state ? (state as any)[step] : undefined}
+        data={step in state ? (state as any)[step] : undefined}
       />
     );
   };
