@@ -2,6 +2,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";
 import Icon from "components/Icon";
+import Logo from "components/Logo";
 import { humanize } from "helpers";
 import { tokens } from "constants/tokens";
 
@@ -29,30 +30,21 @@ export default function Amounts() {
 
         return (
           <div
-            className="flex relative mb-6 border-b border-prim pr-2 pb-1 pt-6 items-center"
+            className={`relative grid grid-cols-[auto_1fr_auto] items-center gap-2 md:gap-4 w-full p-4 ${
+              errors?.amounts?.at && errors.amounts.at(i)?.value?.message
+                ? "border-2 border-red dark:border-red-l2"
+                : "border border-prim"
+            } rounded`}
             key={field.id}
           >
-            <button
-              onClick={() => {
-                setValue(fieldName, field.balance, {
-                  shouldValidate: true,
-                  shouldDirty: true,
-                });
-              }}
-              type="button"
-              className="absolute top-1 right-2 text-blue dark:text-blue-l3 uppercase text-xs"
-            >
-              bal: {humanize(+field.balance, 4)}
-            </button>
-            <img
-              src={tokens[field.tokenId].icon}
-              alt=""
-              className="h-5 w-5 object-contain mr-1"
-            />
             <label
               htmlFor={field.id}
-              className="uppercase font-heading text-sm"
+              className="flex items-center gap-3 h-full uppercase"
             >
+              <Logo
+                logo={{ src: tokens[field.tokenId].icon }}
+                className="h-6 w-6 rounded-full"
+              />
               {tokens[field.tokenId].symbol}
             </label>
             <input
@@ -60,9 +52,22 @@ export default function Amounts() {
               id={field.id}
               type="text"
               autoComplete="off"
-              placeholder="0.000000"
-              className="bg-transparent text-right w-full outline-none text-xl"
+              placeholder="0.00000"
+              className="w-full outline-none"
             />
+            <button
+              type="button"
+              className="text-xs text-gray-d1"
+              onClick={() => {
+                setValue(fieldName, field.balance, {
+                  shouldValidate: true,
+                  shouldDirty: true,
+                });
+              }}
+            >
+              Bal. {humanize(+field.balance, 4)}
+            </button>
+
             <ErrorMessage
               errors={errors}
               name={fieldName}
