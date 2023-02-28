@@ -12,7 +12,7 @@ export default function Form() {
     <form
       onSubmit={withdraw}
       autoComplete="off"
-      className="flex flex-col items-center gap-6 w-full"
+      className="flex flex-col gap-6 w-full"
       noValidate
     >
       <Amounts />
