@@ -29,9 +29,9 @@ export const apCWs: CWs = {
     type: "ap",
   },
   [REVIEWER_ID]: {
-    cw3: contracts.cw3ApTeam,
-    cw4: contracts.cw4GrpApTeam,
-    type: "ap",
+    cw3: contracts.cw3ReviewTeam,
+    cw4: contracts.cw4GrpReviewTeam,
+    type: "review",
   },
 };
 
