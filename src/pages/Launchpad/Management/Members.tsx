@@ -1,6 +1,6 @@
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { FV } from "./types";
-import { CW4Member } from "types/contracts";
+import { Member } from "slices/launchpad/types";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import Status from "components/Status";
@@ -17,7 +17,7 @@ export default function Members() {
     name,
   });
 
-  async function handleAdd(member: CW4Member) {
+  async function handleAdd(member: Member) {
     append(member);
   }
   async function handleRemove(index: number) {

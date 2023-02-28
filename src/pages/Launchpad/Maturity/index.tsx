@@ -1,21 +1,27 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { object } from "yup";
+import { date, object } from "yup";
 import { FV } from "./types";
 import { SchemaShape } from "schemas/types";
+import { dateToFormFormat } from "components/form";
 import { withStepGuard } from "../withStepGuard";
 import Form from "./Form";
 
 export default withStepGuard<4>(function Maturity({ data }) {
   const methods = useForm<FV>({
-    resolver: yupResolver(object().shape<SchemaShape<FV>>({})),
-    defaultValues: {
-      beneficiaries: [
-        { addr: "juno1akkesf6xfuny3upfaq6yfvefzfr8jt2jfhvlw2", share: 13 },
-        { addr: "juno1akkesf6xfuny3upfaq6yfvefzfr8jt2jfhvlw2", share: 20 },
-        { addr: "juno1akkesf6xfuny3upfaq6yfvefzfr8jt2jfhvlw2", share: 21 },
-      ],
-    },
+    resolver: yupResolver(
+      object().shape<SchemaShape<FV>>({
+        date: date()
+          .required("required")
+          .min(new Date(), "must be in the future"),
+      })
+    ),
+    defaultValues: data
+      ? { ...data, date: dateToFormFormat(new Date(data.date)) }
+      : {
+          date: "",
+          beneficiaries: [],
+        },
   });
 
   return (

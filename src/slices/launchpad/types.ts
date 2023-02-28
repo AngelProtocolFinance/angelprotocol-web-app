@@ -1,12 +1,12 @@
-import { CW4Member } from "types/contracts";
-
+/** Types primed to be for form usage */
+export type Member = { addr: string; weight: string };
 export type TAbout = { name: string; tagline: string };
 export type TManagement = {
-  members: CW4Member[];
+  members: Member[];
   //proposal config defaulted to percentage
   proposal: {
-    threshold: number;
-    duration: number;
+    threshold: string; // "1" - "100"
+    duration: string; // in hours
     isAutoExecute: boolean;
   };
 };
@@ -18,16 +18,15 @@ export type TWhitelists = {
 
 export type Beneficiary = {
   addr: string;
-  share: number;
+  share: string; // "1" - "100"
 };
 export type TMaturity = {
   date: string;
   beneficiaries: Beneficiary[];
 };
 
-export type TSplits =
-  | number /** user split not allowed */
-  | { default: number; min: number; max: number };
+export type UserSplit = { default: string; min: string; max: string };
+export type TSplits = string /** user split not allowed */ | UserSplit;
 
 export type TFees = {
   withdrawal: TFee;
@@ -35,7 +34,11 @@ export type TFees = {
   earnings: TFee;
 };
 
-type TFee = { isActive: boolean; receiver: string; rate: number };
+type TFee = {
+  isActive: boolean;
+  receiver: string;
+  rate: string /* "1" - "100" */;
+};
 
 export type Completed = {
   1: TAbout;

@@ -1,15 +1,10 @@
-import { Link } from "react-router-dom";
+import NavButtons from "pages/Launchpad/common/NavButtons";
 import { Field } from "components/form";
 import Beneficiaries from "./Beneficiaries";
-import useSubmit from "./useSubmit";
 
 export default function Form({ classes = "" }: { classes?: string }) {
-  const { submit } = useSubmit();
   return (
-    <form
-      className={`w-full bg-white dark:bg-blue-d6 ${classes}`}
-      onSubmit={submit}
-    >
+    <form className={`w-full bg-white dark:bg-blue-d6 ${classes}`}>
       <h2 className="font-bold text-center sm:text-left text-xl mb-2">
         Maturity
       </h2>
@@ -19,25 +14,16 @@ export default function Form({ classes = "" }: { classes?: string }) {
         list of addresses set in advance.
       </p>
       <Field
+        type="date"
         name="maturity"
         label="Maturity date"
         placeholder="DD/MM/YYYY"
         required
-        classes={{ container: "mb-8" }}
+        classes={{ container: "mb-8", input: "date-input uppercase" }}
       />
 
       <Beneficiaries />
-      <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
-        <Link
-          to={"../management"}
-          className="py-3 min-w-[8rem] btn-outline-filled"
-        >
-          Back
-        </Link>
-        <button type="submit" className="py-3 min-w-[8rem] btn-orange">
-          Continue
-        </button>
-      </div>
+      <NavButtons curr={4} classes="mt-8" />
     </form>
   );
 }

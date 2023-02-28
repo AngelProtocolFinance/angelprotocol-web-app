@@ -25,19 +25,19 @@ export default function Form({ onSubmit }: Props) {
           Proposal settings
         </h2>
         <Field<FV>
-          name="threshold"
+          name="proposal.threshold"
           label="Pass threshold ( % )"
           classes={{ container: "mt-8 mb-4" }}
           required
         />
         <Field<FV>
-          name="duration"
+          name="proposal.duration"
           label="Duration ( hours )"
           classes={{ container: "mt-8 mb-6" }}
           required
         />
         <Toggle<FV>
-          name="isAutoExecute"
+          name="proposal.isAutoExecute"
           classes={{ container: "mb-4 text-sm" }}
         >
           Auto execute after passing vote

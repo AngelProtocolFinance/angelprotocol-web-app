@@ -1,3 +1,7 @@
 import { TMaturity } from "slices/launchpad/types";
 
-export type FV = TMaturity;
+type Beneficiary = {};
+export type FV = {
+  date: string;
+  beneficiaries: {};
+};

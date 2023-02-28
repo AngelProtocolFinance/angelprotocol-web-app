@@ -3,7 +3,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { object } from "yup";
 import { SchemaShape } from "schemas/types";
-import { CW4Member } from "types/contracts";
+import { Member } from "slices/launchpad/types";
 import { useModalContext } from "contexts/ModalContext";
 import { Field } from "components/form";
 import { requiredPositiveNumber } from "schemas/number";
@@ -11,15 +11,15 @@ import { requiredWalletAddr } from "schemas/string";
 
 type Props = {
   added: string[];
-  onAdd(member: CW4Member): void;
+  onAdd(member: Member): void;
 };
 
-type FV = CW4Member;
+type FV = Member;
 
 export default function AddForm({ onAdd, added }: Props) {
   const { closeModal } = useModalContext();
   const methods = useForm<FV>({
-    defaultValues: { addr: "", weight: 1 },
+    defaultValues: { addr: "", weight: "1" },
     resolver: yupResolver(
       object().shape<SchemaShape<FV>>({
         addr: requiredWalletAddr().notOneOf(added, "address already added"),
@@ -44,7 +44,7 @@ export default function AddForm({ onAdd, added }: Props) {
         <Field name="addr" label="Member address" required />
         <Field name="weight" label="Member weight" required />
       </FormProvider>
-      <button type="submit" className="btn btn-orange">
+      <button type="submit" className="btn btn-orange mt-6">
         Add member
       </button>
     </Dialog.Panel>
