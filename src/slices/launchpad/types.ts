@@ -16,10 +16,15 @@ export type TWhitelists = {
   beneficiaries: string[];
 };
 
+export type Beneficiary = {
+  addr: string;
+  share: number;
+};
 export type TMaturity = {
   date: string;
-  beneficiaries: string[];
+  beneficiaries: Beneficiary[];
 };
+
 export type TSplits =
   | number /** user split not allowed */
   | { default: number; min: number; max: number };

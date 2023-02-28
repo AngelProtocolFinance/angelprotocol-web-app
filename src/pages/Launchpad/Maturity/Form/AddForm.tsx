@@ -1,6 +1,6 @@
 import { Dialog } from "@headlessui/react";
 import { FormProvider, useForm } from "react-hook-form";
-import { Beneficiary } from "../types";
+import { Beneficiary } from "slices/launchpad/types";
 import { useModalContext } from "contexts/ModalContext";
 import { Field } from "components/form";
 

@@ -1,10 +1,8 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FC } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { object } from "yup";
 import { FV } from "./types";
 import { SchemaShape } from "schemas/types";
-import { TManagement } from "slices/launchpad/types";
 import { useGetWallet } from "contexts/WalletContext";
 import { useLaunchpad } from "slices/launchpad";
 import { requiredPercentString, requiredPositiveNumber } from "schemas/number";
@@ -12,11 +10,7 @@ import { isJunoAddress } from "schemas/tests";
 import { withStepGuard } from "../withStepGuard";
 import Form from "./Form";
 
-type Props = {
-  data: TManagement | undefined;
-};
-
-const Management: FC<Props> = ({ data }) => {
+export default withStepGuard<2>(function Management({ data }) {
   const { update } = useLaunchpad(2);
   const { wallet } = useGetWallet();
 
@@ -63,6 +57,4 @@ const Management: FC<Props> = ({ data }) => {
       <Form onSubmit={handleSubmit(submit)} />
     </FormProvider>
   );
-};
-
-export default withStepGuard<2>(Management);
+});

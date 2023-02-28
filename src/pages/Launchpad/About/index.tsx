@@ -1,16 +1,14 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FC } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { object } from "yup";
 import { FV } from "./types";
 import { SchemaShape } from "schemas/types";
-import { TAbout } from "slices/launchpad/types";
 import { useLaunchpad } from "slices/launchpad";
 import { requiredString } from "schemas/string";
 import { withStepGuard } from "../withStepGuard";
 import Form from "./Form";
 
-const About: FC<{ data: TAbout | undefined }> = (props) => {
+export default withStepGuard<1>(function About({ data }) {
   const { update } = useLaunchpad(1);
   const methods = useForm<FV>({
     resolver: yupResolver(
@@ -19,7 +17,7 @@ const About: FC<{ data: TAbout | undefined }> = (props) => {
         tagline: requiredString,
       })
     ),
-    defaultValues: props.data || {
+    defaultValues: data || {
       name: "",
       tagline: "",
     },
@@ -32,6 +30,4 @@ const About: FC<{ data: TAbout | undefined }> = (props) => {
       <Form onSubmit={handleSubmit((data) => update(data))} />
     </FormProvider>
   );
-};
-
-export default withStepGuard<1>(About);
+});
