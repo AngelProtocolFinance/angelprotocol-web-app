@@ -2,6 +2,7 @@ import { FC } from "react";
 import { Navigate } from "react-router-dom";
 import { Completed, Steps } from "slices/launchpad/types";
 import { useGetter } from "store/accessors";
+import { routes } from "./constants";
 
 export type Props = {
   step: Steps;
@@ -19,7 +20,7 @@ export function withStepGuard<T extends Steps>(Step: FC<StepProps<T>>) {
 
     //if no progress, go to step1
     if (state.progress === 0) {
-      return <Navigate to={"../1"} />;
+      return <Navigate to={`../${routes[1]}`} />;
     }
 
     //user goes to uncompleted step
@@ -27,11 +28,6 @@ export function withStepGuard<T extends Steps>(Step: FC<StepProps<T>>) {
       return <Navigate to={`../${state.progress}`} />;
     }
 
-    return (
-      <Step
-        {...props}
-        data={step in state ? (state as any)[step] : undefined}
-      />
-    );
+    return <Step {...props} data={(state as any)[step] || undefined} />;
   };
 }

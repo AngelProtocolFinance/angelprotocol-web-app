@@ -5,9 +5,9 @@ import { useGetter, useSetter } from "store/accessors";
 
 const STORAGE_KEY = "ap__launchpad";
 
-const init: LaunchState | null = window.localStorage.getItem(
-  STORAGE_KEY
-) as any;
+const saved = window.localStorage.getItem(STORAGE_KEY);
+
+const init: LaunchState | null = saved && JSON.parse(saved);
 
 const initialState = init || {};
 
