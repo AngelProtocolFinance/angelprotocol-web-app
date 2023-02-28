@@ -2,7 +2,13 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { Completed, Init, LaunchState, Progress, Steps } from "./types";
 import { useSetter } from "store/accessors";
 
-const initialState: Init = {};
+const STORAGE_KEY = "ap__launchpad";
+
+const init: LaunchState | null = window.localStorage.getItem(
+  STORAGE_KEY
+) as any;
+
+const initialState: Init = init || {};
 
 const launchpad = createSlice({
   name: "launchpad",
@@ -21,8 +27,13 @@ const launchpad = createSlice({
       }
 
       (state as any)[payload.step] = payload.payload;
+
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     },
-    reset: (state) => ({ curr: 0, progress: 0 }),
+    reset: (state) => {
+      window.localStorage.removeItem(STORAGE_KEY);
+      return { curr: 0, progress: 0 };
+    },
   },
 });
 
