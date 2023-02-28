@@ -10,22 +10,23 @@ import TableSection, { Cells } from "components/TableSection";
 import { isEmpty } from "helpers";
 import AddressForm from "./AddressForm";
 
-type Props<T extends FieldValues> = {
-  name: Path<T>;
+type Props<T extends FieldValues, K extends Path<T>> = {
+  name: T[K] extends string[] ? K : never;
   title: string;
   memberName: string;
   emptyMsg: string;
 };
 
-export default function Addresses<T extends FieldValues>({
+export default function Addresses<T extends FieldValues, K extends Path<T>>({
   title,
   name,
   memberName,
   emptyMsg,
-}: Props<T>) {
+}: Props<T, K>) {
   const { showModal } = useModalContext();
+  const { getValues } = useFormContext();
   const { fields, append, remove } = useFieldArray({
-    name,
+    name: name,
   });
 
   async function handleAdd(addr: string) {
@@ -41,7 +42,11 @@ export default function Addresses<T extends FieldValues>({
       <button
         type="button"
         onClick={() =>
-          showModal(AddressForm, { onAdd: handleAdd, name: memberName })
+          showModal(AddressForm, {
+            onAdd: handleAdd,
+            name: memberName,
+            added: getValues(name),
+          })
         }
         className="btn-outline-filled min-w-[13.43rem] justify-self-end text-sm py-3 gap-3 mb-5"
       >

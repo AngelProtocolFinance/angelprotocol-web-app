@@ -15,13 +15,13 @@ export default function Form() {
         (beneficiaries) from your AIF. You will be able to make changes to those
         lists in the future.
       </p>
-      <Addresses<FV>
+      <Addresses<FV, "contributors">
         memberName="contributor"
         name="contributors"
         title="Contributors"
         emptyMsg="Anyone can contribute to your AIF."
       />
-      <Addresses<FV>
+      <Addresses<FV, "beneficiaries">
         memberName="beneficiary"
         name="beneficiaries"
         title="Beneficiaries"

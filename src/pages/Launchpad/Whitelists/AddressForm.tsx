@@ -1,15 +1,29 @@
 import { Dialog } from "@headlessui/react";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
+import { object } from "yup";
+import { SchemaShape } from "schemas/types";
 import { useModalContext } from "contexts/ModalContext";
 import { Field } from "components/form";
+import { requiredWalletAddr } from "schemas/string";
 
 type Props = {
+  added: string[];
   name: string;
   onAdd(address: string): void;
 };
-export default function MemberForm({ onAdd, name }: Props) {
+
+type FV = { addr: string };
+export default function MemberForm({ onAdd, name, added }: Props) {
   const { closeModal } = useModalContext();
-  const methods = useForm();
+  const methods = useForm<FV>({
+    resolver: yupResolver(
+      object().shape<SchemaShape<FV>>({
+        addr: requiredWalletAddr().notOneOf(added, "address already added"),
+      })
+    ),
+    defaultValues: { addr: "" },
+  });
   const { handleSubmit } = methods;
   return (
     <Dialog.Panel
@@ -23,7 +37,10 @@ export default function MemberForm({ onAdd, name }: Props) {
       <FormProvider {...methods}>
         <Field name="addr" label="Address" required />
       </FormProvider>
-      <button type="submit" className="btn btn-orange">
+      <button
+        type="submit"
+        className="btn btn-orange mt-4 text-xs font-work justify-self-end"
+      >
         Add {name}
       </button>
     </Dialog.Panel>
