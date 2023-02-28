@@ -1,26 +1,42 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Completed, Init, LaunchState, Steps } from "./types";
+import { Completed, Init, LaunchState, Progress, Steps } from "./types";
 import { useSetter } from "store/accessors";
 
 const initialState: Init = {};
 
 const launchpad = createSlice({
-  name: "gift",
+  name: "launchpad",
   initialState: initialState as LaunchState,
   reducers: {
     update: (
-      state: any,
+      state,
       { payload }: PayloadAction<{ step: Steps; payload: Completed[Steps] }>
     ) => {
-      state[payload.step] = payload.payload;
+      //after updating, always move to next step
+      state.curr = (payload.step + 1) as Progress;
+
+      //update progress
+      if (state.curr > state.progress) {
+        state.progress = state.curr;
+      }
+
+      (state as any)[payload.step] = payload.payload;
     },
+    reset: (state) => ({ curr: 0, progress: 0 }),
   },
 });
-const { update: updateAction } = launchpad.actions;
 
 export default launchpad.reducer;
 
-export function useUpdate<T extends Steps>(step: T) {
+export function useLaunchpad<T extends Steps>(step: T) {
   const dispatch = useSetter();
-  return (payload: Completed[T]) => dispatch(updateAction({ step, payload }));
+
+  return {
+    update(payload: Completed[T]) {
+      dispatch(launchpad.actions.update({ step, payload }));
+    },
+    reset() {
+      dispatch(launchpad.actions.reset());
+    },
+  };
 }

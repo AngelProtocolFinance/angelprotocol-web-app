@@ -32,23 +32,30 @@ type Fees = {
 type Fee = { isActive: boolean; receiver: string; rate: number };
 
 export type Completed = {
-  about: About;
-  management: Management;
-  whitelists: Whitelists;
-  maturity: Maturity;
-  splits: Splits;
-  fees: Fees;
+  1: About;
+  2: Management;
+  3: Whitelists;
+  4: Maturity;
+  5: Splits;
+  6: Fees;
 };
 
-export type Init = {};
-type Step1 = Pick<Completed, "about">;
-type Step2 = Step1 & Pick<Completed, "management">;
-type Step3 = Step2 & Pick<Completed, "whitelists">;
-type Step4 = Step3 & Pick<Completed, "maturity">;
-type Step5 = Step4 & Pick<Completed, "splits">;
-type Step6 = Step4 & Pick<Completed, "fees">;
+type Pending = Partial<Completed>;
+type InitStep = 0;
+type CompleteStep = 7;
 
-export type LaunchState =
+export type Init = {};
+type Step1 = Pick<Pending, 1>;
+type Step2 = Step1 & Pick<Pending, 2>;
+type Step3 = Step2 & Pick<Pending, 3>;
+type Step4 = Step3 & Pick<Pending, 4>;
+type Step5 = Step4 & Pick<Pending, 5>;
+type Step6 = Step5 & Pick<Pending, 6>;
+
+export type Steps = keyof Completed;
+
+export type Progress = InitStep | Steps | CompleteStep;
+export type LaunchState = { curr: Progress; progress: Progress } & (
   | Init
   | Step1
   | Step2
@@ -56,6 +63,5 @@ export type LaunchState =
   | Step4
   | Step5
   | Step6
-  | Completed;
-
-export type Steps = keyof Completed;
+  | Completed
+);
