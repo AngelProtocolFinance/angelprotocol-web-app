@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Completed, Init, LaunchState, Progress, Steps } from "./types";
-import { useSetter } from "store/accessors";
+import { useNavigate } from "react-router-dom";
+import { Completed, LaunchState, Progress, Steps } from "./types";
+import { useGetter, useSetter } from "store/accessors";
 
 const STORAGE_KEY = "ap__launchpad";
 
@@ -8,7 +9,7 @@ const init: LaunchState | null = window.localStorage.getItem(
   STORAGE_KEY
 ) as any;
 
-const initialState: Init = init || {};
+const initialState = init || {};
 
 const launchpad = createSlice({
   name: "launchpad",
@@ -40,11 +41,21 @@ const launchpad = createSlice({
 export default launchpad.reducer;
 
 export function useLaunchpad<T extends Steps>(step: T) {
+  const state = useGetter((state) => state.launchpad);
   const dispatch = useSetter();
+
+  const navigate = useNavigate();
 
   return {
     update(payload: Completed[T]) {
       dispatch(launchpad.actions.update({ step, payload }));
+      if (state.progress === 7) {
+        //if completed, always navigate to summary
+        navigate(`../${state.progress}`);
+      } else {
+        //otherwise, navigate to next step
+        navigate(`../${step + 1}`);
+      }
     },
     reset() {
       dispatch(launchpad.actions.reset());

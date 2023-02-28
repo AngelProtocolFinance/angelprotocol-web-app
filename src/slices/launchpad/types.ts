@@ -44,7 +44,7 @@ type Pending = Partial<Completed>;
 type InitStep = 0;
 type CompleteStep = 7;
 
-export type Init = {};
+export type Init = { init: null };
 type Step1 = Pick<Pending, 1>;
 type Step2 = Step1 & Pick<Pending, 2>;
 type Step3 = Step2 & Pick<Pending, 3>;
@@ -55,13 +55,6 @@ type Step6 = Step5 & Pick<Pending, 6>;
 export type Steps = keyof Completed;
 
 export type Progress = InitStep | Steps | CompleteStep;
-export type LaunchState = { curr: Progress; progress: Progress } & (
-  | Init
-  | Step1
-  | Step2
-  | Step3
-  | Step4
-  | Step5
-  | Step6
-  | Completed
-);
+export type Meta = { curr: Progress; progress: Progress };
+export type LaunchState = Meta &
+  (Init | Step1 | Step2 | Step3 | Step4 | Step5 | Step6 | Completed);
