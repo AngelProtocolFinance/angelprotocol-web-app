@@ -1,7 +1,6 @@
 import { ChangeEvent, ReactNode } from "react";
 import { FieldValues, Path, useController } from "react-hook-form";
 
-const OVERLAP_WIDTH = 0.1;
 export function MinmaxSlider<T extends FieldValues>(props: {
   names: { min: Path<T>; max: Path<T> };
   children(min: number, max: number): ReactNode;
@@ -39,9 +38,9 @@ export function MinmaxSlider<T extends FieldValues>(props: {
         className="relative my-6 h-4 border border-prim rounded-full"
         style={{
           //prettier-ignore
-          background: `linear-gradient(to right, #fafafa30 ${min-OVERLAP_WIDTH}%, 
-            #FFC86F ${min-OVERLAP_WIDTH}%, #FFEFD5 ${max+OVERLAP_WIDTH}%, 
-            #fafafa30 ${max+OVERLAP_WIDTH}%)`,
+          background: `linear-gradient(to right, #fafafa30 ${min}%, 
+            #FFEFD5 ${min}%, #FFC86F ${max}%, 
+            #fafafa30 ${max}%)`,
         }}
       >
         {props.hidden !== "min" && (

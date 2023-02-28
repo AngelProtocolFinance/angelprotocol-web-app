@@ -26,7 +26,12 @@ export type TMaturity = {
 };
 
 export type UserSplit = { default: string; min: string; max: string };
-export type TSplits = string /** user split not allowed */ | UserSplit;
+export type TSplits /** locked */ = {
+  isCustom: boolean; //modifiable by contributors
+  default: string;
+  min: string;
+  max: string;
+};
 
 export type TFees = {
   withdrawal: TFee;
