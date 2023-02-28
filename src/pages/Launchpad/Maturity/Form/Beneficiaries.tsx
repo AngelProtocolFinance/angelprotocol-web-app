@@ -6,11 +6,12 @@ import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
 import { isEmpty } from "helpers";
+import { Group, GroupTitle } from "../../common/Form";
 import MemberForm from "./AddForm";
 
 const name: keyof FV = "beneficiaries";
 
-export default function Beneficiaries() {
+export default function Beneficiaries({ classes = "" }) {
   const { showModal } = useModalContext();
   const { watch } = useFormContext<FV>();
   const { fields, append, remove } = useFieldArray({
@@ -31,10 +32,10 @@ export default function Beneficiaries() {
   );
 
   return (
-    <div className="mb-8 grid content-start border border-prim p-8 rounded">
-      <h3 className="text-xl font-bold mb-8">
+    <Group className={classes}>
+      <GroupTitle className="mb-8">
         Beneficiary Whitelist at Maturity
-      </h3>
+      </GroupTitle>
       <button
         type="button"
         onClick={() =>
@@ -78,7 +79,7 @@ export default function Beneficiaries() {
           {100 - totalShare}% share goes to Multisig wallet
         </p>
       )}
-    </div>
+    </Group>
   );
 }
 

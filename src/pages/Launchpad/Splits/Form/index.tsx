@@ -1,34 +1,35 @@
 import { useFormContext } from "react-hook-form";
 import { FV } from "../types";
+import Form, {
+  Desc,
+  FormProps,
+  Group,
+  GroupTitle,
+  Title,
+} from "../../common/Form";
 import NavButtons from "../../common/NavButtons";
 import Toggle from "../../common/Toggle";
 import { MinmaxSlider } from "./MinmaxSlider";
 
-type Props = {
-  onSubmit: React.FormEventHandler<HTMLFormElement>;
-};
-
-export default function Form({ onSubmit }: Props) {
+export default function SplitsForm(props: FormProps) {
   const { watch } = useFormContext<FV>();
   const isCustom = watch("isCustom");
 
   return (
-    <form onSubmit={onSubmit} className="w-full bg-white dark:bg-blue-d6">
-      <h2 className="font-bold text-center sm:text-left text-xl mb-2">
-        Split of Contributions
-      </h2>
-      <p className="text-center sm:text-left text-lg text-gray-d1 dark:text-gray">
+    <Form {...props}>
+      <Title className="mb-2">Split of Contributions</Title>
+      <Desc>
         You can set the distribution of the contributions to your AIF. By
         default, contributors are able to set how their contribution is split
         between your Locked account and your Liquid account. You can deactivate
         that to default to a value that you set or set minimum & maximum values.
-      </p>
+      </Desc>
       <Toggle<FV> name="isCustom" classes={{ container: "my-9 text-sm" }}>
         Allow contributors to define a Locked/Liquid Split
       </Toggle>
 
-      <div className="mb-8 grid content-start border border-prim p-8 rounded">
-        <h3 className="text-xl font-bold mb-8">Default Values</h3>
+      <Group className="mb-8">
+        <GroupTitle className="mb-8">Default Values</GroupTitle>
         <div className="flex justify-between text-sm">
           <span>To locked</span>
           <span>To liquid</span>
@@ -49,10 +50,10 @@ export default function Form({ onSubmit }: Props) {
             </div>
           )}
         </MinmaxSlider>
-      </div>
+      </Group>
       {isCustom && (
-        <div className="mb-8 grid content-start border border-prim p-8 rounded">
-          <h3 className="text-xl font-bold mb-8">Minimums and Maximums</h3>
+        <Group className="mb-8">
+          <GroupTitle className="mb-8">Minimums and Maximums</GroupTitle>
           <div className="flex justify-between text-sm">
             <span>To locked</span>
             <span>To liquid</span>
@@ -66,10 +67,10 @@ export default function Form({ onSubmit }: Props) {
               </p>
             )}
           </MinmaxSlider>
-        </div>
+        </Group>
       )}
 
       <NavButtons classes="mt-6" curr={5} />
-    </form>
+    </Form>
   );
 }

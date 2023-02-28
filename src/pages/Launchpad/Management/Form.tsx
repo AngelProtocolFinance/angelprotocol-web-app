@@ -1,24 +1,22 @@
-import { FormEventHandler } from "react";
 import { FV } from "./types";
 import { Field } from "components/form";
+import Form, { Desc, FormProps, Title } from "../common/Form";
 import NavButtons from "../common/NavButtons";
 import Toggle from "../common/Toggle";
 import Members from "./Members";
 
-type Props = { onSubmit: FormEventHandler<HTMLFormElement> };
-export default function Form({ onSubmit }: Props) {
+export default function ManageForm(props: FormProps) {
   return (
-    <form onSubmit={onSubmit} className="w-full bg-white dark:bg-blue-d6">
-      <h2 className="font-bold text-center sm:text-left text-xl mb-2">
-        AIF Management
-      </h2>
-      <p className="text-center sm:text-left text-lg mb-8">
+    <Form {...props}>
+      <Title className="mb-2">AIF Management</Title>
+      <Desc className="mb-8">
         The Management of your AIF comprises one or more members that will be in
         charge of taking key decisions for your AIF. Here, you can add members,
         decide how many signatories are necessary to execute decisions and how
         long decision requests are open for.
-      </p>
-      <Members />
+      </Desc>
+
+      <Members classes="mb-8" />
 
       <div className="content-start border border-prim p-8 rounded">
         <h2 className="font-bold text-center sm:text-left text-xl mb-2">
@@ -45,6 +43,6 @@ export default function Form({ onSubmit }: Props) {
       </div>
 
       <NavButtons classes="mt-8" curr={2} />
-    </form>
+    </Form>
   );
 }

@@ -1,21 +1,14 @@
 import { Field } from "components/form";
+import Form, { Desc, FormProps, Title } from "../common/Form";
 
-type Props = {
-  onSubmit: React.FormEventHandler<HTMLFormElement>;
-  classes?: string;
-};
-
-export default function Form({ classes = "", onSubmit }: Props) {
+export default function AboutForm(props: FormProps) {
   return (
-    <form
-      className={`w-full bg-white dark:bg-blue-d6 ${classes}`}
-      onSubmit={onSubmit}
-    >
-      <h2 className="font-bold text-center sm:text-left text-xl mb-2">About</h2>
-      <p className="text-center sm:text-left text-lg mb-8">
+    <Form {...props}>
+      <Title className="mb-2">About</Title>
+      <Desc className="mb-8">
         Tell us more about your Angel Impact Fund. You will be able to fill a
         detailed profile once your AIF is created.
-      </p>
+      </Desc>
       <Field
         name="name"
         label="Name"
@@ -36,6 +29,6 @@ export default function Form({ classes = "", onSubmit }: Props) {
       >
         Continue
       </button>
-    </form>
+    </Form>
   );
 }

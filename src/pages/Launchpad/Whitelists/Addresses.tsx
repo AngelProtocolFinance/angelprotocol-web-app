@@ -8,6 +8,7 @@ import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
 import { isEmpty } from "helpers";
+import { Group, GroupTitle } from "../common/Form";
 import AddressForm from "./AddressForm";
 
 type Props<T extends FieldValues, K extends Path<T>> = {
@@ -15,6 +16,7 @@ type Props<T extends FieldValues, K extends Path<T>> = {
   title: string;
   memberName: string;
   emptyMsg: string;
+  classes?: string;
 };
 
 export default function Addresses<T extends FieldValues, K extends Path<T>>({
@@ -22,6 +24,7 @@ export default function Addresses<T extends FieldValues, K extends Path<T>>({
   name,
   memberName,
   emptyMsg,
+  classes = "",
 }: Props<T, K>) {
   const { showModal } = useModalContext();
   const { getValues } = useFormContext();
@@ -37,8 +40,8 @@ export default function Addresses<T extends FieldValues, K extends Path<T>>({
   }
 
   return (
-    <div className="mb-8 grid content-start border border-prim p-8 rounded">
-      <h3 className="text-xl font-bold mb-8">{title}</h3>
+    <Group className={classes}>
+      <GroupTitle className="mb-8">{title}</GroupTitle>
       <button
         type="button"
         onClick={() =>
@@ -72,7 +75,7 @@ export default function Addresses<T extends FieldValues, K extends Path<T>>({
           </TableSection>
         </table>
       )}
-    </div>
+    </Group>
   );
 }
 

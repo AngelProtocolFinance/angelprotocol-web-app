@@ -6,11 +6,12 @@ import Icon from "components/Icon";
 import Status from "components/Status";
 import TableSection, { Cells } from "components/TableSection";
 import { isEmpty } from "helpers";
+import { Group, GroupTitle } from "../common/Form";
 import AddForm from "./AddForm";
 
 const name: keyof FV = "members";
 
-export default function Members() {
+export default function Members({ classes = "" }) {
   const { showModal } = useModalContext();
   const { getValues } = useFormContext<FV>();
   const { fields, append, remove } = useFieldArray({
@@ -25,8 +26,8 @@ export default function Members() {
   }
 
   return (
-    <div className="mb-8 grid content-start border border-prim p-8 rounded">
-      <h3 className="text-xl font-bold mb-8">Members</h3>
+    <Group className={classes}>
+      <GroupTitle className="mb-8">Members</GroupTitle>
       <button
         type="button"
         onClick={() =>
@@ -71,7 +72,7 @@ export default function Members() {
           </TableSection>
         </table>
       )}
-    </div>
+    </Group>
   );
 }
 
