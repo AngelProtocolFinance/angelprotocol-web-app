@@ -20,20 +20,14 @@ const launchpad = createSlice({
       { payload }: PayloadAction<{ step: Steps; payload: Completed[Steps] }>
     ) => {
       //after updating, always move to next step
-      state.curr = (payload.step + 1) as Progress;
-
-      //update progress
-      if (state.curr > state.progress) {
-        state.progress = state.curr;
-      }
-
+      state.progress = (payload.step + 1) as Progress;
       (state as any)[payload.step] = payload.payload;
 
       window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     },
     reset: (state) => {
       window.localStorage.removeItem(STORAGE_KEY);
-      return { curr: 0, progress: 0 };
+      return { progress: 0 };
     },
   },
 });

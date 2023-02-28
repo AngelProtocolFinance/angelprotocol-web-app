@@ -1,30 +1,35 @@
-import { useFieldArray, useFormContext } from "react-hook-form";
+import {
+  FieldValues,
+  Path,
+  useFieldArray,
+  useFormContext,
+} from "react-hook-form";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
 import { isEmpty } from "helpers";
 import AddressForm from "./AddressForm";
 
-type Props = {
-  name: string;
+type Props<T extends FieldValues> = {
+  name: Path<T>;
   title: string;
   memberName: string;
   emptyMsg: string;
 };
 
-export default function Addresses({
+export default function Addresses<T extends FieldValues>({
   title,
   name,
   memberName,
   emptyMsg,
-}: Props) {
+}: Props<T>) {
   const { showModal } = useModalContext();
   const { fields, append, remove } = useFieldArray({
     name,
   });
 
   async function handleAdd(addr: string) {
-    append(addr);
+    append(addr as any);
   }
   async function handleRemove(index: number) {
     remove(index);

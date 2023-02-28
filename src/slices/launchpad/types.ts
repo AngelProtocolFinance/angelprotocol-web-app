@@ -56,6 +56,13 @@ type Step6 = Step5 & Pick<Pending, 6>;
 export type Steps = keyof Completed;
 
 export type Progress = InitStep | Steps | CompleteStep;
-export type Meta = { curr: Progress; progress: Progress };
-export type LaunchState = Meta &
-  (Init | Step1 | Step2 | Step3 | Step4 | Step5 | Step6 | Completed);
+export type LaunchState = { progress: Progress } & (
+  | Init
+  | Step1
+  | Step2
+  | Step3
+  | Step4
+  | Step5
+  | Step6
+  | Completed
+);

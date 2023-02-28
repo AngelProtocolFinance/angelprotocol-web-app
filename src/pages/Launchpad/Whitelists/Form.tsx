@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import { FV } from "./types";
+import NavButtons from "../common/NavButtons";
 import Addresses from "./Addresses";
 import useSubmit from "./useSubmit";
 
@@ -14,30 +15,20 @@ export default function Form() {
         (beneficiaries) from your AIF. You will be able to make changes to those
         lists in the future.
       </p>
-      <Addresses
+      <Addresses<FV>
         memberName="contributor"
         name="contributors"
         title="Contributors"
         emptyMsg="Anyone can contribute to your AIF."
       />
-      <Addresses
+      <Addresses<FV>
         memberName="beneficiary"
         name="beneficiaries"
         title="Beneficiaries"
         emptyMsg="Multisig wallet will be the only beneficiary"
       />
 
-      <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
-        <Link
-          to={"../management"}
-          className="py-3 min-w-[8rem] btn-outline-filled"
-        >
-          Back
-        </Link>
-        <button type="submit" className="py-3 min-w-[8rem] btn-orange">
-          Continue
-        </button>
-      </div>
+      <NavButtons classes="mt-8" curr={3} />
     </form>
   );
 }

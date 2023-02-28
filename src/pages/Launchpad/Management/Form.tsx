@@ -1,7 +1,7 @@
 import { FormEventHandler } from "react";
-import { Link } from "react-router-dom";
 import { FV } from "./types";
 import { Field } from "components/form";
+import NavButtons from "../common/NavButtons";
 import Toggle from "../common/Toggle";
 import Members from "./Members";
 
@@ -44,14 +44,7 @@ export default function Form({ onSubmit }: Props) {
         </Toggle>
       </div>
 
-      <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
-        <Link to={"../."} className="py-3 min-w-[8rem] btn-outline-filled">
-          Back
-        </Link>
-        <button type="submit" className="py-3 min-w-[8rem] btn-orange">
-          Continue
-        </button>
-      </div>
+      <NavButtons classes="mt-8" curr={2} />
     </form>
   );
 }
