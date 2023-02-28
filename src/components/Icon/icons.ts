@@ -63,6 +63,7 @@ import { GoDash, GoLinkExternal, GoSync } from "react-icons/go";
 import { GrFacebookOption } from "react-icons/gr";
 import { ImDroplet, ImFilePicture } from "react-icons/im";
 import {
+  IoMdClipboard,
   IoMdDownload,
   IoMdListBox,
   IoMdLock,
@@ -113,6 +114,7 @@ export const icons = {
   CaretLeft: AiFillCaretLeft,
   Check: BiCheck,
   CheckCircle: AiFillCheckCircle,
+  Clipboard: IoMdClipboard,
   ClipboardCheck: FaClipboardCheck,
   Clock: FaClock,
   Close: IoClose,
