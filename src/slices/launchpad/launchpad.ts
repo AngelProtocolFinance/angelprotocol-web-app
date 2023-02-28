@@ -9,7 +9,7 @@ const saved = window.localStorage.getItem(STORAGE_KEY);
 
 const init: LaunchState | null = saved && JSON.parse(saved);
 
-const initialState = init || {};
+const initialState = init || { progress: 1 };
 
 const launchpad = createSlice({
   name: "launchpad",
@@ -27,7 +27,7 @@ const launchpad = createSlice({
     },
     reset: (state) => {
       window.localStorage.removeItem(STORAGE_KEY);
-      return { progress: 0 };
+      return { progress: 1 };
     },
   },
 });

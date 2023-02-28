@@ -7,7 +7,7 @@ import { SchemaShape } from "schemas/types";
 import { TManagement } from "slices/launchpad/types";
 import { useGetWallet } from "contexts/WalletContext";
 import { useLaunchpad } from "slices/launchpad";
-import { percentString, requiredPositiveNumber } from "schemas/number";
+import { requiredPercentString, requiredPositiveNumber } from "schemas/number";
 import { isJunoAddress } from "schemas/tests";
 import { withStepGuard } from "../withStepGuard";
 import Form from "./Form";
@@ -25,7 +25,7 @@ const Management: FC<Props> = ({ data }) => {
       object().shape<SchemaShape<FV>>({
         //no need to validate members, already validated in AddForm
         duration: requiredPositiveNumber,
-        threshold: percentString,
+        threshold: requiredPercentString,
       })
     ),
     defaultValues: data

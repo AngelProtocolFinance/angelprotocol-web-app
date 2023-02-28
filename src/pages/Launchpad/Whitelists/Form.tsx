@@ -1,12 +1,15 @@
+import { FormEventHandler } from "react";
 import { FV } from "./types";
 import NavButtons from "../common/NavButtons";
 import Addresses from "./Addresses";
-import useSubmit from "./useSubmit";
 
-export default function Form() {
-  const { submit } = useSubmit();
+type Props = {
+  onSubmit: FormEventHandler<HTMLFormElement>;
+};
+
+export default function Form({ onSubmit }: Props) {
   return (
-    <form onSubmit={submit} className="w-full bg-white dark:bg-blue-d6">
+    <form onSubmit={onSubmit} className="w-full bg-white dark:bg-blue-d6">
       <h2 className="font-bold text-center sm:text-left text-xl mb-2">
         Whitelists
       </h2>

@@ -1,17 +1,26 @@
 import { FormProvider, useForm } from "react-hook-form";
+import { FV } from "./types";
+import { TWhitelists } from "slices/launchpad/types";
+import { useLaunchpad } from "slices/launchpad";
+import { withStepGuard } from "../withStepGuard";
 import Form from "./Form";
 
-export default function Whitelists() {
-  const methods = useForm({
-    defaultValues: {
-      contributors: ["abcd", "efgh", "ijkl"],
-      beneficiaries: ["abcd", "efgh", "ijkl"],
-    },
+type Props = {
+  data: TWhitelists | undefined;
+};
+
+function Whitelists({ data }: Props) {
+  const { update } = useLaunchpad(3);
+  const methods = useForm<FV>({
+    defaultValues: data || { contributors: [], beneficiaries: [] },
   });
 
+  const { handleSubmit } = methods;
   return (
     <FormProvider {...methods}>
-      <Form />
+      <Form onSubmit={handleSubmit((data) => update(data))} />
     </FormProvider>
   );
 }
+
+export default withStepGuard<3>(Whitelists);

@@ -19,12 +19,10 @@ const About: FC<{ data: TAbout | undefined }> = (props) => {
         tagline: requiredString,
       })
     ),
-    defaultValues: props.data
-      ? props.data
-      : {
-          name: "",
-          tagline: "",
-        },
+    defaultValues: props.data || {
+      name: "",
+      tagline: "",
+    },
   });
 
   const { handleSubmit } = methods;

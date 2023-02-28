@@ -41,3 +41,7 @@ export const positiveNumber = Yup.lazy((value) =>
 export const percentString = Yup.lazy((value) =>
   value === "" ? Yup.string() : percentConstraint
 );
+
+export const requiredPercentString = Yup.lazy((value) =>
+  value === "" ? Yup.string().required("required") : percentConstraint
+);
