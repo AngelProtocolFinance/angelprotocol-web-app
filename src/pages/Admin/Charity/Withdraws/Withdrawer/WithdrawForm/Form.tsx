@@ -17,7 +17,7 @@ export default function Form() {
     >
       <Amounts />
       <Network />
-      <Beneficiary classes="mt-6 mb-2" />
+      <Beneficiary />
       <Warning classes="mt-4 mb-2">
         All withdraws to Ethereum & Binance are processed on a hourly basis by
         our cross-chain pipelines.
