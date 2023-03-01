@@ -7,10 +7,11 @@ export default function NavButtons({ classes = "", curr }: Props) {
 
   return (
     <div className={`grid grid-cols-2 sm:flex gap-2 ${classes}`}>
-      <Link to={prev} className="py-3 min-w-[8rem] btn-outline-filled">
+      <Link to={prev} className="text-sm px-8 btn-outline-filled">
         Back
       </Link>
-      <button type="submit" className="py-3 min-w-[8rem] btn-orange">
+
+      <button type="submit" className="text-sm px-8 btn-orange">
         Continue
       </button>
     </div>

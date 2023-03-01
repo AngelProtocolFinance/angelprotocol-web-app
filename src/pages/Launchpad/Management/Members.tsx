@@ -7,14 +7,16 @@ import TableSection, { Cells } from "components/TableSection";
 import { isEmpty } from "helpers";
 import { Group, GroupTitle } from "../common/Form";
 import Info from "../common/Info";
-import AddForm from "./AddForm";
+import MemberForm from "./MemberForm";
 
 const name: keyof FV = "members";
+
+type MemberItem = Member & { idx: number };
 
 export default function Members({ classes = "" }) {
   const { showModal } = useModalContext();
   const { getValues } = useFormContext<FV>();
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, remove, update } = useFieldArray({
     name,
   });
 
@@ -24,6 +26,13 @@ export default function Members({ classes = "" }) {
   async function handleRemove(index: number) {
     remove(index);
   }
+  async function handleEdit(member: MemberItem) {
+    showModal(MemberForm, {
+      onChange: (m) => update(member.idx, m),
+      initial: member,
+      added: getValues("members").map((m) => m.addr),
+    });
+  }
 
   return (
     <Group className={classes}>
@@ -31,8 +40,8 @@ export default function Members({ classes = "" }) {
       <button
         type="button"
         onClick={() =>
-          showModal(AddForm, {
-            onAdd: handleAdd,
+          showModal(MemberForm, {
+            onChange: handleAdd,
             added: getValues("members").map((m) => m.addr),
           })
         }
@@ -47,13 +56,13 @@ export default function Members({ classes = "" }) {
           AIF
         </Info>
       ) : (
-        <table className="table-fixed rounded outline outline-1 outline-prim">
+        <table className="rounded outline outline-1 outline-prim">
           <TableSection
             type="thead"
             rowClass="border-b border-prim bg-orange-l6 dark:bg-blue-d7 rounded"
           >
             <Cells type="th" cellClass="text-xs uppercase text-left py-3 px-4">
-              <p className="w-80">Member</p>
+              <>member</>
               <>Vote weight</>
               <></>
             </Cells>
@@ -63,7 +72,12 @@ export default function Members({ classes = "" }) {
             rowClass="border-b border-prim last:border-none"
           >
             {fields.map((field, idx) => (
-              <Row key={field.id} idx={idx} onRemove={handleRemove} />
+              <Row
+                key={field.id}
+                idx={idx}
+                onRemove={handleRemove}
+                onEdit={handleEdit}
+              />
             ))}
           </TableSection>
         </table>
@@ -75,15 +89,26 @@ export default function Members({ classes = "" }) {
 type Props = {
   idx: number;
   onRemove(idx: number): void;
+  onEdit(member: MemberItem): void;
 };
 
-function Row({ idx, onRemove }: Props) {
-  const { getValues } = useFormContext();
-  const { addr, weight } = getValues(`${name}.${idx}`);
+function Row({ idx, onRemove, onEdit }: Props) {
+  const { getValues } = useFormContext<FV>();
+  const member = getValues(`members.${idx}`);
+  const { addr, weight } = member;
   return (
     <Cells type="td" cellClass="py-3 px-4 text-sm">
       <>{addr}</>
-      <>{weight}</>
+      <>
+        {weight}{" "}
+        <button
+          onClick={() => onEdit({ ...member, idx })}
+          type="button"
+          className="inline-block font-work underline"
+        >
+          (change)
+        </button>
+      </>
 
       <div className="w-full h-full relative">
         <button

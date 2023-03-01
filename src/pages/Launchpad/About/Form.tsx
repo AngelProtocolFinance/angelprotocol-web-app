@@ -14,6 +14,7 @@ export default function AboutForm(props: FormProps) {
         label="Name"
         placeholder="Name of your Angel Impact Fund"
         required
+        tooltip="Maximum 60 characters"
         classes={{ container: "mb-4" }}
       />
       <Field
@@ -21,11 +22,12 @@ export default function AboutForm(props: FormProps) {
         label="Tagline"
         placeholder="Tagline that best describes the purpose of your AIF"
         required
+        tooltip="Maximum 140 characters"
         classes={{ container: "mb-4" }}
       />
       <button
         type="submit"
-        className="mt-8 py-3 px-8 w-full sm:w-auto btn-orange"
+        className="text-sm mt-8 py-3 px-8 w-full sm:w-auto btn-orange"
       >
         Continue
       </button>

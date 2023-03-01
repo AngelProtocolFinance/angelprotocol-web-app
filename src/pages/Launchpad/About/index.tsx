@@ -13,8 +13,8 @@ export default withStepGuard<1>(function About({ data }) {
   const methods = useForm<FV>({
     resolver: yupResolver(
       object().shape<SchemaShape<FV>>({
-        name: requiredString,
-        tagline: requiredString,
+        name: requiredString.max(60, "exceeded limit"), //just append tooltip
+        tagline: requiredString.max(140, "exceeded limit"),
       })
     ),
     defaultValues: data || {
