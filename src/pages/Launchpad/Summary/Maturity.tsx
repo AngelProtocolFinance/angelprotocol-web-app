@@ -26,16 +26,14 @@ export default function Maturity({
       {isEmpty(_beneficiaries) ? (
         <Info>To be created multisig wallet is the only beneficiary</Info>
       ) : (
-        <table>
-          <TableSection type="tbody" rowClass="">
-            {beneficiaries.map(({ addr, share }) => (
-              <Cells type="td" cellClass="" key={addr}>
-                <>{addr}</>
-                <>{share} %</>
-              </Cells>
-            ))}
-          </TableSection>
-        </table>
+        <ul className="grid gap-y-2 list-disc list-inside">
+          {beneficiaries.map(({ addr, share }) => (
+            <li key={addr} className="">
+              <span className="mr-10">{addr}</span>
+              <span className="font-semibold">{share} %</span>
+            </li>
+          ))}
+        </ul>
       )}
     </Section>
   );

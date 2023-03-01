@@ -10,7 +10,8 @@ export default function Splits({
 }: SectionProps<TSplits>) {
   return (
     <Section {...props}>
-      <div>
+      <p className="font-semibold mb-2">Default values</p>
+      <div className="mb-6">
         <span>To locked</span>
         <span>{def} %</span>
       </div>
@@ -21,7 +22,7 @@ export default function Splits({
 
       {isCustom && (
         <>
-          <h5>Maximum and minimums</h5>
+          <p className="font-semibold mb-2">Maximum and minimums</p>
           <div>
             <span>To locked</span>
             <span>
