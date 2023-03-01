@@ -53,7 +53,10 @@ function SubmitWithReason({
         <Field<WV>
           name="reason"
           label="Reason"
-          classes={{ container: "field-admin mb-8" }}
+          classes={{
+            container: "field-admin",
+            label: "font-bold font-work text-base",
+          }}
         />
         <button
           type="submit"
