@@ -6,7 +6,6 @@ import { useAdminResources } from "pages/Admin/Guard";
 import { useLatestBlockQuery } from "services/juno";
 import QueryLoader from "components/QueryLoader";
 import { Field } from "components/form";
-import { APP_NAME } from "constants/common";
 import Warning from "./Warning";
 
 export default function Submit() {
@@ -71,9 +70,6 @@ function SubmitWithReason({
   if (endowment.endow_type === "Charity") {
     return (
       <>
-        <Warning classes="mb-4">
-          {`Withdrawing from endowment funds requires ${APP_NAME} team approval.`}
-        </Warning>
         <Field<WV>
           name="reason"
           label="Reason"

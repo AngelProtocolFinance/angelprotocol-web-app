@@ -1,15 +1,10 @@
 import { PropsWithChildren } from "react";
 import Icon from "components/Icon";
 
-export default function Warning({
-  classes = "",
-  children,
-}: PropsWithChildren<{ classes?: string }>) {
+export default function Warning({ children }: PropsWithChildren<{}>) {
   return (
-    <div
-      className={`${classes} p-2 bg-orange-l6 dark:bg-blue-d4 border border-orange-l3 dark:border-bluegray rounded-md text-orange-d1 dark:text-orange-l3 text-xs`}
-    >
-      <Icon type="Info" className="inline relative bottom-0.5 mr-1" />
+    <div className="grid grid-cols-[auto_1fr] items-center p-3 pr-4 gap-3 w-full border border-prim rounded text-sm">
+      <Icon type="WarningOutline" className="w-6 h-6 text-red" />
       {children}
     </div>
   );
