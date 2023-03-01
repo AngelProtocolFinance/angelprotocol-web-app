@@ -1,3 +1,4 @@
+import { PropsWithChildren } from "react";
 import { TSplits } from "slices/launchpad/types";
 import Section, { SectionProps } from "./Section";
 
@@ -11,32 +12,39 @@ export default function Splits({
   return (
     <Section {...props}>
       <p className="font-semibold mb-2">Default values</p>
-      <div className="mb-6">
-        <span>To locked</span>
-        <span>{def} %</span>
-      </div>
-      <div>
-        <span>To liquid</span>
-        <span>{100 - +def} %</span>
-      </div>
+      <ul className="list-disc list-inside mb-6">
+        <Item classes="mb-2" title="To locked">
+          {def} %
+        </Item>
+        <Item classes="mb-2" title="To liquid">
+          {100 - +def} %
+        </Item>
+      </ul>
 
       {isCustom && (
         <>
           <p className="font-semibold mb-2">Maximum and minimums</p>
-          <div>
-            <span>To locked</span>
-            <span>
-              {min}% to {max}%
-            </span>
-          </div>
-          <div>
-            <span>To locked</span>
-            <span>
-              {100 - +max}% to {100 - +min}%
-            </span>
-          </div>
+          <Item classes="mb-2" title="To locked">
+            {min}% to {max}%
+          </Item>
+          <Item classes="mb-2" title="To liquid">
+            {100 - +max}% to {100 - +min}%
+          </Item>
         </>
       )}
     </Section>
+  );
+}
+
+function Item({
+  title,
+  classes = "",
+  children,
+}: PropsWithChildren<{ classes?: string; title: string }>) {
+  return (
+    <li className={classes}>
+      <span className="w-40 inline-block mr-6">{title}</span>
+      <span className="font-semibold">{children}</span>
+    </li>
   );
 }

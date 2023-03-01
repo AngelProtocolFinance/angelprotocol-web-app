@@ -1,5 +1,5 @@
 import { TMaturity } from "slices/launchpad/types";
-import TableSection, { Cells } from "components/TableSection";
+import { Cells } from "components/TableSection";
 import { isEmpty } from "helpers";
 import Info from "../common/Info";
 import Section, { SectionProps } from "./Section";

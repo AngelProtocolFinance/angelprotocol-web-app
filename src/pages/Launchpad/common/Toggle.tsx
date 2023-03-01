@@ -43,12 +43,14 @@ export default function Toggle<T extends FV>({
           disabled={disabled || isSubmitting}
           checked={value}
           onChange={onChange}
-          className="border border-prim peer relative inline-flex h-6 w-11 items-center rounded-full transition-colors"
+          className="border border-prim peer relative inline-flex h-8 w-14 items-center rounded-full transition-colors"
         >
           <span
             className={`${
-              value ? "translate-x-6 bg-orange" : "translate-x-1 bg-gray"
-            } inline-block h-4 w-4 transform rounded-full  transition-transform`}
+              value
+                ? "translate-x-[1.625rem] bg-orange"
+                : "translate-x-1 bg-gray"
+            } inline-block h-6 w-6 transform rounded-full  transition-transform`}
           />
         </Switch>
 
