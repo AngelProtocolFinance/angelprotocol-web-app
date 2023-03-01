@@ -76,3 +76,14 @@ export type LaunchState = { progress: Progress } & (
   | Step6
   | Completed
 );
+
+const steps: `${keyof Completed}`[] = ["1", "2", "3", "4", "5", "6"];
+// typeguard LaunchState is a Completed
+export const isCompleted = (
+  state: LaunchState
+): state is { progress: 7 } & Completed => {
+  const completed = Object.keys(state);
+  return (
+    state.progress === 7 && steps.every((step) => completed.includes(step))
+  );
+};

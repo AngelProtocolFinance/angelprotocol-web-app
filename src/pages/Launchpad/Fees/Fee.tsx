@@ -25,8 +25,6 @@ export default function Fee({ name, title }: Props) {
 
   const isActive = watch(isActiveName);
 
-  console.log("value", watch(receiverName), receiverName);
-
   useEffect(() => {
     if (!isActive) {
       clearErrors([rateName, receiverName]);

@@ -18,6 +18,7 @@ export default function Launchpad() {
         <Route path={routes[4]} element={<Maturity step={4} />} />
         <Route path={routes[5]} element={<Splits step={5} />} />
         <Route path={routes[6]} element={<Fees step={6} />} />
+        <Route path={routes[7]} element={<p>summary</p>} />
         <Route index element={<About step={1} />} />
         <Route path="*" element={<Navigate to="." />} />
       </Route>
