@@ -6,7 +6,6 @@ export default function Withdraws() {
     <div className="grid gap-8">
       <h2 className="text-center font-bold text-3xl -mb-2">Withdraw</h2>
       <Withdrawer />
-
       <Transactions />
     </div>
   );
