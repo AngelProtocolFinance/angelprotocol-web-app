@@ -16,15 +16,7 @@ export default function Submit() {
 
   const type = getValues("type");
   if (type === "liquid") {
-    return (
-      <button
-        type="submit"
-        disabled={isSubmitDisabled}
-        className="btn-orange px-4 py-2 text-sm"
-      >
-        Create withdraw proposal
-      </button>
-    );
+    return <WithdrawButton disabled={isSubmitDisabled} />;
   }
   //check maturity when locked
   return (
@@ -58,13 +50,7 @@ function SubmitWithReason({
             label: "font-bold font-work text-base",
           }}
         />
-        <button
-          type="submit"
-          disabled={isSubmitDisabled}
-          className="btn-orange px-4 py-2 text-sm"
-        >
-          Create withdraw proposal
-        </button>
+        <WithdrawButton disabled={isSubmitDisabled} />
       </>
     );
   }
@@ -79,13 +65,15 @@ function SubmitWithReason({
           Withdrawing endowment funds before maturity is not allowed.
         </Warning>
       )}
-      <button
-        type="submit"
-        disabled={!isMatured}
-        className="mt-2 btn-orange px-4 py-2 text-sm"
-      >
-        Create withdraw proposal
-      </button>
+      <WithdrawButton disabled={!isMatured} />
     </>
+  );
+}
+
+function WithdrawButton({ disabled }: { disabled: boolean }) {
+  return (
+    <button type="submit" disabled={disabled} className="btn-orange py-3">
+      Withdraw
+    </button>
   );
 }
