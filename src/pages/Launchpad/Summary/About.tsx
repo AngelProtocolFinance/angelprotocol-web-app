@@ -8,7 +8,7 @@ export default function About({
 }: SectionProps<TAbout>) {
   return (
     <Section {...props}>
-      <p>{name}</p>
+      <p className="mb-2">{name}</p>
       <p>{tagline}</p>
     </Section>
   );

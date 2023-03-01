@@ -3,10 +3,10 @@ import { FV } from "./types";
 import { Member } from "slices/launchpad/types";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
-import Status from "components/Status";
 import TableSection, { Cells } from "components/TableSection";
 import { isEmpty } from "helpers";
 import { Group, GroupTitle } from "../common/Form";
+import { Info } from "../common/Info";
 import AddForm from "./AddForm";
 
 const name: keyof FV = "members";
@@ -42,14 +42,10 @@ export default function Members({ classes = "" }) {
         <span>Add member</span>
       </button>
       {isEmpty(fields) ? (
-        <Status
-          icon="Info"
-          iconOptions={{ size: 18 }}
-          classes="text-sm text-gray-l2 dark:text-gray mt-4"
-        >
+        <Info classes="mt-4">
           No members have been added yet - would be set to the creator of this
           fund
-        </Status>
+        </Info>
       ) : (
         <table className="table-fixed rounded outline outline-1 outline-prim">
           <TableSection

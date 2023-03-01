@@ -11,6 +11,7 @@ export default function Management({
 
   return (
     <Section {...props}>
+      <h5 className="font-medium">Members:</h5>
       {isEmpty(_members) ? (
         <p>No members set - creator of this AIF would be a default member</p>
       ) : (
