@@ -24,7 +24,7 @@ export default function Submit() {
       <button
         type="submit"
         disabled={isSubmitDisabled}
-        className="mt-2 btn-orange px-4 py-2 text-sm"
+        className="btn-orange px-4 py-2 text-sm"
       >
         Create withdraw proposal
       </button>
@@ -71,7 +71,7 @@ function SubmitWithReason({
   if (endowment.endow_type === "Charity") {
     return (
       <>
-        <Warning classes="mb-4">
+        <Warning classes="-mt-3">
           {`Withdrawing from endowment funds requires ${APP_NAME} team approval.`}
         </Warning>
         <Field<WV>
@@ -95,7 +95,7 @@ function SubmitWithReason({
   return (
     <>
       {!isMatured && (
-        <Warning>
+        <Warning classes="-mt-3">
           Withdrawing endowment funds before maturity is not allowed.
         </Warning>
       )}
