@@ -6,7 +6,7 @@ import Warning from "./Warning";
 import useWithdraw from "./useWithdraw";
 
 export default function Form() {
-  const { withdraw } = useWithdraw();
+  const withdraw = useWithdraw();
 
   return (
     <form
