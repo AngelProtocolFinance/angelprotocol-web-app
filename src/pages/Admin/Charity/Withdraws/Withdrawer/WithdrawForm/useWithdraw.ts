@@ -14,7 +14,11 @@ import { chainIds } from "constants/chainIds";
 import useLogWithdrawProposal from "./useLogWithdrawProposal";
 
 export default function useWithdraw() {
-  const { handleSubmit, getValues } = useFormContext<WithdrawValues>();
+  const {
+    handleSubmit,
+    getValues,
+    formState: { isValid, isDirty, isSubmitting },
+  } = useFormContext<WithdrawValues>();
 
   const { cw3, id, endow_type, propMeta } = useAdminResources<"charity">();
   const { wallet } = useGetWallet();
@@ -91,5 +95,9 @@ export default function useWithdraw() {
     });
   }
 
-  return handleSubmit(withdraw);
+  return {
+    withdraw: handleSubmit(withdraw),
+    isSubmitDisabled: !isValid || !isDirty || isSubmitting,
+    type,
+  };
 }
