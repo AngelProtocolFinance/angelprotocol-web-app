@@ -48,9 +48,9 @@ export default function AddForm({ onAdd, share, added }: Props) {
     >
       <FormProvider {...methods}>
         <Field name="addr" label="Address" required />
-        <Field name="share" label="Share" required />
+        <Field name="share" label="Share (%)" required />
       </FormProvider>
-      <button type="submit" className="btn btn-orange mt-6">
+      <button type="submit" className="btn btn-orange mt-6 text-sm">
         Add beneficiary
       </button>
     </Dialog.Panel>

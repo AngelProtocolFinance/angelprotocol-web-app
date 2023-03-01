@@ -39,7 +39,7 @@ export default function MemberForm({ onAdd, name, added }: Props) {
       </FormProvider>
       <button
         type="submit"
-        className="btn btn-orange mt-4 text-xs font-work justify-self-end"
+        className="btn btn-orange mt-4 text-sm justify-self-end"
       >
         Add {name}
       </button>

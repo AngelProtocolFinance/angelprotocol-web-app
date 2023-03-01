@@ -54,14 +54,14 @@ export default function Beneficiaries({ classes = "" }) {
       {isEmpty(fields) ? (
         <Info>Multisig wallet is the beneficiary</Info>
       ) : (
-        <table className="table-fixed rounded outline outline-1 outline-prim">
+        <table className="rounded outline outline-1 outline-prim">
           <TableSection
             type="thead"
             rowClass="border-b border-prim bg-orange-l6 dark:bg-blue-d7 rounded"
           >
             <Cells type="th" cellClass="text-xs uppercase text-left py-3 px-4">
-              <p className="w-80">Member</p>
-              <>Share</>
+              <>Member</>
+              <>Allocation</>
               <></>
             </Cells>
           </TableSection>
