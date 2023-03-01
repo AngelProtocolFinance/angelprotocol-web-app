@@ -1,30 +1,16 @@
-import { useAdminResources } from "pages/Admin/Guard";
-import { useWithdrawLogsQuery } from "services/apes";
-import QueryLoader from "components/QueryLoader";
+import { WithdrawLog } from "types/aws";
 import Log from "./Log";
 
 type Props = {
+  withdraws: WithdrawLog[];
   classes?: string;
 };
-export default function List({ classes = "" }: Props) {
-  const { cw3 } = useAdminResources();
-  const queryState = useWithdrawLogsQuery(cw3);
+export default function List({ classes = "", withdraws }: Props) {
   return (
-    <QueryLoader
-      queryState={queryState}
-      messages={{
-        loading: "Loading transactions...",
-        error: "Failed to get transactions",
-        empty: "No transactions found",
-      }}
-    >
-      {(logs) => (
-        <ul className={`${classes} gap-2 sm:grid-cols-3`}>
-          {logs.map((w) => (
-            <Log {...w} key={w.proposal_id} />
-          ))}
-        </ul>
-      )}
-    </QueryLoader>
+    <ul className={`${classes} gap-2 sm:grid-cols-3`}>
+      {withdraws.map((w) => (
+        <Log {...w} key={w.proposal_id} />
+      ))}
+    </ul>
   );
 }
