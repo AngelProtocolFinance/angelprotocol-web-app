@@ -1,6 +1,7 @@
 import { TMaturity } from "slices/launchpad/types";
 import TableSection, { Cells } from "components/TableSection";
 import { isEmpty } from "helpers";
+import Info from "../common/Info";
 import Section, { SectionProps } from "./Section";
 
 export default function Maturity({
@@ -17,19 +18,18 @@ export default function Maturity({
 
   return (
     <Section {...props}>
-      <h3>Maturity</h3>
-      <div>
-        <span>Maturity date:</span>
-        <span>{new Date(date).toLocaleString()}</span>
+      <div className="mb-6">
+        <span className="font-semibold">Maturity date: </span>
+        <span>{new Date(date).toLocaleDateString()}</span>
       </div>
-      <h5>Maturity Whitelists</h5>
+      <p className="font-semibold mb-2">Maturity Whitelist:</p>
       {isEmpty(_beneficiaries) ? (
-        <p>To be created multisig wallet is the beneficiary</p>
+        <Info>To be created multisig wallet is the only beneficiary</Info>
       ) : (
         <table>
           <TableSection type="tbody" rowClass="">
             {beneficiaries.map(({ addr, share }) => (
-              <Cells type="td" cellClass="">
+              <Cells type="td" cellClass="" key={addr}>
                 <>{addr}</>
                 <>{share} %</>
               </Cells>

@@ -23,7 +23,7 @@ export default function Summary() {
 
   return (
     <div>
-      <h2 className="text-xl font-bold">
+      <h2 className="text-xl font-bold mb-8">
         You're ready to create your AIF! Here's a summary:
       </h2>
       <About {...about} title="About" step={1} disabled={false} />

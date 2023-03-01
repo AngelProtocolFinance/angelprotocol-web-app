@@ -54,10 +54,6 @@ export default function SplitsForm(props: FormProps) {
       {isCustom && (
         <Group className="mb-8">
           <GroupTitle className="mb-8">Minimums and Maximums</GroupTitle>
-          <div className="flex justify-between text-sm">
-            <span>To locked</span>
-            <span>To liquid</span>
-          </div>
           <MinmaxSlider<FV> names={{ min: "min", max: "max" }}>
             {(min, max) => (
               <p className="mt-16">

@@ -22,11 +22,19 @@ export default function Management({
       )}
       <p className="font-semibold mt-6 mb-2">Proposal settings:</p>
       <ul className="list-disc list-inside grid gap-2">
-        <li>Pass threshold is {proposal.threshold} %</li>
-        <li>Voting duration is {proposal.duration} hours</li>
+        <li>
+          Pass threshold is{" "}
+          <span className="font-semibold">{proposal.threshold} %</span>
+        </li>
+        <li>
+          Voting duration is{" "}
+          <span className="font-semibold">{proposal.duration}</span> hours
+        </li>
         <li>
           Proposal auto-execution is turned{" "}
-          {proposal.isAutoExecute ? "ON" : "OFF"}
+          <span className="font-semibold">
+            {proposal.isAutoExecute ? "ON" : "OFF"}
+          </span>
         </li>
       </ul>
     </Section>
