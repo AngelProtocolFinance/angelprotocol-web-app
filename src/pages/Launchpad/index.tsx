@@ -5,6 +5,7 @@ import Layout from "./Layout";
 import Management from "./Management";
 import Maturity from "./Maturity";
 import Splits from "./Splits";
+import Summary from "./Summary";
 import Whitelists from "./Whitelists";
 import { routes } from "./constants";
 
@@ -18,7 +19,7 @@ export default function Launchpad() {
         <Route path={routes[4]} element={<Maturity step={4} />} />
         <Route path={routes[5]} element={<Splits step={5} />} />
         <Route path={routes[6]} element={<Fees step={6} />} />
-        <Route path={routes[7]} element={<p>summary</p>} />
+        <Route path={routes[7]} element={<Summary />} />
         <Route index element={<About step={1} />} />
         <Route path="*" element={<Navigate to="." />} />
       </Route>
