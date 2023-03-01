@@ -3,13 +3,10 @@ import Withdrawer from "./Withdrawer";
 
 export default function Withdraws() {
   return (
-    <div className="grid gap-6">
-      <h2 className="text-center font-bold text-3xl">Withdraw</h2>
+    <div className="grid gap-8">
+      <h2 className="text-center font-bold text-3xl -mb-2">Withdraw</h2>
       <Withdrawer />
 
-      <h3 className="uppercase font-extrabold text-2xl mt-6 border-t border-prim pt-2">
-        Transactions
-      </h3>
       <Transactions />
     </div>
   );

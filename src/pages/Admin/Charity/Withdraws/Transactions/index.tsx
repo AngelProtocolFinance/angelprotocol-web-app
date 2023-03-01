@@ -15,11 +15,10 @@ export default function Transactions() {
         error: "Failed to get transactions",
         empty: "No transactions found",
       }}
-      classes={{ container: "mt-2" }}
     >
       {(logs) => (
         <>
-          <List withdraws={logs} classes="grid md:hidden mt-4" />
+          <List withdraws={logs} classes="grid md:hidden" />
           <Table withdraws={logs} classes="hidden md:table" />
         </>
       )}
