@@ -22,18 +22,18 @@ export function CheckField<T extends FieldValues>({
   } = useFormContext<T>();
 
   const id = `__${name}`;
-  const { container, input: int, lbl, error } = unpack(classes);
+  const { container, input, label, error } = unpack(classes);
 
   return (
     <div className={`check-field ${container}`}>
       <input
-        className={int + " peer"}
+        className={input + " peer"}
         type="checkbox"
         {...register(name)}
         id={id}
         disabled={isSubmitting || disabled}
       />
-      <label data-required={required} className={lbl} htmlFor={id}>
+      <label data-required={required} className={label} htmlFor={id}>
         {children}
       </label>
 
