@@ -3,6 +3,7 @@ import { WithdrawValues as WV } from "./types";
 import { EndowmentDetails } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { Field } from "components/form";
+import { APP_NAME } from "constants/common";
 import Warning from "./Warning";
 
 export default function Submit() {
@@ -46,6 +47,9 @@ function SubmitWithReason({
   if (endowment.endow_type === "charity") {
     return (
       <>
+        <Warning classes="mb-4">
+          {`Withdrawing from endowment funds requires ${APP_NAME} team approval.`}
+        </Warning>
         <Field<WV>
           name="reason"
           label="Reason"
