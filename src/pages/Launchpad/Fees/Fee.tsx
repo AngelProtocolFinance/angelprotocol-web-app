@@ -1,3 +1,4 @@
+import { ErrorMessage } from "@hookform/error-message";
 import { useEffect } from "react";
 import { Path, useFormContext } from "react-hook-form";
 import { FV } from "./types";
@@ -6,52 +7,71 @@ import { Cells } from "components/TableSection";
 import Toggle from "../common/Toggle";
 import { keys } from "./constants";
 
-export default function Fee(props: { name: keyof TFees; title: string }) {
+type Props = { name: keyof TFees; title: string };
+
+export default function Fee({ name, title }: Props) {
   const {
     register,
     watch,
     setValue,
+    clearErrors,
+    setFocus,
     formState: { errors },
   } = useFormContext<FV>();
 
-  const isActiveName: Path<FV> = `${props.name}.${keys.isActive}`;
-  const rateName: Path<FV> = `${props.name}.${keys.rate}`;
-  const receiverName: Path<FV> = `${props.name}.${keys.receiver}`;
+  const isActiveName: Path<FV> = `${name}.${keys.isActive}`;
+  const rateName: Path<FV> = `${name}.${keys.rate}`;
+  const receiverName: Path<FV> = `${name}.${keys.receiver}`;
 
   const isActive = watch(isActiveName);
 
-  const isAddressError = errors[props.name]?.receiver !== undefined; // [1
-  const isRateError = errors[props.name]?.rate !== undefined;
+  console.log("value", watch(receiverName), receiverName);
 
   useEffect(() => {
     if (!isActive) {
-      setValue(receiverName, "");
-      setValue(rateName, "1");
+      clearErrors([rateName, receiverName]);
+      setValue(rateName, "1", { shouldValidate: false });
+      setValue(receiverName, "", { shouldValidate: false });
+    } else {
+      setFocus(receiverName);
     }
+
     //eslint-disable-next-line
-  }, [isActive, props.name, setValue]);
+  }, [isActive, name, setValue]);
 
   return (
-    <Cells type="td" cellClass="py-3 px-4">
-      <p className="text-sm uppercase font-work">{props.title}</p>
-      <Toggle name={`${props.name}.isActive`} />
+    <Cells type="td" cellClass="py-4 px-4">
+      <p className="text-sm uppercase font-work">{title}</p>
+      <Toggle<FV> name={isActiveName} />
 
-      <input
-        disabled={!isActive}
-        placeholder="required"
-        className={`bg-transparent font-mono text-sm ${
-          isAddressError ? "text-red" : "text-green"
-        } placeholder:text-red/80 focus:outline-none disabled:text-white/30 disabled:placeholder:text-transparent`}
-        {...register(receiverName)}
-      />
+      <div className="relative">
+        <input
+          disabled={!isActive}
+          className="w-full bg-transparent focus:outline-none text-sm"
+          {...register(receiverName)}
+          // ref={receiverRef}
+        />
+        <ErrorMessage
+          name={receiverName}
+          as="span"
+          className="field-error text-left -bottom-3.5 w-max left-0"
+          errors={errors}
+        />
+      </div>
 
-      <input
-        disabled={!isActive}
-        className={`w-6 bg-transparent font-mono ${
-          isRateError ? "text-red" : "text-green"
-        } focus:outline-none disabled:text-white/30`}
-        {...register(rateName)}
-      />
+      <div className="relative">
+        <input
+          {...register(rateName)}
+          disabled={!isActive}
+          className="w-full bg-transparent focus:outline-none text-sm"
+        />
+        <ErrorMessage
+          name={rateName}
+          as="span"
+          className="field-error text-left -bottom-3.5 w-max left-0"
+          errors={errors}
+        />
+      </div>
     </Cells>
   );
 }

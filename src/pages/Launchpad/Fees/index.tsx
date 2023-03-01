@@ -1,9 +1,10 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { number, object, string } from "yup";
+import { object, string } from "yup";
 import { FV } from "./types";
 import { SchemaShape } from "schemas/types";
 import { TFee, TFees } from "slices/launchpad/types";
+import { useLaunchpad } from "slices/launchpad";
 import { requiredPercent } from "schemas/number";
 import { requiredWalletAddr } from "schemas/string";
 import { withStepGuard } from "../withStepGuard";
@@ -11,25 +12,23 @@ import Form from "./Form";
 import { keys } from "./constants";
 
 const fee: SchemaShape<TFee> = {
-  receiver: string().when(keys.isActive, {
-    is: true,
-    then: () => requiredWalletAddr(),
-    otherwise: (schema) => schema.optional(),
-  }),
-  rate: number().when(keys.isActive, {
-    is: true,
-    then: () => requiredPercent,
-    otherwise: (schema) => schema.optional(),
-  }),
+  receiver: string().when(keys.isActive, (v, schema) =>
+    v ? requiredWalletAddr() : schema.optional()
+  ),
+  rate: string().when(keys.isActive, (v, schema) =>
+    v ? requiredPercent : schema.optional()
+  ),
 };
 
 export default withStepGuard<6>(function Fees({ data }) {
+  const { update } = useLaunchpad(6);
   const methods = useForm<FV>({
+    mode: "onChange",
     resolver: yupResolver(
       object().shape<SchemaShape<TFees>>({
-        deposit: object(fee),
-        withdrawal: object(fee),
-        earnings: object(fee),
+        deposit: object().shape(fee),
+        withdrawal: object().shape(fee),
+        earnings: object().shape(fee),
       })
     ),
     defaultValues: data || {
@@ -39,9 +38,10 @@ export default withStepGuard<6>(function Fees({ data }) {
     },
   });
 
+  const { handleSubmit } = methods;
   return (
     <FormProvider {...methods}>
-      <Form />
+      <Form onSubmit={handleSubmit((data) => update(data))} />
     </FormProvider>
   );
 });

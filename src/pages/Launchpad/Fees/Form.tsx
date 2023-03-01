@@ -17,10 +17,10 @@ export default function FeesForm(props: FormProps) {
           type="thead"
           rowClass="uppercase text-xs font-bold border-b border-prim divide-x divide-prim"
         >
-          <Cells type="th" cellClass="px-4 py-3">
+          <Cells type="th" cellClass="px-4 py-4">
             <></>
             <>active</>
-            <p className="text-left w-80">payout address</p>
+            <>payout address</>
             <>rate</>
           </Cells>
         </TableSection>

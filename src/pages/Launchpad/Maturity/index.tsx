@@ -29,7 +29,11 @@ export default withStepGuard<4>(function Maturity({ data }) {
   const { handleSubmit } = methods;
   return (
     <FormProvider {...methods}>
-      <Form onSubmit={handleSubmit((data) => update(data))} />
+      <Form
+        onSubmit={handleSubmit(({ date, ...data }) =>
+          update({ ...data, date: new Date(date).toISOString() })
+        )}
+      />
     </FormProvider>
   );
 });
