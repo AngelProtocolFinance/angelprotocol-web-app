@@ -1,13 +1,17 @@
-import { WithdrawLog } from "types/aws";
+import { useAdminResources } from "pages/Admin/Guard";
+import { useWithdrawLogsQuery } from "services/apes";
+import QueryLoader from "components/QueryLoader";
 import TableSection, { Cells } from "components/TableSection";
 import LogRow from "./LogRow";
 
 type Props = {
-  withdraws: WithdrawLog[];
   classes?: string;
 };
 
-export default function Table({ withdraws, classes = "" }: Props) {
+export default function Table({ classes = "" }: Props) {
+  const { cw3 } = useAdminResources();
+  const queryState = useWithdrawLogsQuery(cw3);
+
   return (
     <table className={`w-full mt-6 ${classes}`}>
       <TableSection type="thead" rowClass="border-b-2 border-white/20">
@@ -23,9 +27,22 @@ export default function Table({ withdraws, classes = "" }: Props) {
         </Cells>
       </TableSection>
       <TableSection type="tbody" rowClass="border-b border-white/10">
-        {withdraws.map((log, i) => (
-          <LogRow {...log} key={i} />
-        ))}
+        <QueryLoader
+          queryState={queryState}
+          messages={{
+            loading: <td>Loading transactions...</td>,
+            error: <td>Failed to get transactions</td>,
+            empty: <td>No transactions found</td>,
+          }}
+        >
+          {(logs) => (
+            <>
+              {logs.map((log, i) => (
+                <LogRow {...log} key={i} />
+              ))}
+            </>
+          )}
+        </QueryLoader>
       </TableSection>
     </table>
   );
