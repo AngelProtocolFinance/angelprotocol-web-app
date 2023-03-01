@@ -16,10 +16,10 @@ export default function Table({ withdraws, classes = "" }: Props) {
           cellClass="text-left font-heading text-white/80 uppercase p-2"
         >
           <>Amount</>
-          <>Receiver</>
+          <>Network</>
+          <>Withdrawal address/Account</>
+          <>Blockchain record</>
           <>Status</>
-          <>Amount Received</>
-          <>Transaction hash</>
         </Cells>
       </TableSection>
       <TableSection type="tbody" rowClass="border-b border-white/10">
