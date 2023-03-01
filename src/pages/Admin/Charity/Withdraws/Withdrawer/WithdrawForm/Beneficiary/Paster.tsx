@@ -1,17 +1,15 @@
 import Icon from "components/Icon";
-import usePaster from "./usePaster";
 
 type Props = { onPaste(text: string): void };
 
 export default function Paster({ onPaste }: Props) {
-  const { canPaste, text } = usePaster();
+  const paste = async () => {
+    const text = await navigator.clipboard.readText();
+    onPaste(text);
+  };
 
   return (
-    <button
-      type="button"
-      onClick={() => canPaste && onPaste(text)}
-      disabled={!canPaste}
-    >
+    <button type="button" onClick={paste}>
       <Icon
         type="Clipboard"
         className="hover:text-orange cursor-pointer"

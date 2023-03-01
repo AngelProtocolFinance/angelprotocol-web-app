@@ -12,8 +12,7 @@ export default function Beneficiary() {
     formState: { errors },
   } = useFormContext<WithdrawValues>();
 
-  const handlePaste = (text: string) =>
-    setValue("beneficiary", text, { shouldDirty: true });
+  const handlePaste = (text: string) => setValue("beneficiary", text);
 
   return (
     <div className="relative grid gap-3 w-full">
