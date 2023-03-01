@@ -75,6 +75,7 @@ import {
   IoCrop,
   IoWalletSharp,
   IoWarning,
+  IoWarningOutline,
 } from "react-icons/io5";
 import {
   MdAccountBalanceWallet,
@@ -194,6 +195,7 @@ export const icons = {
   User: FaUserCircle,
   Wallet: IoWalletSharp,
   Warning: IoWarning,
+  WarningOutline: IoWarningOutline,
   WaterDrop: MdWaterDrop,
   Widget: MdWidgets,
   Youtube: AiFillYoutube,
