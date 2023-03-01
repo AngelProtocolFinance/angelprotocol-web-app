@@ -7,11 +7,18 @@ import Status from "../Status";
 import { explorerUrls } from "../constants";
 import { getFinalRoute } from "../getFinalRoute";
 
+const hasMore = false;
+
 export default function LogRow(props: WithdrawLog) {
   const { amount, symbol, target_wallet } = props;
   const finalRoute = getFinalRoute(props);
   return (
-    <Cells type="td" cellClass="p-2 text-white/80">
+    <Cells
+      type="td"
+      cellClass={`p-3 border-t border-prim max-w-[256px] truncate ${
+        hasMore ? "" : "first:rounded-bl last:rounded-br"
+      }`}
+    >
       <Amount val={amount} symbol={symbol} />
 
       <span className="font-mono text-sm">{maskAddress(target_wallet)}</span>
