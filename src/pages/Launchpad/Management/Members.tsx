@@ -6,7 +6,7 @@ import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
 import { isEmpty } from "helpers";
 import { Group, GroupTitle } from "../common/Form";
-import { Info } from "../common/Info";
+import Info from "../common/Info";
 import AddForm from "./AddForm";
 
 const name: keyof FV = "members";
@@ -44,7 +44,7 @@ export default function Members({ classes = "" }) {
       {isEmpty(fields) ? (
         <Info classes="mt-4">
           No members have been added yet - would be set to the creator of this
-          fund
+          AIF
         </Info>
       ) : (
         <table className="table-fixed rounded outline outline-1 outline-prim">

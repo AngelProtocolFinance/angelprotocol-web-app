@@ -7,6 +7,7 @@ import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
 import { isEmpty } from "helpers";
 import { Group, GroupTitle } from "../../common/Form";
+import Info from "../../common/Info";
 import MemberForm from "./AddForm";
 
 const name: keyof FV = "beneficiaries";
@@ -51,7 +52,7 @@ export default function Beneficiaries({ classes = "" }) {
         <span>Add beneficiary</span>
       </button>
       {isEmpty(fields) ? (
-        <p>Multisig wallet is the beneficiary</p>
+        <Info>Multisig wallet is the beneficiary</Info>
       ) : (
         <table className="table-fixed rounded outline outline-1 outline-prim">
           <TableSection
@@ -75,9 +76,9 @@ export default function Beneficiaries({ classes = "" }) {
         </table>
       )}
       {totalShare < 100 && totalShare !== 0 && (
-        <p className="mt-8">
+        <Info classes="mt-8">
           {100 - totalShare}% share goes to Multisig wallet
-        </p>
+        </Info>
       )}
     </Group>
   );

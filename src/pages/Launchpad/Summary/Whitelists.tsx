@@ -1,5 +1,6 @@
 import { TWhitelists } from "slices/launchpad/types";
 import { isEmpty } from "helpers";
+import Info from "../common/Info";
 import Section, { SectionProps } from "./Section";
 
 export default function Whitelists({
@@ -12,19 +13,19 @@ export default function Whitelists({
 
   return (
     <Section {...props}>
-      <h5>Contributors</h5>
+      <p className="font-semibold mb-2">Contributors:</p>
 
       {isEmpty(donors) ? (
-        <p>Anyone can contribute to this AIF</p>
+        <Info>Anyone can contribute to this AIF</Info>
       ) : (
-        <ul>{donors}</ul>
+        <ul className="list-disc list-inside grid gap-2">{donors}</ul>
       )}
 
-      <h5>Beneficiaries</h5>
+      <p className="font-semibold mb-2 mt-6">Beneficiaries:</p>
       {isEmpty(withdrawers) ? (
-        <p>Only the multisig wallet can withdraw funds</p>
+        <Info>Only the multisig wallet can withdraw funds</Info>
       ) : (
-        <ul>{withdrawers}</ul>
+        <ul className="list-disc list-inside grid gap-2">{withdrawers}</ul>
       )}
     </Section>
   );

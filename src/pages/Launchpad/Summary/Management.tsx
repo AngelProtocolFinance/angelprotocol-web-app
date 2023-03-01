@@ -1,5 +1,6 @@
 import { TManagement } from "slices/launchpad/types";
 import { isEmpty } from "helpers";
+import Info from "../common/Info";
 import Section, { SectionProps } from "./Section";
 
 export default function Management({
@@ -11,14 +12,16 @@ export default function Management({
 
   return (
     <Section {...props}>
-      <h5 className="font-medium">Members:</h5>
+      <p className="font-semibold">Members:</p>
       {isEmpty(_members) ? (
-        <p>No members set - creator of this AIF would be a default member</p>
+        <Info classes="mt-2">
+          No members set - creator of this AIF would be a default member
+        </Info>
       ) : (
         _members
       )}
-      <h5>Proposal settings</h5>
-      <ul>
+      <p className="font-semibold mt-6 mb-2">Proposal settings:</p>
+      <ul className="list-disc list-inside grid gap-2">
         <li>Pass threshold is {proposal.threshold} %</li>
         <li>Voting duration is {proposal.duration} hours</li>
         <li>

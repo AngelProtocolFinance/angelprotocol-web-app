@@ -9,6 +9,7 @@ import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
 import { isEmpty } from "helpers";
 import { Group, GroupTitle } from "../common/Form";
+import Info from "../common/Info";
 import AddressForm from "./AddressForm";
 
 type Props<T extends FieldValues, K extends Path<T>> = {
@@ -57,7 +58,7 @@ export default function Addresses<T extends FieldValues, K extends Path<T>>({
         <span>Add {memberName}</span>
       </button>
       {isEmpty(fields) ? (
-        <p>{emptyMsg}</p>
+        <Info>{emptyMsg}</Info>
       ) : (
         <table className="table-fixed rounded outline outline-1 outline-prim">
           <TableSection

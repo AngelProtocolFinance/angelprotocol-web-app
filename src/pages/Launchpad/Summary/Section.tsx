@@ -15,9 +15,9 @@ export default function Section({
   disabled,
 }: PropsWithChildren<SectionProps<{}>>) {
   return (
-    <div className="py-4 border-t border-prim  text-sm">
+    <div className="py-6 border-t border-prim text-sm">
       <div className="flex items-center justify-between mb-8">
-        <h3 className="font-bold text-base">{title}</h3>
+        <h3 className="font-bold text-base font-sans">{title}</h3>
         <Link
           to={step === 1 ? "../." : `../${step}`}
           aria-disabled={disabled}
