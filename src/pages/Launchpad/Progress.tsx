@@ -1,8 +1,15 @@
 import { PropsWithChildren, useState } from "react";
+import { useMatch } from "react-router-dom";
 import { DrawerIcon } from "components/Icon";
+import { useGetter } from "store/accessors";
 import useHandleScreenResize, { SCREEN_MD } from "hooks/useHandleScreenResize";
 
-export default function ProgressIndicator({ classes = "" }) {
+export default function Progress({ classes = "" }) {
+  /** no need to check for /launchpad,since `<Routes/>
+   *  always falls back to home outside of /launchpad/1-7 pattern */
+  const step = +(useMatch("/launchpad/:step")?.params.step || "1");
+
+  const { progress: p } = useGetter((state) => state.launchpad);
   const [isOtherStepsShown, setIsOtherStepsShown] = useState(true);
 
   useHandleScreenResize(
@@ -27,7 +34,7 @@ export default function ProgressIndicator({ classes = "" }) {
   return (
     <div className={`py-4 pl-6 pr-4 ${classes} dark:text-gray`}>
       <div className="relative">
-        <Step classes="relative" isDone={true} isCurr={true}>
+        <Step classes="relative" isDone={p >= 1} isCurr={step === 1}>
           About
         </Step>
         <button
@@ -42,14 +49,23 @@ export default function ProgressIndicator({ classes = "" }) {
 
       {isOtherStepsShown && (
         <>
-          <Step isDone={false} isCurr={false}>
-            Step2
+          <Step isDone={p >= 2} isCurr={step === 2}>
+            Management
           </Step>
-          <Step isDone={false} isCurr={false}>
-            Step3
+          <Step isDone={p >= 3} isCurr={step === 3}>
+            Whitelists
           </Step>
-          <Step isDone={false} isCurr={false}>
-            Step4
+          <Step isDone={p >= 4} isCurr={step === 4}>
+            Maturity
+          </Step>
+          <Step isDone={p >= 5} isCurr={step === 5}>
+            Split of Contribution
+          </Step>
+          <Step isDone={p >= 6} isCurr={step === 6}>
+            Fees
+          </Step>
+          <Step isDone={p >= 7} isCurr={step === 7}>
+            Summary
           </Step>
         </>
       )}
