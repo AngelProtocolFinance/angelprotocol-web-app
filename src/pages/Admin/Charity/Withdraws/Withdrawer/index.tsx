@@ -30,7 +30,7 @@ export default function Withdrawer() {
       {({ tokens_on_hand }) => (
         <Tab.Group
           as="div"
-          className="justify-self-center flex flex-col items-center p-8 gap-6 border border-prim rounded"
+          className="justify-self-center flex flex-col items-center p-8 gap-6 dark:bg-blue-d6 border border-prim rounded"
           defaultIndex={type === "locked" ? 1 : 0}
         >
           <Tab.List className="grid grid-cols-2 place-items-center gap-1 w-full h-10 p-1 border border-prim rounded-3xl">

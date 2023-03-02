@@ -28,7 +28,7 @@ export default function Network() {
               {"JUNO"}
               <DrawerIcon
                 isOpen={open}
-                className="text-2xl text-gray-d1 dark:text-gray"
+                className="text-2xl text-gray-d1 dark:text-white"
                 aria-hidden="true"
               />
             </>
@@ -60,7 +60,7 @@ export default function Network() {
                   {selected && (
                     <Icon
                       type="Check"
-                      className="text-2xl text-gray-d1 dark:text-gray"
+                      className="text-2xl text-gray-d1 dark:text-white"
                     />
                   )}
                 </>
