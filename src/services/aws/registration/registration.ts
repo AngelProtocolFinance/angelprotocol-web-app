@@ -141,7 +141,7 @@ const registration_api = aws.injectEndpoints({
         method: "POST",
         body: { chain_id },
       }),
-      transformErrorResponse(err, meta, arg) {
+      transformErrorResponse(err) {
         return {
           status: err.status,
           data: `Registration submission failed. Contact ${EMAIL_SUPPORT}`,

@@ -137,7 +137,7 @@ export const customApi = junoApi.injectEndpoints({
         { type: "registrar", id: registrarTags.vault_list },
         { type: "account", id: accountTags.state },
       ],
-      async queryFn({ endowId, ...args }, api, extraOptions, baseQuery) {
+      async queryFn({ endowId, ...args }) {
         const [{ vaults }, accState] = await Promise.all([
           queryContract("regVaultList", contracts.registrar, args),
           queryContract("accState", contracts.accounts, { id: endowId }),

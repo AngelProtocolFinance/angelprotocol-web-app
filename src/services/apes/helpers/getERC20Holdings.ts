@@ -43,7 +43,7 @@ export async function getERC20Holdings(
       };
     })
   );
-  return Object.entries(res.results).reduce((map, [_, result]) => {
+  return Object.entries(res.results).reduce((map, [, result]) => {
     const { callsReturnContext: ctx, originalContractCallContext: callCTX } =
       result;
     const decimals = ctx[CALL_IDX.DECIMALS].returnValues[0];

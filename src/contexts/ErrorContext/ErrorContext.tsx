@@ -18,10 +18,10 @@ import InstallWallet from "./InstallWalletContent";
 type State = { handleError: (error: any, displayMessage?: string) => void };
 
 const Context = createContext<State>({
-  handleError: (_: any, __?: string) => {},
+  handleError: () => {},
 });
 
-export default function ErrorContext(props: PropsWithChildren<{}>) {
+export default function ErrorContext(props: PropsWithChildren) {
   const { showModal } = useModalContext();
 
   const handleError = useCallback(

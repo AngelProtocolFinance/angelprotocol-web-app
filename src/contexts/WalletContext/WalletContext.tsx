@@ -48,7 +48,7 @@ const initialState: State = {
   isLoading: true,
 };
 
-export default function WalletContext(props: PropsWithChildren<{}>) {
+export default function WalletContext(props: PropsWithChildren) {
   const {
     isLoading: isMetamaskLoading, //requesting permission, attaching event listeners
     connection: metamaskConnection,
@@ -289,7 +289,7 @@ const getContext = createContext<State>(initialState);
 const setContext = createContext<Setters>({
   connections: [],
   disconnect: async () => {},
-  switchChain: async (_) => {},
+  switchChain: async () => {},
 });
 
 export const useSetWallet = () => useContext(setContext);

@@ -53,7 +53,7 @@ function debounceCallback(callback: Fn, msDelay: number): Fn {
       window.clearTimeout(timeout);
     }
     timeout = window.setTimeout(() => {
-      callback.apply(null, args);
+      callback(...args);
     }, msDelay);
   };
 
