@@ -2,7 +2,6 @@ import { useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";
 import { WithdrawMeta } from "pages/Admin/types";
 import { Asset } from "types/contracts";
-import { accountTypeDisplayValue } from "pages/Admin/Charity/constants";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Account from "contracts/Account";
@@ -58,7 +57,7 @@ export default function useWithdraw() {
       : //normal proposal when withdraw doesn't need to go thru AP
         endowCW3.createProposalMsg(
           "withdraw proposal",
-          `withdraw ${accountTypeDisplayValue[type]} assets from endowment id: ${id}`,
+          `withdraw ${type} assets from endowment id: ${id}`,
           [
             account.createEmbeddedWithdrawMsg({
               id,
