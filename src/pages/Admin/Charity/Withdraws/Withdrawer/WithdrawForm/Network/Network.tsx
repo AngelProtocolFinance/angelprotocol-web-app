@@ -21,30 +21,35 @@ export default function Network() {
   return (
     <div className="grid gap-3">
       <span className="font-work font-bold">Select network</span>
-      <Listbox {...register("network")} as="div" className="relative">
-        <Listbox.Button className="grid grid-cols-[1fr_auto] items-center text-left gap-2 w-full md:w-52 p-4 border border-prim rounded">
-          {({ open, value }) => (
-            <>
-              <span>{value}</span>
-              <DrawerIcon
-                isOpen={open}
-                className="text-2xl text-gray-d1 dark:text-white"
-                aria-hidden="true"
-              />
-            </>
-          )}
-        </Listbox.Button>
+      <QueryLoader
+        queryState={queryState}
+        messages={{
+          loading: "Loading available networks...",
+          empty: "No available networks",
+          error: "Error loading networks",
+        }}
+      >
+        {(chains) => (
+          <Listbox {...register("network")} as="div" className="relative">
+            <Listbox.Button className="grid grid-cols-[1fr_auto] items-center text-left gap-2 w-full md:w-52 p-4 border border-prim rounded">
+              {({ open, value }) => (
+                <>
+                  <span className="truncate">
+                    {
+                      chains.find((chain) => chain.chain_id === value)
+                        ?.chain_name
+                    }
+                  </span>
+                  <DrawerIcon
+                    isOpen={open}
+                    className="text-2xl text-gray-d1 dark:text-white"
+                    aria-hidden="true"
+                  />
+                </>
+              )}
+            </Listbox.Button>
 
-        <Listbox.Options className="absolute mt-1 z-10 flex flex-col gap-1 w-full p-1 border border-prim rounded bg-white dark:bg-blue-d6 shadow-lg">
-          <QueryLoader
-            queryState={queryState}
-            messages={{
-              loading: "Loading available networks...",
-              empty: "No available networks",
-              error: "Error loading networks",
-            }}
-          >
-            {(chains) => (
+            <Listbox.Options className="absolute mt-1 z-10 flex flex-col gap-1 w-full p-1 border border-prim rounded bg-white dark:bg-blue-d6 shadow-lg">
               <>
                 {chains.map((chain) => (
                   <Listbox.Option
@@ -74,10 +79,10 @@ export default function Network() {
                   </Listbox.Option>
                 ))}
               </>
-            )}
-          </QueryLoader>
-        </Listbox.Options>
-      </Listbox>
+            </Listbox.Options>
+          </Listbox>
+        )}
+      </QueryLoader>
     </div>
   );
 }
