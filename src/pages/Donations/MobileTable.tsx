@@ -7,7 +7,7 @@ import useSort from "hooks/useSort";
 import { humanize } from "helpers";
 
 export default function MobileTable({ donations, classes = "" }: TableProps) {
-  const { sorted } = useSort(donations);
+  const { sorted } = useSort(donations, "date");
   const showKYCForm = useKYC();
 
   return (
