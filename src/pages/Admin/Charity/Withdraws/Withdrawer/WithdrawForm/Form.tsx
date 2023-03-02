@@ -22,9 +22,9 @@ export default function Form() {
         All withdraws to Ethereum & Binance are processed on a hourly basis by
         our cross-chain pipelines.
       </Warning>
-      {/* <Warning classes="-mt-3">
+      <Warning classes="-mt-3">
         The minimum withdrawal for Ethereum & Binance is $20 USDC.
-      </Warning> */}
+      </Warning>
       <Warning classes="-mt-3">
         We recommend not using crypto exchange addresses for withdrawals. We are
         not responsible for the loss of funds.
