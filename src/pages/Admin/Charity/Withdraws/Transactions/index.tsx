@@ -1,7 +1,7 @@
 // import { useAdminResources } from "pages/Admin/Guard";
 // import { useWithdrawLogsQuery } from "services/apes";
 import QueryLoader from "components/QueryLoader";
-import List from "./List";
+import MobileTable from "./MobileTable";
 import Table from "./Table";
 import useTransactions from "./useTransactions";
 
@@ -27,7 +27,14 @@ export default function Transactions() {
     >
       {(logs) => (
         <>
-          <List withdraws={logs} classes="grid md:hidden" />
+          <MobileTable
+            withdraws={logs}
+            classes="grid md:hidden"
+            hasMore={hasMore}
+            onLoadMore={loadNextPage}
+            disabled={isLoading || isLoadingNextPage || isError}
+            isLoading={isLoadingNextPage}
+          />
           <Table
             withdraws={logs}
             classes="hidden md:table"

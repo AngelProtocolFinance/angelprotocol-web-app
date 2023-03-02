@@ -65,7 +65,7 @@ export type WithdrawLog = {
   proposal_chain_id: string;
   target_wallet: string;
   target_chain: string;
-  start_time?: string;
+  start_time: string;
 
   //from cw3 query
   amount: number;
