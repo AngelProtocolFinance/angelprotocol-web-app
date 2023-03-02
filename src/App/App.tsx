@@ -32,7 +32,7 @@ export default function App() {
               path={`${appRoutes.donate_widget}/:id`}
               element={<DonateWidget />}
             />
-            <Route element={<Layout key={location.key} />}>
+            <Route element={<Layout />}>
               <Route
                 path={`${appRoutes.profile}/:id/*`}
                 element={<Profile />}

@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { Location, Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { Link } from "./types";
 import ErrorBoundary from "components/ErrorBoundary";
 import Loader from "components/Loader";
@@ -18,7 +18,8 @@ const HEADER_LINKS: Link[] = [
   // { title: "Governance", href: appRoutes.govern },
 ];
 
-export default function Layout({ key }: Pick<Location, "key">) {
+export default function Layout() {
+  const { key } = useLocation();
   return (
     <div className="grid grid-rows-[auto_1fr_auto]">
       <Seo /> {/* Load all defaults for SEO meta tags */}
