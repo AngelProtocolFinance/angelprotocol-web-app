@@ -10,8 +10,10 @@ import { getTxUrl, humanize } from "helpers";
 import { appRoutes } from "constants/routes";
 
 export default function Table({ donations, classes = "" }: TableProps) {
-  const { handleHeaderClick, sorted, sortDirection, sortKey } =
-    useSort(donations);
+  const { handleHeaderClick, sorted, sortDirection, sortKey } = useSort(
+    donations,
+    "date"
+  );
 
   const showKYCForm = useKYC();
 
