@@ -24,7 +24,9 @@ export default function Form({ type }: Props) {
         reset();
       }}
     >
-      <h3 className="font-bold text-lg mb-6">Update {type} strategy</h3>
+      <h3 className="font-bold text-lg mb-6 max-sm:text-center">
+        Update {type} strategy
+      </h3>
 
       <Fields classes="mt-4" type={type} />
 
