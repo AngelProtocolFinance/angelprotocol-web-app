@@ -15,11 +15,11 @@ jobs:
           node-version: "16"
           cache: "yarn"
       - name: Install dependencies
-        run: yarn install
+        run: yarn
       - name: Lint codebase
-        run: yarn run lint
+        run: yarn lint
       - name: Test codebase
-        run: yarn run test --watchAll=false --coverage --json --outputFile ./codecov-report.json
+        run: yarn test --configuration=ci
         env:
           NX_JUNO_LCD_NODE: ${{ secrets.REACT_APP_JUNO_LCD_NODE }}
           NX_INFURA_ID: ${{ secrets.REACT_APP_INFURA_ID }}
