@@ -11,7 +11,7 @@ export default function Balance({ type }: Props) {
   const { data, ...rest } = useAssetsQuery({ endowId: id });
 
   return (
-    <div className="rounded border border-prim bg-orange-l6 dark:bg-blue-d6">
+    <div className="@container rounded border border-prim bg-orange-l6 dark:bg-blue-d6">
       <h4 className="uppercase text-xl font-bold mb-5 pt-5 px-4">
         {type} account
       </h4>
@@ -29,8 +29,12 @@ export default function Balance({ type }: Props) {
       >
         {({ total, free, invested, symbol }) => {
           return (
-            <div className="flex gap-8 px-4">
-              <Amount title="Total value" classes="mr-auto" symbol={symbol}>
+            <div className="grid grid-cols-[auto_1fr] gap-y-5 justify-self-start gap-x-8 @lg:flex @lg:gap-x-8 px-4">
+              <Amount
+                title="Total value"
+                classes="col-span-full @lg:mr-auto"
+                symbol={symbol}
+              >
                 {humanize(total, 2)}
               </Amount>
               <Amount title="Free balance" symbol={symbol}>
