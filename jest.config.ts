@@ -1,11 +1,9 @@
 import type { Config } from "jest";
 
-const nxPreset = require("@nrwl/jest/preset").default;
-
 /* eslint-disable */
 const config: Config = {
-  ...nxPreset,
-  displayName: "angel-protocol",
+  preset: "./jest.preset.js",
+  displayName: "angelprotocol-web-app",
   transform: {
     "^(?!.*\\.(js|jsx|ts|tsx|css|json)$)": "@nrwl/react/plugins/jest",
     "^.+\\.[tj]sx?$": [
