@@ -21,8 +21,8 @@ jobs:
       - name: Test codebase
         run: yarn run test --watchAll=false --coverage --json --outputFile ./codecov-report.json
         env:
-          REACT_APP_JUNO_LCD_NODE: ${{ secrets.REACT_APP_JUNO_LCD_NODE }}
-          REACT_APP_INFURA_ID: ${{ secrets.REACT_APP_INFURA_ID }}
+          NX_JUNO_LCD_NODE: ${{ secrets.REACT_APP_JUNO_LCD_NODE }}
+          NX_INFURA_ID: ${{ secrets.REACT_APP_INFURA_ID }}
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:

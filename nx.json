@@ -17,26 +17,20 @@
       "inputs": ["default", "^production"]
     },
     "lint": {
-      "inputs": [
-        "default",
-        "{workspaceRoot}/.eslintrc.json",
-        "{workspaceRoot}/.eslintignore"
-      ]
+      "inputs": ["default", ".eslintrc.json", ".eslintignore"]
     },
     "test": {
-      "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"]
+      "inputs": ["default", "^production"]
     }
   },
   "namedInputs": {
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "production": [
       "default",
-      "!{projectRoot}/.eslintrc.json",
-      "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
-      "!{projectRoot}/tsconfig.spec.json",
-      "!{projectRoot}/jest.config.[jt]s"
-    ],
-    "sharedGlobals": ["{workspaceRoot}/babel.config.json"]
+      "!.eslintrc.json",
+      "!tsconfig.spec.json",
+      "!jest.config.[jt]s"
+    ]
   },
   "defaultProject": "angelprotocol-web-app"
 }
