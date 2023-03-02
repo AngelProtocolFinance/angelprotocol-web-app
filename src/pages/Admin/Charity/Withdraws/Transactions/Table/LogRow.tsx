@@ -5,7 +5,7 @@ import ExtLink from "components/ExtLink";
 import QueryLoader from "components/QueryLoader";
 import { Cells } from "components/TableSection";
 import { humanize } from "helpers";
-import ProposalLink from "../ProposalLink";
+import Actions from "../Actions";
 import Status from "../Status";
 import { explorerUrls } from "../constants";
 import { getFinalRoute } from "../getFinalRoute";
@@ -69,7 +69,7 @@ export default function LogRow(
 
       <Status status={proposal_status} />
 
-      <ProposalLink proposalId={proposal_id} />
+      <Actions proposalId={proposal_id} />
     </Cells>
   );
 }
