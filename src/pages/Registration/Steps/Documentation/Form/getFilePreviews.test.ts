@@ -12,7 +12,7 @@ const preview3: FileObject = { name: "preview3", publicUrl: "preview3Url" };
 
 const timeStamp = 123456789;
 const bucket: Bucket = "endow-reg";
-const baseURL: string = `https://${bucket}.${bucketURL}/${timeStamp}`;
+const baseURL = `https://${bucket}.${bucketURL}/${timeStamp}`;
 
 const result1: FileObject = {
   name: file1.name,

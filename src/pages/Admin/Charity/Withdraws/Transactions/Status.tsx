@@ -16,7 +16,7 @@ export default function Status({
 
   const currRoute = routes.length;
   if (num_routes && currRoute > 0) {
-    let status =
+    const status =
       currRoute >= num_routes && routes[currRoute - 1].status === "OK" ? (
         <span className="text-green-l1">completed</span>
       ) : (

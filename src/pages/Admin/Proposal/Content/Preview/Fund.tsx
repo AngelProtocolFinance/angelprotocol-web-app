@@ -50,7 +50,7 @@ function getExpiry(
   time: FundPreview["expiry_time"],
   height: FundPreview["expiry_height"]
 ) {
-  let expiry: string = "no expiry";
+  let expiry = "no expiry";
 
   if (time && height) {
     expiry = `at block ${humanize(height, 0)} or ${new Date(

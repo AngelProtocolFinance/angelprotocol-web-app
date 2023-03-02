@@ -69,7 +69,7 @@ const sendTx: CustomSendTx = async (chainId, tx, mode) => {
     }
   ).then((res) => res.json());
 
-  if (!!res.code) {
+  if (res.code) {
     throw new Error(res["raw_log"]);
   }
 
