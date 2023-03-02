@@ -66,11 +66,11 @@
       "outputs": ["{workspaceRoot}/coverage"],
       "options": {
         "jestConfig": "jest.config.ts",
-        "passWithNoTests": true,
-        "coverageReporters": ["json"]
+        "passWithNoTests": true
       },
       "configurations": {
         "ci": {
+          "coverageReporters": ["json"],
           "ci": true,
           "codeCoverage": true
         }
