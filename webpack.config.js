@@ -1,4 +1,5 @@
 const nodelib = require("node-stdlib-browser");
+const SizePlugin = require("size-plugin");
 const { ProvidePlugin } = require("webpack");
 const {
   NodeProtocolUrlPlugin,

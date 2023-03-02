@@ -1,5 +1,6 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "npmScope": "angelprotocol-web-app",
   "tasksRunnerOptions": {
     "default": {
       "runner": "nx/tasks-runners/default",
@@ -13,23 +14,25 @@
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"]
     },
-    "e2e": {
-      "inputs": ["default", "^production"]
-    },
     "lint": {
-      "inputs": ["default", ".eslintrc.json", ".eslintignore"]
+      "inputs": [
+        "default",
+        "{workspaceRoot}/.eslintrc.json",
+        "{workspaceRoot}/.eslintignore"
+      ]
     },
     "test": {
       "inputs": ["default", "^production"]
     }
   },
   "namedInputs": {
-    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "default": ["{workspaceRoot}/**/*"],
     "production": [
       "default",
-      "!.eslintrc.json",
-      "!tsconfig.spec.json",
-      "!jest.config.[jt]s"
+      "!{workspaceRoot}/.eslintrc.json",
+      "!{workspaceRoot}/src/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
+      "!{workspaceRoot}/tsconfig.spec.json",
+      "!{workspaceRoot}/jest.config.[jt]s"
     ]
   },
   "defaultProject": "angelprotocol-web-app"
