@@ -6,6 +6,7 @@ import { chainIds } from "constants/chainIds";
 const data: { Items: WithdrawLog[]; ItemCutoff?: number } = {
   Items: [
     {
+      start_time: new Date().toISOString(),
       amount: 800.2839,
       endowment_multisig: "",
       proposal_chain_id: "",
@@ -26,6 +27,7 @@ const data: { Items: WithdrawLog[]; ItemCutoff?: number } = {
       ],
     },
     {
+      start_time: new Date().toISOString(),
       amount: 800.2839,
       endowment_multisig: "",
       proposal_chain_id: "",
@@ -46,6 +48,7 @@ const data: { Items: WithdrawLog[]; ItemCutoff?: number } = {
       ],
     },
     {
+      start_time: new Date().toISOString(),
       amount: 800.2839,
       endowment_multisig: "",
       proposal_chain_id: "",
@@ -66,6 +69,7 @@ const data: { Items: WithdrawLog[]; ItemCutoff?: number } = {
       ],
     },
     {
+      start_time: new Date().toISOString(),
       amount: 800.2839,
       endowment_multisig: "",
       proposal_chain_id: "",
@@ -86,6 +90,7 @@ const data: { Items: WithdrawLog[]; ItemCutoff?: number } = {
       ],
     },
     {
+      start_time: new Date().toISOString(),
       amount: 300.2839,
       endowment_multisig: "",
       proposal_chain_id: "",
