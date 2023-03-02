@@ -43,16 +43,7 @@ export default function LogRow(props: WithdrawLog) {
       </QueryLoader>
 
       <span className="font-mono text-sm">{maskAddress(target_wallet)}</span>
-      <Status {...props} />
 
-      {finalRoute && finalRoute.status === "OK" ? (
-        <Amount
-          val={finalRoute.output_amount}
-          symbol={finalRoute.output_symbol}
-        />
-      ) : (
-        <>---</>
-      )}
       {finalRoute && finalRoute.status === "OK" ? (
         <ExtLink
           className="text-sm font-mono text-blue hover:text-blue-l1 active:text-blue-d1"
@@ -63,6 +54,8 @@ export default function LogRow(props: WithdrawLog) {
       ) : (
         <>---</>
       )}
+
+      <Status {...props} />
     </Cells>
   );
 }
