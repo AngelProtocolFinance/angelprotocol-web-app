@@ -1,0 +1,46 @@
+@layer components {
+  .btn-outline-filled {
+    @apply btn-outline bg-orange-l5 dark:bg-blue-d4 hover:bg-orange-l4 dark:hover:bg-blue-d3;
+  }
+  .btn-gift {
+    @apply text-sm;
+  }
+  .btn-donate {
+    @apply text-sm md:text-base;
+  }
+
+  .btn-reg {
+    @apply text-sm;
+  }
+  .check-field-reg > input {
+    @apply checked:bg-orange before:hidden;
+  }
+  .check-field-kyc > input {
+    @apply w-6 h-6 before:text-lg;
+  }
+
+  .checkbox-marketplace {
+    @apply inline-block border-gray-d1 dark:border-gray-l3 rounded-sm before:text-sm checked:bg-blue-l2 checked:text-white checked:border-blue-l2 dark:checked:bg-blue dark:checked:border-blue focus:ring-blue;
+  }
+
+  .field-gift > input {
+    @apply bg-white dark:bg-blue-d6;
+  }
+
+  .field-input-admin {
+    @apply bg-orange-l6 dark:bg-blue-d7;
+  }
+
+  .field-kyc > input {
+    @apply bg-gray-l6 dark:bg-blue-d6;
+  }
+
+  .field-admin > textarea,
+  .field-admin > input {
+    @apply bg-orange-l6 dark:bg-blue-d7;
+  }
+
+  .field-admin-sec > input {
+    @apply border-0 border-b rounded-none bg-transparent p-0 pb-2;
+  }
+}
