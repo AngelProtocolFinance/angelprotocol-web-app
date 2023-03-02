@@ -1,9 +1,14 @@
 import { WithdrawLog } from "types/aws";
-// import { useAdminResources } from "pages/Admin/Guard";
-// import { useWithdrawLogsQuery } from "services/apes";
+import { useAdminResources } from "pages/Admin/Guard";
+import {
+  updateApesQueryData,
+  useLazyWithdrawLogsQuery,
+  useWithdrawLogsQuery,
+} from "services/apes";
+import { useSetter } from "store/accessors";
 import { chainIds } from "constants/chainIds";
 
-const data: { Items: WithdrawLog[]; ItemCutoff?: number } = {
+const DATA: { Items: WithdrawLog[]; ItemCutoff?: number } = {
   Items: [
     {
       start_time: new Date().toISOString(),
@@ -113,11 +118,51 @@ const data: { Items: WithdrawLog[]; ItemCutoff?: number } = {
   ],
 };
 export default function useTransactions() {
+  const dispatch = useSetter();
+  const { cw3 } = useAdminResources();
+  const queryState = useWithdrawLogsQuery({ cw3, sort: "default" });
+
+  const { isLoading, isError, data, originalArgs } = queryState;
+
+  const [loadMore, { isLoading: isLoadingNextPage, isError: isErrorNextPage }] =
+    useLazyWithdrawLogsQuery();
+
+  async function loadNextPage() {
+    //button is hidden when there's no more
+    if (
+      data?.ItemCutoff &&
+      originalArgs /** cards won't even show if no initial query is made */
+    ) {
+      const { data: newEndowRes } = await loadMore({
+        ...originalArgs,
+        start: data.ItemCutoff + 1,
+      });
+
+      if (newEndowRes) {
+        //pessimistic update to original cache data
+        dispatch(
+          updateApesQueryData("withdrawLogs", originalArgs, (prevResult) => {
+            prevResult.Items.push(...newEndowRes.Items);
+            prevResult.ItemCutoff = newEndowRes.ItemCutoff;
+          })
+        );
+      }
+    }
+  }
+
+  const hasMore = !!data?.ItemCutoff;
+
   return {
-    data,
+    data: DATA,
     hasMore: false,
     isError: false,
     isLoading: false,
+    // data,
+    // hasMore,
+    // isError: isError || isErrorNextPage,
+    // isLoading,
+    // loadNextPage,
+    // isLoadingNextPage,
     isLoadingNextPage: false,
     loadNextPage: () => {},
   };
