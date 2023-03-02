@@ -4,38 +4,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "react-app-rewired --max_old_space_size=4096 build",
+    "build": "yarn nx build",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
-    "start": "react-app-rewired start",
+    "start": "yarn nx serve",
     "test": "react-app-rewired test --colors",
     "lint": "eslint 'src/**/*.{ts,tsx}'",
     "serve-build": "yarn build && yarn dlx serve -s build -p 4200",
     "format": "yarn run prettier --write 'src/**/*.{ts,tsx}'"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest",
-      "prettier"
-    ],
-    "plugins": [
-      "prettier"
-    ],
-    "rules": {
-      "prettier/prettier": "error"
-    }
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
   },
   "packageManager": "yarn@3.3.0",
   "engines": {
