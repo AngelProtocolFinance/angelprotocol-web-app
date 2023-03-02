@@ -1,5 +1,13 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { BaseChain, Chain, FetchedChain, Token, WithdrawLog } from "types/aws";
+import {
+  BaseChain,
+  Chain,
+  FetchedChain,
+  PaginatedAWSQueryRes,
+  Token,
+  WithdrawLog,
+  WithdrawLogQueryParams,
+} from "types/aws";
 import { UnsupportedChainError } from "errors/errors";
 import { chainIds } from "constants/chainIds";
 import { IS_TEST, JUNO_LCD_OVERRIDE, JUNO_RPC_OVERRIDE } from "constants/env";
@@ -17,9 +25,12 @@ export const apes = createApi({
     chains: builder.query<BaseChain[], unknown>({
       query: () => `v1/chains${IS_TEST ? "/test" : ""}`,
     }),
-    withdrawLogs: builder.query<WithdrawLog[], string>({
+    withdrawLogs: builder.query<
+      PaginatedAWSQueryRes<WithdrawLog[]>,
+      WithdrawLogQueryParams
+    >({
       providesTags: ["withdraw_logs"],
-      query: (cw3) => `v1/withdraw/${cw3}`,
+      query: ({ cw3, ...params }) => ({ url: `/v1/withdraw/${cw3}`, params }),
     }),
     chain: builder.query<Chain, { address?: string; chainId?: string }>({
       providesTags: ["chain"],
@@ -76,5 +87,9 @@ export const {
   useLazyChainQuery,
   useTokensQuery,
   useWithdrawLogsQuery,
-  util: { invalidateTags: invalidateApesTags },
+  useLazyWithdrawLogsQuery,
+  util: {
+    invalidateTags: invalidateApesTags,
+    updateQueryData: updateApesQueryData,
+  },
 } = apes;
