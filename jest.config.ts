@@ -1,7 +1,9 @@
+import type { Config } from "jest";
+
 const nxPreset = require("@nrwl/jest/preset").default;
 
 /* eslint-disable */
-export default {
+const config: Config = {
   ...nxPreset,
   displayName: "angel-protocol",
   transform: {
@@ -11,6 +13,14 @@ export default {
       { jsc: { transform: { react: { runtime: "automatic" } } } },
     ],
   },
+
+  setupFilesAfterEnv: ["<rootDir>/src/setupTests.ts"],
   moduleFileExtensions: ["ts", "tsx", "js", "jsx"],
-  coverageDirectory: "../../coverage/packages/test",
+  moduleNameMapper: {
+    "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
+      "<rootDir>/src/__mocks__/file.js",
+    "\\.(css|less)$": "<rootDir>/src/__mocks__/style.js",
+  },
 };
+
+export default config;

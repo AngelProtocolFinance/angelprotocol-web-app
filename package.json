@@ -7,8 +7,8 @@
     "build": "yarn nx build",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "start": "yarn nx serve",
-    "test": "react-app-rewired test --colors",
-    "lint": "eslint 'src/**/*.{ts,tsx}'",
+    "test": "yarn nx test",
+    "lint": "yarn nx lint",
     "serve-build": "yarn build && yarn dlx serve -s build -p 4200",
     "format": "yarn run prettier --write 'src/**/*.{ts,tsx}'"
   },
