@@ -10,9 +10,9 @@ import Status from "../Status";
 import { explorerUrls } from "../constants";
 import { getFinalRoute } from "../getFinalRoute";
 
-const hasMore = false;
-
-export default function LogRow(props: WithdrawLog) {
+export default function LogRow(
+  props: WithdrawLog & { areBotEdgesFlat: boolean }
+) {
   const {
     amount,
     target_wallet,
@@ -20,6 +20,7 @@ export default function LogRow(props: WithdrawLog) {
     target_chain,
     proposal_status,
     proposal_id,
+    areBotEdgesFlat,
   } = props;
   const finalRoute = getFinalRoute(props);
   const queryState = useChainsQuery({});
@@ -28,7 +29,7 @@ export default function LogRow(props: WithdrawLog) {
     <Cells
       type="td"
       cellClass={`py-3 px-4 border-t border-prim max-w-[20rem] text-sm truncate ${
-        hasMore ? "" : "first:rounded-bl last:rounded-br"
+        areBotEdgesFlat ? "" : "first:rounded-bl last:rounded-br"
       }`}
     >
       <>{start_time ? new Date(start_time).toLocaleDateString() : <>---</>}</>
