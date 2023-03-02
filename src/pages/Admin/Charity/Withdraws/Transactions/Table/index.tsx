@@ -20,6 +20,7 @@ export default function Table({ withdraws, classes = "" }: Props) {
           type="th"
           cellClass="px-3 py-4 text-xs uppercase font-semibold text-left first:rounded-tl last:rounded-tr"
         >
+          <>Start time</>
           <>Amount</>
           <>Network</>
           <>Withdrawal address/Account</>
