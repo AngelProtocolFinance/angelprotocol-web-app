@@ -1,5 +1,7 @@
 import { WithdrawLog } from "types/aws";
+import { useChainsQuery } from "services/apes";
 import ExtLink from "components/ExtLink";
+import QueryLoader from "components/QueryLoader";
 import { Cells } from "components/TableSection";
 import { maskAddress } from "helpers";
 import Amount from "../Amount";
@@ -10,8 +12,9 @@ import { getFinalRoute } from "../getFinalRoute";
 const hasMore = false;
 
 export default function LogRow(props: WithdrawLog) {
-  const { amount, symbol, target_wallet, start_time } = props;
+  const { amount, symbol, target_wallet, start_time, target_chain } = props;
   const finalRoute = getFinalRoute(props);
+  const queryState = useChainsQuery({});
 
   return (
     <Cells
@@ -23,6 +26,21 @@ export default function LogRow(props: WithdrawLog) {
       <>{start_time ? new Date(start_time).toLocaleDateString() : <>---</>}</>
 
       <Amount val={amount} symbol={symbol} />
+
+      <QueryLoader
+        queryState={queryState}
+        messages={{
+          loading: "Loading chain name...",
+          error: "Error loading chain name",
+        }}
+      >
+        {(chains) => (
+          <span className="uppercase">
+            {chains.find((chain) => chain.chain_id === target_chain)
+              ?.chain_name ?? target_chain}
+          </span>
+        )}
+      </QueryLoader>
 
       <span className="font-mono text-sm">{maskAddress(target_wallet)}</span>
       <Status {...props} />
