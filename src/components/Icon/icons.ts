@@ -96,7 +96,11 @@ import {
   MdWaterDrop,
   MdWidgets,
 } from "react-icons/md";
-import { RiMapPin2Line, RiMoneyDollarCircleFill } from "react-icons/ri";
+import {
+  RiFileSearchLine,
+  RiMapPin2Line,
+  RiMoneyDollarCircleFill,
+} from "react-icons/ri";
 import { SiHiveBlockchain } from "react-icons/si";
 import { TiArrowUnsorted } from "react-icons/ti";
 import { VscLoading, VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
@@ -145,6 +149,7 @@ export const icons = {
   FatArrowDownload: IoMdDownload,
   FileDownload: MdOutlineFileDownload,
   FileUpload: MdOutlineUploadFile,
+  FileSearch: RiFileSearchLine,
   Filter: MdOutlineFilterAlt,
   FilterLeft: BsFilterLeft,
   Forward: MdOutlineArrowForwardIos,

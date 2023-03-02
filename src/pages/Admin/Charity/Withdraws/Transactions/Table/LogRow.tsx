@@ -5,6 +5,7 @@ import ExtLink from "components/ExtLink";
 import QueryLoader from "components/QueryLoader";
 import { Cells } from "components/TableSection";
 import { humanize } from "helpers";
+import ProposalLink from "../ProposalLink";
 import Status from "../Status";
 import { explorerUrls } from "../constants";
 import { getFinalRoute } from "../getFinalRoute";
@@ -12,8 +13,14 @@ import { getFinalRoute } from "../getFinalRoute";
 const hasMore = false;
 
 export default function LogRow(props: WithdrawLog) {
-  const { amount, target_wallet, start_time, target_chain, proposal_status } =
-    props;
+  const {
+    amount,
+    target_wallet,
+    start_time,
+    target_chain,
+    proposal_status,
+    proposal_id,
+  } = props;
   const finalRoute = getFinalRoute(props);
   const queryState = useChainsQuery({});
 
@@ -60,6 +67,8 @@ export default function LogRow(props: WithdrawLog) {
       )}
 
       <Status status={proposal_status} />
+
+      <ProposalLink proposalId={proposal_id} />
     </Cells>
   );
 }

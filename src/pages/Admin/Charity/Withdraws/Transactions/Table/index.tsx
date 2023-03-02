@@ -26,6 +26,7 @@ export default function Table({ withdraws, classes = "" }: Props) {
           <>Withdrawal address/Account</>
           <>Blockchain record</>
           <>Status</>
+          <>Actions</>
         </Cells>
       </TableSection>
       <TableSection
