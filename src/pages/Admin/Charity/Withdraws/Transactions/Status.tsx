@@ -2,7 +2,7 @@ import { ProposalStatus } from "types/contracts";
 
 const bgColors: { [key in ProposalStatus]: string } = {
   open: "bg-green",
-  passed: "bg-gray-d1",
+  passed: "bg-gray-d1 dark:bg-gray",
   rejected: "bg-red-l1",
   pending: "bg-orange",
   executed: "bg-blue",
