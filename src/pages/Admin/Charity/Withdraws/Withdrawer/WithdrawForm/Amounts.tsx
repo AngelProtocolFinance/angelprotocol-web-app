@@ -53,11 +53,11 @@ export default function Amounts() {
               type="text"
               autoComplete="off"
               placeholder="0.00000"
-              className="w-full outline-none"
+              className="w-full outline-none bg-transparent"
             />
             <button
               type="button"
-              className="text-xs text-gray-d1"
+              className="text-xs text-gray-d1 dark:text-gray"
               onClick={() => {
                 setValue(fieldName, field.balance, {
                   shouldValidate: true,

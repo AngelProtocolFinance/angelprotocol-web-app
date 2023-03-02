@@ -24,7 +24,7 @@ export default function Beneficiary() {
           errors?.beneficiary && errors.beneficiary.message
             ? "border-2 border-red dark:border-red-l2"
             : "border border-prim"
-        } rounded truncate focus:outline-none`}
+        } rounded bg-transparent truncate focus:outline-none`}
         placeholder="Input wallet address..."
       />
       <ErrorMessage
