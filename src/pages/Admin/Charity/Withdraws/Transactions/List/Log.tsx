@@ -20,7 +20,7 @@ export default function Log(props: WithdrawLog) {
       </KeyVal>
 
       <KeyVal title="status">
-        <Status {...props} />
+        <Status status={props.proposal_status} />
       </KeyVal>
 
       <KeyVal title="to receive">

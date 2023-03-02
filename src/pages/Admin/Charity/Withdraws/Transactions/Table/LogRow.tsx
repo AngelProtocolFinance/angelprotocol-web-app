@@ -1,10 +1,10 @@
 import { WithdrawLog } from "types/aws";
 import { useChainsQuery } from "services/apes";
+import Copier from "components/Copier";
 import ExtLink from "components/ExtLink";
 import QueryLoader from "components/QueryLoader";
 import { Cells } from "components/TableSection";
-import { maskAddress } from "helpers";
-import Amount from "../Amount";
+import { humanize } from "helpers";
 import Status from "../Status";
 import { explorerUrls } from "../constants";
 import { getFinalRoute } from "../getFinalRoute";
@@ -12,20 +12,21 @@ import { getFinalRoute } from "../getFinalRoute";
 const hasMore = false;
 
 export default function LogRow(props: WithdrawLog) {
-  const { amount, symbol, target_wallet, start_time, target_chain } = props;
+  const { amount, target_wallet, start_time, target_chain, proposal_status } =
+    props;
   const finalRoute = getFinalRoute(props);
   const queryState = useChainsQuery({});
 
   return (
     <Cells
       type="td"
-      cellClass={`p-3 border-t border-prim max-w-[256px] truncate ${
+      cellClass={`py-3 px-4 border-t border-prim max-w-[20rem] text-sm truncate ${
         hasMore ? "" : "first:rounded-bl last:rounded-br"
       }`}
     >
       <>{start_time ? new Date(start_time).toLocaleDateString() : <>---</>}</>
 
-      <Amount val={amount} symbol={symbol} />
+      <>{humanize(amount, 4)}</>
 
       <QueryLoader
         queryState={queryState}
@@ -42,20 +43,23 @@ export default function LogRow(props: WithdrawLog) {
         )}
       </QueryLoader>
 
-      <span className="font-mono text-sm">{maskAddress(target_wallet)}</span>
+      <span className="grid grid-cols-[1fr_auto] gap-2 items-center">
+        <span className="max-w-[16rem] truncate">{target_wallet}</span>
+        <Copier text={target_wallet} classes="w-6 h-6 hover:text-orange" />
+      </span>
 
       {finalRoute && finalRoute.status === "OK" ? (
         <ExtLink
-          className="text-sm font-mono text-blue hover:text-blue-l1 active:text-blue-d1"
+          className="text-orange hover:text-orange-l2 active:text-orange-d1 underline"
           href={`${explorerUrls[finalRoute.id]}/${finalRoute.hash}`}
         >
-          {maskAddress(finalRoute.hash)}
+          View transactions
         </ExtLink>
       ) : (
         <>---</>
       )}
 
-      <Status {...props} />
+      <Status status={proposal_status} />
     </Cells>
   );
 }
