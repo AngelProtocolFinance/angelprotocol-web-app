@@ -5,6 +5,7 @@ type Props = {
   withdraws: WithdrawLog[];
   classes?: string;
 };
+
 export default function List({ classes = "", withdraws }: Props) {
   return (
     <ul className={`${classes} gap-2 sm:grid-cols-3`}>
