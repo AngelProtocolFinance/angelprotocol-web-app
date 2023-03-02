@@ -12,6 +12,7 @@ const hasMore = false;
 export default function LogRow(props: WithdrawLog) {
   const { amount, symbol, target_wallet, start_time } = props;
   const finalRoute = getFinalRoute(props);
+
   return (
     <Cells
       type="td"
@@ -19,7 +20,7 @@ export default function LogRow(props: WithdrawLog) {
         hasMore ? "" : "first:rounded-bl last:rounded-br"
       }`}
     >
-      <>{start_time ? new Date(start_time).toLocaleDateString() : <></>}</>
+      <>{start_time ? new Date(start_time).toLocaleDateString() : <>---</>}</>
 
       <Amount val={amount} symbol={symbol} />
 
