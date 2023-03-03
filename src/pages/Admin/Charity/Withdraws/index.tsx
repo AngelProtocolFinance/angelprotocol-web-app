@@ -1,5 +1,5 @@
 import QueryLoader from "components/QueryLoader";
-import OpenRequestInfo from "./OpenRequestInfo";
+import OpenRequestsInfo from "./OpenRequestsInfo";
 import Transactions from "./Transactions";
 import Withdrawer from "./Withdrawer";
 import useGetWithdrawLogs from "./useGetWithdrawLogs";
@@ -19,7 +19,7 @@ export default function Withdraws() {
         filterFn={(item) => item.proposal_status === "open"}
       >
         {/** Will display the warning only if there are any open proposals */}
-        {(_) => <OpenRequestInfo />}
+        {(_) => <OpenRequestsInfo />}
       </QueryLoader>
 
       <h2 className="text-center font-bold text-3xl -mb-2">Withdraw</h2>
