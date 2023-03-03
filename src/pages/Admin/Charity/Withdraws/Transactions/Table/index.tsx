@@ -89,7 +89,7 @@ export default function Table({
                 className="border-t border-prim rounded-b"
               >
                 <LoadMoreBtn
-                  onLoadMore={onLoadMore}
+                  onClick={onLoadMore}
                   disabled={isLoading}
                   isLoading={isLoading}
                 />
