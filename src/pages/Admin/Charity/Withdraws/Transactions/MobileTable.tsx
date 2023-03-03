@@ -30,7 +30,7 @@ export default function MobileTable({
 
   return (
     <div
-      className={`${classes} w-full max-md:max-w-lg border border-prim ${
+      className={`${classes} w-full max-@md:max-w-lg border border-prim ${
         hasMore ? "rounded-t" : "rounded"
       }`}
     >

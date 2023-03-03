@@ -30,7 +30,7 @@ export default function Amounts() {
 
         return (
           <div
-            className={`relative grid grid-cols-[auto_1fr_auto] items-center gap-2 md:gap-4 w-full p-4 ${
+            className={`relative grid grid-cols-[auto_1fr_auto] items-center gap-2 @md:gap-4 w-full p-4 ${
               errors?.amounts?.at && errors.amounts.at(i)?.value?.message
                 ? "border-2 border-red dark:border-red-l2"
                 : "border border-prim"
