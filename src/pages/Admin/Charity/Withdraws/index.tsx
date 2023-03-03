@@ -9,7 +9,7 @@ export default function Withdraws() {
     useGetWithdrawLogs();
 
   // isLoadingNextPage should not affect the whole QueryLoader
-  const queryState = { isLoading, isError, data: data.Items };
+  const queryState = { isLoading, isError, data: data?.Items };
 
   return (
     <div className="grid gap-8 justify-items-center">
