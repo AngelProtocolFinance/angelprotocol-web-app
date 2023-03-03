@@ -1,6 +1,8 @@
+import { Link } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 import { isCompleted } from "slices/launchpad/types";
 import { useGetter } from "store/accessors";
+import { routes } from "../constants";
 import About from "./About";
 import Fees from "./Fees";
 import Management from "./Management";
@@ -47,6 +49,21 @@ export default function Summary() {
         disabled={false}
       />
       <Fees fees={fees} title="Fees" step={6} disabled={false} />
+      <div className="grid grid-cols-2 sm:flex gap-2 border-t border-prim pt-8">
+        <Link
+          to={`../${routes[6]}`}
+          className="text-sm px-8 btn-outline-filled"
+        >
+          Back
+        </Link>
+        <button
+          type="button"
+          className="text-sm px-8 btn-orange"
+          onClick={() => alert("work in progress")}
+        >
+          Create my AIF
+        </button>
+      </div>
     </div>
   );
 }
