@@ -118,7 +118,7 @@ export default function MobileTable({
       ))}
       {hasMore && (
         <LoadMoreBtn
-          onLoadMore={onLoadMore}
+          onClick={onLoadMore}
           disabled={isLoading}
           isLoading={isLoading}
         />
