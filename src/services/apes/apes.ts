@@ -30,7 +30,7 @@ export const apes = createApi({
       WithdrawLogQueryParams
     >({
       providesTags: ["withdraw_logs"],
-      query: ({ cw3, ...params }) => ({ url: `/v1/withdraw/${cw3}`, params }),
+      query: ({ cw3, ...params }) => ({ url: `/v2/withdraw/${cw3}`, params }),
     }),
     chain: builder.query<Chain, { address?: string; chainId?: string }>({
       providesTags: ["chain"],
