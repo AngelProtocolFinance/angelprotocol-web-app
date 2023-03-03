@@ -34,10 +34,10 @@ export default function MobileTable({
         hasMore ? "rounded-t" : "rounded"
       }`}
     >
-      <div className="grid items-center grid-cols-[auto_1fr_auto] h-10 uppercase text-xs font-bold bg-orange-l6 dark:bg-blue-d7 border-b border-prim divide-x divide-prim rounded-t">
-        <div className="w-12" />
-        <div className="py-3 px-4">Start time</div>
-        <div className="py-3 px-4 text-center">Amount</div>
+      <div className="grid items-center grid-cols-6 h-10 uppercase text-xs font-bold bg-orange-l6 dark:bg-blue-d7 border-b border-prim divide-x divide-prim rounded-t">
+        <div />
+        <div className="py-3 px-4 col-span-3">Start time</div>
+        <div className="py-3 px-4 col-span-2 text-center">Amount</div>
       </div>
 
       {sorted.map((row, index) => (
@@ -55,7 +55,7 @@ export default function MobileTable({
                   open
                     ? "bg-orange-l5 dark:bg-blue-d4 border-b border-prim"
                     : ""
-                } w-full grid grid-cols-[auto_1fr_auto] divide-x divide-prim`}
+                } w-full grid grid-cols-6 divide-x divide-prim`}
               >
                 <DrawerIcon
                   size={24}
@@ -64,10 +64,10 @@ export default function MobileTable({
                   } w-12 place-self-center`}
                   isOpen={open}
                 />
-                <span className="text-sm py-3 px-4 text-left">
+                <span className="text-sm py-3 px-4 col-span-3 text-left">
                   {new Date(row.start_time).toLocaleDateString()}
                 </span>
-                <span className="py-3 px-4 text-sm text-left">
+                <span className="py-3 px-4 text-sm col-span-2 text-left">
                   {humanize(row.amount, 4)}
                 </span>
               </Disclosure.Button>
