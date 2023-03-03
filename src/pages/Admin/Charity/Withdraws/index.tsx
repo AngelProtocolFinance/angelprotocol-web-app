@@ -47,7 +47,6 @@ export default function Withdraws() {
             withdraws={logs}
             hasMore={hasMore}
             onLoadMore={loadNextPage}
-            disabled={isLoading || isLoadingNextPage || isError}
             isLoading={isLoadingNextPage}
           />
         )}

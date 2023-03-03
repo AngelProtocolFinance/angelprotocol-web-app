@@ -8,7 +8,6 @@ import LogRow from "./LogRow";
 export default function Table({
   withdraws,
   classes = "",
-  disabled,
   isLoading,
   hasMore,
   onLoadMore,
@@ -91,7 +90,7 @@ export default function Table({
               >
                 <LoadMoreBtn
                   onLoadMore={onLoadMore}
-                  disabled={disabled}
+                  disabled={isLoading}
                   isLoading={isLoading}
                 />
               </td>
