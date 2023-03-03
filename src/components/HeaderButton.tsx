@@ -8,12 +8,18 @@ export function HeaderButton<T>(
     _activeSortKey: SortKey<T>;
   }
 ) {
-  const { _activeSortKey, _sortKey, _sortDirection, children, ...restProps } =
-    props;
+  const {
+    _activeSortKey,
+    _sortKey,
+    _sortDirection,
+    children,
+    className,
+    ...restProps
+  } = props;
   return (
     <button
       {...restProps}
-      className="flex items-center justify-start gap-1 uppercase relative"
+      className={`${className} flex items-center justify-start gap-1 uppercase relative`}
     >
       <span>{children}</span>
 
