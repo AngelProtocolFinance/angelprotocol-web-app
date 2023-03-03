@@ -4,6 +4,7 @@ import { FieldValues, Path, useController } from "react-hook-form";
 export function MinmaxSlider<T extends FieldValues>(props: {
   names: { min: Path<T>; max: Path<T> };
   children(min: number, max: number): ReactNode;
+  disabled?: boolean;
   hidden?: "min" | "max";
   hideLabels?: true;
 }) {
@@ -34,15 +35,7 @@ export function MinmaxSlider<T extends FieldValues>(props: {
 
   return (
     <div>
-      <div
-        className="relative my-6 h-4 border border-prim rounded-full"
-        style={{
-          //prettier-ignore
-          background: `linear-gradient(to right, #fafafa30 ${min}%, 
-            #FFEFD5 ${min}%, #FFC86F ${max}%, 
-            #fafafa30 ${max}%)`,
-        }}
-      >
+      <div className="relative my-6 h-4 border border-prim rounded-full">
         {props.hidden !== "min" && (
           <>
             {!props.hideLabels && !isClose && (
@@ -55,7 +48,8 @@ export function MinmaxSlider<T extends FieldValues>(props: {
             )}
             <input
               id="min"
-              className="range-min absolute inset-x-0 top-0 h-0"
+              className="range-min absolute inset-x-0 top-0 h-0 z-10"
+              disabled={props.disabled}
               type="range"
               step={1}
               min={0}
@@ -77,7 +71,8 @@ export function MinmaxSlider<T extends FieldValues>(props: {
             )}
             <input
               id="max"
-              className="range-max absolute inset-x-0 bottom-0 h-0"
+              className="range-max absolute inset-x-0 bottom-0 h-0 z-10"
+              disabled={props.disabled}
               type="range"
               step={1}
               min={0}
@@ -87,6 +82,19 @@ export function MinmaxSlider<T extends FieldValues>(props: {
             />
           </>
         )}
+        <div
+          className={`absolute inset-y-0 bg-orange/25 ${
+            props.hidden === "max"
+              ? "rounded-l-full"
+              : props.hidden === "min"
+              ? "rounded-r-full"
+              : "rounded-full"
+          } z-0`}
+          style={{
+            left: `${min}%`,
+            width: `${max - min}%`,
+          }}
+        />
       </div>
       {props.children(min, max)}
     </div>
