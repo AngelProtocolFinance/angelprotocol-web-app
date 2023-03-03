@@ -1,6 +1,6 @@
 import { Disclosure } from "@headlessui/react";
 import { PropsWithChildren } from "react";
-import { TableProps } from "./types";
+import { TableProps } from "../types";
 import { WithdrawLog } from "types/aws";
 import { useChainsQuery } from "services/apes";
 import Copier from "components/Copier";
@@ -10,11 +10,11 @@ import { DrawerIcon } from "components/Icon";
 import QueryLoader from "components/QueryLoader";
 import useSort from "hooks/useSort";
 import { humanize } from "helpers";
-import Actions from "./Actions";
-import LoadMoreBtn from "./LoadMoreBtn";
-import Status from "./Status";
-import { explorerUrls } from "./constants";
-import { getFinalRoute } from "./getFinalRoute";
+import Actions from "../Actions";
+import LoadMoreBtn from "../LoadMoreBtn";
+import Status from "../Status";
+import { explorerUrls } from "../constants";
+import { getFinalRoute } from "../getFinalRoute";
 
 export default function MobileTable({
   withdraws,
