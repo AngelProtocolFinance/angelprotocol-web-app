@@ -9,25 +9,16 @@ export default function Withdraws() {
     useGetWithdrawLogs();
 
   // isLoadingNextPage should not affect the whole QueryLoader
-  const queryState = { isLoading, isError, data: data?.Items };
-
   return (
     <div className="grid gap-8 justify-items-center">
-      <QueryLoader
-        queryState={queryState}
-        messages={{ empty: <></>, error: <></> }}
-        filterFn={(item) => item.proposal_status === "open"}
-      >
-        {/** Will display the warning only if there are any open proposals */}
-        {(_) => <OpenRequestsInfo />}
-      </QueryLoader>
+      <OpenRequestsInfo />
 
       <h2 className="text-center font-bold text-3xl -mb-2">Withdraw</h2>
 
       <Withdrawer />
 
       <QueryLoader
-        queryState={queryState}
+        queryState={{ data: data?.Items, isLoading, isError }}
         messages={{
           loading: "Loading transactions...",
           error: "Failed to get transactions",
