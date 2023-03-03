@@ -1,7 +1,6 @@
 import { WalletProvider } from "@terra-money/wallet-provider";
 import { lazy } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
-import Launchpad from "pages/Launchpad";
 import ModalContext from "contexts/ModalContext";
 import WalletContext from "contexts/WalletContext";
 import useScrollTop from "hooks/useScrollTop";
@@ -16,6 +15,7 @@ const Donations = lazy(() => import("pages/Donations"));
 const Leaderboard = lazy(() => import("pages/Leaderboard"));
 const Marketplace = lazy(() => import("pages/Marketplace"));
 const Registration = lazy(() => import("pages/Registration"));
+const Launchpad = lazy(() => import("pages/Launchpad"));
 const Donate = lazy(() => import("pages/Donate"));
 const Gift = lazy(() => import("pages/Gift"));
 const DonateWidget = lazy(() => import("pages/DonateWidget"));
