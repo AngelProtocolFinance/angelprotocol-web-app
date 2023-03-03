@@ -8,23 +8,16 @@ export function HeaderButton<T>(
     _activeSortKey: SortKey<T>;
   }
 ) {
-  const {
-    _activeSortKey,
-    _sortKey,
-    _sortDirection,
-    children,
-    className,
-    ...restProps
-  } = props;
+  const { _activeSortKey, _sortKey, _sortDirection, children, ...restProps } =
+    props;
   return (
     <button
       {...restProps}
-      className={`${className} flex items-center justify-start gap-1 uppercase relative`}
+      className="grid grid-cols-[1fr_auto] items-center justify-between gap-1 uppercase"
     >
       <span>{children}</span>
 
       <Icon
-        size={15}
         type={
           _activeSortKey === _sortKey
             ? _sortDirection === "asc"
@@ -32,7 +25,7 @@ export function HeaderButton<T>(
               : "Down"
             : "Unsorted"
         }
-        className={`absolute -right-6 ${
+        className={`w-4 h-4 ${
           _activeSortKey === _sortKey
             ? "text-gray-d2 dark:text-white"
             : "text-gray dark:text-white"
