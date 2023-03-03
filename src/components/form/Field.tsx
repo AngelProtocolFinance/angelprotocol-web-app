@@ -36,7 +36,7 @@ export function Field<T extends FieldValues, K extends InputType = "text">({
     formState: { errors, isSubmitting },
   } = useFormContext();
 
-  const { container, input, label: lbl, error } = unpack(classes);
+  const { container, input, lbl, error } = unpack(classes);
 
   const id = "__" + String(name);
   return (
