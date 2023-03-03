@@ -117,7 +117,7 @@ const DATA: { Items: WithdrawLog[]; ItemCutoff?: number } = {
     },
   ],
 };
-export default function useTransactions() {
+export default function useGetWithdrawLogs() {
   const dispatch = useSetter();
   const { cw3 } = useAdminResources();
   const queryState = useWithdrawLogsQuery({ cw3, sort: "default" });

@@ -19,7 +19,6 @@ import { getFinalRoute } from "./getFinalRoute";
 export default function MobileTable({
   withdraws,
   classes = "",
-  disabled,
   isLoading,
   hasMore,
   onLoadMore,
@@ -120,7 +119,7 @@ export default function MobileTable({
       {hasMore && (
         <LoadMoreBtn
           onLoadMore={onLoadMore}
-          disabled={disabled}
+          disabled={isLoading}
           isLoading={isLoading}
         />
       )}
