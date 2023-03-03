@@ -13,7 +13,7 @@ export function HeaderButton<T>(
   return (
     <button
       {...restProps}
-      className="grid grid-cols-[1fr_auto] items-center justify-between gap-1 uppercase"
+      className="flex items-center justify-between gap-1 uppercase"
     >
       <span>{children}</span>
 
@@ -25,7 +25,7 @@ export function HeaderButton<T>(
               : "Down"
             : "Unsorted"
         }
-        className={`w-4 h-4 ${
+        className={`w-4 h-4 shrink-0 ${
           _activeSortKey === _sortKey
             ? "text-gray-d2 dark:text-white"
             : "text-gray dark:text-white"
