@@ -7,6 +7,7 @@ import Copier from "components/Copier";
 import ExtLink from "components/ExtLink";
 import { DrawerIcon } from "components/Icon";
 import QueryLoader from "components/QueryLoader";
+import useSort from "hooks/useSort";
 import { humanize } from "helpers";
 import Actions from "./Actions";
 import LoadMoreBtn from "./LoadMoreBtn";
@@ -22,6 +23,11 @@ export default function MobileTable({
   hasMore,
   onLoadMore,
 }: TableProps) {
+  const { handleHeaderClick, sorted, sortDirection, sortKey } = useSort(
+    withdraws,
+    "start_time"
+  );
+
   return (
     <div
       className={`${classes} border border-prim ${
@@ -34,7 +40,7 @@ export default function MobileTable({
         <div className="py-3 px-4 w-28 text-center">Amount</div>
       </div>
 
-      {withdraws.map((row, index) => (
+      {sorted.map((row, index) => (
         <Disclosure
           key={index}
           as="div"
