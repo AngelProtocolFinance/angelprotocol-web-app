@@ -5,6 +5,7 @@ import { WithdrawLog } from "types/aws";
 import { useChainsQuery } from "services/apes";
 import Copier from "components/Copier";
 import ExtLink from "components/ExtLink";
+import { HeaderButton } from "components/HeaderButton";
 import { DrawerIcon } from "components/Icon";
 import QueryLoader from "components/QueryLoader";
 import useSort from "hooks/useSort";
@@ -34,10 +35,28 @@ export default function MobileTable({
         hasMore ? "rounded-t" : "rounded"
       }`}
     >
-      <div className="grid items-center grid-cols-6 h-10 uppercase text-xs font-bold bg-orange-l6 dark:bg-blue-d7 border-b border-prim divide-x divide-prim rounded-t">
+      <div className="grid grid-cols-6 h-10 uppercase text-xs font-bold bg-orange-l6 dark:bg-blue-d7 border-b border-prim divide-x divide-prim rounded-t">
         <div />
-        <div className="py-3 px-4 col-span-3">Start time</div>
-        <div className="py-3 px-4 col-span-2 text-center">Amount</div>
+        <div className="py-3 px-4 col-span-3">
+          <HeaderButton
+            onClick={handleHeaderClick("start_time")}
+            _activeSortKey={sortKey}
+            _sortKey="start_time"
+            _sortDirection={sortDirection}
+          >
+            Start time
+          </HeaderButton>
+        </div>
+        <div className="py-3 px-4 col-span-2 text-center">
+          <HeaderButton
+            onClick={handleHeaderClick("amount")}
+            _activeSortKey={sortKey}
+            _sortKey="amount"
+            _sortDirection={sortDirection}
+          >
+            Amount
+          </HeaderButton>
+        </div>
       </div>
 
       {sorted.map((row, index) => (
