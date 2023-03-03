@@ -88,4 +88,5 @@ export type WithdrawLogQueryParams = {
   sort: "default" | `${WithdrawLogSortKey}+${SortDirection}`;
   start?: number; //to load next page, set start to ItemCutOff + 1
   limit?: number; // Number of items to be returned per request. If not provided, API defaults to return all
+  proposal_status?: string | null; // comma separated ProposalStatus values
 };
