@@ -20,7 +20,7 @@ export default function OpenRequestsInfo() {
       queryState={{ ...queryState, data: queryState.data?.Items }}
       messages={{ empty: <></>, error: <></> }}
     >
-      {(_) => (
+      {() => (
         <div className="flex justify-center items-center gap-3 py-2 px-4 w-full dark:bg-blue-d6 border border-prim rounded">
           <Icon type="Info" className="w-6 h-6 shrink-0" />
           <span className="text-sm">
