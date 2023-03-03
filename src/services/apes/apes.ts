@@ -14,117 +14,6 @@ import { IS_TEST, JUNO_LCD_OVERRIDE, JUNO_RPC_OVERRIDE } from "constants/env";
 import { APIs } from "constants/urls";
 import { fetchBalances } from "./helpers/fetchBalances";
 
-const DATA: { Items: WithdrawLog[]; ItemCutoff: number } = {
-  ItemCutoff: 5,
-  Items: [
-    {
-      start_time: new Date().toISOString(),
-      amount: 800.2839,
-      endowment_multisig: "",
-      proposal_chain_id: "",
-      proposal_id: 1,
-      proposal_status: "open",
-      symbol: "JUNO",
-      target_chain: chainIds.juno,
-      target_wallet: "juno1k7jkmvzkrr3rv4htqvmh63f0fmvm89dfpqc6y5",
-      num_routes: 1,
-      routes: [
-        {
-          id: "axelar",
-          hash: "fjdklsafdfa",
-          output_amount: 800.2839,
-          output_symbol: "JUNO",
-          status: "OK",
-        },
-      ],
-    },
-    {
-      start_time: new Date().toISOString(),
-      amount: 800.2839,
-      endowment_multisig: "",
-      proposal_chain_id: "",
-      proposal_id: 1,
-      proposal_status: "executed",
-      symbol: "JUNO",
-      target_chain: chainIds.juno,
-      target_wallet: "juno1k7jkmvzkrr3rv4htqvmh63f0fmvm89dfpqc6y5",
-      num_routes: 1,
-      routes: [
-        {
-          id: "axelar",
-          hash: "fjdklsafdfa",
-          output_amount: 800.2839,
-          output_symbol: "JUNO",
-          status: "OK",
-        },
-      ],
-    },
-    {
-      start_time: new Date().toISOString(),
-      amount: 800.2839,
-      endowment_multisig: "",
-      proposal_chain_id: "",
-      proposal_id: 1,
-      proposal_status: "pending",
-      symbol: "JUNO",
-      target_chain: chainIds.juno,
-      target_wallet: "juno1k7jkmvzkrr3rv4htqvmh63f0fmvm89dfpqc6y5",
-      num_routes: 1,
-      routes: [
-        {
-          id: "axelar",
-          hash: "fjdklsafdfa",
-          output_amount: 800.2839,
-          output_symbol: "JUNO",
-          status: "OK",
-        },
-      ],
-    },
-    {
-      start_time: new Date().toISOString(),
-      amount: 800.2839,
-      endowment_multisig: "",
-      proposal_chain_id: "",
-      proposal_id: 1,
-      proposal_status: "rejected",
-      symbol: "JUNO",
-      target_chain: chainIds.juno,
-      target_wallet: "juno1k7jkmvzkrr3rv4htqvmh63f0fmvm89dfpqc6y5",
-      num_routes: 1,
-      routes: [
-        {
-          id: "axelar",
-          hash: "fjdklsafdfa",
-          output_amount: 800.2839,
-          output_symbol: "JUNO",
-          status: "OK",
-        },
-      ],
-    },
-    {
-      start_time: new Date().toISOString(),
-      amount: 300.2839,
-      endowment_multisig: "",
-      proposal_chain_id: "",
-      proposal_id: 1,
-      proposal_status: "passed",
-      symbol: "ETH",
-      target_chain: chainIds.ethereum,
-      target_wallet: "0x0f6d331f26C0B64fc6EACddABd5645b55cf2d8e0",
-      num_routes: 1,
-      routes: [
-        {
-          id: "axelar",
-          hash: "fjdklsafdf2",
-          output_amount: 300.2839,
-          output_symbol: "ETH",
-          status: "OK",
-        },
-      ],
-    },
-  ],
-};
-
 export const apes = createApi({
   reducerPath: "apes",
   baseQuery: fetchBaseQuery({
@@ -142,7 +31,6 @@ export const apes = createApi({
     >({
       providesTags: ["withdraw_logs"],
       query: ({ cw3, ...params }) => ({ url: `/v1/withdraw/${cw3}`, params }),
-      transformResponse: () => ({ ...DATA, Count: 5, ScannedCount: 5 }),
     }),
     chain: builder.query<Chain, { address?: string; chainId?: string }>({
       providesTags: ["chain"],
