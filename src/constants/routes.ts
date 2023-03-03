@@ -16,7 +16,6 @@ export enum appRoutes {
   donate = "/donate",
   donate_widget = "/donate-widget",
   gift = "/gift",
-  launchpad = "/launchpad",
 }
 
 export enum governRoutes {

@@ -6,6 +6,7 @@ import ModalContext from "contexts/ModalContext";
 import WalletContext from "contexts/WalletContext";
 import useScrollTop from "hooks/useScrollTop";
 import { chainOptions } from "constants/chainOptions";
+import { IS_AST } from "constants/env";
 import { appRoutes } from "constants/routes";
 import Layout from "./Layout";
 
@@ -47,13 +48,9 @@ export default function App() {
               <Route path={appRoutes.leaderboard} element={<Leaderboard />} />
               <Route
                 path={`${appRoutes.register}/*`}
-                element={<Registration />}
+                element={IS_AST ? <Launchpad /> : <Registration />}
               />
               <Route path={`${appRoutes.gift}/*`} element={<Gift />} />
-              <Route
-                path={`${appRoutes.launchpad}/*`}
-                element={<Launchpad />}
-              />
               <Route index element={<Marketplace />} />
             </Route>
             <Route
