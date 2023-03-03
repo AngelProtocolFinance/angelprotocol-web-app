@@ -209,6 +209,18 @@
   .range-max::-moz-range-thumb {
     @apply cursor-pointer -mt-[14px] appearance-none bg-orange w-5 h-5 rounded-full;
   }
+  .range-min:disabled::-webkit-slider-thumb {
+    @apply bg-gray;
+  }
+  .range-min:disabled::-moz-range-thumb {
+    @apply bg-gray;
+  }
+  .range-max:disabled::-webkit-slider-thumb {
+    @apply bg-gray;
+  }
+  .range-max:disabled::-moz-range-thumb {
+    @apply bg-gray;
+  }
 }
 
 @layer utilities {

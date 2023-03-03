@@ -1,3 +1,4 @@
+import { PropsWithChildren, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { FV } from "../types";
 import Form, {
@@ -12,8 +13,16 @@ import Toggle from "../../common/Toggle";
 import { MinmaxSlider } from "./MinmaxSlider";
 
 export default function SplitsForm(props: FormProps) {
-  const { watch } = useFormContext<FV>();
+  const { watch, resetField } = useFormContext<FV>();
   const isCustom = watch("isCustom");
+
+  useEffect(() => {
+    if (!isCustom) {
+      resetField("default", { defaultValue: "50" }); //reset to these defaults - since persisted value is used as default value
+      resetField("min", { defaultValue: "0" });
+      resetField("max", { defaultValue: "100" });
+    }
+  }, [isCustom, resetField]);
 
   return (
     <Form {...props}>
@@ -38,16 +47,12 @@ export default function SplitsForm(props: FormProps) {
           names={{ min: "defaultMin", max: "default" }}
           hidden="max"
           hideLabels
-          disabled
+          disabled={!isCustom}
         >
-          {(min, max) => (
+          {(min, max, disabled) => (
             <div className="flex justify-between text-sm">
-              <span className="py-2 text-center w-16 border border-prim rounded">
-                {max}%
-              </span>
-              <span className="py-2 text-center w-16 border border-prim rounded">
-                {100 - max}%
-              </span>
+              <Percent disabled={disabled}>{max}%</Percent>
+              <Percent disabled={disabled}>{100 - max}%</Percent>
             </div>
           )}
         </MinmaxSlider>
@@ -55,7 +60,7 @@ export default function SplitsForm(props: FormProps) {
       {isCustom && (
         <Group className="mb-8">
           <GroupTitle className="mb-8">Minimums and Maximums</GroupTitle>
-          <MinmaxSlider<FV> names={{ min: "min", max: "max" }} disabled>
+          <MinmaxSlider<FV> names={{ min: "min", max: "max" }}>
             {(min, max) => (
               <p className="mt-16">
                 Contributors can decide to allocate{" "}
@@ -69,5 +74,20 @@ export default function SplitsForm(props: FormProps) {
 
       <NavButtons classes="mt-6" curr={5} />
     </Form>
+  );
+}
+
+function Percent({
+  children,
+  disabled,
+}: PropsWithChildren<{ disabled?: boolean }>) {
+  return (
+    <span
+      className={`py-2 text-center w-16 border border-prim rounded ${
+        disabled ? "bg-[#F5F5F5] dark:bg-bluegray-d1" : ""
+      }`}
+    >
+      {children}
+    </span>
   );
 }
