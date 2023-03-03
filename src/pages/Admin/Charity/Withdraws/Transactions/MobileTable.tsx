@@ -30,14 +30,14 @@ export default function MobileTable({
 
   return (
     <div
-      className={`${classes} border border-prim ${
+      className={`${classes} w-full max-md:max-w-lg border border-prim ${
         hasMore ? "rounded-t" : "rounded"
       }`}
     >
       <div className="grid items-center grid-cols-[auto_1fr_auto] h-10 uppercase text-xs font-bold bg-orange-l6 dark:bg-blue-d7 border-b border-prim divide-x divide-prim rounded-t">
         <div className="w-12" />
-        <div className="py-3 px-4 w-42">Start time</div>
-        <div className="py-3 px-4 w-28 text-center">Amount</div>
+        <div className="py-3 px-4">Start time</div>
+        <div className="py-3 px-4 text-center">Amount</div>
       </div>
 
       {sorted.map((row, index) => (
@@ -64,10 +64,10 @@ export default function MobileTable({
                   } w-12 place-self-center`}
                   isOpen={open}
                 />
-                <span className="text-sm py-3 px-4 w-42 text-left">
+                <span className="text-sm py-3 px-4 text-left">
                   {new Date(row.start_time).toLocaleDateString()}
                 </span>
-                <span className="py-3 px-4 text-sm w-28 text-left">
+                <span className="py-3 px-4 text-sm text-left">
                   {humanize(row.amount, 4)}
                 </span>
               </Disclosure.Button>

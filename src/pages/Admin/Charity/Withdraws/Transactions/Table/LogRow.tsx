@@ -28,7 +28,7 @@ export default function LogRow(
   return (
     <Cells
       type="td"
-      cellClass={`py-3 px-4 border-t border-prim max-w-[20rem] text-sm truncate ${
+      cellClass={`py-3 px-4 border-t border-prim max-w-xs text-sm truncate ${
         areBotEdgesFlat ? "" : "first:rounded-bl last:rounded-br"
       }`}
     >
