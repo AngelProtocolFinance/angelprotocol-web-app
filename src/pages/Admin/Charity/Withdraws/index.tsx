@@ -15,7 +15,7 @@ export default function Withdraws() {
     <div className="grid gap-8 justify-items-center">
       <QueryLoader
         queryState={queryState}
-        messages={{}}
+        messages={{ empty: <></>, error: <></> }}
         filterFn={(item) => item.proposal_status === "open"}
       >
         {/** Will display the warning only if there are any open proposals */}
