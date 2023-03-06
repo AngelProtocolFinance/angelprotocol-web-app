@@ -4,12 +4,22 @@ import ExtLink from "components/ExtLink";
 import { CheckField, Field } from "components/form";
 import { Separator } from "components/registration";
 import { APP_NAME } from "constants/common";
-import { HELP_REGISTRATION, PRIVACY_POLICY } from "constants/urls";
+import { PRIVACY_POLICY } from "constants/urls";
 import routes from "../routes";
 import useSubmit from "./useSubmit";
 
+const NEED_HELP_ARTICLE_ID = 6628120;
+
 export default function Form({ classes = "" }: { classes?: string }) {
   const { submit, isSubmitting } = useSubmit();
+
+  const openIntercomHelp = () => {
+    const w = window as any;
+    if ("Intercom" in w) {
+      w.Intercom("showArticle", NEED_HELP_ARTICLE_ID);
+    }
+  };
+
   return (
     <form
       onSubmit={submit}
@@ -58,12 +68,13 @@ export default function Form({ classes = "" }: { classes?: string }) {
         Resume your registration
       </Link>
 
-      <ExtLink
-        className="underline text-orange justify-self-center mt-6 text-xs"
-        href={HELP_REGISTRATION}
+      <button
+        type="button"
+        className="underline text-orange justify-self-center mt-6 text-sm"
+        onClick={openIntercomHelp}
       >
         Need Help?
-      </ExtLink>
+      </button>
     </form>
   );
 }
