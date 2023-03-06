@@ -45,7 +45,7 @@ export default function Members({ classes = "" }) {
             added: getValues("members").map((m) => m.addr),
           })
         }
-        className="btn-outline-filled justify-self-end text-sm py-3 px-8 gap-3 mb-5"
+        className="btn-outline-filled sm:justify-self-end text-sm py-3 px-8 gap-3 mb-5"
       >
         <Icon type="Plus" />
         <span>Add member</span>
