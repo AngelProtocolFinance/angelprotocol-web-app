@@ -1,6 +1,6 @@
 import { useState } from "react";
-import ContentLoader from "components/ContentLoader";
-import ImagePlaceholder from "components/ImagePlaceholder";
+import ContentLoader from "../ContentLoader";
+import ImagePlaceholder from "./ImagePlaceholder";
 
 type Props = {
   src?: string;
