@@ -56,7 +56,7 @@ export default function Members({ classes = "" }) {
           AIF
         </Info>
       ) : (
-        <table className="rounded outline outline-1 outline-prim">
+        <table className="table-fixed rounded outline outline-1 outline-prim">
           <TableSection
             type="thead"
             rowClass="border-b border-prim bg-orange-l6 dark:bg-blue-d7 rounded"
@@ -98,7 +98,7 @@ function Row({ idx, onRemove, onEdit }: Props) {
   const { addr, weight } = member;
   return (
     <Cells type="td" cellClass="py-3 px-4 text-sm">
-      <>{addr}</>
+      <div className="truncate w-[4.8rem] sm:w-28 md:w-full">{addr}</div>
       <>
         {weight}{" "}
         <button
@@ -110,7 +110,7 @@ function Row({ idx, onRemove, onEdit }: Props) {
         </button>
       </>
 
-      <div className="w-full h-full relative">
+      <td className="w-14 h-full relative">
         <button
           className="text-center absolute-center"
           type="button"
@@ -122,7 +122,7 @@ function Row({ idx, onRemove, onEdit }: Props) {
             className="text-gray-d1 dark:text-gray"
           />
         </button>
-      </div>
+      </td>
     </Cells>
   );
 }
