@@ -15,7 +15,7 @@ export default function FeesForm(props: FormProps) {
       <table className="outline outline-1 outline-prim rounded w-full">
         <TableSection
           type="thead"
-          rowClass="uppercase text-xs font-bold border-b border-prim divide-x divide-prim"
+          rowClass="uppercase text-xs font-bold border-b border-prim divide-x divide-prim bg-orange-l6 dark:bg-blue-d7"
         >
           <Cells type="th" cellClass="px-4 py-4">
             <></>
@@ -26,7 +26,7 @@ export default function FeesForm(props: FormProps) {
         </TableSection>
         <TableSection
           type="tbody"
-          rowClass="border-b border-prim divide-x divide-prim last:border-0"
+          rowClass="border-b border-prim divide-x divide-prim last:border-0 even:bg-orange-l6 even:dark:bg-blue-d7"
         >
           <Fee title="withdrawal fee" name="deposit" />
           <Fee title="deposit fee" name="withdrawal" />
