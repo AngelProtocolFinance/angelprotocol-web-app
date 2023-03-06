@@ -99,16 +99,16 @@ function Row({ idx, onRemove, onEdit }: Props) {
   return (
     <Cells type="td" cellClass="py-3 px-4 text-sm">
       <div className="truncate w-[4.8rem] sm:w-28 md:w-full">{addr}</div>
-      <>
+      <td className="font-work">
         {weight}{" "}
         <button
           onClick={() => onEdit({ ...member, idx })}
           type="button"
-          className="inline-block font-work underline"
+          className="inline-block underline"
         >
           (change)
         </button>
-      </>
+      </td>
 
       <td className="w-14 h-full relative">
         <button
