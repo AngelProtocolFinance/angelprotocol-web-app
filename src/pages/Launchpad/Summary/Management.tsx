@@ -12,16 +12,17 @@ export default function Management({
 
   return (
     <Section {...props}>
-      <p className="font-semibold">Members:</p>
+      <p className="font-semibold mb-2">Members:</p>
       {isEmpty(_members) ? (
         <Info classes="mt-2">
           No members set - creator of this AIF would be a default member
         </Info>
       ) : (
-        _members
+        <ul className="list-disc list-inside grid gap-y-2">{_members}</ul>
       )}
       <p className="font-semibold mt-6 mb-2">Proposal settings:</p>
-      <ul className="list-disc list-inside grid gap-2">
+
+      <ul className="list-disc list-inside grid gap-y-2">
         <li>
           Pass threshold is{" "}
           <span className="font-semibold">{proposal.threshold} %</span>
