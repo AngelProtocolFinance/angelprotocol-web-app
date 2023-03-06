@@ -15,6 +15,7 @@ export default function Network() {
     (async () => {
       //validate address on network change
       await trigger("beneficiary");
+      await trigger("amounts");
     })();
   }, [network, trigger]);
 
