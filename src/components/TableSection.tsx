@@ -1,4 +1,4 @@
-import React from "react";
+import React, { cloneElement } from "react";
 
 export default function TableSection(props: HeadProps | BodyProps) {
   return React.createElement(props.type, {
@@ -21,6 +21,17 @@ export default function TableSection(props: HeadProps | BodyProps) {
 
 export function Cells(props: CellProps) {
   const cells = React.Children.map(props.children, (child, index) => {
+    //return explicit element + common props
+    if (child.type === "td" || child.type === "th") {
+      return cloneElement(child, {
+        ...child.props,
+        key: index,
+        className: child.props.className
+          ? `${child.props.className} ${props.cellClass}`
+          : props.cellClass,
+      });
+    }
+
     //for dual header tables make first cell of header <td/>
     if (props.dual) {
       return React.createElement(
