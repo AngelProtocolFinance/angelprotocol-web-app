@@ -20,11 +20,7 @@ export default function Beneficiary() {
         id={id}
         type="text"
         autoComplete="off"
-        className={`flex justify-between items-center w-full p-4 ${
-          errors?.beneficiary && errors.beneficiary.message
-            ? "border-2 border-red dark:border-red-l2"
-            : "border border-prim"
-        } rounded bg-transparent max-@md:text-sm truncate focus:outline-none`}
+        className="flex justify-between items-center w-full p-4 border border-prim rounded bg-transparent @max-md:text-sm truncate focus:outline-none"
         placeholder="Input wallet address..."
       />
       <ErrorMessage

@@ -34,7 +34,7 @@ export default function Network() {
             <Listbox.Button className="grid grid-cols-[1fr_auto] items-center text-left gap-2 w-full @md:w-52 p-4 border border-prim rounded">
               {({ open, value }) => (
                 <>
-                  <span className="truncate max-@md:text-sm">
+                  <span className="truncate @max-md:text-sm">
                     {
                       chains.find((chain) => chain.chain_id === value)
                         ?.chain_name
@@ -56,7 +56,7 @@ export default function Network() {
                     key={`listbox-opt-${chain.chain_id}`}
                     value={chain.chain_id}
                     className={({ active, selected }) =>
-                      `grid grid-cols-[auto_1fr_auto] items-center gap-2 p-4 pl-2 rounded max-@md:text-sm uppercase cursor-pointer ${
+                      `grid grid-cols-[auto_1fr_auto] items-center gap-2 p-4 pl-2 rounded @max-md:text-sm uppercase cursor-pointer ${
                         selected
                           ? "bg-orange-l4 dark:bg-blue-d4"
                           : active
