@@ -39,8 +39,10 @@ export default function Fee({ name, title }: Props) {
 
   return (
     <Cells type="td" cellClass="py-4 px-4">
-      <p className="text-sm uppercase font-work">{title}</p>
-      <Toggle<FV> name={isActiveName} />
+      <td className="text-sm uppercase font-wor w-40">{title}</td>
+      <td className="w-20 relative">
+        <Toggle<FV> name={isActiveName} />
+      </td>
 
       <div className="relative">
         <input
@@ -57,19 +59,21 @@ export default function Fee({ name, title }: Props) {
         />
       </div>
 
-      <div className="relative">
-        <input
-          {...register(rateName)}
-          disabled={!isActive}
-          className="w-full bg-transparent focus:outline-none text-sm"
-        />
-        <ErrorMessage
-          name={rateName}
-          as="span"
-          className="field-error text-left -bottom-3.5 w-max left-0"
-          errors={errors}
-        />
-      </div>
+      <td className="w-16">
+        <div className="relative">
+          <input
+            {...register(rateName)}
+            disabled={!isActive}
+            className="w-full bg-transparent focus:outline-none text-sm font-work"
+          />
+          <ErrorMessage
+            name={rateName}
+            as="span"
+            className="field-error text-left -bottom-3.5 w-max left-0"
+            errors={errors}
+          />
+        </div>
+      </td>
     </Cells>
   );
 }

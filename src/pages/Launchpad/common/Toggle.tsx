@@ -37,7 +37,9 @@ export default function Toggle<T extends FV>({
   return (
     <Switch.Group as={Fragment}>
       <div
-        className={`grid grid-cols-[auto_1fr] gap-x-3 items-center ${container}`}
+        className={`grid grid-cols-[auto_1fr] ${
+          children ? "gap-x-3" : ""
+        } items-center ${container}`}
       >
         <Switch
           disabled={disabled || isSubmitting}

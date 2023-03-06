@@ -20,7 +20,7 @@ export default function FeesForm(props: FormProps) {
           <Cells type="th" cellClass="px-4 py-4">
             <></>
             <>active</>
-            <>payout address</>
+            <th className="text-left">payout address</th>
             <>rate</>
           </Cells>
         </TableSection>
