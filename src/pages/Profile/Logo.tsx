@@ -1,24 +1,15 @@
-import placeholderLogo from "assets/images/angelprotocol-rounded-logo.png";
+import Image from "components/Image";
 import { useProfileContext } from "./ProfileContext";
 
-const container = "h-48 w-48";
-
-const logoStyle = `${container} border border-prim rounded-full object-cover bg-white`;
-
 export default function Logo() {
-  return (
-    <div className="padded-container flex justify-center items-center w-full overflow-visible h-0 isolate lg:justify-start">
-      <Image />
-    </div>
-  );
-}
-
-function Image() {
   const { logo } = useProfileContext();
 
-  if (!logo) {
-    return <img className={logoStyle} alt="logo" src={placeholderLogo} />;
-  }
-
-  return <img className={logoStyle} alt="logo" src={logo} />;
+  return (
+    <div className="padded-container flex justify-center items-center w-full overflow-visible h-0 isolate lg:justify-start">
+      <Image
+        src={logo}
+        className="h-48 w-48 border border-prim rounded-full object-cover bg-white"
+      />
+    </div>
+  );
 }
