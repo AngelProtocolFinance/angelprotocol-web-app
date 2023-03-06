@@ -46,7 +46,7 @@ export default function Beneficiaries({ classes = "" }) {
             added: beneficiaries.map((b) => b.addr),
           })
         }
-        className="btn-outline-filled justify-self-end text-sm py-3 px-8 gap-3 mb-5"
+        className="btn-outline-filled sm:justify-self-end text-sm py-3 px-8 gap-3 mb-5"
       >
         <Icon type="Plus" />
         <span>Add beneficiary</span>
@@ -67,7 +67,7 @@ export default function Beneficiaries({ classes = "" }) {
           </TableSection>
           <TableSection
             type="tbody"
-            rowClass="border-b border-prim last:border-none"
+            rowClass="border-b border-prim last:border-none even:bg-orange-l6 even:dark:bg-blue-d7"
           >
             {fields.map((field, idx) => (
               <Row key={field.id} idx={idx} onRemove={handleRemove} />
@@ -94,10 +94,10 @@ function Row({ idx, onRemove }: Props) {
   const { addr, share } = getValues(`${name}.${idx}`);
   return (
     <Cells type="td" cellClass="py-3 px-4 text-sm">
-      <>{addr}</>
-      <>{share}</>
+      <div className="w-[4.8rem] sm:w-28 md:w-full truncate">{addr}</div>
+      <td className="font-work">{share}%</td>
 
-      <div className="w-full h-full relative">
+      <td className="w-12 h-full relative">
         <button
           className="text-center absolute-center"
           type="button"
@@ -109,7 +109,7 @@ function Row({ idx, onRemove }: Props) {
             className="text-gray-d1 dark:text-gray"
           />
         </button>
-      </div>
+      </td>
     </Cells>
   );
 }
