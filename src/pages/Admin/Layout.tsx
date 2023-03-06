@@ -9,7 +9,7 @@ export default function Layout({ linkGroups }: { linkGroups: LinkGroup[] }) {
       <SidebarOpener className="md:hidden" linkGroups={linkGroups} />
       <Sidebar className="max-md:hidden" linkGroups={linkGroups} />
       {/** views */}
-      <div className="p-10 @container">
+      <div className="px-6 py-8 md:p-10 @container">
         <Outlet />
       </div>
     </div>
