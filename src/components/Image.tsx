@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ContentLoader from "components/ContentLoader";
-import LogoPlaceholder from "components/LogoPlaceholder";
+import ImagePlaceholder from "components/ImagePlaceholder";
 
 type Props = {
   src?: string;
@@ -14,7 +14,7 @@ export default function Image({ src, className }: Props) {
     <>
       {isLoading && <ContentLoader className={`${className} rounded-full`} />}
       {!src && (
-        <LogoPlaceholder
+        <ImagePlaceholder
           classes={{ container: className, icon: "w-1/2 h-1/2" }}
         />
       )}

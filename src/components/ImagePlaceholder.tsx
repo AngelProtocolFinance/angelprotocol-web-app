@@ -2,7 +2,7 @@ import Icon from "./Icon";
 
 type Props = { classes: { container?: string; icon?: string } };
 
-export default function LogoPlaceholder({ classes }: Props) {
+export default function ImagePlaceholder({ classes }: Props) {
   const { container = "", icon = "" } = classes;
   return (
     <div
