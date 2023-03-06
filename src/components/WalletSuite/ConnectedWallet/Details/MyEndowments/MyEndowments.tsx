@@ -15,7 +15,10 @@ export default function MyEndowments({ endowments }: Props) {
           key={`my-endow-${endowment.endowId}`}
           className="grid grid-cols-[auto_1fr] gap-3"
         >
-          <Image src={endowment.logo} className="w-10 h-10" />
+          <Image
+            src={endowment.logo}
+            className="w-10 h-10 border border-prim rounded-full"
+          />
 
           <div className="grid items-center">
             <Name value={endowment.name} />

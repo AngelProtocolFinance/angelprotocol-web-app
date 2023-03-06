@@ -12,7 +12,7 @@ export default function Image({ src, className }: Props) {
 
   return (
     <>
-      {isLoading && <ContentLoader className={`${className} rounded-full`} />}
+      {isLoading && <ContentLoader className={className} />}
       {!src && (
         <ImagePlaceholder
           classes={{ container: className, icon: "w-1/2 h-1/2" }}
@@ -21,9 +21,7 @@ export default function Image({ src, className }: Props) {
       {!!src && (
         <img
           src={src}
-          className={`${className} object-contain border border-prim rounded-full ${
-            isLoading ? "hidden" : ""
-          }`}
+          className={`${className} object-contain ${isLoading ? "hidden" : ""}`}
           alt=""
           onLoad={() => setLoading(false)}
         />
