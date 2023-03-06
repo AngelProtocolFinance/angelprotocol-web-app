@@ -1,7 +1,7 @@
 import { Listbox } from "@headlessui/react";
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
-import { WithdrawValues } from "../types";
+import { WithdrawValues } from "./types";
 import { useChainsQuery } from "services/apes";
 import Icon, { DrawerIcon } from "components/Icon";
 import QueryLoader from "components/QueryLoader";
