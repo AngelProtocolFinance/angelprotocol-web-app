@@ -80,6 +80,8 @@ function getWalletAddrPattern(network: string) {
     case chainIds.ethereum:
     case chainIds.polygon:
       return evmAddrPattern;
+    case chainIds.terra:
+      return terraAddrPattern;
     default:
       return junoAddrPattern;
   }
