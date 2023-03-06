@@ -5366,7 +5366,7 @@ __metadata:
     eslint-plugin-prettier: ^4.2.1
     ethereum-multicall: ^2.15.0
     https-browserify: ^1.0.0
-    is-mobile: ^3.1.1
+    is-mobile: ^4.0.0
     jsonwebtoken: ^8.5.1
     jwt-decode: ^3.1.2
     os-browserify: ^0.3.0
@@ -10599,10 +10599,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-mobile@npm:^3.1.1":
-  version: 3.1.1
-  resolution: "is-mobile@npm:3.1.1"
-  checksum: b7c549020ac4674520378623afc4976694ff686eb3761cfad12da936ba9c2d675687bdc3c82eadf5a25147ce51c682800679bf835e31de272f05c026cd2b2f14
+"is-mobile@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "is-mobile@npm:4.0.0"
+  checksum: 1c4f32ab030ac6c203d63b547ef23933eacfebe81fd9d800c86739d5a73afad7983aea4c5e832c3d9c0a63d1e68cd318637490e6406bdda1cbadc8f701d5d557
   languageName: node
   linkType: hard
 
