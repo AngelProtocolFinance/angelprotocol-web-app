@@ -69,7 +69,7 @@ export default function Members({ classes = "" }) {
           </TableSection>
           <TableSection
             type="tbody"
-            rowClass="border-b border-prim last:border-none"
+            rowClass="border-b border-prim last:border-none even:bg-orange-l6 even:dark:bg-blue-d7"
           >
             {fields.map((field, idx) => (
               <Row
