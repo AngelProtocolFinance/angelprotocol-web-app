@@ -8,24 +8,25 @@ type Props = {
 };
 
 export default function Image({ src, className }: Props) {
-  const [isLoading, setLoading] = useState(!!src);
+  const [isLoading, setLoading] = useState(true);
+
+  if (!src) {
+    return (
+      <ImagePlaceholder
+        classes={{ container: className, icon: "w-1/2 h-1/2" }}
+      />
+    );
+  }
 
   return (
     <>
       {isLoading && <ContentLoader className={className} />}
-      {!src && (
-        <ImagePlaceholder
-          classes={{ container: className, icon: "w-1/2 h-1/2" }}
-        />
-      )}
-      {!!src && (
-        <img
-          src={src}
-          className={`${className} object-contain ${isLoading ? "hidden" : ""}`}
-          alt=""
-          onLoad={() => setLoading(false)}
-        />
-      )}
+      <img
+        src={src}
+        className={`${className} object-contain ${isLoading ? "hidden" : ""}`}
+        alt=""
+        onLoad={() => setLoading(false)}
+      />
     </>
   );
 }
