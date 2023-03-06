@@ -18,7 +18,7 @@ export default function ManageForm(props: FormProps) {
 
       <Members classes="mb-8" />
 
-      <div className="content-start border border-prim p-8 rounded">
+      <div className="content-start border border-prim p-4 md:p-8 rounded">
         <h2 className="font-bold text-center sm:text-left text-xl mb-2">
           Proposal settings
         </h2>
