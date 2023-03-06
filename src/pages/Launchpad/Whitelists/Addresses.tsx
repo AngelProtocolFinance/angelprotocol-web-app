@@ -52,7 +52,7 @@ export default function Addresses<T extends FieldValues, K extends Path<T>>({
             added: getValues(name),
           })
         }
-        className="btn-outline-filled min-w-[13.43rem] justify-self-end text-sm py-3 gap-3 mb-5"
+        className="btn-outline-filled min-w-[13.43rem] sm:justify-self-end text-sm py-3 gap-3 mb-5"
       >
         <Icon type="Plus" />
         <span>Add {memberName}</span>
@@ -63,7 +63,7 @@ export default function Addresses<T extends FieldValues, K extends Path<T>>({
         <table className="table-fixed rounded outline outline-1 outline-prim">
           <TableSection
             type="tbody"
-            rowClass="border-b border-prim divide-x divide-prim last:border-none"
+            rowClass="border-b border-prim divide-x divide-prim last:border-none odd:bg-orange-l6 odd:dark:bg-blue-d7"
           >
             {fields.map((field, idx) => (
               <Row
@@ -91,8 +91,8 @@ function Row({ idx, onRemove, name }: RowProps) {
   const addr = getValues(`${name}.${idx}`);
   return (
     <Cells type="td" cellClass="py-3 px-4 text-sm">
-      <p className="w-96">{addr}</p>
-      <div className="w-full h-full relative">
+      <div className="truncate w-24 sm:w-full">{addr}</div>
+      <td className="w-16 h-full relative">
         <button
           className="text-center absolute-center"
           type="button"
@@ -104,7 +104,7 @@ function Row({ idx, onRemove, name }: RowProps) {
             className="text-gray-d1 dark:text-gray"
           />
         </button>
-      </div>
+      </td>
     </Cells>
   );
 }
