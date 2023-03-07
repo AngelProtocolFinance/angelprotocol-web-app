@@ -137,6 +137,14 @@ export const LINKS: {
       size: 24,
     },
   },
+  permissions: {
+    title: "Permissions",
+    to: sidebarRoutes.permissions,
+    icon: {
+      type: "PermDataSettings",
+      size: 24,
+    },
+  },
   proposals: {
     title: "Decision Center",
     to: sidebarRoutes.proposals,

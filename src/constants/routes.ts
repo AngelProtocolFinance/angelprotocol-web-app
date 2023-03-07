@@ -40,6 +40,7 @@ export const adminRoutes = {
   templates: "templates",
   widget_config: "widget-config",
   contributions: "contributions",
+  permissions: "permissions",
 
   //charity
   edit_profile: "edit-profile",
