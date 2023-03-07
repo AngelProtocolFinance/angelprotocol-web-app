@@ -39,27 +39,30 @@ export default function Fee({ name, title }: Props) {
 
   return (
     <Cells type="td" cellClass="py-4 px-4">
-      <td className="text-sm uppercase font-wor w-40">{title}</td>
-      <td className="w-20 relative">
+      <td className="sm:hidden">{">"}</td>
+      <td className="text-sm uppercase font-work w-40">{title}</td>
+      <td className="w-full sm:w-20 relative">
         <Toggle<FV> name={isActiveName} />
       </td>
 
-      <div className="relative">
-        <input
-          disabled={!isActive}
-          className="w-full bg-transparent focus:outline-none text-sm"
-          {...register(receiverName)}
-          // ref={receiverRef}
-        />
-        <ErrorMessage
-          name={receiverName}
-          as="span"
-          className="field-error text-left -bottom-3.5 w-max left-0"
-          errors={errors}
-        />
-      </div>
+      <td className="relative max-sm:col-span-full max-sm:w-full">
+        <div className="relative">
+          <input
+            disabled={!isActive}
+            className="w-full bg-transparent focus:outline-none text-sm"
+            {...register(receiverName)}
+            // ref={receiverRef}
+          />
+          <ErrorMessage
+            name={receiverName}
+            as="span"
+            className="field-error text-left -bottom-3.5 w-max left-0"
+            errors={errors}
+          />
+        </div>
+      </td>
 
-      <td className="w-16">
+      <td className="w-full sm:w-16 max-sm:row-start-3 max-sm:col-start-1 max-sm:col-span-full">
         <div className="relative">
           <input
             {...register(rateName)}

@@ -2,6 +2,7 @@ import React, { cloneElement } from "react";
 
 export default function TableSection(props: HeadProps | BodyProps) {
   return React.createElement(props.type, {
+    className: props.classes,
     children: React.Children.map(props.children, (child, index) => {
       return (
         <tr
@@ -80,6 +81,7 @@ export function Cells(props: CellProps) {
 type CellBase = {
   children: JSX.Element | JSX.Element[];
   type: "th" | "td";
+
   cellClass: string;
 };
 
@@ -102,6 +104,7 @@ type CellProps = CellHorizontal | CellVertical | CellDual;
 
 type HeadProps = {
   type: "thead";
+  classes?: string;
   children: JSX.Element;
   rowClass: string;
   onRowSelect?: never;
@@ -111,6 +114,7 @@ type HeadProps = {
 
 type BodyProps = {
   type: "tbody";
+  classes?: string;
   children: JSX.Element[] | JSX.Element;
   rowClass: string;
   onRowSelect?: (rowIndex: number) => () => void;
