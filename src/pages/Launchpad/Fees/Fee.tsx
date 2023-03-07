@@ -38,14 +38,14 @@ export default function Fee({ name, title }: Props) {
   }, [isActive, name, setValue]);
 
   return (
-    <Cells type="td" cellClass="py-4 px-4">
+    <Cells type="td" cellClass="py-4 px-4 border-r border-prim last:border-r-0">
       <td className="sm:hidden">{">"}</td>
-      <td className="text-sm uppercase font-work w-40">{title}</td>
-      <td className="w-full sm:w-20 relative">
+      <td className="text-sm uppercase font-work w-full sm:w-40">{title}</td>
+      <td className="w-full sm:w-20 relative max-sm:border-r-0">
         <Toggle<FV> name={isActiveName} />
       </td>
 
-      <td className="relative max-sm:col-span-full max-sm:w-full">
+      <td className="relative max-sm:col-span-full max-sm:w-full max-sm:border-r-0 max-sm:border-y">
         <div className="relative">
           <input
             disabled={!isActive}
