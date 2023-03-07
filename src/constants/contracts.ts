@@ -14,6 +14,7 @@ const mainnet = {
   gov: "",
   airdrop: "",
   loop_haloust_pair: "",
+  settingsController: "",
 }
 
 //just reuse literal structure
@@ -33,6 +34,7 @@ const testnet:Contracts = {
   gov: "",
   airdrop: "",
   loop_haloust_pair: "",
+  settingsController: "juno1z0rdce48svms0wgq5h56uewh7cxnhwees9r8efv6vthhxt9d37mss9mlnv",
 }
 
 //prettier-ignore
@@ -50,6 +52,7 @@ const local: Contracts = {
   gov: "",
   airdrop: "",
   loop_haloust_pair: "",
+  settingsController: "",
 };
 
 export const contracts: Contracts =
