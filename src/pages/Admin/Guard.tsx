@@ -7,25 +7,67 @@ import { useGetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import Loader from "components/Loader";
 
+const data: AdminResources = {
+  categories: { general: [1], sdgs: [1] },
+  cw3: "juno1sae4p8crnac0h9m27psn205d6k586f7cnm4eshws623v05g95teqvj2s8q",
+  cw4: "",
+  id: 1,
+  name: "",
+  deposit_approved: true,
+  config: {
+    group_addr: "",
+    max_voting_period: { height: 1, time: 1 },
+    require_execution: true,
+    threshold: { absolute_percentage: { percentage: "50" } },
+  },
+  endow_type: "Charity",
+  kyc_donors_only: false,
+  oneoff_vaults: { liquid: [""], locked: [""] },
+  owner: "",
+  pending_redemptions: 0,
+  propMeta: {
+    isAuthorized: true,
+    successMeta: { message: "" },
+    tagPayloads: [{ payload: [], type: "" }],
+  },
+  rebalance: {
+    interest_distribution: "0",
+    locked_interests_to_liquid: true,
+    locked_principle_to_liquid: true,
+    principle_distribution: "1",
+    rebalance_liquid_invested_profits: true,
+  },
+  status: {
+    Inactive: 0,
+    Approved: 1,
+    Frozen: 2,
+    Closed: 3,
+  },
+  strategies: { liquid: [], locked: [] },
+  type: "charity",
+  withdraw_approved: true,
+  withdraw_before_maturity: true,
+};
+
 export function Guard(props: {
   children(resources: AdminResources): ReactNode;
 }) {
-  const { wallet } = useGetWallet();
-  const { id } = useParams<AdminParams>();
+  // const { wallet } = useGetWallet();
+  // const { id } = useParams<AdminParams>();
 
-  const { data, isLoading, isError } = useAdminResourcesQuery(
-    {
-      user: wallet?.address,
-      endowmentId: id!,
-    },
-    { skip: !id }
-  );
+  // const { data, isLoading, isError } = useAdminResourcesQuery(
+  //   {
+  //     user: wallet?.address,
+  //     endowmentId: id!,
+  //   },
+  //   { skip: !id }
+  // );
 
-  if (isLoading)
-    return <GuardPrompt message="Getting admin resources" showLoader />;
+  // if (isLoading)
+  //   return <GuardPrompt message="Getting admin resources" showLoader />;
 
-  if (isError || !data)
-    return <GuardPrompt message="Error getting admin resources" />;
+  // if (isError || !data)
+  //   return <GuardPrompt message="Error getting admin resources" />;
 
   return (
     <context.Provider value={data}>{props.children(data)}</context.Provider>
