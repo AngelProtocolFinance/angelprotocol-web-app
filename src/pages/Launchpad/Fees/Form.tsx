@@ -42,7 +42,7 @@ export default function FeesForm(props: FormProps) {
       <table className="max-sm:grid outline outline-1 outline-prim rounded w-full">
         <TableSection
           type="thead"
-          classes="max-sm:grid max-sm:grid-cols-[3rem_1fr_5.5rem] max-sm:border-b border-prim"
+          classes="max-sm:grid max-sm:grid-cols-[3rem_1fr_5.5rem] max-sm:border-b border-prim bg-orange-l6 dark:bg-blue-d7"
           rowClass="max-sm:contents uppercase text-xs font-bold border-b border-prim bg-orange-l6 dark:bg-blue-d7"
         >
           <Cells
