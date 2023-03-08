@@ -7,9 +7,14 @@ import { Cells } from "components/TableSection";
 import Toggle from "../common/Toggle";
 import { keys } from "./constants";
 
-type Props = { name: keyof TFees; title: string };
+type Props = {
+  name: keyof TFees;
+  title: string;
+  isOpen: boolean;
+  onToggle(name: keyof TFees): void;
+};
 
-export default function Fee({ name, title }: Props) {
+export default function Fee({ name, title, isOpen, onToggle }: Props) {
   const {
     register,
     watch,
@@ -39,13 +44,21 @@ export default function Fee({ name, title }: Props) {
 
   return (
     <Cells type="td" cellClass="py-4 px-4 border-r border-prim last:border-r-0">
-      <td className="sm:hidden">{">"}</td>
+      <td className="sm:hidden">
+        <button type="button" onClick={() => onToggle(name)}>
+          {!isOpen ? ">" : "V"}
+        </button>
+      </td>
       <td className="text-sm uppercase font-work w-full sm:w-40">{title}</td>
       <td className="w-full sm:w-20 relative max-sm:border-r-0">
         <Toggle<FV> name={isActiveName} />
       </td>
 
-      <td className="relative max-sm:col-span-full max-sm:w-full max-sm:border-r-0 max-sm:border-y">
+      <td
+        className={`${
+          !isOpen && "hidden"
+        } relative max-sm:col-span-full max-sm:w-full max-sm:border-r-0 max-sm:border-y`}
+      >
         <div className="relative">
           <input
             disabled={!isActive}
@@ -62,7 +75,11 @@ export default function Fee({ name, title }: Props) {
         </div>
       </td>
 
-      <td className="w-full sm:w-16 max-sm:row-start-3 max-sm:col-start-1 max-sm:col-span-full">
+      <td
+        className={`${
+          !isOpen && "hidden"
+        } w-full sm:w-16 max-sm:row-start-3 max-sm:col-start-1 max-sm:col-span-full`}
+      >
         <div className="relative">
           <input
             {...register(rateName)}

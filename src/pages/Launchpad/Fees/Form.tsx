@@ -1,9 +1,36 @@
+import { useState } from "react";
+import { TFees } from "slices/launchpad/types";
 import TableSection, { Cells } from "components/TableSection";
+import useHandleScreenResize, { SCREEN_SM } from "hooks/useHandleScreenResize";
 import Form, { Desc, FormProps, Title } from "../common/Form";
 import NavButtons from "../common/NavButtons";
 import Fee from "./Fee";
 
+type RowState = { [K in keyof TFees]?: boolean };
+
 export default function FeesForm(props: FormProps) {
+  const [open, setOpen] = useState<RowState>({});
+
+  useHandleScreenResize(
+    (screen) =>
+      screen >= SCREEN_SM
+        ? setOpen({
+            earnings: true,
+            deposit: true,
+            withdrawal: true,
+          })
+        : setOpen({}),
+    {
+      debounceTime: 100,
+      shouldAttachListener: true,
+      shouldCallOnResizeOnLoad: true,
+    }
+  );
+
+  function handleToggle(name: keyof TFees) {
+    setOpen((open) => ({ ...open, [name]: !open[name] }));
+  }
+
   return (
     <Form {...props}>
       <Title className="mb-2">Fees</Title>
@@ -34,9 +61,24 @@ export default function FeesForm(props: FormProps) {
           type="tbody"
           rowClass="max-sm:grid max-sm:grid-cols-[3rem_1fr_5.5rem] border-b border-prim last:border-0 even:bg-orange-l6 even:dark:bg-blue-d7"
         >
-          <Fee title="withdrawal fee" name="deposit" />
-          <Fee title="deposit fee" name="withdrawal" />
-          <Fee title="earnigs fee" name="earnings" />
+          <Fee
+            title="withdrawal fee"
+            name="withdrawal"
+            onToggle={handleToggle}
+            isOpen={!!open.withdrawal}
+          />
+          <Fee
+            title="deposit fee"
+            name="deposit"
+            onToggle={handleToggle}
+            isOpen={!!open.deposit}
+          />
+          <Fee
+            title="earnigs fee"
+            name="earnings"
+            onToggle={handleToggle}
+            isOpen={!!open.earnings}
+          />
         </TableSection>
       </table>
       <NavButtons curr={6} classes="mt-8" />
