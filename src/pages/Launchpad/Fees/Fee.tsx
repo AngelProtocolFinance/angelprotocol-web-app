@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { Path, useFormContext } from "react-hook-form";
 import { FV } from "./types";
 import { TFees } from "slices/launchpad/types";
+import { DrawerIcon } from "components/Icon";
 import { Cells } from "components/TableSection";
 import Toggle from "../common/Toggle";
 import { keys } from "./constants";
@@ -45,8 +46,16 @@ export default function Fee({ name, title, isOpen, onToggle }: Props) {
   return (
     <Cells type="td" cellClass="py-4 px-4 border-r border-prim last:border-r-0">
       <td className="sm:hidden">
-        <button type="button" onClick={() => onToggle(name)}>
-          {!isOpen ? ">" : "V"}
+        <button
+          type="button"
+          onClick={() => onToggle(name)}
+          className="w-full relative"
+        >
+          <DrawerIcon
+            size={25.5}
+            className={`${isOpen ? "text-orange" : ""} absolute-center`}
+            isOpen={isOpen}
+          />
         </button>
       </td>
       <td className="text-sm uppercase font-work w-full sm:w-40">{title}</td>
