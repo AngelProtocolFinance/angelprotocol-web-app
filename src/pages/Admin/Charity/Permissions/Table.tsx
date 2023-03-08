@@ -34,7 +34,7 @@ export default function Table({ className = "" }) {
           <Cells
             key={permission.id}
             type="td"
-            cellClass="p-3 border-t border-prim min-w-[116px] max-w-xs truncate first:rounded-bl last:rounded-br"
+            cellClass="py-3 px-4 border-t border-prim min-w-[116px] max-w-xs truncate first:rounded-bl last:rounded-br"
           >
             <>{permission.action}</>
             <RadioButton
