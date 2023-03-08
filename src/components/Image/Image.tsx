@@ -1,24 +1,24 @@
 import { PropsWithChildren, useRef, useState } from "react";
 import ContentLoader from "components/ContentLoader";
 import ExtLink from "components/ExtLink";
-import LogoPlaceholder from "./LogoPlaceholder";
+import ImagePlaceholder from "./ImagePlaceholder";
 
-export type LogoProps = {
+export type ImageProps = {
   src?: string;
   isSrcLoading?: boolean;
 } & ({ href: string; title: string } | { href?: never; title?: never });
 
 type Props = {
-  logo?: LogoProps;
+  img?: ImageProps;
   className?: string;
 };
 
-export default function Logo({ logo, className }: Props) {
+export default function Image({ img, className }: Props) {
   const ref = useRef<HTMLImageElement>(null);
-  const [isLoading, setLoading] = useState(!!logo?.src || logo?.isSrcLoading);
+  const [isLoading, setLoading] = useState(!!img?.src || img?.isSrcLoading);
 
-  if (!logo?.src) {
-    return <LogoPlaceholder className={className} />;
+  if (!img?.src) {
+    return <ImagePlaceholder className={className} />;
   }
 
   const shouldLoad = !ref.current?.complete && isLoading;
@@ -26,15 +26,15 @@ export default function Logo({ logo, className }: Props) {
   return (
     <>
       {shouldLoad && <ContentLoader className={className} />}
-      {!logo.isSrcLoading && (
+      {!img.isSrcLoading && (
         <WithLink
           className={`${className} ${shouldLoad ? "hidden" : ""}`}
-          href={logo.href}
-          title={logo.title}
+          href={img.href}
+          title={img.title}
         >
           <img
             ref={ref}
-            src={logo.src}
+            src={img.src}
             className="object-contain w-full h-full"
             alt=""
             onLoad={() => setLoading(false)}

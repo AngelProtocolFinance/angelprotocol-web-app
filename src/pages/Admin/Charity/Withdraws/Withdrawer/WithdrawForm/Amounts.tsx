@@ -2,7 +2,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";
 import Icon from "components/Icon";
-import Logo from "components/Logo";
+import Image from "components/Image";
 import { humanize } from "helpers";
 import { tokens } from "constants/tokens";
 
@@ -37,8 +37,8 @@ export default function Amounts() {
               htmlFor={field.id}
               className="flex items-center gap-3 h-full uppercase"
             >
-              <Logo
-                logo={{ src: tokens[field.tokenId].icon }}
+              <Image
+                img={{ src: tokens[field.tokenId].icon }}
                 className="h-6 w-6 rounded-full"
               />
               {tokens[field.tokenId].symbol}
