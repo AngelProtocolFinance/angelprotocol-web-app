@@ -6,11 +6,7 @@ export const queryObject: {
     : (args: Q[K]["args"]) => object;
 } = {
   /** registrar */
-  regVaultRates: { approved_vault_rate_list: {} },
   regConfig: { config: {} },
-  regVaultList(options) {
-    return { vault_list: options };
-  },
 
   /** index fund */
   ifFunds: { funds_list: {} },

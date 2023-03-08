@@ -1,16 +1,15 @@
 import { Dialog } from "@headlessui/react";
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
-import { Vault } from "services/types";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import { LoadingStatus } from "components/Status";
 import TokenField from "components/TokenField";
 import useSubmit from "./useSubmit";
 
-export default function Form({ acct_type = "liquid", address }: Vault) {
+export default function Form({ acct_type = "liquid", address = "1231231231" }) {
   const { getValues, handleSubmit } = useFormContext<FV>();
-  const { submit, isSending } = useSubmit(address, acct_type);
+  const { submit, isSending } = useSubmit(address, acct_type as any);
   const { closeModal } = useModalContext();
   return (
     <Dialog.Panel

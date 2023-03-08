@@ -23,20 +23,11 @@ import {
   RegistrarConfig,
   ReviewCW3Config,
   Simulation,
-  VaultListOptions,
-  VaultListRes,
   VotesPageOptions,
-  YieldVault,
 } from "types/contracts";
 
 type Addr = { addr: string };
 export interface ContractQueries {
-  regVaultRates: { args: null; res: Q<any>; result: any }; //TODO update this
-  regVaultList: {
-    args: VaultListOptions;
-    res: Q<VaultListRes>;
-    result: YieldVault[];
-  };
   regConfig: { args: null; res: Q<RegistrarConfig>; result: RegistrarConfig };
 
   ifFunds: {
