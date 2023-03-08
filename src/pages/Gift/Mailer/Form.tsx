@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "./types";
@@ -10,6 +11,7 @@ import { richTextToHTML } from "helpers/richTextToHtml";
 import { APP_NAME } from "constants/common";
 import { appRoutes } from "constants/routes";
 import { APIs } from "constants/urls";
+import Success from "./Success";
 
 export default function Form({ classes = "" }) {
   const {
@@ -18,6 +20,7 @@ export default function Form({ classes = "" }) {
     formState: { isSubmitting },
   } = useFormContext<FV>();
   const { showModal } = useModalContext();
+  const [recipient, setRecipient] = useState<string>();
 
   async function submit({ recipient, secret, message }: FV) {
     const res = await fetch(APIs.aws + "/v1/giftcard/send-email", {
@@ -36,18 +39,11 @@ export default function Form({ classes = "" }) {
         title: "Failed to send gift card",
       });
     }
-    showModal(Prompt, {
-      type: "success",
-      headline: "Confirmation",
-      title: "Giftcard Sent Successfully",
-      children: (
-        <p className="text-center text-gray-d1 dark:text-gray">
-          Your gift card message to{" "}
-          <span className="font-bold">{recipient.email}</span> has been
-          successfully sent.
-        </p>
-      ),
-    });
+    setRecipient(recipient.email);
+  }
+
+  if (recipient) {
+    return <Success className={classes} recipient={recipient} />;
   }
 
   return (
