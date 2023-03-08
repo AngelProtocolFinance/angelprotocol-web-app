@@ -6,8 +6,10 @@ import { settings } from "../routes";
 export default function Settings() {
   return (
     <div>
-      <h2 className="text-[2rem] font-bold mb-8">Settings</h2>
-      <div className="rounded border border-prim p-6">
+      <h2 className="text-[2rem] font-bold mb-8 max-sm:text-center">
+        Settings
+      </h2>
+      <div className="@container rounded border border-prim p-6">
         <h3 className="font-bold text-2xl mb-10">Auto-invest</h3>
         {/** future: create plan */}
         <AccountTabs
@@ -26,11 +28,11 @@ export default function Settings() {
 
 function Strategy({ type }: { type: AccountType }) {
   return (
-    <div className="flex py-7 px-6 items-center border border-prim rounded justify-between">
+    <div className="@lg:flex py-7 px-6 items-center border border-prim rounded justify-between">
       <h4 className="text-xl font-bold">Default {type} strategy</h4>
       <Link
         to={`${settings.edit}/${type}`}
-        className="btn-outline-filled px-8 py-2"
+        className="btn-outline-filled px-8 py-2 mt-4 @lg:mt-0"
       >
         Edit
       </Link>
