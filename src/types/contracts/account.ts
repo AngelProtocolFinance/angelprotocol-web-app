@@ -85,18 +85,6 @@ export interface Source {
   vault: string; //"juno123addr.."
 }
 
-export interface EndowmentSettingsPayload {
-  id: number;
-  owner?: string;
-  kyc_donors_only?: boolean;
-  endow_type?: EndowmentType; //editable by config.owner
-  name?: string;
-  categories?: Categories;
-  tier?: number; //editable by config.owner
-  logo?: string;
-  image?: string;
-}
-
 export interface DepositPayload {
   id: number;
   locked_percentage: string; //"0.7"
@@ -135,10 +123,4 @@ export type StatusChangePayload = {
   endowment_id: number;
   status: EndowmentStatus[keyof EndowmentStatus];
   beneficiary?: Beneficiary;
-};
-
-export type UpdateStategyPayload = {
-  id: number;
-  acct_type: AccountType;
-  strategies: Strategy[];
 };
