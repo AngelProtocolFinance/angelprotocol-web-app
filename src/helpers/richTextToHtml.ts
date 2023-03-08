@@ -1,8 +1,8 @@
 import Quill from "quill";
 
-export function richTextToHTML(inputDelta: any) {
+export function richTextToHTML(richTextJson: string) {
   var tempCont = document.createElement("div");
   const quill = new Quill(tempCont);
-  quill.setContents(inputDelta);
+  quill.setContents(JSON.parse(richTextJson));
   return tempCont.getElementsByClassName("ql-editor")[0].innerHTML;
 }
