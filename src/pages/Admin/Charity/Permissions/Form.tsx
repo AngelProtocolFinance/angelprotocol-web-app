@@ -3,7 +3,7 @@ import Table from "./Table";
 import { FormValues } from "./schema";
 
 export default function Form() {
-  const { handleSubmit } = useFormContext<FormValues>();
+  const { handleSubmit, reset } = useFormContext<FormValues>();
 
   return (
     <form
@@ -11,6 +11,7 @@ export default function Form() {
       onSubmit={handleSubmit((formValues: any) =>
         console.log("formValues", formValues)
       )}
+      onReset={() => reset()}
     >
       <Table />
 
