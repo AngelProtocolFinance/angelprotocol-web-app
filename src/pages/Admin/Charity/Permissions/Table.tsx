@@ -16,7 +16,7 @@ export default function Table({ className = "" }) {
       >
         <Cells
           type="th"
-          cellClass="px-3 py-4 text-xs uppercase font-semibold text-left first:rounded-tl last:rounded-tr"
+          cellClass="py-3 px-4 text-xs uppercase font-semibold text-left first:rounded-tl last:rounded-tr"
         >
           <>Action</>
           <>Admin wallet</>
@@ -37,6 +37,7 @@ export default function Table({ className = "" }) {
             cellClass="py-3 px-4 border-t border-prim min-w-[116px] max-w-xs truncate first:rounded-bl last:rounded-br"
           >
             <>{permission.action}</>
+
             <RadioButton
               checked={permission.permitted_to === "admin_wallet"}
               onClick={() =>
@@ -55,7 +56,20 @@ export default function Table({ className = "" }) {
                 update(index, { ...permission, permitted_to: "delegate" })
               }
             />
-            <>{permission.delegate_address}</>
+
+            <input
+              type="text"
+              className="field-input w-full truncate py-1.5"
+              placeholder="Wallet address..."
+              value={permission.delegate_address}
+              onChange={(e) =>
+                update(index, {
+                  ...permission,
+                  delegate_address: e.target.value,
+                })
+              }
+              disabled={permission.permitted_to !== "delegate"}
+            />
           </Cells>
         ))}
       </TableSection>
