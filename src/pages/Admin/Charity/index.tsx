@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { LinkGroup } from "../Sidebar/types";
 import { adminRoutes } from "constants/routes";
 import Layout from "../Layout";
@@ -11,11 +11,9 @@ import Dashboard from "./Dashboard";
 import EditProfile from "./EditProfile";
 import Invest from "./Invest";
 import Settings from "./Settings";
-import StrategyEditor from "./Settings/StrategyEditor";
 import Templates from "./Templates";
 import WidgetConfigurer from "./WidgetConfigurer";
 import Withdraws from "./Withdraws";
-import { settings } from "./routes";
 
 const LINK_GROUPS: LinkGroup[] = [
   {
@@ -51,14 +49,7 @@ export default function Charity() {
         </Route>
         <Route path={adminRoutes.invest} element={<Invest />} />
         <Route path={adminRoutes.contributions} element={<Contributions />} />
-        <Route path={adminRoutes.settings}>
-          <Route path={settings.edit}>
-            <Route path="liquid" element={<StrategyEditor type="liquid" />} />
-            <Route path="locked" element={<StrategyEditor type="locked" />} />
-          </Route>
-          <Route index element={<Settings />} />
-          <Route path="*" element={<Navigate to="." />} />
-        </Route>
+        <Route path={adminRoutes.settings} element={<Settings />} />
         <Route path={adminRoutes.edit_profile} element={<EditProfile />} />
         <Route path={adminRoutes.widget_config}>
           <Route index element={<WidgetConfigurer />} />

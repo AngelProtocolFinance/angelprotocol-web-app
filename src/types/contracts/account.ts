@@ -1,10 +1,9 @@
 import { Coin } from "@cosmjs/proto-signing";
 import {
   Asset,
-  CapitalizedEndowmentType,
   Categories,
   EndowmentStatus,
-  EndowmentTier,
+  EndowmentStatusText,
   EndowmentType,
 } from "./common";
 import { CW20 } from "./cw20";
@@ -31,13 +30,14 @@ export interface EndowmentState {
   closing_beneficiary?: string;
 }
 
+/** 
 interface RebalanceDetails {
   rebalance_liquid_invested_profits: boolean; // should invested portions of the liquid account be rebalanced?
   locked_interests_to_liquid: boolean; // should Locked acct interest earned be distributed to the Liquid Acct?
   interest_distribution: string; // % of Locked acct interest earned to be distributed to the Liquid Acct
   locked_principle_to_liquid: boolean; // should Locked acct principle be distributed to the Liquid Acct?
   principle_distribution: string; // % of Locked acct principle to be distributed to the Liquid Acct
-}
+} */
 
 export interface Strategy {
   vault: string; // Vault SC Address
@@ -50,29 +50,24 @@ type Vaults<T> = {
 };
 
 export type AccountStrategies = Vaults<Strategy[]>;
-type OneOffVaults = Vaults<string[]>;
 
 export interface EndowmentDetails {
   owner: string;
-  status: EndowmentStatus;
-  endow_type: CapitalizedEndowmentType;
-  withdraw_before_maturity: boolean;
-  maturity_time?: number;
-  maturity_height?: number;
-  strategies: AccountStrategies;
-  oneoff_vaults: OneOffVaults;
-  rebalance: RebalanceDetails;
-  kyc_donors_only: boolean;
-  deposit_approved: boolean;
-  withdraw_approved: boolean;
-  pending_redemptions: number;
-  logo?: string;
-  image?: string;
-  name: string;
   categories: Categories;
-  tier?: number;
-  copycat_strategy?: number;
-  proposal_link?: number;
+  //tier
+  endow_type: EndowmentType;
+  //logo
+  //image
+  status: EndowmentStatusText;
+  //deposit_approved
+  //withdraw_approved
+  maturity_time?: number;
+  invested_strategies: Vaults<string[]>;
+  //rebalance
+  kyc_donors_only: boolean;
+  //pending_redemptions
+  //proposal_link
+  //referral_id
 }
 
 export type Holding = { address: string; amount: string };
@@ -89,24 +84,6 @@ export interface Source {
   liquid: string; //"0"
   vault: string; //"juno123addr.."
 }
-
-export type EndowmentQueryOptions = {
-  proposal_link?: number;
-  start_after?: number;
-  limit?: number;
-};
-
-export type EndowmentEntry = {
-  id: number; //int
-  owner: String;
-  status: keyof EndowmentStatus;
-  endow_type: CapitalizedEndowmentType;
-  name: string;
-  logo: string;
-  image: string;
-  tier: EndowmentTier;
-  categories: Categories;
-};
 
 export interface EndowmentSettingsPayload {
   id: number;

@@ -80,10 +80,6 @@ export const queryObject: {
   },
 
   /** account */
-  accEndowList(options) {
-    return { endowment_list: options };
-  },
-
   accEndowment({ id }) {
     return { endowment: { id } };
   },
