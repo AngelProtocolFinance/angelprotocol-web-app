@@ -30,9 +30,15 @@ export type EndowmentProfile = EndowmentBase & {
   };
   street_address?: string;
 
+  // represents total cumulative balances
   total_liq: number;
   total_lock: number;
   overall: number;
+
+  // represents tokens on hand balances (takes into account withdrawn funds)
+  on_hand_liq: number;
+  on_hand_lock: number;
+  on_hand_overall: number;
 
   url?: string;
 };

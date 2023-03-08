@@ -9,8 +9,9 @@ export default function Network() {
 
   useEffect(() => {
     (async () => {
-      //validate address on network change
+      //validate address and amount on network change
       await trigger("beneficiary");
+      await trigger("amounts");
     })();
   }, [network, trigger]);
 

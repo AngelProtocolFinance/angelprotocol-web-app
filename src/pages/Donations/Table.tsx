@@ -6,7 +6,7 @@ import Icon from "components/Icon";
 import useKYC from "components/KYC/useKYC";
 import TableSection, { Cells } from "components/TableSection";
 import useSort from "hooks/useSort";
-import { getTxUrl, humanize, maskAddress } from "helpers";
+import { getTxUrl, humanize } from "helpers";
 import { appRoutes } from "constants/routes";
 
 export default function Table({ donations, classes = "" }: TableProps) {
@@ -17,15 +17,15 @@ export default function Table({ donations, classes = "" }: TableProps) {
 
   return (
     <table
-      className={`${classes} w-full text-sm rounded outline outline-gray-l3 dark:outline-bluegray`}
+      className={`${classes} w-full text-sm rounded-t border border-separate border-spacing-0 border-prim`}
     >
       <TableSection
         type="thead"
-        rowClass="bg-orange-l6 dark:bg-blue-d7 rounded divide-x border-b divide-prim border-prim"
+        rowClass="bg-orange-l6 dark:bg-blue-d7 divide-x divide-prim"
       >
         <Cells
           type="th"
-          cellClass="px-3 py-4 text-xs uppercase font-semibold text-left"
+          cellClass="px-3 py-4 text-xs uppercase font-semibold text-left first:rounded-tl last:rounded-tr"
         >
           <HeaderButton
             onClick={handleHeaderClick("charityName")}
@@ -75,10 +75,15 @@ export default function Table({ donations, classes = "" }: TableProps) {
       </TableSection>
       <TableSection
         type="tbody"
-        rowClass="even:bg-orange-l6 dark:even:bg-blue-d7 divide-x divide-prim border-b last:border-b-0 border-prim"
+        rowClass="even:bg-orange-l6 dark:odd:bg-blue-d6 dark:even:bg-blue-d7 divide-x divide-prim"
+        selectedClass="bg-orange-l5 dark:bg-blue-d4"
       >
         {sorted.map((row) => (
-          <Cells key={row.hash} type="td" cellClass="p-3">
+          <Cells
+            key={row.hash}
+            type="td"
+            cellClass="p-3 border-t border-prim max-w-[256px] truncate"
+          >
             <Link
               to={`${appRoutes.profile}/${row.id}`}
               className="flex items-center justify-between gap-1 cursor-pointer text-sm hover:underline"
@@ -95,7 +100,7 @@ export default function Table({ donations, classes = "" }: TableProps) {
               href={getTxUrl(row.chainId, row.hash)}
               className="text-center text-angel-blue cursor-pointer uppercase text-sm"
             >
-              {maskAddress(row.hash)}
+              {row.hash}
             </ExtLink>
             <div className="text-center text-white">
               <span

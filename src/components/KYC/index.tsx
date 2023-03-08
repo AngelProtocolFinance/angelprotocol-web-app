@@ -1,8 +1,8 @@
-import { Dialog } from "@headlessui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues, Props } from "./types";
 import { placeHolderCountryOption } from "components/CountrySelector";
+import Modal from "components/Modal";
 import Form, { formStyle } from "./Form";
 import { schema } from "./schema";
 
@@ -45,11 +45,11 @@ export default function KYC(props: Props) {
 
   return (
     <FormProvider {...methods}>
-      <Dialog.Panel
+      <Modal
         className={`${formStyle} fixed-center z-20 rounded-md p-6 w-full max-w-xl max-h-[85vh] overflow-y-auto scroller shadow-lg border-none dark:border-2 dark:border-bluegray`}
       >
         <Form {...props} />
-      </Dialog.Panel>
+      </Modal>
     </FormProvider>
   );
 }
