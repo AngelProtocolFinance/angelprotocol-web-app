@@ -3,6 +3,7 @@ import { CW3Config } from "types/contracts";
 import { queryContract } from "services/juno/queryContract";
 import { isJunoAddress } from "schemas/tests";
 import { contracts } from "constants/contracts";
+import { IS_TEST } from "constants/env";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { defaultProposalTags } from "../../tags";
 import { customApi } from "../custom";
@@ -29,8 +30,10 @@ export const apCWs: CWs = {
     type: "ap",
   },
   [REVIEWER_ID]: {
-    cw3: contracts.cw3ReviewTeam,
-    cw4: contracts.cw4GrpReviewTeam,
+    cw3: IS_TEST ? contracts.cw3ReviewTeam : contracts.cw3CharityReviewTeam,
+    cw4: IS_TEST
+      ? contracts.cw4GrpReviewTeam
+      : contracts.cw4GrpCharityReviewTeam,
     type: "review",
   },
 };
