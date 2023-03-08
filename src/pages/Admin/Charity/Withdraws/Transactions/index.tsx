@@ -5,8 +5,8 @@ import Table from "./Table";
 export default function Transactions(props: TableProps) {
   return (
     <>
-      <MobileTable classes="grid md:hidden" {...props} />
-      <Table classes="hidden md:table" {...props} />
+      <MobileTable classes="grid @md:hidden" {...props} />
+      <Table classes="hidden @md:table" {...props} />
     </>
   );
 }
