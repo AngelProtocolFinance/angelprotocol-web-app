@@ -29,7 +29,6 @@ jest.mock("services/aws/leaderboard", () => ({
 
 //test comment 3
 
-const leadText = /leaderboard/i;
 const heroText = /ANGEL GIVING REDEFINES/i;
 const marketLink = /marketplace/i;
 const regLink = /register/i;
@@ -88,7 +87,7 @@ describe("App.tsx tests", () => {
     expect(screen.getByTestId(loaderTestId)).toBeInTheDocument();
     //leaderboard is finally loaded
     expect(
-      await screen.findByRole("heading", { name: leadText })
+      await screen.findByRole("heading", { name: leadLink })
     ).toBeInTheDocument();
     expect(screen.queryByTestId(loaderTestId)).toBeNull();
 
@@ -115,7 +114,7 @@ describe("App.tsx tests", () => {
       })
     );
     //leaderboard is already lazy loaded on first visit
-    expect(screen.getByRole("heading", { name: leadText })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: leadLink })).toBeInTheDocument();
     expect(screen.queryByTestId(loaderTestId)).toBeNull();
 
     //user goes back to Marketplace
