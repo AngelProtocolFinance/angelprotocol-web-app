@@ -12,7 +12,11 @@ export default function Image({ src, className }: Props) {
   const [isLoading, setLoading] = useState(!!src);
 
   if (!src) {
-    return <ImagePlaceholder className={className} />;
+    return (
+      <ImagePlaceholder
+        classes={{ container: className, icon: "w-1/2 h-1/2" }}
+      />
+    );
   }
 
   const shouldLoad = !ref.current?.complete && isLoading;
