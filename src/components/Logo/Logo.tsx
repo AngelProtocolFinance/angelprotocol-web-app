@@ -21,16 +21,14 @@ export default function Logo({ logo, className }: Props) {
     return <LogoPlaceholder className={className} />;
   }
 
+  const shouldLoad = !ref.current?.complete && isLoading;
+
   return (
     <>
-      {isLoading && !ref.current?.complete && (
-        <ContentLoader className={className} />
-      )}
+      {shouldLoad && <ContentLoader className={className} />}
       {!logo.isSrcLoading && (
         <WithLink
-          className={`${className} ${
-            isLoading && !ref.current?.complete ? "hidden" : ""
-          }`}
+          className={`${className} ${shouldLoad ? "hidden" : ""}`}
           href={logo.href}
           title={logo.title}
         >
