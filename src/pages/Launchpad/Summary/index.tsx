@@ -11,7 +11,6 @@ import Account from "contracts/Account";
 import useCosmosTxSender, { Tx } from "hooks/useCosmosTxSender";
 import { getWasmAttribute, isEmpty, roundDown, roundDownToNum } from "helpers";
 import { EMAIL_SUPPORT, GENERIC_ERROR_MESSAGE } from "constants/common";
-import { APIs } from "constants/urls";
 import { routes } from "../constants";
 import About from "./About";
 import Fees from "./Fees";
@@ -79,11 +78,8 @@ export default function Summary() {
             success: {
               message:
                 "Congratulations, your AIF has been successfully created!",
-              link: {
-                description: "View your AIF",
-                url: `${APIs.aws}/v1/ast/${chain.chain_id}/${id}`,
-              },
             },
+            tx,
           });
         } catch (err) {
           showModal(TxPrompt, { error: GENERIC_ERROR_MESSAGE });
