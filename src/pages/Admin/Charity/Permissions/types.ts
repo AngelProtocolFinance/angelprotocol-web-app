@@ -1,14 +1,31 @@
-export const PERMISSION_TYPE = {
-  admin_wallet: "admin_wallet",
-  governance: "governance",
-  delegate: "delegate",
-} as const;
+export type Delegate = {
+  address: string; // wallet address like juno1dg2...
+  expires?: number; // datetime int of delegation expiry
+};
 
-export type PermissionType = keyof typeof PERMISSION_TYPE;
+export type SettingsPermissions = {
+  owner_controlled: boolean;
+  gov_controlled: boolean;
+  modifiable: boolean;
+  delegate?: Delegate;
+};
 
-export type Permission = {
-  id: string;
-  action: string;
-  permitted_to: keyof typeof PERMISSION_TYPE;
-  delegate_address: string;
+export type UpdateEndowmentControllerMsg = {
+  id: number;
+  endowment_controller?: SettingsPermissions;
+  name?: SettingsPermissions;
+  image?: SettingsPermissions;
+  logo?: SettingsPermissions;
+  categories?: SettingsPermissions;
+  kyc_donors_only?: SettingsPermissions;
+  split_to_liquid?: SettingsPermissions;
+  ignore_user_splits?: SettingsPermissions;
+  donation_match_active?: SettingsPermissions;
+  beneficiaries_allowlist?: SettingsPermissions;
+  contributors_allowlist?: SettingsPermissions;
+  maturity_allowlist?: SettingsPermissions;
+  earnings_fee?: SettingsPermissions;
+  deposit_fee?: SettingsPermissions;
+  withdraw_fee?: SettingsPermissions;
+  aum_fee?: SettingsPermissions;
 };

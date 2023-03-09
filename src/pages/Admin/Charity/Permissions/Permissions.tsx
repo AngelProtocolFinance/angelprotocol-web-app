@@ -1,23 +1,10 @@
 import { FormProvider, useForm } from "react-hook-form";
-import { Permission } from "./types";
+import { UpdateEndowmentControllerMsg } from "./types";
 import QueryLoader from "components/QueryLoader";
 import Form from "./Form";
 import { FormValues } from "./schema";
 
-const data: Permission[] = [
-  {
-    id: "1",
-    action: "Changes to Admin Wallet members",
-    permitted_to: "admin_wallet",
-    delegate_address: "juno1k7jkmvzkrr3rv4htqvmh63f0fmvm89dfpqc111",
-  },
-  {
-    id: "2",
-    action: "Changes to Admin Wallet parameters",
-    permitted_to: "delegate",
-    delegate_address: "juno1k7jkmvzkrr3rv4htqvmh63f0fmvm89dfpqc111",
-  },
-];
+const data: UpdateEndowmentControllerMsg = {} as UpdateEndowmentControllerMsg;
 
 export default function Permissions() {
   return (
@@ -31,19 +18,57 @@ export default function Permissions() {
           data,
         }}
         messages={{
-          empty: "No permissions found.",
           error: "Failed to get permissions.",
           loading: "Loading permissions...",
         }}
       >
-        {(permissions) => <InnerComponent permissions={permissions} />}
+        {(permissions) => <InnerComponent data={permissions} />}
       </QueryLoader>
     </div>
   );
 }
 
-function InnerComponent({ permissions }: { permissions: Permission[] }) {
-  const methods = useForm<FormValues>({ defaultValues: { permissions } });
+function InnerComponent({ data }: { data: UpdateEndowmentControllerMsg }) {
+  const methods = useForm<FormValues>({
+    defaultValues: {
+      beneficiaries_allowlist: {
+        name: "Changes to beneficiaries whitelist",
+        modifiable: true,
+        gov_controlled: true,
+        owner_controlled: true,
+        delegate: false,
+      },
+      contributors_allowlist: {
+        name: "Changes to contributors whitelist",
+        modifiable: true,
+        gov_controlled: false,
+        owner_controlled: false,
+        delegate: true,
+        delegate_address: "juno1k7jkmvzkrr3rv4htqvmh63f0fmvm89dfpqc6y5",
+      },
+      liquidAccountStrategy: {
+        name: "Liquid account investment strategy",
+        modifiable: true,
+        gov_controlled: false,
+        owner_controlled: true,
+        delegate: false,
+      },
+      lockedAccountStrategy: {
+        name: "Locked account investment strategy",
+        modifiable: true,
+        gov_controlled: false,
+        owner_controlled: true,
+        delegate: false,
+      },
+      profile: {
+        name: "Changes to profile",
+        modifiable: true,
+        gov_controlled: false,
+        owner_controlled: true,
+        delegate: false,
+      },
+    },
+  });
 
   return (
     <FormProvider {...methods}>

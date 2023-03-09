@@ -1,10 +1,12 @@
-import { useFieldArray, useFormContext } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 import TableSection, { Cells } from "components/TableSection";
 import { FormValues } from "./schema";
 
 export default function Table({ className = "" }) {
-  const { control } = useFormContext<FormValues>();
-  const { fields, update } = useFieldArray({ control, name: "permissions" });
+  const {
+    control,
+    formState: { defaultValues },
+  } = useFormContext<FormValues>();
 
   return (
     <table
@@ -30,48 +32,65 @@ export default function Table({ className = "" }) {
         rowClass="dark:bg-blue-d6 divide-x divide-prim"
         selectedClass="bg-orange-l5 dark:bg-blue-d4"
       >
-        {fields.map((permission, index) => (
-          <Cells
-            key={permission.id}
-            type="td"
-            cellClass="py-3 px-4 border-t border-prim min-w-[116px] max-w-xs truncate first:rounded-bl last:rounded-br"
-          >
-            <>{permission.action}</>
+        {(Object.keys(defaultValues || {}) as (keyof FormValues)[]).map(
+          (formField) => (
+            <Controller
+              control={control}
+              name={formField}
+              render={({ field: { value, onChange } }) => (
+                <Cells
+                  key={`table-row-${formField}`}
+                  type="td"
+                  cellClass="py-3 px-4 border-t border-prim min-w-[116px] max-w-xs truncate first:rounded-bl last:rounded-br"
+                >
+                  <>{value.name}</>
 
-            <RadioButton
-              checked={permission.permitted_to === "admin_wallet"}
-              onClick={() =>
-                update(index, { ...permission, permitted_to: "admin_wallet" })
-              }
-            />
-            <RadioButton
-              checked={permission.permitted_to === "governance"}
-              onClick={() =>
-                update(index, { ...permission, permitted_to: "governance" })
-              }
-            />
-            <RadioButton
-              checked={permission.permitted_to === "delegate"}
-              onClick={() =>
-                update(index, { ...permission, permitted_to: "delegate" })
-              }
-            />
+                  <RadioButton
+                    checked={value.owner_controlled}
+                    onClick={() =>
+                      onChange({
+                        ...value,
+                        owner_controlled: !value.owner_controlled,
+                      })
+                    }
+                  />
+                  <RadioButton
+                    checked={value.gov_controlled}
+                    onClick={() =>
+                      onChange({
+                        ...value,
+                        gov_controlled: !value.gov_controlled,
+                      })
+                    }
+                  />
+                  <RadioButton
+                    checked={value.delegate}
+                    onClick={() =>
+                      onChange({
+                        ...value,
+                        delegate: !value.delegate,
+                      })
+                    }
+                  />
 
-            <input
-              type="text"
-              className="field-input w-full truncate py-1.5"
-              placeholder="Wallet address..."
-              value={permission.delegate_address}
-              onChange={(e) =>
-                update(index, {
-                  ...permission,
-                  delegate_address: e.target.value,
-                })
-              }
-              disabled={permission.permitted_to !== "delegate"}
+                  <input
+                    type="text"
+                    className="field-input w-full truncate py-1.5"
+                    placeholder="Wallet address..."
+                    value={value.delegate_address}
+                    onChange={(e) =>
+                      onChange({
+                        ...value,
+                        delegate_address: e.target.value,
+                      })
+                    }
+                    disabled={!value.delegate}
+                  />
+                </Cells>
+              )}
             />
-          </Cells>
-        ))}
+          )
+        )}
       </TableSection>
     </table>
   );
