@@ -104,12 +104,35 @@ export const aws = createApi({
         };
       },
     }),
+    saveAIF: builder.mutation<unknown, NewAIF>({
+      invalidatesTags: ["endowments", "profile", "walletProfile"],
+      query: (payload) => {
+        const token = createAuthToken("app-user");
+        return {
+          url: `/v1/ast`,
+          method: "POST",
+          body: payload,
+          headers: { authorization: token },
+        };
+      },
+    }),
   }),
 });
+
+type NewAIF = {
+  chainId: string;
+  id: number;
+  registrant: string;
+  tagline: string;
+  /** not in registration steps */
+  // banner
+  // logo
+};
 
 export const {
   useWalletProfileQuery,
   useToggleBookmarkMutation,
+  useSaveAIFMutation,
   useEndowmentCardsQuery,
   useEndowmentIdNamesQuery,
   useProfileQuery,
