@@ -1,11 +1,14 @@
 import { Coin } from "@cosmjs/proto-signing";
 import {
   Asset,
+  CW4Member,
   CapitalizedEndowmentType,
   Categories,
   EndowmentStatus,
   EndowmentTier,
   EndowmentType,
+  SplitDetails,
+  Threshold,
 } from "./common";
 import { CW20 } from "./cw20";
 
@@ -98,7 +101,7 @@ export type EndowmentQueryOptions = {
 
 export type EndowmentEntry = {
   id: number; //int
-  owner: String;
+  owner: string;
   status: keyof EndowmentStatus;
   endow_type: CapitalizedEndowmentType;
   name: string;
@@ -164,4 +167,79 @@ export type UpdateStategyPayload = {
   id: number;
   acct_type: AccountType;
   strategies: Strategy[];
+};
+
+/**
+ * {
+          owner: item.owner,
+          maturity_time: undefined,
+          name: item.name,
+          categories: { sdgs: item.un_sdgs, general: [] },
+          tier: item.tier,
+          logo: item.logo,
+          image: item.image,
+          endow_type: "charity",
+          cw4_members: [{ addr: item.owner, weight: 1 }],
+          kyc_donors_only: item.kyc_donors_only,
+          cw3_threshold: {
+            absolute_percentage: { percentage: charity_cw3_threshold_abs_perc },
+          },
+          cw3_max_voting_period: charity_cw3_max_voting_period,
+          beneficiaries_allowlist: [],
+          contributors_allowlist: [],
+          split_max: "1.0",
+          split_min: "0.0",
+          split_default: "0.5",
+          earnings_fee: undefined,
+          withdraw_fee: undefined,
+          deposit_fee: undefined,
+          aum_fee: undefined,
+          dao: undefined,
+          proposal_link: undefined,
+          settings_controller: undefined,
+          parent: undefined,
+          split_to_liquid: undefined,
+          ignore_user_splits: false,
+        },
+ */
+
+export type EndowmentFee = {
+  payout_address: string;
+  fee_percentage: string; // "0" - "1"
+  active: boolean;
+};
+
+const _normal: EndowmentType = "normal";
+export type NewAIF = {
+  owner: string;
+  maturity_time: number; // required in launchpad: datetime in seconds
+  name: string;
+  categories: Categories; // SHOULD NOT be editable for now (only the Config.owner, ie via the Gov contract or AP CW3 Multisig can set/update)
+  //tier
+  endow_type: typeof _normal;
+  //logo
+  //image
+  cw4_members: CW4Member[];
+  kyc_donors_only: boolean;
+  cw3_threshold: Threshold; // currently just absolute percentage
+  cw3_max_voting_period: number; // datetime in seconds
+  beneficiaries_allowlist: string[]; // if populated, only the listed Addresses can withdraw/receive funds from the Endowment (if empty, anyone can)
+  contributors_allowlist: string[]; // if populated, only the listed Addresses can contribute to the Endowment (if empty, anyone can donate)
+
+  split_to_liquid: SplitDetails;
+  ignore_user_splits: boolean;
+  // duplicate?
+  split_max: string;
+  split_min: string;
+  split_default: string;
+
+  earnings_fee: EndowmentFee | undefined;
+  withdraw_fee: EndowmentFee | undefined;
+  deposit_fee: EndowmentFee | undefined;
+  //aum_fee
+  //dao
+  //proposal_link
+  //endowment_controller
+  //parent
+  //referral_id
 };
