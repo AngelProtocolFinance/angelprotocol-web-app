@@ -37,7 +37,6 @@ export default function Logo({ logo, className }: Props) {
             src={logo.src}
             className="object-contain w-full h-full"
             alt=""
-            loading="lazy"
             onLoad={() => setLoading(false)}
           />
         </WithLink>
