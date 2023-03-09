@@ -10,8 +10,10 @@ import { getFilePreviews } from "./getFilePreviews";
 export default function useSubmit() {
   const {
     handleSubmit,
+    getValues,
     formState: { isDirty, isSubmitting },
   } = useFormContext<FormValues>();
+
   const {
     step,
     data: { init, documentation },
@@ -30,6 +32,7 @@ export default function useSubmit() {
     level,
     hqCountry,
     activeInCountries,
+    cashEligible,
     ...documents
   }: FormValues) => {
     if (documentation && !isDirty) {
@@ -57,5 +60,5 @@ export default function useSubmit() {
       handleError
     );
   };
-  return { submit: handleSubmit(submit), isSubmitting };
+  return { submit: handleSubmit(submit), getValues, isSubmitting };
 }
