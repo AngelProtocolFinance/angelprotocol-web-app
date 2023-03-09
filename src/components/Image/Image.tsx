@@ -25,7 +25,6 @@ export default function Image({ src, className }: Props) {
         src={src}
         className={`${className} object-contain ${shouldLoad ? "hidden" : ""}`}
         alt=""
-        loading="lazy"
         onLoad={() => setLoading(false)}
       />
     </>
