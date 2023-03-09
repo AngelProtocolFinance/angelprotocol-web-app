@@ -28,6 +28,7 @@ const result3: FileObject = {
 };
 
 const uploadFiles = jest.fn();
+global.fetch = jest.fn();
 
 describe("get documentation file previews", () => {
   test("correct preview mapping for new uploads", async () => {
