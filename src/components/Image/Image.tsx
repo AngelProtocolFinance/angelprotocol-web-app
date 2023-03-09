@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import ContentLoader from "../ContentLoader";
 import ImagePlaceholder from "./ImagePlaceholder";
 
@@ -8,18 +8,22 @@ type Props = {
 };
 
 export default function Image({ src, className }: Props) {
+  const ref = useRef<HTMLImageElement>(null);
   const [isLoading, setLoading] = useState(!!src);
 
   if (!src) {
     return <ImagePlaceholder className={className} />;
   }
 
+  const shouldLoad = !ref.current?.complete && isLoading;
+
   return (
     <>
-      {isLoading && <ContentLoader className={className} />}
+      {shouldLoad && <ContentLoader className={className} />}
       <img
+        ref={ref}
         src={src}
-        className={`${className} object-contain ${isLoading ? "hidden" : ""}`}
+        className={`${className} object-contain ${shouldLoad ? "hidden" : ""}`}
         alt=""
         onLoad={() => setLoading(false)}
       />
