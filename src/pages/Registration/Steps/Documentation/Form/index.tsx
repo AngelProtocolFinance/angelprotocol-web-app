@@ -18,7 +18,8 @@ import useSubmit from "./useSubmit";
 
 export default function Form() {
   const { data } = useRegState<2>();
-  const { submit, isSubmitting } = useSubmit();
+  const { submit, isSubmitting, getValues } = useSubmit();
+
   return (
     <form className="w-full" onSubmit={submit}>
       <Level num={1} />
@@ -115,6 +116,19 @@ export default function Form() {
         <Radio value="No" />
       </div>
       <Separator classes="my-8" />
+      {getValues("hqCountry").name && (
+        <CheckField<FV>
+          name="cashEligible"
+          required
+          classes={{
+            container: "check-field-reg text-sm mb-3",
+            input: "checkbox-reg self-start sm:self-center",
+            error: "mt-1",
+          }}
+        >
+          {`By checking this box, you declare that you are eligible for cash donation processing by APES`}
+        </CheckField>
+      )}
       <CheckField<FV>
         name="hasAuthority"
         required
@@ -125,7 +139,7 @@ export default function Form() {
         }}
       >
         {`By checking this box, you declare that you have the authority to create
-        an endowment in the name of {data.contact.orgName} through ${APP_NAME}`}
+        an endowment in the name of ${data.contact.orgName} through ${APP_NAME}`}
       </CheckField>
       <CheckField<FV>
         name="hasAgreedToTerms"
