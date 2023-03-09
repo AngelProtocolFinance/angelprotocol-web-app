@@ -15,7 +15,7 @@ type Props = {
 
 export default function Logo({ logo, className }: Props) {
   const ref = useRef<HTMLImageElement>(null);
-  const [isLoading, setLoading] = useState(!!logo?.src);
+  const [isLoading, setLoading] = useState(!!logo?.src || logo?.isSrcLoading);
 
   if (!logo?.src) {
     return <LogoPlaceholder className={className} />;
