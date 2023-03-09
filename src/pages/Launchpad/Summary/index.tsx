@@ -24,7 +24,7 @@ export default function Summary() {
   const { wallet } = useGetWallet();
   const sendTx = useCosmosTxSender();
   const [saveAIF] = useSaveAIFMutation();
-  const { showModal } = useModalContext();
+  const { showModal, closeModal } = useModalContext();
   const navigate = useNavigate();
   const state = useGetter((state) => state.launchpad);
   if (!isCompleted(state)) return <Navigate to={`../${state.progress}`} />;
@@ -59,7 +59,11 @@ export default function Summary() {
         try {
           const id = getWasmAttribute("endow_id", res.rawLog);
 
-          showModal(TxPrompt, { loading: "Saving endowment info.." });
+          showModal(
+            TxPrompt,
+            { loading: "Saving endowment info.." },
+            { isDismissible: false }
+          );
 
           const result = await saveAIF({
             chainId: chain.chain_id,
@@ -75,6 +79,8 @@ export default function Summary() {
               tx,
             });
           }
+
+          closeModal();
           navigate(`${appRoutes.register}/success`, { state: id });
         } catch (err) {
           showModal(TxPrompt, { error: GENERIC_ERROR_MESSAGE });

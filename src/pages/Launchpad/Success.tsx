@@ -1,9 +1,13 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, Navigate, useLocation } from "react-router-dom";
 import Icon from "components/Icon";
 import { appRoutes } from "constants/routes";
 
 export default function Success({ classes = "" }) {
   const { state: id } = useLocation();
+
+  if (!id) {
+    return <Navigate to={appRoutes.register} />;
+  }
 
   return (
     <div
