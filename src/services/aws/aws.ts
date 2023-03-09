@@ -5,6 +5,7 @@ import {
   EndowmentProfile,
   EndowmentProfileUpdate,
   EndowmentsQueryParams,
+  NewAIF,
   PaginatedAWSQueryRes,
   WalletProfile,
 } from "types/aws";
@@ -118,16 +119,6 @@ export const aws = createApi({
     }),
   }),
 });
-
-type NewAIF = {
-  chainId: string;
-  id: number;
-  registrant: string;
-  tagline: string;
-  /** not in registration steps */
-  // banner
-  // logo
-};
 
 export const {
   useWalletProfileQuery,
