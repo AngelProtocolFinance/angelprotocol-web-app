@@ -5,12 +5,12 @@ import Table from "./Table";
 
 export default function DonationsTable({ classes = "" }) {
   const { id } = useAdminResources();
-  const queryState = useDonationsQuery({ id: id.toString() });
+  const { data, ...rest } = useDonationsQuery({ id: id.toString() });
 
   return (
     <div className={classes}>
       <QueryLoader
-        queryState={queryState}
+        queryState={{ data: data?.Items, ...rest }}
         messages={{
           loading: "Fetching donations..",
           error: "Failed to get donations",

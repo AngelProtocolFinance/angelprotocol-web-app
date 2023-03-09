@@ -9,7 +9,7 @@ import { contracts } from "constants/contracts";
 import { junoApi } from "..";
 import { queryContract } from "../queryContract";
 import { accountTags, adminTags, registrarTags } from "../tags";
-import { getCWs, getMeta, isAp } from "./helpers/admin-resource";
+import { apCWs, getMeta } from "./helpers/admin-resource";
 import summarizer, { BalMap } from "./helpers/endow-assets";
 
 export const customApi = junoApi.injectEndpoints({
@@ -21,9 +21,10 @@ export const customApi = junoApi.injectEndpoints({
       ],
       async queryFn(args) {
         const numId = idParamToNum(args.endowmentId);
+        const AP = apCWs[numId];
         /** special case for ap admin usage */
-        if (isAp(numId)) {
-          const { cw3 } = getCWs(numId);
+        if (AP) {
+          const { cw3 } = AP;
           //skip endowment query, query hardcoded cw3 straight
           const voter = await queryContract("cw3Voter", cw3, {
             addr: args.user,
@@ -60,9 +61,10 @@ export const customApi = junoApi.injectEndpoints({
       ],
       async queryFn(args) {
         const numId = idParamToNum(args.endowmentId);
+        const AP = apCWs[numId];
         /** special case for ap admin usage */
-        if (isAp(numId)) {
-          const { cw3, cw4, type } = getCWs(numId);
+        if (AP) {
+          const { cw3, cw4, type } = AP;
           //skip endowment query, query hardcoded cw3 straight
 
           const [meta, config] = await getMeta(numId, cw3, args.user);

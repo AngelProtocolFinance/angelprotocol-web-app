@@ -5,7 +5,9 @@ import Investments from "./Invesments";
 export default function Invest() {
   return (
     <div>
-      <h3 className="font-bold text-[2rem] mb-8">Invest Dashboard</h3>
+      <h3 className="font-bold text-[2rem] mb-8 max-sm:text-center">
+        Invest Dashboard
+      </h3>
       <Balances />
       <h3 className="font-bold text-2xl mt-8 mb-4">Investments options</h3>
       <AccountTabs
