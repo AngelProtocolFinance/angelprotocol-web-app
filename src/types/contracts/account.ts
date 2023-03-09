@@ -169,40 +169,6 @@ export type UpdateStategyPayload = {
   strategies: Strategy[];
 };
 
-/**
- * {
-          owner: item.owner,
-          maturity_time: undefined,
-          name: item.name,
-          categories: { sdgs: item.un_sdgs, general: [] },
-          tier: item.tier,
-          logo: item.logo,
-          image: item.image,
-          endow_type: "charity",
-          cw4_members: [{ addr: item.owner, weight: 1 }],
-          kyc_donors_only: item.kyc_donors_only,
-          cw3_threshold: {
-            absolute_percentage: { percentage: charity_cw3_threshold_abs_perc },
-          },
-          cw3_max_voting_period: charity_cw3_max_voting_period,
-          beneficiaries_allowlist: [],
-          contributors_allowlist: [],
-          split_max: "1.0",
-          split_min: "0.0",
-          split_default: "0.5",
-          earnings_fee: undefined,
-          withdraw_fee: undefined,
-          deposit_fee: undefined,
-          aum_fee: undefined,
-          dao: undefined,
-          proposal_link: undefined,
-          settings_controller: undefined,
-          parent: undefined,
-          split_to_liquid: undefined,
-          ignore_user_splits: false,
-        },
- */
-
 export type EndowmentFee = {
   payout_address: string;
   fee_percentage: string; // "0" - "1"
