@@ -52,7 +52,7 @@ export default function LogRow(
       </QueryLoader>
 
       <span className="grid grid-cols-[1fr_auto] gap-2 items-center">
-        <span className="max-w-[16rem] truncate">{target_wallet}</span>
+        <span className="truncate">{target_wallet}</span>
         <Copier text={target_wallet} classes="w-6 h-6 hover:text-orange" />
       </span>
 
