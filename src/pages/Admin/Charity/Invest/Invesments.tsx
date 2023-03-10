@@ -9,6 +9,7 @@ type Props = {
 
 export default function Investments({ type }: Props) {
   const { id } = useAdminResources();
+  console.log({ id, type });
 
   return (
     <div className="grid gap-3">

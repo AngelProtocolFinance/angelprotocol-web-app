@@ -8,12 +8,14 @@ import authReducer from "slices/authSlice";
 import { componentReducer } from "slices/components";
 import { donation } from "slices/donation";
 import gift from "slices/gift";
+import launchpad from "slices/launchpad";
 
 export const store = configureStore({
   reducer: {
     admin: adminReducer,
     donation,
     gift,
+    launchpad,
     auth: authReducer,
     component: componentReducer,
     [aws.reducerPath]: aws.reducer,

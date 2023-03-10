@@ -1,7 +1,8 @@
-import React from "react";
+import React, { cloneElement } from "react";
 
 export default function TableSection(props: HeadProps | BodyProps) {
   return React.createElement(props.type, {
+    className: props.classes,
     children: React.Children.map(props.children, (child, index) => {
       return (
         <tr
@@ -21,6 +22,17 @@ export default function TableSection(props: HeadProps | BodyProps) {
 
 export function Cells(props: CellProps) {
   const cells = React.Children.map(props.children, (child, index) => {
+    //return explicit element + common props
+    if (child.type === "td" || child.type === "th") {
+      return cloneElement(child, {
+        ...child.props,
+        key: index,
+        className: child.props.className
+          ? `${child.props.className} ${props.cellClass}`
+          : props.cellClass,
+      });
+    }
+
     //for dual header tables make first cell of header <td/>
     if (props.dual) {
       return React.createElement(
@@ -69,6 +81,7 @@ export function Cells(props: CellProps) {
 type CellBase = {
   children: JSX.Element | JSX.Element[];
   type: "th" | "td";
+
   cellClass: string;
 };
 
@@ -91,6 +104,7 @@ type CellProps = CellHorizontal | CellVertical | CellDual;
 
 type HeadProps = {
   type: "thead";
+  classes?: string;
   children: JSX.Element;
   rowClass: string;
   onRowSelect?: never;
@@ -100,6 +114,7 @@ type HeadProps = {
 
 type BodyProps = {
   type: "tbody";
+  classes?: string;
   children: JSX.Element[] | JSX.Element;
   rowClass: string;
   onRowSelect?: (rowIndex: number) => () => void;
