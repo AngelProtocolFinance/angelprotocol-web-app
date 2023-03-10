@@ -1,45 +1,57 @@
+import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "./types";
+import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import Prompt from "components/Prompt";
 import { RichTextEditor } from "components/RichText";
-import { Label } from "components/form";
-import { Field } from "components/form";
+import { Field, Label } from "components/form";
 import { createAuthToken } from "helpers";
-import { APP_NAME } from "constants/common";
+import { richTextToHTML } from "helpers/richTextToHtml";
+import { APP_NAME, GENERIC_ERROR_MESSAGE } from "constants/common";
 import { appRoutes } from "constants/routes";
 import { APIs } from "constants/urls";
+import Success from "./Success";
 
 export default function Form({ classes = "" }) {
-  const { handleSubmit, reset } = useFormContext<FV>();
+  const {
+    handleSubmit,
+    reset,
+    formState: { isSubmitting },
+  } = useFormContext<FV>();
   const { showModal } = useModalContext();
+  const [recipient, setRecipient] = useState<string>();
+  const { handleError } = useErrorContext();
 
-  async function submit({ recipient, secret }: FV) {
-    const res = await fetch(APIs.aws + "/v1/giftcard/send-email", {
-      method: "POST",
-      headers: { authorization: createAuthToken("angelprotocol-web-app") },
-      body: JSON.stringify({ email: recipient.email, secret }),
-    });
-    if (!res.ok) {
-      return showModal(Prompt, {
-        type: "error",
-        headline: "Confirmation",
-        title: "Failed to send gift card",
+  async function submit({ recipient, secret, message }: FV) {
+    try {
+      const res = await fetch(APIs.aws + "/v1/giftcard/send-email", {
+        method: "POST",
+        headers: { authorization: createAuthToken("angelprotocol-web-app") },
+        body: JSON.stringify({
+          email: recipient.email,
+          secret,
+          note: richTextToHTML(message),
+        }),
       });
+
+      if (!res.ok) {
+        return showModal(Prompt, {
+          type: "error",
+          headline: "Confirmation",
+          title: "Failed to send gift card",
+        });
+      }
+
+      setRecipient(recipient.email);
+    } catch (error) {
+      handleError(error, GENERIC_ERROR_MESSAGE);
     }
-    showModal(Prompt, {
-      type: "success",
-      headline: "Confirmation",
-      title: "Giftcard Sent Successfully",
-      children: (
-        <p className="text-center text-gray-d1 dark:text-gray">
-          Your gift card message to{" "}
-          <span className="font-bold">{recipient.email}</span> has been
-          successfully sent.
-        </p>
-      ),
-    });
+  }
+
+  if (recipient) {
+    return <Success className={classes} recipient={recipient} />;
   }
 
   return (
@@ -83,7 +95,11 @@ export default function Form({ classes = "" }) {
         >
           Reset
         </button>
-        <button className="btn-orange btn-gift" type="submit">
+        <button
+          className="btn-orange btn-gift"
+          type="submit"
+          disabled={isSubmitting}
+        >
           Submit
         </button>
         <Link
