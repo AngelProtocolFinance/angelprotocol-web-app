@@ -1,4 +1,8 @@
-import { CapitalizedEndowmentType, EndowmentType } from "./common";
+import {
+  CapitalizedEndowmentType,
+  EndowmentType,
+  SplitDetails,
+} from "./common";
 
 export type RebalanceDetails = {
   rebalance_liquid_invested_profits: boolean;
@@ -6,12 +10,6 @@ export type RebalanceDetails = {
   interest_distribution: string;
   locked_principle_to_liquid: boolean;
   principle_distribution: string;
-};
-
-export type SplitDetails = {
-  max: string;
-  min: string;
-  default: string;
 };
 
 export type AcceptedTokens = {

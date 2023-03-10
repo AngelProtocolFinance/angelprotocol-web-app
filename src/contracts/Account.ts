@@ -3,6 +3,7 @@ import {
   DepositPayload,
   EndowmentSettingsPayload,
   InvestPayload,
+  NewAIF,
   RedeemPayload,
   StatusChangePayload,
   UpdateStategyPayload,
@@ -60,5 +61,11 @@ export default class Account extends Contract {
       },
       funds
     );
+  }
+
+  createNewAIFmsg(payload: NewAIF) {
+    return this.createExecuteContractMsg(Account.address, {
+      create_endowment: payload,
+    });
   }
 }
