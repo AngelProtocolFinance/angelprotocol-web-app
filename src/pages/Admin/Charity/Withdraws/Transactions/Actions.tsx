@@ -7,7 +7,7 @@ export default function Actions({ proposalId }: { proposalId: number }) {
     <Link
       title="View Proposal"
       className="flex justify-center items-center hover:text-orange active:text-orange-d1"
-      to={`${adminRoutes.proposal}/${proposalId}`}
+      to={`../${adminRoutes.proposal}/${proposalId}`}
     >
       <Icon type="FileSearch" className="w-6 h-6" />
     </Link>
