@@ -6,6 +6,7 @@ import { humanize } from "helpers";
 
 export default function Balances({ type }: { type: AccountType }) {
   const { id } = useAdminResources();
+  console.log({ id, type });
   return (
     <QueryLoader
       queryState={{
