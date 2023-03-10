@@ -7,8 +7,10 @@ type FormField = Omit<SettingsPermissions, "delegate"> & {
 };
 
 export type FormValues = {
+  accountFees: FormField;
   beneficiaries_allowlist: FormField;
   contributors_allowlist: FormField;
+  donationSplitParams: FormField;
   liquidAccountStrategy: FormField;
   lockedAccountStrategy: FormField;
   profile: FormField;

@@ -31,6 +31,13 @@ export default function Permissions() {
 function InnerComponent({ data }: { data: UpdateEndowmentControllerMsg }) {
   const methods = useForm<FormValues>({
     defaultValues: {
+      accountFees: {
+        name: "Changes to account fees",
+        modifiable: true,
+        gov_controlled: false,
+        owner_controlled: true,
+        delegate: false,
+      },
       beneficiaries_allowlist: {
         name: "Changes to beneficiaries whitelist",
         modifiable: true,
@@ -45,6 +52,13 @@ function InnerComponent({ data }: { data: UpdateEndowmentControllerMsg }) {
         owner_controlled: false,
         delegate: true,
         delegate_address: "juno1k7jkmvzkrr3rv4htqvmh63f0fmvm89dfpqc6y5",
+      },
+      donationSplitParams: {
+        name: "Changes to donation split parameters",
+        modifiable: true,
+        gov_controlled: false,
+        owner_controlled: true,
+        delegate: false,
       },
       liquidAccountStrategy: {
         name: "Liquid account investment strategy",
