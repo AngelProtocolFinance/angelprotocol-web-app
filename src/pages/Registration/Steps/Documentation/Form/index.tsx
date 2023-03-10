@@ -6,7 +6,7 @@ import ExtLink from "components/ExtLink";
 import { Selector } from "components/Selector";
 import { CheckField, Field, Label } from "components/form";
 import { FileDropzone, LoadText } from "components/registration";
-import { APP_NAME } from "constants/common";
+import { APP_NAME, CASH_ELIGIBLE_COUNTRIES } from "constants/common";
 import { unsdgs } from "constants/unsdgs";
 import { TERMS_OF_USE } from "constants/urls";
 import { steps } from "../../../routes";
@@ -116,7 +116,7 @@ export default function Form() {
         <Radio value="No" />
       </div>
       <Separator classes="my-8" />
-      {getValues("hqCountry").name && (
+      {CASH_ELIGIBLE_COUNTRIES.includes(getValues("hqCountry").name) && (
         <CheckField<FV>
           name="CashEligible"
           required

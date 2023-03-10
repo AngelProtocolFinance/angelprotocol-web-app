@@ -8,3 +8,9 @@ export const SEO_IMAGE =
   "https://charity-profile-images.s3.amazonaws.com/logo/angelprotocol-wings-bl.png";
 export const EMAIL_SUPPORT = "support@angelgiving.io";
 export const GENERIC_ERROR_MESSAGE = `An error occurred. Please get in touch with ${EMAIL_SUPPORT} if the problem persists.`;
+
+export const CASH_ELIGIBLE_COUNTRIES = [
+  "New Zealand",
+  "United States",
+  "United Kingdom",
+];
