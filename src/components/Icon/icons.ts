@@ -97,7 +97,7 @@ import {
   MdWidgets,
 } from "react-icons/md";
 import {
-  RiFileSearchLine,
+  RiFileSearchFill,
   RiMapPin2Line,
   RiMoneyDollarCircleFill,
 } from "react-icons/ri";
@@ -149,7 +149,7 @@ export const icons = {
   FatArrowDownload: IoMdDownload,
   FileDownload: MdOutlineFileDownload,
   FileUpload: MdOutlineUploadFile,
-  FileSearch: RiFileSearchLine,
+  FileSearch: RiFileSearchFill,
   Filter: MdOutlineFilterAlt,
   FilterLeft: BsFilterLeft,
   Forward: MdOutlineArrowForwardIos,
