@@ -1,4 +1,4 @@
-import { PropsWithChildren, useState } from "react";
+import { PropsWithChildren, useRef, useState } from "react";
 import ContentLoader from "components/ContentLoader";
 import ExtLink from "components/ExtLink";
 import LogoPlaceholder from "./LogoPlaceholder";
@@ -14,22 +14,28 @@ type Props = {
 };
 
 export default function Logo({ logo, className }: Props) {
-  const [isLoading, setLoading] = useState(!!logo?.src);
+  const ref = useRef<HTMLImageElement>(null);
+  const [isLoading, setLoading] = useState(!!logo?.src || logo?.isSrcLoading);
 
   if (!logo?.src) {
     return <LogoPlaceholder className={className} />;
   }
 
+  const shouldLoad = !ref.current?.complete && isLoading;
+
   return (
     <>
-      {isLoading && <ContentLoader className={className} />}
+      {shouldLoad && <ContentLoader className={className} />}
       {!logo.isSrcLoading && (
-        <WithLink className={className} href={logo.href} title={logo.title}>
+        <WithLink
+          className={`${className} ${shouldLoad ? "hidden" : ""}`}
+          href={logo.href}
+          title={logo.title}
+        >
           <img
+            ref={ref}
             src={logo.src}
-            className={`object-contain w-full h-full ${
-              isLoading ? "hidden" : ""
-            }`}
+            className="object-contain w-full h-full"
             alt=""
             onLoad={() => setLoading(false)}
           />

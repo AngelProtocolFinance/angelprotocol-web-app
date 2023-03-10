@@ -1,16 +1,10 @@
-import { Args } from "../queryContract/types";
-import {
-  AdminResources,
-  EndowmentAssets,
-  ProposalDetails,
-} from "services/types";
-import { condenseToNum, idParamToNum } from "helpers";
+import { AdminResources, ProposalDetails } from "services/types";
+import { idParamToNum } from "helpers";
 import { contracts } from "constants/contracts";
 import { junoApi } from "..";
 import { queryContract } from "../queryContract";
-import { accountTags, adminTags, registrarTags } from "../tags";
+import { accountTags, adminTags } from "../tags";
 import { apCWs, getMeta } from "./helpers/admin-resource";
-import summarizer, { BalMap } from "./helpers/endow-assets";
 
 export const customApi = junoApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -130,56 +124,6 @@ export const customApi = junoApi.injectEndpoints({
         };
       },
     }),
-    assets: builder.query<
-      EndowmentAssets,
-      Args<"regVaultList"> & { endowId: number }
-    >({
-      providesTags: [
-        "vault",
-        { type: "registrar", id: registrarTags.vault_list },
-        { type: "account", id: accountTags.state },
-      ],
-      async queryFn({ endowId, ...args }, api, extraOptions, baseQuery) {
-        const [{ vaults }, accState] = await Promise.all([
-          queryContract("regVaultList", contracts.registrar, args),
-          queryContract("accState", contracts.accounts, { id: endowId }),
-        ]);
-
-        const vaultBals = await Promise.allSettled(
-          vaults.map((v) =>
-            queryContract("vaultBalance", v.address, {
-              endowment_id: endowId,
-            }).then((res) => ({ address: v.address, balance: res }))
-          )
-        );
-
-        const { tokens_on_hand } = accState;
-        const { native, cw20 } = tokens_on_hand[args.acct_type || "liquid"];
-        const balMap: BalMap = [
-          ...vaultBals.map((v) =>
-            v.status === "fulfilled"
-              ? [v.value.address, v.value.balance]
-              : ["", ""]
-          ),
-          ...native.map((n) => [n.denom, n.amount]),
-          ...cw20.map((c) => [c.address, c.amount]),
-        ].reduce(
-          (result, [vault, balance]) => ({
-            ...result,
-            [vault]: condenseToNum(balance),
-          }),
-          {}
-        );
-
-        const summarize = summarizer(vaults, balMap, tokens_on_hand);
-        return {
-          data: {
-            liquid: summarize("liquid"),
-            locked: summarize("locked"),
-          },
-        };
-      },
-    }),
   }),
 });
 
@@ -187,5 +131,4 @@ export const {
   useIsMemberQuery,
   useAdminResourcesQuery,
   useProposalDetailsQuery,
-  useAssetsQuery,
 } = customApi;

@@ -7,9 +7,9 @@ export default function Warning({
 }: PropsWithChildren<{ classes?: string }>) {
   return (
     <div
-      className={`${classes} p-2 bg-orange-l6 dark:bg-blue-d4 border border-orange-l3 dark:border-bluegray rounded-md text-orange-d1 dark:text-orange-l3 text-xs`}
+      className={`${classes} grid grid-cols-[auto_1fr] items-center gap-3 w-full p-3 pr-4 border border-prim rounded text-sm`}
     >
-      <Icon type="Info" className="inline relative bottom-0.5 mr-1" />
+      <Icon type="WarningOutline" className="w-6 h-6 text-red" />
       {children}
     </div>
   );
