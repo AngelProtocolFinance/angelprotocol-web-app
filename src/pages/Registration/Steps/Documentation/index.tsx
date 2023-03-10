@@ -27,7 +27,7 @@ function Documentation() {
           hasAgreedToTerms: false,
           isKYCRequired: "No",
           sdgs: [],
-          cashEligible: false,
+          CashEligible: false,
           hqCountry: { name: "", flag: "" },
           activeInCountries: [],
         },

@@ -118,7 +118,7 @@ export default function Form() {
       <Separator classes="my-8" />
       {getValues("hqCountry").name && (
         <CheckField<FV>
-          name="cashEligible"
+          name="CashEligible"
           required
           classes={{
             container: "check-field-reg text-sm mb-3",

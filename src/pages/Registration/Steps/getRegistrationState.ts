@@ -126,7 +126,7 @@ function formatDocumentation({
 
     //meta
     level: Tier,
-    cashEligible: false,
+    CashEligible: false,
     hasAuthority: true,
     hasAgreedToTerms: true,
   };

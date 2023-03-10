@@ -32,7 +32,7 @@ export default function useSubmit() {
     level,
     hqCountry,
     activeInCountries,
-    cashEligible,
+    CashEligible,
     ...documents
   }: FormValues) => {
     if (documentation && !isDirty) {

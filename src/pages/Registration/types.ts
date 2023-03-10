@@ -52,7 +52,7 @@ export type Documentation = {
   auditedFinancialReports: Asset;
   isKYCRequired: "Yes" | "No";
 
-  cashEligible: boolean;
+  CashEligible: boolean;
   //so user won't click again on resume
   hasAuthority: boolean;
   hasAgreedToTerms: boolean;
