@@ -2,7 +2,6 @@ import { useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";
 import { WithdrawMeta } from "pages/Admin/types";
 import { Asset } from "types/contracts";
-import { accountTypeDisplayValue } from "pages/Admin/Charity/constants";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Account from "contracts/Account";
@@ -14,11 +13,7 @@ import { chainIds } from "constants/chainIds";
 import useLogWithdrawProposal from "./useLogWithdrawProposal";
 
 export default function useWithdraw() {
-  const {
-    handleSubmit,
-    getValues,
-    formState: { isValid, isDirty, isSubmitting },
-  } = useFormContext<WithdrawValues>();
+  const { handleSubmit, getValues } = useFormContext<WithdrawValues>();
 
   const { cw3, id, endow_type, propMeta } = useAdminResources<"charity">();
   const { wallet } = useGetWallet();
@@ -62,7 +57,7 @@ export default function useWithdraw() {
       : //normal proposal when withdraw doesn't need to go thru AP
         endowCW3.createProposalMsg(
           "withdraw proposal",
-          `withdraw ${accountTypeDisplayValue[type]} assets from endowment id: ${id}`,
+          `withdraw ${type} assets from endowment id: ${id}`,
           [
             account.createEmbeddedWithdrawMsg({
               id,
@@ -95,9 +90,5 @@ export default function useWithdraw() {
     });
   }
 
-  return {
-    withdraw: handleSubmit(withdraw),
-    isSubmitDisabled: !isValid || !isDirty || isSubmitting,
-    type,
-  };
+  return handleSubmit(withdraw);
 }

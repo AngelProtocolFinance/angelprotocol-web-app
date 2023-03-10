@@ -3,18 +3,16 @@ import { useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";
 
 const id = "__beneficiary";
-export default function Beneficiary({ classes = "" }: { classes?: string }) {
+
+export default function Beneficiary() {
   const {
     register,
     formState: { errors },
   } = useFormContext<WithdrawValues>();
 
   return (
-    <div className={`${classes} relative grid border-b border-prim`}>
-      <label
-        htmlFor={id}
-        className="font-bold font-heading text-sm uppercase mb-2"
-      >
+    <div className="relative grid gap-3 w-full">
+      <label htmlFor={id} className="font-bold font-work">
         Destination wallet
       </label>
       <input
@@ -22,7 +20,8 @@ export default function Beneficiary({ classes = "" }: { classes?: string }) {
         id={id}
         type="text"
         autoComplete="off"
-        className="bg-transparent focus:outline-none text-sm pb-2"
+        className="flex justify-between items-center w-full p-4 border border-prim rounded bg-transparent @max-md:text-sm truncate focus:outline-none"
+        placeholder="Input wallet address..."
       />
       <ErrorMessage
         errors={errors}

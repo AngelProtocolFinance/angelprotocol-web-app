@@ -9,7 +9,8 @@ import { getTxUrl, humanize, maskAddress } from "helpers";
 
 export default function Table(props: { donations: Donation[] }) {
   const { handleHeaderClick, sorted, sortDirection, sortKey } = useSort(
-    props.donations
+    props.donations,
+    "date"
   );
 
   return (
