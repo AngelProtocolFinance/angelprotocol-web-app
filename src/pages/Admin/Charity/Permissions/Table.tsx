@@ -45,7 +45,7 @@ export default function Table({ className = "" }) {
                 >
                   <>{value.name}</>
 
-                  <RadioButton
+                  <Checkbox
                     checked={value.owner_controlled}
                     onClick={() =>
                       onChange({
@@ -54,7 +54,7 @@ export default function Table({ className = "" }) {
                       })
                     }
                   />
-                  <RadioButton
+                  <Checkbox
                     checked={value.gov_controlled}
                     onClick={() =>
                       onChange({
@@ -63,7 +63,7 @@ export default function Table({ className = "" }) {
                       })
                     }
                   />
-                  <RadioButton
+                  <Checkbox
                     checked={value.delegate}
                     onClick={() =>
                       onChange({
@@ -96,24 +96,14 @@ export default function Table({ className = "" }) {
   );
 }
 
-function RadioButton({
-  checked,
-  onClick,
-}: {
-  checked: boolean;
-  onClick(): void;
-}) {
+function Checkbox({ checked, onClick }: { checked: boolean; onClick(): void }) {
   return (
-    <button
-      type="button"
-      className="grid place-items-center w-5 h-5 rounded-full border border-prim group"
-      onClick={onClick}
-    >
-      <span
-        className={`w-3 h-3 rounded-full transition ease-in-out duration-200 ${
-          checked ? "bg-orange" : "group-hover:bg-orange/50"
-        }`}
-      />
-    </button>
+    <input
+      type="checkbox"
+      className="checkbox-orange"
+      checked={checked}
+      onChange={onClick}
+      // disabled={disabled}
+    />
   );
 }
