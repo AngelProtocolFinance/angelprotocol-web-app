@@ -1,14 +1,12 @@
 import { PropsWithChildren } from "react";
 import { AccountType } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
-import { useAssetsQuery } from "services/juno/custom";
 import QueryLoader from "components/QueryLoader";
 import { humanize } from "helpers";
 
 type Props = { type: AccountType };
 export default function Balance({ type }: Props) {
   const { id } = useAdminResources();
-  const { data, ...rest } = useAssetsQuery({ endowId: id });
 
   return (
     <div className="@container rounded border border-prim bg-orange-l6 dark:bg-blue-d6">
@@ -20,7 +18,11 @@ export default function Balance({ type }: Props) {
         <span className="capitalize">{type}</span> Account details.
       </p>
       <QueryLoader
-        queryState={{ ...rest, data: data ? data[type] : undefined }}
+        queryState={{
+          data: { total: 0, free: 0, invested: 0, symbol: "USD" },
+          isLoading: false,
+          isError: false,
+        }}
         classes={{ container: "text-sm text-gray-d1 dark:text-gray px-4" }}
         messages={{
           loading: "Fetching balances",

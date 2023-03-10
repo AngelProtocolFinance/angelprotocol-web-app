@@ -1,16 +1,18 @@
-import { Vault } from "services/types";
 import { useModalContext } from "contexts/ModalContext";
 import { humanize, maskAddress } from "helpers";
 import Investor from "./Investor";
 import Redeemer from "./Redeemer";
 
-type Action = "invest" | "redeem";
+// type Action = "invest" | "redeem";
 
-export default function Investment({
-  action,
-  ...props
-}: Vault & { action: Action }) {
-  const { address, invested, symbol } = props;
+export default function Investment() {
+  const props = {
+    address: "1231283",
+    invested: "0",
+    symbol: "USD",
+    action: "invest",
+  };
+  const { address, invested, symbol, action } = props;
 
   const { showModal } = useModalContext();
 

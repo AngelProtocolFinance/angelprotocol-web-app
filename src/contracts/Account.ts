@@ -1,11 +1,9 @@
 import { Coin } from "@cosmjs/proto-signing";
 import {
   DepositPayload,
-  EndowmentSettingsPayload,
   InvestPayload,
   RedeemPayload,
   StatusChangePayload,
-  UpdateStategyPayload,
   WithdrawPayload,
 } from "types/contracts";
 import { contracts } from "constants/contracts";
@@ -28,12 +26,6 @@ export default class Account extends Contract {
     });
   }
 
-  createEmbeddedStrategyUpdateMsg(payload: UpdateStategyPayload) {
-    return this.createEmbeddedWasmMsg(Account.address, {
-      update_strategies: payload,
-    });
-  }
-
   createEmbeddedInvestMsg(payload: InvestPayload) {
     return this.createEmbeddedWasmMsg(Account.address, {
       vaults_invest: payload,
@@ -43,12 +35,6 @@ export default class Account extends Contract {
   createEmbeddedRedeemMsg(payload: RedeemPayload) {
     return this.createEmbeddedWasmMsg(Account.address, {
       vaults_redeem: payload,
-    });
-  }
-
-  createEmbeddedUpdateSettingsMsg(payload: EndowmentSettingsPayload) {
-    return this.createEmbeddedWasmMsg(Account.address, {
-      update_endowment_settings: payload,
     });
   }
 
