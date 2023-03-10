@@ -67,7 +67,7 @@ export default function Fee({ name, title, isOpen, onToggle }: Props) {
 
       <td
         className={`${
-          !isOpen && "hidden"
+          isOpen ? "" : "hidden"
         } relative max-sm:col-span-full max-sm:w-full max-sm:border-r-0 max-sm:border-y`}
       >
         <p className="sm:hidden font-work font-bold text-xs mb-3 uppercase">
@@ -91,7 +91,7 @@ export default function Fee({ name, title, isOpen, onToggle }: Props) {
 
       <td
         className={`${
-          !isOpen && "hidden"
+          isOpen ? "" : "hidden"
         } w-full sm:w-16 max-sm:row-start-3 max-sm:col-start-1 max-sm:col-span-full`}
       >
         <p className="sm:hidden font-work font-bold text-xs mb-3 uppercase">
