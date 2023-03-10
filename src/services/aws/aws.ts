@@ -106,7 +106,6 @@ export const aws = createApi({
       },
     }),
     saveAIF: builder.mutation<unknown, NewAIF>({
-      invalidatesTags: ["endowments", "profile", "walletProfile"],
       query: (payload) => {
         const token = createAuthToken("app-user");
         return {
