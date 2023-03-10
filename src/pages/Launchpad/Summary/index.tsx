@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 import { Completed, TFee, isCompleted } from "slices/launchpad/types";
 import { EndowmentFee, NewAIF } from "types/contracts";
@@ -11,6 +11,7 @@ import Account from "contracts/Account";
 import useCosmosTxSender, { Tx } from "hooks/useCosmosTxSender";
 import { getWasmAttribute, isEmpty, roundDown, roundDownToNum } from "helpers";
 import { EMAIL_SUPPORT, GENERIC_ERROR_MESSAGE } from "constants/common";
+import { appRoutes } from "constants/routes";
 import { routes } from "../constants";
 import About from "./About";
 import Fees from "./Fees";
@@ -23,7 +24,8 @@ export default function Summary() {
   const { wallet } = useGetWallet();
   const sendTx = useCosmosTxSender();
   const [saveAIF] = useSaveAIFMutation();
-  const { showModal } = useModalContext();
+  const { showModal, closeModal } = useModalContext();
+  const navigate = useNavigate();
   const state = useGetter((state) => state.launchpad);
   if (!isCompleted(state)) return <Navigate to={`../${state.progress}`} />;
 
@@ -57,7 +59,11 @@ export default function Summary() {
         try {
           const id = getWasmAttribute("endow_id", res.rawLog);
 
-          showModal(TxPrompt, { loading: "Saving endowment info.." });
+          showModal(
+            TxPrompt,
+            { loading: "Saving endowment info.." },
+            { isDismissible: false }
+          );
 
           const result = await saveAIF({
             chainId: chain.chain_id,
@@ -74,13 +80,8 @@ export default function Summary() {
             });
           }
 
-          showModal(TxPrompt, {
-            success: {
-              message:
-                "Congratulations, your AIF has been successfully created!",
-            },
-            tx,
-          });
+          closeModal();
+          navigate(`${appRoutes.register}/success`, { state: id });
         } catch (err) {
           showModal(TxPrompt, { error: GENERIC_ERROR_MESSAGE });
         }

@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { Completed, LaunchState, Progress, Steps } from "./types";
 import { useGetter, useSetter } from "store/accessors";
 
-const STORAGE_KEY = "ap__launchpad";
+export const LAUNCHPAD_STORAGE_KEY = "ap__launchpad";
 
-const saved = window.localStorage.getItem(STORAGE_KEY);
+const saved = window.localStorage.getItem(LAUNCHPAD_STORAGE_KEY);
 
 const init: LaunchState | null = saved && JSON.parse(saved);
 
@@ -26,10 +26,10 @@ const launchpad = createSlice({
 
       (state as any)[payload.step] = payload.payload;
 
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      window.localStorage.setItem(LAUNCHPAD_STORAGE_KEY, JSON.stringify(state));
     },
     reset: (state) => {
-      window.localStorage.removeItem(STORAGE_KEY);
+      window.localStorage.removeItem(LAUNCHPAD_STORAGE_KEY);
       return { progress: 1 };
     },
   },
