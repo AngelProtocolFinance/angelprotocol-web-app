@@ -155,3 +155,13 @@ export type ADR36Payload = Pick<Signed, "chain_id" | "fee" | "memo"> & {
   msg: Signed["msgs"];
   signatures: Signature[];
 };
+
+export type NewAIF = {
+  chainId: string;
+  id: number;
+  registrant: string;
+  tagline: string;
+  /** not in registration steps */
+  // banner
+  // logo
+};
