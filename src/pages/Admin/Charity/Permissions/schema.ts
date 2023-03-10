@@ -1,10 +1,11 @@
 import { SettingsPermissions } from "./types";
 
-type FormField = Omit<SettingsPermissions, "delegate"> & {
+export type FormField = Omit<SettingsPermissions, "delegate"> & {
   name: string;
-  delegate: boolean;
-  delegate_address?: string;
-};
+} & (
+    | { delegate: true; delegate_address: string }
+    | { delegate: false; delegate_address: undefined }
+  );
 
 export type FormValues = {
   accountFees: FormField;
