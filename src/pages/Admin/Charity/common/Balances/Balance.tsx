@@ -7,7 +7,6 @@ import { humanize } from "helpers";
 type Props = { type: AccountType };
 export default function Balance({ type }: Props) {
   const { id } = useAdminResources();
-  console.log({ id });
 
   return (
     <div className="@container rounded border border-prim bg-orange-l6 dark:bg-blue-d6">

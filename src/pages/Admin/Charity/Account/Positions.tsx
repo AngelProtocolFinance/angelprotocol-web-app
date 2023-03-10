@@ -9,7 +9,6 @@ type Props = {
 
 export default function Positions({ type }: Props) {
   const { id } = useAdminResources();
-  console.log({ type, id });
   return (
     <div className="grid gap-3">
       <QueryLoader
