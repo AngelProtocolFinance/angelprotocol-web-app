@@ -48,7 +48,9 @@ export default function Table({ className = "" }) {
                 >
                   <>{value.name}</>
 
-                  <Checkbox
+                  <input
+                    type="checkbox"
+                    className="checkbox-orange"
                     checked={value.owner_controlled}
                     disabled={isSubmitting}
                     onClick={() =>
@@ -58,7 +60,9 @@ export default function Table({ className = "" }) {
                       })
                     }
                   />
-                  <Checkbox
+                  <input
+                    type="checkbox"
+                    className="checkbox-orange"
                     checked={value.gov_controlled}
                     disabled={isSubmitting}
                     onClick={() =>
@@ -68,7 +72,9 @@ export default function Table({ className = "" }) {
                       })
                     }
                   />
-                  <Checkbox
+                  <input
+                    type="checkbox"
+                    className="checkbox-orange"
                     checked={value.delegate}
                     disabled={isSubmitting}
                     onClick={() =>
@@ -99,25 +105,5 @@ export default function Table({ className = "" }) {
         )}
       </TableSection>
     </table>
-  );
-}
-
-function Checkbox({
-  checked,
-  disabled,
-  onClick,
-}: {
-  checked: boolean;
-  disabled?: boolean;
-  onClick(): void;
-}) {
-  return (
-    <input
-      type="checkbox"
-      className="checkbox-orange"
-      checked={checked}
-      onChange={onClick}
-      disabled={disabled}
-    />
   );
 }
