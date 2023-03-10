@@ -37,7 +37,10 @@ export default function Table({ className = "" }) {
             <Controller
               control={control}
               name={formField}
-              render={({ field: { value, onChange } }) => (
+              render={({
+                field: { value, onChange },
+                formState: { isSubmitting },
+              }) => (
                 <Cells
                   key={`table-row-${formField}`}
                   type="td"
@@ -47,6 +50,7 @@ export default function Table({ className = "" }) {
 
                   <Checkbox
                     checked={value.owner_controlled}
+                    disabled={isSubmitting}
                     onClick={() =>
                       onChange({
                         ...value,
@@ -56,6 +60,7 @@ export default function Table({ className = "" }) {
                   />
                   <Checkbox
                     checked={value.gov_controlled}
+                    disabled={isSubmitting}
                     onClick={() =>
                       onChange({
                         ...value,
@@ -65,6 +70,7 @@ export default function Table({ className = "" }) {
                   />
                   <Checkbox
                     checked={value.delegate}
+                    disabled={isSubmitting}
                     onClick={() =>
                       onChange({
                         ...value,
@@ -84,7 +90,7 @@ export default function Table({ className = "" }) {
                         delegate_address: e.target.value,
                       })
                     }
-                    disabled={!value.delegate}
+                    disabled={!value.delegate || isSubmitting}
                   />
                 </Cells>
               )}
@@ -96,14 +102,22 @@ export default function Table({ className = "" }) {
   );
 }
 
-function Checkbox({ checked, onClick }: { checked: boolean; onClick(): void }) {
+function Checkbox({
+  checked,
+  disabled,
+  onClick,
+}: {
+  checked: boolean;
+  disabled?: boolean;
+  onClick(): void;
+}) {
   return (
     <input
       type="checkbox"
       className="checkbox-orange"
       checked={checked}
       onChange={onClick}
-      // disabled={disabled}
+      disabled={disabled}
     />
   );
 }
