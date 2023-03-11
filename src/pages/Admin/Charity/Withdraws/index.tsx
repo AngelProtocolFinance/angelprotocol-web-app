@@ -1,29 +1,39 @@
-import { useAdminResources } from "pages/Admin/Guard";
-import { useStateQuery } from "services/juno/account";
 import QueryLoader from "components/QueryLoader";
+import OpenRequestsInfo from "./OpenRequestsInfo";
 import Transactions from "./Transactions";
-import WithdrawTabs from "./WithdrawTabs";
+import Withdrawer from "./Withdrawer";
+import useGetWithdrawLogs from "./useGetWithdrawLogs";
 
 export default function Withdraws() {
-  const { id } = useAdminResources();
-  const queryState = useStateQuery({ id });
+  const { data, hasMore, isError, isLoading, isLoadingNextPage, loadNextPage } =
+    useGetWithdrawLogs();
 
+  // isLoadingNextPage should not affect the whole QueryLoader
   return (
-    <div className="grid content-start font-work">
+    <div className="grid gap-8 justify-items-center">
+      <OpenRequestsInfo />
+
+      <h2 className="text-center font-bold text-3xl -mb-2">Withdraw</h2>
+
+      <Withdrawer />
+
       <QueryLoader
-        queryState={queryState}
+        queryState={{ data: data?.Items, isLoading, isError }}
         messages={{
-          loading: "Loading withdraw form...",
-          error: "Failed to load withdraw form",
+          loading: "Loading transactions...",
+          error: "Failed to get transactions",
+          empty: "No transactions found",
         }}
       >
-        {(balance) => <WithdrawTabs {...balance} />}
+        {(logs) => (
+          <Transactions
+            withdraws={logs}
+            hasMore={hasMore}
+            onLoadMore={loadNextPage}
+            isLoading={isLoadingNextPage}
+          />
+        )}
       </QueryLoader>
-
-      <h3 className="uppercase font-extrabold text-2xl mt-6 border-t border-prim pt-2">
-        Transactions
-      </h3>
-      <Transactions />
     </div>
   );
 }

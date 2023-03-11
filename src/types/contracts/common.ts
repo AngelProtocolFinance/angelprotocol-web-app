@@ -43,10 +43,10 @@ type AbsolutePercentage = { absolute_percentage: { percentage: string } };
 export type Threshold = AbsolutePercentage; // | AbsoluteCount | Quorum;
 
 export type EndowmentStatus = {
-  Inactive: 0;
-  Approved: 1;
-  Frozen: 2;
-  Closed: 3;
+  inactive: 0;
+  approved: 1;
+  frozen: 2;
+  closed: 3;
 };
 export type EndowmentType = "charity" | "normal";
 export type CapitalizedEndowmentType = Capitalize<EndowmentType>;
@@ -64,4 +64,10 @@ export type Categories = {
 export type Asset = {
   info: { native: string } | { cw20: string };
   amount: string;
+};
+
+export type SplitDetails = {
+  max: string;
+  min: string;
+  default: string;
 };

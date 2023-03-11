@@ -75,6 +75,7 @@
     "@svgr/webpack": "^6.1.2",
     "@swc/core": "^1.2.173",
     "@swc/jest": "0.2.20",
+    "@tailwindcss/container-queries": "^0.1.0",
     "@testing-library/dom": "^8.20.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.4.0",

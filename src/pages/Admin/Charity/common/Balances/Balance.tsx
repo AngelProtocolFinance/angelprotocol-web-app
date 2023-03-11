@@ -1,17 +1,16 @@
 import { PropsWithChildren } from "react";
 import { AccountType } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
-import { useAssetsQuery } from "services/juno/custom";
 import QueryLoader from "components/QueryLoader";
 import { humanize } from "helpers";
 
 type Props = { type: AccountType };
 export default function Balance({ type }: Props) {
   const { id } = useAdminResources();
-  const { data, ...rest } = useAssetsQuery({ endowId: id });
+  console.log({ id, type });
 
   return (
-    <div className="rounded border border-prim bg-orange-l6 dark:bg-blue-d6">
+    <div className="@container rounded border border-prim bg-orange-l6 dark:bg-blue-d6">
       <h4 className="uppercase text-xl font-bold mb-5 pt-5 px-4">
         {type} account
       </h4>
@@ -20,7 +19,11 @@ export default function Balance({ type }: Props) {
         <span className="capitalize">{type}</span> Account details.
       </p>
       <QueryLoader
-        queryState={{ ...rest, data: data ? data[type] : undefined }}
+        queryState={{
+          data: { total: 0, free: 0, invested: 0, symbol: "USD" },
+          isLoading: false,
+          isError: false,
+        }}
         classes={{ container: "text-sm text-gray-d1 dark:text-gray px-4" }}
         messages={{
           loading: "Fetching balances",
@@ -29,8 +32,12 @@ export default function Balance({ type }: Props) {
       >
         {({ total, free, invested, symbol }) => {
           return (
-            <div className="flex gap-8 px-4">
-              <Amount title="Total value" classes="mr-auto" symbol={symbol}>
+            <div className="grid grid-cols-[auto_1fr] gap-y-5 justify-self-start gap-x-8 @lg:flex @lg:gap-x-8 px-4">
+              <Amount
+                title="Total value"
+                classes="col-span-full @lg:mr-auto"
+                symbol={symbol}
+              >
                 {humanize(total, 2)}
               </Amount>
               <Amount title="Free balance" symbol={symbol}>

@@ -1,11 +1,11 @@
 import Icon from "components/Icon";
 import { SortDirection, SortKey } from "hooks/useSort";
 
-export function HeaderButton(
+export function HeaderButton<T>(
   props: React.ButtonHTMLAttributes<HTMLButtonElement> & {
     _sortDirection: SortDirection;
-    _sortKey: SortKey;
-    _activeSortKey: SortKey;
+    _sortKey: SortKey<T>;
+    _activeSortKey: SortKey<T>;
   }
 ) {
   const { _activeSortKey, _sortKey, _sortDirection, children, ...restProps } =
@@ -13,12 +13,11 @@ export function HeaderButton(
   return (
     <button
       {...restProps}
-      className="flex items-center justify-start gap-1 uppercase relative"
+      className="flex items-center justify-between gap-1 uppercase"
     >
       <span>{children}</span>
 
       <Icon
-        size={15}
         type={
           _activeSortKey === _sortKey
             ? _sortDirection === "asc"
@@ -26,7 +25,7 @@ export function HeaderButton(
               : "Down"
             : "Unsorted"
         }
-        className={`absolute -right-6 ${
+        className={`w-4 h-4 shrink-0 ${
           _activeSortKey === _sortKey
             ? "text-gray-d2 dark:text-white"
             : "text-gray dark:text-white"

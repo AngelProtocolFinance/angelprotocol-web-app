@@ -7,6 +7,9 @@ export const NETWORK:
   | "LOCAL"
   | undefined /** mainnet if not specified */ = process.env.NX_NETWORK as any;
 
+const APP_TYPE = process.env.REACT_APP_APP_TYPE;
+
+export const IS_AST = APP_TYPE === "AST";
 export const IS_TEST = NETWORK === "TESTNET" || NETWORK === "LOCAL";
 
 export const EXPECTED_NETWORK_TYPE: NetworkType = IS_TEST

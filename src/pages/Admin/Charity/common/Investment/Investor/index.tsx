@@ -1,23 +1,22 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues } from "./types";
-import { Vault } from "services/types";
 import { TokenWithAmount } from "types/slices";
 import Form from "./Form";
 import { schema } from "./schema";
 
-export default function Investor(v: Vault) {
+export default function Investor() {
   const token: TokenWithAmount = {
     approved: true,
     decimals: 6,
     logo: "", //not used
     min_donation_amnt: 0.01,
     name: "", //not used
-    symbol: v.symbol,
-    token_id: v.input_denom,
+    symbol: "USD",
+    token_id: "uusd",
     type: "juno-native",
     amount: "0",
-    balance: v.balance,
+    balance: 0,
   };
 
   const methods = useForm<FormValues>({
@@ -32,7 +31,7 @@ export default function Investor(v: Vault) {
   });
   return (
     <FormProvider {...methods}>
-      <Form {...v} />
+      <Form />
     </FormProvider>
   );
 }

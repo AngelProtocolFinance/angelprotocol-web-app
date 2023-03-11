@@ -63,6 +63,7 @@ import { GoDash, GoLinkExternal, GoSync } from "react-icons/go";
 import { GrFacebookOption } from "react-icons/gr";
 import { ImDroplet, ImFilePicture } from "react-icons/im";
 import {
+  IoMdClipboard,
   IoMdDownload,
   IoMdListBox,
   IoMdLock,
@@ -91,10 +92,15 @@ import {
   MdOutlineUploadFile,
   MdPermDataSetting,
   MdSpaceDashboard,
+  MdWarningAmber,
   MdWaterDrop,
   MdWidgets,
 } from "react-icons/md";
-import { RiMapPin2Line, RiMoneyDollarCircleFill } from "react-icons/ri";
+import {
+  RiFileSearchFill,
+  RiMapPin2Line,
+  RiMoneyDollarCircleFill,
+} from "react-icons/ri";
 import { SiHiveBlockchain } from "react-icons/si";
 import { TiArrowUnsorted } from "react-icons/ti";
 import { VscLoading, VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
@@ -113,6 +119,7 @@ export const icons = {
   CaretLeft: AiFillCaretLeft,
   Check: BiCheck,
   CheckCircle: AiFillCheckCircle,
+  Clipboard: IoMdClipboard,
   ClipboardCheck: FaClipboardCheck,
   Clock: FaClock,
   Close: IoClose,
@@ -142,6 +149,7 @@ export const icons = {
   FatArrowDownload: IoMdDownload,
   FileDownload: MdOutlineFileDownload,
   FileUpload: MdOutlineUploadFile,
+  FileSearch: RiFileSearchFill,
   Filter: MdOutlineFilterAlt,
   FilterLeft: BsFilterLeft,
   Forward: MdOutlineArrowForwardIos,
@@ -192,6 +200,7 @@ export const icons = {
   User: FaUserCircle,
   Wallet: IoWalletSharp,
   Warning: IoWarning,
+  WarningOutline: MdWarningAmber,
   WaterDrop: MdWaterDrop,
   Widget: MdWidgets,
   Youtube: AiFillYoutube,

@@ -4287,6 +4287,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tailwindcss/container-queries@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "@tailwindcss/container-queries@npm:0.1.0"
+  peerDependencies:
+    tailwindcss: ">=3.2.0"
+  checksum: dcf5d1720280be115393351db274a21df4f552f20ebc2441421b190f1112550a9310b146de15fa627029469850421e4bcf07966a78d589103259e6eb1bd2a1f5
+  languageName: node
+  linkType: hard
+
 "@terra-money/legacy.proto@npm:@terra-money/terra.proto@^0.1.7":
   version: 0.1.7
   resolution: "@terra-money/terra.proto@npm:0.1.7"
@@ -15081,6 +15090,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"postcss-selector-parser@npm:^6.0.11":
+  version: 6.0.11
+  resolution: "postcss-selector-parser@npm:6.0.11"
+  dependencies:
+    cssesc: ^3.0.0
+    util-deprecate: ^1.0.2
+  checksum: 0b01aa9c2d2c8dbeb51e9b204796b678284be9823abc8d6d40a8b16d4149514e922c264a8ed4deb4d6dbced564b9be390f5942c058582d8656351516d6c49cde
+  languageName: node
+  linkType: hard
+
 "postcss-svgo@npm:^5.1.0":
   version: 5.1.0
   resolution: "postcss-svgo@npm:5.1.0"
@@ -15112,6 +15131,17 @@ __metadata:
   linkType: hard
 
 "postcss@npm:^8.0.9, postcss@npm:^8.3.5, postcss@npm:^8.4.14, postcss@npm:^8.4.19, postcss@npm:^8.4.21":
+  version: 8.4.21
+  resolution: "postcss@npm:8.4.21"
+  dependencies:
+    nanoid: ^3.3.4
+    picocolors: ^1.0.0
+    source-map-js: ^1.0.2
+  checksum: e39ac60ccd1542d4f9d93d894048aac0d686b3bb38e927d8386005718e6793dbbb46930f0a523fe382f1bbd843c6d980aaea791252bf5e176180e5a4336d9679
+  languageName: node
+  linkType: hard
+
+"postcss@npm:^8.0.9":
   version: 8.4.21
   resolution: "postcss@npm:8.4.21"
   dependencies:

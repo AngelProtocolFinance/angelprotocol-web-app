@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useWalletProfileQuery } from "services/aws/aws";
 import { WalletState, useSetWallet } from "contexts/WalletContext";
-import LoaderRing from "components/LoaderRing";
 import { logger } from "helpers";
 import { appRoutes } from "constants/routes";
 import Address from "./Address";
@@ -32,14 +31,6 @@ export default function Details(props: WalletState) {
   return (
     <Popover.Panel className="fixed sm:absolute inset-0 sm:inset-auto sm:origin-top-right sm:mt-2 sm:right-0 flex flex-col w-full sm:w-80 bg-white dark:bg-blue-d6 sm:rounded-lg border border-prim shadow-[0_0_16px_rgba(15,46,67,0.25)] text-gray-d2 dark:text-white overflow-y-auto">
       {({ close }) => {
-        if (isLoading || isFetching) {
-          return (
-            <div className="flex items-center justify-center w-full h-full sm:h-96">
-              <LoaderRing thickness={10} classes="w-16" />
-            </div>
-          );
-        }
-
         return (
           <>
             <MobileTitle className="sm:hidden" onClose={close} />
@@ -55,7 +46,11 @@ export default function Details(props: WalletState) {
               <ChainSelector {...props} />
             </div>
             <MyDonations address={props.address} />
-            <Favourites bookmarks={profile?.bookmarks} isError={isError} />
+            <Favourites
+              bookmarks={profile?.bookmarks}
+              isError={isError}
+              isLoading={isLoading || isFetching}
+            />
             <DisconnectBtn />
           </>
         );

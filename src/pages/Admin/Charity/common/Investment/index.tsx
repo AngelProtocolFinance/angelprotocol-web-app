@@ -1,23 +1,25 @@
-import { Vault } from "services/types";
 import { useModalContext } from "contexts/ModalContext";
 import { humanize, maskAddress } from "helpers";
 import Investor from "./Investor";
 import Redeemer from "./Redeemer";
 
-type Action = "invest" | "redeem";
+// type Action = "invest" | "redeem";
 
-export default function Investment({
-  action,
-  ...props
-}: Vault & { action: Action }) {
-  const { address, invested, symbol } = props;
+export default function Investment() {
+  const props = {
+    address: "1231283",
+    invested: "0",
+    symbol: "USD",
+    action: "invest",
+  };
+  const { address, invested, symbol, action } = props;
 
   const { showModal } = useModalContext();
 
   return (
-    <div className="border border-prim rounded bg-orange-l6 dark:bg-blue-d6">
+    <div className="@container border border-prim rounded bg-orange-l6 dark:bg-blue-d6">
       <p className="p-6 font-work">{maskAddress(address)}</p>
-      <div className="border-t border-prim flex justify-between p-6">
+      <div className="border-t border-prim grid @md:flex @md:justify-between p-6">
         <div>
           <p className="text-xs uppercase text-gray-d1 dark:text-gray mb-1">
             Current balance
@@ -31,7 +33,7 @@ export default function Investment({
           onClick={() =>
             showModal(action === "invest" ? Investor : Redeemer, props)
           }
-          className="btn-outline-filled px-8 py-2"
+          className="btn-outline-filled px-8 py-2 text-sm mt-6 @md:mt-0 @md:text-base"
         >
           {action}
         </button>

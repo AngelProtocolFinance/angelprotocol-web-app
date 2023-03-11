@@ -238,3 +238,5 @@ export const unsdgs: { [index in UNSDG_NUMS]: UNSDG } = {
     website: "https://sdgs.un.org/goals/goal17",
   },
 };
+
+export const MAX_SDGS = 8;
