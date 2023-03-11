@@ -1,6 +1,5 @@
 import { AccountType } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
-import { useAssetsQuery } from "services/juno/custom";
 import QueryLoader from "components/QueryLoader";
 import Investment from "../common/Investment";
 
@@ -10,13 +9,16 @@ type Props = {
 
 export default function Investments({ type }: Props) {
   const { id } = useAdminResources();
-  const { data, ...rest } = useAssetsQuery({
-    endowId: id,
-  });
+  console.log({ id, type });
+
   return (
     <div className="grid gap-3">
       <QueryLoader
-        queryState={{ ...rest, data: data ? data[type].vaults : undefined }}
+        queryState={{
+          data: [{ address: "hello world" }],
+          isLoading: false,
+          isError: false,
+        }}
         messages={{
           loading: "Fetching investments..",
           error: "Failed to fetch investments",
@@ -26,7 +28,7 @@ export default function Investments({ type }: Props) {
         {(investments) => (
           <>
             {investments.map((inv) => (
-              <Investment key={inv.address} {...inv} action="invest" />
+              <Investment />
             ))}
           </>
         )}

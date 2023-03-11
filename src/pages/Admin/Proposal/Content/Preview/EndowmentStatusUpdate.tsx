@@ -28,8 +28,8 @@ export default function EndowmentStatusUpdate(
 }
 
 const statusText: { [key in EndowmentStatusNum]: keyof EndowmentStatus } = {
-  0: "Inactive",
-  1: "Approved",
-  2: "Frozen",
-  3: "Closed",
+  0: "inactive",
+  1: "approved",
+  2: "frozen",
+  3: "closed",
 };

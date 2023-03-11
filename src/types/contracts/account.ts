@@ -1,11 +1,13 @@
 import { Coin } from "types/cosmos";
 import {
   Asset,
-  CapitalizedEndowmentType,
+  CW4Member,
   Categories,
   EndowmentStatus,
-  EndowmentTier,
+  EndowmentStatusText,
   EndowmentType,
+  SplitDetails,
+  Threshold,
 } from "./common";
 import { CW20 } from "./cw20";
 
@@ -31,13 +33,14 @@ export interface EndowmentState {
   closing_beneficiary?: string;
 }
 
+/** 
 interface RebalanceDetails {
   rebalance_liquid_invested_profits: boolean; // should invested portions of the liquid account be rebalanced?
   locked_interests_to_liquid: boolean; // should Locked acct interest earned be distributed to the Liquid Acct?
   interest_distribution: string; // % of Locked acct interest earned to be distributed to the Liquid Acct
   locked_principle_to_liquid: boolean; // should Locked acct principle be distributed to the Liquid Acct?
   principle_distribution: string; // % of Locked acct principle to be distributed to the Liquid Acct
-}
+} */
 
 export interface Strategy {
   vault: string; // Vault SC Address
@@ -50,29 +53,24 @@ type Vaults<T> = {
 };
 
 export type AccountStrategies = Vaults<Strategy[]>;
-type OneOffVaults = Vaults<string[]>;
 
 export interface EndowmentDetails {
   owner: string;
-  status: EndowmentStatus;
-  endow_type: CapitalizedEndowmentType;
-  withdraw_before_maturity: boolean;
-  maturity_time?: number;
-  maturity_height?: number;
-  strategies: AccountStrategies;
-  oneoff_vaults: OneOffVaults;
-  rebalance: RebalanceDetails;
-  kyc_donors_only: boolean;
-  deposit_approved: boolean;
-  withdraw_approved: boolean;
-  pending_redemptions: number;
-  logo?: string;
-  image?: string;
-  name: string;
   categories: Categories;
-  tier?: number;
-  copycat_strategy?: number;
-  proposal_link?: number;
+  //tier
+  endow_type: EndowmentType;
+  //logo
+  //image
+  status: EndowmentStatusText;
+  //deposit_approved
+  //withdraw_approved
+  maturity_time?: number;
+  invested_strategies: Vaults<string[]>;
+  //rebalance
+  kyc_donors_only: boolean;
+  //pending_redemptions
+  //proposal_link
+  //referral_id
 }
 
 export type Holding = { address: string; amount: string };
@@ -88,36 +86,6 @@ export interface Source {
   locked: string; //"0"
   liquid: string; //"0"
   vault: string; //"juno123addr.."
-}
-
-export type EndowmentQueryOptions = {
-  proposal_link?: number;
-  start_after?: number;
-  limit?: number;
-};
-
-export type EndowmentEntry = {
-  id: number; //int
-  owner: String;
-  status: keyof EndowmentStatus;
-  endow_type: CapitalizedEndowmentType;
-  name: string;
-  logo: string;
-  image: string;
-  tier: EndowmentTier;
-  categories: Categories;
-};
-
-export interface EndowmentSettingsPayload {
-  id: number;
-  owner?: string;
-  kyc_donors_only?: boolean;
-  endow_type?: EndowmentType; //editable by config.owner
-  name?: string;
-  categories?: Categories;
-  tier?: number; //editable by config.owner
-  logo?: string;
-  image?: string;
 }
 
 export interface DepositPayload {
@@ -164,4 +132,45 @@ export type UpdateStategyPayload = {
   id: number;
   acct_type: AccountType;
   strategies: Strategy[];
+};
+
+export type EndowmentFee = {
+  payout_address: string;
+  fee_percentage: string; // "0" - "1"
+  active: boolean;
+};
+
+const _normal: EndowmentType = "normal";
+export type NewAIF = {
+  owner: string;
+  maturity_time: number; // required in launchpad: datetime in seconds
+  name: string;
+  categories: Categories; // SHOULD NOT be editable for now (only the Config.owner, ie via the Gov contract or AP CW3 Multisig can set/update)
+  //tier
+  endow_type: typeof _normal;
+  //logo
+  //image
+  cw4_members: CW4Member[];
+  kyc_donors_only: boolean;
+  cw3_threshold: Threshold; // currently just absolute percentage
+  cw3_max_voting_period: number; // datetime in seconds
+  beneficiaries_allowlist: string[]; // if populated, only the listed Addresses can withdraw/receive funds from the Endowment (if empty, anyone can)
+  contributors_allowlist: string[]; // if populated, only the listed Addresses can contribute to the Endowment (if empty, anyone can donate)
+
+  split_to_liquid: SplitDetails;
+  ignore_user_splits: boolean;
+  // duplicate?
+  split_max: string;
+  split_min: string;
+  split_default: string;
+
+  earnings_fee: EndowmentFee | undefined;
+  withdraw_fee: EndowmentFee | undefined;
+  deposit_fee: EndowmentFee | undefined;
+  //aum_fee
+  //dao
+  //proposal_link
+  //endowment_controller
+  //parent
+  //referral_id
 };

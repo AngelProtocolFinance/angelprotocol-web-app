@@ -4,15 +4,21 @@ import Icon, { icons } from "../Icon";
 
 export default function Status<T extends IconType | JSX.Element>({
   icon,
+  inline = false,
   iconOptions,
   classes = "",
   gap = "gap-2",
   children,
 }: StatusProps<T>) {
+  const { className = "", ...options } = iconOptions || {};
   return (
-    <div className={`${classes} ${gap} flex items-center`}>
+    <div className={`${classes} ${gap} ${inline ? "" : "flex items-center"}`}>
       {isIconProps(icon) ? (
-        <Icon type={icon} {...(iconOptions as any)} />
+        <Icon
+          {...options}
+          type={icon}
+          className={`${className} ${inline ? "inline-block relative" : ""}`}
+        />
       ) : (
         (icon as JSX.Element)
       )}

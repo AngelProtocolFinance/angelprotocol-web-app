@@ -1,6 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { TokenWithBalance } from "services/types";
-import { FetchedChain, Token, WithdrawLog } from "types/aws";
+import {
+  FetchedChain,
+  PaginatedAWSQueryRes,
+  Token,
+  WithdrawLog,
+  WithdrawLogQueryParams,
+} from "types/aws";
 import { ProviderId } from "contexts/WalletContext";
 import { IS_TEST } from "constants/env";
 import { APIs } from "constants/urls";
@@ -20,9 +26,12 @@ export const apes = createApi({
     chain: builder.query<FetchedChain, string>({
       query: (chainId) => `v1/chain/${chainId}`,
     }),
-    withdrawLogs: builder.query<WithdrawLog[], string>({
+    withdrawLogs: builder.query<
+      PaginatedAWSQueryRes<WithdrawLog[]>,
+      WithdrawLogQueryParams
+    >({
       providesTags: ["withdraw_logs"],
-      query: (cw3) => `v1/withdraw/${cw3}`,
+      query: ({ cw3, ...params }) => ({ url: `/v2/withdraw/${cw3}`, params }),
     }),
     balances: builder.query<
       TokenWithBalance[],
@@ -49,5 +58,9 @@ export const {
   useLazyChainQuery,
   useTokensQuery,
   useWithdrawLogsQuery,
-  util: { invalidateTags: invalidateApesTags },
+  useLazyWithdrawLogsQuery,
+  util: {
+    invalidateTags: invalidateApesTags,
+    updateQueryData: updateApesQueryData,
+  },
 } = apes;

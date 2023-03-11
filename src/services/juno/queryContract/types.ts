@@ -8,8 +8,6 @@ import {
   CW20Balance,
   CW20Info,
   EndowmentDetails,
-  EndowmentEntry,
-  EndowmentQueryOptions,
   EndowmentState,
   FundDetails,
   GenericBalance,
@@ -25,22 +23,11 @@ import {
   RegistrarConfig,
   ReviewCW3Config,
   Simulation,
-  VaultListOptions,
-  VaultListRes,
   VotesPageOptions,
-  YieldVault,
 } from "types/contracts";
-
-type EndowmentListRes = { endowments: EndowmentEntry[] };
 
 type Addr = { addr: string };
 export interface ContractQueries {
-  regVaultRates: { args: null; res: Q<any>; result: any }; //TODO update this
-  regVaultList: {
-    args: VaultListOptions;
-    res: Q<VaultListRes>;
-    result: YieldVault[];
-  };
   regConfig: { args: null; res: Q<RegistrarConfig>; result: RegistrarConfig };
 
   ifFund: {
@@ -109,11 +96,6 @@ export interface ContractQueries {
     result: any;
   }; //TODO update once to be used
 
-  accEndowList: {
-    args: EndowmentQueryOptions;
-    res: Q<EndowmentListRes>;
-    result: EndowmentEntry[];
-  };
   accEndowment: {
     args: { id: number };
     res: Q<EndowmentDetails>;

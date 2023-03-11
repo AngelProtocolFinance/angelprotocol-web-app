@@ -1,11 +1,13 @@
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
-import { Vault } from "services/types";
 import TokenField from "components/TokenField";
 import TxModal from "../../TxModal";
 import useSubmit from "./useSubmit";
 
-export default function Form({ acct_type = "liquid", address }: Vault) {
+export default function Form({
+  acct_type = "liquid" as any,
+  address = "123213123123",
+}) {
   const { getValues, handleSubmit } = useFormContext<FV>();
   const { submit, isSending } = useSubmit(address, acct_type);
   return (

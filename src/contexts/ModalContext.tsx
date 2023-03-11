@@ -1,5 +1,6 @@
-import { Dialog } from "@headlessui/react";
+import { Dialog, Transition } from "@headlessui/react";
 import {
+  Fragment,
   PropsWithChildren,
   ReactNode,
   createContext,
@@ -76,11 +77,25 @@ export default function ModalContext(
         closeModal,
       }}
     >
-      <Dialog open={!!state} onClose={closeModal} className="relative z-50">
-        <div className="z-10 fixed inset-0 bg-black/50" aria-hidden="true" />
-        {state?.Modal /** should always be wrapped with Dialog.Panel */}
-      </Dialog>
-
+      <Transition show={!!state} as={Fragment}>
+        <Dialog onClose={closeModal} className="relative z-50">
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-300"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div
+              className="z-10 fixed inset-0 bg-black/50"
+              aria-hidden="true"
+            />
+          </Transition.Child>
+          {state?.Modal /** should always be wrapped with Panel */}
+        </Dialog>
+      </Transition>
       {props.children}
     </Context.Provider>
   );

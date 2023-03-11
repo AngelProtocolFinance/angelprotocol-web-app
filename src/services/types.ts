@@ -7,7 +7,6 @@ import {
   EndowmentDetails,
   Proposal,
   ReviewCW3Config,
-  YieldVault,
 } from "types/contracts";
 import { Coin } from "types/cosmos";
 import { TxArgs } from "hooks/useCosmosTxSender";
@@ -85,22 +84,3 @@ export type CosmosBalances = { balances: Coin[] };
 
 export type TokenWithBalance = Token & { balance: number; gift?: number };
 export type Regions = { [region: string]: string[] };
-
-export type EndowmentAssets = {
-  liquid: AssetSummary;
-  locked: AssetSummary;
-};
-
-export type AssetSummary = {
-  symbol: string;
-  free: number;
-  invested: number;
-  total: number;
-  vaults: Vault[];
-};
-
-export type Vault = YieldVault & {
-  balance: number;
-  invested: number;
-  symbol: string;
-};

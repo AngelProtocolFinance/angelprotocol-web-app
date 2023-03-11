@@ -28,7 +28,7 @@ export default function useUpdateStatus() {
     if (!data.prevStatus) {
       showModal(Popup, { message: "Endowment not found" });
       return;
-    } else if (data.prevStatus === "Closed") {
+    } else if (data.prevStatus === "closed") {
       showModal(Popup, { message: "Endowment is closed and can't be changed" });
       //only review team can change status from "Inactive"
       //NOTE: if this template will be used other than Charity: further check authority
@@ -101,8 +101,8 @@ export default function useUpdateStatus() {
 }
 
 const endowmentStatus: EndowmentStatus = {
-  Inactive: 0,
-  Approved: 1,
-  Frozen: 2,
-  Closed: 3,
+  inactive: 0,
+  approved: 1,
+  frozen: 2,
+  closed: 3,
 };

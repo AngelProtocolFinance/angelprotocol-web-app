@@ -6,6 +6,7 @@ import ModalContext from "contexts/ModalContext";
 import WalletContext from "contexts/WalletContext";
 import useScrollTop from "hooks/useScrollTop";
 import { chainOptions } from "constants/chainOptions";
+import { IS_AST } from "constants/env";
 import { appRoutes } from "constants/routes";
 import Layout from "./Layout";
 
@@ -15,6 +16,7 @@ const Donations = lazy(() => import("pages/Donations"));
 const Leaderboard = lazy(() => import("pages/Leaderboard"));
 const Marketplace = lazy(() => import("pages/Marketplace"));
 const Registration = lazy(() => import("pages/Registration"));
+const Launchpad = lazy(() => import("pages/Launchpad"));
 const Donate = lazy(() => import("pages/Donate"));
 const Gift = lazy(() => import("pages/Gift"));
 const DonateWidget = lazy(() => import("pages/DonateWidget"));
@@ -47,7 +49,7 @@ export default function App() {
               <Route path={appRoutes.leaderboard} element={<Leaderboard />} />
               <Route
                 path={`${appRoutes.register}/*`}
-                element={<Registration />}
+                element={IS_AST ? <Launchpad /> : <Registration />}
               />
               <Route path={`${appRoutes.gift}/*`} element={<Gift />} />
               <Route index element={<Marketplace />} />

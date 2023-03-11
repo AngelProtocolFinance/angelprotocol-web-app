@@ -1,4 +1,5 @@
 import { ProposalStatus } from "../../contracts";
+import { SortDirection } from "../ap";
 
 /**
  * put all aws/apes definitions here, if big category exist, separate in a file
@@ -48,6 +49,7 @@ export type WithdrawLog = {
   proposal_chain_id: string;
   target_wallet: string;
   target_chain: string;
+  start_time: string;
 
   //from cw3 query
   amount: number;
@@ -57,4 +59,17 @@ export type WithdrawLog = {
   //only appears when tx is processed
   num_routes?: number;
   routes?: WithdrawRoute[];
+};
+
+export type WithdrawLogSortKey = Extract<
+  keyof WithdrawLog,
+  "start_time" | "amount"
+>;
+
+export type WithdrawLogQueryParams = {
+  cw3: string; // CW3 address
+  sort: "default" | `${WithdrawLogSortKey}+${SortDirection}`;
+  start?: number; //to load next page, set start to ItemCutOff + 1
+  limit?: number; // Number of items to be returned per request. If not provided, API defaults to return all
+  proposal_status?: string | null; // comma separated ProposalStatus values
 };

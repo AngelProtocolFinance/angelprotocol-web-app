@@ -2,7 +2,6 @@ import { EndowmentUpdateValues as V } from "pages/Admin/types";
 import { FormContainer, Submitter } from "components/admin";
 import { Field, Label } from "components/form";
 import StatusOptions from "./StatusOptions";
-import StatusPreview from "./StatusPreview";
 import useUpdateStatus from "./useUpdateStatus";
 
 export default function Form() {
@@ -30,7 +29,6 @@ export default function Form() {
         required
         type="number"
       />
-      <StatusPreview />
       <Label required className="-mb-4">
         New endowment status
       </Label>

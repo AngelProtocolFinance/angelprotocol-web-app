@@ -18,6 +18,7 @@ export type FieldProps<T extends FieldValues, K extends InputType> = Omit<
 > & {
   name: Path<T>;
   classes?: Classes | string;
+  tooltip?: string;
   label: string;
   type?: K;
 };
@@ -27,6 +28,7 @@ export function Field<T extends FieldValues, K extends InputType = "text">({
   label,
   name,
   classes,
+  tooltip,
   required,
   disabled,
   ...props
@@ -56,13 +58,25 @@ export function Field<T extends FieldValues, K extends InputType = "text">({
         spellCheck: false,
       })}
 
-      <ErrorMessage
-        data-error
-        errors={errors}
-        name={name}
-        as="span"
-        className={error}
-      />
+      {(tooltip && ( //tooltip in normal flow
+        <p className={error + " text-left mt-2 left-0 text-xs"}>
+          <span className="text-gray-d1 dark:text-gray">{tooltip}</span>{" "}
+          <ErrorMessage
+            errors={errors}
+            name={name}
+            as="span"
+            className="text-red dark:text-red-l2 text-xs before:content-['('] before:mr-0.5 after:content-[')'] after:ml-0.5 empty:before:hidden empty:after:hidden"
+          />
+        </p>
+      )) || (
+        <ErrorMessage
+          data-error
+          errors={errors}
+          name={name}
+          as="span"
+          className={error}
+        />
+      )}
     </div>
   );
 }

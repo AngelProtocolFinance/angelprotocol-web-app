@@ -5,6 +5,7 @@ import {
   EndowmentProfile,
   EndowmentProfileUpdate,
   EndowmentsQueryParams,
+  NewAIF,
   PaginatedAWSQueryRes,
   WalletProfile,
 } from "types/aws";
@@ -104,12 +105,24 @@ export const aws = createApi({
         };
       },
     }),
+    saveAIF: builder.mutation<unknown, NewAIF>({
+      query: (payload) => {
+        const token = createAuthToken("app-user");
+        return {
+          url: `/v1/ast`,
+          method: "POST",
+          body: payload,
+          headers: { authorization: token },
+        };
+      },
+    }),
   }),
 });
 
 export const {
   useWalletProfileQuery,
   useToggleBookmarkMutation,
+  useSaveAIFMutation,
   useEndowmentCardsQuery,
   useEndowmentIdNamesQuery,
   useProfileQuery,

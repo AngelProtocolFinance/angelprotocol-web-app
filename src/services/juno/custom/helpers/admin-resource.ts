@@ -3,6 +3,7 @@ import { CW3Config } from "types/contracts";
 import { queryContract } from "services/juno/queryContract";
 import { isJunoAddress } from "schemas/tests";
 import { contracts } from "constants/contracts";
+import { IS_TEST } from "constants/env";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { defaultProposalTags } from "../../tags";
 import { customApi } from "../custom";
@@ -10,19 +11,32 @@ import { customApi } from "../custom";
 export const AP_ID = 0;
 export const REVIEWER_ID = 0.5;
 
-export function getCWs(id: number) {
-  //TODO: atm, only two admin types, refactor this once > 2
-  //charities doesn't have hardcoded cws, so only test for AP_ID && REVIEWER_ID
-  const cw3 = id === AP_ID ? contracts.cw3ApTeam : contracts.cw3ReviewTeam;
-  const cw4 =
-    id === AP_ID ? contracts.cw4GrpApTeam : contracts.cw4GrpReviewTeam;
-  const type: AdminResources["type"] = id === AP_ID ? "ap" : "review";
-  return { cw3, cw4, type };
-}
+type Admins = AdminResources["type"];
+const _charity: Admins = "charity";
+type CWs = {
+  [key: number]:
+    | {
+        cw3: string;
+        cw4: string;
+        type: Exclude<Admins, typeof _charity>;
+      }
+    | undefined;
+};
 
-export function isAp(id: number) {
-  return id === AP_ID || id === REVIEWER_ID;
-}
+export const apCWs: CWs = {
+  [AP_ID]: {
+    cw3: contracts.cw3ApTeam,
+    cw4: contracts.cw4GrpApTeam,
+    type: "ap",
+  },
+  [REVIEWER_ID]: {
+    cw3: IS_TEST ? contracts.cw3ReviewTeam : contracts.cw3CharityReviewTeam,
+    cw4: IS_TEST
+      ? contracts.cw4GrpReviewTeam
+      : contracts.cw4GrpCharityReviewTeam,
+    type: "review",
+  },
+};
 
 export async function getMeta(
   endowId: number,
@@ -41,41 +55,29 @@ export async function getMeta(
   ]);
 
   const numVoters = votersRes.voters.length;
-
+  const tagPayloads = [customApi.util.invalidateTags(defaultProposalTags)];
   const willExecute =
     /** single member */
     numVoters === 1 ||
     /** multiple members but threshold is lte 1/members given that execution is not required */
     (!config.require_execution &&
-      Number(config.threshold.absolute_percentage.percentage) <= 1 / numVoters);
+      Number(config.threshold.absolute_percentage.percentage) <=
+        1 / numVoters) ||
+    undefined;
 
-  const tagPayloads = [customApi.util.invalidateTags(defaultProposalTags)];
-
-  const meta = willExecute
-    ? {
-        willExecute,
-        successMeta: {
-          message: "Successful transaction",
-          link: {
-            url: `${appRoutes.admin}/${endowId}`,
-            description: "Go to admin home",
-          },
-        },
-        tagPayloads,
-        isAuthorized: !!voter.weight,
-      }
-    : {
-        willExecute: undefined,
-        successMeta: {
-          message: "Proposal successfully created",
-          link: {
-            url: `${appRoutes.admin}/${endowId}/${adminRoutes.proposals}`,
-            description: "Go to proposals",
-          },
-        },
-        tagPayloads,
-        isAuthorized: !!voter.weight,
-      };
+  const url = willExecute
+    ? `${appRoutes.admin}/${endowId}`
+    : `${appRoutes.admin}/${endowId}/${adminRoutes.proposals}`;
+  const description = willExecute ? "Go to admin home" : "Go to proposals";
+  const message = willExecute
+    ? "Successful transaction"
+    : "Proposal successfully created";
+  const meta = {
+    willExecute,
+    successMeta: { message, link: { url, description } },
+    tagPayloads,
+    isAuthorized: !!voter.weight,
+  };
 
   return [meta, config];
 }
