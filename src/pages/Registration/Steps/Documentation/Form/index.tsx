@@ -138,7 +138,7 @@ export default function Form() {
           error: "mt-1",
         }}
       >
-        {`By checking this box, you declare that you have the authority to create
+        By checking this box, you declare that you have the authority to create
         an endowment in the name of ${data.contact.orgName} through ${APP_NAME}`}
       </CheckField>
       <CheckField<FV>
