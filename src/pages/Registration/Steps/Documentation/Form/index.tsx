@@ -126,7 +126,7 @@ export default function Form() {
             error: "mt-1",
           }}
         >
-          {`By checking this box, you declare that you are eligible for cash donation processing by APES`}
+          By checking this box, you declare that you are eligible for cash donation processing by APES
         </CheckField>
       )}
       <CheckField<FV>
