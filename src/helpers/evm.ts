@@ -1,6 +1,7 @@
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { ProviderId } from "contexts/WalletContext/types";
-import { Dwindow, InjectedProvider } from "types/ethereum";
+import { InjectedProvider } from "types/evm";
+import { Dwindow } from "types/window";
 import { INFURA_ID } from "constants/env";
 
 export const WCProvider = new WalletConnectProvider({

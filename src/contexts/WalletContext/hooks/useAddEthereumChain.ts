@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { InjectedProvider } from "types/ethereum";
+import { InjectedProvider } from "types/evm";
 import { useLazyChainQuery } from "services/apes";
 import { WalletError } from "errors/errors";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
