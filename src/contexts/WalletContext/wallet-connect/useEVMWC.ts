@@ -1,15 +1,14 @@
 import QRCodeModal from "@walletconnect/qrcode-modal";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { Wallet, WalletState } from "../types";
+import { ProviderState, Wallet, WalletMeta } from "../types";
 import metamaskIcon from "assets/icons/wallets/metamask.png";
 import { connector as ctor, getProvider } from "helpers/evm";
 import { WC_EVENT } from "./constants";
 
 export function useEVMWC(): Wallet {
-  const [state, setState] = useState<WalletState>({
+  const [state, setState] = useState<ProviderState>({
     status: "disconnected",
-    connect,
   });
 
   /** persistent connection */
@@ -29,7 +28,7 @@ export function useEVMWC(): Wallet {
         () => {
           /** modal is closed without connecting */
           if (!ctor.connected) {
-            setState({ status: "disconnected", connect });
+            setState({ status: "disconnected" });
           }
         },
         { mobileLinks: ["metamask"], desktopLinks: [] }
@@ -47,7 +46,6 @@ export function useEVMWC(): Wallet {
           address: accounts[0],
           chainId: `${chainId}`,
           provider: getProvider("evm-wc") as any,
-          disconnect,
         });
         QRCodeModal.close();
       });
@@ -59,7 +57,6 @@ export function useEVMWC(): Wallet {
         address: accounts[0],
         chainId: `${chainId}`,
         provider: getProvider("evm-wc") as any,
-        disconnect,
       });
     }
 
@@ -81,13 +78,18 @@ export function useEVMWC(): Wallet {
     ctor.killSession();
     ctor.off(WC_EVENT.connect);
     ctor.off(WC_EVENT.disconnect);
-    setState({ status: "disconnected", connect });
+    setState({ status: "disconnected" });
   }
 
-  return {
-    ...state,
+  const meta: WalletMeta = {
     logo: metamaskIcon,
     id: "evm-wc",
     name: "Metamask mobile",
+  };
+
+  return {
+    ...meta,
+    ...state,
+    ...{ connect, disconnect },
   };
 }

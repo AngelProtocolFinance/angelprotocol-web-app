@@ -1,5 +1,7 @@
-import { EVMWallet, WalletState } from "../types";
+import { EVMWallet, ProviderState, WalletState } from "../types";
 
-export function isEVM(wallet: WalletState): wallet is EVMWallet {
+export function isEVM(
+  wallet: WalletState | ProviderState
+): wallet is EVMWallet {
   return wallet.status === "connected" && wallet.type === "evm";
 }

@@ -1,7 +1,7 @@
 import { KeplrQRCodeModalV1 } from "@keplr-wallet/wc-qrcode-modal";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { Connected, Cosmos, Wallet, WalletState } from "../types";
+import { Connected, Cosmos, ProviderState, Wallet, WalletMeta } from "../types";
 import icon from "assets/icons/wallets/keplr.png";
 import { connector as ctor, getKeplrWCClient } from "helpers/keplr";
 import { chainIds } from "constants/chains";
@@ -11,9 +11,8 @@ const QRModal = new KeplrQRCodeModalV1();
 
 /** NOTE: only use this wallet in mainnet */
 export function useKeplrWC(): Wallet {
-  const [state, setState] = useState<WalletState>({
+  const [state, setState] = useState<ProviderState>({
     status: "disconnected",
-    connect,
   });
 
   /** persistent connection */
@@ -30,7 +29,7 @@ export function useKeplrWC(): Wallet {
       QRModal.open(ctor.uri, () => {
         /** modal is closed without connecting */
         if (!ctor.connected) {
-          setState({ status: "disconnected", connect });
+          setState({ status: "disconnected" });
         }
       });
       ctor.on(WC_EVENT.connect, async (error) => {
@@ -42,7 +41,6 @@ export function useKeplrWC(): Wallet {
           type: "cosmos",
           status: "connected",
           ...(await getWalletInfo()),
-          disconnect,
         });
         QRModal.close();
       });
@@ -50,7 +48,6 @@ export function useKeplrWC(): Wallet {
       setState({
         type: "cosmos",
         status: "connected",
-        disconnect,
         ...(await getWalletInfo()),
       });
     }
@@ -61,14 +58,18 @@ export function useKeplrWC(): Wallet {
     ctor.killSession();
     ctor.off(WC_EVENT.connect);
     ctor.off(WC_EVENT.disconnect);
-    setState({ status: "disconnected", connect });
+    setState({ status: "disconnected" });
   }
 
-  return {
-    ...state,
+  const meta: WalletMeta = {
     logo: icon,
     id: "keplr-wc",
     name: "Keplr mobile",
+  };
+  return {
+    ...state,
+    ...meta,
+    ...{ connect, disconnect },
   };
 }
 
@@ -77,12 +78,11 @@ async function getWalletInfo(): Promise<
 > {
   const id = chainIds.juno;
   const keplr = getKeplrWCClient();
-
   await keplr.enable(id);
   const key = await keplr.getKey(id);
   return {
     chainId: id,
     address: key.bech32Address,
-    client: getKeplrWCClient(),
+    client: keplr,
   };
 }

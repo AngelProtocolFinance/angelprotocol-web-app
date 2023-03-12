@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { Wallet, WalletMeta, WalletState } from "../types";
+import { ProviderState, Wallet, WalletMeta } from "../types";
 import { Dwindow } from "types/window";
 import icon from "assets/icons/wallets/keplr.png";
 import { chainIds } from "constants/chains";
@@ -16,9 +16,8 @@ const INSTALL_URL = "https://www.keplr.app/download";
 const meta: WalletMeta = { logo: icon, id: "keplr", name: "Keplr" };
 
 export default function useKeplr(): Wallet {
-  const [state, setState] = useState<WalletState>({
+  const [state, setState] = useState<ProviderState>({
     status: "disconnected",
-    connect,
   });
 
   /** persistent connection */
@@ -45,7 +44,6 @@ export default function useKeplr(): Wallet {
         status: "connected",
         address: key.bech32Address,
         chainId: chainIds.juno,
-        disconnect,
         client: dwindow.keplr,
       });
       saveUserAction(actionKey, "connect");
@@ -53,15 +51,15 @@ export default function useKeplr(): Wallet {
       if (isNew) {
         toast.error("Failed to connect to wallet.");
       }
-      setState({ status: "disconnected", connect });
+      setState({ status: "disconnected" });
       saveUserAction(actionKey, "disconnect");
     }
   }
 
   function disconnect() {
-    setState({ status: "disconnected", connect });
+    setState({ status: "disconnected" });
     saveUserAction(actionKey, "disconnect");
   }
 
-  return { ...state, ...meta };
+  return { ...meta, ...state, ...{ connect, disconnect } };
 }

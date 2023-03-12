@@ -1,7 +1,7 @@
 import Decimal from "decimal.js";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { Wallet, WalletMeta, WalletState } from "./types";
+import { ProviderState, Wallet, WalletMeta } from "./types";
 import { AccountChangeHandler, ChainChangeHandler } from "types/evm";
 import { useLazyChainQuery } from "services/apes";
 import { getProvider, logger } from "helpers";
@@ -21,9 +21,8 @@ export default function useInjectedWallet(
   const { id } = meta;
   const actionKey = `${id}__pref`;
 
-  const [state, setState] = useState<WalletState>({
+  const [state, setState] = useState<ProviderState>({
     status: "disconnected",
-    connect,
   });
 
   const [fetchChain] = useLazyChainQuery();
@@ -151,7 +150,6 @@ export default function useInjectedWallet(
         status: "connected",
         address: accounts[0],
         chainId: `${parseInt(hexChainId, 16)}`,
-        disconnect,
         switchChain,
         isSwitching: false,
         provider: provider,
@@ -162,7 +160,7 @@ export default function useInjectedWallet(
       if (isNew) {
         toast.error("Failed to connect to wallet.");
       }
-      setState({ status: "disconnected", connect });
+      setState({ status: "disconnected" });
       saveUserAction(actionKey, "disconnect");
     }
   }
@@ -170,7 +168,7 @@ export default function useInjectedWallet(
   function disconnect() {
     const provider = getProvider(id);
     if (provider) {
-      setState({ status: "disconnected", connect });
+      setState({ status: "disconnected" });
       saveUserAction(actionKey, "disconnect");
 
       if (provider.removeListener) {
@@ -183,5 +181,5 @@ export default function useInjectedWallet(
     }
   }
 
-  return { ...state, ...meta };
+  return { ...state, ...meta, ...{ connect, disconnect } };
 }
