@@ -1,12 +1,13 @@
 import Decimal from "decimal.js";
 import { useCallback, useEffect, useState } from "react";
-import { Connection, ProviderId, ProviderInfo } from "./types";
+import { Connection, ProviderInfo } from "./types";
 import { BaseChain } from "types/aws";
 import {
   AccountChangeHandler,
   ChainChangeHandler,
   InjectedProvider,
 } from "types/evm";
+import { ProviderId } from "types/lists";
 import { Dwindow } from "types/window";
 import { getProvider } from "helpers";
 import {

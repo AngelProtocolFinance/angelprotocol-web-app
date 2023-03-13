@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { ChainQueryArgs } from "services/types";
 import {
   BaseChain,
   Chain,
@@ -8,7 +9,6 @@ import {
   WithdrawLog,
   WithdrawLogQueryParams,
 } from "types/aws";
-import { ProviderId } from "contexts/WalletContext";
 import { UnsupportedChainError } from "errors/errors";
 import { chainIds } from "constants/chainIds";
 import { IS_TEST, JUNO_LCD_OVERRIDE, JUNO_RPC_OVERRIDE } from "constants/env";
@@ -33,23 +33,10 @@ export const apes = createApi({
       providesTags: ["withdraw_logs"],
       query: ({ cw3, ...params }) => ({ url: `/v2/withdraw/${cw3}`, params }),
     }),
-    chain: builder.query<
-      Chain,
-      { address?: string; chainId?: string; providerId?: ProviderId }
-    >({
+    chain: builder.query<Chain, ChainQueryArgs>({
       providesTags: ["chain"],
       async queryFn({ address, chainId, providerId }, api, options, baseQuery) {
         try {
-          if (!chainId) {
-            throw new Error("Argument 'chainId' missing");
-          }
-          if (!address) {
-            throw new Error("Argument 'address' missing");
-          }
-          if (!providerId) {
-            throw new Error("Argument 'providerId' missing");
-          }
-
           const { data } = await baseQuery(`v1/chain/${chainId}`);
           const chain = overrideURLs(data as FetchedChain);
 

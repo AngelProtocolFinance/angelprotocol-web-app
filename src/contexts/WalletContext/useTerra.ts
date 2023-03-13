@@ -5,8 +5,9 @@ import {
   WalletStatus,
   useWallet,
 } from "@terra-money/wallet-provider";
-import { Connection, ProviderId, ProviderInfo } from "./types";
+import { Connection, ProviderInfo } from "./types";
 import { BaseChain } from "types/aws";
+import { ProviderId } from "types/lists";
 import station_icon from "assets/icons/wallets/terra-extension.jpg";
 import {
   ManualChainSwitchRequiredError,

@@ -1,6 +1,6 @@
 import { useCallback } from "react";
-import { ProviderId } from "../types";
 import { InjectedProvider } from "types/evm";
+import { ProviderId } from "types/lists";
 import { useLazyChainQuery } from "services/apes";
 import { WalletError } from "errors/errors";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";

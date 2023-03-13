@@ -1,6 +1,6 @@
 import WalletConnect from "@walletconnect/client";
-import { ProviderId } from "contexts/WalletContext/types";
 import { InjectedProvider, RequestArguments } from "types/evm";
+import { ProviderId } from "types/lists";
 import { Dwindow } from "types/window";
 import { WC_BRIDGE } from "constants/urls";
 

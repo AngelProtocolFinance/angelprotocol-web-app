@@ -2,7 +2,7 @@ import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 import { fromHex, toBase64 } from "@cosmjs/encoding";
 import { KeplrWalletConnectV1 } from "@keplr-wallet/wc-client";
 import WalletConnect from "@walletconnect/client/";
-import { ProviderId } from "contexts/WalletContext/types";
+import { ProviderId } from "types/lists";
 import { Dwindow } from "types/window";
 import { JUNO_LCD } from "constants/env";
 import { WC_BRIDGE } from "constants/urls";
