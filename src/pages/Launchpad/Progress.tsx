@@ -3,11 +3,14 @@ import { useMatch } from "react-router-dom";
 import { DrawerIcon } from "components/Icon";
 import { useGetter } from "store/accessors";
 import useHandleScreenResize, { SCREEN_MD } from "hooks/useHandleScreenResize";
+import { appRoutes } from "constants/routes";
 
 export default function Progress({ classes = "" }) {
   /** no need to check for /launchpad,since `<Routes/>
    *  always falls back to home outside of /launchpad/1-7 pattern */
-  const step = +(useMatch("/launchpad/:step")?.params.step || "1");
+  const step = +(
+    useMatch(`${appRoutes.register}/steps/:step`)?.params.step || "1"
+  );
 
   const { progress: p } = useGetter((state) => state.launchpad);
   const [isOtherStepsShown, setIsOtherStepsShown] = useState(true);
