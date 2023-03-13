@@ -29,8 +29,15 @@ const amount: (arg: TNetwork) => SchemaShape<Amount> = (network) => ({
                * NOTE: this is on the assumption that endow TOH would just be USDC
                * for other tokens, must first get dollar amount
                */
-              "minimum 20 USDC",
-              () => (network === chainIds.juno ? true : +val >= 20)
+              network === chainIds.ethereum
+                ? "minimum 40 USDC"
+                : "minimum 20 USDC",
+              () =>
+                network === chainIds.juno
+                  ? true
+                  : network === chainIds.ethereum
+                  ? +val >= 40
+                  : +val >= 20
             )
         )
   ),
