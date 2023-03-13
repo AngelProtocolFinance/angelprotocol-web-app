@@ -1930,6 +1930,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@cosmjs/encoding@npm:^0.30.0":
+  version: 0.30.0
+  resolution: "@cosmjs/encoding@npm:0.30.0"
+  dependencies:
+    base64-js: ^1.3.0
+    bech32: ^1.1.4
+    readonly-date: ^1.0.0
+  checksum: 18ac0fd63d336b340726f9faf65dae89ae14e13237b4831b4cc7b34d31b4b1a453b60b1220540bbaa940e994c462bbf718628ad451722f9dc1c36986d191a795
+  languageName: node
+  linkType: hard
+
 "@cosmjs/json-rpc@npm:^0.29.0":
   version: 0.29.0
   resolution: "@cosmjs/json-rpc@npm:0.29.0"
@@ -5319,7 +5330,7 @@ __metadata:
     "@babel/plugin-syntax-flow": ^7.18.6
     "@babel/plugin-transform-react-jsx": ^7.21.0
     "@cosmjs/cosmwasm-stargate": ^0.29.0
-    "@cosmjs/encoding": ^0.29.0
+    "@cosmjs/encoding": ^0.30.0
     "@cosmjs/proto-signing": ^0.29.0
     "@cosmjs/stargate": ^0.29.0
     "@ethersproject/contracts": ^5.7.0
