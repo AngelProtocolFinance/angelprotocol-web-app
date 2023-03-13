@@ -9,7 +9,9 @@ export default function Invest() {
         Invest Dashboard
       </h3>
       <Balances />
-      <h3 className="font-bold text-2xl my-8">Featured Strategies</h3>
+      <h3 className="font-bold text-2xl my-8 text-center @lg:text-left">
+        Featured Strategies
+      </h3>
       <div className="grid gap-3">
         {strategies.map((strategy, idx) => (
           <Strategy key={idx} {...strategy} />
