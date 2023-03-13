@@ -3,10 +3,9 @@ import TableSection, { Cells } from "components/TableSection";
 import { FormValues } from "./schema";
 
 export default function Table({ className = "" }) {
-  const {
-    control,
-    formState: { defaultValues },
-  } = useFormContext<FormValues>();
+  const { control, getValues } = useFormContext<FormValues>();
+
+  const { initialValues, ...formValues } = getValues();
 
   return (
     <table
@@ -32,77 +31,77 @@ export default function Table({ className = "" }) {
         rowClass="dark:bg-blue-d6 divide-x divide-prim"
         selectedClass="bg-orange-l5 dark:bg-blue-d4"
       >
-        {(Object.keys(defaultValues || {}) as (keyof FormValues)[]).map(
-          (formField) => (
-            <Controller
-              control={control}
-              name={formField}
-              render={({
-                field: { value, onChange },
-                formState: { isSubmitting },
-              }) => (
-                <Cells
-                  key={`table-row-${formField}`}
-                  type="td"
-                  cellClass="py-3 px-4 border-t border-prim min-w-[116px] max-w-xs truncate first:rounded-bl last:rounded-br"
-                >
-                  <>{value.name}</>
+        {(
+          Object.keys(formValues) as (keyof Omit<FormValues, "initialValues">)[]
+        ).map((formField) => (
+          <Controller
+            control={control}
+            name={formField}
+            render={({
+              field: { value, onChange },
+              formState: { isSubmitting },
+            }) => (
+              <Cells
+                key={`table-row-${formField}`}
+                type="td"
+                cellClass="py-3 px-4 border-t border-prim min-w-[116px] max-w-xs truncate first:rounded-bl last:rounded-br"
+              >
+                <>{value.name}</>
 
-                  <input
-                    type="checkbox"
-                    className="checkbox-orange"
-                    checked={value.owner_controlled}
-                    disabled={isSubmitting}
-                    onClick={() =>
-                      onChange({
-                        ...value,
-                        owner_controlled: !value.owner_controlled,
-                      })
-                    }
-                  />
-                  <input
-                    type="checkbox"
-                    className="checkbox-orange"
-                    checked={value.gov_controlled}
-                    disabled={isSubmitting}
-                    onClick={() =>
-                      onChange({
-                        ...value,
-                        gov_controlled: !value.gov_controlled,
-                      })
-                    }
-                  />
-                  <input
-                    type="checkbox"
-                    className="checkbox-orange"
-                    checked={value.delegate}
-                    disabled={isSubmitting}
-                    onClick={() =>
-                      onChange({
-                        ...value,
-                        delegate: !value.delegate,
-                      })
-                    }
-                  />
+                <input
+                  type="checkbox"
+                  className="checkbox-orange"
+                  checked={value.owner_controlled}
+                  disabled={isSubmitting}
+                  onClick={() =>
+                    onChange({
+                      ...value,
+                      owner_controlled: !value.owner_controlled,
+                    })
+                  }
+                />
+                <input
+                  type="checkbox"
+                  className="checkbox-orange"
+                  checked={value.gov_controlled}
+                  disabled={isSubmitting}
+                  onClick={() =>
+                    onChange({
+                      ...value,
+                      gov_controlled: !value.gov_controlled,
+                    })
+                  }
+                />
+                <input
+                  type="checkbox"
+                  className="checkbox-orange"
+                  checked={value.delegate}
+                  disabled={isSubmitting}
+                  onClick={() =>
+                    onChange({
+                      ...value,
+                      delegate: !value.delegate,
+                    })
+                  }
+                />
 
-                  <input
-                    type="text"
-                    className="field-input w-full truncate py-1.5"
-                    placeholder="Wallet address..."
-                    value={value.delegate_address}
-                    onChange={(e) =>
-                      onChange({
-                        ...value,
-                        delegate_address: e.target.value,
-                      })
-                    }
-                    disabled={!value.delegate || isSubmitting}
-                  />
-                </Cells>
-              )}
-            />
-          )
-        )}
+                <input
+                  type="text"
+                  className="field-input w-full truncate py-1.5"
+                  placeholder="Wallet address..."
+                  value={value.delegate_address}
+                  onChange={(e) =>
+                    onChange({
+                      ...value,
+                      delegate_address: e.target.value,
+                    })
+                  }
+                  disabled={!value.delegate || isSubmitting}
+                />
+              </Cells>
+            )}
+          />
+        ))}
       </TableSection>
     </table>
   );
