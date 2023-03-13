@@ -6,19 +6,20 @@ import ExtLink from "components/ExtLink";
 import { Selector } from "components/Selector";
 import { CheckField, Field, Label } from "components/form";
 import { FileDropzone, LoadText } from "components/registration";
-import { APP_NAME, CASH_ELIGIBLE_COUNTRIES } from "constants/common";
+import { APP_NAME } from "constants/common";
 import { unsdgs } from "constants/unsdgs";
 import { TERMS_OF_USE } from "constants/urls";
 import { steps } from "../../../routes";
 import { useRegState } from "../../StepGuard";
 import { MB_LIMIT } from "../schema";
+import { CashEligibleCheckbox } from "./CashEligibleCheckbox";
 import Level from "./Level";
 import { Radio } from "./Radio";
 import useSubmit from "./useSubmit";
 
 export default function Form() {
   const { data } = useRegState<2>();
-  const { submit, isSubmitting, getValues } = useSubmit();
+  const { submit, isSubmitting } = useSubmit();
 
   return (
     <form className="w-full" onSubmit={submit}>
@@ -116,19 +117,7 @@ export default function Form() {
         <Radio value="No" />
       </div>
       <Separator classes="my-8" />
-      {CASH_ELIGIBLE_COUNTRIES.includes(getValues("hqCountry").name) && (
-        <CheckField<FV>
-          name="CashEligible"
-          required
-          classes={{
-            container: "check-field-reg text-sm mb-3",
-            input: "checkbox-reg self-start sm:self-center",
-            error: "mt-1",
-          }}
-        >
-          By checking this box, you declare that you are eligible for cash donation processing by APES
-        </CheckField>
-      )}
+      <CashEligibleCheckbox />
       <CheckField<FV>
         name="hasAuthority"
         required
@@ -151,7 +140,6 @@ export default function Form() {
         }}
       >
         By checking this box, you declare that you have read and agreed to our{" "}
-        {""}
         <ExtLink className="underline text-orange" href={TERMS_OF_USE}>
           Terms & Conditions
         </ExtLink>
