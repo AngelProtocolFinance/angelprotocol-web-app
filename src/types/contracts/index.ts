@@ -10,3 +10,4 @@ export * from "./governance";
 export * from "./indexfund";
 export * from "./lp";
 export * from "./registrar";
+export * from "./settingsController";
