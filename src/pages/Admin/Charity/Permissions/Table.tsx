@@ -1,8 +1,10 @@
 import { Controller, useFormContext } from "react-hook-form";
+import { useAdminResources } from "pages/Admin/Guard";
 import TableSection, { Cells } from "components/TableSection";
 import { FormValues } from "./schema";
 
 export default function Table({ className = "" }) {
+  const { endow_type } = useAdminResources<"charity">();
   const { control, getValues } = useFormContext<FormValues>();
 
   const { initialValues, ...formValues } = getValues();
@@ -21,7 +23,7 @@ export default function Table({ className = "" }) {
         >
           <>Action</>
           <>Admin wallet</>
-          <>Governance</>
+          {endow_type === "normal" ? <>Governance</> : null}
           <>Delegate</>
           <>Delegate address</>
         </Cells>
@@ -60,18 +62,20 @@ export default function Table({ className = "" }) {
                     })
                   }
                 />
-                <input
-                  type="checkbox"
-                  className="checkbox-orange"
-                  checked={value.gov_controlled}
-                  disabled={isSubmitting}
-                  onChange={() =>
-                    onChange({
-                      ...value,
-                      gov_controlled: !value.gov_controlled,
-                    })
-                  }
-                />
+                {endow_type === "normal" ? (
+                  <input
+                    type="checkbox"
+                    className="checkbox-orange"
+                    checked={value.gov_controlled}
+                    disabled={isSubmitting}
+                    onChange={() =>
+                      onChange({
+                        ...value,
+                        gov_controlled: !value.gov_controlled,
+                      })
+                    }
+                  />
+                ) : null}
                 <input
                   type="checkbox"
                   className="checkbox-orange"
