@@ -24,7 +24,7 @@ export const tokenShape: SchemaShape<TWA> = {
           ];
           return !!minAmount
             ? schema
-                .min(0, `amount must be at least ${minAmount}`)
+                .min(minAmount || 0, `amount must be at least ${minAmount}`)
                 .max(balance + (gift || 0), "not enough balance")
             : schema.max(balance + (gift || 0), "not enough balance");
         })
