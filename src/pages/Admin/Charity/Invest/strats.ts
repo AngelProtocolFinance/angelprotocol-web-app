@@ -1,9 +1,9 @@
 /** strategies placeholder */
 
-export type Strategy = {
+export type TStrategy = {
   name: string;
   description: string;
-  providerName: string;
+  provider: { name: string; url: string };
   rating: string; //"AAA";
   type: string; // "Uncollateralized Lending";
   apy: number; //5.2
@@ -16,13 +16,13 @@ export type Strategy = {
   };
 };
 
-const userBalance: Strategy["balances"] = { locked: 1000, liquid: 1000 };
+const userBalance: TStrategy["balances"] = { locked: 1000, liquid: 1000 };
 
-const strategy: Strategy = {
+const strategy: TStrategy = {
   name: "Investment Option Name",
   description:
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec varius ipsum velaliq imperdiet. Sed porttitor nibh sit amet molestie commodo. Etiam aliquet ex magna, vestibulum dignissim nibh commodo non. Praesent congue maximus viverra. Etiam rhoncus imperdiet gravida.",
-  providerName: "Provider Name & URL",
+  provider: { name: "Provider Name & URL", url: "https://google.com" },
   rating: "AAA",
   type: "Uncollateralized Lending",
   apy: 5.2,
@@ -30,4 +30,4 @@ const strategy: Strategy = {
   balances: userBalance,
 };
 
-export const strategies: Strategy[] = Array(3).fill(strategy);
+export const strategies: TStrategy[] = Array(3).fill(strategy);
