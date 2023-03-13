@@ -10,7 +10,7 @@ export default function Form() {
       onSubmit={submit}
       onReset={() => reset()}
     >
-      <Table />
+      <Table className="max-md:hidden" />
 
       <div className="flex gap-3">
         <button
