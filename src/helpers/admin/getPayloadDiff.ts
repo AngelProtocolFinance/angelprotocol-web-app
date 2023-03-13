@@ -1,3 +1,5 @@
+import { isEmpty } from "helpers";
+
 //NOTE: intended for shallow form objects only atm
 export function getPayloadDiff<T extends object>(prev: T, next: T): Partial<T> {
   const diff: any = {};
@@ -35,6 +37,10 @@ function areDiff(val1: any, val2: any): boolean {
 
   if (Array.isArray(val1) && Array.isArray(val2)) {
     return val1.length !== val2.length || val1.some((v) => !val2.includes(v));
+  }
+
+  if (typeof val1 === "object" && typeof val2 === "object") {
+    return !isEmpty(Object.entries(getPayloadDiff(val1, val2)));
   }
 
   return val1 !== val2;
