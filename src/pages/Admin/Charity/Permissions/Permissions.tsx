@@ -61,20 +61,6 @@ function InnerComponent({ controller }: { controller: EndowmentController }) {
         owner_controlled: true,
         delegate: false,
       },
-      liquidAccountStrategy: {
-        name: "Liquid account investment strategy",
-        modifiable: true,
-        gov_controlled: false,
-        owner_controlled: true,
-        delegate: false,
-      },
-      lockedAccountStrategy: {
-        name: "Locked account investment strategy",
-        modifiable: true,
-        gov_controlled: false,
-        owner_controlled: true,
-        delegate: false,
-      },
       profile: {
         name: "Changes to profile",
         modifiable: true,

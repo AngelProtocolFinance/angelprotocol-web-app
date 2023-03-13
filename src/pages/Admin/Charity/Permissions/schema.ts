@@ -12,7 +12,5 @@ export type FormValues = {
   beneficiaries_allowlist: FormField;
   contributors_allowlist: FormField;
   donationSplitParams: FormField;
-  liquidAccountStrategy: FormField;
-  lockedAccountStrategy: FormField;
   profile: FormField;
 };
