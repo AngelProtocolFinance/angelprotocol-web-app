@@ -10,7 +10,6 @@ import { getFilePreviews } from "./getFilePreviews";
 export default function useSubmit() {
   const {
     handleSubmit,
-    getValues,
     formState: { isDirty, isSubmitting },
   } = useFormContext<FormValues>();
 
@@ -32,7 +31,7 @@ export default function useSubmit() {
     level,
     hqCountry,
     activeInCountries,
-    CashEligible,
+    cashEligible,
     ...documents
   }: FormValues) => {
     if (documentation && !isDirty) {
@@ -56,9 +55,10 @@ export default function useSubmit() {
         KycDonorsOnly: isKYCRequired === "Yes",
         HqCountry: hqCountry.name,
         ActiveInCountries: activeInCountries.map((opt) => opt.value),
+        CashEligible: cashEligible,
       }),
       handleError
     );
   };
-  return { submit: handleSubmit(submit), getValues, isSubmitting };
+  return { submit: handleSubmit(submit), isSubmitting };
 }
