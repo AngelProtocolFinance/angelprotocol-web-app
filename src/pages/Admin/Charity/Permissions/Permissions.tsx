@@ -1,34 +1,35 @@
 import { FormProvider, useForm } from "react-hook-form";
 import { EndowmentController } from "types/contracts";
+import { useAdminResources } from "pages/Admin/Guard";
+import { useEndowmentControllerQuery } from "services/juno/settingsController";
 import QueryLoader from "components/QueryLoader";
 import Form from "./Form";
 import { FormValues } from "./schema";
 
-const data: EndowmentController = {} as EndowmentController;
-
 export default function Permissions() {
+  const { id } = useAdminResources();
+  const queryState = useEndowmentControllerQuery({ id });
+
   return (
     <div className="grid gap-6">
       <h2 className="font-bold text-3xl">Permissions</h2>
 
       <QueryLoader
-        queryState={{
-          isLoading: false,
-          isError: false,
-          data,
-        }}
+        queryState={queryState}
         messages={{
           error: "Failed to get permissions.",
           loading: "Loading permissions...",
         }}
       >
-        {(permissions) => <InnerComponent data={permissions} />}
+        {(endowmentController) => (
+          <InnerComponent controller={endowmentController} />
+        )}
       </QueryLoader>
     </div>
   );
 }
 
-function InnerComponent({ data }: { data: EndowmentController }) {
+function InnerComponent({ controller }: { controller: EndowmentController }) {
   const methods = useForm<FormValues>({
     defaultValues: {
       accountFees: {
