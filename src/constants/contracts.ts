@@ -27,7 +27,7 @@ const testnet:Contracts = {
   index_fund:      "juno1d26dmz9zld4n8pzjpqae5m95adnfalvz47vldpwfzsplw4umcjmqhkle94",
   cw4GrpApTeam:    "juno1qkphn8h2rnyqjjtfh8j8dtuqgh5cac57nq2286tsljducqp4lwfqac44jm",
   cw3ApTeam:       "juno1ukpw6g9dqfw3fk2mqchplgcz4jaukttf6tpyrht7sw00t7mn7dpsjwpfhs",
-  accounts:        "juno1cyd63pk2wuvjkqmhlvp9884z4h89rqtn8w8xgz9m28hjd2kzj2cqf070uz",
+  accounts:        "juno1d4v5h5yr920xjjwcuret5n3meee5l04c58fpjhghdgml8kp57spqvmg4lx",
   cw4GrpCharityReviewTeam:"juno12lgc6d44c0y0tnef8fwjq8d9arrw5jgvrg8ydju5kz7nek9px72qvu8aw0",
   cw3CharityReviewTeam:   "juno1lstuws59hjswletwmskefdajhq76pz9tlfq84perndemrzztda0q6jc3nr",
   cw4GrpImpactReviewTeam: "juno1m7gwjd4slsnsh6l7c36g7n5c5nhqewfr9lsx6hf2w48wftcm3qssfxdswq",
