@@ -42,7 +42,7 @@ export default function MobileTable({ className = "" }) {
                   {watch(`${formField}.name`)}
                 </p>
               </Disclosure.Button>
-              <Disclosure.Panel className="w-full font-work divide-y divide-prim">
+              <Disclosure.Panel className="w-full font-work divide-y divide-prim border-t border-prim">
                 <div className="grid gap-4 py-3 px-4">
                   <CheckField<FormValues>
                     name={`${formField}.owner_controlled`}
