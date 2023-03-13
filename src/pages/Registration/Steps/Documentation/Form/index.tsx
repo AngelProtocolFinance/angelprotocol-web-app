@@ -139,7 +139,7 @@ export default function Form() {
         }}
       >
         By checking this box, you declare that you have the authority to create
-        an endowment in the name of ${data.contact.orgName} through ${APP_NAME}`}
+        an endowment in the name of {data.contact.orgName} through {APP_NAME}
       </CheckField>
       <CheckField<FV>
         name="hasAgreedToTerms"
