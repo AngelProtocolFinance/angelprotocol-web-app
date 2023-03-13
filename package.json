@@ -94,6 +94,7 @@
     "@babel/plugin-transform-react-jsx": "^7.20.13",
     "@peculiar/webcrypto": "^1.4.0",
     "@tailwindcss/container-queries": "^0.1.0",
+    "@tailwindcss/line-clamp": "0.4.2",
     "@testing-library/dom": "^8.20.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.4.0",
