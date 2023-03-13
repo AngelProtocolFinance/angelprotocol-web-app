@@ -20,7 +20,7 @@ export default function Form() {
           className="btn-outline-filled py-2 px-8 rounded"
           disabled={isSubmitting}
         >
-          Reset changes
+          Reset
         </button>
         <button
           type="submit"
