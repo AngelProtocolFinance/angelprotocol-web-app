@@ -22,6 +22,10 @@ export default function TableSection(props: HeadProps | BodyProps) {
 
 export function Cells(props: CellProps) {
   const cells = React.Children.map(props.children, (child, index) => {
+    if (!child) {
+      return null;
+    }
+
     //return explicit element + common props
     if (child.type === "td" || child.type === "th") {
       return cloneElement(child, {
@@ -79,7 +83,7 @@ export function Cells(props: CellProps) {
 }
 
 type CellBase = {
-  children: JSX.Element | JSX.Element[];
+  children: JSX.Element | (JSX.Element | null)[] | null;
   type: "th" | "td";
 
   cellClass: string;
