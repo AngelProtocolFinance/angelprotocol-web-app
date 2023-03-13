@@ -1,10 +1,10 @@
 import { FormProvider, useForm } from "react-hook-form";
-import { EndowmentController } from "types/contracts";
+import { EndowmentController, SettingsPermissions } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useEndowmentControllerQuery } from "services/juno/settingsController";
 import QueryLoader from "components/QueryLoader";
 import Form from "./Form";
-import { FormValues } from "./schema";
+import { FormField, FormValues } from "./schema";
 
 export default function Permissions() {
   const { id } = useAdminResources();
@@ -32,42 +32,20 @@ export default function Permissions() {
 function InnerComponent({ controller }: { controller: EndowmentController }) {
   const methods = useForm<FormValues>({
     defaultValues: {
-      accountFees: {
-        name: "Changes to account fees",
-        modifiable: true,
-        gov_controlled: false,
-        owner_controlled: true,
-        delegate: false,
-      },
-      beneficiaries_allowlist: {
-        name: "Changes to beneficiaries whitelist",
-        modifiable: true,
-        gov_controlled: true,
-        owner_controlled: true,
-        delegate: false,
-      },
-      contributors_allowlist: {
-        name: "Changes to contributors whitelist",
-        modifiable: true,
-        gov_controlled: false,
-        owner_controlled: false,
-        delegate: true,
-        delegate_address: "juno1k7jkmvzkrr3rv4htqvmh63f0fmvm89dfpqc6y5",
-      },
-      donationSplitParams: {
-        name: "Changes to donation split parameters",
-        modifiable: true,
-        gov_controlled: false,
-        owner_controlled: true,
-        delegate: false,
-      },
-      profile: {
-        name: "Changes to profile",
-        modifiable: true,
-        gov_controlled: false,
-        owner_controlled: true,
-        delegate: false,
-      },
+      accountFees: createField("Changes to account fees", controller.aum_fee),
+      beneficiaries_allowlist: createField(
+        "Changes to beneficiaries whitelist",
+        controller.beneficiaries_allowlist
+      ),
+      contributors_allowlist: createField(
+        "Changes to contributors whitelist",
+        controller.contributors_allowlist
+      ),
+      donationSplitParams: createField(
+        "Changes to donation split parameters",
+        controller.split_to_liquid
+      ),
+      profile: createField("Changes to profile", controller.name),
     },
   });
 
@@ -76,4 +54,18 @@ function InnerComponent({ controller }: { controller: EndowmentController }) {
       <Form />
     </FormProvider>
   );
+}
+
+function createField(name: string, settings: SettingsPermissions): FormField {
+  const result: FormField = {
+    name,
+    gov_controlled: settings.gov_controlled,
+    modifiable: settings.modifiable,
+    owner_controlled: settings.owner_controlled,
+    ...(!settings.delegate
+      ? { delegate: false, delegate_address: undefined }
+      : { delegate: true, delegate_address: settings.delegate.address }),
+  };
+
+  return result;
 }
