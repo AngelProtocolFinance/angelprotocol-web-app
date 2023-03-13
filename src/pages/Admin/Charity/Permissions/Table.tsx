@@ -35,6 +35,7 @@ export default function Table({ className = "" }) {
           Object.keys(formValues) as (keyof Omit<FormValues, "initialValues">)[]
         ).map((formField) => (
           <Controller
+            key={`table-row-${formField}`}
             control={control}
             name={formField}
             render={({
@@ -42,7 +43,6 @@ export default function Table({ className = "" }) {
               formState: { isSubmitting },
             }) => (
               <Cells
-                key={`table-row-${formField}`}
                 type="td"
                 cellClass="py-3 px-4 border-t border-prim min-w-[116px] max-w-xs truncate first:rounded-bl last:rounded-br"
               >
