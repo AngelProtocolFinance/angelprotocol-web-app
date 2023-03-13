@@ -33,6 +33,8 @@ export default function useSubmit() {
         return handleError("No changes detected");
       }
 
+      return console.log(diff);
+
       const settingsController = new SettingsController(wallet);
       const msg = createUpdateEndowmentControllerMsg(id, newValues);
       const embeddedMsg =
