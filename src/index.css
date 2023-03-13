@@ -243,13 +243,6 @@
     @apply outline-gray-l3 dark:outline-bluegray;
   }
 
-  .line-clamp-2 {
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-  }
-
   .box-delay-1 {
     animation-delay: 300ms;
   }
