@@ -1,25 +1,54 @@
 import { useFormContext } from "react-hook-form";
+import { ProposalMeta } from "pages/Admin/types";
 import {
   SettingsPermissions,
   UpdateEndowmentControllerMsg,
 } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useErrorContext } from "contexts/ErrorContext";
+import { useModalContext } from "contexts/ModalContext";
+import { useGetWallet } from "contexts/WalletContext";
+import CW3 from "contracts/CW3";
+import SettingsController from "contracts/SettingsController";
+import useCosmosTxSender from "hooks/useCosmosTxSender";
+import { cleanObject } from "helpers/cleanObject";
 import { FormField, FormValues } from "./schema";
 
 export default function useSubmit() {
-  const { id } = useAdminResources();
+  const { id, cw3, propMeta } = useAdminResources();
   const { handleError } = useErrorContext();
   const {
     formState: { isSubmitting },
     handleSubmit,
     reset,
   } = useFormContext<FormValues>();
+  const { wallet } = useGetWallet();
+  const sendTx = useCosmosTxSender();
+  const { showModal } = useModalContext();
 
   async function onSubmit(formValues: FormValues) {
     try {
       const updateMsg = createUpdateEndowmentControllerMsg(id, formValues);
-      console.log(updateMsg);
+      const settingsController = new SettingsController(wallet);
+      const embeddedMsg =
+        settingsController.createEmbeddedUpdateEndowmentControllerMsg(
+          cleanObject(updateMsg)
+        );
+
+      const meta: ProposalMeta = { type: "endow_controller" };
+
+      const adminContract = new CW3(wallet, cw3);
+      const proposalMsg = adminContract.createProposalMsg(
+        "Update permission settings",
+        `Update permission settings for endowment id:${id}`,
+        [embeddedMsg],
+        JSON.stringify(meta)
+      );
+
+      await sendTx({
+        msgs: [proposalMsg],
+        ...propMeta,
+      });
     } catch (error) {
       handleError(error);
     }
