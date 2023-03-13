@@ -1,3 +1,4 @@
+import MobileTable from "./MobileTable";
 import Table from "./Table";
 import useSubmit from "./useSubmit";
 
@@ -11,6 +12,7 @@ export default function Form() {
       onReset={() => reset()}
     >
       <Table className="max-md:hidden" />
+      <MobileTable className="md:hidden" />
 
       <div className="flex gap-3">
         <button
