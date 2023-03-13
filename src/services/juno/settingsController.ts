@@ -105,11 +105,16 @@ export const settingsController_api = junoApi.injectEndpoints({
           id: settingsControllerTags.endowment_controller,
         },
       ],
-      query: (args) =>
-        genQueryPath("endowmentController", args, settingsController),
-      transformResponse: (res: Res<"endowmentController">) => {
-        return data.data;
+      async queryFn(args) {
+        return {
+          data: data.data,
+        };
       },
+      // query: (args) =>
+      //   genQueryPath("endowmentController", args, settingsController),
+      // transformResponse: (res: Res<"endowmentController">) => {
+      //   return res.data;
+      // },
     }),
   }),
 });
