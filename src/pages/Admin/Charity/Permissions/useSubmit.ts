@@ -6,12 +6,12 @@ import {
 } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useErrorContext } from "contexts/ErrorContext";
-import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import CW3 from "contracts/CW3";
 import SettingsController from "contracts/SettingsController";
 import useCosmosTxSender from "hooks/useCosmosTxSender";
-import { cleanObject } from "helpers/cleanObject";
+import { isEmpty } from "helpers";
+import { getPayloadDiff } from "helpers/admin";
 import { FormField, FormValues } from "./schema";
 
 export default function useSubmit() {
@@ -24,16 +24,19 @@ export default function useSubmit() {
   } = useFormContext<FormValues>();
   const { wallet } = useGetWallet();
   const sendTx = useCosmosTxSender();
-  const { showModal } = useModalContext();
 
-  async function onSubmit(formValues: FormValues) {
+  async function onSubmit({ initialValues, ...newValues }: FormValues) {
     try {
-      const updateMsg = createUpdateEndowmentControllerMsg(id, formValues);
+      const diff = getPayloadDiff(initialValues, newValues);
+
+      if (isEmpty(Object.entries(diff))) {
+        return handleError("No changes detected");
+      }
+
       const settingsController = new SettingsController(wallet);
+      const msg = createUpdateEndowmentControllerMsg(id, newValues);
       const embeddedMsg =
-        settingsController.createEmbeddedUpdateEndowmentControllerMsg(
-          cleanObject(updateMsg)
-        );
+        settingsController.createEmbeddedUpdateEndowmentControllerMsg(msg);
 
       const meta: ProposalMeta = { type: "endow_controller" };
 
@@ -59,7 +62,7 @@ export default function useSubmit() {
 
 function createUpdateEndowmentControllerMsg(
   endowId: number,
-  formValues: FormValues
+  formValues: Omit<FormValues, "initialValues">
 ): UpdateEndowmentControllerMsg {
   const accountFees = createField(formValues.accountFees);
   const beneficiaries_allowlist = createField(formValues.accountFees);

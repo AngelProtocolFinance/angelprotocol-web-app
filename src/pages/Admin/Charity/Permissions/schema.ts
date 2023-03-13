@@ -7,10 +7,12 @@ export type FormField = Omit<SettingsPermissions, "delegate"> & {
     | { delegate: false; delegate_address: undefined }
   );
 
-export type FormValues = {
+type FormFields = {
   accountFees: FormField;
   beneficiaries_allowlist: FormField;
   contributors_allowlist: FormField;
   donationSplitParams: FormField;
   profile: FormField;
 };
+
+export type FormValues = FormFields & { initialValues: FormFields };
