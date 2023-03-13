@@ -1,10 +1,10 @@
 import { FormProvider, useForm } from "react-hook-form";
-import { UpdateEndowmentControllerMsg } from "./types";
+import { EndowmentController } from "types/contracts";
 import QueryLoader from "components/QueryLoader";
 import Form from "./Form";
 import { FormValues } from "./schema";
 
-const data: UpdateEndowmentControllerMsg = {} as UpdateEndowmentControllerMsg;
+const data: EndowmentController = {} as EndowmentController;
 
 export default function Permissions() {
   return (
@@ -28,7 +28,7 @@ export default function Permissions() {
   );
 }
 
-function InnerComponent({ data }: { data: UpdateEndowmentControllerMsg }) {
+function InnerComponent({ data }: { data: EndowmentController }) {
   const methods = useForm<FormValues>({
     defaultValues: {
       accountFees: {

@@ -1,5 +1,8 @@
 import { useFormContext } from "react-hook-form";
-import { SettingsPermissions, UpdateEndowmentControllerMsg } from "./types";
+import {
+  SettingsPermissions,
+  UpdateEndowmentControllerMsg,
+} from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useErrorContext } from "contexts/ErrorContext";
 import { FormField, FormValues } from "./schema";

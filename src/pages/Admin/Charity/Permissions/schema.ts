@@ -1,4 +1,4 @@
-import { SettingsPermissions } from "./types";
+import { SettingsPermissions } from "types/contracts";
 
 export type FormField = Omit<SettingsPermissions, "delegate"> & {
   name: string;

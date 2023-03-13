@@ -88,4 +88,9 @@ export const queryObject: {
   vaultBalance({ endowment_id }) {
     return { balance: { endowment_id } };
   },
+
+  /** (account) settings controller */
+  endowmentController({ id }) {
+    return { endowment_controller: { id } };
+  },
 };
