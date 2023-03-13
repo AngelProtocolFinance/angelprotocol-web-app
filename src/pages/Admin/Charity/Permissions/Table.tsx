@@ -53,7 +53,7 @@ export default function Table({ className = "" }) {
                   className="checkbox-orange"
                   checked={value.owner_controlled}
                   disabled={isSubmitting}
-                  onClick={() =>
+                  onChange={() =>
                     onChange({
                       ...value,
                       owner_controlled: !value.owner_controlled,
@@ -65,7 +65,7 @@ export default function Table({ className = "" }) {
                   className="checkbox-orange"
                   checked={value.gov_controlled}
                   disabled={isSubmitting}
-                  onClick={() =>
+                  onChange={() =>
                     onChange({
                       ...value,
                       gov_controlled: !value.gov_controlled,
@@ -77,7 +77,7 @@ export default function Table({ className = "" }) {
                   className="checkbox-orange"
                   checked={value.delegate}
                   disabled={isSubmitting}
-                  onClick={() =>
+                  onChange={() =>
                     onChange({
                       ...value,
                       delegate: !value.delegate,
