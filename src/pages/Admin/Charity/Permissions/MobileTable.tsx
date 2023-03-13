@@ -43,22 +43,31 @@ export default function MobileTable({ className = "" }) {
                 </p>
               </Disclosure.Button>
               <Disclosure.Panel className="w-full font-work divide-y divide-prim">
-                <div className="grid py-2">
+                <div className="grid gap-4 py-3 px-4">
                   <CheckField<FormValues>
                     name={`${formField}.owner_controlled`}
-                    classes={{ label: "uppercase" }}
+                    classes={{
+                      label: "uppercase text-xs font-bold",
+                      input: "checkbox-orange",
+                    }}
                   >
                     Admin wallet
                   </CheckField>
                   <CheckField<FormValues>
                     name={`${formField}.gov_controlled`}
-                    classes={{ label: "uppercase" }}
+                    classes={{
+                      label: "uppercase text-xs font-bold",
+                      input: "checkbox-orange",
+                    }}
                   >
                     Governance
                   </CheckField>
                   <CheckField<FormValues>
                     name={`${formField}.delegate`}
-                    classes={{ label: "uppercase" }}
+                    classes={{
+                      label: "uppercase text-xs font-bold",
+                      input: "checkbox-orange",
+                    }}
                   >
                     Delegate
                   </CheckField>
@@ -69,7 +78,8 @@ export default function MobileTable({ className = "" }) {
                   placeholder="juno1..."
                   classes={{
                     container: "py-3 px-4",
-                    label: "uppercase text-xs",
+                    label: "uppercase text-xs font-bold",
+                    input: "field-input truncate h-8",
                   }}
                 />
               </Disclosure.Panel>
