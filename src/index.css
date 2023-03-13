@@ -99,7 +99,7 @@
     @apply text-sm absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2;
   }
   .checkbox-orange {
-    @apply checkbox border-prim focus:ring-orange-l2;
+    @apply checkbox focus:ring-orange-l2;
   }
   .checkbox-orange:checked {
     @apply border-none bg-orange text-white;
