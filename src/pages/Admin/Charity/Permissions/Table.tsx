@@ -50,7 +50,10 @@ export default function Table({ className = "", disabled = false }) {
               const isDisabled =
                 !value.modifiable ||
                 disabled ||
-                (value.delegate && value.delegate_address !== wallet?.address);
+                (initialValues[formField].delegate &&
+                  !!initialValues[formField].delegate_address &&
+                  initialValues[formField].delegate_address !==
+                    wallet?.address);
               return (
                 <Cells
                   type="td"
