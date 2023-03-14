@@ -23,34 +23,44 @@ export default function Form() {
       />
       <Label className="-mb-4 font-bold">Latest wasm codes</Label>
       <GroupContainer>
-        <Field<RV> classes="field-admin-sec" label="CW3" name="cw3_code" />
-        <Field<RV> classes="field-admin-sec" label="CW4" name="cw4_code" />
-        <Field<RV>
+        <Field<RV, "number">
+          type="number"
           classes="field-admin-sec"
-          label="Donation Matching"
-          name="donation_match_code"
+          label="CW3"
+          name="cw3_code"
         />
-        <Field<RV>
+        <Field<RV, "number">
+          type="number"
+          classes="field-admin-sec"
+          label="CW4"
+          name="cw4_code"
+        />
+        <Field<RV, "number">
+          type="number"
           classes="field-admin-sec"
           label="Subdao Bonding Token"
           name="subdao_bonding_token_code"
         />
-        <Field<RV>
+        <Field<RV, "number">
+          type="number"
           classes="field-admin-sec"
           label="Subdao CW20 Token"
           name="subdao_cw20_token_code"
         />
-        <Field<RV>
+        <Field<RV, "number">
+          type="number"
           classes="field-admin-sec"
           label="Subdao CW900"
           name="subdao_cw900_code"
         />
-        <Field<RV>
+        <Field<RV, "number">
+          type="number"
           classes="field-admin-sec"
           label="Subdao Distributor"
           name="subdao_distributor_code"
         />
-        <Field<RV>
+        <Field<RV, "number">
+          type="number"
           classes="field-admin-sec"
           label="Subdao Gov"
           name="subdao_gov_code"
