@@ -41,10 +41,7 @@ export default function Table({ className = "" }) {
             key={`table-row-${formField}`}
             control={control}
             name={formField}
-            render={({
-              field: { value, onChange },
-              formState: { isSubmitting },
-            }) => (
+            render={({ field: { value, onChange } }) => (
               <Cells
                 type="td"
                 cellClass="py-3 px-4 border-t border-prim min-w-[116px] max-w-xs truncate first:rounded-bl last:rounded-br"
@@ -55,7 +52,7 @@ export default function Table({ className = "" }) {
                   type="checkbox"
                   className="checkbox-orange"
                   checked={value.owner_controlled}
-                  disabled={isSubmitting}
+                  disabled={!value.modifiable}
                   onChange={() =>
                     onChange({
                       ...value,
@@ -68,7 +65,7 @@ export default function Table({ className = "" }) {
                     type="checkbox"
                     className="checkbox-orange"
                     checked={value.gov_controlled}
-                    disabled={isSubmitting}
+                    disabled={!value.modifiable}
                     onChange={() =>
                       onChange({
                         ...value,
@@ -81,7 +78,7 @@ export default function Table({ className = "" }) {
                   type="checkbox"
                   className="checkbox-orange"
                   checked={value.delegate}
-                  disabled={isSubmitting}
+                  disabled={!value.modifiable}
                   onChange={() =>
                     onChange({
                       ...value,
@@ -101,10 +98,10 @@ export default function Table({ className = "" }) {
                       delegate_address: e.target.value,
                     })
                   }
-                  disabled={!value.delegate || isSubmitting}
+                  disabled={!value.delegate || !value.modifiable}
                 />
 
-                {endow_type === "normal" ? (
+                {endow_type !== "normal" ? (
                   <button
                     type="button"
                     className="btn-red py-1 px-2 rounded font-semibold text-xs uppercase text-white tracking-wider"

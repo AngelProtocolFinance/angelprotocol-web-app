@@ -54,6 +54,7 @@ export default function MobileTable({ className = "" }) {
                         label: "uppercase text-xs font-bold",
                         input: "checkbox-orange",
                       }}
+                      disabled={!modifiable}
                     >
                       Admin wallet
                     </CheckField>
@@ -63,6 +64,7 @@ export default function MobileTable({ className = "" }) {
                         label: "uppercase text-xs font-bold",
                         input: "checkbox-orange",
                       }}
+                      disabled={!modifiable}
                     >
                       Governance
                     </CheckField>
@@ -72,6 +74,7 @@ export default function MobileTable({ className = "" }) {
                         label: "uppercase text-xs font-bold",
                         input: "checkbox-orange",
                       }}
+                      disabled={!modifiable}
                     >
                       Delegate
                     </CheckField>
@@ -85,6 +88,7 @@ export default function MobileTable({ className = "" }) {
                       label: "uppercase text-xs font-bold",
                       input: "field-input truncate h-8",
                     }}
+                    disabled={!modifiable}
                   />
                   {endow_type === "normal" ? (
                     <div className="flex justify-between items-center p-4">
@@ -92,8 +96,8 @@ export default function MobileTable({ className = "" }) {
                       <button
                         type="button"
                         className="btn-red p-2 rounded font-semibold text-xs uppercase text-white tracking-wider"
-                        disabled={!modifiable}
                         {...register(`${formField}.modifiable`)}
+                        disabled={!modifiable}
                       >
                         {modifiable ? "Lock forever" : "Locked forever"}
                       </button>
