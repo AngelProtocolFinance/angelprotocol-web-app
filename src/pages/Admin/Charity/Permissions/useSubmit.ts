@@ -15,7 +15,7 @@ import { getPayloadDiff } from "helpers/admin";
 import { FormField, FormValues } from "./schema";
 
 export default function useSubmit() {
-  const { id, cw3, propMeta } = useAdminResources();
+  const { id, cw3, propMeta, endow_type } = useAdminResources<"charity">();
   const { handleError } = useErrorContext();
   const {
     formState: { isSubmitting },
@@ -32,8 +32,6 @@ export default function useSubmit() {
       if (isEmpty(Object.entries(diff))) {
         return handleError("No changes detected");
       }
-
-      return console.log(diff);
 
       const settingsController = new SettingsController(wallet);
       const msg = createUpdateEndowmentControllerMsg(id, diff);
@@ -59,7 +57,12 @@ export default function useSubmit() {
     }
   }
 
-  return { isSubmitting, reset, submit: handleSubmit(onSubmit) };
+  return {
+    isSubmitting,
+    modifiable: endow_type === "normal",
+    reset,
+    submit: handleSubmit(onSubmit),
+  };
 }
 
 function createUpdateEndowmentControllerMsg(

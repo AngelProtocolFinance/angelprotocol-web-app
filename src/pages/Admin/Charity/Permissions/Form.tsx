@@ -3,11 +3,14 @@ import Table from "./Table";
 import useSubmit from "./useSubmit";
 
 export default function Form() {
-  const { isSubmitting, reset, submit } = useSubmit();
+  const { isSubmitting, modifiable, reset, submit } = useSubmit();
 
   return (
     <form onSubmit={submit} onReset={() => reset()}>
-      <fieldset className="grid gap-6 w-full" disabled={isSubmitting}>
+      <fieldset
+        className="grid gap-6 w-full"
+        disabled={isSubmitting || !modifiable}
+      >
         <Table className="max-md:hidden" />
         <MobileTable className="md:hidden" />
 
