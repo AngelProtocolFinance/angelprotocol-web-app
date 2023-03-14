@@ -55,7 +55,8 @@ export default function useSubmit() {
   }
 
   return {
-    disabled: isSubmitting || endow_type === "charity",
+    disabled:
+      isSubmitting || endow_type === "charity" || !propMeta.isAuthorized,
     reset,
     submit: handleSubmit(onSubmit),
   };
