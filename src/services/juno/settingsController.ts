@@ -21,12 +21,12 @@ const data: Res<"endowmentController"> = {
     },
     image: {
       gov_controlled: true,
-      modifiable: false,
+      modifiable: true,
       owner_controlled: true,
     },
     logo: {
       gov_controlled: true,
-      modifiable: false,
+      modifiable: true,
       owner_controlled: true,
     },
     categories: {
@@ -61,7 +61,7 @@ const data: Res<"endowmentController"> = {
     },
     contributors_allowlist: {
       gov_controlled: true,
-      modifiable: true,
+      modifiable: false,
       owner_controlled: true,
     },
     maturity_allowlist: {
