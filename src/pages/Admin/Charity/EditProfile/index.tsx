@@ -41,6 +41,7 @@ function FormWithContext(props: EndowmentProfile) {
     kyc_donors_only: props.kyc_donors_only,
     overview: props.overview,
     url: props.url || "",
+    published: props.published || false,
     registration_number: props.registration_number || "",
     social_media_url_facebook: props.social_media_urls.facebook || "",
     social_media_url_linkedin: props.social_media_urls.linkedin || "",
