@@ -28,6 +28,7 @@ export default function MobileTable({ className = "", disabled = false }) {
         >
           {({ open }) => {
             const modifiable = watch(`${formField}.modifiable`);
+            const isDisabled = !modifiable || disabled;
             return (
               <>
                 <Disclosure.Button
@@ -54,7 +55,7 @@ export default function MobileTable({ className = "", disabled = false }) {
                         label: "uppercase text-xs font-bold",
                         input: "checkbox-orange",
                       }}
-                      disabled={!modifiable || disabled}
+                      disabled={isDisabled}
                     >
                       Admin wallet
                     </CheckField>
@@ -64,7 +65,7 @@ export default function MobileTable({ className = "", disabled = false }) {
                         label: "uppercase text-xs font-bold",
                         input: "checkbox-orange",
                       }}
-                      disabled={!modifiable || disabled}
+                      disabled={isDisabled}
                     >
                       Governance
                     </CheckField>
@@ -74,7 +75,7 @@ export default function MobileTable({ className = "", disabled = false }) {
                         label: "uppercase text-xs font-bold",
                         input: "checkbox-orange",
                       }}
-                      disabled={!modifiable || disabled}
+                      disabled={isDisabled}
                     >
                       Delegate
                     </CheckField>
@@ -88,7 +89,7 @@ export default function MobileTable({ className = "", disabled = false }) {
                       label: "uppercase text-xs font-bold",
                       input: "field-input truncate h-8",
                     }}
-                    disabled={!modifiable || disabled}
+                    disabled={isDisabled}
                   />
                   {endow_type === "normal" ? (
                     <div className="flex justify-between items-center p-4">
@@ -97,7 +98,7 @@ export default function MobileTable({ className = "", disabled = false }) {
                         type="button"
                         className="btn-red p-2 rounded font-semibold text-xs uppercase text-white tracking-wider"
                         {...register(`${formField}.modifiable`)}
-                        disabled={!modifiable || disabled}
+                        disabled={isDisabled}
                       >
                         {modifiable ? "Lock forever" : "Locked forever"}
                       </button>
