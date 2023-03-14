@@ -41,7 +41,7 @@ export type Templates =
   | "acc_endow_status"
 
   //registrar
-  | "reg_config"
+  | "reg_config_extension"
   | "reg_owner";
 
 export type MetaConstructor<K extends Templates, V> = {
@@ -135,7 +135,7 @@ export type EndowmentStatusMeta = MetaConstructor<
 
 /** _registrar */
 export type RegistrarConfigUpdateMeta = MetaConstructor<
-  "reg_config",
+  "reg_config_extension",
   DiffSet<RegistrarConfigExtensionPayload>
 >;
 

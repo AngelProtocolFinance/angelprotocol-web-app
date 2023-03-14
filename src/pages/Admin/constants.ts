@@ -29,7 +29,7 @@ export const templates: { [key in Templates]: string } = {
   acc_endow_status: "acc_endow_status",
 
   //registrar
-  reg_config: "reg_config",
+  reg_config_extension: "reg_config_extension",
   reg_owner: "reg_owner",
 };
 

@@ -47,7 +47,7 @@ export default function useConfigureRegistrar() {
       );
 
     const configUpdateMeta: RegistrarConfigUpdateMeta = {
-      type: "reg_config",
+      type: "reg_config_extension",
       data: genDiffMeta(diffEntries, initialConfigPayload),
     };
 

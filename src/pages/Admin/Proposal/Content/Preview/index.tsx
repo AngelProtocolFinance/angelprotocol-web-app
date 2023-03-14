@@ -46,7 +46,7 @@ export default function Preview(props: ProposalMeta) {
       return <EndowmentStatusUpdate {...props.data} />;
 
     /** _registrar */
-    case "reg_config":
+    case "reg_config_extension":
       return <DiffTable diffSet={props.data} />;
     case "reg_owner":
       return <OwnerUpdate {...props.data} />;

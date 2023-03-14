@@ -10,7 +10,7 @@ import { FormError, FormSkeleton } from "components/admin";
 import Form from "./Form";
 import { schema } from "./schema";
 
-export default function Config() {
+export default function ConfigExtension() {
   const {
     data: config,
     isLoading,
@@ -19,10 +19,10 @@ export default function Config() {
   if (isLoading) return <FormSkeleton />;
   if (isError || !config)
     return <FormError errorMessage="failed to load registrar config" />;
-  return <RegistrarConfigContext {...config} />;
+  return <Context {...config} />;
 }
 
-function RegistrarConfigContext(props: RegistrarConfigExtension) {
+function Context(props: RegistrarConfigExtension) {
   const initialConfigPayload: RegistrarConfigExtensionPayload = {
     accounts_contract: props.accounts_contract || "",
     accounts_settings_controller: props.accounts_settings_controller || "",

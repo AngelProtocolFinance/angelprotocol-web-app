@@ -18,7 +18,7 @@ export const registrar_api = junoApi.injectEndpoints({
       Result<"regConfigExtension">,
       Args<"regConfigExtension">
     >({
-      providesTags: [{ type: "registrar", id: registrarTags.config }],
+      providesTags: [{ type: "registrar", id: registrarTags.config_extension }],
       query: (args) => genQueryPath("regConfigExtension", args, reg),
       transformResponse: (res: Res<"regConfigExtension">) => {
         return res.data;
