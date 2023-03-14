@@ -30,6 +30,7 @@ export default function MobileTable({ className = "", disabled = false }) {
         >
           {({ open }) => {
             const modifiable = watch(`${formField}.modifiable`);
+            const delegate = watch(`${formField}.delegate`);
             const initDelegate = watch(`initialValues.${formField}.delegate`);
             const init_delegate_address = watch(
               `initialValues.${formField}.delegate_address`
@@ -100,7 +101,7 @@ export default function MobileTable({ className = "", disabled = false }) {
                       label: "uppercase text-xs font-bold",
                       input: "field-input truncate h-8",
                     }}
-                    disabled={isDisabled}
+                    disabled={!delegate || isDisabled}
                   />
                   {endow_type === "normal" ? (
                     <div className="flex justify-between items-center p-4">
