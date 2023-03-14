@@ -46,6 +46,7 @@ export type EndowmentProfile = EndowmentBase & {
 
 export type EndowmentCard = EndowmentBase & {
   endow_type: CapitalizedEndowmentType;
+  published: boolean;
 };
 
 export type EndowmentIdName = Pick<EndowmentBase, "id" | "name">;

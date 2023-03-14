@@ -29,9 +29,11 @@ export default function Cards({ classes = "" }: { classes?: string }) {
               : "grid-cols-[repeat(auto-fit,minmax(245px,1fr))]"
           } gap-4 content-start`}
         >
-          {endowments.map((endow) => (
-            <Card {...endow} key={endow.id} />
-          ))}
+          {endowments
+            .filter((endowment) => endowment.published)
+            .map((endow) => (
+              <Card {...endow} key={endow.id} />
+            ))}
 
           {hasMore && (
             <button
