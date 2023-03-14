@@ -2,6 +2,7 @@ import { PropsWithChildren } from "react";
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "./types";
 import { UNSDG_NUMS } from "types/lists";
+import Toggle from "pages/Launchpad/common/Toggle";
 import ActivityCountries from "components/ActivityCountries";
 import CountrySelector from "components/CountrySelector";
 import Icon from "components/Icon";
@@ -37,6 +38,9 @@ export default function Form() {
         <Icon type="Back" />
         <span>Back to profile</span>
       </Link>
+      <Toggle<FV> name="published" classes={{ container: "ml-auto text-sm" }}>
+        Publish profile
+      </Toggle>
       <Group
         title="Public profile information"
         description="The following information will be used to populate your public
