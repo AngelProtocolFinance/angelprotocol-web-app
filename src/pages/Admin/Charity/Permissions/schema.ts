@@ -7,7 +7,7 @@ export type FormField = Omit<SettingsPermissions, "delegate"> & {
   name: string;
 } & (
     | { delegate: true; delegate_address: string }
-    | { delegate: false; delegate_address: undefined }
+    | { delegate: false; delegate_address: "" }
   );
 
 type FormFields = {
