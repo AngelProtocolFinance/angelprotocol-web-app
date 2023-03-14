@@ -1,7 +1,7 @@
 import { Controller, useFormContext } from "react-hook-form";
 import { useAdminResources } from "pages/Admin/Guard";
 import TableSection, { Cells } from "components/TableSection";
-import { FormValues } from "./schema";
+import { FormField, FormValues } from "./schema";
 
 export default function Table({ className = "" }) {
   const { endow_type } = useAdminResources<"charity">();
@@ -26,6 +26,7 @@ export default function Table({ className = "" }) {
           {endow_type === "normal" ? <>Governance</> : null}
           <>Delegate</>
           <>Delegate address</>
+          {endow_type === "normal" ? <>Actions</> : null}
         </Cells>
       </TableSection>
       <TableSection
@@ -102,6 +103,23 @@ export default function Table({ className = "" }) {
                   }
                   disabled={!value.delegate || isSubmitting}
                 />
+
+                {endow_type === "normal" ? (
+                  <button
+                    type="button"
+                    className="btn-red py-1 px-2 rounded font-semibold text-xs uppercase text-white tracking-wider"
+                    disabled={!value.modifiable}
+                    onClick={() => {
+                      const newValue: FormField = {
+                        ...value,
+                        modifiable: false,
+                      };
+                      onChange(newValue);
+                    }}
+                  >
+                    {value.modifiable ? "Lock forever" : "Locked forever"}
+                  </button>
+                ) : null}
               </Cells>
             )}
           />
