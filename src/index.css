@@ -90,7 +90,7 @@
   }
 
   .checkbox {
-    @apply appearance-none relative w-4 h-4 shrink-0 cursor-pointer disabled:cursor-default border border-gray-d2 dark:border-white disabled:border-none rounded focus:outline-none focus:ring-2 focus:ring-orange disabled:bg-gray-l5 disabled:dark:bg-bluegray;
+    @apply appearance-none relative w-4 h-4 shrink-0 cursor-pointer disabled:cursor-default border border-gray-d2 dark:border-white rounded focus:outline-none focus:ring-2 focus:ring-orange disabled:bg-gray-l5 disabled:dark:bg-bluegray;
   }
   .checkbox:checked::before {
     content: "✓";
@@ -99,10 +99,10 @@
     @apply text-sm absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2;
   }
   .checkbox-orange {
-    @apply checkbox focus:ring-orange-l2;
+    @apply checkbox focus:ring-orange-l2 disabled:border-gray-l3 disabled:dark:border-gray;
   }
   .checkbox-orange:checked {
-    @apply border-none bg-orange text-white;
+    @apply border-none bg-orange text-white disabled:bg-gray-l3 disabled:dark:bg-bluegray;
   }
 }
 
