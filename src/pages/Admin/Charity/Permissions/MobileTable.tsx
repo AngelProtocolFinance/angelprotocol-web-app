@@ -1,12 +1,14 @@
 import { Disclosure } from "@headlessui/react";
 import { useFormContext } from "react-hook-form";
 import { useAdminResources } from "pages/Admin/Guard";
+import { useGetWallet } from "contexts/WalletContext";
 import { DrawerIcon } from "components/Icon";
 import { CheckField, Field } from "components/form";
 import { FormValues } from "./schema";
 
 export default function MobileTable({ className = "", disabled = false }) {
   const { endow_type } = useAdminResources<"charity">();
+  const { wallet } = useGetWallet();
   const { getValues, register, watch } = useFormContext<FormValues>();
 
   const { initialValues, ...formValues } = getValues();
@@ -28,7 +30,12 @@ export default function MobileTable({ className = "", disabled = false }) {
         >
           {({ open }) => {
             const modifiable = watch(`${formField}.modifiable`);
-            const isDisabled = !modifiable || disabled;
+            const delegate = watch(`${formField}.delegate`);
+            const delegate_address = watch(`${formField}.delegate_address`);
+            const isDisabled =
+              !modifiable ||
+              disabled ||
+              (delegate && delegate_address !== wallet?.address);
             return (
               <>
                 <Disclosure.Button

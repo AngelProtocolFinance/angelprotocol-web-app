@@ -1,10 +1,13 @@
 import { Controller, useFormContext } from "react-hook-form";
 import { useAdminResources } from "pages/Admin/Guard";
+import { useGetWallet } from "contexts/WalletContext";
 import TableSection, { Cells } from "components/TableSection";
 import { FormField, FormValues } from "./schema";
 
 export default function Table({ className = "", disabled = false }) {
   const { endow_type } = useAdminResources<"charity">();
+  const { wallet } = useGetWallet();
+
   const { control, getValues } = useFormContext<FormValues>();
 
   const { initialValues, ...formValues } = getValues();
@@ -44,7 +47,10 @@ export default function Table({ className = "", disabled = false }) {
             control={control}
             name={formField}
             render={({ field: { value, onChange } }) => {
-              const isDisabled = !value.modifiable || disabled;
+              const isDisabled =
+                !value.modifiable ||
+                disabled ||
+                (value.delegate && value.delegate_address !== wallet?.address);
               return (
                 <Cells
                   type="td"
