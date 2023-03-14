@@ -32,16 +32,26 @@ export const tokenAmountString = Yup.lazy((value) =>
     : tokenConstraint
 );
 
-export const requiredPositiveNumber = Yup.lazy((value) =>
-  value === "" ? Yup.string().required("required") : positiveNumberConstraint
-);
-export const positiveNumber = Yup.lazy((value) =>
-  value === "" ? Yup.string() : positiveNumberConstraint
-);
-export const percentString = Yup.lazy((value) =>
-  value === "" ? Yup.string() : percentConstraint
-);
+function lazyNumber(constraint: any, isRequired?: true) {
+  return Yup.lazy((value) => {
+    if (value === "") {
+      return isRequired ? Yup.string().required("required") : Yup.string();
+      //number fields treated as number
+    } else if (isNaN(value)) {
+      return isRequired
+        ? Yup.number(/** where "" resolves to NaN */).typeError("required")
+        : Yup.mixed();
+    } else {
+      return constraint;
+    }
+  });
+}
 
-export const requiredPercent = Yup.lazy((value) =>
-  value === "" ? Yup.string().required("required") : percentConstraint
+export const requiredPositiveNumber = lazyNumber(
+  positiveNumberConstraint,
+  true
 );
+export const positiveNumber = lazyNumber(positiveNumberConstraint);
+
+export const percentString = lazyNumber(percentConstraint);
+export const requiredPercent = lazyNumber(percentConstraint, true);
