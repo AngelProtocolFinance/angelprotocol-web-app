@@ -1,4 +1,7 @@
+import * as Yup from "yup";
+import { SchemaShape } from "schemas/types";
 import { SettingsPermissions } from "types/contracts";
+import { requiredWalletAddr } from "schemas/string";
 
 export type FormField = Omit<SettingsPermissions, "delegate"> & {
   name: string;
@@ -16,3 +19,22 @@ type FormFields = {
 };
 
 export type FormValues = FormFields & { initialValues: FormFields };
+
+const deledateKey: keyof FormField = "delegate";
+
+const fieldShape: SchemaShape<FormField> = {
+  delegate_address: Yup.string().when(
+    deledateKey,
+    (delegate: FormField["delegate"], schema) =>
+      delegate ? requiredWalletAddr() : schema.optional()
+  ),
+};
+const shape: SchemaShape<FormValues> = {
+  accountFees: Yup.object().shape(fieldShape),
+  beneficiaries_allowlist: Yup.object().shape(fieldShape),
+  contributors_allowlist: Yup.object().shape(fieldShape),
+  donationSplitParams: Yup.object().shape(fieldShape),
+  profile: Yup.object().shape(fieldShape),
+};
+
+export const schema = Yup.object(shape);

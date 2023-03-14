@@ -1,10 +1,11 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { EndowmentController, SettingsPermissions } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useEndowmentControllerQuery } from "services/juno/settingsController";
 import QueryLoader from "components/QueryLoader";
 import Form from "./Form";
-import { FormField, FormValues } from "./schema";
+import { FormField, FormValues, schema } from "./schema";
 
 export default function Permissions() {
   const { id } = useAdminResources();
@@ -51,6 +52,7 @@ function InnerComponent({ controller }: { controller: EndowmentController }) {
       initialValues,
       ...initialValues,
     },
+    resolver: yupResolver(schema),
   });
 
   return (
