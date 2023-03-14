@@ -101,7 +101,7 @@ export default function Table({ className = "" }) {
                   disabled={!value.delegate || !value.modifiable}
                 />
 
-                {endow_type !== "normal" ? (
+                {endow_type === "normal" ? (
                   <button
                     type="button"
                     className="btn-red py-1 px-2 rounded font-semibold text-xs uppercase text-white tracking-wider"
