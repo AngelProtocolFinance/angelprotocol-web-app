@@ -9,7 +9,7 @@ import {
   EndowmentStatusText,
   FundConfig,
   FundDetails,
-  RegistrarConfigPayload,
+  RegistrarConfigExtensionPayload,
   RegistrarOwnerPayload,
 } from "types/contracts";
 import { DiffSet } from "types/utils";
@@ -136,7 +136,7 @@ export type EndowmentStatusMeta = MetaConstructor<
 /** _registrar */
 export type RegistrarConfigUpdateMeta = MetaConstructor<
   "reg_config",
-  DiffSet<RegistrarConfigPayload>
+  DiffSet<RegistrarConfigExtensionPayload>
 >;
 
 export type ProposalMeta =
@@ -246,8 +246,10 @@ export type MemberUpdatorValues = ProposalBase & {
   weight: string;
 };
 
-export type RegistrarConfigValues = ProposalBase &
-  RegistrarConfigPayload & { initialConfigPayload: RegistrarConfigPayload };
+export type RegistrarConfigExtensionValues = ProposalBase &
+  RegistrarConfigExtensionPayload & {
+    initialConfigPayload: RegistrarConfigExtensionPayload;
+  };
 
 export type RegistrarOwnerValues = ProposalBase &
   RegistrarOwnerPayload & { initialOwner: string };
