@@ -36,7 +36,7 @@ export default function useSubmit() {
       return console.log(diff);
 
       const settingsController = new SettingsController(wallet);
-      const msg = createUpdateEndowmentControllerMsg(id, newValues);
+      const msg = createUpdateEndowmentControllerMsg(id, diff);
       const embeddedMsg =
         settingsController.createEmbeddedUpdateEndowmentControllerMsg(msg);
 
@@ -64,7 +64,7 @@ export default function useSubmit() {
 
 function createUpdateEndowmentControllerMsg(
   endowId: number,
-  formValues: Omit<FormValues, "initialValues">
+  formValues: Partial<Omit<FormValues, "initialValues">>
 ): UpdateEndowmentControllerMsg {
   const accountFees = createField(formValues.accountFees);
   const beneficiaries_allowlist = createField(formValues.accountFees);
@@ -92,7 +92,11 @@ function createUpdateEndowmentControllerMsg(
   return updateMsg;
 }
 
-function createField(formField: FormField): SettingsPermissions {
+function createField(formField?: FormField): SettingsPermissions | undefined {
+  if (!formField) {
+    return undefined;
+  }
+
   const result: SettingsPermissions = {
     gov_controlled: formField.gov_controlled,
     modifiable: formField.modifiable,
