@@ -5,7 +5,7 @@ import { DrawerIcon } from "components/Icon";
 import { CheckField, Field } from "components/form";
 import { FormValues } from "./schema";
 
-export default function MobileTable({ className = "" }) {
+export default function MobileTable({ className = "", disabled = false }) {
   const { endow_type } = useAdminResources<"charity">();
   const { getValues, register, watch } = useFormContext<FormValues>();
 
@@ -54,7 +54,7 @@ export default function MobileTable({ className = "" }) {
                         label: "uppercase text-xs font-bold",
                         input: "checkbox-orange",
                       }}
-                      disabled={!modifiable}
+                      disabled={!modifiable || disabled}
                     >
                       Admin wallet
                     </CheckField>
@@ -64,7 +64,7 @@ export default function MobileTable({ className = "" }) {
                         label: "uppercase text-xs font-bold",
                         input: "checkbox-orange",
                       }}
-                      disabled={!modifiable}
+                      disabled={!modifiable || disabled}
                     >
                       Governance
                     </CheckField>
@@ -74,7 +74,7 @@ export default function MobileTable({ className = "" }) {
                         label: "uppercase text-xs font-bold",
                         input: "checkbox-orange",
                       }}
-                      disabled={!modifiable}
+                      disabled={!modifiable || disabled}
                     >
                       Delegate
                     </CheckField>
@@ -88,7 +88,7 @@ export default function MobileTable({ className = "" }) {
                       label: "uppercase text-xs font-bold",
                       input: "field-input truncate h-8",
                     }}
-                    disabled={!modifiable}
+                    disabled={!modifiable || disabled}
                   />
                   {endow_type === "normal" ? (
                     <div className="flex justify-between items-center p-4">
@@ -97,7 +97,7 @@ export default function MobileTable({ className = "" }) {
                         type="button"
                         className="btn-red p-2 rounded font-semibold text-xs uppercase text-white tracking-wider"
                         {...register(`${formField}.modifiable`)}
-                        disabled={!modifiable}
+                        disabled={!modifiable || disabled}
                       >
                         {modifiable ? "Lock forever" : "Locked forever"}
                       </button>

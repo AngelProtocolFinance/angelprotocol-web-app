@@ -58,8 +58,7 @@ export default function useSubmit() {
   }
 
   return {
-    isSubmitting,
-    modifiable: endow_type === "normal",
+    disabled: isSubmitting || endow_type === "charity",
     reset,
     submit: handleSubmit(onSubmit),
   };

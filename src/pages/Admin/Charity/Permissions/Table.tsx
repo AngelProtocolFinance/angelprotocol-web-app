@@ -3,11 +3,13 @@ import { useAdminResources } from "pages/Admin/Guard";
 import TableSection, { Cells } from "components/TableSection";
 import { FormField, FormValues } from "./schema";
 
-export default function Table({ className = "" }) {
+export default function Table({ className = "", disabled = false }) {
   const { endow_type } = useAdminResources<"charity">();
   const { control, getValues } = useFormContext<FormValues>();
 
   const { initialValues, ...formValues } = getValues();
+
+  const isNormal = endow_type === "normal";
 
   return (
     <table
@@ -23,10 +25,10 @@ export default function Table({ className = "" }) {
         >
           <>Action</>
           <>Admin wallet</>
-          {endow_type === "normal" ? <>Governance</> : null}
+          {isNormal ? <>Governance</> : null}
           <>Delegate</>
           <>Delegate address</>
-          {endow_type === "normal" ? <>Actions</> : null}
+          {isNormal ? <>Actions</> : null}
         </Cells>
       </TableSection>
       <TableSection
@@ -52,7 +54,7 @@ export default function Table({ className = "" }) {
                   type="checkbox"
                   className="checkbox-orange"
                   checked={value.owner_controlled}
-                  disabled={!value.modifiable}
+                  disabled={!value.modifiable || disabled}
                   onChange={() =>
                     onChange({
                       ...value,
@@ -60,12 +62,12 @@ export default function Table({ className = "" }) {
                     })
                   }
                 />
-                {endow_type === "normal" ? (
+                {isNormal ? (
                   <input
                     type="checkbox"
                     className="checkbox-orange"
                     checked={value.gov_controlled}
-                    disabled={!value.modifiable}
+                    disabled={!value.modifiable || disabled}
                     onChange={() =>
                       onChange({
                         ...value,
@@ -78,7 +80,7 @@ export default function Table({ className = "" }) {
                   type="checkbox"
                   className="checkbox-orange"
                   checked={value.delegate}
-                  disabled={!value.modifiable}
+                  disabled={!value.modifiable || disabled}
                   onChange={() =>
                     onChange({
                       ...value,
@@ -98,14 +100,14 @@ export default function Table({ className = "" }) {
                       delegate_address: e.target.value,
                     })
                   }
-                  disabled={!value.delegate || !value.modifiable}
+                  disabled={!value.delegate || !value.modifiable || disabled}
                 />
 
-                {endow_type === "normal" ? (
+                {isNormal ? (
                   <button
                     type="button"
                     className="btn-red py-1 px-2 rounded font-semibold text-xs uppercase text-white tracking-wider"
-                    disabled={!value.modifiable}
+                    disabled={!value.modifiable || disabled}
                     onClick={() => {
                       const newValue: FormField = {
                         ...value,
