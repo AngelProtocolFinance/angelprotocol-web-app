@@ -29,21 +29,21 @@ export default function MobileTable({ className = "", disabled = false }) {
         <div className="py-3 px-4">Action</div>
       </div>
 
-      {FORM_KEYS.map((formField) => (
+      {FORM_KEYS.map((fieldName) => (
         <Disclosure
-          key={`mob-table-row-${formField}`}
+          key={`mob-table-row-${fieldName}`}
           as="div"
           className="text-sm odd:bg-orange-l6 dark:even:bg-blue-d6 dark:odd:bg-blue-d7 w-full border-b last:border-0 border-prim"
         >
           {({ open }) => {
-            const delegate = watch(`${formField}.delegate`);
-            const name = watch(`${formField}.name`);
-            const initDelegate = watch(`initialValues.${formField}.delegate`);
+            const delegate = watch(`${fieldName}.delegate`);
+            const name = watch(`${fieldName}.name`);
+            const initDelegate = watch(`initialValues.${fieldName}.delegate`);
             const initDelegateAddress = watch(
-              `initialValues.${formField}.delegate_address`
+              `initialValues.${fieldName}.delegate_address`
             );
             const initModifiable = watch(
-              `initialValues.${formField}.modifiable`
+              `initialValues.${fieldName}.modifiable`
             );
             const isDisabled =
               !initModifiable ||
@@ -73,7 +73,7 @@ export default function MobileTable({ className = "", disabled = false }) {
                 <Disclosure.Panel className="w-full font-work divide-y divide-prim border-t border-prim">
                   <div className="grid gap-4 py-3 px-4">
                     <CheckField<FormValues>
-                      name={`${formField}.owner_controlled`}
+                      name={`${fieldName}.owner_controlled`}
                       classes={{
                         label: "uppercase text-xs font-bold",
                         input: "checkbox-orange",
@@ -83,7 +83,7 @@ export default function MobileTable({ className = "", disabled = false }) {
                       Admin wallet
                     </CheckField>
                     <CheckField<FormValues>
-                      name={`${formField}.gov_controlled`}
+                      name={`${fieldName}.gov_controlled`}
                       classes={{
                         label: "uppercase text-xs font-bold",
                         input: "checkbox-orange",
@@ -93,7 +93,7 @@ export default function MobileTable({ className = "", disabled = false }) {
                       Governance
                     </CheckField>
                     <CheckField<FormValues>
-                      name={`${formField}.delegate`}
+                      name={`${fieldName}.delegate`}
                       classes={{
                         label: "uppercase text-xs font-bold",
                         input: "checkbox-orange",
@@ -104,7 +104,7 @@ export default function MobileTable({ className = "", disabled = false }) {
                     </CheckField>
                   </div>
                   <Field<FormValues>
-                    name={`${formField}.delegate_address`}
+                    name={`${fieldName}.delegate_address`}
                     label="Delegate address"
                     placeholder="juno1..."
                     classes={{
@@ -118,7 +118,7 @@ export default function MobileTable({ className = "", disabled = false }) {
                     /** Color #54595F is hardcoded because this is the only place where it's necessary */
                     <div className="flex justify-between items-center p-4">
                       <span className="font-bold uppercase">Actions</span>
-                      <LockButton disabled={isDisabled} name={formField} />
+                      <LockButton disabled={isDisabled} name={fieldName} />
                     </div>
                   ) : null}
                 </Disclosure.Panel>

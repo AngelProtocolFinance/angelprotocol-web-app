@@ -48,14 +48,14 @@ export default function Table({ className = "", disabled = false }) {
         rowClass="dark:bg-blue-d6 divide-x divide-prim"
         selectedClass="bg-orange-l5 dark:bg-blue-d4"
       >
-        {FORM_KEYS.map((formField) => {
-          const delegate = watch(`${formField}.delegate`);
-          const name = watch(`${formField}.name`);
-          const initDelegate = watch(`initialValues.${formField}.delegate`);
+        {FORM_KEYS.map((fieldName) => {
+          const delegate = watch(`${fieldName}.delegate`);
+          const name = watch(`${fieldName}.name`);
+          const initDelegate = watch(`initialValues.${fieldName}.delegate`);
           const initDelegateAddress = watch(
-            `initialValues.${formField}.delegate_address`
+            `initialValues.${fieldName}.delegate_address`
           );
-          const initModifiable = watch(`initialValues.${formField}.modifiable`);
+          const initModifiable = watch(`initialValues.${fieldName}.modifiable`);
           const isDisabled =
             !initModifiable ||
             disabled ||
@@ -65,7 +65,7 @@ export default function Table({ className = "", disabled = false }) {
 
           return (
             <Cells
-              key={`table-row-${formField}`}
+              key={`table-row-${fieldName}`}
               type="td"
               cellClass="py-3 px-4 border-t border-prim min-w-[116px] max-w-xs truncate first:rounded-bl last:rounded-br"
             >
@@ -74,21 +74,21 @@ export default function Table({ className = "", disabled = false }) {
               <input
                 type="checkbox"
                 className="checkbox-orange"
-                {...register(`${formField}.owner_controlled`)}
+                {...register(`${fieldName}.owner_controlled`)}
                 disabled={isDisabled}
               />
               {isNormal ? (
                 <input
                   type="checkbox"
                   className="checkbox-orange"
-                  {...register(`${formField}.gov_controlled`)}
+                  {...register(`${fieldName}.gov_controlled`)}
                   disabled={isDisabled}
                 />
               ) : null}
               <input
                 type="checkbox"
                 className="checkbox-orange"
-                {...register(`${formField}.delegate`)}
+                {...register(`${fieldName}.delegate`)}
                 disabled={isDisabled}
               />
 
@@ -96,12 +96,12 @@ export default function Table({ className = "", disabled = false }) {
                 type="text"
                 className="field-input w-full truncate py-1.5"
                 placeholder="Wallet address..."
-                {...register(`${formField}.delegate_address`)}
+                {...register(`${fieldName}.delegate_address`)}
                 disabled={!delegate || isDisabled}
               />
 
               {isNormal ? (
-                <LockButton disabled={isDisabled} name={formField} />
+                <LockButton disabled={isDisabled} name={fieldName} />
               ) : null}
             </Cells>
           );
