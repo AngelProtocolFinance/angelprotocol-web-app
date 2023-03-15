@@ -2,7 +2,17 @@ import { Controller, useFormContext } from "react-hook-form";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useGetWallet } from "contexts/WalletContext";
 import TableSection, { Cells } from "components/TableSection";
+import { getTypedKeys } from "helpers";
 import { FormField, FormValues } from "./schema";
+
+const formValues: FormValues["initialValues"] = {
+  accountFees: {} as FormField,
+  beneficiaries_allowlist: {} as FormField,
+  contributors_allowlist: {} as FormField,
+  donationSplitParams: {} as FormField,
+  profile: {} as FormField,
+};
+const FORM_KEYS = getTypedKeys(formValues);
 
 export default function Table({ className = "", disabled = false }) {
   const { endow_type } = useAdminResources<"charity">();
@@ -10,7 +20,7 @@ export default function Table({ className = "", disabled = false }) {
 
   const { control, getValues } = useFormContext<FormValues>();
 
-  const { initialValues, ...formValues } = getValues();
+  const { initialValues } = getValues();
 
   const isNormal = endow_type === "normal";
 
@@ -39,9 +49,7 @@ export default function Table({ className = "", disabled = false }) {
         rowClass="dark:bg-blue-d6 divide-x divide-prim"
         selectedClass="bg-orange-l5 dark:bg-blue-d4"
       >
-        {(
-          Object.keys(formValues) as (keyof Omit<FormValues, "initialValues">)[]
-        ).map((formField) => (
+        {FORM_KEYS.map((formField) => (
           <Controller
             key={`table-row-${formField}`}
             control={control}

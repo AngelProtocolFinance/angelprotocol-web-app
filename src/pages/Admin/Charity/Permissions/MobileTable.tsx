@@ -4,6 +4,7 @@ import { useAdminResources } from "pages/Admin/Guard";
 import { useGetWallet } from "contexts/WalletContext";
 import { DrawerIcon } from "components/Icon";
 import { CheckField, Field } from "components/form";
+import { getTypedKeys } from "helpers";
 import { FormField, FormValues } from "./schema";
 
 const formValues: FormValues["initialValues"] = {
@@ -13,9 +14,6 @@ const formValues: FormValues["initialValues"] = {
   donationSplitParams: {} as FormField,
   profile: {} as FormField,
 };
-function getTypedKeys<T extends object>(obj: T): Array<keyof T> {
-  return Object.keys(obj) as Array<keyof T>;
-}
 const FORM_KEYS = getTypedKeys(formValues);
 
 export default function MobileTable({ className = "", disabled = false }) {
