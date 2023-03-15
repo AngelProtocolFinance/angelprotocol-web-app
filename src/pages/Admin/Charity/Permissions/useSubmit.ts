@@ -55,7 +55,7 @@ export default function useSubmit() {
   }
 
   return {
-    disabled: isSubmitting || !propMeta.isAuthorized,
+    isSubmitting,
     reset,
     submit: handleSubmit(onSubmit),
   };

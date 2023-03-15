@@ -3,6 +3,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { EndowmentController, SettingsPermissions } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useEndowmentControllerQuery } from "services/juno/settingsController";
+import { useGetWallet } from "contexts/WalletContext";
 import QueryLoader from "components/QueryLoader";
 import Form from "./Form";
 import { FormField, FormValues, schema } from "./schema";
@@ -55,9 +56,18 @@ function InnerComponent({ controller }: { controller: EndowmentController }) {
     resolver: yupResolver(schema),
   });
 
+  const { wallet } = useGetWallet();
+  const {
+    propMeta: { isAuthorized },
+  } = useAdminResources();
+
+  const isUserDelegate =
+    controller.endowment_controller.delegate &&
+    controller.endowment_controller.delegate.address === wallet?.address;
+
   return (
     <FormProvider {...methods}>
-      <Form />
+      <Form disabled={!isAuthorized || !isUserDelegate} />
     </FormProvider>
   );
 }
