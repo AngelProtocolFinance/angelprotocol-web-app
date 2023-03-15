@@ -9,7 +9,7 @@ import { FormValues } from "./schema";
 export default function MobileTable({ className = "", disabled = false }) {
   const { endow_type } = useAdminResources<"charity">();
   const { wallet } = useGetWallet();
-  const { getValues, register, watch } = useFormContext<FormValues>();
+  const { getValues, setValue, watch } = useFormContext<FormValues>();
 
   const { initialValues, ...formValues } = getValues();
 
@@ -109,7 +109,9 @@ export default function MobileTable({ className = "", disabled = false }) {
                       <button
                         type="button"
                         className="btn-red p-2 rounded font-semibold text-xs uppercase text-white tracking-wider"
-                        {...register(`${formField}.modifiable`)}
+                        onClick={() =>
+                          setValue(`${formField}.modifiable`, false)
+                        }
                         disabled={isDisabled}
                       >
                         {modifiable ? "Lock forever" : "Locked forever"}
