@@ -4,14 +4,24 @@ import { useAdminResources } from "pages/Admin/Guard";
 import { useGetWallet } from "contexts/WalletContext";
 import { DrawerIcon } from "components/Icon";
 import { CheckField, Field } from "components/form";
-import { FormValues } from "./schema";
+import { FormField, FormValues } from "./schema";
+
+const formValues: FormValues["initialValues"] = {
+  accountFees: {} as FormField,
+  beneficiaries_allowlist: {} as FormField,
+  contributors_allowlist: {} as FormField,
+  donationSplitParams: {} as FormField,
+  profile: {} as FormField,
+};
+function getTypedKeys<T extends object>(obj: T): Array<keyof T> {
+  return Object.keys(obj) as Array<keyof T>;
+}
+const FORM_KEYS = getTypedKeys(formValues);
 
 export default function MobileTable({ className = "", disabled = false }) {
   const { endow_type } = useAdminResources<"charity">();
   const { wallet } = useGetWallet();
-  const { getValues, setValue, watch } = useFormContext<FormValues>();
-
-  const { initialValues, ...formValues } = getValues();
+  const { setValue, watch } = useFormContext<FormValues>();
 
   return (
     <div className={`${className} border border-prim rounded-t`}>
@@ -20,9 +30,7 @@ export default function MobileTable({ className = "", disabled = false }) {
         <div className="py-3 px-4">Action</div>
       </div>
 
-      {(
-        Object.keys(formValues) as (keyof Omit<FormValues, "initialValues">)[]
-      ).map((formField) => (
+      {FORM_KEYS.map((formField) => (
         <Disclosure
           key={`mob-table-row-${formField}`}
           as="div"
