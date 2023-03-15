@@ -10,9 +10,13 @@ export default function LockDuration({ classes = "" }) {
   return (
     <div className={`grid sm:grid-cols-3 gap-3 ${classes}`}>
       <h3 className="col-span-full font-bold">Choose lock duration</h3>
-      <LockOption register={register("lockPeriod")} id="duration" value={1} />
-      <LockOption register={register("lockPeriod")} id="duration" value={7} />
-      <LockOption register={register("lockPeriod")} id="duration" value={14} />
+      <LockOption register={register("lockPeriod")} id="duration" value={"1"} />
+      <LockOption register={register("lockPeriod")} id="duration" value={"7"} />
+      <LockOption
+        register={register("lockPeriod")}
+        id="duration"
+        value={"14"}
+      />
     </div>
   );
 }
@@ -37,7 +41,7 @@ function LockOption({ register, id, value }: OptionProps) {
         htmlFor={id + value}
         className="text-[0.9375rem] uppercase font-bold"
       >
-        {value} {value === 1 ? "day" : "days"}
+        {value} {value === "1" ? "day" : "days"}
       </label>
       <p>
         <span className="text-sm text-gray-d1 dark:text-gray mr-2">

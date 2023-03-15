@@ -16,12 +16,14 @@ export default function Form({
   description,
   rating,
 }: TStrategy) {
-  const { getValues } = useFormContext<FV>();
+  const { getValues, handleSubmit } = useFormContext<FV>();
   const { isSending } = useSubmit("13123", "liquid");
   const { closeModal } = useModalContext();
   return (
     <Modal
-      onSubmit={() => alert("show summary")}
+      onSubmit={handleSubmit(() => {
+        alert("show summary");
+      })}
       as="form"
       className="max-h-[95vh] overflow-y-auto max-w-[37.5rem] w-[95vw] sm:w-full fixed-center z-20 bg-gray-l6 dark:bg-blue-d6 border border-prim rounded overflow-scroll"
     >

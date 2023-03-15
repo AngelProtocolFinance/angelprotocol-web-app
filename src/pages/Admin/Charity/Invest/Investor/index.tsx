@@ -26,6 +26,7 @@ export default function Investor(props: TStrategy) {
     reValidateMode: "onChange",
     defaultValues: {
       type: "liquid",
+      lockPeriod: "1",
       token,
       tokens: [token],
       //meta

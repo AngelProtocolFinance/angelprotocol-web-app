@@ -5,7 +5,7 @@ export type FormValues = {
   token: TokenWithAmount;
 
   type: AccountType;
-  lockPeriod: 1 | 7 | 14; //days
+  lockPeriod: "1" | "7" | "14"; //days
 
   //meta
   tokens: TokenWithAmount[];
