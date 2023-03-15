@@ -36,7 +36,7 @@ export default function Form({ balances }: TStrategy) {
         tokens={getValues("tokens")}
         label="Enter the amount to invest:"
         scale={[10, 20, 50, 100, 250]}
-        classes={{ container: "px-8", label: "font-heading text-base" }}
+        classes={{ container: "px-8", label: "font-heading text-base mb-2" }}
       />
       <div className="mt-8 px-8 py-4 gap-x-3 border-t border-prim flex justify-end">
         <button

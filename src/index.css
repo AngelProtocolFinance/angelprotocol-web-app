@@ -85,6 +85,10 @@
     @apply w-full rounded text-sm px-4 py-3.5 bg-transparent placeholder:text-gray-d1 dark:placeholder:text-gray border border-gray-l3 dark:border-bluegray focus:outline-none focus:border-gray-d1 focus:dark:border-blue-l2 disabled:bg-gray-l5 disabled:text-gray-d1 disabled:dark:text-gray disabled:dark:bg-bluegray-d1 aria-disabled:bg-gray-l5 aria-disabled:text-gray-d1 aria-disabled:dark:text-gray aria-disabled:dark:bg-bluegray-d1 aria-disabled:pointer-events-none;
   }
 
+  .radio {
+    @apply cursor-pointer appearance-none h-4 relative aspect-square border rounded-full before:content-[''] before:h-2.5 before:aspect-square before:absolute-center before:rounded-full checked:before:bg-orange disabled:checked:before:bg-gray-l5 disabled:checked:before:dark:bg-bluegray;
+  }
+
   .checkbox {
     @apply appearance-none relative w-4 h-4 shrink-0 cursor-pointer disabled:cursor-default border border-gray-d2 dark:border-white rounded focus:outline-none focus:ring-2 focus:ring-orange disabled:bg-gray-l5 disabled:dark:bg-bluegray;
   }

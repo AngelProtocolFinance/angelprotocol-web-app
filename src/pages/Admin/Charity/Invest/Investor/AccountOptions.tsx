@@ -60,7 +60,7 @@ function AccountOption({ register, type, balance, id }: OptionProps) {
         id={id + type}
         type="radio"
         value={type}
-        className="row-span-2 cursor-pointer appearance-none h-4 relative aspect-square border rounded-full before:content-[''] before:h-2.5 before:aspect-square before:absolute-center before:rounded-full checked:before:bg-orange disabled:checked:before:bg-gray-l5 disabled:checked:before:dark:bg-bluegray"
+        className="row-span-2 radio"
       />
       <label
         htmlFor={id + type}
