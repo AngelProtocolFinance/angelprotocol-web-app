@@ -45,6 +45,7 @@ export default function Form(props: {
         withGiftcard
         withBalance
         label="Enter the donation amount:"
+        classes={{ label: "text-lg" }}
       />
       {!props.hideAdvOpts && (
         <AdvancedOptions classes="mt-10" unfold={props.unfoldAdvOpts} />

@@ -54,7 +54,7 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
       <div className="flex max-sm:flex-col max-sm:items-start items-center mb-1">
         <label
           htmlFor="amount"
-          className="text-lg font-bold mr-auto max-sm:mb-2"
+          className={`font-bold mr-auto max-sm:mb-2 ${classes?.label ?? ""}`}
         >
           {label}
         </label>
