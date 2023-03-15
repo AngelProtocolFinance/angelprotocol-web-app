@@ -34,6 +34,7 @@ export default function Form({ classes = "" }) {
         tokens={getValues("tokens")}
         label="Enter the donation amount:"
         scale={[10, 20, 50, 100, 250]}
+        withBalance
       />
 
       <Recipient classes="mt-8" />

@@ -20,6 +20,7 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
   tokens,
   name,
   withGiftcard,
+  withBalance,
   scale,
   classes,
 }: Props<T, K>) {
@@ -57,11 +58,13 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
         >
           {label}
         </label>
-        <Balance
-          token={token}
-          onSetAmount={onSetAmount}
-          isGiftEnabled={!!withGiftcard}
-        />
+        {withBalance && (
+          <Balance
+            token={token}
+            onSetAmount={onSetAmount}
+            isGiftEnabled={!!withGiftcard}
+          />
+        )}
       </div>
 
       <div

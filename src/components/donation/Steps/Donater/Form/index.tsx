@@ -43,6 +43,7 @@ export default function Form(props: {
         name="token"
         tokens={getValues("tokens")}
         withGiftcard
+        withBalance
         label="Enter the donation amount:"
       />
       {!props.hideAdvOpts && (
