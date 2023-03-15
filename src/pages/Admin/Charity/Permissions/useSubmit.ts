@@ -48,7 +48,7 @@ export default function useSubmit() {
 
         const adminContract = new CW3(wallet, cw3);
         msg = adminContract.createProposalMsg(
-          "Update permission settings",
+          `Update permission settings for endowment id:${id}`,
           `Update permission settings for endowment id:${id}`,
           [embeddedMsg],
           JSON.stringify(meta)
