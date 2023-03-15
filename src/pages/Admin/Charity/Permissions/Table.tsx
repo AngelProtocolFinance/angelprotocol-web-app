@@ -3,6 +3,7 @@ import { useAdminResources } from "pages/Admin/Guard";
 import { useGetWallet } from "contexts/WalletContext";
 import TableSection, { Cells } from "components/TableSection";
 import { getTypedKeys } from "helpers";
+import LockButton from "./LockButton";
 import { FormField, FormValues } from "./schema";
 
 const formValues: FormValues["initialValues"] = {
@@ -18,7 +19,7 @@ export default function Table({ className = "", disabled = false }) {
   const { endow_type } = useAdminResources<"charity">();
   const { wallet } = useGetWallet();
 
-  const { register, setValue, watch } = useFormContext<FormValues>();
+  const { register, watch } = useFormContext<FormValues>();
 
   const isNormal = endow_type === "normal";
 
@@ -49,7 +50,6 @@ export default function Table({ className = "", disabled = false }) {
       >
         {FORM_KEYS.map((formField) => {
           const delegate = watch(`${formField}.delegate`);
-          const currModifiable = watch(`${formField}.modifiable`);
           const name = watch(`${formField}.name`);
           const initDelegate = watch(`initialValues.${formField}.delegate`);
           const initDelegateAddress = watch(
@@ -101,19 +101,7 @@ export default function Table({ className = "", disabled = false }) {
               />
 
               {isNormal ? (
-                /** Color #54595F is hardcoded because this is the only place where it's necessary */
-                <button
-                  type="button"
-                  className={`btn-red ${
-                    currModifiable ? "" : "bg-[#54595F]"
-                  } py-1 px-2 font-semibold text-xs uppercase tracking-wider`}
-                  disabled={isDisabled}
-                  onClick={() =>
-                    setValue(`${formField}.modifiable`, !currModifiable)
-                  }
-                >
-                  {currModifiable ? "Lock forever" : "Locked forever"}
-                </button>
+                <LockButton disabled={isDisabled} name={formField} />
               ) : null}
             </Cells>
           );
