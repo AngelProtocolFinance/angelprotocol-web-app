@@ -1,3 +1,4 @@
+import { EncodeObject } from "@cosmjs/proto-signing";
 import { useFormContext } from "react-hook-form";
 import { ProposalMeta } from "pages/Admin/types";
 import { useAdminResources } from "pages/Admin/Guard";
@@ -7,7 +8,7 @@ import CW3 from "contracts/CW3";
 import SettingsController from "contracts/SettingsController";
 import useCosmosTxSender from "hooks/useCosmosTxSender";
 import { isEmpty } from "helpers";
-import { getPayloadDiff } from "helpers/admin";
+import { getPayloadDiff, getTagPayloads } from "helpers/admin";
 import createUpdateEndowmentControllerMsg from "./createUpdateEndowmentControllerMsg";
 import { FormValues } from "./schema";
 
@@ -31,23 +32,35 @@ export default function useSubmit() {
       }
 
       const settingsController = new SettingsController(wallet);
-      const msg = createUpdateEndowmentControllerMsg(id, diff);
-      const embeddedMsg =
-        settingsController.createEmbeddedUpdateEndowmentControllerMsg(msg);
+      const updateMsg = createUpdateEndowmentControllerMsg(id, diff);
 
-      const meta: ProposalMeta = { type: "endow_controller" };
+      let msg: EncodeObject;
 
-      const adminContract = new CW3(wallet, cw3);
-      const proposalMsg = adminContract.createProposalMsg(
-        "Update permission settings",
-        `Update permission settings for endowment id:${id}`,
-        [embeddedMsg],
-        JSON.stringify(meta)
-      );
+      // Unauthorized & non-delegated users wouldn't even be able to submit,
+      // making it safe to assume they are either of those
+      if (propMeta.isAuthorized) {
+        const embeddedMsg =
+          settingsController.createEmbeddedUpdateEndowmentControllerMsg(
+            updateMsg
+          );
+
+        const meta: ProposalMeta = { type: "endow_controller" };
+
+        const adminContract = new CW3(wallet, cw3);
+        msg = adminContract.createProposalMsg(
+          "Update permission settings",
+          `Update permission settings for endowment id:${id}`,
+          [embeddedMsg],
+          JSON.stringify(meta)
+        );
+      } else {
+        msg = settingsController.createUpdateEndowmentControllerMsg(updateMsg);
+      }
 
       await sendTx({
-        msgs: [proposalMsg],
+        msgs: [msg],
         ...propMeta,
+        tagPayloads: getTagPayloads(propMeta.willExecute && "endow_controller"),
       });
     } catch (error) {
       handleError(error);

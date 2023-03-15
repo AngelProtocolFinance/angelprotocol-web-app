@@ -12,4 +12,10 @@ export default class SettingsController extends Contract {
       update_endowment_controller: payload,
     });
   }
+
+  createUpdateEndowmentControllerMsg(payload: UpdateEndowmentControllerMsg) {
+    return this.createExecuteContractMsg(SettingsController.address, {
+      update_endowment_controller: payload,
+    });
+  }
 }
