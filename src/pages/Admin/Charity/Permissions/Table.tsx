@@ -18,9 +18,7 @@ export default function Table({ className = "", disabled = false }) {
   const { endow_type } = useAdminResources<"charity">();
   const { wallet } = useGetWallet();
 
-  const { getValues, register, setValue, watch } = useFormContext<FormValues>();
-
-  const { initialValues } = getValues();
+  const { register, setValue, watch } = useFormContext<FormValues>();
 
   const isNormal = endow_type === "normal";
 
@@ -53,12 +51,18 @@ export default function Table({ className = "", disabled = false }) {
           const delegate = watch(`${formField}.delegate`);
           const currModifiable = watch(`${formField}.modifiable`);
           const name = watch(`${formField}.name`);
+          const initDelegate = watch(`initialValues.${formField}.delegate`);
+          const initDelegateAddress = watch(
+            `initialValues.${formField}.delegate_address`
+          );
+          const initModifiable = watch(`initialValues.${formField}.modifiable`);
           const isDisabled =
-            !initialValues[formField].modifiable ||
+            !initModifiable ||
             disabled ||
-            (initialValues[formField].delegate &&
-              !!initialValues[formField].delegate_address &&
-              initialValues[formField].delegate_address !== wallet?.address);
+            (initDelegate &&
+              !!initDelegateAddress &&
+              initDelegateAddress !== wallet?.address);
+
           return (
             <Cells
               key={`table-row-${formField}`}
@@ -104,9 +108,9 @@ export default function Table({ className = "", disabled = false }) {
                     currModifiable ? "" : "bg-[#54595F]"
                   } py-1 px-2 font-semibold text-xs uppercase tracking-wider`}
                   disabled={isDisabled}
-                  onClick={() => {
-                    setValue(`${formField}.modifiable`, !currModifiable);
-                  }}
+                  onClick={() =>
+                    setValue(`${formField}.modifiable`, !currModifiable)
+                  }
                 >
                   {currModifiable ? "Lock forever" : "Locked forever"}
                 </button>

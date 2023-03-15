@@ -35,18 +35,23 @@ export default function MobileTable({ className = "", disabled = false }) {
           className="text-sm odd:bg-orange-l6 dark:even:bg-blue-d6 dark:odd:bg-blue-d7 w-full border-b last:border-0 border-prim"
         >
           {({ open }) => {
-            const modifiable = watch(`${formField}.modifiable`);
             const delegate = watch(`${formField}.delegate`);
+            const currModifiable = watch(`${formField}.modifiable`);
+            const name = watch(`${formField}.name`);
             const initDelegate = watch(`initialValues.${formField}.delegate`);
-            const init_delegate_address = watch(
+            const initDelegateAddress = watch(
               `initialValues.${formField}.delegate_address`
             );
+            const initModifiable = watch(
+              `initialValues.${formField}.modifiable`
+            );
             const isDisabled =
-              !modifiable ||
+              !initModifiable ||
               disabled ||
               (initDelegate &&
-                !!init_delegate_address &&
-                init_delegate_address !== wallet?.address);
+                !!initDelegateAddress &&
+                initDelegateAddress !== wallet?.address);
+
             return (
               <>
                 <Disclosure.Button
@@ -62,7 +67,7 @@ export default function MobileTable({ className = "", disabled = false }) {
                     isOpen={open}
                   />
                   <p className="text-sm p-4 text-left h-full truncate">
-                    {watch(`${formField}.name`)}
+                    {name}
                   </p>
                 </Disclosure.Button>
                 <Disclosure.Panel className="w-full font-work divide-y divide-prim border-t border-prim">
@@ -110,17 +115,20 @@ export default function MobileTable({ className = "", disabled = false }) {
                     disabled={!delegate || isDisabled}
                   />
                   {endow_type === "normal" ? (
+                    /** Color #54595F is hardcoded because this is the only place where it's necessary */
                     <div className="flex justify-between items-center p-4">
                       <span className="font-bold uppercase">Actions</span>
                       <button
                         type="button"
-                        className="btn-red p-2 rounded font-semibold text-xs uppercase text-white tracking-wider"
-                        onClick={() =>
-                          setValue(`${formField}.modifiable`, false)
-                        }
+                        className={`btn-red ${
+                          currModifiable ? "" : "bg-[#54595F]"
+                        } py-1 px-2 font-semibold text-xs uppercase tracking-wider`}
                         disabled={isDisabled}
+                        onClick={() =>
+                          setValue(`${formField}.modifiable`, !currModifiable)
+                        }
                       >
-                        {modifiable ? "Lock forever" : "Locked forever"}
+                        {currModifiable ? "Lock forever" : "Locked forever"}
                       </button>
                     </div>
                   ) : null}
