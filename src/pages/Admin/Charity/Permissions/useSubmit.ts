@@ -12,7 +12,7 @@ import createUpdateEndowmentControllerMsg from "./createUpdateEndowmentControlle
 import { FormValues } from "./schema";
 
 export default function useSubmit() {
-  const { id, cw3, propMeta, endow_type } = useAdminResources<"charity">();
+  const { id, cw3, propMeta } = useAdminResources<"charity">();
   const { handleError } = useErrorContext();
   const {
     formState: { isSubmitting },
@@ -55,8 +55,7 @@ export default function useSubmit() {
   }
 
   return {
-    disabled:
-      isSubmitting || endow_type === "charity" || !propMeta.isAuthorized,
+    disabled: isSubmitting || !propMeta.isAuthorized,
     reset,
     submit: handleSubmit(onSubmit),
   };
