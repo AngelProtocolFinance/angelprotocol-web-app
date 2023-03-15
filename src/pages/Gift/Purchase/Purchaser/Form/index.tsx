@@ -35,7 +35,7 @@ export default function Form({ classes = "" }) {
         label="Enter the donation amount:"
         scale={[10, 20, 50, 100, 250]}
         withBalance
-        classes={{ label: "text-lg" }}
+        classes={{ label: "text-lg", inputContainer: "dark:bg-blue-d6" }}
       />
 
       <Recipient classes="mt-8" />

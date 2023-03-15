@@ -69,7 +69,9 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
 
       <div
         aria-disabled={isSubmitting}
-        className="relative grid grid-cols-[1fr_auto] items-center gap-2 px-4 dark:bg-blue-d6 field-container"
+        className={`${
+          classes?.inputContainer ?? ""
+        } relative grid grid-cols-[1fr_auto] items-center gap-2 px-4 field-container`}
       >
         <input
           {...register(amountField)}

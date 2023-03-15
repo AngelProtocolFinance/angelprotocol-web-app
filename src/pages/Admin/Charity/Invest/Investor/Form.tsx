@@ -23,9 +23,9 @@ export default function Form({
     <Modal
       onSubmit={() => alert("show summary")}
       as="form"
-      className="max-h-[95vh] overflow-y-auto max-w-[37.5rem] w-[95vw] sm:w-full fixed-center z-20 bg-white dark:bg-blue-d6 border border-prim rounded overflow-scroll"
+      className="max-h-[95vh] overflow-y-auto max-w-[37.5rem] w-[95vw] sm:w-full fixed-center z-20 bg-gray-l6 dark:bg-blue-d6 border border-prim rounded overflow-scroll"
     >
-      <div className="relative border-b border-prim py-5 text-center">
+      <div className="relative border-b border-prim py-5 text-center bg-orange-l6 dark:bg-blue-d7">
         <span className="font-bold font-heading text-lg">Invest</span>
         <button
           onClick={closeModal}
@@ -35,7 +35,7 @@ export default function Form({
           <Icon type="Close" size={26.5} />
         </button>
       </div>
-      <div className="mx-8 p-4 border border-prim rounded my-6">
+      <div className="mx-8 p-4 border border-prim rounded my-6 bg-white dark:bg-blue-d7">
         <h4 className="text-xl font-bold mb-2">{name}</h4>
         <p className="text-gray-d1 dark:text-gray text-sm mb-4">
           {description}
@@ -58,6 +58,7 @@ export default function Form({
         classes={{
           container: "px-8 mt-6",
           label: "font-heading text-base mb-2",
+          inputContainer: "bg-white dark:bg-blue-d7",
         }}
       />
       <div className="mt-8 px-8 py-4 gap-x-3 border-t border-prim flex justify-end">
