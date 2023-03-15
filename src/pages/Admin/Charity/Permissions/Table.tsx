@@ -1,4 +1,4 @@
-import { Controller, useFormContext } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useGetWallet } from "contexts/WalletContext";
 import TableSection, { Cells } from "components/TableSection";
@@ -18,7 +18,7 @@ export default function Table({ className = "", disabled = false }) {
   const { endow_type } = useAdminResources<"charity">();
   const { wallet } = useGetWallet();
 
-  const { control, getValues } = useFormContext<FormValues>();
+  const { getValues, register, setValue, watch } = useFormContext<FormValues>();
 
   const { initialValues } = getValues();
 
@@ -49,100 +49,71 @@ export default function Table({ className = "", disabled = false }) {
         rowClass="dark:bg-blue-d6 divide-x divide-prim"
         selectedClass="bg-orange-l5 dark:bg-blue-d4"
       >
-        {FORM_KEYS.map((formField) => (
-          <Controller
-            key={`table-row-${formField}`}
-            control={control}
-            name={formField}
-            render={({ field: { value, onChange } }) => {
-              const isDisabled =
-                !value.modifiable ||
-                disabled ||
-                (initialValues[formField].delegate &&
-                  !!initialValues[formField].delegate_address &&
-                  initialValues[formField].delegate_address !==
-                    wallet?.address);
-              return (
-                <Cells
-                  type="td"
-                  cellClass="py-3 px-4 border-t border-prim min-w-[116px] max-w-xs truncate first:rounded-bl last:rounded-br"
+        {FORM_KEYS.map((formField) => {
+          const delegate = watch(`${formField}.delegate`);
+          const currModifiable = watch(`${formField}.modifiable`);
+          const name = watch(`${formField}.name`);
+          const isDisabled =
+            !initialValues[formField].modifiable ||
+            disabled ||
+            (initialValues[formField].delegate &&
+              !!initialValues[formField].delegate_address &&
+              initialValues[formField].delegate_address !== wallet?.address);
+          return (
+            <Cells
+              key={`table-row-${formField}`}
+              type="td"
+              cellClass="py-3 px-4 border-t border-prim min-w-[116px] max-w-xs truncate first:rounded-bl last:rounded-br"
+            >
+              <>{name}</>
+
+              <input
+                type="checkbox"
+                className="checkbox-orange"
+                {...register(`${formField}.owner_controlled`)}
+                disabled={isDisabled}
+              />
+              {isNormal ? (
+                <input
+                  type="checkbox"
+                  className="checkbox-orange"
+                  {...register(`${formField}.gov_controlled`)}
+                  disabled={isDisabled}
+                />
+              ) : null}
+              <input
+                type="checkbox"
+                className="checkbox-orange"
+                {...register(`${formField}.delegate`)}
+                disabled={isDisabled}
+              />
+
+              <input
+                type="text"
+                className="field-input w-full truncate py-1.5"
+                placeholder="Wallet address..."
+                {...register(`${formField}.delegate_address`)}
+                disabled={!delegate || isDisabled}
+              />
+
+              {isNormal ? (
+                /** Color #54595F is hardcoded because this is the only place where it's necessary */
+                <button
+                  type="button"
+                  className={`btn-red ${
+                    currModifiable ? "" : "bg-[#54595F]"
+                  } py-1 px-2 font-semibold text-xs uppercase tracking-wider`}
+                  disabled={isDisabled}
+                  onClick={() => {
+                    setValue(`${formField}.modifiable`, !currModifiable);
+                  }}
                 >
-                  <>{value.name}</>
-
-                  <input
-                    type="checkbox"
-                    className="checkbox-orange"
-                    checked={value.owner_controlled}
-                    disabled={isDisabled}
-                    onChange={() =>
-                      onChange({
-                        ...value,
-                        owner_controlled: !value.owner_controlled,
-                      })
-                    }
-                  />
-                  {isNormal ? (
-                    <input
-                      type="checkbox"
-                      className="checkbox-orange"
-                      checked={value.gov_controlled}
-                      disabled={isDisabled}
-                      onChange={() =>
-                        onChange({
-                          ...value,
-                          gov_controlled: !value.gov_controlled,
-                        })
-                      }
-                    />
-                  ) : null}
-                  <input
-                    type="checkbox"
-                    className="checkbox-orange"
-                    checked={value.delegate}
-                    disabled={isDisabled}
-                    onChange={() =>
-                      onChange({
-                        ...value,
-                        delegate: !value.delegate,
-                      })
-                    }
-                  />
-
-                  <input
-                    type="text"
-                    className="field-input w-full truncate py-1.5"
-                    placeholder="Wallet address..."
-                    value={value.delegate_address}
-                    onChange={(e) =>
-                      onChange({
-                        ...value,
-                        delegate_address: e.target.value,
-                      })
-                    }
-                    disabled={!value.delegate || isDisabled}
-                  />
-
-                  {isNormal ? (
-                    <button
-                      type="button"
-                      className="btn-red py-1 px-2 rounded font-semibold text-xs uppercase text-white tracking-wider"
-                      disabled={isDisabled}
-                      onClick={() => {
-                        const newValue: FormField = {
-                          ...value,
-                          modifiable: false,
-                        };
-                        onChange(newValue);
-                      }}
-                    >
-                      {value.modifiable ? "Lock forever" : "Locked forever"}
-                    </button>
-                  ) : null}
-                </Cells>
-              );
-            }}
-          />
-        ))}
+                  {currModifiable ? "Lock forever" : "Locked forever"}
+                </button>
+              ) : null}
+            </Cells>
+          );
+        })}
       </TableSection>
     </table>
   );
