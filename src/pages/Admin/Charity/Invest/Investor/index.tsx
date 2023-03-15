@@ -14,7 +14,7 @@ export default function Investor(props: TStrategy) {
     logo: "", //not used
     min_donation_amnt: 0.01,
     name: "", //not used
-    symbol: "USD",
+    symbol: "USDC",
     token_id: "uusd",
     type: "juno-native",
     amount: "0",

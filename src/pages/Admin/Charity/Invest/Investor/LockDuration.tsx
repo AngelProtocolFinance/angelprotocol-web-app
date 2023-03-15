@@ -8,7 +8,7 @@ export default function LockDuration({ classes = "" }) {
   if (type === "liquid") return null;
 
   return (
-    <div className={`grid grid-cols-3 gap-3 ${classes}`}>
+    <div className={`grid sm:grid-cols-3 gap-3 ${classes}`}>
       <h3 className="col-span-full font-bold">Choose lock duration</h3>
       <LockOption register={register("lockPeriod")} id="duration" value={1} />
       <LockOption register={register("lockPeriod")} id="duration" value={7} />

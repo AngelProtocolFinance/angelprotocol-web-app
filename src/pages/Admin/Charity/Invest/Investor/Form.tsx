@@ -1,8 +1,8 @@
-import { Dialog } from "@headlessui/react";
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
+import Modal from "components/Modal";
 import { LoadingStatus } from "components/Status";
 import TokenField from "components/TokenField";
 import { TStrategy } from "../strats";
@@ -10,15 +10,20 @@ import AccountOptions from "./AccountOptions";
 import LockDuration from "./LockDuration";
 import useSubmit from "./useSubmit";
 
-export default function Form({ balances }: TStrategy) {
+export default function Form({
+  balances,
+  name,
+  description,
+  rating,
+}: TStrategy) {
   const { getValues } = useFormContext<FV>();
   const { isSending } = useSubmit("13123", "liquid");
   const { closeModal } = useModalContext();
   return (
-    <Dialog.Panel
+    <Modal
       onSubmit={() => alert("show summary")}
       as="form"
-      className="max-w-[37.5rem] w-[95vw] sm:w-full fixed-center z-20 bg-white dark:bg-blue-d6 border border-prim rounded"
+      className="max-h-[95vh] overflow-y-auto max-w-[37.5rem] w-[95vw] sm:w-full fixed-center z-20 bg-white dark:bg-blue-d6 border border-prim rounded overflow-scroll"
     >
       <div className="relative border-b border-prim py-5 text-center">
         <span className="font-bold font-heading text-lg">Invest</span>
@@ -29,6 +34,19 @@ export default function Form({ balances }: TStrategy) {
         >
           <Icon type="Close" size={26.5} />
         </button>
+      </div>
+      <div className="mx-8 p-4 border border-prim rounded my-6">
+        <h4 className="text-xl font-bold mb-2">{name}</h4>
+        <p className="text-gray-d1 dark:text-gray text-sm mb-4">
+          {description}
+        </p>
+        <KeyValue
+          title="Risk rating"
+          tooltip="lorem ipsum"
+          value={rating}
+          classes="border-b border-prim"
+        />
+        <KeyValue title="Accepted Currency" value="USDC" />
       </div>
       <AccountOptions balances={balances} classes="mx-8 mb-6" />
       <LockDuration classes="mx-8" />
@@ -59,6 +77,24 @@ export default function Form({ balances }: TStrategy) {
           {isSending ? <LoadingStatus>Processing...</LoadingStatus> : "Invest"}
         </button>
       </div>
-    </Dialog.Panel>
+    </Modal>
+  );
+}
+
+type Props = {
+  classes?: string;
+  title: string;
+  value: string;
+  tooltip?: string;
+};
+function KeyValue({ title, value, tooltip, classes = "" }: Props) {
+  return (
+    <div className={`flex justify-between py-3 items-center ${classes}`}>
+      <span className="text-gray-d1 dark:text-gray">
+        {title}{" "}
+        {tooltip && <Icon type="Question" className="relative inline" />}
+      </span>
+      <span className="font-semibold text-[0.9375rem]">{value}</span>
+    </div>
   );
 }

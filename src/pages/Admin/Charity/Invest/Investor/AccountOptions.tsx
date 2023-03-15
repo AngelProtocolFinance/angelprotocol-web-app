@@ -25,7 +25,7 @@ export default function AccountOptions({ balances, classes = "" }: Props) {
   }, [type]);
 
   return (
-    <div className={`grid grid-cols-2 gap-3 ${classes}`}>
+    <div className={`grid sm:grid-cols-2 gap-3 ${classes}`}>
       <h3 className="col-span-full font-bold">
         Choose the account to invest with:
       </h3>
