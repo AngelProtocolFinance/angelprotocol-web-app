@@ -5,8 +5,8 @@ describe("getPayloadDiff", () => {
     expect(
       getPayloadDiff(
         //prettier-ignore
-        { a: 1, b: 2, c: 3 },
-        { a: 1, b: 2, c: 3 }
+        { a: 1, b: 2, c: 3, d:NaN },
+        { a: 1, b: 2, c: 3, d: NaN }
       )
     ).toStrictEqual({});
 
@@ -23,8 +23,9 @@ describe("getPayloadDiff", () => {
     expect(
       getPayloadDiff(
         //prettier-ignore
-        { a: 1, b: "a", c: 3, d:undefined, e:"", f:4, g:[1] },
-        { a: 0, b: "b", c: "", d: null, e: undefined, f: false, g: [] }
+        { a: 1, b: "a", c: 3, d:undefined, e:"", f:4, g:[1], h: 5, i: NaN},
+        //prettier-ignore
+        { a: 0, b: "b", c: "", d: null, e: undefined, f: false, g: [], h: NaN, i:NaN }
       )
     ).toStrictEqual({ a: 0, b: "b", c: "", f: false, g: [] });
   });

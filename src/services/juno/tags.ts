@@ -41,6 +41,7 @@ export enum indexfundTags {
 
 export enum registrarTags {
   config = "config",
+  config_extension = "config_extension",
 }
 
 export enum accountTags {

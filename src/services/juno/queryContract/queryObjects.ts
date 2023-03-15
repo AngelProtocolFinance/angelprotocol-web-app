@@ -7,6 +7,7 @@ export const queryObject: {
 } = {
   /** registrar */
   regConfig: { config: {} },
+  regConfigExtension: { config_extension: {} },
 
   /** index fund */
   ifFunds: { funds_list: {} },

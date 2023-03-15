@@ -21,6 +21,7 @@ import {
   Proposal,
   QueryRes as Q,
   RegistrarConfig,
+  RegistrarConfigExtension,
   ReviewCW3Config,
   Simulation,
   VotesPageOptions,
@@ -28,7 +29,16 @@ import {
 
 type Addr = { addr: string };
 export interface ContractQueries {
-  regConfig: { args: null; res: Q<RegistrarConfig>; result: RegistrarConfig };
+  regConfig: {
+    args: null;
+    res: Q<RegistrarConfig>;
+    result: RegistrarConfig;
+  };
+  regConfigExtension: {
+    args: null;
+    res: Q<RegistrarConfigExtension>;
+    result: RegistrarConfigExtension;
+  };
 
   ifFunds: {
     args: null;

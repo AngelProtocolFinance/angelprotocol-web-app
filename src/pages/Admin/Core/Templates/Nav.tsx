@@ -42,8 +42,8 @@ export default function Nav() {
       </NavLink>
 
       <Category title="Registrar" classes="mt-4" />
-      <NavLink to={routes.reg_config} className={styler}>
-        Update Config
+      <NavLink to={routes.reg_config_extension} className={styler}>
+        Contracts & WASM codes
       </NavLink>
       <NavLink to={routes.reg_owner} className={styler}>
         Update Owner
