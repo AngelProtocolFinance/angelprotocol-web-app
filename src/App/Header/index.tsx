@@ -2,14 +2,14 @@ import Airdrop from "App/Header/Airdrop";
 import { useEffect, useRef, useState } from "react";
 import { Location, matchRoutes, useLocation } from "react-router-dom";
 import { Link } from "../types";
-import Logo, { LogoProps } from "components/Logo";
+import Image, { ImageProps } from "components/Image";
 import WalletSuite from "components/WalletSuite";
 import { appRoutes } from "constants/routes";
 import DesktopNav from "./DesktopNav";
 import { Opener as MobileNavOpener } from "./MobileNav";
 import ThemeToggle from "./ThemeToggle";
 
-type Props = { classes: string; links: Link[]; logo: LogoProps };
+type Props = { classes: string; links: Link[]; logo: ImageProps };
 
 export default function Header({ classes, links, logo }: Props) {
   const location = useLocation();
@@ -41,7 +41,7 @@ export default function Header({ classes, links, logo }: Props) {
       transition-shadow ease-in-out duration-300 w-full h-[90px]`}
     >
       <div className="grid items-center gap-4 padded-container grid-cols-[auto_1fr_auto] h-full">
-        <Logo className="w-32" logo={logo} />
+        <Image className="w-32" img={logo} />
         <DesktopNav classes="hidden lg:flex" links={links} />
         <div className="flex gap-4 justify-self-end">
           <ThemeToggle classes="hidden lg:flex" />

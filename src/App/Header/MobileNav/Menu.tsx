@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import { Link } from "../../types";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
-import Logo, { LogoProps } from "components/Logo";
+import Image, { ImageProps } from "components/Image";
 import { createNavLinkStyler } from "helpers";
 
 export default function Menu({
@@ -12,7 +12,7 @@ export default function Menu({
   logo,
 }: {
   links: Link[];
-  logo: LogoProps;
+  logo: ImageProps;
 }) {
   const { closeModal } = useModalContext();
   return (
@@ -21,7 +21,7 @@ export default function Menu({
       className="fixed top-0 inset-x-0 z-10 bg-blue dark:bg-blue-d5 shadow-lg pb-8"
     >
       <div className="flex justify-between items-center w-full py-4 padded-container border-b border-gray-l2">
-        <Logo className="w-32" logo={logo} />
+        <Image className="w-32" img={logo} />
         <button
           onClick={closeModal}
           className="flex items-center text-white justify-center"

@@ -1,11 +1,11 @@
 import { Link } from "../../types";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
-import { LogoProps } from "components/Logo";
+import { ImageProps } from "components/Image";
 import useHandleScreenResize, { SCREEN_LG } from "hooks/useHandleScreenResize";
 import Menu from "./Menu";
 
-type Props = { classes: string; links: Link[]; logo: LogoProps };
+type Props = { classes: string; links: Link[]; logo: ImageProps };
 
 export function Opener({ classes, links, logo }: Props) {
   const { showModal, closeModal, isModalOpen } = useModalContext();
