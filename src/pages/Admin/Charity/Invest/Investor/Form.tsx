@@ -7,15 +7,16 @@ import { LoadingStatus } from "components/Status";
 import TokenField from "components/TokenField";
 import { TStrategy } from "../strats";
 import AccountOptions from "./AccountOptions";
+import LockDuration from "./LockDuration";
 import useSubmit from "./useSubmit";
 
 export default function Form({ balances }: TStrategy) {
-  const { getValues, handleSubmit } = useFormContext<FV>();
-  const { submit, isSending } = useSubmit("13123", "liquid");
+  const { getValues } = useFormContext<FV>();
+  const { isSending } = useSubmit("13123", "liquid");
   const { closeModal } = useModalContext();
   return (
     <Dialog.Panel
-      onSubmit={handleSubmit(submit)}
+      onSubmit={() => alert("show summary")}
       as="form"
       className="max-w-[37.5rem] w-[95vw] sm:w-full fixed-center z-20 bg-white dark:bg-blue-d6 border border-prim rounded"
     >
@@ -30,13 +31,16 @@ export default function Form({ balances }: TStrategy) {
         </button>
       </div>
       <AccountOptions balances={balances} classes="mx-8 mb-6" />
-
+      <LockDuration classes="mx-8" />
       <TokenField<FV, "token">
         name="token"
         tokens={getValues("tokens")}
         label="Enter the amount to invest:"
         scale={[10, 20, 50, 100, 250]}
-        classes={{ container: "px-8", label: "font-heading text-base mb-2" }}
+        classes={{
+          container: "px-8 mt-6",
+          label: "font-heading text-base mb-2",
+        }}
       />
       <div className="mt-8 px-8 py-4 gap-x-3 border-t border-prim flex justify-end">
         <button
