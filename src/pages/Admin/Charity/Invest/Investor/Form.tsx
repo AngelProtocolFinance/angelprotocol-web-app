@@ -5,11 +5,13 @@ import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import { LoadingStatus } from "components/Status";
 import TokenField from "components/TokenField";
+import { TStrategy } from "../strats";
+import AccountOptions from "./AccountOptions";
 import useSubmit from "./useSubmit";
 
-export default function Form({ acct_type = "liquid", address = "1231231231" }) {
+export default function Form({ balances }: TStrategy) {
   const { getValues, handleSubmit } = useFormContext<FV>();
-  const { submit, isSending } = useSubmit(address, acct_type as any);
+  const { submit, isSending } = useSubmit("13123", "liquid");
   const { closeModal } = useModalContext();
   return (
     <Dialog.Panel
@@ -27,12 +29,14 @@ export default function Form({ acct_type = "liquid", address = "1231231231" }) {
           <Icon type="Close" size={26.5} />
         </button>
       </div>
+      <AccountOptions balances={balances} classes="mx-8 mb-6" />
+
       <TokenField<FV, "token">
         name="token"
         tokens={getValues("tokens")}
         label="Enter the amount to invest:"
         scale={[10, 20, 50, 100, 250]}
-        classes={{ container: "px-8 pt-8" }}
+        classes={{ container: "px-8", label: "font-heading text-base" }}
       />
       <div className="mt-8 px-8 py-4 gap-x-3 border-t border-prim flex justify-end">
         <button

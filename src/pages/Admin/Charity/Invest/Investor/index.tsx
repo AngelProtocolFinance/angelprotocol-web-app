@@ -2,10 +2,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues } from "./types";
 import { TokenWithAmount } from "types/slices";
+import { TStrategy } from "../strats";
 import Form from "./Form";
 import { schema } from "./schema";
 
-export default function Investor() {
+export default function Investor(props: TStrategy) {
+  const { balances } = props;
   const token: TokenWithAmount = {
     approved: true,
     decimals: 6,
@@ -16,13 +18,14 @@ export default function Investor() {
     token_id: "uusd",
     type: "juno-native",
     amount: "0",
-    balance: 0,
+    balance: balances.liquid,
   };
 
   const methods = useForm<FormValues>({
     mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: {
+      type: "liquid",
       token,
       tokens: [token],
       //meta
@@ -31,7 +34,7 @@ export default function Investor() {
   });
   return (
     <FormProvider {...methods}>
-      <Form />
+      <Form {...props} />
     </FormProvider>
   );
 }

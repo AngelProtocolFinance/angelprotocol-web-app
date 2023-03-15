@@ -1,18 +1,15 @@
 import { PropsWithChildren } from "react";
+import { useModalContext } from "contexts/ModalContext";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import { humanize } from "helpers";
+import Investor from "./Investor";
 import { TStrategy } from "./strats";
 
-export default function Strategy({
-  name,
-  invested,
-  description,
-  provider,
-  type,
-  rating,
-  apy,
-}: TStrategy) {
+export default function Strategy(props: TStrategy) {
+  const { name, invested, description, provider, type, rating, apy } = props;
+  const { showModal } = useModalContext();
+
   return (
     <div className="@container border border-prim rounded bg-orange-l6 dark:bg-blue-d6">
       <p className="mx-6 mt-6 font-heading text-xl font-bold mb-2">{name}</p>
@@ -40,7 +37,7 @@ export default function Strategy({
         <KeyVal title="Current balance">{humanize(invested)} USD</KeyVal>
         <button
           type="button"
-          onClick={() => alert("show invest form")}
+          onClick={() => showModal(Investor, props)}
           className="mt-6 @lg:mt-0 btn-outline-filled px-8 py-2 ml-auto w-full @lg:w-auto col-span-full"
         >
           invest

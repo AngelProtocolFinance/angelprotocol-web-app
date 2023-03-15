@@ -16,7 +16,7 @@ export type TStrategy = {
   };
 };
 
-const userBalance: TStrategy["balances"] = { locked: 1000, liquid: 1000 };
+const userBalance: TStrategy["balances"] = { locked: 300, liquid: 200 };
 
 const strategy: TStrategy = {
   name: "Investment Option Name",

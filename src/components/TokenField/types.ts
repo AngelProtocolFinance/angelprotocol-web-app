@@ -12,6 +12,7 @@ type Scale = [number, number, number, number, number];
 
 type Classes = {
   container?: string;
+  label?: string;
 };
 
 export type Props<T extends FieldValues, K extends Path<T>> = {
