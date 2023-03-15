@@ -11,22 +11,22 @@ export type SettingsPermissions = {
 };
 
 export type EndowmentController = {
-  endowment_controller: SettingsPermissions;
-  name: SettingsPermissions;
-  image: SettingsPermissions;
-  logo: SettingsPermissions;
-  categories: SettingsPermissions;
-  kyc_donors_only: SettingsPermissions;
-  split_to_liquid: SettingsPermissions;
-  ignore_user_splits: SettingsPermissions;
-  donation_match_active: SettingsPermissions;
-  beneficiaries_allowlist: SettingsPermissions;
-  contributors_allowlist: SettingsPermissions;
-  maturity_allowlist: SettingsPermissions;
-  earnings_fee: SettingsPermissions;
-  deposit_fee: SettingsPermissions;
-  withdraw_fee: SettingsPermissions;
   aum_fee: SettingsPermissions;
+  beneficiaries_allowlist: SettingsPermissions;
+  categories: SettingsPermissions;
+  contributors_allowlist: SettingsPermissions;
+  deposit_fee: SettingsPermissions;
+  donation_match_active: SettingsPermissions;
+  earnings_fee: SettingsPermissions;
+  endowment_controller: SettingsPermissions;
+  ignore_user_splits: SettingsPermissions;
+  image: SettingsPermissions;
+  kyc_donors_only: SettingsPermissions;
+  logo: SettingsPermissions;
+  maturity_allowlist: SettingsPermissions;
+  name: SettingsPermissions;
+  split_to_liquid: SettingsPermissions;
+  withdraw_fee: SettingsPermissions;
 };
 
 export type UpdateEndowmentControllerMsg = Partial<EndowmentController> & {
