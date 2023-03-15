@@ -26,23 +26,23 @@ type Contracts = typeof mainnet;
 
 //prettier-ignore
 const testnet:Contracts = {
-  registrar:              "juno120jxhdz7n4qk9kjeelq5q2ae7w3mslc2qeteptvhv83dnff6x56qdsq93m",
-  index_fund:             "juno1dztxk384lhvtexmmkts3ycjdgyuxnjdr5g08m6rx8mkwykkc6qrqdce9ta",
-  cw4GrpApTeam:           "juno1m6uc8tqprqmde9w3zz4tta5g7qjtk84lxd3d8kx48p6qf87t9tnqhw22vy",
-  cw3ApTeam:              "juno1e24yglups708f4udtxj0fkgrf2r88prpse6nrmunc0gzyycvzl9svz00uu",
-  accounts:               "juno1tesh9uuz60dxzh4cy0kvcunfavv4egptgr5e6l3h2cv6apjdmhfsydfklv",
-  cw4GrpReviewTeam:       "juno1nqpd8dvgdc94fvytlxell09qv6xkswafjtq3c967p89gy683ccvskae63y",
-  cw3ReviewTeam:          "juno19zkn0ch2nnctamtrkp8g5cr0p077lgyefrlehtya854ke050r0mqxxthd2",
+  registrar:              "juno1cgmrq76kx0nh764gumq0r9xa99ec0krvs5y86xqmp8csttc7pwnqh9ftf7",
+  index_fund:             "juno1ueexvz5hspl8se5448dylq9zpm0fp65qx6g20slj7vuhkeh6yxgqv5x9j6",
+  cw4GrpApTeam:           "juno1sj057c5ufqgqjh66y0dgfhvjl6xw2jd96l3lm99fz0pym86uaj9sl62dxn",
+  cw3ApTeam:              "juno17jz7gpzxnrp42q8rt0ultku0205uxye6mq2cwpnvertaqwvcy5dq3q6kdm",
+  accounts:               "juno1kkzhj4m73p6yylev6ycy6dkneddqy88e5t0kdtla9h0wnnlq3g0q4wmcm4",
+  cw4GrpReviewTeam:       "juno1xwlmdadkrw960fzzl9tqe2u46hxeu44xjyu76zhk343re05x85fqzpnkx3",
+  cw3ReviewTeam:          "juno10kvhxyq56j4tjs8dm8r7yhd0f8ct5hjyrrga0cd6kjqwatej07jqc09fqn",
   cw4GrpCharityReviewTeam:"",
   cw3CharityReviewTeam:   "",
   cw4GrpImpactReviewTeam: "",
   cw3ImpactReviewTeam:    "",
   halo_token:             "",
-  gift_cards:             "juno138x649c22xxuark66pwwwwyya4xy4lkka4hcxgtfutclxakp5ltqv8dz9j",
+  gift_cards:             "juno1zfjggfdjadcgd4f2jugw440vfdecf5erqfy0ts9f5v9yucmu99rqdsy6j6",
   gov:                    "",
   airdrop:                "",
   loop_haloust_pair:      "",
-  settingsController:     "juno1y9wec20gnat9chrapmlm7jwz6cytvr9jqfeny2h4kw32tqqd2kwq3ctkfu",
+  settingsController:     "juno1aztgl4v5nnrewnqqlqg9yvwv4s7gtssql9gzvshlyhgt9w80z3aqx5gnvp",
 }
 
 //prettier-ignore
