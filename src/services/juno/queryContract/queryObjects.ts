@@ -30,7 +30,7 @@ export const queryObject: {
 
   /** giftcard */
   giftcardBalance({ addr }) {
-    return { Balance: { address: addr } };
+    return { balance: { address: addr } };
   },
 
   /** cw4 member */
