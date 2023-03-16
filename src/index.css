@@ -86,7 +86,7 @@
   }
 
   .radio {
-    @apply cursor-pointer appearance-none h-4 relative aspect-square border rounded-full before:content-[''] before:h-2.5 before:aspect-square before:absolute-center before:rounded-full checked:before:bg-orange disabled:checked:before:bg-gray-l5 disabled:checked:before:dark:bg-bluegray;
+    @apply cursor-pointer appearance-none h-4 relative aspect-square border rounded-full before:content-[''] before:h-2.5 before:aspect-square before:absolute-center before:rounded-full checked:before:bg-orange disabled:checked:before:bg-gray-l5 disabled:checked:before:dark:bg-bluegray focus:outline-none focus:ring-1 focus:ring-orange;
   }
 
   .checkbox {
