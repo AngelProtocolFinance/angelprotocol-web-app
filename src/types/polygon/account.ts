@@ -33,7 +33,7 @@ export type Fee = {
   active: boolean;
 };
 
-type TokenData = {
+export type TokenData = {
   existingCw20Data: string | ADDRESS_ZERO;
   newCw20InitialSupply: number;
   newCw20Name: string;
@@ -55,12 +55,12 @@ type TokenData = {
   bondingCurveUnbondingPeriod: number;
 };
 
-type DaoToken = {
+export type DaoToken = {
   token: 0; //existingCW20 | 1 newCW20 | 2 bondingCurve;
   data: TokenData;
 };
 
-type DaoSetup = {
+export type DaoSetup = {
   quorum: number; //: Decimal,
   threshold: number; //: Decimal,
   votingPeriod: number; //: u64,
@@ -109,7 +109,7 @@ type SplitDetails = {
   defaultSplit: number;
 };
 
-export type NewAIF = {
+export interface NewAIF extends Obj {
   owner: string;
   withdrawBeforeMaturity: true; //not specified in launchpad design
   maturityTime: number;
@@ -127,14 +127,11 @@ export type NewAIF = {
 
   whitelistedBeneficiaries: string[];
   whitelistedContributors: string[];
-  maturityWhitelist: string[];
 
   //splits
-  ignoreUserSplits: boolean;
-  splitMin: number;
   splitMax: number;
+  splitMin: number;
   splitDefault: number;
-  splitToLiquid: SplitDetails;
 
   //fees
   earningsFee: Fee;
@@ -145,7 +142,41 @@ export type NewAIF = {
   //dao
   dao: DaoSetup; //just set to placeholder - overriden by creatDao:bool
   createDao: false; //not included in launchpad, for edit later
+  proposalLink: 0;
 
   settingsController: SettingsController; //not included in launchpad, for edit later
   parent: number;
-};
+
+  maturityWhitelist: string[];
+  ignoreUserSplits: boolean;
+  splitToLiquid: SplitDetails;
+}
+
+type Primitives = number | string | boolean;
+type Obj = { [index: string]: Primitives | Primitives[] | Obj | Obj[] };
+
+function isObj(val: Primitives | Obj): val is Obj {
+  return !(
+    typeof val === "number" ||
+    typeof val === "string" ||
+    typeof val === "boolean"
+  );
+}
+
+export function toTuple(val: Obj): any[] {
+  return Object.values(val).map((v) => {
+    if (
+      typeof v === "number" ||
+      typeof v === "string" ||
+      typeof v === "boolean"
+    ) {
+      return v;
+    } else if (Array.isArray(v)) {
+      return v.map((_v) => {
+        return isObj(_v) ? toTuple(_v) : _v;
+      });
+    } else {
+      return toTuple(v);
+    }
+  });
+}

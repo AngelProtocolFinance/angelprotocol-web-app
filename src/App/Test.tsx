@@ -1,5 +1,10 @@
 import { SimulContractTx } from "types/evm";
-import { Fee, NewAIF, SettingsPermission } from "types/polygon/account";
+import {
+  Fee,
+  NewAIF,
+  SettingsPermission,
+  toTuple,
+} from "types/polygon/account";
 import {
   EVMWallet,
   isConnected,
@@ -21,7 +26,8 @@ export default function Test() {
 
   async function createEndowment(w: EVMWallet) {
     try {
-      const data = createMsg(w);
+      const data = toTuple(createMsg(w));
+
       const tx: SimulContractTx = {
         from: w.address,
         to: "0x09266441B8Dc93EE70Dbe27A3612eA6e1116f1F3",
@@ -45,6 +51,13 @@ export default function Test() {
       ]);
 
       console.log(nonce, gas, gasPrice);
+
+      const result = await w.provider.request({
+        method: EIPMethods.eth_sendTransaction,
+        params: [{ ...tx, nonce, gas, gasPrice }],
+      });
+
+      console.log(result);
     } catch (err) {
       console.log(err);
     }
@@ -107,20 +120,14 @@ function createMsg(wallet: EVMWallet): NewAIF {
     whitelistedBeneficiaries: [],
     whitelistedContributors: [],
     // whitelistedContributors: string[];
-    maturityWhitelist: [],
+
     // maturityWhitelist: string[];
 
     // //splits
     // ignoreUserSplits: boolean;
-    ignoreUserSplits: false,
-    splitMin: 0,
     splitMax: 100,
+    splitMin: 0,
     splitDefault: 50,
-    splitToLiquid: {
-      min: 0,
-      max: 100,
-      defaultSplit: 50,
-    },
 
     // //fees
     earningsFee: defaultFee,
@@ -141,9 +148,9 @@ function createMsg(wallet: EVMWallet): NewAIF {
         token: 0,
         data: {
           existingCw20Data: ADDRESS_ZERO,
-          newCw20InitialSupply: 0,
-          newCw20Name: "",
-          newCw20Symbol: "",
+          newCw20InitialSupply: 100000,
+          newCw20Name: "TEST",
+          newCw20Symbol: "TEST",
           bondingCurveCurveType: {
             curve_type: 0,
             data: {
@@ -153,12 +160,12 @@ function createMsg(wallet: EVMWallet): NewAIF {
               power: 0,
             },
           },
-          bondingCurveName: "",
-          bondingCurveSymbol: "",
-          bondingCurveDecimals: 0,
+          bondingCurveName: "TEST",
+          bondingCurveSymbol: "TEST",
+          bondingCurveDecimals: 18,
           bondingCurveReserveDenom: ADDRESS_ZERO,
-          bondingCurveReserveDecimals: 0,
-          bondingCurveUnbondingPeriod: 0,
+          bondingCurveReserveDecimals: 18,
+          bondingCurveUnbondingPeriod: 10,
         },
       },
     },
@@ -166,6 +173,7 @@ function createMsg(wallet: EVMWallet): NewAIF {
     createDao: false,
     // createDao: false; //not included in launchpad, for edit later
 
+    proposalLink: 0,
     settingsController: {
       endowmentController: defaultPermission,
       strategies: defaultPermission,
@@ -188,6 +196,13 @@ function createMsg(wallet: EVMWallet): NewAIF {
     },
     // settingsController: SettingsController; //not included in launchpad, for edit later
     parent: 0,
+    maturityWhitelist: [],
+    ignoreUserSplits: false,
+    splitToLiquid: {
+      min: 0,
+      max: 100,
+      defaultSplit: 50,
+    },
   };
 }
 
