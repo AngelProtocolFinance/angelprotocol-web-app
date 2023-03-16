@@ -1,6 +1,5 @@
 import { Disclosure } from "@headlessui/react";
 import { useFormContext } from "react-hook-form";
-import { useAdminResources } from "pages/Admin/Guard";
 import { useGetWallet } from "contexts/WalletContext";
 import { DrawerIcon } from "components/Icon";
 import { CheckField, Field } from "components/form";
@@ -18,7 +17,6 @@ const formValues: UpdateableFormValues = {
 const FORM_KEYS = getTypedKeys(formValues);
 
 export default function MobileTable({ className = "", disabled = false }) {
-  const { endow_type } = useAdminResources<"charity">();
   const { wallet } = useGetWallet();
   const { watch } = useFormContext<FormValues>();
 
@@ -114,13 +112,11 @@ export default function MobileTable({ className = "", disabled = false }) {
                     }}
                     disabled={!delegate || isDisabled}
                   />
-                  {endow_type === "normal" ? (
-                    /** Color #54595F is hardcoded because this is the only place where it's necessary */
-                    <div className="flex justify-between items-center p-4">
-                      <span className="font-bold uppercase">Actions</span>
-                      <LockButton disabled={isDisabled} name={fieldName} />
-                    </div>
-                  ) : null}
+                  {/** Color #54595F is hardcoded because this is the only place where it's necessary */}
+                  <div className="flex justify-between items-center p-4">
+                    <span className="font-bold uppercase">Actions</span>
+                    <LockButton disabled={isDisabled} name={fieldName} />
+                  </div>
                 </Disclosure.Panel>
               </>
             );

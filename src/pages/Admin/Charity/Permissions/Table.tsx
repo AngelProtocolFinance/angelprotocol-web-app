@@ -100,9 +100,7 @@ export default function Table({ className = "", disabled = false }) {
                 disabled={!delegate || isDisabled}
               />
 
-              {isNormal ? (
-                <LockButton disabled={isDisabled} name={fieldName} />
-              ) : null}
+              <LockButton disabled={isDisabled} name={fieldName} />
             </Cells>
           );
         })}
