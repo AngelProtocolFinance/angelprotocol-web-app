@@ -43,6 +43,9 @@ export default function useSubmit() {
 
       // Unauthorized & non-delegated users wouldn't even be able to submit,
       // making it safe to assume they are either of those
+      //
+      // Users who are delegates for the whole controller can send direct update msg,
+      // thus bypassing the need to create a proposal (even if they are a member of CW3 owners)
       if (userDelegate) {
         msg = settingsController.createUpdateEndowmentControllerMsg(updateMsg);
       } else {

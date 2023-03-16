@@ -112,7 +112,6 @@ export default function MobileTable({ className = "", disabled = false }) {
                     }}
                     disabled={!delegate || isDisabled}
                   />
-                  {/** Color #54595F is hardcoded because this is the only place where it's necessary */}
                   <div className="flex justify-between items-center p-4">
                     <span className="font-bold uppercase">Actions</span>
                     <LockButton disabled={isDisabled} name={fieldName} />
