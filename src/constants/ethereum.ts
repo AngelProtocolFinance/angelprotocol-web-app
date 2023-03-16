@@ -1,3 +1,5 @@
+import type { ADDRESS_ZERO as TADDRESS_ZERO } from "types/polygon/account";
+
 export const EIP1193Events = {
   accountsChanged: "accountsChanged",
   chainChanged: "chainChanged",
@@ -22,3 +24,6 @@ export const EIPMethods = {
 export const EIP1102 = {
   eth_requestAccounts: "eth_requestAccounts",
 } as const;
+
+export const ADDRESS_ZERO =
+  "0x0000000000000000000000000000000000000000" as TADDRESS_ZERO;

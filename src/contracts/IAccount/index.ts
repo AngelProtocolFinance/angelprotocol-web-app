@@ -1,25 +1,18 @@
 import { Interface } from "@ethersproject/abi";
-import type { BigNumberish } from "@ethersproject/bignumber";
+import { NewAIF } from "types/polygon/account";
 import abi from "./abi.json";
 
 const encoder = new Interface(abi);
-const balanceOfFn = encoder.getFunction("balanceOf");
-const transferFn = encoder.getFunction("transfer");
+const createEndowmentFn = encoder.getFunction("createEndowment");
 
-export const balanceOf = {
-  encode(address: string) {
-    return encoder.encodeFunctionData(balanceOfFn, [address]);
+export const createEndowment = {
+  encode(aif: NewAIF) {
+    return encoder.encodeFunctionData(createEndowmentFn, [aif]);
   },
   parse(result: string) {
-    const { balance } = encoder.decodeFunctionResult(balanceOfFn, result);
-
+    const decoded = encoder.decodeFunctionResult(createEndowmentFn, result);
+    console.log(decoded);
     //just convert to string, let consumer condense
-    return (balance as BigNumberish).toString();
-  },
-};
-
-export const transfer = {
-  encode(to: string, amount: string) {
-    return encoder.encodeFunctionData(transferFn, [to, amount]);
+    // return (balance as BigNumberish).toString();
   },
 };

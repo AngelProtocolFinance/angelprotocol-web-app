@@ -9,12 +9,13 @@ import { chainOptions } from "constants/chainOptions";
 import { IS_AST } from "constants/env";
 import { appRoutes } from "constants/routes";
 import Layout from "./Layout";
+import Test from "./Test";
 
 const Admin = lazy(() => import("pages/Admin"));
 const Profile = lazy(() => import("pages/Profile"));
 const Donations = lazy(() => import("pages/Donations"));
 const Leaderboard = lazy(() => import("pages/Leaderboard"));
-const Marketplace = lazy(() => import("pages/Marketplace"));
+// const Marketplace = lazy(() => import("pages/Marketplace"));
 const Registration = lazy(() => import("pages/Registration"));
 const Launchpad = lazy(() => import("pages/Launchpad"));
 const Donate = lazy(() => import("pages/Donate"));
@@ -52,7 +53,7 @@ export default function App() {
                 element={IS_AST ? <Launchpad /> : <Registration />}
               />
               <Route path={`${appRoutes.gift}/*`} element={<Gift />} />
-              <Route index element={<Marketplace />} />
+              <Route index element={<Test />} />
             </Route>
             <Route
               path="*"
