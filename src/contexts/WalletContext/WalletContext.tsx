@@ -5,8 +5,9 @@ import {
   useContext,
   useMemo,
 } from "react";
-import { Connection, ProviderId, ProviderStatus } from "./types";
+import { Connection, ProviderStatus } from "./types";
 import { BaseChain, Chain, TokenWithBalance } from "types/aws";
+import { ProviderId } from "types/lists";
 import { useChainQuery } from "services/apes";
 import { WalletDisconnectedError } from "errors/errors";
 import { chainIDs } from "constants/chains";
@@ -219,13 +220,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     isLoading: isChainLoading,
     isFetching: isChainFetching,
     error,
-  } = useChainQuery(
-    {
-      chainId: activeProvider?.providerInfo?.chainId,
-      address: activeProvider?.providerInfo?.address,
-    },
-    { skip: !activeProvider }
-  );
+  } = useChainQuery(activeProvider?.providerInfo!, { skip: !activeProvider });
 
   useVerifyChain(chain, error, disconnect);
 
