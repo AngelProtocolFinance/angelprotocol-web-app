@@ -6,7 +6,7 @@ import ExtLink from "components/ExtLink";
 import { Selector } from "components/Selector";
 import { CheckField, Field, Label } from "components/form";
 import { FileDropzone, LoadText } from "components/registration";
-import { APP_NAME } from "constants/common";
+import { APP_NAME, ENDOW_DESIGNATIONS } from "constants/common";
 import { unsdgs } from "constants/unsdgs";
 import { TERMS_OF_USE } from "constants/urls";
 import { steps } from "../../../routes";
@@ -57,6 +57,16 @@ export default function Form() {
         multiple
         name="sdgs"
         options={sdgOptions}
+      />
+      <Label className="mb-2 mt-6" required>
+        NPO Type
+      </Label>
+      <Selector<FV, "endowDesignation", string, false>
+        name="endowDesignation"
+        options={ENDOW_DESIGNATIONS.map((option) => ({
+          label: option.label,
+          value: option.value,
+        }))}
       />
       <Label className="mt-6 mb-2" required>
         Select the country your organization is headquartered in

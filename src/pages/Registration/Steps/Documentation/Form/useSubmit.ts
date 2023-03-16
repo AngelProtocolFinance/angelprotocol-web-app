@@ -30,6 +30,7 @@ export default function useSubmit() {
     level,
     hqCountry,
     activeInCountries,
+    endowDesignation,
     ...documents
   }: FormValues) => {
     if (documentation && !isDirty) {
@@ -52,6 +53,7 @@ export default function useSubmit() {
         AuditedFinancialReports: previews.auditedFinancialReports,
         KycDonorsOnly: isKYCRequired === "Yes",
         HqCountry: hqCountry.name,
+        EndowDesignation: endowDesignation.label,
         ActiveInCountries: activeInCountries.map((opt) => opt.value),
       }),
       handleError

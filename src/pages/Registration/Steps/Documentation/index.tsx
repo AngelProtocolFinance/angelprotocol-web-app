@@ -28,6 +28,7 @@ function Documentation() {
           isKYCRequired: "No",
           sdgs: [],
           hqCountry: { name: "", flag: "" },
+          endowDesignation: { value: "", label: "" },
           activeInCountries: [],
         },
   });
