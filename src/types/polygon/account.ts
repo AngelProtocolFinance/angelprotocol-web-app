@@ -155,6 +155,8 @@ export interface NewAIF extends Obj {
 type Primitives = number | string | boolean;
 type Obj = { [index: string]: Primitives | Primitives[] | Obj | Obj[] };
 
+type Tuple = (Primitives | Tuple)[];
+
 function isObj(val: Primitives | Obj): val is Obj {
   return !(
     typeof val === "number" ||
@@ -163,7 +165,7 @@ function isObj(val: Primitives | Obj): val is Obj {
   );
 }
 
-export function toTuple(val: Obj): any[] {
+export function toTuple(val: Obj): Tuple {
   return Object.values(val).map((v) => {
     if (
       typeof v === "number" ||
