@@ -19,7 +19,11 @@ export default function Table({ className = "", disabled = false }) {
   const { endow_type } = useAdminResources<"charity">();
   const { wallet } = useGetWallet();
 
-  const { register, watch } = useFormContext<FormValues>();
+  const {
+    register,
+    watch,
+    formState: { errors },
+  } = useFormContext<FormValues>();
 
   const isNormal = endow_type === "normal";
 
@@ -98,7 +102,11 @@ export default function Table({ className = "", disabled = false }) {
 
               <input
                 type="text"
-                className="field-input w-full truncate py-1.5"
+                className={`field-input w-full truncate py-1.5 ${
+                  !errors[fieldName]
+                    ? ""
+                    : "border-red dark:border-red focus:border-red focus:dark:border-red"
+                }`}
                 placeholder="Wallet address..."
                 {...register(`${fieldName}.delegate_address`)}
                 disabled={!delegate || inputDisabled}
