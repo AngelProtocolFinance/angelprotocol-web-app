@@ -15,8 +15,8 @@ export default function Form() {
       onSubmit={submit}
       onReset={() => reset()}
     >
-      <Table className="max-md:hidden" disabled={disabled} />
-      <MobileTable className="md:hidden" disabled={disabled} />
+      <Table className="max-lg:hidden" disabled={disabled} />
+      <MobileTable className="lg:hidden" disabled={disabled} />
 
       <div className="flex items-center gap-3">
         <button
@@ -38,7 +38,7 @@ export default function Form() {
             errors={errors}
             name={`${errorName}.delegate_address`}
             as="span"
-            className="field-error static text-sm"
+            className="max-lg:hidden field-error static text-sm"
           />
         )}
       </div>
