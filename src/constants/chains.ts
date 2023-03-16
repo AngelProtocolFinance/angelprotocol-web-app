@@ -49,13 +49,21 @@ const testnets = {
     lcd: "",
     txExplorer: "https://testnet.bscscan.com/tx/",
   },
-  80001: {
+  // 80001: {
+  //   type: "evm",
+  //   brand: "polygon",
+  //   name: "Polygon Mumbai Testnet",
+  //   rpc: "https://rpc-mumbai.maticvigil.com",
+  //   lcd: "",
+  //   txExplorer: "https://mumbai.polygonscan.com/tx/",
+  // },
+  "1337": {
     type: "evm",
     brand: "polygon",
-    name: "Polygon Mumbai Testnet",
-    rpc: "https://rpc-mumbai.maticvigil.com",
+    name: "Polygon Local",
+    rpc: "http://127.0.0.1:8545",
     lcd: "",
-    txExplorer: "https://mumbai.polygonscan.com/tx/",
+    txExplorer: "",
   },
 } as const;
 
