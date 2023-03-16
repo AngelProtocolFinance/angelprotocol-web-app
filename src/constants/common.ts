@@ -8,3 +8,15 @@ export const SEO_IMAGE =
   "https://charity-profile-images.s3.amazonaws.com/logo/angelprotocol-wings-bl.png";
 export const EMAIL_SUPPORT = "support@angelgiving.io";
 export const GENERIC_ERROR_MESSAGE = `An error occurred. Please get in touch with ${EMAIL_SUPPORT} if the problem persists.`;
+
+export const ENDOW_DESIGNATIONS = [
+  { label: "Charity", value: "Non-Profit", icon: "Charity" },
+  {
+    label: "Religious Organization",
+    value: "Religious Non-Profit",
+    icon: "ReligiousOrganization",
+  },
+  { label: "University", value: "University", icon: "University" },
+  { label: "Hospital", value: "Hospital", icon: "Hospital" },
+  { label: "Other", value: "Other", icon: "Charity" },
+];
