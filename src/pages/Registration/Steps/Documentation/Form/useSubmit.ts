@@ -53,7 +53,7 @@ export default function useSubmit() {
         AuditedFinancialReports: previews.auditedFinancialReports,
         KycDonorsOnly: isKYCRequired === "Yes",
         HqCountry: hqCountry.name,
-        EndowDesignation: endowDesignation.label,
+        EndowDesignation: endowDesignation.value,
         ActiveInCountries: activeInCountries.map((opt) => opt.value),
       }),
       handleError
