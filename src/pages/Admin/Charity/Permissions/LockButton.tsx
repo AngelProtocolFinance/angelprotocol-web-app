@@ -1,9 +1,9 @@
 import { useFormContext } from "react-hook-form";
-import { FormValues } from "./schema";
+import { FormValues, UpdateableFormValues } from "./schema";
 
 type Props = {
   disabled: boolean;
-  name: keyof FormValues["initialValues"];
+  name: keyof UpdateableFormValues;
 };
 
 export default function LockButton(props: Props) {

@@ -6,7 +6,7 @@ import { useEndowmentControllerQuery } from "services/juno/settingsController";
 import { useGetWallet } from "contexts/WalletContext";
 import QueryLoader from "components/QueryLoader";
 import Form from "./Form";
-import { FormField, FormValues, schema } from "./schema";
+import { FormField, FormValues, UpdateableFormValues, schema } from "./schema";
 
 export default function Permissions() {
   const { id } = useAdminResources();
@@ -32,7 +32,7 @@ export default function Permissions() {
 }
 
 function InnerComponent({ controller }: { controller: EndowmentController }) {
-  const initialValues: FormValues["initialValues"] = {
+  const initialValues: UpdateableFormValues = {
     accountFees: createField("Changes to account fees", controller.aum_fee),
     beneficiaries_allowlist: createField(
       "Changes to beneficiaries whitelist",

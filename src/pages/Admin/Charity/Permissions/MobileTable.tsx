@@ -6,9 +6,9 @@ import { DrawerIcon } from "components/Icon";
 import { CheckField, Field } from "components/form";
 import { getTypedKeys } from "helpers";
 import LockButton from "./LockButton";
-import { FormField, FormValues } from "./schema";
+import { FormField, FormValues, UpdateableFormValues } from "./schema";
 
-const formValues: FormValues["initialValues"] = {
+const formValues: UpdateableFormValues = {
   accountFees: {} as FormField,
   beneficiaries_allowlist: {} as FormField,
   contributors_allowlist: {} as FormField,

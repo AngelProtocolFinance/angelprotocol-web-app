@@ -2,11 +2,11 @@ import {
   SettingsPermissions,
   UpdateEndowmentControllerMsg,
 } from "types/contracts";
-import { FormField, FormValues } from "./schema";
+import { FormField, UpdateableFormValues } from "./schema";
 
 export default function createUpdateEndowmentControllerMsg(
   endowId: number,
-  formValues: Partial<Omit<FormValues, "initialValues">>
+  formValues: Partial<UpdateableFormValues>
 ): UpdateEndowmentControllerMsg {
   const accountFees = createField(formValues.accountFees);
   const beneficiaries_allowlist = createField(formValues.accountFees);

@@ -10,7 +10,7 @@ export type FormField = Omit<SettingsPermissions, "delegate"> & {
     | { delegate: false; delegate_address: "" }
   );
 
-type FormFields = {
+export type UpdateableFormValues = {
   accountFees: FormField;
   beneficiaries_allowlist: FormField;
   contributors_allowlist: FormField;
@@ -18,7 +18,9 @@ type FormFields = {
   profile: FormField;
 };
 
-export type FormValues = FormFields & { initialValues: FormFields };
+export type FormValues = UpdateableFormValues & {
+  initialValues: UpdateableFormValues;
+};
 
 const deledateKey: keyof FormField = "delegate";
 
