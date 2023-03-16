@@ -43,12 +43,16 @@ export default function MobileTable({ className = "", disabled = false }) {
             const initModifiable = watch(
               `initialValues.${fieldName}.modifiable`
             );
+            const modifiable = watch(`${fieldName}.modifiable`);
+
             const isDisabled =
               disabled ||
               !initModifiable ||
               (initDelegate &&
                 !!initDelegateAddress &&
                 initDelegateAddress !== wallet?.address);
+
+            const inputDisabled = isDisabled || !modifiable;
 
             return (
               <>
@@ -76,7 +80,7 @@ export default function MobileTable({ className = "", disabled = false }) {
                         label: "uppercase text-xs font-bold",
                         input: "checkbox-orange",
                       }}
-                      disabled={isDisabled}
+                      disabled={inputDisabled}
                     >
                       Admin wallet
                     </CheckField>
@@ -86,7 +90,7 @@ export default function MobileTable({ className = "", disabled = false }) {
                         label: "uppercase text-xs font-bold",
                         input: "checkbox-orange",
                       }}
-                      disabled={isDisabled}
+                      disabled={inputDisabled}
                     >
                       Governance
                     </CheckField>
@@ -96,7 +100,7 @@ export default function MobileTable({ className = "", disabled = false }) {
                         label: "uppercase text-xs font-bold",
                         input: "checkbox-orange",
                       }}
-                      disabled={isDisabled}
+                      disabled={inputDisabled}
                     >
                       Delegate
                     </CheckField>
@@ -110,7 +114,7 @@ export default function MobileTable({ className = "", disabled = false }) {
                       label: "uppercase text-xs font-bold",
                       input: "field-input truncate h-8",
                     }}
-                    disabled={!delegate || isDisabled}
+                    disabled={!delegate || inputDisabled}
                   />
                   <div className="flex justify-between items-center p-4">
                     <span className="font-bold uppercase">Actions</span>

@@ -56,12 +56,16 @@ export default function Table({ className = "", disabled = false }) {
             `initialValues.${fieldName}.delegate_address`
           );
           const initModifiable = watch(`initialValues.${fieldName}.modifiable`);
+          const modifiable = watch(`${fieldName}.modifiable`);
+
           const isDisabled =
             disabled ||
             !initModifiable ||
             (initDelegate &&
               !!initDelegateAddress &&
               initDelegateAddress !== wallet?.address);
+
+          const inputDisabled = isDisabled || !modifiable;
 
           return (
             <Cells
@@ -75,21 +79,21 @@ export default function Table({ className = "", disabled = false }) {
                 type="checkbox"
                 className="checkbox-orange"
                 {...register(`${fieldName}.owner_controlled`)}
-                disabled={isDisabled}
+                disabled={inputDisabled}
               />
               {isNormal ? (
                 <input
                   type="checkbox"
                   className="checkbox-orange"
                   {...register(`${fieldName}.gov_controlled`)}
-                  disabled={isDisabled}
+                  disabled={inputDisabled}
                 />
               ) : null}
               <input
                 type="checkbox"
                 className="checkbox-orange"
                 {...register(`${fieldName}.delegate`)}
-                disabled={isDisabled}
+                disabled={inputDisabled}
               />
 
               <input
@@ -97,7 +101,7 @@ export default function Table({ className = "", disabled = false }) {
                 className="field-input w-full truncate py-1.5"
                 placeholder="Wallet address..."
                 {...register(`${fieldName}.delegate_address`)}
-                disabled={!delegate || isDisabled}
+                disabled={!delegate || inputDisabled}
               />
 
               <LockButton disabled={isDisabled} name={fieldName} />
