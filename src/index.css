@@ -118,7 +118,7 @@
     @apply btn bg-blue disabled:bg-gray hover:bg-blue-l1 active:bg-blue-d1 focus-visible:ring-blue-l4;
   }
   .btn-red {
-    @apply btn bg-red text-white hover:bg-red-l1 active:bg-red-d1 focus-visible:ring-red-l4;
+    @apply btn bg-red disabled:bg-gray aria-disabled:bg-gray text-white hover:bg-red-l1 active:bg-red-d1 focus-visible:ring-red-l4;
   }
   .overlay {
     @apply before:content-[''] before:absolute before:inset-0 before:bg-blue/90 before:dark:bg-blue-d3/90;
