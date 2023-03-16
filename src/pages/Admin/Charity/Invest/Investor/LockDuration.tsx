@@ -10,13 +10,9 @@ export default function LockDuration({ classes = "" }) {
   return (
     <div className={`grid sm:grid-cols-3 gap-3 ${classes}`}>
       <h3 className="col-span-full font-bold">Choose lock duration</h3>
-      <LockOption register={register("lockPeriod")} id="duration" value={"1"} />
-      <LockOption register={register("lockPeriod")} id="duration" value={"7"} />
-      <LockOption
-        register={register("lockPeriod")}
-        id="duration"
-        value={"14"}
-      />
+      <LockOption register={register("lockPeriod")} value="1" />
+      <LockOption register={register("lockPeriod")} value="7" />
+      <LockOption register={register("lockPeriod")} value="14" />
     </div>
   );
 }
@@ -24,23 +20,20 @@ export default function LockDuration({ classes = "" }) {
 type OptionProps = {
   register: UseFormRegisterReturn;
   value: FormValues["lockPeriod"];
-  id: string;
 };
 
-function LockOption({ register, id, value }: OptionProps) {
+function LockOption({ register, value }: OptionProps) {
+  const id = register.name + value;
   return (
     <div className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-0.5 items-center py-3 px-[1.1125rem] rounded border border-prim">
       <input
         {...register}
-        id={id + value}
+        id={id}
         type="radio"
         value={value}
         className="row-span-2 radio"
       />
-      <label
-        htmlFor={id + value}
-        className="text-[0.9375rem] uppercase font-bold"
-      >
+      <label htmlFor={id} className="text-[0.9375rem] uppercase font-bold">
         {value} {value === "1" ? "day" : "days"}
       </label>
       <p>
