@@ -1,5 +1,6 @@
 import { Disclosure } from "@headlessui/react";
 import { useFormContext } from "react-hook-form";
+import { useAdminResources } from "pages/Admin/Guard";
 import { useGetWallet } from "contexts/WalletContext";
 import { DrawerIcon } from "components/Icon";
 import { CheckField, Field } from "components/form";
@@ -17,6 +18,7 @@ const formValues: UpdateableFormValues = {
 const FORM_KEYS = getTypedKeys(formValues);
 
 export default function MobileTable({ className = "", disabled = false }) {
+  const { endow_type } = useAdminResources<"charity">();
   const { wallet } = useGetWallet();
   const {
     watch,
@@ -87,16 +89,18 @@ export default function MobileTable({ className = "", disabled = false }) {
                     >
                       Admin wallet
                     </CheckField>
-                    <CheckField<FormValues>
-                      name={`${fieldName}.gov_controlled`}
-                      classes={{
-                        label: "uppercase text-xs font-bold",
-                        input: "checkbox-orange",
-                      }}
-                      disabled={inputDisabled}
-                    >
-                      Governance
-                    </CheckField>
+                    {endow_type === "normal" && (
+                      <CheckField<FormValues>
+                        name={`${fieldName}.gov_controlled`}
+                        classes={{
+                          label: "uppercase text-xs font-bold",
+                          input: "checkbox-orange",
+                        }}
+                        disabled={inputDisabled}
+                      >
+                        Governance
+                      </CheckField>
+                    )}
                     <CheckField<FormValues>
                       name={`${fieldName}.delegate`}
                       classes={{
