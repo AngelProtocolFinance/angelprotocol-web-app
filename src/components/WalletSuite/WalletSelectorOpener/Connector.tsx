@@ -23,7 +23,7 @@ export default function Connector(props: Connection) {
     >
       <Image
         src={props.logo}
-        className="w-12 h-12 border border-prim rounded-full"
+        className="w-12 h-12 rounded-full"
       />
       <span className="font-heading font-bold text-sm capitalize">
         {props.name}
