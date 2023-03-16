@@ -32,6 +32,8 @@ export default function Permissions() {
 }
 
 function InnerComponent({ controller }: { controller: EndowmentController }) {
+  const { wallet } = useGetWallet();
+
   const initialValues: UpdateableFormValues = {
     accountFees: createField("Changes to account fees", controller.aum_fee),
     beneficiaries_allowlist: createField(
@@ -51,23 +53,17 @@ function InnerComponent({ controller }: { controller: EndowmentController }) {
   const methods = useForm<FormValues>({
     defaultValues: {
       initialValues,
+      userDelegate:
+        controller.endowment_controller.delegate &&
+        controller.endowment_controller.delegate.address === wallet?.address,
       ...initialValues,
     },
     resolver: yupResolver(schema),
   });
 
-  const { wallet } = useGetWallet();
-  const {
-    propMeta: { isAuthorized },
-  } = useAdminResources();
-
-  const isUserDelegate =
-    controller.endowment_controller.delegate &&
-    controller.endowment_controller.delegate.address === wallet?.address;
-
   return (
     <FormProvider {...methods}>
-      <Form disabled={!isAuthorized || !isUserDelegate} />
+      <Form />
     </FormProvider>
   );
 }

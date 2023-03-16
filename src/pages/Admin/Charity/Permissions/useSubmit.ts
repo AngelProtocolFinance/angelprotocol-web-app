@@ -19,11 +19,16 @@ export default function useSubmit() {
     formState: { isSubmitting },
     handleSubmit,
     reset,
+    watch,
   } = useFormContext<FormValues>();
   const { wallet } = useGetWallet();
   const sendTx = useCosmosTxSender();
 
-  async function onSubmit({ initialValues, ...newValues }: FormValues) {
+  async function onSubmit({
+    initialValues,
+    userDelegate,
+    ...newValues
+  }: FormValues) {
     try {
       const diff = getPayloadDiff(initialValues, newValues);
 
@@ -38,7 +43,9 @@ export default function useSubmit() {
 
       // Unauthorized & non-delegated users wouldn't even be able to submit,
       // making it safe to assume they are either of those
-      if (propMeta.isAuthorized) {
+      if (userDelegate) {
+        msg = settingsController.createUpdateEndowmentControllerMsg(updateMsg);
+      } else {
         const embeddedMsg =
           settingsController.createEmbeddedUpdateEndowmentControllerMsg(
             updateMsg
@@ -53,8 +60,6 @@ export default function useSubmit() {
           [embeddedMsg],
           JSON.stringify(meta)
         );
-      } else {
-        msg = settingsController.createUpdateEndowmentControllerMsg(updateMsg);
       }
 
       await sendTx({
@@ -68,7 +73,8 @@ export default function useSubmit() {
   }
 
   return {
-    isSubmitting,
+    disabled:
+      isSubmitting || (!propMeta.isAuthorized && !watch("userDelegate")),
     reset,
     submit: handleSubmit(onSubmit),
   };

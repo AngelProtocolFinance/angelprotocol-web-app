@@ -20,6 +20,7 @@ export type UpdateableFormValues = {
 
 export type FormValues = UpdateableFormValues & {
   initialValues: UpdateableFormValues;
+  userDelegate: boolean;
 };
 
 const deledateKey: keyof FormField = "delegate";

@@ -46,8 +46,8 @@ export default function MobileTable({ className = "", disabled = false }) {
               `initialValues.${fieldName}.modifiable`
             );
             const isDisabled =
-              !initModifiable ||
               disabled ||
+              !initModifiable ||
               (initDelegate &&
                 !!initDelegateAddress &&
                 initDelegateAddress !== wallet?.address);

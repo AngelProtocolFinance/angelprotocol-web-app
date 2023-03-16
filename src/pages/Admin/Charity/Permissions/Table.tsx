@@ -57,8 +57,8 @@ export default function Table({ className = "", disabled = false }) {
           );
           const initModifiable = watch(`initialValues.${fieldName}.modifiable`);
           const isDisabled =
-            !initModifiable ||
             disabled ||
+            !initModifiable ||
             (initDelegate &&
               !!initDelegateAddress &&
               initDelegateAddress !== wallet?.address);

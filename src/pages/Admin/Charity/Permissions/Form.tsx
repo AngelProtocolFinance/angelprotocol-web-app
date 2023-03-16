@@ -2,10 +2,8 @@ import MobileTable from "./MobileTable";
 import Table from "./Table";
 import useSubmit from "./useSubmit";
 
-export default function Form({ disabled = false }) {
-  const { isSubmitting, reset, submit } = useSubmit();
-
-  const isDisabled = disabled || isSubmitting;
+export default function Form() {
+  const { disabled, reset, submit } = useSubmit();
 
   return (
     <form
@@ -13,20 +11,20 @@ export default function Form({ disabled = false }) {
       onSubmit={submit}
       onReset={() => reset()}
     >
-      <Table className="max-md:hidden" disabled={isDisabled} />
-      <MobileTable className="md:hidden" disabled={isDisabled} />
+      <Table className="max-md:hidden" disabled={disabled} />
+      <MobileTable className="md:hidden" disabled={disabled} />
 
       <div className="flex gap-3">
         <button
           type="reset"
-          disabled={isDisabled}
+          disabled={disabled}
           className="btn-outline-filled py-2 px-8 rounded"
         >
           Reset
         </button>
         <button
           type="submit"
-          disabled={isDisabled}
+          disabled={disabled}
           className="btn-orange py-2 px-8 rounded"
         >
           Submit changes
