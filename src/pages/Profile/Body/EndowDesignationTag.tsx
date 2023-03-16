@@ -9,7 +9,6 @@ export default function EndowDesignationTag() {
   const endowDesignation = ENDOW_DESIGNATIONS.find(
     (option) => option.value === profile.endow_designation
   );
-  console.log(profile.endow_designation);
   return endowDesignation && profile.endow_designation !== "Other" ? (
     <div className="flex flex-col items-start gap-3">
       <Tag>
