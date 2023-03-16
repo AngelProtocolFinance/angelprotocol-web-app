@@ -16,7 +16,7 @@ export default function useSubmit() {
   const { id, cw3, propMeta } = useAdminResources<"charity">();
   const { handleError } = useErrorContext();
   const {
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors },
     handleSubmit,
     reset,
     watch,
@@ -76,6 +76,7 @@ export default function useSubmit() {
   }
 
   return {
+    errors,
     disabled:
       isSubmitting || (!propMeta.isAuthorized && !watch("userDelegate")),
     reset,

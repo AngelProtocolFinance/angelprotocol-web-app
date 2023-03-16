@@ -105,7 +105,7 @@ export default function Table({ className = "", disabled = false }) {
                 className={`field-input w-full truncate py-1.5 ${
                   !errors[fieldName]
                     ? ""
-                    : "border-red dark:border-red focus:border-red focus:dark:border-red"
+                    : "border-red dark:border-red-l2 focus:border-red focus:dark:border-red-l2"
                 }`}
                 placeholder="Wallet address..."
                 {...register(`${fieldName}.delegate_address`)}

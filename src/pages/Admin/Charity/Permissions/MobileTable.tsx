@@ -18,7 +18,10 @@ const FORM_KEYS = getTypedKeys(formValues);
 
 export default function MobileTable({ className = "", disabled = false }) {
   const { wallet } = useGetWallet();
-  const { watch } = useFormContext<FormValues>();
+  const {
+    watch,
+    formState: { errors },
+  } = useFormContext<FormValues>();
 
   return (
     <div className={`${className} border border-prim rounded-t`}>
@@ -112,7 +115,12 @@ export default function MobileTable({ className = "", disabled = false }) {
                     classes={{
                       container: "py-3 px-4",
                       label: "uppercase text-xs font-bold",
-                      input: "field-input truncate h-8",
+                      input: `field-input truncate h-8 ${
+                        !errors[fieldName]
+                          ? ""
+                          : "border-red dark:border-red-l2 focus:border-red focus:dark:border-red-l2"
+                      }`,
+                      error: "-bottom-px right-8",
                     }}
                     disabled={!delegate || inputDisabled}
                   />

@@ -1,9 +1,13 @@
+import { ErrorMessage } from "@hookform/error-message";
+import { getTypedKeys } from "helpers";
 import MobileTable from "./MobileTable";
 import Table from "./Table";
 import useSubmit from "./useSubmit";
 
 export default function Form() {
-  const { disabled, reset, submit } = useSubmit();
+  const { disabled, errors, reset, submit } = useSubmit();
+
+  const errorName = getTypedKeys(errors).find((errKey) => !!errors[errKey]);
 
   return (
     <form
@@ -14,7 +18,7 @@ export default function Form() {
       <Table className="max-md:hidden" disabled={disabled} />
       <MobileTable className="md:hidden" disabled={disabled} />
 
-      <div className="flex gap-3">
+      <div className="flex items-center gap-3">
         <button
           type="reset"
           disabled={disabled}
@@ -29,6 +33,14 @@ export default function Form() {
         >
           Submit changes
         </button>
+        {errorName && (
+          <ErrorMessage
+            errors={errors}
+            name={`${errorName}.delegate_address`}
+            as="span"
+            className="field-error static text-sm"
+          />
+        )}
       </div>
     </form>
   );
