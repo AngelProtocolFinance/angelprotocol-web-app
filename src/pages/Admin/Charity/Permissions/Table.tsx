@@ -2,6 +2,7 @@ import { useFormContext } from "react-hook-form";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useGetWallet } from "contexts/WalletContext";
 import TableSection, { Cells } from "components/TableSection";
+import { CheckField } from "components/form";
 import { getTypedKeys } from "helpers";
 import LockButton from "./LockButton";
 import { FormField, FormValues, UpdateableFormValues } from "./schema";
@@ -79,24 +80,30 @@ export default function Table({ className = "", disabled = false }) {
             >
               <>{name}</>
 
-              <input
-                type="checkbox"
-                className="checkbox-orange"
-                {...register(`${fieldName}.owner_controlled`)}
+              <CheckField<FormValues>
+                name={`${fieldName}.owner_controlled`}
+                classes={{
+                  label: "uppercase text-xs font-bold",
+                  input: "checkbox-orange",
+                }}
                 disabled={inputDisabled}
               />
               {isNormal ? (
-                <input
-                  type="checkbox"
-                  className="checkbox-orange"
-                  {...register(`${fieldName}.gov_controlled`)}
+                <CheckField<FormValues>
+                  name={`${fieldName}.gov_controlled`}
+                  classes={{
+                    label: "uppercase text-xs font-bold",
+                    input: "checkbox-orange",
+                  }}
                   disabled={inputDisabled}
                 />
               ) : null}
-              <input
-                type="checkbox"
-                className="checkbox-orange"
-                {...register(`${fieldName}.delegate`)}
+              <CheckField<FormValues>
+                name={`${fieldName}.delegate`}
+                classes={{
+                  label: "uppercase text-xs font-bold",
+                  input: "checkbox-orange",
+                }}
                 disabled={inputDisabled}
               />
 
