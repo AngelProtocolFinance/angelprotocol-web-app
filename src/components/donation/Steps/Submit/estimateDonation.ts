@@ -120,7 +120,7 @@ export async function estimateDonation({
         type: wallet.type,
         wallet,
         fee: { amount: feeAmount, symbol: native.symbol },
-        tx: { ...tx, nonce },
+        tx: { ...tx, nonce, gas, gasPrice },
       };
     }
   } catch (err) {
