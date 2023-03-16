@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import Logo from "components/Logo";
+import Image from "components/Image";
 import WalletSuite from "components/WalletSuite";
 import { Steps } from "components/donation";
 import { useSetter } from "store/accessors";
@@ -51,7 +51,7 @@ export default function InnerComponent(props: {
         </section>
       </div>
       <footer className="flex justify-center items-center h-20 w-full bg-blue dark:bg-blue-d3">
-        <Logo className="w-20" logo={AP_LOGO} />
+        <Image className="w-20" img={AP_LOGO} />
       </footer>
     </div>
   );

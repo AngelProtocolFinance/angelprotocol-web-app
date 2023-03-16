@@ -10,7 +10,7 @@ import CreateFund from "./index-fund/CreateFund";
 import IndexFundOwner from "./index-fund/IndexFundOwner";
 import FundMembers from "./index-fund/Members";
 import RemoveFund from "./index-fund/RemoveFund";
-import RegistrarConfig from "./registrar/Config";
+import RegistrarConfigExtension from "./registrar/ConfigExtension";
 import RegistrarOwner from "./registrar/Owner";
 
 export default function Templates() {
@@ -27,7 +27,10 @@ export default function Templates() {
         <Route path={routes.if_owner} element={<IndexFundOwner />} />
 
         {/** _registrar */}
-        <Route path={routes.reg_config} element={<RegistrarConfig />} />
+        <Route
+          path={routes.reg_config_extension}
+          element={<RegistrarConfigExtension />}
+        />
         <Route path={routes.reg_owner} element={<RegistrarOwner />} />
 
         {/**_cw3 */}

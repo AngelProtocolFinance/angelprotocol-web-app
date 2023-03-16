@@ -1,7 +1,7 @@
 import { useProfileQuery } from "services/aws/aws";
 import ContentLoader from "components/ContentLoader";
 import Icon from "components/Icon";
-import Logo from "components/Logo";
+import Image from "components/Image";
 import { useAdminResources } from "../../Guard";
 
 export default function CharityHeader() {
@@ -11,9 +11,9 @@ export default function CharityHeader() {
   return (
     <>
       <div className="flex justify-between">
-        <Logo
+        <Image
           className="w-14 h-14"
-          logo={{ src: profile?.logo, isSrcLoading: isLoading }}
+          img={{ src: profile?.logo, isSrcLoading: isLoading }}
         />
 
         {isLoading ? (

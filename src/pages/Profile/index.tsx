@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
 import placeholderBanner from "assets/images/placeholder-banner.png";
 import { useProfileQuery } from "services/aws/aws";
+import Image from "components/Image";
 import { idParamToNum } from "helpers";
 import Body from "./Body";
-import Logo from "./Logo";
 import PageError from "./PageError";
 import ProfileContext, { useProfileContext } from "./ProfileContext";
 import Skeleton from "./Skeleton";
@@ -41,5 +41,17 @@ function Banner() {
       className="relative overlay w-full h-52 sm:h-72 bg-cover bg-center"
       style={{ backgroundImage: `url('${image || placeholderBanner}')` }}
     />
+  );
+}
+
+function Logo() {
+  const { logo } = useProfileContext();
+  return (
+    <div className="padded-container flex justify-center items-center w-full overflow-visible h-0 isolate lg:justify-start">
+      <Image
+        img={{ src: logo }}
+        className="h-48 w-48 border border-prim rounded-full object-cover bg-white"
+      />
+    </div>
   );
 }

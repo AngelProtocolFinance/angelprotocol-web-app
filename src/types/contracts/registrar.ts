@@ -13,46 +13,65 @@ export type AcceptedTokens = {
   cw20: string[];
 };
 
+export type RegistrarConfigExtension = {
+  accounts_contract?: string;
+  accounts_settings_controller?: string;
+  applications_review: string;
+  charity_shares_contract?: string;
+  collector_addr: string;
+  cw3_code?: number;
+  cw4_code?: number;
+  donation_match_charites_contract?: string;
+  donation_match_code?: number;
+  gov_contract?: string;
+  halo_token_lp_contract?: string;
+  halo_token?: string;
+  index_fund?: string;
+  subdao_bonding_token_code?: number;
+  subdao_cw20_token_code?: number;
+  subdao_cw900_code?: number;
+  subdao_distributor_code?: number;
+  subdao_gov_code?: number;
+  swap_factory?: string;
+  swaps_router?: string;
+};
+
 export type RegistrarConfig = {
   owner: string;
-  applications_review: string;
-  applications_impact_review: string;
-  index_fund?: string;
-  accounts_contract?: string;
+  version: string;
   treasury: string;
   rebalance: RebalanceDetails;
   split_to_liquid: SplitDetails;
-  halo_token?: string;
-  gov_contract?: string;
-  charity_shares_contract?: string;
-  swaps_router?: string;
-  cw3_code?: number;
-  cw4_code?: number;
   accepted_tokens: AcceptedTokens;
+  axelar_gateway: string;
+  axelar_ibc_channel: string;
+  axelar_chain_id: string;
 };
 
-export type VaultRateInfo = {
-  vault_addr: string; //"juno172u..
-  fx_rate: string; //"1.206784043460040765"
-};
-
-export type RegistrarConfigPayload = {
-  accounts_contract?: string;
-  index_fund_contract?: string;
-  treasury?: string;
-  split_max?: string; //decimal string
-  split_min?: string; //decimal string
-  split_default?: string; //decimal string
-  halo_token?: string;
-  gov_contract?: string;
-  charity_shares_contract?: string;
-  cw3_code?: number;
-  cw4_code?: number;
-  accepted_tokens_native?: string[];
-  accepted_tokens_cw20?: string[];
-  applications_review?: string;
-  applications_impact_review?: string;
-  swaps_router?: string;
+export type RegistrarConfigExtensionPayload = {
+  //make all required, encourages form default values
+  //submitter responsible for removing unset fields
+  accounts_contract: string;
+  accounts_settings_controller: string;
+  applications_review: string;
+  charity_shares_contract: string;
+  collector_addr: string;
+  donation_match_charites_contract: string;
+  fundraising_contract: string;
+  gov_contract: string;
+  halo_token_lp_contract: string;
+  halo_token: string;
+  index_fund_contract: string;
+  swap_factory: string;
+  swaps_router: string;
+  /// WASM CODES
+  cw3_code: number;
+  cw4_code: number;
+  subdao_bonding_token_code: number;
+  subdao_cw20_token_code: number;
+  subdao_cw900_code: number;
+  subdao_distributor_code: number;
+  subdao_gov_code: number;
 };
 
 export type RegistrarOwnerPayload = {

@@ -152,7 +152,7 @@
     @apply btn-outline bg-orange-l5 dark:bg-blue-d4 hover:bg-orange-l4 dark:hover:bg-blue-d3;
   }
   .btn-gift {
-    @apply text-sm;
+    @apply text-base sm:text-sm;
   }
   .btn-donate {
     @apply text-sm md:text-base;
@@ -241,13 +241,6 @@
 
   .outline-prim {
     @apply outline-gray-l3 dark:outline-bluegray;
-  }
-
-  .line-clamp-2 {
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
   }
 
   .box-delay-1 {
