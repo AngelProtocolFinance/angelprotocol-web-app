@@ -34,7 +34,9 @@ const shape: SchemaShape<FormValues> = {
   hq_country: Yup.object().shape<SchemaShape<CountryOption>>({
     name: requiredString,
   }),
-  endow_designation: Yup.string().required("required").url("invalid NPO Type"),
+  endow_designation: Yup.string()
+    .required("required")
+    .url("invalid Endowment Designation"),
   name: requiredString,
   overview: requiredString,
   active_in_countries: Yup.array(),

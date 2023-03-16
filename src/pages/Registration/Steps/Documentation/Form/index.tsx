@@ -59,7 +59,7 @@ export default function Form() {
         options={sdgOptions}
       />
       <Label className="mb-2 mt-6" required>
-        NPO Type
+        Endowment Designation
       </Label>
       <Selector<FV, "endowDesignation", string, false>
         name="endowDesignation"
