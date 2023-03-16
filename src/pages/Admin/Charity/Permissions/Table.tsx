@@ -40,7 +40,7 @@ export default function Table({ className = "", disabled = false }) {
           {isNormal ? <>Governance</> : null}
           <>Delegate</>
           <>Delegate address</>
-          {isNormal ? <>Actions</> : null}
+          <>Actions</>
         </Cells>
       </TableSection>
       <TableSection
