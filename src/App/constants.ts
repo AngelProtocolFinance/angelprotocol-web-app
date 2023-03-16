@@ -9,7 +9,7 @@ export const SOCIAL_MEDIA_LINKS: SocialMediaLink[] = [
       type: "Twitter",
       size: 24,
     },
-    href: "https://twitter.com/angelprotocol",
+    href: "https://twitter.com/angelgiving_",
   },
   {
     title: "Telegram",
@@ -25,7 +25,7 @@ export const SOCIAL_MEDIA_LINKS: SocialMediaLink[] = [
       type: "Discord",
       size: 24,
     },
-    href: "https://discord.gg/RhqA652ySA",
+    href: "https://discord.gg/angelprotocol",
   },
   {
     title: "YouTube",
@@ -33,7 +33,7 @@ export const SOCIAL_MEDIA_LINKS: SocialMediaLink[] = [
       type: "Youtube",
       size: 24,
     },
-    href: "https://www.youtube.com/channel/UCPYj_fooJCfc_tc52rPiw1w",
+    href: "https://www.youtube.com/@AngelGiving",
   },
   {
     title: "Medium",
@@ -49,7 +49,7 @@ export const SOCIAL_MEDIA_LINKS: SocialMediaLink[] = [
       type: "FacebookCircle",
       size: 24,
     },
-    href: "https://www.facebook.com/AngelProtocolFB/",
+    href: "https://www.facebook.com/AngelgivingFB/",
   },
   {
     title: "Linkedin",
@@ -57,7 +57,7 @@ export const SOCIAL_MEDIA_LINKS: SocialMediaLink[] = [
       type: "Linkedin",
       size: 24,
     },
-    href: "https://www.linkedin.com/company/angel-protocol/",
+    href: "https://www.linkedin.com/company/angel-giving/",
   },
   {
     title: "Instagram",
@@ -65,7 +65,7 @@ export const SOCIAL_MEDIA_LINKS: SocialMediaLink[] = [
       type: "Instagram",
       size: 24,
     },
-    href: "https://www.instagram.com/angelprotocol/",
+    href: "https://www.instagram.com/angel.giving/",
   },
 ];
 
