@@ -1,9 +1,9 @@
 import { useFormContext } from "react-hook-form";
 import {
+  RegistrarConfigExtensionValues as RV,
   RegistrarConfigUpdateMeta,
-  RegistrarConfigValues,
 } from "pages/Admin/types";
-import { RegistrarConfigPayload } from "types/contracts";
+import { RegistrarConfigExtensionPayload as RP } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
@@ -14,15 +14,15 @@ import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
 import { genDiffMeta, getPayloadDiff } from "helpers/admin";
 import { cleanObject } from "helpers/cleanObject";
 
-type Key = keyof RegistrarConfigPayload;
-type Value = RegistrarConfigPayload[Key];
+type Key = keyof RP;
+type Value = RP[Key];
 export default function useConfigureRegistrar() {
   const { cw3, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },
-  } = useFormContext<RegistrarConfigValues>();
+  } = useFormContext<RV>();
   const { showModal } = useModalContext();
   const sendTx = useCosmosTxSender();
 
@@ -31,7 +31,7 @@ export default function useConfigureRegistrar() {
     description,
     initialConfigPayload,
     ...data //registrarConfig
-  }: RegistrarConfigValues) {
+  }: RV) {
     //check for changes
     const diff = getPayloadDiff(initialConfigPayload, data);
     const diffEntries = Object.entries(diff) as [Key, Value][];
@@ -40,21 +40,14 @@ export default function useConfigureRegistrar() {
       return;
     }
 
-    //convert presentational decimal to floating point string
-    const finalPayload: RegistrarConfigPayload = {
-      ...diff,
-      split_default: diff.split_default && `${+diff.split_default / 100}`,
-      split_max: diff.split_max && `${+diff.split_max / 100}`,
-      split_min: diff.split_min && `${+diff.split_min / 100}`,
-    };
-
     const registrarContract = new Registrar(wallet);
-    const configUpdateMsg = registrarContract.createEmbeddedConfigUpdateMsg(
-      cleanObject(finalPayload)
-    );
+    const configUpdateMsg =
+      registrarContract.createEmbeddedConfigExtensionUpdateMsg(
+        cleanObject(diff)
+      );
 
     const configUpdateMeta: RegistrarConfigUpdateMeta = {
-      type: "reg_config",
+      type: "reg_config_extension",
       data: genDiffMeta(diffEntries, initialConfigPayload),
     };
 

@@ -1,15 +1,12 @@
-import { Contract as EVMContract } from "@ethersproject/contracts";
-import { TransactionResponse, Web3Provider } from "@ethersproject/providers";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import ERC20Abi from "abi/ERC20.json";
 import { EstimatedTx, TxStatus } from "../types";
 import { DonateArgs } from "../types";
 import { KYCData } from "types/aws";
-import { TokenWithAmount } from "types/slices";
 import { invalidateApesTags } from "services/apes";
 import { WalletState } from "contexts/WalletContext";
 import Contract from "contracts/Contract";
 import { getProvider, logger } from "helpers";
+import { EIPMethods } from "constants/evm";
 import donation, { setTxStatus } from "../donation";
 import logDonation from "./logDonation";
 
@@ -27,7 +24,7 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
       const { token, pctLiquidSplit } = details;
       updateTx({ loadingMsg: "Payment is being processed..." });
 
-      const { isSuccess, hash } = await sendTransaction(tx, wallet, token);
+      const { isSuccess, hash } = await sendTransaction(tx, wallet);
 
       if (isSuccess) {
         const kycData: KYCData | undefined =
@@ -82,8 +79,7 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
 
 async function sendTransaction(
   tx: EstimatedTx,
-  wallet: WalletState,
-  token: TokenWithAmount
+  wallet: WalletState
 ): Promise<{ hash: string; isSuccess: boolean }> {
   switch (tx.type) {
     case "cosmos": {
@@ -97,23 +93,15 @@ async function sendTransaction(
     }
     //evm donations
     default: {
-      const provider = new Web3Provider(getProvider(wallet.providerId) as any);
-      const signer = provider.getSigner();
-      let response: TransactionResponse;
-      if (wallet.chain.native_currency.token_id === token.token_id) {
-        response = await signer.sendTransaction(tx.val);
-      } else {
-        const ER20Contract: any = new EVMContract(
-          token.token_id,
-          ERC20Abi,
-          signer
-        );
-        response = await ER20Contract.transfer(tx.val.to, tx.val.value);
-      }
+      const provider = getProvider(wallet.providerId)!;
+      const hash = await provider.request<string>({
+        method: EIPMethods.eth_sendTransaction,
+        params: [tx.val],
+      });
       return {
-        hash: response.hash,
-        isSuccess: true /** just set to true, let top catch handle eth error */,
-      };
+        hash,
+        isSuccess: true,
+      } /** just set to true, let top catch handle eth error */;
     }
   }
 }

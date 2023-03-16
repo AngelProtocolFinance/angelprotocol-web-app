@@ -1,82 +1,94 @@
 import QRCodeModal from "@walletconnect/qrcode-modal";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Connection, ProviderInfo } from "../types";
 import { WalletState } from "./types";
-import { WCProvider as WCP } from "helpers/evm";
+import { connector as ctor } from "helpers/evm";
+import { WalletError } from "errors/errors";
 import { WALLET_METADATA } from "../constants";
 import { WC_EVENT } from "./constants";
 
 export function useEVMWC() {
-  const uriRef = useRef<string>("");
-  const [walletState, setWalletState] = useState<WalletState>({
+  const [state, setState] = useState<WalletState>({
     status: "disconnected",
     connect,
   });
 
   /** persistent connection */
   useEffect(() => {
-    if (WCP.wc.connected) connect(false /** re-enable connection again */);
+    if (ctor.connected) connect(false);
     //eslint-disable-next-line
   }, []);
 
   /** new connection */
   async function connect(isNew = true) {
-    try {
-      setWalletState({ status: "loading" });
+    if (isNew) {
+      setState({ status: "loading" });
+      await ctor.createSession();
 
-      if (uriRef.current || isNew) {
-        QRCodeModal.open(
-          uriRef.current,
-          () => {
-            setWalletState({ status: "disconnected", connect });
-          },
-          { mobileLinks: ["metamask"], desktopLinks: [] }
-        );
-      }
-      const accounts = await WCP.enable();
+      QRCodeModal.open(
+        ctor.uri,
+        () => {
+          /** modal is closed without connecting */
+          if (!ctor.connected) {
+            setState({ status: "disconnected", connect });
+          }
+        },
+        { mobileLinks: ["metamask"], desktopLinks: [] }
+      );
 
-      setWalletState({
+      ctor.on(WC_EVENT.connect, async (error, payload) => {
+        if (error) {
+          disconnect();
+          throw new WalletError("Failed to connect to wallet", 0);
+        }
+        const { accounts, chainId } = payload.params[0];
+        setState({
+          status: "connected",
+          disconnect,
+          address: accounts[0],
+          chainId: `${chainId}`,
+        });
+        QRCodeModal.close();
+      });
+    } else {
+      const { chainId, accounts } = ctor.session;
+      setState({
         status: "connected",
         disconnect,
         address: accounts[0],
-        chainId: `${WCP.chainId}`,
+        chainId: `${chainId}`,
       });
-
-      WCP.wc.on(
-        WC_EVENT.update,
-        (error, { params: [{ accounts, chainId }] }) => {
-          setWalletState({
-            status: "connected",
-            disconnect,
-            address: accounts[0],
-            chainId: `${chainId}`,
-          });
-        }
-      );
-      WCP.wc.on(WC_EVENT.disconnect, (error) => {
-        setWalletState({ status: "disconnected", connect });
-      });
-    } catch (err) {
-      setWalletState({ status: "disconnected", connect });
-    } finally {
-      uriRef.current = WCP.wc.uri;
-      QRCodeModal.close();
     }
+
+    ctor.on(WC_EVENT.update, (error, payload) => {
+      if (error) return;
+      // Get updated accounts and chainId
+      const { accounts, chainId } = payload.params[0];
+      setState((prev) =>
+        prev.status === "connected"
+          ? { ...prev, address: accounts[0], chainId: `${chainId}` }
+          : prev
+      );
+    });
+
+    ctor.on(WC_EVENT.disconnect, disconnect);
   }
 
   function disconnect() {
-    WCP.disconnect();
-    setWalletState({ status: "disconnected", connect });
+    ctor.killSession();
+    ctor.off(WC_EVENT.connect);
+    ctor.off(WC_EVENT.disconnect);
+    setState({ status: "disconnected", connect });
   }
 
   /** TODO: refactor to just return Meta & WalletState */
   const providerInfo: ProviderInfo | undefined =
-    walletState.status === "connected"
+    state.status === "connected"
       ? {
           logo: WALLET_METADATA["evm-wc"].logo,
           providerId: "evm-wc",
-          chainId: walletState.chainId,
-          address: walletState.address,
+          chainId: state.chainId,
+          address: state.address,
         }
       : undefined;
 
@@ -91,7 +103,7 @@ export function useEVMWC() {
   return {
     connection,
     disconnect,
-    isLoading: walletState.status === "loading",
+    isLoading: state.status === "loading",
     providerInfo,
   };
 }

@@ -1,19 +1,19 @@
 import { Coin } from "@cosmjs/proto-signing";
-import { JsonRpcProvider } from "@ethersproject/providers";
-import { formatUnits } from "@ethersproject/units";
-import { BalMap } from "./types";
 import { FetchedChain, Token, TokenWithBalance } from "types/aws";
+import { ProviderId } from "types/lists";
 import { queryContract } from "services/juno/queryContract";
-import { condenseToNum } from "helpers";
+import { balanceOf } from "contracts/ERC20";
+import { condenseToNum, getProvider } from "helpers";
 import { contracts } from "constants/contracts";
-import { getERC20Holdings } from "./getERC20Holdings";
 
+type BalMap = { [index: string]: string | undefined | number };
 type CosmosBalances = { balances: Coin[] };
 type TokenType = "natives" | "alts";
 
 export async function fetchBalances(
   chain: FetchedChain,
-  address: string
+  address: string,
+  providerId: ProviderId
 ): Promise<TokenWithBalance[]> {
   const tokens = segragate([chain.native_currency, ...chain.tokens]); //n,s
   if (chain.type === "juno-native" || chain.type === "terra-native") {
@@ -75,16 +75,36 @@ export async function fetchBalances(
   } else {
     /**fetch balances for ethereum */
     const native = tokens.natives[0]; //evm chains have only one gas token
-    const jsonProvider = new JsonRpcProvider(chain.rpc_url);
-    const [nativeBal, erc20s] = await Promise.allSettled([
-      jsonProvider.getBalance(address),
-      getERC20Holdings(chain.rpc_url, address, tokens.alts),
+    const provider = getProvider(providerId)!;
+
+    const [nativeBal, ...erc20s] = await Promise.allSettled([
+      provider.request<string>({
+        method: "eth_getBalance",
+        params: [address, "latest"],
+      }),
+      ...tokens.alts.map((t) =>
+        provider
+          .request<string>({
+            method: "eth_call",
+            params: [{ to: t.token_id, data: balanceOf.encode(address) }],
+          })
+          .then<Coin>((result) => ({
+            amount: balanceOf.parse(result),
+            denom: t.token_id,
+          }))
+      ),
     ]);
+
+    const erc20map = toMap(
+      erc20s.map<Coin>((result) =>
+        result.status === "fulfilled" ? result.value : { amount: "", denom: "" }
+      )
+    );
 
     return [
       {
         ...native,
-        balance: +formatUnits(
+        balance: condenseToNum(
           nativeBal.status === "fulfilled" ? nativeBal.value : "0",
           native.decimals
         ),
@@ -92,7 +112,7 @@ export async function fetchBalances(
     ].concat(
       tokens.alts.map((t) => ({
         ...t,
-        balance: getBal(erc20s, t),
+        balance: getBal(erc20map, t),
       }))
     );
   }

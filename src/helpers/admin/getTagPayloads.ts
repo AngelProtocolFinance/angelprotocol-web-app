@@ -74,10 +74,15 @@ export function getTagPayloads(type?: ProposalMeta["type"]): TagPayload[] {
       break;
 
     case "reg_owner":
-    case "reg_config":
       _tags.push({
         type: "registrar",
         id: registrarTags.config,
+      });
+      break;
+    case "reg_config_extension":
+      _tags.push({
+        type: "registrar",
+        id: registrarTags.config_extension,
       });
       break;
   }

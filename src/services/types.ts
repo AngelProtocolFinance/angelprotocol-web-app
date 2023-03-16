@@ -7,6 +7,7 @@ import {
   Proposal,
   ReviewCW3Config,
 } from "types/contracts";
+import { ProviderId } from "types/lists";
 import { TxArgs } from "hooks/useCosmosTxSender";
 
 export type Tag = TagDescription<string>;
@@ -79,3 +80,9 @@ export type CountryOption = {
 };
 
 export type Regions = { [region: string]: string[] };
+
+export type ChainQueryArgs = {
+  address: string;
+  chainId: string;
+  providerId: ProviderId;
+};

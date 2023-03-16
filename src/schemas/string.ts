@@ -8,9 +8,13 @@ export const evmAddrPattern = /^0x[a-fA-F0-9]{40}$/;
 
 export const requiredString = Yup.string().required("required");
 
-export const contractAddr = Yup.string().matches(
-  junoContractAddrPattern,
-  "contract address not valid"
+export const contractAddr = Yup.lazy((val) =>
+  val === ""
+    ? Yup.string()
+    : Yup.string().matches(
+        junoContractAddrPattern,
+        "address format is not valid"
+      )
 );
 export const requiredContractAddr = requiredString.matches(
   junoContractAddrPattern,

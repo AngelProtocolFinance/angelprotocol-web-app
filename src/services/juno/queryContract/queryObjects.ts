@@ -7,6 +7,7 @@ export const queryObject: {
 } = {
   /** registrar */
   regConfig: { config: {} },
+  regConfigExtension: { config_extension: {} },
 
   /** index fund */
   ifFunds: { funds_list: {} },
@@ -29,7 +30,7 @@ export const queryObject: {
 
   /** giftcard */
   giftcardBalance({ addr }) {
-    return { Balance: { address: addr } };
+    return { balance: { address: addr } };
   },
 
   /** cw4 member */

@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { ChainQueryArgs } from "services/types";
 import {
   BaseChain,
   Chain,
@@ -32,21 +33,18 @@ export const apes = createApi({
       providesTags: ["withdraw_logs"],
       query: ({ cw3, ...params }) => ({ url: `/v2/withdraw/${cw3}`, params }),
     }),
-    chain: builder.query<Chain, { address?: string; chainId?: string }>({
+    chain: builder.query<Chain, ChainQueryArgs>({
       providesTags: ["chain"],
-      async queryFn({ address, chainId }, api, options, baseQuery) {
+      async queryFn({ address, chainId, providerId }, api, options, baseQuery) {
         try {
-          if (!chainId) {
-            throw new Error("Argument 'chainId' missing");
-          }
-          if (!address) {
-            throw new Error("Argument 'address' missing");
-          }
-
           const { data } = await baseQuery(`v1/chain/${chainId}`);
           const chain = overrideURLs(data as FetchedChain);
 
-          const [native, ...tokens] = await fetchBalances(chain, address);
+          const [native, ...tokens] = await fetchBalances(
+            chain,
+            address,
+            providerId
+          );
 
           return { data: { ...chain, native_currency: native, tokens } };
         } catch (error) {

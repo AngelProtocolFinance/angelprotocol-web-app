@@ -1,9 +1,10 @@
 import { useCallback } from "react";
-import { InjectedProvider } from "types/ethereum";
+import { InjectedProvider } from "types/evm";
+import { ProviderId } from "types/lists";
 import { useLazyChainQuery } from "services/apes";
 import { WalletError } from "errors/errors";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
-import { EIPMethods } from "constants/ethereum";
+import { EIPMethods } from "constants/evm";
 import { toPrefixedHex } from "../helpers";
 
 export function useAddEthereumChain() {
@@ -13,10 +14,14 @@ export function useAddEthereumChain() {
     async (
       injectedProvider: InjectedProvider,
       address: string,
-      chainId: string
+      chainId: string,
+      providerId: ProviderId
     ) => {
       try {
-        const chainToAdd = await getChain({ address, chainId }, true).unwrap();
+        const chainToAdd = await getChain(
+          { address, chainId, providerId },
+          true
+        ).unwrap();
 
         await injectedProvider.request({
           method: EIPMethods.wallet_addEthereumChain,
