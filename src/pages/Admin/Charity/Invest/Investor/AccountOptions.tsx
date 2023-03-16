@@ -31,15 +31,13 @@ export default function AccountOptions({ balances, classes = "" }: Props) {
       </h3>
       <AccountOption
         register={register("type")}
-        type="liquid"
+        value="liquid"
         balance={balances.liquid}
-        id="type"
       />
       <AccountOption
         register={register("type")}
-        type="locked"
+        value="locked"
         balance={balances.locked}
-        id="type"
       />
     </div>
   );
@@ -47,26 +45,23 @@ export default function AccountOptions({ balances, classes = "" }: Props) {
 
 type OptionProps = {
   register: UseFormRegisterReturn;
-  type: AccountType;
+  value: AccountType;
   balance: number;
-  id: string;
 };
 
-function AccountOption({ register, type, balance, id }: OptionProps) {
+function AccountOption({ register, value, balance }: OptionProps) {
+  const id = register.name + value;
   return (
     <div className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-0.5 items-center py-3 px-[1.1125rem] rounded border border-prim">
       <input
         {...register}
-        id={id + type}
+        id={id}
         type="radio"
-        value={type}
+        value={value}
         className="row-span-2 radio"
       />
-      <label
-        htmlFor={id + type}
-        className="text-[0.9375rem] uppercase font-bold"
-      >
-        {type} account
+      <label htmlFor={id} className="text-[0.9375rem] uppercase font-bold">
+        {value} account
       </label>
       <p>
         <span className="text-sm text-gray-d1 dark:text-gray mr-2">
