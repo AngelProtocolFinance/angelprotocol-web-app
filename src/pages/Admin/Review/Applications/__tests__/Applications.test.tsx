@@ -97,7 +97,7 @@ const mockApplications: EndowmentProposal[] = [
     },
     Tier: 3,
     RegistrationStatus: "Under Review",
-    PK: "72e8ed16-ea13-448a-b31c-a0cec547aa7c",
+    PK: "32e8ed16-ea13-448a-b31c-a0cec547aa7c",
     AuditedFinancialReports: [
       {
         name: "auditedFinReport1",
@@ -115,6 +115,7 @@ const mockApplications: EndowmentProposal[] = [
     KycDonorsOnly: true,
     poll_id: 1,
     ActiveInCountries: [],
+    EndowDesignation: "Charity",
     HqCountry: "",
   },
   {
@@ -160,6 +161,7 @@ const mockApplications: EndowmentProposal[] = [
     KycDonorsOnly: false,
     poll_id: 2,
     ActiveInCountries: [],
+    EndowDesignation: "Charity",
     HqCountry: "",
   },
   {
@@ -205,6 +207,7 @@ const mockApplications: EndowmentProposal[] = [
     KycDonorsOnly: false,
     poll_id: 3,
     ActiveInCountries: [],
+    EndowDesignation: "Charity",
     HqCountry: "",
   },
 ];
