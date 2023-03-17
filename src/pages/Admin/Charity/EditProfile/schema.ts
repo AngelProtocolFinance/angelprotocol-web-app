@@ -30,6 +30,10 @@ const shape: SchemaShape<FormValues> = {
   image: fileObj,
   logo: fileObj,
   url: url.required("required"),
+  endowDesignation: Yup.object().shape<SchemaShape<OptionType<string>>>({
+    label: requiredString,
+    value: requiredString,
+  }),
   // registration_number: no need to validate,
   hq_country: Yup.object().shape<SchemaShape<Country>>({
     name: requiredString,

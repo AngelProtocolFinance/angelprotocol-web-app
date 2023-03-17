@@ -3,6 +3,7 @@ import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
 import { FileObject } from "types/aws";
 import { Country } from "types/countries";
+import { OptionType } from "components/Selector";
 import { Asset } from "components/registration";
 import { genFileSchema } from "schemas/file";
 import { requiredString } from "schemas/string";
@@ -38,9 +39,10 @@ export const schema = Yup.object().shape<SchemaShape<FormValues>>({
   hqCountry: Yup.object().shape<SchemaShape<Country>>({
     name: requiredString,
   }),
-  endowDesignation: Yup.string()
-    .required("required")
-    .url("invalid Endowment Designation"),
+  endowDesignation: Yup.object().shape<SchemaShape<OptionType<string>>>({
+    label: requiredString,
+    value: requiredString,
+  }),
   //level 2-3 fields not required
   financialStatements: Yup.object().shape(genAssetShape()),
   auditedFinancialReports: Yup.object().shape(genAssetShape()),
