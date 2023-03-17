@@ -43,7 +43,9 @@ export default function Form(props: {
         name="token"
         tokens={getValues("tokens")}
         withGiftcard
+        withBalance
         label="Enter the donation amount:"
+        classes={{ label: "text-lg", inputContainer: "dark:bg-blue-d6" }}
       />
       {!props.hideAdvOpts && (
         <AdvancedOptions classes="mt-10" unfold={props.unfoldAdvOpts} />

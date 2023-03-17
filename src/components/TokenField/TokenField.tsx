@@ -20,6 +20,7 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
   tokens,
   name,
   withGiftcard,
+  withBalance,
   scale,
   classes,
 }: Props<T, K>) {
@@ -53,20 +54,24 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
       <div className="flex max-sm:flex-col max-sm:items-start items-center mb-1">
         <label
           htmlFor="amount"
-          className="text-lg font-bold mr-auto max-sm:mb-2"
+          className={`font-bold mr-auto max-sm:mb-2 ${classes?.label ?? ""}`}
         >
           {label}
         </label>
-        <Balance
-          token={token}
-          onSetAmount={onSetAmount}
-          isGiftEnabled={!!withGiftcard}
-        />
+        {withBalance && (
+          <Balance
+            token={token}
+            onSetAmount={onSetAmount}
+            isGiftEnabled={!!withGiftcard}
+          />
+        )}
       </div>
 
       <div
         aria-disabled={isSubmitting}
-        className="relative grid grid-cols-[1fr_auto] items-center gap-2 px-4 dark:bg-blue-d6 field-container"
+        className={`${
+          classes?.inputContainer ?? ""
+        } relative grid grid-cols-[1fr_auto] items-center gap-2 px-4 field-container`}
       >
         <input
           {...register(amountField)}

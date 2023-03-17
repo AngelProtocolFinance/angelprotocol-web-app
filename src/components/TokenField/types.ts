@@ -12,6 +12,8 @@ type Scale = [number, number, number, number, number];
 
 type Classes = {
   container?: string;
+  label?: string;
+  inputContainer?: string;
 };
 
 export type Props<T extends FieldValues, K extends Path<T>> = {
@@ -19,6 +21,7 @@ export type Props<T extends FieldValues, K extends Path<T>> = {
   label: string;
   tokens: TokenWithAmount[];
   withGiftcard?: true;
+  withBalance?: true;
   scale?: Scale;
   classes?: Classes;
 };
