@@ -27,15 +27,9 @@ export default function Options({ query }: { query: string }) {
               <li
                 className={`${
                   active ? "bg-blue-l2 dark:bg-blue-d1" : ""
-                } flex gap-2 p-2 text-sm`}
+                } flex items-center gap-2 p-2 text-sm`}
               >
-                <span>{country.flag}</span>
-                {/* <img
-                  loading="lazy"
-                  src={country.flag}
-                  alt="flag"
-                  className="aspect-video w-8 object-contain"
-                /> */}
+                <span className="text-2xl">{country.flag}</span>
                 <span>{country.name}</span>
               </li>
             )}

@@ -9,7 +9,6 @@ import {
 } from "react-hook-form";
 import { Country } from "types/countries";
 import countries from "assets/countries/all.json";
-import unknownFlag from "assets/icons/unknown-flag.jpeg";
 import Icon, { DrawerIcon } from "../Icon";
 import Options from "./Options";
 
@@ -54,8 +53,7 @@ export default function CountrySelector<
   useEffect(() => {
     (async () => {
       if (country.name && !country.flag) {
-        const flag =
-          countries.find((c) => c.name === country.name)?.flag || unknownFlag;
+        const flag = countries.find((c) => c.name === country.name)?.flag || "";
         onCountryChange({ name: country.name, flag });
       }
     })();
@@ -72,17 +70,12 @@ export default function CountrySelector<
         props.classes?.container || ""
       }`}
     >
-      <img
-        src={country.flag}
-        alt="flag"
-        className="w-8"
-        onError={(e) => {
-          e.currentTarget.src = unknownFlag;
-        }}
-      />
+      <span className="mr-1 empty:hidden text-3xl relative -bottom-0.5">
+        {country.flag || null}
+      </span>
 
       <Combobox.Button>
-        {({ open }) => <DrawerIcon isOpen={open} size={25} className="mx-1" />}
+        {({ open }) => <DrawerIcon isOpen={open} size={25} className="mr-1" />}
       </Combobox.Button>
 
       <Combobox.Input
