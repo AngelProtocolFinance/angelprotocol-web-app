@@ -14,7 +14,7 @@ export default function Form() {
       <Table className="max-lg:hidden" disabled={disabled} />
       <MobileTable className="lg:hidden" disabled={disabled} />
 
-      <div className="flex items-center gap-3">
+      <div className="flex flex-wrap items-center gap-3">
         <button
           type="reset"
           disabled={disabled}
@@ -34,7 +34,7 @@ export default function Form() {
             errors={errors}
             name={`${errorName}.delegate_address`}
             as="span"
-            className="max-lg:hidden field-error static text-sm flex-wrap"
+            className="field-error static text-sm"
           />
         )}
       </div>
