@@ -7,26 +7,26 @@ import {
   useController,
   useFormContext,
 } from "react-hook-form";
-import { CountryOption } from "services/types";
+import { Country } from "types/countries";
+import countries from "assets/countries/all.json";
 import unknownFlag from "assets/icons/unknown-flag.jpeg";
-import { useLazyCountryFlagQuery } from "services/countries";
 import Icon, { DrawerIcon } from "../Icon";
 import Options from "./Options";
 
-type BaseFormShape = { [index: string]: CountryOption };
+type BaseFormShape = { [index: string]: Country };
 
-export const placeHolderCountryOption: CountryOption = {
+export const placeHolderCountryOption: Country = {
   name: "",
   flag: "",
 };
 
-const nameKey: keyof CountryOption = "name";
+const nameKey: keyof Country = "name";
 
 export default function CountrySelector<
   T extends FieldValues,
   K extends Path<T>
 >(props: {
-  fieldName: T[K] extends CountryOption ? K : never;
+  fieldName: T[K] extends Country ? K : never;
   onReset?(): void;
   placeholder?: string;
   classes?: {
@@ -46,7 +46,6 @@ export default function CountrySelector<
   });
 
   const [query, setQuery] = useState(country.name);
-  const [queryFlag] = useLazyCountryFlagQuery();
 
   /**
    * some consumers can only store countryName:string
@@ -55,8 +54,9 @@ export default function CountrySelector<
   useEffect(() => {
     (async () => {
       if (country.name && !country.flag) {
-        const { data = "" } = await queryFlag(country.name);
-        onCountryChange({ name: country.name, flag: data });
+        const flag =
+          countries.find((c) => c.name === country.name)?.flag || unknownFlag;
+        onCountryChange({ name: country.name, flag });
       }
     })();
     // eslint-disable-next-line
@@ -89,7 +89,7 @@ export default function CountrySelector<
         ref={ref}
         placeholder={props.placeholder}
         onChange={(event) => setQuery(event.target.value as any)}
-        displayValue={(country: CountryOption) => country.name}
+        displayValue={(country: Country) => country.name}
         className={props.classes?.input}
       />
 
