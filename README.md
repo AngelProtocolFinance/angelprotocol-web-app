@@ -6,7 +6,6 @@
 - `Node v16.18.0`
 
 ## Setup
-
 1. create `.env` file at the root of the project and add the following entries
 
 ```yaml

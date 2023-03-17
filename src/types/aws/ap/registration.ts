@@ -76,7 +76,7 @@ export type TDocumentation = {
   FinancialStatements?: FileObject[];
   AuditedFinancialReports?: FileObject[];
   KycDonorsOnly: boolean;
-
+  CashEligible: boolean;
   HqCountry: string;
   EndowDesignation: string;
   // general
