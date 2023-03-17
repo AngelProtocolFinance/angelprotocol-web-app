@@ -1,11 +1,11 @@
 import { useFormContext } from "react-hook-form";
 import { useAdminResources } from "pages/Admin/Guard";
-import { useGetWallet } from "contexts/WalletContext";
 import TableSection, { Cells } from "components/TableSection";
 import { CheckField } from "components/form";
 import { getTypedKeys } from "helpers";
 import LockButton from "./LockButton";
 import { FormField, FormValues, UpdateableFormValues } from "./schema";
+import useTableData from "./useTableData";
 
 const formValues: UpdateableFormValues = {
   accountFees: {} as FormField,
@@ -16,15 +16,15 @@ const formValues: UpdateableFormValues = {
 };
 const FORM_KEYS = getTypedKeys(formValues);
 
-export default function Table({ className = "", disabled = false }) {
-  const { endow_type, propMeta } = useAdminResources<"charity">();
-  const { wallet } = useGetWallet();
+export default function Table({ className = "" }) {
+  const { endow_type } = useAdminResources<"charity">();
 
   const {
     register,
-    watch,
     formState: { errors },
   } = useFormContext<FormValues>();
+
+  const getData = useTableData();
 
   const isNormal = endow_type === "normal";
 
@@ -54,26 +54,12 @@ export default function Table({ className = "", disabled = false }) {
         selectedClass="bg-orange-l5 dark:bg-blue-d4"
       >
         {FORM_KEYS.map((fieldName) => {
-          const delegate = watch(`${fieldName}.delegate`);
-          const name = watch(`${fieldName}.name`);
-          const initDelegate = watch(`initialValues.${fieldName}.delegate`);
-          const initDelegateAddress = watch(
-            `initialValues.${fieldName}.delegate_address`
-          );
-          const initModifiable = watch(`initialValues.${fieldName}.modifiable`);
-          const modifiable = watch(`${fieldName}.modifiable`);
-          const initOwnerControlled = watch(
-            `initialValues.${fieldName}.owner_controlled`
-          );
-          const userAuthorized: boolean =
-            (initDelegate &&
-              !!initDelegateAddress &&
-              initDelegateAddress !== wallet?.address) ||
-            (initOwnerControlled && propMeta.isAuthorized);
-
-          const isDisabled = disabled || !initModifiable || !userAuthorized;
-
-          const inputDisabled = isDisabled || !modifiable;
+          const {
+            name,
+            checkboxDisabled,
+            delegateAddressDisabled,
+            lockBtnDisabled,
+          } = getData(fieldName);
 
           return (
             <Cells
@@ -89,7 +75,7 @@ export default function Table({ className = "", disabled = false }) {
                   label: "uppercase text-xs font-bold",
                   input: "checkbox-orange",
                 }}
-                disabled={inputDisabled}
+                disabled={checkboxDisabled}
               />
               {isNormal ? (
                 <CheckField<FormValues>
@@ -98,7 +84,7 @@ export default function Table({ className = "", disabled = false }) {
                     label: "uppercase text-xs font-bold",
                     input: "checkbox-orange",
                   }}
-                  disabled={inputDisabled}
+                  disabled={checkboxDisabled}
                 />
               ) : null}
               <CheckField<FormValues>
@@ -107,7 +93,7 @@ export default function Table({ className = "", disabled = false }) {
                   label: "uppercase text-xs font-bold",
                   input: "checkbox-orange",
                 }}
-                disabled={inputDisabled}
+                disabled={checkboxDisabled}
               />
 
               <input
@@ -119,10 +105,10 @@ export default function Table({ className = "", disabled = false }) {
                 }`}
                 placeholder="Wallet address..."
                 {...register(`${fieldName}.delegate_address`)}
-                disabled={!delegate || inputDisabled}
+                disabled={delegateAddressDisabled}
               />
 
-              <LockButton disabled={isDisabled} name={fieldName} />
+              <LockButton disabled={lockBtnDisabled} name={fieldName} />
             </Cells>
           );
         })}
