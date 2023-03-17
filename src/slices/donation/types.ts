@@ -1,7 +1,7 @@
 import { TransactionRequest } from "@ethersproject/providers";
 import { CreateTxOptions } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
-import { CountryOption } from "services/types";
+import { Country } from "types/countries";
 import { TokenWithAmount, TxOptions } from "types/slices";
 import { WalletState } from "contexts/WalletContext";
 import { OptionType } from "components/Selector";
@@ -27,7 +27,7 @@ export type KYC = {
   address: { street: string; complement: string };
   city: string;
   postalCode: string;
-  country: CountryOption;
+  country: Country;
   state: string;
   usState: OptionType<string>;
   email: string;

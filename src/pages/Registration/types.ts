@@ -1,4 +1,3 @@
-import { CountryOption } from "services/types";
 import {
   ContactRoles,
   FileObject,
@@ -6,6 +5,7 @@ import {
   RegistrationStatus,
 } from "types/aws";
 import { EndowmentTierNum } from "types/contracts";
+import { Country } from "types/countries";
 import { UNSDG_NUMS } from "types/lists";
 import { Optional } from "types/utils";
 import { OptionType } from "components/Selector";
@@ -58,7 +58,7 @@ export type Documentation = {
   hasAgreedToTerms: boolean;
   level: EndowmentTierNum;
 
-  hqCountry: CountryOption;
+  hqCountry: Country;
   endowDesignation: OptionType<string>;
   // general info
   activeInCountries: OptionType<string>[];
