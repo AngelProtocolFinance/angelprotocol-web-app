@@ -34,7 +34,6 @@ export default function useEditProfile() {
     hq_country,
     categories_sdgs,
     active_in_countries,
-    endow_designation,
     ...newData
   }) => {
     try {
@@ -50,7 +49,6 @@ export default function useEditProfile() {
         image: bannerUrl,
         logo: logoUrl,
         hq_country: hq_country.name,
-        endow_designation: endow_designation.value,
         categories_sdgs: categories_sdgs.map((opt) => opt.value),
         active_in_countries: active_in_countries.map((opt) => opt.value),
         ...newData,

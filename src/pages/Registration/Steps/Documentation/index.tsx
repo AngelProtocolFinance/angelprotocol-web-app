@@ -29,7 +29,6 @@ function Documentation() {
           sdgs: [],
           cashEligible: false,
           hqCountry: { name: "", flag: "" },
-          endowDesignation: { value: "", label: "" },
           activeInCountries: [],
         },
   });

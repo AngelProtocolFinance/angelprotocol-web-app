@@ -38,9 +38,7 @@ export const schema = Yup.object().shape<SchemaShape<FormValues>>({
   hqCountry: Yup.object().shape<SchemaShape<CountryOption>>({
     name: requiredString,
   }),
-  endowDesignation: Yup.string()
-    .required("required")
-    .url("invalid Endowment Designation"),
+
   //level 2-3 fields not required
   financialStatements: Yup.object().shape(genAssetShape()),
   auditedFinancialReports: Yup.object().shape(genAssetShape()),

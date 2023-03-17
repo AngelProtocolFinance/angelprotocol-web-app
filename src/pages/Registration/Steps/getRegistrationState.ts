@@ -100,7 +100,6 @@ function formatDocumentation({
   UN_SDG,
   KycDonorsOnly,
   HqCountry,
-  EndowDesignation,
   ActiveInCountries,
 }: DoneDocs["Registration"]): Documentation {
   return {
@@ -113,7 +112,7 @@ function formatDocumentation({
       label: `${sdg} - ${unsdgs[sdg].title}`,
     })),
     hqCountry: { name: HqCountry, flag: "" },
-    endowDesignation: { value: EndowDesignation, label: EndowDesignation },
+
     //level 2
     financialStatements: genFileAsset(fs || []),
 

@@ -9,7 +9,6 @@ import ImgEditor from "components/ImgEditor";
 import { RichTextEditor } from "components/RichText";
 import { Selector } from "components/Selector";
 import { Field, Label } from "components/form";
-import { ENDOW_DESIGNATIONS } from "constants/common";
 import { appRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
@@ -112,16 +111,6 @@ export default function Form() {
           name="categories_sdgs"
           options={sdgOptions}
           classes={{ button: "field-input-admin" }}
-        />
-        <Label className="-mb-4" required>
-          Endowment Designation
-        </Label>
-        <Selector<FV, "endow_designation", string, false>
-          name="endow_designation"
-          options={ENDOW_DESIGNATIONS.map((option) => ({
-            label: option.label,
-            value: option.value,
-          }))}
         />
         <Label className="-mb-4" required>
           Headquarters

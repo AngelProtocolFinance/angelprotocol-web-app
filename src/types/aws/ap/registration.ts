@@ -78,7 +78,6 @@ export type TDocumentation = {
   KycDonorsOnly: boolean;
   CashEligible: boolean;
   HqCountry: string;
-  EndowDesignation: string;
   // general
   ActiveInCountries: string[];
 };
