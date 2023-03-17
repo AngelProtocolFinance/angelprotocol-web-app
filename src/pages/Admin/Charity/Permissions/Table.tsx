@@ -106,6 +106,8 @@ export default function Table({ className = "" }) {
                 placeholder="Wallet address..."
                 {...register(`${fieldName}.delegate_address`)}
                 disabled={delegateAddressDisabled}
+                autoComplete="off"
+                spellCheck={false}
               />
 
               <LockButton disabled={lockBtnDisabled} name={fieldName} />

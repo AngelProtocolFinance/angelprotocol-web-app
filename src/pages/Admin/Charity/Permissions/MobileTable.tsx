@@ -116,6 +116,7 @@ export default function MobileTable({ className = "", disabled = false }) {
                           ? ""
                           : "border-red dark:border-red-l2 focus:border-red focus:dark:border-red-l2"
                       }`}
+                      type="text"
                       autoComplete="off"
                       spellCheck={false}
                       {...register(`${fieldName}.delegate_address`)}
