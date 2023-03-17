@@ -13,7 +13,7 @@ export const ENDOW_DESIGNATIONS = [
   { label: "Charity", value: "Non-Profit", icon: "Charity" },
   {
     label: "Religious Organization",
-    value: "Religious Non-Profit",
+    value: "Religious Organization",
     icon: "ReligiousOrganization",
   },
   { label: "University", value: "University", icon: "University" },
