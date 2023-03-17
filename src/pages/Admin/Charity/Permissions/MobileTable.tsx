@@ -3,7 +3,7 @@ import { useFormContext } from "react-hook-form";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useGetWallet } from "contexts/WalletContext";
 import { DrawerIcon } from "components/Icon";
-import { CheckField, Field } from "components/form";
+import { CheckField, Label } from "components/form";
 import { getTypedKeys } from "helpers";
 import LockButton from "./LockButton";
 import { FormField, FormValues, UpdateableFormValues } from "./schema";
@@ -22,6 +22,7 @@ export default function MobileTable({ className = "", disabled = false }) {
   const { wallet } = useGetWallet();
   const {
     watch,
+    register,
     formState: { errors },
   } = useFormContext<FormValues>();
 
@@ -112,22 +113,27 @@ export default function MobileTable({ className = "", disabled = false }) {
                       Delegate
                     </CheckField>
                   </div>
-                  <Field<FormValues>
-                    name={`${fieldName}.delegate_address`}
-                    label="Delegate address"
-                    placeholder="juno1..."
-                    classes={{
-                      container: "py-3 px-4",
-                      label: "uppercase text-xs font-bold",
-                      input: `field-input truncate h-8 ${
+                  <div className="grid gap-2 py-3 px-4">
+                    <Label
+                      className="uppercase text-xs font-bold"
+                      htmlFor={`del-addr-input-${fieldName}`}
+                    >
+                      Delegate address
+                    </Label>
+
+                    <input
+                      id={`del-addr-input-${fieldName}`}
+                      disabled={!delegate || inputDisabled}
+                      className={`field-input truncate h-8 ${
                         !errors[fieldName]
                           ? ""
                           : "border-red dark:border-red-l2 focus:border-red focus:dark:border-red-l2"
-                      }`,
-                      error: "-bottom-px right-8",
-                    }}
-                    disabled={!delegate || inputDisabled}
-                  />
+                      }`}
+                      autoComplete="off"
+                      spellCheck={false}
+                      {...register(`${fieldName}.delegate_address`)}
+                    />
+                  </div>
                   <div className="flex justify-between items-center p-4">
                     <span className="font-bold uppercase">Actions</span>
                     <LockButton disabled={isDisabled} name={fieldName} />
