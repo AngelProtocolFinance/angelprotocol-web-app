@@ -18,7 +18,7 @@ const formValues: UpdateableFormValues = {
 const FORM_KEYS = getTypedKeys(formValues);
 
 export default function MobileTable({ className = "", disabled = false }) {
-  const { endow_type } = useAdminResources<"charity">();
+  const { endow_type, propMeta } = useAdminResources<"charity">();
   const { wallet } = useGetWallet();
   const {
     watch,
@@ -50,13 +50,16 @@ export default function MobileTable({ className = "", disabled = false }) {
               `initialValues.${fieldName}.modifiable`
             );
             const modifiable = watch(`${fieldName}.modifiable`);
-
-            const isDisabled =
-              disabled ||
-              !initModifiable ||
+            const initOwnerControlled = watch(
+              `initialValues.${fieldName}.owner_controlled`
+            );
+            const userAuthorized: boolean =
               (initDelegate &&
                 !!initDelegateAddress &&
-                initDelegateAddress !== wallet?.address);
+                initDelegateAddress !== wallet?.address) ||
+              (initOwnerControlled && propMeta.isAuthorized);
+
+            const isDisabled = disabled || !initModifiable || !userAuthorized;
 
             const inputDisabled = isDisabled || !modifiable;
 

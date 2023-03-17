@@ -19,7 +19,6 @@ export default function useSubmit() {
     formState: { isSubmitting, errors },
     handleSubmit,
     reset,
-    watch,
   } = useFormContext<FormValues>();
   const { wallet } = useGetWallet();
   const sendTx = useCosmosTxSender();
@@ -77,8 +76,7 @@ export default function useSubmit() {
 
   return {
     errors,
-    disabled:
-      isSubmitting || (!propMeta.isAuthorized && !watch("userDelegate")),
+    isSubmitting,
     reset: () => reset(),
     submit: handleSubmit(onSubmit),
   };

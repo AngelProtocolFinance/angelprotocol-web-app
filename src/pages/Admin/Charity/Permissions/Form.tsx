@@ -5,26 +5,26 @@ import Table from "./Table";
 import useSubmit from "./useSubmit";
 
 export default function Form() {
-  const { disabled, errors, reset, submit } = useSubmit();
+  const { isSubmitting, errors, reset, submit } = useSubmit();
 
   const errorName = getTypedKeys(errors).find((errKey) => !!errors[errKey]);
 
   return (
     <form className="grid gap-6 w-full" onSubmit={submit} onReset={reset}>
-      <Table className="max-lg:hidden" disabled={disabled} />
-      <MobileTable className="lg:hidden" disabled={disabled} />
+      <Table className="max-lg:hidden" disabled={isSubmitting} />
+      <MobileTable className="lg:hidden" disabled={isSubmitting} />
 
       <div className="flex flex-wrap items-center gap-3">
         <button
           type="reset"
-          disabled={disabled}
+          disabled={isSubmitting}
           className="btn-outline-filled py-2 px-8 rounded"
         >
           Reset
         </button>
         <button
           type="submit"
-          disabled={disabled}
+          disabled={isSubmitting}
           className="btn-orange py-2 px-8 rounded"
         >
           Submit changes
