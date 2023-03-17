@@ -172,9 +172,6 @@ function toAIF(
       default: toPct(splits.default),
     },
     ignore_user_splits: !splits.isCustom,
-    split_max: toPct(splits.max),
-    split_min: toPct(splits.min),
-    split_default: toPct(splits.default),
     earnings_fee: fees.earnings.isActive
       ? toEndowFee(fees.earnings)
       : undefined,
