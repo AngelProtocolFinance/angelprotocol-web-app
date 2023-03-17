@@ -17,3 +17,15 @@ export const AP_LOGO: ImageProps = {
   src: angelProtocolLogo,
   title: "Go to Marketing page",
 };
+
+export const ENDOW_DESIGNATIONS = [
+  { label: "Charity", value: "Non-Profit", icon: "Charity" },
+  {
+    label: "Religious Organization",
+    value: "Religious Organization",
+    icon: "ReligiousOrganization",
+  },
+  { label: "University", value: "University", icon: "University" },
+  { label: "Hospital", value: "Hospital", icon: "Hospital" },
+  { label: "Other", value: "Other", icon: "Charity" },
+];

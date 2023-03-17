@@ -59,6 +59,7 @@ export type Documentation = {
   tier: EndowmentTierNum;
 
   hqCountry: CountryOption;
+  endowDesignation: OptionType<string>;
   // general info
   activeInCountries: OptionType<string>[];
 };

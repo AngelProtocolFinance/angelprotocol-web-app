@@ -14,6 +14,7 @@ const _general: K = "categories_general";
 const _id: K = "id";
 const _tier: K = "tier";
 const _owner: K = "owner";
+const _npo_type: K = "endow_designation";
 
 export type FlatFormValues = Omit<
   EndowmentProfileUpdate,
@@ -33,7 +34,9 @@ export type FormValues = Omit<
   | typeof _country
   | typeof _sdgs
   | typeof _activity_countries
+  | typeof _npo_type
 > & {
+  [_npo_type]: OptionType<string>;
   [_logo]: ImgLink;
   [_img]: ImgLink;
   [_country]: CountryOption;

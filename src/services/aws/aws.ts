@@ -148,6 +148,7 @@ const endowCardObj: {
   [key in EndowCardFields]: any; //we care only for keys
 } = {
   hq_country: "",
+  endow_designation: "",
   active_in_countries: "",
   categories_sdgs: "",
   id: "",

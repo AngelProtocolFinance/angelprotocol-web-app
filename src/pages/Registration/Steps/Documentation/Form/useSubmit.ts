@@ -30,6 +30,7 @@ export default function useSubmit() {
     isKYCRequired,
     hqCountry,
     activeInCountries,
+    endowDesignation,
     cashEligible,
     ...documents
   }: FormValues) => {
@@ -53,6 +54,7 @@ export default function useSubmit() {
         AuditedFinancialReports: previews.auditedFinancialReports,
         KycDonorsOnly: isKYCRequired === "Yes",
         HqCountry: hqCountry.name,
+        EndowDesignation: endowDesignation.value,
         ActiveInCountries: activeInCountries.map((opt) => opt.value),
         CashEligible: cashEligible,
       }),
