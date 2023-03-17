@@ -10,11 +10,7 @@ export default function Form() {
   const errorName = getTypedKeys(errors).find((errKey) => !!errors[errKey]);
 
   return (
-    <form
-      className="grid gap-6 w-full"
-      onSubmit={submit}
-      onReset={() => reset()}
-    >
+    <form className="grid gap-6 w-full" onSubmit={submit} onReset={reset}>
       <Table className="max-lg:hidden" disabled={disabled} />
       <MobileTable className="lg:hidden" disabled={disabled} />
 
@@ -38,7 +34,7 @@ export default function Form() {
             errors={errors}
             name={`${errorName}.delegate_address`}
             as="span"
-            className="max-lg:hidden field-error static text-sm"
+            className="max-lg:hidden field-error static text-sm flex-wrap"
           />
         )}
       </div>

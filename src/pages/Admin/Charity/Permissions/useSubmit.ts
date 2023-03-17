@@ -79,7 +79,7 @@ export default function useSubmit() {
     errors,
     disabled:
       isSubmitting || (!propMeta.isAuthorized && !watch("userDelegate")),
-    reset,
+    reset: () => reset(),
     submit: handleSubmit(onSubmit),
   };
 }
