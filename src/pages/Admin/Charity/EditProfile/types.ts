@@ -1,5 +1,5 @@
-import { CountryOption } from "services/types";
 import { EndowmentProfileUpdate } from "types/aws";
+import { Country } from "types/countries";
 import { UNSDG_NUMS } from "types/lists";
 import { ImgLink } from "components/ImgEditor";
 import { OptionType } from "components/Selector";
@@ -39,7 +39,7 @@ export type FormValues = Omit<
   [_npo_type]: OptionType<string>;
   [_logo]: ImgLink;
   [_img]: ImgLink;
-  [_country]: CountryOption;
+  [_country]: Country;
   [_sdgs]: OptionType<UNSDG_NUMS>[];
   [_activity_countries]: OptionType<string>[];
   initial: FlatFormValues;

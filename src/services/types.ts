@@ -49,19 +49,3 @@ export type JunoTags =
   | "account"
   | "registrar"
   | "custom";
-
-export type Country = {
-  flags: { png?: string; svg?: string };
-  name: {
-    common: string;
-  };
-};
-
-export type CountryInRegion = Pick<Country, "name"> & { region: string };
-
-export type CountryOption = {
-  name: string;
-  flag: string;
-};
-
-export type Regions = { [region: string]: string[] };

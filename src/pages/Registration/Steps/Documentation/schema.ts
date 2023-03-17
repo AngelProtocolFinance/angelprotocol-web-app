@@ -1,8 +1,8 @@
 import * as Yup from "yup";
 import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
-import { CountryOption } from "services/types";
 import { FileObject } from "types/aws";
+import { Country } from "types/countries";
 import { OptionType } from "components/Selector";
 import { Asset } from "components/registration";
 import { genFileSchema } from "schemas/file";
@@ -36,7 +36,7 @@ export const schema = Yup.object().shape<SchemaShape<FormValues>>({
   sdgs: Yup.array()
     .min(1, "required")
     .max(MAX_SDGS, `maximum ${MAX_SDGS} selections allowed`),
-  hqCountry: Yup.object().shape<SchemaShape<CountryOption>>({
+  hqCountry: Yup.object().shape<SchemaShape<Country>>({
     name: requiredString,
   }),
   endowDesignation: Yup.object().shape<SchemaShape<OptionType<string>>>({
