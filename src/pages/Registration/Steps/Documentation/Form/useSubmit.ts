@@ -12,6 +12,7 @@ export default function useSubmit() {
     handleSubmit,
     formState: { isDirty, isSubmitting },
   } = useFormContext<FormValues>();
+
   const {
     step,
     data: { init, documentation },
@@ -29,6 +30,7 @@ export default function useSubmit() {
     isKYCRequired,
     hqCountry,
     activeInCountries,
+    cashEligible,
     ...documents
   }: FormValues) => {
     if (documentation && !isDirty) {
@@ -52,6 +54,7 @@ export default function useSubmit() {
         KycDonorsOnly: isKYCRequired === "Yes",
         HqCountry: hqCountry.name,
         ActiveInCountries: activeInCountries.map((opt) => opt.value),
+        CashEligible: cashEligible,
       }),
       handleError
     );
