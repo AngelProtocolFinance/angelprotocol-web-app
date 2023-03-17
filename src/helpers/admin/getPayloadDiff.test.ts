@@ -77,4 +77,13 @@ describe("getPayloadDiff", () => {
       )
     ).toStrictEqual({});
   });
+  test("both the same string in prev and next", () => {
+    expect(
+      getPayloadDiff(
+        //prettier ignore
+        { a: "a" },
+        { a: "a" }
+      )
+    ).toStrictEqual({});
+  });
 });
