@@ -141,6 +141,7 @@ export type EndowmentFee = {
 };
 
 const _normal: EndowmentType = "normal";
+
 export type NewAIF = {
   owner: string;
   maturity_time: number; // required in launchpad: datetime in seconds
@@ -159,10 +160,6 @@ export type NewAIF = {
 
   split_to_liquid: SplitDetails;
   ignore_user_splits: boolean;
-  // duplicate?
-  split_max: string;
-  split_min: string;
-  split_default: string;
 
   earnings_fee: EndowmentFee | undefined;
   withdraw_fee: EndowmentFee | undefined;
