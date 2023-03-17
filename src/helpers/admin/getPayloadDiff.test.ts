@@ -77,4 +77,13 @@ describe("getPayloadDiff", () => {
       )
     ).toStrictEqual({});
   });
+  test("objects", () => {
+    expect(
+      getPayloadDiff(
+        //prettier ignore
+        { a: "a" },
+        { a: "a" }
+      )
+    ).toStrictEqual({});
+  });
 });
