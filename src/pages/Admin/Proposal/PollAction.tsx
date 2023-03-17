@@ -15,7 +15,7 @@ export default function PollAction(props: ProposalDetails) {
   const { data: latestBlock = "0" } = useLatestBlockQuery(null);
   const { wallet } = useGetWallet();
   const sendTx = useCosmosTxSender();
-  const { cw3 } = useAdminResources();
+  const { cw3, propMeta } = useAdminResources();
   const { showModal } = useModalContext();
 
   async function executeProposal() {
@@ -24,6 +24,7 @@ export default function PollAction(props: ProposalDetails) {
 
     await sendTx({
       msgs: [execMsg],
+      isAuthorized: propMeta.isAuthorized,
       tagPayloads: extractTagFromMeta(props.meta),
     });
   }
