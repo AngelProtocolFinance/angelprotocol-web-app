@@ -28,7 +28,7 @@ export function getPayloadDiff<T extends object>(prev: T, next: T): Partial<T> {
 }
 
 function areDiff(val1: any, val2: any): boolean {
-  if (isNaN(val1) && isNaN(val2)) {
+  if (Number.isNaN(val1) && Number.isNaN(val2)) {
     //two NaNs treated as they are the same
     return /** areDiff? */ false;
   }
@@ -49,5 +49,5 @@ function hasValue(val: any, exempts: any[] = []): boolean {
 
 // NaN | undefined | null | "" are treated as noValue
 function hasNoValue(val: any): boolean {
-  return val == null || val === "" || isNaN(val);
+  return val == null || val === "" || Number.isNaN(val);
 }
