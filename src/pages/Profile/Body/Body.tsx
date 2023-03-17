@@ -7,6 +7,7 @@ import { APP_NAME, DAPP_DOMAIN } from "constants/common";
 import { appRoutes } from "constants/routes";
 import { useProfileContext } from "../ProfileContext";
 import DonateButton from "./DonateButton";
+import EndowDesignationTag from "./EndowDesignationTag";
 import GeneralInfo from "./GeneralInfo";
 
 export default function Body() {
@@ -42,6 +43,7 @@ export default function Body() {
             <p className="w-full font-normal text-lg">{profile.tagline}</p>
           </div>
           <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-center w-full font-semibold text-base">
+            <EndowDesignationTag />
             <span className="flex items-center gap-2 uppercase">
               <Icon type="MapPin" className="h-6 w-6 text-orange" />
               {profile.hq_country}
