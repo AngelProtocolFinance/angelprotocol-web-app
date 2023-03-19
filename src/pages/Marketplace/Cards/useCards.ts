@@ -1,10 +1,29 @@
 import { useMemo } from "react";
+import { EndowmentCard, EndowmentProfileUpdate } from "types/aws";
 import {
   updateAWSQueryData,
-  useEndowmentCardsQuery,
-  useLazyEndowmentCardsQuery,
+  useEndowmentsQuery,
+  useLazyEndowmentsQuery,
 } from "services/aws/aws";
 import { useGetter, useSetter } from "store/accessors";
+
+type EndowCardFields = keyof (Omit<EndowmentCard, "hq" | "categories"> &
+  /** replace with cloudsearch specific field format */
+  Pick<EndowmentProfileUpdate, "hq_country" | "categories_sdgs">);
+
+const endowCardObj: {
+  [key in EndowCardFields]: any; //we care only for keys
+} = {
+  hq_country: "",
+  active_in_countries: "",
+  categories_sdgs: "",
+  id: "",
+  image: "",
+  kyc_donors_only: "",
+  name: "",
+  tagline: "",
+  endow_type: "",
+};
 
 export default function useCards() {
   const dispatch = useSetter();
@@ -42,7 +61,7 @@ export default function useCards() {
   );
   const designations = endow_designation.join(",");
 
-  const { isLoading, data, isError, originalArgs } = useEndowmentCardsQuery({
+  const { isLoading, data, isError, originalArgs } = useEndowmentsQuery({
     query: searchText || "matchall",
     sort: sort ? `${sort.key}+${sort.direction}` : "default",
     endow_types: endow_types.join(",") || null,
@@ -54,10 +73,10 @@ export default function useCards() {
     ...(activityCountries ? { active_in_countries: activityCountries } : {}),
     start: 0,
     limit: 15,
+    templateResult: endowCardObj,
   });
 
-  const [loadMore, { isLoading: isLoadingNextPage }] =
-    useLazyEndowmentCardsQuery();
+  const [loadMore, { isLoading: isLoadingNextPage }] = useLazyEndowmentsQuery();
 
   async function loadNextPage() {
     //button is hidden when there's no more
@@ -73,7 +92,7 @@ export default function useCards() {
       if (newEndowRes) {
         //pessimistic update to original cache data
         dispatch(
-          updateAWSQueryData("endowmentCards", originalArgs, (prevResult) => {
+          updateAWSQueryData("endowments", originalArgs, (prevResult) => {
             prevResult.Items.push(...newEndowRes.Items);
             prevResult.ItemCutoff = newEndowRes.ItemCutoff;
           })

@@ -3,7 +3,6 @@ import {
   ADR36Payload,
   EndowmentCard,
   EndowmentProfile,
-  EndowmentProfileUpdate,
   EndowmentsQueryParams,
   NewAIF,
   PaginatedAWSQueryRes,
@@ -41,15 +40,18 @@ export const aws = createApi({
   reducerPath: "aws",
   baseQuery: awsBaseQuery,
   endpoints: (builder) => ({
-    endowmentCards: builder.query<
-      PaginatedAWSQueryRes<EndowmentCard[]>,
-      EndowmentsQueryParams
+    endowments: builder.query<
+      PaginatedAWSQueryRes<Partial<EndowmentCard>[]>,
+      EndowmentsQueryParams & { templateResult: Partial<EndowmentCard> }
     >({
       providesTags: ["endowments"],
-      query: (params) => {
+      query: ({ templateResult, ...params }) => {
         return {
           url: `/v3/endowments/${network}`,
-          params: { ...params, return: endowCardFields },
+          params: {
+            ...params,
+            return: Object.keys(templateResult).join(","),
+          },
         };
       },
     }),
@@ -107,42 +109,14 @@ export const aws = createApi({
   }),
 });
 
-export const useEndowmentsQuery = <T extends Partial<EndowmentCard>>(
-  qParams: EndowmentsQueryParams & { templateResult: T }
-) => {
-  const extendedAws = aws.injectEndpoints({
-    endpoints: (builder) => ({
-      endowments: builder.query<
-        PaginatedAWSQueryRes<T[]>,
-        EndowmentsQueryParams & { templateResult: T }
-      >({
-        providesTags: ["endowments"],
-        query: ({ templateResult, ...params }) => {
-          return {
-            url: `/v3/endowments/${network}`,
-            params: {
-              ...params,
-              return: Object.keys(templateResult).join(","),
-            },
-          };
-        },
-      }),
-    }),
-  });
-
-  return extendedAws.endpoints.endowments.useQuery(qParams);
-};
-
 export const {
   useWalletProfileQuery,
   useToggleBookmarkMutation,
   useSaveAIFMutation,
-  useEndowmentCardsQuery,
   useProfileQuery,
   useEditProfileMutation,
 
   endpoints: {
-    endowmentCards: { useLazyQuery: useLazyEndowmentCardsQuery },
     profile: { useLazyQuery: useLazyProfileQuery },
   },
   util: {
@@ -151,22 +125,27 @@ export const {
   },
 } = aws;
 
-type EndowCardFields = keyof (Omit<EndowmentCard, "hq" | "categories"> &
-  /** replace with cloudsearch specific field format */
-  Pick<EndowmentProfileUpdate, "hq_country" | "categories_sdgs">);
-
-//object format first to avoid duplicates
-const endowCardObj: {
-  [key in EndowCardFields]: any; //we care only for keys
-} = {
-  hq_country: "",
-  active_in_countries: "",
-  categories_sdgs: "",
-  id: "",
-  image: "",
-  kyc_donors_only: "",
-  name: "",
-  tagline: "",
-  endow_type: "",
+export const useEndowmentsQuery = <T extends Partial<EndowmentCard>>(
+  qParams: EndowmentsQueryParams & { templateResult: T }
+) => {
+  const result = aws.endpoints.endowments.useQuery(qParams);
+  return {
+    ...result,
+    data: result.data as PaginatedAWSQueryRes<T[]>,
+    originalArgs: result.originalArgs as EndowmentsQueryParams & {
+      templateResult: T;
+    },
+  };
 };
-const endowCardFields = Object.keys(endowCardObj).join(",");
+
+export const useLazyEndowmentsQuery = () => {
+  const [fetch, ...rest] = aws.endpoints.endowments.useLazyQuery();
+  const func = <T extends Partial<EndowmentCard>>(
+    params: EndowmentsQueryParams & { templateResult: T }
+  ) =>
+    fetch(params).then((res) => ({
+      ...res,
+      data: res.data as PaginatedAWSQueryRes<T[]>,
+    }));
+  return [func, ...rest] as [typeof func, ...typeof rest];
+};
