@@ -53,18 +53,6 @@ export const aws = createApi({
         };
       },
     }),
-    endowmentIdNames: builder.query<
-      PaginatedAWSQueryRes<Pick<EndowmentCard, "id" | "name">[]>,
-      EndowmentsQueryParams
-    >({
-      providesTags: ["endowments"],
-      query: (params) => {
-        return {
-          url: `/v3/endowments/${network}`,
-          params: { ...params, return: ENDOW_ID_NAME_FIELDS },
-        };
-      },
-    }),
     walletProfile: builder.query<WalletProfile, string>({
       providesTags: ["walletProfile"],
       query: getWalletProfileQuery,
@@ -119,18 +107,42 @@ export const aws = createApi({
   }),
 });
 
+export const useEndowmentsQuery = <T extends Partial<EndowmentCard>>(
+  qParams: EndowmentsQueryParams & { templateResult: T }
+) => {
+  const extendedAws = aws.injectEndpoints({
+    endpoints: (builder) => ({
+      endowments: builder.query<
+        PaginatedAWSQueryRes<T[]>,
+        EndowmentsQueryParams & { templateResult: T }
+      >({
+        providesTags: ["endowments"],
+        query: ({ templateResult, ...params }) => {
+          return {
+            url: `/v3/endowments/${network}`,
+            params: {
+              ...params,
+              return: Object.keys(templateResult).join(","),
+            },
+          };
+        },
+      }),
+    }),
+  });
+
+  return extendedAws.endpoints.endowments.useQuery(qParams);
+};
+
 export const {
   useWalletProfileQuery,
   useToggleBookmarkMutation,
   useSaveAIFMutation,
   useEndowmentCardsQuery,
-  useEndowmentIdNamesQuery,
   useProfileQuery,
   useEditProfileMutation,
 
   endpoints: {
     endowmentCards: { useLazyQuery: useLazyEndowmentCardsQuery },
-    endowmentIdNames: { useLazyQuery: useLazyEndowmentIdNamesQuery },
     profile: { useLazyQuery: useLazyProfileQuery },
   },
   util: {
@@ -158,11 +170,3 @@ const endowCardObj: {
   endow_type: "",
 };
 const endowCardFields = Object.keys(endowCardObj).join(",");
-
-const ENDOW_ID_NAME_OBJ: {
-  [key in Extract<EndowCardFields, "id" | "name">]: any;
-} = {
-  id: "",
-  name: "",
-};
-const ENDOW_ID_NAME_FIELDS = Object.keys(ENDOW_ID_NAME_OBJ).join(",");

@@ -3,12 +3,19 @@ import { ErrorMessage } from "@hookform/error-message";
 import React, { useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { EndowmentIdName } from "types/aws";
-import { useEndowmentIdNamesQuery } from "services/aws/aws";
+import { useEndowmentsQuery } from "services/aws/aws";
 import { DrawerIcon } from "components/Icon";
 import QueryLoader from "components/QueryLoader";
 import useDebouncer from "hooks/useDebouncer";
 import { unsdgs } from "constants/unsdgs";
 import { FormValues } from "../../schema";
+
+const ENDOW_ID_NAME_OBJ: {
+  [key in keyof EndowmentIdName]: any;
+} = {
+  id: "",
+  name: "",
+};
 
 const containerStyle =
   "absolute top-full mt-2 z-10 w-full bg-white dark:bg-blue-d6 shadow-lg rounded overflow-y-scroll scroller";
@@ -23,7 +30,7 @@ export default function Combobox() {
 
   const [debouncedQuery] = useDebouncer(query, 500);
 
-  const { data, isLoading, isError } = useEndowmentIdNamesQuery({
+  const { data, isLoading, isError } = useEndowmentsQuery({
     query: debouncedQuery || "matchall",
     sort: "default",
     endow_types: "Charity",
@@ -31,6 +38,7 @@ export default function Combobox() {
     sdgs: Object.keys(unsdgs).join(","),
     kyc_only: "true,false",
     start: 0,
+    templateResult: ENDOW_ID_NAME_OBJ,
   });
 
   return (
