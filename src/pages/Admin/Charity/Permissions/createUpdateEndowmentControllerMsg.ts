@@ -9,10 +9,12 @@ export default function createUpdateEndowmentControllerMsg(
   formValues: Partial<UpdateableFormValues>
 ): UpdateEndowmentControllerMsg {
   const accountFees = createField(formValues.accountFees);
-  const beneficiaries_allowlist = createField(formValues.accountFees);
+  const beneficiaries_allowlist = createField(
+    formValues.beneficiaries_allowlist
+  );
+  const contributors_allowlist = createField(formValues.contributors_allowlist);
   const donationSplitParams = createField(formValues.donationSplitParams);
   const profile = createField(formValues.profile);
-  const contributors_allowlist = createField(formValues.contributors_allowlist);
 
   const updateMsg: UpdateEndowmentControllerMsg = {
     id: endowId,
