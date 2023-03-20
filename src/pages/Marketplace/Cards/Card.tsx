@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { Link } from "react-router-dom";
-import { EndowmentCard } from "types/aws";
+import { EndowmentCard } from "./types";
 import { UNSDG_NUMS } from "types/lists";
 import BookmarkBtn from "components/BookmarkBtn";
 import Icon from "components/Icon";

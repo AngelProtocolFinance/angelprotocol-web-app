@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FlatFormValues, FormValues } from "./types";
-import { EndowmentProfile } from "types/aws";
+import { Endowment } from "types/aws";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useProfileQuery } from "services/aws/aws";
 import Seo from "components/Seo";
@@ -24,7 +24,7 @@ export default function EditProfile() {
   return <FormWithContext {...profile} />;
 }
 
-function FormWithContext(props: EndowmentProfile) {
+function FormWithContext(props: Endowment) {
   const { active_in_countries = [] } = props;
   // could just add to useForm.defaultValue - but not Partial here
   const flatInitial: FlatFormValues = {

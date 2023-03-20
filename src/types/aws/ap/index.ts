@@ -2,7 +2,7 @@ import { Keplr } from "@keplr-wallet/types";
 import { EndowmentType } from "../../contracts";
 import { NetworkType, UNSDG_NUMS } from "../../lists";
 
-type EndowmentBase = {
+export type Endowment = {
   hq_country: string;
   active_in_countries?: string[];
   categories: { sdgs: UNSDG_NUMS[] };
@@ -12,9 +12,9 @@ type EndowmentBase = {
 
   name: string;
   tagline: string;
-};
+  endow_type: EndowmentType;
 
-export type EndowmentProfile = EndowmentBase & {
+  // profile related
   contact_email: string;
   logo: string;
   overview: string;
@@ -43,16 +43,12 @@ export type EndowmentProfile = EndowmentBase & {
   url?: string;
 };
 
-export type EndowmentCard = EndowmentBase & {
-  endow_type: EndowmentType;
-};
-
 export type EndowmentCloudSearchParams = Partial<{
   id: number;
   owner: string;
   active_in_countries: string[];
   categories_general: string[];
-  endow_type: CapitalizedEndowmentType;
+  endow_type: EndowmentType;
   categories_sdgs: UNSDG_NUMS[];
   hq_country: string;
   image: string;

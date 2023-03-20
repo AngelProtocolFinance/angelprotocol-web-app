@@ -1,9 +1,8 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import {
   ADR36Payload,
-  EndowmentCard,
+  Endowment,
   EndowmentCloudSearchParams,
-  EndowmentProfile,
   EndowmentsQueryParams,
   NewAIF,
   PaginatedAWSQueryRes,
@@ -42,8 +41,8 @@ export const aws = createApi({
   baseQuery: awsBaseQuery,
   endpoints: (builder) => ({
     endowments: builder.query<
-      PaginatedAWSQueryRes<Partial<EndowmentCard>[]>,
-      EndowmentsQueryParams & { templateResult: Partial<EndowmentCard> }
+      PaginatedAWSQueryRes<Partial<Endowment>[]>,
+      EndowmentsQueryParams & { templateResult: Partial<Endowment> }
     >({
       providesTags: ["endowments"],
       query: ({ templateResult, ...params }) => {
@@ -76,10 +75,10 @@ export const aws = createApi({
       },
       transformResponse: (response: { data: any }) => response,
     }),
-    profile: builder.query<EndowmentProfile, number>({
+    profile: builder.query<Endowment, number>({
       providesTags: ["profile"],
       query: (endowId) => `/v1/profile/${network}/endowment/${endowId}`,
-      transformResponse({ tagline, ...rest }: EndowmentProfile) {
+      transformResponse({ tagline, ...rest }: Endowment) {
         //transform cloudsearch placeholders
         return {
           tagline: tagline === " " ? "" : tagline,
@@ -87,7 +86,7 @@ export const aws = createApi({
         };
       },
     }),
-    editProfile: builder.mutation<EndowmentProfile, ADR36Payload>({
+    editProfile: builder.mutation<Endowment, ADR36Payload>({
       invalidatesTags: ["endowments", "profile", "walletProfile"],
       query: (payload) => {
         return {
@@ -127,7 +126,7 @@ export const {
   },
 } = aws;
 
-export const useEndowmentsQuery = <T extends Partial<EndowmentCard>>(
+export const useEndowmentsQuery = <T extends Partial<Endowment>>(
   qParams: EndowmentsQueryParams & { templateResult: T }
 ) => {
   const result = aws.endpoints.endowments.useQuery(qParams);
@@ -142,7 +141,7 @@ export const useEndowmentsQuery = <T extends Partial<EndowmentCard>>(
 
 export const useLazyEndowmentsQuery = () => {
   const [fetch, ...rest] = aws.endpoints.endowments.useLazyQuery();
-  const func = <T extends Partial<EndowmentCard>>(
+  const func = <T extends Partial<Endowment>>(
     params: EndowmentsQueryParams & { templateResult: T }
   ) =>
     fetch(params).then((res) => ({
@@ -152,7 +151,7 @@ export const useLazyEndowmentsQuery = () => {
   return [func, ...rest] as [typeof func, ...typeof rest];
 };
 
-function createReturnParam(templateResult: Partial<EndowmentCard>): string {
+function createReturnParam(templateResult: Partial<Endowment>): string {
   const { categories, ...okFields } = templateResult;
 
   const cloudSearchParams: EndowmentCloudSearchParams = {

@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { EndowmentCard } from "types/aws";
+import { EndowmentCard } from "./types";
 import {
   updateAWSQueryData,
   useEndowmentsQuery,
@@ -18,7 +18,7 @@ const TEMPLATE_RESULT: {
   kyc_donors_only: false,
   name: "",
   tagline: "",
-  endow_type: "Charity",
+  endow_type: "charity",
 };
 
 export default function useCards() {
