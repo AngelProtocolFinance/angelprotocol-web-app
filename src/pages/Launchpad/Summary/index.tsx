@@ -29,7 +29,7 @@ export default function Summary() {
   const state = useGetter((state) => state.launchpad);
   if (!isCompleted(state)) return <Navigate to={`../${state.progress}`} />;
 
-  const { progress, ...completed } = state;
+  const { progress, network, ...completed } = state;
 
   const {
     1: about,
@@ -41,6 +41,10 @@ export default function Summary() {
   } = completed;
 
   async function submit() {
+    if (network === "polygon") {
+      return alert("Work in progress for polygon submission");
+    }
+
     if (!wallet) {
       return showModal(TxPrompt, { error: "Wallet is not connected" });
     }
