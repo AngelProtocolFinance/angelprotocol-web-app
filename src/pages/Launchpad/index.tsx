@@ -4,6 +4,7 @@ import Fees from "./Fees";
 import Layout from "./Layout";
 import Management from "./Management";
 import Maturity from "./Maturity";
+import NetworkOption from "./NetworkOption";
 import Splits from "./Splits";
 import Start from "./Start";
 import Success from "./Success";
@@ -31,6 +32,12 @@ export default function Launchpad() {
       <Route
         path={routes.success}
         element={<Success classes="justify-self-center my-10 sm:my-20 " />}
+      />
+      <Route
+        path={routes.network}
+        element={
+          <NetworkOption classes="justify-self-center my-10 sm:my-20 " />
+        }
       />
       <Route
         index
