@@ -1,8 +1,10 @@
 import { CountryOption } from "services/types";
-import { EndowmentProfileUpdate } from "types/aws";
+import { EndowmentCloudSearchParams } from "types/aws";
 import { UNSDG_NUMS } from "types/lists";
 import { ImgLink } from "components/ImgEditor";
 import { OptionType } from "components/Selector";
+
+export type EndowmentProfileUpdate = Required<EndowmentCloudSearchParams>;
 
 type K = keyof EndowmentProfileUpdate;
 const _logo: K = "logo";
@@ -14,6 +16,13 @@ const _general: K = "categories_general";
 const _id: K = "id";
 const _tier: K = "tier";
 const _owner: K = "owner";
+const _endow_type: K = "endow_type";
+const _total_liq: K = "total_liq";
+const _total_lock: K = "total_lock";
+const _overall: K = "overall";
+const _on_hand_liq: K = "on_hand_liq";
+const _on_hand_lock: K = "on_hand_lock";
+const _on_hand_overall: K = "on_hand_overall";
 
 export type FlatFormValues = Omit<
   EndowmentProfileUpdate,
@@ -24,6 +33,13 @@ export type FlatFormValues = Omit<
   | typeof _id
   | typeof _tier
   | typeof _owner
+  | typeof _endow_type
+  | typeof _total_liq
+  | typeof _total_lock
+  | typeof _overall
+  | typeof _on_hand_liq
+  | typeof _on_hand_lock
+  | typeof _on_hand_overall
 >;
 
 export type FormValues = Omit<

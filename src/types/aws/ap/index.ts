@@ -52,6 +52,7 @@ export type EndowmentCloudSearchParams = Partial<{
   owner: string;
   active_in_countries: string[];
   categories_general: string[];
+  endow_type: CapitalizedEndowmentType;
   categories_sdgs: UNSDG_NUMS[];
   hq_country: string;
   image: string;
@@ -71,9 +72,16 @@ export type EndowmentCloudSearchParams = Partial<{
   tagline: string;
   tier: number /** 1 - 3  */;
   url: string | null;
-}>;
+  // represents total cumulative balances
+  total_liq: number;
+  total_lock: number;
+  overall: number;
 
-export type EndowmentProfileUpdate = Required<EndowmentCloudSearchParams>;
+  // represents tokens on hand balances (takes into account withdrawn funds)
+  on_hand_liq: number;
+  on_hand_lock: number;
+  on_hand_overall: number;
+}>;
 
 export type SortDirection = "asc" | "desc";
 export type EndowmentsSortKey = "name_internal" | "overall";
