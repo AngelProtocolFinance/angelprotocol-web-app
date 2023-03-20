@@ -13,5 +13,5 @@ export const routes = {
   index: "",
   steps: "steps",
   success: "success",
-  network: "network",
+  new: "new",
 };

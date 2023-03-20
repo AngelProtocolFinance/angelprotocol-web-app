@@ -17,11 +17,11 @@ export default function Start({ classes = "" }) {
   })(saved);
 
   if (!state || state.progress === 1) {
-    return <Navigate to={routes.network} />;
+    return <Navigate to={routes.new} />;
   }
 
   function startNew() {
-    navigate(routes.network);
+    navigate(routes.new);
   }
 
   const { progress } = state;
