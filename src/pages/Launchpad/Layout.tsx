@@ -26,10 +26,10 @@ export default function Layout({ classes = "" }) {
         <Link
           state={step} //pass where this link was clicked from
           to={`../${routes.new}`}
-          className="-mt-4 mb-2 flex items-center gap-2 justify-self-end"
+          className="-mt-4 mb-2 flex items-center gap-2 justify-self-end "
         >
           <NetworkIcon network={network} classes="w-4 h-4 object contain" />
-          <span className="text-xs uppercase font-semibold font-heading text-gray-d1 dark:text-gray">
+          <span className="text-xs uppercase font-semibold font-heading text-gray-d1 dark:text-gray hover:text-orange dark:hover:text-orange">
             {network}
           </span>
         </Link>
