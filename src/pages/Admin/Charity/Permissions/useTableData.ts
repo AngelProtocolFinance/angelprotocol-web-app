@@ -14,10 +14,7 @@ export default function useTableData() {
     const delegated = watch(`${fieldName}.delegate`);
     const modifiable = watch(`${fieldName}.modifiable`);
 
-    const controllerModifiable = watch(`endowment_controller.modifiable`);
-
-    const formDisabled =
-      isSubmitting || !controllerModifiable || !(userDelegated || isUserOwner);
+    const formDisabled = isSubmitting || !(userDelegated || isUserOwner);
 
     const inputDisabled = formDisabled || !modifiable;
 
