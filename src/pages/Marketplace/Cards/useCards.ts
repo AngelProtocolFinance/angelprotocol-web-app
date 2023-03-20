@@ -11,7 +11,7 @@ type EndowCardFields = keyof (Omit<EndowmentCard, "hq" | "categories"> &
   /** replace with cloudsearch specific field format */
   Pick<EndowmentProfileUpdate, "hq_country" | "categories_sdgs">);
 
-const endowCardObj: {
+const TEMPLATE_RESULT: {
   [key in EndowCardFields]: any; //we care only for keys
 } = {
   hq_country: "",
@@ -73,7 +73,7 @@ export default function useCards() {
     ...(activityCountries ? { active_in_countries: activityCountries } : {}),
     start: 0,
     limit: 15,
-    templateResult: endowCardObj,
+    templateResult: TEMPLATE_RESULT,
   });
 
   const [loadMore, { isLoading: isLoadingNextPage }] = useLazyEndowmentsQuery();

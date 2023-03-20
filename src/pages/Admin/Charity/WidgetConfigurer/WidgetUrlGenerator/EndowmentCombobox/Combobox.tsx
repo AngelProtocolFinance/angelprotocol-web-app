@@ -10,7 +10,7 @@ import useDebouncer from "hooks/useDebouncer";
 import { unsdgs } from "constants/unsdgs";
 import { FormValues } from "../../schema";
 
-const ENDOW_ID_NAME_OBJ: {
+const TEMPLATE_RESULT: {
   [key in keyof EndowmentIdName]: any;
 } = {
   id: "",
@@ -38,7 +38,7 @@ export default function Combobox() {
     sdgs: Object.keys(unsdgs).join(","),
     kyc_only: "true,false",
     start: 0,
-    templateResult: ENDOW_ID_NAME_OBJ,
+    templateResult: TEMPLATE_RESULT,
   });
 
   return (
