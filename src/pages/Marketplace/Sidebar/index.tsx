@@ -5,7 +5,6 @@ import Designations from "./Designations";
 import KYCFilter from "./KYCFilter";
 import Regions from "./Regions";
 import SDGGroups from "./SDGGroups";
-import Types from "./Types";
 
 export default function Sidebar({ classes = "" }: { classes?: string }) {
   const dispatch = useSetter();
@@ -46,7 +45,6 @@ export default function Sidebar({ classes = "" }: { classes?: string }) {
 
       <div className="flex w-full px-2">
         <div className="flex flex-col w-full">
-          <Types />
           <Designations />
           <KYCFilter />
           <SDGGroups />
