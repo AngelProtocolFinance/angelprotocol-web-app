@@ -11,12 +11,12 @@ export default function Layout({ classes = "" }) {
     >
       <Progress classes="mx-6 md:ml-8 md:min-w-[12rem] lg:min-w-[15.5rem]" />
       <div className="grid z-10 w-full px-6 py-8 md:p-0 md:pr-8 md:shadow-none shadow-[0px_-5px_5px_0px] shadow-gray-l3/80 dark:shadow-blue-d7">
-        <div className="-mt-4 max-sm:mb-2 flex justify-end items-center gap-2">
+        <button className="-mt-4 mb-2 flex items-center gap-2 justify-self-end">
           <NetworkIcon network={network} classes="w-4 h-4 object contain" />
           <span className="text-xs uppercase font-semibold font-heading text-gray-d1 dark:text-gray">
             {network}
           </span>
-        </div>
+        </button>
         <Outlet />
       </div>
     </div>
