@@ -92,12 +92,12 @@ export const BNB_WALLET_SUPPORTED_CHAINS: BaseChain[] = IS_TEST
 
 export const EVM_SUPPORTED_CHAINS: BaseChain[] = IS_TEST
   ? [
-      { chain_id: chainIDs.ethTest, chain_name: "Ethereum Testnet" },
+      { chain_id: chainIDs.ethereumTest, chain_name: "Ethereum Testnet" },
       { chain_id: chainIDs.binanceTest, chain_name: "BNB Smart Chain Testnet" },
       { chain_id: chainIDs.polygonTest, chain_name: "Polygon Testnet" },
     ]
   : [
-      { chain_id: chainIDs.ethMain, chain_name: "Ethereum Mainnet" },
+      { chain_id: chainIDs.ethereumMain, chain_name: "Ethereum Mainnet" },
       { chain_id: chainIDs.polygonMain, chain_name: "Polygon Mainnet" },
       // {chain_id: chainIDs.binanceMain, chain_name: "BNB Smart Chain Mainnet"},
     ];

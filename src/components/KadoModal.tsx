@@ -60,8 +60,8 @@ function getKadoNetworkValue(chainId: string): KADO_NETWORK_VALUES {
     // if Binance, just default to ethereum
     case chainIDs.binanceMain:
     case chainIDs.binanceTest:
-    case chainIDs.ethMain:
-    case chainIDs.ethTest:
+    case chainIDs.ethereumMain:
+    case chainIDs.ethereumTest:
       return "ethereum";
     case chainIDs.junoMain:
     case chainIDs.junoTest:

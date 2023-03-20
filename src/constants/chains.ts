@@ -7,8 +7,8 @@ export enum chainIDs {
   polygonTest = "80001",
   binanceMain = "56",
   binanceTest = "97",
-  ethMain = "1",
-  ethTest = "5",
+  ethereumMain = "1",
+  ethereumTest = "5",
   terraMain = "phoenix-1",
   terraTest = "pisco-1",
   //add axelar, connext
@@ -30,13 +30,13 @@ const explorers: { [key in chainIDs]: string } = {
 };
 
 const _chains: { [key in chainIDs]: Info } = {
-  [chainIDs.ethMain]: {
-    txExplorer: `${explorers[chainIDs.ethMain]}/tx`,
-    addressExplorer: `${explorers[chainIDs.ethMain]}/address`,
+  [chainIDs.ethereumMain]: {
+    txExplorer: `${explorers[chainIDs.ethereumMain]}/tx`,
+    addressExplorer: `${explorers[chainIDs.ethereumMain]}/address`,
   },
-  [chainIDs.ethTest]: {
-    txExplorer: `${explorers[chainIDs.ethTest]}/tx`,
-    addressExplorer: `${explorers[chainIDs.ethTest]}/address`,
+  [chainIDs.ethereumTest]: {
+    txExplorer: `${explorers[chainIDs.ethereumTest]}/tx`,
+    addressExplorer: `${explorers[chainIDs.ethereumTest]}/address`,
   },
   [chainIDs.binanceMain]: {
     txExplorer: `${explorers[chainIDs.binanceMain]}/tx`,
