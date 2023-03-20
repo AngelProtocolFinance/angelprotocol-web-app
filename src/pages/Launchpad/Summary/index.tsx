@@ -12,7 +12,7 @@ import useCosmosTxSender, { Tx } from "hooks/useCosmosTxSender";
 import { getWasmAttribute, isEmpty, roundDown, roundDownToNum } from "helpers";
 import { EMAIL_SUPPORT, GENERIC_ERROR_MESSAGE } from "constants/common";
 import { appRoutes } from "constants/routes";
-import { routes } from "../constants";
+import { steps } from "../constants";
 import About from "./About";
 import Fees from "./Fees";
 import Management from "./Management";
@@ -116,10 +116,7 @@ export default function Summary() {
       />
       <Fees fees={fees} title="Fees" step={6} disabled={false} />
       <div className="grid grid-cols-2 sm:flex gap-2 border-t border-prim pt-8">
-        <Link
-          to={`../${routes[6]}`}
-          className="text-sm px-8 btn-outline-filled"
-        >
+        <Link to={`../${steps[6]}`} className="text-sm px-8 btn-outline-filled">
           Back
         </Link>
         <button
