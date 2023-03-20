@@ -17,7 +17,7 @@ const formValues: UpdateableFormValues = {
 };
 const FORM_KEYS = getTypedKeys(formValues);
 
-export default function MobileTable({ className = "", disabled = false }) {
+export default function MobileTable({ className = "" }) {
   const { endow_type } = useAdminResources<"charity">();
   const {
     register,

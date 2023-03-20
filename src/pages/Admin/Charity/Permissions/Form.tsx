@@ -12,7 +12,7 @@ export default function Form() {
   return (
     <form className="grid gap-6 w-full" onSubmit={submit} onReset={reset}>
       <Table className="max-lg:hidden" />
-      <MobileTable className="lg:hidden" disabled={isSubmitting} />
+      <MobileTable className="lg:hidden" />
 
       <div className="flex flex-wrap items-center gap-3">
         <button
