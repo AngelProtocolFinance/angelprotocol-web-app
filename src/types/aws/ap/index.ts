@@ -4,6 +4,7 @@ import { NetworkType, UNSDG_NUMS } from "../../lists";
 
 type EndowmentBase = {
   hq_country: string;
+  endow_designation: string;
   active_in_countries?: string[];
   categories: { sdgs: UNSDG_NUMS[] };
   id: number;
@@ -62,6 +63,7 @@ export type EndowmentProfileUpdate = {
   categories_general: string[];
   categories_sdgs: UNSDG_NUMS[];
   hq_country: string;
+  endow_designation: string;
   image: string;
   kyc_donors_only: boolean;
   logo: string;

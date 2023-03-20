@@ -21,10 +21,7 @@ export default function Connector(props: Connection) {
       className="flex flex-col items-center justify-center gap-1 h-28 p-5 border border-gray-l2 rounded bg-white hover:bg-orange-l5 dark:bg-blue/50 hover:dark:bg-blue-d3 dark:border-none"
       onClick={handleConnect}
     >
-      <Image
-        src={props.logo}
-        className="w-12 h-12 border border-prim rounded-full"
-      />
+      <Image src={props.logo} className="w-12 h-12 rounded-full" />
       <span className="font-heading font-bold text-sm capitalize">
         {props.name}
       </span>

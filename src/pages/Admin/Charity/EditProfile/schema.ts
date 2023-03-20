@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
-import { CountryOption } from "services/types";
+import { Country } from "types/countries";
 import { ImgLink } from "components/ImgEditor";
 import { genFileSchema } from "schemas/file";
 import { requiredString, url } from "schemas/string";
@@ -30,10 +30,17 @@ const shape: SchemaShape<FormValues> = {
   image: fileObj,
   logo: fileObj,
   url: url.required("required"),
+  endowDesignation: Yup.object().shape<SchemaShape<OptionType<string>>>({
+    label: requiredString,
+    value: requiredString,
+  }),
   // registration_number: no need to validate,
-  hq_country: Yup.object().shape<SchemaShape<CountryOption>>({
+  hq_country: Yup.object().shape<SchemaShape<Country>>({
     name: requiredString,
   }),
+  endow_designation: Yup.string()
+    .required("required")
+    .url("invalid Endowment Designation"),
   name: requiredString,
   overview: requiredString,
   active_in_countries: Yup.array(),
