@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import {
   ADR36Payload,
   EndowmentCard,
+  EndowmentCloudSearchParams,
   EndowmentProfile,
   EndowmentsQueryParams,
   NewAIF,
@@ -46,11 +47,12 @@ export const aws = createApi({
     >({
       providesTags: ["endowments"],
       query: ({ templateResult, ...params }) => {
+        const returnParam = createReturnParam(templateResult);
         return {
           url: `/v3/endowments/${network}`,
           params: {
             ...params,
-            return: Object.keys(templateResult).join(","),
+            return: returnParam,
           },
         };
       },
@@ -149,3 +151,18 @@ export const useLazyEndowmentsQuery = () => {
     }));
   return [func, ...rest] as [typeof func, ...typeof rest];
 };
+
+function createReturnParam(templateResult: Partial<EndowmentCard>): string {
+  const { categories, ...okFields } = templateResult;
+
+  const cloudSearchParams: EndowmentCloudSearchParams = {
+    ...okFields,
+  };
+
+  if (!!categories) {
+    // doesn't matter what the value is, it's only important to have a defined `categories_sdgs` key
+    cloudSearchParams.categories_sdgs = categories.sdgs;
+  }
+
+  return Object.keys(cloudSearchParams).join(",");
+}

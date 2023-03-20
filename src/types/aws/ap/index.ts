@@ -47,15 +47,9 @@ export type EndowmentCard = EndowmentBase & {
   endow_type: EndowmentType;
 };
 
-export type EndowmentIdName = Pick<EndowmentBase, "id" | "name">;
-
-export type EndowmentProfileUpdate = {
-  //required
+export type EndowmentCloudSearchParams = Partial<{
   id: number;
   owner: string;
-
-  /** optional, though set as required in this type
-  to force setting of default values - "", [], etc ..*/
   active_in_countries: string[];
   categories_general: string[];
   categories_sdgs: UNSDG_NUMS[];
@@ -77,7 +71,9 @@ export type EndowmentProfileUpdate = {
   tagline: string;
   tier: number /** 1 - 3  */;
   url: string | null;
-};
+}>;
+
+export type EndowmentProfileUpdate = Required<EndowmentCloudSearchParams>;
 
 export type SortDirection = "asc" | "desc";
 export type EndowmentsSortKey = "name_internal" | "overall";

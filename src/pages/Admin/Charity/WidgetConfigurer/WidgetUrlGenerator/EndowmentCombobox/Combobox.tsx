@@ -2,7 +2,6 @@ import { Combobox as HuiCombobox } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import React, { useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { EndowmentIdName } from "types/aws";
 import { useEndowmentsQuery } from "services/aws/aws";
 import { DrawerIcon } from "components/Icon";
 import QueryLoader from "components/QueryLoader";
@@ -11,9 +10,9 @@ import { unsdgs } from "constants/unsdgs";
 import { FormValues } from "../../schema";
 
 const TEMPLATE_RESULT: {
-  [key in keyof EndowmentIdName]: any;
+  [key in keyof FormValues["endowIdName"]]: FormValues["endowIdName"][key];
 } = {
-  id: "",
+  id: -1,
   name: "",
 };
 
@@ -57,7 +56,7 @@ export default function Combobox() {
             ref={ref}
             placeholder="Select an endowment..."
             onChange={(event) => setQuery(event.target.value)}
-            displayValue={(value: EndowmentIdName) => value.name}
+            displayValue={(value: FormValues["endowIdName"]) => value.name}
             className="pl-4"
           />
 

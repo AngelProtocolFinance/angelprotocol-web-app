@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { EndowmentCard, EndowmentProfileUpdate } from "types/aws";
+import { EndowmentCard } from "types/aws";
 import {
   updateAWSQueryData,
   useEndowmentsQuery,
@@ -7,22 +7,18 @@ import {
 } from "services/aws/aws";
 import { useGetter, useSetter } from "store/accessors";
 
-type EndowCardFields = keyof (Omit<EndowmentCard, "hq" | "categories"> &
-  /** replace with cloudsearch specific field format */
-  Pick<EndowmentProfileUpdate, "hq_country" | "categories_sdgs">);
-
 const TEMPLATE_RESULT: {
-  [key in EndowCardFields]: any; //we care only for keys
+  [key in keyof EndowmentCard]: EndowmentCard[key]; //we care only for keys
 } = {
   hq_country: "",
-  active_in_countries: "",
-  categories_sdgs: "",
-  id: "",
+  active_in_countries: [],
+  categories: { sdgs: [] },
+  id: -1,
   image: "",
-  kyc_donors_only: "",
+  kyc_donors_only: false,
   name: "",
   tagline: "",
-  endow_type: "",
+  endow_type: "Charity",
 };
 
 export default function useCards() {
