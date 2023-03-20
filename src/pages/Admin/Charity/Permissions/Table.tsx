@@ -65,7 +65,7 @@ export default function Table({ className = "" }) {
             <Cells
               key={`table-row-${fieldName}`}
               type="td"
-              cellClass="py-3 px-4 border-t border-prim min-w-[116px] max-w-xs truncate first:rounded-bl last:rounded-br"
+              cellClass="py-3 px-4 border-t border-prim xl:min-w-[116px] max-w-xs first:max-xl:max-w-[200px] truncate first:rounded-bl last:rounded-br"
             >
               <>{name}</>
 
@@ -98,7 +98,7 @@ export default function Table({ className = "" }) {
 
               <input
                 type="text"
-                className={`field-input w-full truncate py-1.5 ${
+                className={`field-input min-w-[9rem] w-full truncate py-1.5 ${
                   !errors[fieldName]
                     ? ""
                     : "border-red dark:border-red-l2 focus:border-red focus:dark:border-red-l2"
