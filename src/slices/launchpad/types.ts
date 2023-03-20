@@ -67,21 +67,15 @@ type Step6 = Step5 & Pick<Pending, 6>;
 export type Steps = keyof Completed;
 
 export type Progress = Steps | CompleteStep;
-export type LaunchState = { progress: Progress } & (
-  | Step1
-  | Step2
-  | Step3
-  | Step4
-  | Step5
-  | Step6
-  | Completed
-);
+
+type Meta = { progress: Progress; network: "polygon" | "juno" };
+
+export type LaunchState = Meta &
+  (Step1 | Step2 | Step3 | Step4 | Step5 | Step6 | Completed);
 
 const steps: `${keyof Completed}`[] = ["1", "2", "3", "4", "5", "6"];
 // typeguard LaunchState is a Completed
-export const isCompleted = (
-  state: LaunchState
-): state is { progress: 7 } & Completed => {
+export const isCompleted = (state: LaunchState): state is Meta & Completed => {
   const completed = Object.keys(state);
   return (
     state.progress === 7 && steps.every((step) => completed.includes(step))

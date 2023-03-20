@@ -30,7 +30,7 @@ const launchpad = createSlice({
     },
     reset: (state) => {
       window.localStorage.removeItem(LAUNCHPAD_STORAGE_KEY);
-      return { progress: 1 };
+      return { progress: 1, network: "polygon" };
     },
   },
 });
