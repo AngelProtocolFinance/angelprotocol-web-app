@@ -1,8 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { Network } from "slices/launchpad/types";
-import junoIcon from "assets/icons/currencies/juno.svg";
-import polygonIcon from "assets/icons/currencies/matic.svg";
 import { useLaunchpad } from "slices/launchpad";
+import NetworkIcon from "./common/NetworkIcon";
 import { routes } from "./constants";
 
 export default function New({ classes = "" }) {
@@ -37,11 +36,7 @@ function NetworkBtn({ network }: Props) {
       className="btn-outline w-full gap-2 sm:min-w-[10rem] justify-start px-6"
       onClick={start}
     >
-      <img
-        src={network === "juno" ? junoIcon : polygonIcon}
-        alt=""
-        className="w-6 h-6 object-contain"
-      />
+      <NetworkIcon classes="w-6 h-6 object-contain" network={network} />
       <span className="uppercase">{network}</span>
     </button>
   );
