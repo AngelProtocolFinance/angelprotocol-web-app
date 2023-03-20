@@ -32,25 +32,25 @@ export default function Permissions() {
 
 function InnerComponent({ controller }: { controller: EndowmentController }) {
   const initialValues: UpdateableFormValues = {
-    accountFees: createField("Changes to account fees", controller.aum_fee),
+    accountFees: createField(controller.aum_fee, "Changes to account fees"),
     beneficiaries_allowlist: createField(
-      "Changes to beneficiaries whitelist",
-      controller.beneficiaries_allowlist
+      controller.beneficiaries_allowlist,
+      "Changes to beneficiaries whitelist"
     ),
     contributors_allowlist: createField(
-      "Changes to contributors whitelist",
-      controller.contributors_allowlist
+      controller.contributors_allowlist,
+      "Changes to contributors whitelist"
     ),
     donationSplitParams: createField(
-      "Changes to donation split parameters",
-      controller.split_to_liquid
+      controller.split_to_liquid,
+      "Changes to donation split parameters"
     ),
-    profile: createField("Changes to profile", controller.name),
+    profile: createField(controller.name, "Changes to profile"),
   };
   const methods = useForm<FormValues>({
     defaultValues: {
       initialValues,
-      endowment_controller: createField("", controller.endowment_controller),
+      endowment_controller: createField(controller.endowment_controller),
       ...initialValues,
     },
     resolver: yupResolver(schema),
@@ -63,7 +63,7 @@ function InnerComponent({ controller }: { controller: EndowmentController }) {
   );
 }
 
-function createField(name: string, settings: SettingsPermissions): FormField {
+function createField(settings: SettingsPermissions, name = ""): FormField {
   const result: FormField = {
     name,
     gov_controlled: settings.gov_controlled,
