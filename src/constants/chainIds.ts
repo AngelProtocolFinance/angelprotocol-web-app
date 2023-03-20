@@ -1,18 +1,15 @@
 import { Chains } from "types/lists";
+import { chainIDs } from "./chains";
 import { IS_TEST } from "./env";
 
-export const chainIds: { [key in Chains]: string } = IS_TEST
-  ? {
-      binance: "97",
-      ethereum: "5",
-      juno: "uni-6",
-      polygon: "80001",
-      terra: "pisco-1",
-    }
-  : {
-      binance: "56",
-      ethereum: "1",
-      juno: "juno-1",
-      polygon: "137",
-      terra: "phoenix-1",
-    };
+type SuppChains = { [key in Chains]: chainIDs };
+
+const network = IS_TEST ? "Main" : "Test";
+
+export const chainIds: SuppChains = {
+  binance: chainIDs[`binance${network}`],
+  ethereum: chainIDs[`ethereum${network}`],
+  juno: chainIDs[`juno${network}`],
+  polygon: chainIDs[`polygon${network}`],
+  terra: chainIDs[`terra${network}`],
+};
