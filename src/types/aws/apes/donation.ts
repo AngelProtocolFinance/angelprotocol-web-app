@@ -1,6 +1,8 @@
+import { chainIDs } from "constants/chains";
+
 export type Donation = {
   amount: number;
-  chainId: string;
+  chainId: chainIDs;
   chainName: string;
   charityName: string;
   date: string;

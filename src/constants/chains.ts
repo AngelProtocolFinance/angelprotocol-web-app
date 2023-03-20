@@ -72,7 +72,7 @@ const _chains: { [key in chainIDs]: Info } = {
   },
 };
 
-export const chains: { [index: string]: Info } = new Proxy(_chains, {
+export const chains: { [index in chainIDs]: Info } = new Proxy(_chains, {
   get(target, key: chainIDs) {
     return (
       target[key] ?? {

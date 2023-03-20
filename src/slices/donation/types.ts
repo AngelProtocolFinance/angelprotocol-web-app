@@ -5,6 +5,7 @@ import { EVMTx } from "types/evm";
 import { TokenWithAmount, TxOptions } from "types/slices";
 import { WalletState } from "contexts/WalletContext";
 import { OptionType } from "components/Selector";
+import { chainIDs } from "constants/chains";
 
 export type DonationRecipient = {
   id: number;
@@ -17,7 +18,7 @@ export type DonationDetails = {
   pctLiquidSplit: number; // <input range value transformed to number via onChange
 
   //meta
-  chainId: string;
+  chainId: chainIDs;
   chainName: string;
   tokens: TokenWithAmount[];
 };

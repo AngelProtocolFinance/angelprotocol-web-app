@@ -1,3 +1,4 @@
+import { chainIDs } from "constants/chains";
 import { ProposalStatus } from "../../contracts";
 import { NetworkType } from "../../lists";
 import { WithBalance } from "../../utils";
@@ -28,7 +29,7 @@ export type Token = {
 export type TokenWithBalance = WithBalance<Token> & { gift?: number };
 
 export type BaseChain = {
-  chain_id: string;
+  chain_id: chainIDs;
   chain_name: string; // Avalanche Fuji Testnet
 };
 

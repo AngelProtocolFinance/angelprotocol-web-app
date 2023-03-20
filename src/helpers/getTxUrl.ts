@@ -1,5 +1,5 @@
-import { chains } from "constants/chains";
+import { chainIDs, chains } from "constants/chains";
 
-export function getTxUrl(chainId: string, txHash: string): string {
+export function getTxUrl(chainId: chainIDs, txHash: string): string {
   return `${chains[chainId].txExplorer}/${txHash}`;
 }
