@@ -6,8 +6,10 @@ import { SchemaShape } from "schemas/types";
 import { Member } from "slices/launchpad/types";
 import { useModalContext } from "contexts/ModalContext";
 import { Field } from "components/form";
+import { useGetter } from "store/accessors";
 import { requiredPositiveNumber } from "schemas/number";
 import { requiredWalletAddr } from "schemas/string";
+import { chainIds } from "constants/chainIds";
 
 export type Props = {
   initial?: Member;
@@ -18,16 +20,16 @@ export type Props = {
 type FV = Member;
 
 export default function MemberForm({ onChange, added, initial }: Props) {
+  const network = useGetter((state) => state.launchpad.network);
   const { closeModal } = useModalContext();
   const isEdit = initial !== undefined;
   const methods = useForm<FV>({
     defaultValues: initial || { addr: "", weight: "1" },
     resolver: yupResolver(
       object().shape<SchemaShape<FV>>({
-        addr: requiredWalletAddr().notOneOf(
-          initial ? [] : added,
-          "address already added"
-        ),
+        addr: requiredWalletAddr(
+          network === "juno" ? chainIds.juno : chainIds.polygon
+        ).notOneOf(initial ? [] : added, "address already added"),
         weight: requiredPositiveNumber,
       })
     ),
