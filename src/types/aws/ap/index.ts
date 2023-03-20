@@ -19,6 +19,7 @@ export type EndowmentProfile = EndowmentBase & {
   contact_email: string;
   logo: string;
   overview: string;
+  published: boolean;
   registration_number?: string;
   social_media_urls: {
     twitter?: string;
@@ -46,6 +47,7 @@ export type EndowmentProfile = EndowmentBase & {
 
 export type EndowmentCard = EndowmentBase & {
   endow_type: CapitalizedEndowmentType;
+  published: boolean;
 };
 
 export type EndowmentIdName = Pick<EndowmentBase, "id" | "name">;
@@ -66,6 +68,7 @@ export type EndowmentProfileUpdate = {
   kyc_donors_only: boolean;
   logo: string;
   name: string;
+  published: boolean;
   overview: string;
   registration_number: string;
   social_media_url_facebook: string;
@@ -98,6 +101,7 @@ export type EndowmentsQueryParams = {
   hq_country?: string; //comma separated values
   active_in_countries?: string; //comma separated values
   limit?: number; // Number of items to be returned per request. If not provided, API defaults to return all
+  published: string;
 };
 
 export interface LeaderboardEntry {
