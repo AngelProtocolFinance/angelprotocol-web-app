@@ -9,8 +9,10 @@ import SettingsController from "contracts/SettingsController";
 import useCosmosTxSender from "hooks/useCosmosTxSender";
 import { isEmpty } from "helpers";
 import { getPayloadDiff, getTagPayloads } from "helpers/admin";
+import { UnexpectedStateError } from "errors/errors";
 import createUpdateEndowmentControllerMsg from "./createUpdateEndowmentControllerMsg";
 import { FormValues } from "./schema";
+import useUserAuthorization from "./useUserAuthorization";
 
 export default function useSubmit() {
   const { id, cw3, propMeta } = useAdminResources<"charity">();
@@ -22,13 +24,20 @@ export default function useSubmit() {
   } = useFormContext<FormValues>();
   const { wallet } = useGetWallet();
   const sendTx = useCosmosTxSender();
+  const { isUserOwner, userDelegated } = useUserAuthorization();
 
   async function onSubmit({
     initialValues,
-    userDelegate,
+    endowment_controller,
     ...newValues
   }: FormValues) {
     try {
+      if (!endowment_controller.modifiable) {
+        throw new UnexpectedStateError(
+          "Submitting unmodifiable controller changes"
+        );
+      }
+
       const diff = getPayloadDiff(initialValues, newValues);
 
       if (isEmpty(Object.entries(diff))) {
@@ -45,7 +54,7 @@ export default function useSubmit() {
       //
       // Users who are delegates for the whole controller can send direct update msg,
       // thus bypassing the need to create a proposal (even if they are a member of CW3 owners)
-      if (userDelegate) {
+      if (userDelegated) {
         msg = settingsController.createUpdateEndowmentControllerMsg(updateMsg);
       } else {
         const embeddedMsg =
@@ -67,6 +76,7 @@ export default function useSubmit() {
       await sendTx({
         msgs: [msg],
         ...propMeta,
+        isAuthorized: userDelegated || isUserOwner,
         tagPayloads: getTagPayloads(propMeta.willExecute && "endow_controller"),
       });
     } catch (error) {

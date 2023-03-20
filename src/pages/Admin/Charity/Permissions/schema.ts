@@ -20,7 +20,7 @@ export type UpdateableFormValues = {
 
 export type FormValues = UpdateableFormValues & {
   initialValues: UpdateableFormValues;
-  userDelegate: boolean;
+  endowment_controller: FormField;
 };
 
 const deledateKey: keyof FormField = "delegate";

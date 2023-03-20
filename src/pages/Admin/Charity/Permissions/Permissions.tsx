@@ -3,7 +3,6 @@ import { FormProvider, useForm } from "react-hook-form";
 import { EndowmentController, SettingsPermissions } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useEndowmentControllerQuery } from "services/juno/settingsController";
-import { useGetWallet } from "contexts/WalletContext";
 import QueryLoader from "components/QueryLoader";
 import Form from "./Form";
 import { FormField, FormValues, UpdateableFormValues, schema } from "./schema";
@@ -32,8 +31,6 @@ export default function Permissions() {
 }
 
 function InnerComponent({ controller }: { controller: EndowmentController }) {
-  const { wallet } = useGetWallet();
-
   const initialValues: UpdateableFormValues = {
     accountFees: createField("Changes to account fees", controller.aum_fee),
     beneficiaries_allowlist: createField(
@@ -53,9 +50,7 @@ function InnerComponent({ controller }: { controller: EndowmentController }) {
   const methods = useForm<FormValues>({
     defaultValues: {
       initialValues,
-      userDelegate:
-        controller.endowment_controller.delegate &&
-        controller.endowment_controller.delegate.address === wallet?.address,
+      endowment_controller: createField("", controller.endowment_controller),
       ...initialValues,
     },
     resolver: yupResolver(schema),
