@@ -8,6 +8,7 @@ import Icon from "components/Icon";
 import ImgEditor from "components/ImgEditor";
 import { RichTextEditor } from "components/RichText";
 import { Selector } from "components/Selector";
+import Toggle from "components/Toggle";
 import { Field, Label } from "components/form";
 import { ENDOW_DESIGNATIONS } from "constants/common";
 import { appRoutes } from "constants/routes";
@@ -38,6 +39,9 @@ export default function Form() {
         <Icon type="Back" />
         <span>Back to profile</span>
       </Link>
+      <Toggle<FV> name="published" classes={{ container: "ml-auto text-sm" }}>
+        Publish profile
+      </Toggle>
       <Group
         title="Public profile information"
         description="The following information will be used to populate your public
