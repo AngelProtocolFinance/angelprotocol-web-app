@@ -87,7 +87,12 @@ export type EndowmentProfileUpdate = {
 export type SortDirection = "asc" | "desc";
 export type EndowmentsSortKey = "name_internal" | "overall";
 
-export type EndowDesignation = "Non-Profit" | "Religious Non-Profit";
+export type EndowDesignation =
+  | "Non-Profit"
+  | "Religious Organization"
+  | "University"
+  | "Hospital"
+  | "Other";
 
 export type EndowmentsQueryParams = {
   query: string; //set to "matchAll" if no search query
