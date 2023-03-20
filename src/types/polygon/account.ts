@@ -152,8 +152,16 @@ export interface NewAIF extends Obj {
   splitToLiquid: SplitDetails;
 }
 
-type Primitives = number | string | boolean;
-type Obj = { [index: string]: Primitives | Primitives[] | Obj | Obj[] };
+export type Primitives = number | string | boolean;
+export type Obj = {
+  [index: string]:
+    | Primitives
+    | Primitives[]
+    | Obj
+    | Obj[]
+    | (Primitives | Obj)[];
+  // | add future combination here
+};
 
 type Tuple = (Primitives | Tuple)[];
 
