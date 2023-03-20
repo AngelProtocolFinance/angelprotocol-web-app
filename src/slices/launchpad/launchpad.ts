@@ -9,7 +9,7 @@ const saved = window.localStorage.getItem(LAUNCHPAD_STORAGE_KEY);
 
 const init: LaunchState | null = saved && JSON.parse(saved);
 
-const initialState = init || { progress: 1 };
+const initialState = init || { progress: 1, network: "polygon" };
 
 const launchpad = createSlice({
   name: "launchpad",
@@ -30,6 +30,10 @@ const launchpad = createSlice({
     },
     reset: (state, { payload }: PayloadAction<Network>) => {
       window.localStorage.removeItem(LAUNCHPAD_STORAGE_KEY);
+
+      //save init - as it constants previously selected network
+      const init: LaunchState = { progress: 1, network: payload };
+      window.localStorage.setItem(LAUNCHPAD_STORAGE_KEY, JSON.stringify(init));
       return { progress: 1, network: payload };
     },
   },
