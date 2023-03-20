@@ -6,8 +6,8 @@ import { requiredWalletAddr } from "schemas/string";
 export type FormField = Omit<SettingsPermissions, "delegate"> & {
   name: string;
 } & (
-    | { delegate: true; delegate_address: string }
-    | { delegate: false; delegate_address: "" }
+    | { delegated: true; delegate_address: string }
+    | { delegated: false; delegate_address: "" }
   );
 
 export type UpdateableFormValues = {
@@ -23,12 +23,12 @@ export type FormValues = UpdateableFormValues & {
   endowment_controller: FormField;
 };
 
-const deledateKey: keyof FormField = "delegate";
+const deledatedKey: keyof FormField = "delegated";
 
 const fieldShape: SchemaShape<FormField> = {
   delegate_address: Yup.string().when(
-    deledateKey,
-    (delegate: FormField["delegate"], schema) =>
+    deledatedKey,
+    (delegate: FormField["delegated"], schema) =>
       delegate ? requiredWalletAddr() : schema.optional()
   ),
 };

@@ -88,7 +88,7 @@ export default function Table({ className = "" }) {
                 />
               ) : null}
               <CheckField<FormValues>
-                name={`${fieldName}.delegate`}
+                name={`${fieldName}.delegated`}
                 classes={{
                   label: "uppercase text-xs font-bold",
                   input: "checkbox-orange",

@@ -90,7 +90,7 @@ export default function MobileTable({ className = "" }) {
                       </CheckField>
                     )}
                     <CheckField<FormValues>
-                      name={`${fieldName}.delegate`}
+                      name={`${fieldName}.delegated`}
                       classes={{
                         label: "uppercase text-xs font-bold",
                         input: "checkbox-orange",

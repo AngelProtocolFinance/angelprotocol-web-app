@@ -47,7 +47,7 @@ function createField(formField?: FormField): SettingsPermissions | undefined {
     owner_controlled: formField.owner_controlled,
   };
 
-  if (formField.delegate) {
+  if (formField.delegated) {
     result.delegate = { address: formField.delegate_address };
   }
 

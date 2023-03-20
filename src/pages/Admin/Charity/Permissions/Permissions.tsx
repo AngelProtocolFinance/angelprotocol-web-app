@@ -70,8 +70,8 @@ function createField(settings: SettingsPermissions, name = ""): FormField {
     modifiable: settings.modifiable,
     owner_controlled: settings.owner_controlled,
     ...(!settings.delegate
-      ? { delegate: false, delegate_address: "" }
-      : { delegate: true, delegate_address: settings.delegate.address }),
+      ? { delegated: false, delegate_address: "" }
+      : { delegated: true, delegate_address: settings.delegate.address }),
   };
 
   return result;

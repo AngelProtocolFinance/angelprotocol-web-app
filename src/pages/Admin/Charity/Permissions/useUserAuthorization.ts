@@ -14,7 +14,7 @@ export default function useUserAuthorization(): Result {
 
   return {
     userDelegated:
-      endowment_controller.delegate &&
+      endowment_controller.delegated &&
       endowment_controller.delegate_address === wallet?.address,
     isUserOwner: endowment_controller.owner_controlled && propMeta.isAuthorized,
   };
