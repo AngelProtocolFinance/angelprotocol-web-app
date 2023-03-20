@@ -16,15 +16,15 @@ export default function useTableData() {
 
     const controllerModifiable = watch(`endowment_controller.modifiable`);
 
-    const isDisabled =
+    const formDisabled =
       isSubmitting || !controllerModifiable || !(userDelegated || isUserOwner);
 
-    const inputDisabled = isDisabled || !modifiable;
+    const inputDisabled = formDisabled || !modifiable;
 
     return {
       delegateAddressDisabled: !delegated || inputDisabled,
       checkboxDisabled: inputDisabled,
-      lockBtnDisabled: isDisabled,
+      lockBtnDisabled: formDisabled,
       name,
     };
   }
