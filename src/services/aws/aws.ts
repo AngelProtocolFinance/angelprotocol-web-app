@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import {
   ADR36Payload,
   Endowment,
-  EndowmentCloudSearchParams,
+  EndowmentCloudSearchFields,
   EndowmentsQueryParams,
   NewAIF,
   PaginatedAWSQueryRes,
@@ -152,7 +152,7 @@ export const useLazyEndowmentsQuery = () => {
 function createReturnParam(templateResult: Partial<Endowment>): string {
   const { categories, ...okFields } = templateResult;
 
-  const cloudSearchParams: EndowmentCloudSearchParams = {
+  const cloudSearchParams: EndowmentCloudSearchFields = {
     ...okFields,
   };
 

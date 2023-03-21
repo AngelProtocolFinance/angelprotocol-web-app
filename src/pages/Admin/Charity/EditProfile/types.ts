@@ -1,10 +1,10 @@
 import { CountryOption } from "services/types";
-import { EndowmentCloudSearchParams } from "types/aws";
+import { EndowmentCloudSearchFields } from "types/aws";
 import { UNSDG_NUMS } from "types/lists";
 import { ImgLink } from "components/ImgEditor";
 import { OptionType } from "components/Selector";
 
-export type EndowmentProfileUpdate = Required<EndowmentCloudSearchParams>;
+export type EndowmentProfileUpdate = Required<EndowmentCloudSearchFields>;
 
 type K = keyof EndowmentProfileUpdate;
 const _logo: K = "logo";

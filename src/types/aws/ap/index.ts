@@ -43,7 +43,7 @@ export type Endowment = {
   url?: string;
 };
 
-export type EndowmentCloudSearchParams = Partial<{
+export type EndowmentCloudSearchFields = Partial<{
   id: number;
   owner: string;
   active_in_countries: string[];
