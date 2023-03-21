@@ -15,7 +15,7 @@ function Documentation() {
     resolver: yupResolver(schema),
     defaultValues: doc
       ? {
-          ...(({ level, ...doc }) => doc)(doc),
+          ...(({ tier, ...doc }) => doc)(doc),
         }
       : {
           proofOfIdentity: genFileAsset([]),

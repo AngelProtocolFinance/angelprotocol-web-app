@@ -55,7 +55,7 @@ function Dashboard() {
       <Step
         num={2}
         disabled={isStepDisabled}
-        status={`Level ${documentation.level}`}
+        status={`Level ${documentation.tier}`}
       />
       <Step num={3} disabled={isStepDisabled} />
 

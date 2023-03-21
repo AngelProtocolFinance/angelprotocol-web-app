@@ -125,7 +125,7 @@ function formatDocumentation({
     activeInCountries: ActiveInCountries.map((c) => ({ label: c, value: c })),
 
     //meta
-    level: Tier,
+    tier: Tier,
     hasAuthority: true,
     hasAgreedToTerms: true,
   };
