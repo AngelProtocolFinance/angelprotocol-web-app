@@ -10,13 +10,14 @@ export default function Form() {
   const errorName = getTypedKeys(errors).find((errKey) => !!errors[errKey]);
 
   return (
-    <form className="grid gap-6 w-full" onSubmit={submit} onReset={reset}>
+    <form className="grid gap-6 w-full" onSubmit={submit}>
       <Table className="max-lg:hidden" />
       <MobileTable className="lg:hidden" />
 
       <div className="flex flex-wrap items-center gap-3">
         <button
-          type="reset"
+          type="button"
+          onClick={reset}
           disabled={isSubmitting}
           className="btn-outline-filled py-2 px-8 rounded"
         >
