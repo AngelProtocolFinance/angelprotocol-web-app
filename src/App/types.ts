@@ -7,6 +7,7 @@ export type Link = {
     size: number;
   };
   href: string;
+  external?: boolean;
 };
 
 type SocialMedia =
