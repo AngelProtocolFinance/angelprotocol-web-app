@@ -32,6 +32,9 @@ export default function Links() {
       <a href={`${BASE_DOMAIN}/about-angel-giving/`} className={navStyle}>
         About
       </a>
+      <NavLink className={navLinkStyle} to={appRoutes.register}>
+        Register
+      </NavLink>
       <span
         className={`flex justify-between items-center mt-4 ${commonNavItemStyle}`}
       >
