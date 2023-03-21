@@ -57,8 +57,8 @@ const _chains: { [key in chainIDs]: Info } = {
     addressExplorer: `${explorers[chainIDs.polygonTest]}/address`,
   },
   [chainIDs.polygonLocal]: {
-    txExplorer: `${explorers[chainIDs.polygonTest]}/tx`,
-    addressExplorer: `${explorers[chainIDs.polygonTest]}/address`,
+    txExplorer: "",
+    addressExplorer: "",
   },
   [chainIDs.junoMain]: {
     txExplorer: `${explorers[chainIDs.junoMain]}/txs`,
