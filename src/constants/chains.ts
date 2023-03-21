@@ -29,7 +29,7 @@ const explorers: { [key in chainIDs]: string } = {
   "pisco-1": "https://finder.terra.money/testnet",
 };
 
-const _allChains: { [key in chainIDs]: Info } = {
+const _chains: { [key in chainIDs]: Info } = {
   [chainIDs.ethereumMain]: {
     txExplorer: `${explorers[chainIDs.ethereumMain]}/tx`,
     addressExplorer: `${explorers[chainIDs.ethereumMain]}/address`,
@@ -72,7 +72,7 @@ const _allChains: { [key in chainIDs]: Info } = {
   },
 };
 
-export const allChains: { [index in chainIDs]: Info } = new Proxy(_allChains, {
+export const chains: { [index in chainIDs]: Info } = new Proxy(_chains, {
   get(target, key: chainIDs) {
     return (
       target[key] ?? {
