@@ -84,7 +84,7 @@ export type EndowmentsSortKey = "name_internal" | "overall";
 
 export type EndowDesignation = "Non-Profit" | "Religious Non-Profit";
 
-export type EndowmentsQueryParams = {
+export type EndowmentsQueryParams<T extends Partial<Endowment>> = {
   query: string; //set to "matchAll" if no search query
   sort: "default" | `${EndowmentsSortKey}+${SortDirection}`;
   start?: number; //to load next page, set start to ItemCutOff + 1
@@ -96,6 +96,10 @@ export type EndowmentsQueryParams = {
   hq_country?: string; //comma separated values
   active_in_countries?: string; //comma separated values
   limit?: number; // Number of items to be returned per request. If not provided, API defaults to return all
+
+  // temporary object representing the expected (template) result format/type
+  // to be converted to `return` CloudSearch param (comma separated field names to include in result)
+  templateResult: T;
 };
 
 export interface LeaderboardEntry {

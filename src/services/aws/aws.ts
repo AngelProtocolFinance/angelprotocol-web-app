@@ -42,7 +42,7 @@ export const aws = createApi({
   endpoints: (builder) => ({
     endowments: builder.query<
       PaginatedAWSQueryRes<Partial<Endowment>[]>,
-      EndowmentsQueryParams & { templateResult: Partial<Endowment> }
+      EndowmentsQueryParams<Partial<Endowment>>
     >({
       providesTags: ["endowments"],
       query: ({ templateResult, ...params }) => {
@@ -127,22 +127,20 @@ export const {
 } = aws;
 
 export const useEndowmentsQuery = <T extends Partial<Endowment>>(
-  qParams: EndowmentsQueryParams & { templateResult: T }
+  qParams: EndowmentsQueryParams<T>
 ) => {
   const result = aws.endpoints.endowments.useQuery(qParams);
   return {
     ...result,
     data: result.data as PaginatedAWSQueryRes<T[]>,
-    originalArgs: result.originalArgs as EndowmentsQueryParams & {
-      templateResult: T;
-    },
+    originalArgs: result.originalArgs as EndowmentsQueryParams<T>,
   };
 };
 
 export const useLazyEndowmentsQuery = () => {
   const [fetch, ...rest] = aws.endpoints.endowments.useLazyQuery();
   const func = <T extends Partial<Endowment>>(
-    params: EndowmentsQueryParams & { templateResult: T }
+    params: EndowmentsQueryParams<T>
   ) =>
     fetch(params).then((res) => ({
       ...res,
