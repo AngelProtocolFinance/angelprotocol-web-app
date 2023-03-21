@@ -10,7 +10,7 @@ import { BaseChain, Chain, TokenWithBalance } from "types/aws";
 import { ProviderId } from "types/lists";
 import { useChainQuery } from "services/apes";
 import { WalletDisconnectedError } from "errors/errors";
-import { chainIDs } from "constants/chains";
+import { ChainID } from "constants/chains";
 import { IS_MOBILE, IS_TEST } from "constants/env";
 import {
   BNB_WALLET_SUPPORTED_CHAINS,
@@ -39,7 +39,7 @@ type State = {
 };
 
 type Setters = {
-  switchChain: (chainId: chainIDs) => Promise<void>;
+  switchChain: (chainId: ChainID) => Promise<void>;
   disconnect(): void;
   connections: Connection[];
 };
@@ -205,7 +205,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   ]);
 
   const switchChain = useCallback(
-    async (chainId: chainIDs) => {
+    async (chainId: ChainID) => {
       if (!activeProvider) {
         throw new WalletDisconnectedError();
       }

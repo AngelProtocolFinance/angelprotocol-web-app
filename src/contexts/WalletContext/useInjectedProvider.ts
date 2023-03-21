@@ -17,7 +17,7 @@ import {
   WalletError,
   WalletNotInstalledError,
 } from "errors/errors";
-import { chainIDs } from "constants/chains";
+import { ChainID } from "constants/chains";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { EIPMethods } from "constants/evm";
 import { WALLET_METADATA } from "./constants";
@@ -178,7 +178,7 @@ export default function useInjectedProvider(
     }
   };
 
-  const switchChain = async (chainId: chainIDs) => {
+  const switchChain = async (chainId: ChainID) => {
     const injectedProvider = getProvider(providerId);
 
     if (!injectedProvider) {

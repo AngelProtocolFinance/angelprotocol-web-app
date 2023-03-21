@@ -2,9 +2,9 @@ import { EncodeObject } from "@cosmjs/proto-signing";
 import { DeliverTxResponse } from "@cosmjs/stargate";
 import { TagPayload } from "services/types";
 import { Chain } from "types/aws";
-import { chainIDs } from "constants/chains";
+import { ChainID } from "constants/chains";
 
-export type Tx = { hash: string; chainID: chainIDs };
+export type Tx = { hash: string; chainID: ChainID };
 
 export type TxSuccessMeta = {
   message: string;

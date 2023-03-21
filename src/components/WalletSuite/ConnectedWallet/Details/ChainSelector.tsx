@@ -3,7 +3,7 @@ import { BaseChain } from "types/aws";
 import { useErrorContext } from "contexts/ErrorContext";
 import { WalletState, useSetWallet } from "contexts/WalletContext";
 import Icon, { DrawerIcon } from "components/Icon";
-import { chainIDs } from "constants/chains";
+import { ChainID } from "constants/chains";
 
 const SELECTOR_STYLE =
   "flex justify-between items-center w-full p-4 pl-3 font-normal font-body text-sm";
@@ -13,7 +13,7 @@ export default function ChainSelector(props: WalletState) {
 
   const { switchChain } = useSetWallet();
 
-  const handleSwitch = async (chainId: chainIDs) => {
+  const handleSwitch = async (chainId: ChainID) => {
     try {
       await switchChain(chainId);
     } catch (e) {

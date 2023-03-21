@@ -1,6 +1,6 @@
 import { BaseChain } from "types/aws";
 import { ProviderId } from "types/lists";
-import { chainIDs } from "constants/chains";
+import { ChainID } from "constants/chains";
 import { WalletState } from "./WalletContext";
 
 export type WithWallet<T> = T & { wallet: WalletState };
@@ -28,5 +28,5 @@ export type ProviderStatus = {
   providerInfo?: ProviderInfo;
   isLoading: boolean;
   supportedChains: BaseChain[];
-  switchChain: (chainId: chainIDs) => Promise<void>;
+  switchChain: (chainId: ChainID) => Promise<void>;
 };

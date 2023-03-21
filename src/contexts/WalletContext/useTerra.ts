@@ -14,7 +14,7 @@ import {
   UnsupportedChainError,
   WalletDisconnectedError,
 } from "errors/errors";
-import { chainIDs } from "constants/chains";
+import { ChainID, chainIDs } from "constants/chains";
 import { IS_TEST } from "constants/env";
 
 const SUPPORTED_CHAINS: BaseChain[] = IS_TEST
@@ -74,7 +74,7 @@ export default function useTerra() {
     },
   };
 
-  const switchChain = async (chainId: chainIDs) => {
+  const switchChain = async (chainId: ChainID) => {
     if (!connection) {
       throw new WalletDisconnectedError();
     }

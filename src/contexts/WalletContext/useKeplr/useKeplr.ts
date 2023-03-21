@@ -7,7 +7,7 @@ import {
   WalletError,
   WalletNotInstalledError,
 } from "errors/errors";
-import { chainIDs } from "constants/chains";
+import { ChainID, chainIDs } from "constants/chains";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { IS_TEST } from "constants/env";
 import { WALLET_METADATA } from "../constants";
@@ -41,7 +41,7 @@ export default function useKeplr() {
     // eslint-disable-next-line
   }, []);
 
-  const requestAccess = async (chainId: chainIDs, isNewConnection = false) => {
+  const requestAccess = async (chainId: ChainID, isNewConnection = false) => {
     try {
       if (!dwindow.keplr) return;
 
@@ -99,7 +99,7 @@ export default function useKeplr() {
     saveUserAction(actionKey, "disconnect");
   }
 
-  const switchChain = async (chainId: chainIDs) => {
+  const switchChain = async (chainId: ChainID) => {
     if (!dwindow.keplr) {
       throw new WalletNotInstalledError("keplr");
     }

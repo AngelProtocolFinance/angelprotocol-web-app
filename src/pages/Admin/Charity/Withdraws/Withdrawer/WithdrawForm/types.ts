@@ -1,5 +1,5 @@
 import { AccountType, GenericBalance } from "types/contracts";
-import { chainIDs } from "constants/chains";
+import { ChainID } from "constants/chains";
 
 export type Amount = {
   tokenId: string; //
@@ -10,7 +10,7 @@ export type Amount = {
 
 export type WithdrawValues = {
   amounts: Amount[];
-  network: chainIDs;
+  network: ChainID;
   beneficiary: string;
   reason: string;
 

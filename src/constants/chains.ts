@@ -1,22 +1,24 @@
 import { DAPP_DOMAIN } from "constants/common";
 
-export enum chainIDs {
-  junoMain = "juno-1",
-  junoTest = "uni-6",
-  polygonMain = "137",
-  polygonTest = "80001",
-  binanceMain = "56",
-  binanceTest = "97",
-  ethereumMain = "1",
-  ethereumTest = "5",
-  terraMain = "phoenix-1",
-  terraTest = "pisco-1",
+export const chainIDs = {
+  junoMain: "juno-1",
+  junoTest: "uni-6",
+  polygonMain: "137",
+  polygonTest: "80001",
+  binanceMain: "56",
+  binanceTest: "97",
+  ethereumMain: "1",
+  ethereumTest: "5",
+  terraMain: "phoenix-1",
+  terraTest: "pisco-1",
   //add axelar, connext
-}
+} as const;
+
+export type ChainID = typeof chainIDs[keyof typeof chainIDs];
 
 type Info = { txExplorer: string; addressExplorer: string };
 
-const explorers: { [key in chainIDs]: string } = {
+const explorers: { [key in ChainID]: string } = {
   1: "https://etherscan.io",
   5: "https://goerli.etherscan.io",
   97: "https://testnet.bscscan.com",
@@ -29,7 +31,7 @@ const explorers: { [key in chainIDs]: string } = {
   "pisco-1": "https://finder.terra.money/testnet",
 };
 
-const _chains: { [key in chainIDs]: Info } = {
+const _chains: { [key in ChainID]: Info } = {
   [chainIDs.ethereumMain]: {
     txExplorer: `${explorers[chainIDs.ethereumMain]}/tx`,
     addressExplorer: `${explorers[chainIDs.ethereumMain]}/address`,
@@ -72,8 +74,8 @@ const _chains: { [key in chainIDs]: Info } = {
   },
 };
 
-export const chains: { [index in chainIDs]: Info } = new Proxy(_chains, {
-  get(target, key: chainIDs) {
+export const chains: { [index in ChainID]: Info } = new Proxy(_chains, {
+  get(target, key: ChainID) {
     return (
       target[key] ?? {
         txExplorer: DAPP_DOMAIN,

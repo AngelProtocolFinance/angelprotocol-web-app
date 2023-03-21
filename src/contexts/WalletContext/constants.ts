@@ -54,7 +54,7 @@ export const WALLET_METADATA: {
 
 export const placeholderChain: Chain = {
   block_explorer_url: "https://www.placeholder.io/token/txs/",
-  chain_id: "placeholder",
+  chain_id: "uni-6",
   chain_name: "placeholder",
   native_currency: {
     type: "placeholder",
