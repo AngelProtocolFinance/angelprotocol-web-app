@@ -1,5 +1,6 @@
 import { Interface } from "@ethersproject/abi";
-import { Tuple } from "types/evm";
+import { NewAIF } from "types/contracts/evm";
+import { toTuple } from "helpers";
 import abi from "./abi.json";
 
 const encoder = new Interface(abi);
@@ -7,8 +8,8 @@ const encoder = new Interface(abi);
 const createEndowmentFn = encoder.getFunction("createEndowment");
 
 export const createEndowment = {
-  encode(aif: Tuple) {
-    return encoder.encodeFunctionData(createEndowmentFn, [aif]);
+  encode(aif: NewAIF) {
+    return encoder.encodeFunctionData(createEndowmentFn, [toTuple(aif)]);
   },
   parse(result: string) {
     const decoded = encoder.decodeFunctionResult(createEndowmentFn, result);
