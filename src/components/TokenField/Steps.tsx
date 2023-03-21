@@ -12,7 +12,7 @@ export default function Steps({
   const steps = scale.map((s) => roundDownToNum(s * base, precision));
 
   //only show steps if balance is gte all steps
-  if (!steps.every((s) => token.balance >= s)) return null;
+  if (token.balance < Math.max(...steps)) return null;
 
   return (
     <div className="grid grid-cols-5 gap-2 text-xs">
