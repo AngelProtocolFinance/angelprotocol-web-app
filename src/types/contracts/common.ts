@@ -49,11 +49,9 @@ export type EndowmentStatus = {
   closed: 3;
 };
 export type EndowmentType = "charity" | "normal";
-export type CapitalizedEndowmentType = Capitalize<EndowmentType>;
 export type EndowmentStatusText = keyof EndowmentStatus;
 export type EndowmentStatusNum = EndowmentStatus[EndowmentStatusText];
 export type EndowmentStatusStrNum = `${EndowmentStatusNum}`;
-export type EndowmentTier = "Level1" | "Level2" | "Level3";
 export type EndowmentTierNum = 1 | 2 | 3;
 
 export type Categories = {
