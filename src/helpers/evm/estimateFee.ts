@@ -9,12 +9,12 @@ export async function estimateFee(
   tx: SimulSendNativeTx | SimulContractTx
 ): Promise<{ fee: number; tx: EVMTx }> {
   const provider = getProvider(wallet.providerId)!;
+
   const [nonce, gas, gasPrice] = await Promise.all([
     provider.request<string>({
       method: EIPMethods.eth_getTransactionCount,
       params: [wallet.address, "latest"],
     }),
-
     provider.request<string>({
       method: EIPMethods.eth_estimateGas,
       params: [tx],
