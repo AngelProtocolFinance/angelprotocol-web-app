@@ -23,6 +23,7 @@ export async function estimateFee(
       method: EIPMethods.eth_gasPrice,
     }),
   ]);
+
   const fee = condense(gasPrice, wallet.displayCoin.decimals)
     .mul(gas)
     .toNumber();
