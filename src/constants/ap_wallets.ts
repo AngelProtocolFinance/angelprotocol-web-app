@@ -5,6 +5,6 @@ export const ap_wallets = {
   cosmos: "cosmos17wp2dr7zrsrrtlz9cn4sxtpsha37dwmwa5n6dr",
   juno_deposit: "juno17wp2dr7zrsrrtlz9cn4sxtpsha37dwmwtxsp2l",
   juno_withdraw: "juno19ecww4v6sftj07d0vtjzjqtaertltek55ngmp7",
-  polygon_deposit: "polygon17wp2dr7zrsrrtlz9cn4sxtpsha37dwmwtxsp2l",
-  polygon_withdraw: "polygon19ecww4v6sftj07d0vtjzjqtaertltek55ngmp7",
+  polygon_deposit: "0x5a882Eb704EA153B117Ab2b1797bA46a1B09Da2c ",
+  polygon_withdraw: "0x0189BeffF5B23E692Ea25C4820930c3c11e8D448",
 };
