@@ -1,5 +1,5 @@
 import { Keplr } from "@keplr-wallet/types";
-import { CapitalizedEndowmentType } from "../../contracts";
+import { EndowmentType } from "../../contracts";
 import { NetworkType, UNSDG_NUMS } from "../../lists";
 
 type EndowmentBase = {
@@ -44,7 +44,7 @@ export type EndowmentProfile = EndowmentBase & {
 };
 
 export type EndowmentCard = EndowmentBase & {
-  endow_type: CapitalizedEndowmentType;
+  endow_type: EndowmentType;
 };
 
 export type EndowmentIdName = Pick<EndowmentBase, "id" | "name">;
@@ -88,7 +88,7 @@ export type EndowmentsQueryParams = {
   query: string; //set to "matchAll" if no search query
   sort: "default" | `${EndowmentsSortKey}+${SortDirection}`;
   start?: number; //to load next page, set start to ItemCutOff + 1
-  endow_types: string | null; // comma separated CapitalizedEndowmentType values
+  endow_types: string | null; // comma separated EndowmentType values
   endow_designation?: string;
   sdgs: string | 0; // comma separated sdg values. The backend recognizes "0" as "no SDG was selected"
   tiers: string | null; // comma separated Exclude<EndowmentTier, "Level1"> values ("Level1" excluded for now)
