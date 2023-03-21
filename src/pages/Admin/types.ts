@@ -42,7 +42,10 @@ export type Templates =
 
   //registrar
   | "reg_config_extension"
-  | "reg_owner";
+  | "reg_owner"
+
+  // settings controller
+  | "endow_controller";
 
 export type MetaConstructor<K extends Templates, V> = {
   type: K;
@@ -165,7 +168,10 @@ export type ProposalMeta =
   | { type: "acc_redeem" }
 
   //registrar
-  | RegistrarConfigUpdateMeta;
+  | RegistrarConfigUpdateMeta
+
+  // settings controller
+  | { type: "endow_controller" };
 
 /** _templates */
 export type ProposalBase = {

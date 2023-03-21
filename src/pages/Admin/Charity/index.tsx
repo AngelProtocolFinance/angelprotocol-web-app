@@ -10,6 +10,7 @@ import Contributions from "./Contributions";
 import Dashboard from "./Dashboard";
 import EditProfile from "./EditProfile";
 import Invest from "./Invest";
+import Permissions from "./Permissions";
 import Settings from "./Settings";
 import Templates from "./Templates";
 import WidgetConfigurer from "./WidgetConfigurer";
@@ -33,6 +34,7 @@ const LINK_GROUPS: LinkGroup[] = [
     title: "Manage",
     links: [LINKS[adminRoutes.proposals]],
   },
+  { title: "Settings", links: [LINKS[adminRoutes.permissions]] },
 ];
 
 export default function Charity() {
@@ -51,6 +53,7 @@ export default function Charity() {
         <Route path={adminRoutes.contributions} element={<Contributions />} />
         <Route path={adminRoutes.settings} element={<Settings />} />
         <Route path={adminRoutes.edit_profile} element={<EditProfile />} />
+        <Route path={adminRoutes.permissions} element={<Permissions />} />
         <Route path={adminRoutes.widget_config}>
           <Route index element={<WidgetConfigurer />} />
           <Route path=":endowId" element={<WidgetConfigurer />} />

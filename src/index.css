@@ -98,6 +98,12 @@
   .checkbox::before {
     @apply text-sm absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2;
   }
+  .checkbox-orange {
+    @apply checkbox focus:ring-orange-l2 disabled:border-gray-l3 disabled:dark:border-gray;
+  }
+  .checkbox-orange:checked {
+    @apply border-none bg-orange text-white disabled:bg-gray-l3 disabled:dark:bg-bluegray;
+  }
 }
 
 /** Layer 2 components */
@@ -110,6 +116,9 @@
   }
   .btn-blue {
     @apply btn bg-blue disabled:bg-gray hover:bg-blue-l1 active:bg-blue-d1 focus-visible:ring-blue-l4;
+  }
+  .btn-red {
+    @apply btn bg-red disabled:bg-gray aria-disabled:bg-gray text-white hover:bg-red-l1 active:bg-red-d1 focus-visible:ring-red-l4;
   }
   .overlay {
     @apply before:content-[''] before:absolute before:inset-0 before:bg-blue/90 before:dark:bg-blue-d3/90;

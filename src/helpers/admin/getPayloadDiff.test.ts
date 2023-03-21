@@ -86,4 +86,63 @@ describe("getPayloadDiff", () => {
       )
     ).toStrictEqual({});
   });
+  test("include diff subobjects", () => {
+    expect(
+      getPayloadDiff(
+        {
+          diffObjField: {
+            a: true,
+            b: "abc",
+            c: 1,
+            d: null,
+            e: undefined,
+            f: {},
+            g: "a",
+            h: "same",
+          },
+          sameObjField: {
+            a: true,
+            b: "abc",
+            c: 1,
+            d: null,
+            e: undefined,
+            f: {},
+            g: "a",
+            h: "same",
+          },
+        },
+        {
+          diffObjField: {
+            a: false,
+            b: "abc",
+            c: 2,
+            d: "a",
+            e: "a",
+            f: { a: "a" },
+            h: "same",
+          },
+          sameObjField: {
+            a: true,
+            b: "abc",
+            c: 1,
+            d: null,
+            e: undefined,
+            f: {},
+            g: "a",
+            h: "same",
+          },
+        }
+      )
+    ).toStrictEqual({
+      diffObjField: {
+        a: false,
+        b: "abc",
+        c: 2,
+        d: "a",
+        e: "a",
+        f: { a: "a" },
+        h: "same",
+      },
+    });
+  });
 });

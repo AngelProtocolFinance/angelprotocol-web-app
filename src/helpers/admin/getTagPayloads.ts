@@ -7,12 +7,19 @@ import {
   defaultProposalTags,
   indexfundTags,
   registrarTags,
+  settingsControllerTags,
 } from "services/juno/tags";
 
 export function getTagPayloads(type?: ProposalMeta["type"]): TagPayload[] {
   const _tags = [...defaultProposalTags];
 
   switch (type) {
+    case "endow_controller":
+      _tags.push({
+        type: "settingsController",
+        id: settingsControllerTags.endowment_controller,
+      });
+      break;
     case "if_alliance":
       _tags.push({
         type: "indexfund",

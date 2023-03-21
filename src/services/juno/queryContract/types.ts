@@ -7,6 +7,7 @@ import {
   CW4Member,
   CW20Balance,
   CW20Info,
+  EndowmentController,
   EndowmentDetails,
   EndowmentState,
   FundDetails,
@@ -116,6 +117,12 @@ export interface ContractQueries {
     args: { endowment_id: number };
     res: Q<string>;
     result: string;
+  };
+
+  endowmentController: {
+    args: { id: number };
+    res: Q<EndowmentController>;
+    result: EndowmentController;
   };
 }
 

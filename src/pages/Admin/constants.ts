@@ -31,6 +31,8 @@ export const templates: { [key in Templates]: string } = {
   //registrar
   reg_config_extension: "reg_config_extension",
   reg_owner: "reg_owner",
+
+  endow_controller: "endow_controller",
 };
 
 export const templateRoutes: { [key in Templates | "index"]: string } = {
@@ -134,6 +136,14 @@ export const LINKS: {
     to: sidebarRoutes.edit_profile,
     icon: {
       type: "User",
+      size: 24,
+    },
+  },
+  permissions: {
+    title: "Permissions",
+    to: sidebarRoutes.permissions,
+    icon: {
+      type: "PermDataSettings",
       size: 24,
     },
   },
