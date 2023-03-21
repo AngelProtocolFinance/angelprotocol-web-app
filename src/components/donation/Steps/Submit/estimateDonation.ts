@@ -6,8 +6,8 @@ import { WalletState } from "contexts/WalletContext";
 import { SubmitStep } from "slices/donation";
 import Account from "contracts/Account";
 import CW20 from "contracts/CW20";
-import { transfer } from "contracts/ERC20";
 import GiftCard from "contracts/GiftCard";
+import { transfer } from "contracts/evm/ERC20";
 import {
   condense,
   extractFeeAmount,
