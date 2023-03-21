@@ -1,5 +1,5 @@
-import { Tupleable } from "../../types/evm";
-import { toTuple } from "../evm";
+import { Tupleable } from "types/evm";
+import { toTuple } from "./toTuple";
 
 //NOTE: intended for shallow form objects only atm
 describe("toTuple", () => {
