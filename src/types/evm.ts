@@ -49,3 +49,5 @@ export type Tupleable = {
     | (Primitives | Tupleable)[];
   // | add future combination here
 };
+
+export type Tuple = (Primitives | Tuple)[];

@@ -1,5 +1,11 @@
 import WalletConnect from "@walletconnect/client";
-import { InjectedProvider, RequestArguments } from "types/evm";
+import {
+  InjectedProvider,
+  Primitives,
+  RequestArguments,
+  Tuple,
+  Tupleable,
+} from "types/evm";
 import { ProviderId } from "types/lists";
 import { Dwindow } from "types/window";
 import { WC_BRIDGE } from "constants/urls";
@@ -33,4 +39,30 @@ export function getProvider(
     default:
       return undefined;
   }
+}
+
+function isTupleable(val: Primitives | Tupleable): val is Tupleable {
+  return !(
+    typeof val === "number" ||
+    typeof val === "string" ||
+    typeof val === "boolean"
+  );
+}
+
+export function toTuple(val: Tupleable): Tuple {
+  return Object.values(val).map((v) => {
+    if (
+      typeof v === "number" ||
+      typeof v === "string" ||
+      typeof v === "boolean"
+    ) {
+      return v;
+    } else if (Array.isArray(v)) {
+      return v.map((_v) => {
+        return isTupleable(_v) ? toTuple(_v) : _v;
+      });
+    } else {
+      return toTuple(v);
+    }
+  });
 }
