@@ -6,7 +6,7 @@ import {
   useWallet,
 } from "@terra-money/wallet-provider";
 import { Connection, ProviderInfo } from "./types";
-import { BaseChain } from "types/aws";
+import { BaseChain, ChainID } from "types/aws";
 import { ProviderId } from "types/lists";
 import station_icon from "assets/icons/wallets/terra-extension.jpg";
 import {
@@ -14,7 +14,7 @@ import {
   UnsupportedChainError,
   WalletDisconnectedError,
 } from "errors/errors";
-import { ChainID, chainIDs } from "constants/chains";
+import { chainIDs } from "constants/chains";
 import { IS_TEST } from "constants/env";
 
 const SUPPORTED_CHAINS: BaseChain[] = IS_TEST

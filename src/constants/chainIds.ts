@@ -1,5 +1,6 @@
+import { ChainID } from "types/aws";
 import { Chains } from "types/lists";
-import { ChainID, chainIDs } from "./chains";
+import { chainIDs } from "./chains";
 import { IS_TEST } from "./env";
 
 const network = IS_TEST ? "Main" : "Test";

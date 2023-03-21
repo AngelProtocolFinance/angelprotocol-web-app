@@ -1,3 +1,4 @@
+import { ChainID } from "types/aws";
 import { DAPP_DOMAIN } from "constants/common";
 
 export const chainIDs = {
@@ -13,8 +14,6 @@ export const chainIDs = {
   terraTest: "pisco-1",
   //add axelar, connext
 } as const;
-
-export type ChainID = typeof chainIDs[keyof typeof chainIDs];
 
 type Info = { txExplorer: string; addressExplorer: string };
 

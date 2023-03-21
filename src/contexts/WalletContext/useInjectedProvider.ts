@@ -1,7 +1,7 @@
 import Decimal from "decimal.js";
 import { useCallback, useEffect, useState } from "react";
 import { Connection, ProviderInfo } from "./types";
-import { BaseChain } from "types/aws";
+import { BaseChain, ChainID } from "types/aws";
 import {
   AccountChangeHandler,
   ChainChangeHandler,
@@ -17,7 +17,7 @@ import {
   WalletError,
   WalletNotInstalledError,
 } from "errors/errors";
-import { ChainID } from "constants/chains";
+import "constants/chains";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { EIPMethods } from "constants/evm";
 import { WALLET_METADATA } from "./constants";

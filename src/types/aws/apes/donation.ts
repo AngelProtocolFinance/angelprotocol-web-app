@@ -1,4 +1,4 @@
-import { ChainID } from "constants/chains";
+import { ChainID } from ".";
 
 export type Donation = {
   amount: number;

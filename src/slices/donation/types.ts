@@ -1,11 +1,11 @@
 import { CreateTxOptions } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { CountryOption } from "services/types";
+import { ChainID } from "types/aws";
 import { EVMTx } from "types/evm";
 import { TokenWithAmount, TxOptions } from "types/slices";
 import { WalletState } from "contexts/WalletContext";
 import { OptionType } from "components/Selector";
-import { ChainID } from "constants/chains";
 
 export type DonationRecipient = {
   id: number;

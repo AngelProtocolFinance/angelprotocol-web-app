@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { Connection, ProviderInfo } from "../types";
-import { BaseChain } from "types/aws";
+import { BaseChain, ChainID } from "types/aws";
 import { Dwindow } from "types/window";
 import {
   UnsupportedChainError,
   WalletError,
   WalletNotInstalledError,
 } from "errors/errors";
-import { ChainID, chainIDs } from "constants/chains";
+import { chainIDs } from "constants/chains";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { IS_TEST } from "constants/env";
 import { WALLET_METADATA } from "../constants";

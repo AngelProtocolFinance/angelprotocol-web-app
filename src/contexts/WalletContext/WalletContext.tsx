@@ -6,11 +6,10 @@ import {
   useMemo,
 } from "react";
 import { Connection, ProviderStatus } from "./types";
-import { BaseChain, Chain, TokenWithBalance } from "types/aws";
+import { BaseChain, Chain, ChainID, TokenWithBalance } from "types/aws";
 import { ProviderId } from "types/lists";
 import { useChainQuery } from "services/apes";
 import { WalletDisconnectedError } from "errors/errors";
-import { ChainID } from "constants/chains";
 import { IS_MOBILE, IS_TEST } from "constants/env";
 import {
   BNB_WALLET_SUPPORTED_CHAINS,

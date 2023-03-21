@@ -1,4 +1,4 @@
-import { ChainID } from "constants/chains";
+import { chainIDs } from "constants/chains";
 import { ProposalStatus } from "../../contracts";
 import { NetworkType } from "../../lists";
 import { WithBalance } from "../../utils";
@@ -27,6 +27,8 @@ export type Token = {
 };
 
 export type TokenWithBalance = WithBalance<Token> & { gift?: number };
+
+export type ChainID = typeof chainIDs[keyof typeof chainIDs];
 
 export type BaseChain = {
   chain_id: ChainID;

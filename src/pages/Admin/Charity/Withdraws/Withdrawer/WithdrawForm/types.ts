@@ -1,5 +1,5 @@
+import { ChainID } from "types/aws";
 import { AccountType, GenericBalance } from "types/contracts";
-import { ChainID } from "constants/chains";
 
 export type Amount = {
   tokenId: string; //
