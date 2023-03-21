@@ -5,6 +5,8 @@ export type EVMTx = {
   from: string;
   to: string;
   nonce: string;
+  gas: string;
+  gasPrice: string;
 };
 
 export type SendNativeTx = EVMTx & {

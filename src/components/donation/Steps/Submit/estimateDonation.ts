@@ -8,16 +8,9 @@ import Account from "contracts/Account";
 import CW20 from "contracts/CW20";
 import GiftCard from "contracts/GiftCard";
 import { transfer } from "contracts/evm/ERC20";
-import {
-  condense,
-  extractFeeAmount,
-  getProvider,
-  logger,
-  scale,
-  scaleToStr,
-} from "helpers";
+import { extractFeeAmount, logger, scale, scaleToStr } from "helpers";
+import { estimateFee } from "helpers/evm/estimateFee";
 import { ap_wallets } from "constants/ap_wallets";
-import { EIPMethods } from "constants/evm";
 import estimateTerraFee from "./estimateTerraFee";
 import getBreakdown from "./getBreakdown";
 
@@ -99,7 +92,6 @@ export async function estimateDonation({
     }
     // evm transactions
     else {
-      const provider = getProvider(wallet.providerId)!;
       const scaledAmount = scale(token.amount, token.decimals).toHex();
       const tx: SimulSendNativeTx | SimulContractTx =
         token.type === "evm-native"
@@ -110,28 +102,11 @@ export async function estimateDonation({
               data: transfer.encode(ap_wallets.eth, scaledAmount),
             };
 
-      const [nonce, gas, gasPrice] = await Promise.all([
-        provider.request<string>({
-          method: EIPMethods.eth_getTransactionCount,
-          params: [wallet.address, "latest"],
-        }),
-
-        //for display in summary only but not
-        provider.request<string>({
-          method: EIPMethods.eth_estimateGas,
-          params: [tx],
-        }),
-        provider.request<string>({
-          method: EIPMethods.eth_gasPrice,
-        }),
-      ]);
-      const feeAmount = condense(gasPrice, native_currency.decimals)
-        .mul(gas)
-        .toNumber();
+      const { tx: simulated, fee } = await estimateFee(wallet, tx);
 
       return {
-        fee: { amount: feeAmount, symbol: native_currency.symbol },
-        tx: { type: "evm", val: { ...tx, nonce } },
+        fee: { amount: fee, symbol: native_currency.symbol },
+        tx: { type: "evm", val: simulated },
       };
     }
   } catch (err) {
