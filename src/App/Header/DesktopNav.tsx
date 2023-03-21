@@ -18,6 +18,9 @@ export default function DesktopNav({ classes = "" }: { classes?: string }) {
       <a href={`${BASE_DOMAIN}/about-angel-giving/`} className={styles}>
         About
       </a>
+      <NavLink className={styler} to={appRoutes.register}>
+        Register
+      </NavLink>
     </nav>
   );
 }
