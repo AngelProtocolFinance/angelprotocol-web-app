@@ -88,7 +88,7 @@ export type SortDirection = "asc" | "desc";
 export type EndowmentsSortKey = "name_internal" | "overall";
 
 export type EndowDesignation =
-  | "Non-Profit"
+  | "Charity"
   | "Religious Organization"
   | "University"
   | "Hospital"
