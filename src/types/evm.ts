@@ -38,3 +38,14 @@ export type InjectedProvider = {
 };
 
 export type WCProvider = Pick<InjectedProvider, "request">;
+
+export type Primitives = number | string | boolean;
+export type Tupleable = {
+  [index: string]:
+    | Primitives
+    | Primitives[]
+    | Tupleable
+    | Tupleable[]
+    | (Primitives | Tupleable)[];
+  // | add future combination here
+};

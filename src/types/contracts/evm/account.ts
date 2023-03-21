@@ -1,3 +1,5 @@
+import { Tupleable } from "../../evm";
+
 type Categories = { sdgs: number[]; general: number[] };
 
 type EndowTier = 0; // none | 1 Level1 | 2 Level2 | 3; Level3
@@ -109,7 +111,7 @@ type SplitDetails = {
   defaultSplit: number;
 };
 
-export interface NewAIF extends Obj {
+export interface NewAIF extends Tupleable {
   owner: string;
   withdrawBeforeMaturity: true; //not specified in launchpad design
   maturityTime: number;
