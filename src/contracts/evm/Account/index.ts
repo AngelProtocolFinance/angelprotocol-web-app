@@ -6,6 +6,7 @@ import abi from "./abi.json";
 const encoder = new Interface(abi);
 //FUTURE: append abi with new methods
 const createEndowmentFn = encoder.getFunction("createEndowment");
+export const endowmentCreatedTopic = encoder.getEventTopic("EndowmentCreated");
 
 export const createEndowment = {
   encode(aif: NewAIF) {
