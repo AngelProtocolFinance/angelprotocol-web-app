@@ -12,6 +12,8 @@ import { ap_wallets } from "constants/ap_wallets";
 import { chainIds } from "constants/chainIds";
 import useLogWithdrawProposal from "./useLogWithdrawProposal";
 
+const endow_chain = chainIds.juno;
+
 export default function useWithdraw() {
   const { handleSubmit, getValues } = useFormContext<WithdrawValues>();
 
@@ -31,12 +33,11 @@ export default function useWithdraw() {
       })
     );
 
-    const isSupported =
-      data.network === chainIds.juno || data.network === chainIds.polygon;
+    const isSupported = data.network === endow_chain;
     //if not juno or polygon, send to ap wallet (juno)
     const beneficiary = isSupported
       ? data.beneficiary
-      : data.network === chainIds.juno
+      : endow_chain === chainIds.juno
       ? ap_wallets.juno_withdraw
       : ap_wallets.polygon_withdraw;
 
@@ -85,7 +86,7 @@ export default function useWithdraw() {
             await logProposal(
               {
                 endowment_multisig: cw3,
-                proposal_chain_id: chainIds.juno,
+                proposal_chain_id: endow_chain,
                 target_chain: data.network,
                 target_wallet: data.beneficiary,
                 type: data.type,
