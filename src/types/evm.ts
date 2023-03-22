@@ -23,6 +23,10 @@ export interface RequestArguments {
   readonly params?: readonly unknown[] | object;
 }
 
+export type TxReceipt = {
+  //add needed fields
+};
+
 export type AccountChangeHandler = (accounts: string[]) => void;
 export type ChainChangeHandler = (chainId: string) => void;
 

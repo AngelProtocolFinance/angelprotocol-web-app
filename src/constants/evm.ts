@@ -19,6 +19,8 @@ export const EIPMethods = {
   eth_gasPrice: "eth_gasPrice",
   eth_call: "eth_call",
   eth_getTransactionReceipt: "eth_getTransactionReceipt",
+  eth_newFilter: "eth_newFilter",
+  eth_getFilterChanges: "eth_getFilterChanges",
 
   //others
 };
