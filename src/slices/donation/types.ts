@@ -1,8 +1,6 @@
-import { CreateTxOptions } from "@terra-money/terra.js";
-import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { CountryOption } from "services/types";
-import { EVMTx } from "types/evm";
-import { TokenWithAmount, TxOptions } from "types/slices";
+import { TokenWithAmount } from "types/slices";
+import { EstimatedTx } from "types/tx";
 import { WalletState } from "contexts/WalletContext";
 import { OptionType } from "components/Selector";
 
@@ -63,11 +61,6 @@ export type TxStep = {
   step: 4;
   status: TxStatus;
 } & Omit<SubmitStep, "step">;
-
-export type EstimatedTx =
-  | { type: "cosmos"; val: TxOptions }
-  | { type: "terra"; val: CreateTxOptions; wallet: ConnectedWallet }
-  | { type: "evm"; val: EVMTx };
 
 export type DonateArgs = {
   wallet: WalletState;

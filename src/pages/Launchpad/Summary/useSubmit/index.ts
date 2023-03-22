@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { Completed, Network } from "slices/launchpad/types";
 import { SimulContractTx } from "types/evm";
-import { TxContent, isTxError } from "types/tx";
+import { TxContent, isTxResultError } from "types/tx";
 import { useSaveAIFMutation } from "services/aws/aws";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
@@ -90,8 +90,8 @@ export default function useSubmit(network: Network) {
 
     const result = await sendTx(wallet, tx, "endow_id");
 
-    if (isTxError(result)) {
-      return showModal(TxPrompt, { error: result.error });
+    if (isTxResultError(result)) {
+      return showModal(TxPrompt, result);
     }
 
     // //////////////// LOG NEW AIF TO AWS ////////////////////

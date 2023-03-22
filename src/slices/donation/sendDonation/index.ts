@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { TxStatus } from "../types";
 import { DonateArgs } from "../types";
 import { KYCData } from "types/aws";
-import { isTxError } from "types/tx";
+import { isTxResultError } from "types/tx";
 import { invalidateApesTags } from "services/apes";
 import { logger } from "helpers";
 import { sendTx } from "helpers/tx";
@@ -25,7 +25,7 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
 
       const result = await sendTx(wallet, tx);
 
-      if (isTxError(result)) {
+      if (isTxResultError(result)) {
         return updateTx("error");
       }
       const { hash } = result;

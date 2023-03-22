@@ -1,5 +1,5 @@
+import { EstimatedTx } from "types/tx";
 import { WalletState } from "contexts/WalletContext";
-import { EstimatedTx } from "slices/donation";
 import { sendCosmosTx } from "./sendCosmosTx";
 import { sendEVMTx } from "./sendEVMTx";
 import { sendTerraTx } from "./sendTerraTx";

@@ -1,13 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { Props as PromptProps } from "./types";
+import { TxState, isTxError, isTxLoading, isTxSuccess } from "types/tx";
 import { useModalContext } from "contexts/ModalContext";
 import ExtLink from "components/ExtLink";
-import {
-  TxState,
-  isError,
-  isLoading,
-  isSuccess,
-} from "hooks/useCosmosTxSender";
 import { getTxUrl } from "helpers";
 import Prompt from "./Prompt";
 
@@ -18,7 +13,7 @@ export function TxPrompt(props: TxState) {
   return (
     <Prompt {...rest}>
       <p>{message}</p>
-      {isSuccess(props) && props.success.link && (
+      {isTxSuccess(props) && props.success.link && (
         <button
           onClick={() => {
             navigate(props.success.link!.url);
@@ -29,7 +24,7 @@ export function TxPrompt(props: TxState) {
           {props.success.link.description}
         </button>
       )}
-      {(isError(props) || isSuccess(props)) && props.tx && (
+      {(isTxError(props) || isTxSuccess(props)) && props.tx && (
         <ExtLink
           href={getTxUrl(props.tx.chainID, props.tx.hash)}
           className="text-blue dark:text-blue-l2 text-xs block mt-4 uppercase hover:text-blue-l2 hover:dark:text-orange-l2"
@@ -42,13 +37,13 @@ export function TxPrompt(props: TxState) {
 }
 
 function toPrompt(props: TxState): PromptProps & { message: string } {
-  if (isLoading(props)) {
+  if (isTxLoading(props)) {
     return {
       type: "loading",
       headline: "Transaction",
       message: props.loading,
     };
-  } else if (isError(props)) {
+  } else if (isTxError(props)) {
     return { type: "error", headline: "Transaction", message: props.error };
   } else {
     return {
