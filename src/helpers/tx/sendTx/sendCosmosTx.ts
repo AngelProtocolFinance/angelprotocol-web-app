@@ -30,7 +30,6 @@ export async function sendCosmosTx(
         return { error: "Transaction not signed" };
       }
     } else if (err instanceof TimeoutError) {
-      err.txId;
       return {
         error: "Timeout: Failed to confirm if transaction is finalized",
         tx: { hash: err.txId, chainID: wallet.chain.chain_id },

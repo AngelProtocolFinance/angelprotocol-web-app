@@ -1,7 +1,7 @@
 import { WalletState } from "contexts/WalletContext";
 import { EstimatedTx } from "slices/donation";
 import { sendCosmosTx } from "./sendCosmosTx";
-import { sendEVMTx } from "./sendEVMTX";
+import { sendEVMTx } from "./sendEVMTx";
 import { sendTerraTx } from "./sendTerraTx";
 
 export default function sendTx(wallet: WalletState, tx: EstimatedTx) {
