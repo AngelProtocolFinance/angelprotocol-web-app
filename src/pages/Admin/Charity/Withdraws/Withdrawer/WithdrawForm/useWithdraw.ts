@@ -37,11 +37,9 @@ export default function useWithdraw() {
       })
     );
 
-    const isSupported = data.network === chainIds.juno;
+    const isJuno = data.network === chainIds.juno;
     //if not juno, send to ap wallet (juno)
-    const beneficiary = isSupported
-      ? data.beneficiary
-      : ap_wallets.juno_withdraw;
+    const beneficiary = isJuno ? data.beneficiary : ap_wallets.juno_withdraw;
 
     const meta: WithdrawMeta = {
       type: "acc_withdraw",
@@ -82,7 +80,7 @@ export default function useWithdraw() {
       content: { type: "cosmos", val: [proposal], attribute: "proposal_id" },
       //Juno withdrawal
       ...propMeta,
-      onSuccess: isSupported
+      onSuccess: isJuno
         ? undefined //no need to POST to AWS if destination is juno
         : async (response, chain) =>
             await logProposal(
