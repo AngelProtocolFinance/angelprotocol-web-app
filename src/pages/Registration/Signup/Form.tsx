@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "./types";
+import { useModalContext } from "contexts/ModalContext";
 import ExtLink from "components/ExtLink";
+import WalletModal from "components/WalletSuite/WalletSelectorOpener/WalletModal";
 import { CheckField, Field } from "components/form";
 import { Separator } from "components/registration";
 import { APP_NAME } from "constants/common";
@@ -12,7 +14,9 @@ const NEED_HELP_ARTICLE_ID = 6628120;
 
 export default function Form({ classes = "" }: { classes?: string }) {
   const { submit, isSubmitting } = useSubmit();
+  const { showModal } = useModalContext();
 
+  const handleClick = () => showModal(WalletModal, {});
   const openIntercomHelp = () => {
     const w = window as any;
     if ("Intercom" in w) {
@@ -29,6 +33,12 @@ export default function Form({ classes = "" }: { classes?: string }) {
         {`Register to ${APP_NAME}`}
       </h3>
 
+      <h4 className="text-lg text-center -mt-4">
+        Already have an account?{" "}
+        <span className="underline text-orange-l1" onClick={handleClick}>
+          Connect Wallet
+        </span>
+      </h4>
       <Field<FV>
         name="email"
         label="E-mail"
