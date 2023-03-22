@@ -50,7 +50,7 @@ export default function Form(props: {
       )}
 
       <div
-        className={`flex gap-6 ${
+        className={`flex gap-3 md:gap-5 ${
           isInsideWidget ? "justify-center" : "justify-between"
         } font-body mt-8 md:mt-12`}
       >
