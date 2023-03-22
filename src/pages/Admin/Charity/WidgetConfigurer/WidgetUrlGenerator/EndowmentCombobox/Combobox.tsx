@@ -13,7 +13,7 @@ const TEMPLATE_RESULT: {
   [key in keyof FormValues["endowIdName"]]: FormValues["endowIdName"][key];
 } = {
   id: -1,
-  name: "",
+  name: "name",
 };
 
 const containerStyle =

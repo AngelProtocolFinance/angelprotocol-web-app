@@ -10,14 +10,14 @@ import { useGetter, useSetter } from "store/accessors";
 const TEMPLATE_RESULT: {
   [key in keyof EndowmentCard]: EndowmentCard[key]; //we care only for keys
 } = {
-  hq_country: "",
+  hq_country: "country",
   active_in_countries: [],
   categories: { sdgs: [] },
   id: -1,
-  image: "",
+  image: "img",
   kyc_donors_only: false,
-  name: "",
-  tagline: "",
+  name: "name",
+  tagline: "tagline",
   endow_type: "charity",
 };
 
