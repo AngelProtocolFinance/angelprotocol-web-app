@@ -2,6 +2,7 @@ import { EncodeObject } from "@cosmjs/proto-signing";
 import { StdFee } from "@cosmjs/stargate";
 import { CreateTxOptions, Msg } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
+import { WalletState } from "contexts/WalletContext";
 import { EVMTx, SimulContractTx, SimulSendNativeTx } from "./evm";
 import { TagPayload } from "./third-party/redux";
 
@@ -16,7 +17,7 @@ export type EstimatedTx =
   | {
       type: "terra";
       val: CreateTxOptions;
-      signer: ConnectedWallet /**future client/provider will be included in wallet */;
+      wallet: ConnectedWallet /**future client/provider will be included in wallet */;
     }
   | { type: "evm"; val: EVMTx };
 
@@ -27,6 +28,11 @@ export type TxError = { error: string; tx?: SubmittedTx };
 export type TxSuccess = SubmittedTx & { attrValue?: string };
 
 export type TxResult = TxError | TxSuccess;
+
+// //////////// TYPE GUARDS ////////////
+export function isTxError(tx: TxResult): tx is TxError {
+  return "error" in tx;
+}
 
 // //////////// ESTIMATE TX ////////////
 export type TxContent =
@@ -44,8 +50,10 @@ export type TxSuccessMeta = {
 };
 
 export type SenderArgs = {
+  wallet: WalletState;
+  tx: TxContent;
   tagPayloads?: TagPayload[];
   successMeta?: TxSuccessMeta;
-  isAuthorized?: boolean;
-  tx: TxContent;
+
+  attribute?: string;
 };

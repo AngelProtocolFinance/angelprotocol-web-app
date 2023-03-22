@@ -1,51 +1,34 @@
 import { useState } from "react";
-import { SenderArgs } from "types/tx";
+import { SenderArgs, isTxError } from "types/tx";
 import { invalidateApesTags } from "services/apes";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
-import Popup from "components/Popup";
 import { TxPrompt } from "components/Prompt";
 import { useSetter } from "store/accessors";
-import { chainIds } from "constants/chainIds";
+import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import estimateTx from "./estimateTx/estimateTx";
+import signAndBroadcast from "./sendTx/sendTx";
 
 type Sender = (args: SenderArgs) => Promise<void>;
-
-const supportedChains: string[] = [chainIds.juno, chainIds.polygon];
 
 export default function useTxSender<T extends boolean = false>(
   isSenderInModal: T = false as any
 ): T extends true ? { sendTx: Sender; isSending: boolean } : Sender {
-  const { wallet } = useGetWallet();
   /** use this state to show loading to modal forms */
   const [isSending, setIsSending] = useState(false);
   const { showModal, setModalOption } = useModalContext();
   const dispatch = useSetter();
 
+  /**
+   * whether wallet is connected, user is authorized,
+   * or wallet is connected to the correct chain, must be checked before calling this function
+   */
   const sendTx: Sender = async ({
+    wallet,
     tx: txContent,
     tagPayloads,
-    isAuthorized,
     successMeta,
   }) => {
     try {
-      if (!wallet) {
-        return showModal(TxPrompt, { error: "Wallet is not connected" });
-      }
-      const { chain } = wallet;
-
-      if (!supportedChains.includes(chain.chain_id)) {
-        return showModal(TxPrompt, {
-          error: "Connected wallet doesn't support this transaction",
-        });
-      }
-
-      if (!isAuthorized /** should be explicitly set to true to pass */) {
-        return showModal(TxPrompt, {
-          error: "You are not authorized to make this transaction",
-        });
-      }
-
       /**
        * avoid unmounting sender in modal while tx is still sending to avoid memory leak
        * sender should be responsible showing something is being submitted
@@ -70,24 +53,23 @@ export default function useTxSender<T extends boolean = false>(
       );
 
       if (!estimate) {
-        return showModal(Popup, {
-          message: "Simulation failed. Transaction is likely to fail",
+        return showModal(TxPrompt, {
+          error: "Simulation failed. Transaction is likely to fail",
         });
       }
 
-      if (estimate.fee.amount > wallet.displayCoin.balance) {
-        return showModal(Popup, {
-          message: "Not enough balance to pay for fees",
+      const { fee, tx } = estimate;
+      if (fee.amount > wallet.displayCoin.balance) {
+        return showModal(TxPrompt, {
+          error: "Not enough balance to pay for fees",
         });
       }
 
-      // const tx: TxOptions = { msgs: msgs, fee };
-      // const response = await contract.signAndBroadcast(tx);
+      const result = await signAndBroadcast(wallet, tx);
 
-      // const txRes: Tx = {
-      //   hash: response.transactionHash,
-      //   chainID: wallet.chain.chain_id,
-      // };
+      if (isTxError(result)) {
+        return showModal(TxPrompt, { error: result.error, tx: result.tx });
+      }
 
       //always invalidate cached chain data to reflect balance changes from fee deduction
       dispatch(invalidateApesTags(["chain"]));
@@ -98,10 +80,10 @@ export default function useTxSender<T extends boolean = false>(
 
       showModal(TxPrompt, {
         success: successMeta || { message: "Transaction successful!" },
-        tx: txRes,
+        tx: { hash: result.hash, chainID: result.chainID },
       });
     } catch (err) {
-      handleTxError(err, ({ error, tx }) => showModal(TxPrompt, { error, tx }));
+      showModal(TxPrompt, { error: GENERIC_ERROR_MESSAGE });
     } finally {
       isSenderInModal && setIsSending(false);
     }
