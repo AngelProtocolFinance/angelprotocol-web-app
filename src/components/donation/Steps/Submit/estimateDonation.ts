@@ -25,7 +25,7 @@ export async function estimateDonation({
   const { chain } = wallet;
 
   let content: TxContent;
-  // ///////////// GET DONATE CONTENT ///////////////
+  // ///////////// GET TX CONTENT ///////////////
   try {
     if (chain.type === "juno-native") {
       const { fromBal, fromGift } = getBreakdown(token);
@@ -89,9 +89,8 @@ export async function estimateDonation({
             };
       content = { type: "evm", val: tx };
     }
-
-    return estimateTx(content, wallet, terraWallet);
     // ///////////// ESTIMATE TX ///////////////
+    return estimateTx(content, wallet, terraWallet);
   } catch (err) {
     logger.error(err);
     return null;

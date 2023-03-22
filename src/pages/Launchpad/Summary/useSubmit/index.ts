@@ -27,8 +27,8 @@ export default function useSubmit(network: Network) {
 
     const { chain } = wallet;
     if (
-      (network === "polygon" && chain.chain_id !== chainIds.polygon) ||
-      chain.chain_id !== "1337" /** polygon local */
+      network === "polygon" &&
+      !(chain.chain_id === chainIds.polygon || chain.chain_id === "1337") //polygon local
     ) {
       /** TODO: wallet state should have `type: ("evm" | "cosmos" ..etc)` field
        *  so the flow would be
