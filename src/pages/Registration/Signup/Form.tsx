@@ -25,9 +25,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
       onSubmit={submit}
       className={`${classes} padded-container w-full max-w-[37.5rem] grid`}
     >
-      <h3 className="text-3xl text-center">
-        {`Register to ${APP_NAME}`}
-      </h3>
+      <h3 className="text-3xl text-center">{`Register to ${APP_NAME}`}</h3>
 
       <Field<FV>
         name="email"
