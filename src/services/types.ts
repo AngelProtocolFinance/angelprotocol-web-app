@@ -22,12 +22,6 @@ export type EncodedQueryMember = {
   data: string; //base64 encoded msg
 };
 
-/**
- * Required<
-    Pick<TxArgs, "successMeta" | "tagPayloads" | "isAuthorized">
-  >
- */
-
 type Base = {
   cw3: string;
   cw4: string;
