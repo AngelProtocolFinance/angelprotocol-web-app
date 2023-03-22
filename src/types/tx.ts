@@ -2,9 +2,7 @@ import { EncodeObject } from "@cosmjs/proto-signing";
 import { StdFee } from "@cosmjs/stargate";
 import { CreateTxOptions, Msg } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
-import { WalletState } from "contexts/WalletContext";
 import { EVMTx, SimulContractTx, SimulSendNativeTx } from "./evm";
-import { TagPayload } from "./third-party/redux";
 
 // //////////// SEND TX ////////////
 export type CosmosTx = {
@@ -47,13 +45,4 @@ export type Estimate = { fee: Fee; tx: EstimatedTx };
 export type TxSuccessMeta = {
   message: string;
   link?: { url: string; description: string };
-};
-
-export type SenderArgs = {
-  wallet: WalletState;
-  tx: TxContent;
-  tagPayloads?: TagPayload[];
-  successMeta?: TxSuccessMeta;
-
-  attribute?: string;
 };

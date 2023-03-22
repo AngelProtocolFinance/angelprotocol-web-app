@@ -2,7 +2,7 @@ import { EncodeObject } from "@cosmjs/proto-signing";
 import { Estimate } from "types/tx";
 import { WalletState } from "contexts/WalletContext";
 import Contract from "contracts/Contract";
-import { extractFeeAmount } from "helpers";
+import { extractFeeAmount } from "../../extractFeeData";
 
 export default async function estimateCosmosFee(
   wallet: WalletState,

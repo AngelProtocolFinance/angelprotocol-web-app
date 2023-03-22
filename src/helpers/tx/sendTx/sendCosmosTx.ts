@@ -2,7 +2,7 @@ import { TimeoutError, isDeliverTxFailure } from "@cosmjs/stargate";
 import { CosmosTx, TxResult } from "types/tx";
 import { WalletState } from "contexts/WalletContext";
 import Contract from "contracts/Contract";
-import { getWasmAttribute } from "helpers";
+import { getWasmAttribute } from "./getWasmAttribute";
 
 export async function sendCosmosTx(
   wallet: WalletState,

@@ -4,12 +4,8 @@ import { useModalContext } from "contexts/ModalContext";
 import { TxPrompt } from "components/Prompt";
 import { useSetter } from "store/accessors";
 import { TxOnSuccess, TxSuccessMeta } from "hooks/useCosmosTxSender";
-import {
-  createAuthToken,
-  getWasmAttribute,
-  idParamToNum,
-  logger,
-} from "helpers";
+import { createAuthToken, idParamToNum, logger } from "helpers";
+import { getWasmAttribute } from "helpers/tx";
 import { EMAIL_SUPPORT } from "constants/common";
 import { APIs } from "constants/urls";
 

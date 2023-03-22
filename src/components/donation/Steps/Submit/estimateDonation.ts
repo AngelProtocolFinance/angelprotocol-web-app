@@ -8,8 +8,8 @@ import Account from "contracts/Account";
 import CW20 from "contracts/CW20";
 import GiftCard from "contracts/GiftCard";
 import { transfer } from "contracts/evm/ERC20";
-import { estimateTx } from "hooks/useTxSender";
 import { logger, scale, scaleToStr } from "helpers";
+import { estimateTx } from "helpers/tx";
 import { ap_wallets } from "constants/ap_wallets";
 import getBreakdown from "./getBreakdown";
 
@@ -23,7 +23,6 @@ export async function estimateDonation({
   terraWallet?: ConnectedWallet;
 }): Promise<Estimate | null> {
   const { chain } = wallet;
-  const { native_currency } = chain;
 
   let content: TxContent;
   // ///////////// GET DONATE CONTENT ///////////////

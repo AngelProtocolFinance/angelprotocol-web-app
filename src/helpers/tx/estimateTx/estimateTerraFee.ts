@@ -2,7 +2,7 @@ import { Coin, LCDClient, Msg } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { Estimate } from "types/tx";
 import { WalletState } from "contexts/WalletContext";
-import { extractFeeAmount } from "helpers";
+import { extractFeeAmount } from "../../extractFeeData";
 
 export default async function estimateTerraFee(
   wallet: WalletState,
@@ -26,6 +26,6 @@ export default async function estimateTerraFee(
 
   return {
     fee: { amount, symbol: wallet.displayCoin.symbol },
-    tx: { type: "terra", val: { fee, msgs }, signer },
+    tx: { type: "terra", val: { fee, msgs }, wallet: signer },
   };
 }

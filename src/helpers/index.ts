@@ -6,7 +6,6 @@ export * from "./getPossessiveForm";
 export * from "./evm";
 export * from "./getTxUrl";
 export * from "./getAddressUrl";
-export * from "./getWasmAttribute";
 export * from "./idParamToNum";
 export * from "./isEmpty";
 export * from "./logger";

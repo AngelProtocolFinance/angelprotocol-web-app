@@ -1,9 +1,9 @@
 import { SimulContractTx, SimulSendNativeTx } from "types/evm";
 import { Estimate } from "types/tx";
 import { WalletState } from "contexts/WalletContext";
-import { condense } from "helpers/decimal";
-import { getProvider } from "helpers/evm";
 import { EIPMethods } from "constants/evm";
+import { condense } from "../../decimal";
+import { getProvider } from "../../evm";
 
 export async function estimateEVMFee(
   wallet: WalletState,

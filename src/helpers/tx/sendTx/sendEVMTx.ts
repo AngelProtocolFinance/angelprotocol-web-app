@@ -1,8 +1,8 @@
 import { EVMTx } from "types/evm";
 import { TxResult } from "types/tx";
 import { WalletState } from "contexts/WalletContext";
-import { getProvider } from "helpers/evm";
 import { EIPMethods } from "constants/evm";
+import { getProvider } from "../../evm";
 
 export async function sendEVMTx(
   wallet: WalletState,
