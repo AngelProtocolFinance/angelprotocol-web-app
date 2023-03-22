@@ -26,6 +26,10 @@ export default function useWithdraw() {
 
   //NOTE: submit is disabled on Normal endowments with unmatured accounts
   async function withdraw(data: WithdrawValues) {
+    if (endow_chain === chainIds.polygon) {
+      return;
+    }
+
     const assets: Asset[] = data.amounts.map(
       ({ value, tokenId, type: tokenType }) => ({
         info: tokenType === "cw20" ? { cw20: tokenId } : { native: tokenId },
@@ -33,13 +37,11 @@ export default function useWithdraw() {
       })
     );
 
-    const isSupported = data.network === endow_chain;
-    //if not juno or polygon, send to ap wallet (juno)
+    const isSupported = data.network === chainIds.juno;
+    //if not juno, send to ap wallet (juno)
     const beneficiary = isSupported
       ? data.beneficiary
-      : endow_chain === chainIds.juno
-      ? ap_wallets.juno_withdraw
-      : ap_wallets.polygon_withdraw;
+      : ap_wallets.juno_withdraw;
 
     const meta: WithdrawMeta = {
       type: "acc_withdraw",
@@ -81,12 +83,12 @@ export default function useWithdraw() {
       //Juno withdrawal
       ...propMeta,
       onSuccess: isSupported
-        ? undefined //no need to POST to AWS if destination is juno or polygon
+        ? undefined //no need to POST to AWS if destination is juno
         : async (response, chain) =>
             await logProposal(
               {
                 endowment_multisig: cw3,
-                proposal_chain_id: endow_chain,
+                proposal_chain_id: chainIds.juno,
                 target_chain: data.network,
                 target_wallet: data.beneficiary,
                 type: data.type,
