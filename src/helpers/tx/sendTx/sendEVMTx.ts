@@ -11,10 +11,20 @@ export async function sendEVMTx(
 ): Promise<TxResult> {
   try {
     const provider = getProvider(wallet.providerId)!;
+
     const hash = await provider.request<string>({
       method: EIPMethods.eth_sendTransaction,
       params: [tx],
     });
+
+    const receipt = await provider.request({
+      method: EIPMethods.eth_getTransactionReceipt,
+      params: [
+        "0xb65f75ae2b4dec64c2168dd69b1c02064488cd47917cd26e12a93bf088f84f24",
+      ],
+    });
+
+    console.log(receipt);
 
     return { hash, chainID: wallet.chain.chain_id };
 
