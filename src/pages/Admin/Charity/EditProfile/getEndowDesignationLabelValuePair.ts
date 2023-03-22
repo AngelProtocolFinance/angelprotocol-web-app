@@ -4,7 +4,7 @@ import { ENDOW_DESIGNATIONS } from "constants/common";
 
 export const getEndowDesignationLabelValuePair = (
   value: EndowDesignation
-): OptionType<string> => {
+): OptionType<EndowDesignation> => {
   const label =
     ENDOW_DESIGNATIONS.find((option) => option.value === value)?.label || value;
   return {

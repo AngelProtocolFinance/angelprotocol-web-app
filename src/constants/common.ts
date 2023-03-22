@@ -1,3 +1,6 @@
+import { EndowDesignation } from "types/aws";
+import { IconType } from "components/Icon";
+
 // CONFIGURE THE CONSTANTS BELOW TO DISPLAY THE DESIRED REPEATING TEXT/IMAGES THROUGHOUT THE APP
 export const APP_NAME = "Angel Giving";
 export const BASE_DOMAIN = "https://angelgiving.io";
@@ -9,8 +12,12 @@ export const SEO_IMAGE =
 export const EMAIL_SUPPORT = "support@angelgiving.io";
 export const GENERIC_ERROR_MESSAGE = `An error occurred. Please get in touch with ${EMAIL_SUPPORT} if the problem persists.`;
 
-export const ENDOW_DESIGNATIONS = [
-  { label: "Charity", value: "Non-Profit", icon: "Charity" },
+export const ENDOW_DESIGNATIONS: {
+  label: string;
+  value: EndowDesignation;
+  icon: IconType;
+}[] = [
+  { label: "Charity", value: "Charity", icon: "Charity" },
   {
     label: "Religious Organization",
     value: "Religious Organization",
