@@ -10,6 +10,7 @@ import {
 } from "types/aws";
 import { NetworkType } from "types/lists";
 import { createAuthToken } from "helpers";
+import { cleanObject } from "helpers/cleanObject";
 import { IS_TEST } from "constants/env";
 import { APIs } from "constants/urls";
 
@@ -150,16 +151,35 @@ export const useLazyEndowmentsQuery = () => {
 };
 
 function createReturnParam(templateResult: Partial<Endowment>): string {
-  const { categories, ...okFields } = templateResult;
-
-  const cloudSearchParams: EndowmentCloudSearchFields = {
-    ...okFields,
+  const cloudSearchFields: EndowmentCloudSearchFields = {
+    active_in_countries: templateResult.active_in_countries,
+    categories_sdgs: templateResult.categories?.sdgs,
+    endow_type: templateResult.endow_type,
+    hq_country: templateResult.hq_country,
+    id: templateResult.id,
+    image: templateResult.image,
+    kyc_donors_only: templateResult.kyc_donors_only,
+    logo: templateResult.logo,
+    name: templateResult.name,
+    on_hand_liq: templateResult.on_hand_liq,
+    on_hand_lock: templateResult.on_hand_lock,
+    on_hand_overall: templateResult.on_hand_overall,
+    overall: templateResult.overall,
+    overview: templateResult.overview,
+    registration_number: templateResult.registration_number,
+    social_media_url_discord: templateResult.social_media_urls?.discord,
+    social_media_url_facebook: templateResult.social_media_urls?.facebook,
+    social_media_url_instagram: templateResult.social_media_urls?.instagram,
+    social_media_url_linkedin: templateResult.social_media_urls?.linkedin,
+    social_media_url_tiktok: templateResult.social_media_urls?.tiktok,
+    social_media_url_twitter: templateResult.social_media_urls?.twitter,
+    social_media_url_youtube: templateResult.social_media_urls?.youtube,
+    street_address: templateResult.street_address,
+    tagline: templateResult.tagline,
+    total_liq: templateResult.total_liq,
+    total_lock: templateResult.total_lock,
+    url: templateResult.url,
   };
 
-  if (!!categories) {
-    // doesn't matter what the value is, it's only important to have a defined `categories_sdgs` key
-    cloudSearchParams.categories_sdgs = categories.sdgs;
-  }
-
-  return Object.keys(cloudSearchParams).join(",");
+  return Object.keys(cleanObject(cloudSearchFields)).join(",");
 }
