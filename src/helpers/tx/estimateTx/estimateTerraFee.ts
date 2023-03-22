@@ -6,7 +6,7 @@ import { extractFeeAmount } from "../../extractFeeData";
 
 export default async function estimateTerraFee(
   wallet: WalletState,
-  signer: ConnectedWallet,
+  terraWallet: ConnectedWallet,
   msgs: Msg[]
 ): Promise<Estimate> {
   const client = new LCDClient({
@@ -26,6 +26,6 @@ export default async function estimateTerraFee(
 
   return {
     fee: { amount, symbol: wallet.displayCoin.symbol },
-    tx: { type: "terra", val: { fee, msgs }, wallet: signer },
+    tx: { type: "terra", val: { fee, msgs }, wallet: terraWallet },
   };
 }

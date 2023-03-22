@@ -6,18 +6,18 @@ import { estimateEVMFee } from "./estimateEVMfee";
 import estimateTerraFee from "./estimateTerraFee";
 
 export default async function estimateTx(
-  tx: TxContent,
+  content: TxContent,
   wallet: WalletState,
   terraWallet?: ConnectedWallet
 ): Promise<Estimate | null> {
   try {
-    switch (tx.type) {
+    switch (content.type) {
       case "cosmos":
-        return estimateCosmosFee(wallet, tx.val);
+        return estimateCosmosFee(wallet, content.val);
       case "terra":
-        return estimateTerraFee(wallet, terraWallet!, tx.val);
+        return estimateTerraFee(wallet, terraWallet!, content.val);
       default:
-        return estimateEVMFee(wallet, tx.val);
+        return estimateEVMFee(wallet, content.val);
     }
   } catch (err) {
     return null;

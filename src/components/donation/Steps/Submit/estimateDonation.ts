@@ -74,7 +74,7 @@ export async function estimateDonation({
               },
             });
 
-      content = { type: "terra", val: [msg] };
+      content = { type: "terra", val: [msg], wallet: terraWallet! };
     }
     // evm transactions
     else {
@@ -90,7 +90,7 @@ export async function estimateDonation({
       content = { type: "evm", val: tx };
     }
     // ///////////// ESTIMATE TX ///////////////
-    return estimateTx(content, wallet, terraWallet);
+    return estimateTx(content, wallet);
   } catch (err) {
     logger.error(err);
     return null;

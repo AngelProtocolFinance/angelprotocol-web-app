@@ -35,7 +35,7 @@ export type TxResult = TxError | TxSuccess;
 // //////////// ESTIMATE TX ////////////
 export type TxContent =
   | { type: "cosmos"; val: EncodeObject[] }
-  | { type: "terra"; val: Msg[] }
+  | { type: "terra"; val: Msg[]; wallet: ConnectedWallet }
   | { type: "evm"; val: SimulContractTx | SimulSendNativeTx };
 
 export type Fee = { amount: number; symbol: string };
