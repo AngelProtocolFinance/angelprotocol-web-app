@@ -1,53 +1,40 @@
-import { useState } from "react";
-import { useParams } from "react-router-dom";
-import { Donation, DonationsQueryParams } from "types/aws";
-import { useDonationsQuery } from "services/apes";
+import { Donation } from "types/aws";
 import CsvExporter from "components/CsvExporter";
 import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
-import useDebouncer from "hooks/useDebouncer";
 import { isEmpty } from "helpers";
 import Filter from "./Filter";
 import MobileTable from "./MobileTable";
 import NoDonations from "./NoDonations";
 import Table from "./Table";
+import useDonations from "./useDonations";
 
 export default function Donations() {
-  const { address } = useParams<{ address: string }>();
+  const {
+    address,
+    data,
+    hasMore,
+    isError,
+    isLoading,
+    isLoadingNextPage,
+    query,
+    loadNextPage,
+    onQueryChange,
+    setParams,
+  } = useDonations();
 
-  const [query, setQuery] = useState<string>("");
-  const [debouncedQuery, isDebouncing] = useDebouncer(query, 500);
-
-  const [params, setParams] = useState<DonationsQueryParams>({
-    id: address || "",
-  });
-
-  const queryState = useDonationsQuery(params, {
-    skip: !address,
-    selectFromResult({ data = [], ...rest }) {
-      const filtered = data.filter(({ kycData, ...flatFields }) =>
-        Object.values(flatFields)
-          .reduce<string>((result, val) => `${val}` + result, "")
-          .toLocaleLowerCase()
-          .includes(debouncedQuery.toLocaleLowerCase())
-      );
-
-      return { data: filtered, ...rest };
-    },
-  });
-
-  const { isLoading, isError, data } = queryState;
+  const isLoadingOrError = isLoading || isLoadingNextPage || isError;
 
   return (
     <div className="grid grid-cols-[1fr_auto] content-start gap-y-4 lg:gap-y-8 lg:gap-x-3 relative padded-container pt-8 lg:pt-20 pb-8">
-      <h1 className="text-3xl font-bold max-lg:text-center max-lg:col-span-full max-lg:mb-4">
+      <h1 className="text-3xl font-bold max-lg:font-work max-lg:text-center max-lg:col-span-full max-lg:mb-4">
         My Donations
       </h1>
       <CsvExporter
-        aria-disabled={isLoading || isError || isDebouncing || isEmpty(data)}
+        aria-disabled={isLoadingOrError || !data?.Items || isEmpty(data.Items)}
         classes="max-lg:row-start-5 max-lg:col-span-full lg:justify-self-end btn-orange px-8 py-3"
         headers={csvHeaders}
-        data={data}
+        data={data?.Items || []}
         filename="donations.csv"
       >
         Export to CSV
@@ -64,17 +51,21 @@ export default function Donations() {
           type="text"
           placeholder="Search donations..."
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(e) => onQueryChange(e.target.value)}
         />
       </div>
       <Filter
-        isDisabled={isLoading || isError || isDebouncing}
+        isDisabled={isLoadingOrError}
         setParams={setParams}
         donorAddress={address || ""}
         classes="max-lg:col-span-full max-lg:w-full"
       />
       <QueryLoader
-        queryState={{ ...queryState, isLoading: isLoading || isDebouncing }}
+        queryState={{
+          data: data?.Items,
+          isLoading: isLoading,
+          isError: isError,
+        }}
         messages={{
           loading: "Loading donations..",
           error: "Failed to get donations",
@@ -82,16 +73,24 @@ export default function Donations() {
         }}
       >
         {(donations) => (
-          <>
+          <div className="grid col-span-full">
             <Table
               donations={donations}
-              classes="hidden max-lg:my-4 lg:table col-span-full"
+              classes="hidden max-lg:mt-4 lg:table"
+              hasMore={hasMore}
+              onLoadMore={loadNextPage}
+              disabled={isLoadingOrError}
+              isLoading={isLoadingNextPage}
             />
             <MobileTable
               donations={donations}
-              classes="lg:hidden max-lg:my-4 col-span-full"
+              classes="lg:hidden max-lg:my-4"
+              hasMore={hasMore}
+              onLoadMore={loadNextPage}
+              disabled={isLoadingOrError}
+              isLoading={isLoadingNextPage}
             />
-          </>
+          </div>
         )}
       </QueryLoader>
     </div>

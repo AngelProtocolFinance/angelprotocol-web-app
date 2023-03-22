@@ -3,7 +3,6 @@ import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
 import { DonationsMetricList, Update } from "types/aws";
 import { store } from "store/store";
-import { APP_NAME } from "constants/common";
 import App from "../App";
 
 const mockMetrics: DonationsMetricList = {
@@ -29,8 +28,7 @@ jest.mock("services/aws/leaderboard", () => ({
 
 //test comment 3
 
-const heroText = /Reflecting on the past/i;
-const leadText = /leaderboard/i;
+const heroText = /ANGEL GIVING REDEFINES/i;
 const marketLink = /marketplace/i;
 const loaderTestId = "loader";
 

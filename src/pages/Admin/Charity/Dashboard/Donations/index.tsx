@@ -7,7 +7,9 @@ import Table from "./Table";
 
 export default function Donations({ classes = "" }: { classes?: string }) {
   const { endowmentId } = useAdminResources();
-  const queryState = useDonationsQuery({ id: endowmentId.toString() });
+  const { data, isLoading, isError } = useDonationsQuery({
+    id: endowmentId.toString(),
+  });
 
   return (
     <div className={`grid grid-rows-[auto_1fr] ${classes}`}>
@@ -15,7 +17,11 @@ export default function Donations({ classes = "" }: { classes?: string }) {
         Received donations
       </h1>
       <QueryLoader
-        queryState={queryState}
+        queryState={{
+          data: data?.Items,
+          isLoading,
+          isError,
+        }}
         messages={{
           loading: "Fetching donations..",
           error: "Failed to get donations",

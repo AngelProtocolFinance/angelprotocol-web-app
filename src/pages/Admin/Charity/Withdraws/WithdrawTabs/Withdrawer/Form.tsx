@@ -23,7 +23,8 @@ export default function Form() {
         our cross-chain pipelines.
       </Warning>
       <Warning classes="mb-2">
-        The minimum withdrawal for Ethereum & Binance is $20 USDC.
+        The minimum withdrawal for Ethereum & Binance is $40 & $20 USDC,
+        respectively.
       </Warning>
       <Warning classes="mb-2">
         We recommend not using crypto exchange addresses for withdrawals. We are

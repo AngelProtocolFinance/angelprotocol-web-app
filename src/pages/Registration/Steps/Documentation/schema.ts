@@ -1,11 +1,13 @@
 import * as Yup from "yup";
 import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
-import { CountryOption } from "services/types";
 import { FileObject } from "types/aws";
+import { Country } from "types/countries";
+import { OptionType } from "components/Selector";
 import { Asset } from "components/registration";
 import { genFileSchema } from "schemas/file";
 import { requiredString } from "schemas/string";
+import { MAX_SDGS } from "constants/unsdgs";
 
 export const MB_LIMIT = 25;
 const VALID_MIME_TYPES = [
@@ -31,11 +33,16 @@ export const schema = Yup.object().shape<SchemaShape<FormValues>>({
   proofOfIdentity: Yup.object().shape(genAssetShape(true)),
   proofOfRegistration: Yup.object().shape(genAssetShape(true)),
   website: Yup.string().required("required").url("invalid url"),
-  sdgs: Yup.array().min(1, "required"),
-  hqCountry: Yup.object().shape<SchemaShape<CountryOption>>({
+  sdgs: Yup.array()
+    .min(1, "required")
+    .max(MAX_SDGS, `maximum ${MAX_SDGS} selections allowed`),
+  hqCountry: Yup.object().shape<SchemaShape<Country>>({
     name: requiredString,
   }),
-
+  endowDesignation: Yup.object().shape<SchemaShape<OptionType<string>>>({
+    label: requiredString,
+    value: requiredString,
+  }),
   //level 2-3 fields not required
   financialStatements: Yup.object().shape(genAssetShape()),
   auditedFinancialReports: Yup.object().shape(genAssetShape()),

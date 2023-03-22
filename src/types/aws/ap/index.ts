@@ -4,6 +4,7 @@ import { NetworkType, UNSDG_NUMS } from "../../lists";
 
 type EndowmentBase = {
   hq_country: string;
+  endow_designation: string;
   active_in_countries?: string[];
   categories: { sdgs: UNSDG_NUMS[] };
   id: number;
@@ -18,6 +19,7 @@ export type EndowmentProfile = EndowmentBase & {
   contact_email: string;
   logo: string;
   overview: string;
+  published: boolean;
   registration_number?: string;
   social_media_urls: {
     twitter?: string;
@@ -30,15 +32,22 @@ export type EndowmentProfile = EndowmentBase & {
   };
   street_address?: string;
 
+  // represents total cumulative balances
   total_liq: number;
   total_lock: number;
   overall: number;
+
+  // represents tokens on hand balances (takes into account withdrawn funds)
+  on_hand_liq: number;
+  on_hand_lock: number;
+  on_hand_overall: number;
 
   url?: string;
 };
 
 export type EndowmentCard = EndowmentBase & {
   endow_type: CapitalizedEndowmentType;
+  published: boolean;
 };
 
 export type EndowmentIdName = Pick<EndowmentBase, "id" | "name">;
@@ -54,10 +63,12 @@ export type EndowmentProfileUpdate = {
   categories_general: string[];
   categories_sdgs: UNSDG_NUMS[];
   hq_country: string;
+  endow_designation: string;
   image: string;
   kyc_donors_only: boolean;
   logo: string;
   name: string;
+  published: boolean;
   overview: string;
   registration_number: string;
   social_media_url_facebook: string;
@@ -76,7 +87,12 @@ export type EndowmentProfileUpdate = {
 export type SortDirection = "asc" | "desc";
 export type EndowmentsSortKey = "name_internal" | "overall";
 
-export type EndowDesignation = "Non-Profit" | "Religious Non-Profit";
+export type EndowDesignation =
+  | "Charity"
+  | "Religious Organization"
+  | "University"
+  | "Hospital"
+  | "Other";
 
 export type EndowmentsQueryParams = {
   query: string; //set to "matchAll" if no search query
@@ -90,6 +106,7 @@ export type EndowmentsQueryParams = {
   hq_country?: string; //comma separated values
   active_in_countries?: string; //comma separated values
   limit?: number; // Number of items to be returned per request. If not provided, API defaults to return all
+  published: string;
 };
 
 export interface LeaderboardEntry {

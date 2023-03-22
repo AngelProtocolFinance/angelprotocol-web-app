@@ -1,6 +1,4 @@
-import heroImage from "assets/images/bhm-hero.png";
-import ExtLink from "components/ExtLink";
-import { SUBDOMAIN_BUILDER } from "constants/common";
+import heroImage from "assets/images/hero.png";
 
 export default function Hero({ classes = "" }: { classes?: string }) {
   return (
@@ -8,29 +6,21 @@ export default function Hero({ classes = "" }: { classes?: string }) {
       className={`${classes} grid-cols-1 lg:grid-cols-[3fr_2fr] gap-4 padded-container justify-items-center lg:content-start text-white`}
     >
       <h1 className="order-1 font-extrabold w-full text-[1.63rem] md:text-3xl lg:text-[2.75rem] text-center lg:text-left lg:self-end">
-        <span className="lg:block leading-tight">
-          Reflecting on the past,{" "}
-          <span className="text-orange">building for the future</span>
-        </span>
+        <div className="leading-tight">ANGEL GIVING REDEFINES</div>
+        <div className="leading-tight text-orange">
+          GLOBAL NONPROFIT FINANCING.
+        </div>
       </h1>
-      <img
-        src={heroImage}
-        alt=""
-        className="order-3 row-span-2 self-end w-[420px] aspect-square"
-      />
+      <img src={heroImage} alt="" className="order-3 row-span-2 rounded-lg" />
       <p className="order-2 lg:order-3 text-[1.13rem] lg:text-2xl w-full leading-relaxed text-center lg:text-left">
-        Racial bias in philanthropic giving has resulted in an underfunding of
-        Black communities by $2 billion. Despite this, Black led nonprofits and
-        businesses outperform when equipped with the resources needed.
-        <span className="my-4 block">
-          TOGETHER WE CAN CREATE A MORE JUST AND EQUITABLE FUTURE!
+        Nonprofit fundraising hasn’t changed much for the last hundred years.
+        But the world has. We provide nonprofits with new tools to raise,
+        coordinate and invest funds. With Angel Giving, impact is amplified.
+        Funding goes further. Connections run deeper and access is available to
+        all.{" "}
+        <span className="md:leading-normal xl:leading-relaxed font-bold">
+          Donate below.
         </span>
-        <ExtLink
-          className="z-[1] inline-block rounded-md btn-orange px-4 py-2 mb-16 text-sm mt-5"
-          href={SUBDOMAIN_BUILDER("blackhistorymonth")}
-        >
-          Donate Now
-        </ExtLink>
       </p>
     </div>
   );

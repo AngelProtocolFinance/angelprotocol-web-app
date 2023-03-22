@@ -12,8 +12,12 @@ export function isPrevDark() {
   const isSystemThemeDark = window.matchMedia(
     "(prefers-color-scheme: dark)"
   ).matches;
-  // user might not have previously selected a theme, so check system theme
-  return userTheme !== LIGHT || isSystemThemeDark;
+
+  return (
+    userTheme === DARK ||
+    //user might not previously selected theme so check for system theme
+    (!userTheme && isSystemThemeDark)
+  );
 }
 
 const htmlNode = document.documentElement;

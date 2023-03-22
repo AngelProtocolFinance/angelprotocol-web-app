@@ -24,17 +24,17 @@ export const account_api = junoApi.injectEndpoints({
         };
       },
     }),
-    balance: builder.query<Result<"accBalance">, Args<"accBalance">>({
-      providesTags: [{ type: "account", id: accountTags.balance }],
-      query: (args) => genQueryPath("accBalance", args, accounts),
-      transformResponse: (res: Res<"accBalance">) => {
+    state: builder.query<Result<"accState">, Args<"accState">>({
+      providesTags: [{ type: "account", id: accountTags.state }],
+      query: (args) => genQueryPath("accState", args, accounts),
+      transformResponse: (res: Res<"accState">) => {
         return res.data;
       },
     }),
   }),
 });
 
-export const { useBalanceQuery, useEndowmentsQuery } = account_api;
+export const { useStateQuery, useEndowmentsQuery } = account_api;
 
 async function getEndowments(
   limit: 50,

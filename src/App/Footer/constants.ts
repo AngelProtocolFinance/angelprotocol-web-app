@@ -19,7 +19,7 @@ type SocialMediaLinks = {
 export const SOCIAL_MEDIA_LINKS: SocialMediaLinks = {
   Twitter: {
     iconType: "Twitter",
-    link: "https://twitter.com/angelprotocol",
+    link: "https://twitter.com/angelgiving_",
   },
   Telegram: {
     iconType: "Telegram",
@@ -27,11 +27,11 @@ export const SOCIAL_MEDIA_LINKS: SocialMediaLinks = {
   },
   Discord: {
     iconType: "Discord",
-    link: "https://discord.gg/RhqA652ySA",
+    link: "https://discord.gg/angelprotocol",
   },
   YouTube: {
     iconType: "Youtube",
-    link: "https://www.youtube.com/channel/UCPYj_fooJCfc_tc52rPiw1w",
+    link: "https://www.youtube.com/@AngelGiving",
   },
   Medium: {
     iconType: "Medium",
@@ -39,15 +39,15 @@ export const SOCIAL_MEDIA_LINKS: SocialMediaLinks = {
   },
   Facebook: {
     iconType: "FacebookCircle",
-    link: "https://www.facebook.com/AngelProtocolFB/",
+    link: "https://www.facebook.com/AngelgivingFB/",
   },
   Linkedin: {
     iconType: "Linkedin",
-    link: "https://www.linkedin.com/company/angel-protocol/",
+    link: "https://www.linkedin.com/company/angel-giving",
   },
   Instagram: {
     iconType: "Instagram",
-    link: "https://www.instagram.com/angelprotocol/",
+    link: "https://www.instagram.com/angel.giving",
   },
 };
 

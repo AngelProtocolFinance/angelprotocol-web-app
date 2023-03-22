@@ -1,5 +1,4 @@
 import { NavLink } from "react-router-dom";
-import ExtLink from "components/ExtLink";
 import { createNavLinkStyler } from "helpers";
 import { BASE_DOMAIN } from "constants/common";
 import { appRoutes } from "constants/routes";
@@ -7,18 +6,21 @@ import { appRoutes } from "constants/routes";
 export default function DesktopNav({ classes = "" }: { classes?: string }) {
   return (
     <nav className={`${classes} items-center justify-end font-body text-base`}>
-      <ExtLink className={styles} href={BASE_DOMAIN}>
+      <a href={BASE_DOMAIN} className={styles}>
         For Non-Profits
-      </ExtLink>
+      </a>
       <NavLink className={styler} to={appRoutes.index}>
         Marketplace
       </NavLink>
-      <ExtLink href={`${BASE_DOMAIN}/csr-partners/`} className={styles}>
+      <a href={`${BASE_DOMAIN}/csr-partners/`} className={styles}>
         Giving Partners
-      </ExtLink>
-      <ExtLink href={`${BASE_DOMAIN}/about-angel-giving/`} className={styles}>
+      </a>
+      <a href={`${BASE_DOMAIN}/about-angel-giving/`} className={styles}>
         About
-      </ExtLink>
+      </a>
+      <NavLink className={styler} to={appRoutes.register}>
+        Register
+      </NavLink>
     </nav>
   );
 }

@@ -4,12 +4,15 @@ import { setDesignations } from "slices/components/marketFilter";
 import { FilterOption, FlatFilter } from "./common";
 
 const options: FilterOption<EndowDesignation>[] = [
-  { displayText: "Non-Profit", key: "non-profit", value: "Non-Profit" },
+  { displayText: "Charity", key: "non-profit", value: "Charity" },
   {
-    displayText: "Religious Non-Profit",
-    key: "religious-non-profit",
-    value: "Religious Non-Profit",
+    displayText: "Religious Organization",
+    key: "religious-organization",
+    value: "Religious Organization",
   },
+  { displayText: "University", key: "university", value: "University" },
+  { displayText: "Hospital", key: "hospital", value: "Hospital" },
+  { displayText: "Other", key: "other", value: "Other" },
 ];
 
 export default function Designations() {
@@ -20,7 +23,7 @@ export default function Designations() {
 
   return (
     <FlatFilter
-      label="Designation"
+      label="NPO Type"
       selectedValues={designations}
       options={options}
       onChange={(value) => dispatch(setDesignations(value))}

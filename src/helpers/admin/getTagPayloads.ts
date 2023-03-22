@@ -54,7 +54,7 @@ export function getTagPayloads(type?: ProposalMeta["type"]): TagPayload[] {
     case "acc_withdraw":
       _tags.push({
         type: "account",
-        id: accountTags.balance,
+        id: accountTags.state,
       });
       break;
 

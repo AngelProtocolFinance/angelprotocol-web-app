@@ -1,8 +1,8 @@
-import { Dialog } from "@headlessui/react";
 import { useCallback, useState } from "react";
 import { useModalContext } from "contexts/ModalContext";
 import ExtLink from "components/ExtLink";
 import Icon, { IconType } from "components/Icon";
+import Modal from "components/Modal";
 import { DonationRecipient } from "slices/donation";
 import { DAPP_DOMAIN } from "constants/common";
 
@@ -45,7 +45,7 @@ function Prompt({ type, iconSize, recipient: { name } }: Props) {
   }, []);
 
   return (
-    <Dialog.Panel className="grid content-start fixed-center z-20 border border-prim bg-gray-l5 dark:bg-blue-d5 font-work text-gray-d2 dark:text-white w-[91%] sm:w-full max-w-[39rem] rounded overflow-hidden">
+    <Modal className="grid content-start fixed-center z-20 border border-prim bg-gray-l5 dark:bg-blue-d5 font-work text-gray-d2 dark:text-white w-[91%] sm:w-full max-w-[39rem] rounded overflow-hidden">
       <div className="grid place-items-center relative h-16 font-heading font-bold bg-orange-l5 dark:bg-blue-d7 border-b border-prim">
         Share on {type}
         <button
@@ -60,7 +60,7 @@ function Prompt({ type, iconSize, recipient: { name } }: Props) {
         className="my-6 sm:my-10 mx-4 sm:mx-12 text-sm leading-normal p-3 border dark:bg-blue-d6 border-prim rounded"
       >
         I just donated to <span className="font-bold">{name}</span> on{" "}
-        <span className="font-bold">@AngelProtocol</span>!{" "}
+        <span className="font-bold">@angelgiving_</span>!{" "}
         {`Every gift is
         invested to provide sustainable funding for non-profits: Give once, give
         forever. Help join the cause: ${DAPP_DOMAIN}`}
@@ -74,7 +74,7 @@ function Prompt({ type, iconSize, recipient: { name } }: Props) {
         </div>
         <span>Share now</span>
       </ExtLink>
-    </Dialog.Panel>
+    </Modal>
   );
 }
 

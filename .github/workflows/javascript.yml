@@ -23,7 +23,3 @@ jobs:
         env:
           REACT_APP_JUNO_LCD_NODE: ${{ secrets.REACT_APP_JUNO_LCD_NODE }}
           REACT_APP_INFURA_ID: ${{ secrets.REACT_APP_INFURA_ID }}
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
