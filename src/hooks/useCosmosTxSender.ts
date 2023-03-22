@@ -5,6 +5,7 @@ import { useGetWallet } from "contexts/WalletContext";
 import Popup from "components/Popup";
 import { TxPrompt } from "components/Prompt";
 import { useSetter } from "store/accessors";
+import { logger } from "helpers";
 import { estimateTx, sendTx as signAndBroadCast } from "helpers/tx";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 
@@ -90,6 +91,7 @@ export default function useCosmosTxSender<T extends boolean = false>(
         });
       }
     } catch (err) {
+      logger.error(err);
       showModal(TxPrompt, { error: GENERIC_ERROR_MESSAGE });
     } finally {
       isSenderInModal && setIsSending(false);
