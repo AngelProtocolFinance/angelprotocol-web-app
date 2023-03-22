@@ -88,7 +88,7 @@ export default function useSubmit(network: Network) {
       });
     }
 
-    const result = await sendTx(wallet, tx);
+    const result = await sendTx(wallet, tx, "endow_id");
 
     if (isTxError(result)) {
       return showModal(TxPrompt, { error: result.error });

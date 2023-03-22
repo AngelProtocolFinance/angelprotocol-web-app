@@ -6,7 +6,8 @@ import { getProvider } from "../../evm";
 
 export async function sendEVMTx(
   wallet: WalletState,
-  tx: EVMTx
+  tx: EVMTx,
+  attribute?: string //eslint-disable-line
 ): Promise<TxResult> {
   try {
     const provider = getProvider(wallet.providerId)!;
