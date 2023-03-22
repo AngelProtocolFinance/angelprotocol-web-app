@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { Tx, TxArgs } from "./types";
-import { TxOptions } from "types/slices";
 import { SenderArgs } from "types/tx";
 import { invalidateApesTags } from "services/apes";
 import { useModalContext } from "contexts/ModalContext";
@@ -8,13 +6,14 @@ import { useGetWallet } from "contexts/WalletContext";
 import Popup from "components/Popup";
 import { TxPrompt } from "components/Prompt";
 import { useSetter } from "store/accessors";
-import Contract from "contracts/Contract";
-import { extractFeeAmount } from "helpers";
-import handleTxError from "./handleTxError";
+import { chainIds } from "constants/chainIds";
+import estimateTx from "./estimateTx/estimateTx";
 
 type Sender = (args: SenderArgs) => Promise<void>;
 
-export default function useCosmosTxSender<T extends boolean = false>(
+const supportedChains: string[] = [chainIds.juno, chainIds.polygon];
+
+export default function useTxSender<T extends boolean = false>(
   isSenderInModal: T = false as any
 ): T extends true ? { sendTx: Sender; isSending: boolean } : Sender {
   const { wallet } = useGetWallet();
@@ -24,7 +23,7 @@ export default function useCosmosTxSender<T extends boolean = false>(
   const dispatch = useSetter();
 
   const sendTx: Sender = async ({
-    msgs,
+    tx: txContent,
     tagPayloads,
     isAuthorized,
     successMeta,
@@ -32,6 +31,13 @@ export default function useCosmosTxSender<T extends boolean = false>(
     try {
       if (!wallet) {
         return showModal(TxPrompt, { error: "Wallet is not connected" });
+      }
+      const { chain } = wallet;
+
+      if (!supportedChains.includes(chain.chain_id)) {
+        return showModal(TxPrompt, {
+          error: "Connected wallet doesn't support this transaction",
+        });
       }
 
       if (!isAuthorized /** should be explicitly set to true to pass */) {
@@ -58,27 +64,30 @@ export default function useCosmosTxSender<T extends boolean = false>(
         );
       }
 
-      const contract = new Contract(wallet);
-
-      const fee = await contract.estimateFee(msgs);
-      const feeAmount = extractFeeAmount(
-        fee,
-        wallet.chain.native_currency.token_id
+      const estimate = await estimateTx(
+        txContent,
+        wallet /** terra isn't supported in this hook */
       );
 
-      if (feeAmount > wallet.displayCoin.balance) {
+      if (!estimate) {
+        return showModal(Popup, {
+          message: "Simulation failed. Transaction is likely to fail",
+        });
+      }
+
+      if (estimate.fee.amount > wallet.displayCoin.balance) {
         return showModal(Popup, {
           message: "Not enough balance to pay for fees",
         });
       }
 
-      const tx: TxOptions = { msgs: msgs, fee };
-      const response = await contract.signAndBroadcast(tx);
+      // const tx: TxOptions = { msgs: msgs, fee };
+      // const response = await contract.signAndBroadcast(tx);
 
-      const txRes: Tx = {
-        hash: response.transactionHash,
-        chainID: wallet.chain.chain_id,
-      };
+      // const txRes: Tx = {
+      //   hash: response.transactionHash,
+      //   chainID: wallet.chain.chain_id,
+      // };
 
       //always invalidate cached chain data to reflect balance changes from fee deduction
       dispatch(invalidateApesTags(["chain"]));

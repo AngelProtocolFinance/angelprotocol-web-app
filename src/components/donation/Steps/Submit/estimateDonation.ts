@@ -1,17 +1,16 @@
 import { Coin, MsgExecuteContract, MsgSend } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
-import { Estimate } from "./types";
 import { SimulContractTx, SimulSendNativeTx } from "types/evm";
+import { Estimate, TxContent } from "types/tx";
 import { WalletState } from "contexts/WalletContext";
 import { SubmitStep } from "slices/donation";
 import Account from "contracts/Account";
 import CW20 from "contracts/CW20";
 import GiftCard from "contracts/GiftCard";
 import { transfer } from "contracts/evm/ERC20";
-import { extractFeeAmount, logger, scale, scaleToStr } from "helpers";
-import { estimateFee } from "helpers/evm/estimateFee";
+import { estimateTx } from "hooks/useTxSender";
+import { logger, scale, scaleToStr } from "helpers";
 import { ap_wallets } from "constants/ap_wallets";
-import estimateTerraFee from "./estimateTerraFee";
 import getBreakdown from "./getBreakdown";
 
 export async function estimateDonation({
@@ -26,6 +25,8 @@ export async function estimateDonation({
   const { chain } = wallet;
   const { native_currency } = chain;
 
+  let content: TxContent;
+  // ///////////// GET DONATE CONTENT ///////////////
   try {
     if (chain.type === "juno-native") {
       const { fromBal, fromGift } = getBreakdown(token);
@@ -56,12 +57,7 @@ export async function estimateDonation({
           )
         );
       }
-      const fee = await contract.estimateFee(msgs);
-      const feeAmount = extractFeeAmount(fee, wallet.displayCoin.token_id);
-      return {
-        fee: { amount: feeAmount, symbol: native_currency.symbol },
-        tx: { type: "cosmos", val: { fee, msgs } },
-      };
+      content = { type: "cosmos", val: msgs };
     }
     // terra native transaction, send or contract interaction
     else if (chain.type === "terra-native") {
@@ -79,16 +75,7 @@ export async function estimateDonation({
               },
             });
 
-      const fee = await estimateTerraFee(wallet, [msg]);
-      const feeAmount = extractFeeAmount(fee, wallet.displayCoin.token_id);
-      return {
-        fee: { amount: feeAmount, symbol: native_currency.symbol },
-        tx: {
-          type: "terra",
-          val: { fee, msgs: [msg] },
-          wallet: terraWallet!,
-        },
-      };
+      content = { type: "terra", val: [msg] };
     }
     // evm transactions
     else {
@@ -101,14 +88,11 @@ export async function estimateDonation({
               to: token.token_id,
               data: transfer.encode(ap_wallets.eth, scaledAmount),
             };
-
-      const { tx: simulated, fee } = await estimateFee(wallet, tx);
-
-      return {
-        fee: { amount: fee, symbol: native_currency.symbol },
-        tx: { type: "evm", val: simulated },
-      };
+      content = { type: "evm", val: tx };
     }
+
+    return estimateTx(content, wallet, terraWallet);
+    // ///////////// ESTIMATE TX ///////////////
   } catch (err) {
     logger.error(err);
     return null;
