@@ -1,5 +1,5 @@
 import { Keplr } from "@keplr-wallet/types";
-import { EndowmentType } from "../../contracts";
+import { EndowmentTierNum, EndowmentType } from "../../contracts";
 import { NetworkType, UNSDG_NUMS } from "../../lists";
 
 type EndowmentBase = {
@@ -75,7 +75,7 @@ export type EndowmentProfileUpdate = {
   social_media_url_tiktok: string;
   street_address: string;
   tagline: string;
-  tier: number /** 1 - 3  */;
+  tier: EndowmentTierNum /** 1 - 3  */;
   url: string | null;
 };
 

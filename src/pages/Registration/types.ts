@@ -55,7 +55,7 @@ export type Documentation = {
   //so user won't click again on resume
   hasAuthority: boolean;
   hasAgreedToTerms: boolean;
-  level: EndowmentTierNum;
+  tier: EndowmentTierNum;
 
   hqCountry: CountryOption;
   // general info
