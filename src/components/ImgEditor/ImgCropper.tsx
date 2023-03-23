@@ -7,9 +7,9 @@ import Modal from "components/Modal";
 
 type Props = {
   preview: string;
-  type: string;
+  type: string; // original file type, will be the same for blob in `onSave(blob: Blob)`
   aspect: [number, number];
-  onSave(blob: Blob | null): void;
+  onSave(blob: Blob | null): void; // blob.type is the same as Props.type
 };
 
 export default function ImgCropper({
