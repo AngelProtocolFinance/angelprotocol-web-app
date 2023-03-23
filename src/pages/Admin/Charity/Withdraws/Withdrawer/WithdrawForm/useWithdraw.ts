@@ -73,6 +73,7 @@ export default function useWithdraw() {
       content: { type: "cosmos", val: [proposal] },
       //Juno withdrawal
       ...propMeta,
+      attribute: "proposal_id",
       onSuccess: isJuno
         ? undefined //no need to POST to AWS if destination is juno
         : async (response, chain) =>
