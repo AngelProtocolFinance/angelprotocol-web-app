@@ -35,7 +35,7 @@ export default function Image({ img, className }: Props) {
           <img
             ref={ref}
             src={img.src}
-            className="object-contain w-full h-full"
+            className={`${className} object-contain w-full h-full`}
             alt=""
             onLoad={() => setLoading(false)}
           />
