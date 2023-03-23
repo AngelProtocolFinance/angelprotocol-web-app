@@ -20,7 +20,9 @@ type SocialMedia =
   | "Linkedin"
   | "Instagram";
 
-export type SocialMediaLink = Required<Link> & { title: SocialMedia };
+export type SocialMediaLink = Required<Omit<Link, "external">> & {
+  title: SocialMedia;
+};
 
 export type LinkGroup = {
   title: string;
