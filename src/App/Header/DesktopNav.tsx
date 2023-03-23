@@ -12,7 +12,7 @@ export default function DesktopNav({ classes = "" }: { classes?: string }) {
       <NavLink className={styler} to={appRoutes.index}>
         Marketplace
       </NavLink>
-      <a href={`${BASE_DOMAIN}/csr-partners/`} className={styles}>
+      <a href={`${BASE_DOMAIN}/giving-partners-csr/`} className={styles}>
         Giving Partners
       </a>
       <a href={`${BASE_DOMAIN}/about-angel-giving/`} className={styles}>
