@@ -4,7 +4,7 @@ import Status, { ErrorStatus, LoadingStatus } from "components/Status";
 import { isEmpty } from "helpers";
 
 type Props<T> = {
-  queryState: SWRResponse<T>;
+  queryState: Omit<SWRResponse<T>, "mutate">;
   messages: {
     loading?: string | ReactElement;
     error?: string | ReactElement;

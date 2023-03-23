@@ -1,13 +1,15 @@
 import { useAdminResources } from "pages/Admin/Guard";
-import { useProposalsQuery } from "services/juno/cw3";
-import QueryLoader from "components/QueryLoader";
+import useQueryContract from "services/contract/useQueryContract";
+import SWRLoader from "components/SWRLoader";
 import DonationsTable from "../DonationsTable";
 import Balances from "../common/Balances";
 import Table from "./Table";
 
 export default function Dashboard() {
   const { cw3 } = useAdminResources();
-  const queryState = useProposalsQuery({ contract: cw3, limit: 5 });
+  const { data, ...rest } = useQueryContract(cw3, "cw3Proposals", {
+    limit: 5,
+  });
 
   return (
     <div className="grid content-start mt-6">
@@ -16,8 +18,8 @@ export default function Dashboard() {
       <h3 className="mt-10 mb-4 uppercase font-extrabold text-2xl">
         New Proposals
       </h3>
-      <QueryLoader
-        queryState={queryState}
+      <SWRLoader
+        queryState={{ ...rest, data: data?.proposals || [] }}
         messages={{
           loading: "Getting recent proposals..",
           error: "Failed to get proposals",
@@ -27,7 +29,7 @@ export default function Dashboard() {
         filterFn={(proposal) => proposal.status === "open"}
       >
         {(proposals) => <Table proposals={proposals} />}
-      </QueryLoader>
+      </SWRLoader>
       <DonationsTable classes="mt-10" />
     </div>
   );
