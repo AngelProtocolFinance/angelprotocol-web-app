@@ -2,20 +2,24 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { EndowmentController, SettingsPermissions } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
-import { useEndowmentControllerQuery } from "services/juno/settingsController";
-import QueryLoader from "components/QueryLoader";
+import useQueryContract from "services/contract/useQueryContract";
+import SWRLoader from "components/SWRLoader";
 import Form from "./Form";
 import { FormField, FormValues, UpdateableFormValues, schema } from "./schema";
 
 export default function Permissions() {
   const { id } = useAdminResources();
-  const queryState = useEndowmentControllerQuery({ id });
+  const queryState = useQueryContract(
+    "accounts/settings",
+    "endowmentController",
+    { id }
+  );
 
   return (
     <div className="grid gap-6">
       <h2 className="font-bold text-3xl">Permissions</h2>
 
-      <QueryLoader
+      <SWRLoader
         queryState={queryState}
         messages={{
           error: "Failed to get permissions.",
@@ -25,7 +29,7 @@ export default function Permissions() {
         {(endowmentController) => (
           <InnerComponent controller={endowmentController} />
         )}
-      </QueryLoader>
+      </SWRLoader>
     </div>
   );
 }

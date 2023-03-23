@@ -2,15 +2,19 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { RegistrarOwnerValues } from "pages/Admin/types";
 import { RegistrarConfig } from "types/contracts";
-import { useRegConfigQuery } from "services/juno/registrar";
+import useQueryContract from "services/contract/useQueryContract";
 import { FormError, FormSkeleton } from "components/admin";
 import Form from "./Form";
 import { schema } from "./schema";
 
 export default function Owner() {
-  const { data: config, isLoading, isError } = useRegConfigQuery(null);
+  const {
+    data: config,
+    isLoading,
+    error,
+  } = useQueryContract("registrar", "regConfig", null);
   if (isLoading) return <FormSkeleton />;
-  if (isError || !config)
+  if (!!error || !config)
     return <FormError errorMessage="failed to load registrar config" />;
   return <RegistrarOwnerContext {...config} />;
 }
