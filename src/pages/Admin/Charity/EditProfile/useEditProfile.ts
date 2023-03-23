@@ -38,7 +38,7 @@ export default function useEditProfile() {
   }) => {
     try {
       /** special case for edit profile: since upload happens prior
-       * to tx submission. Other users of useCosmosTxSender
+       * to tx submission. Other users of useTxSender
        */
       if (!wallet) {
         return showModal(TxPrompt, {

@@ -56,7 +56,7 @@ export type SenderArgs = {
   tagPayloads?: TagPayload[];
   successMeta?: TxSuccessMeta;
   isAuthorized?: boolean;
-  msgs: EncodeObject[];
+  content: TxContent;
   onSuccess?(result: TxSuccess, chain: Chain): void;
 };
 

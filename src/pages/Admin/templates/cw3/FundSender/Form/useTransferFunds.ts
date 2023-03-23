@@ -8,7 +8,7 @@ import { useGetWallet } from "contexts/WalletContext";
 import Popup from "components/Popup";
 import CW3 from "contracts/CW3";
 import CW20 from "contracts/CW20";
-import useCosmosTxSender from "hooks/useCosmosTxSender";
+import useTxSender from "hooks/useTxSender";
 import { scaleToStr } from "helpers";
 import { getTagPayloads } from "helpers/admin";
 import { contracts } from "constants/contracts";
@@ -23,7 +23,7 @@ export default function useTransferFunds() {
   //TODO: use wallet token[] to list amounts to transfer
   const { wallet } = useGetWallet();
   const { showModal } = useModalContext();
-  const sendTx = useCosmosTxSender();
+  const sendTx = useTxSender();
 
   async function transferFunds(data: FundSendValues) {
     const balance =
@@ -72,7 +72,7 @@ export default function useTransferFunds() {
     );
 
     await sendTx({
-      msgs: [proposalMsg],
+      content: { type: "cosmos", val: [proposalMsg] },
       ...propMeta,
       tagPayloads: getTagPayloads(propMeta.willExecute && "cw3_transfer"),
     });

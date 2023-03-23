@@ -4,14 +4,14 @@ import { useAdminResources } from "pages/Admin/Guard";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
-import useCosmosTxSender from "hooks/useCosmosTxSender";
+import useTxSender from "hooks/useTxSender";
 import { scaleToStr } from "helpers";
 import { getTagPayloads } from "helpers/admin";
 
 export default function useSubmit(vault: string, type: AccountType) {
   const { cw3, id, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
-  const { sendTx, isSending } = useCosmosTxSender(true);
+  const { sendTx, isSending } = useTxSender(true);
 
   async function submit({ token }: FormValues) {
     const account = new Account(wallet);
@@ -39,7 +39,7 @@ export default function useSubmit(vault: string, type: AccountType) {
     );
 
     await sendTx({
-      msgs: [proposal],
+      content: { type: "cosmos", val: [proposal] },
       ...propMeta,
       tagPayloads: getTagPayloads(propMeta.willExecute && "acc_invest"),
     });

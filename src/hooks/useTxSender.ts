@@ -11,7 +11,7 @@ import { GENERIC_ERROR_MESSAGE } from "constants/common";
 
 type Sender = (args: SenderArgs) => Promise<void>;
 
-export default function useCosmosTxSender<T extends boolean = false>(
+export default function useTxSender<T extends boolean = false>(
   isSenderInModal: T = false as any
 ): T extends true ? { sendTx: Sender; isSending: boolean } : Sender {
   const { wallet } = useGetWallet();
@@ -21,7 +21,7 @@ export default function useCosmosTxSender<T extends boolean = false>(
   const dispatch = useSetter();
 
   const sendTx: Sender = async ({
-    msgs,
+    content,
     tagPayloads,
     onSuccess,
     isAuthorized,
@@ -35,6 +35,11 @@ export default function useCosmosTxSender<T extends boolean = false>(
       if (!isAuthorized /** should be explicitly set to true to pass */) {
         return showModal(TxPrompt, {
           error: "You are not authorized to make this transaction",
+        });
+      }
+      if (content.type !== "cosmos") {
+        return showModal(TxPrompt, {
+          error: "Please connect to Juno to make this transaction",
         });
       }
 
@@ -57,7 +62,7 @@ export default function useCosmosTxSender<T extends boolean = false>(
       }
 
       // //////////////// ESTIMATE TX  ////////////////////
-      const estimate = await estimateTx({ type: "cosmos", val: msgs }, wallet);
+      const estimate = await estimateTx(content, wallet);
       if (!estimate) {
         return showModal(TxPrompt, {
           error: "Simulation failed. Transaction likely to fail",
