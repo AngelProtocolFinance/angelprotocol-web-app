@@ -1,15 +1,11 @@
 import { AccountType } from "types/contracts";
+import { TxOnSuccess, TxSuccessMeta } from "types/tx";
 import { invalidateApesTags } from "services/apes";
 import { useModalContext } from "contexts/ModalContext";
 import { TxPrompt } from "components/Prompt";
 import { useSetter } from "store/accessors";
-import { TxOnSuccess, TxSuccessMeta } from "hooks/useCosmosTxSender";
-import {
-  createAuthToken,
-  getWasmAttribute,
-  idParamToNum,
-  logger,
-} from "helpers";
+import { createAuthToken, idParamToNum, logger } from "helpers";
+import { getWasmAttribute } from "helpers/tx";
 import { EMAIL_SUPPORT } from "constants/common";
 import { APIs } from "constants/urls";
 
@@ -55,7 +51,7 @@ export default function useLogWithdrawProposal(successMeta?: TxSuccessMeta) {
 
       showModal(TxPrompt, {
         success: successMeta || { message: "Withdraw proposal submitted" },
-        tx: { hash: res.transactionHash, chainID: chain.chain_id },
+        tx: { hash: res.hash, chainID: chain.chain_id },
       });
 
       dispatch(invalidateApesTags(["withdraw_logs"]));

@@ -1,86 +1,131 @@
 import { useNavigate } from "react-router-dom";
 import { Completed, Network } from "slices/launchpad/types";
 import { SimulContractTx } from "types/evm";
+import { TxContent, isTxResultError } from "types/tx";
 import { useSaveAIFMutation } from "services/aws/aws";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import { TxPrompt } from "components/Prompt";
 import Account from "contracts/Account";
 import { createEndowment } from "contracts/evm/Account";
-import useCosmosTxSender, { Tx } from "hooks/useCosmosTxSender";
-import { getWasmAttribute } from "helpers";
-import { estimateFee, sendTx as sendEVMTX } from "helpers/evm";
-import { EMAIL_SUPPORT, GENERIC_ERROR_MESSAGE } from "constants/common";
+import { logger } from "helpers";
+import { estimateTx, sendTx } from "helpers/tx";
+import { chainIds } from "constants/chainIds";
+import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { appRoutes } from "constants/routes";
 import toEVMAIF from "./toEVMAIF";
 import toJunoAIF from "./toJunoAIF";
 
 export default function useSubmit(network: Network) {
   const { wallet } = useGetWallet();
-  const sendTx = useCosmosTxSender();
   const [saveAIF] = useSaveAIFMutation();
   const { showModal, closeModal } = useModalContext();
   const navigate = useNavigate();
 
   async function submit(completed: Completed) {
-    if (!wallet) {
-      return showModal(TxPrompt, { error: "Wallet is not connected" });
-    }
+    try {
+      if (!wallet) {
+        return showModal(TxPrompt, { error: "Wallet is not connected" });
+      }
 
-    if (network === "polygon" /**TODO: && check connected wallet's chainID */) {
-      const tx: SimulContractTx = {
-        to: "0x09266441B8Dc93EE70Dbe27A3612eA6e1116f1F3", //TODO: move to src/contracts/evm
-        from: wallet.address,
-        data: createEndowment.encode(toEVMAIF(completed, wallet.address)),
-      };
-      const { tx: simulated } = await estimateFee(wallet, tx);
-      const hash = await sendEVMTX(wallet, simulated);
-      return alert(hash);
-    }
+      const { chain } = wallet;
+      if (
+        network === "polygon" &&
+        !(chain.chain_id === chainIds.polygon || chain.chain_id === "1337") //polygon local
+      ) {
+        /** TODO: wallet state should have `type: ("evm" | "cosmos" ..etc)` field
+         *  so the flow would be
+         *  1. Connected wallet doesn't support (non-EVM) this transaction
+         *  2. Please connect to Polygon network
+         *
+         *  if PRE-CHECK ( UI is disabled + helpful toolip)
+         *  no need to perform these checks but value must be casted
+         *  const wallet = useGetWallet() as EVM/CosmosWalletConnectedToCorrectNetwork
+         */
+        return showModal(TxPrompt, {
+          error: "Please connect to Polygon network",
+        });
+      }
 
-    if (!(wallet.providerId === "keplr" || wallet.providerId === "keplr-wc")) {
-      return showModal(TxPrompt, {
-        error: "Only Keplr wallet support this transaction",
+      if (network === "juno" && chain.chain_id !== chainIds.juno) {
+        return showModal(TxPrompt, {
+          error: "Please connect to Juno network",
+        });
+      }
+
+      // //////////////// CONSTRUCT TX CONTENT ////////////////////
+      let content: TxContent;
+      if (network === "polygon") {
+        const tx: SimulContractTx = {
+          to: "0x09266441B8Dc93EE70Dbe27A3612eA6e1116f1F3", //TODO: move to src/contracts/evm
+          from: wallet.address,
+          data: createEndowment.encode(toEVMAIF(completed, wallet.address)),
+        };
+        content = { type: "evm", val: tx };
+      } else {
+        const contract = new Account(wallet);
+        const msg = contract.createNewAIFmsg(
+          toJunoAIF(completed, wallet.address)
+        );
+        content = { type: "cosmos", val: [msg] };
+      }
+
+      // //////////////// SEND TRANSACTION  ////////////////////
+      showModal(
+        TxPrompt,
+        { loading: "Sending transaction.." },
+        { isDismissible: false }
+      );
+      const estimate = await estimateTx(content, wallet);
+
+      if (!estimate) {
+        return showModal(TxPrompt, {
+          error: "Simulation failed: transaction likely to fail",
+        });
+      }
+      const { fee, tx } = estimate;
+
+      if (fee.amount > wallet.displayCoin.balance) {
+        return showModal(TxPrompt, {
+          error: "Not enough balance to pay for fees",
+        });
+      }
+
+      const result = await sendTx(wallet, tx, "endow_id");
+
+      if (isTxResultError(result)) {
+        return showModal(TxPrompt, result);
+      }
+
+      // //////////////// LOG NEW AIF TO AWS ////////////////////
+      const { attrValue: endowId, ...okTx } = result;
+      if (!endowId) {
+        return showModal(TxPrompt, {
+          error: "Endowment was created but failed to save to AWS",
+          tx: okTx,
+        });
+      }
+
+      const saveResult = await saveAIF({
+        chainId: chain.chain_id,
+        id: +endowId,
+        registrant: wallet.address,
+        tagline: completed[1].tagline,
       });
+
+      if ("error" in saveResult) {
+        return showModal(TxPrompt, {
+          error: "Endowment was created but failed to save to AWS",
+          tx: okTx,
+        });
+      }
+
+      closeModal();
+      navigate(`${appRoutes.register}/success`, { state: endowId });
+    } catch (err) {
+      logger.error(err);
+      showModal(TxPrompt, { error: GENERIC_ERROR_MESSAGE });
     }
-
-    const contract = new Account(wallet);
-    const msg = contract.createNewAIFmsg(toJunoAIF(completed, wallet.address));
-    await sendTx({
-      msgs: [msg],
-      isAuthorized: true /** anyone can send this msg */,
-      async onSuccess(res, chain) {
-        try {
-          const id = getWasmAttribute("endow_id", res.rawLog);
-
-          showModal(
-            TxPrompt,
-            { loading: "Saving endowment info.." },
-            { isDismissible: false }
-          );
-
-          const result = await saveAIF({
-            chainId: chain.chain_id,
-            id: +id!,
-            registrant: wallet.address,
-            tagline: completed[1].tagline,
-          });
-
-          const tx: Tx = { hash: res.transactionHash, chainID: chain.chain_id };
-          if ("error" in result) {
-            return showModal(TxPrompt, {
-              error: `Failed to save created endowment. Please contact us at ${EMAIL_SUPPORT}`,
-              tx,
-            });
-          }
-
-          closeModal();
-          navigate(`${appRoutes.register}/success`, { state: id });
-        } catch (err) {
-          showModal(TxPrompt, { error: GENERIC_ERROR_MESSAGE });
-        }
-      },
-    });
   }
 
   return submit;

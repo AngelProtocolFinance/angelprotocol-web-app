@@ -6,7 +6,7 @@ import { useGetWallet } from "contexts/WalletContext";
 import Popup from "components/Popup";
 import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
-import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
+import useCosmosTxSender from "hooks/useCosmosTxSender";
 
 export default function useDestroyFund() {
   const {

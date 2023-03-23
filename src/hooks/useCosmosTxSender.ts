@@ -1,17 +1,15 @@
 import { useState } from "react";
-import { Tx, TxArgs } from "./types";
-import { TxOptions } from "types/slices";
-import { invalidateApesTags } from "services/apes";
+import { SenderArgs, isTxResultError } from "types/tx";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import Popup from "components/Popup";
 import { TxPrompt } from "components/Prompt";
 import { useSetter } from "store/accessors";
-import Contract from "contracts/Contract";
-import { extractFeeAmount } from "helpers";
-import handleTxError from "./handleTxError";
+import { logger } from "helpers";
+import { estimateTx, sendTx as signAndBroadCast } from "helpers/tx";
+import { GENERIC_ERROR_MESSAGE } from "constants/common";
 
-type Sender = (args: TxArgs) => Promise<void>;
+type Sender = (args: SenderArgs) => Promise<void>;
 
 export default function useCosmosTxSender<T extends boolean = false>(
   isSenderInModal: T = false as any
@@ -58,54 +56,43 @@ export default function useCosmosTxSender<T extends boolean = false>(
         );
       }
 
-      const contract = new Contract(wallet);
+      // //////////////// ESTIMATE TX  ////////////////////
+      const estimate = await estimateTx({ type: "cosmos", val: msgs }, wallet);
+      if (!estimate) {
+        return showModal(TxPrompt, {
+          error: "Simulation failed. Transaction likely to fail",
+        });
+      }
+      const { fee, tx } = estimate;
 
-      const fee = await contract.estimateFee(msgs);
-      const feeAmount = extractFeeAmount(
-        fee,
-        wallet.chain.native_currency.token_id
-      );
-
-      if (feeAmount > wallet.displayCoin.balance) {
+      if (fee.amount > wallet.displayCoin.balance) {
         return showModal(Popup, {
           message: "Not enough balance to pay for fees",
         });
       }
 
-      const tx: TxOptions = { msgs: msgs, fee };
-      const response = await contract.signAndBroadcast(tx);
+      // //////////////// SEND TX  ////////////////////
+      const result = await signAndBroadCast(wallet, tx);
 
-      const txRes: Tx = {
-        hash: response.transactionHash,
-        chainID: wallet.chain.chain_id,
-      };
+      if (isTxResultError(result)) {
+        return showModal(TxPrompt, result);
+      }
 
-      if (!response.code) {
-        //always invalidate cached chain data to reflect balance changes from fee deduction
-        dispatch(invalidateApesTags(["chain"]));
+      for (const tagPayload of tagPayloads || []) {
+        dispatch(tagPayload);
+      }
 
-        /** invalidate custom cache entries, after some delay so that query result
-              would reflect the changes made */
-        await new Promise((r) => {
-          setTimeout(r, 3000);
-        });
-        for (const tagPayload of tagPayloads || []) {
-          dispatch(tagPayload);
-        }
-
-        if (onSuccess) {
-          onSuccess(response, wallet.chain);
-        } else {
-          showModal(TxPrompt, {
-            success: successMeta || { message: "Transaction successful!" },
-            tx: txRes,
-          });
-        }
+      if (onSuccess) {
+        onSuccess(result, wallet.chain);
       } else {
-        showModal(TxPrompt, { error: "Transaction failed", tx: txRes });
+        showModal(TxPrompt, {
+          success: successMeta || { message: "Transaction successful!" },
+          tx: result,
+        });
       }
     } catch (err) {
-      handleTxError(err, ({ error, tx }) => showModal(TxPrompt, { error, tx }));
+      logger.error(err);
+      showModal(TxPrompt, { error: GENERIC_ERROR_MESSAGE });
     } finally {
       isSenderInModal && setIsSending(false);
     }

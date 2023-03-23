@@ -1,5 +1,3 @@
-import { PayloadAction } from "@reduxjs/toolkit";
-import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import {
   AdminVoteInfo,
   CW3Config,
@@ -8,10 +6,7 @@ import {
   ReviewCW3Config,
 } from "types/contracts";
 import { ProviderId } from "types/lists";
-import { TxArgs } from "hooks/useCosmosTxSender";
-
-export type Tag = TagDescription<string>;
-export type TagPayload = PayloadAction<Tag[], string>;
+import { SenderArgs } from "types/tx";
 
 export type ContractQueryArgs<T = object> = {
   address: string;
@@ -32,7 +27,7 @@ type Base = {
   cw4: string;
   id: number;
   propMeta: Required<
-    Pick<TxArgs, "successMeta" | "tagPayloads" | "isAuthorized">
+    Pick<SenderArgs, "successMeta" | "tagPayloads" | "isAuthorized">
   > & {
     willExecute?: true;
   };

@@ -1,15 +1,17 @@
-import { EVMTx, SimulContractTx, SimulSendNativeTx } from "types/evm";
+import { SimulContractTx, SimulSendNativeTx } from "types/evm";
+import { Estimate } from "types/tx";
 import { WalletState } from "contexts/WalletContext";
 import { EIPMethods } from "constants/evm";
-import { condense } from "../decimal";
-import { getProvider } from "./evm";
+import { condense } from "../../decimal";
+import { getProvider } from "../../evm";
 
-export async function estimateFee(
+export async function estimateEVMFee(
   wallet: WalletState,
   tx: SimulSendNativeTx | SimulContractTx
-): Promise<{ fee: number; tx: EVMTx }> {
+): Promise<Estimate> {
   const provider = getProvider(wallet.providerId)!;
 
+  //TODO: convert request to fetch call so can also be used in general contract queries
   const [nonce, gas, gasPrice] = await Promise.all([
     provider.request<string>({
       method: EIPMethods.eth_getTransactionCount,
@@ -28,5 +30,8 @@ export async function estimateFee(
     .mul(gas)
     .toNumber();
   /** include gas, and gasPrice - in local setup, wallet might give wrong estimatio */
-  return { fee, tx: { ...tx, nonce, gas, gasPrice } };
+  return {
+    fee: { amount: fee, symbol: wallet.displayCoin.symbol },
+    tx: { val: { ...tx, nonce, gas, gasPrice }, type: "evm" },
+  };
 }
