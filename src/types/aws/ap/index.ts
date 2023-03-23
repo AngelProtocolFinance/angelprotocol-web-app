@@ -63,7 +63,7 @@ export type EndowmentProfileUpdate = {
   categories_general: string[];
   categories_sdgs: UNSDG_NUMS[];
   hq_country: string;
-  endow_designation: EndowDesignation;
+  endow_designation: string;
   image: string;
   kyc_donors_only: boolean;
   logo: string;
