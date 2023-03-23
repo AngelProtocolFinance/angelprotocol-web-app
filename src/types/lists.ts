@@ -31,3 +31,20 @@ export type ProviderId =
   | "walletconnect"
   | "keplr-wc"
   | "keplr";
+
+export type Contract =
+  | "registrar"
+  | "index-fund"
+  | "cw4/ap"
+  | "cw3/ap"
+  | "accounts"
+  | "accounts/settings"
+  | "cw4/review"
+  | "cw3/review"
+  | "cw4/charity-review"
+  | "cw3/charity-review"
+  | "cw4/impact-review"
+  | "cw3/impact-review"
+  | "halo"
+  | "gift-card"
+  | "gov";
