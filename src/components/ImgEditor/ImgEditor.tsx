@@ -116,7 +116,7 @@ export default function ImgEditor<T extends FieldValues, K extends keyof T>(
           Cropped file size can be different from the original's.
           <br />
           {file
-            ? `Current cropped file size: ${humanize(
+            ? `Current cropped image size: ${humanize(
                 file.size / BYTES_IN_MB
               )}MB.`
             : ""}
