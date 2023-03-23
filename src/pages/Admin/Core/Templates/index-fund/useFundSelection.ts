@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { Path, useFormContext } from "react-hook-form";
 import { FundIdContext } from "pages/Admin/types";
+import useQueryContract from "services/contract/useQueryContract";
 import { useLatestBlockQuery } from "services/juno";
-import { useFundListQuery } from "services/juno/indexFund";
 
 export default function useFundSelection<T extends FundIdContext>(
   fieldName: Path<T>
@@ -10,7 +10,12 @@ export default function useFundSelection<T extends FundIdContext>(
   const { setValue } = useFormContext<T>();
 
   const { data: blockHeight = "0" } = useLatestBlockQuery(null);
-  const { data: fundList = [] } = useFundListQuery(null);
+  const { data = { funds: [] } } = useQueryContract(
+    "index-fund",
+    "ifFunds",
+    null
+  );
+  const fundList = data.funds;
 
   const [activeRow, setActiveRow] = useState<number | undefined>();
 

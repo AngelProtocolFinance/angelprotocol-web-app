@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { AllianceEditValues } from "pages/Admin/types";
-import { useAllianceMembersQuery } from "services/juno/indexFund";
+import useQueryContract from "services/contract/useQueryContract";
 import { FormError, FormSkeleton } from "components/admin";
 import { useSetter } from "store/accessors";
 import { setMembers } from "slices/admin/allianceMembers";
@@ -11,13 +11,15 @@ import { schema } from "./schema";
 
 export default function Alliance() {
   const dispatch = useSetter();
-  const {
-    data: allianceMembers = [],
-    isLoading,
-    isError,
-  } = useAllianceMembersQuery(null);
+  const { data, isLoading, error } = useQueryContract(
+    "index-fund",
+    "ifAlliance",
+    null
+  );
 
   useEffect(() => {
+    const allianceMembers = data?.alliance_members || [];
+
     if (isLoading) return;
     if (allianceMembers.length <= 0) return;
 
@@ -30,10 +32,10 @@ export default function Alliance() {
         }))
       )
     );
-  }, [dispatch, allianceMembers, isLoading]);
+  }, [dispatch, data, isLoading]);
 
   if (isLoading) return <FormSkeleton />;
-  if (isError)
+  if (!!error)
     return <FormError errorMessage="failed to load alliance members" />;
 
   return <FormWithContext />;
