@@ -1,15 +1,15 @@
 import { useNavigate } from "react-router-dom";
 import { Completed, Network } from "slices/launchpad/types";
 import { SimulContractTx } from "types/evm";
-import { TxContent, isTxResultError } from "types/tx";
+import { TxContent } from "types/tx";
 import { useSaveAIFMutation } from "services/aws/aws";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import { TxPrompt } from "components/Prompt";
 import Account from "contracts/Account";
 import { createEndowment } from "contracts/evm/Account";
+import useTxSender from "hooks/useTxSender";
 import { logger } from "helpers";
-import { estimateTx, sendTx } from "helpers/tx";
 import { chainIds } from "constants/chainIds";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { appRoutes } from "constants/routes";
@@ -21,6 +21,7 @@ export default function useSubmit(network: Network) {
   const [saveAIF] = useSaveAIFMutation();
   const { showModal, closeModal } = useModalContext();
   const navigate = useNavigate();
+  const sendTx = useTxSender();
 
   async function submit(completed: Completed) {
     try {
@@ -71,57 +72,38 @@ export default function useSubmit(network: Network) {
       }
 
       // //////////////// SEND TRANSACTION  ////////////////////
-      showModal(
-        TxPrompt,
-        { loading: "Sending transaction.." },
-        { isDismissible: false }
-      );
-      const estimate = await estimateTx(content, wallet);
+      await sendTx({
+        content,
+        attribute: "endow_id",
+        isAuthorized: true,
+        onSuccess: async (result, chain) => {
+          // //////////////// LOG NEW AIF TO AWS ////////////////////
+          const { attrValue: endowId, ...okTx } = result;
+          if (!endowId) {
+            return showModal(TxPrompt, {
+              error: "Endowment was created but failed to save to AWS",
+              tx: okTx,
+            });
+          }
 
-      if (!estimate) {
-        return showModal(TxPrompt, {
-          error: "Simulation failed: transaction likely to fail",
-        });
-      }
-      const { fee, tx } = estimate;
+          const saveResult = await saveAIF({
+            chainId: chain.chain_id,
+            id: +endowId,
+            registrant: wallet.address,
+            tagline: completed[1].tagline,
+          });
 
-      if (fee.amount > wallet.displayCoin.balance) {
-        return showModal(TxPrompt, {
-          error: "Not enough balance to pay for fees",
-        });
-      }
+          if ("error" in saveResult) {
+            return showModal(TxPrompt, {
+              error: "Endowment was created but failed to save to AWS",
+              tx: okTx,
+            });
+          }
 
-      const result = await sendTx(wallet, tx, "endow_id");
-
-      if (isTxResultError(result)) {
-        return showModal(TxPrompt, result);
-      }
-
-      // //////////////// LOG NEW AIF TO AWS ////////////////////
-      const { attrValue: endowId, ...okTx } = result;
-      if (!endowId) {
-        return showModal(TxPrompt, {
-          error: "Endowment was created but failed to save to AWS",
-          tx: okTx,
-        });
-      }
-
-      const saveResult = await saveAIF({
-        chainId: chain.chain_id,
-        id: +endowId,
-        registrant: wallet.address,
-        tagline: completed[1].tagline,
+          closeModal();
+          navigate(`${appRoutes.register}/success`, { state: endowId });
+        },
       });
-
-      if ("error" in saveResult) {
-        return showModal(TxPrompt, {
-          error: "Endowment was created but failed to save to AWS",
-          tx: okTx,
-        });
-      }
-
-      closeModal();
-      navigate(`${appRoutes.register}/success`, { state: endowId });
     } catch (err) {
       logger.error(err);
       showModal(TxPrompt, { error: GENERIC_ERROR_MESSAGE });
