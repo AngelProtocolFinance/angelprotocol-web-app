@@ -38,11 +38,6 @@ export default function useTxSender<T extends boolean = false>(
           error: "You are not authorized to make this transaction",
         });
       }
-      if (content.type !== "cosmos") {
-        return showModal(TxPrompt, {
-          error: "Please connect to Juno to make this transaction",
-        });
-      }
 
       /**
        * avoid unmounting sender in modal while tx is still sending to avoid memory leak
