@@ -4,6 +4,7 @@ import { useDropzone } from "react-dropzone";
 import { FieldValues, useFormContext } from "react-hook-form";
 import { ImgLink, Props } from "./types";
 import Icon from "components/Icon";
+import { humanize } from "helpers";
 import useImgEditor from "./useImgEditor";
 
 type Key = keyof ImgLink;
@@ -112,8 +113,13 @@ export default function ImgEditor<T extends FieldValues, K extends keyof T>(
       <p className="text-xs text-gray-d1 dark:text-gray mt-2">
         <span>
           Valid types are: PDF, JPG, PNG and WEBP. File should be less than 1MB.
-          Cropped file size can be different from the original's.{" "}
-          {file ? `Current cropped file size: ${file.size / BYTES_IN_MB}.` : ""}
+          Cropped file size can be different from the original's.
+          <br />
+          {file
+            ? `Current cropped file size: ${humanize(
+                file.size / BYTES_IN_MB
+              )}MB.`
+            : ""}
         </span>{" "}
         <ErrorMessage
           errors={errors}
