@@ -4,7 +4,7 @@ import { setDesignations } from "slices/components/marketFilter";
 import { FilterOption, FlatFilter } from "./common";
 
 const options: FilterOption<EndowDesignation>[] = [
-  { displayText: "Charity", key: "non-profit", value: "Charity" },
+  { displayText: "Charity", key: "charity", value: "Charity" },
   {
     displayText: "Religious Organization",
     key: "religious-organization",

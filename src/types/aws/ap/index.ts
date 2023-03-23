@@ -4,7 +4,7 @@ import { NetworkType, UNSDG_NUMS } from "../../lists";
 
 type EndowmentBase = {
   hq_country: string;
-  endow_designation: string;
+  endow_designation: EndowDesignation;
   active_in_countries?: string[];
   categories: { sdgs: UNSDG_NUMS[] };
   id: number;
@@ -63,7 +63,7 @@ export type EndowmentProfileUpdate = {
   categories_general: string[];
   categories_sdgs: UNSDG_NUMS[];
   hq_country: string;
-  endow_designation: string;
+  endow_designation: EndowDesignation;
   image: string;
   kyc_donors_only: boolean;
   logo: string;
@@ -99,7 +99,7 @@ export type EndowmentsQueryParams = {
   sort: "default" | `${EndowmentsSortKey}+${SortDirection}`;
   start?: number; //to load next page, set start to ItemCutOff + 1
   endow_types: string | null; // comma separated EndowmentType values
-  endow_designation?: string;
+  endow_designation?: string; // comma separated EndowDesignation values
   sdgs: string | 0; // comma separated sdg values. The backend recognizes "0" as "no SDG was selected"
   tiers: string | null; // comma separated Exclude<EndowmentTier, "Level1"> values ("Level1" excluded for now)
   kyc_only: string | null; // comma separated boolean values
