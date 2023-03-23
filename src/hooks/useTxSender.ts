@@ -6,7 +6,7 @@ import Popup from "components/Popup";
 import { TxPrompt } from "components/Prompt";
 import { useSetter } from "store/accessors";
 import { logger } from "helpers";
-import { estimateTx, sendTx as signAndBroadCast } from "helpers/tx";
+import { estimateTx, sendTx } from "helpers/tx";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 
 type Sender = (args: SenderArgs) => Promise<void>;
@@ -20,7 +20,7 @@ export default function useTxSender<T extends boolean = false>(
   const { showModal, setModalOption } = useModalContext();
   const dispatch = useSetter();
 
-  const sendTx: Sender = async ({
+  const sender: Sender = async ({
     attribute,
     content,
     tagPayloads,
@@ -78,7 +78,7 @@ export default function useTxSender<T extends boolean = false>(
       }
 
       // //////////////// SEND TX  ////////////////////
-      const result = await signAndBroadCast(wallet, tx, attribute);
+      const result = await sendTx(wallet, tx, attribute);
 
       if (isTxResultError(result)) {
         return showModal(TxPrompt, result);
@@ -104,5 +104,5 @@ export default function useTxSender<T extends boolean = false>(
     }
   };
 
-  return isSenderInModal ? { sendTx, isSending } : (sendTx as any);
+  return isSenderInModal ? { sendTx: sender, isSending } : (sender as any);
 }
