@@ -69,7 +69,7 @@ export const SECTIONS_DATA: Section[] = [
       },
       {
         text: "Giving Partners (CSR)",
-        href: `${BASE_DOMAIN}/csr-partners/`,
+        href: `${BASE_DOMAIN}/giving-partners-csr/`,
       },
       { text: "Impact Board", href: `${DAPP_DOMAIN}/leaderboard/` },
       // {

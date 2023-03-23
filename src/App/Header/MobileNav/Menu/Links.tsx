@@ -26,7 +26,7 @@ export default function Links() {
       <NavLink className={navLinkStyle} to={appRoutes.index}>
         Marketplace
       </NavLink>
-      <a href={`${BASE_DOMAIN}/csr-partners/`} className={navStyle}>
+      <a href={`${BASE_DOMAIN}/giving-partners-csr/`} className={navStyle}>
         Giving Partners
       </a>
       <a href={`${BASE_DOMAIN}/about-angel-giving/`} className={navStyle}>
