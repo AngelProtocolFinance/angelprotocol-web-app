@@ -15,5 +15,8 @@ export const genFileSchema = (maxSize: number, types: string[]) =>
     .test({
       name: "must be less than size limit",
       message: "exceeds file size limit",
-      test: (file) => (file?.size || 0) <= maxSize,
+      test: (file) => {
+        console.log(`genFileSchema file.size:${file?.size}`);
+        return (file?.size || 0) <= maxSize;
+      },
     });

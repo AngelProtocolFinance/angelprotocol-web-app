@@ -37,6 +37,7 @@ export default function useImgEditor<T extends FieldValues, K extends keyof T>({
         showModal(ImgCropper, {
           preview,
           aspect,
+          type: newFile.type,
           onSave(blob) {
             handleCropResult(blob, newFile);
           },
@@ -52,6 +53,7 @@ export default function useImgEditor<T extends FieldValues, K extends keyof T>({
     showModal(ImgCropper, {
       preview,
       aspect,
+      type: currFile.type,
       onSave(blob) {
         handleCropResult(blob, currFile);
       },
