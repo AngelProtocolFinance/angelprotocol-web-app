@@ -1,18 +1,22 @@
-import useSWR from "swr";
+import useSWR, { SWRResponse } from "swr";
 import {
   ContractQueries as Q,
   ContractQueryTypes as QT,
 } from "../juno/queryContract/types";
-import { contracts } from "constants/contracts";
-import { JUNO_LCD } from "constants/env";
+import { Contract } from "types/lists";
+import { contracts } from "constants/contractsV2";
 import { queryContract } from "../juno/queryContract";
 
 export default function useQueryContract<T extends QT>(
-  type: T,
-  args: Q[T]["args"],
-  contract: string,
-  url = JUNO_LCD
-) {
-  contracts;
-  return useSWR(type, (type) => queryContract(type, contract, args, url));
+  contract: Q[T]["contract"] extends Contract ? Contract : string,
+  id: T,
+  args: Q[T]["args"]
+): SWRResponse<Q[T]["res"]["data"]> {
+  const c = contract in contracts ? contracts[contract as Contract] : contract;
+
+  return useSWR(id, async (id: T) => {
+    const res = await queryContract(id, c, args);
+    /** perform transformations here, and output chain agnostic type */
+    return res;
+  });
 }
