@@ -2,6 +2,7 @@ import { TimeoutError, isDeliverTxFailure } from "@cosmjs/stargate";
 import { CosmosTx, TxResult } from "types/tx";
 import { WalletState } from "contexts/WalletContext";
 import Contract from "contracts/Contract";
+import { logger } from "../../logger";
 import { getWasmAttribute } from "./getWasmAttribute";
 
 export async function sendCosmosTx(
@@ -25,6 +26,7 @@ export async function sendCosmosTx(
       attrValue: attribute && getWasmAttribute(attribute, response.rawLog),
     };
   } catch (err) {
+    logger.error(err);
     if (err instanceof Error) {
       if (/request rejected/i.test(err.message)) {
         return { error: "Transaction not signed" };

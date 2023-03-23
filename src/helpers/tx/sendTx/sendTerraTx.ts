@@ -2,6 +2,7 @@ import { CreateTxOptions } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { Timeout, TxFailed, UserDenied } from "@terra-money/wallet-provider";
 import { SubmittedTx, TxResult } from "types/tx";
+import { logger } from "../../logger";
 
 export async function sendTerraTx(
   wallet: ConnectedWallet,
@@ -19,6 +20,7 @@ export async function sendTerraTx(
     }
     return submitted;
   } catch (err) {
+    logger.error(err);
     if (err instanceof UserDenied) {
       return { error: "Transaction not signed" };
     }

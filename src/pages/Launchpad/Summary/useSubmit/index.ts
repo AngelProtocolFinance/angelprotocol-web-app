@@ -55,9 +55,7 @@ export default function useSubmit(network: Network) {
 
       // //////////////// CONSTRUCT TX CONTENT ////////////////////
       let content: TxContent;
-      if (
-        network === "polygon" /**TODO: && check connected wallet's chainID */
-      ) {
+      if (network === "polygon") {
         const tx: SimulContractTx = {
           to: "0x09266441B8Dc93EE70Dbe27A3612eA6e1116f1F3", //TODO: move to src/contracts/evm
           from: wallet.address,

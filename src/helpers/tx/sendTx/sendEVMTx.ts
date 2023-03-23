@@ -3,6 +3,7 @@ import { TxResult } from "types/tx";
 import { WalletState } from "contexts/WalletContext";
 import { EIPMethods } from "constants/evm";
 import { getProvider } from "../../evm";
+import { logger } from "../../logger";
 
 export async function sendEVMTx(
   wallet: WalletState,
@@ -22,6 +23,7 @@ export async function sendEVMTx(
     //1. get transaction_receipt by polling
     //2. get id from logs
   } catch (err) {
+    logger.error(err);
     return { error: "Error encountered while sending transaction" };
   }
 }
