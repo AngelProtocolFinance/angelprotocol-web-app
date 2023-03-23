@@ -1,7 +1,6 @@
-import { EVMTx, TxReceipt } from "types/evm";
+import { EVMTx, InjectedProvider, TxReceipt } from "types/evm";
 import { TxResult } from "types/tx";
 import { WalletState } from "contexts/WalletContext";
-import { endowmentCreatedTopic } from "contracts/evm/Account";
 import { EIPMethods } from "constants/evm";
 import { getProvider } from "../../evm";
 
@@ -25,30 +24,49 @@ export async function sendEVMTx(
             fromBlock: "latest",
             toBlock: "pending",
             address: tx.to,
-            topics: endowmentCreatedTopic,
           },
         ],
       }),
     ]);
 
-    //get transaction receipt: TODO: once live in testnet, poll if null
-    const receipt = await provider.request<TxReceipt>({
-      method: EIPMethods.eth_getTransactionReceipt,
-      params: [hash],
-    });
+    const receipt = await getReceipt(provider, hash, 10);
+    if (!receipt) {
+      return {
+        error: "Timeout: failed to confirm if transaction is finalized",
+      };
+    }
 
     const changes = await provider.request<any[]>({
       method: EIPMethods.eth_getFilterChanges,
       params: [filterID],
     });
 
-    console.log({ receipt, changes });
-    return { hash: hash, chainID: wallet.chain.chain_id };
+    console.log({ changes, receipt, filterID });
 
-    //TODO:
-    //1. get transaction_receipt by polling
-    //2. get id from logs/events
+    return { hash: hash, chainID: wallet.chain.chain_id };
   } catch (err) {
+    console.log(err);
     return { error: "Error encountered while sending transaction" };
   }
+}
+
+async function getReceipt(
+  provider: InjectedProvider,
+  hash: string,
+  retries: number
+): Promise<TxReceipt | null> {
+  if (retries === 0) return null;
+
+  await new Promise((r) => setTimeout(r, 1000 * (10 - retries)));
+
+  const receipt = await provider.request<TxReceipt | null>({
+    method: EIPMethods.eth_getTransactionReceipt,
+    params: [hash],
+  });
+
+  if (receipt !== null) {
+    return receipt;
+  }
+
+  return getReceipt(provider, hash, retries - 1);
 }

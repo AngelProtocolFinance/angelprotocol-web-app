@@ -23,7 +23,14 @@ export interface RequestArguments {
   readonly params?: readonly unknown[] | object;
 }
 
+export type TxLog = {
+  address: string;
+  topics: string[];
+  data: string;
+};
+
 export type TxReceipt = {
+  logs: TxLog[];
   //add needed fields
 };
 

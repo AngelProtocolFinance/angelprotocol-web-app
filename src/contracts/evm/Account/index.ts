@@ -3,20 +3,16 @@ import { NewAIF } from "types/contracts/evm";
 import { toTuple } from "helpers";
 import abi from "./abi.json";
 
-const encoder = new Interface(abi);
+const iface = new Interface(abi);
 //FUTURE: append abi with new methods
-const createEndowmentFn = encoder.getFunction("createEndowment");
-export const endowmentCreatedTopic = encoder.encodeFilterTopics(
+const createEndowmentFn = iface.getFunction("createEndowment");
+export const endowmentCreatedTopic = iface.encodeFilterTopics(
   "EndowmentCreated",
   []
 );
 
 export const createEndowment = {
   encode(aif: NewAIF) {
-    return encoder.encodeFunctionData(createEndowmentFn, [toTuple(aif)]);
-  },
-  parse(result: string) {
-    const decoded = encoder.decodeFunctionResult(createEndowmentFn, result);
-    console.log(decoded);
+    return iface.encodeFunctionData(createEndowmentFn, [toTuple(aif)]);
   },
 };
