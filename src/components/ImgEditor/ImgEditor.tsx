@@ -111,8 +111,9 @@ export default function ImgEditor<T extends FieldValues, K extends keyof T>(
       </div>
       <p className="text-xs text-gray-d1 dark:text-gray mt-2">
         <span>
-          Valid types are: PDF, JPG, PNG and WEBP. File should be less than 1MB.{" "}
-          {file ? `Current cropped file size: ${file.size / BYTES_IN_MB}` : ""}
+          Valid types are: PDF, JPG, PNG and WEBP. File should be less than 1MB.
+          Cropped file size can be different from the original's.{" "}
+          {file ? `Current cropped file size: ${file.size / BYTES_IN_MB}.` : ""}
         </span>{" "}
         <ErrorMessage
           errors={errors}
