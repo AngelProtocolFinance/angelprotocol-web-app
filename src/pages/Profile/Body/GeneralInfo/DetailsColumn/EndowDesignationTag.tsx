@@ -1,6 +1,6 @@
 import { PropsWithChildren } from "react";
 import { useProfileContext } from "pages/Profile/ProfileContext";
-import Icon, { IconType } from "components/Icon";
+import Icon from "components/Icon";
 import { ENDOW_DESIGNATIONS } from "constants/common";
 
 export default function EndowDesignationTag() {
@@ -12,8 +12,7 @@ export default function EndowDesignationTag() {
   return endowDesignation && profile.endow_designation !== "Other" ? (
     <div className="flex flex-col items-start gap-3">
       <Tag>
-        <Icon type={endowDesignation.icon as IconType} size={24} />{" "}
-        {endowDesignation.label}
+        <Icon type={endowDesignation.icon} size={24} /> {endowDesignation.label}
       </Tag>
     </div>
   ) : null;
