@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { Completed, Network } from "slices/launchpad/types";
+import { Chain } from "types/aws";
 import { SimulContractTx } from "types/evm";
-import { TxContent } from "types/tx";
+import { TxContent, TxSuccess } from "types/tx";
 import { useSaveAIFMutation } from "services/aws/aws";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
@@ -71,38 +72,40 @@ export default function useSubmit(network: Network) {
         content = { type: "cosmos", val: [msg] };
       }
 
+      const onSuccess = async (result: TxSuccess, chain: Chain) => {
+        // //////////////// LOG NEW AIF TO AWS ////////////////////
+        const { attrValue: endowId, ...okTx } = result;
+        if (!endowId) {
+          return showModal(TxPrompt, {
+            error: "Endowment was created but failed to save to AWS",
+            tx: okTx,
+          });
+        }
+
+        const saveResult = await saveAIF({
+          chainId: chain.chain_id,
+          id: +endowId,
+          registrant: wallet.address,
+          tagline: completed[1].tagline,
+        });
+
+        if ("error" in saveResult) {
+          return showModal(TxPrompt, {
+            error: "Endowment was created but failed to save to AWS",
+            tx: okTx,
+          });
+        }
+
+        closeModal();
+        navigate(`${appRoutes.register}/success`, { state: endowId });
+      };
+
       // //////////////// SEND TRANSACTION  ////////////////////
       await sendTx({
         content,
         attribute: "endow_id",
         isAuthorized: true,
-        onSuccess: async (result, chain) => {
-          // //////////////// LOG NEW AIF TO AWS ////////////////////
-          const { attrValue: endowId, ...okTx } = result;
-          if (!endowId) {
-            return showModal(TxPrompt, {
-              error: "Endowment was created but failed to save to AWS",
-              tx: okTx,
-            });
-          }
-
-          const saveResult = await saveAIF({
-            chainId: chain.chain_id,
-            id: +endowId,
-            registrant: wallet.address,
-            tagline: completed[1].tagline,
-          });
-
-          if ("error" in saveResult) {
-            return showModal(TxPrompt, {
-              error: "Endowment was created but failed to save to AWS",
-              tx: okTx,
-            });
-          }
-
-          closeModal();
-          navigate(`${appRoutes.register}/success`, { state: endowId });
-        },
+        onSuccess,
       });
     } catch (err) {
       logger.error(err);
