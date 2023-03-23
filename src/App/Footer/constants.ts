@@ -109,6 +109,7 @@ export const SECTIONS_DATA: Section[] = [
         text: "Terms of Use",
         href: `${BASE_DOMAIN}/terms-of-use/`,
       },
+      { text: "Terms for NPO", href: `${BASE_DOMAIN}/terms-of-use-npo/` },
     ],
   },
 ];
