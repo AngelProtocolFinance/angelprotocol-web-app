@@ -22,7 +22,7 @@ const fileObj = Yup.object().shape<SchemaShape<ImgLink>>({
     is: (value: string) => !value,
     then: (schema) => schema.required("required"),
   }),
-  precropSize: Yup.number().lessThan(BYTES_IN_MB),
+  precropSize: Yup.number().lessThan(BYTES_IN_MB, "exceeds image size"),
 });
 
 //construct strict shape to avoid hardcoding shape keys
