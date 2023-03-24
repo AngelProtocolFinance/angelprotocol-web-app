@@ -23,7 +23,7 @@ export const purchase = createAsyncThunk<void, Args>(
 
     try {
       updateTx({ msg: "Payment is being processed..." });
-      const result = await sendTx(wallet, tx, "deposit_id");
+      const result = await sendTx(wallet, tx);
 
       if (isTxResultError(result)) {
         return updateTx({ error: result.error });

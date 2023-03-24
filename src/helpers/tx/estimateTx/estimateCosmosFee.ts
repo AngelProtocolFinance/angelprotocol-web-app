@@ -6,13 +6,14 @@ import { extractFeeAmount } from "../../extractFeeData";
 
 export default async function estimateCosmosFee(
   wallet: WalletState,
-  msgs: EncodeObject[]
+  msgs: EncodeObject[],
+  attribute?: string
 ): Promise<Estimate> {
   const contract = new Contract(wallet);
   const fee = await contract.estimateFee(msgs);
   const feeAmount = extractFeeAmount(fee, wallet.displayCoin.token_id);
   return {
     fee: { amount: feeAmount, symbol: wallet.displayCoin.symbol },
-    tx: { type: "cosmos", val: { fee, msgs } },
+    tx: { type: "cosmos", val: { fee, msgs }, attribute },
   };
 }

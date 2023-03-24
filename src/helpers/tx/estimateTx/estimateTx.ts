@@ -13,11 +13,11 @@ export default async function estimateTx(
   try {
     switch (content.type) {
       case "cosmos":
-        return estimateCosmosFee(wallet, content.val);
+        return estimateCosmosFee(wallet, content.val, content.attribute);
       case "terra":
         return estimateTerraFee(wallet, terraWallet!, content.val);
       default:
-        return estimateEVMFee(wallet, content.val);
+        return estimateEVMFee(wallet, content.val, content.log);
     }
   } catch (err) {
     return null;

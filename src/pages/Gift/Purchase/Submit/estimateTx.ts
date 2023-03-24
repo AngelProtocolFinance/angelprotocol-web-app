@@ -30,7 +30,10 @@ export async function estimateTx({
         gcContract.createDepositObject(recipient)
       );
     }
-    return estimateGas({ type: "cosmos", val: [msg] }, wallet);
+    return estimateGas(
+      { type: "cosmos", val: [msg], attribute: "deposit_id" },
+      wallet
+    );
   } catch (err) {
     logger.error(err);
     return null;
