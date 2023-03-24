@@ -4,10 +4,13 @@ import { useDropzone } from "react-dropzone";
 import { FieldValues, useFormContext } from "react-hook-form";
 import { ImgLink, Props } from "./types";
 import Icon from "components/Icon";
+import { humanize } from "helpers";
 import useImgEditor from "./useImgEditor";
 
 type Key = keyof ImgLink;
 const fileKey: Key = "file";
+
+const BYTES_IN_MB = 1e6;
 
 export default function ImgEditor<T extends FieldValues, K extends keyof T>(
   props: Props<T, K>
@@ -22,6 +25,7 @@ export default function ImgEditor<T extends FieldValues, K extends keyof T>(
   const {
     onDrop,
     handleOpenCropper,
+    file,
     isInitial,
     noneUploaded,
     handleReset,
@@ -108,7 +112,14 @@ export default function ImgEditor<T extends FieldValues, K extends keyof T>(
       </div>
       <p className="text-xs text-gray-d1 dark:text-gray mt-2">
         <span>
-          Valid types are: PDF, JPG, PNG and WEBP. File should be less than 1MB.
+          Valid types are: JPG, JPEG, PNG and WEBP. Original uploaded image
+          should be less than 1MB in size.
+          <br />
+          {file
+            ? `Current (cropped) image size: ${humanize(
+                file.size / BYTES_IN_MB
+              )}MB.`
+            : ""}
         </span>{" "}
         <ErrorMessage
           errors={errors}
