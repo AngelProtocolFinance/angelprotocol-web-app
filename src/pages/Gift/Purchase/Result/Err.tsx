@@ -17,7 +17,7 @@ export default function Err({ error }: TError) {
         <Icon type="Exclamation" size={56} className="text-white m-5" />
       </div>
 
-      <h3 className="text-2xl sm:text-3xl mb-4 font-bold text-center">
+      <h3 className="text-2xl sm:text-3xl mb-4 text-center">
         Something went wrong!
       </h3>
       <p className="text-center">{error}</p>
