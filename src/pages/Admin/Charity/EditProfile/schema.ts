@@ -17,12 +17,16 @@ export const VALID_MIME_TYPES = [
 
 export const MAX_SIZE_IN_BYTES = 1e6;
 
+// we only need to validate the pre-crop image and if we confirm it is valid
+// we can be sure that the cropped image is valid too
 const fileObj = Yup.object().shape<SchemaShape<ImgLink>>({
-  file: genFileSchema(VALID_MIME_TYPES).when("publicUrl", {
-    is: (value: string) => !value,
-    then: (schema) => schema.required("required"),
-  }),
-  precropFile: genFileSchema(VALID_MIME_TYPES, MAX_SIZE_IN_BYTES),
+  precropFile: genFileSchema(VALID_MIME_TYPES, MAX_SIZE_IN_BYTES).when(
+    "publicUrl",
+    {
+      is: (value: string) => !value,
+      then: (schema) => schema.required("required"),
+    }
+  ),
 });
 
 //construct strict shape to avoid hardcoding shape keys
