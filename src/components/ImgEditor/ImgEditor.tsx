@@ -94,11 +94,7 @@ export default function ImgEditor<T extends FieldValues, K extends keyof T>(
                 </IconButton>
               )
             }
-            {!isInitial && (
-              <IconButton onClick={handleOpenCropper} disabled={isSubmitting}>
-                <Icon type="Crop" />
-              </IconButton>
-            )}
+            
           </div>
         )}
         {
