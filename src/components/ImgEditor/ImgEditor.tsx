@@ -10,15 +10,13 @@ import useImgEditor from "./useImgEditor";
 const BYTES_IN_MB = 1e6;
 
 type Key = keyof ImgLink;
-const fileKey: Key = "file";
-const precropSizeKey: Key = "precropSize";
+const precropFileKey: Key = "precropFile";
 
 export default function ImgEditor<T extends FieldValues, K extends keyof T>(
   props: Props<T, K>
 ) {
   const { name, classes } = props;
-  const filePath: any = `${String(name)}.${fileKey}`;
-  const precropSizePath: any = `${String(name)}.${precropSizeKey}`;
+  const precropFilePath: any = `${String(name)}.${precropFileKey}`;
 
   const {
     formState: { errors, isSubmitting },
@@ -123,13 +121,7 @@ export default function ImgEditor<T extends FieldValues, K extends keyof T>(
         </span>{" "}
         <ErrorMessage
           errors={errors}
-          name={filePath as any}
-          as="span"
-          className="text-red dark:text-red-l2 text-xs before:content-['('] before:mr-0.5 after:content-[')'] after:ml-0.5 empty:before:hidden empty:after:hidden"
-        />
-        <ErrorMessage
-          errors={errors}
-          name={precropSizePath as any}
+          name={precropFilePath as any}
           as="span"
           className="text-red dark:text-red-l2 text-xs before:content-['('] before:mr-0.5 after:content-[')'] after:ml-0.5 empty:before:hidden empty:after:hidden"
         />

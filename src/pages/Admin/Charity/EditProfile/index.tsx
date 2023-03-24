@@ -62,13 +62,11 @@ function FormWithContext(props: EndowmentProfile) {
       name: "",
       publicUrl: props.image,
       preview: props.image,
-      precropSize: 0,
     },
     logo: {
       name: "",
       publicUrl: props.logo,
       preview: props.logo,
-      precropSize: 0,
     },
     endow_designation: props.endow_designation
       ? getEndowDesignationLabelValuePair(props.endow_designation)

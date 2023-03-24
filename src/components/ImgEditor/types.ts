@@ -4,7 +4,7 @@ import { FileObject } from "types/aws";
 export type ImgLink = FileObject & {
   file?: File;
   preview: string;
-  precropSize: number;
+  precropFile?: File;
 };
 
 type Classes = { container?: string; dropzone?: string };
