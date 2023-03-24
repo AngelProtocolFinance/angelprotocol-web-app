@@ -17,4 +17,8 @@ export type Props<T extends FieldValues, K extends keyof T> = {
   accept: string[];
   classes?: Classes;
   aspect: [number, number];
+  /**
+   * Maximum image size in bytes
+   */
+  maxSize?: number;
 };

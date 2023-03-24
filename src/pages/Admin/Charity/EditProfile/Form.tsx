@@ -14,7 +14,7 @@ import { ENDOW_DESIGNATIONS } from "constants/common";
 import { appRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
-import { VALID_MIME_TYPES } from "./schema";
+import { MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "./schema";
 import useEditProfile from "./useEditProfile";
 
 const sdgOptions = Object.entries(unsdgs).map(([key, { title }]) =>
@@ -84,6 +84,7 @@ export default function Form() {
             container: "mb-4",
             dropzone: "w-28 sm:w-48 aspect-square",
           }}
+          maxSize={MAX_SIZE_IN_BYTES}
         />
         <Label className="-mb-4" required>
           Description of your organization
