@@ -26,7 +26,7 @@ export default function useImgEditor<T extends FieldValues, K extends keyof T>({
     field: { value: currFile, onChange: onFileChange, ref },
   } = useController<T>({ name: filePath });
 
-  const { publicUrl, preview, file }: ImgLink = watch(name as any);
+  const { publicUrl, preview }: ImgLink = watch(name as any);
   const isInitial = preview === publicUrl;
   const noneUploaded = !publicUrl && !preview;
 
@@ -72,7 +72,7 @@ export default function useImgEditor<T extends FieldValues, K extends keyof T>({
     setValue(previewPath, cropped as any);
     onFileChange(
       new File([blob], originalFile.name, {
-        type: originalFile.type,
+        type: blob.type,
       })
     );
   }
@@ -92,7 +92,6 @@ export default function useImgEditor<T extends FieldValues, K extends keyof T>({
     noneUploaded,
     handleReset,
     preview,
-    file,
     ref,
   };
 }

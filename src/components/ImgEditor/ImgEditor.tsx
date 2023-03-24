@@ -4,19 +4,18 @@ import { useDropzone } from "react-dropzone";
 import { FieldValues, useFormContext } from "react-hook-form";
 import { ImgLink, Props } from "./types";
 import Icon from "components/Icon";
-import { humanize } from "helpers";
 import useImgEditor from "./useImgEditor";
 
 type Key = keyof ImgLink;
 const fileKey: Key = "file";
-
-const BYTES_IN_MB = 1e6;
+const precropSizeKey: Key = "precropSize";
 
 export default function ImgEditor<T extends FieldValues, K extends keyof T>(
   props: Props<T, K>
 ) {
   const { name, classes } = props;
   const filePath: any = `${String(name)}.${fileKey}`;
+  const precropSizePath: any = `${String(name)}.${precropSizeKey}`;
 
   const {
     formState: { errors, isSubmitting },
@@ -25,7 +24,6 @@ export default function ImgEditor<T extends FieldValues, K extends keyof T>(
   const {
     onDrop,
     handleOpenCropper,
-    file,
     isInitial,
     noneUploaded,
     handleReset,
@@ -112,18 +110,18 @@ export default function ImgEditor<T extends FieldValues, K extends keyof T>(
       </div>
       <p className="text-xs text-gray-d1 dark:text-gray mt-2">
         <span>
-          Valid types are: JPG, JPEG, PNG and WEBP. Original uploaded image
-          should be less than 1MB in size.
-          <br />
-          {file
-            ? `Current (cropped) image size: ${humanize(
-                file.size / BYTES_IN_MB
-              )}MB.`
-            : ""}
+          Valid types are: JPG, JPEG, PNG and WEBP. Uploaded image should be
+          less than 1MB in size.
         </span>{" "}
         <ErrorMessage
           errors={errors}
           name={filePath as any}
+          as="span"
+          className="text-red dark:text-red-l2 text-xs before:content-['('] before:mr-0.5 after:content-[')'] after:ml-0.5 empty:before:hidden empty:after:hidden"
+        />
+        <ErrorMessage
+          errors={errors}
+          name={precropSizePath as any}
           as="span"
           className="text-red dark:text-red-l2 text-xs before:content-['('] before:mr-0.5 after:content-[')'] after:ml-0.5 empty:before:hidden empty:after:hidden"
         />
