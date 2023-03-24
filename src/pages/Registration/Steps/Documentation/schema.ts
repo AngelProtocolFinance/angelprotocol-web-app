@@ -24,7 +24,7 @@ const previewsKey: keyof Asset = "previews";
 function genAssetShape(isRequired: boolean = false): SchemaShape<Asset> {
   return {
     files: Yup.array(
-      genFileSchema(VALID_MIME_TYPES, MB_LIMIT * BYTES_IN_MB)
+      genFileSchema(MB_LIMIT * BYTES_IN_MB, VALID_MIME_TYPES)
     ).when(previewsKey, (previews: FileObject[], schema: any) =>
       previews.length <= 0 && isRequired ? schema.min(1, "required") : schema
     ),
