@@ -112,7 +112,8 @@ export default function ImgEditor<T extends FieldValues, K extends keyof T>(
       </div>
       <p className="text-xs text-gray-d1 dark:text-gray mt-2">
         <span>
-          Valid types are: JPG, JPEG, PNG and WEBP. Original uploaded image should be less than 1MB in size.
+          Valid types are: JPG, JPEG, PNG and WEBP. Original uploaded image
+          should be less than 1MB in size.
           <br />
           {file
             ? `Current (cropped) image size: ${humanize(
