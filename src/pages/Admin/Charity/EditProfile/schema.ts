@@ -18,10 +18,11 @@ export const VALID_MIME_TYPES = [
 const BYTES_IN_MB = 1e6;
 
 const fileObj = Yup.object().shape<SchemaShape<ImgLink>>({
-  file: genFileSchema(BYTES_IN_MB, VALID_MIME_TYPES).when("publicUrl", {
+  file: genFileSchema(VALID_MIME_TYPES).when("publicUrl", {
     is: (value: string) => !value,
     then: (schema) => schema.required("required"),
   }),
+  precropSize: Yup.number().lessThan(BYTES_IN_MB),
 });
 
 //construct strict shape to avoid hardcoding shape keys
