@@ -4,6 +4,8 @@ import { isValidUrl } from "../string";
 describe("string schemas tests", () => {
   describe("isValidUrl", () => {
     const cases = [
+      { input: null, expected: false },
+      { input: undefined, expected: false },
       { input: "", expected: false },
       { input: ".", expected: false },
       { input: "ftp://www.example.com", expected: false },
@@ -11,6 +13,7 @@ describe("string schemas tests", () => {
       // special case, domain name can contain only top-level domain
       // see https://stackoverflow.com/questions/69614892/can-a-domain-consist-of-only-tld-top-level-domain#:~:text=D%20in%20TLD%20means%20domain,so%20yes%20it%20is%20valid.
       { input: "fdasfasda", expected: true },
+      { input: "1", expected: true },
       { input: "example.com", expected: true },
       { input: "example.org", expected: true },
       { input: "www.example.com", expected: true },
