@@ -5,7 +5,6 @@ import { useModalContext } from "contexts/ModalContext";
 import { TxPrompt } from "components/Prompt";
 import { useSetter } from "store/accessors";
 import { createAuthToken, idParamToNum, logger } from "helpers";
-import { getWasmAttribute } from "helpers/tx";
 import { EMAIL_SUPPORT } from "constants/common";
 import { APIs } from "constants/urls";
 
@@ -32,15 +31,14 @@ export default function useLogWithdrawProposal(successMeta?: TxSuccessMeta) {
         { isDismissible: false }
       );
 
-      const parsedId = getWasmAttribute("proposal_id", res.rawLog);
-      const numId = idParamToNum(parsedId);
+      const proposal_id = idParamToNum(res.attrValue);
 
-      if (numId === 0) throw new Error("Failed to get proposal id");
+      if (proposal_id === 0) throw new Error("Failed to get proposal id");
       const generatedToken = createAuthToken("angelprotocol-web-app");
       const response = await fetch(APIs.apes + "/v1/withdraw", {
         method: "POST",
         headers: { authorization: generatedToken },
-        body: JSON.stringify({ ...info, proposal_id: numId }),
+        body: JSON.stringify({ ...info, proposal_id }),
       });
 
       if (!response.ok) {

@@ -1,9 +1,9 @@
 import { TimeoutError, isDeliverTxFailure } from "@cosmjs/stargate";
+import { parseRawLog } from "@cosmjs/stargate/build/logs";
 import { CosmosTx, TxResult } from "types/tx";
 import { WalletState } from "contexts/WalletContext";
 import Contract from "contracts/Contract";
 import { logger } from "../../logger";
-import { getWasmAttribute } from "./getWasmAttribute";
 
 export async function sendCosmosTx(
   wallet: WalletState,
@@ -39,4 +39,11 @@ export async function sendCosmosTx(
     }
     return { error: "Error encountered while sending transaction" };
   }
+}
+
+function getWasmAttribute(attribute: string, rawLog?: string) {
+  const logs = parseRawLog(rawLog);
+  return logs[0].events
+    .find((e) => e.type === "wasm")
+    ?.attributes.find((a) => a.key === attribute)?.value;
 }

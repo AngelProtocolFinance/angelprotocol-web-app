@@ -10,7 +10,7 @@ import { useGetWallet } from "contexts/WalletContext";
 import Popup from "components/Popup";
 import CW3 from "contracts/CW3";
 import Registrar from "contracts/Registrar";
-import useCosmosTxSender from "hooks/useCosmosTxSender";
+import useTxSender from "hooks/useTxSender";
 import { genDiffMeta, getPayloadDiff } from "helpers/admin";
 import { cleanObject } from "helpers/cleanObject";
 
@@ -24,7 +24,7 @@ export default function useConfigureRegistrar() {
     formState: { isDirty, isSubmitting },
   } = useFormContext<RV>();
   const { showModal } = useModalContext();
-  const sendTx = useCosmosTxSender();
+  const sendTx = useTxSender();
 
   async function configureRegistrar({
     title,
@@ -60,7 +60,7 @@ export default function useConfigureRegistrar() {
     );
 
     await sendTx({
-      msgs: [proposalMsg],
+      content: { type: "cosmos", val: [proposalMsg] },
       ...propMeta,
     });
   }

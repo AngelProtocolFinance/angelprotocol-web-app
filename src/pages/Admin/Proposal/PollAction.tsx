@@ -7,7 +7,7 @@ import { defaultProposalTags } from "services/juno/tags";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import CW3 from "contracts/CW3";
-import useCosmosTxSender from "hooks/useCosmosTxSender";
+import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
 import { useAdminResources } from "../Guard";
 import Voter from "./Voter";
@@ -15,7 +15,7 @@ import Voter from "./Voter";
 export default function PollAction(props: ProposalDetails) {
   const { data: latestBlock = "0" } = useLatestBlockQuery(null);
   const { wallet } = useGetWallet();
-  const sendTx = useCosmosTxSender();
+  const sendTx = useTxSender();
   const { cw3, propMeta } = useAdminResources();
   const { showModal } = useModalContext();
 
@@ -24,7 +24,7 @@ export default function PollAction(props: ProposalDetails) {
     const execMsg = contract.createExecProposalMsg(props.id);
 
     await sendTx({
-      msgs: [execMsg],
+      content: { type: "cosmos", val: [execMsg] },
       isAuthorized: propMeta.isAuthorized,
       tagPayloads: extractTagFromMeta(props.meta),
     });

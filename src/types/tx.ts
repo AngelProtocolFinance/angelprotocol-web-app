@@ -25,10 +25,7 @@ export type SubmittedTx = { hash: string; chainID: string };
 
 export type TxLoading = { loading: string };
 export type TxError = { error: string; tx?: SubmittedTx };
-export type TxSuccess = SubmittedTx & {
-  attrValue?: string;
-  rawLog?: string /**TODO: remove once useCosmosTxSender is repurposed to a general useTxSender */;
-};
+export type TxSuccess = SubmittedTx & { attrValue?: string };
 
 export type TxResult = TxError | TxSuccess;
 
@@ -53,10 +50,11 @@ export type TxState = TxLoading | TxError | SuccessState;
 export type TxOnSuccess = (result: TxSuccess, chain: Chain) => void;
 
 export type SenderArgs = {
+  attribute?: string; // left as 'attribute' for consistency, but maybe rename this to 'readAttribute` to better indicate the purpose?
   tagPayloads?: TagPayload[];
   successMeta?: TxSuccessMeta;
   isAuthorized?: boolean;
-  msgs: EncodeObject[];
+  content: TxContent;
   onSuccess?(result: TxSuccess, chain: Chain): void;
 };
 
