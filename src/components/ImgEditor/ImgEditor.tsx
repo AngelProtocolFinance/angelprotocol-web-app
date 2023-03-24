@@ -4,7 +4,10 @@ import { useDropzone } from "react-dropzone";
 import { FieldValues, useFormContext } from "react-hook-form";
 import { ImgLink, Props } from "./types";
 import Icon from "components/Icon";
+import { humanize } from "helpers";
 import useImgEditor from "./useImgEditor";
+
+const BYTES_IN_MB = 1e6;
 
 type Key = keyof ImgLink;
 const fileKey: Key = "file";
@@ -22,11 +25,12 @@ export default function ImgEditor<T extends FieldValues, K extends keyof T>(
   } = useFormContext<T>();
 
   const {
-    onDrop,
     handleOpenCropper,
+    handleReset,
+    imgSize,
     isInitial,
     noneUploaded,
-    handleReset,
+    onDrop,
     preview,
     ref,
   } = useImgEditor(props);
@@ -110,8 +114,12 @@ export default function ImgEditor<T extends FieldValues, K extends keyof T>(
       </div>
       <p className="text-xs text-gray-d1 dark:text-gray mt-2">
         <span>
-          Valid types are: JPG, JPEG, PNG and WEBP. Uploaded image should be
-          less than 1MB in size.
+          Valid types are: JPG, JPEG, PNG and WEBP. Image should be less than
+          1MB in size.
+          <br />
+          {imgSize
+            ? `Current image size: ${humanize(imgSize / BYTES_IN_MB)}MB.`
+            : ""}
         </span>{" "}
         <ErrorMessage
           errors={errors}
