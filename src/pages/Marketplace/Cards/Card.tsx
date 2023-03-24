@@ -46,7 +46,7 @@ export default function Card({
         />
         <div className="flex flex-col p-3 pb-4 gap-3">
           {/* ENDOWMENT NAME */}
-          <h3 className="font-bold text-ellipsis line-clamp-2">{name}</h3>
+          <h3 className="text-ellipsis line-clamp-2">{name}</h3>
           {/* TAGLINE */}
           {tagline && tagline !== PLACEHOLDER_TAGLINE ? (
             <p className="peer text-gray-d1 dark:text-gray text-sm -mt-2">
