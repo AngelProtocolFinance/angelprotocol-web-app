@@ -6,7 +6,7 @@ import { useAdminResources } from "pages/Admin/Guard";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Account from "contracts/Account";
 import CW3Endowment from "contracts/CW3/CW3Endowment";
-import useCosmosTxSender from "hooks/useCosmosTxSender";
+import useTxSender from "hooks/useTxSender";
 import { scaleToStr } from "helpers";
 import { ap_wallets } from "constants/ap_wallets";
 import { chainIds } from "constants/chainIds";
@@ -18,7 +18,7 @@ export default function useWithdraw() {
   const { cw3, id, endow_type, propMeta } = useAdminResources<"charity">();
   const { wallet } = useGetWallet();
 
-  const sendTx = useCosmosTxSender();
+  const sendTx = useTxSender();
   const logProposal = useLogWithdrawProposal(propMeta.successMeta);
   const type = getValues("type");
 
@@ -70,7 +70,7 @@ export default function useWithdraw() {
         );
 
     await sendTx({
-      msgs: [proposal],
+      content: { type: "cosmos", val: [proposal], attribute: "proposal_id" },
       //Juno withdrawal
       ...propMeta,
       onSuccess: isJuno

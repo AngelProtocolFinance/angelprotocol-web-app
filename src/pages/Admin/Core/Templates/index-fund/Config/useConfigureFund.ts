@@ -7,7 +7,7 @@ import { useGetWallet } from "contexts/WalletContext";
 import Popup from "components/Popup";
 import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
-import useCosmosTxSender from "hooks/useCosmosTxSender";
+import useTxSender from "hooks/useTxSender";
 import { scaleToStr } from "helpers";
 import { genDiffMeta, getPayloadDiff } from "helpers/admin";
 import { cleanObject } from "helpers/cleanObject";
@@ -22,7 +22,7 @@ export default function useConfigureFund() {
     formState: { isSubmitting, isDirty, isValid },
   } = useFormContext<FundConfigValues>();
   const { showModal } = useModalContext();
-  const sendTx = useCosmosTxSender();
+  const sendTx = useTxSender();
 
   async function configureFund({
     title,
@@ -62,7 +62,7 @@ export default function useConfigureFund() {
     );
 
     await sendTx({
-      msgs: [proposalMsg],
+      content: { type: "cosmos", val: [proposalMsg] },
       ...propMeta,
     });
   }

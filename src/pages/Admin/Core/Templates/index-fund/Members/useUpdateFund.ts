@@ -8,7 +8,7 @@ import { useGetWallet } from "contexts/WalletContext";
 import { useGetter } from "store/accessors";
 import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
-import useCosmosTxSender from "hooks/useCosmosTxSender";
+import useTxSender from "hooks/useTxSender";
 
 export default function useUpdateFund() {
   const { trigger, reset, getValues } = useFormContext<FundUpdateValues>();
@@ -17,7 +17,7 @@ export default function useUpdateFund() {
   const [isLoading, setIsLoading] = useState(false);
   const fundMembers = useGetter((state) => state.admin.fundMembers);
   const { handleError } = useErrorContext();
-  const sendTx = useCosmosTxSender();
+  const sendTx = useTxSender();
 
   async function updateFund() {
     try {
@@ -76,7 +76,7 @@ export default function useUpdateFund() {
       );
 
       await sendTx({
-        msgs: [proposalMsg],
+        content: { type: "cosmos", val: [proposalMsg] },
         ...propMeta,
       });
       setIsLoading(false);

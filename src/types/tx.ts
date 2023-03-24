@@ -25,10 +25,7 @@ export type SubmittedTx = { hash: string; chainID: string };
 
 export type TxLoading = { loading: string };
 export type TxError = { error: string; tx?: SubmittedTx };
-export type TxSuccess = SubmittedTx & {
-  attrValue?: any;
-  rawLog?: string /**TODO: remove once useCosmosTxSender is repurposed to a general useTxSender */;
-};
+export type TxSuccess = SubmittedTx & { attrValue?: string };
 
 export type TxResult = TxError | TxSuccess;
 
@@ -56,7 +53,7 @@ export type SenderArgs = {
   tagPayloads?: TagPayload[];
   successMeta?: TxSuccessMeta;
   isAuthorized?: boolean;
-  msgs: EncodeObject[];
+  content: TxContent;
   onSuccess?(result: TxSuccess, chain: Chain): void;
 };
 

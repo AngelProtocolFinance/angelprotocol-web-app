@@ -9,7 +9,7 @@ import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
 import CW3Review from "contracts/CW3/CW3Review";
-import useCosmosTxSender from "hooks/useCosmosTxSender";
+import useTxSender from "hooks/useTxSender";
 import { genDiffMeta, getPayloadDiff, getTagPayloads } from "helpers/admin";
 
 type Key = keyof FormReviewCW3Config;
@@ -24,7 +24,7 @@ export default function useCreateProposal() {
     formState: { isSubmitting, isDirty, isValid },
   } = useFormContext<CW3ConfigValues<FormReviewCW3Config>>();
   const { showModal } = useModalContext();
-  const sendTx = useCosmosTxSender();
+  const sendTx = useTxSender();
 
   async function createProposal({
     title,
@@ -74,7 +74,7 @@ export default function useCreateProposal() {
     );
 
     await sendTx({
-      msgs: [proposalMsg],
+      content: { type: "cosmos", val: [proposalMsg] },
       ...propMeta,
       tagPayloads: getTagPayloads(propMeta.willExecute && "review_cw3_config"),
     });

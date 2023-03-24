@@ -6,7 +6,7 @@ import { useGetWallet } from "contexts/WalletContext";
 import Popup from "components/Popup";
 import CW3 from "contracts/CW3";
 import Registrar from "contracts/Registrar";
-import useCosmosTxSender from "hooks/useCosmosTxSender";
+import useTxSender from "hooks/useTxSender";
 
 export default function useUpdateOwner() {
   const { cw3, propMeta } = useAdminResources();
@@ -17,7 +17,7 @@ export default function useUpdateOwner() {
   } = useFormContext<RegistrarOwnerValues>();
 
   const { showModal } = useModalContext();
-  const sendTx = useCosmosTxSender();
+  const sendTx = useTxSender();
 
   async function updateOwner(data: RegistrarOwnerValues) {
     //check for changes
@@ -45,7 +45,7 @@ export default function useUpdateOwner() {
     );
 
     await sendTx({
-      msgs: [proposalMsg],
+      content: { type: "cosmos", val: [proposalMsg] },
       ...propMeta,
     });
   }

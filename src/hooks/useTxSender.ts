@@ -6,12 +6,12 @@ import Popup from "components/Popup";
 import { TxPrompt } from "components/Prompt";
 import { useSetter } from "store/accessors";
 import { logger } from "helpers";
-import { estimateTx, sendTx as signAndBroadCast } from "helpers/tx";
+import { estimateTx, sendTx } from "helpers/tx";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 
 type Sender = (args: SenderArgs) => Promise<void>;
 
-export default function useCosmosTxSender<T extends boolean = false>(
+export default function useTxSender<T extends boolean = false>(
   isSenderInModal: T = false as any
 ): T extends true ? { sendTx: Sender; isSending: boolean } : Sender {
   const { wallet } = useGetWallet();
@@ -20,8 +20,8 @@ export default function useCosmosTxSender<T extends boolean = false>(
   const { showModal, setModalOption } = useModalContext();
   const dispatch = useSetter();
 
-  const sendTx: Sender = async ({
-    msgs,
+  const sender: Sender = async ({
+    content,
     tagPayloads,
     onSuccess,
     isAuthorized,
@@ -57,7 +57,7 @@ export default function useCosmosTxSender<T extends boolean = false>(
       }
 
       // //////////////// ESTIMATE TX  ////////////////////
-      const estimate = await estimateTx({ type: "cosmos", val: msgs }, wallet);
+      const estimate = await estimateTx(content, wallet);
       if (!estimate) {
         return showModal(TxPrompt, {
           error: "Simulation failed. Transaction likely to fail",
@@ -72,7 +72,7 @@ export default function useCosmosTxSender<T extends boolean = false>(
       }
 
       // //////////////// SEND TX  ////////////////////
-      const result = await signAndBroadCast(wallet, tx);
+      const result = await sendTx(wallet, tx);
 
       if (isTxResultError(result)) {
         return showModal(TxPrompt, result);
@@ -98,5 +98,5 @@ export default function useCosmosTxSender<T extends boolean = false>(
     }
   };
 
-  return isSenderInModal ? { sendTx, isSending } : (sendTx as any);
+  return isSenderInModal ? { sendTx: sender, isSending } : (sender as any);
 }

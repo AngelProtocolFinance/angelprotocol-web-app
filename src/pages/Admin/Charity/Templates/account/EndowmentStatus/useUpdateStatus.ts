@@ -12,7 +12,7 @@ import { useGetWallet } from "contexts/WalletContext";
 import Popup from "components/Popup";
 import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
-import useCosmosTxSender from "hooks/useCosmosTxSender";
+import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
 import { cleanObject } from "helpers/cleanObject";
 
@@ -20,7 +20,7 @@ export default function useUpdateStatus() {
   const { handleSubmit } = useFormContext<EndowmentUpdateValues>();
   const { cw3, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
-  const sendTx = useCosmosTxSender();
+  const sendTx = useTxSender();
   const { showModal } = useModalContext();
 
   async function updateStatus(data: EndowmentUpdateValues) {
@@ -90,7 +90,7 @@ export default function useUpdateStatus() {
     );
 
     await sendTx({
-      msgs: [proposalMsg],
+      content: { type: "cosmos", val: [proposalMsg] },
       ...propMeta,
       tagPayloads: getTagPayloads(propMeta.willExecute && "acc_endow_status"),
     });

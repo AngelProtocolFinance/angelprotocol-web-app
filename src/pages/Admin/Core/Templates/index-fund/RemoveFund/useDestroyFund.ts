@@ -6,7 +6,7 @@ import { useGetWallet } from "contexts/WalletContext";
 import Popup from "components/Popup";
 import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
-import useCosmosTxSender from "hooks/useCosmosTxSender";
+import useTxSender from "hooks/useTxSender";
 
 export default function useDestroyFund() {
   const {
@@ -14,7 +14,7 @@ export default function useDestroyFund() {
     formState: { isSubmitting },
   } = useFormContext<FundDestroyValues>();
   const { showModal } = useModalContext();
-  const sendTx = useCosmosTxSender();
+  const sendTx = useTxSender();
   const { cw3, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
 
@@ -44,7 +44,7 @@ export default function useDestroyFund() {
     );
 
     await sendTx({
-      msgs: [proposalMsg],
+      content: { type: "cosmos", val: [proposalMsg] },
       ...propMeta,
     });
   }

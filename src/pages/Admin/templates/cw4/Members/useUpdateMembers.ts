@@ -8,7 +8,7 @@ import Popup from "components/Popup";
 import { useGetter } from "store/accessors";
 import CW3 from "contracts/CW3";
 import CW4 from "contracts/CW4";
-import useCosmosTxSender from "hooks/useCosmosTxSender";
+import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
 
 export default function useUpdateMembers() {
@@ -17,7 +17,7 @@ export default function useUpdateMembers() {
   const apCW4Members = useGetter((state) => state.admin.apCW4Members);
   const { wallet } = useGetWallet();
   const { showModal } = useModalContext();
-  const sendTx = useCosmosTxSender();
+  const sendTx = useTxSender();
 
   async function updateMembers() {
     const isValid = await trigger(["description", "title"], {
@@ -75,7 +75,7 @@ export default function useUpdateMembers() {
     );
 
     await sendTx({
-      msgs: [proposalMsg],
+      content: { type: "cosmos", val: [proposalMsg] },
       ...propMeta,
       tagPayloads: getTagPayloads(propMeta.willExecute && "cw4_members"),
     });
