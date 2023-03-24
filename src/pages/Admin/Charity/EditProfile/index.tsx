@@ -58,16 +58,8 @@ function FormWithContext(props: EndowmentProfile) {
 
   const defaults: FormValues = {
     ...flatInitial,
-    image: {
-      name: "",
-      publicUrl: props.image,
-      preview: props.image,
-    },
-    logo: {
-      name: "",
-      publicUrl: props.logo,
-      preview: props.logo,
-    },
+    image: { name: "", publicUrl: props.image, preview: props.image },
+    logo: { name: "", publicUrl: props.logo, preview: props.logo },
     endow_designation: props.endow_designation
       ? getEndowDesignationLabelValuePair(props.endow_designation)
       : { label: "", value: "" },
