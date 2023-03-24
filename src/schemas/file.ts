@@ -1,6 +1,11 @@
 import * as Yup from "yup";
 
-export const genFileSchema = (size: number, types: string[]) =>
+/**
+ * @param maxSize maximum file size in bytes
+ * @param types an array of strings representing valid MIME types
+ * @returns Yup schema for validating files
+ */
+export const genFileSchema = (maxSize: number, types: string[]) =>
   Yup.mixed<File>()
     .test({
       name: "must be of correct type",
@@ -10,5 +15,5 @@ export const genFileSchema = (size: number, types: string[]) =>
     .test({
       name: "must be less than size limit",
       message: "exceeds file size limit",
-      test: (file) => (file?.size || 0) <= size,
+      test: (file) => (file?.size || 0) <= maxSize,
     });

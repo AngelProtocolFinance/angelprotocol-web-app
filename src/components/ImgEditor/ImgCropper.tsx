@@ -7,11 +7,17 @@ import Modal from "components/Modal";
 
 type Props = {
   preview: string;
+  type: string; // original file type, will be the same for blob in `onSave(blob: Blob)`
   aspect: [number, number];
-  onSave(blob: Blob | null): void;
+  onSave(blob: Blob | null): void; // blob.type is the same as Props.type
 };
 
-export default function ImgCropper({ preview, aspect: [x, y], onSave }: Props) {
+export default function ImgCropper({
+  preview,
+  type,
+  aspect: [x, y],
+  onSave,
+}: Props) {
   const { closeModal } = useModalContext();
 
   const cropperRef = useRef<Cropper>();
@@ -35,7 +41,7 @@ export default function ImgCropper({ preview, aspect: [x, y], onSave }: Props) {
       cropperRef.current.getCroppedCanvas().toBlob((blob) => {
         onSave(blob);
         closeModal();
-      });
+      }, type);
     }
   }
 

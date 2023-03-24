@@ -24,7 +24,7 @@ export default function useImgEditor<T extends FieldValues, K extends keyof T>({
     field: { value: currFile, onChange: onFileChange, ref },
   } = useController<T>({ name: filePath });
 
-  const { publicUrl, preview }: ImgLink = watch(name as any);
+  const { publicUrl, preview, file }: ImgLink = watch(name as any);
   const isInitial = preview === publicUrl;
   const noneUploaded = !publicUrl && !preview;
 
@@ -37,6 +37,7 @@ export default function useImgEditor<T extends FieldValues, K extends keyof T>({
         showModal(ImgCropper, {
           preview,
           aspect,
+          type: newFile.type,
           onSave(blob) {
             handleCropResult(blob, newFile);
           },
@@ -52,6 +53,7 @@ export default function useImgEditor<T extends FieldValues, K extends keyof T>({
     showModal(ImgCropper, {
       preview,
       aspect,
+      type: currFile.type,
       onSave(blob) {
         handleCropResult(blob, currFile);
       },
@@ -86,6 +88,7 @@ export default function useImgEditor<T extends FieldValues, K extends keyof T>({
     noneUploaded,
     handleReset,
     preview,
+    file,
     ref,
   };
 }

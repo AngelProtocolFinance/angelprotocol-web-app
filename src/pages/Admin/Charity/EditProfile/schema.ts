@@ -15,8 +15,10 @@ export const VALID_MIME_TYPES = [
   "image/svg",
 ];
 
+const BYTES_IN_MB = 1e6;
+
 const fileObj = Yup.object().shape<SchemaShape<ImgLink>>({
-  file: genFileSchema(1e6, VALID_MIME_TYPES).when("publicUrl", {
+  file: genFileSchema(BYTES_IN_MB, VALID_MIME_TYPES).when("publicUrl", {
     is: (value: string) => !value,
     then: (schema) => schema.required("required"),
   }),
