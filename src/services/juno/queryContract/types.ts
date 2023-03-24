@@ -34,12 +34,14 @@ export interface ContractQueries {
     args: null;
     res: Q<RegistrarConfig>;
     result: RegistrarConfig;
+    transform: (res: Q<RegistrarConfig>) => RegistrarConfig;
     contract: "registrar";
   };
   regConfigExtension: {
     args: null;
     res: Q<RegistrarConfigExtension>;
     result: RegistrarConfigExtension;
+    transform: (res: Q<RegistrarConfigExtension>) => RegistrarConfigExtension;
     contract: "registrar";
   };
 
@@ -47,32 +49,31 @@ export interface ContractQueries {
     args: null;
     res: Q<{ funds: FundDetails[] }>;
     result: FundDetails[];
+    transform: (res: Q<{ funds: FundDetails[] }>) => FundDetails[];
     contract: "index-fund";
   };
   ifAlliance: {
     args: null;
     res: Q<{ alliance_members: AllianceMember[] }>;
     result: AllianceMember[];
+    transform: (
+      res: Q<{ alliance_members: AllianceMember[] }>
+    ) => AllianceMember[];
     contract: "index-fund";
   };
   ifConfig: {
     args: null;
     res: Q<IndexFundConfig>;
     result: IndexFundConfig;
+    transform: (res: Q<IndexFundConfig>) => IndexFundConfig;
     contract: "index-fund";
-  };
-
-  lpSimul: {
-    args: null;
-    res: Q<Simulation>;
-    result: Simulation;
-    contract: unknown;
   };
 
   giftcardBalance: {
     args: Addr;
     res: Q<GenericBalance>;
     result: Token[];
+    transform: (res: Q<GenericBalance>) => GenericBalance;
     contract: "gift-card";
   };
 
@@ -80,19 +81,28 @@ export interface ContractQueries {
     args: Addr;
     res: Q<GovStaker>;
     result: GovStaker;
+    transform: (res: Q<GovStaker>) => GovStaker;
     contract: "gov";
   };
-  govState: { args: null; res: Q<GovState>; result: GovState; contract: "gov" };
+  govState: {
+    args: null;
+    res: Q<GovState>;
+    result: GovState;
+    transform: (res: Q<GovState>) => GovState;
+    contract: "gov";
+  };
   govConfig: {
     args: null;
     res: Q<GovConfig>;
     result: GovConfig;
+    transform: (res: Q<GovConfig>) => GovConfig;
     contract: "gov";
   };
   govPolls: {
     args: null;
     res: Q<Polls>;
     result: Polls["polls"];
+    transform: (res: Q<Polls>) => Polls["polls"];
     contract: "gov";
   };
 
@@ -100,12 +110,14 @@ export interface ContractQueries {
     args: null;
     res: Q<CW20Info>;
     result: CW20Info;
+    transform: (res: Q<CW20Info>) => CW20Info;
     contract: unknown;
   };
   cw20Balance: {
     args: Addr;
     res: Q<CW20Balance>;
     result: number;
+    transform: (res: Q<CW20Balance>) => CW20Balance;
     contract: unknown;
   };
 
@@ -113,12 +125,14 @@ export interface ContractQueries {
     args: null;
     res: Q<{ members: CW4Member[] }>;
     result: CW4Member[];
+    transform: (res: Q<{ members: CW4Member[] }>) => CW4Member[];
     contract: unknown;
   };
   cw4Member: {
     args: Addr;
     res: Q<InquiredMember>;
     result: InquiredMember;
+    transform: (res: Q<InquiredMember>) => InquiredMember;
     contract: unknown;
   };
 
@@ -126,76 +140,72 @@ export interface ContractQueries {
     args: Addr;
     res: Q<InquiredMember>;
     result: InquiredMember;
+    transform: (res: Q<InquiredMember>) => InquiredMember;
     contract: unknown;
   };
   cw3ListVoters: {
     args: null;
     res: Q<CW3ListVoters>;
     result: CW3ListVoters;
+    transform: (res: Q<CW3ListVoters>) => CW3ListVoters;
     contract: unknown;
   };
   cw3Config: {
     args: null;
     res: Q<CW3Config>;
     result: CW3Config;
+    transform: (res: Q<CW3Config>) => CW3Config;
     contract: unknown;
   };
   reviewCw3Config: {
     args: null;
     res: Q<ReviewCW3Config>;
     result: ReviewCW3Config;
+    transform: (res: Q<ReviewCW3Config>) => ReviewCW3Config;
     contract: unknown;
   };
   cw3Proposals: {
     args: PageOptions;
     res: Q<{ proposals: Proposal[] }>;
     result: Proposal[];
+    transform: (res: Q<{ proposals: Proposal[] }>) => Proposal[];
     contract: unknown;
   };
   cw3Proposal: {
     args: { id: number };
     res: Q<Proposal>;
     result: Proposal;
+    transform: (res: Q<Proposal>) => Proposal;
     contract: unknown;
   };
   cw3Votes: {
     args: VotesPageOptions;
     res: Q<{ votes: AdminVoteInfo[] }>;
     result: AdminVoteInfo[];
+    transform(val: Q<{ votes: AdminVoteInfo[] }>): AdminVoteInfo[];
     contract: unknown;
   };
-
-  airdropIsClaimed: {
-    args: Addr & { stage: number };
-    res: Q<any>;
-    result: any;
-    contract: unknown;
-  }; //TODO update once to be used
 
   accEndowment: {
     args: { id: number };
     res: Q<EndowmentDetails>;
     result: EndowmentDetails;
+    transform: (res: Q<EndowmentDetails>) => EndowmentDetails;
     contract: "accounts";
   };
   accState: {
     args: { id: number };
     res: Q<EndowmentState>;
     result: EndowmentState;
+    transform: (res: Q<EndowmentState>) => EndowmentState;
     contract: "accounts";
-  };
-
-  vaultBalance: {
-    args: { endowment_id: number };
-    res: Q<string>;
-    result: string;
-    contract: unknown;
   };
 
   endowmentController: {
     args: { id: number };
     res: Q<EndowmentController>;
     result: EndowmentController;
+    transform: (res: Q<EndowmentController>) => EndowmentController;
     contract: "accounts/settings";
   };
 }
