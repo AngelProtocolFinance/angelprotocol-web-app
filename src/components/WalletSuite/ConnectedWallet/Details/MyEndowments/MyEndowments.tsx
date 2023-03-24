@@ -10,7 +10,7 @@ export default function MyEndowments({ endowments }: Props) {
       <h3 className="font-heading font-bold text-sm text-gray-d1 dark:text-gray">
         My Endowments
       </h3>
-      <div className="overflow-y-auto max-h-40 scroller grid gap-3">
+      <div className="overflow-y-auto max-h-40 grid gap-3">
         {endowments.map((endowment) => (
           <div
             key={`my-endow-${endowment.endowId}`}
