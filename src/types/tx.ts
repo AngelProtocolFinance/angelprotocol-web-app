@@ -3,7 +3,7 @@ import { StdFee } from "@cosmjs/stargate";
 import { CreateTxOptions, Msg } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { Chain } from "./aws";
-import { EVMTx, SimulContractTx, SimulSendNativeTx } from "./evm";
+import { EVMTx, LogProcessor, SimulTx } from "./evm";
 import { TagPayload } from "./third-party/redux";
 
 // //////////// SEND TX ////////////
@@ -13,13 +13,13 @@ export type CosmosTx = {
 };
 
 export type EstimatedTx =
-  | { type: "cosmos"; val: CosmosTx }
+  | { type: "cosmos"; val: CosmosTx; attribute?: string }
   | {
       type: "terra";
       val: CreateTxOptions;
       wallet: ConnectedWallet /**future client/provider will be included in wallet */;
     }
-  | { type: "evm"; val: EVMTx };
+  | { type: "evm"; val: EVMTx; log?: LogProcessor };
 
 export type SubmittedTx = { hash: string; chainID: string };
 
@@ -31,9 +31,9 @@ export type TxResult = TxError | TxSuccess;
 
 // //////////// ESTIMATE TX ////////////
 export type TxContent =
-  | { type: "cosmos"; val: EncodeObject[] }
+  | { type: "cosmos"; val: EncodeObject[]; attribute?: string }
   | { type: "terra"; val: Msg[]; wallet: ConnectedWallet }
-  | { type: "evm"; val: SimulContractTx | SimulSendNativeTx };
+  | { type: "evm"; val: SimulTx; log?: LogProcessor };
 
 export type Fee = { amount: number; symbol: string };
 export type Estimate = { fee: Fee; tx: EstimatedTx };
@@ -50,7 +50,6 @@ export type TxState = TxLoading | TxError | SuccessState;
 export type TxOnSuccess = (result: TxSuccess, chain: Chain) => void;
 
 export type SenderArgs = {
-  attribute?: string; // left as 'attribute' for consistency, but maybe rename this to 'readAttribute` to better indicate the purpose?
   tagPayloads?: TagPayload[];
   successMeta?: TxSuccessMeta;
   isAuthorized?: boolean;

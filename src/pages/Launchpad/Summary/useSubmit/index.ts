@@ -57,19 +57,21 @@ export default function useSubmit(network: Network) {
 
       // //////////////// CONSTRUCT TX CONTENT ////////////////////
       let content: TxContent;
-      if (network === "polygon") {
+      if (
+        network === "polygon" /**TODO: && check connected wallet's chainID */
+      ) {
         const tx: SimulContractTx = {
-          to: "0x09266441B8Dc93EE70Dbe27A3612eA6e1116f1F3", //TODO: move to src/contracts/evm
+          to: "0xf725Ff6235D53dA06Acb4a70AA33206a1447D550", //TODO: move to src/contracts/evm
           from: wallet.address,
           data: createEndowment.encode(toEVMAIF(completed, wallet.address)),
         };
-        content = { type: "evm", val: tx };
+        content = { type: "evm", val: tx, log: createEndowment.log };
       } else {
         const contract = new Account(wallet);
         const msg = contract.createNewAIFmsg(
           toJunoAIF(completed, wallet.address)
         );
-        content = { type: "cosmos", val: [msg] };
+        content = { type: "cosmos", val: [msg], attribute: "endow_id" };
       }
 
       const onSuccess = async (result: TxSuccess, chain: Chain) => {
@@ -103,7 +105,6 @@ export default function useSubmit(network: Network) {
       // //////////////// SEND TRANSACTION  ////////////////////
       await sendTx({
         content,
-        attribute: "endow_id",
         isAuthorized: true,
         onSuccess,
       });

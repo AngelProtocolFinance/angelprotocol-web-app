@@ -18,6 +18,8 @@ export const EIPMethods = {
   eth_getTransactionCount: "eth_getTransactionCount",
   eth_gasPrice: "eth_gasPrice",
   eth_call: "eth_call",
+  eth_getTransactionReceipt: "eth_getTransactionReceipt",
+
   //others
 };
 

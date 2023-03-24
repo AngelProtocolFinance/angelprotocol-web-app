@@ -1,18 +1,27 @@
 import { Interface } from "@ethersproject/abi";
+import type { BigNumber } from "@ethersproject/bignumber";
 import { NewAIF } from "types/contracts/evm";
+import { TxLog } from "types/evm";
 import { toTuple } from "helpers";
 import abi from "./abi.json";
 
-const encoder = new Interface(abi);
+const iface = new Interface(abi);
 //FUTURE: append abi with new methods
-const createEndowmentFn = encoder.getFunction("createEndowment");
+const createEndowmentFn = iface.getFunction("createEndowment");
+export const endowmentCreatedTopic = iface.encodeFilterTopics(
+  "EndowmentCreated",
+  []
+);
 
 export const createEndowment = {
   encode(aif: NewAIF) {
-    return encoder.encodeFunctionData(createEndowmentFn, [toTuple(aif)]);
+    return iface.encodeFunctionData(createEndowmentFn, [toTuple(aif)]);
   },
-  parse(result: string) {
-    const decoded = encoder.decodeFunctionResult(createEndowmentFn, result);
-    console.log(decoded);
+  log(logs: TxLog[]) {
+    const topic = iface.getEventTopic("EndowmentCreated");
+    const log = logs.find((log) => log.topics.includes(topic));
+    if (!log) return null;
+    const [id] = iface.decodeEventLog("EndowmentCreated", log.data, log.topics);
+    return (id as BigNumber).toString();
   },
 };

@@ -9,19 +9,35 @@ export type EVMTx = {
   gasPrice: string;
 };
 
-export type SendNativeTx = EVMTx & {
-  value: string; // funds
-};
-export type ContractTx = EVMTx & { data: string };
+export type SimulSendNativeTx = Pick<
+  EVMTx & { value: string },
+  "from" | "to" | "value"
+>;
+export type SimulContractTx = Pick<
+  EVMTx & { data: string },
+  "from" | "to" | "data"
+>;
 
-export type SimulSendNativeTx = Pick<SendNativeTx, "from" | "to" | "value">;
-export type SimulContractTx = Pick<ContractTx, "from" | "to" | "data">;
+export type SimulTx = SimulContractTx | SimulSendNativeTx;
+
+export type LogProcessor = (logs: TxLog[]) => any;
 
 /*** EIP1193 spec https://eips.ethereum.org/EIPS/eip-1193*/
 export interface RequestArguments {
   readonly method: string;
   readonly params?: readonly unknown[] | object;
 }
+
+export type TxLog = {
+  address: string;
+  topics: string[];
+  data: string;
+};
+
+export type TxReceipt = {
+  logs: TxLog[];
+  //add needed fields
+};
 
 export type AccountChangeHandler = (accounts: string[]) => void;
 export type ChainChangeHandler = (chainId: string) => void;

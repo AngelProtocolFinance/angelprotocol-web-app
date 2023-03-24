@@ -21,7 +21,6 @@ export default function useTxSender<T extends boolean = false>(
   const dispatch = useSetter();
 
   const sender: Sender = async ({
-    attribute,
     content,
     tagPayloads,
     onSuccess,
@@ -73,7 +72,7 @@ export default function useTxSender<T extends boolean = false>(
       }
 
       // //////////////// SEND TX  ////////////////////
-      const result = await sendTx(wallet, tx, attribute);
+      const result = await sendTx(wallet, tx);
 
       if (isTxResultError(result)) {
         return showModal(TxPrompt, result);

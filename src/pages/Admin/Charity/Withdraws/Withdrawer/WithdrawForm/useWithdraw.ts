@@ -70,10 +70,9 @@ export default function useWithdraw() {
         );
 
     await sendTx({
-      content: { type: "cosmos", val: [proposal] },
+      content: { type: "cosmos", val: [proposal], attribute: "proposal_id" },
       //Juno withdrawal
       ...propMeta,
-      attribute: "proposal_id",
       onSuccess: isJuno
         ? undefined //no need to POST to AWS if destination is juno
         : async (response, chain) =>

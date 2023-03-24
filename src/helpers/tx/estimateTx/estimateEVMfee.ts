@@ -1,4 +1,4 @@
-import { SimulContractTx, SimulSendNativeTx } from "types/evm";
+import { LogProcessor, SimulTx } from "types/evm";
 import { Estimate } from "types/tx";
 import { WalletState } from "contexts/WalletContext";
 import { EIPMethods } from "constants/evm";
@@ -7,7 +7,8 @@ import { getProvider } from "../../evm";
 
 export async function estimateEVMFee(
   wallet: WalletState,
-  tx: SimulSendNativeTx | SimulContractTx
+  tx: SimulTx,
+  log?: LogProcessor
 ): Promise<Estimate> {
   const provider = getProvider(wallet.providerId)!;
 
@@ -32,6 +33,6 @@ export async function estimateEVMFee(
   /** include gas, and gasPrice - in local setup, wallet might give wrong estimatio */
   return {
     fee: { amount: fee, symbol: wallet.displayCoin.symbol },
-    tx: { val: { ...tx, nonce, gas, gasPrice }, type: "evm" },
+    tx: { val: { ...tx, nonce, gas, gasPrice }, type: "evm", log },
   };
 }
