@@ -112,11 +112,10 @@ export default function ImgEditor<T extends FieldValues, K extends keyof T>(
       </div>
       <p className="text-xs text-gray-d1 dark:text-gray mt-2">
         <span>
-          Valid types are: PDF, JPG, PNG and WEBP. File should be less than 1MB.
-          Cropped file size can be different from the original's.
+          Valid types are: JPG, JPEG, PNG and WEBP. Original uploaded image should be less than 1MB in size.
           <br />
           {file
-            ? `Current cropped image size: ${humanize(
+            ? `Current (cropped) image size: ${humanize(
                 file.size / BYTES_IN_MB
               )}MB.`
             : ""}
