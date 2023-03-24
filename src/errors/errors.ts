@@ -91,7 +91,7 @@ export class UnsupportedChainError extends APError {
   constructor(unsupportedChainId: string) {
     super(
       "UnsupportedChainError",
-      `Chain ID ${unsupportedChainId} not supported. The only supported networks are on: Juno, Polygon, Terra, Binance and Ethereum. Please switch to one of those and reload the page`
+      `Chain ID ${unsupportedChainId} not supported. The only supported networks are ${EXPECTED_NETWORK_TYPE} chains on: Juno, Polygon, Terra, Binance and Ethereum. Please switch to one of those and reload the page`
     );
   }
 }
