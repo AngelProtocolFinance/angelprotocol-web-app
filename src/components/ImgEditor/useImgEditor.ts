@@ -9,6 +9,7 @@ import ImgCropper from "./ImgCropper";
 type Key = keyof ImgLink;
 const fileKey: Key = "file";
 const previewKey: Key = "preview";
+const precropSizeKey: Key = "precropSize";
 
 export default function useImgEditor<T extends FieldValues, K extends keyof T>({
   name,
@@ -17,6 +18,7 @@ export default function useImgEditor<T extends FieldValues, K extends keyof T>({
 }: Props<T, K>) {
   const filePath: any = `${String(name)}.${fileKey}`;
   const previewPath: any = `${String(name)}.${previewKey}`;
+  const precropSizePath: any = `${String(name)}.${precropSizeKey}`;
 
   const { setValue, watch } = useFormContext<T>();
   const { showModal } = useModalContext();
@@ -44,6 +46,7 @@ export default function useImgEditor<T extends FieldValues, K extends keyof T>({
         });
       }
       onFileChange(newFile);
+      setValue(precropSizePath, newFile.size as any, { shouldValidate: true });
     }
   };
 
@@ -79,6 +82,7 @@ export default function useImgEditor<T extends FieldValues, K extends keyof T>({
     e.stopPropagation();
     setValue(previewPath, publicUrl as any, { shouldValidate: false });
     setValue(filePath, undefined as any, { shouldValidate: false });
+    setValue(precropSizePath, 0 as any, { shouldValidate: false });
   };
 
   return {
