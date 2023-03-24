@@ -1,4 +1,5 @@
 import * as Yup from "yup";
+import { logger } from "helpers";
 import { chainIds } from "constants/chainIds";
 
 export const junoAddrPattern = /^juno1[a-z0-9]{38,58}$/i;
@@ -44,22 +45,26 @@ export const url = Yup.string().nullable().test({
   test: isValidUrl,
 });
 
-function isValidUrl(str: string | null | undefined) {
-  if (!str) {
-    return true;
+export function isValidUrl(str: string | null | undefined) {
+  if (!str || str === ".") {
+    return false;
   }
 
-  // https://www.freecodecamp.org/news/how-to-validate-urls-in-javascript/
-  const pattern = new RegExp(
-    "^([a-zA-Z]+:\\/\\/)?" + // protocol
-      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
-      "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR IP (v4) address
-      "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
-      "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
-      "(\\#[-a-z\\d_]*)?$", // fragment locator
-    "i"
-  );
-  return pattern.test(str);
+  let givenURL;
+  try {
+    // first check if this is a valid URL at all using any schema
+    givenURL = new URL(str);
+  } catch (error) {
+    logger.info("Original URL is ", str);
+    try {
+      // check if prepending http would result in a valid URL
+      givenURL = new URL(`http://${str}`);
+    } catch (error) {
+      logger.error("Error is", error);
+      return false;
+    }
+  }
+  return givenURL.protocol === "http:" || givenURL.protocol === "https:";
 }
 
 export const stringByteSchema = (minBytes: number, maxBytes: number) =>
