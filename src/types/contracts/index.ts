@@ -8,6 +8,5 @@ export * from "./cw4";
 export * from "./cw20";
 export * from "./governance";
 export * from "./indexfund";
-export * from "./lp";
 export * from "./registrar";
 export * from "./settingsController";
