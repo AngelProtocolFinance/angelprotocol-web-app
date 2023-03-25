@@ -1,26 +1,20 @@
 import { Link } from "react-router-dom";
-import { AP_ID, REVIEWER_ID, useIsMemberQuery } from "services/juno/custom";
+import { AP_ID, REVIEWER_ID } from "services/contract/custom/constants";
+import useIsMemberQuery from "services/contract/custom/useIsMemberQuery";
 import { WalletState } from "contexts/WalletContext";
-import { chainIds } from "constants/chainIds";
 import { appRoutes } from "constants/routes";
 
 export default function AdminLinks(props: WalletState) {
   const {
     data: isApMember = false,
     isLoading: isApLoading,
-    isFetching: isApFetching,
-  } = useIsMemberQuery(
-    { user: props.address, endowmentId: `${AP_ID}` },
-    { skip: props.chain.chain_id !== chainIds.juno }
-  );
+    isValidating: isApFetching,
+  } = useIsMemberQuery(props.address, AP_ID);
   const {
     data: isReviewMember = false,
     isLoading: isReviewLoading,
-    isFetching: isReviewFetching,
-  } = useIsMemberQuery(
-    { user: props.address, endowmentId: `${REVIEWER_ID}` },
-    { skip: props.chain.chain_id !== chainIds.juno }
-  );
+    isValidating: isReviewFetching,
+  } = useIsMemberQuery(props.address, REVIEWER_ID);
 
   const isLoading =
     isApLoading || isApFetching || isReviewLoading || isReviewFetching;
