@@ -109,7 +109,7 @@ export const customApi = junoApi.injectEndpoints({
           return { error: undefined };
         }
 
-        const [proposal, votesRes] = await Promise.all([
+        const [proposal, votes] = await Promise.all([
           queryContract("cw3Proposal", args.cw3, { id }),
           queryContract("cw3Votes", args.cw3, {
             proposal_id: id,
@@ -119,7 +119,7 @@ export const customApi = junoApi.injectEndpoints({
         return {
           data: {
             ...proposal,
-            votes: votesRes.votes,
+            votes: votes,
           },
         };
       },

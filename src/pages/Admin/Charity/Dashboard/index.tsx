@@ -7,7 +7,7 @@ import Table from "./Table";
 
 export default function Dashboard() {
   const { cw3 } = useAdminResources();
-  const { data, ...rest } = useQueryContract(cw3, "cw3Proposals", {
+  const queryState = useQueryContract(cw3, "cw3Proposals", {
     limit: 5,
   });
 
@@ -19,7 +19,7 @@ export default function Dashboard() {
         New Proposals
       </h3>
       <SWRLoader
-        queryState={{ ...rest, data: data?.proposals || [] }}
+        queryState={queryState}
         messages={{
           loading: "Getting recent proposals..",
           error: "Failed to get proposals",

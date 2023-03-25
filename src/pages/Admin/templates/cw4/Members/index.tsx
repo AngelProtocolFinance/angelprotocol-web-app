@@ -14,12 +14,10 @@ export default function Members() {
   const { cw4 } = useAdminResources();
   const dispatch = useSetter();
   const {
-    data = { members: [] },
+    data: members = [],
     isLoading,
     error,
   } = useQueryContract(cw4, "cw4Members", null);
-
-  const members = data.members;
 
   useEffect(() => {
     if (members.length > 0) {

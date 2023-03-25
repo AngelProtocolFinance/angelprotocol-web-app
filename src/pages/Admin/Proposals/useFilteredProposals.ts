@@ -14,13 +14,15 @@ export function useFilteredProposals(
   pageNum: number
 ) {
   const { cw3 } = useAdminResources();
-  const { data, isLoading, error } = useQueryContract(
+  const {
+    data: proposals = [],
+    isLoading,
+    error,
+  } = useQueryContract(
     cw3,
     "cw3Proposals",
     genPageOptions(pageNum, status, group)
   );
-
-  const proposals = data?.proposals || [];
 
   function proposalFilter(proposal: Proposal): boolean {
     const proposalMeta = JSON.parse(proposal.meta || "{}") as ProposalMeta;

@@ -10,12 +10,11 @@ export default function useFundSelection<T extends FundIdContext>(
   const { setValue } = useFormContext<T>();
 
   const { data: blockHeight = "0" } = useLatestBlockQuery(null);
-  const { data = { funds: [] } } = useQueryContract(
+  const { data: fundList = [] } = useQueryContract(
     "index-fund",
     "ifFunds",
     null
   );
-  const fundList = data.funds;
 
   const [activeRow, setActiveRow] = useState<number | undefined>();
 

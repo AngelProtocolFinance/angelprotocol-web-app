@@ -7,7 +7,7 @@ export const VOTES_PER_PAGE = 15;
 export function useVoteList(pollId: number, pageNum?: number) {
   const { cw3 } = useAdminResources();
   const {
-    data = { votes: [] },
+    data: votes = [],
     isValidating,
     isLoading,
   } = useQueryContract(
@@ -16,7 +16,7 @@ export function useVoteList(pollId: number, pageNum?: number) {
     genVoteListPageOptions(pollId, pageNum)
   );
 
-  return { votes: data.votes, isVoteListLoading: isValidating || isLoading };
+  return { votes, isVoteListLoading: isValidating || isLoading };
 }
 
 function genVoteListPageOptions(

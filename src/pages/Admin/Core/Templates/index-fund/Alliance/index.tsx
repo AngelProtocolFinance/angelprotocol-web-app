@@ -11,15 +11,13 @@ import { schema } from "./schema";
 
 export default function Alliance() {
   const dispatch = useSetter();
-  const { data, isLoading, error } = useQueryContract(
-    "index-fund",
-    "ifAlliance",
-    null
-  );
+  const {
+    data: allianceMembers = [],
+    isLoading,
+    error,
+  } = useQueryContract("index-fund", "ifAlliance", null);
 
   useEffect(() => {
-    const allianceMembers = data?.alliance_members || [];
-
     if (isLoading) return;
     if (allianceMembers.length <= 0) return;
 
@@ -32,7 +30,7 @@ export default function Alliance() {
         }))
       )
     );
-  }, [dispatch, data, isLoading]);
+  }, [dispatch, allianceMembers, isLoading]);
 
   if (isLoading) return <FormSkeleton />;
   if (!!error)

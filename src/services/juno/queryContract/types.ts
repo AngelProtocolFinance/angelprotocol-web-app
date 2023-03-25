@@ -24,7 +24,6 @@ import {
   RegistrarConfig,
   RegistrarConfigExtension,
   ReviewCW3Config,
-  Simulation,
   VotesPageOptions,
 } from "types/contracts";
 
