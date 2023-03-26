@@ -146,7 +146,7 @@ export interface ContractQueries {
     args: null;
     res: Q<CW3ListVoters>;
     result: CW3ListVoters;
-    transform: (res: Q<CW3ListVoters>) => CW3ListVoters;
+    transform: (res: Q<CW3ListVoters>) => string[];
     contract: unknown;
   };
   cw3Config: {

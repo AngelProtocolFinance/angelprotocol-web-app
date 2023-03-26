@@ -6,6 +6,7 @@ import { apCWs } from "./constants";
 
 export default function useIsMemberQuery(user: string, endowmentId?: number) {
   //TODO: skip if not juno/polygon and no endowmentId
+  //TODO: add keys
   return useSWR([user, endowmentId], async ([user, id]) => {
     const numId = idParamToNum(id);
     const AP = apCWs[numId];
