@@ -18,7 +18,7 @@ PORT=<port number>
 REACT_APP_NETWORK=<LOCAL | TESTNET | MAINNET>
 REACT_APP_JUNO_LCD_NODE=<juno lcd>
 
-# discard if you don't want to enable AST features
+# discard if doesn't want to enable AST features
 REACT_APP_APP_TYPE=AST
 
 # set these to override all JUNO LCDs and RPCs including 
