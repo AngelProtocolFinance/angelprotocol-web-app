@@ -2,7 +2,6 @@ import { configureStore } from "@reduxjs/toolkit";
 import { apes } from "services/apes";
 import { aws } from "services/aws/aws";
 import { countriesApi } from "services/countries";
-import { junoApi } from "services/juno";
 import { adminReducer } from "slices/admin";
 import authReducer from "slices/authSlice";
 import { componentReducer } from "slices/components";
@@ -19,7 +18,6 @@ export const store = configureStore({
     auth: authReducer,
     component: componentReducer,
     [aws.reducerPath]: aws.reducer,
-    [junoApi.reducerPath]: junoApi.reducer,
     [apes.reducerPath]: apes.reducer,
     [countriesApi.reducerPath]: countriesApi.reducer,
     //auth: authReducer,
@@ -29,7 +27,6 @@ export const store = configureStore({
     getDefaultMiddleware().concat([
       aws.middleware,
       apes.middleware,
-      junoApi.middleware,
       countriesApi.middleware,
     ]),
 });

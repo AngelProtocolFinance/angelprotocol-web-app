@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { templates } from "pages/Admin/constants";
-import { useLatestBlockQuery } from "services/juno";
+import useLatestBlockQuery from "services/contract/custom/useLatestBlockQuery";
 import Icon from "components/Icon";
 import { humanize } from "helpers";
 import { adminRoutes } from "constants/routes";
@@ -8,9 +8,7 @@ import GroupSelector from "./GroupSelector";
 import StatusSelector from "./StatusSelector";
 
 export default function Toolbar({ classes = "" }: { classes?: string }) {
-  const { data: block_height = "0" } = useLatestBlockQuery(null, {
-    pollingInterval: 10_000, //ms
-  });
+  const { data: block_height = "0" } = useLatestBlockQuery(10_000);
   return (
     <div
       className={`flex items-center gap-3 ${classes} border-b-2 pb-3 border-prim`}
