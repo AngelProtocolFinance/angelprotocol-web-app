@@ -2,10 +2,10 @@ import useSWR, { SWRResponse } from "swr";
 import {
   ContractQueries as Q,
   ContractQueryTypes as QT,
-} from "../juno/queryContract/types";
+} from "./queryContract/types";
 import { Contract } from "types/lists";
 import { contracts } from "constants/contracts";
-import { queryContract } from "../juno/queryContract";
+import { queryContract } from "./queryContract";
 
 export function useQueryContract<T extends QT>(
   contract: Q[T]["contract"] extends Contract ? Contract : string,

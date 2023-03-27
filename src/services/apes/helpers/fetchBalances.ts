@@ -1,10 +1,10 @@
 import { Coin } from "@cosmjs/proto-signing";
 import { FetchedChain, Token, TokenWithBalance } from "types/aws";
 import { ProviderId } from "types/lists";
-import { queryContract } from "services/juno/queryContract";
 import { balanceOf } from "contracts/ERC20";
 import { condenseToNum, getProvider } from "helpers";
 import { contracts } from "constants/contracts";
+import { queryContract } from "../../contract/queryContract";
 
 type BalMap = { [index: string]: string | undefined | number };
 type CosmosBalances = { balances: Coin[] };

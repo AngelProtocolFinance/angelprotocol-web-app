@@ -1,7 +1,7 @@
 import useSWR, { SWRResponse } from "swr";
 import { ProposalDetails } from "../../types";
-import { queryContract } from "services/juno/queryContract";
 import { idParamToNum } from "helpers";
+import { queryContract } from "../queryContract";
 
 export function useProposalDetailsQuery(
   cw3: string,
