@@ -10,6 +10,7 @@ import { getFilePreviews } from "./getFilePreviews";
 export default function useSubmit() {
   const {
     handleSubmit,
+    watch,
     formState: { isDirty, isSubmitting },
   } = useFormContext<FormValues>();
 
@@ -62,5 +63,9 @@ export default function useSubmit() {
       handleError
     );
   };
-  return { submit: handleSubmit(submit), isSubmitting };
+  return {
+    submit: handleSubmit(submit),
+    isSubmitting,
+    endowDesignation: watch("endowDesignation.value"),
+  };
 }
