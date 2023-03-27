@@ -94,7 +94,6 @@ export default function ImgEditor<T extends FieldValues, K extends keyof T>(
                 </IconButton>
               )
             }
-            
           </div>
         )}
         {
