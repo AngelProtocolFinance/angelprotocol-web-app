@@ -18,10 +18,14 @@ export function useFilteredProposals(
     data: proposals = [],
     isLoading,
     error,
-  } = useQueryContract("cw3.proposals", {
-    cw3,
-    ...genPageOptions(pageNum, status, group),
-  });
+  } = useQueryContract(
+    "cw3.proposals",
+    {
+      cw3,
+      ...genPageOptions(pageNum, status, group),
+    },
+    { keepPreviousData: true }
+  );
 
   function proposalFilter(proposal: Proposal): boolean {
     const proposalMeta = JSON.parse(proposal.meta || "{}") as ProposalMeta;
