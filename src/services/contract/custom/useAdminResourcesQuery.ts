@@ -15,7 +15,7 @@ export function useAdminResourcesQuery(
   const user = wallet?.address;
 
   return useSWR(
-    user && endowmentId ? [user, endowmentId] : null,
+    endowmentId ? [user, endowmentId] : null,
     async ([user, id]) => {
       const numId = idParamToNum(id);
       const AP = apCWs[numId];
