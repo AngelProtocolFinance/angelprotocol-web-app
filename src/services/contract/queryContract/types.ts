@@ -3,7 +3,6 @@ import {
   AllianceMember,
   CW3Config,
   CW4Member,
-  CW20Balance,
   CW20Info,
   EndowmentController,
   EndowmentDetails,
@@ -47,7 +46,7 @@ export interface ContractQueries {
   "gov.polls": Query<null, Polls["polls"]>;
 
   "cw20.info": Query<null, CW20Info>;
-  "cw20.balance": Query<Addr, CW20Balance>;
+  "cw20.balance": Query<Addr, string>;
 
   "cw4.members": Query<null, CW4Member[]>;
   "cw4.member": Query<Addr, InquiredMember>;

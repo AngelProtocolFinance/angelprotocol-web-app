@@ -65,7 +65,7 @@ export const cosmosQueries: {
     ({ addr }) => ({
       balance: { address: addr },
     }),
-    (res: QR<CW20Balance>) => res.data,
+    (res: QR<CW20Balance>) => res.data.balance,
   ],
 
   /** giftcard */
