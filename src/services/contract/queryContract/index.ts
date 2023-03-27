@@ -6,7 +6,7 @@ import {
 import { Contract } from "types/lists";
 import { contracts } from "constants/contracts";
 import { JUNO_LCD } from "constants/env";
-import { genQuery } from "./genQueryPath";
+import { getQuery } from "./getQuery";
 
 export async function queryContract<T extends QT>(
   type: T,
@@ -20,7 +20,7 @@ export async function queryContract<T extends QT>(
   const c =
     contract_key in contracts ? contracts[contract_key as Contract] : contract;
 
-  const [path, transform] = genQuery(type, args, c);
+  const [path, transform] = getQuery(type, args, c);
   return fetch(`
     ${url}/${path}
   `)
