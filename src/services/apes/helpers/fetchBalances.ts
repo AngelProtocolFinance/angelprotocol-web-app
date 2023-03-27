@@ -1,10 +1,9 @@
 import { Coin } from "@cosmjs/proto-signing";
 import { FetchedChain, Token, TokenWithBalance } from "types/aws";
 import { ProviderId } from "types/lists";
-import { queryContract } from "services/juno/queryContract";
 import { balanceOf } from "contracts/ERC20";
 import { condenseToNum, getProvider } from "helpers";
-import { contracts } from "constants/contracts";
+import { queryContract } from "../../contract/queryContract";
 
 type BalMap = { [index: string]: string | undefined | number };
 type CosmosBalances = { balances: Coin[] };
@@ -26,8 +25,7 @@ export async function fetchBalances(
         //transform for easy access
         .then(({ balances }) => toMap(balances)),
       queryContract(
-        "giftcardBalance",
-        contracts.gift_cards,
+        "gift-card.balance",
         {
           addr: address,
         },
@@ -43,9 +41,9 @@ export async function fetchBalances(
       ),
       ...tokens.alts.map((x) =>
         queryContract(
-          "cw20Balance",
-          x.token_id,
+          "cw20.balance",
           {
+            cw20: x.token_id,
             addr: address,
           },
           chain.lcd_url

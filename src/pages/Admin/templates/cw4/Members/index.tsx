@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { MemberUpdatorValues } from "pages/Admin/types";
 import { useAdminResources } from "pages/Admin/Guard";
-import useQueryContract from "services/contract/useQueryContract";
+import { useQueryContract } from "services/contract";
 import { FormError, FormSkeleton } from "components/admin";
 import { useSetter } from "store/accessors";
 import { setMembers } from "slices/admin/apCW4Members";
@@ -14,12 +14,10 @@ export default function Members() {
   const { cw4 } = useAdminResources();
   const dispatch = useSetter();
   const {
-    data = { members: [] },
+    data: members = [],
     isLoading,
     error,
-  } = useQueryContract(cw4, "cw4Members", null);
-
-  const members = data.members;
+  } = useQueryContract("cw4.members", { cw4 });
 
   useEffect(() => {
     if (members.length > 0) {

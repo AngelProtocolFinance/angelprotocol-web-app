@@ -14,29 +14,13 @@ const customBaseQuery: BaseQueryFn = retry(
   { maxRetries: 1 }
 );
 
-type BlockLatest = {
-  block_id: any;
-  block: { header: { height: string } };
-};
-
 export const junoApi = createApi({
   reducerPath: "junoApi",
   baseQuery: customBaseQuery,
   tagTypes: rootTags,
-  endpoints: (builder) => ({
-    latestBlock: builder.query<string, unknown>({
-      query: () => "/blocks/latest",
-      transformResponse: (res: BlockLatest) => {
-        return res.block.header.height;
-      },
-    }),
-  }),
+  endpoints: () => ({}),
 });
 
 export const {
-  useLatestBlockQuery,
   util: { invalidateTags: invalidateJunoTags },
-  endpoints: {
-    latestBlock: { useLazyQuery: useLazyLatestBlockQuery },
-  },
 } = junoApi;

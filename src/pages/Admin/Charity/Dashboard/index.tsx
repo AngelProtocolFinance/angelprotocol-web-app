@@ -1,5 +1,5 @@
 import { useAdminResources } from "pages/Admin/Guard";
-import useQueryContract from "services/contract/useQueryContract";
+import { useQueryContract } from "services/contract";
 import SWRLoader from "components/SWRLoader";
 import DonationsTable from "../DonationsTable";
 import Balances from "../common/Balances";
@@ -7,7 +7,8 @@ import Table from "./Table";
 
 export default function Dashboard() {
   const { cw3 } = useAdminResources();
-  const { data, ...rest } = useQueryContract(cw3, "cw3Proposals", {
+  const queryState = useQueryContract("cw3.proposals", {
+    cw3,
     limit: 5,
   });
 
@@ -19,7 +20,7 @@ export default function Dashboard() {
         New Proposals
       </h3>
       <SWRLoader
-        queryState={{ ...rest, data: data?.proposals || [] }}
+        queryState={queryState}
         messages={{
           loading: "Getting recent proposals..",
           error: "Failed to get proposals",

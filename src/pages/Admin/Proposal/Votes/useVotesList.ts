@@ -1,5 +1,5 @@
 import { VotesPageOptions } from "types/contracts";
-import useQueryContract from "services/contract/useQueryContract";
+import { useQueryContract } from "services/contract";
 import { useAdminResources } from "../../Guard";
 
 //contract.voteList(genVoteListPageOptions(pollId, pageNum))
@@ -7,16 +7,15 @@ export const VOTES_PER_PAGE = 15;
 export function useVoteList(pollId: number, pageNum?: number) {
   const { cw3 } = useAdminResources();
   const {
-    data = { votes: [] },
+    data: votes = [],
     isValidating,
     isLoading,
-  } = useQueryContract(
+  } = useQueryContract("cw3.votes", {
     cw3,
-    "cw3Votes",
-    genVoteListPageOptions(pollId, pageNum)
-  );
+    ...genVoteListPageOptions(pollId, pageNum),
+  });
 
-  return { votes: data.votes, isVoteListLoading: isValidating || isLoading };
+  return { votes, isVoteListLoading: isValidating || isLoading };
 }
 
 function genVoteListPageOptions(

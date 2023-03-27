@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FundConfigValues } from "pages/Admin/types";
 import { FundConfig, IndexFundConfig } from "types/contracts";
-import useQueryContract from "services/contract/useQueryContract";
+import { useQueryContract } from "services/contract";
 import { FormError, FormSkeleton } from "components/admin";
 import { condenseToStr } from "helpers";
 import Form from "./Form";
@@ -13,7 +13,7 @@ export default function Config() {
     data: indexFundConfig,
     isLoading,
     error,
-  } = useQueryContract("index-fund", "ifConfig", null);
+  } = useQueryContract("index-fund.config", {});
 
   if (isLoading) return <FormSkeleton />;
   if (!!error || !indexFundConfig)

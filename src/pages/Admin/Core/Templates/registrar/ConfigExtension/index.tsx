@@ -5,7 +5,7 @@ import {
   RegistrarConfigExtension,
   RegistrarConfigExtensionPayload,
 } from "types/contracts";
-import useQueryContract from "services/contract/useQueryContract";
+import { useQueryContract } from "services/contract";
 import { FormError, FormSkeleton } from "components/admin";
 import Form from "./Form";
 import { schema } from "./schema";
@@ -15,7 +15,7 @@ export default function ConfigExtension() {
     data: config,
     isLoading,
     error,
-  } = useQueryContract("registrar", "regConfigExtension", null);
+  } = useQueryContract("registrar.config-extension", {});
   if (isLoading) return <FormSkeleton />;
   if (!!error || !config)
     return <FormError errorMessage="failed to load registrar config" />;

@@ -1,12 +1,12 @@
 import { useAdminResources } from "pages/Admin/Guard";
-import useQueryContract from "services/contract/useQueryContract";
+import { useQueryContract } from "services/contract";
 import SWRLoader from "components/SWRLoader";
 import AccountTabs from "../../common/AccountTabs";
 import WithdrawForm from "./WithdrawForm";
 
 export default function Withdrawer() {
   const { id } = useAdminResources();
-  const queryState = useQueryContract("accounts", "accState", { id });
+  const queryState = useQueryContract("accounts.state", { id });
 
   return (
     <SWRLoader

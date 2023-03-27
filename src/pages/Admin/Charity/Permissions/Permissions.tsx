@@ -2,18 +2,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { EndowmentController, SettingsPermissions } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
-import useQueryContract from "services/contract/useQueryContract";
+import { useQueryContract } from "services/contract";
 import SWRLoader from "components/SWRLoader";
 import Form from "./Form";
 import { FormField, FormValues, UpdateableFormValues, schema } from "./schema";
 
 export default function Permissions() {
   const { id } = useAdminResources();
-  const queryState = useQueryContract(
-    "accounts/settings",
-    "endowmentController",
-    { id }
-  );
+  const queryState = useQueryContract("accounts/settings.controller", { id });
 
   return (
     <div className="grid gap-6">

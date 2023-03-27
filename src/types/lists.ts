@@ -47,4 +47,5 @@ export type Contract =
   | "cw3/impact-review"
   | "halo"
   | "gift-card"
-  | "gov";
+  | "gov"
+  | "airdrop";
