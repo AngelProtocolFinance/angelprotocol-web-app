@@ -12,7 +12,6 @@ export function Guard(props: {
   const { id } = useParams<AdminParams>();
 
   const { data, isLoading, error } = useAdminResourcesQuery(id);
-  console.log(data);
 
   if (isLoading)
     return <GuardPrompt message="Getting admin resources" showLoader />;

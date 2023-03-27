@@ -13,5 +13,5 @@ export function useQueryContract<T extends QT>(
   args: Q[T]["args"]
 ): SWRResponse<ReturnType<Q[T]["transform"]>> {
   const c = contract in contracts ? contracts[contract as Contract] : contract;
-  return useSWR([id, c, args], queryContract);
+  return useSWR([id, c, args], (args) => queryContract(...args));
 }
