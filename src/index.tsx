@@ -2,6 +2,7 @@ import { StrictMode, Suspense, lazy } from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
+import { SWRConfig } from "swr";
 import Loader from "components/Loader";
 import { store } from "store/store";
 import { initTheme } from "helpers";
@@ -23,15 +24,23 @@ const root = createRoot(container as Element);
 
 root.render(
   <StrictMode>
-    <ErrorBoundary>
-      <Provider store={store}>
-        <BrowserRouter>
-          <Suspense fallback={<LoaderComponent />}>
-            <App />
-          </Suspense>
-        </BrowserRouter>
-      </Provider>
-    </ErrorBoundary>
+    <SWRConfig
+      value={{
+        revalidateIfStale: false,
+        revalidateOnFocus: false,
+        revalidateOnReconnect: false,
+      }}
+    >
+      <ErrorBoundary>
+        <Provider store={store}>
+          <BrowserRouter>
+            <Suspense fallback={<LoaderComponent />}>
+              <App />
+            </Suspense>
+          </BrowserRouter>
+        </Provider>
+      </ErrorBoundary>
+    </SWRConfig>
   </StrictMode>
 );
 
