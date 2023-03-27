@@ -5,12 +5,12 @@ import { invalidateJunoTags } from "services/juno";
 import { govTags } from "services/juno/tags";
 import { useGetWallet } from "contexts/WalletContext";
 import Airdrop from "contracts/Airdrop";
-import useCosmosTxSender from "hooks/useCosmosTxSender";
+import useTxSender from "hooks/useTxSender";
 import { condense } from "helpers";
 
 export default function useClaimAirdrop(airdrops: Airdrops) {
   const { wallet } = useGetWallet();
-  const { sendTx, isSending } = useCosmosTxSender(true);
+  const { sendTx, isSending } = useTxSender(true);
 
   const totalClaimable = useMemo(
     () =>
@@ -29,7 +29,7 @@ export default function useClaimAirdrop(airdrops: Airdrops) {
     );
 
     await sendTx({
-      msgs: claimAirdropMsgs,
+      content: { type: "cosmos", val: claimAirdropMsgs },
       tagPayloads: [
         invalidateJunoTags([
           { type: "gov", id: govTags.staker },

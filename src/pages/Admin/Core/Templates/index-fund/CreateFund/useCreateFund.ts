@@ -7,7 +7,7 @@ import { useGetWallet } from "contexts/WalletContext";
 import { useGetter } from "store/accessors";
 import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
-import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
+import useTxSender from "hooks/useTxSender";
 import { condense, roundDown } from "helpers";
 import { cleanObject } from "helpers/cleanObject";
 import { INIT_SPLIT } from ".";
@@ -15,7 +15,7 @@ import { INIT_SPLIT } from ".";
 export default function useCreateFund() {
   const { cw3, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
-  const sendTx = useCosmosTxSender();
+  const sendTx = useTxSender();
   const { trigger, getValues } = useFormContext<FundCreatorValues>();
   const newFundMembers = useGetter((state) => state.admin.newFundMembers);
 
@@ -83,7 +83,7 @@ export default function useCreateFund() {
     );
 
     await sendTx({
-      msgs: [proposalMsg],
+      content: { type: "cosmos", val: [proposalMsg] },
       ...propMeta,
     });
 

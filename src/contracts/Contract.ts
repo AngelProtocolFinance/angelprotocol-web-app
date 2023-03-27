@@ -12,7 +12,7 @@ import {
 } from "@cosmjs/stargate";
 import { Chain } from "types/aws";
 import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/contracts";
-import { TxOptions } from "types/slices";
+import { CosmosTx } from "types/tx";
 import { WalletState } from "contexts/WalletContext";
 import { logger, toBase64 } from "helpers";
 import { getKeplrClient } from "helpers/keplr";
@@ -81,7 +81,7 @@ export default class Contract {
     }
   }
 
-  async signAndBroadcast({ msgs, fee }: TxOptions) {
+  async signAndBroadcast({ msgs, fee }: CosmosTx) {
     this.verifyWallet();
     const { chain_id, rpc_url } = this.wallet!.chain;
     const client = await getKeplrClient(

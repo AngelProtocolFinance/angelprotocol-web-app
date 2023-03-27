@@ -8,7 +8,7 @@ import Popup from "components/Popup";
 import { useGetter } from "store/accessors";
 import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
-import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
+import useTxSender from "hooks/useTxSender";
 
 export default function useEditAlliance() {
   const { trigger, reset, getValues } = useFormContext<AllianceEditValues>();
@@ -18,7 +18,7 @@ export default function useEditAlliance() {
     (state) => state.admin.allianceMembers
   );
   const { showModal } = useModalContext();
-  const sendTx = useCosmosTxSender();
+  const sendTx = useTxSender();
 
   async function editAlliance() {
     const isValid = await trigger(["description", "title"], {
@@ -84,7 +84,7 @@ export default function useEditAlliance() {
     );
 
     await sendTx({
-      msgs: [proposalMsg],
+      content: { type: "cosmos", val: [proposalMsg] },
       ...propMeta,
     });
     reset();
