@@ -13,6 +13,7 @@ import { Field, Label } from "components/form";
 import { ENDOW_DESIGNATIONS } from "constants/common";
 import { appRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
+import { religiousDesignation } from "./constants";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import { MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "./schema";
 import useEditProfile from "./useEditProfile";
@@ -22,7 +23,9 @@ const sdgOptions = Object.entries(unsdgs).map(([key, { title }]) =>
 );
 
 export default function Form() {
-  const { editProfile, isSubmitting, id, reset } = useEditProfile();
+  const { editProfile, isSubmitting, id, reset, endowDesignation } =
+    useEditProfile();
+
   return (
     <form
       onSubmit={editProfile}
@@ -109,7 +112,10 @@ export default function Form() {
       </Group>
 
       <Group title="Organization">
-        <Label className="-mb-4" required>
+        <Label
+          className="-mb-4"
+          required={endowDesignation !== religiousDesignation}
+        >
           Aligned SDG#
         </Label>
         <Selector<FV, "categories_sdgs", UNSDG_NUMS, true>

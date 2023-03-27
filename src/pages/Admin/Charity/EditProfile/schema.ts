@@ -7,6 +7,7 @@ import { OptionType } from "components/Selector";
 import { genFileSchema } from "schemas/file";
 import { requiredString, url } from "schemas/string";
 import { MAX_SDGS } from "constants/unsdgs";
+import { religiousDesignation } from "./constants";
 
 export const VALID_MIME_TYPES = [
   "image/jpeg",
@@ -29,11 +30,17 @@ const fileObj = Yup.object().shape<SchemaShape<ImgLink>>({
   ),
 });
 
+const _designation: keyof FormValues = "endow_designation";
 //construct strict shape to avoid hardcoding shape keys
 const shape: SchemaShape<FormValues> = {
   categories_sdgs: Yup.array()
-    .min(1, "required")
-    .max(MAX_SDGS, `maximum ${MAX_SDGS} selections allowed`),
+    .max(MAX_SDGS, `maximum ${MAX_SDGS} selections allowed`)
+    .when(_designation, (val: FormValues[typeof _designation], schema) => {
+      return val.value === religiousDesignation
+        ? schema
+        : schema.min(1, "required");
+    }),
+
   tagline: requiredString.max(140, "max length is 140 chars"),
   image: fileObj,
   logo: fileObj,
