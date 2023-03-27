@@ -61,7 +61,6 @@ export const queryObjects: {
 
   cw3ListVoters: [{ list_voters: {} }, (res) => res.data.voters],
   cw3Config: [{ config: {} }, (res) => res.data],
-  reviewCw3Config: [{ config: {} }, (res) => res.data],
   cw3Proposals: [
     (options) => ({
       reverse_proposals: options,
