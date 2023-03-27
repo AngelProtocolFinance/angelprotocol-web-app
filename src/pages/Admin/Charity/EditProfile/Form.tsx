@@ -13,7 +13,6 @@ import { Field, Label } from "components/form";
 import { ENDOW_DESIGNATIONS } from "constants/common";
 import { appRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
-import { religiousDesignation } from "./constants";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import { MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "./schema";
 import useEditProfile from "./useEditProfile";
@@ -114,7 +113,7 @@ export default function Form() {
       <Group title="Organization">
         <Label
           className="-mb-4"
-          required={endowDesignation !== religiousDesignation}
+          required={endowDesignation !== "Religious Organization"}
         >
           Aligned SDG#
         </Label>

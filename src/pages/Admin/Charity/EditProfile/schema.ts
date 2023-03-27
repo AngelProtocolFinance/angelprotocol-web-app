@@ -7,7 +7,6 @@ import { OptionType } from "components/Selector";
 import { genFileSchema } from "schemas/file";
 import { requiredString, url } from "schemas/string";
 import { MAX_SDGS } from "constants/unsdgs";
-import { religiousDesignation } from "./constants";
 
 export const VALID_MIME_TYPES = [
   "image/jpeg",
@@ -36,7 +35,7 @@ const shape: SchemaShape<FormValues> = {
   categories_sdgs: Yup.array()
     .max(MAX_SDGS, `maximum ${MAX_SDGS} selections allowed`)
     .when(_designation, (val: FormValues[typeof _designation], schema) => {
-      return val.value === religiousDesignation
+      return val.value === "Religious Organization"
         ? schema
         : schema.min(1, "required");
     }),
