@@ -4,7 +4,6 @@ import { CW3Config } from "types/contracts";
 import { useGetWallet } from "contexts/WalletContext";
 import { idParamToNum } from "helpers";
 import { isJunoAddress } from "schemas/tests";
-import { contracts } from "constants/contracts";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { queryContract } from "../queryContract";
 import { apCWs } from "./constants";
