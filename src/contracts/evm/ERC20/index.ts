@@ -11,7 +11,7 @@ export const balanceOf = {
     return encoder.encodeFunctionData(balanceOfFn, [address]);
   },
   parse(result: string) {
-    const { balance } = encoder.decodeFunctionResult(balanceOfFn, result);
+    const [balance] = encoder.decodeFunctionResult(balanceOfFn, result);
 
     //just convert to string, let consumer condense
     return (balance as BigNumberish).toString();

@@ -6,7 +6,7 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { useGetWallet } from "contexts/WalletContext";
 import CW3 from "contracts/CW3";
 import SettingsController from "contracts/SettingsController";
-import useCosmosTxSender from "hooks/useCosmosTxSender";
+import useTxSender from "hooks/useTxSender";
 import { isEmpty } from "helpers";
 import { getPayloadDiff, getTagPayloads } from "helpers/admin";
 import { UnexpectedStateError } from "errors/errors";
@@ -23,7 +23,7 @@ export default function useSubmit() {
     reset,
   } = useFormContext<FormValues>();
   const { wallet } = useGetWallet();
-  const sendTx = useCosmosTxSender();
+  const sendTx = useTxSender();
   const { isUserOwner, userDelegated } = useUserAuthorization();
 
   async function onSubmit({
@@ -74,7 +74,7 @@ export default function useSubmit() {
       }
 
       await sendTx({
-        msgs: [msg],
+        content: { type: "cosmos", val: [msg] },
         ...propMeta,
         isAuthorized: userDelegated || isUserOwner,
         tagPayloads: getTagPayloads(propMeta.willExecute && "endow_controller"),
