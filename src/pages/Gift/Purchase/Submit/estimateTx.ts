@@ -1,11 +1,11 @@
 import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
-import { ConnectedWallet } from "@terra-money/wallet-provider";
-import { Estimate } from "./types";
+import { Estimate } from "types/tx";
 import { WalletState } from "contexts/WalletContext";
 import { SubmitStep } from "slices/gift";
 import CW20 from "contracts/CW20";
 import GiftCard from "contracts/GiftCard";
-import { extractFeeAmount, logger, scaleToStr } from "helpers";
+import { logger, scaleToStr } from "helpers";
+import { estimateTx as estimateGas } from "helpers/tx";
 import { contracts } from "constants/contracts";
 
 export async function estimateTx({
@@ -13,10 +13,7 @@ export async function estimateTx({
   wallet,
 }: SubmitStep & {
   wallet: WalletState;
-  terraWallet?: ConnectedWallet;
 }): Promise<Estimate | null> {
-  const { chain } = wallet;
-  const { native_currency } = chain;
   try {
     const gcContract = new GiftCard(wallet);
     let msg: MsgExecuteContractEncodeObject;
@@ -33,13 +30,10 @@ export async function estimateTx({
         gcContract.createDepositObject(recipient)
       );
     }
-    const fee = await gcContract.estimateFee([msg]);
-    const feeAmount = extractFeeAmount(fee, native_currency.token_id);
-
-    return {
-      fee: { amount: feeAmount, symbol: native_currency.symbol },
-      tx: { fee, msgs: [msg] },
-    };
+    return estimateGas(
+      { type: "cosmos", val: [msg], attribute: "deposit_id" },
+      wallet
+    );
   } catch (err) {
     logger.error(err);
     return null;

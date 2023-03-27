@@ -7,7 +7,7 @@ import { adminTags } from "services/juno/tags";
 import { useGetWallet } from "contexts/WalletContext";
 import CW3 from "contracts/CW3";
 import CW3Review from "contracts/CW3/CW3Review";
-import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
+import useTxSender from "hooks/useTxSender";
 
 export default function useVote() {
   const {
@@ -16,7 +16,7 @@ export default function useVote() {
   } = useFormContext<VV>();
   const { wallet } = useGetWallet();
   const { cw3 } = useAdminResources();
-  const { sendTx, isSending } = useCosmosTxSender(true);
+  const { sendTx, isSending } = useTxSender(true);
 
   async function vote({ type, proposalId, vote, reason }: VV) {
     let voteMsg: MsgExecuteContractEncodeObject;
@@ -34,7 +34,7 @@ export default function useVote() {
     }
 
     await sendTx({
-      msgs: [voteMsg],
+      content: { type: "cosmos", val: [voteMsg] },
       tagPayloads: [
         invalidateJunoTags([{ type: "admin", id: adminTags.proposals }]),
       ],
