@@ -3,7 +3,7 @@ import { url } from "../string";
 //NOTE: intended for shallow form objects only atm
 describe("string schemas tests", () => {
   describe("url", () => {
-    const cases: { input: string | null | undefined; expected: boolean }[] = [
+    const cases = [
       { input: null, expected: true }, // value is empty
       { input: undefined, expected: true }, // value is empty
       { input: "", expected: true }, // value is empty
