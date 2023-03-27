@@ -52,15 +52,6 @@ export default function Form() {
         tooltip={fileTooltip}
       />
       <Label className="mb-2 mt-6" required>
-        Select the Sustainable Development Goals your organization is the most
-        aligned with
-      </Label>
-      <Selector<FV, "sdgs", number, true>
-        multiple
-        name="sdgs"
-        options={sdgOptions}
-      />
-      <Label className="mb-2 mt-6" required>
         Endowment Designation
       </Label>
       <Selector<FV, "endowDesignation", string, false>
@@ -70,6 +61,16 @@ export default function Form() {
           value: option.value,
         }))}
       />
+      <Label className="mb-2 mt-6" required>
+        Select the Sustainable Development Goals your organization is the most
+        aligned with
+      </Label>
+      <Selector<FV, "sdgs", number, true>
+        multiple
+        name="sdgs"
+        options={sdgOptions}
+      />
+
       <Label className="mt-6 mb-2" required>
         Select the country your organization is headquartered in
       </Label>
