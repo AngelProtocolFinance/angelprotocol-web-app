@@ -66,6 +66,6 @@ export default function useSubmit() {
   return {
     submit: handleSubmit(submit),
     isSubmitting,
-    endowDesignation: watch("endowDesignation.value"),
+    endowDesignation: watch("endowDesignation").value,
   };
 }
