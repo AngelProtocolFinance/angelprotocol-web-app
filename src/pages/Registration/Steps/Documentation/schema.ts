@@ -31,13 +31,20 @@ function genAssetShape(isRequired: boolean = false): SchemaShape<Asset> {
   };
 }
 
+const _designation: keyof FormValues = "endowDesignation";
+
 export const schema = Yup.object().shape<SchemaShape<FormValues>>({
   proofOfIdentity: Yup.object().shape(genAssetShape(true)),
   proofOfRegistration: Yup.object().shape(genAssetShape(true)),
   website: Yup.string().required("required").url("invalid url"),
   sdgs: Yup.array()
-    .min(1, "required")
-    .max(MAX_SDGS, `maximum ${MAX_SDGS} selections allowed`),
+    .max(MAX_SDGS, `maximum ${MAX_SDGS} selections allowed`)
+    .when(_designation, (opt: FormValues[typeof _designation], schema) =>
+      opt.value === "Religious Organization"
+        ? schema
+        : schema.min(1, "required")
+    ),
+
   hqCountry: Yup.object().shape<SchemaShape<Country>>({
     name: requiredString,
   }),

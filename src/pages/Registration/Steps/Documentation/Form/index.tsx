@@ -19,7 +19,7 @@ import useSubmit from "./useSubmit";
 
 export default function Form() {
   const { data } = useRegState<2>();
-  const { submit, isSubmitting } = useSubmit();
+  const { submit, isSubmitting, endowDesignation } = useSubmit();
 
   return (
     <form className="w-full" onSubmit={submit}>
@@ -61,7 +61,10 @@ export default function Form() {
           value: option.value,
         }))}
       />
-      <Label className="mb-2 mt-6" required>
+      <Label
+        className="mb-2 mt-6"
+        required={endowDesignation !== "Religious Organization"}
+      >
         Select the Sustainable Development Goals your organization is the most
         aligned with
       </Label>
