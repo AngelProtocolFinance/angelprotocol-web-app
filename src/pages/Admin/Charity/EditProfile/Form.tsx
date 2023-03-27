@@ -120,6 +120,7 @@ export default function Form() {
             label: option.label,
             value: option.value,
           }))}
+          classes={{ button: "field-input-admin" }}
         />
         <Label
           className="-mb-4"
