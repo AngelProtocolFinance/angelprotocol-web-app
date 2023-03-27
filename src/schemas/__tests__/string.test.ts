@@ -1,13 +1,15 @@
-import { isValidUrl } from "../string";
+import { url } from "../string";
 
 //NOTE: intended for shallow form objects only atm
 describe("string schemas tests", () => {
-  describe("isValidUrl", () => {
-    const cases = [
-      { input: null, expected: false },
-      { input: undefined, expected: false },
-      { input: "", expected: false },
+  describe("url", () => {
+    const cases: { input: string | null | undefined; expected: boolean }[] = [
+      { input: null, expected: true }, // value is empty
+      { input: undefined, expected: true }, // value is empty
+      { input: "", expected: true }, // value is empty
       { input: ".", expected: false },
+      { input: ".@%#%&(!", expected: false },
+      { input: "a.", expected: true },
       { input: "ftp://www.example.com", expected: false },
       { input: "mailto://www.example.com", expected: false },
       // special case, domain name can contain only top-level domain
@@ -23,9 +25,11 @@ describe("string schemas tests", () => {
       { input: "www.tiktok.com/@betterme.org", expected: true },
       { input: "https://www.tiktok.com/@betterme.org", expected: true },
     ];
+
     test.each(cases)(
-      'isValidUrl("$input") === $expected',
-      ({ input, expected }) => expect(isValidUrl(input)).toBe(expected)
+      'url("$input") === $expected',
+      async ({ input, expected }) =>
+        expect(await url.isValid(input)).toBe(expected)
     );
   });
 });
