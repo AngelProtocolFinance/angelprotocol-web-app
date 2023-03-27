@@ -36,13 +36,9 @@ export function useAdminResourcesQuery(
         };
       }
 
-      const endowment = await queryContract(
-        "accEndowment",
-        contracts.accounts,
-        {
-          id: numId,
-        }
-      );
+      const endowment = await queryContract("accounts.endowment", {
+        id: numId,
+      });
       const [meta, config] = await getMeta(numId, endowment.owner, user);
 
       return {
@@ -64,11 +60,12 @@ export async function getMeta(
   user?: string
 ): Promise<[AdminResources["propMeta"], CW3Config]> {
   const [voters, config, voter] = await Promise.all([
-    queryContract("cw3ListVoters", cw3, null),
-    queryContract("cw3Config", cw3, null),
+    queryContract("cw3.voters", { cw3 }),
+    queryContract("cw3.config", { cw3 }),
     /** just set credential to none, if disconnected or non-juno wallet */
     user && isJunoAddress(user)
-      ? queryContract("cw3Voter", cw3, {
+      ? queryContract("cw3.voter", {
+          cw3,
           addr: user,
         })
       : Promise.resolve({ weight: 0 }),

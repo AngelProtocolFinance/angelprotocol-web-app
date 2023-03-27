@@ -12,9 +12,8 @@ export default function useInitFundMembers() {
   const dispatch = useSetter();
 
   const { data: funds = [], isLoading } = useQueryContract(
-    "index-fund",
-    "ifFunds",
-    null
+    "index-fund.funds",
+    {}
   );
 
   const fundMembers = funds.find((fund) => fund.id === +fundId)?.members || [];

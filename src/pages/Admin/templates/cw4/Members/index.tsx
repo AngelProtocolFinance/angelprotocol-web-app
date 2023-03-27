@@ -17,7 +17,7 @@ export default function Members() {
     data: members = [],
     isLoading,
     error,
-  } = useQueryContract(cw4, "cw4Members", null);
+  } = useQueryContract("cw4.members", { cw4 });
 
   useEffect(() => {
     if (members.length > 0) {

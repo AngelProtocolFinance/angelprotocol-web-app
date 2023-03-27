@@ -13,7 +13,7 @@ export default function Config() {
     data: indexFundConfig,
     isLoading,
     error,
-  } = useQueryContract("index-fund", "ifConfig", null);
+  } = useQueryContract("index-fund.config", {});
 
   if (isLoading) return <FormSkeleton />;
   if (!!error || !indexFundConfig)

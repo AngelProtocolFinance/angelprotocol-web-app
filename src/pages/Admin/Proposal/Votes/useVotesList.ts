@@ -10,11 +10,10 @@ export function useVoteList(pollId: number, pageNum?: number) {
     data: votes = [],
     isValidating,
     isLoading,
-  } = useQueryContract(
+  } = useQueryContract("cw3.votes", {
     cw3,
-    "cw3Votes",
-    genVoteListPageOptions(pollId, pageNum)
-  );
+    ...genVoteListPageOptions(pollId, pageNum),
+  });
 
   return { votes, isVoteListLoading: isValidating || isLoading };
 }

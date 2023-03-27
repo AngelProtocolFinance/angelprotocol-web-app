@@ -10,8 +10,9 @@ export function useProposalDetailsQuery(
   const numId = idParamToNum(id);
   return useSWR(numId !== 0 ? [numId, cw3] : null, async ([id, cw3]) => {
     const [proposal, votes] = await Promise.all([
-      queryContract("cw3Proposal", cw3, { id }),
-      queryContract("cw3Votes", cw3, {
+      queryContract("cw3.proposal", { id, cw3 }),
+      queryContract("cw3.votes", {
+        cw3,
         proposal_id: id,
       }),
     ]);

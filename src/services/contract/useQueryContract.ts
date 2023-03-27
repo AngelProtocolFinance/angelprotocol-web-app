@@ -2,16 +2,13 @@ import useSWR, { SWRResponse } from "swr";
 import {
   ContractQueries as Q,
   ContractQueryTypes as QT,
+  QueryOptions,
 } from "./queryContract/types";
-import { Contract } from "types/lists";
-import { contracts } from "constants/contracts";
 import { queryContract } from "./queryContract";
 
 export function useQueryContract<T extends QT>(
-  contract: Q[T]["contract"] extends Contract ? Contract : string,
-  id: T,
-  args: Q[T]["args"]
+  type: T,
+  options: QueryOptions<T>
 ): SWRResponse<ReturnType<Q[T]["transform"]>> {
-  const c = contract in contracts ? contracts[contract as Contract] : contract;
-  return useSWR([id, c, args], (args) => queryContract(...args));
+  return useSWR([type, options], (args) => queryContract(...args));
 }

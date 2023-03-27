@@ -1,14 +1,26 @@
-import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
+import {
+  ContractQueries as Q,
+  ContractQueryTypes as QT,
+  QueryOptions,
+} from "./types";
+import { Contract } from "types/lists";
+import { contracts } from "constants/contracts";
 import { JUNO_LCD } from "constants/env";
 import { genQuery } from "./genQueryPath";
 
 export async function queryContract<T extends QT>(
   type: T,
-  contract: string,
-  args: Q[T]["args"],
+  options: QueryOptions<T>,
   url = JUNO_LCD
 ) {
-  const [path, transform] = genQuery(type, args, contract);
+  const [contract_key] = type.split(".");
+  //consumer is forced to supply contract address when it is not hardcoded
+  const { [contract_key]: contract, ...args } = options as any;
+
+  const c =
+    contract_key in contracts ? contracts[contract_key as Contract] : contract;
+
+  const [path, transform] = genQuery(type, args, c);
   return fetch(`
     ${url}/${path}
   `)

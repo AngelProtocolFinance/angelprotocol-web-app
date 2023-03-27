@@ -12,7 +12,7 @@ export default function Owner() {
     data: config,
     isLoading,
     error,
-  } = useQueryContract("registrar", "regConfig", null);
+  } = useQueryContract("registrar.config", {});
   if (isLoading) return <FormSkeleton />;
   if (!!error || !config)
     return <FormError errorMessage="failed to load registrar config" />;

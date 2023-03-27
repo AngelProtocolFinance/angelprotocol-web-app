@@ -15,7 +15,7 @@ export default function Alliance() {
     data: allianceMembers = [],
     isLoading,
     error,
-  } = useQueryContract("index-fund", "ifAlliance", null);
+  } = useQueryContract("index-fund.alliance-members", {});
 
   useEffect(() => {
     if (isLoading) return;

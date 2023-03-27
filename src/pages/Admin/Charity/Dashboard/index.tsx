@@ -7,7 +7,8 @@ import Table from "./Table";
 
 export default function Dashboard() {
   const { cw3 } = useAdminResources();
-  const queryState = useQueryContract(cw3, "cw3Proposals", {
+  const queryState = useQueryContract("cw3.proposals", {
+    cw3,
     limit: 5,
   });
 

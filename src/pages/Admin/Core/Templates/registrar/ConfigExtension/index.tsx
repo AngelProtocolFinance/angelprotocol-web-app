@@ -15,7 +15,7 @@ export default function ConfigExtension() {
     data: config,
     isLoading,
     error,
-  } = useQueryContract("registrar", "regConfigExtension", null);
+  } = useQueryContract("registrar.config-extension", {});
   if (isLoading) return <FormSkeleton />;
   if (!!error || !config)
     return <FormError errorMessage="failed to load registrar config" />;
