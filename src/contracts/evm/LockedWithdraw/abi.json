@@ -1,0 +1,4 @@
+[
+  "event LockedWithdrawInitiated(uint256 indexed,address indexed,address indexed,address[],uint256[])",
+  "function propose(uint256,address,address[],uint256[])"
+]
