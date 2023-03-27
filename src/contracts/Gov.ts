@@ -11,7 +11,7 @@ export default class Gov extends Contract {
 
   constructor(wallet: WalletState | undefined) {
     super(wallet);
-    this.cw20Contract = new CW20(wallet, contracts.halo_token);
+    this.cw20Contract = new CW20(wallet, contracts["halo"]);
     this.address = contracts.gov;
   }
 

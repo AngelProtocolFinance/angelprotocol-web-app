@@ -27,7 +27,7 @@ export async function fetchBalances(
         .then(({ balances }) => toMap(balances)),
       queryContract(
         "giftcardBalance",
-        contracts.gift_cards,
+        contracts["gift-card"],
         {
           addr: address,
         },

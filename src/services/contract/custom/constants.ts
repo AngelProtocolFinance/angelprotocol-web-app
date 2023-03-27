@@ -1,5 +1,5 @@
 import { AdminResources } from "../../types";
-import { contracts } from "constants/contractsV2";
+import { contracts } from "constants/contracts";
 import { IS_TEST } from "constants/env";
 
 export const AP_ID = 0;

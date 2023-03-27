@@ -4,7 +4,7 @@ import {
   ContractQueryTypes as QT,
 } from "../juno/queryContract/types";
 import { Contract } from "types/lists";
-import { contracts } from "constants/contractsV2";
+import { contracts } from "constants/contracts";
 import { queryContract } from "../juno/queryContract";
 
 export function useQueryContract<T extends QT>(

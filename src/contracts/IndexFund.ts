@@ -8,7 +8,7 @@ import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 
 export default class IndexFund extends Contract {
-  private static address = contracts.index_fund;
+  private static address = contracts["index-fund"];
 
   createEmbeddedFundConfigMsg(config: FundConfig) {
     return this.createEmbeddedWasmMsg(IndexFund.address, {

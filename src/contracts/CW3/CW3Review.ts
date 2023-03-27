@@ -6,7 +6,7 @@ import CW3 from ".";
 
 export default class CW3Review extends CW3 {
   constructor(wallet: WalletState | undefined) {
-    super(wallet, contracts.cw3CharityReviewTeam);
+    super(wallet, contracts["cw3/charity-review"]);
   }
 
   createVoteApplicationMsg(payload: ApplicationVote) {

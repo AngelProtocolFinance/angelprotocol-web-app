@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import { queryContract } from "services/juno/queryContract";
 import { idParamToNum } from "helpers";
-import { contracts } from "constants/contractsV2";
+import { contracts } from "constants/contracts";
 import { apCWs } from "./constants";
 
 export function useIsMemberQuery(user: string, endowmentId?: number) {
