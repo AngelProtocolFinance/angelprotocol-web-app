@@ -111,6 +111,16 @@ export default function Form() {
       </Group>
 
       <Group title="Organization">
+        <Label className="-mb-4" required>
+          Endowment Designation
+        </Label>
+        <Selector<FV, "endow_designation", string, false>
+          name="endow_designation"
+          options={ENDOW_DESIGNATIONS.map((option) => ({
+            label: option.label,
+            value: option.value,
+          }))}
+        />
         <Label
           className="-mb-4"
           required={endowDesignation !== "Religious Organization"}
@@ -123,16 +133,7 @@ export default function Form() {
           options={sdgOptions}
           classes={{ button: "field-input-admin" }}
         />
-        <Label className="-mb-4" required>
-          Endowment Designation
-        </Label>
-        <Selector<FV, "endow_designation", string, false>
-          name="endow_designation"
-          options={ENDOW_DESIGNATIONS.map((option) => ({
-            label: option.label,
-            value: option.value,
-          }))}
-        />
+
         <Label className="-mb-4" required>
           Headquarters
         </Label>
@@ -149,7 +150,6 @@ export default function Form() {
         <ActivityCountries<FV, "active_in_countries">
           name="active_in_countries"
           classes={{
-            container: "bg-white dark:bg-blue-d6 px-4 py-3",
             button: "field-input-admin",
           }}
         />
