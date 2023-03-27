@@ -10,6 +10,8 @@ describe("string schemas tests", () => {
       { input: ".", expected: false },
       { input: ".@%#%&(!", expected: false },
       { input: "a.", expected: true },
+      { input: "http://", expected: false },
+      { input: "https://", expected: false },
       { input: "ftp://www.example.com", expected: false },
       { input: "mailto://www.example.com", expected: false },
       // special case, domain name can contain only top-level domain

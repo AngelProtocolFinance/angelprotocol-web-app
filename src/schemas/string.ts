@@ -51,6 +51,11 @@ export const url = Yup.string()
         return false;
       }
 
+      // if the string only contains the schema, the URL is invalid
+      if (new RegExp(/^https?:\/\/?$/).test(str)) {
+        return false;
+      }
+
       let givenURL;
       try {
         // first check if this is a valid URL at all using any schema
