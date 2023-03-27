@@ -9,7 +9,7 @@ import { contracts } from "constants/contractsV2";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { apCWs } from "./constants";
 
-export default function useAdminResourcesQuery(
+export function useAdminResourcesQuery(
   endowmentId?: string
 ): SWRResponse<AdminResources> {
   const { wallet } = useGetWallet();

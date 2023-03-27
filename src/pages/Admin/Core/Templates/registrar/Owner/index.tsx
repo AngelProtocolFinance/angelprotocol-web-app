@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { RegistrarOwnerValues } from "pages/Admin/types";
 import { RegistrarConfig } from "types/contracts";
-import useQueryContract from "services/contract/useQueryContract";
+import { useQueryContract } from "services/contract";
 import { FormError, FormSkeleton } from "components/admin";
 import Form from "./Form";
 import { schema } from "./schema";

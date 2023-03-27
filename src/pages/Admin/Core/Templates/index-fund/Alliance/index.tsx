@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { AllianceEditValues } from "pages/Admin/types";
-import useQueryContract from "services/contract/useQueryContract";
+import { useQueryContract } from "services/contract";
 import { FormError, FormSkeleton } from "components/admin";
 import { useSetter } from "store/accessors";
 import { setMembers } from "slices/admin/allianceMembers";

@@ -3,7 +3,7 @@ import { ProposalDetails } from "../../types";
 import { queryContract } from "services/juno/queryContract";
 import { idParamToNum } from "helpers";
 
-export default function useProposalDetailsQuery(
+export function useProposalDetailsQuery(
   cw3: string,
   id?: string
 ): SWRResponse<ProposalDetails> {

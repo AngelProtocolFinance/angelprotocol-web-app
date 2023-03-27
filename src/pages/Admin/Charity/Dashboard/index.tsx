@@ -1,5 +1,5 @@
 import { useAdminResources } from "pages/Admin/Guard";
-import useQueryContract from "services/contract/useQueryContract";
+import { useQueryContract } from "services/contract";
 import SWRLoader from "components/SWRLoader";
 import DonationsTable from "../DonationsTable";
 import Balances from "../common/Balances";

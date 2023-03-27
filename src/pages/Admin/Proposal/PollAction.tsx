@@ -1,7 +1,7 @@
 import React, { ReactNode, useMemo } from "react";
 import { ProposalMeta } from "pages/Admin/types";
 import { ProposalDetails, TagPayload } from "services/types";
-import useLatestBlockQuery from "services/contract/custom/useLatestBlockQuery";
+import { useLatestBlockQuery } from "services/contract";
 import { invalidateJunoTags } from "services/juno";
 import { defaultProposalTags } from "services/juno/tags";
 import { useModalContext } from "contexts/ModalContext";

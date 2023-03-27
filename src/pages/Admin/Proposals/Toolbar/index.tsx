@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { templates } from "pages/Admin/constants";
-import useLatestBlockQuery from "services/contract/custom/useLatestBlockQuery";
+import { useLatestBlockQuery } from "services/contract";
 import Icon from "components/Icon";
 import { humanize } from "helpers";
 import { adminRoutes } from "constants/routes";

@@ -4,7 +4,7 @@ import { idParamToNum } from "helpers";
 import { contracts } from "constants/contractsV2";
 import { apCWs } from "./constants";
 
-export default function useIsMemberQuery(user: string, endowmentId?: number) {
+export function useIsMemberQuery(user: string, endowmentId?: number) {
   //TODO: skip if not juno/polygon and no endowmentId
   //TODO: add keys
   return useSWR([user, endowmentId], async ([user, id]) => {

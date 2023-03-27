@@ -4,7 +4,7 @@ import {
   ProposalStatusOptions,
 } from "slices/admin/types";
 import { PageOptions, Proposal } from "types/contracts";
-import useQueryContract from "services/contract/useQueryContract";
+import { useQueryContract } from "services/contract";
 import { useAdminResources } from "../Guard";
 
 export const NUM_PROPOSALS_PER_PAGE = 5;

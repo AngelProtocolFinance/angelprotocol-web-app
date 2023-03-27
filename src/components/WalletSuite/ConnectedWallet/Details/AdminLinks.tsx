@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
-import { AP_ID, REVIEWER_ID } from "services/contract/custom/constants";
-import useIsMemberQuery from "services/contract/custom/useIsMemberQuery";
+import { AP_ID, REVIEWER_ID, useIsMemberQuery } from "services/contract/custom";
 import { WalletState } from "contexts/WalletContext";
 import { appRoutes } from "constants/routes";
 

@@ -2,7 +2,7 @@ import { ReactNode, createContext, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { AdminParams } from "./types";
 import { AdminResources } from "services/types";
-import useAdminResourcesQuery from "services/contract/custom/useAdminResourcesQuery";
+import { useAdminResourcesQuery } from "services/contract/custom";
 import Icon from "components/Icon";
 import Loader from "components/Loader";
 

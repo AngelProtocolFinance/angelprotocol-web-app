@@ -1,5 +1,5 @@
 import { useAdminResources } from "pages/Admin/Guard";
-import useQueryContract from "services/contract/useQueryContract";
+import { useQueryContract } from "services/contract";
 import SWRLoader from "components/SWRLoader";
 import AccountTabs from "../../common/AccountTabs";
 import WithdrawForm from "./WithdrawForm";

@@ -1,8 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Path, useFormContext } from "react-hook-form";
 import { FundIdContext } from "pages/Admin/types";
-import useLatestBlockQuery from "services/contract/custom/useLatestBlockQuery";
-import useQueryContract from "services/contract/useQueryContract";
+import { useLatestBlockQuery, useQueryContract } from "services/contract";
 
 export default function useFundSelection<T extends FundIdContext>(
   fieldName: Path<T>

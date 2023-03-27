@@ -5,7 +5,7 @@ import {
   RegistrarConfigExtension,
   RegistrarConfigExtensionPayload,
 } from "types/contracts";
-import useQueryContract from "services/contract/useQueryContract";
+import { useQueryContract } from "services/contract";
 import { FormError, FormSkeleton } from "components/admin";
 import Form from "./Form";
 import { schema } from "./schema";

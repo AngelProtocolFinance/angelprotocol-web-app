@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { ProposalParams } from "pages/Admin/types";
 import { Expiration } from "types/contracts";
-import useProposalDetailsQuery from "services/contract/custom/useProposalDetailsQuery";
+import { useProposalDetailsQuery } from "services/contract/custom";
 import Icon from "components/Icon";
 import SWRLoader from "components/SWRLoader";
 import { DetailLabel, Status } from "components/admin";

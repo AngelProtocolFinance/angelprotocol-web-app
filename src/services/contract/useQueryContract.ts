@@ -7,7 +7,7 @@ import { Contract } from "types/lists";
 import { contracts } from "constants/contractsV2";
 import { queryContract } from "../juno/queryContract";
 
-export default function useQueryContract<T extends QT>(
+export function useQueryContract<T extends QT>(
   contract: Q[T]["contract"] extends Contract ? Contract : string,
   id: T,
   args: Q[T]["args"]

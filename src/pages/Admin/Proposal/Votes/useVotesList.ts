@@ -1,5 +1,5 @@
 import { VotesPageOptions } from "types/contracts";
-import useQueryContract from "services/contract/useQueryContract";
+import { useQueryContract } from "services/contract";
 import { useAdminResources } from "../../Guard";
 
 //contract.voteList(genVoteListPageOptions(pollId, pageNum))
