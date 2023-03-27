@@ -7,12 +7,12 @@ import { Contract } from "types/lists";
 import { toBase64 } from "helpers";
 import { contracts } from "constants/contracts";
 import { JUNO_LCD } from "constants/env";
-import { queries } from "./queries";
+import { cosmosQueries } from "./cosmosQueries";
 
 export async function queryContract<T extends QT>(
   type: T,
   options: QueryOptions<T>,
-  url = JUNO_LCD
+  endpoint = { type: "cosmos", url: JUNO_LCD }
 ) {
   const [contract_key] = type.split(".");
   //consumer is forced to supply contract address when it is not hardcoded
@@ -22,13 +22,13 @@ export async function queryContract<T extends QT>(
     contract_key in contracts ? contracts[contract_key as Contract] : c;
 
   if (true) {
-    const [query, transform] = queries[type];
+    const [query, transform] = cosmosQueries[type];
     const content = typeof query === "function" ? query(args) : query;
     const path = `cosmwasm/wasm/v1/contract/${contract}/smart/${toBase64(
       content
     )}`;
 
-    return fetch(`${url}/${path}`)
+    return fetch(`${endpoint.url}/${path}`)
       .then<Q[T]["res"]>((res) => {
         const msg = `failed query ${type}`;
         if (!res.ok) throw new Error(msg);

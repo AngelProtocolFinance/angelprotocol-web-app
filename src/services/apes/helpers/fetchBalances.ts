@@ -29,7 +29,7 @@ export async function fetchBalances(
         {
           addr: address,
         },
-        chain.lcd_url
+        { type: "cosmos", url: chain.lcd_url }
       ).then(({ native, cw20 }) =>
         toMap([
           ...native,
@@ -46,7 +46,7 @@ export async function fetchBalances(
             cw20: x.token_id,
             addr: address,
           },
-          chain.lcd_url
+          { type: "cosmos", url: chain.lcd_url }
         ).then<Coin>((res) => ({ amount: res.balance, denom: x.token_id }))
       ),
     ]);

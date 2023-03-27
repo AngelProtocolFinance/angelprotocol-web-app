@@ -1,6 +1,6 @@
 import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
 
-export const queries: {
+export const cosmosQueries: {
   [K in QT]: Q[K]["args"] extends null
     ? [object, Q[K]["transform"]]
     : [(args: Q[K]["args"]) => object, Q[K]["transform"]];
