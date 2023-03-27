@@ -6,28 +6,31 @@ export const queryObjects: {
     : [(args: Q[K]["args"]) => object, Q[K]["transform"]];
 } = {
   /** registrar */
-  regConfig: [{ config: {} }, (res) => res.data],
-  regConfigExtension: [{ config_extension: {} }, (res) => res.data],
+  "registrar.config": [{ config: {} }, (res) => res.data],
+  "registrar.config-extension": [{ config_extension: {} }, (res) => res.data],
 
   /** index fund */
-  ifFunds: [{ funds_list: {} }, (res) => res.data.funds],
-  ifAlliance: [{ alliance_members: {} }, (res) => res.data.alliance_members],
-  ifConfig: [{ config: {} }, (res) => res.data],
+  "index-fund.funds": [{ funds_list: {} }, (res) => res.data.funds],
+  "index-fund.alliance-members": [
+    { alliance_members: {} },
+    (res) => res.data.alliance_members,
+  ],
+  "index-fund.config": [{ config: {} }, (res) => res.data],
 
   /** gov */
-  govStaker: [
+  "gov.staker": [
     ({ addr }) => ({
       staker: { address: addr },
     }),
     (res) => res.data,
   ],
-  govState: [{ state: {} }, (res) => res.data],
-  govConfig: [{ config: {} }, (res) => res.data],
-  govPolls: [{ polls: {} }, (res) => res.data.polls],
+  "gov.state": [{ state: {} }, (res) => res.data],
+  "gov.config": [{ config: {} }, (res) => res.data],
+  "gov.polls": [{ polls: {} }, (res) => res.data.polls],
 
   /** cw20 */
-  cw20Info: [{}, (res) => res.data],
-  cw20Balance: [
+  "cw20.info": [{}, (res) => res.data],
+  "cw20.balance": [
     ({ addr }) => ({
       balance: { address: addr },
     }),
@@ -35,7 +38,7 @@ export const queryObjects: {
   ],
 
   /** giftcard */
-  giftcardBalance: [
+  "gift-card.balance": [
     ({ addr }) => ({
       balance: { address: addr },
     }),
@@ -43,8 +46,8 @@ export const queryObjects: {
   ],
 
   /** cw4 member */
-  cw4Members: [{ list_members: {} }, (res) => res.data.members],
-  cw4Member: [
+  "cw4.members": [{ list_members: {} }, (res) => res.data.members],
+  "cw4.member": [
     ({ addr }) => ({
       member: { addr },
     }),
@@ -52,29 +55,29 @@ export const queryObjects: {
   ],
 
   /** cw3 voter */
-  cw3Voter: [
+  "cw3.voter": [
     ({ addr }) => ({
       voter: { address: addr },
     }),
     (res) => res.data,
   ],
 
-  cw3ListVoters: [{ list_voters: {} }, (res) => res.data.voters],
-  cw3Config: [{ config: {} }, (res) => res.data],
-  cw3Proposals: [
+  "cw3.voters": [{ list_voters: {} }, (res) => res.data.voters],
+  "cw3.config": [{ config: {} }, (res) => res.data],
+  "cw3.proposals": [
     (options) => ({
       reverse_proposals: options,
     }),
     (res) => res.data.proposals,
   ],
-  cw3Proposal: [
+  "cw3.proposal": [
     ({ id }) => ({
       proposal: { proposal_id: id },
     }),
     (res) => res.data,
   ],
 
-  cw3Votes: [
+  "cw3.votes": [
     (options) => ({
       list_votes: options,
     }),
@@ -82,16 +85,16 @@ export const queryObjects: {
   ],
 
   /** account */
-  accEndowment: [
+  "accounts.endowment": [
     ({ id }) => ({
       endowment: { id },
     }),
     (res) => res.data,
   ],
-  accState: [({ id }) => ({ state: { id } }), (res) => res.data],
+  "accounts.state": [({ id }) => ({ state: { id } }), (res) => res.data],
 
   /** (account) settings controller */
-  endowmentController: [
+  "accounts/settings.controller": [
     ({ id }) => ({ endowment_controller: { id } }),
     (res) => res.data,
   ],

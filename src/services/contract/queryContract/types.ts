@@ -24,93 +24,87 @@ import {
   RegistrarConfigExtension,
   VotesPageOptions,
 } from "types/contracts";
+import { Contract } from "types/lists";
 
 type Addr = { addr: string };
 
-type Query<Args, Res, Result, Contract> = {
+type Query<Args, Res, Result> = {
   args: Args;
   res: Res;
   transform: (res: Res) => Result;
-  contract: Contract;
 };
 
 export interface ContractQueries {
-  regConfig: Query<null, Q<RegistrarConfig>, RegistrarConfig, "registrar">;
+  "registrar.config": Query<null, Q<RegistrarConfig>, RegistrarConfig>;
 
-  regConfigExtension: Query<
+  "registrar.config-extension": Query<
     null,
     Q<RegistrarConfigExtension>,
-    RegistrarConfigExtension,
-    "registrar"
+    RegistrarConfigExtension
   >;
 
-  ifFunds: Query<
-    null,
-    Q<{ funds: FundDetails[] }>,
-    FundDetails[],
-    "index-fund"
-  >;
+  "index-fund.funds": Query<null, Q<{ funds: FundDetails[] }>, FundDetails[]>;
 
-  ifAlliance: Query<
+  "index-fund.alliance-members": Query<
     null,
     Q<{ alliance_members: AllianceMember[] }>,
-    AllianceMember[],
-    "index-fund"
+    AllianceMember[]
   >;
 
-  ifConfig: Query<null, Q<IndexFundConfig>, IndexFundConfig, "index-fund">;
+  "index-fund.config": Query<null, Q<IndexFundConfig>, IndexFundConfig>;
 
-  giftcardBalance: Query<Addr, Q<GenericBalance>, GenericBalance, "gift-card">;
+  "gift-card.balance": Query<Addr, Q<GenericBalance>, GenericBalance>;
 
-  govStaker: Query<Addr, Q<GovStaker>, GovStaker, "gov">;
-  govState: Query<null, Q<GovState>, GovState, "gov">;
-  govConfig: Query<null, Q<GovConfig>, GovConfig, "gov">;
-  govPolls: Query<null, Q<Polls>, Polls["polls"], "gov">;
+  "gov.staker": Query<Addr, Q<GovStaker>, GovStaker>;
+  "gov.state": Query<null, Q<GovState>, GovState>;
+  "gov.config": Query<null, Q<GovConfig>, GovConfig>;
+  "gov.polls": Query<null, Q<Polls>, Polls["polls"]>;
 
-  cw20Info: Query<null, Q<CW20Info>, CW20Info, unknown>;
-  cw20Balance: Query<Addr, Q<CW20Balance>, CW20Balance, unknown>;
+  "cw20.info": Query<null, Q<CW20Info>, CW20Info>;
+  "cw20.balance": Query<Addr, Q<CW20Balance>, CW20Balance>;
 
-  cw4Members: Query<null, Q<{ members: CW4Member[] }>, CW4Member[], unknown>;
+  "cw4.members": Query<null, Q<{ members: CW4Member[] }>, CW4Member[]>;
+  "cw4.member": Query<Addr, Q<InquiredMember>, InquiredMember>;
 
-  cw4Member: Query<Addr, Q<InquiredMember>, InquiredMember, unknown>;
-  cw3Voter: Query<Addr, Q<InquiredMember>, InquiredMember, unknown>;
-
-  cw3ListVoters: Query<null, Q<CW3ListVoters>, string[], unknown>;
-
-  cw3Config: Query<null, Q<CW3Config>, CW3Config, unknown>;
-  cw3Proposals: Query<
-    PageOptions,
-    Q<{ proposals: Proposal[] }>,
-    Proposal[],
-    unknown
-  >;
-  cw3Proposal: Query<{ id: number }, Q<Proposal>, Proposal, unknown>;
-
-  cw3Votes: Query<
+  "cw3.voter": Query<Addr, Q<InquiredMember>, InquiredMember>;
+  "cw3.voters": Query<null, Q<CW3ListVoters>, string[]>;
+  "cw3.config": Query<null, Q<CW3Config>, CW3Config>;
+  "cw3.proposals": Query<PageOptions, Q<{ proposals: Proposal[] }>, Proposal[]>;
+  "cw3.proposal": Query<{ id: number }, Q<Proposal>, Proposal>;
+  "cw3.votes": Query<
     VotesPageOptions,
     Q<{ votes: AdminVoteInfo[] }>,
-    AdminVoteInfo[],
-    unknown
-  >;
-  accEndowment: Query<
-    { id: number },
-    Q<EndowmentDetails>,
-    EndowmentDetails,
-    "accounts"
+    AdminVoteInfo[]
   >;
 
-  accState: Query<
+  "accounts.endowment": Query<
     { id: number },
-    Q<EndowmentState>,
-    EndowmentState,
-    "accounts"
+    Q<EndowmentDetails>,
+    EndowmentDetails
   >;
-  endowmentController: Query<
+
+  "accounts.state": Query<{ id: number }, Q<EndowmentState>, EndowmentState>;
+  "accounts/settings.controller": Query<
     { id: number },
     Q<EndowmentController>,
-    EndowmentController,
-    "accounts/settings"
+    EndowmentController
   >;
 }
 
 export type ContractQueryTypes = keyof ContractQueries;
+
+type Empty = { [key: string]: never };
+type QueryArgs = ContractQueries[ContractQueryTypes]["args"];
+
+export type QueryOptions<T extends ContractQueryTypes> =
+  (T extends `${infer C}.${string}`
+    ? C extends Contract
+      ? //if args is also null, options is empty
+        QueryArgs extends null
+        ? Empty
+        : {}
+      : //if contract address is not hardcoded, need to supply
+        { [key in C]: string }
+    : Empty) &
+    //only require args if they're not null
+    (QueryArgs extends null ? Empty : QueryArgs);
