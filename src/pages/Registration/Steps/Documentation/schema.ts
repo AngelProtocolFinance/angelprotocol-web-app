@@ -36,8 +36,8 @@ export const schema = Yup.object().shape<SchemaShape<FormValues>>({
   proofOfRegistration: Yup.object().shape(genAssetShape(true)),
   website: Yup.string().required("required").url("invalid url"),
   sdgs: Yup.array()
-    .max(MAX_SDGS, `maximum ${MAX_SDGS} selections allowed`)
-    .min(1, "required"),
+    .min(1, "required")
+    .max(MAX_SDGS, `maximum ${MAX_SDGS} selections allowed`),
 
   hqCountry: Yup.object().shape<SchemaShape<Country>>({
     name: requiredString,
