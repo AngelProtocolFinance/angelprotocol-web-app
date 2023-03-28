@@ -3,7 +3,7 @@ import { InitReg } from "./types";
 import { useRequestEmailMutation } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
-import Popup from "components/Popup";
+import Prompt from "components/Prompt";
 import { handleMutationResult } from "helpers";
 
 export default function ConfirmEmail({ classes = "" }: { classes?: string }) {
@@ -49,7 +49,11 @@ export default function ConfirmEmail({ classes = "" }: { classes?: string }) {
             await requestEmail({ uuid: reference, email }),
             handleError,
             () => {
-              showModal(Popup, { message: "Email verification sent!" });
+              showModal(Prompt, {
+                type: "success",
+                title: "Verify Email",
+                children: "Email verification sent!",
+              });
             }
           );
         }}

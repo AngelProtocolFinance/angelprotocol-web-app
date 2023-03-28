@@ -2,7 +2,6 @@ import { useState } from "react";
 import { SenderArgs, isTxResultError } from "types/tx";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
-import Popup from "components/Popup";
 import { TxPrompt } from "components/Prompt";
 import { useSetter } from "store/accessors";
 import { logger } from "helpers";
@@ -66,8 +65,8 @@ export default function useTxSender<T extends boolean = false>(
       const { fee, tx } = estimate;
 
       if (fee.amount > wallet.displayCoin.balance) {
-        return showModal(Popup, {
-          message: "Not enough balance to pay for fees",
+        return showModal(TxPrompt, {
+          error: "Not enough balance to pay for fees",
         });
       }
 

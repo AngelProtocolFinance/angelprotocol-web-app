@@ -4,7 +4,7 @@ import { IndexFundOwnerValues } from "pages/Admin/types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
-import Popup from "components/Popup";
+import Prompt from "components/Prompt";
 import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
 import useTxSender from "hooks/useTxSender";
@@ -23,8 +23,12 @@ export default function useUpdateOwner() {
   async function updateOwner(data: IndexFundOwnerValues) {
     //check for changes
     if (data.initialOwner === data.new_owner) {
-      showModal(Popup, { message: "no changes detected" });
-      return;
+      return showModal(Prompt, {
+        type: "error",
+        title: "Update Owner",
+        headline: "No Changes Detected",
+        children: "Nothing to submit, no changes detected",
+      });
     }
 
     const indexFundContract = new IndexFund(wallet);

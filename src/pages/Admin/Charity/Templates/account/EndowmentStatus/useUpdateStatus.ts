@@ -9,7 +9,7 @@ import {
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
-import Popup from "components/Popup";
+import Prompt from "components/Prompt";
 import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
 import useTxSender from "hooks/useTxSender";
@@ -25,17 +25,29 @@ export default function useUpdateStatus() {
 
   async function updateStatus(data: EndowmentUpdateValues) {
     if (!data.prevStatus) {
-      showModal(Popup, { message: "Endowment not found" });
-      return;
+      return showModal(Prompt, {
+        type: "error",
+        title: "Update Status",
+        headline: "Endowment not found",
+      });
     } else if (data.prevStatus === "closed") {
-      showModal(Popup, { message: "Endowment is closed and can't be changed" });
+      return showModal(Prompt, {
+        type: "error",
+        title: "Update Status",
+        headline: "Endowment Closed",
+        children: "Endowment is closed and can't be changed",
+      });
       //only review team can change status from "Inactive"
       //NOTE: if this template will be used other than Charity: further check authority
     } else {
       const prevStatusNum = endowmentStatus[data.prevStatus];
       if (+data.status === prevStatusNum) {
-        showModal(Popup, { message: "New status same as previous status" });
-        return;
+        return showModal(Prompt, {
+          type: "error",
+          title: "Update Status",
+          headline: "Status Unchanged",
+          children: "New status same as previous status",
+        });
       }
     }
 

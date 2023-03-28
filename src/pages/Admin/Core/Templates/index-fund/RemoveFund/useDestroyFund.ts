@@ -3,7 +3,7 @@ import { FundDestroyValues, RemoveFundMeta } from "pages/Admin/types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
-import Popup from "components/Popup";
+import Prompt from "components/Prompt";
 import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
 import useTxSender from "hooks/useTxSender";
@@ -20,8 +20,12 @@ export default function useDestroyFund() {
 
   async function destroyFund(data: FundDestroyValues) {
     if (data.fundId === "") {
-      showModal(Popup, { message: "Please select fund to remove" });
-      return;
+      return showModal(Prompt, {
+        type: "error",
+        title: "Destroy Fund",
+        headline: "No Fund Selected",
+        children: "Please select a fund to remove",
+      });
     }
     const indexFundContract = new IndexFund(wallet);
     const embeddedRemoveFundMsg = indexFundContract.createEmbeddedRemoveFundMsg(

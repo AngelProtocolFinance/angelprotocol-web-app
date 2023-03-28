@@ -7,7 +7,7 @@ import {
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import Popup from "components/Popup";
+import Prompt from "components/Prompt";
 import CW3Review from "contracts/CW3/CW3Review";
 import useTxSender from "hooks/useTxSender";
 import { genDiffMeta, getPayloadDiff, getTagPayloads } from "helpers/admin";
@@ -39,8 +39,12 @@ export default function useCreateProposal() {
     const diffEntries = Object.entries(diff) as [Key, Value][];
 
     if (diffEntries.length <= 0) {
-      showModal(Popup, { message: "no changes made" });
-      return;
+      return showModal(Prompt, {
+        type: "error",
+        title: "Create Proposal",
+        headline: "No Changes Detected",
+        children: "Nothing to submit, no changes detected",
+      });
     }
 
     const contract = new CW3Review(wallet);

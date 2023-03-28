@@ -1,14 +1,13 @@
 import jwtDecode from "jwt-decode";
 import { PropsWithChildren } from "react";
-import { Location, Navigate, useLocation } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Link, Location, Navigate, useLocation } from "react-router-dom";
 import { InitReg } from "./types";
 import { InitApplication } from "types/aws";
 import { useRequestEmailMutation } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
-import Popup from "components/Popup";
+import Prompt from "components/Prompt";
 import { handleMutationResult, logger } from "helpers";
 import { APP_NAME } from "constants/common";
 import { appRoutes } from "constants/routes";
@@ -53,7 +52,11 @@ export default function VerifiedEmail({ classes = "" }: { classes?: string }) {
               await requestEmail({ uuid: c.PK, email: c.Email }),
               handleError,
               () => {
-                showModal(Popup, { message: "Email verification sent!" });
+                showModal(Prompt, {
+                  type: "success",
+                  title: "Verify Email",
+                  children: "Email verification sent!",
+                });
               }
             );
           }}

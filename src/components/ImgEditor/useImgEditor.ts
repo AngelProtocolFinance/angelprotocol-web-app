@@ -3,7 +3,8 @@ import { DropzoneOptions } from "react-dropzone";
 import { FieldValues, useController, useFormContext } from "react-hook-form";
 import { ImgLink, Props } from "./types";
 import { useModalContext } from "contexts/ModalContext";
-import Popup from "components/Popup";
+import Prompt from "components/Prompt";
+import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import ImgCropper from "./ImgCropper";
 
 type Key = keyof ImgLink;
@@ -65,8 +66,12 @@ export default function useImgEditor<T extends FieldValues, K extends keyof T>({
 
   function handleCropResult(blob: Blob | null, originalFile: File) {
     if (!blob) {
-      showModal(Popup, { message: "Failed to crop image" });
-      return;
+      return showModal(Prompt, {
+        type: "error",
+        headline: "Edit image",
+        title: "Failed to crop image",
+        children: GENERIC_ERROR_MESSAGE,
+      });
     }
     const cropped = URL.createObjectURL(blob);
     setValue(previewPath, cropped as any);

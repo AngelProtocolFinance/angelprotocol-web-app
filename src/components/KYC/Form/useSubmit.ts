@@ -2,7 +2,6 @@ import { useFormContext } from "react-hook-form";
 import { FormValues as FV, Props } from "../types";
 import { useRequestReceiptMutation } from "services/apes";
 import { useModalContext } from "contexts/ModalContext";
-import Popup from "components/Popup";
 import Prompt from "components/Prompt";
 import { useSetter } from "store/accessors";
 import { setKYC } from "slices/donation";
@@ -31,19 +30,20 @@ export default function useSubmit(props: Props) {
       });
 
       if ("error" in response) {
-        showModal(Popup, {
-          message: "Failed to send receipt request. Please try again later.",
+        return showModal(Prompt, {
+          type: "error",
+          headline: "Send Receipt",
+          title: "Error Sending Tax Receipt",
+          children: "Failed to send receipt request. Please try again later.",
         });
-        return;
       }
-      showModal(Prompt, {
+      return showModal(Prompt, {
         type: "success",
         headline: "Get Receipt",
         title: "Tax Receipt Sent",
         children:
           "Your tax receipt has been sent to the email address provided",
       });
-      return;
     }
 
     //on-donation receipt
