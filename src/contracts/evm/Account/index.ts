@@ -1,10 +1,13 @@
 import { Interface } from "@ethersproject/abi";
 import type { BigNumber } from "@ethersproject/bignumber";
-import { EndowmentDetails } from "services/contract/queryContract/decoded-types";
+import {
+  EndowmentResponse,
+  StateResponse,
+} from "services/contract/queryContract/decoded-types";
 import { NewAIF } from "types/contracts/evm";
 import { TxLog } from "types/evm";
 import { toTuple } from "helpers";
-import abi from "./abi.json";
+import abi from "./abi";
 
 const iface = new Interface(abi);
 //FUTURE: append abi with new methods
@@ -41,7 +44,17 @@ export const endowmentDetails = {
   encode(id: number) {
     return iface.encodeFunctionData(endowDetailsFn, [id]);
   },
-  decode(result: string): EndowmentDetails {
+  decode(result: string): EndowmentResponse {
     return iface.decodeFunctionResult(endowDetailsFn, result)[0];
+  },
+};
+
+const endowStateFn = iface.getFunction("queryState");
+export const endowState = {
+  encode(id: number) {
+    return iface.encodeFunctionData(endowStateFn, [id]);
+  },
+  decode(result: string): StateResponse {
+    return iface.decodeFunctionResult(endowStateFn, result)[0];
   },
 };

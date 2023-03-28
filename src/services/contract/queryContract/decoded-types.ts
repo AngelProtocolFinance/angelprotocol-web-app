@@ -19,7 +19,14 @@ enum StatusEnum {
   Closed,
 }
 
-export interface EndowmentDetails {
+enum BeneficiaryEnum {
+  EndowmentId,
+  IndexFund,
+  Wallet,
+  None,
+}
+
+export interface EndowmentResponse {
   owner: string;
   categories: Categories;
   //tier
@@ -37,6 +44,29 @@ export interface EndowmentDetails {
   //proposal_link
   //referral_id
 }
+
+export interface StateResponse {
+  donationsReceived: {
+    liquid: BigNumber;
+    locked: BigNumber;
+  };
+  closingEndowment: boolean;
+  closingBeneficiary: {
+    data: {
+      id: BigNumber;
+      addr: string;
+    };
+    enumData: BeneficiaryEnum;
+  };
+}
+
+/**
+ * struct StateResponse {
+        AngelCoreStruct.DonationsReceived donationsReceived;
+        bool closingEndowment;
+        AngelCoreStruct.Beneficiary closingBeneficiary;
+    }
+ */
 
 // ////////// CONVERTERS ///////////////
 export function toEndowType(type: TypeEnum): EndowmentType {

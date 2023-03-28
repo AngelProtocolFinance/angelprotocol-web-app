@@ -1,3 +1,4 @@
+import Test from "App/Test";
 import { StrictMode, Suspense, lazy } from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
@@ -13,7 +14,7 @@ import reportWebVitals from "./reportWebVitals";
 //set theme immediately, so even suspense loaders and can use it
 initTheme();
 
-const App = lazy(() => import("./App/App"));
+// const App = lazy(() => import("./App/App"));
 
 const LoaderComponent = () => (
   <Loader bgColorClass="bg-blue" gapClass="gap-2" widthClass="w-4" />
@@ -35,7 +36,7 @@ root.render(
         <Provider store={store}>
           <BrowserRouter>
             <Suspense fallback={<LoaderComponent />}>
-              <App />
+              <Test />
             </Suspense>
           </BrowserRouter>
         </Provider>

@@ -1,0 +1,74 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "curId",
+        "type": "uint256"
+      }
+    ],
+    "name": "queryState",
+    "outputs": [
+      {
+        "components": [
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "locked",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "liquid",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct AngelCoreStruct.DonationsReceived",
+            "name": "donationsReceived",
+            "type": "tuple"
+          },
+          {
+            "internalType": "bool",
+            "name": "closingEndowment",
+            "type": "bool"
+          },
+          {
+            "components": [
+              {
+                "components": [
+                  {
+                    "internalType": "uint256",
+                    "name": "id",
+                    "type": "uint256"
+                  },
+                  {
+                    "internalType": "address",
+                    "name": "addr",
+                    "type": "address"
+                  }
+                ],
+                "internalType": "struct AngelCoreStruct.BeneficiaryData",
+                "name": "data",
+                "type": "tuple"
+              },
+              {
+                "internalType": "enum AngelCoreStruct.BeneficiaryEnum",
+                "name": "enumData",
+                "type": "uint8"
+              }
+            ],
+            "internalType": "struct AngelCoreStruct.Beneficiary",
+            "name": "closingBeneficiary",
+            "type": "tuple"
+          }
+        ],
+        "internalType": "struct AccountMessages.StateResponse",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

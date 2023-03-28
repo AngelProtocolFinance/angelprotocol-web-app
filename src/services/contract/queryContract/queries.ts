@@ -1,7 +1,7 @@
 import { toEndowStatus, toEndowType } from "./decoded-types";
 import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
 import { UNSDG_NUMS } from "types/lists";
-import { endowmentDetails } from "contracts/evm/Account";
+import { endowState, endowmentDetails } from "contracts/evm/Account";
 import { placeholders as p } from "./placeholders";
 
 export const queries: {
@@ -106,8 +106,8 @@ export const queries: {
         },
         endow_type: toEndowType(d.endow_type),
         status: toEndowStatus(d.status),
+        //TODO: populate strategies
         invested_strategies: {
-          //TODO: populate
           liquid: [],
           locked: [],
         },
@@ -116,8 +116,31 @@ export const queries: {
     },
   ],
   "accounts.state": [
-    ({ id }) => ({ state: { id } }),
-    () => p["accounts.state"],
+    ({ id }) => endowState.encode(id) as any,
+    (result) => {
+      const d = endowState.decode(result);
+      console.log(d);
+      return {
+        //TODO: populate once needed
+        tokens_on_hand: {
+          locked: {
+            native: [],
+            cw20: [],
+          },
+          liquid: {
+            native: [],
+            cw20: [],
+          },
+        },
+        donations_received: {
+          locked: d.donationsReceived.locked.toNumber(),
+          liquid: d.donationsReceived.liquid.toNumber(),
+        },
+        closing_endowment: d.closingEndowment,
+        //FUTURE: index-fund can also be beneficiary
+        closing_beneficiary: d.closingBeneficiary.data.addr,
+      };
+    },
   ],
 
   /** (account) settings controller */
