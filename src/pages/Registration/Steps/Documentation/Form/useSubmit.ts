@@ -62,5 +62,8 @@ export default function useSubmit() {
       handleError
     );
   };
-  return { submit: handleSubmit(submit), isSubmitting };
+  return {
+    submit: handleSubmit(submit),
+    isSubmitting,
+  };
 }

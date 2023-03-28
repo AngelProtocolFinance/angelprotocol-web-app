@@ -23,6 +23,7 @@ const sdgOptions = Object.entries(unsdgs).map(([key, { title }]) =>
 
 export default function Form() {
   const { editProfile, isSubmitting, id, reset } = useEditProfile();
+
   return (
     <form
       onSubmit={editProfile}
@@ -127,6 +128,7 @@ export default function Form() {
             label: option.label,
             value: option.value,
           }))}
+          classes={{ button: "field-input-admin" }}
         />
         <Label className="-mb-4" required>
           Headquarters
@@ -144,7 +146,6 @@ export default function Form() {
         <ActivityCountries<FV, "active_in_countries">
           name="active_in_countries"
           classes={{
-            container: "bg-white dark:bg-blue-d6 px-4 py-3",
             button: "field-input-admin",
           }}
         />
