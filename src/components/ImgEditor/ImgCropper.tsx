@@ -3,6 +3,7 @@ import "cropperjs/dist/cropper.min.css";
 import { useCallback, useRef } from "react";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
+import Image from "components/Image";
 import Modal from "components/Modal";
 
 type Props = {
@@ -56,7 +57,11 @@ export default function ImgCropper({
           <Icon type="Save" size={24} />
         </button>
       </div>
-      <img ref={imgRef} src={preview} className="w-full" alt="banner" />
+      <Image
+        ref={imgRef}
+        img={{ alt: "banner", src: preview }}
+        className="w-full"
+      />
     </Modal>
   );
 }

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { TokenWithAmount } from "types/slices";
 import { Estimate } from "types/tx";
 import { WithWallet } from "contexts/WalletContext";
+import Image from "components/Image";
 import { ErrorStatus, LoadingStatus } from "components/Status";
 import { useSetter } from "store/accessors";
 import { SubmitStep, setStep } from "slices/donation";
@@ -48,10 +49,9 @@ export default function Submit(props: WithWallet<SubmitStep>) {
   return (
     <div className="grid content-start">
       <Row title="Currency:">
-        <img
-          alt=""
+        <Image
           className="ml-auto object-cover h-4 w-4 rounded-full mr-1"
-          src={token.logo}
+          img={{ src: token.logo }}
         />
         <span>{token.symbol}</span>
       </Row>

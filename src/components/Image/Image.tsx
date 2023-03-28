@@ -1,4 +1,9 @@
-import { PropsWithChildren, useRef, useState } from "react";
+import React, {
+  PropsWithChildren,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 import ContentLoader from "components/ContentLoader";
 import ExtLink from "components/ExtLink";
 import ImagePlaceholder from "./ImagePlaceholder";
@@ -14,37 +19,44 @@ type Props = {
   className?: string;
 };
 
-export default function Image({ img, className }: Props) {
-  const ref = useRef<HTMLImageElement>(null);
-  const [isLoading, setLoading] = useState(!!img?.src || img?.isSrcLoading);
+const Image = React.forwardRef<HTMLImageElement, Props>(
+  ({ img, className }, forwardRef) => {
+    const ref = useRef<HTMLImageElement>(null);
+    const [isLoading, setLoading] = useState(!!img?.src || img?.isSrcLoading);
 
-  if (!img?.src) {
-    return <ImagePlaceholder className={className} />;
+    useImperativeHandle<HTMLImageElement | null, HTMLImageElement | null>(
+      forwardRef,
+      () => ref.current
+    );
+
+    if (!img?.src) {
+      return <ImagePlaceholder className={className} />;
+    }
+
+    const shouldLoad = !ref.current?.complete && isLoading;
+
+    return (
+      <>
+        {shouldLoad && <ContentLoader className={className} />}
+        {!img.isSrcLoading && (
+          <WithLink
+            className={`${className} ${shouldLoad ? "hidden" : ""}`}
+            href={img.href}
+            title={img.title}
+          >
+            <img
+              ref={ref}
+              src={img.src}
+              className={`${className} object-contain w-full h-full`}
+              alt={img.alt || ""}
+              onLoad={() => setLoading(false)}
+            />
+          </WithLink>
+        )}
+      </>
+    );
   }
-
-  const shouldLoad = !ref.current?.complete && isLoading;
-
-  return (
-    <>
-      {shouldLoad && <ContentLoader className={className} />}
-      {!img.isSrcLoading && (
-        <WithLink
-          className={`${className} ${shouldLoad ? "hidden" : ""}`}
-          href={img.href}
-          title={img.title}
-        >
-          <img
-            ref={ref}
-            src={img.src}
-            className={`${className} object-contain w-full h-full`}
-            alt={img.alt || ""}
-            onLoad={() => setLoading(false)}
-          />
-        </WithLink>
-      )}
-    </>
-  );
-}
+);
 
 function WithLink({
   className,
@@ -64,3 +76,5 @@ function WithLink({
     <div className={className}>{children}</div>
   );
 }
+
+export default Image;
