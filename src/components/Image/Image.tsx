@@ -9,6 +9,7 @@ import ExtLink from "components/ExtLink";
 import ImagePlaceholder from "./ImagePlaceholder";
 
 export type ImageProps = React.ImgHTMLAttributes<HTMLImageElement> & {
+  fallbackSrc?: string;
   isSrcLoading?: boolean;
 } & ({ href: string; title: string } | { href?: never; title?: never });
 
