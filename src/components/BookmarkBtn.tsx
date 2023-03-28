@@ -39,7 +39,7 @@ export default function BookmarkBtn({ endowId, children }: Props) {
       return showModal(Prompt, {
         type: "error",
         headline: "Bookmark",
-        title: "Wallet Disconnected", // this title needed? Added it here as imo UI looks better with title
+        title: "Wallet Disconnected",
         children: "Connect wallet to edit bookmark",
       });
     }
