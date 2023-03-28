@@ -61,7 +61,7 @@ export interface ContractQueries {
   "gov.polls": Query<null, Q<Polls>, Polls["polls"]>;
 
   "cw20.info": Query<null, Q<CW20Info>, CW20Info>;
-  "cw20.balance": Query<Addr, Q<CW20Balance>, CW20Balance>;
+  "cw20.balance": Query<Addr, Q<CW20Balance>, string>;
 
   "cw4.members": Query<null, Q<{ members: CW4Member[] }>, CW4Member[]>;
   "cw4.member": Query<Addr, Q<InquiredMember>, InquiredMember>;

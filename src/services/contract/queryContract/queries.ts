@@ -34,7 +34,7 @@ export const queries: {
     ({ addr }) => ({
       balance: { address: addr },
     }),
-    (res) => res.data,
+    (res) => res.data.balance,
   ],
 
   /** giftcard */

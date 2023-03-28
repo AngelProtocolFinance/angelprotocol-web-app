@@ -47,7 +47,7 @@ export async function fetchBalances(
             addr: address,
           },
           chain.lcd_url
-        ).then<Coin>((res) => ({ amount: res.balance, denom: x.token_id }))
+        ).then<Coin>((res) => ({ amount: res, denom: x.token_id }))
       ),
     ]);
 
