@@ -46,7 +46,7 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
             <img
               ref={ref}
               src={props.src}
-              className={`${props.className} object-contain w-full h-full`}
+              className={`object-contain w-full h-full ${props.className}`}
               alt={props.alt || ""}
               loading={props.loading}
               onLoad={() => setLoading(false)}
