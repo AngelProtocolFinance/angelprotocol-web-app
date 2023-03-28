@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { steps } from "pages/Registration/routes";
 import { WalletState, useSetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
+import Image from "components/Image";
 import { LoadText, Separator } from "components/registration";
 import { useRegState } from "../StepGuard";
 import useRegisterWallet from "./useRegisterWallet";
@@ -48,11 +49,7 @@ export default function WalletSubmission({
         You are already connected to a Wallet:
       </h3>
       <div className="grid grid-cols-[auto_1fr] items-center border border-prim p-4 rounded mt-8">
-        <img
-          src={walletIcon}
-          alt=""
-          className="w-10 h-10 object-contain row-span-2 mr-4"
-        />
+        <Image src={walletIcon} className="w-10 h-10 row-span-2 mr-4" />
         <h6 className="capitalize text-lg mb-1">{providerId}</h6>
         <span className="text-sm truncate">{address}</span>
       </div>

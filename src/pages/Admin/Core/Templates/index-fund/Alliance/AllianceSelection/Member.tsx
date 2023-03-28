@@ -2,6 +2,7 @@ import React from "react";
 import { AllianceMemberWithFlags } from "slices/admin/types";
 import defaultIcon from "assets/icons/angel-alliance.png";
 import Icon from "components/Icon";
+import Image from "components/Image";
 import { Cells } from "components/TableSection";
 import useMember from "./useMember";
 
@@ -21,10 +22,9 @@ export default function Member(props: AllianceMemberWithFlags) {
           : ""
       }`}
     >
-      <img
+      <Image
         src={props.edits?.logo || props.logo || defaultIcon}
-        alt=""
-        className="w-8 h-8 object-contain"
+        className="w-8 h-8"
       />
       <>{props.edits?.name || props.name}</>
       <span className="text-sm">{props.wallet}</span>

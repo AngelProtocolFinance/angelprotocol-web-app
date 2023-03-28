@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { LeaderboardEntry } from "types/aws";
 import defaultIcon from "assets/images/angelprotocol-horiz-blu.png";
+import Image from "components/Image";
 import { Cells } from "components/TableSection";
 import { appRoutes } from "constants/routes";
 import Amount from "./Amount";
@@ -16,12 +17,11 @@ export default function Row({
   const { locked, liquid } = projectFunds(10, total_lock, total_liq, 20, 5);
   return (
     <Cells type="td" cellClass="first:pl-4 last:pr-4 py-3">
-      <img
+      <Image
         src={charity_logo || defaultIcon}
         onError={(e) => e.currentTarget.setAttribute("src", defaultIcon)}
         loading="lazy"
-        alt=""
-        className={`h-16 aspect-video rounded object-contain border border-gray-l3  dark:border-none dark:bg-white p-2`}
+        className="h-16 aspect-video rounded border border-gray-l3 dark:border-none dark:bg-white p-2"
       />
       <Link
         to={`../${appRoutes.profile}/${endowment_id}`}
