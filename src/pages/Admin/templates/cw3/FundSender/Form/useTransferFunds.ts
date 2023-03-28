@@ -5,7 +5,7 @@ import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
-import Popup from "components/Popup";
+import Prompt from "components/Prompt";
 import CW3 from "contracts/CW3";
 import CW20 from "contracts/CW20";
 import useTxSender from "hooks/useTxSender";
@@ -29,10 +29,12 @@ export default function useTransferFunds() {
     const balance =
       data.denom === axlUSDCDenom ? data.usdBalance : data.haloBalance;
     if (data.amount > balance) {
-      showModal(Popup, {
-        message: `not enough ${tokens[data.denom]} balance`,
+      return showModal(Prompt, {
+        type: "error",
+        title: "Transfer Funds",
+        headline: "Insufficient Balance",
+        children: `Not enough ${tokens[data.denom]} balance`,
       });
-      return;
     }
 
     let embeddedMsg: EmbeddedWasmMsg | EmbeddedBankMsg;
