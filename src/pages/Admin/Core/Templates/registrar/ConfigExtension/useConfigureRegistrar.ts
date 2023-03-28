@@ -7,7 +7,7 @@ import { RegistrarConfigExtensionPayload as RP } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
-import Popup from "components/Popup";
+import Prompt from "components/Prompt";
 import CW3 from "contracts/CW3";
 import Registrar from "contracts/Registrar";
 import useTxSender from "hooks/useTxSender";
@@ -16,6 +16,7 @@ import { cleanObject } from "helpers/cleanObject";
 
 type Key = keyof RP;
 type Value = RP[Key];
+
 export default function useConfigureRegistrar() {
   const { cw3, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
@@ -36,8 +37,12 @@ export default function useConfigureRegistrar() {
     const diff = getPayloadDiff(initialConfigPayload, data);
     const diffEntries = Object.entries(diff) as [Key, Value][];
     if (diffEntries.length === 0) {
-      showModal(Popup, { message: "no changes detected" });
-      return;
+      return showModal(Prompt, {
+        type: "error",
+        title: "Update Registrar",
+        headline: "No Changes Detected",
+        children: "Nothing to submit, no changes detected",
+      });
     }
 
     const registrarContract = new Registrar(wallet);
