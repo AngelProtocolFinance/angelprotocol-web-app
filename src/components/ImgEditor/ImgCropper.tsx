@@ -57,11 +57,7 @@ export default function ImgCropper({
           <Icon type="Save" size={24} />
         </button>
       </div>
-      <Image
-        ref={imgRef}
-        img={{ alt: "banner", src: preview }}
-        className="w-full"
-      />
+      <Image ref={imgRef} alt="banner" src={preview} className="w-full" />
     </Modal>
   );
 }

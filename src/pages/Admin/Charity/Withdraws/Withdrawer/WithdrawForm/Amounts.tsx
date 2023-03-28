@@ -38,7 +38,7 @@ export default function Amounts() {
               className="flex items-center gap-3 h-full uppercase"
             >
               <Image
-                img={{ src: tokens[field.tokenId].icon }}
+                src={tokens[field.tokenId].icon}
                 className="h-6 w-6 rounded-full"
               />
               {tokens[field.tokenId].symbol}

@@ -19,8 +19,8 @@ export default function Header() {
         <CharityHeader />
       ) : (
         <>
-          <Image className="w-32 hidden dark:block" img={AP_LOGO} />
-          <Image className="w-32 block dark:hidden" img={AP_LOGO_LIGHT} />
+          <Image className="w-32 hidden dark:block" {...AP_LOGO} />
+          <Image className="w-32 block dark:hidden" {...AP_LOGO_LIGHT} />
           <h5 className="text-sm dark:text-white  font-bold truncate mt-2">
             {type === "ap"
               ? "Angel Giving Team Admin"

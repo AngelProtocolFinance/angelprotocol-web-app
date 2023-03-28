@@ -41,7 +41,7 @@ export default function Header({ classes, links, logo }: Props) {
       transition-shadow ease-in-out duration-300 w-full h-[90px]`}
     >
       <div className="grid items-center gap-4 padded-container grid-cols-[auto_1fr_auto] h-full">
-        <Image className="w-32" img={logo} />
+        <Image className="w-32" {...logo} />
         <DesktopNav classes="hidden lg:flex" links={links} />
         <div className="flex gap-4 justify-self-end">
           <ThemeToggle classes="hidden lg:flex" />

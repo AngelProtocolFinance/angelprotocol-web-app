@@ -51,7 +51,7 @@ export default function Submit(props: WithWallet<SubmitStep>) {
       <Row title="Currency:">
         <Image
           className="ml-auto object-cover h-4 w-4 rounded-full mr-1"
-          img={{ src: token.logo }}
+          src={token.logo}
         />
         <span>{token.symbol}</span>
       </Row>

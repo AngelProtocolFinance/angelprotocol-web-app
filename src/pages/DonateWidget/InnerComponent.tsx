@@ -51,7 +51,7 @@ export default function InnerComponent(props: {
         </section>
       </div>
       <footer className="flex justify-center items-center h-20 w-full bg-blue dark:bg-blue-d3">
-        <Image className="w-20" img={AP_LOGO} />
+        <Image className="w-20" {...AP_LOGO} />
       </footer>
     </div>
   );

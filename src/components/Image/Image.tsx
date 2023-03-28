@@ -10,45 +10,41 @@ import ImagePlaceholder from "./ImagePlaceholder";
 
 export type ImageProps = {
   alt?: string;
-  src?: string;
+  className?: string;
   isSrcLoading?: boolean;
+  src?: string;
 } & ({ href: string; title: string } | { href?: never; title?: never });
 
-type Props = {
-  img?: ImageProps;
-  className?: string;
-};
-
-const Image = React.forwardRef<HTMLImageElement, Props>(
-  ({ img, className }, forwardRef) => {
+const Image = React.forwardRef<HTMLImageElement, ImageProps>(
+  (props, forwardRef) => {
     const ref = useRef<HTMLImageElement>(null);
-    const [isLoading, setLoading] = useState(!!img?.src || img?.isSrcLoading);
+    const [isLoading, setLoading] = useState(!!props.src || props.isSrcLoading);
 
     useImperativeHandle<HTMLImageElement | null, HTMLImageElement | null>(
       forwardRef,
       () => ref.current
     );
 
-    if (!img?.src) {
-      return <ImagePlaceholder className={className} />;
+    if (!props.src) {
+      return <ImagePlaceholder className={props.className} />;
     }
 
     const shouldLoad = !ref.current?.complete && isLoading;
 
     return (
       <>
-        {shouldLoad && <ContentLoader className={className} />}
-        {!img.isSrcLoading && (
+        {shouldLoad && <ContentLoader className={props.className} />}
+        {!props.isSrcLoading && (
           <WithLink
-            className={`${className} ${shouldLoad ? "hidden" : ""}`}
-            href={img.href}
-            title={img.title}
+            className={`${props.className} ${shouldLoad ? "hidden" : ""}`}
+            href={props.href}
+            title={props.title}
           >
             <img
               ref={ref}
-              src={img.src}
-              className={`${className} object-contain w-full h-full`}
-              alt={img.alt || ""}
+              src={props.src}
+              className={`${props.className} object-contain w-full h-full`}
+              alt={props.alt || ""}
               onLoad={() => setLoading(false)}
             />
           </WithLink>

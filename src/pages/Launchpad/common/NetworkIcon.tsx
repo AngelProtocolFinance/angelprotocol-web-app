@@ -7,7 +7,7 @@ type Props = { network: Network; classes?: string };
 export default function NetworkIcon({ classes = "", network }: Props) {
   return (
     <Image
-      img={{ src: network === "juno" ? junoIcon : polygonIcon }}
+      src={network === "juno" ? junoIcon : polygonIcon}
       className={classes}
     />
   );
