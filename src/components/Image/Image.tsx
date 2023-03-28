@@ -12,8 +12,9 @@ export type ImageProps = {
   alt?: string;
   className?: string;
   isSrcLoading?: boolean;
-  src?: string;
+  loading?: "lazy" | "eager";
   onError?: React.ReactEventHandler<HTMLImageElement>;
+  src?: string;
 } & ({ href: string; title: string } | { href?: never; title?: never });
 
 const Image = React.forwardRef<HTMLImageElement, ImageProps>(
@@ -47,6 +48,7 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
               src={props.src}
               className={`${props.className} object-contain w-full h-full`}
               alt={props.alt || ""}
+              loading={props.loading}
               onLoad={() => setLoading(false)}
               onError={(e) =>
                 props.onError ? props.onError(e) : setError(true)
