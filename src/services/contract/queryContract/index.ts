@@ -27,15 +27,19 @@ export async function queryContract<T extends QT>(
     content
   )}`;
 
-  return fetch(`
-    ${url}/${path}
-  `)
-    .then<Q[T]["res"]>((res) => {
-      const msg = `failed query ${type}`;
-      if (!res.ok) throw new Error(msg);
-      return res.json();
-    })
-    .then(
-      (result) => transform(result as any) as ReturnType<Q[T]["transform"]>
-    );
+  console.log(path);
+
+  return transform({} as any) as ReturnType<Q[T]["transform"]>;
+
+  // return fetch(`
+  //   ${url}/${path}
+  // `)
+  //   .then<Q[T]["res"]>((res) => {
+  //     const msg = `failed query ${type}`;
+  //     if (!res.ok) throw new Error(msg);
+  //     return res.json();
+  //   })
+  //   .then(
+  //     (result) => transform(result as any) as ReturnType<Q[T]["transform"]>
+  //   );
 }
