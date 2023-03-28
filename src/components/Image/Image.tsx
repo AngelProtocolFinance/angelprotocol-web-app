@@ -42,7 +42,7 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
             <img
               ref={ref}
               src={props.src}
-              className={`object-contain w-full h-full ${className}`}
+              className={`object-contain ${className}`}
               alt={alt || ""}
               loading={props.loading}
               onLoad={() => setLoading(false)}
@@ -72,7 +72,7 @@ function WithLink({
       {children}
     </ExtLink>
   ) : (
-    <div className={className}>{children}</div>
+    <>{children}</>
   );
 }
 
