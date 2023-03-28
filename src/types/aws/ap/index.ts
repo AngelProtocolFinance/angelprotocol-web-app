@@ -4,6 +4,7 @@ import { NetworkType, UNSDG_NUMS } from "../../lists";
 
 type EndowmentBase = {
   hq_country: string;
+  endow_designation: EndowDesignation;
   active_in_countries?: string[];
   categories: { sdgs: UNSDG_NUMS[] };
   id: number;
@@ -18,6 +19,7 @@ export type EndowmentProfile = EndowmentBase & {
   contact_email: string;
   logo: string;
   overview: string;
+  published: boolean;
   registration_number?: string;
   social_media_urls: {
     twitter?: string;
@@ -45,6 +47,7 @@ export type EndowmentProfile = EndowmentBase & {
 
 export type EndowmentCard = EndowmentBase & {
   endow_type: EndowmentType;
+  published: boolean;
 };
 
 export type EndowmentIdName = Pick<EndowmentBase, "id" | "name">;
@@ -60,10 +63,12 @@ export type EndowmentProfileUpdate = {
   categories_general: string[];
   categories_sdgs: UNSDG_NUMS[];
   hq_country: string;
+  endow_designation: string;
   image: string;
   kyc_donors_only: boolean;
   logo: string;
   name: string;
+  published: boolean;
   overview: string;
   registration_number: string;
   social_media_url_facebook: string;
@@ -82,20 +87,26 @@ export type EndowmentProfileUpdate = {
 export type SortDirection = "asc" | "desc";
 export type EndowmentsSortKey = "name_internal" | "overall";
 
-export type EndowDesignation = "Non-Profit" | "Religious Non-Profit";
+export type EndowDesignation =
+  | "Charity"
+  | "Religious Organization"
+  | "University"
+  | "Hospital"
+  | "Other";
 
 export type EndowmentsQueryParams = {
   query: string; //set to "matchAll" if no search query
   sort: "default" | `${EndowmentsSortKey}+${SortDirection}`;
   start?: number; //to load next page, set start to ItemCutOff + 1
   endow_types: string | null; // comma separated EndowmentType values
-  endow_designation?: string;
+  endow_designation?: string; // comma separated EndowDesignation values
   sdgs: string | 0; // comma separated sdg values. The backend recognizes "0" as "no SDG was selected"
   tiers: string | null; // comma separated Exclude<EndowmentTier, "Level1"> values ("Level1" excluded for now)
   kyc_only: string | null; // comma separated boolean values
   hq_country?: string; //comma separated values
   active_in_countries?: string; //comma separated values
   limit?: number; // Number of items to be returned per request. If not provided, API defaults to return all
+  published: string;
 };
 
 export interface LeaderboardEntry {

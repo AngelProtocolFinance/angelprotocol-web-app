@@ -1,5 +1,5 @@
 import { LinkGroup, SocialMediaLink } from "./types";
-import { BASE_DOMAIN } from "constants/common";
+import { BASE_DOMAIN, DAPP_DOMAIN } from "constants/common";
 import { LITEPAPER } from "constants/urls";
 
 export const SOCIAL_MEDIA_LINKS: SocialMediaLink[] = [
@@ -9,7 +9,7 @@ export const SOCIAL_MEDIA_LINKS: SocialMediaLink[] = [
       type: "Twitter",
       size: 24,
     },
-    href: "https://twitter.com/angelprotocol",
+    href: "https://twitter.com/angelgiving_",
   },
   {
     title: "Telegram",
@@ -25,7 +25,7 @@ export const SOCIAL_MEDIA_LINKS: SocialMediaLink[] = [
       type: "Discord",
       size: 24,
     },
-    href: "https://discord.gg/RhqA652ySA",
+    href: "https://discord.gg/angelprotocol",
   },
   {
     title: "YouTube",
@@ -33,7 +33,7 @@ export const SOCIAL_MEDIA_LINKS: SocialMediaLink[] = [
       type: "Youtube",
       size: 24,
     },
-    href: "https://www.youtube.com/channel/UCPYj_fooJCfc_tc52rPiw1w",
+    href: "https://www.youtube.com/@AngelGiving",
   },
   {
     title: "Medium",
@@ -49,7 +49,7 @@ export const SOCIAL_MEDIA_LINKS: SocialMediaLink[] = [
       type: "FacebookCircle",
       size: 24,
     },
-    href: "https://www.facebook.com/AngelProtocolFB/",
+    href: "https://www.facebook.com/AngelgivingFB/",
   },
   {
     title: "Linkedin",
@@ -57,7 +57,7 @@ export const SOCIAL_MEDIA_LINKS: SocialMediaLink[] = [
       type: "Linkedin",
       size: 24,
     },
-    href: "https://www.linkedin.com/company/angel-protocol/",
+    href: "https://www.linkedin.com/company/angel-giving/",
   },
   {
     title: "Instagram",
@@ -65,7 +65,7 @@ export const SOCIAL_MEDIA_LINKS: SocialMediaLink[] = [
       type: "Instagram",
       size: 24,
     },
-    href: "https://www.instagram.com/angelprotocol/",
+    href: "https://www.instagram.com/angel.giving/",
   },
 ];
 
@@ -74,19 +74,14 @@ export const GROUPS_DATA: LinkGroup[] = [
     title: "Products",
     links: [
       {
-        text: "For Non-profit orgs.",
-        href: `${BASE_DOMAIN}/non-profit-organizations/`,
+        text: "Non-profits",
+        href: `${BASE_DOMAIN}`,
       },
-      { text: "For Donors", href: `${BASE_DOMAIN}/donors/` },
       {
-        text: "For Changemakers",
-        href: `${BASE_DOMAIN}/changemakers/`,
+        text: "Giving Partners (CSR)",
+        href: `${BASE_DOMAIN}/giving-partners-csr/`,
       },
-      { text: "For Investors", href: `${BASE_DOMAIN}/investors/` },
-      {
-        text: "For CSR Partners",
-        href: `${BASE_DOMAIN}/csr-partners/`,
-      },
+      { text: "Impact Board", href: `${DAPP_DOMAIN}/leaderboard/` },
       // {
       //   text: "For Giftcards",
       //   href: "https://app.angel.giving/gift",
@@ -96,13 +91,12 @@ export const GROUPS_DATA: LinkGroup[] = [
   {
     title: "About",
     links: [
-      { text: "About us", href: `${BASE_DOMAIN}/about/` },
+      { text: "About us", href: `${BASE_DOMAIN}/about-angel-giving/` },
       {
         text: "Meet the team",
-        href: `${BASE_DOMAIN}/about/#:~:text=MEET%20THE%20TEAM-,Operations,-DUFFY%20CASEY`,
+        href: `${BASE_DOMAIN}/about/#:~:text=MEET%20THE%20TEAM-`,
       },
       { text: "News", href: `${BASE_DOMAIN}/news/` },
-      { text: "Stories", href: `${BASE_DOMAIN}/stories/` },
       { text: "Careers", href: `${BASE_DOMAIN}/careers/` },
     ],
   },
@@ -125,6 +119,7 @@ export const GROUPS_DATA: LinkGroup[] = [
         text: "Terms of Use",
         href: `${BASE_DOMAIN}/terms-of-use/`,
       },
+      { text: "Terms for NPO", href: `${BASE_DOMAIN}/terms-of-use-npo/` },
     ],
   },
 ];

@@ -30,15 +30,25 @@ export default function Menu({
         </button>
       </div>
       <nav className="mt-8 grid gap-y-4 w-full px-6 font-extrabold font-heading text-white text-3xl">
-        {links.map((link) => (
-          <NavLink
-            key={`header-link-${link.title}`}
-            className={navLinkStyle}
-            to={link.href}
-          >
-            {link.title}
-          </NavLink>
-        ))}
+        {links.map((link) =>
+          link.external ? (
+            <a
+              key={`header-link-${link.title}`}
+              className={styles}
+              href={link.href}
+            >
+              {link.title}
+            </a>
+          ) : (
+            <NavLink
+              key={`header-link-${link.title}`}
+              className={styler}
+              to={link.href}
+            >
+              {link.title}
+            </NavLink>
+          )
+        )}
         <span className="flex justify-between items-center mt-4">
           <span>Theme</span>
           <ThemeToggle classes="flex" />
@@ -48,7 +58,6 @@ export default function Menu({
   );
 }
 
-const navLinkStyle = createNavLinkStyler(
-  "text-white font-heading font-bold w-full text-3xl hover:text-orange transition ease-in-out duration-300",
-  "text-orange pointer-events-none"
-);
+const styles =
+  "text-white font-heading font-bold w-full text-3xl hover:text-orange transition ease-in-out duration-300";
+const styler = createNavLinkStyler(styles, "pointer-events-none text-orange");

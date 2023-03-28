@@ -1,8 +1,9 @@
 import * as Yup from "yup";
 import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
-import { CountryOption } from "services/types";
+import { Country } from "types/countries";
 import { ImgLink } from "components/ImgEditor";
+import { OptionType } from "components/Selector";
 import { genFileSchema } from "schemas/file";
 import { requiredString, url } from "schemas/string";
 import { MAX_SDGS } from "constants/unsdgs";
@@ -14,11 +15,18 @@ export const VALID_MIME_TYPES = [
   "image/svg",
 ];
 
+export const MAX_SIZE_IN_BYTES = 1e6;
+
+// we only need to validate the pre-crop image and if we confirm it is valid
+// we can be sure that the cropped image is valid too
 const fileObj = Yup.object().shape<SchemaShape<ImgLink>>({
-  file: genFileSchema(1e6, VALID_MIME_TYPES).when("publicUrl", {
-    is: (value: string) => !value,
-    then: (schema) => schema.required("required"),
-  }),
+  precropFile: genFileSchema(MAX_SIZE_IN_BYTES, VALID_MIME_TYPES).when(
+    "publicUrl",
+    {
+      is: (value: string) => !value,
+      then: (schema) => schema.required("required"),
+    }
+  ),
 });
 
 //construct strict shape to avoid hardcoding shape keys
@@ -31,8 +39,12 @@ const shape: SchemaShape<FormValues> = {
   logo: fileObj,
   url: url.required("required"),
   // registration_number: no need to validate,
-  hq_country: Yup.object().shape<SchemaShape<CountryOption>>({
+  hq_country: Yup.object().shape<SchemaShape<Country>>({
     name: requiredString,
+  }),
+  endow_designation: Yup.object().shape<SchemaShape<OptionType<string>>>({
+    label: requiredString,
+    value: requiredString,
   }),
   name: requiredString,
   overview: requiredString,

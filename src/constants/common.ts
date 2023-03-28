@@ -1,4 +1,6 @@
+import { EndowDesignation } from "types/aws";
 import angelProtocolLogo from "assets/images/angelgiving-H-logo-beta-wht.svg";
+import { IconType } from "components/Icon";
 import { ImageProps } from "components/Image";
 
 // CONFIGURE THE CONSTANTS BELOW TO DISPLAY THE DESIRED REPEATING TEXT/IMAGES THROUGHOUT THE APP
@@ -17,3 +19,19 @@ export const AP_LOGO: ImageProps = {
   src: angelProtocolLogo,
   title: "Go to Marketing page",
 };
+
+export const ENDOW_DESIGNATIONS: {
+  label: string;
+  value: EndowDesignation;
+  icon: IconType;
+}[] = [
+  { label: "Charity", value: "Charity", icon: "Charity" },
+  {
+    label: "Religious Organization",
+    value: "Religious Organization",
+    icon: "ReligiousOrganization",
+  },
+  { label: "University", value: "University", icon: "University" },
+  { label: "Hospital", value: "Hospital", icon: "Hospital" },
+  { label: "Other", value: "Other", icon: "Charity" },
+];

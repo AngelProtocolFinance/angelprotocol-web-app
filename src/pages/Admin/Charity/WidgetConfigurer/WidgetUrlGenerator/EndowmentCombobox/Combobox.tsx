@@ -31,6 +31,7 @@ export default function Combobox() {
     sdgs: Object.keys(unsdgs).join(","),
     kyc_only: "true,false",
     start: 0,
+    published: "true",
   });
 
   return (

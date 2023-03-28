@@ -37,12 +37,15 @@ import {
 } from "react-icons/bs";
 import { CgArrowsExchangeAltV, CgUndo } from "react-icons/cg";
 import {
+  FaChurch,
   FaClipboardCheck,
   FaClock,
   FaCog,
   FaDiscord,
+  FaDonate,
   FaExclamation,
   FaFacebook,
+  FaHospital,
   FaInstagram,
   FaLinkedin,
   FaLinkedinIn,
@@ -53,6 +56,7 @@ import {
   FaStopwatch,
   FaTelegramPlane,
   FaTiktok,
+  FaUniversity,
   FaUserCircle,
   FaUsersCog,
 } from "react-icons/fa";
@@ -204,6 +208,10 @@ export const icons = {
   WaterDrop: MdWaterDrop,
   Widget: MdWidgets,
   Youtube: AiFillYoutube,
+  Hospital: FaHospital,
+  Charity: FaDonate,
+  University: FaUniversity,
+  ReligiousOrganization: FaChurch,
 } as const;
 
 export type IconType = keyof typeof icons;

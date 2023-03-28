@@ -9,6 +9,7 @@ import { FormError, FormSkeleton } from "components/admin";
 import { APP_NAME, DAPP_DOMAIN } from "constants/common";
 import { unsdgs } from "constants/unsdgs";
 import Form from "./Form";
+import { getEndowDesignationLabelValuePair } from "./getEndowDesignationLabelValuePair";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import { schema } from "./schema";
 
@@ -30,6 +31,7 @@ function FormWithContext(props: EndowmentProfile) {
   const flatInitial: FlatFormValues = {
     name: props.name,
     categories_sdgs: props.categories.sdgs,
+    endow_designation: props.endow_designation,
     hq_country: props.hq_country,
     active_in_countries: active_in_countries,
     image: props.image || "",
@@ -37,6 +39,7 @@ function FormWithContext(props: EndowmentProfile) {
     kyc_donors_only: props.kyc_donors_only,
     overview: props.overview,
     url: props.url || "",
+    published: props.published,
     registration_number: props.registration_number || "",
     social_media_url_facebook: props.social_media_urls.facebook || "",
     social_media_url_linkedin: props.social_media_urls.linkedin || "",
@@ -53,6 +56,9 @@ function FormWithContext(props: EndowmentProfile) {
     ...flatInitial,
     image: { name: "", publicUrl: props.image, preview: props.image },
     logo: { name: "", publicUrl: props.logo, preview: props.logo },
+    endow_designation: props.endow_designation
+      ? getEndowDesignationLabelValuePair(props.endow_designation)
+      : { label: "", value: "" },
     hq_country: { flag: "", name: props.hq_country },
     categories_sdgs: props.categories.sdgs.map((x) =>
       getSDGLabelValuePair(x, unsdgs[x].title)

@@ -4,27 +4,31 @@ import { useDropzone } from "react-dropzone";
 import { FieldValues, useFormContext } from "react-hook-form";
 import { ImgLink, Props } from "./types";
 import Icon from "components/Icon";
+import { humanize } from "helpers";
 import useImgEditor from "./useImgEditor";
 
+const BYTES_IN_MB = 1e6;
+
 type Key = keyof ImgLink;
-const fileKey: Key = "file";
+const precropFileKey: Key = "precropFile";
 
 export default function ImgEditor<T extends FieldValues, K extends keyof T>(
   props: Props<T, K>
 ) {
-  const { name, classes } = props;
-  const filePath: any = `${String(name)}.${fileKey}`;
+  const { name, classes, maxSize } = props;
+  const precropFilePath: any = `${String(name)}.${precropFileKey}`;
 
   const {
     formState: { errors, isSubmitting },
   } = useFormContext<T>();
 
   const {
-    onDrop,
     handleOpenCropper,
+    handleReset,
+    imgSize,
     isInitial,
     noneUploaded,
-    handleReset,
+    onDrop,
     preview,
     ref,
   } = useImgEditor(props);
@@ -90,21 +94,27 @@ export default function ImgEditor<T extends FieldValues, K extends keyof T>(
                 </IconButton>
               )
             }
-            {!isInitial && (
-              <IconButton onClick={handleOpenCropper} disabled={isSubmitting}>
-                <Icon type="Crop" />
-              </IconButton>
-            )}
           </div>
         )}
       </div>
       <p className="text-xs text-gray-d1 dark:text-gray mt-2">
         <span>
-          Valid types are: PDF, JPG, PNG and WEBP. File should be less than 1MB.
+          Valid types are: JPG, JPEG, PNG and WEBP.{" "}
+          {maxSize ? (
+            <>
+              Image should be less than {maxSize / BYTES_IN_MB}MB in size.
+              <br />
+              {imgSize
+                ? `Current image size: ${humanize(imgSize / BYTES_IN_MB)}MB.`
+                : ""}
+            </>
+          ) : (
+            ""
+          )}
         </span>{" "}
         <ErrorMessage
           errors={errors}
-          name={filePath as any}
+          name={precropFilePath as any}
           as="span"
           className="text-red dark:text-red-l2 text-xs before:content-['('] before:mr-0.5 after:content-[')'] after:ml-0.5 empty:before:hidden empty:after:hidden"
         />

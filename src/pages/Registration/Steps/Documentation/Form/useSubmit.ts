@@ -12,6 +12,7 @@ export default function useSubmit() {
     handleSubmit,
     formState: { isDirty, isSubmitting },
   } = useFormContext<FormValues>();
+
   const {
     step,
     data: { init, documentation },
@@ -29,6 +30,8 @@ export default function useSubmit() {
     isKYCRequired,
     hqCountry,
     activeInCountries,
+    endowDesignation,
+    cashEligible,
     ...documents
   }: FormValues) => {
     if (documentation && !isDirty) {
@@ -51,7 +54,9 @@ export default function useSubmit() {
         AuditedFinancialReports: previews.auditedFinancialReports,
         KycDonorsOnly: isKYCRequired === "Yes",
         HqCountry: hqCountry.name,
+        EndowDesignation: endowDesignation.value,
         ActiveInCountries: activeInCountries.map((opt) => opt.value),
+        CashEligible: cashEligible,
       }),
       handleError
     );

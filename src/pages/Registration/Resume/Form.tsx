@@ -11,8 +11,8 @@ export default function Form({ classes = "" }: { classes?: string }) {
       onSubmit={submit}
       className={`${classes} grid padded-container w-full max-w-[37.5rem]`}
     >
-      <h3 className="text-3xl font-bold text-center">Resume registration</h3>
-      <p className="text-center mt-2 text-gray-d1 dark:text-gray-l3 text-lg">
+      <h3 className="text-3xl text-center">Resume registration</h3>
+      <p className="text-center mt-2 text-gray-d1 dark:text-gray-l2 text-lg">
         Enter your registration reference to resume where you left off
       </p>
 

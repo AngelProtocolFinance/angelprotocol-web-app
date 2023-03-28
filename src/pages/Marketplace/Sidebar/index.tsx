@@ -5,7 +5,6 @@ import Designations from "./Designations";
 import KYCFilter from "./KYCFilter";
 import Regions from "./Regions";
 import SDGGroups from "./SDGGroups";
-import Types from "./Types";
 
 export default function Sidebar({ classes = "" }: { classes?: string }) {
   const dispatch = useSetter();
@@ -25,7 +24,7 @@ export default function Sidebar({ classes = "" }: { classes?: string }) {
         </button>
       </div>
       <div className="bg-orange-l6 dark:bg-blue-d7 flex items-center justify-between p-4 border-b border-prim">
-        <h3 className="uppercase font-bold">Filter by</h3>
+        <h3 className="uppercase">Filter by</h3>
         <button
           type="button"
           title="Remove all filter selections."
@@ -46,7 +45,6 @@ export default function Sidebar({ classes = "" }: { classes?: string }) {
 
       <div className="flex w-full px-2">
         <div className="flex flex-col w-full">
-          <Types />
           <Designations />
           <KYCFilter />
           <SDGGroups />

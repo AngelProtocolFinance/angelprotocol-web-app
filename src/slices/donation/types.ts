@@ -1,4 +1,4 @@
-import { CountryOption } from "services/types";
+import { Country } from "types/countries";
 import { TokenWithAmount } from "types/slices";
 import { EstimatedTx } from "types/tx";
 import { WalletState } from "contexts/WalletContext";
@@ -25,7 +25,7 @@ export type KYC = {
   address: { street: string; complement: string };
   city: string;
   postalCode: string;
-  country: CountryOption;
+  country: Country;
   state: string;
   usState: OptionType<string>;
   email: string;

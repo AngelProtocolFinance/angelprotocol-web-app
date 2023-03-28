@@ -8,11 +8,13 @@ import Icon from "components/Icon";
 import ImgEditor from "components/ImgEditor";
 import { RichTextEditor } from "components/RichText";
 import { Selector } from "components/Selector";
+import Toggle from "components/Toggle";
 import { Field, Label } from "components/form";
+import { ENDOW_DESIGNATIONS } from "constants/common";
 import { appRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
-import { VALID_MIME_TYPES } from "./schema";
+import { MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "./schema";
 import useEditProfile from "./useEditProfile";
 
 const sdgOptions = Object.entries(unsdgs).map(([key, { title }]) =>
@@ -37,6 +39,9 @@ export default function Form() {
         <Icon type="Back" />
         <span>Back to profile</span>
       </Link>
+      <Toggle<FV> name="published" classes={{ container: "ml-auto text-sm" }}>
+        Publish profile
+      </Toggle>
       <Group
         title="Public profile information"
         description="The following information will be used to populate your public
@@ -79,6 +84,7 @@ export default function Form() {
             container: "mb-4",
             dropzone: "w-28 sm:w-48 aspect-square",
           }}
+          maxSize={MAX_SIZE_IN_BYTES}
         />
         <Label className="-mb-4" required>
           Description of your organization
@@ -111,6 +117,16 @@ export default function Form() {
           name="categories_sdgs"
           options={sdgOptions}
           classes={{ button: "field-input-admin" }}
+        />
+        <Label className="-mb-4" required>
+          Endowment Designation
+        </Label>
+        <Selector<FV, "endow_designation", string, false>
+          name="endow_designation"
+          options={ENDOW_DESIGNATIONS.map((option) => ({
+            label: option.label,
+            value: option.value,
+          }))}
         />
         <Label className="-mb-4" required>
           Headquarters
@@ -213,7 +229,7 @@ function Group({
 }>) {
   return (
     <div className="grid gap-6 p-6 border border-prim rounded">
-      <h3 className="text-2xl font-bold font-body">{props.title}</h3>
+      <h3 className="text-2xl font-body">{props.title}</h3>
       {description && (
         <p className="-mt-4 text-lg font-semibold">{description}</p>
       )}

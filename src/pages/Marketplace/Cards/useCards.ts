@@ -54,6 +54,7 @@ export default function useCards() {
     ...(activityCountries ? { active_in_countries: activityCountries } : {}),
     start: 0,
     limit: 15,
+    published: "true",
   });
 
   const [loadMore, { isLoading: isLoadingNextPage }] =

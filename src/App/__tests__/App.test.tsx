@@ -29,11 +29,10 @@ jest.mock("services/aws/leaderboard", () => ({
 
 //test comment 3
 
-const leadText = /leaderboard/i;
 const heroText = /ANGEL GIVING REDEFINES/i;
 const marketLink = /marketplace/i;
 const regLink = /register/i;
-const leadLink = /leaderboard/i;
+// const leadLink = /leaderboard/i;
 const loaderTestId = "loader";
 
 describe("App.tsx tests", () => {
@@ -59,11 +58,11 @@ describe("App.tsx tests", () => {
         name: marketLink,
       })
     ).toBeInTheDocument();
-    expect(
-      screen.getByRole("link", {
-        name: leadLink,
-      })
-    ).toBeInTheDocument();
+    // expect(
+    //   screen.getByRole("link", {
+    //     name: leadLink,
+    //   })
+    // ).toBeInTheDocument();
     expect(
       screen.getByRole("link", {
         name: regLink,
@@ -79,18 +78,18 @@ describe("App.tsx tests", () => {
     expect(screen.queryByTestId(loaderTestId)).toBeNull();
 
     //user goes to leaderboards
-    fireEvent.click(
-      screen.getByRole("link", {
-        name: leadLink,
-      })
-    );
-    //leaderboard is being lazy loaded
-    expect(screen.getByTestId(loaderTestId)).toBeInTheDocument();
-    //leaderboard is finally loaded
-    expect(
-      await screen.findByRole("heading", { name: leadText })
-    ).toBeInTheDocument();
-    expect(screen.queryByTestId(loaderTestId)).toBeNull();
+    // fireEvent.click(
+    //   screen.getByRole("link", {
+    //     name: leadLink,
+    //   })
+    // );
+    // //leaderboard is being lazy loaded
+    // expect(screen.getByTestId(loaderTestId)).toBeInTheDocument();
+    // //leaderboard is finally loaded
+    // expect(
+    //   await screen.findByRole("heading", { name: leadLink })
+    // ).toBeInTheDocument();
+    // expect(screen.queryByTestId(loaderTestId)).toBeNull();
 
     //user goes to registration
     fireEvent.click(
@@ -109,14 +108,14 @@ describe("App.tsx tests", () => {
     expect(screen.queryByTestId(loaderTestId)).toBeNull();
 
     //user goes back to leaderboard
-    fireEvent.click(
-      screen.getByRole("link", {
-        name: leadLink,
-      })
-    );
-    //leaderboard is already lazy loaded on first visit
-    expect(screen.getByRole("heading", { name: leadText })).toBeInTheDocument();
-    expect(screen.queryByTestId(loaderTestId)).toBeNull();
+    // fireEvent.click(
+    //   screen.getByRole("link", {
+    //     name: leadLink,
+    //   })
+    // );
+    // //leaderboard is already lazy loaded on first visit
+    // expect(screen.getByRole("heading", { name: leadLink })).toBeInTheDocument();
+    // expect(screen.queryByTestId(loaderTestId)).toBeNull();
 
     //user goes back to Marketplace
     fireEvent.click(

@@ -5,7 +5,6 @@ import {
   Proposal,
   ReviewCW3Config,
 } from "types/contracts";
-import { ProviderId } from "types/lists";
 import { SenderArgs } from "types/tx";
 
 export type ContractQueryArgs<T = object> = {
@@ -59,25 +58,3 @@ export type JunoTags =
   | "account"
   | "registrar"
   | "custom";
-
-export type Country = {
-  flags: { png?: string; svg?: string };
-  name: {
-    common: string;
-  };
-};
-
-export type CountryInRegion = Pick<Country, "name"> & { region: string };
-
-export type CountryOption = {
-  name: string;
-  flag: string;
-};
-
-export type Regions = { [region: string]: string[] };
-
-export type ChainQueryArgs = {
-  address: string;
-  chainId: string;
-  providerId: ProviderId;
-};
