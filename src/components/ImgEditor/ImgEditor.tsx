@@ -132,7 +132,7 @@ export default function ImgEditor<T extends FieldValues, K extends keyof T>(
 }
 
 const buttonStyle =
-  "cursor-pointer text-white text-lg bg-blue hover:bg-blue-l1 disabled:bg-gray-l1 p-2 m-1 rounded-md shadow-lg";
+  "cursor-pointer text-white text-lg bg-blue enabled:hover:bg-blue-l1 disabled:bg-gray-l1 p-2 m-1 rounded-md shadow-lg";
 function IconButton(props: React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return <button {...props} type="button" className={buttonStyle} />;
 }
