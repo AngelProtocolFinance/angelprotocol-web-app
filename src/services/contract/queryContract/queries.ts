@@ -1,4 +1,7 @@
+import { toEndowStatus, toEndowType } from "./decoded-types";
 import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
+import { UNSDG_NUMS } from "types/lists";
+import { endowmentDetails } from "contracts/evm/Account";
 import { placeholders as p } from "./placeholders";
 
 export const queries: {
@@ -90,10 +93,27 @@ export const queries: {
 
   /** account */
   "accounts.endowment": [
-    ({ id }) => ({
-      endowment: { id },
-    }),
-    () => p["accounts.endowment"],
+    ({ id }) => endowmentDetails.encode(id) as any,
+    (result) => {
+      const d = endowmentDetails.decode(result);
+      return {
+        owner: d.owner,
+        categories: {
+          sdgs: d.categories.sdgs.map((s) => s.toNumber()) as UNSDG_NUMS[],
+          general: d.categories.general.map((s) =>
+            s.toNumber()
+          ) as UNSDG_NUMS[],
+        },
+        endow_type: toEndowType(d.endow_type),
+        status: toEndowStatus(d.status),
+        invested_strategies: {
+          //TODO: populate
+          liquid: [],
+          locked: [],
+        },
+        kyc_donors_only: d.kycDonorsOnly,
+      };
+    },
   ],
   "accounts.state": [
     ({ id }) => ({ state: { id } }),
