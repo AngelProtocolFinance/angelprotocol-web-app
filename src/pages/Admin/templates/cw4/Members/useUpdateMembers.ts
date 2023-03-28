@@ -4,11 +4,12 @@ import { CW4Member } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
-import Popup from "components/Popup";
+import Prompt from "components/Prompt";
 import { useGetter } from "store/accessors";
 import CW3 from "contracts/CW3";
 import CW4 from "contracts/CW4";
 import useTxSender from "hooks/useTxSender";
+import { isEmpty } from "helpers";
 import { getTagPayloads } from "helpers/admin";
 
 export default function useUpdateMembers() {
@@ -44,9 +45,13 @@ export default function useUpdateMembers() {
       [[], []]
     );
 
-    if (to_remove.length <= 0 && to_add.length <= 0) {
-      showModal(Popup, { message: "No member changes" });
-      return;
+    if (isEmpty(to_remove) && isEmpty(to_add)) {
+      return showModal(Prompt, {
+        type: "error",
+        title: "Update Members",
+        headline: "No Member Changes",
+        children: "Nothing to submit, no member changes",
+      });
     }
     const cw3Contract = new CW3(wallet, cw3);
     const cw4Contract = new CW4(wallet, cw4);
