@@ -8,17 +8,12 @@ import ContentLoader from "components/ContentLoader";
 import ExtLink from "components/ExtLink";
 import ImagePlaceholder from "./ImagePlaceholder";
 
-export type ImageProps = {
-  alt?: string;
-  className?: string;
+export type ImageProps = React.ImgHTMLAttributes<HTMLImageElement> & {
   isSrcLoading?: boolean;
-  loading?: "lazy" | "eager";
-  onError?: React.ReactEventHandler<HTMLImageElement>;
-  src?: string;
 } & ({ href: string; title: string } | { href?: never; title?: never });
 
 const Image = React.forwardRef<HTMLImageElement, ImageProps>(
-  (props, forwardRef) => {
+  ({ className, alt = "", ...props }, forwardRef) => {
     const ref = useRef<HTMLImageElement>(null);
     const [isLoading, setLoading] = useState(!!props.src || props.isSrcLoading);
     const [isError, setError] = useState(false);
@@ -29,25 +24,25 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
     );
 
     if (!props.src || isError) {
-      return <ImagePlaceholder className={props.className} />;
+      return <ImagePlaceholder className={className} />;
     }
 
     const shouldLoad = !ref.current?.complete && isLoading;
 
     return (
       <>
-        {shouldLoad && <ContentLoader className={props.className} />}
+        {shouldLoad && <ContentLoader className={className} />}
         {!props.isSrcLoading && (
           <WithLink
-            className={`${props.className} ${shouldLoad ? "hidden" : ""}`}
+            className={`${className} ${shouldLoad ? "hidden" : ""}`}
             href={props.href}
             title={props.title}
           >
             <img
               ref={ref}
               src={props.src}
-              className={`object-contain w-full h-full ${props.className}`}
-              alt={props.alt || ""}
+              className={`object-contain w-full h-full ${className}`}
+              alt={alt || ""}
               loading={props.loading}
               onLoad={() => setLoading(false)}
               onError={(e) =>
