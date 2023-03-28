@@ -4,7 +4,7 @@ import { AllianceMember as AM, EmbeddedWasmMsg } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
-import Popup from "components/Popup";
+import Prompt from "components/Prompt";
 import { useGetter } from "store/accessors";
 import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
@@ -32,8 +32,12 @@ export default function useEditAlliance() {
     );
 
     if (markedMembers.length <= 0) {
-      showModal(Popup, { message: "No member changes" });
-      return;
+      return showModal(Prompt, {
+        type: "error",
+        title: "Edit Alliance",
+        headline: "No Member Changes",
+        children: "Nothing to submit, no member changes",
+      });
     }
 
     const indexFundContract = new IndexFund(wallet);
