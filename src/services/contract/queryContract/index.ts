@@ -4,9 +4,10 @@ import {
   QueryOptions,
 } from "./types";
 import { Contract } from "types/lists";
+import { toBase64 } from "helpers";
 import { contracts } from "constants/contracts";
 import { JUNO_LCD } from "constants/env";
-import { getQuery } from "./getQuery";
+import { queries } from "./queries";
 
 export async function queryContract<T extends QT>(
   type: T,
@@ -15,12 +16,17 @@ export async function queryContract<T extends QT>(
 ) {
   const [contract_key] = type.split(".");
   //consumer is forced to supply contract address when it is not hardcoded
-  const { [contract_key]: contract, ...args } = options as any;
+  const { [contract_key]: c, ...args } = options as any;
 
-  const c =
-    contract_key in contracts ? contracts[contract_key as Contract] : contract;
+  const contract =
+    contract_key in contracts ? contracts[contract_key as Contract] : c;
 
-  const [path, transform] = getQuery(type, args, c);
+  const [query, transform] = queries[type];
+  const content = typeof query === "function" ? query(args) : query;
+  const path = `cosmwasm/wasm/v1/contract/${contract}/smart/${toBase64(
+    content
+  )}`;
+
   return fetch(`
     ${url}/${path}
   `)
