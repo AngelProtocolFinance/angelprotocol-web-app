@@ -4,7 +4,7 @@ import { FundConfig } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
-import Popup from "components/Popup";
+import Prompt from "components/Prompt";
 import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
 import useTxSender from "hooks/useTxSender";
@@ -14,6 +14,7 @@ import { cleanObject } from "helpers/cleanObject";
 
 type Key = keyof FundConfig;
 type Value = FundConfig[Key];
+
 export default function useConfigureFund() {
   const { cw3, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
@@ -35,8 +36,12 @@ export default function useConfigureFund() {
 
     const diffEntries = Object.entries(diff) as [Key, Value][];
     if (diffEntries.length <= 0) {
-      showModal(Popup, { message: "no changes detected" });
-      return;
+      return showModal(Prompt, {
+        type: "error",
+        title: "Update Fund",
+        headline: "No Changes Detected",
+        children: "Nothing to submit, no changes detected",
+      });
     }
 
     const configUpdateMeta: FundConfigUpdateMeta = {
