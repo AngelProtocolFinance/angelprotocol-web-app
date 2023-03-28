@@ -130,7 +130,6 @@ export default function Form() {
           }))}
           classes={{ button: "field-input-admin" }}
         />
-
         <Label className="-mb-4" required>
           Headquarters
         </Label>

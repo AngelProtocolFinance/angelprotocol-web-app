@@ -38,7 +38,6 @@ export const schema = Yup.object().shape<SchemaShape<FormValues>>({
   sdgs: Yup.array()
     .min(1, "required")
     .max(MAX_SDGS, `maximum ${MAX_SDGS} selections allowed`),
-
   hqCountry: Yup.object().shape<SchemaShape<Country>>({
     name: requiredString,
   }),

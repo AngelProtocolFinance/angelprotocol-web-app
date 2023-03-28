@@ -71,7 +71,6 @@ export default function Form() {
           value: option.value,
         }))}
       />
-
       <Label className="mt-6 mb-2" required>
         Select the country your organization is headquartered in
       </Label>

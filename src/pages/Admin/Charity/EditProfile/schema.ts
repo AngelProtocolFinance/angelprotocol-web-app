@@ -34,7 +34,6 @@ const shape: SchemaShape<FormValues> = {
   categories_sdgs: Yup.array()
     .min(1, "required")
     .max(MAX_SDGS, `maximum ${MAX_SDGS} selections allowed`),
-
   tagline: requiredString.max(140, "max length is 140 chars"),
   image: fileObj,
   logo: fileObj,
