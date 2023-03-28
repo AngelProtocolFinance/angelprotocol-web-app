@@ -110,7 +110,9 @@ export default function Form() {
       </Group>
 
       <Group title="Organization">
-        <Label className="-mb-4">Aligned SDG#</Label>
+        <Label className="-mb-4" required>
+          Aligned SDG#
+        </Label>
         <Selector<FV, "categories_sdgs", UNSDG_NUMS, true>
           multiple
           name="categories_sdgs"

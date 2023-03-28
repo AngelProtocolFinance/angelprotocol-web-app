@@ -19,7 +19,7 @@ import useSubmit from "./useSubmit";
 
 export default function Form() {
   const { data } = useRegState<2>();
-  const { submit, isSubmitting, endowDesignation } = useSubmit();
+  const { submit, isSubmitting } = useSubmit();
 
   return (
     <form className="w-full" onSubmit={submit}>
@@ -51,6 +51,16 @@ export default function Form() {
         name="proofOfRegistration"
         tooltip={fileTooltip}
       />
+
+      <Label className="mb-2 mt-6" required>
+        Select the Sustainable Development Goals your organization is the most
+        aligned with
+      </Label>
+      <Selector<FV, "sdgs", number, true>
+        multiple
+        name="sdgs"
+        options={sdgOptions}
+      />
       <Label className="mb-2 mt-6" required>
         Endowment Designation
       </Label>
@@ -60,18 +70,6 @@ export default function Form() {
           label: option.label,
           value: option.value,
         }))}
-      />
-      <Label
-        className="mb-2 mt-6"
-        required={endowDesignation !== "Religious Organization"}
-      >
-        Select the Sustainable Development Goals your organization is the most
-        aligned with
-      </Label>
-      <Selector<FV, "sdgs", number, true>
-        multiple
-        name="sdgs"
-        options={sdgOptions}
       />
 
       <Label className="mt-6 mb-2" required>
