@@ -94,17 +94,15 @@ export interface ContractQueries {
 export type ContractQueryTypes = keyof ContractQueries;
 
 type Empty = { [key: string]: never };
-type QueryArgs = ContractQueries[ContractQueryTypes]["args"];
+type QueryArgs<T extends ContractQueryTypes> = ContractQueries[T]["args"];
 
 export type QueryOptions<T extends ContractQueryTypes> =
-  (T extends `${infer C}.${string}`
+  T extends `${infer C}.${string}`
     ? C extends Contract
       ? //if args is also null, options is empty
-        QueryArgs extends null
+        QueryArgs<T> extends null
         ? Empty
-        : {}
+        : QueryArgs<T>
       : //if contract address is not hardcoded, need to supply
-        { [key in C]: string }
-    : Empty) &
-    //only require args if they're not null
-    (QueryArgs extends null ? Empty : QueryArgs);
+        { [key in C]: string } & (QueryArgs<T> extends null ? {} : QueryArgs<T>)
+    : Empty;
