@@ -28,67 +28,46 @@ import { Contract } from "types/lists";
 
 type Addr = { addr: string };
 
-type Query<Args, Res, Result> = {
+type Query<Args, Result> = {
   args: Args;
-  res: Res;
-  transform: (res: Res) => Result;
+  transform: (result: string) => Result;
 };
 
 export interface ContractQueries {
-  "registrar.config": Query<null, Q<RegistrarConfig>, RegistrarConfig>;
+  "registrar.config": Query<null, RegistrarConfig>;
 
-  "registrar.config-extension": Query<
-    null,
-    Q<RegistrarConfigExtension>,
-    RegistrarConfigExtension
-  >;
+  "registrar.config-extension": Query<null, RegistrarConfigExtension>;
 
-  "index-fund.funds": Query<null, Q<{ funds: FundDetails[] }>, FundDetails[]>;
+  "index-fund.funds": Query<null, FundDetails[]>;
 
-  "index-fund.alliance-members": Query<
-    null,
-    Q<{ alliance_members: AllianceMember[] }>,
-    AllianceMember[]
-  >;
+  "index-fund.alliance-members": Query<null, AllianceMember[]>;
 
-  "index-fund.config": Query<null, Q<IndexFundConfig>, IndexFundConfig>;
+  "index-fund.config": Query<null, IndexFundConfig>;
 
-  "gift-card.balance": Query<Addr, Q<GenericBalance>, GenericBalance>;
+  "gift-card.balance": Query<Addr, GenericBalance>;
 
-  "gov.staker": Query<Addr, Q<GovStaker>, GovStaker>;
-  "gov.state": Query<null, Q<GovState>, GovState>;
-  "gov.config": Query<null, Q<GovConfig>, GovConfig>;
-  "gov.polls": Query<null, Q<Polls>, Polls["polls"]>;
+  "gov.staker": Query<Addr, GovStaker>;
+  "gov.state": Query<null, GovState>;
+  "gov.config": Query<null, GovConfig>;
+  "gov.polls": Query<null, Polls["polls"]>;
 
-  "cw20.info": Query<null, Q<CW20Info>, CW20Info>;
-  "cw20.balance": Query<Addr, Q<CW20Balance>, string>;
+  "cw20.info": Query<null, CW20Info>;
+  "cw20.balance": Query<Addr, string>;
 
-  "cw4.members": Query<null, Q<{ members: CW4Member[] }>, CW4Member[]>;
-  "cw4.member": Query<Addr, Q<InquiredMember>, InquiredMember>;
+  "cw4.members": Query<null, CW4Member[]>;
+  "cw4.member": Query<Addr, InquiredMember>;
 
-  "cw3.voter": Query<Addr, Q<InquiredMember>, InquiredMember>;
-  "cw3.voters": Query<null, Q<CW3ListVoters>, string[]>;
-  "cw3.config": Query<null, Q<CW3Config>, CW3Config>;
-  "cw3.proposals": Query<PageOptions, Q<{ proposals: Proposal[] }>, Proposal[]>;
-  "cw3.proposal": Query<{ id: number }, Q<Proposal>, Proposal>;
-  "cw3.votes": Query<
-    VotesPageOptions,
-    Q<{ votes: AdminVoteInfo[] }>,
-    AdminVoteInfo[]
-  >;
+  "cw3.voter": Query<Addr, InquiredMember>;
+  "cw3.voters": Query<null, string[]>;
+  "cw3.config": Query<null, CW3Config>;
+  "cw3.proposals": Query<PageOptions, Proposal[]>;
+  "cw3.proposal": Query<{ id: number }, Proposal>;
+  "cw3.votes": Query<VotesPageOptions, AdminVoteInfo[]>;
 
-  "accounts.endowment": Query<
-    { id: number },
-    Q<EndowmentDetails>,
-    EndowmentDetails
-  >;
+  "accounts.endowment": Query<{ id: number }, EndowmentDetails>;
 
-  "accounts.state": Query<{ id: number }, Q<EndowmentState>, EndowmentState>;
-  "accounts/settings.controller": Query<
-    { id: number },
-    Q<EndowmentController>,
-    EndowmentController
-  >;
+  "accounts.state": Query<{ id: number }, EndowmentState>;
+  "accounts/settings.controller": Query<{ id: number }, EndowmentController>;
 }
 
 export type ContractQueryTypes = keyof ContractQueries;
