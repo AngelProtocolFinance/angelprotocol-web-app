@@ -20,7 +20,6 @@ export default function useEditProfile() {
   const {
     reset,
     handleSubmit,
-    watch,
     formState: { isSubmitting },
   } = useFormContext<FV>();
 
@@ -105,7 +104,6 @@ export default function useEditProfile() {
     editProfile: handleSubmit(editProfile),
     isSubmitting,
     id: endowmentId,
-    endowDesignation: watch("endow_designation").value,
   };
 }
 

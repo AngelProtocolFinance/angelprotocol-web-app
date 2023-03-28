@@ -29,16 +29,11 @@ const fileObj = Yup.object().shape<SchemaShape<ImgLink>>({
   ),
 });
 
-const _designation: keyof FormValues = "endow_designation";
 //construct strict shape to avoid hardcoding shape keys
 const shape: SchemaShape<FormValues> = {
   categories_sdgs: Yup.array()
     .max(MAX_SDGS, `maximum ${MAX_SDGS} selections allowed`)
-    .when(_designation, (opt: FormValues[typeof _designation], schema) => {
-      return opt.value === "Religious Organization"
-        ? schema
-        : schema.min(1, "required");
-    }),
+    .min(1, "required"),
 
   tagline: requiredString.max(140, "max length is 140 chars"),
   image: fileObj,

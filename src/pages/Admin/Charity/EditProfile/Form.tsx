@@ -22,8 +22,7 @@ const sdgOptions = Object.entries(unsdgs).map(([key, { title }]) =>
 );
 
 export default function Form() {
-  const { editProfile, isSubmitting, id, reset, endowDesignation } =
-    useEditProfile();
+  const { editProfile, isSubmitting, id, reset } = useEditProfile();
 
   return (
     <form
@@ -111,6 +110,13 @@ export default function Form() {
       </Group>
 
       <Group title="Organization">
+        <Label className="-mb-4">Aligned SDG#</Label>
+        <Selector<FV, "categories_sdgs", UNSDG_NUMS, true>
+          multiple
+          name="categories_sdgs"
+          options={sdgOptions}
+          classes={{ button: "field-input-admin" }}
+        />
         <Label className="-mb-4" required>
           Endowment Designation
         </Label>
@@ -120,18 +126,6 @@ export default function Form() {
             label: option.label,
             value: option.value,
           }))}
-          classes={{ button: "field-input-admin" }}
-        />
-        <Label
-          className="-mb-4"
-          required={endowDesignation !== "Religious Organization"}
-        >
-          Aligned SDG#
-        </Label>
-        <Selector<FV, "categories_sdgs", UNSDG_NUMS, true>
-          multiple
-          name="categories_sdgs"
-          options={sdgOptions}
           classes={{ button: "field-input-admin" }}
         />
 
