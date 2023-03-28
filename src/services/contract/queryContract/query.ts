@@ -28,7 +28,13 @@ export async function query<T extends QT>(type: T, options: QueryOptions<T>) {
       jsonrpc: "2.0",
       id: 1,
       method: EIPMethods.eth_call,
-      params: [{ to: contract, data }],
+      params: [
+        {
+          to: contract,
+          data,
+        },
+        "latest",
+      ],
     }),
   }).then((res) => {
     if (!res.ok) throw new Error(`failed query ${type}`);
@@ -37,5 +43,5 @@ export async function query<T extends QT>(type: T, options: QueryOptions<T>) {
 
   console.log(result);
 
-  return transform(result) as ReturnType<Q[T]["transform"]>;
+  return transform(result.result) as ReturnType<Q[T]["transform"]>;
 }
