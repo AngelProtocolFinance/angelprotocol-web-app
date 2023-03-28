@@ -11,7 +11,6 @@ import Prompt from "components/Prompt";
 import CW3 from "contracts/CW3";
 import Registrar from "contracts/Registrar";
 import useTxSender from "hooks/useTxSender";
-import { isEmpty } from "helpers";
 import { genDiffMeta, getPayloadDiff } from "helpers/admin";
 import { cleanObject } from "helpers/cleanObject";
 
@@ -37,7 +36,7 @@ export default function useConfigureRegistrar() {
     //check for changes
     const diff = getPayloadDiff(initialConfigPayload, data);
     const diffEntries = Object.entries(diff) as [Key, Value][];
-    if (isEmpty(diffEntries)) {
+    if (diffEntries.length === 0) {
       return showModal(Prompt, {
         type: "error",
         title: "Update Registrar",

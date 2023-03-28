@@ -9,7 +9,6 @@ import { useGetter } from "store/accessors";
 import CW3 from "contracts/CW3";
 import CW4 from "contracts/CW4";
 import useTxSender from "hooks/useTxSender";
-import { isEmpty } from "helpers";
 import { getTagPayloads } from "helpers/admin";
 
 export default function useUpdateMembers() {
@@ -45,7 +44,7 @@ export default function useUpdateMembers() {
       [[], []]
     );
 
-    if (isEmpty(to_remove) && isEmpty(to_add)) {
+    if (to_remove.length <= 0 && to_add.length <= 0) {
       return showModal(Prompt, {
         type: "error",
         title: "Update Members",

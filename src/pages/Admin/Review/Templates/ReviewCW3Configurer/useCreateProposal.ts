@@ -10,7 +10,6 @@ import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Prompt from "components/Prompt";
 import CW3Review from "contracts/CW3/CW3Review";
 import useTxSender from "hooks/useTxSender";
-import { isEmpty } from "helpers";
 import { genDiffMeta, getPayloadDiff, getTagPayloads } from "helpers/admin";
 
 type Key = keyof FormReviewCW3Config;
@@ -39,7 +38,7 @@ export default function useCreateProposal() {
     const diff = getPayloadDiff(initial, newData);
     const diffEntries = Object.entries(diff) as [Key, Value][];
 
-    if (isEmpty(diffEntries)) {
+    if (diffEntries.length <= 0) {
       return showModal(Prompt, {
         type: "error",
         title: "Create Proposal",

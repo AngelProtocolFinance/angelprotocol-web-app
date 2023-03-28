@@ -37,7 +37,7 @@ export default function usePropose() {
     const diff = getPayloadDiff(initial, newData);
     const diffEntries = Object.entries(diff) as [Key, Value][];
 
-    if (isEmpty(diffEntries)) {
+    if (diffEntries.length <= 0) {
       return showModal(Prompt, {
         type: "error",
         title: "Create Proposal",
