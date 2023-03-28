@@ -4,6 +4,7 @@ import ExtLink from "components/ExtLink";
 import ImagePlaceholder from "./ImagePlaceholder";
 
 export type ImageProps = {
+  alt?: string;
   src?: string;
   isSrcLoading?: boolean;
 } & ({ href: string; title: string } | { href?: never; title?: never });
@@ -36,7 +37,7 @@ export default function Image({ img, className }: Props) {
             ref={ref}
             src={img.src}
             className={`${className} object-contain w-full h-full`}
-            alt=""
+            alt={img.alt || ""}
             onLoad={() => setLoading(false)}
           />
         </WithLink>
