@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { TokenWithBalance } from "types/aws";
 import Icon from "components/Icon";
+import Image from "components/Image";
 import { humanize, isEmpty } from "helpers";
 import KadoOpener from "./KadoOpener";
 
@@ -39,7 +40,7 @@ export default function CoinBalances({ smallAmountsHidden, tokens }: Props) {
           key={t.token_id}
           className="flex items-center font-heading font-bold text-sm"
         >
-          <img src={t.logo} className="w-6 h-6 object-contain" alt="" />
+          <Image src={t.logo} className="w-6 h-6" />
           <span className="mr-auto ml-2">{t.symbol}</span>
 
           {!!t.gift && (
