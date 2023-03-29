@@ -10,7 +10,6 @@ import { useGetWallet } from "contexts/WalletContext";
 import Prompt from "components/Prompt";
 import CW3 from "contracts/CW3";
 import useTxSender from "hooks/useTxSender";
-import { isEmpty } from "helpers";
 import { genDiffMeta, getPayloadDiff, getTagPayloads } from "helpers/admin";
 
 type Key = keyof FormCW3Config;
