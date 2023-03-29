@@ -34,6 +34,16 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
       <>
         {shouldLoad && <ContentLoader className={className} />}
         {!props.isSrcLoading && (
+          /**
+           * Setting the logic to add `hidden` class name is necessary on both
+           * `WithLink` wrapper and on the child `img`.
+           *
+           * Reason:
+           * if no `href` was passed, that means only the image would be returned and since
+           * it is returned without a wrapper, we need to apply `hidden` className manually.
+           * Otherwise (if `href` was passed), we need to apply `hidden` to the link component
+           * wrapping the `img`.
+           */
           <WithLink
             className={`${className} ${shouldLoad ? "hidden" : ""}`}
             href={props.href}
@@ -42,7 +52,9 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
             <img
               ref={ref}
               src={props.src}
-              className={`object-contain ${className}`}
+              className={`object-contain ${
+                shouldLoad ? "hidden" : ""
+              } ${className}`}
               alt={alt || ""}
               loading={props.loading}
               onLoad={() => setLoading(false)}
