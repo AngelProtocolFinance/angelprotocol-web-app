@@ -8,6 +8,7 @@ import {
   useFormContext,
 } from "react-hook-form";
 import Icon, { DrawerIcon } from "components/Icon";
+import { getErrorClasses } from "helpers/resolveJsonPath";
 
 type ValKey = string | number;
 
@@ -93,7 +94,10 @@ export function Selector<
           as={multiple ? "div" : "button"}
           className={`${button} ${selectorButtonStyle} ${
             multiple ? "p-1" : ""
-          } min-h-[3rem] justify-between peer-focus:border-gray-d1 peer-focus:dark:border-blue-l2 cursor-pointer`}
+          } min-h-[3rem] justify-between peer-focus:border-gray-d1 peer-focus:dark:border-blue-l2 cursor-pointer  ${getErrorClasses(
+            errors,
+            name
+          )}`}
         >
           {({ open }) => (
             <>
