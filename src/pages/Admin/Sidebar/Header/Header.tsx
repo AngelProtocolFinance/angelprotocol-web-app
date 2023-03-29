@@ -1,5 +1,5 @@
 import Image from "components/Image";
-import { AP_LOGO } from "constants/common";
+import { AP_LOGO, AP_LOGO_LIGHT } from "constants/common";
 import { useAdminResources } from "../../Guard";
 import CharityHeader from "./CharityHeader";
 
@@ -19,8 +19,9 @@ export default function Header() {
         <CharityHeader />
       ) : (
         <>
-          <Image className="w-32" img={AP_LOGO} />
-          <h5 className="text-sm text-white font-bold truncate mt-2">
+          <Image className="w-32 hidden dark:block" img={AP_LOGO} />
+          <Image className="w-32 block dark:hidden" img={AP_LOGO_LIGHT} />
+          <h5 className="text-sm dark:text-white  font-bold truncate mt-2">
             {type === "ap"
               ? "Angel Giving Team Admin"
               : "Charity Applications Review"}
