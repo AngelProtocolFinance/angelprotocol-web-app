@@ -23,3 +23,8 @@ jobs:
         env:
           REACT_APP_JUNO_LCD_NODE: ${{ secrets.REACT_APP_JUNO_LCD_NODE }}
           REACT_APP_INFURA_ID: ${{ secrets.REACT_APP_INFURA_ID }}
+      - name: Build codebase
+        run: yarn build
+        env:
+          REACT_APP_JUNO_LCD_NODE: ${{ secrets.REACT_APP_JUNO_LCD_NODE }}
+          REACT_APP_INFURA_ID: ${{ secrets.REACT_APP_INFURA_ID }}
