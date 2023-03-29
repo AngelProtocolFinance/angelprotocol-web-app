@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { DiffSet } from "types/utils";
 import placeHolderImage from "assets/images/home-banner.jpg";
 import Image from "components/Image";
@@ -51,19 +50,14 @@ function createColumn<T extends object>(value: T[keyof T]): JSX.Element {
   // if the string value starts with the IPFS gateway URL value, this is surely a file
   // the user has uploaded and a preview should be displayed
   if (typeof value === "string" && value.startsWith(bucketURL)) {
-    return <ImageWrapper src={value} />;
+    return (
+      <Image
+        src={value}
+        className="w-40 lg:w-[40rem] lg:min-h-[5rem] max-w-2xl"
+        onError={(e) => e.currentTarget.setAttribute("src", placeHolderImage)}
+      />
+    );
   }
 
   return <>{value}</>;
 }
-
-const ImageWrapper = ({ src }: { src: string }) => {
-  const [srcValue, setSrcValue] = useState(src);
-  return (
-    <Image
-      src={srcValue}
-      className="w-40 lg:w-[40rem] lg:min-h-[5rem] max-w-2xl"
-      onError={() => setSrcValue(placeHolderImage)}
-    />
-  );
-};
