@@ -21,6 +21,7 @@ import { useVerifyChain } from "./hooks";
 import useInjectedProvider from "./useInjectedProvider";
 import useKeplr from "./useKeplr";
 import useTerra from "./useTerra";
+import useWeb3Auth from "./useWeb3Auth";
 import { useEVMWC, useKeplrWC } from "./wallet-connect";
 
 export type WalletState = {
@@ -109,6 +110,14 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     disconnect: disconnectEVMWC,
     providerInfo: evmWCInfo,
   } = useEVMWC();
+
+  const {
+    supportedChains: web3AuthSupportedChains,
+    connection: web3AuthConnection,
+    disconnect: web3AuthDisconnect,
+    switchChain: web3AuthSwitchChain,
+    providerInfo: web3AuthProviderInfo,
+  } = useWeb3Auth();
 
   const providerStatuses: ProviderStatus[] = [
     {
@@ -267,6 +276,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
                 metamaskConnection,
                 binanceWalletConnection,
                 xdefiConnection,
+                web3AuthConnection,
                 ...terraConnections,
                 ...wcConnections,
               ],
