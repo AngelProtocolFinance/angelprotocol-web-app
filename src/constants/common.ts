@@ -1,5 +1,6 @@
 import { EndowDesignation } from "types/aws";
-import angelProtocolLogo from "assets/images/angelgiving-H-logo-beta-wht.svg";
+import angelProtocolLogoBlu from "assets/images/angelgiving-H-logo-beta-blu.svg";
+import angelProtocolLogoWht from "assets/images/angelgiving-H-logo-beta-wht.svg";
 import { IconType } from "components/Icon";
 import { ImageProps } from "components/Image";
 
@@ -16,7 +17,13 @@ export const GENERIC_ERROR_MESSAGE = `An error occurred. Please get in touch wit
 
 export const AP_LOGO: ImageProps = {
   href: "https://angelprotocol.io/",
-  src: angelProtocolLogo,
+  src: angelProtocolLogoWht,
+  title: "Go to Marketing page",
+};
+
+export const AP_LOGO_LIGHT: ImageProps = {
+  href: "https://angelprotocol.io/",
+  src: angelProtocolLogoBlu,
   title: "Go to Marketing page",
 };
 
