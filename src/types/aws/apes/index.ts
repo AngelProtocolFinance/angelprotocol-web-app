@@ -7,6 +7,15 @@ import { SortDirection } from "../ap";
  * put all aws/apes definitions here, if big category exist, separate in a file
  */
 
+export type TokenType =
+  | "juno-native"
+  | "terra-native"
+  | "evm-native"
+  | "erc20"
+  | "cw20"
+  | "ibc"
+  | "placeholder";
+
 export type Token = {
   approved: boolean; // true
   decimals: number; // 6
@@ -15,14 +24,7 @@ export type Token = {
   name: string; // "Stader LunaX Token"
   symbol: string; // DB Partition key ex., "LunaX"
   token_id: string; // "ujuno" | "0xaSD123..." | "ibc/ASH3438hfd..."
-  type:
-    | "juno-native"
-    | "terra-native"
-    | "evm-native"
-    | "erc20"
-    | "cw20"
-    | "ibc"
-    | "placeholder";
+  type: TokenType;
 };
 
 export type TokenWithBalance = WithBalance<Token> & { gift?: number };
