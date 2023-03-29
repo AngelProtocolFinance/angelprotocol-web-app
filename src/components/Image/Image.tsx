@@ -28,6 +28,24 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
       return <ImagePlaceholder className={className} />;
     }
 
+    /**
+     *
+     * Using `ref.current.complete` in addition to `isLoading` to check if image was already loaded as
+     * it maintains state on re-render.
+     *
+     * Were we to just use `isLoading`, then `Image` would flicker on every page load or navigation.
+     *
+     * Explanation for the flicker:
+     * 1. Let's assume the image was already loaded and rendered, but the user navigated away from
+     *    the page that displayed it.
+     * 2. The user decided to navigate back to the page/component with the loaded image.
+     * 3. As the default `isLoading` state is `true`, the `img` component is hidden and while it's loading
+     *    it is displaying the `ContentLoader` component.
+     * 4. As  the image is already loaded and cached, the `img.onLoad` triggers immediately and
+     *    updates `isLoading` to `false` triggering a new render
+     * 5. Component `Image` flickers as it transitions from displaying `ContentLoader` to `img`
+     *
+     */
     const shouldLoad = !ref.current?.complete && isLoading;
 
     return (
@@ -35,6 +53,7 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
         {shouldLoad && <ContentLoader className={className} />}
         {!props.isSrcLoading && (
           /**
+           *
            * Setting the logic to add `hidden` class name is necessary on both
            * `WithLink` wrapper and on the child `img`.
            *
@@ -43,6 +62,7 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
            * it is returned without a wrapper, we need to apply `hidden` className manually.
            * Otherwise (if `href` was passed), we need to apply `hidden` to the link component
            * wrapping the `img`.
+           *
            */
           <WithLink
             className={`${className} ${shouldLoad ? "hidden" : ""}`}
