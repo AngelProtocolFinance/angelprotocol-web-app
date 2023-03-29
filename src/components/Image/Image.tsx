@@ -14,7 +14,7 @@ export type ImageProps = React.ImgHTMLAttributes<HTMLImageElement> & {
 } & ({ href: string; title: string } | { href?: never; title?: never });
 
 const Image = React.forwardRef<HTMLImageElement, ImageProps>(
-  ({ className, alt = "", ...props }, forwardRef) => {
+  ({ className, ...props }, forwardRef) => {
     const ref = useRef<HTMLImageElement>(null);
     const [isLoading, setLoading] = useState(!!props.src || props.isSrcLoading);
     const [isError, setError] = useState(false);
@@ -56,7 +56,7 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
               className={`object-contain ${
                 shouldLoad ? "hidden" : ""
               } ${className}`}
-              alt={alt || ""}
+              alt={props.alt || ""}
               loading={props.loading}
               onLoad={() => setLoading(false)}
               onError={(e) =>
