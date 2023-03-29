@@ -23,7 +23,7 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
       () => ref.current
     );
 
-    if (!props.src || isError) {
+    if ((!props.src && !props.isSrcLoading) || isError) {
       return <ImagePlaceholder className={className} />;
     }
 
