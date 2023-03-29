@@ -5,6 +5,7 @@ import {
   Proposal,
   ReviewCW3Config,
 } from "types/contracts";
+import { ProviderId } from "types/lists";
 import { SenderArgs } from "types/tx";
 
 export type ContractQueryArgs<T = object> = {
@@ -58,3 +59,9 @@ export type JunoTags =
   | "account"
   | "registrar"
   | "custom";
+
+export type ChainQueryArgs = {
+  address: string;
+  chainId: string;
+  providerId: ProviderId;
+};
