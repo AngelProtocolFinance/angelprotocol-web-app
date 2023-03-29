@@ -8,7 +8,7 @@ import Account from "contracts/Account";
 import CW3Endowment from "contracts/CW3/CW3Endowment";
 import { AccountDepositWithdrawEndowments } from "contracts/evm";
 import useTxSender from "hooks/useTxSender";
-import { scaleToStr } from "helpers";
+import { scale, scaleToStr } from "helpers";
 import { ap_wallets } from "constants/ap_wallets";
 import { chainIds } from "constants/chainIds";
 import useLogWithdrawProposal from "./useLogWithdrawProposal";
@@ -28,12 +28,20 @@ export default function useWithdraw() {
   //NOTE: submit is disabled on Normal endowments with unmatured accounts
   async function withdraw(data: WithdrawValues) {
     if (endow_chain === chainIds.polygon) {
-      const assets: Asset[] = data.amounts.map(
-        ({ value, tokenId, type: tokenType }) => ({
-          info: tokenType === "cw20" ? { cw20: tokenId } : { native: tokenId },
-          amount: scaleToStr(value /** empty "" */ || "0"),
-        })
-      );
+      // native tokens not supported in contracts, see Angel-protocol-web-integration-readiness/contracts/core/struct.sol#221
+      const [tokenAddresses, amounts]: [string[], number[]] =
+        data.amounts.reduce(
+          ([prevAddresses, prevAmounts], amount) => {
+            if (amount.type === "cw20") {
+              prevAddresses.push(amount.tokenId);
+              prevAmounts.push(
+                scale(amount.value /** empty str "" */ || "0").toNumber()
+              );
+            }
+            return [prevAddresses, prevAmounts];
+          },
+          [new Array<string>(), new Array<number>()]
+        );
 
       const isPolygon = data.network === chainIds.polygon;
       //if not polygon, send to ap wallet (polygon)
@@ -42,18 +50,7 @@ export default function useWithdraw() {
         : ap_wallets.polygon_withdraw;
       const isSendToApCW3 = endow_type === "charity" && type === "locked";
 
-      const meta: WithdrawMeta = {
-        type: "acc_withdraw",
-        data: {
-          beneficiary: data.beneficiary,
-          assets,
-        },
-      };
-
-      const account = new Account(wallet);
-      const endowCW3 = new CW3Endowment(wallet, cw3);
-
-      const proposal = isSendToApCW3
+      const withdrawTx = isSendToApCW3
         ? endowCW3.createWithdrawProposalMsg({
             endowment_id: id,
             assets,
@@ -61,25 +58,21 @@ export default function useWithdraw() {
             description: data.reason,
           })
         : //normal proposal when withdraw doesn't need to go thru AP
-          endowCW3.createProposalMsg(
-            "withdraw proposal",
-            `withdraw ${type} assets from endowment id: ${id}`,
-            [
-              account.createEmbeddedWithdrawMsg({
-                id,
-                beneficiary,
-                acct_type: data.type,
-                assets,
-              }),
-            ],
-            JSON.stringify(meta)
+          AccountDepositWithdrawEndowments.withdraw.encode(
+            id,
+            type,
+            beneficiary,
+            tokenAddresses,
+            amounts
           );
 
       await sendTx({
         content: {
           type: "evm",
-          val: [proposal],
-          log: AccountDepositWithdrawEndowments.withdraw.log,
+          val: [withdrawTx],
+          log: isSendToApCW3
+            ? null
+            : AccountDepositWithdrawEndowments.withdraw.log,
         },
         //Polygon withdrawal
         ...propMeta,
