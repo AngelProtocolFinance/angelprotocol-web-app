@@ -6,7 +6,9 @@ export default function Test() {
       <button
         type="button"
         onClick={async () => {
-          const result = await query("accounts.state", { id: 1 });
+          const result = await query("cw4.members", {
+            cw4: "0xC0c1d1659f88c0D0737069354b93874cBebfdfD7",
+          });
           console.log(result);
         }}
       >
@@ -15,5 +17,3 @@ export default function Test() {
     </div>
   );
 }
-
-query("registrar.config", {});

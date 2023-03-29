@@ -60,14 +60,14 @@ export interface ContractQueries {
   "cw3.voter": Query<Addr, InquiredMember>;
   "cw3.voters": Query<null, string[]>;
   "cw3.config": Query<null, CW3Config>;
-  "cw3.proposals": Query<PageOptions, Proposal[]>;
-  "cw3.proposal": Query<{ id: number }, Proposal>;
+  "cw3.proposals": Query<PageOptions, Proposal[]>; //not implemented
+  "cw3.proposal": Query<{ id: number }, Proposal>; //not implemented
   "cw3.votes": Query<VotesPageOptions, AdminVoteInfo[]>;
 
   "accounts.endowment": Query<{ id: number }, EndowmentDetails>;
-
   "accounts.state": Query<{ id: number }, EndowmentState>;
-  "accounts/settings.controller": Query<{ id: number }, EndowmentController>;
+
+  "accounts/settings.controller": Query<{ id: number }, EndowmentController>; //included in endowDetails
 }
 
 export type ContractQueryTypes = keyof ContractQueries;

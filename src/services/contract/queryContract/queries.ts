@@ -2,6 +2,7 @@ import { toEndowStatus, toEndowType } from "./decoded-types";
 import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
 import { UNSDG_NUMS } from "types/lists";
 import { endowState, endowmentDetails } from "contracts/evm/Account";
+import { owners } from "contracts/evm/Multisig";
 import { placeholders as p } from "./placeholders";
 
 export const queries: {
@@ -53,7 +54,10 @@ export const queries: {
   ],
 
   /** cw4 member */
-  "cw4.members": [{ list_members: {} }, () => p["cw4.members"]],
+  "cw4.members": [
+    owners.data as any,
+    (result) => owners.decode(result).map((addr) => ({ addr, weight: 1 })),
+  ],
   "cw4.member": [
     ({ addr }) => ({
       member: { addr },
