@@ -25,15 +25,13 @@ type CWs = {
 
 export const apCWs: CWs = {
   [AP_ID]: {
-    cw3: contracts.cw3ApTeam,
-    cw4: contracts.cw4GrpApTeam,
+    cw3: contracts["cw3/ap"],
+    cw4: contracts["cw4/ap"],
     type: "ap",
   },
   [REVIEWER_ID]: {
-    cw3: IS_TEST ? contracts.cw3ReviewTeam : contracts.cw3CharityReviewTeam,
-    cw4: IS_TEST
-      ? contracts.cw4GrpReviewTeam
-      : contracts.cw4GrpCharityReviewTeam,
+    cw3: IS_TEST ? contracts["cw3/review"] : contracts["cw3/charity-review"],
+    cw4: IS_TEST ? contracts["cw4/review"] : contracts["cw4/charity-review"],
     type: "review",
   },
 };

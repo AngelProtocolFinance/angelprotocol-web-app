@@ -6,7 +6,7 @@ import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 
 export default class GiftCard extends Contract {
-  private static address = contracts.gift_cards;
+  private static address = contracts["gift-card"];
 
   createDepositObject(recipient: string) {
     return {

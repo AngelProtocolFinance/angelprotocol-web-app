@@ -4,7 +4,7 @@ import { junoApi } from ".";
 import { genQueryPath } from "./queryContract/genQueryPath";
 import { indexfundTags } from "./tags";
 
-const indexFund = contracts.index_fund;
+const indexFund = contracts["index-fund"];
 export const indexFund_api = junoApi.injectEndpoints({
   endpoints: (builder) => ({
     fundList: builder.query<Result<"ifFunds">, Args<"ifFunds">>({

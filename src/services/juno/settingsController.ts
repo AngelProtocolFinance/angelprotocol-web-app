@@ -4,7 +4,7 @@ import { contracts } from "constants/contracts";
 import { junoApi } from ".";
 import { genQueryPath } from "./queryContract/genQueryPath";
 
-const settingsController = contracts.settingsController;
+const settingsController = contracts["accounts/settings"];
 
 export const settingsController_api = junoApi.injectEndpoints({
   endpoints: (builder) => ({
