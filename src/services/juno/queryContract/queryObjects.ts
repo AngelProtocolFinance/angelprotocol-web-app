@@ -61,21 +61,6 @@ export const queryObject: {
     return { is_claimed: { stage, address: addr } };
   },
 
-  /** lp */
-  lpSimul: {
-    simulation: {
-      offer_asset: {
-        info: {
-          native_token: {
-            denom: "juno", //FUTURE: get from args
-          },
-        },
-        amount: "1000000", //FUTURE: get from args
-      },
-      block_time: Math.round(new Date().getTime() / 1000 + 10),
-    },
-  },
-
   /** account */
   accEndowment({ id }) {
     return { endowment: { id } };

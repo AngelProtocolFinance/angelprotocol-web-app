@@ -24,7 +24,6 @@ import {
   RegistrarConfig,
   RegistrarConfigExtension,
   ReviewCW3Config,
-  Simulation,
   VotesPageOptions,
 } from "types/contracts";
 
@@ -52,8 +51,6 @@ export interface ContractQueries {
     result: AllianceMember[];
   };
   ifConfig: { args: null; res: Q<IndexFundConfig>; result: IndexFundConfig };
-
-  lpSimul: { args: null; res: Q<Simulation>; result: Simulation };
 
   giftcardBalance: {
     args: Addr;
