@@ -2,24 +2,34 @@ import { useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";
 import { WithdrawMeta } from "pages/Admin/types";
 import { Asset } from "types/contracts";
+import { SimulContractTx } from "types/evm";
 import { useAdminResources } from "pages/Admin/Guard";
+import { useErrorContext } from "contexts/ErrorContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Account from "contracts/Account";
 import CW3Endowment from "contracts/CW3/CW3Endowment";
-import { AccountDepositWithdrawEndowments } from "contracts/evm";
+import {
+  AccountDepositWithdrawEndowments,
+  LockedWithdraw,
+} from "contracts/evm";
 import useTxSender from "hooks/useTxSender";
 import { scale, scaleToStr } from "helpers";
+import { WalletDisconnectedError } from "errors/errors";
 import { ap_wallets } from "constants/ap_wallets";
 import { chainIds } from "constants/chainIds";
 import useLogWithdrawProposal from "./useLogWithdrawProposal";
 
 const endow_chain = chainIds.juno;
+const accountsDiamond = "0xf725Ff6235D53dA06Acb4a70AA33206a1447D550";
+const endowmentMultiSigEmitterProxy =
+  "0xC0c1d1659f88c0D0737069354b93874cBebfdfD7";
 
 export default function useWithdraw() {
   const { handleSubmit, getValues } = useFormContext<WithdrawValues>();
 
   const { cw3, id, propMeta } = useAdminResources<"charity">();
   const { wallet } = useGetWallet();
+  const { handleError } = useErrorContext();
 
   const sendTx = useTxSender();
   const logProposal = useLogWithdrawProposal(propMeta.successMeta);
@@ -28,6 +38,10 @@ export default function useWithdraw() {
   //NOTE: submit is disabled on Normal endowments with unmatured accounts
   async function withdraw(data: WithdrawValues) {
     if (endow_chain === chainIds.polygon) {
+      if (!wallet) {
+        return handleError(new WalletDisconnectedError());
+      }
+
       // native tokens not supported in contracts, see Angel-protocol-web-integration-readiness/contracts/core/struct.sol#221
       const [tokenAddresses, amounts]: [string[], number[]] =
         data.amounts.reduce(
@@ -50,28 +64,36 @@ export default function useWithdraw() {
         : ap_wallets.polygon_withdraw;
       const isSendToApCW3 = endow_type === "charity" && type === "locked";
 
-      const withdrawTx = isSendToApCW3
-        ? endowCW3.createWithdrawProposalMsg({
-            endowment_id: id,
-            assets,
-            beneficiary,
-            description: data.reason,
-          })
+      const withdrawTx: SimulContractTx = isSendToApCW3
+        ? {
+            from: wallet.address,
+            to: endowmentMultiSigEmitterProxy,
+            data: LockedWithdraw.propose.encode(
+              id,
+              beneficiary,
+              tokenAddresses,
+              amounts
+            ),
+          }
         : //normal proposal when withdraw doesn't need to go thru AP
-          AccountDepositWithdrawEndowments.withdraw.encode(
-            id,
-            type,
-            beneficiary,
-            tokenAddresses,
-            amounts
-          );
+          {
+            from: wallet.address,
+            to: accountsDiamond,
+            data: AccountDepositWithdrawEndowments.withdraw.encode(
+              id,
+              type,
+              beneficiary,
+              tokenAddresses,
+              amounts
+            ),
+          };
 
       await sendTx({
         content: {
           type: "evm",
-          val: [withdrawTx],
+          val: withdrawTx,
           log: isSendToApCW3
-            ? null
+            ? LockedWithdraw.propose.log
             : AccountDepositWithdrawEndowments.withdraw.log,
         },
         //Polygon withdrawal
