@@ -1,6 +1,5 @@
 import { Interface } from "@ethersproject/abi";
 import type { BigNumber } from "@ethersproject/bignumber";
-import { AccountType } from "types/contracts";
 import { TxLog } from "types/evm";
 import abi from "./abi.json";
 
@@ -15,14 +14,12 @@ export const lockedWithdrawInitiatedTopic = iface.encodeFilterTopics(
 export const propose = {
   encode(
     endowId: number,
-    acctType: AccountType,
     beneficiary: string,
     tokenAddresses: string[],
     amounts: number[]
   ) {
     return iface.encodeFunctionData(proposeFn, [
       endowId,
-      acctType === "locked" ? 0 : 1,
       beneficiary,
       tokenAddresses,
       amounts,
