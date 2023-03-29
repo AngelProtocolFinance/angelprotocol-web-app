@@ -19,6 +19,7 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
     const [isLoading, setLoading] = useState(!!props.src || props.isSrcLoading);
     const [isError, setError] = useState(false);
 
+    // https://legacy.reactjs.org/docs/hooks-reference.html#useimperativehandle
     useImperativeHandle<HTMLImageElement | null, HTMLImageElement | null>(
       forwardRef,
       () => ref.current
