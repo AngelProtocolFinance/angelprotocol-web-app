@@ -71,6 +71,7 @@ export const queries: {
 
   "cw3.voters": [{ list_voters: {} }, () => p["cw3.voters"]],
   "cw3.config": [{ config: {} }, () => p["cw3.config"]],
+  //TO CONFIRM: no query for Proposal[] just proposal_id[]
   "cw3.proposals": [
     (options) => ({
       reverse_proposals: options,
@@ -119,7 +120,6 @@ export const queries: {
     ({ id }) => endowState.encode(id) as any,
     (result) => {
       const d = endowState.decode(result);
-      console.log(d);
       return {
         //TODO: populate once needed
         tokens_on_hand: {
@@ -145,6 +145,7 @@ export const queries: {
 
   /** (account) settings controller */
   "accounts/settings.controller": [
+    //currently included in endowment details
     ({ id }) => ({ endowment_controller: { id } }),
     () => p["accounts/settings.controller"],
   ],

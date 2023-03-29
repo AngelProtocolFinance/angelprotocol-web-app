@@ -120,7 +120,14 @@ export const placeholders: {
     max_voting_period: { time: 1000 },
     require_execution: true,
   },
+  /**
+   * not implemented in solidity multisig.
+   * can only get array of ids
+   */
   "cw3.proposals": [],
+  /**
+   * not implemented in solidity multisig.
+   */
   "cw3.proposal": {
     id: 1,
     title: "this prpposal rocks",
