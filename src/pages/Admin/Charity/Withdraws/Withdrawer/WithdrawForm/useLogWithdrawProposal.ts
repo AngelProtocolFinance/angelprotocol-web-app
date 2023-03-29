@@ -31,6 +31,7 @@ export default function useLogWithdrawProposal(successMeta?: TxSuccessMeta) {
         { isDismissible: false }
       );
 
+      // res.attrValue will be endowment ID if tx on Polygon
       const proposal_id = idParamToNum(res.attrValue);
 
       if (proposal_id === 0) throw new Error("Failed to get proposal id");
