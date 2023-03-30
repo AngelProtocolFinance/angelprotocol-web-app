@@ -15,15 +15,15 @@ export const WALLET_METADATA: {
     name: string;
   };
 } = {
-  "web3-auth": {
-    logo: binanceWalletIcon,
-    installUrl: "https://www.bnbchain.org/en/binance-wallet",
-    name: "web3-auth",
-  },
   "binance-wallet": {
     logo: binanceWalletIcon,
     installUrl: "https://www.bnbchain.org/en/binance-wallet",
     name: "Binance Wallet",
+  },
+  "web3auth-metamask": {
+    logo: metamaskIcon,
+    installUrl: "https://metamask.io/",
+    name: "Metamask",
   },
   metamask: {
     logo: metamaskIcon,

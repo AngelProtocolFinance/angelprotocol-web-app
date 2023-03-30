@@ -31,4 +31,4 @@ export type ProviderId =
   | "walletconnect"
   | "keplr-wc"
   | "keplr"
-  | "web3-auth";
+  | "web3auth-metamask";
