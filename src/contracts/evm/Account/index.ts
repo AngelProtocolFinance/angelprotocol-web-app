@@ -39,22 +39,22 @@ export const createEndowment = {
 };
 
 // ////// QUERIES /////
-const endowDetailsFn = iface.getFunction("queryEndowmentDetails");
+const endowDetailsQuery = iface.getFunction("queryEndowmentDetails");
 export const endowmentDetails = {
   encode(id: number) {
-    return iface.encodeFunctionData(endowDetailsFn, [id]);
+    return iface.encodeFunctionData(endowDetailsQuery, [id]);
   },
   decode(result: string): EndowmentResponse {
-    return iface.decodeFunctionResult(endowDetailsFn, result)[0];
+    return iface.decodeFunctionResult(endowDetailsQuery, result)[0];
   },
 };
 
-const endowStateFn = iface.getFunction("queryState");
+const endowStateQuery = iface.getFunction("queryState");
 export const endowState = {
   encode(id: number) {
-    return iface.encodeFunctionData(endowStateFn, [id]);
+    return iface.encodeFunctionData(endowStateQuery, [id]);
   },
   decode(result: string): StateResponse {
-    return iface.decodeFunctionResult(endowStateFn, result)[0];
+    return iface.decodeFunctionResult(endowStateQuery, result)[0];
   },
 };
