@@ -33,7 +33,7 @@ const amount: (arg: TNetwork) => SchemaShape<Amount> = (network) => ({
                 ? "minimum 40 USDC"
                 : "minimum 20 USDC",
               () =>
-                network === chainIds.juno
+                network === chainIds.juno || network === chainIds.polygon
                   ? true
                   : network === chainIds.ethereum
                   ? +val >= 40
