@@ -3,6 +3,7 @@ import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
 import { UNSDG_NUMS } from "types/lists";
 import { endowState, endowmentDetails } from "contracts/evm/Account";
 import { confirmations, owners, transactionIds } from "contracts/evm/Multisig";
+import { funds } from "contracts/evm/index-fund";
 import { placeholders as p } from "./placeholders";
 
 export const queries: {
@@ -18,7 +19,22 @@ export const queries: {
   ],
 
   /** index fund */
-  "index-fund.funds": [{ funds_list: {} }, () => p["index-fund.funds"]],
+  "index-fund.funds": [
+    funds.encode({ startAfter: 0, limit: 10 }) as any,
+    (result) => {
+      const d = funds.decode(result);
+      return d.map((f) => ({
+        id: f.id.toNumber(),
+        name: f.name,
+        description: f.description,
+        members: f.members.map((m) => m.toString()), //TODO: members should number[] now
+        rotating_fund: f.rotatingFund,
+        split_to_liquid: f.splitToLiquid.div(100).toString(),
+        expiry_time: f.expiryTime.toNumber(),
+        expiry_height: f.expiryHeight.toNumber(),
+      }));
+    },
+  ],
   "index-fund.alliance-members": [
     { alliance_members: {} },
     () => p["index-fund.alliance-members"],

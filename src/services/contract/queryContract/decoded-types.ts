@@ -60,13 +60,16 @@ export interface StateResponse {
   };
 }
 
-/**
- * struct StateResponse {
-        AngelCoreStruct.DonationsReceived donationsReceived;
-        bool closingEndowment;
-        AngelCoreStruct.Beneficiary closingBeneficiary;
-    }
- */
+export interface FundDetails {
+  id: BigNumber;
+  name: string;
+  description: string;
+  members: BigNumber[];
+  rotatingFund: boolean;
+  splitToLiquid: BigNumber; //1-100
+  expiryTime: BigNumber;
+  expiryHeight: BigNumber;
+}
 
 // ////////// CONVERTERS ///////////////
 export function toEndowType(type: TypeEnum): EndowmentType {

@@ -69,7 +69,7 @@ export interface ContractQueries {
 
 export type ContractQueryTypes = keyof ContractQueries;
 
-type Empty = Record<never, never>;
+type Empty = { [key: string]: never };
 type QueryArgs<T extends ContractQueryTypes> = ContractQueries[T]["args"];
 
 export type QueryOptions<T extends ContractQueryTypes> =

@@ -1,5 +1,5 @@
 import { Interface } from "@ethersproject/abi";
-import type { BigNumberish } from "@ethersproject/bignumber";
+import { FundDetails } from "services/contract/queryContract/decoded-types";
 import { Tupleable } from "types/evm";
 import { toTuple } from "helpers";
 import abi from "./abi.json";
@@ -14,10 +14,6 @@ interface PageOptions extends Tupleable {
 export const funds = {
   encode: (options: PageOptions) =>
     iface.encodeFunctionData(fundsQuery, toTuple(options)),
-  parse(result: string) {
-    const [balance] = iface.decodeFunctionResult(fundsQuery, result);
-
-    //just convert to string, let consumer condense
-    return (balance as BigNumberish).toString();
-  },
+  decode: (result: string): FundDetails[] =>
+    iface.decodeFunctionResult(fundsQuery, result)[0],
 };
