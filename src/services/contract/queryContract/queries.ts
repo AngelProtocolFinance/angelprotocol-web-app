@@ -2,7 +2,7 @@ import { toEndowStatus, toEndowType } from "./decoded-types";
 import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
 import { UNSDG_NUMS } from "types/lists";
 import { endowState, endowmentDetails } from "contracts/evm/Account";
-import { confirmations, owners } from "contracts/evm/Multisig";
+import { confirmations, owners, transactionIds } from "contracts/evm/Multisig";
 import { placeholders as p } from "./placeholders";
 
 export const queries: {
@@ -77,10 +77,20 @@ export const queries: {
   "cw3.config": [{ config: {} }, () => p["cw3.config"]],
   //TO CONFIRM: no query for Proposal[] just proposal_id[]
   "cw3.proposals": [
-    (options) => ({
-      reverse_proposals: options,
-    }),
-    () => p["cw3.proposals"],
+    (options) => {
+      const from = options.start_before || 0;
+      const to = from + (options.limit || 0);
+      return transactionIds.encode({
+        from,
+        to,
+        pending: true,
+        executed: true,
+      }) as any;
+    },
+    (result) =>
+      transactionIds
+        .decode(result)
+        .map((id) => ({ ...p["cw3.proposal"], id: id.toNumber() })),
   ],
   "cw3.proposal": [
     ({ id }) => ({

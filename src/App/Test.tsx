@@ -6,9 +6,8 @@ export default function Test() {
       <button
         type="button"
         onClick={async () => {
-          const result = await query("cw3.votes", {
-            cw3: "0x1edC050B5d84cbB0cA0b56356f3F7307efcd50Fb",
-            proposal_id: 2,
+          const result = await query("cw3.proposals", {
+            cw3: "0xC0c1d1659f88c0D0737069354b93874cBebfdfD7",
           });
           console.log(result);
         }}
