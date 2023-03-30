@@ -5,8 +5,8 @@ import { TxLog } from "types/evm";
 import abi from "./abi.json";
 
 const iface = new Interface(abi);
-//FUTURE: append abi with new methods
 const withdrawFn = iface.getFunction("withdraw");
+
 export const updateEndowmentStateTopic = iface.encodeFilterTopics(
   "UpdateEndowmentState",
   []
