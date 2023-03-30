@@ -63,8 +63,6 @@ export default function useTxSender<T extends boolean = false>(
         });
       }
       const { fee, tx } = estimate;
-      console.log(wallet.displayCoin);
-      console.log(fee);
 
       if (fee.amount > wallet.displayCoin.balance) {
         return showModal(TxPrompt, {
