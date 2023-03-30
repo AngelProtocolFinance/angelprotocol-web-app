@@ -1,5 +1,3 @@
-import { SplitDetails } from "./common";
-
 export type RebalanceDetails = {
   rebalance_liquid_invested_profits: boolean;
   locked_interests_to_liquid: boolean;
