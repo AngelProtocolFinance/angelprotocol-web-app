@@ -10,6 +10,7 @@ import Account from "contracts/Account";
 import CW3Endowment from "contracts/CW3/CW3Endowment";
 import {
   AccountDepositWithdrawEndowments,
+  EndowmentMultiSig,
   LockedWithdraw,
 } from "contracts/evm";
 import useTxSender from "hooks/useTxSender";
@@ -21,8 +22,8 @@ import useLogWithdrawProposal from "./useLogWithdrawProposal";
 
 const endow_chain = chainIds.juno;
 const accountsDiamond = "0xf725Ff6235D53dA06Acb4a70AA33206a1447D550";
-const endowmentMultiSigEmitterProxy =
-  "0xC0c1d1659f88c0D0737069354b93874cBebfdfD7";
+const multiSigWalletImplementation =
+  "0x7D8F4C57582abBbfa977541d740908b983A39525";
 
 export default function useWithdraw() {
   const { handleSubmit, getValues } = useFormContext<WithdrawValues>();
@@ -67,7 +68,7 @@ export default function useWithdraw() {
       const withdrawTx: SimulContractTx = isSendToApCW3
         ? {
             from: wallet.address,
-            to: endowmentMultiSigEmitterProxy,
+            to: multiSigWalletImplementation,
             data: LockedWithdraw.propose.encode(
               id,
               beneficiary,
@@ -78,13 +79,19 @@ export default function useWithdraw() {
         : //normal proposal when withdraw doesn't need to go thru AP
           {
             from: wallet.address,
-            to: accountsDiamond,
-            data: AccountDepositWithdrawEndowments.withdraw.encode(
-              id,
-              type,
-              beneficiary,
-              tokenAddresses,
-              amounts
+            to: multiSigWalletImplementation,
+            data: EndowmentMultiSig.submitTransaction.encode(
+              "Withdrawal proposal",
+              `withdraw ${type} assets from endowment id: ${id}`,
+              accountsDiamond,
+              0,
+              AccountDepositWithdrawEndowments.withdraw.encode(
+                id,
+                type,
+                beneficiary,
+                tokenAddresses,
+                amounts
+              )
             ),
           };
 
@@ -94,7 +101,7 @@ export default function useWithdraw() {
           val: withdrawTx,
           log: isSendToApCW3
             ? LockedWithdraw.propose.log
-            : AccountDepositWithdrawEndowments.withdraw.log,
+            : EndowmentMultiSig.submitTransaction.log,
         },
         //Polygon withdrawal
         ...propMeta,
