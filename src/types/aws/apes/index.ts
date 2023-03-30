@@ -7,15 +7,6 @@ import { SortDirection } from "../ap";
  * put all aws/apes definitions here, if big category exist, separate in a file
  */
 
-export type TokenType =
-  | "juno-native"
-  | "terra-native"
-  | "evm-native"
-  | "erc20"
-  | "cw20"
-  | "ibc"
-  | "placeholder";
-
 export type Token = {
   approved: boolean; // true
   decimals: number; // 6
@@ -24,7 +15,14 @@ export type Token = {
   name: string; // "Stader LunaX Token"
   symbol: string; // DB Partition key ex., "LunaX"
   token_id: string; // "ujuno" | "0xaSD123..." | "ibc/ASH3438hfd..."
-  type: TokenType;
+  type:
+    | "juno-native"
+    | "terra-native"
+    | "evm-native"
+    | "erc20"
+    | "cw20"
+    | "ibc"
+    | "placeholder";
 };
 
 export type TokenWithBalance = WithBalance<Token> & { gift?: number };
@@ -34,12 +32,6 @@ export type BaseChain = {
   chain_name: string; // Avalanche Fuji Testnet
 };
 
-export type ChainType =
-  | "juno-native"
-  | "terra-native"
-  | "evm-native"
-  | "placeholder"; // | "sol" | "btc" | ...
-
 export type FetchedChain = BaseChain & {
   block_explorer_url: string; // https://testnet.snowtrace.io
   lcd_url: string; // https://api.avax-test.network/ext/bc/C/rpc
@@ -47,7 +39,7 @@ export type FetchedChain = BaseChain & {
   network_type: NetworkType;
   rpc_url: string; // https://api.avax-test.network/ext/bc/C/rpc
   tokens: Token[];
-  type: ChainType;
+  type: "juno-native" | "terra-native" | "evm-native" | "placeholder"; // | "sol" | "btc" | ...
 };
 
 export type Chain = Omit<FetchedChain, "native_currency" | "tokens"> & {
