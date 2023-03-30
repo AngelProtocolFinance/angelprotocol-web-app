@@ -112,14 +112,21 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   } = useEVMWC();
 
   const {
+    isLoading: isWeb3AuthLoading,
     supportedChains: web3AuthSupportedChains,
     connection: web3AuthConnection,
-    disconnect: web3AuthDisconnect,
-    switchChain: web3AuthSwitchChain,
-    providerInfo: web3AuthProviderInfo,
+    disconnect: disconnectWeb3Auth,
+    switchChain: switchWeb3AuthChain,
+    providerInfo: web3AuthInfo,
   } = useWeb3Auth();
 
   const providerStatuses: ProviderStatus[] = [
+    {
+      providerInfo: web3AuthInfo,
+      isLoading: isWeb3AuthLoading,
+      supportedChains: web3AuthSupportedChains,
+      switchChain: switchWeb3AuthChain,
+    },
     {
       providerInfo: binanceWalletInfo,
       isLoading: isBinanceWalletLoading,
@@ -178,6 +185,9 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       case "metamask":
         disconnectMetamask();
         break;
+      case "web3auth-metamask":
+        disconnectWeb3Auth();
+        break;
       case "evm-wc":
         disconnectEVMWC();
         break;
@@ -205,6 +215,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   }, [
     activeProvider?.providerInfo,
     disconnectMetamask,
+    disconnectWeb3Auth,
     disconnectEVMWC,
     disconnectBinanceWallet,
     disconnectXdefi,
@@ -272,11 +283,11 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
           connections: IS_MOBILE
             ? wcConnections
             : [
+                web3AuthConnection,
                 keplrConnection,
                 metamaskConnection,
                 binanceWalletConnection,
                 xdefiConnection,
-                web3AuthConnection,
                 ...terraConnections,
                 ...wcConnections,
               ],
