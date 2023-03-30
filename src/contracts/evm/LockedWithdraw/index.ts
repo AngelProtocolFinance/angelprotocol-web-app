@@ -4,8 +4,8 @@ import { TxLog } from "types/evm";
 import abi from "./abi.json";
 
 const iface = new Interface(abi);
-//FUTURE: append abi with new methods
 const proposeFn = iface.getFunction("propose");
+
 export const lockedWithdrawInitiatedTopic = iface.encodeFilterTopics(
   "LockedWithdrawInitiated",
   []
