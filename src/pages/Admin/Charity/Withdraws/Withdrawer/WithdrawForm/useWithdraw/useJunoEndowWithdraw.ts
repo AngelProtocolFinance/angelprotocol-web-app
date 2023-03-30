@@ -3,11 +3,13 @@ import { WithdrawValues } from "../types";
 import { WithdrawMeta } from "pages/Admin/types";
 import { Asset } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
+import { useErrorContext } from "contexts/ErrorContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Account from "contracts/Account";
 import CW3Endowment from "contracts/CW3/CW3Endowment";
 import useTxSender from "hooks/useTxSender";
 import { scaleToStr } from "helpers";
+import { WalletDisconnectedError } from "errors/errors";
 import { ap_wallets } from "constants/ap_wallets";
 import { chainIds } from "constants/chainIds";
 import useLogWithdrawProposal from "./useLogWithdrawProposal";
@@ -17,6 +19,7 @@ export default function useJunoEndowWithdraw() {
 
   const { cw3, id, endow_type, propMeta } = useAdminResources<"charity">();
   const { wallet } = useGetWallet();
+  const { handleError } = useErrorContext();
 
   const sendTx = useTxSender();
   const logProposal = useLogWithdrawProposal(propMeta.successMeta);
@@ -24,6 +27,10 @@ export default function useJunoEndowWithdraw() {
 
   //NOTE: submit is disabled on Normal endowments with unmatured accounts
   async function withdraw(data: WithdrawValues) {
+    if (!wallet) {
+      return handleError(new WalletDisconnectedError());
+    }
+
     const assets: Asset[] = data.amounts.map(
       ({ value, tokenId, type: tokenType }) => ({
         info: tokenType === "cw20" ? { cw20: tokenId } : { native: tokenId },
