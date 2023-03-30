@@ -2,7 +2,7 @@ import { toEndowStatus, toEndowType } from "./decoded-types";
 import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
 import { UNSDG_NUMS } from "types/lists";
 import { endowState, endowmentDetails } from "contracts/evm/Account";
-import { owners } from "contracts/evm/Multisig";
+import { confirmations, owners } from "contracts/evm/Multisig";
 import { placeholders as p } from "./placeholders";
 
 export const queries: {
@@ -90,10 +90,11 @@ export const queries: {
   ],
 
   "cw3.votes": [
-    (options) => ({
-      list_votes: options,
-    }),
-    () => p["cw3.votes"],
+    ({ proposal_id }) => confirmations.encode(proposal_id) as any,
+    (result) =>
+      confirmations
+        .decode(result)
+        .map((addr) => ({ voter: addr, vote: "yes", weight: 1 })),
   ],
 
   /** account */

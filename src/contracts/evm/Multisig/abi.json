@@ -1,1 +1,4 @@
-["function getOwners() view returns (address[])"]
+[
+  "function getOwners() view returns (address[])",
+  "function getConfirmations(uint256) view returns (address[])"
+]
