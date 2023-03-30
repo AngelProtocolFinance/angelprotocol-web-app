@@ -12,27 +12,6 @@ export const placeholders: {
 } = {
   "registrar.config": {
     owner: "terra1...",
-    version: "1.0.0",
-    treasury: "terra1...",
-    rebalance: {
-      rebalance_liquid_invested_profits: true,
-      locked_interests_to_liquid: true,
-      interest_distribution: "0.5",
-      locked_principle_to_liquid: true,
-      principle_distribution: "0.5",
-    },
-    split_to_liquid: {
-      min: "0.1",
-      max: "0.5",
-      default: "0.3",
-    },
-    accepted_tokens: {
-      native: ["uusd"],
-      cw20: ["terra1..."],
-    },
-    axelar_gateway: "terra1...",
-    axelar_ibc_channel: "channel-0",
-    axelar_chain_id: "axelar-testnet-9000",
   },
   "registrar.config-extension": {
     accounts_contract: "terra1...",
