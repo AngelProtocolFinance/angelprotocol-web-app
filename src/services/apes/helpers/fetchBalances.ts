@@ -87,7 +87,7 @@ export async function fetchBalances(
             params: [{ to: t.token_id, data: balanceOf.encode(address) }],
           })
           .then<Coin>((result) => ({
-            amount: balanceOf.parse(result),
+            amount: balanceOf.decode(result),
             denom: t.token_id,
           }))
       ),

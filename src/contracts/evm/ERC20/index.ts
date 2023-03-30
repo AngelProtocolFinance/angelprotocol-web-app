@@ -10,7 +10,7 @@ export const balanceOf = {
   encode(address: string) {
     return iface.encodeFunctionData(balanceQuery, [address]);
   },
-  parse(result: string) {
+  decode(result: string): string {
     const [balance] = iface.decodeFunctionResult(balanceQuery, result);
 
     //just convert to string, let consumer condense

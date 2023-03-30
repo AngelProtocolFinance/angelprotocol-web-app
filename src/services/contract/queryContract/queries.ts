@@ -2,6 +2,7 @@ import { toEndowStatus, toEndowType } from "./decoded-types";
 import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
 import { UNSDG_NUMS } from "types/lists";
 import { endowState, endowmentDetails } from "contracts/evm/Account";
+import { balanceOf } from "contracts/evm/ERC20";
 import { confirmations, owners, transactionIds } from "contracts/evm/Multisig";
 import { funds } from "contracts/evm/index-fund";
 import { placeholders as p } from "./placeholders";
@@ -55,10 +56,8 @@ export const queries: {
   /** cw20 */
   "cw20.info": [{}, () => p["cw20.info"]],
   "cw20.balance": [
-    ({ addr }) => ({
-      balance: { address: addr },
-    }),
-    () => p["cw20.balance"],
+    ({ addr }) => balanceOf.encode(addr) as any,
+    (result) => balanceOf.decode(result),
   ],
 
   /** giftcard */
