@@ -27,11 +27,7 @@ export const submitTransaction = {
     const topic = iface.getEventTopic("Confirmation");
     const log = logs.find((log) => log.topics.includes(topic));
     if (!log) return null;
-    const [_, txId] = iface.decodeEventLog(
-      "Confirmation",
-      log.data,
-      log.topics
-    );
+    const [, txId] = iface.decodeEventLog("Confirmation", log.data, log.topics);
     return (txId as BigNumber).toString();
   },
 };
