@@ -72,7 +72,7 @@ export interface ContractQueries {
 
 export type ContractQueryTypes = keyof ContractQueries;
 
-type Empty = { [key: string]: never };
+type Empty = Record<never, never>;
 type QueryArgs<T extends ContractQueryTypes> = ContractQueries[T]["args"];
 
 export type QueryOptions<T extends ContractQueryTypes> =
@@ -83,5 +83,5 @@ export type QueryOptions<T extends ContractQueryTypes> =
         ? Empty
         : QueryArgs<T>
       : //if contract address is not hardcoded, need to supply
-        { [key in C]: string } & (QueryArgs<T> extends null ? {} : QueryArgs<T>)
+        Record<C, string> & (QueryArgs<T> extends null ? {} : QueryArgs<T>)
     : Empty;
