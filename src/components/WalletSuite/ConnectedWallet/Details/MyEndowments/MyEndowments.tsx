@@ -15,7 +15,7 @@ export default function MyEndowments({ endowments }: Props) {
             className="grid grid-cols-[auto_1fr] gap-3"
           >
             <Image
-              img={{ src: endowment.logo }}
+              src={endowment.logo}
               className="w-10 h-10 border border-prim rounded-full"
             />
 

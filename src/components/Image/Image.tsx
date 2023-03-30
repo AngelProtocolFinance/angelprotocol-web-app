@@ -1,49 +1,87 @@
-import { PropsWithChildren, useRef, useState } from "react";
+import React, {
+  PropsWithChildren,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 import ContentLoader from "components/ContentLoader";
 import ExtLink from "components/ExtLink";
 import ImagePlaceholder from "./ImagePlaceholder";
 
-export type ImageProps = {
-  src?: string;
+export type ImageProps = React.ImgHTMLAttributes<HTMLImageElement> & {
   isSrcLoading?: boolean;
 } & ({ href: string; title: string } | { href?: never; title?: never });
 
-type Props = {
-  img?: ImageProps;
-  className?: string;
-};
+const Image = React.forwardRef<HTMLImageElement, ImageProps>(
+  ({ className, ...props }, forwardRef) => {
+    const ref = useRef<HTMLImageElement>(null);
+    const [isError, setError] = useState(false);
 
-export default function Image({ img, className }: Props) {
-  const ref = useRef<HTMLImageElement>(null);
-  const [isLoading, setLoading] = useState(!!img?.src || img?.isSrcLoading);
+    // https://legacy.reactjs.org/docs/hooks-reference.html#useimperativehandle
+    useImperativeHandle<HTMLImageElement | null, HTMLImageElement | null>(
+      forwardRef,
+      () => ref.current
+    );
 
-  if (!img?.src) {
-    return <ImagePlaceholder className={className} />;
-  }
+    if ((!props.src && !props.isSrcLoading) || isError) {
+      return <ImagePlaceholder className={className} />;
+    }
 
-  const shouldLoad = !ref.current?.complete && isLoading;
+    /**
+     *
+     * Using `ref.current.complete` instead of some internal `isLoading` state to check if image
+     * was already loaded as it maintains state on re-render.
+     *
+     * Were we to use some `isLoading` state, then `Image` would flicker on every render.
+     *
+     * Explanation for the flicker:
+     * 1. Let's assume the image was already loaded and rendered, but the user navigated away from
+     *    the page/component that displayed it.
+     * 2. The user decides to navigate back to the page/component with the loaded image.
+     * 3. As the default `isLoading` state is `true`, the `img` component is hidden and
+     *    `ContentLoader` component is displayed.
+     * 4. As  the image is already loaded and cached, the `img.onLoad` triggers immediately and
+     *    updates `isLoading` to `false` triggering a new render
+     * 5. Component `Image` flickers as it transitions from displaying `ContentLoader` to displaying `img`
+     *
+     */
+    const isLoading = !ref.current?.complete && props.isSrcLoading;
 
-  return (
-    <>
-      {shouldLoad && <ContentLoader className={className} />}
-      {!img.isSrcLoading && (
+    return (
+      <>
+        {isLoading && <ContentLoader className={className} />}
+        {/**
+         *
+         * Setting the logic to add `hidden` class name is necessary on both
+         * `WithLink` wrapper and on the child `img`.
+         *
+         * Reason:
+         * if no `href` was passed, that means only the image would be returned and since
+         * it is returned without a wrapper, we need to apply `hidden` className manually.
+         * Otherwise (if `href` was passed), we need to apply `hidden` to the link component
+         * wrapping the `img`.
+         *
+         */}
         <WithLink
-          className={`${className} ${shouldLoad ? "hidden" : ""}`}
-          href={img.href}
-          title={img.title}
+          className={`${className} ${isLoading ? "hidden" : ""}`}
+          href={props.href}
+          title={props.title}
         >
           <img
             ref={ref}
-            src={img.src}
-            className={`${className} object-contain w-full h-full`}
-            alt=""
-            onLoad={() => setLoading(false)}
+            src={props.src}
+            className={`object-contain ${
+              isLoading ? "hidden" : ""
+            } ${className}`}
+            alt={props.alt || ""}
+            loading={props.loading}
+            onError={(e) => (props.onError ? props.onError(e) : setError(true))}
           />
         </WithLink>
-      )}
-    </>
-  );
-}
+      </>
+    );
+  }
+);
 
 function WithLink({
   className,
@@ -60,6 +98,8 @@ function WithLink({
       {children}
     </ExtLink>
   ) : (
-    <div className={className}>{children}</div>
+    <>{children}</>
   );
 }
+
+export default Image;

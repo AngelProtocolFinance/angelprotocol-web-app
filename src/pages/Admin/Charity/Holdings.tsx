@@ -2,6 +2,7 @@ import { Coin } from "@cosmjs/proto-signing";
 import { Link } from "react-router-dom";
 import { AccountType, CW20, GenericBalance } from "types/contracts";
 import Icon from "components/Icon";
+import Image from "components/Image";
 import TableSection, { Cells } from "components/TableSection";
 import { condense, humanize } from "helpers";
 import { adminRoutes } from "constants/routes";
@@ -50,7 +51,7 @@ function Balance(props: CW20 | Coin) {
   return (
     <Cells type="td" cellClass="py-2 font-mono uppercase">
       <div className="flex items-center gap-2">
-        <img className="w-6 h-6 object-contain" src={tokens[id].icon} alt="" />
+        <Image className="w-6 h-6" src={tokens[id].icon} />
         <span>{tokens[id].symbol}</span>
       </div>
 

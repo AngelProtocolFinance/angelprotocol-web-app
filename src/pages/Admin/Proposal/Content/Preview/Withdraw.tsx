@@ -1,4 +1,5 @@
 import { WithdrawMeta } from "pages/Admin/types";
+import Image from "components/Image";
 import TableSection, { Cells } from "components/TableSection";
 import { condense, humanize } from "helpers";
 import { tokens } from "constants/tokens";
@@ -23,10 +24,9 @@ export default function Withdraw({
 
             return (
               <Cells key={denom} cellClass="" type="td">
-                <img
+                <Image
                   src={tokens[denom].icon}
                   className="w-5 h-5 rounded-full mr-2"
-                  alt=""
                 />
                 <>{humanize(condense(asset.amount), 4)}</>
                 <span className="text-xs uppercase pl-2">

@@ -1,5 +1,6 @@
 import { DiffSet } from "types/utils";
-import ImageWrapper from "components/ImageWrapper";
+import placeHolderImage from "assets/images/home-banner.jpg";
+import Image from "components/Image";
 import TableSection, { Cells } from "components/TableSection";
 import { bucketURL } from "helpers/uploadFiles";
 import PreviewContainer from "./common/PreviewContainer";
@@ -50,10 +51,10 @@ function createColumn<T extends object>(value: T[keyof T]): JSX.Element {
   // the user has uploaded and a preview should be displayed
   if (typeof value === "string" && value.startsWith(bucketURL)) {
     return (
-      <ImageWrapper
+      <Image
         src={value}
-        alt=""
-        className="w-40 lg:w-[40rem] lg:min-h-[5rem] max-w-2xl object-contain"
+        className="w-40 lg:w-[40rem] lg:min-h-[5rem] max-w-2xl"
+        onError={(e) => e.currentTarget.setAttribute("src", placeHolderImage)}
       />
     );
   }

@@ -1,6 +1,7 @@
 import { Combobox } from "@headlessui/react";
 import { useState } from "react";
 import { SelectorProps } from "./types";
+import Image from "components/Image";
 import Icon, { DrawerIcon } from "../Icon";
 
 export default function TokenSelector({
@@ -55,7 +56,7 @@ export default function TokenSelector({
               }
               value={token}
             >
-              <img alt="" src={token.logo} className="w-6 h-6 object-contain" />
+              <Image src={token.logo} className="w-6 h-6" />
               <span className="text-sm">{token.symbol}</span>
             </Combobox.Option>
           ))

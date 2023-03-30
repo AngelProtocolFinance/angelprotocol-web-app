@@ -1,5 +1,6 @@
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
+import Image from "components/Image";
 import { WithoutInstallers } from "../WalletContext";
 import { WALLET_METADATA } from "../WalletContext/constants";
 
@@ -14,10 +15,10 @@ export default function InstallWallet(props: {
         className="border border-blue-l1 dark:border-none dark:bg-blue-d2 hover:bg-blue rounded-2xl p-3 md:p-5 flex items-center"
         href={installUrl}
       >
-        <img
+        <Image
           src={logo}
           alt="wallet logo"
-          className="w-8 h-8 md:w-12 md:h-12 object-contain"
+          className="w-8 h-8 md:w-12 md:h-12"
         />
 
         <div className="flex flex-col text-left ml-3 md:ml-5">

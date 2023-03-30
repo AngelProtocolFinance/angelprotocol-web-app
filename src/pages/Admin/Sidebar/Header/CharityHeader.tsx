@@ -13,7 +13,8 @@ export default function CharityHeader() {
       <div className="flex justify-between">
         <Image
           className="w-14 h-14"
-          img={{ src: profile?.logo, isSrcLoading: isLoading }}
+          src={profile?.logo}
+          isSrcLoading={isLoading}
         />
 
         {isLoading ? (

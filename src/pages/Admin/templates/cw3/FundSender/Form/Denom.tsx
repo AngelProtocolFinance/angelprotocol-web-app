@@ -1,6 +1,7 @@
 import { memo } from "react";
 import { useFormContext } from "react-hook-form";
 import { FundSendValues } from "pages/Admin/types";
+import Image from "components/Image";
 import { tokens } from "constants/tokens";
 
 function Denom({ denom }: { denom: string }) {
@@ -24,11 +25,7 @@ function Denom({ denom }: { denom: string }) {
         htmlFor={denom}
         className="uppercase flex items-center text-sm cursor-pointer"
       >
-        <img
-          src={tokens[denom].icon}
-          alt=""
-          className="w-4 h-4 object-contain"
-        />
+        <Image src={tokens[denom].icon} className="w-4 h-4" />
         <span className={`ml-1.5`}>{tokens[denom].symbol}</span>
       </label>
     </div>

@@ -1,6 +1,7 @@
 import { AllianceEditMeta } from "pages/Admin/types";
 import { AllianceMember } from "types/contracts";
 import defaultIcon from "assets/icons/angel-alliance.png";
+import Image from "components/Image";
 import Header from "./common/Header";
 import PreviewContainer from "./common/PreviewContainer";
 
@@ -39,11 +40,7 @@ export default function AllianceUpdate(props: AllianceEditMeta["data"]) {
 function Member(props: AllianceMember) {
   return (
     <div className="flex items-center gap-2 p-0.5">
-      <img
-        src={props.logo || defaultIcon}
-        className="w-6 h-6 object-contain"
-        alt=""
-      />
+      <Image src={props.logo || defaultIcon} className="w-6 h-6" />
       <p className="font-bold text-xs mr-1">{props.name}</p>
       <span className="text-xs">{props.wallet}</span>
     </div>
