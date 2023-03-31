@@ -10,8 +10,8 @@ export default function Adder() {
       <Field<T>
         classes="field-admin-sec"
         label="Endowment Address"
-        name="newMemberAddr"
-        placeholder="juno123abc..."
+        name="newMemberId"
+        placeholder="1"
       />
       <button
         onClick={addMember}

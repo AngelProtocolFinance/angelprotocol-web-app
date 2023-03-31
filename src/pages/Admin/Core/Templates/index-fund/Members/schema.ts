@@ -6,7 +6,7 @@ import { proposalShape } from "../../../../constants";
 
 const shape: SchemaShape<FundUpdateValues> = {
   ...proposalShape,
-  newMemberAddr: requiredContractAddr,
+  newMemberId: requiredContractAddr,
 };
 
 export const schema = Yup.object(shape);
