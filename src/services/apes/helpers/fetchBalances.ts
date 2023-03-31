@@ -3,7 +3,6 @@ import { FetchedChain, Token, TokenWithBalance } from "types/aws";
 import { CW20Balance } from "types/contracts";
 import { ProviderId } from "types/lists";
 import { queryContract } from "services/juno/queryContract";
-import { balance } from "contracts/evm/ERC20";
 import { condenseToNum, getProvider, toBase64 } from "helpers";
 
 type BalMap = { [index: string]: string | undefined | number };
@@ -74,15 +73,13 @@ export async function fetchBalances(
         params: [address, "latest"],
       }),
       ...tokens.alts.map((t) =>
-        provider
-          .request<string>({
-            method: "eth_call",
-            params: [{ to: t.token_id, data: balance.encode(address) }],
-          })
-          .then<Coin>((result) => ({
-            amount: balance.decode(result),
-            denom: t.token_id,
-          }))
+        queryContract("erc20.balance", {
+          erc20: t.token_id,
+          addr: address,
+        }).then<Coin>((result) => ({
+          amount: result,
+          denom: t.token_id,
+        }))
       ),
     ]);
 

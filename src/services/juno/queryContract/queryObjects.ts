@@ -44,7 +44,7 @@ export const queryObjects: {
   "erc20.balance": [
     ({ addr }) => erc20Balance.encode(addr),
     (result) => erc20Balance.decode(result),
-    "placeholder",
+    "migrated",
   ],
 
   /** giftcard */
