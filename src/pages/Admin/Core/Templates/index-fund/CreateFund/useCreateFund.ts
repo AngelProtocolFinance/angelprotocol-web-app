@@ -8,12 +8,12 @@ import { useGetter } from "store/accessors";
 import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
 import useTxSender from "hooks/useTxSender";
-import { condense, roundDown } from "helpers";
+import { roundDownToNum } from "helpers";
 import { cleanObject } from "helpers/cleanObject";
-import { INIT_SPLIT } from ".";
+import { INIT_SPLIT } from "./index";
 
 export default function useCreateFund() {
-  const { cw3, propMeta } = useAdminResources();
+  const { multisig, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
   const sendTx = useTxSender();
   const { trigger, getValues } = useFormContext<FundCreatorValues>();
@@ -51,14 +51,13 @@ export default function useCreateFund() {
       name: fundName,
       description: fundDescription,
       members: newFundMembers,
-      rotating_fund: isFundRotating || undefined,
-      split_to_liquid:
+      rotatingFund: isFundRotating,
+      splitToLiquid:
         splitToLiquid === INIT_SPLIT
-          ? undefined
-          : roundDown(condense(splitToLiquid)),
-      expiry_time:
-        expiryTime === "" ? undefined : new Date(expiryTime).getTime() / 1000,
-      expiry_height: expiryHeight === "" ? undefined : +expiryHeight,
+          ? 0
+          : roundDownToNum(+splitToLiquid * 100, 0),
+      expiryTime: expiryTime === "" ? 0 : new Date(expiryTime).getTime() / 1000,
+      expiryHeight: expiryHeight === "" ? 0 : +expiryHeight,
     };
 
     //remove undefined fields
@@ -74,7 +73,7 @@ export default function useCreateFund() {
       data: newFundDetails,
     };
     //create proposal msg
-    const adminContract = new CW3(wallet, cw3);
+    const adminContract = new CW3(wallet, multisig);
     const proposalMsg = adminContract.createProposalMsg(
       title,
       description,

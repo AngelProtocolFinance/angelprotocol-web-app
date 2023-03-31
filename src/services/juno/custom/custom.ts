@@ -83,7 +83,7 @@ export const customApi = junoApi.injectEndpoints({
     }),
     proposalDetails: builder.query<
       ProposalDetails,
-      { id?: string; cw3: string; voter: string }
+      { id?: string; cw3: string }
     >({
       providesTags: ["multisig.proposal", "multisig.votes"],
       async queryFn(args) {

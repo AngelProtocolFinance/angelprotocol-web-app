@@ -12,7 +12,7 @@ import useTxSender from "hooks/useTxSender";
 
 export default function useUpdateFund() {
   const { trigger, reset, getValues } = useFormContext<FundUpdateValues>();
-  const { cw3, propMeta } = useAdminResources();
+  const { multisig, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
   const [isLoading, setIsLoading] = useState(false);
   const fundMembers = useGetter((state) => state.admin.fundMembers);
@@ -36,10 +36,10 @@ export default function useUpdateFund() {
       const [toAdd, toRemove]: Diffs = fundMembers.reduce(
         ([toAdd, toRemove]: Diffs, fundMember) => {
           if (fundMember.isAdded) {
-            toAdd.push(fundMember.addr);
+            toAdd.push(fundMember.id);
           }
           if (fundMember.isDeleted) {
-            toRemove.push(fundMember.addr);
+            toRemove.push(fundMember.id);
           }
           return [toAdd, toRemove];
         },
@@ -64,7 +64,7 @@ export default function useUpdateFund() {
         data: { fundId: fundId, fundName: fundDetails.name, toRemove, toAdd },
       };
 
-      const adminContract = new CW3(wallet, cw3);
+      const adminContract = new CW3(wallet, multisig);
       const proposalTitle = getValues("title");
       const proposalDescription = getValues("description");
 

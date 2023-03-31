@@ -12,7 +12,7 @@ import useTxSender from "hooks/useTxSender";
 
 export default function useEditAlliance() {
   const { trigger, reset, getValues } = useFormContext<AllianceEditValues>();
-  const { cw3, propMeta } = useAdminResources();
+  const { multisig, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
   const { members: allianceMembers, isEditingMember } = useGetter(
     (state) => state.admin.allianceMembers
@@ -65,7 +65,7 @@ export default function useEditAlliance() {
       if (isDeleted) toRemoveMembers.push(restMemberData);
     }
 
-    const adminContract = new CW3(wallet, cw3);
+    const adminContract = new CW3(wallet, multisig);
 
     //construct proposal meta for preview
     const editAllianceMeta: AllianceEditMeta = {

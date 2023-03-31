@@ -10,9 +10,9 @@ export default function Member(props: AddressWithFlags) {
   const dispatch = useSetter();
   function memberItemAction() {
     if (props.isAdded) {
-      dispatch(undoAddMember(props.addr));
+      dispatch(undoAddMember(props.id));
     } else {
-      dispatch(toggleDeleteExistingMember(props.addr));
+      dispatch(toggleDeleteExistingMember(props.id));
     }
   }
   return (
@@ -25,12 +25,12 @@ export default function Member(props: AddressWithFlags) {
       <span
         className={`${props.isDeleted ? "line-through" : ""} text-sm font-mono`}
       >
-        {props.addr}
+        {props.id}
       </span>
       <button
         onClick={memberItemAction}
         type="button"
-        className="bg-white/30 ml-2 rounded-md p-0.5 ml-auto"
+        className="bg-white/30 ml-2 rounded-md p-0.5"
       >
         {props.isAdded || props.isDeleted ? (
           <Icon type="Undo" />

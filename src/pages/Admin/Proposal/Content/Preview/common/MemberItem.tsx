@@ -2,10 +2,10 @@ import { CW4Member } from "types/contracts";
 import Icon, { IconType } from "components/Icon";
 
 export default function MemberItem(props: {
-  member: CW4Member | string;
+  member: CW4Member | number | string;
   iconType?: IconType;
 }) {
-  if (typeof props.member === "string") {
+  if (typeof props.member === "number" || typeof props.member === "string") {
     return (
       <div className="flex items-center gap-2 p-1">
         <Icon type={props.iconType || "User"} />

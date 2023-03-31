@@ -9,22 +9,22 @@ export default function useAddMember() {
   const newFundMembers = useGetter((state) => state.admin.newFundMembers);
   const dispatch = useDispatch();
   async function addMember() {
-    const isValid = await trigger("newFundAddr");
+    const isValid = await trigger("newFundMemberId");
     if (!isValid) return;
 
-    const newFundMemberAddr = getValues("newFundAddr");
-    const isMemberExisting = newFundMembers.indexOf(newFundMemberAddr) !== -1;
+    const newFundMemberId = getValues("newFundMemberId");
+    const isMemberExisting = newFundMembers.indexOf(+newFundMemberId) !== -1;
 
     if (isMemberExisting) {
       setError(
-        "newFundAddr",
+        "newFundMemberId",
         { message: "address already added" },
         { shouldFocus: true }
       );
       return;
     }
-    dispatch(addFundMember(newFundMemberAddr));
-    resetField("newFundAddr");
+    dispatch(addFundMember(+newFundMemberId));
+    resetField("newFundMemberId");
   }
 
   return { addMember, newFundMembers };

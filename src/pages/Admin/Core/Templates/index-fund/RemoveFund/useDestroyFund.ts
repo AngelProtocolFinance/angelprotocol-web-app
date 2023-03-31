@@ -15,7 +15,7 @@ export default function useDestroyFund() {
   } = useFormContext<FundDestroyValues>();
   const { showModal } = useModalContext();
   const sendTx = useTxSender();
-  const { cw3, propMeta } = useAdminResources();
+  const { multisig, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
 
   async function destroyFund(data: FundDestroyValues) {
@@ -39,7 +39,7 @@ export default function useDestroyFund() {
       data: fundDetails,
     };
 
-    const adminContract = new CW3(wallet, cw3);
+    const adminContract = new CW3(wallet, multisig);
     const proposalMsg = adminContract.createProposalMsg(
       data.title,
       data.description,

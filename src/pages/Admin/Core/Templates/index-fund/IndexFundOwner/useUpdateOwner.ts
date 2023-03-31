@@ -10,7 +10,7 @@ import IndexFund from "contracts/IndexFund";
 import useTxSender from "hooks/useTxSender";
 
 export default function useUpdateOwner() {
-  const { cw3, propMeta } = useAdminResources();
+  const { multisig, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
   const {
     handleSubmit,
@@ -41,7 +41,7 @@ export default function useUpdateOwner() {
       data: { owner: data.initialOwner, newOwner: data.new_owner },
     };
 
-    const adminContract = new CW3(wallet, cw3);
+    const adminContract = new CW3(wallet, multisig);
     const proposalMsg = adminContract.createProposalMsg(
       data.title,
       data.description,

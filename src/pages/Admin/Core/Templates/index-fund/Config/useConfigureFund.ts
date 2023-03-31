@@ -16,7 +16,7 @@ type Key = keyof FundConfig;
 type Value = FundConfig[Key];
 
 export default function useConfigureFund() {
-  const { cw3, propMeta } = useAdminResources();
+  const { multisig, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
   const {
     handleSubmit,
@@ -58,7 +58,7 @@ export default function useConfigureFund() {
       })
     );
 
-    const adminContract = new CW3(wallet, cw3);
+    const adminContract = new CW3(wallet, multisig);
     const proposalMsg = adminContract.createProposalMsg(
       title,
       description,

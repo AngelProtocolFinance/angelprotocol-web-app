@@ -12,15 +12,15 @@ export default function MemberAdder() {
       {newFundMembers.length > 0 && (
         <div className="flex flex-wrap mb-4 gap-2">
           {newFundMembers.map((addr) => (
-            <Member key={addr} address={addr} />
+            <Member key={addr} id={addr} />
           ))}
         </div>
       )}
       <Field<V>
         classes="field-admin-sec"
-        label="Endowment address"
-        name="newFundAddr"
-        placeholder="juno123abc..."
+        label="Endowment id"
+        name="newFundMemberId"
+        placeholder="1"
       />
       <button
         type="button"

@@ -18,7 +18,7 @@ type Key = keyof RP;
 type Value = RP[Key];
 
 export default function useConfigureRegistrar() {
-  const { cw3, propMeta } = useAdminResources();
+  const { multisig, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
   const {
     handleSubmit,
@@ -56,7 +56,7 @@ export default function useConfigureRegistrar() {
       data: genDiffMeta(diffEntries, initialConfigPayload),
     };
 
-    const adminContract = new CW3(wallet, cw3);
+    const adminContract = new CW3(wallet, multisig);
     const proposalMsg = adminContract.createProposalMsg(
       title,
       description,

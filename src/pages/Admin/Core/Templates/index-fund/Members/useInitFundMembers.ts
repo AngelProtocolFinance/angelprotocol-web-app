@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
 import { FundUpdateValues } from "pages/Admin/types";
-import { useQueryContract } from "services/contract";
+import { useContractQuery } from "services/juno";
 import { useGetter, useSetter } from "store/accessors";
 import { setMembers } from "slices/admin/fundMembers";
 
@@ -11,7 +11,7 @@ export default function useInitFundMembers() {
   const fundIdRef = useRef<string | undefined>();
   const dispatch = useSetter();
 
-  const { data: funds = [], isLoading } = useQueryContract(
+  const { data: funds = [], isLoading } = useContractQuery(
     "index-fund.funds",
     {}
   );
@@ -27,7 +27,7 @@ export default function useInitFundMembers() {
       dispatch(
         setMembers(
           fundMembers.map((member) => ({
-            addr: member,
+            id: `${member}`,
             isDeleted: false,
             isAdded: false,
           }))

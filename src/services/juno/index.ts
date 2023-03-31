@@ -14,6 +14,11 @@ import { POLYGON_RPC } from "constants/env";
 import { queryContract } from "./queryContract";
 import { tags } from "./tags";
 
+type BlockLatest = {
+  block_id: any;
+  block: { header: { height: string } };
+};
+
 const customBaseQuery: BaseQueryFn = retry(
   async (args, api, extraOptions) => {
     return fetchBaseQuery({ baseUrl: POLYGON_RPC })(args, api, extraOptions);
@@ -35,10 +40,17 @@ export const junoApi = createApi({
         return { data: await queryContract(type, options) };
       },
     }),
+    latestBlock: builder.query<string, unknown>({
+      query: () => "/blocks/latest",
+      transformResponse: (res: BlockLatest) => {
+        return res.block.header.height;
+      },
+    }),
   }),
 });
 
 export const {
+  useLatestBlockQuery,
   util: { invalidateTags: invalidateJunoTags },
 } = junoApi;
 

@@ -8,7 +8,7 @@ export type AllianceMemberWithFlags = AllianceMember & {
 };
 
 export type AddressWithFlags = {
-  addr: string;
+  id: string;
   isDeleted: boolean;
   isAdded: boolean;
 };

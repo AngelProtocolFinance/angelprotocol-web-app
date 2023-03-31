@@ -15,7 +15,7 @@ import useLogWithdrawProposal from "./useLogWithdrawProposal";
 export default function useWithdraw() {
   const { handleSubmit, getValues } = useFormContext<WithdrawValues>();
 
-  const { cw3, id, endow_type, propMeta } = useAdminResources<"charity">();
+  const { multisig, id, endow_type, propMeta } = useAdminResources<"charity">();
   const { wallet } = useGetWallet();
 
   const sendTx = useTxSender();
@@ -45,7 +45,7 @@ export default function useWithdraw() {
     };
 
     const account = new Account(wallet);
-    const endowCW3 = new CW3Endowment(wallet, cw3);
+    const endowCW3 = new CW3Endowment(wallet, multisig);
 
     const proposal = isSendToApCW3
       ? endowCW3.createWithdrawProposalMsg({
@@ -78,7 +78,7 @@ export default function useWithdraw() {
         : async (response, chain) =>
             await logProposal(
               {
-                endowment_multisig: cw3,
+                endowment_multisig: multisig,
                 proposal_chain_id: chainIds.juno,
                 target_chain: data.network,
                 target_wallet: data.beneficiary,

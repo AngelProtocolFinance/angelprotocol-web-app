@@ -215,7 +215,7 @@ export type FundConfigValues = ProposalBase &
 
 export type FundCreatorValues = ProposalBase & {
   //new fund member
-  newFundAddr: string;
+  newFundMemberId: string;
 
   //fund details
   fundName: string;
@@ -241,7 +241,7 @@ export type FundSendPayload = {
 export type FundSendValues = ProposalBase & FundSendPayload;
 export type FundUpdateValues = ProposalBase & {
   fundId: string;
-  newMemberAddr: string;
+  newMemberId: string;
 };
 
 export type IndexFundOwnerValues = ProposalBase &

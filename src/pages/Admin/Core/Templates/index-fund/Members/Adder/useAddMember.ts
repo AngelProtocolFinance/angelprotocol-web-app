@@ -10,21 +10,21 @@ export default function useAddMember() {
     useFormContext<FundUpdateValues>();
 
   async function addMember() {
-    const isValid = await trigger(["newMemberAddr"], { shouldFocus: true });
+    const isValid = await trigger(["newMemberId"], { shouldFocus: true });
     if (!isValid) return;
 
-    const newMemberAddr = getValues("newMemberAddr");
+    const newMemberId = getValues("newMemberId");
     const existingMember = fundMembers.find(
-      (member) => member.addr === newMemberAddr
+      (member) => member.id === newMemberId
     );
 
     if (existingMember) {
-      setError("newMemberAddr", {
+      setError("newMemberId", {
         message: "address already added or existing",
       });
     } else {
-      dispatch(_addMember(newMemberAddr));
-      resetField("newMemberAddr");
+      dispatch(_addMember(newMemberId));
+      resetField("newMemberId");
     }
   }
 

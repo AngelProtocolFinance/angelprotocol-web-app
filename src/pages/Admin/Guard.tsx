@@ -2,7 +2,8 @@ import { ReactNode, createContext, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { AdminParams } from "./types";
 import { AdminResources } from "services/types";
-import { useAdminResourcesQuery } from "services/contract/custom";
+import { useAdminResourcesQuery } from "services/juno/custom";
+import { useGetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import Loader from "components/Loader";
 
@@ -10,8 +11,12 @@ export function Guard(props: {
   children(resources: AdminResources): ReactNode;
 }) {
   const { id } = useParams<AdminParams>();
+  const { wallet } = useGetWallet();
 
-  const { data, isLoading, error } = useAdminResourcesQuery(id);
+  const { data, isLoading, error } = useAdminResourcesQuery({
+    user: wallet?.address,
+    endowmentId: id,
+  });
 
   if (isLoading)
     return <GuardPrompt message="Getting admin resources" showLoader />;

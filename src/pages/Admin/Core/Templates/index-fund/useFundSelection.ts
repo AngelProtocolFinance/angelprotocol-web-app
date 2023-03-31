@@ -1,15 +1,15 @@
 import { useEffect, useMemo, useState } from "react";
 import { Path, useFormContext } from "react-hook-form";
 import { FundIdContext } from "pages/Admin/types";
-import { useLatestBlockQuery, useQueryContract } from "services/contract";
+import { useContractQuery, useLatestBlockQuery } from "services/juno";
 
 export default function useFundSelection<T extends FundIdContext>(
   fieldName: Path<T>
 ) {
   const { setValue } = useFormContext<T>();
 
-  const { data: blockHeight = "0" } = useLatestBlockQuery();
-  const { data: fundList = [] } = useQueryContract("index-fund.funds", {});
+  const { data: blockHeight = "0" } = useLatestBlockQuery(null);
+  const { data: fundList = [] } = useContractQuery("index-fund.funds", {});
 
   const [activeRow, setActiveRow] = useState<number | undefined>();
 
@@ -17,12 +17,12 @@ export default function useFundSelection<T extends FundIdContext>(
     () =>
       fundList.filter((fund) => {
         let isExpired = false;
-        if (fund.expiry_height) {
-          isExpired = +fund.expiry_height <= +blockHeight;
+        if (fund.expiryHeight) {
+          isExpired = fund.expiryHeight <= +blockHeight;
         }
-        if (fund.expiry_time) {
+        if (fund.expiryTime) {
           isExpired =
-            +fund.expiry_time <= Math.floor(new Date().getTime() / 1000);
+            +fund.expiryTime <= Math.floor(new Date().getTime() / 1000);
         }
         return !isExpired;
       }),

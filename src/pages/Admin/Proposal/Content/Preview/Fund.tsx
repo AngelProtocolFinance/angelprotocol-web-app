@@ -20,17 +20,17 @@ export default function Fund(props: FundPreview) {
             true ? "text-blue" : "text-red-l1"
           } font-bold uppercase`}
         >
-          {props.rotating_fund ? "yes" : "no"}
+          {props.rotatingFund ? "yes" : "no"}
         </span>
       </KeyValue>
-      {props.split_to_liquid && (
+      {props.splitToLiquid && (
         <KeyValue _key="max split to liquid">
-          <span>{(+props.split_to_liquid * 100).toFixed(2)} %</span>
+          <span>{(props.splitToLiquid * 100).toFixed(2)} %</span>
         </KeyValue>
       )}
       <KeyValue _key="expiry">
         <span className="text-sm">
-          {getExpiry(props.expiry_time, props.expiry_height)}
+          {getExpiry(props.expiryTime, props.expiryHeight)}
         </span>
       </KeyValue>
       {props.members.length > 0 && (
@@ -47,8 +47,8 @@ export default function Fund(props: FundPreview) {
 
 const secToMillisFactor = 1000;
 function getExpiry(
-  time: FundPreview["expiry_time"],
-  height: FundPreview["expiry_height"]
+  time: FundPreview["expiryTime"],
+  height: FundPreview["expiryHeight"]
 ) {
   let expiry: string = "no expiry";
 

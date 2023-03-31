@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { AllianceEditValues } from "pages/Admin/types";
-import { useQueryContract } from "services/contract";
+import { useContractQuery } from "services/juno";
 import { FormError, FormSkeleton } from "components/admin";
 import { useSetter } from "store/accessors";
 import { setMembers } from "slices/admin/allianceMembers";
@@ -15,7 +15,7 @@ export default function Alliance() {
     data: allianceMembers = [],
     isLoading,
     error,
-  } = useQueryContract("index-fund.alliance-members", {});
+  } = useContractQuery("index-fund.alliance-members", {});
 
   useEffect(() => {
     if (isLoading) return;
