@@ -1,0 +1,4 @@
+[
+  "event Confirmation(address indexed,uint256 indexed)",
+  "function confirmTransaction(uint256)"
+]
