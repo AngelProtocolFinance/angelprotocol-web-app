@@ -1,30 +1,56 @@
 import React, { ReactNode, useMemo } from "react";
 import { ProposalMeta } from "pages/Admin/types";
 import { ProposalDetails } from "services/types";
+import { SimulContractTx } from "types/evm";
 import { TagPayload } from "types/third-party/redux";
 import { invalidateJunoTags, useLatestBlockQuery } from "services/juno";
 import { defaultProposalTags } from "services/juno/tags";
+import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
-import CW3 from "contracts/CW3";
+import { APTeamMultiSig, ApplicationsMultiSig } from "contracts/evm";
 import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
+import { WalletDisconnectedError } from "errors/errors";
 import { useAdminResources } from "../Guard";
 import Voter from "./Voter";
+
+const applicationsMultiSigProxy = "0x1edC050B5d84cbB0cA0b56356f3F7307efcd50Fb";
+const apTeamMultiSigProxy = "0xC26Ac43b14ebCbff5029792052aF3e4DF3233902";
 
 export default function PollAction(props: ProposalDetails) {
   const { data: latestBlock = "0" } = useLatestBlockQuery(null);
   const { wallet } = useGetWallet();
   const sendTx = useTxSender();
-  const { cw3, propMeta } = useAdminResources();
+  const { propMeta } = useAdminResources();
   const { showModal } = useModalContext();
+  const { handleError } = useErrorContext();
 
   async function executeProposal() {
-    const contract = new CW3(wallet, cw3);
-    const execMsg = contract.createExecProposalMsg(props.id);
+    if (!wallet) {
+      return handleError(new WalletDisconnectedError());
+    }
+
+    const msg: SimulContractTx =
+      props.proposal_type === "application"
+        ? {
+            from: wallet.address,
+            to: applicationsMultiSigProxy,
+            data: ApplicationsMultiSig.executeTransaction.encode(props.id),
+          }
+        : {
+            from: wallet.address,
+            to: apTeamMultiSigProxy,
+            data: APTeamMultiSig.executeTransaction.encode(props.id),
+          };
+
+    const log =
+      props.proposal_type === "application"
+        ? ApplicationsMultiSig.executeTransaction.processLogs
+        : APTeamMultiSig.executeTransaction.processLogs;
 
     await sendTx({
-      content: { type: "cosmos", val: [execMsg] },
+      content: { type: "evm", val: msg, log },
       isAuthorized: propMeta.isAuthorized,
       tagPayloads: extractTagFromMeta(props.meta),
     });
