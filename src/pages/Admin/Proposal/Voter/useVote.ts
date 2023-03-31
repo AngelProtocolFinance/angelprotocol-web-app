@@ -33,7 +33,7 @@ export default function useVote() {
             to: applicationsMultiSigProxy,
             data:
               vote === "no"
-                ? ""
+                ? ApplicationsMultiSig.revokeTransaction.encode(transactionId)
                 : ApplicationsMultiSig.confirmTransaction.encode(transactionId),
           }
         : {
@@ -41,7 +41,7 @@ export default function useVote() {
             to: apTeamMultiSigProxy,
             data:
               vote === "no"
-                ? ""
+                ? APTeamMultiSig.revokeTransaction.encode(transactionId)
                 : APTeamMultiSig.confirmTransaction.encode(transactionId),
           };
 

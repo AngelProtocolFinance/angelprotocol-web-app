@@ -1,4 +1,6 @@
 [
   "event Confirmation(address indexed,uint256 indexed)",
-  "function confirmTransaction(uint256)"
+  "event Revocation(address indexed,uint256 indexed)",
+  "function confirmTransaction(uint256)",
+  "function revokeConfirmation(uint256)"
 ]
