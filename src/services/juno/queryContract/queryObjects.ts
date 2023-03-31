@@ -29,7 +29,7 @@ export const queryObjects: {
 
   /** index fund */
   "index-fund.funds": [
-    funds.encode({ startAfter: 0, limit: 10 }) as any,
+    funds.encode({ startAfter: 0, limit: 10 }),
     () => [],
     "placeholder",
   ],

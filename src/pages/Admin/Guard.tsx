@@ -13,13 +13,14 @@ export function Guard(props: {
   const { id } = useParams<AdminParams>();
   const { wallet } = useGetWallet();
 
-  const { data, isLoading, isError } = useAdminResourcesQuery(
+  const { data, isLoading, isError, error } = useAdminResourcesQuery(
     {
       user: wallet?.address,
       endowmentId: id,
     },
     { skip: !id }
   );
+  console.log({ error, isError, id });
 
   if (isLoading)
     return <GuardPrompt message="Getting admin resources" showLoader />;

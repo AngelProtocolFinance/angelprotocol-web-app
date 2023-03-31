@@ -67,6 +67,7 @@ export const customApi = junoApi.injectEndpoints({
         const endowment = await queryContract("accounts.endowment", {
           id: numId,
         });
+
         const [meta, config] = await getMeta(numId, endowment.owner, args.user);
 
         return {
