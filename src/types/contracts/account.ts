@@ -10,6 +10,7 @@ import {
   Threshold,
 } from "./common";
 import { CW20 } from "./cw20";
+import { ADDRESS_ZERO } from "./evm";
 
 export interface GenericBalance {
   native: Coin[];
@@ -54,6 +55,38 @@ type Vaults<T> = {
 
 export type AccountStrategies = Vaults<Strategy[]>;
 
+type Delegate = {
+  Addr: string | ADDRESS_ZERO;
+  expires: number; // datetime int of delegation expiry: 0 if no expiry
+};
+export type SettingsPermission = {
+  ownerControlled: boolean;
+  govControlled: boolean;
+  modifiableAfterInit: boolean;
+  delegate: Delegate;
+};
+
+export type SettingsController = {
+  endowmentController: SettingsPermission;
+  strategies: SettingsPermission;
+  whitelistedBeneficiaries: SettingsPermission;
+  whitelistedContributors: SettingsPermission;
+  maturityWhitelist: SettingsPermission;
+  maturityTime: SettingsPermission;
+  profile: SettingsPermission;
+  earningsFee: SettingsPermission;
+  withdrawFee: SettingsPermission;
+  depositFee: SettingsPermission;
+  aumFee: SettingsPermission;
+  kycDonorsOnly: SettingsPermission;
+  name: SettingsPermission;
+  image: SettingsPermission;
+  logo: SettingsPermission;
+  categories: SettingsPermission;
+  splitToLiquid: SettingsPermission;
+  ignoreUserSplits: SettingsPermission;
+};
+
 export interface EndowmentDetails {
   owner: string;
   categories: Categories;
@@ -68,6 +101,7 @@ export interface EndowmentDetails {
   invested_strategies: Vaults<string[]>;
   //rebalance
   kyc_donors_only: boolean;
+  settingsController: SettingsController;
   //pending_redemptions
   //proposal_link
   //referral_id
@@ -170,4 +204,8 @@ export type NewAIF = {
   //endowment_controller
   //parent
   //referral_id
+};
+
+export type UpdateEndowmentControllerMsg = SettingsController & {
+  id: number;
 };

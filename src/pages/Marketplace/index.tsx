@@ -9,6 +9,7 @@ export default function Marketplace() {
   const isFilterOpen = useGetter(
     (state) => state.component.marketFilter.isOpen
   );
+
   return (
     <div className="w-full grid content-start pb-16">
       <div

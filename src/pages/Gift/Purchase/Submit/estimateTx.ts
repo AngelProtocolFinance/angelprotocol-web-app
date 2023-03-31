@@ -26,7 +26,7 @@ export async function estimateTx({
       const contract = new CW20(wallet, token.token_id);
       msg = contract.createSendMsg(
         token.amount,
-        contracts.gift_cards,
+        contracts["gift-card"],
         gcContract.createDepositObject(recipient)
       );
     }

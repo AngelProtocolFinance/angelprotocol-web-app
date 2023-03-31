@@ -1,5 +1,6 @@
 import { Completed, TFee } from "slices/launchpad/types";
-import { Fee, NewAIF, SettingsPermission } from "types/contracts/evm";
+import { SettingsPermission } from "types/contracts";
+import { Fee, NewAIF } from "types/contracts/evm";
 import { roundDownToNum } from "helpers";
 import { ADDRESS_ZERO } from "constants/evm";
 

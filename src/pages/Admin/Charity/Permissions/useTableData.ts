@@ -12,7 +12,7 @@ export default function useTableData() {
   function getData(fieldName: keyof UpdateableFormValues) {
     const name = watch(`${fieldName}.name`);
     const delegated = watch(`${fieldName}.delegated`);
-    const modifiable = watch(`${fieldName}.modifiable`);
+    const modifiable = watch(`${fieldName}.modifiableAfterInit`);
 
     const formDisabled = isSubmitting || !(userDelegated || isUserOwner);
 

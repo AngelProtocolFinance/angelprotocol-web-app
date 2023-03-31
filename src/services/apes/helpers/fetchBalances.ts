@@ -1,10 +1,10 @@
 import { Coin } from "@cosmjs/proto-signing";
 import { FetchedChain, Token, TokenWithBalance } from "types/aws";
+import { CW20Balance } from "types/contracts";
 import { ProviderId } from "types/lists";
-import { queryContract } from "services/juno/queryContract";
-import { balanceOf } from "contracts/evm/ERC20";
-import { condenseToNum, getProvider } from "helpers";
-import { contracts } from "constants/contracts";
+import { balance } from "contracts/evm/ERC20";
+import { condenseToNum, getProvider, toBase64 } from "helpers";
+import { queryContract } from "../../contract/queryContract";
 
 type BalMap = { [index: string]: string | undefined | number };
 type CosmosBalances = { balances: Coin[] };
@@ -26,8 +26,7 @@ export async function fetchBalances(
         //transform for easy access
         .then(({ balances }) => toMap(balances)),
       queryContract(
-        "giftcardBalance",
-        contracts.gift_cards,
+        "gift-card.balance",
         {
           addr: address,
         },
@@ -42,14 +41,10 @@ export async function fetchBalances(
         ])
       ),
       ...tokens.alts.map((x) =>
-        queryContract(
-          "cw20Balance",
-          x.token_id,
-          {
-            addr: address,
-          },
-          chain.lcd_url
-        ).then<Coin>((res) => ({ amount: res.balance, denom: x.token_id }))
+        cw20Balance(x.token_id, address, chain.lcd_url).then<Coin>((res) => ({
+          amount: res,
+          denom: x.token_id,
+        }))
       ),
     ]);
 
@@ -86,10 +81,10 @@ export async function fetchBalances(
         provider
           .request<string>({
             method: "eth_call",
-            params: [{ to: t.token_id, data: balanceOf.encode(address) }],
+            params: [{ to: t.token_id, data: balance.encode(address) }],
           })
           .then<Coin>((result) => ({
-            amount: balanceOf.parse(result),
+            amount: balance.decode(result),
             denom: t.token_id,
           }))
       ),
@@ -158,4 +153,21 @@ function extract(val: BalMap[keyof BalMap], decimals: number) {
 function isPromise<T>(val: any): val is PromiseSettledResult<T> {
   const key: keyof PromiseSettledResult<any> = "status";
   return key in val;
+}
+
+async function cw20Balance(
+  contract: string,
+  address: string,
+  lcd: string
+): Promise<string> {
+  return fetch(
+    `${lcd}/cosmwasm/wasm/v1/contract/${contract}/smart/${toBase64({
+      balance: { address },
+    })}`
+  )
+    .then<{ data: CW20Balance }>((res) => {
+      if (!res.ok) throw new Error("failed to get cw20 balance");
+      return res.json();
+    })
+    .then((result) => result.data.balance);
 }

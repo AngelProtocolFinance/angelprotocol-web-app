@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { IndexFundOwnerValues } from "pages/Admin/types";
 import { IndexFundConfig } from "types/contracts";
-import { useIndexFundConfigQuery } from "services/juno/indexFund";
+import { useQueryContract } from "services/contract";
 import { FormError, FormSkeleton } from "components/admin";
 import Form from "./Form";
 import { schema } from "./schema";
@@ -11,10 +11,10 @@ export default function IndexFundOwner() {
   const {
     data: indexFundConfig,
     isLoading,
-    isError,
-  } = useIndexFundConfigQuery(null);
+    error,
+  } = useQueryContract("index-fund.config", {});
   if (isLoading) return <FormSkeleton />;
-  if (isError || !indexFundConfig)
+  if (!!error || !indexFundConfig)
     return <FormError errorMessage="failed to load registrar config" />;
   return <FormWithContext {...indexFundConfig} />;
 }

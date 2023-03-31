@@ -4,7 +4,7 @@ import {
   ProposalStatusOptions,
 } from "slices/admin/types";
 import { PageOptions, Proposal } from "types/contracts";
-import { useProposalsQuery } from "services/juno/cw3";
+import { useQueryContract } from "services/contract";
 import { useAdminResources } from "../Guard";
 
 export const NUM_PROPOSALS_PER_PAGE = 5;
@@ -14,42 +14,37 @@ export function useFilteredProposals(
   pageNum: number
 ) {
   const { cw3 } = useAdminResources();
-  const { filteredProposals, isLoading, isError } = useProposalsQuery(
+  const {
+    data: proposals = [],
+    isLoading,
+    error,
+  } = useQueryContract(
+    "cw3.proposals",
     {
-      contract: cw3,
+      cw3,
       ...genPageOptions(pageNum, status, group),
     },
-    {
-      selectFromResult: ({ data = [], isLoading, isFetching, isError }) => {
-        function proposalFilter(proposal: Proposal): boolean {
-          const proposalMeta = JSON.parse(
-            proposal.meta || "{}"
-          ) as ProposalMeta;
-
-          const isBelongToGroup =
-            group === "all" || new RegExp(group).test(proposalMeta.type);
-
-          const isCorrectStatus =
-            status === "all" || proposal.status === status;
-
-          return isBelongToGroup && isCorrectStatus;
-        }
-
-        return {
-          filteredProposals:
-            status === "all" && group === "all"
-              ? data
-              : data.filter(proposalFilter),
-          isLoading: isLoading || isFetching,
-          isError,
-        };
-      },
-    }
+    { keepPreviousData: true }
   );
+
+  function proposalFilter(proposal: Proposal): boolean {
+    const proposalMeta = JSON.parse(proposal.meta || "{}") as ProposalMeta;
+
+    const isBelongToGroup =
+      group === "all" || new RegExp(group).test(proposalMeta.type);
+
+    const isCorrectStatus = status === "all" || proposal.status === status;
+
+    return isBelongToGroup && isCorrectStatus;
+  }
+
   return {
-    filteredProposals,
+    filteredProposals:
+      status === "all" && group === "all"
+        ? proposals
+        : proposals.filter(proposalFilter),
     isFilteredProposalsLoading: isLoading,
-    isFilteredProposalsFailed: isError,
+    isFilteredProposalsFailed: !!error,
   };
 }
 

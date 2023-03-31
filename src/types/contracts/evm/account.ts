@@ -1,4 +1,5 @@
 import { Tupleable } from "../../evm";
+import { SettingsController } from "../account";
 
 type Categories = { sdgs: number[]; general: number[] };
 
@@ -71,38 +72,6 @@ export type DaoSetup = {
   proposalDeposit: number; //: Uint128,
   snapshotPeriod: number; //: u64,
   token: DaoToken;
-};
-
-type Delegate = {
-  Addr: string | ADDRESS_ZERO;
-  expires: number; // datetime int of delegation expiry
-};
-export type SettingsPermission = {
-  ownerControlled: true;
-  govControlled: true;
-  modifiableAfterInit: true;
-  delegate: Delegate;
-};
-
-type SettingsController = {
-  endowmentController: SettingsPermission;
-  strategies: SettingsPermission;
-  whitelistedBeneficiaries: SettingsPermission;
-  whitelistedContributors: SettingsPermission;
-  maturityWhitelist: SettingsPermission;
-  maturityTime: SettingsPermission;
-  profile: SettingsPermission;
-  earningsFee: SettingsPermission;
-  withdrawFee: SettingsPermission;
-  depositFee: SettingsPermission;
-  aumFee: SettingsPermission;
-  kycDonorsOnly: SettingsPermission;
-  name: SettingsPermission;
-  image: SettingsPermission;
-  logo: SettingsPermission;
-  categories: SettingsPermission;
-  splitToLiquid: SettingsPermission;
-  ignoreUserSplits: SettingsPermission;
 };
 
 type SplitDetails = {

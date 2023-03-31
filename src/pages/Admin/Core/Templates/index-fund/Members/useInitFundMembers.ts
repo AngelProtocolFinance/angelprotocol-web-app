@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
 import { FundUpdateValues } from "pages/Admin/types";
-import { useFundListQuery } from "services/juno/indexFund";
+import { useQueryContract } from "services/contract";
 import { useGetter, useSetter } from "store/accessors";
 import { setMembers } from "slices/admin/fundMembers";
 
@@ -11,12 +11,12 @@ export default function useInitFundMembers() {
   const fundIdRef = useRef<string | undefined>();
   const dispatch = useSetter();
 
-  const { fundMembers = [], isFundMembersLoading } = useFundListQuery(null, {
-    selectFromResult: ({ data, isLoading, isFetching }) => ({
-      fundMembers: data?.find((fund) => fund.id === +fundId)?.members,
-      isFundMembersLoading: isLoading || isFetching,
-    }),
-  });
+  const { data: funds = [], isLoading } = useQueryContract(
+    "index-fund.funds",
+    {}
+  );
+
+  const fundMembers = funds.find((fund) => fund.id === +fundId)?.members || [];
   const fundMembersCopy = useGetter((state) => state.admin.fundMembers);
 
   useEffect(() => {
@@ -43,7 +43,7 @@ export default function useInitFundMembers() {
 
   return {
     fundMembersCopy,
-    isFundMembersLoading,
+    isFundMembersLoading: isLoading,
     isFundSelected: fundId !== "",
   };
 }

@@ -1,10 +1,9 @@
 import { useParams } from "react-router-dom";
 import { ProposalParams } from "pages/Admin/types";
 import { Expiration } from "types/contracts";
-import { useProposalDetailsQuery } from "services/juno/custom";
-import { useGetWallet } from "contexts/WalletContext";
+import { useProposalDetailsQuery } from "services/contract/custom";
 import Icon from "components/Icon";
-import QueryLoader from "components/QueryLoader";
+import SWRLoader from "components/SWRLoader";
 import { DetailLabel, Status } from "components/admin";
 import { useAdminResources } from "../Guard";
 import Content from "./Content";
@@ -13,21 +12,13 @@ import Stats from "./Stats";
 import Votes from "./Votes";
 
 export default function Proposal() {
-  const { wallet } = useGetWallet();
   const { cw3 } = useAdminResources();
   const params = useParams<ProposalParams>();
-  const queryState = useProposalDetailsQuery(
-    {
-      id: params.id,
-      cw3,
-      voter: wallet?.address!,
-    },
-    { skip: !wallet }
-  );
+  const queryState = useProposalDetailsQuery(cw3, params.id);
 
   return (
     <div className="grid content-start w-full min-h-screen font-work">
-      <QueryLoader
+      <SWRLoader
         queryState={queryState}
         messages={{
           loading: "Getting proposal details",
@@ -64,7 +55,7 @@ export default function Proposal() {
             )}
           </div>
         )}
-      </QueryLoader>
+      </SWRLoader>
     </div>
   );
 }

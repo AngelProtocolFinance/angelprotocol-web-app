@@ -2,7 +2,8 @@ import React, { ReactNode, useMemo } from "react";
 import { ProposalMeta } from "pages/Admin/types";
 import { ProposalDetails } from "services/types";
 import { TagPayload } from "types/third-party/redux";
-import { invalidateJunoTags, useLatestBlockQuery } from "services/juno";
+import { useLatestBlockQuery } from "services/contract";
+import { invalidateJunoTags } from "services/juno";
 import { defaultProposalTags } from "services/juno/tags";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
@@ -13,7 +14,7 @@ import { useAdminResources } from "../Guard";
 import Voter from "./Voter";
 
 export default function PollAction(props: ProposalDetails) {
-  const { data: latestBlock = "0" } = useLatestBlockQuery(null);
+  const { data: latestBlock = "0" } = useLatestBlockQuery();
   const { wallet } = useGetWallet();
   const sendTx = useTxSender();
   const { cw3, propMeta } = useAdminResources();

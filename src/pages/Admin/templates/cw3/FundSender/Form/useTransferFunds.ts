@@ -39,7 +39,7 @@ export default function useTransferFunds() {
 
     let embeddedMsg: EmbeddedWasmMsg | EmbeddedBankMsg;
     //this wallet is not even rendered when wallet is disconnected
-    const cw20Contract = new CW20(wallet, contracts.halo_token);
+    const cw20Contract = new CW20(wallet, contracts["halo"]);
     if (data.denom === denoms.halo) {
       embeddedMsg = cw20Contract.createEmbeddedTransferMsg(
         scaleToStr(data.amount), //halo decimals:6

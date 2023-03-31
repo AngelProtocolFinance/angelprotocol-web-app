@@ -1,15 +1,15 @@
 import { useAdminResources } from "pages/Admin/Guard";
-import { useStateQuery } from "services/juno/account";
-import QueryLoader from "components/QueryLoader";
+import { useQueryContract } from "services/contract";
+import SWRLoader from "components/SWRLoader";
 import AccountTabs from "../../common/AccountTabs";
 import WithdrawForm from "./WithdrawForm";
 
 export default function Withdrawer() {
   const { id } = useAdminResources();
-  const queryState = useStateQuery({ id });
+  const queryState = useQueryContract("accounts.state", { id });
 
   return (
-    <QueryLoader
+    <SWRLoader
       queryState={queryState}
       messages={{
         loading: "Loading withdraw form...",
@@ -29,6 +29,6 @@ export default function Withdrawer() {
           <WithdrawForm type="locked" balance={tokens_on_hand["locked"]} />
         </AccountTabs>
       )}
-    </QueryLoader>
+    </SWRLoader>
   );
 }
