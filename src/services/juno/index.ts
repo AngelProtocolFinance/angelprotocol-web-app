@@ -5,19 +5,17 @@ import {
   fetchBaseQuery,
   retry,
 } from "@reduxjs/toolkit/query/react";
+import Decimal from "decimal.js";
 import {
   ContractQueries as Q,
   ContractQueryTypes as QT,
   QueryOptions,
 } from "./queryContract/types";
-import { POLYGON_RPC } from "constants/env";
+import { POLYGON_RPC } from "constants/urls";
 import { queryContract } from "./queryContract";
 import { tags } from "./tags";
 
-type BlockLatest = {
-  block_id: any;
-  block: { header: { height: string } };
-};
+type Result = { result: string };
 
 const customBaseQuery: BaseQueryFn = retry(
   async (args, api, extraOptions) => {
@@ -41,9 +39,12 @@ export const junoApi = createApi({
       },
     }),
     latestBlock: builder.query<string, unknown>({
-      query: () => "/blocks/latest",
-      transformResponse: (res: BlockLatest) => {
-        return res.block.header.height;
+      query: () => ({
+        method: "POST",
+        body: { jsonrpc: "2.0", id: 1, method: "eth_blockNumber", params: [] },
+      }),
+      transformResponse: (res: Result) => {
+        return new Decimal(res.result).toString();
       },
     }),
   }),

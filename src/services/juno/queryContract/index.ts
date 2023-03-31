@@ -6,9 +6,8 @@ import {
 import { Contract } from "types/lists";
 import { contracts } from "constants/contracts";
 import { EIPMethods } from "constants/evm";
+import { POLYGON_RPC } from "constants/urls";
 import { queryObjects } from "./queryObjects";
-
-const POLYGON_RPC = "https://rpc.ankr.com/polygon_mumbai";
 
 type Result = { result: string } | { error: { code: number; message: string } };
 
@@ -48,8 +47,6 @@ export async function queryContract<T extends QT>(
 
   if ("error" in result)
     throw new Error(`error ${type}:` + result.error.message);
-
-  console.log({ result });
 
   return transform(result.result) as ReturnType<Q[T]["transform"]>;
 }

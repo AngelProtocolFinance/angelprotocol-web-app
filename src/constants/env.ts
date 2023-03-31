@@ -26,5 +26,3 @@ export const JUNO_LCD_OVERRIDE = process.env.REACT_APP_JUNO_LCD_OVERRIDE;
 export const JUNO_RPC_OVERRIDE = process.env.REACT_APP_JUNO_RPC_OVERRIDE;
 export const JUNO_LCD =
   JUNO_LCD_OVERRIDE || process.env.REACT_APP_JUNO_LCD_NODE;
-
-export const POLYGON_RPC = "https://rpc.ankr.com/polygon_mumbai";
