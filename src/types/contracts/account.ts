@@ -98,7 +98,6 @@ export interface EndowmentDetails {
   //deposit_approved
   //withdraw_approved
   maturity_time?: number;
-  invested_strategies: Vaults<string[]>;
   //rebalance
   kyc_donors_only: boolean;
   settingsController: SettingsController;

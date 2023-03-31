@@ -119,11 +119,6 @@ export const queryObjects: {
         },
         endow_type: toEndowType(d.endow_type),
         status: toEndowStatusText(d.status),
-        //TODO: populate strategies
-        invested_strategies: {
-          liquid: [],
-          locked: [],
-        },
         kyc_donors_only: d.kycDonorsOnly,
         settingsController: Object.entries(d.settingsController).reduce(
           (result, [key, permission]) => ({
