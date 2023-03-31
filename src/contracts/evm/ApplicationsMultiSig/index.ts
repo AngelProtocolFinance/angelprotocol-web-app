@@ -1,4 +1,5 @@
 import { Interface } from "@ethersproject/abi";
+import { BigNumber } from "@ethersproject/bignumber";
 import { TxLog } from "types/evm";
 import abi from "./abi.json";
 
@@ -28,7 +29,12 @@ export const executeTransaction = {
     const execTopic = iface.getEventTopic("Execution");
     const execLog = logs.find((log) => log.topics.includes(execTopic));
     if (!!execLog) {
-      return "execution";
+      const [id] = iface.decodeEventLog(
+        "Execution",
+        execLog.data,
+        execLog.topics
+      );
+      return (id as BigNumber).toString();
     }
     const execFailTopic = iface.getEventTopic("ExecutionFailure");
     const execFailLog = logs.find((log) => log.topics.includes(execFailTopic));
