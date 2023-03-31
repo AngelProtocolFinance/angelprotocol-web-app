@@ -1,6 +1,7 @@
 import { SafeEventEmitterProvider, WALLET_ADAPTERS } from "@web3auth/base";
 import { MetamaskAdapter } from "@web3auth/metamask-adapter";
 import { Web3Auth } from "@web3auth/modal";
+import { TorusWalletConnectorPlugin } from "@web3auth/torus-wallet-connector-plugin";
 import { LOGIN_MODAL_EVENTS } from "@web3auth/ui";
 import { useEffect, useState } from "react";
 import { BaseChain } from "types/aws";
@@ -57,19 +58,24 @@ export default function useWeb3Auth() {
         });
         web3Auth.configureAdapter(metamaskAdapter);
 
-        setWeb3auth(web3Auth);
-        await web3Auth.initModal({
-          modalConfig: {
-            [WALLET_ADAPTERS.OPENLOGIN]: {
-              label: "openlogin",
-              showOnModal: true,
+        const torusConnectorPlugin = new TorusWalletConnectorPlugin({
+          torusWalletOpts: {},
+          walletInitOptions: {
+            whiteLabel: {
+              theme: { isDark: true, colors: { primary: "#00a8ff" } },
+              logoDark: "https://web3auth.io/images/w3a-L-Favicon-1.svg",
+              logoLight: "https://web3auth.io/images/w3a-D-Favicon-1.svg",
             },
+            useWalletConnect: true,
           },
         });
+        await web3Auth.addPlugin(torusConnectorPlugin);
+        await web3Auth.initModal();
         web3Auth.on(LOGIN_MODAL_EVENTS.MODAL_VISIBILITY, (isVisible) => {
           console.log("LOGIN_MODAL_EVENTS.MODAL_VISIBILITY", isVisible);
           setIsLoading(isVisible);
         });
+        setWeb3auth(web3Auth);
       } catch (error) {
         console.error(error);
       }
