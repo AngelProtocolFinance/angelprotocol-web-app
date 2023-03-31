@@ -21,3 +21,8 @@ export const tags: ContractQueryTypes[] = [
   "accounts.endowment",
   "accounts.state",
 ];
+
+export const defaultProposalTags: ContractQueryTypes[] = [
+  "multisig.proposals",
+  "multisig.proposal",
+];

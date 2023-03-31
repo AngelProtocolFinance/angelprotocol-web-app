@@ -13,7 +13,7 @@ import { getTagPayloads } from "helpers/admin";
 
 export default function useUpdateMembers() {
   const { trigger, reset, getValues } = useFormContext<MemberUpdatorValues>();
-  const { cw3, cw4, propMeta } = useAdminResources();
+  const { multisig, propMeta } = useAdminResources();
   const apCW4Members = useGetter((state) => state.admin.apCW4Members);
   const { wallet } = useGetWallet();
   const { showModal } = useModalContext();
@@ -52,8 +52,9 @@ export default function useUpdateMembers() {
         children: "Nothing to submit, no member changes",
       });
     }
-    const cw3Contract = new CW3(wallet, cw3);
-    const cw4Contract = new CW4(wallet, cw4);
+    //TODO: part of tx migration
+    const cw3Contract = new CW3(wallet, multisig);
+    const cw4Contract = new CW4(wallet, multisig);
     const embeddedExecuteMsg = cw4Contract.createEmbeddedUpdateMembersMsg(
       to_add,
       to_remove

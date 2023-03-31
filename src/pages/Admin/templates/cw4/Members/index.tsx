@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { MemberUpdatorValues } from "pages/Admin/types";
 import { useAdminResources } from "pages/Admin/Guard";
-import { useQueryContract } from "services/contract";
+import { useContractQuery } from "services/juno";
 import { FormError, FormSkeleton } from "components/admin";
 import { useSetter } from "store/accessors";
 import { setMembers } from "slices/admin/apCW4Members";
@@ -11,13 +11,13 @@ import MemberUpdateForm from "./Form";
 import { schema } from "./schema";
 
 export default function Members() {
-  const { cw4 } = useAdminResources();
+  const { multisig } = useAdminResources();
   const dispatch = useSetter();
   const {
     data: members = [],
     isLoading,
     error,
-  } = useQueryContract("cw4.members", { cw4 });
+  } = useContractQuery("multisig.members", { multisig });
 
   useEffect(() => {
     if (members.length > 0) {

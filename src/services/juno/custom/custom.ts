@@ -2,16 +2,12 @@ import { AdminResources, ProposalDetails } from "services/types";
 import { idParamToNum } from "helpers";
 import { junoApi } from "..";
 import { queryContract } from "../queryContract";
-import { accountTags, adminTags } from "../tags";
 import { apCWs, getMeta } from "./helpers/admin-resource";
 
 export const customApi = junoApi.injectEndpoints({
   endpoints: (builder) => ({
     isMember: builder.query<boolean, { user: string; endowmentId?: string }>({
-      providesTags: [
-        { type: "admin", id: adminTags.voter },
-        { type: "account", id: accountTags.endowment },
-      ],
+      providesTags: ["multisig.members", "accounts.endowment"],
       async queryFn(args) {
         const numId = idParamToNum(args.endowmentId);
         const AP = apCWs[numId];
@@ -44,10 +40,9 @@ export const customApi = junoApi.injectEndpoints({
       { user?: string; endowmentId?: string }
     >({
       providesTags: [
-        { type: "admin", id: adminTags.voter },
-        { type: "admin", id: adminTags.voters },
-        { type: "admin", id: adminTags.config },
-        { type: "account", id: accountTags.endowment },
+        "multisig.members",
+        "multisig.config",
+        "accounts.endowment",
       ],
       async queryFn(args) {
         const numId = idParamToNum(args.endowmentId);
@@ -90,10 +85,7 @@ export const customApi = junoApi.injectEndpoints({
       ProposalDetails,
       { id?: string; cw3: string; voter: string }
     >({
-      providesTags: [
-        { type: "admin", id: adminTags.proposal },
-        { type: "admin", id: adminTags.votes },
-      ],
+      providesTags: ["multisig.proposal", "multisig.votes"],
       async queryFn(args) {
         const id = Number(args.id);
 

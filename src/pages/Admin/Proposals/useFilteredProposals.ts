@@ -4,7 +4,7 @@ import {
   ProposalStatusOptions,
 } from "slices/admin/types";
 import { PageOptions, Proposal } from "types/contracts";
-import { useQueryContract } from "services/contract";
+import { useContractQuery } from "services/juno";
 import { useAdminResources } from "../Guard";
 
 export const NUM_PROPOSALS_PER_PAGE = 5;
@@ -13,19 +13,15 @@ export function useFilteredProposals(
   status: ProposalStatusOptions,
   pageNum: number
 ) {
-  const { cw3 } = useAdminResources();
+  const { multisig } = useAdminResources();
   const {
     data: proposals = [],
     isLoading,
     error,
-  } = useQueryContract(
-    "cw3.proposals",
-    {
-      cw3,
-      ...genPageOptions(pageNum, status, group),
-    },
-    { keepPreviousData: true }
-  );
+  } = useContractQuery("multisig.proposals", {
+    multisig,
+    ...genPageOptions(pageNum, status, group),
+  });
 
   function proposalFilter(proposal: Proposal): boolean {
     const proposalMeta = JSON.parse(proposal.meta || "{}") as ProposalMeta;

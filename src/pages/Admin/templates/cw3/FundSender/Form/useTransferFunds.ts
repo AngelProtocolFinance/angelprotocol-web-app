@@ -19,7 +19,7 @@ export default function useTransferFunds() {
     handleSubmit,
     formState: { isSubmitting, isValid, isDirty },
   } = useFormContext<FundSendValues>();
-  const { cw3, propMeta } = useAdminResources();
+  const { multisig, propMeta } = useAdminResources();
   //TODO: use wallet token[] to list amounts to transfer
   const { wallet } = useGetWallet();
   const { showModal } = useModalContext();
@@ -57,7 +57,7 @@ export default function useTransferFunds() {
       );
     }
 
-    const contract = new CW3(wallet, cw3);
+    const contract = new CW3(wallet, multisig);
     const fundTransferMeta: FundSendMeta = {
       type: "cw3_transfer",
       data: {

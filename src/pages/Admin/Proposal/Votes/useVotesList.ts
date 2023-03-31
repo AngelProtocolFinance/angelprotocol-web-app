@@ -1,24 +1,20 @@
 import { VotesPageOptions } from "types/contracts";
-import { useQueryContract } from "services/contract";
+import { useContractQuery } from "services/juno";
 import { useAdminResources } from "../../Guard";
 
 export const VOTES_PER_PAGE = 15;
 export function useVoteList(pollId: number, pageNum?: number) {
-  const { cw3 } = useAdminResources();
+  const { multisig } = useAdminResources();
   const {
     data: votes = [],
-    isValidating,
+    isFetching,
     isLoading,
-  } = useQueryContract(
-    "cw3.votes",
-    {
-      cw3,
-      ...genVoteListPageOptions(pollId, pageNum),
-    },
-    { keepPreviousData: true }
-  );
+  } = useContractQuery("multisig.votes", {
+    multisig,
+    ...genVoteListPageOptions(pollId, pageNum),
+  });
 
-  return { votes, isVoteListLoading: isValidating || isLoading };
+  return { votes, isVoteListLoading: isFetching || isLoading };
 }
 
 function genVoteListPageOptions(

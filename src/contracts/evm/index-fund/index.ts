@@ -1,5 +1,5 @@
 import { Interface } from "@ethersproject/abi";
-import { DecodedFund } from "services/contract/queryContract/decoded-types";
+import { DecodedFund } from "services/juno/queryContract/decoded-types";
 import { Tupleable } from "types/evm";
 import { toTuple } from "helpers";
 import abi from "./abi.json";

@@ -16,7 +16,7 @@ type Key = keyof FormCW3Config;
 type Value = FormCW3Config[Key];
 
 export default function usePropose() {
-  const { cw3, propMeta } = useAdminResources();
+  const { multisig, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
   const {
     getValues,
@@ -45,7 +45,7 @@ export default function usePropose() {
       });
     }
 
-    const contract = new CW3(wallet, cw3);
+    const contract = new CW3(wallet, multisig);
 
     const configUpdateMsg = contract.createEmbeddedUpdateConfigMsg({
       threshold: {
