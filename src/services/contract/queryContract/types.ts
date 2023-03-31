@@ -4,7 +4,6 @@ import {
   CW3Config,
   CW4Member,
   CW20Info,
-  EndowmentController,
   EndowmentDetails,
   EndowmentState,
   FundDetails,
@@ -63,8 +62,6 @@ export interface ContractQueries {
 
   "accounts.endowment": Query<{ id: number }, EndowmentDetails>;
   "accounts.state": Query<{ id: number }, EndowmentState>;
-
-  "accounts/settings.controller": Query<{ id: number }, EndowmentController>; //included in endowDetails
 }
 
 export type ContractQueryTypes = keyof ContractQueries;

@@ -9,4 +9,3 @@ export * from "./cw20";
 export * from "./governance";
 export * from "./indexfund";
 export * from "./registrar";
-export * from "./settingsController";

@@ -1,5 +1,5 @@
 import { Interface } from "@ethersproject/abi";
-import { FundDetails } from "services/contract/queryContract/decoded-types";
+import { DecodedFund } from "services/contract/queryContract/decoded-types";
 import { Tupleable } from "types/evm";
 import { toTuple } from "helpers";
 import abi from "./abi.json";
@@ -14,6 +14,6 @@ interface PageOptions extends Tupleable {
 export const funds = {
   encode: (options: PageOptions) =>
     iface.encodeFunctionData(fundsQuery, toTuple(options)),
-  decode: (result: string): FundDetails[] =>
+  decode: (result: string): DecodedFund[] =>
     iface.decodeFunctionResult(fundsQuery, result)[0],
 };

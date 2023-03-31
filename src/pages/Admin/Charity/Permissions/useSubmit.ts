@@ -15,7 +15,12 @@ import { FormValues } from "./schema";
 import useUserAuthorization from "./useUserAuthorization";
 
 export default function useSubmit() {
-  const { id, cw3, propMeta } = useAdminResources<"charity">();
+  const {
+    id,
+    cw3,
+    propMeta,
+    settingsController: settings,
+  } = useAdminResources<"charity">();
   const { handleError } = useErrorContext();
   const {
     formState: { isSubmitting, errors },
@@ -32,7 +37,7 @@ export default function useSubmit() {
     ...newValues
   }: FormValues) {
     try {
-      if (!endowment_controller.modifiable) {
+      if (!endowment_controller.modifiableAfterInit) {
         throw new UnexpectedStateError(
           "Submitting unmodifiable controller changes"
         );
@@ -45,7 +50,7 @@ export default function useSubmit() {
       }
 
       const settingsController = new SettingsController(wallet);
-      const updateMsg = createUpdateEndowmentControllerMsg(id, diff);
+      const updateMsg = createUpdateEndowmentControllerMsg(id, diff, settings);
 
       let msg: EncodeObject;
 

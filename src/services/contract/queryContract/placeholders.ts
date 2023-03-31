@@ -1,14 +1,10 @@
 import { ContractQueries } from "./types";
-import { SettingsPermissions } from "types/contracts";
-
-const permission: SettingsPermissions = {
-  owner_controlled: true,
-  gov_controlled: true,
-  modifiable: true,
-};
 
 export const placeholders: {
-  [K in keyof ContractQueries]: ReturnType<ContractQueries[K]["transform"]>;
+  [K in Exclude<
+    keyof ContractQueries,
+    "accounts.endowment" | "accounts.state"
+  >]: ReturnType<ContractQueries[K]["transform"]>;
 } = {
   "registrar.config": {
     owner: "terra1...",
@@ -118,52 +114,4 @@ export const placeholders: {
     proposal_type: "normal",
   },
   "cw3.votes": [],
-
-  "accounts.endowment": {
-    owner: "juno123addr..",
-    categories: { sdgs: [], general: [] },
-    endow_type: "charity",
-    status: "approved",
-    invested_strategies: {
-      liquid: [],
-      locked: [],
-    },
-    kyc_donors_only: false,
-  },
-  "accounts.state": {
-    tokens_on_hand: {
-      locked: {
-        native: [],
-        cw20: [],
-      },
-      liquid: {
-        native: [],
-        cw20: [],
-      },
-    },
-    donations_received: {
-      locked: 0,
-      liquid: 0,
-    },
-    closing_endowment: false,
-    closing_beneficiary: undefined,
-  },
-  "accounts/settings.controller": {
-    aum_fee: permission,
-    beneficiaries_allowlist: permission,
-    categories: permission,
-    contributors_allowlist: permission,
-    deposit_fee: permission,
-    donation_match_active: permission,
-    earnings_fee: permission,
-    endowment_controller: permission,
-    ignore_user_splits: permission,
-    image: permission,
-    kyc_donors_only: permission,
-    logo: permission,
-    maturity_allowlist: permission,
-    name: permission,
-    split_to_liquid: permission,
-    withdraw_fee: permission,
-  },
 };

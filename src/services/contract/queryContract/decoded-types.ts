@@ -1,5 +1,6 @@
 import type { BigNumber } from "@ethersproject/bignumber";
 import { EndowmentStatusText, EndowmentType } from "types/contracts";
+import { SettingsPermission } from "types/contracts";
 
 type Categories = {
   sdgs: BigNumber[]; // u8 maps one of the 17 UN SDG
@@ -26,7 +27,40 @@ enum BeneficiaryEnum {
   None,
 }
 
-export interface EndowmentResponse {
+type Delegate = {
+  Addr: string;
+  expires: BigNumber;
+};
+
+type Permission = {
+  ownerControlled: boolean;
+  govControlled: boolean;
+  modifiableAfterInit: boolean;
+  delegate: Delegate;
+};
+
+type SettingsController = {
+  endowmentController: Permission;
+  strategies: Permission;
+  whitelistedBeneficiaries: Permission;
+  whitelistedContributors: Permission;
+  maturityWhitelist: Permission;
+  maturityTime: Permission;
+  profile: Permission;
+  earningsFee: Permission;
+  withdrawFee: Permission;
+  depositFee: Permission;
+  aumFee: Permission;
+  kycDonorsOnly: Permission;
+  name: Permission;
+  image: Permission;
+  logo: Permission;
+  categories: Permission;
+  splitToLiquid: Permission;
+  ignoreUserSplits: Permission;
+};
+
+export interface DecodedEndowment {
   owner: string;
   categories: Categories;
   //tier
@@ -40,12 +74,13 @@ export interface EndowmentResponse {
   //invested_strategies:
   //rebalance
   kycDonorsOnly: boolean;
+  settingsController: SettingsController;
   //pending_redemptions
   //proposal_link
   //referral_id
 }
 
-export interface StateResponse {
+export interface DecodedEndowmentState {
   donationsReceived: {
     liquid: BigNumber;
     locked: BigNumber;
@@ -60,7 +95,7 @@ export interface StateResponse {
   };
 }
 
-export interface FundDetails {
+export interface DecodedFund {
   id: BigNumber;
   name: string;
   description: string;
@@ -72,6 +107,14 @@ export interface FundDetails {
 }
 
 // ////////// CONVERTERS ///////////////
+export function toPermission(permission: Permission): SettingsPermission {
+  const { delegate } = permission;
+  return {
+    ...permission,
+    delegate: { ...delegate, expires: delegate.expires?.toNumber() },
+  };
+}
+
 export function toEndowType(type: TypeEnum): EndowmentType {
   switch (type) {
     case TypeEnum.Charity:

@@ -1,5 +1,6 @@
-import { toEndowStatus, toEndowType } from "./decoded-types";
+import { toEndowStatus, toEndowType, toPermission } from "./decoded-types";
 import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
+import { SettingsController, SettingsPermission } from "types/contracts";
 import { UNSDG_NUMS } from "types/lists";
 import { endowState, endowmentDetails } from "contracts/evm/Account";
 import { balanceOf } from "contracts/evm/ERC20";
@@ -127,6 +128,7 @@ export const queries: {
     ({ id }) => endowmentDetails.encode(id) as any,
     (result) => {
       const d = endowmentDetails.decode(result);
+      console.log(d);
       return {
         owner: d.owner,
         categories: {
@@ -143,6 +145,13 @@ export const queries: {
           locked: [],
         },
         kyc_donors_only: d.kycDonorsOnly,
+        settingsController: Object.entries(d.settingsController).reduce(
+          (result, [key, permission]) => ({
+            ...result,
+            [key]: toPermission(permission),
+          }),
+          {} as SettingsController
+        ),
       };
     },
   ],
@@ -171,12 +180,5 @@ export const queries: {
         closing_beneficiary: d.closingBeneficiary.data.addr,
       };
     },
-  ],
-
-  /** (account) settings controller */
-  "accounts/settings.controller": [
-    //currently included in endowment details
-    ({ id }) => ({ endowment_controller: { id } }),
-    () => p["accounts/settings.controller"],
   ],
 };

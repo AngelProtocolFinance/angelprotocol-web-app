@@ -68,7 +68,7 @@ export default function MobileTable({ className = "" }) {
                 <Disclosure.Panel className="w-full font-work divide-y divide-prim border-t border-prim">
                   <div className="grid gap-4 py-3 px-4">
                     <CheckField<FormValues>
-                      name={`${fieldName}.owner_controlled`}
+                      name={`${fieldName}.ownerControlled`}
                       classes={{
                         label: "uppercase text-xs font-bold",
                         input: "checkbox-orange",
@@ -79,7 +79,7 @@ export default function MobileTable({ className = "" }) {
                     </CheckField>
                     {endow_type === "normal" && (
                       <CheckField<FormValues>
-                        name={`${fieldName}.gov_controlled`}
+                        name={`${fieldName}.govControlled`}
                         classes={{
                           label: "uppercase text-xs font-bold",
                           input: "checkbox-orange",

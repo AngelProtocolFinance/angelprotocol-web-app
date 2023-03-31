@@ -1,48 +1,25 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { EndowmentController, SettingsPermissions } from "types/contracts";
+import { SettingsPermission } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
-import { useQueryContract } from "services/contract";
-import SWRLoader from "components/SWRLoader";
+import { ADDRESS_ZERO } from "constants/evm";
 import Form from "./Form";
 import { FormField, FormValues, UpdateableFormValues, schema } from "./schema";
 
 export default function Permissions() {
-  const { id } = useAdminResources();
-  const queryState = useQueryContract("accounts/settings.controller", { id });
-
-  return (
-    <div className="grid gap-6">
-      <h2 className="font-bold text-3xl">Permissions</h2>
-
-      <SWRLoader
-        queryState={queryState}
-        messages={{
-          error: "Failed to get permissions.",
-          loading: "Loading permissions...",
-        }}
-      >
-        {(endowmentController) => (
-          <InnerComponent controller={endowmentController} />
-        )}
-      </SWRLoader>
-    </div>
-  );
-}
-
-function InnerComponent({ controller }: { controller: EndowmentController }) {
+  const { settingsController: controller } = useAdminResources<"charity">();
   const initialValues: UpdateableFormValues = {
-    accountFees: createField(controller.aum_fee, "Changes to account fees"),
+    accountFees: createField(controller.aumFee, "Changes to account fees"),
     beneficiaries_allowlist: createField(
-      controller.beneficiaries_allowlist,
+      controller.whitelistedBeneficiaries,
       "Changes to beneficiaries whitelist"
     ),
     contributors_allowlist: createField(
-      controller.contributors_allowlist,
+      controller.whitelistedContributors,
       "Changes to contributors whitelist"
     ),
     donationSplitParams: createField(
-      controller.split_to_liquid,
+      controller.splitToLiquid,
       "Changes to donation split parameters"
     ),
     profile: createField(controller.name, "Changes to profile"),
@@ -50,29 +27,31 @@ function InnerComponent({ controller }: { controller: EndowmentController }) {
   const methods = useForm<FormValues>({
     defaultValues: {
       initialValues,
-      endowment_controller: createField(controller.endowment_controller),
+      endowment_controller: createField(controller.endowmentController),
       ...initialValues,
     },
     resolver: yupResolver(schema),
   });
 
   return (
-    <FormProvider {...methods}>
-      <Form />
-    </FormProvider>
+    <div className="grid gap-6">
+      <h2 className="font-bold text-3xl">Permissions</h2>
+
+      <FormProvider {...methods}>
+        <Form />
+      </FormProvider>
+    </div>
   );
 }
 
-function createField(settings: SettingsPermissions, name = ""): FormField {
-  const result: FormField = {
+function createField(settings: SettingsPermission, name = ""): FormField {
+  const isDelegated = settings.delegate.Addr !== ADDRESS_ZERO;
+  return {
     name,
-    gov_controlled: settings.gov_controlled,
-    modifiable: settings.modifiable,
-    owner_controlled: settings.owner_controlled,
-    ...(!settings.delegate
-      ? { delegated: false, delegate_address: "" }
-      : { delegated: true, delegate_address: settings.delegate.address }),
+    govControlled: settings.govControlled,
+    modifiableAfterInit: settings.modifiableAfterInit,
+    ownerControlled: settings.ownerControlled,
+    delegated: isDelegated,
+    delegate_address: isDelegated ? settings.delegate.Addr : "",
   };
-
-  return result;
 }

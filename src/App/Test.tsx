@@ -6,10 +6,7 @@ export default function Test() {
       <button
         type="button"
         onClick={async () => {
-          const result = await query("cw20.balance", {
-            cw20: "0xaBCe32FBA4C591E8Ea5A5f711F7112dC08BCee74",
-            addr: "0xce551C1125BfCdAb88048854522D0B220f41A6Ff",
-          });
+          const result = await query("accounts.endowment", { id: 1 });
           console.log(result);
         }}
       >

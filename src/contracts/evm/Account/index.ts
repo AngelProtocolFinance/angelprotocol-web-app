@@ -1,8 +1,8 @@
 import { Interface } from "@ethersproject/abi";
 import type { BigNumber } from "@ethersproject/bignumber";
 import {
-  EndowmentResponse,
-  StateResponse,
+  DecodedEndowment,
+  DecodedEndowmentState,
 } from "services/contract/queryContract/decoded-types";
 import { NewAIF } from "types/contracts/evm";
 import { TxLog } from "types/evm";
@@ -44,7 +44,7 @@ export const endowmentDetails = {
   encode(id: number) {
     return iface.encodeFunctionData(endowDetailsQuery, [id]);
   },
-  decode(result: string): EndowmentResponse {
+  decode(result: string): DecodedEndowment {
     return iface.decodeFunctionResult(endowDetailsQuery, result)[0];
   },
 };
@@ -54,7 +54,7 @@ export const endowState = {
   encode(id: number) {
     return iface.encodeFunctionData(endowStateQuery, [id]);
   },
-  decode(result: string): StateResponse {
+  decode(result: string): DecodedEndowmentState {
     return iface.decodeFunctionResult(endowStateQuery, result)[0];
   },
 };
