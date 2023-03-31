@@ -4,9 +4,9 @@ import { SettingsController } from "types/contracts";
 import { UNSDG_NUMS } from "types/lists";
 import { endowState, endowmentDetails } from "contracts/evm/Account";
 import { balance as erc20Balance } from "contracts/evm/ERC20";
-import { confirmations, owners, transactionIds } from "contracts/evm/Multisig";
 import { balance as giftCardBalance } from "contracts/evm/gift-card";
 import { funds } from "contracts/evm/index-fund";
+import { confirmations, owners, transactionIds } from "contracts/evm/multisig";
 import { placeholders as p } from "./placeholders";
 
 type MigrationState =
