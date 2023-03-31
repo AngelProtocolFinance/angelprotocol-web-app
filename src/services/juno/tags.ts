@@ -1,63 +1,23 @@
-import { FullTagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
+import { ContractQueryTypes } from "./queryContract/types";
 
-export const rootTags = [
-  "gov",
-  "admin",
-  "indexfund",
-  "account",
-  "registrar",
-  "custom",
-  "vault",
-  "settingsController",
-] as const;
+export const tags: ContractQueryTypes[] = [
+  "registrar.config",
+  "registrar.config-extension",
 
-type JunoTag = typeof rootTags[number];
+  "index-fund.funds",
+  "index-fund.alliance-members",
+  "index-fund.config",
 
-export enum adminTags {
-  proposals = "proposals",
-  proposal = "proposal",
-  members = "members",
-  member = "member",
-  config = "config",
-  votes = "votes",
-  voter = "voter",
-  voters = "voters",
-  applications = "applications",
-}
+  "gift-card.balance",
 
-export enum govTags {
-  polls = "polls",
-  state = "state",
-  staker = "staker",
-  config = "config",
-  halo_balance = "halo_balance",
-  halo_info = "halo_info",
-}
+  "erc20.balance",
 
-export enum indexfundTags {
-  alliance_members = "alliance_members",
-  fund_list = "fund_list",
-  config = "config",
-}
+  "multisig.members",
+  "multisig.proposals",
+  "multisig.config",
+  "multisig.proposal",
+  "multisig.votes",
 
-export enum registrarTags {
-  config = "config",
-  config_extension = "config_extension",
-}
-
-export enum accountTags {
-  endowment = "endowment",
-  endowments = "endowments",
-  profile = "profile",
-  state = "state",
-}
-
-export enum settingsControllerTags {
-  endowment_controller = "endowment_controller",
-}
-
-export const defaultProposalTags: FullTagDescription<JunoTag>[] = [
-  //basic tags to invalidate
-  { type: "admin", id: adminTags.proposals },
-  { type: "admin", id: adminTags.proposal },
+  "accounts.endowment",
+  "accounts.state",
 ];

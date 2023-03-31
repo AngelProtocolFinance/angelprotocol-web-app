@@ -12,7 +12,7 @@ import {
 } from "./queryContract/types";
 import { POLYGON_RPC } from "constants/env";
 import { queryContract } from "./queryContract";
-import { rootTags } from "./tags";
+import { tags } from "./tags";
 
 const customBaseQuery: BaseQueryFn = retry(
   async (args, api, extraOptions) => {
@@ -24,7 +24,7 @@ const customBaseQuery: BaseQueryFn = retry(
 export const junoApi = createApi({
   reducerPath: "junoApi",
   baseQuery: customBaseQuery,
-  tagTypes: rootTags,
+  tagTypes: tags,
   endpoints: (builder) => ({
     //implementation endpoint of useQueryHook
     contract: builder.query<boolean, { type: any; options: any }>({
