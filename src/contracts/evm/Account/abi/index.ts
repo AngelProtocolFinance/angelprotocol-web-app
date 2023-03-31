@@ -3,7 +3,7 @@ import endowment from "./queries/endowment.json";
 import state from "./queries/state.json";
 import createEndowment from "./txs/createEndowment.json";
 
-export default [
+export const abi = [
   ...createEndowment,
 
   ...endowmentCreated,

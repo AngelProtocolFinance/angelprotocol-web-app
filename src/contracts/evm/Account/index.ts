@@ -7,7 +7,7 @@ import {
 import { NewAIF } from "types/contracts/evm";
 import { TxLog } from "types/evm";
 import { toTuple } from "helpers";
-import abi from "./abi";
+import { abi } from "./abi";
 
 const iface = new Interface(abi);
 //FUTURE: append abi with new methods
