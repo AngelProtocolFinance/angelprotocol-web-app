@@ -11,10 +11,10 @@ export default function Owner() {
   const {
     data: config,
     isLoading,
-    error,
+    isError,
   } = useContractQuery("registrar.config", {});
   if (isLoading) return <FormSkeleton />;
-  if (!!error || !config)
+  if (!isError || !config)
     return <FormError errorMessage="failed to load registrar config" />;
   return <RegistrarOwnerContext {...config} />;
 }

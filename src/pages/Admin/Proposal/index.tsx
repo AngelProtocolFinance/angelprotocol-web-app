@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { ProposalParams } from "pages/Admin/types";
 import { Expiration } from "types/contracts";
 import { useProposalDetailsQuery } from "services/juno/custom";
+import { useGetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
 import { DetailLabel, Status } from "components/admin";
@@ -13,11 +14,15 @@ import Votes from "./Votes";
 
 export default function Proposal() {
   const { multisig } = useAdminResources();
+  const { wallet } = useGetWallet();
   const params = useParams<ProposalParams>();
-  const queryState = useProposalDetailsQuery({
-    id: params.id,
-    cw3: multisig,
-  });
+  const queryState = useProposalDetailsQuery(
+    {
+      id: params.id,
+      cw3: multisig,
+    },
+    { skip: !wallet }
+  );
 
   return (
     <div className="grid content-start w-full min-h-screen font-work">

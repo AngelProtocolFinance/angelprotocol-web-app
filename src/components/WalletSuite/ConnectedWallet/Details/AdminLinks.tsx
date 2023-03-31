@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { AP_ID, REVIEWER_ID, useIsMemberQuery } from "services/juno/custom";
 import { WalletState } from "contexts/WalletContext";
+import { chainIds } from "constants/chainIds";
 import { appRoutes } from "constants/routes";
 
 export default function AdminLinks(props: WalletState) {
@@ -8,12 +9,18 @@ export default function AdminLinks(props: WalletState) {
     data: isApMember = false,
     isLoading: isApLoading,
     isFetching: isApFetching,
-  } = useIsMemberQuery({ user: props.address, endowmentId: `${AP_ID}` });
+  } = useIsMemberQuery(
+    { user: props.address, endowmentId: `${AP_ID}` },
+    { skip: props.chain.chain_id !== chainIds.polygon }
+  );
   const {
     data: isReviewMember = false,
     isLoading: isReviewLoading,
     isFetching: isReviewFetching,
-  } = useIsMemberQuery({ user: props.address, endowmentId: `${REVIEWER_ID}` });
+  } = useIsMemberQuery(
+    { user: props.address, endowmentId: `${REVIEWER_ID}` },
+    { skip: props.chain.chain_id !== chainIds.polygon }
+  );
 
   const isLoading =
     isApLoading || isApFetching || isReviewLoading || isReviewFetching;
