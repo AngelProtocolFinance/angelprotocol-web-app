@@ -1,5 +1,5 @@
 import { Interface } from "@ethersproject/abi";
-import { DecodedGiftCardBalance } from "services/contract/queryContract/decoded-types";
+import { DecodedGiftCardBalance } from "services/juno/queryContract/decoded-types";
 import abi from "./abi.json";
 
 const iface = new Interface(abi);

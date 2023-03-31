@@ -1,14 +1,14 @@
 import { useAdminResources } from "pages/Admin/Guard";
-import { useQueryContract } from "services/contract";
-import SWRLoader from "components/SWRLoader";
+import { useContractQuery } from "services/juno";
+import QueryLoader from "components/QueryLoader";
 import DonationsTable from "../DonationsTable";
 import Balances from "../common/Balances";
 import Table from "./Table";
 
 export default function Dashboard() {
-  const { cw3 } = useAdminResources();
-  const queryState = useQueryContract("cw3.proposals", {
-    cw3,
+  const { multisig } = useAdminResources();
+  const queryState = useContractQuery("multisig.proposals", {
+    multisig,
     limit: 5,
   });
 
@@ -19,7 +19,7 @@ export default function Dashboard() {
       <h3 className="mt-10 mb-4 uppercase font-extrabold text-2xl">
         New Proposals
       </h3>
-      <SWRLoader
+      <QueryLoader
         queryState={queryState}
         messages={{
           loading: "Getting recent proposals..",
@@ -30,7 +30,7 @@ export default function Dashboard() {
         filterFn={(proposal) => proposal.status === "open"}
       >
         {(proposals) => <Table proposals={proposals} />}
-      </SWRLoader>
+      </QueryLoader>
       <DonationsTable classes="mt-10" />
     </div>
   );
