@@ -1,13 +1,16 @@
-import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
 import { useFormContext } from "react-hook-form";
 import { VoteValues as VV } from "./types";
-import { useAdminResources } from "pages/Admin/Guard";
+import { SimulContractTx } from "types/evm";
 import { invalidateJunoTags } from "services/juno";
 import { adminTags } from "services/juno/tags";
+import { useErrorContext } from "contexts/ErrorContext";
 import { useGetWallet } from "contexts/WalletContext";
-import CW3 from "contracts/CW3";
-import CW3Review from "contracts/CW3/CW3Review";
+import { APTeamMultiSig, ApplicationsMultiSig } from "contracts/evm";
 import useTxSender from "hooks/useTxSender";
+import { WalletDisconnectedError } from "errors/errors";
+
+const applicationsMultiSigProxy = "0x1edC050B5d84cbB0cA0b56356f3F7307efcd50Fb";
+const apTeamMultiSigProxy = "0xC26Ac43b14ebCbff5029792052aF3e4DF3233902";
 
 export default function useVote() {
   const {
@@ -15,26 +18,35 @@ export default function useVote() {
     formState: { isValid },
   } = useFormContext<VV>();
   const { wallet } = useGetWallet();
-  const { cw3 } = useAdminResources();
   const { sendTx, isSending } = useTxSender(true);
+  const { handleError } = useErrorContext();
 
-  async function vote({ type, proposalId, vote, reason }: VV) {
-    let voteMsg: MsgExecuteContractEncodeObject;
-    if (type === "application") {
-      const contract = new CW3Review(wallet);
-      voteMsg = contract.createVoteApplicationMsg({
-        proposal_id: proposalId,
-        vote: vote,
-        reason: (vote === "no" && reason) || undefined,
-      });
-    } else {
-      //normal cw3
-      const contract = new CW3(wallet, cw3);
-      voteMsg = contract.createVoteMsg(proposalId, vote);
+  async function vote({ type, proposalId: transactionId, vote }: VV) {
+    if (!wallet) {
+      return handleError(new WalletDisconnectedError());
     }
 
+    const voteMsg: SimulContractTx =
+      type === "application"
+        ? {
+            from: wallet.address,
+            to: applicationsMultiSigProxy,
+            data:
+              vote === "no"
+                ? ""
+                : ApplicationsMultiSig.confirmTransaction.encode(transactionId),
+          }
+        : {
+            from: wallet.address,
+            to: apTeamMultiSigProxy,
+            data:
+              vote === "no"
+                ? ""
+                : APTeamMultiSig.confirmTransaction.encode(transactionId),
+          };
+
     await sendTx({
-      content: { type: "cosmos", val: [voteMsg] },
+      content: { type: "evm", val: voteMsg },
       tagPayloads: [
         invalidateJunoTags([{ type: "admin", id: adminTags.proposals }]),
       ],
