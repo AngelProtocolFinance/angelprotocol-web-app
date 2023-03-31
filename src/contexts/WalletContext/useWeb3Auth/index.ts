@@ -27,6 +27,8 @@ const DEFAULT_CHAIN: BaseChain = IS_TEST
 
 export default function useWeb3Auth() {
   const [web3auth, setWeb3auth] = useState<Web3Auth | null>(null);
+  const [torusPlugin, setTorusPlugin] =
+    useState<TorusWalletConnectorPlugin | null>(null);
   const [providerInfo, setProviderInfo] = useState<ProviderInfo>();
   const [chainId, setChainId] = useState("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -69,6 +71,7 @@ export default function useWeb3Auth() {
             useWalletConnect: true,
           },
         });
+        setTorusPlugin(torusConnectorPlugin);
         await web3Auth.addPlugin(torusConnectorPlugin);
         await web3Auth.initModal();
         web3Auth.on(LOGIN_MODAL_EVENTS.MODAL_VISIBILITY, (isVisible) => {
@@ -76,6 +79,10 @@ export default function useWeb3Auth() {
           setIsLoading(isVisible);
         });
         setWeb3auth(web3Auth);
+        setProvider(
+          (torusConnectorPlugin?.proxyProvider as SafeEventEmitterProvider) ||
+            web3Auth?.provider
+        );
       } catch (error) {
         console.error(error);
       }
@@ -122,7 +129,11 @@ export default function useWeb3Auth() {
     } catch (e) {
       console.log(e);
     }
-
+    try {
+      await torusPlugin?.disconnect();
+    } catch (e) {
+      console.log(e);
+    }
     web3auth.clearCache();
     saveUserAction("metamask__pref", "disconnect");
     setProviderInfo(undefined);
