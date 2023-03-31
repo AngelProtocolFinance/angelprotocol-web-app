@@ -121,33 +121,16 @@ export default function useWeb3Auth() {
     setProviderInfo(undefined);
   };
 
-  const getChainId = async () => {
-    if (!provider) {
-      console.log("provider not initialized yet");
-      return;
-    }
-    const rpc = new RPC(provider);
-    const chainId = await rpc.getChainId();
-    return chainId;
-  };
-
   const switchChain = async (chainId: string) => {
     if (!provider) {
       console.log("provider not initialized yet");
       return;
     }
-    await web3auth?.switchChain({ chainId });
-    console.log("Chain Switched");
-  };
-
-  const getAccounts = async () => {
-    if (!provider) {
-      console.log("provider not initialized yet");
-      return;
+    if (chainConfig[chainId]) {
+      await web3auth?.addChain(chainConfig[chainId]);
+      await web3auth?.switchChain({ chainId: chainConfig[chainId].chainId });
     }
-    const rpc = new RPC(provider);
-    const address = await rpc.getAccounts();
-    return address;
+    setChainId(chainId);
   };
 
   return {
