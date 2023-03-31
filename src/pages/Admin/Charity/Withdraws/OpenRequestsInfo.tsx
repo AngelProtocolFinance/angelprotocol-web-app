@@ -9,9 +9,9 @@ import { adminRoutes } from "constants/routes";
 const proposal_status: ProposalStatus = "open";
 
 export default function OpenRequestsInfo() {
-  const { cw3 } = useAdminResources();
+  const { multisig } = useAdminResources();
   const queryState = useWithdrawLogsQuery({
-    cw3,
+    cw3: multisig,
     sort: "default",
     proposal_status,
   });

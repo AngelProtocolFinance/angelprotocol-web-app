@@ -17,7 +17,7 @@ import useUserAuthorization from "./useUserAuthorization";
 export default function useSubmit() {
   const {
     id,
-    cw3,
+    multisig,
     propMeta,
     settingsController: settings,
   } = useAdminResources<"charity">();
@@ -69,7 +69,7 @@ export default function useSubmit() {
 
         const meta: ProposalMeta = { type: "endow_controller" };
 
-        const adminContract = new CW3(wallet, cw3);
+        const adminContract = new CW3(wallet, multisig);
         msg = adminContract.createProposalMsg(
           `Update permission settings for endowment id:${id}`,
           `Update permission settings for endowment id:${id} by member:${wallet?.address}`,

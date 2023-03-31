@@ -8,8 +8,8 @@ import { useSetter } from "store/accessors";
 
 export default function useGetWithdrawLogs() {
   const dispatch = useSetter();
-  const { cw3 } = useAdminResources();
-  const queryState = useWithdrawLogsQuery({ cw3, sort: "default" });
+  const { multisig } = useAdminResources();
+  const queryState = useWithdrawLogsQuery({ cw3: multisig, sort: "default" });
 
   const { isLoading, isError, data, originalArgs } = queryState;
 

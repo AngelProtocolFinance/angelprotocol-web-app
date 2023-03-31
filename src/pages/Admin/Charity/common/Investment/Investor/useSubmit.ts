@@ -9,7 +9,7 @@ import { scaleToStr } from "helpers";
 import { getTagPayloads } from "helpers/admin";
 
 export default function useSubmit(vault: string, type: AccountType) {
-  const { cw3, id, propMeta } = useAdminResources();
+  const { multisig, id, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
   const { sendTx, isSending } = useTxSender(true);
 
@@ -30,7 +30,7 @@ export default function useSubmit(vault: string, type: AccountType) {
       ],
     });
 
-    const cw3contract = new CW3(wallet, cw3);
+    const cw3contract = new CW3(wallet, multisig);
     //proposal meta for preview
     const proposal = cw3contract.createProposalMsg(
       "Invest",

@@ -18,7 +18,7 @@ import { cleanObject } from "helpers/cleanObject";
 
 export default function useUpdateStatus() {
   const { handleSubmit } = useFormContext<EndowmentUpdateValues>();
-  const { cw3, propMeta } = useAdminResources();
+  const { multisig, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
   const sendTx = useTxSender();
   const { showModal } = useModalContext();
@@ -93,7 +93,7 @@ export default function useUpdateStatus() {
       },
     };
 
-    const adminContract = new CW3(wallet, cw3);
+    const adminContract = new CW3(wallet, multisig);
     const proposalMsg = adminContract.createProposalMsg(
       data.title,
       data.description,
