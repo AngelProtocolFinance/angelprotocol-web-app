@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { WithdrawValues } from "../types";
+import { WithdrawValues } from "./types";
 import { SimulContractTx } from "types/evm";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useErrorContext } from "contexts/ErrorContext";

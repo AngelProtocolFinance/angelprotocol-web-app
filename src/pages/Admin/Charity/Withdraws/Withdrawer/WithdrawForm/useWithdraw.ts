@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { WithdrawValues } from "../types";
+import { WithdrawValues } from "./types";
 import usePolygonEndowWithdraw from "./usePolygonEndowWithdraw";
 
 export default function useWithdraw() {
