@@ -9,7 +9,7 @@ import {
 } from "react-hook-form";
 import { Country } from "types/countries";
 import countries from "assets/countries/all.json";
-import { getErrorClasses } from "helpers/resolveJsonPath";
+import { resolvePath } from "helpers/resolveJsonPath";
 import Icon, { DrawerIcon } from "../Icon";
 import Options from "./Options";
 
@@ -63,13 +63,14 @@ export default function CountrySelector<
 
   return (
     <Combobox
+      aria-invalid={!!resolvePath(errors, `${props.fieldName}.name`)?.message}
       aria-disabled={isSubmitting}
       value={country}
       onChange={onCountryChange}
       as="div"
       className={`relative items-center grid grid-cols-[auto_auto_1fr] w-full field-container ${
         props.classes?.container || ""
-      } ${getErrorClasses(errors, `${props.fieldName}.name`)}`}
+      }`}
     >
       <span className="mr-1 empty:hidden text-3xl relative -bottom-0.5">
         {country.flag || null}

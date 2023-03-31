@@ -3,7 +3,7 @@ import { createElement } from "react";
 import { useFormContext } from "react-hook-form";
 import { FieldValues, Path } from "react-hook-form";
 import { Classes } from "./types";
-import { getErrorClasses } from "helpers/resolveJsonPath";
+import { resolvePath } from "helpers/resolveJsonPath";
 import { Label } from ".";
 import { unpack } from "./helpers";
 
@@ -42,7 +42,6 @@ export function Field<T extends FieldValues, K extends InputType = "text">({
   const { container, input, lbl, error } = unpack(classes);
 
   const id = "__" + String(name);
-  console.log(errors);
   return (
     <div className={container + " field"}>
       <Label className={lbl} required={required} htmlFor={id}>
@@ -54,8 +53,9 @@ export function Field<T extends FieldValues, K extends InputType = "text">({
         ...register(name, { valueAsNumber: type === "number" }),
         ...(type === textarea ? {} : { type }),
         id,
+        "aria-invalid": !!resolvePath(errors, name)?.message,
         disabled: isSubmitting || disabled,
-        className: `${input} ${getErrorClasses(errors, name)}`,
+        className: `${input}`,
         autoComplete: "off",
         spellCheck: false,
       })}

@@ -8,7 +8,7 @@ import {
   useFormContext,
 } from "react-hook-form";
 import Icon, { DrawerIcon } from "components/Icon";
-import { getErrorClasses } from "helpers/resolveJsonPath";
+import { resolvePath } from "./../helpers/resolveJsonPath";
 
 type ValKey = string | number;
 
@@ -90,14 +90,14 @@ export function Selector<
           tabIndex={-1}
         />
         <Listbox.Button
+          aria-invalid={
+            !!resolvePath(errors, multiple ? name : labelId)?.message
+          }
           aria-disabled={isDisabled}
           as={multiple ? "div" : "button"}
           className={`${button} ${selectorButtonStyle} ${
             multiple ? "p-1" : ""
-          } min-h-[3rem] justify-between peer-focus:border-gray-d1 peer-focus:dark:border-blue-l2 cursor-pointer  ${getErrorClasses(
-            errors,
-            name
-          )}`}
+          } min-h-[3rem] justify-between peer-focus:border-gray-d1 peer-focus:dark:border-blue-l2 cursor-pointer`}
         >
           {({ open }) => (
             <>

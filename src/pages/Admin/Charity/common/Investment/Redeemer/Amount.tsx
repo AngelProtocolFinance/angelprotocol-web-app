@@ -1,6 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import { FormValues } from "./types";
+import { resolvePath } from "helpers/resolveJsonPath";
 
 type Props = { classes?: string; symbol: string };
 
@@ -11,6 +12,7 @@ export default function Amount({ classes = "", symbol }: Props) {
   } = useFormContext<FormValues>();
   return (
     <div
+      aria-invalid={!!resolvePath(errors, "token.amount")?.message}
       aria-disabled={isSubmitting}
       className={`${classes} pb-3 relative grid grid-cols-[1fr_auto_auto] items-baseline dark:bg-blue-d6 field-container border-none`}
     >

@@ -8,7 +8,7 @@ import {
 } from "react-hook-form";
 import { OnSetAmount, Props } from "./types";
 import { TokenWithAmount } from "types/slices";
-import { getErrorClasses } from "helpers/resolveJsonPath";
+import { resolvePath } from "helpers/resolveJsonPath";
 import Balance from "./Balance";
 import Steps from "./Steps";
 import TokenSelector from "./TokenSelector";
@@ -69,13 +69,11 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
       </div>
 
       <div
+        aria-invalid={!!resolvePath(errors[name], "amount")?.message}
         aria-disabled={isSubmitting}
         className={`${
           classes?.inputContainer ?? ""
-        } relative grid grid-cols-[1fr_auto] items-center gap-2 px-4 field-container ${getErrorClasses(
-          errors[name],
-          "amount"
-        )}`}
+        } relative grid grid-cols-[1fr_auto] items-center gap-2 px-4 field-container`}
       >
         <input
           {...register(amountField)}
