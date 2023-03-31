@@ -53,6 +53,7 @@ export const customApi = junoApi.injectEndpoints({
           //skip endowment query, query hardcoded cw3 straight
 
           const [meta, config] = await getMeta(numId, multisig, args.user);
+
           return {
             data: {
               type: type as any,
