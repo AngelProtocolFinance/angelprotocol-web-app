@@ -37,7 +37,7 @@ const testnet:Contracts = {
   "cw4/impact-review":    "",
   "cw3/impact-review":    "",
   halo:                   "",
-  "gift-card":            "juno1zfjggfdjadcgd4f2jugw440vfdecf5erqfy0ts9f5v9yucmu99rqdsy6j6",
+  "gift-card":            "0xC87BC3FDd4f3Dc8d1b4200005cAa60Ce744a0c17",
   gov:                    "",
   airdrop:                "",
   "accounts/settings":    "juno1aztgl4v5nnrewnqqlqg9yvwv4s7gtssql9gzvshlyhgt9w80z3aqx5gnvp",

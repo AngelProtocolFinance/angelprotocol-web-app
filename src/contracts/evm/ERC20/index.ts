@@ -6,10 +6,9 @@ const iface = new Interface(abi);
 const balanceQuery = iface.getFunction("balanceOf");
 const transferFn = iface.getFunction("transfer");
 
-export const balanceOf = {
-  encode(address: string) {
-    return iface.encodeFunctionData(balanceQuery, [address]);
-  },
+export const balance = {
+  encode: (address: string) =>
+    iface.encodeFunctionData(balanceQuery, [address]),
   decode(result: string): string {
     const [balance] = iface.decodeFunctionResult(balanceQuery, result);
 
@@ -19,7 +18,6 @@ export const balanceOf = {
 };
 
 export const transfer = {
-  encode(to: string, amount: string) {
-    return iface.encodeFunctionData(transferFn, [to, amount]);
-  },
+  encode: (to: string, amount: string) =>
+    iface.encodeFunctionData(transferFn, [to, amount]),
 };

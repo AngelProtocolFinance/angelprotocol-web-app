@@ -1,10 +1,11 @@
 import { toEndowStatus, toEndowType, toPermission } from "./decoded-types";
 import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
-import { SettingsController, SettingsPermission } from "types/contracts";
+import { SettingsController } from "types/contracts";
 import { UNSDG_NUMS } from "types/lists";
 import { endowState, endowmentDetails } from "contracts/evm/Account";
-import { balanceOf } from "contracts/evm/ERC20";
+import { balance as erc20Balance } from "contracts/evm/ERC20";
 import { confirmations, owners, transactionIds } from "contracts/evm/Multisig";
+import { balance as giftCardBalance } from "contracts/evm/gift-card";
 import { funds } from "contracts/evm/index-fund";
 import { placeholders as p } from "./placeholders";
 
@@ -57,16 +58,28 @@ export const queries: {
   /** cw20 */
   "cw20.info": [{}, () => p["cw20.info"]],
   "cw20.balance": [
-    ({ addr }) => balanceOf.encode(addr) as any,
-    (result) => balanceOf.decode(result),
+    ({ addr }) => erc20Balance.encode(addr) as any,
+    (result) => erc20Balance.decode(result),
   ],
 
   /** giftcard */
   "gift-card.balance": [
-    ({ addr }) => ({
-      balance: { address: addr },
-    }),
-    () => p["gift-card.balance"],
+    ({ addr }) => giftCardBalance.encode(addr) as any,
+    (result) => {
+      const {
+        coinNativeAmount,
+        /** amounts and addresses corresponds to one another */
+        Cw20CoinVerified_addr: addresses,
+        Cw20CoinVerified_amount: amounts,
+      } = giftCardBalance.decode(result);
+      return {
+        cw20: addresses.map((addr, i) => ({
+          address: addr,
+          amount: amounts[i].toString(),
+        })),
+        native: [{ denom: "", amount: coinNativeAmount.toString() }],
+      };
+    },
   ],
 
   /** cw4 member */
@@ -128,7 +141,6 @@ export const queries: {
     ({ id }) => endowmentDetails.encode(id) as any,
     (result) => {
       const d = endowmentDetails.decode(result);
-      console.log(d);
       return {
         owner: d.owner,
         categories: {

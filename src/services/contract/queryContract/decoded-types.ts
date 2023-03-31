@@ -106,6 +106,12 @@ export interface DecodedFund {
   expiryHeight: BigNumber;
 }
 
+export type DecodedGiftCardBalance = {
+  coinNativeAmount: BigNumber;
+  Cw20CoinVerified_amount: BigNumber[];
+  Cw20CoinVerified_addr: string[];
+};
+
 // ////////// CONVERTERS ///////////////
 export function toPermission(permission: Permission): SettingsPermission {
   const { delegate } = permission;

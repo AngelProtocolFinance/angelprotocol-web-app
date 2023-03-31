@@ -2,7 +2,7 @@ import { Coin } from "@cosmjs/proto-signing";
 import { FetchedChain, Token, TokenWithBalance } from "types/aws";
 import { CW20Balance } from "types/contracts";
 import { ProviderId } from "types/lists";
-import { balanceOf } from "contracts/evm/ERC20";
+import { balance } from "contracts/evm/ERC20";
 import { condenseToNum, getProvider, toBase64 } from "helpers";
 import { queryContract } from "../../contract/queryContract";
 
@@ -81,10 +81,10 @@ export async function fetchBalances(
         provider
           .request<string>({
             method: "eth_call",
-            params: [{ to: t.token_id, data: balanceOf.encode(address) }],
+            params: [{ to: t.token_id, data: balance.encode(address) }],
           })
           .then<Coin>((result) => ({
-            amount: balanceOf.decode(result),
+            amount: balance.decode(result),
             denom: t.token_id,
           }))
       ),

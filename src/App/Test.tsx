@@ -6,7 +6,9 @@ export default function Test() {
       <button
         type="button"
         onClick={async () => {
-          const result = await query("accounts.endowment", { id: 1 });
+          const result = await query("gift-card.balance", {
+            addr: "0xce551C1125BfCdAb88048854522D0B220f41A6Ff",
+          });
           console.log(result);
         }}
       >
