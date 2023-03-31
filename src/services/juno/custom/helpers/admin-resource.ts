@@ -65,7 +65,10 @@ export async function getMeta(
     willExecute,
     successMeta: { message, link: { url, description } },
     tagPayloads,
-    isAuthorized: (user && isEthereumAddress(user) && user in members) || false,
+    isAuthorized:
+      (user &&
+        isEthereumAddress(user) &&
+        members.findIndex((m) => m.addr === user)) !== -1 || false,
   };
 
   return [meta, config];
