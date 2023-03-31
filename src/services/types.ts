@@ -23,8 +23,7 @@ export type EncodedQueryMember = {
 };
 
 type Base = {
-  cw3: string;
-  cw4: string;
+  multisig: string;
   id: number;
   propMeta: Required<
     Pick<SenderArgs, "successMeta" | "tagPayloads" | "isAuthorized">

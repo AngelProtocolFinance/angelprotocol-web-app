@@ -21,11 +21,11 @@ export type FundDetails = {
   id: number;
   name: string;
   description: string;
-  members: string[];
-  rotating_fund?: boolean;
-  split_to_liquid?: string; //"0.63"
-  expiry_time?: number; //unix time on seconds
-  expiry_height?: number; //block height
+  members: number[];
+  rotatingFund: boolean;
+  splitToLiquid: number; //1-100
+  expiryTime: number;
+  expiryHeight: number;
 };
 
 export type IndexFundOwnerPayload = {

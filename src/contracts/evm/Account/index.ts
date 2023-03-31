@@ -3,7 +3,7 @@ import type { BigNumber } from "@ethersproject/bignumber";
 import {
   DecodedEndowment,
   DecodedEndowmentState,
-} from "services/contract/queryContract/decoded-types";
+} from "services/juno/queryContract/decoded-types";
 import { NewAIF } from "types/contracts/evm";
 import { TxLog } from "types/evm";
 import { toTuple } from "helpers";
