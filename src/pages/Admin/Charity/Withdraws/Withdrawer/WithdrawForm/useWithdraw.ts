@@ -37,9 +37,9 @@ export default function useWithdraw() {
       return handleError(new WalletDisconnectedError());
     }
 
-    // native tokens not supported in contracts, see Angel-protocol-web-integration-readiness/contracts/core/struct.sol#221
     const [tokenAddresses, amounts]: [string[], number[]] = data.amounts.reduce(
       ([prevAddresses, prevAmounts], amount) => {
+        // native tokens not supported in contracts, see Angel-protocol-web-integration-readiness/contracts/core/struct.sol#221
         if (amount.type === "cw20") {
           prevAddresses.push(amount.tokenId);
           prevAmounts.push(
@@ -58,6 +58,9 @@ export default function useWithdraw() {
       : ap_wallets.polygon_withdraw;
     const isSendToApCW3 = endow_type === "charity" && type === "locked";
 
+    // logic was created by looking at how appropriate `` > tests are constructed, see:
+    // - liquid withdrawal: test/integration-test/EndowmentMembersCharity.Accounts.test.js#179
+    // - locked withdrawal: test/integration-test/EndowmentMembersCharity.Accounts.test.js#279
     const withdrawTx: SimulContractTx = isSendToApCW3
       ? {
           from: wallet.address,

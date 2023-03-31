@@ -32,7 +32,7 @@ export default function WithdrawForm({
     reValidateMode: "onChange",
     defaultValues: {
       beneficiary: wallet?.address || "",
-      network: chainIds.juno,
+      network: chainIds.polygon,
       //transform to form format
       amounts: [...natives, ...cw20s],
       height: 0,

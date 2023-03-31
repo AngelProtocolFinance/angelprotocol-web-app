@@ -24,7 +24,7 @@ const amount: (arg: TNetwork) => SchemaShape<Amount> = (network) => ({
               return +balance >= +val;
             })
             .test(
-              "min $20 when destination is not JUNO",
+              "min $20 when destination is not Polygon",
               /**
                * NOTE: this is on the assumption that endow TOH would just be USDC
                * for other tokens, must first get dollar amount
@@ -33,11 +33,8 @@ const amount: (arg: TNetwork) => SchemaShape<Amount> = (network) => ({
                 ? "minimum 40 USDC"
                 : "minimum 20 USDC",
               () =>
-                network === chainIds.juno || network === chainIds.polygon
-                  ? true
-                  : network === chainIds.ethereum
-                  ? +val >= 40
-                  : +val >= 20
+                network === chainIds.polygon ||
+                (network === chainIds.ethereum ? +val >= 40 : +val >= 20)
             )
         )
   ),
