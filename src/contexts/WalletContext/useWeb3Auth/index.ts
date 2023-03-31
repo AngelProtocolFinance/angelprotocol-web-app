@@ -79,8 +79,13 @@ export default function useWeb3Auth() {
 
   useEffect(() => {
     const setupProviderInfo = async () => {
-      const chainId = await getChainId();
-      const address = await getAccounts();
+      if (!provider) {
+        console.log("provider not initialized yet");
+        return;
+      }
+      const rpc = new RPC(provider);
+      const chainId = await rpc.getChainId();
+      const address = await rpc.getAccounts();
       setProviderInfo({
         providerId: "web3auth-metamask",
         logo: WEB3AUTH_LOGO,
@@ -89,7 +94,7 @@ export default function useWeb3Auth() {
       });
     };
     if (provider) setupProviderInfo();
-  }, [provider]);
+  }, [provider, chainId]);
 
   const login = async () => {
     if (!web3auth) {
