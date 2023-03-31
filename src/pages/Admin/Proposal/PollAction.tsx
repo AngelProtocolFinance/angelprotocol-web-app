@@ -12,11 +12,9 @@ import { APTeamMultiSig, ApplicationsMultiSig } from "contracts/evm";
 import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
 import { WalletDisconnectedError } from "errors/errors";
+import { polygonContracts } from "constants/contracts";
 import { useAdminResources } from "../Guard";
 import Voter from "./Voter";
-
-const applicationsMultiSigProxy = "0x1edC050B5d84cbB0cA0b56356f3F7307efcd50Fb";
-const apTeamMultiSigProxy = "0xC26Ac43b14ebCbff5029792052aF3e4DF3233902";
 
 export default function PollAction(props: ProposalDetails) {
   const { data: latestBlock = "0" } = useLatestBlockQuery(null);
@@ -35,12 +33,12 @@ export default function PollAction(props: ProposalDetails) {
       props.proposal_type === "application"
         ? {
             from: wallet.address,
-            to: applicationsMultiSigProxy,
+            to: polygonContracts.multiSig.ApplicationsMultiSigProxy,
             data: ApplicationsMultiSig.executeTransaction.encode(props.id),
           }
         : {
             from: wallet.address,
-            to: apTeamMultiSigProxy,
+            to: polygonContracts.multiSig.APTeamMultiSigProxy,
             data: APTeamMultiSig.executeTransaction.encode(props.id),
           };
 

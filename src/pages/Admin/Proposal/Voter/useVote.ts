@@ -8,9 +8,7 @@ import { useGetWallet } from "contexts/WalletContext";
 import { APTeamMultiSig, ApplicationsMultiSig } from "contracts/evm";
 import useTxSender from "hooks/useTxSender";
 import { WalletDisconnectedError } from "errors/errors";
-
-const applicationsMultiSigProxy = "0x1edC050B5d84cbB0cA0b56356f3F7307efcd50Fb";
-const apTeamMultiSigProxy = "0xC26Ac43b14ebCbff5029792052aF3e4DF3233902";
+import { polygonContracts } from "constants/contracts";
 
 export default function useVote() {
   const {
@@ -30,7 +28,7 @@ export default function useVote() {
       type === "application"
         ? {
             from: wallet.address,
-            to: applicationsMultiSigProxy,
+            to: polygonContracts.multiSig.ApplicationsMultiSigProxy,
             data:
               vote === "no"
                 ? ApplicationsMultiSig.revokeTransaction.encode(transactionId)
@@ -38,7 +36,7 @@ export default function useVote() {
           }
         : {
             from: wallet.address,
-            to: apTeamMultiSigProxy,
+            to: polygonContracts.multiSig.APTeamMultiSigProxy,
             data:
               vote === "no"
                 ? APTeamMultiSig.revokeTransaction.encode(transactionId)

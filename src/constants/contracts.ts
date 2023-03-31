@@ -69,3 +69,63 @@ const local: Contracts = {
 
 export const contracts: Contracts =
   NETWORK === "LOCAL" ? local : NETWORK === "TESTNET" ? testnet : mainnet;
+
+export const polygonContracts = {
+  INFO: "ALL ADDRESS ARE MENTIONED INTO THIS FILE",
+  libraries: {
+    STRING_LIBRARY: "0x57D47BE8eCd58A506292b5Ebd3bFba5E3F41F63f",
+    ANGEL_CORE_STRUCT_LIBRARY: "0x5FD2a6cE261c6131Ca479Fb04A7cE9AEBCB53FB9",
+  },
+  multiSig: {
+    ApplicationsMultiSigProxy: "0x1edC050B5d84cbB0cA0b56356f3F7307efcd50Fb",
+    APTeamMultiSigProxy: "0xC26Ac43b14ebCbff5029792052aF3e4DF3233902",
+    ApplicationMultisigImplementation:
+      "0x4bCbb6eec52d710e0f699Fe5f4D4920E0627B6C1",
+    APTeamMultisigImplementation: "0x308AD7B20A0070D848a551E70C7C47d0e9673DA3",
+  },
+  charityApplication: {
+    CharityApplicationProxy: "0x8ead0CF0f28a0dF2de0Ac7cFEB1b48dB20619cD7",
+    CharityApplicationImplementation:
+      "0x89831907835e537Be7818b692482B39815C55FEB",
+  },
+  swapRouterAddress2: {
+    swapRouterProxy: "0x89831907835e537Be7818b692482B39815C55FEB",
+    swapRouterImplementation: "0xDfE663881Dd23d4B0d32899fE43E6347F21fF41f",
+  },
+  indexFundAddress: {
+    indexFundProxy: "0x89831907835e537Be7818b692482B39815C55FEB",
+    indexFundImplementation: "0xDfE663881Dd23d4B0d32899fE43E6347F21fF41f",
+  },
+  subDaoEmitter: {
+    SubdaoEmitterProxyAddress: "0x89831907835e537Be7818b692482B39815C55FEB",
+    SubdaoEmitterImplementationAddress:
+      "0xDfE663881Dd23d4B0d32899fE43E6347F21fF41f",
+  },
+  HaloImplementations: {
+    DonationMatchImplementation: "0xDfE663881Dd23d4B0d32899fE43E6347F21fF41f",
+    DonationMatchAddress: {
+      DonationMatchProxy: "0x8ead0CF0f28a0dF2de0Ac7cFEB1b48dB20619cD7",
+      DonationMatchImplementation: "0x89831907835e537Be7818b692482B39815C55FEB",
+    },
+    SubDaoImplementation: "0x10618938dFD69dA98eB5f4112a4487fAC6b22ef7",
+    subDaoERC20Implementation: "0x25E2c69e9775bA8d2c0a38b3212987123b8727eF",
+    subDaoCurveTokenImplementation:
+      "0xBdf1fFA5B0357744DE7517d98aDf8dC22c1eF373",
+    IncentivisedVotingLockupImplementation:
+      "0x0c7056652736A06d6D90f11B29176DEa7630f14C",
+  },
+  registrar: {
+    registrarImplementation: "0xD0DF2E81A44A8d5191C4Aaba74B1fA6b1429F729",
+    registrarProxy: "0xf9ae9FEb01B382C87d391F04a021fae312264CA7",
+  },
+  accounts: {
+    diamond: "0xf725Ff6235D53dA06Acb4a70AA33206a1447D550",
+  },
+  EndowmentMultiSigAddress: {
+    EndowmentMultiSigEmitterProxy: "0xC0c1d1659f88c0D0737069354b93874cBebfdfD7",
+    EndowmentMultiSigEmitterImplementation:
+      "0x6472BC08F58D989483665F8Da7999516Ec7dF489",
+    MultiSigWalletFactory: "0x59802CEB7B8af8F0619A74Db0fC70e880ca9f47D",
+    MultiSigWalletImplementation: "0x7D8F4C57582abBbfa977541d740908b983A39525",
+  },
+};
