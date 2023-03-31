@@ -1,8 +1,6 @@
 [
-  "event Confirmation(address indexed,uint256 indexed)",
   "event Execution(uint256 indexed)",
   "event ExecutionFailure(uint256 indexed)",
-  "event Revocation(address indexed,uint256 indexed)",
   "function confirmTransaction(uint256)",
   "function executeTransaction(uint256)",
   "function revokeConfirmation(uint256)"

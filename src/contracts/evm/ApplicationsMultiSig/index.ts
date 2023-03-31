@@ -8,13 +8,11 @@ const confirmTransactionFn = iface.getFunction("confirmTransaction");
 const executeTransactionFn = iface.getFunction("executeTransaction");
 const revokeTransactionFn = iface.getFunction("revokeTransaction");
 
-export const confirmationTopic = iface.encodeFilterTopics("Confirmation", []);
 export const executionTopic = iface.encodeFilterTopics("Execution", []);
 export const executionFailureTopic = iface.encodeFilterTopics(
   "ExecutionFailure",
   []
 );
-export const revocationTopic = iface.encodeFilterTopics("Revocation", []);
 
 export const confirmTransaction = {
   encode(transactionId: number) {
