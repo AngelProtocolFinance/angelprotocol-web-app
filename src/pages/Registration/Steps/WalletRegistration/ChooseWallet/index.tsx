@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { steps } from "../../../routes";
 import { useRegState } from "../../StepGuard";
-import KeplrConnector from "./KeplrConnector";
+import WalletConnector from "./WalletConnector";
 
 export default function ChooseWallet() {
   const { data } = useRegState<3>();
@@ -11,7 +11,7 @@ export default function ChooseWallet() {
       <p className="mb-8 text-sm text-gray-d1 dark:text-gray mt-2">
         We recommend using a new wallet.
       </p>
-      <KeplrConnector />
+      <WalletConnector name="Web3 Auth" />
       <Link
         to={`../${steps.doc}`}
         state={data.init}
