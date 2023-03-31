@@ -7,13 +7,13 @@ type Categories = {
   general: BigNumber[]; //??
 };
 
-enum TypeEnum {
+enum EndowmentTypeEnum {
   Charity,
   Normal,
   None,
 }
 
-enum StatusEnum {
+enum EndowmentStatusEnum {
   Inactive,
   Approved,
   Frozen,
@@ -64,10 +64,10 @@ export interface DecodedEndowment {
   owner: string;
   categories: Categories;
   //tier
-  endow_type: TypeEnum;
+  endow_type: EndowmentTypeEnum;
   //logo
   //image
-  status: StatusEnum;
+  status: EndowmentStatusEnum;
   //deposit_approved
   //withdraw_approved
   maturity_time: BigNumber;
@@ -113,7 +113,9 @@ export type DecodedGiftCardBalance = {
 };
 
 // ////////// CONVERTERS ///////////////
-export function toPermission(permission: Permission): SettingsPermission {
+export function toSettingsPermission(
+  permission: Permission
+): SettingsPermission {
   const { delegate } = permission;
   return {
     ...permission,
@@ -121,26 +123,28 @@ export function toPermission(permission: Permission): SettingsPermission {
   };
 }
 
-export function toEndowType(type: TypeEnum): EndowmentType {
+export function toEndowType(type: EndowmentTypeEnum): EndowmentType {
   switch (type) {
-    case TypeEnum.Charity:
+    case EndowmentTypeEnum.Charity:
       return "charity";
-    case TypeEnum.Normal:
+    case EndowmentTypeEnum.Normal:
       return "normal";
     default:
       return "normal";
   }
 }
 
-export function toEndowStatus(status: StatusEnum): EndowmentStatusText {
+export function toEndowStatusText(
+  status: EndowmentStatusEnum
+): EndowmentStatusText {
   switch (status) {
-    case StatusEnum.Inactive:
+    case EndowmentStatusEnum.Inactive:
       return "inactive";
-    case StatusEnum.Approved:
+    case EndowmentStatusEnum.Approved:
       return "approved";
-    case StatusEnum.Frozen:
+    case EndowmentStatusEnum.Frozen:
       return "frozen";
-    case StatusEnum.Closed:
+    case EndowmentStatusEnum.Closed:
       return "closed";
     default:
       return "inactive";

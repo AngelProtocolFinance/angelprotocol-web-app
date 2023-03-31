@@ -1,4 +1,8 @@
-import { toEndowStatus, toEndowType, toPermission } from "./decoded-types";
+import {
+  toEndowStatusText,
+  toEndowType,
+  toSettingsPermission,
+} from "./decoded-types";
 import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
 import { SettingsController } from "types/contracts";
 import { UNSDG_NUMS } from "types/lists";
@@ -114,7 +118,7 @@ export const queryObjects: {
           ) as UNSDG_NUMS[],
         },
         endow_type: toEndowType(d.endow_type),
-        status: toEndowStatus(d.status),
+        status: toEndowStatusText(d.status),
         //TODO: populate strategies
         invested_strategies: {
           liquid: [],
@@ -124,7 +128,7 @@ export const queryObjects: {
         settingsController: Object.entries(d.settingsController).reduce(
           (result, [key, permission]) => ({
             ...result,
-            [key]: toPermission(permission),
+            [key]: toSettingsPermission(permission),
           }),
           {} as SettingsController
         ),
