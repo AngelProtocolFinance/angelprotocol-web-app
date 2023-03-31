@@ -27,6 +27,7 @@ const DEFAULT_CHAIN: BaseChain = IS_TEST
 export default function useWeb3Auth() {
   const [web3auth, setWeb3auth] = useState<Web3Auth | null>(null);
   const [providerInfo, setProviderInfo] = useState<ProviderInfo>();
+  const [chainId, setChainId] = useState("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [provider, setProvider] = useState<SafeEventEmitterProvider | null>(
     null
