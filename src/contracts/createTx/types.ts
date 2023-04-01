@@ -1,3 +1,4 @@
+import { SettingsControllerUpdate } from "types/contracts";
 import { NewAIF } from "types/contracts/evm";
 import { NewOwner, NewTransaction } from "types/contracts/evm/multisig";
 import { Tupleable } from "types/evm";
@@ -16,7 +17,7 @@ type Tx<T extends Tupleable> = {
 
 type Txs = {
   "accounts.create-endowment": Tx<NewAIF>;
-  "accounts.update-controller": Tx<NewAIF>;
+  "accounts.update-controller": Tx<SettingsControllerUpdate>;
   //create and sign
   "multisig.submit-transaction": Tx<NewTransaction>;
   "multisig.add-owner": Tx<NewOwner>;

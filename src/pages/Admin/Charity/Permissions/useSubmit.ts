@@ -1,11 +1,9 @@
-import { EncodeObject } from "@cosmjs/proto-signing";
 import { useFormContext } from "react-hook-form";
-import { ProposalMeta } from "pages/Admin/types";
+import { SimulContractTx } from "types/evm";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useGetWallet } from "contexts/WalletContext";
-import CW3 from "contracts/CW3";
-import SettingsController from "contracts/SettingsController";
+import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { isEmpty } from "helpers";
 import { getPayloadDiff, getTagPayloads } from "helpers/admin";
@@ -49,10 +47,13 @@ export default function useSubmit() {
         return handleError("No changes detected");
       }
 
-      const settingsController = new SettingsController(wallet);
-      const updateMsg = createUpdateEndowmentControllerMsg(id, diff, settings);
+      if (!wallet) {
+        return alert("wallet not connected");
+      }
 
-      let msg: EncodeObject;
+      const args = createUpdateEndowmentControllerMsg(id, diff, settings);
+
+      let tx: SimulContractTx;
 
       // Unauthorized & non-delegated users wouldn't even be able to submit,
       // making it safe to assume they are either of those
@@ -60,26 +61,21 @@ export default function useSubmit() {
       // Users who are delegates for the whole controller can send direct update msg,
       // thus bypassing the need to create a proposal (even if they are a member of CW3 owners)
       if (userDelegated) {
-        msg = settingsController.createUpdateEndowmentControllerMsg(updateMsg);
+        tx = createTx(wallet.address, "accounts.update-controller", args);
       } else {
-        const embeddedMsg =
-          settingsController.createEmbeddedUpdateEndowmentControllerMsg(
-            updateMsg
-          );
-
-        const meta: ProposalMeta = { type: "endow_controller" };
-
-        const adminContract = new CW3(wallet, multisig);
-        msg = adminContract.createProposalMsg(
-          `Update permission settings for endowment id:${id}`,
-          `Update permission settings for endowment id:${id} by member:${wallet?.address}`,
-          [embeddedMsg],
-          JSON.stringify(meta)
-        );
+        const [data, dest] = encodeTx("accounts.update-controller", args);
+        tx = createTx(wallet.address, "multisig.submit-transaction", {
+          multisig,
+          title: `Update permission settings`,
+          description: `Update permission settings for endowment id:${id} by member:${wallet?.address}`,
+          destination: dest,
+          value: "0",
+          data,
+        });
       }
 
       await sendTx({
-        content: { type: "cosmos", val: [msg] },
+        content: { type: "evm", val: tx },
         ...propMeta,
         isAuthorized: userDelegated || isUserOwner,
         tagPayloads: getTagPayloads(propMeta.willExecute && "endow_controller"),

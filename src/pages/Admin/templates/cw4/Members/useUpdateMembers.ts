@@ -1,4 +1,3 @@
-import Decimal from "decimal.js";
 import { useFormContext } from "react-hook-form";
 import { MemberUpdatorValues } from "pages/Admin/types";
 import { CW4Member } from "types/contracts";
@@ -57,15 +56,18 @@ export default function useUpdateMembers() {
       return alert("wallet not connected");
     }
 
-    const tx = createTx(wallet.address, "multisig.submit-transaction", {
+    const [data, dest] = encodeTx("multisig.add-owner", {
       multisig,
+      address: "0x6CAd9deFc6c024CA1f714ff4d468Fa9FEB3032b5",
+    });
+
+    const tx = createTx(wallet.address, "multisig.submit-transaction", {
+      multisig: dest,
       title: "hello world",
       description: "hahahdfas",
-      destination: multisig,
-      value: new Decimal(0).toHex(),
-      data: encodeTx("multisig.add-owner", {
-        address: "0x6CAd9deFc6c024CA1f714ff4d468Fa9FEB3032b5",
-      }),
+      destination: dest,
+      value: "0",
+      data,
     });
 
     //TODO: part of tx migration

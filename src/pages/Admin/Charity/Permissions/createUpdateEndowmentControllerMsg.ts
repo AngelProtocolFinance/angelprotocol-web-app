@@ -1,7 +1,7 @@
 import {
   SettingsController,
+  SettingsControllerUpdate,
   SettingsPermission,
-  UpdateEndowmentControllerMsg,
 } from "types/contracts";
 import { ADDRESS_ZERO } from "constants/evm";
 import { UpdateableFormValues } from "./schema";
@@ -10,7 +10,7 @@ export default function createUpdateEndowmentControllerMsg(
   endowId: number,
   changes: Partial<UpdateableFormValues>,
   initial: SettingsController
-): UpdateEndowmentControllerMsg {
+): SettingsControllerUpdate {
   const accountFees = toPermission("accountFees", changes, initial.aumFee);
   const beneficiaries_allowlist = toPermission(
     "beneficiaries_allowlist",
@@ -29,7 +29,7 @@ export default function createUpdateEndowmentControllerMsg(
   );
   const profile = toPermission("profile", changes, initial.profile);
 
-  const updateMsg: UpdateEndowmentControllerMsg = {
+  const updateMsg: SettingsControllerUpdate = {
     id: endowId,
     aumFee: accountFees,
     whitelistedBeneficiaries: beneficiaries_allowlist,
