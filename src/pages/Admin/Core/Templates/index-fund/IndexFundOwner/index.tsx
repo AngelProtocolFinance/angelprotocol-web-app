@@ -11,10 +11,10 @@ export default function IndexFundOwner() {
   const {
     data: indexFundConfig,
     isLoading,
-    error,
+    isError,
   } = useContractQuery("index-fund.config", {});
   if (isLoading) return <FormSkeleton />;
-  if (!!error || !indexFundConfig)
+  if (isError || !indexFundConfig)
     return <FormError errorMessage="failed to load registrar config" />;
   return <FormWithContext {...indexFundConfig} />;
 }

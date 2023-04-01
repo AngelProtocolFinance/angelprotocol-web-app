@@ -14,10 +14,10 @@ export default function ConfigExtension() {
   const {
     data: config,
     isLoading,
-    error,
+    isError,
   } = useContractQuery("registrar.config-extension", {});
   if (isLoading) return <FormSkeleton />;
-  if (!!error || !config)
+  if (isError || !config)
     return <FormError errorMessage="failed to load registrar config" />;
   return <Context {...config} />;
 }

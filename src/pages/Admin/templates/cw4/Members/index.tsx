@@ -16,7 +16,7 @@ export default function Members() {
   const {
     data: members = [],
     isLoading,
-    error,
+    isError,
   } = useContractQuery("multisig.members", { multisig });
 
   useEffect(() => {
@@ -34,7 +34,7 @@ export default function Members() {
   }, [members, dispatch]);
 
   if (isLoading) return <FormSkeleton />;
-  if (!!error) return <FormError errorMessage="failed to load group members" />;
+  if (isError) return <FormError errorMessage="failed to load group members" />;
   return <MemberUpdateContext />;
 }
 

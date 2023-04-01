@@ -14,7 +14,7 @@ export default function Alliance() {
   const {
     data: allianceMembers = [],
     isLoading,
-    error,
+    isError,
   } = useContractQuery("index-fund.alliance-members", {});
 
   useEffect(() => {
@@ -33,7 +33,7 @@ export default function Alliance() {
   }, [dispatch, allianceMembers, isLoading]);
 
   if (isLoading) return <FormSkeleton />;
-  if (!!error)
+  if (isError)
     return <FormError errorMessage="failed to load alliance members" />;
 
   return <FormWithContext />;
