@@ -11,3 +11,10 @@ export interface NewTransaction extends Tupleable {
 export interface NewOwner extends Tupleable {
   address: string;
 }
+
+export interface TransactionIDsPageOptions extends Tupleable {
+  from: number;
+  to: number;
+  pending: boolean;
+  executed: boolean;
+}

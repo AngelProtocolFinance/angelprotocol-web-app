@@ -13,7 +13,7 @@ import { accounts } from "contracts/evm/Account";
 import { erc20 } from "contracts/evm/ERC20";
 import { giftCard } from "contracts/evm/gift-card";
 import { indexFund } from "contracts/evm/index-fund";
-import { confirmations, owners, transactionIds } from "contracts/evm/multisig";
+import { multisig } from "contracts/evm/multisig";
 import { toTuple } from "helpers";
 import { placeholders as p } from "./placeholders";
 
@@ -85,8 +85,14 @@ export const queryObjects: {
 
   /** multisig */
   "multisig.members": [
-    owners.data,
-    (result) => owners.decode(result).map((addr) => ({ addr, weight: 1 })),
+    multisig.encodeFunctionData("getOwners", []),
+    (result) => {
+      const owners: string[] = multisig.decodeFunctionResult(
+        "getOwners",
+        result
+      )[0];
+      return owners.map((addr) => ({ addr, weight: 1 }));
+    },
     "migrated",
   ],
   "multisig.config": ["", () => p["multisig.config"], "placeholder"],
@@ -95,27 +101,46 @@ export const queryObjects: {
     (options) => {
       const from = options.start_before || 0;
       const to = from + (options.limit || 0);
-      return transactionIds.encode({
-        from,
-        to,
-        pending: true,
-        executed: true,
-      }) as any;
+      return multisig.encodeFunctionData(
+        "getTransactionIds",
+        toTuple({
+          from,
+          to,
+          pending: true,
+          executed: true,
+        })
+      );
     },
-    (result) =>
-      transactionIds
-        .decode(result)
-        .map((id) => ({ ...p["multisig.proposal"], id: id.toNumber() })),
+    (result) => {
+      const ids: BigNumber[] = multisig.decodeFunctionResult(
+        "getTransactionIds",
+        result
+      )[0];
+      return ids.map((id) => ({
+        ...p["multisig.proposal"],
+        id: id.toNumber(),
+      }));
+    },
+
     "semi-migrated",
   ],
   "multisig.proposal": [() => "", () => p["multisig.proposal"], "placeholder"],
 
   "multisig.votes": [
-    ({ proposal_id }) => confirmations.encode(proposal_id),
-    (result) =>
-      confirmations
-        .decode(result)
-        .map((addr) => ({ voter: addr, vote: "yes", weight: 1 })),
+    ({ proposal_id }) =>
+      multisig.encodeFunctionData("getConfirmations", [proposal_id]),
+    (result) => {
+      const confirmations: string[] = multisig.decodeFunctionResult(
+        "getConfirmations",
+        result
+      )[0];
+      return confirmations.map((addr) => ({
+        voter: addr,
+        vote: "yes",
+        weight: 1,
+      }));
+    },
+
     "migrated",
   ],
 
