@@ -2,6 +2,7 @@ import type { BigNumber } from "@ethersproject/bignumber";
 import {
   DecodedEndowment,
   DecodedEndowmentState,
+  DecodedGiftCardBalance,
   toEndowStatusText,
   toEndowType,
   toSettingsPermission,
@@ -10,7 +11,7 @@ import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
 import { UNSDG_NUMS } from "types/lists";
 import { accounts } from "contracts/evm/Account";
 import { erc20 } from "contracts/evm/ERC20";
-import { balance as giftCardBalance } from "contracts/evm/gift-card";
+import { giftCard } from "contracts/evm/gift-card";
 import { funds } from "contracts/evm/index-fund";
 import { confirmations, owners, transactionIds } from "contracts/evm/multisig";
 import { placeholders as p } from "./placeholders";
@@ -57,14 +58,19 @@ export const queryObjects: {
 
   /** giftcard */
   "gift-card.balance": [
-    ({ addr }) => giftCardBalance.encode(addr),
+    ({ addr }) => giftCard.encodeFunctionData("queryBalance", [addr]),
     (result) => {
+      const decoded: DecodedGiftCardBalance = giftCard.decodeFunctionResult(
+        "queryBalance",
+        result
+      )[0];
       const {
         coinNativeAmount,
         /** amounts and addresses corresponds to one another */
         Cw20CoinVerified_addr: addresses,
         Cw20CoinVerified_amount: amounts,
-      } = giftCardBalance.decode(result);
+      } = decoded;
+
       return {
         cw20: addresses.map((addr, i) => ({
           address: addr,
