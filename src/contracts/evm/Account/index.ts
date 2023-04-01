@@ -22,9 +22,8 @@ export const endowmentCreatedTopic = iface.encodeFilterTopics(
   []
 );
 export const createEndowment = {
-  encode(aif: NewAIF) {
-    return iface.encodeFunctionData(createEndowmentFn, [toTuple(aif)]);
-  },
+  encode: (aif: NewAIF) =>
+    iface.encodeFunctionData(createEndowmentFn, [toTuple(aif)]),
   log(logs: TxLog[]) {
     const topic = iface.getEventTopic(endowmentCreatedEvent);
     const log = logs.find((log) => log.topics.includes(topic));
