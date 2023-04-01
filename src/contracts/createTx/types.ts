@@ -1,5 +1,6 @@
 import { SettingsControllerUpdate } from "types/contracts";
 import { NewAIF } from "types/contracts/evm";
+import { Transfer } from "types/contracts/evm/erc20";
 import { NewOwner, NewTransaction } from "types/contracts/evm/multisig";
 import { Tupleable } from "types/evm";
 import { Contract } from "types/lists";
@@ -18,9 +19,11 @@ type Tx<T extends Tupleable> = {
 type Txs = {
   "accounts.create-endowment": Tx<NewAIF>;
   "accounts.update-controller": Tx<SettingsControllerUpdate>;
-  //create and sign
+
   "multisig.submit-transaction": Tx<NewTransaction>;
   "multisig.add-owner": Tx<NewOwner>;
+
+  "erc20.transfer": Tx<Transfer>;
 };
 
 export type TxTypes = keyof Txs;

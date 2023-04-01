@@ -7,7 +7,7 @@ import { SubmitStep } from "slices/donation";
 import Account from "contracts/Account";
 import CW20 from "contracts/CW20";
 import GiftCard from "contracts/GiftCard";
-import { transfer } from "contracts/evm/ERC20";
+import { createTx } from "contracts/createTx/createTx";
 import { logger, scale, scaleToStr } from "helpers";
 import { estimateTx } from "helpers/tx";
 import { ap_wallets } from "constants/ap_wallets";
@@ -82,11 +82,12 @@ export async function estimateDonation({
       const tx: SimulSendNativeTx | SimulContractTx =
         token.type === "evm-native"
           ? { from: wallet.address, value: scaledAmount, to: ap_wallets.eth }
-          : {
-              from: wallet.address,
-              to: token.token_id,
-              data: transfer.encode(ap_wallets.eth, scaledAmount),
-            };
+          : createTx(wallet.address, "erc20.transfer", {
+              erc20: token.token_id,
+              to: ap_wallets.eth,
+              amount: scaledAmount,
+            });
+
       content = { type: "evm", val: tx };
     }
     // ///////////// ESTIMATE TX ///////////////

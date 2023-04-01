@@ -1,3 +1,4 @@
+import type { BigNumber } from "@ethersproject/bignumber";
 import {
   DecodedEndowment,
   DecodedEndowmentState,
@@ -8,7 +9,7 @@ import {
 import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
 import { UNSDG_NUMS } from "types/lists";
 import { accounts } from "contracts/evm/Account";
-import { balance as erc20Balance } from "contracts/evm/ERC20";
+import { erc20 } from "contracts/evm/ERC20";
 import { balance as giftCardBalance } from "contracts/evm/gift-card";
 import { funds } from "contracts/evm/index-fund";
 import { confirmations, owners, transactionIds } from "contracts/evm/multisig";
@@ -43,8 +44,14 @@ export const queryObjects: {
 
   /** erc20 */
   "erc20.balance": [
-    ({ addr }) => erc20Balance.encode(addr),
-    (result) => erc20Balance.decode(result),
+    ({ addr }) => erc20.encodeFunctionData("balanceOf", [addr]),
+    (result) => {
+      const decoded: BigNumber = erc20.decodeFunctionResult(
+        "balanceOf",
+        result
+      )[0];
+      return decoded.toString();
+    },
     "migrated",
   ],
 

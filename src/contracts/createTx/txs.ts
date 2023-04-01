@@ -1,4 +1,5 @@
 import { TxArgs, TxTypes } from "./types";
+import { erc20 } from "contracts/evm/ERC20";
 import { addOwner, submitTransaction } from "contracts/evm/multisig";
 import { toTuple } from "helpers";
 import { accounts } from "../evm/Account";
@@ -10,4 +11,6 @@ export const txs: { [T in TxTypes]: (args: TxArgs<T>) => string } = {
     accounts.encodeFunctionData("updateEndowmentController", [toTuple(update)]),
   "multisig.submit-transaction": (tx) => submitTransaction.encode(tx),
   "multisig.add-owner": (newOwner) => addOwner.encode(newOwner),
+  "erc20.transfer": (transfer) =>
+    erc20.encodeFunctionData("transfer", toTuple(transfer)),
 };
