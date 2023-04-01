@@ -11,10 +11,10 @@ export default function useInitFundMembers() {
   const fundIdRef = useRef<string | undefined>();
   const dispatch = useSetter();
 
-  const { data: funds = [], isLoading } = useContractQuery(
-    "index-fund.funds",
-    {}
-  );
+  const { data: funds = [], isLoading } = useContractQuery("index-fund.funds", {
+    startAfter: 0,
+    limit: 10,
+  });
 
   const fundMembers = funds.find((fund) => fund.id === +fundId)?.members || [];
   const fundMembersCopy = useGetter((state) => state.admin.fundMembers);

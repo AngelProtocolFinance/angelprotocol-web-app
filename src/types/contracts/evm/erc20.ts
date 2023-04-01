@@ -1,4 +1,4 @@
-import { Tupleable } from "types/evm";
+import { Tupleable } from "../../evm";
 
 export interface Transfer extends Tupleable {
   to: string;

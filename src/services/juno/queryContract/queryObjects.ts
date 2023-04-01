@@ -12,8 +12,9 @@ import { UNSDG_NUMS } from "types/lists";
 import { accounts } from "contracts/evm/Account";
 import { erc20 } from "contracts/evm/ERC20";
 import { giftCard } from "contracts/evm/gift-card";
-import { funds } from "contracts/evm/index-fund";
+import { indexFund } from "contracts/evm/index-fund";
 import { confirmations, owners, transactionIds } from "contracts/evm/multisig";
+import { toTuple } from "helpers";
 import { placeholders as p } from "./placeholders";
 
 type MigrationState =
@@ -36,7 +37,7 @@ export const queryObjects: {
 
   /** index fund */
   "index-fund.funds": [
-    funds.encode({ startAfter: 0, limit: 10 }),
+    (args) => indexFund.encodeFunctionData("", toTuple(args)),
     () => [],
     "placeholder",
   ],
