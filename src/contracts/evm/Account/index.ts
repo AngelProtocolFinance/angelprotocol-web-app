@@ -4,6 +4,7 @@ import {
   DecodedEndowment,
   DecodedEndowmentState,
 } from "services/juno/queryContract/decoded-types";
+import { SettingsControllerUpdate } from "types/contracts";
 import { NewAIF } from "types/contracts/evm";
 import { TxLog } from "types/evm";
 import { toTuple } from "helpers";
@@ -37,22 +38,22 @@ export const createEndowment = {
   },
 };
 
+export const updateController = {
+  encode: (update: SettingsControllerUpdate) =>
+    iface.encodeFunctionData("updateEndowmentController", [toTuple(update)]),
+};
+
 // ////// QUERIES /////
 const endowDetailsQuery = iface.getFunction("queryEndowmentDetails");
 export const endowmentDetails = {
-  encode(id: number) {
-    return iface.encodeFunctionData(endowDetailsQuery, [id]);
-  },
-  decode(result: string): DecodedEndowment {
-    return iface.decodeFunctionResult(endowDetailsQuery, result)[0];
-  },
+  encode: (id: number) => iface.encodeFunctionData(endowDetailsQuery, [id]),
+  decode: (result: string): DecodedEndowment =>
+    iface.decodeFunctionResult(endowDetailsQuery, result)[0],
 };
 
 const endowStateQuery = iface.getFunction("queryState");
 export const endowState = {
-  encode(id: number) {
-    return iface.encodeFunctionData(endowStateQuery, [id]);
-  },
+  encode: (id: number) => iface.encodeFunctionData(endowStateQuery, [id]),
   decode(result: string): DecodedEndowmentState {
     return iface.decodeFunctionResult(endowStateQuery, result)[0];
   },

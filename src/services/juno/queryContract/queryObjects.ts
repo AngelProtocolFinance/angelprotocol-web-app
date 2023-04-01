@@ -109,7 +109,6 @@ export const queryObjects: {
     (result) => {
       const d = endowmentDetails.decode(result);
       const controller = d.settingsController;
-      console.log(d);
       return {
         owner: d.owner,
         categories: {

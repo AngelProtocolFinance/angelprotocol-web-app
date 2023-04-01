@@ -31,25 +31,23 @@ export default function createUpdateEndowmentControllerMsg(
 
   const updateMsg: SettingsControllerUpdate = {
     id: endowId,
-    aumFee: accountFees,
-    whitelistedBeneficiaries: beneficiaries_allowlist,
-    categories: profile,
-    whitelistedContributors: contributors_allowlist,
-    depositFee: accountFees,
-    earningsFee: accountFees,
-    ignoreUserSplits: donationSplitParams,
-    image: profile,
-    kycDonorsOnly: profile,
-    logo: profile,
-    maturityWhitelist: beneficiaries_allowlist,
-    name: profile,
-    splitToLiquid: donationSplitParams,
-    withdrawFee: accountFees,
     endowmentController: initial.endowmentController,
-    profile: initial.profile,
-    maturityTime: initial.maturityTime,
-    strategies: initial.strategies,
+    name: profile,
+    image: profile,
+    logo: profile,
+    categories: profile,
+    kycDonorsOnly: profile,
+    splitToLiquid: donationSplitParams,
+    ignoreUserSplits: donationSplitParams,
+    whitelistedBeneficiaries: beneficiaries_allowlist,
+    whitelistedContributors: contributors_allowlist,
+    maturityWhitelist: beneficiaries_allowlist,
+    earningsFee: accountFees,
+    depositFee: accountFees,
+    withdrawFee: accountFees,
+    aumFee: accountFees,
   };
+
   return updateMsg;
 }
 
@@ -59,7 +57,14 @@ function toPermission(
   initial: SettingsPermission
 ): SettingsPermission {
   const val = changes[permission];
-  if (!val) return initial;
+  if (!val)
+    return {
+      ...initial,
+      delegate: {
+        Addr: ADDRESS_ZERO,
+        expires: 0,
+      },
+    };
 
   return {
     govControlled: val.govControlled,

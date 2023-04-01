@@ -1,0 +1,3 @@
+[
+  "function updateEndowmentController(tuple(uint256,tuple(bool,bool,bool,tuple(address,uint256)),tuple(bool,bool,bool,tuple(address,uint256)),tuple(bool,bool,bool,tuple(address,uint256)),tuple(bool,bool,bool,tuple(address,uint256)),tuple(bool,bool,bool,tuple(address,uint256)),tuple(bool,bool,bool,tuple(address,uint256)),tuple(bool,bool,bool,tuple(address,uint256)),tuple(bool,bool,bool,tuple(address,uint256)),tuple(bool,bool,bool,tuple(address,uint256)),tuple(bool,bool,bool,tuple(address,uint256)),tuple(bool,bool,bool,tuple(address,uint256)),tuple(bool,bool,bool,tuple(address,uint256)),tuple(bool,bool,bool,tuple(address,uint256)),tuple(bool,bool,bool,tuple(address,uint256)),tuple(bool,bool,bool,tuple(address,uint256))))"
+]

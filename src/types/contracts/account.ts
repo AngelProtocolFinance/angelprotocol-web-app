@@ -208,20 +208,18 @@ export type NewAIF = {
 
 export interface SettingsControllerUpdate extends Tupleable {
   id: number;
+
   endowmentController: SettingsPermission;
   name: SettingsPermission;
   image: SettingsPermission;
   logo: SettingsPermission;
   categories: SettingsPermission;
-  strategies: SettingsPermission;
   kycDonorsOnly: SettingsPermission;
   splitToLiquid: SettingsPermission;
   ignoreUserSplits: SettingsPermission;
   whitelistedBeneficiaries: SettingsPermission;
   whitelistedContributors: SettingsPermission;
   maturityWhitelist: SettingsPermission;
-  maturityTime: SettingsPermission;
-  profile: SettingsPermission;
   earningsFee: SettingsPermission;
   depositFee: SettingsPermission;
   withdrawFee: SettingsPermission;
