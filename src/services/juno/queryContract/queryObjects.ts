@@ -37,7 +37,7 @@ export const queryObjects: {
 
   /** index fund */
   "index-fund.funds": [
-    (args) => indexFund.encodeFunctionData("", toTuple(args)),
+    (args) => indexFund.encodeFunctionData("queryFundsList", toTuple(args)),
     () => [],
     "placeholder",
   ],
