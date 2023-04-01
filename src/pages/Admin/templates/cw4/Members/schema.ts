@@ -3,11 +3,12 @@ import { MemberUpdatorValues } from "pages/Admin/types";
 import { SchemaShape } from "schemas/types";
 import { requiredPositiveNumber } from "schemas/number";
 import { requiredWalletAddr } from "schemas/string";
+import { chainIds } from "constants/chainIds";
 import { proposalShape } from "../../../constants";
 
 const shape: SchemaShape<MemberUpdatorValues> = {
   ...proposalShape,
-  addr: requiredWalletAddr(),
+  addr: requiredWalletAddr(chainIds.polygon),
   weight: requiredPositiveNumber,
 };
 

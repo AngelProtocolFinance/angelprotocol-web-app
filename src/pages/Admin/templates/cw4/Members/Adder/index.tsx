@@ -11,12 +11,12 @@ export default function Adder() {
         classes="field-admin-sec"
         label="Wallet address"
         name="addr"
-        placeholder="juno123abc..."
+        placeholder="0x308AD..."
       />
       <Field<T>
         classes="field-admin-sec"
         label="Weight"
-        placeholder="juno123abc..."
+        placeholder="0x308AD..."
         name="weight"
       />
       <button

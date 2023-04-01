@@ -17,7 +17,7 @@ export function useFilteredProposals(
   const {
     data: proposals = [],
     isLoading,
-    error,
+    isError,
   } = useContractQuery("multisig.proposals", {
     multisig,
     ...genPageOptions(pageNum, status, group),
@@ -40,7 +40,7 @@ export function useFilteredProposals(
         ? proposals
         : proposals.filter(proposalFilter),
     isFilteredProposalsLoading: isLoading,
-    isFilteredProposalsFailed: !!error,
+    isFilteredProposalsFailed: isError,
   };
 }
 

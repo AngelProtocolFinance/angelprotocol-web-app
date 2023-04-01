@@ -31,6 +31,7 @@ interface PageOptions extends Tupleable {
   pending: boolean;
   executed: boolean;
 }
+
 export const transactionIds = {
   encode: (args: PageOptions) =>
     iface.encodeFunctionData(transactionIDsQuery, toTuple(args)),
