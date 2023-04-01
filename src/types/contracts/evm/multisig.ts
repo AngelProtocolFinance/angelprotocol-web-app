@@ -1,4 +1,4 @@
-import { Tuple, Tupleable } from "../../evm";
+import { Tupleable } from "../../evm";
 
 export interface NewTransaction extends Tupleable {
   title: string;

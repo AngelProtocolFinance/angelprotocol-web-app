@@ -1,7 +1,7 @@
-import { TxPayload, TxTypes } from "./types";
+import { TxArgs, TxTypes } from "./types";
 import { createEndowment } from "../evm/Account";
 
-export const txs: { [T in TxTypes]: (payload: TxPayload<T>) => string } = {
+export const txs: { [T in TxTypes]: (args: TxArgs<T>) => string } = {
   "accounts.create-endowment": (aif) => createEndowment.encode(aif),
   "accounts.update-controller": () => "",
   "multisig.submit-transaction": () => "",

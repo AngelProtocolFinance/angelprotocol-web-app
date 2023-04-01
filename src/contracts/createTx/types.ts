@@ -11,7 +11,7 @@ type Tx<T extends Tupleable> = {
    *
    * after tx, for each log, if log.topic in map, invalidate query_tag[]
    */
-  payload: T;
+  args: T;
 };
 
 type Txs = {
@@ -23,11 +23,11 @@ type Txs = {
 };
 
 export type TxTypes = keyof Txs;
-export type TxPayload<T extends TxTypes> = Txs[T]["payload"];
+export type TxArgs<T extends TxTypes> = Txs[T]["args"];
 
 type Empty = { [key: string]: never };
 export type TxOptions<T extends TxTypes> = T extends `${infer C}.${string}`
   ? C extends Contract
-    ? Txs[T]["payload"]
-    : { [key in C]: string } & Txs[T]["payload"]
+    ? Txs[T]["args"]
+    : { [key in C]: string } & Txs[T]["args"]
   : Empty;

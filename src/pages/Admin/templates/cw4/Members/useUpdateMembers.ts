@@ -1,18 +1,18 @@
+import Decimal from "decimal.js";
 import { useFormContext } from "react-hook-form";
-import { CW4MemberUpdateMeta, MemberUpdatorValues } from "pages/Admin/types";
+import { MemberUpdatorValues } from "pages/Admin/types";
 import { CW4Member } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import Prompt from "components/Prompt";
 import { useGetter } from "store/accessors";
-import CW3 from "contracts/CW3";
-import CW4 from "contracts/CW4";
+import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
 
 export default function useUpdateMembers() {
-  const { trigger, reset, getValues } = useFormContext<MemberUpdatorValues>();
+  const { trigger, reset } = useFormContext<MemberUpdatorValues>();
   const { multisig, propMeta } = useAdminResources();
   const apCW4Members = useGetter((state) => state.admin.apCW4Members);
   const { wallet } = useGetWallet();
@@ -52,35 +52,26 @@ export default function useUpdateMembers() {
         children: "Nothing to submit, no member changes",
       });
     }
+
+    if (!wallet) {
+      return alert("wallet not connected");
+    }
+
+    const tx = createTx(wallet.address, "multisig.submit-transaction", {
+      multisig,
+      title: "hello world",
+      description: "hahahdfas",
+      destination: multisig,
+      value: new Decimal(0).toHex(),
+      data: encodeTx("multisig.add-owner", {
+        address: "0x6CAd9deFc6c024CA1f714ff4d468Fa9FEB3032b5",
+      }),
+    });
+
     //TODO: part of tx migration
-    const cw3Contract = new CW3(wallet, multisig);
-    const cw4Contract = new CW4(wallet, multisig);
-    const embeddedExecuteMsg = cw4Contract.createEmbeddedUpdateMembersMsg(
-      to_add,
-      to_remove
-    );
-
-    //create meta for proposal preview
-    const memberUpdateMeta: CW4MemberUpdateMeta = {
-      type: "cw4_members",
-      data: {
-        toAdd: to_add,
-        toRemove: to_remove,
-      },
-    };
-
-    const proposalTitle = getValues("title");
-    const proposalDescription = getValues("description");
-
-    const proposalMsg = cw3Contract.createProposalMsg(
-      proposalTitle,
-      proposalDescription,
-      [embeddedExecuteMsg],
-      JSON.stringify(memberUpdateMeta)
-    );
 
     await sendTx({
-      content: { type: "cosmos", val: [proposalMsg] },
+      content: { type: "evm", val: tx },
       ...propMeta,
       tagPayloads: getTagPayloads(propMeta.willExecute && "cw4_members"),
     });

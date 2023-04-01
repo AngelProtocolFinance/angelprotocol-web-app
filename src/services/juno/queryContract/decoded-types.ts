@@ -113,13 +113,15 @@ export type DecodedGiftCardBalance = {
 };
 
 // ////////// CONVERTERS ///////////////
-export function toSettingsPermission(
-  permission: Permission
-): SettingsPermission {
-  const { delegate } = permission;
+export function toSettingsPermission(p: Permission): SettingsPermission {
   return {
-    ...permission,
-    delegate: { ...delegate, expires: delegate.expires?.toNumber() },
+    ownerControlled: p.ownerControlled,
+    govControlled: p.govControlled,
+    modifiableAfterInit: p.modifiableAfterInit,
+    delegate: {
+      Addr: p.delegate.Addr,
+      expires: p.delegate.expires.toNumber(),
+    },
   };
 }
 

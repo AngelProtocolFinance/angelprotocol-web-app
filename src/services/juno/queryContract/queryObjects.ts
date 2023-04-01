@@ -4,7 +4,6 @@ import {
   toSettingsPermission,
 } from "./decoded-types";
 import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
-import { SettingsController } from "types/contracts";
 import { UNSDG_NUMS } from "types/lists";
 import { endowState, endowmentDetails } from "contracts/evm/Account";
 import { balance as erc20Balance } from "contracts/evm/ERC20";
@@ -109,6 +108,8 @@ export const queryObjects: {
     ({ id }) => endowmentDetails.encode(id),
     (result) => {
       const d = endowmentDetails.decode(result);
+      const controller = d.settingsController;
+      console.log(d);
       return {
         owner: d.owner,
         categories: {
@@ -120,13 +121,32 @@ export const queryObjects: {
         endow_type: toEndowType(d.endow_type),
         status: toEndowStatusText(d.status),
         kyc_donors_only: d.kycDonorsOnly,
-        settingsController: Object.entries(d.settingsController).reduce(
-          (result, [key, permission]) => ({
-            ...result,
-            [key]: toSettingsPermission(permission),
-          }),
-          {} as SettingsController
-        ),
+        settingsController: {
+          endowmentController: toSettingsPermission(
+            controller.endowmentController
+          ),
+          strategies: toSettingsPermission(controller.endowmentController),
+          whitelistedBeneficiaries: toSettingsPermission(
+            controller.whitelistedBeneficiaries
+          ),
+          whitelistedContributors: toSettingsPermission(
+            controller.whitelistedContributors
+          ),
+          maturityWhitelist: toSettingsPermission(controller.maturityWhitelist),
+          maturityTime: toSettingsPermission(controller.maturityTime),
+          profile: toSettingsPermission(controller.profile),
+          earningsFee: toSettingsPermission(controller.earningsFee),
+          withdrawFee: toSettingsPermission(controller.withdrawFee),
+          depositFee: toSettingsPermission(controller.depositFee),
+          aumFee: toSettingsPermission(controller.aumFee),
+          kycDonorsOnly: toSettingsPermission(controller.kycDonorsOnly),
+          name: toSettingsPermission(controller.name),
+          image: toSettingsPermission(controller.image),
+          logo: toSettingsPermission(controller.logo),
+          categories: toSettingsPermission(controller.categories),
+          splitToLiquid: toSettingsPermission(controller.splitToLiquid),
+          ignoreUserSplits: toSettingsPermission(controller.ignoreUserSplits),
+        },
       };
     },
     "migrated",
