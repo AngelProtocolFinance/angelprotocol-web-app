@@ -1,3 +1,4 @@
+import type { BigNumber } from "@ethersproject/bignumber";
 import { useNavigate } from "react-router-dom";
 import { Completed, Network } from "slices/launchpad/types";
 import { Chain } from "types/aws";
@@ -8,7 +9,8 @@ import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import { TxPrompt } from "components/Prompt";
 import Account from "contracts/Account";
-import { createEndowment } from "contracts/evm/Account";
+import { createTx } from "contracts/createTx/createTx";
+import { accounts } from "contracts/evm/Account";
 import useTxSender from "hooks/useTxSender";
 import { logger } from "helpers";
 import { chainIds } from "constants/chainIds";
@@ -60,12 +62,23 @@ export default function useSubmit(network: Network) {
       if (
         network === "polygon" /**TODO: && check connected wallet's chainID */
       ) {
-        const tx: SimulContractTx = {
-          to: "0xf725Ff6235D53dA06Acb4a70AA33206a1447D550", //TODO: move to src/contracts/evm
-          from: wallet.address,
-          data: createEndowment.encode(toEVMAIF(completed, wallet.address)),
+        const tx: SimulContractTx = createTx(
+          wallet.address,
+          "accounts.create-endowment",
+          toEVMAIF(completed, wallet.address)
+        );
+        content = {
+          type: "evm",
+          val: tx,
+          log(logs) {
+            const ev = accounts.getEvent("EndowmentCreated");
+            const topic = accounts.getEventTopic(ev);
+            const log = logs.find((log) => log.topics.includes(topic));
+            if (!log) return null;
+            const [id] = accounts.decodeEventLog(ev, log.data, log.topics);
+            return (id as BigNumber).toString();
+          },
         };
-        content = { type: "evm", val: tx, log: createEndowment.log };
       } else {
         const contract = new Account(wallet);
         const msg = contract.createNewAIFmsg(

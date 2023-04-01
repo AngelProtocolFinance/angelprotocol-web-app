@@ -1,11 +1,13 @@
 import {
+  DecodedEndowment,
+  DecodedEndowmentState,
   toEndowStatusText,
   toEndowType,
   toSettingsPermission,
 } from "./decoded-types";
 import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
 import { UNSDG_NUMS } from "types/lists";
-import { endowState, endowmentDetails } from "contracts/evm/Account";
+import { accounts } from "contracts/evm/Account";
 import { balance as erc20Balance } from "contracts/evm/ERC20";
 import { balance as giftCardBalance } from "contracts/evm/gift-card";
 import { funds } from "contracts/evm/index-fund";
@@ -105,9 +107,12 @@ export const queryObjects: {
 
   /** account */
   "accounts.endowment": [
-    ({ id }) => endowmentDetails.encode(id),
+    ({ id }) => accounts.encodeFunctionData("queryEndowmentDetails", [id]),
     (result) => {
-      const d = endowmentDetails.decode(result);
+      const d: DecodedEndowment = accounts.decodeFunctionResult(
+        "queryEndowmentDetails",
+        result
+      )[0];
       const controller = d.settingsController;
       return {
         owner: d.owner,
@@ -151,9 +156,13 @@ export const queryObjects: {
     "migrated",
   ],
   "accounts.state": [
-    ({ id }) => endowState.encode(id),
+    ({ id }) => accounts.encodeFunctionData("queryState", [id]),
     (result) => {
-      const d = endowState.decode(result);
+      const d: DecodedEndowmentState = accounts.decodeFunctionResult(
+        "queryState",
+        result
+      )[0];
+
       return {
         //TODO: populate once needed
         tokens_on_hand: {
