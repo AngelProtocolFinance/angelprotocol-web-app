@@ -1,4 +1,4 @@
-import { TxArgs, TxOptions, TxTypes } from "./types";
+import { TxOptions, TxTypes } from "./types";
 import { SimulContractTx } from "types/evm";
 import { Contract } from "types/lists";
 import { contracts } from "constants/contracts";
