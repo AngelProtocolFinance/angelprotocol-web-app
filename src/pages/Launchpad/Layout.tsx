@@ -1,13 +1,8 @@
 import { Outlet, useMatch } from "react-router-dom";
-import { Link } from "react-router-dom";
-import { useGetter } from "store/accessors";
 import { appRoutes } from "constants/routes";
 import Progress from "./Progress";
-import NetworkIcon from "./common/NetworkIcon";
-import { routes } from "./constants";
 
 export default function Layout({ classes = "" }) {
-  const network = useGetter((state) => state.launchpad.network);
   /** no need to check for /launchpad,since `<Routes/>
    *  always falls back to home outside of /launchpad/1-7 pattern */
   const step = +(
@@ -23,16 +18,6 @@ export default function Layout({ classes = "" }) {
         step={step}
       />
       <div className="grid z-10 w-full px-6 py-8 md:p-0 md:pr-8 md:shadow-none shadow-[0px_-5px_5px_0px] shadow-gray-l3/80 dark:shadow-blue-d7">
-        <Link
-          state={step} //pass where this link was clicked from
-          to={`../${routes.new}`}
-          className="-mt-4 mb-2 flex items-center gap-2 justify-self-end "
-        >
-          <NetworkIcon network={network} classes="w-4 h-4 object contain" />
-          <span className="text-xs uppercase font-semibold font-heading text-gray-d1 dark:text-gray hover:text-orange dark:hover:text-orange">
-            {network}
-          </span>
-        </Link>
         <Outlet />
       </div>
     </div>
