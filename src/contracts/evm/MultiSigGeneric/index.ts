@@ -28,15 +28,17 @@ export const executeTransaction = {
   processLogs(logs: TxLog[]) {
     const execTopic = iface.getEventTopic("Execution");
     const execLog = logs.find((log) => log.topics.includes(execTopic));
-    if (!!execLog) {
-      const [id] = iface.decodeEventLog(
-        "Execution",
-        execLog.data,
-        execLog.topics
-      );
-      return (id as BigNumber).toString();
+
+    if (!execLog) {
+      return null;
     }
-    return null;
+
+    const [id] = iface.decodeEventLog(
+      "Execution",
+      execLog.data,
+      execLog.topics
+    );
+    return (id as BigNumber).toString();
   },
 };
 
