@@ -1,13 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import { Completed, Network } from "slices/launchpad/types";
+import { Completed } from "slices/launchpad/types";
 import { Chain } from "types/aws";
 import { SimulContractTx } from "types/evm";
-import { TxContent, TxSuccess } from "types/tx";
+import { TxSuccess } from "types/tx";
 import { useSaveAIFMutation } from "services/aws/aws";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import { TxPrompt } from "components/Prompt";
-import Account from "contracts/Account";
 import { createEndowment } from "contracts/evm/Account";
 import useTxSender from "hooks/useTxSender";
 import { logger } from "helpers";
@@ -15,9 +14,8 @@ import { chainIds } from "constants/chainIds";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { appRoutes } from "constants/routes";
 import toEVMAIF from "./toEVMAIF";
-import toJunoAIF from "./toJunoAIF";
 
-export default function useSubmit(network: Network) {
+export default function useSubmit() {
   const { wallet } = useGetWallet();
   const [saveAIF] = useSaveAIFMutation();
   const { showModal, closeModal } = useModalContext();
@@ -32,8 +30,7 @@ export default function useSubmit(network: Network) {
 
       const { chain } = wallet;
       if (
-        network === "polygon" &&
-        !(chain.chain_id === chainIds.polygon || chain.chain_id === "1337") //polygon local
+        chain.chain_id !== chainIds.polygon //polygon local
       ) {
         /** TODO: wallet state should have `type: ("evm" | "cosmos" ..etc)` field
          *  so the flow would be
@@ -49,30 +46,12 @@ export default function useSubmit(network: Network) {
         });
       }
 
-      if (network === "juno" && chain.chain_id !== chainIds.juno) {
-        return showModal(TxPrompt, {
-          error: "Please connect to Juno network",
-        });
-      }
-
       // //////////////// CONSTRUCT TX CONTENT ////////////////////
-      let content: TxContent;
-      if (
-        network === "polygon" /**TODO: && check connected wallet's chainID */
-      ) {
-        const tx: SimulContractTx = {
-          to: "0xf725Ff6235D53dA06Acb4a70AA33206a1447D550", //TODO: move to src/contracts/evm
-          from: wallet.address,
-          data: createEndowment.encode(toEVMAIF(completed, wallet.address)),
-        };
-        content = { type: "evm", val: tx, log: createEndowment.log };
-      } else {
-        const contract = new Account(wallet);
-        const msg = contract.createNewAIFmsg(
-          toJunoAIF(completed, wallet.address)
-        );
-        content = { type: "cosmos", val: [msg], attribute: "endow_id" };
-      }
+      const tx: SimulContractTx = {
+        to: "0xf725Ff6235D53dA06Acb4a70AA33206a1447D550", //TODO: move to src/contracts/evm
+        from: wallet.address,
+        data: createEndowment.encode(toEVMAIF(completed, wallet.address)),
+      };
 
       const onSuccess = async (result: TxSuccess, chain: Chain) => {
         // //////////////// LOG NEW AIF TO AWS ////////////////////
@@ -104,7 +83,7 @@ export default function useSubmit(network: Network) {
 
       // //////////////// SEND TRANSACTION  ////////////////////
       await sendTx({
-        content,
+        content: { type: "evm", val: tx, log: createEndowment.log },
         isAuthorized: true,
         onSuccess,
       });
