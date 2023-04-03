@@ -38,7 +38,7 @@ export default function TokenSelector({
           <Icon type="Search" size={20} />
           <Combobox.Input
             placeholder="Search..."
-            disabled={tokens.length <= 1}
+            aria-disabled={tokens.length <= 1}
             className="text-left text-sm focus:outline-none bg-transparent w-20"
             onChange={(event) => setSymbol(event.target.value)}
           />
