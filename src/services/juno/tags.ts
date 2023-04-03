@@ -11,7 +11,7 @@ export const rootTags = [
   "settingsController",
 ] as const;
 
-type JunoTag = typeof rootTags[number];
+type JunoTag = (typeof rootTags)[number];
 
 export enum adminTags {
   proposals = "proposals",
