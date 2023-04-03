@@ -8,7 +8,7 @@ import { defaultProposalTags } from "services/juno/tags";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
-import { APTeamMultiSig, ApplicationsMultiSig } from "contracts/evm";
+import { MultiSigGeneric } from "contracts/evm";
 import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
 import { WalletDisconnectedError } from "errors/errors";
@@ -29,26 +29,23 @@ export default function PollAction(props: ProposalDetails) {
       return handleError(new WalletDisconnectedError());
     }
 
-    const msg: SimulContractTx =
+    const toAddress =
       props.proposal_type === "application"
-        ? {
-            from: wallet.address,
-            to: polygonContracts.multiSig.ApplicationsMultiSigProxy,
-            data: ApplicationsMultiSig.executeTransaction.encode(props.id),
-          }
-        : {
-            from: wallet.address,
-            to: polygonContracts.multiSig.APTeamMultiSigProxy,
-            data: APTeamMultiSig.executeTransaction.encode(props.id),
-          };
+        ? polygonContracts.multiSig.ApplicationsMultiSigProxy
+        : polygonContracts.multiSig.APTeamMultiSigProxy;
 
-    const log =
-      props.proposal_type === "application"
-        ? ApplicationsMultiSig.executeTransaction.processLogs
-        : APTeamMultiSig.executeTransaction.processLogs;
+    const msg: SimulContractTx = {
+      from: wallet.address,
+      to: toAddress,
+      data: MultiSigGeneric.executeTransaction.encode(props.id),
+    };
 
     await sendTx({
-      content: { type: "evm", val: msg, log },
+      content: {
+        type: "evm",
+        val: msg,
+        log: MultiSigGeneric.executeTransaction.processLogs,
+      },
       isAuthorized: propMeta.isAuthorized,
       tagPayloads: extractTagFromMeta(props.meta),
     });

@@ -5,7 +5,7 @@ import { invalidateJunoTags } from "services/juno";
 import { adminTags } from "services/juno/tags";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useGetWallet } from "contexts/WalletContext";
-import { APTeamMultiSig, ApplicationsMultiSig } from "contracts/evm";
+import { MultiSigGeneric } from "contracts/evm";
 import useTxSender from "hooks/useTxSender";
 import { WalletDisconnectedError } from "errors/errors";
 import { polygonContracts } from "constants/contracts";
@@ -24,24 +24,19 @@ export default function useVote() {
       return handleError(new WalletDisconnectedError());
     }
 
-    const voteMsg: SimulContractTx =
+    const toAddress =
       type === "application"
-        ? {
-            from: wallet.address,
-            to: polygonContracts.multiSig.ApplicationsMultiSigProxy,
-            data:
-              vote === "no"
-                ? ApplicationsMultiSig.revokeTransaction.encode(transactionId)
-                : ApplicationsMultiSig.confirmTransaction.encode(transactionId),
-          }
-        : {
-            from: wallet.address,
-            to: polygonContracts.multiSig.APTeamMultiSigProxy,
-            data:
-              vote === "no"
-                ? APTeamMultiSig.revokeTransaction.encode(transactionId)
-                : APTeamMultiSig.confirmTransaction.encode(transactionId),
-          };
+        ? polygonContracts.multiSig.ApplicationsMultiSigProxy
+        : polygonContracts.multiSig.APTeamMultiSigProxy;
+
+    const voteMsg: SimulContractTx = {
+      from: wallet.address,
+      to: toAddress,
+      data:
+        vote === "no"
+          ? MultiSigGeneric.revokeTransaction.encode(transactionId)
+          : MultiSigGeneric.confirmTransaction.encode(transactionId),
+    };
 
     await sendTx({
       content: { type: "evm", val: voteMsg },

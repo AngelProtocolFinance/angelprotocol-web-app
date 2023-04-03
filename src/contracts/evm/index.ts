@@ -1,2 +1,1 @@
-export * as ApplicationsMultiSig from "./ApplicationsMultiSig";
-export * as APTeamMultiSig from "./APTeamMultiSig";
+export * as MultiSigGeneric from "./MultiSigGeneric";
