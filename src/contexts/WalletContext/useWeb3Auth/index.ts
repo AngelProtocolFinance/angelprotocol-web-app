@@ -1,4 +1,4 @@
-import { SafeEventEmitterProvider, WALLET_ADAPTERS } from "@web3auth/base";
+import { SafeEventEmitterProvider } from "@web3auth/base";
 import { MetamaskAdapter } from "@web3auth/metamask-adapter";
 import { Web3Auth } from "@web3auth/modal";
 import { TorusWalletConnectorPlugin } from "@web3auth/torus-wallet-connector-plugin";
@@ -9,8 +9,8 @@ import { chainIDs } from "constants/chains";
 import { IS_TEST } from "constants/env";
 import { ProviderInfo } from "..";
 import { saveUserAction } from "../helpers";
-import RPC from "./ethersRPC";
 import { WEB3AUTH_LOGO, chainConfig } from "./web3AuthConfigs";
+import RPC from "./web3RPC";
 
 const clientId =
   "BEglQSgt4cUWcj6SKRdu5QkOXTsePmMcusG5EAoyjyOYKlVRjIF1iCNnMOTfpzCiunHRrMui8TIwQPXdkQ8Yxuk"; // get from https://dashboard.web3auth.io
