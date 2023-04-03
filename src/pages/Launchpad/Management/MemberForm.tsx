@@ -6,7 +6,6 @@ import { SchemaShape } from "schemas/types";
 import { Member } from "slices/launchpad/types";
 import { useModalContext } from "contexts/ModalContext";
 import { Field } from "components/form";
-import { useGetter } from "store/accessors";
 import { requiredPositiveNumber } from "schemas/number";
 import { requiredWalletAddr } from "schemas/string";
 import { chainIds } from "constants/chainIds";
