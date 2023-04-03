@@ -3,8 +3,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { object, string } from "yup";
 import { FV } from "./types";
 import { SchemaShape } from "schemas/types";
-import { Network, TFee, TFees } from "slices/launchpad/types";
-import { useGetter } from "store/accessors";
+import { TFee, TFees } from "slices/launchpad/types";
 import { useLaunchpad } from "slices/launchpad";
 import { requiredPercent } from "schemas/number";
 import { requiredWalletAddr } from "schemas/string";
@@ -13,29 +12,24 @@ import { withStepGuard } from "../withStepGuard";
 import Form from "./Form";
 import { keys } from "./constants";
 
-const fee = (network: Network): SchemaShape<TFee> => ({
+const fee: SchemaShape<TFee> = {
   receiver: string().when(keys.isActive, (v, schema) =>
-    v
-      ? requiredWalletAddr(
-          network === "juno" ? chainIds.juno : chainIds.polygon
-        )
-      : schema.optional()
+    v ? requiredWalletAddr(chainIds.polygon) : schema.optional()
   ),
   rate: string().when(keys.isActive, (v, schema) =>
     v ? requiredPercent : schema.optional()
   ),
-});
+};
 
 export default withStepGuard<6>(function Fees({ data }) {
-  const network = useGetter((state) => state.launchpad.network);
   const { update } = useLaunchpad(6);
   const methods = useForm<FV>({
     mode: "onChange",
     resolver: yupResolver(
       object().shape<SchemaShape<TFees>>({
-        deposit: object().shape(fee(network)),
-        withdrawal: object().shape(fee(network)),
-        earnings: object().shape(fee(network)),
+        deposit: object().shape(fee),
+        withdrawal: object().shape(fee),
+        earnings: object().shape(fee),
       })
     ),
     defaultValues: data || {
