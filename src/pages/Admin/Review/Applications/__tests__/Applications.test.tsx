@@ -117,7 +117,7 @@ const mockApplications: EndowmentProposal[] = [
     ActiveInCountries: [],
     EndowDesignation: "Charity",
     HqCountry: "",
-    CashEligible: false,
+    CashEligible: true,
   },
   {
     RegistrationDate: "2022-06-30T10:05:45.350Z",
@@ -164,7 +164,7 @@ const mockApplications: EndowmentProposal[] = [
     ActiveInCountries: [],
     EndowDesignation: "Charity",
     HqCountry: "",
-    CashEligible: false,
+    CashEligible: true,
   },
   {
     RegistrationDate: "2022-06-30T10:05:45.350Z",
@@ -211,6 +211,6 @@ const mockApplications: EndowmentProposal[] = [
     ActiveInCountries: [],
     EndowDesignation: "Charity",
     HqCountry: "",
-    CashEligible: false,
+    CashEligible: true,
   },
 ];

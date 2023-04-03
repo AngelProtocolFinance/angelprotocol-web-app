@@ -2,13 +2,10 @@ import { Coin } from "@cosmjs/proto-signing";
 import { Tupleable } from "types/evm";
 import {
   Asset,
-  CW4Member,
   Categories,
   EndowmentStatus,
   EndowmentStatusText,
   EndowmentType,
-  SplitDetails,
-  Threshold,
 } from "./common";
 import { CW20 } from "./cw20";
 import { ADDRESS_ZERO } from "./evm";
@@ -174,41 +171,8 @@ export type EndowmentFee = {
   active: boolean;
 };
 
-const _normal: EndowmentType = "normal";
-
-export type NewAIF = {
-  owner: string;
-  maturity_time: number; // required in launchpad: datetime in seconds
-  name: string;
-  categories: Categories; // SHOULD NOT be editable for now (only the Config.owner, ie via the Gov contract or AP CW3 Multisig can set/update)
-  //tier
-  endow_type: typeof _normal;
-  //logo
-  //image
-  cw4_members: CW4Member[];
-  kyc_donors_only: boolean;
-  cw3_threshold: Threshold; // currently just absolute percentage
-  cw3_max_voting_period: number; // datetime in seconds
-  beneficiaries_allowlist: string[]; // if populated, only the listed Addresses can withdraw/receive funds from the Endowment (if empty, anyone can)
-  contributors_allowlist: string[]; // if populated, only the listed Addresses can contribute to the Endowment (if empty, anyone can donate)
-
-  split_to_liquid: SplitDetails;
-  ignore_user_splits: boolean;
-
-  earnings_fee: EndowmentFee | undefined;
-  withdraw_fee: EndowmentFee | undefined;
-  deposit_fee: EndowmentFee | undefined;
-  //aum_fee
-  //dao
-  //proposal_link
-  //endowment_controller
-  //parent
-  //referral_id
-};
-
 export interface SettingsControllerUpdate extends Tupleable {
   id: number;
-
   endowmentController: SettingsPermission;
   name: SettingsPermission;
   image: SettingsPermission;

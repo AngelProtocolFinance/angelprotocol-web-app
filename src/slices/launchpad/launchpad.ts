@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { useNavigate } from "react-router-dom";
-import { Completed, LaunchState, Network, Progress, Steps } from "./types";
+import { Completed, LaunchState, Progress, Steps } from "./types";
 import { useGetter, useSetter } from "store/accessors";
 
 export const LAUNCHPAD_STORAGE_KEY = "ap__launchpad";
@@ -28,13 +28,8 @@ const launchpad = createSlice({
 
       window.localStorage.setItem(LAUNCHPAD_STORAGE_KEY, JSON.stringify(state));
     },
-    reset: (state, { payload }: PayloadAction<Network>) => {
-      window.localStorage.removeItem(LAUNCHPAD_STORAGE_KEY);
-
-      //save init - as it constants previously selected network
-      const init: LaunchState = { progress: 1, network: payload };
-      window.localStorage.setItem(LAUNCHPAD_STORAGE_KEY, JSON.stringify(init));
-      return { progress: 1, network: payload };
+    reset: (state) => {
+      return { progress: 1 };
     },
   },
 });
@@ -58,8 +53,8 @@ export function useLaunchpad<T extends Steps>(step: T) {
         navigate(`../${step + 1}`);
       }
     },
-    reset(network: Network) {
-      dispatch(launchpad.actions.reset(network));
+    reset() {
+      dispatch(launchpad.actions.reset());
     },
   };
 }

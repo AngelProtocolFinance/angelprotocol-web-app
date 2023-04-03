@@ -1,10 +1,14 @@
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { LaunchState } from "slices/launchpad/types";
-import { LAUNCHPAD_STORAGE_KEY } from "slices/launchpad/launchpad";
+import {
+  LAUNCHPAD_STORAGE_KEY,
+  useLaunchpad,
+} from "slices/launchpad/launchpad";
 import { routes } from "./constants";
 
 export default function Start({ classes = "" }) {
   const navigate = useNavigate();
+  const { reset } = useLaunchpad(1);
 
   const saved = localStorage.getItem(LAUNCHPAD_STORAGE_KEY);
   const state = ((s) => {
@@ -17,11 +21,12 @@ export default function Start({ classes = "" }) {
   })(saved);
 
   if (!state || state.progress === 1) {
-    return <Navigate to={routes.new} />;
+    return <Navigate to={routes.steps} />;
   }
 
   function startNew() {
-    navigate(routes.new);
+    reset();
+    navigate(routes.steps);
   }
 
   const { progress } = state;

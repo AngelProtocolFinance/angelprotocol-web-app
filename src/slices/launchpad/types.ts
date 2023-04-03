@@ -68,8 +68,7 @@ export type Steps = keyof Completed;
 
 export type Progress = Steps | CompleteStep;
 
-export type Network = "polygon" | "juno";
-export type Meta = { progress: Progress; network: Network };
+export type Meta = { progress: Progress };
 
 export type LaunchState = Meta &
   (Step1 | Step2 | Step3 | Step4 | Step5 | Step6 | Completed);

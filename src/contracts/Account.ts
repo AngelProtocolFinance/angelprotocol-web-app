@@ -2,7 +2,6 @@ import { Coin } from "@cosmjs/proto-signing";
 import {
   DepositPayload,
   InvestPayload,
-  NewAIF,
   RedeemPayload,
   StatusChangePayload,
   WithdrawPayload,
@@ -47,11 +46,5 @@ export default class Account extends Contract {
       },
       funds
     );
-  }
-
-  createNewAIFmsg(payload: NewAIF) {
-    return this.createExecuteContractMsg(Account.address, {
-      create_endowment: payload,
-    });
   }
 }
