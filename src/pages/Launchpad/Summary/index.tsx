@@ -14,11 +14,11 @@ import useSubmit from "./useSubmit";
 export default function Summary() {
   const state = useGetter((state) => state.launchpad);
 
-  const submit = useSubmit(state.network);
+  const submit = useSubmit();
 
   if (!isCompleted(state)) return <Navigate to={`../${state.progress}`} />;
 
-  const { progress, network, ...completed } = state;
+  const { progress, ...completed } = state;
 
   const {
     1: about,

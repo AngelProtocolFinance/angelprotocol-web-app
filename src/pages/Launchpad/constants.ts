@@ -13,5 +13,4 @@ export const routes = {
   index: "",
   steps: "steps",
   success: "success",
-  new: "new",
 };

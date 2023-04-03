@@ -5,7 +5,6 @@ import { object } from "yup";
 import { SchemaShape } from "schemas/types";
 import { useModalContext } from "contexts/ModalContext";
 import { Field } from "components/form";
-import { useGetter } from "store/accessors";
 import { requiredWalletAddr } from "schemas/string";
 import { chainIds } from "constants/chainIds";
 
@@ -17,14 +16,14 @@ type Props = {
 
 type FV = { addr: string };
 export default function MemberForm({ onAdd, name, added }: Props) {
-  const network = useGetter((state) => state.launchpad.network);
   const { closeModal } = useModalContext();
   const methods = useForm<FV>({
     resolver: yupResolver(
       object().shape<SchemaShape<FV>>({
-        addr: requiredWalletAddr(
-          network === "juno" ? chainIds.juno : chainIds.polygon
-        ).notOneOf(added, "address already added"),
+        addr: requiredWalletAddr(chainIds.polygon).notOneOf(
+          added,
+          "address already added"
+        ),
       })
     ),
     defaultValues: { addr: "" },
