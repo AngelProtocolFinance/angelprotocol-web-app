@@ -36,13 +36,7 @@ export const executeTransaction = {
       );
       return (id as BigNumber).toString();
     }
-    const execFailTopic = iface.getEventTopic("ExecutionFailure");
-    const execFailLog = logs.find((log) => log.topics.includes(execFailTopic));
-    if (!!execFailLog) {
-      throw new Error("ExecutionFailure");
-    }
-
-    throw new Error("Not enough confirmations");
+    return null;
   },
 };
 
