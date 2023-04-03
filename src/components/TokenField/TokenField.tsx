@@ -3,12 +3,12 @@ import { useEffect } from "react";
 import {
   FieldValues,
   Path,
+  get,
   useController,
   useFormContext,
 } from "react-hook-form";
 import { OnSetAmount, Props } from "./types";
 import { TokenWithAmount } from "types/slices";
-import { resolvePath } from "helpers/resolveJsonPath";
 import Balance from "./Balance";
 import Steps from "./Steps";
 import TokenSelector from "./TokenSelector";
@@ -69,7 +69,7 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
       </div>
 
       <div
-        aria-invalid={!!resolvePath(errors[name], "amount")?.message}
+        aria-invalid={!!get(errors[name], "amount")?.message}
         aria-disabled={isSubmitting}
         className={`${
           classes?.inputContainer ?? ""

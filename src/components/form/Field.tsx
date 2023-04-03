@@ -1,9 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { createElement } from "react";
-import { useFormContext } from "react-hook-form";
-import { FieldValues, Path } from "react-hook-form";
+import { FieldValues, Path, get, useFormContext } from "react-hook-form";
 import { Classes } from "./types";
-import { resolvePath } from "helpers/resolveJsonPath";
 import { Label } from ".";
 import { unpack } from "./helpers";
 
@@ -53,7 +51,7 @@ export function Field<T extends FieldValues, K extends InputType = "text">({
         ...register(name, { valueAsNumber: type === "number" }),
         ...(type === textarea ? {} : { type }),
         id,
-        "aria-invalid": !!resolvePath(errors, name)?.message,
+        "aria-invalid": !!get(errors, name)?.message,
         disabled: isSubmitting || disabled,
         className: `${input}`,
         autoComplete: "off",

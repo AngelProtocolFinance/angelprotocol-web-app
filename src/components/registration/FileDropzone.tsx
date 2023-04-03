@@ -3,13 +3,13 @@ import { useDropzone } from "react-dropzone";
 import {
   FieldValues,
   Path,
+  get,
   useController,
   useFormContext,
 } from "react-hook-form";
 import { FileObject } from "types/aws";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
-import { resolvePath } from "helpers/resolveJsonPath";
 
 export type Asset = {
   previews: FileObject[]; //from previous submission
@@ -50,7 +50,7 @@ export function FileDropzone<T extends FieldValues, K extends Path<T>>(props: {
   return (
     <div>
       <div
-        aria-invalid={!!resolvePath(errors, filesId)?.message}
+        aria-invalid={!!get(errors, filesId)?.message}
         {...getRootProps({
           className: `relative grid place-items-center rounded border border-dashed w-full h-[11.375rem] focus:outline-none ${
             isDragActive
