@@ -20,16 +20,16 @@ export type Props = {
 type FV = Member;
 
 export default function MemberForm({ onChange, added, initial }: Props) {
-  const network = useGetter((state) => state.launchpad.network);
   const { closeModal } = useModalContext();
   const isEdit = initial !== undefined;
   const methods = useForm<FV>({
     defaultValues: initial || { addr: "", weight: "1" },
     resolver: yupResolver(
       object().shape<SchemaShape<FV>>({
-        addr: requiredWalletAddr(
-          network === "juno" ? chainIds.juno : chainIds.polygon
-        ).notOneOf(initial ? [] : added, "address already added"),
+        addr: requiredWalletAddr(chainIds.polygon).notOneOf(
+          initial ? [] : added,
+          "address already added"
+        ),
         weight: requiredPositiveNumber,
       })
     ),
