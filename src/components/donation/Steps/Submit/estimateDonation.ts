@@ -4,9 +4,8 @@ import { SimulContractTx, SimulSendNativeTx } from "types/evm";
 import { Estimate, TxContent } from "types/tx";
 import { WalletState } from "contexts/WalletContext";
 import { SubmitStep } from "slices/donation";
-import Account from "contracts/Account";
-import CW20 from "contracts/CW20";
 import GiftCard from "contracts/GiftCard";
+import createCosmosMsg from "contracts/createCosmosTx/createCosmosMsg";
 import { createTx } from "contracts/createTx/createTx";
 import { logger, scale, scaleToStr } from "helpers";
 import { estimateTx } from "helpers/tx";
@@ -29,21 +28,24 @@ export async function estimateDonation({
   try {
     if (chain.type === "juno-native") {
       const { fromBal, fromGift } = getBreakdown(token);
-      const contract = new Account(wallet);
+
       const msgs = [];
       if (fromBal) {
         const scaledAmount = scaleToStr(fromBal, token.decimals);
+        const sender = wallet.address;
+        const recipient = ap_wallets.juno_deposit;
         msgs.push(
           token.type === "juno-native" || token.type === "ibc"
-            ? contract.createTransferNativeMsg(
-                scaledAmount,
-                ap_wallets.juno_deposit,
-                token.token_id
-              )
-            : new CW20(wallet, token.token_id).createTransferMsg(
-                scaledAmount,
-                ap_wallets.juno_deposit
-              )
+            ? createCosmosMsg(sender, "recipient.send", {
+                recipient,
+                amount: scaledAmount,
+                denom: token.token_id,
+              })
+            : createCosmosMsg(sender, "cw20.transfer", {
+                recipient,
+                amount: scaledAmount,
+                cw20: token.token_id,
+              })
         );
       }
       if (fromGift) {
