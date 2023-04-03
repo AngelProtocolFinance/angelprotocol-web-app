@@ -1,4 +1,0 @@
-[
-  "event UpdateEndowmentState(uint256,tuple(tuple(uint256,uint256),tuple(tuple(uint256,uint256[],address[]),tuple(uint256,uint256[],address[])),bool,tuple(tuple(uint256,address),uint8)))",
-  "function withdraw(uint256,uint8,address,address[],uint256[])"
-]

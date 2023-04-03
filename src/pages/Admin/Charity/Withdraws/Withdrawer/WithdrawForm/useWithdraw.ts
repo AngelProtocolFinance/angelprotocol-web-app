@@ -4,11 +4,7 @@ import { SimulContractTx } from "types/evm";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import {
-  AccountDepositWithdrawEndowments,
-  EndowmentMultiSig,
-  LockedWithdraw,
-} from "contracts/evm";
+import { Account, EndowmentMultiSig, LockedWithdraw } from "contracts/evm";
 import useTxSender from "hooks/useTxSender";
 import { scale } from "helpers";
 import { WalletDisconnectedError } from "errors/errors";
@@ -87,7 +83,7 @@ export default function useWithdraw() {
             `withdraw liquid assets from endowment id: ${id}`,
             accountsDiamond,
             0,
-            AccountDepositWithdrawEndowments.withdraw.encode(
+            Account.withdraw.encode(
               id,
               type,
               beneficiary,

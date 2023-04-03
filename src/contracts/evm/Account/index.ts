@@ -1,11 +1,13 @@
 import { Interface } from "@ethersproject/abi";
 import type { BigNumber } from "@ethersproject/bignumber";
+import { AccountType } from "types/contracts";
 import { NewAIF } from "types/contracts/evm";
 import { TxLog } from "types/evm";
 import { toTuple } from "helpers";
 import abi from "./abi.json";
 
 const iface = new Interface(abi);
+
 //FUTURE: append abi with new methods
 const createEndowmentFn = iface.getFunction("createEndowment");
 export const endowmentCreatedTopic = iface.encodeFilterTopics(
@@ -22,6 +24,40 @@ export const createEndowment = {
     const log = logs.find((log) => log.topics.includes(topic));
     if (!log) return null;
     const [id] = iface.decodeEventLog("EndowmentCreated", log.data, log.topics);
+    return (id as BigNumber).toString();
+  },
+};
+
+const withdrawFn = iface.getFunction("withdraw");
+export const updateEndowmentStateTopic = iface.encodeFilterTopics(
+  "UpdateEndowmentState",
+  []
+);
+export const withdraw = {
+  encode(
+    endowId: number,
+    acctType: AccountType,
+    beneficiary: string,
+    tokenAddresses: string[],
+    amounts: number[]
+  ) {
+    return iface.encodeFunctionData(withdrawFn, [
+      endowId,
+      acctType === "locked" ? 0 : 1,
+      beneficiary,
+      tokenAddresses,
+      amounts,
+    ]);
+  },
+  log(logs: TxLog[]) {
+    const topic = iface.getEventTopic("UpdateEndowmentState");
+    const log = logs.find((log) => log.topics.includes(topic));
+    if (!log) return null;
+    const [id] = iface.decodeEventLog(
+      "UpdateEndowmentState",
+      log.data,
+      log.topics
+    );
     return (id as BigNumber).toString();
   },
 };
