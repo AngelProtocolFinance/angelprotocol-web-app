@@ -1,7 +1,6 @@
 import { Simulation } from "types/contracts";
 import { scaleToStr } from "helpers";
 import { contracts } from "constants/contracts";
-import CW20 from "./CW20";
 import Contract from "./Contract";
 
 export default class LP extends Contract {

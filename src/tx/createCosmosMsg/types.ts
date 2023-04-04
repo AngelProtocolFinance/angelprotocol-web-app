@@ -1,9 +1,13 @@
 import { Coin } from "@cosmjs/proto-signing";
 import {
   AllianceMember,
+  ApplicationVote,
   Asset,
+  CW3ConfigPayload,
   CW4Member,
   DepositPayload,
+  EmbeddedBankMsg,
+  EmbeddedWasmMsg,
   FundConfig,
   FundDetails,
   IndexFundOwnerPayload,
@@ -11,8 +15,11 @@ import {
   RedeemPayload,
   RegistrarConfigExtensionPayload,
   RegistrarOwnerPayload,
+  ReviewCW3ConfigPayload,
   StatusChangePayload,
+  UpdateEndowmentControllerMsg,
   Vote,
+  WithdrawLockPayload,
   WithdrawPayload,
 } from "types/contracts";
 
@@ -59,6 +66,8 @@ export type Msgs = {
   "accounts.redeem": Msg<RedeemPayload>;
   "accounts.deposit": Msg<DepositPayload>;
 
+  "controller.update-contoller": Msg<UpdateEndowmentControllerMsg>;
+
   "airdrop.claim": Msg<AirdropClaim>;
 
   "gov.create-poll": Msg<{ title: string; description: string; link?: string }>;
@@ -95,6 +104,20 @@ export type Msgs = {
   "gift-card.spend": Msg<GCSpend>;
 
   "cw4.update-members": Msg<{ add: CW4Member[]; remove: string[] }>;
+
+  "cw3.update-config": Msg<CW3ConfigPayload>;
+  "cw3.execute-proposal": Msg<{ proposal_id: number }>;
+  "cw3.propose": Msg<{
+    title: string;
+    description: string;
+    msgs: (EmbeddedBankMsg | EmbeddedWasmMsg)[];
+    meta?: string;
+  }>;
+  "cw3.vote": Msg<{ proposal_id: number; vote: Vote }>;
+  "cw3.propose-withdraw": Msg<WithdrawLockPayload>;
+
+  "cw3/review.vote-application": Msg<ApplicationVote>;
+  "cw3/review.update-config": Msg<ReviewCW3ConfigPayload>;
 };
 
 export type MsgTypes = keyof Msgs;

@@ -17,6 +17,8 @@ export const msgs: {
   "accounts.redeem": (p) => ({ vaults_redeem: p }),
   "accounts.deposit": (p) => ({ deposit: p }),
 
+  "controller.update-contoller": (p) => ({ update_endowment_controller: p }),
+
   "airdrop.claim": (p) => ({ claim: p }),
 
   "gift-card.deposit": (p) => ({
@@ -47,4 +49,13 @@ export const msgs: {
   "registrar.update-owner": (p) => ({ update_owner: p }),
 
   "cw4.update-members": (p) => ({ update_members: p }),
+
+  "cw3.update-config": (p) => ({ update_config: p }),
+  "cw3.execute-proposal": (p) => ({ execute: p }),
+  "cw3.propose": (p) => ({ propose: p }),
+  "cw3.vote": (p) => ({ vote: p }),
+  "cw3.propose-withdraw": (p) => ({ propose_locked_withdraw: p }),
+
+  "cw3/review.vote-application": (p) => ({ vote_application: p }),
+  "cw3/review.update-config": (p) => ({ update_config: p }),
 };
