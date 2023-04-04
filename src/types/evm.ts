@@ -2,7 +2,7 @@
 
 export type EVMTx = {
   //all prefixed-hex
-  from: string;
+  from?: string;
   to: string;
   nonce: string;
   gas: string;

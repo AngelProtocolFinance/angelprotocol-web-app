@@ -15,17 +15,18 @@ export default class Contract {
   contractAddress: string;
 
   /** ABI interface */
-  private iface: Interface;
+  protected iface: Interface;
   /** The connected wallet */
-  private wallet: WalletState;
+  protected wallet: WalletState | undefined;
 
   protected constructor(
     abi: string[],
     contractAddress: string,
-    wallet: WalletState
+    wallet?: WalletState
   ) {
     this.iface = new Interface(abi);
     this.contractAddress = contractAddress;
+    // should add check confirming the wallet is connected to an EVM chain
     this.wallet = wallet;
   }
 
@@ -88,11 +89,17 @@ export default class Contract {
     args: Tupleable
   ): SimulContractTx {
     const encodedFuncData = this.encode(funcName, args);
-    return {
-      from: this.wallet.address,
+
+    const tx: SimulContractTx = {
       to: this.contractAddress,
       data: encodedFuncData,
     };
+
+    if (this.wallet) {
+      tx.from = this.wallet?.address;
+    }
+
+    return tx;
   }
 
   /**

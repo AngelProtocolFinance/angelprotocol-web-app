@@ -1,25 +1,73 @@
-import { Interface } from "@ethersproject/abi";
-import type { BigNumberish } from "@ethersproject/bignumber";
+import { Coin } from "@cosmjs/proto-signing";
+import { BigNumberish } from "@ethersproject/bignumber";
+import { SimulContractTx } from "types/evm";
+import { WalletState } from "contexts/WalletContext";
+import { getProvider } from "helpers";
+import { EIPMethods } from "constants/evm";
+import Contract from "../Contract";
 import abi from "./abi.json";
 
-const encoder = new Interface(abi);
-const balanceOfFn = encoder.getFunction("balanceOf");
-const transferFn = encoder.getFunction("transfer");
+/**
+ * Representation of the `Account` contract that extends and wraps the generic `Contract` functionality.
+ * Ensures that `Contract` methods are called with the Account ABI.
+ */
+export default class ERC20 extends Contract {
+  /**
+   * Passes the Account ABI to the parent `Contract` class, ensuring its methods are called with that ABI.
+   *
+   * @param contractAddress Address of the contract.
+   * @param wallet The connected wallet.
+   */
+  constructor(contractAddress: string, wallet?: WalletState) {
+    super(abi, contractAddress, wallet);
+  }
 
-export const balanceOf = {
-  encode(address: string) {
-    return encoder.encodeFunctionData(balanceOfFn, [address]);
-  },
-  parse(result: string) {
-    const [balance] = encoder.decodeFunctionResult(balanceOfFn, result);
+  /**
+   * Just an example how this can be done using same design that was used for Juno.
+   * Omitted some checks and optimizations for simplicity.
+   *
+   * @param address Address for which to fetch token balances.
+   * @param providerId Provider ID to use to query balances.
+   * @returns A Promise of {@link Coin} which contains the balance and denomination of the coin for the specified address
+   */
+  async createBalanceOfTx(
+    address: string,
+    providerId = this.wallet?.providerId
+  ): Promise<Coin> {
+    if (!providerId) {
+      throw new Error();
+    }
 
-    //just convert to string, let consumer condense
-    return (balance as BigNumberish).toString();
-  },
-};
+    const provider = getProvider(providerId)!; // used "!" for simplicity, we should handle the `undefined` case explicitly
 
-export const transfer = {
-  encode(to: string, amount: string) {
-    return encoder.encodeFunctionData(transferFn, [to, amount]);
-  },
-};
+    // This isn't optimized for Txs that have a wallet connected, but don't require a 'from' parameter,
+    // but can code can be updated to accommodate this.
+    const tx = super.createContractTx("balanceOf", { address });
+
+    return provider
+      .request<string>({
+        method: EIPMethods.eth_call,
+        params: [tx],
+      })
+      .then<Coin>((result) => ({
+        amount: (
+          this.iface.decodeFunctionResult(
+            "balanceOf",
+            result
+          )[0] as BigNumberish
+        ).toString(),
+        denom: this.contractAddress,
+      }));
+  }
+
+  /**
+   * Omitted some checks and optimizations for simplicity.
+   *
+   * @param to Target address to transfer to.
+   * @param amount Amount to transfer.
+   * @returns An object containing transaction data necessary to call an EVM contract, see {@link SimulContractTx}
+   */
+  createTransferTx(to: string, amount: string): SimulContractTx {
+    return super.createContractTx("transfer", { to, amount });
+  }
+}

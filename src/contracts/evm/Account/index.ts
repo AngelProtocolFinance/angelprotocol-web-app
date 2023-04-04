@@ -54,7 +54,7 @@ export default class Account extends Contract {
   /**
    *
    * @param aif New AIF to create.
-   * @returns An object {@link SimulContractTx} containing transaction data necessary to call an EVM contract, see
+   * @returns An object containing transaction data necessary to call an EVM contract, see {@link SimulContractTx}
    */
   createCreateEndowmentTx(aif: NewAIF): SimulContractTx {
     return super.createContractTx("createEndowment", { aif });

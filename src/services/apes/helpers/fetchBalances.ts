@@ -2,7 +2,7 @@ import { Coin } from "@cosmjs/proto-signing";
 import { FetchedChain, Token, TokenWithBalance } from "types/aws";
 import { ProviderId } from "types/lists";
 import { queryContract } from "services/juno/queryContract";
-import { balanceOf } from "contracts/evm/ERC20";
+import ERC20 from "contracts/evm/ERC20";
 import { condenseToNum, getProvider } from "helpers";
 import { contracts } from "constants/contracts";
 
@@ -83,15 +83,7 @@ export async function fetchBalances(
         params: [address, "latest"],
       }),
       ...tokens.alts.map((t) =>
-        provider
-          .request<string>({
-            method: "eth_call",
-            params: [{ to: t.token_id, data: balanceOf.encode(address) }],
-          })
-          .then<Coin>((result) => ({
-            amount: balanceOf.parse(result),
-            denom: t.token_id,
-          }))
+        new ERC20(t.token_id).createBalanceOfTx(address, providerId)
       ),
     ]);
 

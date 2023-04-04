@@ -8,7 +8,7 @@ import Account from "contracts/Account";
 import CW20 from "contracts/CW20";
 import GiftCard from "contracts/GiftCard";
 import Contract from "contracts/evm/Contract";
-import { transfer } from "contracts/evm/ERC20";
+import ERC20 from "contracts/evm/ERC20";
 import { logger, scale, scaleToStr } from "helpers";
 import { estimateTx } from "helpers/tx";
 import { ap_wallets } from "constants/ap_wallets";
@@ -87,11 +87,10 @@ export async function estimateDonation({
               ap_wallets.eth,
               scaledAmount
             )
-          : {
-              from: wallet.address,
-              to: token.token_id,
-              data: transfer.encode(ap_wallets.eth, scaledAmount),
-            };
+          : new ERC20(token.token_id, wallet).createTransferTx(
+              ap_wallets.eth,
+              scaledAmount
+            );
       content = { type: "evm", val: tx };
     }
     // ///////////// ESTIMATE TX ///////////////
