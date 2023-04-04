@@ -62,8 +62,15 @@ export type TxStep = {
   status: TxStatus;
 } & Omit<SubmitStep, "step">;
 
-export type DonateArgs = {
+export type DonateBaseArgs = {
   wallet: WalletState;
-  tx: EstimatedTx;
   donation: SubmitStep;
+};
+
+export type DonateArgs = DonateBaseArgs & {
+  tx: EstimatedTx;
+};
+
+export type FiatDonateArgs = DonateBaseArgs & {
+  externalSessionId: string;
 };
