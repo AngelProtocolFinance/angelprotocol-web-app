@@ -1,5 +1,5 @@
 export const MELD_ACCESS_TOKEN =
-  "WGtqyur7j1yYz4HionfL1t:FeS3nzTCXpJfPdEskZ3GhRSMjjYSbnKkqWGtqyur7j1yYz4HionfL1t:FeS3nzTCXpJfPdEskZ3GhRSMjjYSbnKkq";
+  "WGtqyur7j1yYz4HionfL1t:FeS3nzTCXpJfPdEskZ3GhRSMjjYSbnKkq";
 
 export const SERVICE_PROVIDER = "TRANSAK";
 
