@@ -5,7 +5,6 @@ import {
   Coin,
   DeliverTxResponse,
   GasPrice,
-  MsgSendEncodeObject,
   StdFee,
   calculateFee,
   isDeliverTxFailure,
@@ -105,26 +104,6 @@ export default class Contract {
         sender: this.walletAddress,
         msg: toUtf8(JSON.stringify(msg)),
         funds,
-      },
-    };
-  }
-
-  createTransferNativeMsg(
-    scaledAmount: string,
-    recipient: string,
-    denom = this.wallet!.chain.native_currency.token_id
-  ): MsgSendEncodeObject {
-    return {
-      typeUrl: "/cosmos.bank.v1beta1.MsgSend",
-      value: {
-        fromAddress: this.walletAddress,
-        toAddress: recipient,
-        amount: [
-          {
-            denom,
-            amount: scaledAmount,
-          },
-        ],
       },
     };
   }
