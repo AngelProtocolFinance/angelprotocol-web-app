@@ -1,12 +1,12 @@
 import { Dialog } from "@headlessui/react";
 import { useCallback, useEffect, useState } from "react";
-import { invalidateApesTags } from "services/apes";
 import { useModalContext } from "contexts/ModalContext";
 import { WithWallet } from "contexts/WalletContext";
 import IFrame from "components/IFrame";
 import Icon from "components/Icon";
 import { useSetter } from "store/accessors";
 import { SubmitStep } from "slices/donation";
+import { sendFiatDonation } from "slices/donation/sendDonation";
 import { getFiatWidgetUrl } from "helpers/getFiatWidgetUrl";
 
 export default function FiatMeldModal(props: WithWallet<SubmitStep>) {
@@ -14,19 +14,24 @@ export default function FiatMeldModal(props: WithWallet<SubmitStep>) {
   const dispatch = useSetter();
   const { closeModal, setModalOption } = useModalContext();
   const [url, setUrl] = useState();
+  const [externalSessionId, setExternalSessionId] = useState<string>("");
   const handleOnLoad = useCallback(
     () =>
       // there is a high chance the user bought some new crypto prior to closing this modal
       // reload the page to get new wallet balances
-      setModalOption("onClose", () =>
-        dispatch(invalidateApesTags(["donations"]))
-      ),
-    [setModalOption, dispatch]
+      setModalOption("onClose", () => {
+        const { wallet, ...donation } = props;
+        dispatch(sendFiatDonation({ donation, wallet, externalSessionId }));
+      }),
+    [setModalOption, props, dispatch, externalSessionId]
   );
 
   useEffect(() => {
     getFiatWidgetUrl(token, props.wallet.address)
-      .then((response) => setUrl(response.widgetUrl))
+      .then((response) => {
+        setUrl(response.widgetUrl);
+        setExternalSessionId(response.externalSessionId);
+      })
       .catch((err) => console.error(err));
   }, [props.wallet.address, token]);
 
