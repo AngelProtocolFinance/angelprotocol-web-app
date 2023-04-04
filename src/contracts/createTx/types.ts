@@ -22,6 +22,7 @@ type Txs = {
 
   "multisig.submit-transaction": Tx<NewTransaction>;
   "multisig.add-owner": Tx<{ address: string }>;
+  "multisig.remove-owner": Tx<{ address: string }>;
   "multisig.confirm-tx": Tx<{ id: number }>;
   "multisig.execute-tx": Tx<{ id: number }>;
 

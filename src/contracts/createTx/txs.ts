@@ -16,6 +16,8 @@ export const txs: { [T in TxTypes]: (args: TxArgs<T>) => string } = {
     multisig.encodeFunctionData("submitTransaction", toTuple(tx)),
   "multisig.add-owner": ({ address }) =>
     multisig.encodeFunctionData("addOwner", [address]),
+  "multisig.remove-owner": ({ address }) =>
+    multisig.encodeFunctionData("removeOwner", [address]),
   "multisig.confirm-tx": ({ id }) =>
     multisig.encodeFunctionData("confirmTransaction", [id]),
   "multisig.execute-tx": ({ id }) =>
