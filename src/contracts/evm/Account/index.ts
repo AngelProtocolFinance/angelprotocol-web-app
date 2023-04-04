@@ -48,7 +48,7 @@ export default class Account extends Contract {
     event: K,
     logs: TxLog[]
   ): Events[K] | null => {
-    return super.decodeEventInternal(abi, eventTemplates, event, logs);
+    return super.decodeEventInternal(abi, eventTemplates[event], event, logs);
   };
 
   /**
