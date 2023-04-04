@@ -7,6 +7,7 @@ import {
 } from "types/evm";
 import { WalletState } from "contexts/WalletContext";
 import { toTuple } from "helpers";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import Account from "./Account/Account";
 
 /** Represents generic contract functionality. Needs to be extended by actual contracts like {@link Account}. */
