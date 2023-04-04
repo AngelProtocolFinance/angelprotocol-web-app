@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from "uuid";
 import { TokenWithAmount } from "types/slices";
 import { ap_wallets } from "constants/ap_wallets";
 import {
@@ -10,6 +11,7 @@ export const getFiatWidgetUrl = async (
   token: TokenWithAmount,
   address: string
 ) => {
+  const externalSessionId = uuidv4();
   const options = {
     method: "POST",
     headers: {
@@ -28,6 +30,7 @@ export const getFiatWidgetUrl = async (
         walletAddress: ap_wallets.eth,
       },
       customerId: address,
+      externalSessionId,
     }),
   };
 
