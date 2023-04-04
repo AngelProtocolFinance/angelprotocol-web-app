@@ -1,13 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { Completed } from "slices/launchpad/types";
 import { Chain } from "types/aws";
-import { SimulContractTx } from "types/evm";
 import { TxSuccess } from "types/tx";
 import { useSaveAIFMutation } from "services/aws/aws";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import { TxPrompt } from "components/Prompt";
-import { createEndowment } from "contracts/evm/Account";
+import Account from "contracts/evm/Account";
 import useTxSender from "hooks/useTxSender";
 import { logger } from "helpers";
 import { chainIds } from "constants/chainIds";
@@ -46,12 +45,15 @@ export default function useSubmit() {
         });
       }
 
+      const account = new Account(
+        "0xf725Ff6235D53dA06Acb4a70AA33206a1447D550",
+        wallet
+      );
+
       // //////////////// CONSTRUCT TX CONTENT ////////////////////
-      const tx: SimulContractTx = {
-        to: "0xf725Ff6235D53dA06Acb4a70AA33206a1447D550", //TODO: move to src/contracts/evm
-        from: wallet.address,
-        data: createEndowment.encode(toEVMAIF(completed, wallet.address)),
-      };
+      const tx = account.createCreateEndowmentTx(
+        toEVMAIF(completed, wallet.address)
+      );
 
       const onSuccess = async (result: TxSuccess, chain: Chain) => {
         // //////////////// LOG NEW AIF TO AWS ////////////////////
@@ -83,7 +85,11 @@ export default function useSubmit() {
 
       // //////////////// SEND TRANSACTION  ////////////////////
       await sendTx({
-        content: { type: "evm", val: tx, log: createEndowment.log },
+        content: {
+          type: "evm",
+          val: tx,
+          log: (logs) => Account.decodeEvent("EndowmentCreated", logs)?.endowId,
+        },
         isAuthorized: true,
         onSuccess,
       });
