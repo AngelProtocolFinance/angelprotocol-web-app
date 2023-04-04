@@ -18,6 +18,8 @@ export const txs: { [T in TxTypes]: (args: TxArgs<T>) => string } = {
     multisig.encodeFunctionData("addOwner", [address]),
   "multisig.confirm-tx": ({ id }) =>
     multisig.encodeFunctionData("confirmTransaction", [id]),
+  "multisig.execute-tx": ({ id }) =>
+    multisig.encodeFunctionData("executeTransaction", [id]),
 
   // //// ERC20 ////
   "erc20.transfer": (transfer) =>
