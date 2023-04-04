@@ -33,8 +33,8 @@ export default class Contract {
 
   /**
    *
-   * @param abi Contract ABI containing the description of the event to decode
-   * @param eventTemplates Event template to use to populate the data
+   * @param abi Contract ABI containing the description of the event to decode.
+   * @param eventTemplate Event template to use to populate the expected data (event args). Easier to use it as a const than as a type, as it allows for field iteration such as `Object.keys(evenTemplate).map(...)`
    * @param event Name of the event to decode
    * @param logs Transaction logs.
    * @returns The specified event's arguments if it was found (if it was emitted). Otherwise returns `null`.
