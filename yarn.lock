@@ -5466,9 +5466,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@walletconnect/types@npm:2.5.2, @walletconnect/types@npm:^2.5.2":
-  version: 2.5.2
-  resolution: "@walletconnect/types@npm:2.5.2"
+"@walletconnect/types@npm:2.6.0, @walletconnect/types@npm:^2.5.2":
+  version: 2.6.0
+  resolution: "@walletconnect/types@npm:2.6.0"
   dependencies:
     "@walletconnect/events": ^1.0.1
     "@walletconnect/heartbeat": 1.2.0
@@ -5476,7 +5476,7 @@ __metadata:
     "@walletconnect/keyvaluestorage": ^1.0.2
     "@walletconnect/logger": ^2.0.1
     events: ^3.3.0
-  checksum: 119e3e5ded0fe6ce69135f474292c690ed5aa11c9c0fd432b64315472d41154a7bd8787c657d75750ac8717bdf46a0f7996507ea6b46075c63fb4ebf573c193e
+  checksum: 248249aaadd9c64a2d9fa4ac0ab60e38eb82302b71e94d88a5b472344ef64597135edd16fa80d2802d22924a3204333c7eb9ffb345dcc1d0dce4f62ec0e2c790
   languageName: node
   linkType: hard
 
@@ -5503,8 +5503,8 @@ __metadata:
   linkType: hard
 
 "@walletconnect/utils@npm:^2.5.2":
-  version: 2.5.2
-  resolution: "@walletconnect/utils@npm:2.5.2"
+  version: 2.6.0
+  resolution: "@walletconnect/utils@npm:2.6.0"
   dependencies:
     "@stablelib/chacha20poly1305": 1.0.1
     "@stablelib/hkdf": 1.0.1
@@ -5515,13 +5515,13 @@ __metadata:
     "@walletconnect/relay-api": ^1.0.9
     "@walletconnect/safe-json": ^1.0.1
     "@walletconnect/time": ^1.0.2
-    "@walletconnect/types": 2.5.2
+    "@walletconnect/types": 2.6.0
     "@walletconnect/window-getters": ^1.0.1
     "@walletconnect/window-metadata": ^1.0.1
     detect-browser: 5.3.0
     query-string: 7.1.1
     uint8arrays: ^3.1.0
-  checksum: f32cd3170eff48802112831c9ac6e75410012e6b1aaba277d4e3333af138f372d38f418b8dad91b8cd80049bccd30c7dfab72444970b9c859ba76007f7875d67
+  checksum: 9565e8c5b5b6ebd29b197ef3b1adc13ff121bb3e801a56a756cb6921228805a752a5a63556dca913c504441ceec7c9860c55b98962e1b74c1ba93b0eee3dc21c
   languageName: node
   linkType: hard
 
@@ -5663,7 +5663,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web3auth/modal@npm:^5.1.0":
+"@web3auth/modal@npm:^5.1.1":
   version: 5.1.1
   resolution: "@web3auth/modal@npm:5.1.1"
   dependencies:
@@ -6277,7 +6277,7 @@ __metadata:
     "@types/react-test-renderer": 18.0.0
     "@walletconnect/client": ^1.8.0
     "@walletconnect/qrcode-modal": ^1.8.0
-    "@web3auth/modal": ^5.1.0
+    "@web3auth/modal": ^5.1.1
     "@web3auth/torus-wallet-connector-plugin": ^5.1.0
     compress.js: ^1.2.2
     cropperjs: ^1.5.12
@@ -6301,7 +6301,7 @@ __metadata:
     react-helmet: ^6.1.0
     react-hook-form: ^7.43.1
     react-icons: ^4.8.0
-    react-redux: ^8.0.2
+    react-redux: ^8.0.5
     react-router-dom: ^6.2.0
     react-scripts: 5.0.1
     react-test-renderer: ^18.2.0
@@ -17003,9 +17003,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-redux@npm:^8.0.2":
-  version: 8.0.2
-  resolution: "react-redux@npm:8.0.2"
+"react-redux@npm:^8.0.5":
+  version: 8.0.5
+  resolution: "react-redux@npm:8.0.5"
   dependencies:
     "@babel/runtime": ^7.12.1
     "@types/hoist-non-react-statics": ^3.3.1
@@ -17031,7 +17031,7 @@ __metadata:
       optional: true
     redux:
       optional: true
-  checksum: 44c1739c45dad04ecc65a290897c73828ff0bf43f2b7618ed5ef6d4ceecedae38e76cecd189a5ecedf579c28ead05427bc000fb45ad30b9fcd5c2be27cd3ac73
+  checksum: a108f4f7ead6ac005e656d46051474a2bbdb31ede481bbbb3d8d779c1a35e1940b8655577cc5021313411864d305f67fc719aa48d6e5ed8288cf9cbe8b7042e4
   languageName: node
   linkType: hard
 
