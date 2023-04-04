@@ -3,5 +3,6 @@
   "function getConfirmations(uint256) view returns (address[])",
   "function getTransactionIds(uint256,uint256,bool,bool) view returns (uint256[])",
   "function submitTransaction(string,string,address,uint256,bytes) returns (uint256)",
-  "function addOwner(address)"
+  "function addOwner(address)",
+  "function confirmTransaction(uint256)"
 ]

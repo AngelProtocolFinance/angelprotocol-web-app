@@ -8,10 +8,6 @@ export interface NewTransaction extends Tupleable {
   data: string;
 }
 
-export interface NewOwner extends Tupleable {
-  address: string;
-}
-
 export interface TransactionIDsPageOptions extends Tupleable {
   from: number;
   to: number;

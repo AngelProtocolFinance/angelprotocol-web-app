@@ -1,7 +1,7 @@
 import { SettingsControllerUpdate } from "types/contracts";
 import { NewAIF } from "types/contracts/evm";
 import { Transfer } from "types/contracts/evm/erc20";
-import { NewOwner, NewTransaction } from "types/contracts/evm/multisig";
+import { NewTransaction } from "types/contracts/evm/multisig";
 import { Tupleable } from "types/evm";
 import { Contract } from "types/lists";
 
@@ -21,7 +21,8 @@ type Txs = {
   "accounts.update-controller": Tx<SettingsControllerUpdate>;
 
   "multisig.submit-transaction": Tx<NewTransaction>;
-  "multisig.add-owner": Tx<NewOwner>;
+  "multisig.add-owner": Tx<{ address: string }>;
+  "multisig.confirm-tx": Tx<{ id: number }>;
 
   "erc20.transfer": Tx<Transfer>;
 };

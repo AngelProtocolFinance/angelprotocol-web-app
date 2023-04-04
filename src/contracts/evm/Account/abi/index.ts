@@ -1,15 +1,6 @@
 import endowmentCreated from "./events/endowmentCreated.json";
 import endowment from "./queries/endowment.json";
 import state from "./queries/state.json";
-import createEndowment from "./txs/createEndowment.json";
-import updateController from "./txs/updateController.json";
+import txs from "./txs/txs.json";
 
-export const abi = [
-  ...endowmentCreated,
-
-  ...createEndowment,
-  ...updateController,
-
-  ...endowment,
-  ...state,
-];
+export const abi = [...endowmentCreated, ...txs, ...endowment, ...state];
