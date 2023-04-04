@@ -8,7 +8,7 @@ import Account from "contracts/Account";
 import CW20 from "contracts/CW20";
 import GiftCard from "contracts/GiftCard";
 import Contract from "contracts/evm/Contract";
-import ERC20 from "contracts/evm/ERC20";
+import ERC20 from "contracts/evm/ERC20/ERC20";
 import { logger, scale, scaleToStr } from "helpers";
 import { estimateTx } from "helpers/tx";
 import { ap_wallets } from "constants/ap_wallets";
