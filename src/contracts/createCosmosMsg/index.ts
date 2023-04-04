@@ -1,1 +1,1 @@
-export { default } from "./createCosmosMsg";
+export { default, embedMsg } from "./createCosmosMsg";
