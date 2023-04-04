@@ -10,7 +10,6 @@ import { embedMsg } from "contracts/createCosmosMsg";
 import useTxSender from "hooks/useTxSender";
 import { scaleToStr } from "helpers";
 import { getTagPayloads } from "helpers/admin";
-import { contracts } from "constants/contracts";
 import { axlUSDCDenom, denoms, tokens } from "constants/tokens";
 
 export default function useTransferFunds() {
@@ -40,7 +39,7 @@ export default function useTransferFunds() {
     const embedded =
       data.denom === denoms.halo
         ? embedMsg("cw20.transfer", {
-            cw20: contracts["halo"],
+            cw20: "" /** TODO: for conversion to ERC20  */,
             recipient: data.recipient,
             amount: scaled,
           })

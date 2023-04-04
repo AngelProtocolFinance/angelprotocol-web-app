@@ -11,7 +11,6 @@ const mainnet:Contracts = {
     "multisig/review": "",
     accounts:          "juno1e0w8892n60v0juuugvwptj8f6v3ad56ydr3cgxstmpkggjrqzfhsaqh38c",
     "gift-card":       "juno17pghl3qreyqnjlq6hun5ymshl0dkfeelcy738dkgk602lzmgcvaq2e4xav",
-    halo:              ""
 }
 
 //prettier-ignore
@@ -22,7 +21,6 @@ const testnet:Contracts = {
   "multisig/review":   "0x1edC050B5d84cbB0cA0b56356f3F7307efcd50Fb",
   accounts:            "0xf725Ff6235D53dA06Acb4a70AA33206a1447D550",
   "gift-card":         "juno17pghl3qreyqnjlq6hun5ymshl0dkfeelcy738dkgk602lzmgcvaq2e4xav",
-  halo:                ""
 }
 
 export const contracts: Contracts = NETWORK === "TESTNET" ? testnet : mainnet;
