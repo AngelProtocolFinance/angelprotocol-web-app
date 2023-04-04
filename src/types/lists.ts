@@ -39,6 +39,4 @@ export type Contract =
   | "multisig/review"
   | "accounts"
   | "halo"
-  | "gift-card"
-  | "gov"
-  | "airdrop";
+  | "gift-card";

@@ -1,6 +1,6 @@
 import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
 import { toUtf8 } from "@cosmjs/encoding";
-import { Coin, MsgSendEncodeObject } from "@cosmjs/stargate";
+import { MsgSendEncodeObject } from "@cosmjs/stargate";
 import { MsgOptions, MsgSendType, MsgTypes } from "./types";
 import { msgs } from "./msgs";
 

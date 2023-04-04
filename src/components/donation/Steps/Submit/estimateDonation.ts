@@ -5,7 +5,7 @@ import { Estimate, TxContent } from "types/tx";
 import { WalletState } from "contexts/WalletContext";
 import { SubmitStep } from "slices/donation";
 import GiftCard from "contracts/GiftCard";
-import createCosmosMsg from "contracts/createCosmosTx/createCosmosMsg";
+import createCosmosMsg from "contracts/createCosmosMsg";
 import { createTx } from "contracts/createTx/createTx";
 import { logger, scale, scaleToStr } from "helpers";
 import { estimateTx } from "helpers/tx";
