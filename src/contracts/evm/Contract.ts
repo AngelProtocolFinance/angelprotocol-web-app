@@ -10,7 +10,7 @@ import { toTuple } from "helpers";
 import Account from "./Account";
 
 /** Represents generic contract functionality. Needs to be extended by actual contracts like {@link Account}. */
-export default abstract class Contract {
+export default class Contract {
   /** contract's address */
   contractAddress: string;
 
@@ -98,14 +98,16 @@ export default abstract class Contract {
   /**
    * Creates an object containing data necessary to send some native coin value to an EVM contract.
    *
+   * @param from Sender.
+   * @param to Target address.
    * @param value Value of native coin to send.
    * @returns An object {@link SimulSendNativeTx} containing data necessary to send some native coin value to an EVM contract.
    */
-  protected createNativeTx(value: string): SimulSendNativeTx {
-    return {
-      from: this.wallet.address,
-      to: this.contractAddress,
-      value,
-    };
+  static createTransferTx(
+    from: string,
+    to: string,
+    value: string
+  ): SimulSendNativeTx {
+    return { from, to, value };
   }
 }
