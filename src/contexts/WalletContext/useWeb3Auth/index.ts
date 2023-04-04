@@ -1,19 +1,16 @@
 import { SafeEventEmitterProvider } from "@web3auth/base";
-import { MetamaskAdapter } from "@web3auth/metamask-adapter";
 import { Web3Auth } from "@web3auth/modal";
-import { TorusWalletConnectorPlugin } from "@web3auth/torus-wallet-connector-plugin";
 import { LOGIN_MODAL_EVENTS } from "@web3auth/ui";
 import { useEffect, useState } from "react";
+import { ProviderInfo } from "../types";
 import { BaseChain } from "types/aws";
 import { chainIDs } from "constants/chains";
 import { IS_TEST } from "constants/env";
-import { ProviderInfo } from "..";
 import { saveUserAction } from "../helpers";
 import { WEB3AUTH_LOGO, chainConfig } from "./web3AuthConfigs";
+import web3Auth, { torusConnectorPlugin } from "./web3AuthSetup";
 import RPC from "./web3RPC";
 
-const clientId =
-  "BEglQSgt4cUWcj6SKRdu5QkOXTsePmMcusG5EAoyjyOYKlVRjIF1iCNnMOTfpzCiunHRrMui8TIwQPXdkQ8Yxuk"; // get from https://dashboard.web3auth.io
 const SUPPORTED_CHAINS: BaseChain[] = IS_TEST
   ? [
       { chain_id: chainIDs.polygonTest, chain_name: "Polygon Testnet" },
@@ -21,75 +18,33 @@ const SUPPORTED_CHAINS: BaseChain[] = IS_TEST
     ]
   : [{ chain_id: chainIDs.polygonMain, chain_name: "Polygon Mainnet" }];
 
-const DEFAULT_CHAIN: BaseChain = IS_TEST
-  ? { chain_id: chainIDs.polygonTest, chain_name: "Polygon Testnet" }
-  : { chain_id: chainIDs.polygonMain, chain_name: "Polygon Mainnet" };
-
 export default function useWeb3Auth() {
   const [web3auth, setWeb3auth] = useState<Web3Auth | null>(null);
-  const [torusPlugin, setTorusPlugin] =
-    useState<TorusWalletConnectorPlugin | null>(null);
   const [providerInfo, setProviderInfo] = useState<ProviderInfo>();
   const [chainId, setChainId] = useState("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [provider, setProvider] = useState<SafeEventEmitterProvider | null>(
     null
   );
-
-  useEffect(() => {
-    const init = async () => {
-      try {
-        const web3Auth = new Web3Auth({
-          clientId,
-          web3AuthNetwork: "cyan",
-          chainConfig: chainConfig[DEFAULT_CHAIN.chain_id],
-          uiConfig: {
-            theme: "dark",
-            loginMethodsOrder: ["github", "google"],
-            defaultLanguage: "en",
-            appLogo: WEB3AUTH_LOGO, // Your App Logo Here
-          },
-        });
-
-        // adding metamask adapter
-        const metamaskAdapter = new MetamaskAdapter({
-          clientId,
-          sessionTime: 3600, // 1 hour in seconds
-          web3AuthNetwork: "cyan",
-          chainConfig: chainConfig[DEFAULT_CHAIN.chain_id],
-        });
-        web3Auth.configureAdapter(metamaskAdapter);
-
-        const torusConnectorPlugin = new TorusWalletConnectorPlugin({
-          torusWalletOpts: {},
-          walletInitOptions: {
-            whiteLabel: {
-              theme: { isDark: true, colors: { primary: "#00a8ff" } },
-              logoDark: "https://web3auth.io/images/w3a-L-Favicon-1.svg",
-              logoLight: "https://web3auth.io/images/w3a-D-Favicon-1.svg",
-            },
-            useWalletConnect: true,
-          },
-        });
-        setTorusPlugin(torusConnectorPlugin);
-        await web3Auth.addPlugin(torusConnectorPlugin);
-        await web3Auth.initModal();
-        web3Auth.on(LOGIN_MODAL_EVENTS.MODAL_VISIBILITY, (isVisible) => {
-          console.log("LOGIN_MODAL_EVENTS.MODAL_VISIBILITY", isVisible);
-          setIsLoading(isVisible);
-        });
-        setWeb3auth(web3Auth);
-        setProvider(
-          (torusConnectorPlugin?.proxyProvider as SafeEventEmitterProvider) ||
-            web3Auth?.provider
-        );
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    init();
-  }, []);
+  const init = async () => {
+    // let web3Auth: Web3Auth | null = null;
+    try {
+      await web3Auth.initModal();
+      web3Auth.on(LOGIN_MODAL_EVENTS.MODAL_VISIBILITY, (isVisible) => {
+        console.log("LOGIN_MODAL_EVENTS.MODAL_VISIBILITY", isVisible);
+        setIsLoading(isVisible);
+      });
+      setWeb3auth(web3Auth);
+      setProvider(
+        (torusConnectorPlugin?.proxyProvider as SafeEventEmitterProvider) ||
+          web3Auth?.provider
+      );
+    } catch (error) {
+      console.error(error);
+    } finally {
+      return web3Auth;
+    }
+  };
 
   useEffect(() => {
     const setupProviderInfo = async () => {
@@ -111,12 +66,15 @@ export default function useWeb3Auth() {
   }, [provider, chainId]);
 
   const login = async () => {
-    if (!web3auth) {
+    setIsLoading(true);
+    const web3Auth = await init();
+    if (!web3Auth) {
       console.log("web3auth not initialized yet");
       return;
     }
-    const web3authProvider = await web3auth.connect();
+    const web3authProvider = await web3Auth.connect();
     setProvider(web3authProvider);
+    setIsLoading(false);
   };
 
   const logout = async () => {
@@ -129,11 +87,7 @@ export default function useWeb3Auth() {
     } catch (e) {
       console.log(e);
     }
-    try {
-      await torusPlugin?.disconnect();
-    } catch (e) {
-      console.log(e);
-    }
+
     web3auth.clearCache();
     saveUserAction("metamask__pref", "disconnect");
     setProviderInfo(undefined);
