@@ -23,7 +23,6 @@ export default class ERC20 extends Contract {
   }
 
   /**
-   * Just an example how this can be done using same design that was used for Juno.
    * Omitted some checks and optimizations for simplicity.
    *
    * @param address Address for which to fetch token balances.
