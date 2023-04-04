@@ -30,6 +30,7 @@ export async function estimateDonation({
     if (chain.type === "juno-native") {
       const { fromBal, fromGift } = getBreakdown(token);
       const contract = new Account(wallet);
+
       const msgs = [];
       if (fromBal) {
         const scaledAmount = scaleToStr(fromBal, token.decimals);

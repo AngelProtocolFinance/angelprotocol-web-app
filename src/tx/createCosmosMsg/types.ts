@@ -22,6 +22,7 @@ import {
   WithdrawLockPayload,
   WithdrawPayload,
 } from "types/contracts";
+import { Contract } from "types/lists";
 
 type NativeTransfer = {
   amount: string;
@@ -123,7 +124,9 @@ export type Msgs = {
 export type MsgTypes = keyof Msgs;
 export type TxArgs<T extends MsgTypes> = Msgs[T]["args"];
 
+type Empty = { [key: string]: never };
 export type MsgOptions<T extends MsgTypes> = T extends `${infer C}.${string}`
-  ? //for juno no hardcoded-contracts
-    { [key in C]: string } & Msgs[T]["args"]
-  : Msgs[T]["args"];
+  ? C extends Contract
+    ? Msgs[T]["args"]
+    : { [key in C]: string } & Msgs[T]["args"]
+  : Empty;

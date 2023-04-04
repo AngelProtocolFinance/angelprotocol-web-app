@@ -1,16 +1,13 @@
 import { useFormContext } from "react-hook-form";
+import createCosmosMsg, { embedMsg } from "tx/createCosmosMsg";
 import { OwnerUpdateMeta, RegistrarOwnerValues } from "pages/Admin/types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
 import Prompt from "components/Prompt";
-import CW3 from "contracts/CW3";
-import Registrar from "contracts/Registrar";
 import useTxSender from "hooks/useTxSender";
 
 export default function useUpdateOwner() {
   const { cw3, propMeta } = useAdminResources();
-  const { wallet } = useGetWallet();
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },
@@ -30,26 +27,21 @@ export default function useUpdateOwner() {
       });
     }
 
-    const registrarContract = new Registrar(wallet);
-    const configUpdateMsg = registrarContract.createEmbeddedOwnerUpdateMsg({
-      new_owner: data.new_owner,
-    });
-
     const ownerUpdateMeta: OwnerUpdateMeta = {
       type: "reg_owner",
       data: { owner: data.initialOwner, newOwner: data.new_owner },
     };
 
-    const adminContract = new CW3(wallet, cw3);
-    const proposalMsg = adminContract.createProposalMsg(
-      data.title,
-      data.description,
-      [configUpdateMsg],
-      JSON.stringify(ownerUpdateMeta)
-    );
+    const msg = createCosmosMsg("sender", "cw3.propose", {
+      cw3,
+      title: data.title,
+      description: data.description,
+      msgs: [embedMsg("registrar.update-owner", { new_owner: data.new_owner })],
+      meta: JSON.stringify(ownerUpdateMeta),
+    });
 
     await sendTx({
-      content: { type: "cosmos", val: [proposalMsg] },
+      content: { type: "cosmos", val: [msg] },
       ...propMeta,
     });
   }

@@ -1,4 +1,5 @@
 import { useFormContext } from "react-hook-form";
+import createCosmosMsg, { embedMsg } from "tx/createCosmosMsg";
 import {
   RegistrarConfigExtensionValues as RV,
   RegistrarConfigUpdateMeta,
@@ -6,10 +7,7 @@ import {
 import { RegistrarConfigExtensionPayload as RP } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
 import Prompt from "components/Prompt";
-import CW3 from "contracts/CW3";
-import Registrar from "contracts/Registrar";
 import useTxSender from "hooks/useTxSender";
 import { genDiffMeta, getPayloadDiff } from "helpers/admin";
 import { cleanObject } from "helpers/cleanObject";
@@ -19,7 +17,6 @@ type Value = RP[Key];
 
 export default function useConfigureRegistrar() {
   const { cw3, propMeta } = useAdminResources();
-  const { wallet } = useGetWallet();
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },
@@ -45,27 +42,21 @@ export default function useConfigureRegistrar() {
       });
     }
 
-    const registrarContract = new Registrar(wallet);
-    const configUpdateMsg =
-      registrarContract.createEmbeddedConfigExtensionUpdateMsg(
-        cleanObject(diff)
-      );
-
     const configUpdateMeta: RegistrarConfigUpdateMeta = {
       type: "reg_config_extension",
       data: genDiffMeta(diffEntries, initialConfigPayload),
     };
 
-    const adminContract = new CW3(wallet, cw3);
-    const proposalMsg = adminContract.createProposalMsg(
+    const msg = createCosmosMsg("sender", "cw3.propose", {
+      cw3,
       title,
       description,
-      [configUpdateMsg],
-      JSON.stringify(configUpdateMeta)
-    );
+      msgs: [embedMsg("registrar.update-config-extension", cleanObject(diff))],
+      meta: JSON.stringify(configUpdateMeta),
+    });
 
     await sendTx({
-      content: { type: "cosmos", val: [proposalMsg] },
+      content: { type: "cosmos", val: [msg] },
       ...propMeta,
     });
   }
