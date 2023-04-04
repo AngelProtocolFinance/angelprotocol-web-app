@@ -6,7 +6,7 @@ import { useSetter } from "store/accessors";
 import { SubmitStep, setStep } from "slices/donation";
 import { humanize } from "helpers";
 import { appRoutes } from "constants/routes";
-import FiatKadoModal from "./FiatKadoModal";
+import FiatMeldModal from "./FiatMeldModal";
 import getBreakdown from "./getBreakdown";
 
 export default function FiatSubmit(props: WithWallet<SubmitStep>) {
@@ -23,7 +23,7 @@ export default function FiatSubmit(props: WithWallet<SubmitStep>) {
   const { showModal } = useModalContext();
 
   const handleOpenKado = useCallback(
-    () => showModal(FiatKadoModal, props),
+    () => showModal(FiatMeldModal, props),
     [props, showModal]
   );
 
