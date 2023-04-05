@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import {
   FieldValues,
   Path,
+  get,
   useController,
   useFormContext,
 } from "react-hook-form";
@@ -68,6 +69,7 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
       </div>
 
       <div
+        aria-invalid={!!get(errors[name], "amount")?.message}
         aria-disabled={isSubmitting}
         className={`${
           classes?.inputContainer ?? ""
