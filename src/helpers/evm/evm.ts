@@ -2,6 +2,7 @@ import WalletConnect from "@walletconnect/client";
 import { InjectedProvider, RequestArguments } from "types/evm";
 import { ProviderId } from "types/lists";
 import { Dwindow } from "types/window";
+import web3Auth from "contexts/WalletContext/useWeb3Auth/web3AuthSetup";
 import { WC_BRIDGE } from "constants/urls";
 
 export const connector = new WalletConnect({
@@ -26,7 +27,7 @@ export function getProvider(
     case "metamask":
       return dwindow.ethereum;
     case "web3auth-metamask":
-      return dwindow.ethereum;
+      return web3Auth.provider as InjectedProvider;
     /** only used in sendTx */
     case "evm-wc":
       return wcProvider as InjectedProvider;
