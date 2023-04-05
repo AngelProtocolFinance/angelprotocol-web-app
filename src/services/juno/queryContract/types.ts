@@ -14,7 +14,6 @@ import {
   RegistrarConfigExtension,
   VotesPageOptions,
 } from "types/contracts";
-import { PageOptions as FundsPageOptions } from "types/contracts/evm/index-fund";
 import { Contract } from "types/lists";
 
 type Addr = { addr: string };
@@ -28,7 +27,13 @@ export interface ContractQueries {
   "registrar.config": Query<null, RegistrarConfig>;
   "registrar.config-extension": Query<null, RegistrarConfigExtension>;
 
-  "index-fund.funds": Query<FundsPageOptions, FundDetails[]>;
+  "index-fund.funds": Query<
+    {
+      startAfter: number;
+      limit: number;
+    },
+    FundDetails[]
+  >;
   "index-fund.alliance-members": Query<null, AllianceMember[]>;
   "index-fund.config": Query<null, IndexFundConfig>;
 

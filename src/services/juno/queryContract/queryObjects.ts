@@ -2,6 +2,7 @@ import type { BigNumber } from "@ethersproject/bignumber";
 import {
   DecodedEndowment,
   DecodedEndowmentState,
+  DecodedFund,
   DecodedGiftCardBalance,
   toEndowStatusText,
   toEndowType,
@@ -38,8 +39,24 @@ export const queryObjects: {
   /** index fund */
   "index-fund.funds": [
     (args) => indexFund.encodeFunctionData("queryFundsList", toTuple(args)),
-    () => [],
-    "placeholder",
+    (result) => {
+      const decoded: DecodedFund[] = indexFund.decodeFunctionResult(
+        "queryFundsList",
+        result
+      )[0];
+      console.log({ decoded });
+      return decoded.map((f) => ({
+        id: f.id.toNumber(),
+        name: f.name,
+        description: f.description,
+        members: f.members.map((m) => m.toNumber()),
+        rotatingFund: f.rotatingFund,
+        splitToLiquid: f.splitToLiquid.toNumber(),
+        expiryTime: f.expiryTime.toNumber(),
+        expiryHeight: f.expiryHeight.toNumber(),
+      }));
+    },
+    "migrated",
   ],
   "index-fund.alliance-members": ["", () => [], "placeholder"],
   "index-fund.config": ["", () => p["index-fund.config"], "placeholder"],
