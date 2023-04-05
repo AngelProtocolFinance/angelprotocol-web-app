@@ -1634,7 +1634,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.17.2, @babel/runtime@npm:^7.20.6, @babel/runtime@npm:^7.21.0":
+"@babel/runtime@npm:^7.17.2, @babel/runtime@npm:^7.20.6, @babel/runtime@npm:^7.21.0, @babel/runtime@npm:^7.x":
   version: 7.21.0
   resolution: "@babel/runtime@npm:7.21.0"
   dependencies:
@@ -3659,7 +3659,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@solana/web3.js@npm:^1.63.1":
+"@solana/web3.js@npm:^1.63.1, @solana/web3.js@npm:^1.x":
   version: 1.75.0
   resolution: "@solana/web3.js@npm:1.75.0"
   dependencies:
@@ -5480,7 +5480,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@walletconnect/types@npm:^1.6.4, @walletconnect/types@npm:^1.6.5, @walletconnect/types@npm:^1.6.6, @walletconnect/types@npm:^1.8.0":
+"@walletconnect/types@npm:^1.6.4, @walletconnect/types@npm:^1.6.5, @walletconnect/types@npm:^1.6.6, @walletconnect/types@npm:^1.8.0, @walletconnect/types@npm:^1.x":
   version: 1.8.0
   resolution: "@walletconnect/types@npm:1.8.0"
   checksum: 194d615888068030183489222641332987846aa5c6bcf0a62fa60ca7a282b9f94932c49fcd2b293a859e98624fe3e7a2d3c5fb66545fe30d3391e7ac91a99e34
@@ -6241,6 +6241,7 @@ __metadata:
     "@babel/core": ^7.20.2
     "@babel/plugin-syntax-flow": ^7.18.6
     "@babel/plugin-transform-react-jsx": ^7.20.13
+    "@babel/runtime": ^7.x
     "@cosmjs/cosmwasm-stargate": ^0.30.0
     "@cosmjs/encoding": ^0.30.0
     "@cosmjs/proto-signing": ^0.30.0
@@ -6255,6 +6256,7 @@ __metadata:
     "@keplr-wallet/wc-qrcode-modal": ^0.11.31
     "@peculiar/webcrypto": ^1.4.0
     "@reduxjs/toolkit": ^1.9.0
+    "@solana/web3.js": ^1.x
     "@tailwindcss/container-queries": ^0.1.0
     "@tailwindcss/line-clamp": 0.4.2
     "@terra-money/terra.js": ^3.1.7
@@ -6277,6 +6279,7 @@ __metadata:
     "@types/react-test-renderer": 18.0.0
     "@walletconnect/client": ^1.8.0
     "@walletconnect/qrcode-modal": ^1.8.0
+    "@walletconnect/types": ^1.x
     "@web3auth/modal": ^5.1.1
     "@web3auth/torus-wallet-connector-plugin": ^5.1.0
     compress.js: ^1.2.2
