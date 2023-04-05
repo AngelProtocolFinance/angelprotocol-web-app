@@ -25,6 +25,8 @@ export function getProvider(
       return dwindow.BinanceChain;
     case "metamask":
       return dwindow.ethereum;
+    case "web3auth-metamask":
+      return dwindow.ethereum;
     /** only used in sendTx */
     case "evm-wc":
       return wcProvider as InjectedProvider;
