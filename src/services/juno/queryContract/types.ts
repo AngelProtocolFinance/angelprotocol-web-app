@@ -34,7 +34,13 @@ export interface ContractQueries {
     },
     FundDetails[]
   >;
-  "index-fund.alliance-members": Query<null, AllianceMember[]>;
+  "index-fund.alliance-members": Query<
+    {
+      startAfter: number;
+      limit: number;
+    },
+    AllianceMember[]
+  >;
   "index-fund.config": Query<null, IndexFundConfig>;
 
   "gift-card.balance": Query<Addr, GenericBalance>;

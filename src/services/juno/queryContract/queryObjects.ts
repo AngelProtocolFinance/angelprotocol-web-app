@@ -44,7 +44,6 @@ export const queryObjects: {
         "queryFundsList",
         result
       )[0];
-      console.log({ decoded });
       return decoded.map((f) => ({
         id: f.id.toNumber(),
         name: f.name,
@@ -58,7 +57,21 @@ export const queryObjects: {
     },
     "migrated",
   ],
-  "index-fund.alliance-members": ["", () => [], "placeholder"],
+  "index-fund.alliance-members": [
+    (args) =>
+      indexFund.encodeFunctionData("queryAllianceMembers", toTuple(args)),
+    (result) => {
+      const decoded: string[] = indexFund.decodeFunctionResult(
+        "queryAllianceMembers",
+        result
+      )[0];
+      return decoded.map((a) => ({
+        wallet: a,
+        name: "Alliance member",
+      }));
+    },
+    "semi-migrated",
+  ],
   "index-fund.config": ["", () => p["index-fund.config"], "placeholder"],
 
   /** erc20 */
