@@ -60,6 +60,7 @@
     "@terra-money/terra.js": "^3.1.7",
     "@terra-money/wallet-provider": "^3.11.1",
     "@types/react-helmet": "^6.1.6",
+    "@types/uuid": "^9.0.1",
     "@walletconnect/client": "^1.8.0",
     "@walletconnect/qrcode-modal": "^1.8.0",
     "@web3auth/modal": "^5.1.1",
