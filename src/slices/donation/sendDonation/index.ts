@@ -121,15 +121,15 @@ export const sendFiatDonation = createAsyncThunk<void, FiatDonateArgs>(
         charityName: recipient.name,
         denomination: token.symbol,
         splitLiq: `${pctLiquidSplit}`,
-        transactionId: "To be Processed",
+        transactionId: externalSessionId,
         transactionDate: new Date().toISOString(),
         endowmentId: recipient.id,
         fiatRamp: SERVICE_PROVIDER,
-        paymentMethod: externalSessionId || "",
-        destinationChainId: "",
+        paymentMethod: externalSessionId,
+        destinationChainId: "juno-1",
       });
 
-      //need to create an additional state for submitted txn
+      //need to create an additional state for submitted fiat txn
       updateTx({ hash: "Transaction Submitted" });
 
       //invalidate cache entries
