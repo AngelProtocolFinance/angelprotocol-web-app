@@ -1,5 +1,4 @@
-export const MELD_ACCESS_TOKEN =
-  "WGtqyur7j1yYz4HionfL1t:FeS3nzTCXpJfPdEskZ3GhRSMjjYSbnKkq";
+export const MELD_ACCESS_TOKEN = process.env.REACT_APP_MELD_ACCESS_TOKEN;
 
 export const SERVICE_PROVIDER = "TRANSAK";
 
