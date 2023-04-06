@@ -62,8 +62,6 @@
     "@types/react-helmet": "^6.1.6",
     "@walletconnect/client": "^1.8.0",
     "@walletconnect/qrcode-modal": "^1.8.0",
-    "@web3auth/modal": "^5.1.1",
-    "@web3auth/torus-wallet-connector-plugin": "^5.1.0",
     "compress.js": "^1.2.2",
     "cropperjs": "^1.5.12",
     "decimal.js": "^10.3.1",
@@ -81,7 +79,6 @@
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.2.0",
     "react-scripts": "5.0.1",
-    "web3": "^1.9.0",
     "yup": "^0.32.9"
   },
   "resolutions": {
@@ -95,7 +92,6 @@
     "@babel/plugin-transform-react-jsx": "^7.20.13",
     "@babel/runtime": "^7.x",
     "@peculiar/webcrypto": "^1.4.0",
-    "@solana/web3.js": "^1.x",
     "@tailwindcss/container-queries": "^0.1.0",
     "@tailwindcss/line-clamp": "0.4.2",
     "@testing-library/dom": "^9.0.0",
@@ -113,7 +109,6 @@
     "@types/react-dom": "^18.0.0",
     "@types/react-router-dom": "^5.1.8",
     "@types/react-test-renderer": "18.0.0",
-    "@walletconnect/types": "^1.x",
     "eslint": "^8.3.0",
     "eslint-config-prettier": "^8.7.0",
     "eslint-plugin-prettier": "^4.2.1",
