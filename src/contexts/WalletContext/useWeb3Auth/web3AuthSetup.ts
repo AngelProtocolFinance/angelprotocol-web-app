@@ -15,7 +15,9 @@ const web3Auth = new Web3AuthNoModal({
   chainConfig: chainConfig[DEFAULT_CHAIN.chain_id],
 });
 
-const torusWalletAdapter = new TorusWalletAdapter();
+const torusWalletAdapter = new TorusWalletAdapter({
+  chainConfig: chainConfig[DEFAULT_CHAIN.chain_id],
+});
 web3Auth.configureAdapter(torusWalletAdapter);
 
 export default web3Auth;
