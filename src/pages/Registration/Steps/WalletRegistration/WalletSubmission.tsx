@@ -22,7 +22,7 @@ export default function WalletSubmission({
     !(
       providerId === "keplr" ||
       providerId === "keplr-wc" ||
-      providerId === "web3auth-metamask"
+      providerId === "web3auth-torus"
     )
   ) {
     return (

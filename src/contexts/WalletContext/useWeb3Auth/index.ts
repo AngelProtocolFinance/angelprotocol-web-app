@@ -1,15 +1,26 @@
-import { SafeEventEmitterProvider } from "@web3auth/base";
-import { Web3Auth } from "@web3auth/modal";
-import { LOGIN_MODAL_EVENTS } from "@web3auth/ui";
-import { useEffect, useState } from "react";
+import type { Maybe, SafeEventEmitterProvider } from "@web3auth/base";
+import Decimal from "decimal.js";
+import { useState } from "react";
 import { ProviderInfo } from "../types";
 import { BaseChain } from "types/aws";
+import { logger } from "helpers";
 import { chainIDs } from "constants/chains";
 import { IS_TEST } from "constants/env";
-import { saveUserAction } from "../helpers";
+import { EIPMethods } from "constants/evm";
 import { WEB3AUTH_LOGO, chainConfig } from "./web3AuthConfigs";
-import web3Auth, { torusConnectorPlugin } from "./web3AuthSetup";
-import RPC from "./web3RPC";
+import web3Auth from "./web3AuthSetup";
+
+type Loading = { status: "loading" };
+
+export type Connected = {
+  status: "connected";
+  address: string;
+  chainId: string;
+  provider: SafeEventEmitterProvider;
+};
+
+type Disconnected = { status: "disconnected" };
+type WalletState = Loading | Connected | Disconnected;
 
 const SUPPORTED_CHAINS: BaseChain[] = IS_TEST
   ? [
@@ -19,94 +30,72 @@ const SUPPORTED_CHAINS: BaseChain[] = IS_TEST
   : [{ chain_id: chainIDs.polygonMain, chain_name: "Polygon Mainnet" }];
 
 export default function useWeb3Auth() {
-  const [web3auth, setWeb3auth] = useState<Web3Auth | null>(null);
-  const [providerInfo, setProviderInfo] = useState<ProviderInfo>();
-  const [chainId, setChainId] = useState("");
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [provider, setProvider] = useState<SafeEventEmitterProvider | null>(
-    null
-  );
-  const init = async () => {
-    // let web3Auth: Web3Auth | null = null;
+  const [state, setState] = useState<WalletState>({ status: "disconnected" });
+
+  const login = async (isNew = false) => {
     try {
-      await web3Auth.initModal();
-      web3Auth.on(LOGIN_MODAL_EVENTS.MODAL_VISIBILITY, (isVisible) => {
-        console.log("LOGIN_MODAL_EVENTS.MODAL_VISIBILITY", isVisible);
-        setIsLoading(isVisible);
-      });
-      setWeb3auth(web3Auth);
-      setProvider(
-        (torusConnectorPlugin?.proxyProvider as SafeEventEmitterProvider) ||
-          web3Auth?.provider
-      );
-    } catch (error) {
-      console.error(error);
-    } finally {
-      return web3Auth;
-    }
-  };
+      setState({ status: "loading" });
 
-  useEffect(() => {
-    const setupProviderInfo = async () => {
+      await web3Auth.init();
+      const provider = await web3Auth.connectTo("torus-evm");
+
       if (!provider) {
-        console.log("provider not initialized yet");
-        return;
+        if (isNew) return;
+        throw new Error("Failed to connect to wallet");
       }
-      const rpc = new RPC(provider);
-      const chainId = await rpc.getChainId();
-      const address = await rpc.getAccounts();
-      setProviderInfo({
-        providerId: "web3auth-metamask",
-        logo: WEB3AUTH_LOGO,
-        chainId,
-        address,
-      });
-    };
-    if (provider) setupProviderInfo();
-  }, [provider, chainId]);
 
-  const login = async () => {
-    setIsLoading(true);
-    const web3Auth = await init();
-    if (!web3Auth) {
-      console.log("web3auth not initialized yet");
-      return;
+      const accounts = await provider.request<string[]>({
+        method: EIPMethods.eth_requestAccounts,
+      });
+      const hexChainId = await provider.request<string>({
+        method: EIPMethods.eth_chainId,
+      });
+
+      if (!(val(accounts) && val(hexChainId))) {
+        if (isNew) return;
+        throw new Error("Failed to connect to wallet");
+      }
+
+      setState({
+        status: "connected",
+        address: accounts[0],
+        chainId: new Decimal(hexChainId).toString(),
+        provider,
+      });
+    } catch (err) {
+      logger.error(err);
+      setState({ status: "disconnected" });
     }
-    const web3authProvider = await web3Auth.connect();
-    setProvider(web3authProvider);
-    setIsLoading(false);
   };
 
   const logout = async () => {
-    if (!web3auth) {
-      console.log("web3auth not initialized yet");
-      return;
-    }
-    try {
-      await web3auth.logout();
-    } catch (e) {
-      console.log(e);
-    }
-
-    web3auth.clearCache();
-    saveUserAction("metamask__pref", "disconnect");
-    setProviderInfo(undefined);
+    await web3Auth.logout({ cleanup: true });
+    setState({ status: "disconnected" });
   };
 
   const switchChain = async (chainId: string) => {
-    if (!provider) {
-      console.log("provider not initialized yet");
-      return;
+    if (web3Auth.status !== "ready") {
+      throw new Error("Failed to switch chain");
     }
+
     if (chainConfig[chainId]) {
-      await web3auth?.addChain(chainConfig[chainId]);
-      await web3auth?.switchChain({ chainId: chainConfig[chainId].chainId });
+      await web3Auth.addChain(chainConfig[chainId]);
+      await web3Auth.switchChain({ chainId: chainConfig[chainId].chainId });
     }
-    setChainId(chainId);
   };
 
+  const providerInfo: ProviderInfo | undefined =
+    state.status === "connected"
+      ? {
+          logo: WEB3AUTH_LOGO,
+          providerId: "web3auth-torus",
+          chainId: state.chainId,
+          address: state.address,
+        }
+      : undefined;
+
   return {
-    isLoading,
+    isLoading: state.status === "loading",
     connection: {
       connect: login,
       logo: "https://web3auth.io/images/w3a-L-Favicon-1.svg",
@@ -117,4 +106,9 @@ export default function useWeb3Auth() {
     switchChain,
     supportedChains: SUPPORTED_CHAINS,
   };
+}
+
+//Maybe is T type guard
+function val<T>(v: Maybe<T>): v is T {
+  return !!v;
 }
