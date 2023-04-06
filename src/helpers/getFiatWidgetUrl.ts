@@ -4,6 +4,7 @@ import { ap_wallets } from "constants/ap_wallets";
 import {
   DESTINATION_CURRENCY_CODE,
   MELD_ACCESS_TOKEN,
+  MELD_API,
   SERVICE_PROVIDER,
 } from "constants/fiatTransactions";
 
@@ -34,10 +35,7 @@ export const getFiatWidgetUrl = async (
     }),
   };
 
-  const response = await fetch(
-    "https://api-sb.meld.io/crypto/session/widget",
-    options
-  );
+  const response = await fetch(`${MELD_API}/crypto/session/widget`, options);
 
   return response.json();
 };
