@@ -116,7 +116,11 @@ export const queryObjects: {
   /** multisig */
   "multisig.members": [
     multisig.encodeFunctionData("getOwners", []),
-    (result) => multisig.decodeFunctionResult("getOwners", result)[0],
+    (result) => {
+      const d: string[] = multisig.decodeFunctionResult("getOwners", result)[0];
+      //wallets outputs lowercase addresses, but addresses from contracts are not
+      return d.map((a) => a.toLowerCase());
+    },
     "migrated",
   ],
   "multisig.config": ["", () => p["multisig.config"], "placeholder"],

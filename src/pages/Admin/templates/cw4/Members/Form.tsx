@@ -1,7 +1,7 @@
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { ErrorStatus } from "components/Status";
-import { DivContainer, Submitter } from "components/admin";
+import { DivContainer } from "components/admin";
 import { isEmpty } from "helpers";
 import AddForm from "./Adder";
 import Member from "./Member";
@@ -11,11 +11,12 @@ export default function Form() {
   const { showModal } = useModalContext();
   return (
     <DivContainer>
+      <h3>Members</h3>
       <div className="p-3 rounded border border-prim bg-orange-l6 dark:bg-blue-d7">
         {isEmpty(members) ? (
-          <ErrorStatus>No members found</ErrorStatus>
+          <ErrorStatus classes="text-sm">No members found</ErrorStatus>
         ) : (
-          <div className="flex flex-col gap-2 mb-2">
+          <div className="flex flex-col gap-2">
             {members.map((m) => (
               <Member key={m} address={m} />
             ))}
@@ -24,13 +25,11 @@ export default function Form() {
       </div>
 
       <button
+        className="btn-outline-filled justify-self-end text-sm py-1 -mt-2"
         onClick={() => showModal(AddForm, { address: "", action: "add" })}
       >
         add member
       </button>
-      <Submitter type="button" onClick={() => alert("submit")}>
-        Submit
-      </Submitter>
     </DivContainer>
   );
 }

@@ -10,10 +10,16 @@ const shape: SchemaShape<FormValues> = {
   // to add or to remove
   address: requiredWalletAddr(chainIds.polygon).when(
     ["$members", "$action"],
-    ([members, action], schema: StringSchema) =>
-      action === "add"
+    (...args: any[]) => {
+      const [members, action, schema] = args as [
+        string[],
+        string,
+        StringSchema
+      ];
+      return action === "add"
         ? schema.notOneOf(members, "member already exist")
-        : schema
+        : schema;
+    }
   ),
 };
 

@@ -11,7 +11,7 @@ export default function Member({ address }: { address: string }) {
       <button
         onClick={() => showModal(AddForm, { address, action: "remove" })}
         type="button"
-        className="bg-white/30 ml-2 rounded-md p-0.5"
+        className="bg-white/30 ml-auto rounded-md p-0.5"
       >
         <Icon type="Close" />
       </button>

@@ -1,30 +1,28 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { FormValues as FV } from "./types";
+import { FormValues as FV, FormProps } from "./types";
 import { useAdminResources } from "pages/Admin/Guard";
 import Modal from "components/Modal";
 import { Field } from "components/form";
 import { schema } from "./schema";
+import useUpdateMembers from "./useUpdateMembers";
 
-type Props = {
-  address: string;
-  action: "remove" | "add";
-};
-
-export default function AddForm({ address, action }: Props) {
+export default function AddForm({ address, action }: FormProps) {
   const { members } = useAdminResources();
+
   const methods = useForm<FV>({
     resolver: yupResolver(schema),
     context: { members, action },
     defaultValues: { address },
   });
-  const { handleSubmit } = methods;
 
-  function submit() {}
+  const { updateMembers, isSending } = useUpdateMembers(action);
+
+  const { handleSubmit } = methods;
 
   return (
     <Modal
-      onSubmit={handleSubmit(submit)}
+      onSubmit={handleSubmit(updateMembers)}
       as="form"
       className="p-6 fixed-center z-10 grid gap-4 text-gray-d2 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded overflow-hidden"
     >
@@ -50,7 +48,11 @@ export default function AddForm({ address, action }: Props) {
           required
         />
       </FormProvider>
-      <button type="submit" className="btn btn-orange mt-6 text-sm">
+      <button
+        type="submit"
+        className="btn btn-orange mt-6 text-sm"
+        disabled={isSending}
+      >
         Submit
       </button>
     </Modal>
