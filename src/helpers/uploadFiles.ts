@@ -26,7 +26,7 @@ export async function uploadFiles(
           fileName: `${timeStamp}-${f.name.replace(SPACES, "_")}`,
         }),
         headers: { authorization },
-      })
+      }).catch((e: any) => console.log(e))
     )
   );
 
