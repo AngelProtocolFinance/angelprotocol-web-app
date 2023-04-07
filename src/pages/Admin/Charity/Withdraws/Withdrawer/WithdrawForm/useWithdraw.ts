@@ -22,7 +22,7 @@ const multiSigWalletImplementation =
 export default function useWithdraw() {
   const { handleSubmit, getValues } = useFormContext<WithdrawValues>();
 
-  const { cw3, id, endow_type, propMeta } = useAdminResources<"charity">();
+  const { cw3, id, propMeta } = useAdminResources<"charity">();
   const { wallet } = useGetWallet();
   const { handleError } = useErrorContext();
 
@@ -54,7 +54,9 @@ export default function useWithdraw() {
     const beneficiary = isPolygon
       ? data.beneficiary
       : ap_wallets.polygon_withdraw;
-    const isSendToApCW3 = endow_type === "charity" && type === "locked";
+
+    // AST's would not even be able to submit a "locked" withdrawal from UI
+    const isSendToApCW3 = type === "locked";
 
     // logic was created by looking at how appropriate `` > tests are constructed, see:
     // - liquid withdrawal: test/integration-test/EndowmentMembersCharity.Accounts.test.js#179
