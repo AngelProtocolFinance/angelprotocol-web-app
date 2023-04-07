@@ -1,3 +1,6 @@
+import contractsLocal from "./contracts-local.json";
+import contractsMainnet from "./contracts-mainnet.json";
+import contractsTestnet from "./contracts-testnet.json";
 import { NETWORK } from "./env";
 
 //prettier-ignore
@@ -69,3 +72,10 @@ const local: Contracts = {
 
 export const contracts: Contracts =
   NETWORK === "LOCAL" ? local : NETWORK === "TESTNET" ? testnet : mainnet;
+
+export const contractsEvm =
+  NETWORK === "LOCAL"
+    ? contractsLocal
+    : NETWORK === "TESTNET"
+    ? contractsTestnet
+    : contractsMainnet;

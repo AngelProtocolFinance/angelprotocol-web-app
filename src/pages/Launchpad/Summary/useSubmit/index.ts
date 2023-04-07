@@ -45,10 +45,7 @@ export default function useSubmit() {
         });
       }
 
-      const account = new Account(
-        "0xf725Ff6235D53dA06Acb4a70AA33206a1447D550",
-        wallet
-      );
+      const account = new Account(wallet);
 
       // //////////////// CONSTRUCT TX CONTENT ////////////////////
       const tx = account.createCreateEndowmentTx(

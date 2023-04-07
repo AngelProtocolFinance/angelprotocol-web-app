@@ -1,6 +1,7 @@
 import { NewAIF } from "types/contracts/evm";
 import { SimulContractTx, TxLog } from "types/evm";
 import { WalletState } from "contexts/WalletContext";
+import { contractsEvm } from "constants/contracts";
 import { Contract } from "../Contract";
 import abi from "./abi.json";
 
@@ -32,8 +33,8 @@ export class Account extends Contract {
    * @param contractAddress Address of the contract.
    * @param wallet The connected wallet.
    */
-  constructor(contractAddress: string, wallet: WalletState) {
-    super(abi, contractAddress, wallet);
+  constructor(wallet: WalletState) {
+    super(abi, contractsEvm.accounts.diamond, wallet);
   }
 
   /**
