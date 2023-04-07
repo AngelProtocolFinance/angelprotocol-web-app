@@ -116,13 +116,7 @@ export const queryObjects: {
   /** multisig */
   "multisig.members": [
     multisig.encodeFunctionData("getOwners", []),
-    (result) => {
-      const owners: string[] = multisig.decodeFunctionResult(
-        "getOwners",
-        result
-      )[0];
-      return owners.map((addr) => ({ addr, weight: 1 }));
-    },
+    (result) => multisig.decodeFunctionResult("getOwners", result)[0],
     "migrated",
   ],
   "multisig.config": ["", () => p["multisig.config"], "placeholder"],

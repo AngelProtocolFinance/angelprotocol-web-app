@@ -1,6 +1,5 @@
 import { ProposalMeta } from "pages/Admin/types";
 import AllianceUpdate from "./AllianceUpdate";
-import CWMemberUpdate from "./CWMemberUpdate";
 import DiffTable from "./DiffTable";
 import EndowmentApplication from "./EndowmentApplication";
 import EndowmentStatusUpdate from "./EndowmentStatusUpdate";
@@ -33,10 +32,6 @@ export default function Preview(props: ProposalMeta) {
       return <FundTransfer {...props.data} />;
     case "cw3_application":
       return <EndowmentApplication {...props.data} />;
-
-    /** _cw4 */
-    case "cw4_members":
-      return <CWMemberUpdate {...props.data} />;
 
     /** _account */
     case "acc_withdraw":

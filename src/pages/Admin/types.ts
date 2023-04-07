@@ -3,7 +3,6 @@ import { EndowmentProposal } from "types/aws";
 import {
   AllianceMember,
   Asset,
-  CW4Member,
   EndowmentStatus,
   EndowmentStatusStrNum,
   EndowmentStatusText,
@@ -26,14 +25,14 @@ export type Templates =
   | "if_config"
   | "if_owner"
 
+  //cw4
+  | "cw4_members"
+
   //cw3
   | "cw3_config"
   | "cw3_transfer"
   | "cw3_application"
   | "review_cw3_config"
-
-  //cw4
-  | "cw4_members"
 
   //account
   | "acc_withdraw"
@@ -87,15 +86,7 @@ export type FundConfigUpdateMeta = MetaConstructor<
   DiffSet<FundConfig>
 >;
 
-/** _cw4 */
-
-export type CW4MemberUpdateMeta = MetaConstructor<
-  "cw4_members",
-  {
-    toAdd: CW4Member[];
-    toRemove: string[];
-  }
->;
+export type CW4MemberUpdateMeta = MetaConstructor<"cw4_members", undefined>;
 
 /** _cw3 */
 export type ApplicationMeta = MetaConstructor<
