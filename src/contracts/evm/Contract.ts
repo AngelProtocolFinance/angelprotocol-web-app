@@ -7,6 +7,23 @@ import {
 } from "types/evm";
 import { WalletState } from "contexts/WalletContext";
 import { toTuple } from "helpers";
+import { EIPMethods } from "constants/evm";
+import { POLYGON_RPC } from "constants/urls";
+
+type FetchResult =
+  | { result: string }
+  | { error: { code: number; message: string } };
+
+export type ResultDecoder<Result> = (
+  result: string,
+  iface: Interface,
+  contractAddress: string
+) => Result;
+
+export type Query<Args extends Tupleable, Result> = {
+  args: Args;
+  result: Result;
+};
 
 /** Represents generic contract functionality. Needs to be extended by actual contracts. */
 export class Contract {
@@ -115,5 +132,49 @@ export class Contract {
     value: string
   ): SimulSendNativeTx {
     return { from, to, value };
+  }
+
+  /**
+   * Omitted some checks and optimizations for simplicity.
+   *
+   * @param address Address for which to fetch token balances.
+   * @param providerId Provider ID to use to query balances.
+   * @returns A Promise of {@link Coin} which contains the balance and denomination of the coin for the specified address
+   */
+  protected async queryInternal<Result>(
+    funcName: string,
+    args: Tupleable,
+    decode: ResultDecoder<Result>
+  ): Promise<Result> {
+    const tx = this.createContractTx(funcName, args);
+
+    const result = await fetch(POLYGON_RPC, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        jsonrpc: "2.0",
+        id: 1,
+        method: EIPMethods.eth_call,
+        params: [tx, "latest"],
+      }),
+    })
+      .then<FetchResult>((res) => {
+        if (!res.ok) {
+          throw new Error(`failed query ${funcName}`);
+        }
+        return res.json();
+      })
+      .then<Result>((res) => {
+        if ("error" in res) {
+          throw new Error(`error ${funcName}:` + res.error.message);
+        }
+
+        return decode(res.result, this.iface, this.contractAddress);
+      })
+      .catch((err) => {
+        throw new Error(err);
+      });
+
+    return result;
   }
 }

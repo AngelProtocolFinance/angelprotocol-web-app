@@ -83,7 +83,7 @@ export async function fetchBalances(
         params: [address, "latest"],
       }),
       ...tokens.alts.map((t) =>
-        new ERC20(t.token_id).createBalanceOfTx(address, providerId)
+        new ERC20(t.token_id).query("balanceOf", { address })
       ),
     ]);
 

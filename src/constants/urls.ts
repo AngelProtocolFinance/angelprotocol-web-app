@@ -1,4 +1,5 @@
 import { BASE_DOMAIN } from "constants/common";
+import { IS_TEST } from "./env";
 
 export const APIs = {
   aws: "https://kpnxz5rzo2.execute-api.us-east-1.amazonaws.com",
@@ -15,3 +16,5 @@ export const SUPPORT =
   "https://share-eu1.hsforms.com/14aljI0OEQje2DDmJiZoLFgetp37";
 
 export const TERMS_OF_USE = `${BASE_DOMAIN}/terms-of-use-npo/`;
+
+export const POLYGON_RPC = IS_TEST ? "https://rpc.ankr.com/polygon_mumbai" : "";

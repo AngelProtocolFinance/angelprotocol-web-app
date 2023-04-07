@@ -2,10 +2,25 @@ import { Coin } from "@cosmjs/proto-signing";
 import { BigNumberish } from "@ethersproject/bignumber";
 import { SimulContractTx } from "types/evm";
 import { WalletState } from "contexts/WalletContext";
-import { getProvider } from "helpers";
-import { EIPMethods } from "constants/evm";
-import { Contract } from "../Contract";
+import { Contract, Query, ResultDecoder } from "../Contract";
 import abi from "./abi.json";
+
+type Queries = {
+  balanceOf: Query<{ address: string }, Coin>;
+};
+
+type FunctionType = keyof Queries;
+
+const RESULT_DECODERS: {
+  [key in FunctionType]: ResultDecoder<Queries[key]["result"]>;
+} = {
+  balanceOf: (result, iface, contractAddress) => ({
+    amount: (
+      iface.decodeFunctionResult("balanceOf", result)[0] as BigNumberish
+    ).toString(),
+    denom: contractAddress,
+  }),
+};
 
 /**
  * Representation of the `Account` contract that extends and wraps the generic `Contract` functionality.
@@ -29,34 +44,11 @@ export class ERC20 extends Contract {
    * @param providerId Provider ID to use to query balances.
    * @returns A Promise of {@link Coin} which contains the balance and denomination of the coin for the specified address
    */
-  async createBalanceOfTx(
-    address: string,
-    providerId = this.wallet?.providerId
-  ): Promise<Coin> {
-    if (!providerId) {
-      throw new Error();
-    }
-
-    const provider = getProvider(providerId)!; // used "!" for simplicity, we should handle the `undefined` case explicitly
-
-    // This isn't optimized for Txs that have a wallet connected, but don't require a 'from' parameter,
-    // but can code can be updated to accommodate this.
-    const tx = super.createContractTx("balanceOf", { address });
-
-    return provider
-      .request<string>({
-        method: EIPMethods.eth_call,
-        params: [tx],
-      })
-      .then<Coin>((result) => ({
-        amount: (
-          this.iface.decodeFunctionResult(
-            "balanceOf",
-            result
-          )[0] as BigNumberish
-        ).toString(),
-        denom: this.contractAddress,
-      }));
+  async query<T extends FunctionType>(
+    funcName: T,
+    args: Queries[T]["args"]
+  ): Promise<Queries[T]["result"]> {
+    return super.queryInternal(funcName, args, RESULT_DECODERS[funcName]);
   }
 
   /**
