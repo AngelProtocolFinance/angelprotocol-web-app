@@ -3,11 +3,18 @@ import { ContractQueries } from "./types";
 export const placeholders: {
   [K in Exclude<
     keyof ContractQueries,
-    "accounts.endowment" | "accounts.state"
+    | "accounts.endowment"
+    | "accounts.state"
+    | "multisig.members"
+    | "erc20.balance"
+    | "multisig.votes"
+    | "index-fund.funds"
+    | "index-fund.alliance-members"
   >]: ReturnType<ContractQueries[K]["transform"]>;
 } = {
   "registrar.config": {
     owner: "terra1...",
+    acceptedTokens: { cw20: [] },
   },
   "registrar.config-extension": {
     accounts_contract: "terra1...",
@@ -31,8 +38,6 @@ export const placeholders: {
     swap_factory: "terra1...",
     swaps_router: "terra1...",
   },
-  "index-fund.funds": [],
-  "index-fund.alliance-members": [],
   "index-fund.config": {
     owner: "juno123abc..",
     registrar_contract: "juno123abc..",
@@ -49,9 +54,6 @@ export const placeholders: {
     native: [],
   },
 
-  "erc20.balance": "1000000",
-
-  "multisig.members": [],
   "multisig.config": {
     group_addr: "juno123abc..",
     threshold: {
@@ -80,5 +82,4 @@ export const placeholders: {
     threshold: { absolute_percentage: { percentage: "0.5", total_weight: 2 } },
     proposal_type: "normal",
   },
-  "multisig.votes": [],
 };
