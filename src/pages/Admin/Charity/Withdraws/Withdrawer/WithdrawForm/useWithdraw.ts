@@ -49,9 +49,9 @@ export default function useWithdraw() {
       [new Array<string>(), new Array<number>()]
     );
 
-    const isPolygon = data.network === chainIds.polygon;
+    const isWithdrawalToPolygon = data.network === chainIds.polygon;
     //if not polygon, send to ap wallet (polygon)
-    const beneficiary = isPolygon
+    const beneficiary = isWithdrawalToPolygon
       ? data.beneficiary
       : ap_wallets.polygon_withdraw;
 
@@ -107,7 +107,7 @@ export default function useWithdraw() {
       },
       //Polygon withdrawal
       ...propMeta,
-      onSuccess: isPolygon
+      onSuccess: isWithdrawalToPolygon
         ? undefined //no need to POST to AWS if destination is polygon
         : async (response, chain) =>
             await logProposal(
