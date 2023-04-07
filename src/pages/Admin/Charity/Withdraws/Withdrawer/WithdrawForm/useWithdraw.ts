@@ -56,12 +56,12 @@ export default function useWithdraw() {
       : ap_wallets.polygon_withdraw;
 
     // AST's would not even be able to submit a "locked" withdrawal from UI
-    const isSendToApCW3 = type === "locked";
+    const isSendToApMultisig = type === "locked";
 
     // logic was created by looking at how appropriate `` > tests are constructed, see:
     // - liquid withdrawal: test/integration-test/EndowmentMembersCharity.Accounts.test.js#179
     // - locked withdrawal: test/integration-test/EndowmentMembersCharity.Accounts.test.js#279
-    const withdrawTx: SimulContractTx = isSendToApCW3
+    const withdrawTx: SimulContractTx = isSendToApMultisig
       ? {
           from: wallet.address,
           to: multiSigWalletImplementation,
@@ -101,7 +101,7 @@ export default function useWithdraw() {
       content: {
         type: "evm",
         val: withdrawTx,
-        log: isSendToApCW3
+        log: isSendToApMultisig
           ? LockedWithdraw.propose.log
           : EndowmentMultiSig.submitTransaction.log,
       },
