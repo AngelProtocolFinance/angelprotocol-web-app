@@ -16,8 +16,9 @@ import useLogWithdrawProposal from "./useLogWithdrawProposal";
 
 const accountsDiamond = "0xf725Ff6235D53dA06Acb4a70AA33206a1447D550";
 const lockedWithdrawAddress = ""; // not yet sure where to find this as it's missing from `contract-address.json`
-const multiSigWalletImplementation =
-  "0x7D8F4C57582abBbfa977541d740908b983A39525";
+const APTeamMultiSigProxy = "0xC26Ac43b14ebCbff5029792052aF3e4DF3233902";
+const EndowmentMultiSigEmitterProxy =
+  "0xC0c1d1659f88c0D0737069354b93874cBebfdfD7";
 
 export default function useWithdraw() {
   const { handleSubmit, getValues } = useFormContext<WithdrawValues>();
@@ -64,7 +65,7 @@ export default function useWithdraw() {
     const withdrawTx: SimulContractTx = isSendToApMultisig
       ? {
           from: wallet.address,
-          to: multiSigWalletImplementation,
+          to: APTeamMultiSigProxy,
           data: EndowmentMultiSig.submitTransaction.encode(
             "Locked Withdraw Proposal",
             `withdraw locked assets from endowment id: ${id}`,
@@ -81,7 +82,7 @@ export default function useWithdraw() {
       : //normal proposal when withdraw doesn't need to go thru AP
         {
           from: wallet.address,
-          to: multiSigWalletImplementation,
+          to: EndowmentMultiSigEmitterProxy,
           data: EndowmentMultiSig.submitTransaction.encode(
             "Liquid Withdraw proposal",
             `withdraw liquid assets from endowment id: ${id}`,
