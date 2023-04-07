@@ -9,12 +9,14 @@ import {
   toSettingsPermission,
 } from "./decoded-types";
 import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
+// import { RegistrarConfig } from "types/contracts";
 import { UNSDG_NUMS } from "types/lists";
 import { accounts } from "contracts/evm/Account";
 import { erc20 } from "contracts/evm/ERC20";
 import { giftCard } from "contracts/evm/gift-card";
 import { indexFund } from "contracts/evm/index-fund";
 import { multisig } from "contracts/evm/multisig";
+import { registrar } from "contracts/evm/registrar";
 import { toTuple } from "helpers";
 import { placeholders as p } from "./placeholders";
 
@@ -29,7 +31,19 @@ export const queryObjects: {
     : [(args: Q[K]["args"]) => string, Q[K]["transform"], MigrationState];
 } = {
   /** registrar */
-  "registrar.config": ["", () => p["registrar.config"], "placeholder"],
+  "registrar.config": [
+    registrar.encodeFunctionData("queryConfig", []),
+    () => {
+      return p["registrar.config"];
+      // const decoded: RegistrarConfig = registrar.decodeFunctionResult(
+      //   "queryConfig",
+      //   result
+      // )[0];
+      //select fields only
+      // return { owner: decoded.owner, acceptedTokens: decoded.acceptedTokens };
+    },
+    "placeholder",
+  ],
   "registrar.config-extension": [
     "",
     () => p["registrar.config-extension"],
