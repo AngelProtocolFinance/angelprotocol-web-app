@@ -1,7 +1,7 @@
 import { NewAIF } from "types/contracts/evm";
 import { SimulContractTx, TxLog } from "types/evm";
 import { WalletState } from "contexts/WalletContext";
-import Contract from "../Contract";
+import { Contract } from "../Contract";
 import abi from "./abi.json";
 
 /**
@@ -25,7 +25,7 @@ type Events = typeof eventTemplates;
  * Representation of the `Account` contract that extends and wraps the generic `Contract` functionality.
  * Ensures that `Contract` methods are called with the Account ABI.
  */
-export default class Account extends Contract {
+export class Account extends Contract {
   /**
    * Passes the Account ABI to the parent `Contract` class, ensuring its methods are called with that ABI.
    *

@@ -6,7 +6,7 @@ import { useSaveAIFMutation } from "services/aws/aws";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import { TxPrompt } from "components/Prompt";
-import Account from "contracts/evm/Account/Account";
+import { Account } from "contracts/evm";
 import useTxSender from "hooks/useTxSender";
 import { logger } from "helpers";
 import { chainIds } from "constants/chainIds";

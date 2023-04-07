@@ -4,14 +4,14 @@ import { SimulContractTx } from "types/evm";
 import { WalletState } from "contexts/WalletContext";
 import { getProvider } from "helpers";
 import { EIPMethods } from "constants/evm";
-import Contract from "../Contract";
+import { Contract } from "../Contract";
 import abi from "./abi.json";
 
 /**
  * Representation of the `Account` contract that extends and wraps the generic `Contract` functionality.
  * Ensures that `Contract` methods are called with the Account ABI.
  */
-export default class ERC20 extends Contract {
+export class ERC20 extends Contract {
   /**
    * Passes the Account ABI to the parent `Contract` class, ensuring its methods are called with that ABI.
    *

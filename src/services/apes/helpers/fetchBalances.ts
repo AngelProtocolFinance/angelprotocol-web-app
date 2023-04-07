@@ -2,7 +2,7 @@ import { Coin } from "@cosmjs/proto-signing";
 import { FetchedChain, Token, TokenWithBalance } from "types/aws";
 import { ProviderId } from "types/lists";
 import { queryContract } from "services/juno/queryContract";
-import ERC20 from "contracts/evm/ERC20/ERC20";
+import { ERC20 } from "contracts/evm";
 import { condenseToNum, getProvider } from "helpers";
 import { contracts } from "constants/contracts";
 
