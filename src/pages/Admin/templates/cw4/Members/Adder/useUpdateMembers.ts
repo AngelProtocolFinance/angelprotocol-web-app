@@ -28,8 +28,8 @@ export default function useUpdateMembers(action: FormProps["action"]) {
 
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig: dest,
-      title: "hello world",
-      description: "hahahdfas",
+      title: fv.title,
+      description: fv.description,
       destination: dest,
       value: "0",
       data,
