@@ -7,7 +7,8 @@ export type RebalanceDetails = {
 };
 
 export type AcceptedTokens = {
-  native: string[];
+  //this may not be final
+  //?? erc20
   cw20: string[];
 };
 
@@ -36,6 +37,7 @@ export type RegistrarConfigExtension = {
 
 export type RegistrarConfig = {
   owner: string;
+  acceptedTokens: AcceptedTokens;
   ///add fields as needed
 };
 
