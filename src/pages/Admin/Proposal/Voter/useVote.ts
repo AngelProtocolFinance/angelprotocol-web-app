@@ -24,6 +24,12 @@ export default function useVote() {
       return handleError(new WalletDisconnectedError());
     }
 
+    if (vote === "no") {
+      return handleError(
+        "Can't vote 'no'. Need to decide on the flow for this case or if we even need the 'no' option."
+      );
+    }
+
     const toAddress =
       type === "application"
         ? polygonContracts.multiSig.ApplicationsMultiSigProxy
@@ -32,10 +38,7 @@ export default function useVote() {
     const voteMsg: SimulContractTx = {
       from: wallet.address,
       to: toAddress,
-      data:
-        vote === "no"
-          ? MultiSigGeneric.revokeTransaction.encode(transactionId)
-          : MultiSigGeneric.confirmTransaction.encode(transactionId),
+      data: MultiSigGeneric.confirmTransaction.encode(transactionId),
     };
 
     await sendTx({

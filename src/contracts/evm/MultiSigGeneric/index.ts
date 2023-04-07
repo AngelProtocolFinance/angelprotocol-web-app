@@ -7,7 +7,6 @@ const iface = new Interface(abi);
 
 const confirmTransactionFn = iface.getFunction("confirmTransaction");
 const executeTransactionFn = iface.getFunction("executeTransaction");
-const revokeTransactionFn = iface.getFunction("revokeTransaction");
 
 export const confirmTransaction = {
   encode(transactionId: number) {
@@ -33,11 +32,5 @@ export const executeTransaction = {
       execLog.topics
     );
     return (id as BigNumber).toString();
-  },
-};
-
-export const revokeTransaction = {
-  encode(transactionId: number) {
-    return iface.encodeFunctionData(revokeTransactionFn, [transactionId]);
   },
 };
