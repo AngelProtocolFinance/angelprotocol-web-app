@@ -17,9 +17,11 @@ type Tx<T extends Tupleable> = {
 };
 
 type Txs = {
+  // //// ACCOUNTS ////
   "accounts.create-endowment": Tx<NewAIF>;
   "accounts.update-controller": Tx<SettingsControllerUpdate>;
 
+  // //// MULTISIG ////
   "multisig.submit-transaction": Tx<NewTransaction>;
   "multisig.add-owner": Tx<{ address: string }>;
   "multisig.remove-owner": Tx<{ address: string }>;
@@ -28,13 +30,33 @@ type Txs = {
 
   "erc20.transfer": Tx<Transfer>;
 
-  "index-fund.config": Tx<any>;
+  // //// INDEX FUND ////
+  "index-fund.config": Tx<{
+    fundRotation: number;
+    fundMemberLimit: number;
+    fundingGoal: number;
+  }>;
   "index-fund.update-owner": Tx<{ newOwner: string }>;
-  "index-fund.create-fund": Tx<any>;
+  "index-fund.create-fund": Tx<{
+    name: string;
+    description: string;
+    members: number[];
+    rotatingFund: boolean;
+    splitToLiquid: number;
+    expiryTime: number;
+    expiryHeight: number;
+  }>;
   "index-fund.remove-fund": Tx<{ id: number }>;
   "index-fund.remove-member": Tx<{ id: number }>;
-  "index-fund.update-members": Tx<any>;
-  "index-fund.update-alliance-list": Tx<any>;
+  "index-fund.update-members": Tx<{
+    fundId: number;
+    add: number[];
+    remove: number[];
+  }>;
+  "index-fund.update-alliance-list": Tx<{
+    address: string;
+    action: "add" | "remove";
+  }>;
 };
 
 export type TxTypes = keyof Txs;
