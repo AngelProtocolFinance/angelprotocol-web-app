@@ -14,6 +14,7 @@ import {
   RegistrarConfigExtension,
   VotesPageOptions,
 } from "types/contracts";
+import { AccountType } from "types/contracts/evm";
 import { Contract } from "types/lists";
 
 type Addr = { addr: string };
@@ -55,6 +56,10 @@ export interface ContractQueries {
 
   "accounts.endowment": Query<{ id: number }, EndowmentDetails>;
   "accounts.state": Query<{ id: number }, EndowmentState>;
+  "accounts.token-balance": Query<
+    { id: number; accounType: AccountType; token: string },
+    string
+  >;
 }
 
 export type ContractQueryTypes = keyof ContractQueries;

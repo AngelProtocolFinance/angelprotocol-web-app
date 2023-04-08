@@ -1,4 +1,4 @@
-import type { BigNumber } from "@ethersproject/bignumber";
+import { BigNumber } from "@ethersproject/bignumber";
 import {
   DecodedEndowment,
   DecodedEndowmentState,
@@ -271,6 +271,17 @@ export const queryObjects: {
         //FUTURE: index-fund can also be beneficiary
         closing_beneficiary: d.closingBeneficiary.data.addr,
       };
+    },
+    "migrated",
+  ],
+  "accounts.token-balance": [
+    (args) => accounts.encodeFunctionData("queryTokenAmount", toTuple(args)),
+    (result) => {
+      const d: BigNumber = accounts.decodeFunctionResult(
+        "queryTokenAmount",
+        result
+      )[0];
+      return d.toString();
     },
     "migrated",
   ],

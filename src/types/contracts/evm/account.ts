@@ -26,6 +26,8 @@ type Duration = {
   data: { height: number; time: number };
 };
 
+export type AccountType = 0 /** locked */ | 1 /** liquid */ | 2 /** none */;
+
 export type ADDRESS_ZERO = "0x0000000000000000000000000000000000000000" & {
   __type: "address_zero";
 };
