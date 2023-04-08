@@ -34,13 +34,18 @@ export const queryObjects: {
   "registrar.config": [
     registrar.encodeFunctionData("queryConfig", []),
     () => {
-      return p["registrar.config"];
       // const decoded: RegistrarConfig = registrar.decodeFunctionResult(
       //   "queryConfig",
       //   result
       // )[0];
       //select fields only
       // return { owner: decoded.owner, acceptedTokens: decoded.acceptedTokens };
+      return {
+        owner: p["registrar.config"].owner,
+        acceptedTokens: {
+          cw20: ["0xaBCe32FBA4C591E8Ea5A5f711F7112dC08BCee74"],
+        },
+      };
     },
     "placeholder",
   ],
