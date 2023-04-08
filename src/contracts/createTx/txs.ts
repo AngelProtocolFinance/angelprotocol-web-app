@@ -1,5 +1,6 @@
 import { TxArgs, TxTypes } from "./types";
 import { erc20 } from "contracts/evm/ERC20";
+import { indexFund } from "contracts/evm/index-fund";
 import { multisig } from "contracts/evm/multisig";
 import { toTuple } from "helpers";
 import { accounts } from "../evm/Account";
@@ -28,11 +29,18 @@ export const txs: { [T in TxTypes]: (args: TxArgs<T>) => string } = {
     erc20.encodeFunctionData("transfer", toTuple(transfer)),
 
   // //// INDEX FUND ////
-  "index-fund.config": (config) => "",
-  "index-fund.update-owner": ({ newOwner }) => "",
-  "index-fund.create-fund": (fund) => "",
-  "index-fund.remove-fund": ({ id }) => "",
-  "index-fund.remove-member": ({ id }) => "",
-  "index-fund.update-members": (members) => "",
-  "index-fund.update-alliance-list": (allianceList) => "",
+  "index-fund.config": (config) =>
+    indexFund.encodeFunctionData("updateConfig", [toTuple(config)]),
+  "index-fund.update-owner": ({ newOwner }) =>
+    indexFund.encodeFunctionData("updateOwner", [newOwner]),
+  "index-fund.create-fund": (fund) =>
+    indexFund.encodeFunctionData("createIndexFund", toTuple(fund)),
+  "index-fund.remove-fund": ({ id }) =>
+    indexFund.encodeFunctionData("removeIndexFund", [id]),
+  "index-fund.remove-member": ({ id }) =>
+    indexFund.encodeFunctionData("removeMember", [id]),
+  "index-fund.update-members": (update) =>
+    indexFund.encodeFunctionData("updateFundMembers", toTuple(update)),
+  "index-fund.update-alliance-list": (update) =>
+    indexFund.encodeFunctionData("updateAllianceMemberList", toTuple(update)),
 };
