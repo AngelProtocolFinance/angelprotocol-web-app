@@ -27,6 +27,14 @@ type Txs = {
   "multisig.execute-tx": Tx<{ id: number }>;
 
   "erc20.transfer": Tx<Transfer>;
+
+  "index-fund.config": Tx<any>;
+  "index-fund.update-owner": Tx<{ newOwner: string }>;
+  "index-fund.create-fund": Tx<any>;
+  "index-fund.remove-fund": Tx<{ id: number }>;
+  "index-fund.remove-member": Tx<{ id: number }>;
+  "index-fund.update-members": Tx<any>;
+  "index-fund.update-alliance-list": Tx<any>;
 };
 
 export type TxTypes = keyof Txs;

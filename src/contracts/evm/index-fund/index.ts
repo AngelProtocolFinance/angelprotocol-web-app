@@ -1,4 +1,5 @@
 import { Interface } from "@ethersproject/abi";
-import abi from "./abi.json";
+import queries from "./queries.json";
+import txs from "./txs.json";
 
-export const indexFund = new Interface(abi);
+export const indexFund = new Interface([...queries, ...txs]);
