@@ -4,6 +4,7 @@ import { PropsWithChildren, ReactNode } from "react";
 import {
   FieldValues,
   Path,
+  get,
   useController,
   useFormContext,
 } from "react-hook-form";
@@ -89,6 +90,7 @@ export function Selector<
           tabIndex={-1}
         />
         <Listbox.Button
+          aria-invalid={!!get(errors, multiple ? name : labelId)?.message}
           aria-disabled={isDisabled}
           as={multiple ? "div" : "button"}
           className={`${button} ${selectorButtonStyle} ${

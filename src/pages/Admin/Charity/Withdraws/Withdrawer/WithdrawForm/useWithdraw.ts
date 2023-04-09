@@ -15,7 +15,7 @@ import useLogWithdrawProposal from "./useLogWithdrawProposal";
 export default function useWithdraw() {
   const { handleSubmit, getValues } = useFormContext<WithdrawValues>();
 
-  const { multisig, id, endow_type, propMeta } = useAdminResources<"charity">();
+  const { multisig, id, propMeta } = useAdminResources<"charity">();
   const { wallet } = useGetWallet();
 
   const sendTx = useTxSender();
@@ -34,7 +34,6 @@ export default function useWithdraw() {
     const isJuno = data.network === chainIds.juno;
     //if not juno, send to ap wallet (juno)
     const beneficiary = isJuno ? data.beneficiary : ap_wallets.juno_withdraw;
-    const isSendToApCW3 = endow_type === "charity" && type === "locked";
 
     const meta: WithdrawMeta = {
       type: "acc_withdraw",
@@ -47,27 +46,29 @@ export default function useWithdraw() {
     const account = new Account(wallet);
     const endowCW3 = new CW3Endowment(wallet, multisig);
 
-    const proposal = isSendToApCW3
-      ? endowCW3.createWithdrawProposalMsg({
-          endowment_id: id,
-          assets,
-          beneficiary,
-          description: data.reason,
-        })
-      : //normal proposal when withdraw doesn't need to go thru AP
-        endowCW3.createProposalMsg(
-          "withdraw proposal",
-          `withdraw ${type} assets from endowment id: ${id}`,
-          [
-            account.createEmbeddedWithdrawMsg({
-              id,
-              beneficiary,
-              acct_type: data.type,
-              assets,
-            }),
-          ],
-          JSON.stringify(meta)
-        );
+    const proposal =
+      // AST's won't even have the opportunity to submit a "withdraw from 'locked' funds" form
+      type === "locked"
+        ? endowCW3.createWithdrawProposalMsg({
+            endowment_id: id,
+            assets,
+            beneficiary,
+            description: data.reason,
+          })
+        : //normal proposal when withdraw doesn't need to go thru AP
+          endowCW3.createProposalMsg(
+            "withdraw proposal",
+            `withdraw ${type} assets from endowment id: ${id}`,
+            [
+              account.createEmbeddedWithdrawMsg({
+                id,
+                beneficiary,
+                acct_type: data.type,
+                assets,
+              }),
+            ],
+            JSON.stringify(meta)
+          );
 
     await sendTx({
       content: { type: "cosmos", val: [proposal], attribute: "proposal_id" },

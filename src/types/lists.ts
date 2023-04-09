@@ -30,7 +30,8 @@ export type ProviderId =
   | "station"
   | "walletconnect"
   | "keplr-wc"
-  | "keplr";
+  | "keplr"
+  | "web3auth-metamask";
 
 export type Contract =
   | "registrar"
