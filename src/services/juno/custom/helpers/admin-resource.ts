@@ -36,7 +36,7 @@ export async function getMeta(
   endowId: number,
   multisig: string,
   user?: string
-): Promise<[AdminResources["propMeta"], CW3Config]> {
+): Promise<[AdminResources["propMeta"], CW3Config, string[] /** members */]> {
   const [members, config] = await Promise.all([
     queryContract("multisig.members", { multisig }),
     queryContract("multisig.config", { multisig }),
@@ -66,10 +66,8 @@ export async function getMeta(
     successMeta: { message, link: { url, description } },
     tagPayloads,
     isAuthorized:
-      (user &&
-        isEthereumAddress(user) &&
-        members.findIndex((m) => m.addr === user)) !== -1 || false,
+      (user && isEthereumAddress(user) && members.includes(user)) || false,
   };
 
-  return [meta, config];
+  return [meta, config, members];
 }
