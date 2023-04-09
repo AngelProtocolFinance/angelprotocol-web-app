@@ -11,6 +11,8 @@ export const txs: { [T in TxTypes]: (args: TxArgs<T>) => string } = {
     accounts.encodeFunctionData("createEndowment", [toTuple(aif)]),
   "accounts.update-controller": (update) =>
     accounts.encodeFunctionData("updateEndowmentController", [toTuple(update)]),
+  "accounts.deposit-erc20": (args) =>
+    accounts.encodeFunctionData("depositERC20", toTuple(args)),
 
   // //// MULTISIG ////
   "multisig.submit-transaction": (tx) =>
@@ -27,6 +29,8 @@ export const txs: { [T in TxTypes]: (args: TxArgs<T>) => string } = {
   // //// ERC20 ////
   "erc20.transfer": (transfer) =>
     erc20.encodeFunctionData("transfer", toTuple(transfer)),
+  "erc20.approve": (allowance) =>
+    erc20.encodeFunctionData("approve", toTuple(allowance)),
 
   // //// INDEX FUND ////
   "index-fund.config": (config) =>

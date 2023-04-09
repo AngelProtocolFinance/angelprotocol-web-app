@@ -1,6 +1,6 @@
 import { SettingsControllerUpdate } from "types/contracts";
-import { NewAIF } from "types/contracts/evm";
-import { Transfer } from "types/contracts/evm/erc20";
+import { ERC20Deposit, NewAIF } from "types/contracts/evm";
+import { Allowance, Transfer } from "types/contracts/evm/erc20";
 import { NewTransaction } from "types/contracts/evm/multisig";
 import { Tupleable } from "types/evm";
 import { Contract } from "types/lists";
@@ -20,6 +20,7 @@ type Txs = {
   // //// ACCOUNTS ////
   "accounts.create-endowment": Tx<NewAIF>;
   "accounts.update-controller": Tx<SettingsControllerUpdate>;
+  "accounts.deposit-erc20": Tx<ERC20Deposit>;
 
   // //// MULTISIG ////
   "multisig.submit-transaction": Tx<NewTransaction>;
@@ -29,6 +30,7 @@ type Txs = {
   "multisig.execute-tx": Tx<{ id: number }>;
 
   "erc20.transfer": Tx<Transfer>;
+  "erc20.approve": Tx<Allowance>;
 
   // //// INDEX FUND ////
   "index-fund.config": Tx<{

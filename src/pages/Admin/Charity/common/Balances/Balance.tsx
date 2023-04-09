@@ -15,7 +15,6 @@ export default function Balance({ type }: Props) {
     token:
       "0xaBCe32FBA4C591E8Ea5A5f711F7112dC08BCee74" /** TODO: should come from registrar.accepted_tokens */,
   });
-  console.log(query);
 
   return (
     <div className="@container rounded border border-prim bg-orange-l6 dark:bg-blue-d6">

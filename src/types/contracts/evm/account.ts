@@ -124,3 +124,15 @@ export interface NewAIF extends Tupleable {
   ignoreUserSplits: boolean;
   splitToLiquid: SplitDetails;
 }
+
+type DepositRequest = {
+  id: number;
+  lockedPercentage: number;
+  liquidPercentage: number;
+};
+
+export interface ERC20Deposit extends Tupleable {
+  details: DepositRequest;
+  token: string;
+  amount: string;
+}
