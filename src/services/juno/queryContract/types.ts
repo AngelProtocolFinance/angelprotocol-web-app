@@ -2,7 +2,6 @@ import {
   AdminVoteInfo,
   AllianceMember,
   CW3Config,
-  CW4Member,
   EndowmentDetails,
   EndowmentState,
   FundDetails,
@@ -48,7 +47,7 @@ export interface ContractQueries {
 
   "erc20.balance": Query<Addr, string>;
 
-  "multisig.members": Query<null, CW4Member[]>;
+  "multisig.members": Query<null, string[]>;
   "multisig.proposals": Query<PageOptions, Proposal[]>;
   "multisig.config": Query<null, CW3Config>;
   "multisig.proposal": Query<{ id: number }, Proposal>;

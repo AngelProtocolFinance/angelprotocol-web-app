@@ -34,11 +34,6 @@ export type EmbeddedBankMsg = {
 
 export type Vote = "yes" | "no";
 
-export type CW4Member = {
-  addr: string;
-  weight: number;
-};
-
 type AbsolutePercentage = { absolute_percentage: { percentage: string } };
 export type Threshold = AbsolutePercentage; // | AbsoluteCount | Quorum;
 

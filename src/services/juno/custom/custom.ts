@@ -52,12 +52,17 @@ export const customApi = junoApi.injectEndpoints({
           const { multisig, type } = AP;
           //skip endowment query, query hardcoded cw3 straight
 
-          const [meta, config] = await getMeta(numId, multisig, args.user);
+          const [meta, config, members] = await getMeta(
+            numId,
+            multisig,
+            args.user
+          );
 
           return {
             data: {
               type: type as any,
               id: numId,
+              members,
               multisig,
               propMeta: meta,
               config,
@@ -69,12 +74,17 @@ export const customApi = junoApi.injectEndpoints({
           id: numId,
         });
 
-        const [meta, config] = await getMeta(numId, endowment.owner, args.user);
+        const [meta, config, members] = await getMeta(
+          numId,
+          endowment.owner,
+          args.user
+        );
 
         return {
           data: {
             type: "charity",
             id: numId,
+            members,
             multisig: endowment.owner,
             config,
             propMeta: meta,
