@@ -101,16 +101,23 @@ export default function useWeb3Auth() {
         provider: provider,
       });
     } catch (err) {
-      logger.error(err);
       setState({ status: "disconnected" });
+      //let caller of login() handle error
+      if (isNew) throw err;
+      //log for persistent connection
+      logger.error(err);
     }
   };
 
   const logout = async () => {
-    await web3Auth.logout({ cleanup: true });
-    web3Auth.provider?.off("chainChanged", handleChainChange);
-    web3Auth.provider?.off("accountsChanged", handleAccountsChange);
-    setState({ status: "disconnected" });
+    try {
+      await web3Auth.logout({ cleanup: true });
+      web3Auth.provider?.off("chainChanged", handleChainChange);
+      web3Auth.provider?.off("accountsChanged", handleAccountsChange);
+      setState({ status: "disconnected" });
+    } catch (err) {
+      throw new Error("Failed to disconnect from wallet");
+    }
   };
 
   const switchChain = async (chainId: string) => {
