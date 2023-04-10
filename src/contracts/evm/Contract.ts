@@ -8,9 +8,11 @@ import { POLYGON_RPC } from "constants/urls";
 
 /** Represents generic contract functionality. Needs to be extended by actual contracts. */
 export class Contract<
-  Functions extends { [key: string]: Tupleable },
-  Events extends { [key: string]: Tupleable },
-  Queries extends { [key: string]: Query<any, any, any> }
+  Queries extends { [key: string]: Query<any, any, any> },
+  Functions extends { [key in keyof Queries]: Queries[key]["args"] } & {
+    [key: string]: Tupleable;
+  },
+  Events extends { [key: string]: Tupleable }
 > {
   /** contract's address */
   address: string;

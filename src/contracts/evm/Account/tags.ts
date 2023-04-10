@@ -1,6 +1,6 @@
-import { FunctionType } from "./types";
+import { QueryType } from "./types";
 
-export const ACCOUNT_TAGS: `account.${FunctionType}`[] = [
+export const ACCOUNT_TAGS: `account.${QueryType}`[] = [
   "account.queryEndowmentDetails",
   "account.queryState",
 ];

@@ -9,7 +9,7 @@ import { RESULT_DECODERS } from "./resultDecoders";
  * Representation of the `Account` contract that extends and wraps the generic `Contract` functionality.
  * Ensures that `Contract` methods are called with the Account ABI.
  */
-export class AccountContract extends Contract<Functions, Events, Queries> {
+export class AccountContract extends Contract<Queries, Functions, Events> {
   /**
    * Passes the Account ABI to the parent `Contract` class, ensuring its methods are called with that ABI.
    *

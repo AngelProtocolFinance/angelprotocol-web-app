@@ -11,12 +11,6 @@ import {
 } from "types/contracts";
 import { AccountType, ERC20Deposit, NewAIF } from "types/contracts/evm";
 
-export type Functions = {
-  createEndowment: { aif: NewAIF };
-  depositERC20: { args: ERC20Deposit };
-  updateEndowmentController: { update: SettingsControllerUpdate };
-};
-
 export type Queries = {
   queryEndowmentDetails: Query<
     { id: number },
@@ -31,7 +25,13 @@ export type Queries = {
   >;
 };
 
-export type FunctionType = keyof Queries;
+export type QueryType = keyof Queries;
+
+export type Functions = { [key in QueryType]: Queries[key]["args"] } & {
+  createEndowment: { aif: NewAIF };
+  depositERC20: { args: ERC20Deposit };
+  updateEndowmentController: { update: SettingsControllerUpdate };
+};
 
 /**
  * By creating an event template constant and creating a type from it we enable the following:

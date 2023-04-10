@@ -1,5 +1,5 @@
 import { ResultDecoder } from "../types";
-import { FunctionType, Queries } from "./types";
+import { Queries, QueryType } from "./types";
 import {
   toEndowStatusText,
   toEndowType,
@@ -8,7 +8,7 @@ import {
 import { UNSDG_NUMS } from "types/lists";
 
 export const RESULT_DECODERS: {
-  [key in FunctionType]: ResultDecoder<
+  [key in QueryType]: ResultDecoder<
     Queries[key]["decodedResult"],
     Queries[key]["finalResult"]
   >;
