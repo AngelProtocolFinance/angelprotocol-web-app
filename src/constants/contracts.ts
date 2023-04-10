@@ -15,7 +15,7 @@ const mainnet:Contracts = {
 
 //prettier-ignore
 const testnet:Contracts = {
-  registrar:           "juno17emcut72n6ycmf54qd0l4mzsefqxnqdhqxzlczxstlkkatdlst5qf9s3qr",
+  registrar:           "0xf9ae9FEb01B382C87d391F04a021fae312264CA7",
   "index-fund":        "0xba4A7987e34BFDCb1D10e1318934dBce1024bDC8",
   "multisig/ap":       "0xC26Ac43b14ebCbff5029792052aF3e4DF3233902",
   "multisig/review":   "0x1edC050B5d84cbB0cA0b56356f3F7307efcd50Fb",

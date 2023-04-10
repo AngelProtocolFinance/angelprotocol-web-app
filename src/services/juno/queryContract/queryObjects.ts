@@ -9,6 +9,7 @@ import {
   toSettingsPermission,
 } from "./decoded-types";
 import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
+import { RegistrarConfig } from "types/contracts";
 // import { RegistrarConfig } from "types/contracts";
 import { UNSDG_NUMS } from "types/lists";
 import { accounts } from "contracts/evm/Account";
@@ -33,21 +34,15 @@ export const queryObjects: {
   /** registrar */
   "registrar.config": [
     registrar.encodeFunctionData("queryConfig", []),
-    () => {
-      // const decoded: RegistrarConfig = registrar.decodeFunctionResult(
-      //   "queryConfig",
-      //   result
-      // )[0];
+    (result) => {
+      const decoded: RegistrarConfig = registrar.decodeFunctionResult(
+        "queryConfig",
+        result
+      )[0];
       //select fields only
-      // return { owner: decoded.owner, acceptedTokens: decoded.acceptedTokens };
-      return {
-        owner: p["registrar.config"].owner,
-        acceptedTokens: {
-          cw20: ["0xaBCe32FBA4C591E8Ea5A5f711F7112dC08BCee74"],
-        },
-      };
+      return { owner: decoded.owner, acceptedTokens: decoded.acceptedTokens };
     },
-    "placeholder",
+    "migrated",
   ],
   "registrar.config-extension": [
     "",
