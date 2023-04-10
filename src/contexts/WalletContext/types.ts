@@ -7,7 +7,7 @@ export type WithWallet<T> = T & { wallet: WalletState };
 
 export type WithoutInstallers = Exclude<
   ProviderId,
-  "station" | "walletconnect" | "leap-wallet"
+  "station" | "walletconnect" | "leap-wallet" | "web3auth-torus"
 >;
 
 export type Connection = {

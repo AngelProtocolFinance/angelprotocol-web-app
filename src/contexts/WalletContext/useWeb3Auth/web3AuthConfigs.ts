@@ -1,12 +1,10 @@
 import { CustomChainConfig } from "@web3auth/base";
 import { chainIDs } from "constants/chains";
 
-type chainConfigType = { [key: string]: CustomChainConfig };
-
 export const CLIENT_ID =
   "BEglQSgt4cUWcj6SKRdu5QkOXTsePmMcusG5EAoyjyOYKlVRjIF1iCNnMOTfpzCiunHRrMui8TIwQPXdkQ8Yxuk"; // get from https://dashboard.web3auth.io
 
-export const chainConfig: chainConfigType = {
+export const chainConfig: { [key: string]: CustomChainConfig } = {
   [chainIDs.polygonTest]: {
     chainNamespace: "eip155",
     chainId: "0x13881",
