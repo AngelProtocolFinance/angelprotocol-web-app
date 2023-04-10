@@ -6,7 +6,8 @@ import { invalidateJunoTags } from "services/juno";
 import { defaultProposalTags } from "services/juno/tags";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
-import CW3 from "contracts/CW3";
+import { TxPrompt } from "components/Prompt";
+import { createTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
 import { useAdminResources } from "../Guard";
@@ -19,11 +20,17 @@ export default function PollAction(props: ProposalDetails) {
   const { showModal } = useModalContext();
 
   async function executeProposal() {
-    const contract = new CW3(wallet, multisig);
-    const execMsg = contract.createExecProposalMsg(props.id);
-
+    if (!wallet) {
+      return showModal(TxPrompt, { error: "Wallet is not connected" });
+    }
     await sendTx({
-      content: { type: "cosmos", val: [execMsg] },
+      content: {
+        type: "evm",
+        val: createTx(wallet.address, "multisig.execute-tx", {
+          multisig,
+          id: props.id,
+        }),
+      },
       isAuthorized: propMeta.isAuthorized,
       tagPayloads: extractTagFromMeta(props.meta),
     });

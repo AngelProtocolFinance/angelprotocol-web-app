@@ -129,8 +129,6 @@ export const customApi = junoApi.injectEndpoints({
           }),
         ]);
 
-        console.log({ count, proposal, signed, signers, executed });
-
         return {
           data: {
             ...proposal,

@@ -6,7 +6,6 @@ export default function Votes({
   signers,
   classes = "",
 }: ProposalDetails & { classes?: string }) {
-  console.log(signed, signers);
   return (
     <ul
       className={
