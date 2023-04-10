@@ -1,9 +1,4 @@
-import { BigNumber } from "@ethersproject/bignumber";
 import { Query } from "../types";
-import {
-  DecodedEndowment,
-  DecodedEndowmentState,
-} from "services/juno/queryContract/decoded-types";
 import {
   EndowmentDetails,
   EndowmentState,
@@ -12,15 +7,10 @@ import {
 import { AccountType, ERC20Deposit, NewAIF } from "types/contracts/evm";
 
 export type Queries = {
-  queryEndowmentDetails: Query<
-    { id: number },
-    DecodedEndowment,
-    EndowmentDetails
-  >;
-  queryState: Query<{ id: number }, DecodedEndowmentState, EndowmentState>;
+  queryEndowmentDetails: Query<{ id: number }, EndowmentDetails>;
+  queryState: Query<{ id: number }, EndowmentState>;
   queryTokenAmount: Query<
     { id: number; accounType: AccountType; token: string },
-    BigNumber,
     string
   >;
 };

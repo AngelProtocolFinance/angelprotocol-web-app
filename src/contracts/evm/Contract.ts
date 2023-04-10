@@ -8,7 +8,7 @@ import { POLYGON_RPC } from "constants/urls";
 
 /** Represents generic contract functionality. Needs to be extended by actual contracts. */
 export class Contract<
-  Queries extends { [key: string]: Query<any, any, any> },
+  Queries extends { [key: string]: Query<any, any> },
   Functions extends { [key in keyof Queries]: Queries[key]["args"] } & {
     [key: string]: Tupleable;
   },
@@ -26,10 +26,7 @@ export class Contract<
   protected eventTemplates: Events;
   /** Decoder functions used to decode query results */
   protected resultDecoders: {
-    [key in keyof Queries]: ResultDecoder<
-      Queries[key]["decodedResult"],
-      Queries[key]["finalResult"]
-    >;
+    [key in keyof Queries]: ResultDecoder<Queries[key]["result"]>;
   };
 
   /**
@@ -44,10 +41,7 @@ export class Contract<
     address: string,
     eventTemplates: Events,
     resultDecoders: {
-      [key in keyof Queries]: ResultDecoder<
-        Queries[key]["decodedResult"],
-        Queries[key]["finalResult"]
-      >;
+      [key in keyof Queries]: ResultDecoder<Queries[key]["result"]>;
     },
     wallet?: WalletState
   ) {
@@ -144,7 +138,7 @@ export class Contract<
   query<T extends Extract<keyof Queries, string>>(
     funcName: T,
     args: Functions[T]
-  ): Promise<Queries[T]["finalResult"]> {
+  ): Promise<Queries[T]["result"]> {
     const tx = this.createTx(funcName, args);
 
     const result = fetch(POLYGON_RPC, {
@@ -163,20 +157,15 @@ export class Contract<
         }
         return res.json();
       })
-      .then<Queries[T]["finalResult"]>((res) => {
+      .then<Queries[T]["result"]>((res) => {
         if ("error" in res) {
           throw new Error(`error ${funcName}:` + res.error.message);
         }
 
-        const decodedResult: Queries[T]["decodedResult"] =
-          this.iface.decodeFunctionResult(
-            "queryEndowmentDetails",
-            res.result
-          )[0];
         return this.resultDecoders[funcName](
-          decodedResult,
-          this.address,
-          this.iface
+          res.result,
+          this.iface,
+          this.address
         );
       })
       .catch((err) => {

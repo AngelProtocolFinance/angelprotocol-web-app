@@ -5,16 +5,15 @@ export type FetchResult =
   | { result: string }
   | { error: { code: number; message: string } };
 
-export type ResultDecoder<DecodedResult, FinalResult> = (
-  decodedResult: DecodedResult,
-  contractAddress: string,
-  iface: Interface
+export type ResultDecoder<FinalResult> = (
+  result: string,
+  iface: Interface,
+  contractAddress: string
 ) => FinalResult;
 
-export type Query<Args extends Tupleable, DecodedResult, FinalResult> = {
+export type Query<Args extends Tupleable, Result> = {
   args: Args;
-  decodedResult: DecodedResult;
-  finalResult: FinalResult;
+  result: Result;
 };
 
 type GetFirstConstructorArgType<T> = T extends new (

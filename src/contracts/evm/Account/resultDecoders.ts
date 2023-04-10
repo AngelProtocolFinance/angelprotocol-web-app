@@ -1,6 +1,9 @@
+import { BigNumber } from "@ethersproject/bignumber";
 import { ResultDecoder } from "../types";
 import { Queries, QueryType } from "./types";
 import {
+  DecodedEndowment,
+  DecodedEndowmentState,
   toEndowStatusText,
   toEndowType,
   toSettingsPermission,
@@ -8,12 +11,13 @@ import {
 import { UNSDG_NUMS } from "types/lists";
 
 export const RESULT_DECODERS: {
-  [key in QueryType]: ResultDecoder<
-    Queries[key]["decodedResult"],
-    Queries[key]["finalResult"]
-  >;
+  [key in QueryType]: ResultDecoder<Queries[key]["result"]>;
 } = {
-  queryEndowmentDetails: (decodedResult) => {
+  queryEndowmentDetails: (result, iface) => {
+    const decodedResult: DecodedEndowment = iface.decodeFunctionResult(
+      "queryEndowmentDetails",
+      result
+    )[0];
     const controller = decodedResult.settingsController;
     return {
       owner: decodedResult.owner,
@@ -56,25 +60,37 @@ export const RESULT_DECODERS: {
       },
     };
   },
-  queryState: (decodedResult) => ({
-    //TODO: populate once needed
-    tokens_on_hand: {
-      locked: {
-        native: [],
-        cw20: [],
+  queryState: (result, iface) => {
+    const decodedResult: DecodedEndowmentState = iface.decodeFunctionResult(
+      "queryState",
+      result
+    )[0];
+    return {
+      //TODO: populate once needed
+      tokens_on_hand: {
+        locked: {
+          native: [],
+          cw20: [],
+        },
+        liquid: {
+          native: [],
+          cw20: [],
+        },
       },
-      liquid: {
-        native: [],
-        cw20: [],
+      donations_received: {
+        locked: decodedResult.donationsReceived.locked.toNumber(),
+        liquid: decodedResult.donationsReceived.liquid.toNumber(),
       },
-    },
-    donations_received: {
-      locked: decodedResult.donationsReceived.locked.toNumber(),
-      liquid: decodedResult.donationsReceived.liquid.toNumber(),
-    },
-    closing_endowment: decodedResult.closingEndowment,
-    //FUTURE: index-fund can also be beneficiary
-    closing_beneficiary: decodedResult.closingBeneficiary.data.addr,
-  }),
-  queryTokenAmount: (decodedResult) => decodedResult.toString(),
+      closing_endowment: decodedResult.closingEndowment,
+      //FUTURE: index-fund can also be beneficiary
+      closing_beneficiary: decodedResult.closingBeneficiary.data.addr,
+    };
+  },
+  queryTokenAmount: (result, iface) => {
+    const decodedResult: BigNumber = iface.decodeFunctionResult(
+      "queryTokenAmount",
+      result
+    )[0];
+    return decodedResult.toString();
+  },
 };
