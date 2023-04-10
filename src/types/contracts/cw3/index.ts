@@ -33,12 +33,7 @@ export type ProposalsRes = {
   proposals: Proposal[];
 };
 
-export type ProposalStatus =
-  | "pending"
-  | "open"
-  | "rejected"
-  | "passed"
-  | "executed";
+export type ProposalStatus = "pending" | "executed";
 
 export type Expiration = { at_time: number } | { at_height: number };
 
@@ -50,7 +45,6 @@ export type Proposal = {
   meta?: string; //JSON string that contains preview metadata
   msgs: (EmbeddedWasmMsg | EmbeddedBankMsg)[];
   status: ProposalStatus;
-  expires: Expiration;
   threshold: ThresholdRes;
   proposal_type: ProposalType;
 };

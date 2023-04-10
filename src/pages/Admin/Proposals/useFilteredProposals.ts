@@ -20,7 +20,7 @@ export function useFilteredProposals(
     isError,
   } = useContractQuery("multisig.proposals", {
     multisig,
-    ...genPageOptions(pageNum, status, group),
+    ...genPageOptions(pageNum, group),
   });
 
   function proposalFilter(proposal: Proposal): boolean {
@@ -29,16 +29,14 @@ export function useFilteredProposals(
     const isBelongToGroup =
       group === "all" || new RegExp(group).test(proposalMeta.type);
 
-    const isCorrectStatus = status === "all" || proposal.status === status;
+    const isCorrectStatus = proposal.status === status;
 
     return isBelongToGroup && isCorrectStatus;
   }
 
   return {
     filteredProposals:
-      status === "all" && group === "all"
-        ? proposals
-        : proposals.filter(proposalFilter),
+      group === "all" ? proposals : proposals.filter(proposalFilter),
     isFilteredProposalsLoading: isLoading,
     isFilteredProposalsFailed: isError,
   };
@@ -46,10 +44,9 @@ export function useFilteredProposals(
 
 function genPageOptions(
   pageNum: number,
-  status: ProposalStatusOptions,
   group: ProposalGroupOptions
 ): PageOptions {
-  if (status === "all" && group === "all") {
+  if (group === "all") {
     return {
       //e.g 10 first, then 20
       limit: NUM_PROPOSALS_PER_PAGE * pageNum,

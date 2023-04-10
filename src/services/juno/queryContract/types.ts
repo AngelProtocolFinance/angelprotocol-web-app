@@ -51,6 +51,7 @@ export interface ContractQueries {
   "multisig.proposals": Query<PageOptions, Proposal[]>;
   "multisig.config": Query<null, CW3Config>;
   "multisig.proposal": Query<{ id: number }, Proposal>;
+  "multisig.tx-count": Query<{ pending: boolean; executed: boolean }, number>;
   "multisig.votes": Query<VotesPageOptions, AdminVoteInfo[]>;
 
   "accounts.endowment": Query<{ id: number }, EndowmentDetails>;

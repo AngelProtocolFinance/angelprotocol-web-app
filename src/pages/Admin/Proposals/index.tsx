@@ -26,9 +26,7 @@ export default function Proposals() {
 
   const isLoadMoreShown =
     //don't show load more if num proposals doesn't even reach min
-    filteredProposals.length >= NUM_PROPOSALS_PER_PAGE &&
-    activeStatus === "all" &&
-    activeGroup === "all";
+    filteredProposals.length >= NUM_PROPOSALS_PER_PAGE && activeGroup === "all";
 
   return (
     <div className="grid content-start rounded font-work">

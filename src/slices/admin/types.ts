@@ -17,5 +17,5 @@ export type AddressWithFlags = {
 export type ProposalGroup = "if" | "cw3" | "cw4" | "reg" | "acc";
 
 export type ProposalGroupOptions = ProposalGroup | "all";
-export type ProposalStatusOptions = ProposalStatus | "all";
+export type ProposalStatusOptions = ProposalStatus;
 export type ApplicationStatusOptions = ApplicationStatus | "all";

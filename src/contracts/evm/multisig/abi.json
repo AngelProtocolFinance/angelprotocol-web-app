@@ -2,6 +2,7 @@
   "function getOwners() view returns (address[])",
   "function getConfirmations(uint256) view returns (address[])",
   "function getTransactionIds(uint256,uint256,bool,bool) view returns (uint256[])",
+  "function getTransactionCount(bool,bool) view returns (uint256)",
   "function submitTransaction(string,string,address,uint256,bytes) returns (uint256)",
   "function addOwner(address)",
   "function removeOwner(address)",

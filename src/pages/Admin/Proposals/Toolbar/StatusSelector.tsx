@@ -38,10 +38,6 @@ export default function StatusSelector() {
 }
 
 const pollStatusOptions: { [key in ProposalStatusOptions]: string } = {
-  all: "all",
   executed: "executed",
-  open: "open",
-  passed: "passed",
   pending: "pending",
-  rejected: "rejected",
 };

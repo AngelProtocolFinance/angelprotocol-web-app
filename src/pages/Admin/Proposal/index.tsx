@@ -1,9 +1,7 @@
 import { useParams } from "react-router-dom";
 import { ProposalParams } from "pages/Admin/types";
-import { Expiration } from "types/contracts";
 import { useProposalDetailsQuery } from "services/juno/custom";
 import { useGetWallet } from "contexts/WalletContext";
-import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
 import { DetailLabel, Status } from "components/admin";
 import { useAdminResources } from "../Guard";
@@ -44,7 +42,6 @@ export default function Proposal() {
               <PollAction {...proposal} />
             </div>
             <DetailLabel>ends</DetailLabel>
-            <Expiry {...proposal.expires} />
             <DetailLabel classes="mt-4">
               {proposal.proposal_type === "application"
                 ? "Reason for rejection"
@@ -64,22 +61,6 @@ export default function Proposal() {
           </div>
         )}
       </QueryLoader>
-    </div>
-  );
-}
-
-function Expiry(props: Expiration) {
-  const isTime = "at_time" in props;
-  return isTime ? (
-    <span className="text-sm text-gray-d1 dark:text-gray">
-      {new Date(props.at_time / 1e6).toLocaleString()}
-    </span>
-  ) : (
-    <div className="flex gap-1">
-      <span className="text-sm text-gray-d1 dark:text-gray">
-        {props.at_height.toLocaleString()}
-      </span>
-      <Icon type="Blockchain" className="relative top-1" />
     </div>
   );
 }

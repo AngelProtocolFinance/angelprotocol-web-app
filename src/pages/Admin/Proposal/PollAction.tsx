@@ -2,7 +2,7 @@ import React, { ReactNode, useMemo } from "react";
 import { ProposalMeta } from "pages/Admin/types";
 import { ProposalDetails } from "services/types";
 import { TagPayload } from "types/third-party/redux";
-import { invalidateJunoTags, useLatestBlockQuery } from "services/juno";
+import { invalidateJunoTags } from "services/juno";
 import { defaultProposalTags } from "services/juno/tags";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
@@ -13,7 +13,6 @@ import { useAdminResources } from "../Guard";
 import Voter from "./Voter";
 
 export default function PollAction(props: ProposalDetails) {
-  const { data: latestBlock = "0" } = useLatestBlockQuery(null);
   const { wallet } = useGetWallet();
   const sendTx = useTxSender();
   const { multisig, propMeta } = useAdminResources();
@@ -30,22 +29,13 @@ export default function PollAction(props: ProposalDetails) {
     });
   }
 
-  const isExpired =
-    "at_time" in props.expires
-      ? new Date() > new Date(props.expires.at_time / 1e6)
-      : +latestBlock > props.expires.at_height;
-
   const userVote = useMemo(
     () => props.votes.find((vote) => vote.voter === wallet?.address),
     [props.votes, wallet?.address]
   );
 
   const EXED = props.status === "executed";
-  const EX =
-    props.status === "passed" &&
-    /** proposal has embedded execute message*/ props.msgs &&
-    props.msgs.length > 0;
-  const VE = props.status !== "open" || isExpired;
+  const EX = props.status === "pending";
   const V = userVote !== undefined;
 
   let node: ReactNode = null;
@@ -56,8 +46,6 @@ export default function PollAction(props: ProposalDetails) {
   } else if (EX) {
     node = node = <Button onClick={executeProposal}>Execute Poll</Button>;
     //voting period ended, but poll is not passed
-  } else if (VE) {
-    node = <Text>voting period has ended</Text>;
   } else {
     //voting ongoing
     if (V) {

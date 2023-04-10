@@ -27,7 +27,6 @@ export default function Dashboard() {
           empty: "No new open proposals",
         }}
         classes={{ container: "mt-2" }}
-        filterFn={(proposal) => proposal.status === "open"}
       >
         {(proposals) => <Table proposals={proposals} />}
       </QueryLoader>

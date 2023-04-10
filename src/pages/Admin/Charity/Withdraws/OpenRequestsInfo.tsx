@@ -6,7 +6,7 @@ import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
 import { adminRoutes } from "constants/routes";
 
-const proposal_status: ProposalStatus = "open";
+const proposal_status: ProposalStatus = "pending";
 
 export default function OpenRequestsInfo() {
   const { multisig } = useAdminResources();
