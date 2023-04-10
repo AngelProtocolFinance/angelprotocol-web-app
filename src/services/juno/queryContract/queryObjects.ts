@@ -200,7 +200,14 @@ export const queryObjects: {
 
   "multisig.votes": [
     ({ id }) => multisig.encodeFunctionData("getConfirmations", [id]),
-    (result) => multisig.decodeFunctionResult("getConfirmations", result)[0],
+    (result) => {
+      const d: string[] = multisig.decodeFunctionResult(
+        "getConfirmations",
+        result
+      )[0];
+      return d.map((s) => s.toLowerCase());
+    },
+
     "migrated",
   ],
 

@@ -6,7 +6,7 @@ export default function Stats({ signed, signers }: ProposalDetails) {
   const numSigners = signers.length;
 
   const pctSigned = getPct(numSigned, numSigners);
-  const pctNotSigned = 100 - pctSigned;
+  const pctPending = 100 - pctSigned;
   const pctTarget = getPct(1, numSigners);
 
   return (
@@ -21,7 +21,7 @@ export default function Stats({ signed, signers }: ProposalDetails) {
         <Stat
           title="pending"
           value={numSigners - numSigned}
-          pct={pctNotSigned}
+          pct={pctPending}
           textColor="text-red-l1"
         />
       </div>
@@ -31,8 +31,7 @@ export default function Stats({ signed, signers }: ProposalDetails) {
           //prettier-ignore
           background: `linear-gradient(to right, 
             #34d39990 ${pctSigned}%, 
-            #f43f5e90 ${pctSigned}%, #f43f5e90 ${pctSigned + pctSigned}%, 
-            #fafafa30 ${pctSigned + pctSigned}%, #fafafa30 ${100}%, 
+            #f43f5e90 ${pctSigned}%, #fafafa30 ${pctSigned}%, 
             #fafafa30 ${100}%)`,
         }}
       >
@@ -46,7 +45,7 @@ export default function Stats({ signed, signers }: ProposalDetails) {
         </p>
       </div>
       <p className="mt-2 flex items-baseline gap-2">
-        <span className="text-sm uppercase">total voted</span>
+        <span className="text-sm uppercase">total signed</span>
         <span className="font-bold">{numSigned}</span>
         <span className="text-sm text-gray-d1 dark:text-gray">
           {pctSigned}%
