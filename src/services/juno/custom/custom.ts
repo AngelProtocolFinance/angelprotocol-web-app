@@ -109,18 +109,32 @@ export const customApi = junoApi.injectEndpoints({
       async queryFn({ id: idParam, multisig }) {
         const id = idParamToNum(idParam);
 
-        const [proposal, signed, signers] = await Promise.all([
+        const count = await queryContract("multisig.tx-count", {
+          multisig,
+          pending: false,
+          executed: true,
+        });
+
+        const [proposal, signed, signers, executed] = await Promise.all([
           queryContract("multisig.proposal", { multisig, id }),
           queryContract("multisig.votes", {
             multisig,
             id,
           }),
           queryContract("multisig.members", { multisig }),
+          queryContract("multisig.proposals", {
+            multisig,
+            range: [0, count],
+            status: "executed",
+          }),
         ]);
+
+        console.log({ count, proposal, signed, signers, executed });
 
         return {
           data: {
             ...proposal,
+            status: executed.some((p) => p.id === id) ? "executed" : "pending",
             signed,
             signers,
           },
