@@ -22,7 +22,9 @@ export class Contract<
   /** The connected wallet */
   protected wallet: WalletState | undefined;
 
+  /** Event templates used to populate the decoded event object */
   protected eventTemplates: Events;
+  /** Decoder functions used to decode query results */
   protected resultDecoders: {
     [key in keyof Queries]: ResultDecoder<
       Queries[key]["decodedResult"],
@@ -30,6 +32,13 @@ export class Contract<
     >;
   };
 
+  /**
+   * @param abi ABI interface.
+   * @param address contract's address.
+   * @param eventTemplates Event templates used to populate the decoded event object.
+   * @param resultDecoders Decoder functions used to decode query results.
+   * @param wallet The connected wallet.
+   */
   protected constructor(
     abi: AbiFragments,
     address: string,
@@ -51,25 +60,14 @@ export class Contract<
   }
 
   /**
-   *
-   * @param aif New AIF to create.
+   * @param funcName Target contract function name.
+   * @param args Target function arguments.
    * @returns An object containing transaction data necessary to call an EVM contract, see {@link SimulContractTx}
    */
   createTx<T extends Extract<keyof Functions, string>>(
     funcName: T,
     args: Functions[T]
   ): SimulContractTx {
-    return this.createTxInternal(funcName, args);
-  }
-
-  /**
-   *
-   * @param aif New AIF to create.
-   * @returns An object containing transaction data necessary to call an EVM contract, see {@link SimulContractTx}
-   */
-  private createTxInternal<
-    T extends Extract<keyof Functions, string> | Extract<keyof Queries, string>
-  >(funcName: T, args: Functions[T] | Queries[T]): SimulContractTx {
     const encodedFuncData = this.encode(funcName, args);
 
     const tx: SimulContractTx = {
@@ -85,7 +83,7 @@ export class Contract<
   }
 
   /**
-   * Wrapper around the parent's event decoder that ensures only expected events are decoded for this contract.
+   * Takes the log array, finds the specified event and if found decodes its data into a predefined object {@link eventTemplates}.
    *
    * @param event Name of the event to be decoded.
    * @param logs Transaction logs.
@@ -118,25 +116,36 @@ export class Contract<
     );
   };
 
-  encode<
-    T extends Extract<keyof Functions, string> | Extract<keyof Queries, string>
-  >(funcName: T, args: Functions[T] | Queries[T]): string {
+  /**
+   * Encoded function name and its arguments in format acceptable by EVM.
+   *
+   * @param funcName Target contract function name.
+   * @param args Target function arguments.
+   * @returns Encoded value of function name + arguments.
+   */
+  encode<T extends Extract<keyof Functions, string>>(
+    funcName: T,
+    args: Functions[T]
+  ): string {
     const func = this.iface.getFunction(funcName);
     return this.iface.encodeFunctionData(func, toTuple(args));
   }
 
   /**
-   * Omitted some checks and optimizations for simplicity.
+   * Queries contracts and decodes result into a predefined result type. Accepts only those functio names
+   * defined in {@link Queries} type, but since `Queries` is a part of the {@link Functions} type,
+   * arguments are extract from it (`Functions`) to make sure correct ones are used.
+   * (otherwise error appears in call to `createTx`).
    *
-   * @param address Address for which to fetch token balances.
-   * @param providerId Provider ID to use to query balances.
-   * @returns A Promise of {@link Coin} which contains the balance and denomination of the coin for the specified address
+   * @param funcName Target contract function name to query.
+   * @param args Target function arguments.
+   * @returns A Promise of query resulted created as the predefined result type.
    */
   query<T extends Extract<keyof Queries, string>>(
     funcName: T,
-    args: Queries[T]["args"]
+    args: Functions[T]
   ): Promise<Queries[T]["finalResult"]> {
-    const tx = this.createTxInternal(funcName, args);
+    const tx = this.createTx(funcName, args);
 
     const result = fetch(POLYGON_RPC, {
       method: "POST",
