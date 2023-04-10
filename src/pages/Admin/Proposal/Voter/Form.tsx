@@ -15,7 +15,6 @@ export default function Form() {
     >
       <div className="grid grid-cols-2 gap-4 mb-6 mt-2">
         <VoteOption<V> label="yes" vote="yes" />
-        <VoteOption<V> label="no" vote="no" />
       </div>
       <Reason />
 
