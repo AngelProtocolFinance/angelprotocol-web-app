@@ -156,12 +156,11 @@ export const queryObjects: {
     "migrated",
   ],
   "multisig.config": ["", () => p["multisig.config"], "placeholder"],
-  //TO CONFIRM: no query for Proposal[] just proposal_id[]
   "multisig.tx-count": [
     (options) =>
       multisig.encodeFunctionData("getTransactionCount", toTuple(options)),
     (result) => {
-      const d: BigNumber = multisig.decodeFunctionData(
+      const d: BigNumber = multisig.decodeFunctionResult(
         "getTransactionCount",
         result
       )[0];
@@ -170,8 +169,7 @@ export const queryObjects: {
     "migrated",
   ],
   "multisig.proposals": [
-    ({ range, status }) => {
-      const [from, to] = range;
+    ({ range: [from, to], status }) => {
       return multisig.encodeFunctionData(
         "getTransactionIds",
         toTuple({

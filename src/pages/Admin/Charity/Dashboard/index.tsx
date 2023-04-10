@@ -12,9 +12,6 @@ export default function Dashboard() {
     status: "pending",
     page: 1,
   });
-  // const queryState = useContractQuery("multisig.proposals", {
-  //   multisig,
-  // });
 
   return (
     <div className="grid content-start mt-6">

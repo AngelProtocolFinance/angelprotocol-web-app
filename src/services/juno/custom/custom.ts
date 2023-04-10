@@ -109,8 +109,6 @@ export const customApi = junoApi.injectEndpoints({
       async queryFn({ id: idParam, multisig }) {
         const id = idParamToNum(idParam);
 
-        if (id === 0) return { error: undefined };
-
         const [proposal, signed, signers] = await Promise.all([
           queryContract("multisig.proposal", { multisig, id }),
           queryContract("multisig.votes", {
@@ -179,7 +177,7 @@ export const customApi = junoApi.injectEndpoints({
         //get last 5 proposals
         const range: [number, number] = [
           Math.max(0, count - proposalsPerPage * args.page),
-          count - args.page,
+          count,
         ];
 
         const proposals = await queryContract("multisig.proposals", {
@@ -187,6 +185,7 @@ export const customApi = junoApi.injectEndpoints({
           range,
           status,
         });
+        proposals.sort((a, b) => b.id - a.id);
 
         return {
           data: {
