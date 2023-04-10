@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { steps } from "pages/Registration/routes";
+import { useErrorContext } from "contexts/ErrorContext";
 import { WalletState, useSetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import Image from "components/Image";
@@ -14,6 +15,7 @@ export default function WalletSubmission({
   providerId,
   walletIcon,
 }: WalletState) {
+  const { handleError } = useErrorContext();
   const { disconnect } = useSetWallet();
   const { isSubmitting, registerWallet } = useRegisterWallet();
   const { data } = useRegState<3>();
@@ -35,7 +37,13 @@ export default function WalletSubmission({
           type="button"
           className="mt-8 btn-outline-filled btn-reg"
           disabled={isSubmitting}
-          onClick={disconnect}
+          onClick={() => {
+            try {
+              disconnect();
+            } catch (err) {
+              handleError(err);
+            }
+          }}
         >
           Change wallet
         </button>
