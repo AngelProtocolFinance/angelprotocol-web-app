@@ -1,7 +1,7 @@
 import { Tab } from "@headlessui/react";
 import { AccountType, EndowmentType } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
-import { useContractQuery } from "services/juno";
+import { useEndowBalanceQuery } from "services/juno/custom";
 import QueryLoader from "components/QueryLoader";
 import WithdrawForm from "./WithdrawForm";
 
@@ -12,7 +12,7 @@ const types: { [key in EndowmentType]: AccountType[] } = {
 
 export default function Withdrawer() {
   const { id, endow_type } = useAdminResources<"charity">();
-  const queryState = useContractQuery("accounts.state", { id });
+  const queryState = useEndowBalanceQuery({ id });
 
   return (
     <QueryLoader
@@ -22,7 +22,7 @@ export default function Withdrawer() {
         error: "Failed to load withdraw form",
       }}
     >
-      {({ tokens_on_hand }) => (
+      {(balance) => (
         <Tab.Group
           as="div"
           className="flex flex-col items-center max-w-lg p-8 gap-6 dark:bg-blue-d6 border border-prim rounded"
@@ -42,7 +42,7 @@ export default function Withdrawer() {
           <Tab.Panels>
             {types[endow_type].map((type) => (
               <Tab.Panel key={`tab-panel-${type}`}>
-                <WithdrawForm type={type} balance={tokens_on_hand[type]} />
+                <WithdrawForm type={type} balance={balance[type]} />
               </Tab.Panel>
             ))}
           </Tab.Panels>

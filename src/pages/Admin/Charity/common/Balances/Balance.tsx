@@ -1,7 +1,7 @@
 import { PropsWithChildren } from "react";
 import { AccountType } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
-import { useContractQuery } from "services/juno";
+import { useEndowBalanceQuery } from "services/juno/custom";
 import QueryLoader from "components/QueryLoader";
 import { condense, humanize } from "helpers";
 
@@ -9,12 +9,10 @@ type Props = { type: AccountType };
 export default function Balance({ type }: Props) {
   const { id } = useAdminResources();
 
-  const query = useContractQuery("accounts.token-balance", {
+  const query = useEndowBalanceQuery({
     id,
-    accounType: type === "locked" ? 0 : 1,
-    token:
-      "0xaBCe32FBA4C591E8Ea5A5f711F7112dC08BCee74" /** TODO: should come from registrar.accepted_tokens */,
   });
+  console.log(query);
 
   return (
     <div className="@container rounded border border-prim bg-orange-l6 dark:bg-blue-d6">
@@ -33,7 +31,9 @@ export default function Balance({ type }: Props) {
           error: "Failed to get balances",
         }}
       >
-        {(balance) => {
+        {({ [type]: balance }) => {
+          //TODO: show all token balances
+          const bal = balance.cw20[0].amount;
           return (
             <div className="grid grid-cols-[auto_1fr] gap-y-5 justify-self-start gap-x-8 @lg:flex @lg:gap-x-8 px-4">
               <Amount
@@ -41,10 +41,10 @@ export default function Balance({ type }: Props) {
                 classes="col-span-full @lg:mr-auto"
                 symbol="USD"
               >
-                {humanize(condense(balance), 2)}
+                {humanize(condense(bal), 2)}
               </Amount>
               <Amount title="Free balance" symbol="USD">
-                {humanize(condense(balance), 2)}
+                {humanize(condense(bal), 2)}
               </Amount>
               <Amount title="Invested balance" symbol="USD">
                 {humanize(0, 2)}

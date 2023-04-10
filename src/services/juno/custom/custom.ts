@@ -1,4 +1,6 @@
 import { AdminResources, ProposalDetails } from "services/types";
+import { AcceptedTokens, BalanceInfo, CW20 } from "types/contracts";
+import { AccountType } from "types/contracts/evm";
 import { idParamToNum } from "helpers";
 import { junoApi } from "..";
 import { queryContract } from "../queryContract";
@@ -121,6 +123,38 @@ export const customApi = junoApi.injectEndpoints({
         };
       },
     }),
+    endowBalance: builder.query<BalanceInfo, { id: number }>({
+      providesTags: ["multisig.proposal", "multisig.votes"],
+      async queryFn(args) {
+        //TODO: get this from registrar
+        const tokens: AcceptedTokens = {
+          cw20: ["0xaBCe32FBA4C591E8Ea5A5f711F7112dC08BCee74"],
+        };
+
+        const balances = (type: AccountType) =>
+          Promise.all(
+            tokens.cw20.map((t) =>
+              queryContract("accounts.token-balance", {
+                id: args.id,
+                accounType: type,
+                token: t,
+              }).then<CW20>((b) => ({
+                address: t,
+                amount: b,
+              }))
+            )
+          );
+
+        const [liquid, locked] = await Promise.all([balances(0), balances(1)]);
+
+        return {
+          data: {
+            liquid: { cw20: liquid, native: [] },
+            locked: { cw20: locked, native: [] },
+          },
+        };
+      },
+    }),
   }),
 });
 
@@ -128,4 +162,5 @@ export const {
   useIsMemberQuery,
   useAdminResourcesQuery,
   useProposalDetailsQuery,
+  useEndowBalanceQuery,
 } = customApi;
