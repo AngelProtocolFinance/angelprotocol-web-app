@@ -115,8 +115,7 @@ export const customApi = junoApi.injectEndpoints({
           executed: true,
         });
 
-        const [proposal, signed, signers, executed] = await Promise.all([
-          queryContract("multisig.proposal", { multisig, id }),
+        const [signed, signers, executed] = await Promise.all([
           queryContract("multisig.votes", {
             multisig,
             id,
@@ -131,7 +130,9 @@ export const customApi = junoApi.injectEndpoints({
 
         return {
           data: {
-            ...proposal,
+            id,
+            title: `Proposal ${id}`,
+            description: "Some helpful description",
             status: executed.some((p) => p.id === id) ? "executed" : "pending",
             signed,
             signers,
