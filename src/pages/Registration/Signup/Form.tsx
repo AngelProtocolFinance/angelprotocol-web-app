@@ -36,7 +36,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
         required
         name="hasAgreedToPrivacyPolicy"
         classes={{
-          container: "check-field-reg justify-self-center -mt-4 text-xs",
+          container: "check-field-reg justify-self-center -mt-2 text-xs",
           error: "mt-2",
         }}
       >
