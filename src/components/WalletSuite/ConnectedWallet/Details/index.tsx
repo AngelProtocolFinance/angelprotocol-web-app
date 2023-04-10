@@ -2,8 +2,10 @@ import { Popover } from "@headlessui/react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useWalletProfileQuery } from "services/aws/aws";
+import { useErrorContext } from "contexts/ErrorContext";
 import { WalletState, useSetWallet } from "contexts/WalletContext";
 import { logger } from "helpers";
+import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { appRoutes } from "constants/routes";
 import Address from "./Address";
 import AdminLinks from "./AdminLinks";
@@ -74,9 +76,20 @@ function MyDonations({ address }: { address: string }) {
 
 function DisconnectBtn() {
   const { disconnect } = useSetWallet();
+  const { handleError } = useErrorContext();
+
+  const handle = () => {
+    try {
+      disconnect();
+    } catch (error) {
+      logger.error(error);
+      handleError(error, GENERIC_ERROR_MESSAGE);
+    }
+  };
+
   return (
     <button
-      onClick={disconnect}
+      onClick={handle}
       className="btn h-12 flex-none bg-orange-l5 dark:bg-blue-d5 hover:bg-orange-l3 hover:dark:bg-blue-d7 uppercase font-body font-bold text-base sm:rounded-b-lg "
     >
       disconnect
