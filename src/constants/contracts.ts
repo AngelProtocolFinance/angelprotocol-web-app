@@ -1,4 +1,7 @@
 import { Contract } from "types/lists";
+import contractsLocal from "./contracts-local.json";
+import contractsMainnet from "./contracts-mainnet.json";
+import contractsTestnet from "./contracts-testnet.json";
 import { NETWORK } from "./env";
 
 type Contracts = { [key in Contract]: string };
@@ -24,3 +27,10 @@ const testnet:Contracts = {
 }
 
 export const contracts: Contracts = NETWORK === "TESTNET" ? testnet : mainnet;
+
+export const contractsEvm =
+  NETWORK === "LOCAL"
+    ? contractsLocal
+    : NETWORK === "TESTNET"
+    ? contractsTestnet
+    : contractsMainnet;
