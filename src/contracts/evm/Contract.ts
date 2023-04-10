@@ -1,18 +1,17 @@
 import { Interface } from "@ethersproject/abi";
-import { AbiFragments, FetchResult, ResultDecoder } from "./types";
-import {
-  SimulContractTx,
-  SimulSendNativeTx,
-  Tupleable,
-  TxLog,
-} from "types/evm";
+import { AbiFragments, FetchResult, Query, ResultDecoder } from "./types";
+import { SimulContractTx, Tupleable, TxLog } from "types/evm";
 import { WalletState } from "contexts/WalletContext";
 import { toTuple } from "helpers";
 import { EIPMethods } from "constants/evm";
 import { POLYGON_RPC } from "constants/urls";
 
 /** Represents generic contract functionality. Needs to be extended by actual contracts. */
-export class Contract {
+export class Contract<
+  Functions extends { [key: string]: Tupleable },
+  Events extends { [key: string]: Tupleable },
+  Queries extends { [key: string]: Query<any, any, any> }
+> {
   /** contract's address */
   address: string;
 
@@ -21,29 +20,55 @@ export class Contract {
   /** The connected wallet */
   protected wallet: WalletState | undefined;
 
+  protected eventTemplates: Events;
+  protected resultDecoders: {
+    [key in keyof Queries]: ResultDecoder<
+      Queries[key]["decodedResult"],
+      Queries[key]["finalResult"]
+    >;
+  };
+
   protected constructor(
     abi: AbiFragments,
     address: string,
+    eventTemplates: Events,
+    resultDecoders: {
+      [key in keyof Queries]: ResultDecoder<
+        Queries[key]["decodedResult"],
+        Queries[key]["finalResult"]
+      >;
+    },
     wallet?: WalletState
   ) {
     this.iface = new Interface(abi);
     this.address = address;
+    this.eventTemplates = eventTemplates;
+    this.resultDecoders = resultDecoders;
     // should add check confirming the wallet is connected to an EVM chain
     this.wallet = wallet;
   }
 
   /**
-   * Creates an object containing data necessary to invoke an EVM contract.
    *
-   * @param funcName Function name
-   * @param args Function arguments
-   * @returns An object {@link SimulContractTx} containing data necessary to invoke an EVM contract.
+   * @param aif New AIF to create.
+   * @returns An object containing transaction data necessary to call an EVM contract, see {@link SimulContractTx}
    */
-  protected createTxInternal(
-    funcName: string,
-    args: Tupleable
+  createTx<T extends Extract<keyof Functions, string>>(
+    funcName: T,
+    args: Functions[T]
   ): SimulContractTx {
-    const encodedFuncData = this.encodeInternal(funcName, args);
+    return this.createTxInternal(funcName, args);
+  }
+
+  /**
+   *
+   * @param aif New AIF to create.
+   * @returns An object containing transaction data necessary to call an EVM contract, see {@link SimulContractTx}
+   */
+  private createTxInternal<
+    T extends Extract<keyof Functions, string> | Extract<keyof Queries, string>
+  >(funcName: T, args: Functions[T] | Queries[T]): SimulContractTx {
+    const encodedFuncData = this.encode(funcName, args);
 
     const tx: SimulContractTx = {
       to: this.address,
@@ -58,40 +83,18 @@ export class Contract {
   }
 
   /**
-   * Creates an object containing data necessary to send some native coin value to an EVM contract.
+   * Wrapper around the parent's event decoder that ensures only expected events are decoded for this contract.
    *
-   * @param from Sender.
-   * @param to Target address.
-   * @param value Value of native coin to send.
-   * @returns An object {@link SimulSendNativeTx} containing data necessary to send some native coin value to an EVM contract.
-   */
-  static createTransferTx(
-    from: string,
-    to: string,
-    value: string
-  ): SimulSendNativeTx {
-    return { from, to, value };
-  }
-
-  /**
-   *
-   * @param abi Contract ABI containing the description of the event to decode.
-   * @param eventTemplate Event template to use to populate the expected data (event args). Easier to use it as a const than as a type, as it allows for field iteration such as `Object.keys(evenTemplate).map(...)`
-   * @param event Name of the event to decode
+   * @param event Name of the event to be decoded.
    * @param logs Transaction logs.
    * @returns The specified event's arguments if it was found (if it was emitted). Otherwise returns `null`.
+   * @see {@link Events}
    */
-  protected decodeEventInternal<
-    T extends { [key: string]: object },
-    K extends Extract<keyof T, string>
-  >(
-    abi: AbiFragments,
-    eventTemplate: T[K],
+  decodeEvent = <K extends Extract<keyof Events, string>>(
     event: K,
     logs: TxLog[]
-  ): T[K] | null {
-    const iface = new Interface(abi);
-    const topic = iface.getEventTopic(event);
+  ): Events[K] | null => {
+    const topic = this.iface.getEventTopic(event);
 
     // Find the event in the logs
     const log = logs.find((log) => log.topics.includes(topic));
@@ -100,27 +103,22 @@ export class Contract {
     }
 
     // decode event arguments (untyped)
-    const result = iface.decodeEventLog(event, log.data, log.topics);
+    const result = this.iface.decodeEventLog(event, log.data, log.topics);
 
     // populate the resulting event arguments object using the event template (`eventTemplate`)
-    return Object.keys(eventTemplate).reduce(
+    return Object.keys(this.eventTemplates[event]).reduce(
       (res, key, i) => {
         // this is cast is safe to do because `key` is by definition a `keyof T[K]`
-        res[key as keyof T[K]] = result[i];
+        res[key as keyof Events[K]] = result[i];
         return res;
       },
-      { ...eventTemplate }
+      { ...this.eventTemplates[event] }
     );
-  }
+  };
 
-  /**
-   * Encodes transaction data.
-   *
-   * @param funcName Function name
-   * @param args Function arguments
-   * @returns String value representing the encoded combination of function name and its arguments
-   */
-  protected encodeInternal(funcName: string, args: Tupleable): string {
+  encode<
+    T extends Extract<keyof Functions, string> | Extract<keyof Queries, string>
+  >(funcName: T, args: Functions[T] | Queries[T]): string {
     const func = this.iface.getFunction(funcName);
     return this.iface.encodeFunctionData(func, toTuple(args));
   }
@@ -132,11 +130,10 @@ export class Contract {
    * @param providerId Provider ID to use to query balances.
    * @returns A Promise of {@link Coin} which contains the balance and denomination of the coin for the specified address
    */
-  protected queryInternal<DecodedResult, FinalResult>(
-    funcName: string,
-    args: Tupleable,
-    decode: ResultDecoder<DecodedResult, FinalResult>
-  ): Promise<FinalResult> {
+  query<T extends Extract<keyof Queries, string>>(
+    funcName: T,
+    args: Queries[T]["args"]
+  ): Promise<Queries[T]["finalResult"]> {
     const tx = this.createTxInternal(funcName, args);
 
     const result = fetch(POLYGON_RPC, {
@@ -155,16 +152,21 @@ export class Contract {
         }
         return res.json();
       })
-      .then<FinalResult>((res) => {
+      .then<Queries[T]["finalResult"]>((res) => {
         if ("error" in res) {
           throw new Error(`error ${funcName}:` + res.error.message);
         }
 
-        const decodedResult: DecodedResult = this.iface.decodeFunctionResult(
-          "queryEndowmentDetails",
-          res.result
-        )[0];
-        return decode(decodedResult, this.address, this.iface);
+        const decodedResult: Queries[T]["decodedResult"] =
+          this.iface.decodeFunctionResult(
+            "queryEndowmentDetails",
+            res.result
+          )[0];
+        return this.resultDecoders[funcName](
+          decodedResult,
+          this.address,
+          this.iface
+        );
       })
       .catch((err) => {
         throw new Error(err);
