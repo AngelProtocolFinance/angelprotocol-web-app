@@ -15,7 +15,7 @@ export default function IndexFundOwner() {
   } = useContractQuery("index-fund.config", {});
   if (isLoading) return <FormSkeleton />;
   if (isError || !indexFundConfig)
-    return <FormError errorMessage="failed to load registrar config" />;
+    return <FormError errorMessage="failed to load index-fund config" />;
   return <FormWithContext {...indexFundConfig} />;
 }
 

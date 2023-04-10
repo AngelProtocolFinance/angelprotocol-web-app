@@ -4,6 +4,7 @@ import {
   DecodedEndowmentState,
   DecodedFund,
   DecodedGiftCardBalance,
+  DecodedIndexFundConfig,
   toEndowStatusText,
   toEndowType,
   toSettingsPermission,
@@ -88,22 +89,21 @@ export const queryObjects: {
   ],
   "index-fund.config": [
     indexFund.encodeFunctionData("queryConfig", []),
-    () => {
-      return p["index-fund.config"];
-      // const d: DecodedIndexFundConfig = indexFund.decodeFunctionResult(
-      //   result,
-      //   "queryConfig"
-      // )[0];
-      // return {
-      //   owner: d.owner,
-      //   registrarContract: d.registrarContract,
-      //   fundRotation: d.fundRotation.toNumber(),
-      //   fundMemberLimit: d.fundMemberLimit.toNumber(),
-      //   fundingGoal: d.fundingGoal.toNumber(),
-      //   alliance_members: d.alliance_members,
-      // };
+    (result) => {
+      const d: DecodedIndexFundConfig = indexFund.decodeFunctionResult(
+        "queryConfig",
+        result
+      )[0];
+      return {
+        owner: d.owner,
+        registrarContract: d.registrarContract,
+        fundRotation: d.fundRotation.toNumber(),
+        fundMemberLimit: d.fundMemberLimit.toNumber(),
+        fundingGoal: d.fundingGoal.toNumber(),
+        alliance_members: d.alliance_members,
+      };
     },
-    "placeholder",
+    "migrated",
   ],
 
   /** erc20 */
