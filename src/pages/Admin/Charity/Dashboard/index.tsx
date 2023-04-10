@@ -1,5 +1,5 @@
 import { useAdminResources } from "pages/Admin/Guard";
-import { useContractQuery } from "services/juno";
+import { useProposalsQuery } from "services/juno/custom";
 import QueryLoader from "components/QueryLoader";
 import DonationsTable from "../DonationsTable";
 import Balances from "../common/Balances";
@@ -7,10 +7,14 @@ import Table from "./Table";
 
 export default function Dashboard() {
   const { multisig } = useAdminResources();
-  const queryState = useContractQuery("multisig.proposals", {
+  const { data, ...rest } = useProposalsQuery({
     multisig,
-    limit: 5,
+    status: "pending",
+    page: 1,
   });
+  // const queryState = useContractQuery("multisig.proposals", {
+  //   multisig,
+  // });
 
   return (
     <div className="grid content-start mt-6">
@@ -20,7 +24,7 @@ export default function Dashboard() {
         New Proposals
       </h3>
       <QueryLoader
-        queryState={queryState}
+        queryState={{ ...rest, data: data?.proposals || [] }}
         messages={{
           loading: "Getting recent proposals..",
           error: "Failed to get proposals",

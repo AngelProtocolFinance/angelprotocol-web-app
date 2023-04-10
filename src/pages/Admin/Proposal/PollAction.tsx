@@ -1,4 +1,4 @@
-import React, { ReactNode, useMemo } from "react";
+import React, { ReactNode } from "react";
 import { ProposalMeta } from "pages/Admin/types";
 import { ProposalDetails } from "services/types";
 import { TagPayload } from "types/third-party/redux";
@@ -29,14 +29,11 @@ export default function PollAction(props: ProposalDetails) {
     });
   }
 
-  const userVote = useMemo(
-    () => props.votes.find((vote) => vote.voter === wallet?.address),
-    [props.votes, wallet?.address]
-  );
-
   const EXED = props.status === "executed";
-  const EX = props.status === "pending";
-  const V = userVote !== undefined;
+  //for execution
+  const EX = props.status === "pending" && props.signed.length >= 1;
+  //user signed
+  const S = props.signed.some((s) => s === wallet?.address);
 
   let node: ReactNode = null;
   //poll is executed
@@ -48,20 +45,20 @@ export default function PollAction(props: ProposalDetails) {
     //voting period ended, but poll is not passed
   } else {
     //voting ongoing
-    if (V) {
-      node = <Text>you voted {userVote.vote}</Text>;
+    if (S) {
+      node = <Text>Signed</Text>;
     } else {
       node = (
         <Button
           onClick={() => {
             showModal(Voter, {
-              type: props.proposal_type,
+              type: "normal",
               proposalId: props.id,
               existingReason: props.description,
             });
           }}
         >
-          Vote
+          Sign
         </Button>
       );
     }

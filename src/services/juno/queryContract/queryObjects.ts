@@ -170,28 +170,29 @@ export const queryObjects: {
     "migrated",
   ],
   "multisig.proposals": [
-    (options) => {
-      const from = options.start_before || 0;
-      const to = from + (options.limit || 0);
+    ({ range, status }) => {
+      const [from, to] = range;
       return multisig.encodeFunctionData(
         "getTransactionIds",
         toTuple({
           from,
           to,
-          pending: true,
-          executed: true,
+          pending: status === "pending",
+          executed: status === "executed",
         })
       );
     },
-    (result) => {
+    (result, args) => {
       const ids: BigNumber[] = multisig.decodeFunctionResult(
         "getTransactionIds",
         result
       )[0];
 
       return ids.map((id) => ({
-        ...p["multisig.proposal"],
         id: id.toNumber(),
+        title: `Proposal #${id}`,
+        description: "No description",
+        status: args?.status ?? "pending",
       }));
     },
 
@@ -200,20 +201,8 @@ export const queryObjects: {
   "multisig.proposal": [() => "", () => p["multisig.proposal"], "placeholder"],
 
   "multisig.votes": [
-    ({ proposal_id }) =>
-      multisig.encodeFunctionData("getConfirmations", [proposal_id]),
-    (result) => {
-      const confirmations: string[] = multisig.decodeFunctionResult(
-        "getConfirmations",
-        result
-      )[0];
-      return confirmations.map((addr) => ({
-        voter: addr,
-        vote: "yes",
-        weight: 1,
-      }));
-    },
-
+    ({ id }) => multisig.encodeFunctionData("getConfirmations", [id]),
+    (result) => multisig.decodeFunctionResult("getConfirmations", result)[0],
     "migrated",
   ],
 

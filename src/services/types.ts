@@ -1,5 +1,4 @@
 import {
-  AdminVoteInfo,
   CW3Config,
   EndowmentDetails,
   Proposal,
@@ -49,7 +48,8 @@ export type CharityResources = Base & {
 export type AdminResources = APResources | ReviewResources | CharityResources;
 
 export type ProposalDetails = Proposal & {
-  votes: AdminVoteInfo[];
+  signers: string[];
+  signed: string[];
 };
 
 export type JunoTags =

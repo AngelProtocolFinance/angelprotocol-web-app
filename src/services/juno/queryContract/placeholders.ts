@@ -75,9 +75,6 @@ export const placeholders: {
     id: 1,
     title: "this prpposal rocks",
     description: "this is a description",
-    msgs: [],
     status: "pending",
-    threshold: { absolute_percentage: { percentage: "0.5", total_weight: 2 } },
-    proposal_type: "normal",
   },
 };

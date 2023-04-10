@@ -51,5 +51,5 @@ export async function queryContract<T extends QT>(
   if ("error" in result)
     throw new Error(`error ${type}:` + result.error.message);
 
-  return transform(result.result) as any;
+  return transform(result.result, args) as any;
 }

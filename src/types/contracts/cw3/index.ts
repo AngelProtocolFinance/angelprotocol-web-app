@@ -1,23 +1,12 @@
 import { Coin } from "@cosmjs/proto-signing";
-import {
-  Asset,
-  EmbeddedBankMsg,
-  EmbeddedWasmMsg,
-  Threshold,
-  Vote,
-} from "../common";
+import { Asset, Threshold, Vote } from "../common";
 
 type Duration = { time: number } | { height: number };
-type PercentageRes = {
-  absolute_percentage: {
-    percentage: string; //"0.5"
-    total_weight: number; //2
-  };
+
+export type PageOptions = {
+  range: [number, number];
+  status: ProposalStatus;
 };
-
-type ThresholdRes = PercentageRes; // | AbsoluteCount | Quorum;
-
-export type PageOptions = { limit?: number; start_before?: number };
 
 export type VotesPageOptions = {
   proposal_id: number;
@@ -42,11 +31,8 @@ export type Proposal = {
   id: number; //1
   title: string; //"this prpposal rocks"
   description: string; //"this is a description"
-  meta?: string; //JSON string that contains preview metadata
-  msgs: (EmbeddedWasmMsg | EmbeddedBankMsg)[];
   status: ProposalStatus;
-  threshold: ThresholdRes;
-  proposal_type: ProposalType;
+  meta?: string;
 };
 
 export interface CW3Config {

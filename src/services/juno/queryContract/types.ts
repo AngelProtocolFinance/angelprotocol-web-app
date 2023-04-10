@@ -1,5 +1,4 @@
 import {
-  AdminVoteInfo,
   AllianceMember,
   CW3Config,
   EndowmentDetails,
@@ -11,7 +10,6 @@ import {
   Proposal,
   RegistrarConfig,
   RegistrarConfigExtension,
-  VotesPageOptions,
 } from "types/contracts";
 import { AccountType } from "types/contracts/evm";
 import { Contract } from "types/lists";
@@ -20,7 +18,7 @@ type Addr = { addr: string };
 
 type Query<Args, Result> = {
   args: Args;
-  transform: (result: string) => Result;
+  transform: (result: string, args?: Args) => Result;
 };
 
 export interface ContractQueries {
@@ -52,7 +50,7 @@ export interface ContractQueries {
   "multisig.config": Query<null, CW3Config>;
   "multisig.proposal": Query<{ id: number }, Proposal>;
   "multisig.tx-count": Query<{ pending: boolean; executed: boolean }, number>;
-  "multisig.votes": Query<VotesPageOptions, AdminVoteInfo[]>;
+  "multisig.votes": Query<{ id: number }, string[]>;
 
   "accounts.endowment": Query<{ id: number }, EndowmentDetails>;
   "accounts.state": Query<{ id: number }, EndowmentState>;
