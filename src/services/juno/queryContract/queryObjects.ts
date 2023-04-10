@@ -91,7 +91,25 @@ export const queryObjects: {
     },
     "semi-migrated",
   ],
-  "index-fund.config": ["", () => p["index-fund.config"], "placeholder"],
+  "index-fund.config": [
+    indexFund.encodeFunctionData("queryConfig", []),
+    () => {
+      return p["index-fund.config"];
+      // const d: DecodedIndexFundConfig = indexFund.decodeFunctionResult(
+      //   result,
+      //   "queryConfig"
+      // )[0];
+      // return {
+      //   owner: d.owner,
+      //   registrarContract: d.registrarContract,
+      //   fundRotation: d.fundRotation.toNumber(),
+      //   fundMemberLimit: d.fundMemberLimit.toNumber(),
+      //   fundingGoal: d.fundingGoal.toNumber(),
+      //   alliance_members: d.alliance_members,
+      // };
+    },
+    "placeholder",
+  ],
 
   /** erc20 */
   "erc20.balance": [

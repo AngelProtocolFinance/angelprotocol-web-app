@@ -1,14 +1,14 @@
 import * as Yup from "yup";
-import { FundConfigValues } from "pages/Admin/types";
+import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
-import { positiveNumber, tokenAmountString } from "schemas/number";
+import { requiredPositiveNumber, requiredTokenAmount } from "schemas/number";
 import { proposalShape } from "../../../../constants";
 
-const shape: SchemaShape<FundConfigValues> = {
+const shape: SchemaShape<FormValues> = {
   ...proposalShape,
-  funding_goal: tokenAmountString,
-  fund_member_limit: positiveNumber,
-  fund_rotation: positiveNumber,
+  fundingGoal: requiredTokenAmount,
+  fundMemberLimit: requiredPositiveNumber,
+  fundRotation: requiredPositiveNumber,
 };
 
 export const schema = Yup.object(shape);

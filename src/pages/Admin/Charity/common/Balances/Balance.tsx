@@ -12,7 +12,6 @@ export default function Balance({ type }: Props) {
   const query = useEndowBalanceQuery({
     id,
   });
-  console.log(query);
 
   return (
     <div className="@container rounded border border-prim bg-orange-l6 dark:bg-blue-d6">

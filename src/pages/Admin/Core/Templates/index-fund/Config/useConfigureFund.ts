@@ -1,19 +1,12 @@
 import { useFormContext } from "react-hook-form";
-import { FundConfigUpdateMeta, FundConfigValues } from "pages/Admin/types";
-import { FundConfig } from "types/contracts";
+import { FormValues } from "./types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
-import Prompt from "components/Prompt";
-import CW3 from "contracts/CW3";
-import IndexFund from "contracts/IndexFund";
+import Prompt, { TxPrompt } from "components/Prompt";
+import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
-import { scaleToStr } from "helpers";
-import { genDiffMeta, getPayloadDiff } from "helpers/admin";
-import { cleanObject } from "helpers/cleanObject";
-
-type Key = keyof FundConfig;
-type Value = FundConfig[Key];
+import { getPayloadDiff } from "helpers/admin";
 
 export default function useConfigureFund() {
   const { multisig, propMeta } = useAdminResources();
@@ -21,20 +14,20 @@ export default function useConfigureFund() {
   const {
     handleSubmit,
     formState: { isSubmitting, isDirty, isValid },
-  } = useFormContext<FundConfigValues>();
+  } = useFormContext<FormValues>();
   const { showModal } = useModalContext();
   const sendTx = useTxSender();
 
   async function configureFund({
     title,
     description,
-    initialConfigPayload,
+    initial,
     ...data
-  }: FundConfigValues) {
+  }: FormValues) {
     //check for changes
-    const diff = getPayloadDiff(initialConfigPayload, data);
+    const diff = getPayloadDiff(initial, data);
 
-    const diffEntries = Object.entries(diff) as [Key, Value][];
+    const diffEntries = Object.entries(diff);
     if (diffEntries.length <= 0) {
       return showModal(Prompt, {
         type: "error",
@@ -44,30 +37,23 @@ export default function useConfigureFund() {
       });
     }
 
-    const configUpdateMeta: FundConfigUpdateMeta = {
-      type: "if_config",
-      data: genDiffMeta(diffEntries, initialConfigPayload),
-    };
+    if (!wallet) {
+      return showModal(TxPrompt, { error: "Wallet is not connected" });
+    }
 
-    const indexFundContract = new IndexFund(wallet);
-    const configUpdateMsg = indexFundContract.createEmbeddedFundConfigMsg(
-      //don't send diff since unchanged val will be null, and null value will set an attribute to default
-      cleanObject({
-        ...data,
-        funding_goal: data.funding_goal && scaleToStr(data.funding_goal),
-      })
-    );
+    const [configData, dest] = encodeTx("index-fund.config", data);
 
-    const adminContract = new CW3(wallet, multisig);
-    const proposalMsg = adminContract.createProposalMsg(
+    const tx = createTx(wallet.address, "multisig.submit-transaction", {
+      multisig,
       title,
       description,
-      [configUpdateMsg],
-      JSON.stringify(configUpdateMeta)
-    );
+      destination: dest,
+      value: "0",
+      data: configData,
+    });
 
     await sendTx({
-      content: { type: "cosmos", val: [proposalMsg] },
+      content: { type: "evm", val: tx },
       ...propMeta,
     });
   }

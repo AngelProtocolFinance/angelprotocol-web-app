@@ -39,20 +39,17 @@ export const placeholders: {
     swap_factory: "terra1...",
     swaps_router: "terra1...",
   },
-  "index-fund.config": {
-    owner: "juno123abc..",
-    registrar_contract: "juno123abc..",
-    fund_rotation: 10,
-    fund_member_limit: 10,
-    funding_goal: "50000000",
-    accepted_tokens: {
-      native: ["ujuno"],
-      cw20: [],
-    },
-  },
   "gift-card.balance": {
     cw20: [],
     native: [],
+  },
+  "index-fund.config": {
+    owner: "juno123abc..",
+    registrarContract: "juno123abc..",
+    fundRotation: 10,
+    fundMemberLimit: 10,
+    fundingGoal: 50000,
+    alliance_members: [],
   },
 
   "multisig.config": {

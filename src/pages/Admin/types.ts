@@ -6,7 +6,6 @@ import {
   EndowmentStatus,
   EndowmentStatusStrNum,
   EndowmentStatusText,
-  FundConfig,
   FundDetails,
   RegistrarConfigExtensionPayload,
   RegistrarOwnerPayload,
@@ -81,10 +80,7 @@ export type FundMemberUpdateMeta = MetaConstructor<
   }
 >;
 
-export type FundConfigUpdateMeta = MetaConstructor<
-  "if_config",
-  DiffSet<FundConfig>
->;
+export type FundConfigUpdateMeta = MetaConstructor<"if_config", undefined>;
 
 export type CW4MemberUpdateMeta = MetaConstructor<"cw4_members", undefined>;
 
@@ -201,8 +197,6 @@ export type EndowmentUpdateValues = ProposalBase & {
   //metadata
   prevStatus?: EndowmentStatusText;
 };
-export type FundConfigValues = ProposalBase &
-  FundConfig & { initialConfigPayload: FundConfig };
 
 export type FundCreatorValues = ProposalBase & {
   //new fund member

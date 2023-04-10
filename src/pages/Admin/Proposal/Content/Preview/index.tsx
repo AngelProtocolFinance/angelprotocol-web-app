@@ -20,8 +20,6 @@ export default function Preview(props: ProposalMeta) {
       return <Fund {...props.data} />;
     case "if_members":
       return <FundMemberUpdate {...props.data} />;
-    case "if_config":
-      return <DiffTable diffSet={props.data} />;
     case "if_owner":
       return <OwnerUpdate {...props.data} />;
 

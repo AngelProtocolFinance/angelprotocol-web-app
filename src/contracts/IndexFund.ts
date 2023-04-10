@@ -1,6 +1,5 @@
 import {
   AllianceMember,
-  FundConfig,
   FundDetails,
   IndexFundOwnerPayload,
 } from "types/contracts";
@@ -9,12 +8,6 @@ import Contract from "./Contract";
 
 export default class IndexFund extends Contract {
   private static address = contracts["index-fund"];
-
-  createEmbeddedFundConfigMsg(config: FundConfig) {
-    return this.createEmbeddedWasmMsg(IndexFund.address, {
-      update_config: config,
-    });
-  }
 
   createEmbeddedOwnerUpdateMsg(payload: IndexFundOwnerPayload) {
     return this.createEmbeddedWasmMsg(IndexFund.address, {

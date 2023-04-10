@@ -112,6 +112,15 @@ export type DecodedGiftCardBalance = {
   Cw20CoinVerified_addr: string[];
 };
 
+export type DecodedIndexFundConfig = {
+  owner: string;
+  registrarContract: string;
+  fundRotation: BigNumber;
+  fundMemberLimit: BigNumber;
+  fundingGoal: BigNumber;
+  alliance_members: string[];
+};
+
 // ////////// CONVERTERS ///////////////
 export function toSettingsPermission(p: Permission): SettingsPermission {
   return {
