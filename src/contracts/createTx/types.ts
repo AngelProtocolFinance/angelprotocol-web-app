@@ -1,5 +1,3 @@
-import { SettingsControllerUpdate } from "types/contracts";
-import { ERC20Deposit, NewAIF } from "types/contracts/evm";
 import { Allowance, Transfer } from "types/contracts/evm/erc20";
 import { NewTransaction } from "types/contracts/evm/multisig";
 import { Tupleable } from "types/evm";
@@ -17,11 +15,6 @@ type Tx<T extends Tupleable> = {
 };
 
 type Txs = {
-  // //// ACCOUNTS ////
-  "accounts.create-endowment": Tx<NewAIF>;
-  "accounts.update-controller": Tx<SettingsControllerUpdate>;
-  "accounts.deposit-erc20": Tx<ERC20Deposit>;
-
   // //// MULTISIG ////
   "multisig.submit-transaction": Tx<NewTransaction>;
   "multisig.add-owner": Tx<{ address: string }>;

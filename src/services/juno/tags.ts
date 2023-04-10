@@ -17,9 +17,6 @@ export const tags: ContractQueryTypes[] = [
   "multisig.config",
   "multisig.proposal",
   "multisig.votes",
-
-  "accounts.endowment",
-  "accounts.state",
 ];
 
 export const defaultProposalTags: ContractQueryTypes[] = [

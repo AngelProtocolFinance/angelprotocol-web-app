@@ -1,14 +1,22 @@
 import { ProposalMeta } from "pages/Admin/types";
+import { ContractQueries } from "services/juno/queryContract/types";
 import { TagPayload } from "types/third-party/redux";
 import { invalidateJunoTags } from "services/juno";
 import { defaultProposalTags } from "services/juno/tags";
+import { TAGS } from "contracts/evm";
+
+type ArrayElement<ArrayType> = ArrayType extends readonly (infer ElementType)[]
+  ? ElementType
+  : never;
 
 export function getTagPayloads(type?: ProposalMeta["type"]): TagPayload[] {
-  const _tags = [...defaultProposalTags];
+  const _tags: (keyof ContractQueries | ArrayElement<typeof TAGS>)[] = [
+    ...defaultProposalTags,
+  ];
 
   switch (type) {
     case "endow_controller":
-      _tags.push("accounts.endowment");
+      _tags.push("account.queryEndowmentDetails");
       break;
     case "if_alliance":
       _tags.push("index-fund.alliance-members");
@@ -35,15 +43,15 @@ export function getTagPayloads(type?: ProposalMeta["type"]): TagPayload[] {
 
     case "acc_invest":
     case "acc_withdraw":
-      _tags.push("accounts.state");
+      _tags.push("account.queryState");
       break;
 
     case "acc_strategy":
-      _tags.push("accounts.endowment");
+      _tags.push("account.queryEndowmentDetails");
       break;
 
     case "acc_endow_status":
-      _tags.push("accounts.endowment");
+      _tags.push("account.queryEndowmentDetails");
       break;
 
     case "reg_owner":

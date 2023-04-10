@@ -1,4 +1,3 @@
-import type { BigNumber } from "@ethersproject/bignumber";
 import { useNavigate } from "react-router-dom";
 import { Completed } from "slices/launchpad/types";
 import { Chain } from "types/aws";
@@ -7,8 +6,7 @@ import { useSaveAIFMutation } from "services/aws/aws";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import { TxPrompt } from "components/Prompt";
-import { createTx } from "contracts/createTx/createTx";
-import { accounts } from "contracts/evm/Account";
+import { AccountContract } from "contracts/evm";
 import useTxSender from "hooks/useTxSender";
 import { logger } from "helpers";
 import { chainIds } from "constants/chainIds";
@@ -49,11 +47,11 @@ export default function useSubmit() {
 
       // //////////////// CONSTRUCT TX CONTENT ////////////////////
 
-      const tx = createTx(
-        wallet.address,
-        "accounts.create-endowment",
-        toEVMAIF(completed, wallet.address)
-      );
+      const accountContract = new AccountContract(wallet);
+
+      const tx = accountContract.createTx("createEndowment", {
+        aif: toEVMAIF(completed, wallet.address),
+      });
 
       const onSuccess = async (result: TxSuccess, chain: Chain) => {
         // //////////////// LOG NEW AIF TO AWS ////////////////////
@@ -88,14 +86,8 @@ export default function useSubmit() {
         content: {
           type: "evm",
           val: tx,
-          log: (logs) => {
-            const ev = accounts.getEvent("EndowmentCreated");
-            const topic = accounts.getEventTopic(ev);
-            const log = logs.find((log) => log.topics.includes(topic));
-            if (!log) return null;
-            const [id] = accounts.decodeEventLog(ev, log.data, log.topics);
-            return (id as BigNumber).toString();
-          },
+          log: (logs) =>
+            accountContract.decodeEvent("EndowmentCreated", logs)?.endowId,
         },
         isAuthorized: true,
         onSuccess,

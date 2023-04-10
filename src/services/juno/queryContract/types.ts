@@ -2,8 +2,6 @@ import {
   AdminVoteInfo,
   AllianceMember,
   CW3Config,
-  EndowmentDetails,
-  EndowmentState,
   FundDetails,
   GenericBalance,
   IndexFundConfig,
@@ -13,7 +11,6 @@ import {
   RegistrarConfigExtension,
   VotesPageOptions,
 } from "types/contracts";
-import { AccountType } from "types/contracts/evm";
 import { Contract } from "types/lists";
 
 type Addr = { addr: string };
@@ -52,13 +49,6 @@ export interface ContractQueries {
   "multisig.config": Query<null, CW3Config>;
   "multisig.proposal": Query<{ id: number }, Proposal>;
   "multisig.votes": Query<VotesPageOptions, AdminVoteInfo[]>;
-
-  "accounts.endowment": Query<{ id: number }, EndowmentDetails>;
-  "accounts.state": Query<{ id: number }, EndowmentState>;
-  "accounts.token-balance": Query<
-    { id: number; accounType: AccountType; token: string },
-    string
-  >;
 }
 
 export type ContractQueryTypes = keyof ContractQueries;

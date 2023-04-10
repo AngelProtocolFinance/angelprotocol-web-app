@@ -3,9 +3,6 @@ import { ContractQueries } from "./types";
 export const placeholders: {
   [K in Exclude<
     keyof ContractQueries,
-    | "accounts.endowment"
-    | "accounts.state"
-    | "accounts.token-balance"
     | "multisig.members"
     | "erc20.balance"
     | "multisig.votes"

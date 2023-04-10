@@ -1,15 +1,18 @@
 import { AdminResources, ProposalDetails } from "services/types";
 import { AcceptedTokens, BalanceInfo, CW20 } from "types/contracts";
 import { AccountType } from "types/contracts/evm";
+import { AccountContract } from "contracts/evm";
 import { idParamToNum } from "helpers";
 import { junoApi } from "..";
 import { queryContract } from "../queryContract";
 import { apCWs, getMeta } from "./helpers/admin-resource";
 
+const accountContract = new AccountContract();
+
 export const customApi = junoApi.injectEndpoints({
   endpoints: (builder) => ({
     isMember: builder.query<boolean, { user: string; endowmentId?: string }>({
-      providesTags: ["multisig.members", "accounts.endowment"],
+      providesTags: ["multisig.members", "account.queryEndowmentDetails"],
       async queryFn(args) {
         const numId = idParamToNum(args.endowmentId);
         const AP = apCWs[numId];
@@ -24,7 +27,7 @@ export const customApi = junoApi.injectEndpoints({
           };
         }
 
-        const endowment = await queryContract("accounts.endowment", {
+        const endowment = await accountContract.query("queryEndowmentDetails", {
           id: numId,
         });
 
@@ -44,7 +47,7 @@ export const customApi = junoApi.injectEndpoints({
       providesTags: [
         "multisig.members",
         "multisig.config",
-        "accounts.endowment",
+        "account.queryEndowmentDetails",
       ],
       async queryFn(args) {
         const numId = idParamToNum(args.endowmentId);
@@ -72,7 +75,7 @@ export const customApi = junoApi.injectEndpoints({
           };
         }
 
-        const endowment = await queryContract("accounts.endowment", {
+        const endowment = await accountContract.query("queryEndowmentDetails", {
           id: numId,
         });
 
@@ -134,14 +137,16 @@ export const customApi = junoApi.injectEndpoints({
         const balances = (type: AccountType) =>
           Promise.all(
             tokens.cw20.map((t) =>
-              queryContract("accounts.token-balance", {
-                id: args.id,
-                accounType: type,
-                token: t,
-              }).then<CW20>((b) => ({
-                address: t,
-                amount: b,
-              }))
+              accountContract
+                .query("queryTokenAmount", {
+                  id: args.id,
+                  accounType: type,
+                  token: t,
+                })
+                .then<CW20>((b) => ({
+                  address: t,
+                  amount: b,
+                }))
             )
           );
 

@@ -3,7 +3,8 @@ import { SimulContractTx } from "types/evm";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useGetWallet } from "contexts/WalletContext";
-import { createTx, encodeTx } from "contracts/createTx/createTx";
+import { createTx } from "contracts/createTx/createTx";
+import { AccountContract } from "contracts/evm";
 import useTxSender from "hooks/useTxSender";
 import { isEmpty } from "helpers";
 import { getPayloadDiff, getTagPayloads } from "helpers/admin";
@@ -53,6 +54,8 @@ export default function useSubmit() {
 
       const args = createUpdateEndowmentControllerMsg(id, diff, settings);
 
+      const accountContract = new AccountContract(wallet);
+
       let tx: SimulContractTx;
 
       // Unauthorized & non-delegated users wouldn't even be able to submit,
@@ -61,16 +64,21 @@ export default function useSubmit() {
       // Users who are delegates for the whole controller can send direct update msg,
       // thus bypassing the need to create a proposal (even if they are a member of CW3 owners)
       if (userDelegated) {
-        tx = createTx(wallet.address, "accounts.update-controller", args);
+        tx = accountContract.createTx("updateEndowmentController", {
+          update: args,
+        });
       } else {
-        const [data, dest] = encodeTx("accounts.update-controller", args);
+        const encodedData = accountContract.encode(
+          "updateEndowmentController",
+          { update: args }
+        );
         tx = createTx(wallet.address, "multisig.submit-transaction", {
           multisig,
           title: `Update permission settings`,
           description: `Update permission settings for endowment id:${id} by member:${wallet?.address}`,
-          destination: dest,
+          destination: accountContract.address,
           value: "0",
-          data,
+          data: encodedData,
         });
       }
 

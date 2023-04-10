@@ -11,6 +11,7 @@ import {
   ContractQueryTypes as QT,
   QueryOptions,
 } from "./queryContract/types";
+import { TAGS } from "contracts/evm";
 import { POLYGON_RPC } from "constants/urls";
 import { queryContract } from "./queryContract";
 import { tags } from "./tags";
@@ -27,7 +28,7 @@ const customBaseQuery: BaseQueryFn = retry(
 export const junoApi = createApi({
   reducerPath: "junoApi",
   baseQuery: customBaseQuery,
-  tagTypes: tags,
+  tagTypes: [...tags, ...TAGS],
   endpoints: (builder) => ({
     //implementation endpoint of useQueryHook
     contract: builder.query<boolean, { type: any; options: any }>({

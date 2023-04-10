@@ -3,17 +3,8 @@ import { erc20 } from "contracts/evm/ERC20";
 import { indexFund } from "contracts/evm/index-fund";
 import { multisig } from "contracts/evm/multisig";
 import { toTuple } from "helpers";
-import { accounts } from "../evm/Account";
 
 export const txs: { [T in TxTypes]: (args: TxArgs<T>) => string } = {
-  // //// ACCOUNTS ////
-  "accounts.create-endowment": (aif) =>
-    accounts.encodeFunctionData("createEndowment", [toTuple(aif)]),
-  "accounts.update-controller": (update) =>
-    accounts.encodeFunctionData("updateEndowmentController", [toTuple(update)]),
-  "accounts.deposit-erc20": (args) =>
-    accounts.encodeFunctionData("depositERC20", toTuple(args)),
-
   // //// MULTISIG ////
   "multisig.submit-transaction": (tx) =>
     multisig.encodeFunctionData("submitTransaction", toTuple(tx)),
