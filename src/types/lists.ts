@@ -41,3 +41,5 @@ export type Contract =
   | "accounts"
   | "locked-withdraw"
   | "gift-card";
+
+export type AccountType = "liquid" | "locked";

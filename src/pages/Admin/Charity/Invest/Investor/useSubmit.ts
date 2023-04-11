@@ -1,6 +1,6 @@
 import { FormValues } from "./types";
 import { ProposalMeta } from "pages/Admin/types";
-import { AccountType } from "types/contracts";
+import { AccountType } from "types/lists";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Account from "contracts/Account";

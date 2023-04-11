@@ -13,6 +13,7 @@ export const txs: { [T in TxTypes]: (args: TxArgs<T>) => string } = {
     accounts.encodeFunctionData("updateEndowmentController", [toTuple(update)]),
   "accounts.deposit-erc20": (args) =>
     accounts.encodeFunctionData("depositERC20", toTuple(args)),
+  "accounts.withdraw": () => "",
 
   // //// MULTISIG ////
   "multisig.submit-transaction": (tx) =>

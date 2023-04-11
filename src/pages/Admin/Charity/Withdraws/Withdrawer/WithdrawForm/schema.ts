@@ -11,8 +11,8 @@ type TNetwork = WV["network"];
 
 const balKey: keyof Amount = "balance";
 const netKey: keyof WV = "network";
+const endowKey: keyof WV = "endowType";
 const amountsKey: keyof WV = "amounts";
-const heightKey: keyof WV = "height";
 
 const amount: (arg: TNetwork) => SchemaShape<Amount> = (network) => ({
   value: Yup.lazy((val: TVal) =>
@@ -56,8 +56,11 @@ const shape: SchemaShape<WV> = {
   beneficiary: Yup.string().when(netKey, (network: TNetwork) =>
     requiredWalletAddr(network)
   ),
-  reason: Yup.string().when(heightKey, (height, schema) =>
-    height > 0 ? schema.required("reason required") : schema.optional()
+  reason: Yup.string().when(endowKey, (endowType, schema) =>
+    endowType === "charity"
+      ? //normal endowments should not be required to provide reason when withdrawing matured funds
+        schema.required("reason required")
+      : schema.optional()
   ),
 };
 

@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import { AccountType } from "types/contracts";
+import { AccountType } from "types/lists";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useEndowBalanceQuery } from "services/juno/custom";
 import QueryLoader from "components/QueryLoader";
@@ -30,9 +30,9 @@ export default function Balance({ type }: Props) {
           error: "Failed to get balances",
         }}
       >
-        {({ [type]: balance }) => {
+        {({ [type]: balances }) => {
           //TODO: show all token balances
-          const bal = balance.cw20[0].amount;
+          const bal = balances[0].amount;
           return (
             <div className="grid grid-cols-[auto_1fr] gap-y-5 justify-self-start gap-x-8 @lg:flex @lg:gap-x-8 px-4">
               <Amount

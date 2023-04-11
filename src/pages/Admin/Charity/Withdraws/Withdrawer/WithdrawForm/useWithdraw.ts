@@ -1,7 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";
 import { WithdrawMeta } from "pages/Admin/types";
-import { Asset } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Account from "contracts/Account";
@@ -25,12 +24,35 @@ export default function useWithdraw() {
 
   //NOTE: submit is disabled on Normal endowments with unmatured accounts
   async function withdraw(data: WithdrawValues) {
-    const assets: Asset[] = data.amounts.map(
-      ({ value, tokenId, type: tokenType }) => ({
-        info: tokenType === "cw20" ? { cw20: tokenId } : { native: tokenId },
-        amount: scaleToStr(value /** empty "" */ || "0"),
-      })
-    );
+    //transform amounts
+    const addresses: string[] = [];
+    const amounts: string[] = [];
+
+    for (const amount of data.amounts) {
+      addresses.push(amount.tokenId);
+      amounts.push(scaleToStr(amount.value));
+    }
+
+    /**
+     * WITHRAWS FOR POLYGON
+     *
+     * --- NORMAL ENDOWMENTS ---
+     * LIQUID WITHDRAWS
+     * if sender is in beneficity whitelist, can send `accounts.withdraw` directly
+     * if sender is not in whitelist, but in multisig, should send `accounts.withdraw` via endow-multisig
+     *
+     * LOCKED WITHDRAWS
+     * if sender is in maturity whitelist, can send `accounts.withdraw` directly
+     * if sender is not in whitelist, but in multisig, should send `accounts.withdraw` via endow-multisig
+     *
+     * --- CHARITY ---
+     * LIQUID WITHDRAWS
+     * `accounts.withdraw` via endow-multisig
+     *
+     * LOCKED WITHDRAWS
+     * `locked-withdraw.propose` via endow-multisig
+     *
+     */
 
     const isJuno = data.network === chainIds.juno;
     //if not juno, send to ap wallet (juno)
@@ -40,7 +62,7 @@ export default function useWithdraw() {
       type: "acc_withdraw",
       data: {
         beneficiary: data.beneficiary,
-        assets,
+        assets: [],
       },
     };
 
@@ -52,7 +74,7 @@ export default function useWithdraw() {
       type === "locked"
         ? endowCW3.createWithdrawProposalMsg({
             endowment_id: id,
-            assets,
+            assets: [],
             beneficiary,
             description: data.reason,
           })
@@ -65,7 +87,7 @@ export default function useWithdraw() {
                 id,
                 beneficiary,
                 acct_type: data.type,
-                assets,
+                assets: [],
               }),
             ],
             JSON.stringify(meta)

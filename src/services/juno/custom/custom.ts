@@ -1,11 +1,10 @@
-import { AdminResources, ProposalDetails } from "services/types";
 import {
-  AcceptedTokens,
-  BalanceInfo,
-  CW20,
-  Proposal,
-  ProposalStatus,
-} from "types/contracts";
+  AdminResources,
+  EndowBalance,
+  IERC20,
+  ProposalDetails,
+} from "services/types";
+import { AcceptedTokens, Proposal, ProposalStatus } from "types/contracts";
 import { AccountType } from "types/contracts/evm";
 import { idParamToNum } from "helpers";
 import { junoApi } from "..";
@@ -144,7 +143,7 @@ export const customApi = junoApi.injectEndpoints({
         };
       },
     }),
-    endowBalance: builder.query<BalanceInfo, { id: number }>({
+    endowBalance: builder.query<EndowBalance, { id: number }>({
       providesTags: ["multisig.proposal", "multisig.votes"],
       async queryFn(args) {
         //TODO: get this from registrar
@@ -159,7 +158,7 @@ export const customApi = junoApi.injectEndpoints({
                 id: args.id,
                 accounType: type,
                 token: t,
-              }).then<CW20>((b) => ({
+              }).then<IERC20>((b) => ({
                 address: t,
                 amount: b,
               }))
@@ -169,10 +168,7 @@ export const customApi = junoApi.injectEndpoints({
         const [liquid, locked] = await Promise.all([balances(0), balances(1)]);
 
         return {
-          data: {
-            liquid: { cw20: liquid, native: [] },
-            locked: { cw20: locked, native: [] },
-          },
+          data: { liquid, locked },
         };
       },
     }),

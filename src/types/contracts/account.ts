@@ -1,5 +1,6 @@
 import { Coin } from "@cosmjs/proto-signing";
-import { Tupleable } from "types/evm";
+import { Tupleable } from "../evm";
+import { AccountType } from "../lists";
 import {
   Asset,
   Categories,
@@ -124,8 +125,6 @@ export interface DepositPayload {
   locked_percentage: string; //"0.7"
   liquid_percentage: string; //"0.3"
 }
-
-export type AccountType = "locked" | "liquid";
 
 export interface WithdrawPayload {
   id: number;

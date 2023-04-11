@@ -1,4 +1,4 @@
-import { AccountType } from "types/contracts";
+import { AccountType } from "types/lists";
 import { TxOnSuccess, TxSuccessMeta } from "types/tx";
 import { invalidateApesTags } from "services/apes";
 import { useModalContext } from "contexts/ModalContext";

@@ -4,7 +4,7 @@ import {
   Proposal,
   ReviewCW3Config,
 } from "types/contracts";
-import { ProviderId } from "types/lists";
+import { AccountType, ProviderId } from "types/lists";
 import { SenderArgs } from "types/tx";
 
 export type ContractQueryArgs<T = object> = {
@@ -65,3 +65,10 @@ export type ChainQueryArgs = {
   chainId: string;
   providerId: ProviderId;
 };
+
+export interface IERC20 {
+  amount: string;
+  address: string;
+}
+
+export type EndowBalance = { [key in AccountType]: IERC20[] };

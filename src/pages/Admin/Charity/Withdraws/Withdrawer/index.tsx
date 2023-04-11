@@ -23,13 +23,13 @@ export default function Withdrawer() {
         error: "Failed to load withdraw form",
       }}
     >
-      {(balance) =>
+      {(balances) =>
         isLockAvailable ? (
-          <Tabs {...balance} classes={container} />
+          <Tabs balances={balances} classes={container} />
         ) : (
           <WithdrawForm
             type="liquid"
-            balance={balance["liquid"]}
+            balances={balances["liquid"]}
             classes={container}
           />
         )

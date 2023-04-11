@@ -11,7 +11,7 @@ type Props = {
 };
 
 export default function SubmitLocked({ isSubmitDisabled, endowment }: Props) {
-  const note =
+  const warning =
     endowment.endow_type === "charity"
       ? `Withdrawing from endowment funds requires ${APP_NAME} team approval.`
       : //matured normal endowments can withdraw without warnings
@@ -19,15 +19,17 @@ export default function SubmitLocked({ isSubmitDisabled, endowment }: Props) {
 
   return (
     <>
-      {note && <Warning classes="-mt-3">{note}</Warning>}
-      <Field<WV>
-        name="reason"
-        label="Reason"
-        classes={{
-          container: "field-admin",
-          label: "font-bold font-work text-base",
-        }}
-      />
+      {warning && <Warning classes="-mt-3">{warning}</Warning>}
+      {warning && (
+        <Field<WV>
+          name="reason"
+          label="Reason"
+          classes={{
+            container: "field-admin",
+            label: "font-bold font-work text-base",
+          }}
+        />
+      )}
       <WithdrawButton disabled={isSubmitDisabled} />
     </>
   );

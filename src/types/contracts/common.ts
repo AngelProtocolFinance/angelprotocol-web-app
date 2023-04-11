@@ -43,7 +43,8 @@ export type EndowmentStatus = {
   frozen: 2;
   closed: 3;
 };
-export type EndowmentType = "charity" | "normal";
+
+export type EndowmentType = "charity" | "normal"; //TODO: move to types/lists
 export type EndowmentStatusText = keyof EndowmentStatus;
 export type EndowmentStatusNum = EndowmentStatus[EndowmentStatusText];
 export type EndowmentStatusStrNum = `${EndowmentStatusNum}`;

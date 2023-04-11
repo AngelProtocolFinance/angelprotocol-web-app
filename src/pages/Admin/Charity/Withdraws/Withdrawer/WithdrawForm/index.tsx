@@ -9,22 +9,14 @@ import { schema } from "./schema";
 
 export default function WithdrawForm({
   classes = "",
-  balance: { cw20, native },
+  balances,
   type,
 }: WithdrawerProps & { classes?: string }) {
   const { wallet } = useGetWallet();
 
-  const cw20s: Amount[] = cw20.map((c) => ({
-    type: "cw20",
+  const amounts: Amount[] = balances.map((c) => ({
     tokenId: c.address,
     balance: roundDown(condense(c.amount), 4),
-    value: "",
-  }));
-
-  const natives: Amount[] = native.map((n) => ({
-    type: "native",
-    tokenId: n.denom,
-    balance: roundDown(condense(n.amount), 4),
     value: "",
   }));
 
@@ -35,8 +27,7 @@ export default function WithdrawForm({
       beneficiary: wallet?.address || "",
       network: chainIds.juno,
       //transform to form format
-      amounts: [...natives, ...cw20s],
-      height: 0,
+      amounts,
       type,
     },
     resolver: yupResolver(schema),

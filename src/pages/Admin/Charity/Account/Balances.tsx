@@ -1,4 +1,4 @@
-import { AccountType } from "types/contracts";
+import { AccountType } from "types/lists";
 import { useAdminResources } from "pages/Admin/Guard";
 import ContentLoader from "components/ContentLoader";
 import QueryLoader from "components/QueryLoader";

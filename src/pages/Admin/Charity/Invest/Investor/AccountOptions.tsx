@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { UseFormRegisterReturn, useFormContext } from "react-hook-form";
 import { FormValues } from "./types";
-import { AccountType } from "types/contracts";
+import { AccountType } from "types/lists";
 import { humanize } from "helpers";
 import { TStrategy } from "../strats";
 
