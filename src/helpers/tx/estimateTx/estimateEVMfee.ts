@@ -28,7 +28,8 @@ export async function estimateEVMFee(
     }),
   ]);
 
-  const adjusted = new Decimal(gas).mul(1.5);
+  const adjusted = new Decimal(gas).mul(1.5).floor();
+
   const fee = condense(gasPrice, wallet.displayCoin.decimals)
     .mul(adjusted)
     .toNumber();
