@@ -185,7 +185,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       case "metamask":
         disconnectMetamask();
         break;
-      case "web3auth-metamask":
+      case "web3auth-torus":
         disconnectWeb3Auth();
         break;
       case "evm-wc":

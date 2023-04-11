@@ -31,7 +31,7 @@ export type ProviderId =
   | "walletconnect"
   | "keplr-wc"
   | "keplr"
-  | "web3auth-metamask";
+  | "web3auth-torus";
 
 export type Contract =
   | "registrar"
