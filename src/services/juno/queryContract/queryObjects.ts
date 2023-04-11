@@ -219,6 +219,7 @@ export const queryObjects: {
         "queryEndowmentDetails",
         result
       )[0];
+
       const controller = d.settingsController;
       return {
         owner: d.owner,
@@ -230,6 +231,7 @@ export const queryObjects: {
         },
         endow_type: toEndowType(d.endow_type),
         status: toEndowStatusText(d.status),
+        maturity_time: d.maturityTime.toNumber(),
         kyc_donors_only: d.kycDonorsOnly,
         settingsController: {
           endowmentController: toSettingsPermission(

@@ -95,7 +95,7 @@ export interface EndowmentDetails {
   status: EndowmentStatusText;
   //deposit_approved
   //withdraw_approved
-  maturity_time?: number;
+  maturity_time: number;
   //rebalance
   kyc_donors_only: boolean;
   settingsController: SettingsController;

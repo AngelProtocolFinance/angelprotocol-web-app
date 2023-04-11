@@ -70,7 +70,7 @@ export interface DecodedEndowment {
   status: EndowmentStatusEnum;
   //deposit_approved
   //withdraw_approved
-  maturity_time: BigNumber;
+  maturityTime: BigNumber;
   //invested_strategies:
   //rebalance
   kycDonorsOnly: boolean;
