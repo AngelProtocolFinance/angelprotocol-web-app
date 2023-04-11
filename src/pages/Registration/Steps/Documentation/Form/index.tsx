@@ -31,7 +31,9 @@ export default function Form() {
         cannot be found through the search bar.`}
       </p>
       <Label className="mt-8 mb-2" required>
-        Your proof of identity
+        Your personal proof of identity (This should contain a picture and be
+        such as your passport or driving license. All documents are not
+        published and are kept confidential)
       </Label>
       <FileDropzone<FV, "proofOfIdentity">
         name="proofOfIdentity"
