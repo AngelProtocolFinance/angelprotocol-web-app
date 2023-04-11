@@ -20,11 +20,6 @@ export const WALLET_METADATA: {
     installUrl: "https://www.bnbchain.org/en/binance-wallet",
     name: "Binance Wallet",
   },
-  "web3auth-metamask": {
-    logo: metamaskIcon,
-    installUrl: "https://metamask.io/",
-    name: "Metamask",
-  },
   metamask: {
     logo: metamaskIcon,
     installUrl: "https://metamask.io/",
