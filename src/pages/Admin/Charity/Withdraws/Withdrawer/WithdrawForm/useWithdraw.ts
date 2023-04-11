@@ -49,7 +49,7 @@ export default function useWithdraw() {
             await logProposal(
               {
                 endowment_multisig: multisig,
-                proposal_chain_id: chainIds.juno,
+                proposal_chain_id: chainIds.polygon,
                 target_chain: data.network,
                 target_wallet: data.beneficiary,
                 type: data.type,
