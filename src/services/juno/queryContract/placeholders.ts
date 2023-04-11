@@ -4,7 +4,6 @@ export const placeholders: {
   [K in Exclude<
     keyof ContractQueries,
     | "multisig.members"
-    | "erc20.balance"
     | "multisig.votes"
     | "index-fund.funds"
     | "index-fund.alliance-members"

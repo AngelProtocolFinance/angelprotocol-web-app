@@ -17,12 +17,6 @@ export const txs: { [T in TxTypes]: (args: TxArgs<T>) => string } = {
   "multisig.execute-tx": ({ id }) =>
     multisig.encodeFunctionData("executeTransaction", [id]),
 
-  // //// ERC20 ////
-  "erc20.transfer": (transfer) =>
-    erc20.encodeFunctionData("transfer", toTuple(transfer)),
-  "erc20.approve": (allowance) =>
-    erc20.encodeFunctionData("approve", toTuple(allowance)),
-
   // //// INDEX FUND ////
   "index-fund.config": (config) =>
     indexFund.encodeFunctionData("updateConfig", [toTuple(config)]),

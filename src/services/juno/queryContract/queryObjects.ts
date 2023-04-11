@@ -7,7 +7,6 @@ import {
 import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
 import { RegistrarConfig } from "types/contracts";
 // import { RegistrarConfig } from "types/contracts";
-import { erc20 } from "contracts/evm/ERC20";
 import { giftCard } from "contracts/evm/gift-card";
 import { indexFund } from "contracts/evm/index-fund";
 import { multisig } from "contracts/evm/multisig";
@@ -95,19 +94,6 @@ export const queryObjects: {
         fundingGoal: d.fundingGoal.toNumber(),
         alliance_members: d.alliance_members,
       };
-    },
-    "migrated",
-  ],
-
-  /** erc20 */
-  "erc20.balance": [
-    ({ addr }) => erc20.encodeFunctionData("balanceOf", [addr]),
-    (result) => {
-      const decoded: BigNumber = erc20.decodeFunctionResult(
-        "balanceOf",
-        result
-      )[0];
-      return decoded.toString();
     },
     "migrated",
   ],

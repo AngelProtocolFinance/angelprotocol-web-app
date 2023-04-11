@@ -10,8 +10,6 @@ export const tags: ContractQueryTypes[] = [
 
   "gift-card.balance",
 
-  "erc20.balance",
-
   "multisig.members",
   "multisig.proposals",
   "multisig.config",

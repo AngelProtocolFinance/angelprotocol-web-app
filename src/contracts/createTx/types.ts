@@ -22,9 +22,6 @@ type Txs = {
   "multisig.confirm-tx": Tx<{ id: number }>;
   "multisig.execute-tx": Tx<{ id: number }>;
 
-  "erc20.transfer": Tx<Transfer>;
-  "erc20.approve": Tx<Allowance>;
-
   // //// INDEX FUND ////
   "index-fund.config": Tx<{
     fundRotation: number;

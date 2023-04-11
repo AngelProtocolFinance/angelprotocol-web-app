@@ -42,8 +42,6 @@ export interface ContractQueries {
 
   "gift-card.balance": Query<Addr, GenericBalance>;
 
-  "erc20.balance": Query<Addr, string>;
-
   "multisig.members": Query<null, string[]>;
   "multisig.proposals": Query<PageOptions, Proposal[]>;
   "multisig.config": Query<null, CW3Config>;

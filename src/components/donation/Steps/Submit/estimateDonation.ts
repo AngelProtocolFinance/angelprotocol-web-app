@@ -6,7 +6,7 @@ import { WalletState } from "contexts/WalletContext";
 import { SubmitStep } from "slices/donation";
 import GiftCard from "contracts/GiftCard";
 import createCosmosMsg from "contracts/createCosmosMsg";
-import { createTx } from "contracts/createTx/createTx";
+import { ERC20Contract } from "contracts/evm";
 import { logger, scale, scaleToStr } from "helpers";
 import { estimateTx } from "helpers/tx";
 import { ap_wallets } from "constants/ap_wallets";
@@ -84,10 +84,8 @@ export async function estimateDonation({
       const tx: SimulSendNativeTx | SimulContractTx =
         token.type === "evm-native"
           ? { from: wallet.address, value: scaledAmount, to: ap_wallets.eth }
-          : createTx(wallet.address, "erc20.transfer", {
-              erc20: token.token_id,
-              to: ap_wallets.eth,
-              amount: scaledAmount,
+          : new ERC20Contract(token.token_id, wallet).createTx("transfer", {
+              args: { to: ap_wallets.eth, amount: scaledAmount },
             });
 
       content = { type: "evm", val: tx };
