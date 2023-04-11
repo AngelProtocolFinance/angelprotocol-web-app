@@ -11,7 +11,6 @@ import { createTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
 import { useAdminResources } from "../Guard";
-import Voter from "./Voter";
 
 export default function PollAction(props: ProposalDetails) {
   const { wallet } = useGetWallet();
@@ -36,6 +35,23 @@ export default function PollAction(props: ProposalDetails) {
     });
   }
 
+  async function sign() {
+    if (!wallet) {
+      return showModal(TxPrompt, { error: "Wallet is not connected" });
+    }
+    await sendTx({
+      content: {
+        type: "evm",
+        val: createTx(wallet.address, "multisig.confirm-tx", {
+          multisig,
+          id: props.id,
+        }),
+      },
+      isAuthorized: propMeta.isAuthorized,
+      tagPayloads: [invalidateJunoTags(["multisig.votes"])],
+    });
+  }
+
   const EXED = props.status === "executed";
   //for execution
   const EX = props.status === "pending" && props.signed.length >= 1;
@@ -45,7 +61,7 @@ export default function PollAction(props: ProposalDetails) {
   let node: ReactNode = null;
   //poll is executed
   if (EXED) {
-    node = <Text>poll has ended</Text>;
+    node = <></>;
     //voting period ended and poll is passed waiting to be executed
   } else if (EX) {
     node = node = <Button onClick={executeProposal}>Execute Poll</Button>;
@@ -55,19 +71,7 @@ export default function PollAction(props: ProposalDetails) {
     if (S) {
       node = <Text>Signed</Text>;
     } else {
-      node = (
-        <Button
-          onClick={() => {
-            showModal(Voter, {
-              type: "normal",
-              proposalId: props.id,
-              existingReason: props.description,
-            });
-          }}
-        >
-          Sign
-        </Button>
-      );
+      node = <Button onClick={sign}>Sign</Button>;
     }
   }
   return <>{node}</>;

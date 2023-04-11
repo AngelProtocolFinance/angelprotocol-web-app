@@ -10,6 +10,7 @@ export default function Votes({
   id,
   signed,
   signers,
+  status,
   classes = "",
 }: ProposalDetails & { classes?: string }) {
   const { multisig, propMeta } = useAdminResources();
@@ -31,6 +32,7 @@ export default function Votes({
     });
   }
 
+  const disabled = status === "executed";
   return (
     <ul
       className={
@@ -42,8 +44,12 @@ export default function Votes({
         return (
           <li key={s} className="p-3 flex items-center  text-sm">
             <span className="mr-auto">{s}</span>
-            {userSigned && wallet && wallet.address === s ? (
+            {userSigned &&
+            status !== "executed" &&
+            wallet &&
+            wallet.address === s ? (
               <button
+                disabled={disabled}
                 type="button"
                 onClick={() => revoke(wallet.address)}
                 className="text-xs uppercase font-heading mr-2 hover:text-orange"

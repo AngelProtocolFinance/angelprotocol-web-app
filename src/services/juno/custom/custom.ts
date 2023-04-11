@@ -105,7 +105,11 @@ export const customApi = junoApi.injectEndpoints({
       ProposalDetails,
       { id?: string; multisig: string }
     >({
-      providesTags: ["multisig.proposal", "multisig.votes", "multisig.members"],
+      providesTags: [
+        "multisig.votes",
+        "multisig.members",
+        "multisig.proposals",
+      ],
       async queryFn({ id: idParam, multisig }) {
         const id = idParamToNum(idParam);
 
