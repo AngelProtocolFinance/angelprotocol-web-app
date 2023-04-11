@@ -40,7 +40,10 @@ export const queryObjects: {
         result
       )[0];
       //select fields only
-      return { owner: decoded.owner, acceptedTokens: decoded.acceptedTokens };
+      return {
+        owner: decoded.owner.toLocaleLowerCase(),
+        acceptedTokens: decoded.acceptedTokens,
+      };
     },
     "migrated",
   ],
@@ -80,7 +83,7 @@ export const queryObjects: {
         result
       )[0];
       return decoded.map((a) => ({
-        wallet: a,
+        wallet: a.toLocaleLowerCase(),
         name: "Alliance member",
       }));
     },
@@ -94,7 +97,7 @@ export const queryObjects: {
         result
       )[0];
       return {
-        owner: d.owner,
+        owner: d.owner.toLocaleLowerCase(),
         registrarContract: d.registrarContract,
         fundRotation: d.fundRotation.toNumber(),
         fundMemberLimit: d.fundMemberLimit.toNumber(),
@@ -135,7 +138,7 @@ export const queryObjects: {
 
       return {
         cw20: addresses.map((addr, i) => ({
-          address: addr,
+          address: addr.toLocaleLowerCase(),
           amount: amounts[i].toString(),
         })),
         native: [{ denom: "", amount: coinNativeAmount.toString() }],
@@ -221,7 +224,7 @@ export const queryObjects: {
 
       const controller = d.settingsController;
       return {
-        owner: d.owner,
+        owner: d.owner.toLocaleLowerCase(),
         categories: {
           sdgs: d.categories.sdgs.map((s) => s.toNumber()) as UNSDG_NUMS[],
           general: d.categories.general.map((s) =>
@@ -288,7 +291,7 @@ export const queryObjects: {
         },
         closing_endowment: d.closingEndowment,
         //FUTURE: index-fund can also be beneficiary
-        closing_beneficiary: d.closingBeneficiary.data.addr,
+        closing_beneficiary: d.closingBeneficiary.data.addr.toLocaleLowerCase(),
       };
     },
     "migrated",

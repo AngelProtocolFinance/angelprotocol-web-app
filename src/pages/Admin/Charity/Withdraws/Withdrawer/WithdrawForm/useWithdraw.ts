@@ -11,6 +11,27 @@ import { ap_wallets } from "constants/ap_wallets";
 import { chainIds } from "constants/chainIds";
 import useLogWithdrawProposal from "./useLogWithdrawProposal";
 
+/**
+ * WITHRAWS FOR POLYGON
+ *
+ * --- NORMAL ENDOWMENTS ---
+ * LIQUID
+ * if sender is in beneficity whitelist, can send `accounts.withdraw` directly
+ * if sender is not in whitelist, but in multisig, should send `accounts.withdraw` via endow-multisig
+ *
+ * LOCKED
+ * if sender is in maturity whitelist, can send `accounts.withdraw` directly
+ * if sender is not in whitelist, but in multisig, should send `accounts.withdraw` via endow-multisig
+ *
+ * --- CHARITY ---
+ * LIQUID
+ * `accounts.withdraw` via endow-multisig
+ *
+ * LOCKED
+ * `locked-withdraw.propose` via endow-multisig
+ *
+ */
+
 export default function useWithdraw() {
   const { handleSubmit, getValues } = useFormContext<WithdrawValues>();
 
@@ -22,7 +43,6 @@ export default function useWithdraw() {
   const logProposal = useLogWithdrawProposal(propMeta.successMeta);
   const type = getValues("type");
 
-  //NOTE: submit is disabled on Normal endowments with unmatured accounts
   async function withdraw(data: WithdrawValues) {
     //transform amounts
     const addresses: string[] = [];
@@ -32,27 +52,6 @@ export default function useWithdraw() {
       addresses.push(amount.tokenId);
       amounts.push(scaleToStr(amount.value));
     }
-
-    /**
-     * WITHRAWS FOR POLYGON
-     *
-     * --- NORMAL ENDOWMENTS ---
-     * LIQUID WITHDRAWS
-     * if sender is in beneficity whitelist, can send `accounts.withdraw` directly
-     * if sender is not in whitelist, but in multisig, should send `accounts.withdraw` via endow-multisig
-     *
-     * LOCKED WITHDRAWS
-     * if sender is in maturity whitelist, can send `accounts.withdraw` directly
-     * if sender is not in whitelist, but in multisig, should send `accounts.withdraw` via endow-multisig
-     *
-     * --- CHARITY ---
-     * LIQUID WITHDRAWS
-     * `accounts.withdraw` via endow-multisig
-     *
-     * LOCKED WITHDRAWS
-     * `locked-withdraw.propose` via endow-multisig
-     *
-     */
 
     const isJuno = data.network === chainIds.juno;
     //if not juno, send to ap wallet (juno)
