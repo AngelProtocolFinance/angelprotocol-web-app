@@ -162,11 +162,7 @@ export class Contract<
           throw new Error(`error ${funcName}:` + res.error.message);
         }
 
-        return this.resultDecoders[funcName](
-          res.result,
-          this.iface,
-          this.address
-        );
+        return this.resultDecoders[funcName](res.result, this.iface);
       })
       .catch((err) => {
         throw new Error(err);
