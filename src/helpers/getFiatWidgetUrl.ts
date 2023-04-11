@@ -1,18 +1,11 @@
-import { v4 as uuidv4 } from "uuid";
-import { TokenWithAmount } from "types/slices";
-import { ap_wallets } from "constants/ap_wallets";
-import {
-  DESTINATION_CURRENCY_CODE,
-  MELD_ACCESS_TOKEN,
-  MELD_API,
-  SERVICE_PROVIDER,
-} from "constants/fiatTransactions";
+import { NetworkType } from "types/lists";
+import { IS_TEST } from "constants/env";
+import { MELD_ACCESS_TOKEN } from "constants/fiatTransactions";
+import { APIs } from "constants/urls";
 
-export const getFiatWidgetUrl = async (
-  token: TokenWithAmount,
-  address: string
-) => {
-  const externalSessionId = uuidv4();
+const network: NetworkType = IS_TEST ? "testnet" : "mainnet";
+
+export const getFiatWidgetUrl = async (payload: any) => {
   const options = {
     method: "POST",
     headers: {
@@ -20,22 +13,13 @@ export const getFiatWidgetUrl = async (
       "content-type": "application/json",
       Authorization: `BASIC ${MELD_ACCESS_TOKEN}`,
     },
-    body: JSON.stringify({
-      sessionData: {
-        lockFields: ["cryptoCurrency", "walletAddress"],
-        countryCode: "US",
-        destinationCurrencyCode: DESTINATION_CURRENCY_CODE,
-        serviceProvider: SERVICE_PROVIDER,
-        sourceAmount: token.amount,
-        sourceCurrencyCode: token.symbol,
-        walletAddress: ap_wallets.eth,
-      },
-      customerId: address,
-      externalSessionId,
-    }),
+    body: JSON.stringify(payload),
   };
 
-  const response = await fetch(`${MELD_API}/crypto/session/widget`, options);
+  const response = await fetch(
+    `${APIs.apes}/v1/fiat/meld-widget-proxy/${network}`,
+    options
+  );
 
   return response.json();
 };
