@@ -29,7 +29,8 @@ export const purchase = createAsyncThunk<void, Args>(
         return updateTx({ error: result.error });
       }
 
-      const { hash, attrValue: depositID } = result;
+      const { hash, data } = result;
+      const depositID = data as undefined | string;
       if (details.recipient) {
         return updateTx({ hash: result.hash });
       }

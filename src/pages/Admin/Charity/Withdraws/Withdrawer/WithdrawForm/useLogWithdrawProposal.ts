@@ -31,7 +31,7 @@ export default function useLogWithdrawProposal(successMeta?: TxSuccessMeta) {
         { isDismissible: false }
       );
 
-      const proposal_id = idParamToNum(res.attrValue);
+      const proposal_id = idParamToNum(res.data as string | undefined);
 
       if (proposal_id === 0) throw new Error("Failed to get proposal id");
       const generatedToken = createAuthToken("angelprotocol-web-app");

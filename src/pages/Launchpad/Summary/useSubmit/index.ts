@@ -1,8 +1,7 @@
 import type { BigNumber } from "@ethersproject/bignumber";
 import { useNavigate } from "react-router-dom";
 import { Completed } from "slices/launchpad/types";
-import { Chain } from "types/aws";
-import { TxSuccess } from "types/tx";
+import { TxOnSuccess } from "types/tx";
 import { useSaveAIFMutation } from "services/aws/aws";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
@@ -55,9 +54,10 @@ export default function useSubmit() {
         toEVMAIF(completed, wallet.address)
       );
 
-      const onSuccess = async (result: TxSuccess, chain: Chain) => {
+      const onSuccess: TxOnSuccess = async (result, chain) => {
         // //////////////// LOG NEW AIF TO AWS ////////////////////
-        const { attrValue: endowId, ...okTx } = result;
+        const { data, ...okTx } = result;
+        const endowId = data as string | null;
         if (!endowId) {
           return showModal(TxPrompt, {
             error: "Endowment was created but failed to save to AWS",

@@ -29,7 +29,7 @@ export async function sendEVMTx(
     return {
       hash: hash,
       chainID: wallet.chain.chain_id,
-      attrValue: log ? log(receipt.logs) : undefined,
+      data: log ? log(receipt.logs) : undefined,
     };
   } catch (err) {
     logger.error(err);

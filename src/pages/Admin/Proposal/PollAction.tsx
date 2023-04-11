@@ -8,6 +8,7 @@ import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import { TxPrompt } from "components/Prompt";
 import { createTx } from "contracts/createTx/createTx";
+import { multisig as Multisig } from "contracts/evm/multisig";
 import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
 import { useAdminResources } from "../Guard";
@@ -29,9 +30,28 @@ export default function PollAction(props: ProposalDetails) {
           multisig,
           id: props.id,
         }),
+        log(logs) {
+          const topic = Multisig.getEventTopic("ExecutionFailure");
+          const log = logs.find((l) => l.topics.includes(topic));
+          if (log) return "error";
+        },
       },
       isAuthorized: propMeta.isAuthorized,
       tagPayloads: extractTagFromMeta(props.meta),
+
+      onSuccess(result) {
+        const { data, ...okTx } = result;
+        if (data === "error") {
+          return showModal(TxPrompt, {
+            error: "Some of transaction content failed to execute",
+            tx: okTx,
+          });
+        }
+        showModal(TxPrompt, {
+          success: { message: "Transaction executed" },
+          tx: okTx,
+        });
+      },
     });
   }
 

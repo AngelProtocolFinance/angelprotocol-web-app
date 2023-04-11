@@ -1,4 +1,5 @@
 [
+  "event ExecutionFailure(uint256 indexed)",
   "function getOwners() view returns (address[])",
   "function getConfirmations(uint256) view returns (address[])",
   "function getTransactionIds(uint256,uint256,bool,bool) view returns (uint256[])",
