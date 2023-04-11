@@ -7,7 +7,7 @@ export type FetchResult =
 
 export type ResultDecoder<FinalResult> = (
   result: string,
-  iface: Interface,
+  iface: Interface
 ) => FinalResult;
 
 export type Query<Args extends Tupleable, Result> = {
