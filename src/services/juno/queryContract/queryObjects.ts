@@ -11,7 +11,6 @@ import {
 } from "./decoded-types";
 import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
 import { RegistrarConfig } from "types/contracts";
-// import { RegistrarConfig } from "types/contracts";
 import { UNSDG_NUMS } from "types/lists";
 import { accounts } from "contracts/evm/Account";
 import { erc20 } from "contracts/evm/ERC20";
@@ -231,7 +230,7 @@ export const queryObjects: {
         },
         endow_type: toEndowType(d.endow_type),
         status: toEndowStatusText(d.status),
-        maturity_time: d.maturityTime.toNumber(),
+        maturityTime: d.maturityTime.toNumber(),
         kyc_donors_only: d.kycDonorsOnly,
         settingsController: {
           endowmentController: toSettingsPermission(

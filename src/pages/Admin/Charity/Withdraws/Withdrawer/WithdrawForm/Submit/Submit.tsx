@@ -5,7 +5,7 @@ import SubmitLocked from "./SubmitLocked";
 import WithdrawButton from "./WithdrawButton";
 
 export default function Submit() {
-  const { endow_type, maturity_time } = useAdminResources<"charity">();
+  const { endow_type } = useAdminResources<"charity">();
   const {
     getValues,
     formState: { isDirty, isValid, isSubmitting },
@@ -16,11 +16,10 @@ export default function Submit() {
   if (type === "liquid") {
     return <WithdrawButton disabled={isSubmitDisabled} />;
   }
-
-  //check maturity when locked
+  //locked withdraw form not visible to normal endowments when not matured
   return (
     <SubmitLocked
-      endowment={{ endow_type, maturity_time }}
+      endowment={{ endow_type }}
       isSubmitDisabled={isSubmitDisabled}
     />
   );

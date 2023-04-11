@@ -1,18 +1,19 @@
-import { Tab } from "@headlessui/react";
-import { AccountType, EndowmentType } from "types/contracts";
-import { useAdminResources } from "pages/Admin/Guard";
 import { useEndowBalanceQuery } from "services/juno/custom";
 import QueryLoader from "components/QueryLoader";
+import { isMatured } from "helpers/admin";
+import { useAdminResources } from "../../../Guard";
+import Tabs from "./Tabs";
 import WithdrawForm from "./WithdrawForm";
 
-const types: { [key in EndowmentType]: AccountType[] } = {
-  charity: ["liquid", "locked"],
-  normal: ["liquid"],
-};
+const container = "dark:bg-blue-d6 border border-prim rounded max-w-lg  p-8";
 
 export default function Withdrawer() {
-  const { id, endow_type } = useAdminResources<"charity">();
+  const { id, endow_type, maturityTime } = useAdminResources<"charity">();
   const queryState = useEndowBalanceQuery({ id });
+
+  const isLockAvailable =
+    endow_type === "charity" ||
+    (endow_type === "normal" && isMatured(maturityTime));
 
   return (
     <QueryLoader
@@ -22,32 +23,17 @@ export default function Withdrawer() {
         error: "Failed to load withdraw form",
       }}
     >
-      {(balance) => (
-        <Tab.Group
-          as="div"
-          className="flex flex-col items-center max-w-lg p-8 gap-6 dark:bg-blue-d6 border border-prim rounded"
-        >
-          {endow_type === "charity" && (
-            <Tab.List className="grid grid-cols-2 place-items-center gap-1 w-full h-10 p-1 border border-prim rounded-3xl">
-              {types[endow_type].map((type) => (
-                <Tab
-                  key={`tab-${type}`}
-                  className="rounded-2xl flex items-center justify-center w-full h-full uppercase text-sm font-bold focus:outline-none aria-selected:bg-orange-l5 aria-selected:dark:bg-blue-d4 aria-selected:border aria-selected:border-prim"
-                >
-                  {type}
-                </Tab>
-              ))}
-            </Tab.List>
-          )}
-          <Tab.Panels>
-            {types[endow_type].map((type) => (
-              <Tab.Panel key={`tab-panel-${type}`}>
-                <WithdrawForm type={type} balance={balance[type]} />
-              </Tab.Panel>
-            ))}
-          </Tab.Panels>
-        </Tab.Group>
-      )}
+      {(balance) =>
+        isLockAvailable ? (
+          <Tabs {...balance} classes={container} />
+        ) : (
+          <WithdrawForm
+            type="liquid"
+            balance={balance["liquid"]}
+            classes={container}
+          />
+        )
+      }
     </QueryLoader>
   );
 }

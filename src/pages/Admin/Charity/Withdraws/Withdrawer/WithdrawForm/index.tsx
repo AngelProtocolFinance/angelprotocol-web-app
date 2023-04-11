@@ -8,9 +8,10 @@ import Form from "./Form";
 import { schema } from "./schema";
 
 export default function WithdrawForm({
+  classes = "",
   balance: { cw20, native },
   type,
-}: WithdrawerProps) {
+}: WithdrawerProps & { classes?: string }) {
   const { wallet } = useGetWallet();
 
   const cw20s: Amount[] = cw20.map((c) => ({
@@ -42,7 +43,7 @@ export default function WithdrawForm({
   });
   return (
     <FormProvider {...methods}>
-      <Form />
+      <Form classes={classes} />
     </FormProvider>
   );
 }
