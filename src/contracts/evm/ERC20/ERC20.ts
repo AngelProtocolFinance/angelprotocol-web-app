@@ -15,12 +15,6 @@ export class ERC20Contract extends Contract<Queries, Functions, Events> {
    * @param wallet The connected wallet.
    */
   constructor(address: string, wallet?: WalletState) {
-    super(
-      abi,
-      address,
-      EVENT_TEMPLATES,
-      RESULT_DECODERS,
-      wallet
-    );
+    super(abi, address, EVENT_TEMPLATES, RESULT_DECODERS, wallet);
   }
 }

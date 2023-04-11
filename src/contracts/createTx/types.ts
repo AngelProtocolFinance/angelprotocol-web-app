@@ -1,4 +1,3 @@
-import { Allowance, Transfer } from "types/contracts/evm/erc20";
 import { NewTransaction } from "types/contracts/evm/multisig";
 import { Tupleable } from "types/evm";
 import { Contract } from "types/lists";

@@ -1,5 +1,4 @@
 import { TxArgs, TxTypes } from "./types";
-import { erc20 } from "contracts/evm/ERC20";
 import { indexFund } from "contracts/evm/index-fund";
 import { multisig } from "contracts/evm/multisig";
 import { toTuple } from "helpers";
