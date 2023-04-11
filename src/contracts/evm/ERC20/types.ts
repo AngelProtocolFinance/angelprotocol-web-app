@@ -13,12 +13,8 @@ export type Functions = { [key in QueryType]: Queries[key]["args"] } & {
 };
 
 /**
- * By creating an event template constant and creating a type from it we enable the following:
- *   1. The parent's event decoder (decodeEventInternal) knows how to populate the expected event arguments
- *   2. The parent's event decoder can preserve type-safety
- *   3. The Account can create a wrapper around the parent's event decoder to ensure only expected events can be decoded
- *      using its (Account's) `decodeEvent` method
- *
+ * By creating an event template constant and creating a type from it we enable the event decoder to preserve type-safety.
+ * 
  * IMPORTANT: it is crucial to have event arguments in the same order as they appear in the event from the logs.
  */
 export const EVENT_TEMPLATES = {} as const;
