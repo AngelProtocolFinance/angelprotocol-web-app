@@ -9,6 +9,7 @@ const AVAILABLE_CHAINS: { chainId: string; name: string }[] = [
   { chainId: chainIds.juno, name: "juno" },
   { chainId: chainIds.ethereum, name: "ethereum" },
   { chainId: chainIds.binance, name: "binance" },
+  { chainId: chainIds.polygon, name: "polygon" },
 ];
 
 export default function Network() {
