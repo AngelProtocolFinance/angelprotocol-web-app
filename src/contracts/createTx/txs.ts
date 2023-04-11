@@ -49,4 +49,6 @@ export const txs: { [T in TxTypes]: (args: TxArgs<T>) => string } = {
     indexFund.encodeFunctionData("updateFundMembers", toTuple(update)),
   "index-fund.update-alliance-list": (update) =>
     indexFund.encodeFunctionData("updateAllianceMemberList", toTuple(update)),
+
+  "locked-withdraw.propose": () => "",
 };

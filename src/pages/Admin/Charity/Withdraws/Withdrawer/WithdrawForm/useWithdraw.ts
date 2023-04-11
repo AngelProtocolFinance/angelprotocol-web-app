@@ -16,6 +16,7 @@ export default function useWithdraw() {
   const { handleSubmit, getValues } = useFormContext<WithdrawValues>();
 
   const { multisig, id, propMeta } = useAdminResources<"charity">();
+
   const { wallet } = useGetWallet();
 
   const sendTx = useTxSender();

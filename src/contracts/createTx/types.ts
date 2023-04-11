@@ -60,6 +60,13 @@ type Txs = {
     address: string;
     action: "add" | "remove";
   }>;
+
+  "locked-withdraw.propose": Tx<{
+    id: number;
+    beneficiary: string;
+    addresses: string[];
+    amounts: string[];
+  }>;
 };
 
 export type TxTypes = keyof Txs;

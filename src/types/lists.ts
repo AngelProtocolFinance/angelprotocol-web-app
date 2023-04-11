@@ -39,4 +39,5 @@ export type Contract =
   | "multisig/ap"
   | "multisig/review"
   | "accounts"
+  | "locked-withdraw"
   | "gift-card";
