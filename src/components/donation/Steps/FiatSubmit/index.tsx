@@ -16,7 +16,7 @@ export default function FiatSubmit(props: WithWallet<SubmitStep>) {
       name: "",
       flag: "",
     },
-    paymentOption: "Credit/Debit Card",
+    paymentOption: "CARD",
   };
   const methods = useForm<FiatDonateValues>({
     mode: "onSubmit",

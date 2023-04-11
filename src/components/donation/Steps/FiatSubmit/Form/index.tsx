@@ -9,7 +9,6 @@ import { useSetter } from "store/accessors";
 import { SubmitStep, setStep } from "slices/donation";
 import { humanize } from "helpers";
 import { appRoutes } from "constants/routes";
-import PaymentOption from "./PaymentOption";
 import getBreakdown from "./getBreakdown";
 
 export default function Form(props: WithWallet<SubmitStep>) {
@@ -32,7 +31,7 @@ export default function Form(props: WithWallet<SubmitStep>) {
       className="grid gap-4 rounded-md w-full"
       autoComplete="off"
     >
-      <h4 className="font-bold text-sm">Choose payment method:</h4>
+      {/* <h4 className="font-bold text-sm">Choose payment method:</h4>
       <div className="flex">
         <PaymentOption option="ACH Transfer" />
         <PaymentOption option="SEPA" />
@@ -40,10 +39,10 @@ export default function Form(props: WithWallet<SubmitStep>) {
       <div className="flex">
         <PaymentOption option="Wire Transfer" />
         <PaymentOption option="Credit/Debit Card" />
-      </div>
+      </div> */}
       <h4 className="font-bold text-sm">Enter your payment details:</h4>
 
-      <Field<FiatDonateValues>
+      {/* <Field<FiatDonateValues>
         name="name"
         label="Name on card"
         placeholder="e.g. John Doe"
@@ -71,7 +70,7 @@ export default function Form(props: WithWallet<SubmitStep>) {
           required
           classes={{ container: "w-1/5" }}
         />
-      </div>
+      </div> */}
       <div className="flex-col">
         <Label className="mb-2" htmlFor="country">
           Country
