@@ -23,6 +23,8 @@ export const txs: { [T in TxTypes]: (args: TxArgs<T>) => string } = {
     multisig.encodeFunctionData("removeOwner", [address]),
   "multisig.confirm-tx": ({ id }) =>
     multisig.encodeFunctionData("confirmTransaction", [id]),
+  "multisig.revoke-tx": ({ id }) =>
+    multisig.encodeFunctionData("revokeConfirmation", [id]),
   "multisig.execute-tx": ({ id }) =>
     multisig.encodeFunctionData("executeTransaction", [id]),
 

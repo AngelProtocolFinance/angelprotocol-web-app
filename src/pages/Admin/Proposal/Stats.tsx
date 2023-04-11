@@ -7,7 +7,10 @@ export default function Stats({ signed, signers }: ProposalDetails) {
 
   const pctSigned = getPct(numSigned, numSigners);
   const pctPending = 100 - pctSigned;
-  const pctTarget = getPct(1, numSigners);
+  const pctTarget = getPct(
+    1 /** TODO: this info can only be obtained from deployment: way to change this? */,
+    numSigners
+  );
 
   return (
     <div>
