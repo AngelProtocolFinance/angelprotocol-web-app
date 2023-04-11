@@ -71,6 +71,8 @@ export interface DecodedEndowment {
   //deposit_approved
   //withdraw_approved
   maturityTime: BigNumber;
+  whitelistedBeneficiaries: string[];
+  maturityWhitelist: string[];
   //invested_strategies:
   //rebalance
   kycDonorsOnly: boolean;
@@ -122,6 +124,7 @@ export type DecodedIndexFundConfig = {
 };
 
 // ////////// CONVERTERS ///////////////
+
 export function toSettingsPermission(p: Permission): SettingsPermission {
   return {
     ownerControlled: p.ownerControlled,

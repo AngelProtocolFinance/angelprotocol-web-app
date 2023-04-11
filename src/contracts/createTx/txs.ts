@@ -1,6 +1,7 @@
 import { TxArgs, TxTypes } from "./types";
 import { erc20 } from "contracts/evm/ERC20";
 import { indexFund } from "contracts/evm/index-fund";
+import { lockedWithdraw } from "contracts/evm/locked-withdraw";
 import { multisig } from "contracts/evm/multisig";
 import { toTuple } from "helpers";
 import { accounts } from "../evm/Account";
@@ -13,7 +14,8 @@ export const txs: { [T in TxTypes]: (args: TxArgs<T>) => string } = {
     accounts.encodeFunctionData("updateEndowmentController", [toTuple(update)]),
   "accounts.deposit-erc20": (args) =>
     accounts.encodeFunctionData("depositERC20", toTuple(args)),
-  "accounts.withdraw": () => "",
+  "accounts.withdraw": (args) =>
+    accounts.encodeFunctionData("withdraw", toTuple(args)),
 
   // //// MULTISIG ////
   "multisig.submit-transaction": (tx) =>
@@ -51,5 +53,6 @@ export const txs: { [T in TxTypes]: (args: TxArgs<T>) => string } = {
   "index-fund.update-alliance-list": (update) =>
     indexFund.encodeFunctionData("updateAllianceMemberList", toTuple(update)),
 
-  "locked-withdraw.propose": () => "",
+  "locked-withdraw.propose": (args) =>
+    lockedWithdraw.encodeFunctionData("propose", toTuple(args)),
 };

@@ -234,6 +234,12 @@ export const queryObjects: {
         endow_type: toEndowType(d.endow_type),
         status: toEndowStatusText(d.status),
         maturityTime: d.maturityTime.toNumber(),
+        whitelistedBeneficiaries: d.whitelistedBeneficiaries.map((w) =>
+          w.toLocaleLowerCase()
+        ),
+        maturityWhitelist: d.maturityWhitelist.map((w) =>
+          w.toLocaleLowerCase()
+        ),
         kyc_donors_only: d.kycDonorsOnly,
         settingsController: {
           endowmentController: toSettingsPermission(
