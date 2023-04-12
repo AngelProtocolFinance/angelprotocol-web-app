@@ -11,7 +11,9 @@ jest.mock("./createAuthToken", () => ({ createAuthToken: () => AUTH_TOKEN }));
 beforeEach(() => {
   jest
     .spyOn(globalThis, "fetch")
-    .mockImplementation(jest.fn(() => Promise.resolve({ ok: true }) as any));
+    .mockImplementation(
+      jest.fn(async () => new Response(undefined, { status: 200 }))
+    );
 });
 
 afterEach(() => {
