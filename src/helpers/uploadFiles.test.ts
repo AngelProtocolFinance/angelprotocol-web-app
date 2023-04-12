@@ -8,17 +8,12 @@ const baseURL = `https://${bucket}.${bucketURL}/${TIME_STAMP}`;
 
 jest.mock("./createAuthToken", () => ({ createAuthToken: () => AUTH_TOKEN }));
 
-jest.mock("node-fetch", () => Promise.resolve({ ok: true }));
 beforeEach(() => {
   jest
-    .spyOn(window, "fetch")
+    .spyOn(global, "fetch")
     .mockImplementation(
       jest.fn(() => Promise.resolve(new Response(undefined, { status: 200 })))
     );
-});
-
-afterEach(() => {
-  jest.restoreAllMocks();
 });
 
 describe("uploadFiles tests", () => {
