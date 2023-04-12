@@ -14,7 +14,7 @@ const HEADER_LINKS: Link[] = [
   { title: "For Non-Profits", href: BASE_DOMAIN, external: true },
   {
     title: "Marketplace",
-    href: IS_AST ? appRoutes.marketplace : appRoutes.index,
+    href: appRoutes.marketplace,
   },
   {
     title: "Giving Partners",

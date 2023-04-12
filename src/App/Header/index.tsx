@@ -62,7 +62,7 @@ function hasBanner(location: Location): boolean {
   return !!matchRoutes(
     [
       /**routes with banner */
-      appRoutes.index,
+      appRoutes.marketplace,
       appRoutes.gift + "/*",
       appRoutes.donate + "/:id",
       appRoutes.profile + "/:id",
