@@ -1,9 +1,9 @@
 import * as Yup from "yup";
-import { FundDestroyValues } from "pages/Admin/types";
+import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
 import { proposalShape } from "../../../../constants";
 
-const shape: SchemaShape<FundDestroyValues> = {
+const shape: SchemaShape<FormValues> = {
   ...proposalShape,
 };
 

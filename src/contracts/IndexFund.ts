@@ -27,12 +27,6 @@ export default class IndexFund extends Contract {
     });
   }
 
-  createEmbeddedRemoveFundMsg(fundId: number) {
-    return this.createEmbeddedWasmMsg(IndexFund.address, {
-      remove_fund: { fund_id: fundId },
-    });
-  }
-
   createEmbeddedUpdateMembersMsg(
     fundId: number,
     toAdd: string[],

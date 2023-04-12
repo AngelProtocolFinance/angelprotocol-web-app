@@ -202,8 +202,6 @@ export type FundCreatorValues = ProposalBase & {
   splitToLiquid: string; //handled by slider limits
 };
 
-export type FundDestroyValues = ProposalBase & { fundId: string };
-
 export type FundSendPayload = {
   amount: number;
   recipient: string;
