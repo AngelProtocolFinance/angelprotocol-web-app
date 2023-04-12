@@ -10,7 +10,7 @@ jest.mock("./createAuthToken", () => ({ createAuthToken: () => AUTH_TOKEN }));
 
 beforeEach(() => {
   jest
-    .spyOn(window, "fetch")
+    .spyOn(globalThis, "fetch")
     .mockImplementation(jest.fn(() => Promise.resolve({ ok: true }) as any));
 });
 
