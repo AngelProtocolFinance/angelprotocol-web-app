@@ -27,6 +27,7 @@ export async function uploadFiles(
         }),
         headers: { authorization },
       }).then((res) => {
+        console.log(res);
         if (!res.ok) throw new Error(`Failed to upload file: ${f.name}`);
       })
     )
