@@ -28,7 +28,7 @@ export default function Alliance() {
           <button
             type="button"
             onClick={() => {
-              showModal(Adder, { address: "", action: "add" });
+              showModal(Adder, { members, address: "", action: "add" });
             }}
             className="btn-outline-filled text-sm justify-self-end py-2 px-3 -mb-2"
           >
