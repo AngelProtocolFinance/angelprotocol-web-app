@@ -1,4 +1,4 @@
-import { FundUpdateValues as T } from "pages/Admin/types";
+import { FormValues as FV } from "../types";
 import { GroupContainer } from "components/admin";
 import { Field } from "components/form";
 import useAddMember from "./useAddMember";
@@ -7,9 +7,9 @@ export default function Adder() {
   const { addMember } = useAddMember();
   return (
     <GroupContainer className="mb-2 grid">
-      <Field<T>
+      <Field<FV>
         classes="field-admin-sec"
-        label="Endowment Address"
+        label="Endowment ID"
         name="newMemberId"
         placeholder="1"
       />

@@ -62,15 +62,7 @@ export type AllianceEditMeta = MetaConstructor<"if_alliance", undefined>;
 export type CreateFundMeta = MetaConstructor<"if_create", FundPreview>;
 export type RemoveFundMeta = MetaConstructor<"if_remove", FundPreview>;
 
-export type FundMemberUpdateMeta = MetaConstructor<
-  "if_members",
-  {
-    fundId: string;
-    fundName: string;
-    toRemove: string[];
-    toAdd: string[];
-  }
->;
+export type FundMemberUpdateMeta = MetaConstructor<"if_members", undefined>;
 
 export type FundConfigUpdateMeta = MetaConstructor<"if_config", undefined>;
 
@@ -213,10 +205,6 @@ export type FundSendPayload = {
 };
 
 export type FundSendValues = ProposalBase & FundSendPayload;
-export type FundUpdateValues = ProposalBase & {
-  fundId: string;
-  newMemberId: string;
-};
 
 export type MemberUpdatorValues = ProposalBase & {
   addr: string;

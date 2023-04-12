@@ -3,7 +3,6 @@ import DiffTable from "./DiffTable";
 import EndowmentApplication from "./EndowmentApplication";
 import EndowmentStatusUpdate from "./EndowmentStatusUpdate";
 import Fund from "./Fund";
-import FundMemberUpdate from "./FundMemberUpdate";
 import FundTransfer from "./FundTransfer";
 import OwnerUpdate from "./OwnerUpdate";
 import Withdraw from "./Withdraw";
@@ -15,8 +14,7 @@ export default function Preview(props: ProposalMeta) {
       return <Fund {...props.data} />;
     case "if_remove":
       return <Fund {...props.data} />;
-    case "if_members":
-      return <FundMemberUpdate {...props.data} />;
+
     case "if_owner":
       return <OwnerUpdate {...props.data} />;
 

@@ -17,20 +17,18 @@ export default function Member(props: AddressWithFlags) {
   }
   return (
     <li
-      className={`flex gap-1 text-gray-d2 items-center ${
+      className={`flex gap-1 text-gray-d2 dark:text-white items-center ${
         props.isDeleted ? "bg-red/30" : ""
       } ${props.isAdded ? "bg-green/30" : ""} rounded-md p-2 w-full`}
     >
       <Icon type="User" />
-      <span
-        className={`${props.isDeleted ? "line-through" : ""} text-sm font-mono`}
-      >
+      <span className={`${props.isDeleted ? "line-through" : ""} text-sm ml-4`}>
         {props.id}
       </span>
       <button
         onClick={memberItemAction}
         type="button"
-        className="bg-white/30 ml-2 rounded-md p-0.5"
+        className="bg-white/30 rounded-md p-0.5 ml-auto"
       >
         {props.isAdded || props.isDeleted ? (
           <Icon type="Undo" />
