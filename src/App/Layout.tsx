@@ -4,6 +4,7 @@ import { Link } from "./types";
 import Loader from "components/Loader";
 import Seo from "components/Seo";
 import { AP_LOGO, BASE_DOMAIN } from "constants/common";
+import { IS_AST } from "constants/env";
 import { appRoutes } from "constants/routes";
 import Footer from "./Footer";
 import Header from "./Header";
@@ -11,7 +12,10 @@ import { GROUPS_DATA, SOCIAL_MEDIA_LINKS } from "./constants";
 
 const HEADER_LINKS: Link[] = [
   { title: "For Non-Profits", href: BASE_DOMAIN, external: true },
-  { title: "Marketplace", href: appRoutes.index },
+  {
+    title: "Marketplace",
+    href: IS_AST ? appRoutes.marketplace : appRoutes.index,
+  },
   {
     title: "Giving Partners",
     href: `${BASE_DOMAIN}/giving-partners-csr/`,
