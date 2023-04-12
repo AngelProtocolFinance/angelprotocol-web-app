@@ -1,12 +1,13 @@
 import * as Yup from "yup";
-import { IndexFundOwnerValues } from "pages/Admin/types";
+import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
-import { requiredContractAddr } from "schemas/string";
+import { requiredWalletAddr } from "schemas/string";
+import { chainIds } from "constants/chainIds";
 import { proposalShape } from "../../../../constants";
 
-const shape: SchemaShape<IndexFundOwnerValues> = {
+const shape: SchemaShape<FormValues> = {
   ...proposalShape,
-  new_owner: requiredContractAddr,
+  newOwner: requiredWalletAddr(chainIds.polygon),
 };
 
 export const schema = Yup.object(shape);

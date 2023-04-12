@@ -1,30 +1,35 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { IndexFundOwnerValues } from "pages/Admin/types";
+import { FormValues } from "./types";
 import { IndexFundConfig } from "types/contracts";
 import { useContractQuery } from "services/juno";
+import QueryLoader from "components/QueryLoader";
 import { FormError, FormSkeleton } from "components/admin";
 import Form from "./Form";
 import { schema } from "./schema";
 
 export default function IndexFundOwner() {
-  const {
-    data: indexFundConfig,
-    isLoading,
-    isError,
-  } = useContractQuery("index-fund.config", {});
-  if (isLoading) return <FormSkeleton />;
-  if (isError || !indexFundConfig)
-    return <FormError errorMessage="failed to load index-fund config" />;
-  return <FormWithContext {...indexFundConfig} />;
+  const query = useContractQuery("index-fund.config", {});
+
+  return (
+    <QueryLoader
+      queryState={query}
+      messages={{
+        loading: <FormSkeleton />,
+        error: <FormError errorMessage="Failed to load index-fund config" />,
+      }}
+    >
+      {(config) => <FormWithContext {...config} />}
+    </QueryLoader>
+  );
 }
 
 function FormWithContext(props: IndexFundConfig) {
-  const methods = useForm<IndexFundOwnerValues>({
+  const methods = useForm<FormValues>({
     resolver: yupResolver(schema),
     mode: "onChange",
     reValidateMode: "onChange",
-    defaultValues: { initialOwner: props.owner },
+    defaultValues: { owner: props.owner, newOwner: "" },
   });
 
   return (

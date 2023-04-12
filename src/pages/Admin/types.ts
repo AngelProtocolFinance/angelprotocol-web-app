@@ -220,9 +220,6 @@ export type FundUpdateValues = ProposalBase & {
   newMemberId: string;
 };
 
-export type IndexFundOwnerValues = ProposalBase &
-  RegistrarOwnerPayload & { initialOwner: string };
-
 export type MemberUpdatorValues = ProposalBase & {
   addr: string;
   weight: string;
