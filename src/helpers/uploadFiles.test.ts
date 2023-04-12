@@ -11,9 +11,7 @@ jest.mock("./createAuthToken", () => ({ createAuthToken: () => AUTH_TOKEN }));
 beforeEach(() => {
   jest
     .spyOn(global, "fetch")
-    .mockImplementation(
-      jest.fn(() => Promise.resolve(new Response(undefined, { status: 200 })))
-    );
+    .mockResolvedValue(new Response(undefined, { status: 200 }));
 });
 
 describe("uploadFiles tests", () => {
