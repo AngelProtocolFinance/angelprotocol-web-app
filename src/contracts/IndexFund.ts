@@ -1,8 +1,4 @@
-import {
-  AllianceMember,
-  FundDetails,
-  IndexFundOwnerPayload,
-} from "types/contracts";
+import { FundDetails, IndexFundOwnerPayload } from "types/contracts";
 import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 
@@ -44,21 +40,6 @@ export default class IndexFund extends Contract {
   ) {
     return this.createEmbeddedWasmMsg(IndexFund.address, {
       update_members: { fund_id: fundId, add: toAdd, remove: toRemove },
-    });
-  }
-
-  createEmbeddedAAListUpdateMsg(
-    member: AllianceMember,
-    action: "add" | "remove"
-  ) {
-    return this.createEmbeddedWasmMsg(IndexFund.address, {
-      update_alliance_member_list: { address: member.wallet, member, action },
-    });
-  }
-
-  createEmbeddedAAMemberEditMsg(member: AllianceMember) {
-    return this.createEmbeddedWasmMsg(IndexFund.address, {
-      update_alliance_member: { address: member.wallet, member },
     });
   }
 }

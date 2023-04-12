@@ -1,5 +1,4 @@
 import { ProposalMeta } from "pages/Admin/types";
-import AllianceUpdate from "./AllianceUpdate";
 import DiffTable from "./DiffTable";
 import EndowmentApplication from "./EndowmentApplication";
 import EndowmentStatusUpdate from "./EndowmentStatusUpdate";
@@ -12,8 +11,6 @@ import Withdraw from "./Withdraw";
 export default function Preview(props: ProposalMeta) {
   switch (props.type) {
     /**_indexfund */
-    case "if_alliance":
-      return <AllianceUpdate {...props.data} />;
     case "if_create":
       return <Fund {...props.data} />;
     case "if_remove":

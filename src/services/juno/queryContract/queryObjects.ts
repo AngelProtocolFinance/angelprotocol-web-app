@@ -82,10 +82,7 @@ export const queryObjects: {
         "queryAllianceMembers",
         result
       )[0];
-      return decoded.map((a) => ({
-        wallet: a.toLowerCase(),
-        name: "Alliance member",
-      }));
+      return decoded.map((a) => a.toLowerCase());
     },
     "semi-migrated",
   ],

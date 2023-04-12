@@ -1,5 +1,4 @@
 import {
-  AllianceMember,
   CW3Config,
   EndowmentDetails,
   EndowmentState,
@@ -37,7 +36,7 @@ export interface ContractQueries {
       startAfter: number;
       limit: number;
     },
-    AllianceMember[]
+    string[]
   >;
   "index-fund.config": Query<null, IndexFundConfig>;
 

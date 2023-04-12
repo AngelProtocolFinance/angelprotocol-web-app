@@ -1,7 +1,6 @@
 import { Coin } from "@cosmjs/proto-signing";
 import { EndowmentProposal } from "types/aws";
 import {
-  AllianceMember,
   Asset,
   EndowmentStatus,
   EndowmentStatusStrNum,
@@ -59,14 +58,7 @@ export type OwnerUpdateMeta = MetaConstructor<
   { owner: string; newOwner: string }
 >;
 /** _indexfund */
-export type AllianceEditMeta = MetaConstructor<
-  "if_alliance",
-  {
-    toAddMembers: AllianceMember[];
-    toRemoveMembers: AllianceMember[];
-    editedMembers: AllianceMember[];
-  }
->;
+export type AllianceEditMeta = MetaConstructor<"if_alliance", undefined>;
 export type CreateFundMeta = MetaConstructor<"if_create", FundPreview>;
 export type RemoveFundMeta = MetaConstructor<"if_remove", FundPreview>;
 
@@ -166,7 +158,6 @@ export type ProposalBase = {
   description: string;
 };
 export type FundIdContext = { fundId: string };
-export type AllianceEditValues = ProposalBase & Required<AllianceMember>;
 
 export interface FormCW3Config {
   threshold: number;
