@@ -47,23 +47,18 @@ export default function App() {
               <Route path={`${appRoutes.donate}/:id`} element={<Donate />} />
               <Route path={appRoutes.leaderboard} element={<Leaderboard />} />
               <Route
-                index={IS_AST}
                 path={`${appRoutes.register}/*`}
                 element={IS_AST ? <Launchpad /> : <Registration />}
               />
               <Route path={`${appRoutes.gift}/*`} element={<Gift />} />
-              <Route
-                index={!IS_AST}
-                path={appRoutes.marketplace}
-                element={<Marketplace />}
-              />
+              <Route path={appRoutes.marketplace} element={<Marketplace />} />
             </Route>
             <Route
               path="*"
               element={
                 <Navigate
                   replace
-                  to={IS_AST ? appRoutes.register : appRoutes.index}
+                  to={IS_AST ? appRoutes.register : appRoutes.marketplace}
                 />
               }
             />
