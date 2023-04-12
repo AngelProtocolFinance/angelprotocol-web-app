@@ -5,9 +5,18 @@ const TIME_STAMP = 123456789;
 const AUTH_TOKEN = "test";
 const bucket: Bucket = "endow-profiles";
 const baseURL = `https://${bucket}.${bucketURL}/${TIME_STAMP}`;
-global.fetch = jest.fn();
 
 jest.mock("./createAuthToken", () => ({ createAuthToken: () => AUTH_TOKEN }));
+
+beforeEach(() => {
+  jest
+    .spyOn(window, "fetch")
+    .mockImplementation(jest.fn(() => Promise.resolve({ ok: true }) as any));
+});
+
+afterEach(() => {
+  jest.restoreAllMocks();
+});
 
 describe("uploadFiles tests", () => {
   test("upload multiple files", async () => {
