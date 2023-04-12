@@ -8,11 +8,12 @@ const baseURL = `https://${bucket}.${bucketURL}/${TIME_STAMP}`;
 
 jest.mock("./createAuthToken", () => ({ createAuthToken: () => AUTH_TOKEN }));
 
+jest.mock("node-fetch", () => Promise.resolve({ ok: true }));
 beforeEach(() => {
   jest
-    .spyOn(globalThis, "fetch")
+    .spyOn(window, "fetch")
     .mockImplementation(
-      jest.fn(async () => new Response(undefined, { status: 200 }))
+      jest.fn(() => Promise.resolve(new Response(undefined, { status: 200 })))
     );
 });
 
