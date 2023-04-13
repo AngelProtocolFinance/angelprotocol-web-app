@@ -1,8 +1,11 @@
 import { EndowDesignation } from "types/aws";
-import angelProtocolLogoBlu from "assets/images/angelgiving-H-logo-beta-blu.svg";
-import angelProtocolLogoWht from "assets/images/angelgiving-H-logo-beta-wht.svg";
+import angelGivingLogoBlu from "assets/images/angelgiving-H-logo-beta-blu.svg";
+import angelGivingLogoWht from "assets/images/angelgiving-H-logo-beta-wht.svg";
+import angelProtocolLogoWht from "assets/images/angelprotocol-H-logo-beta-wht.svg";
+import angelProtocolLogoBlu from "assets/images/angelprotocol-beta-horiz-blu.svg";
 import { IconType } from "components/Icon";
 import { ImageProps } from "components/Image";
+import { IS_AST } from "./env";
 
 // CONFIGURE THE CONSTANTS BELOW TO DISPLAY THE DESIRED REPEATING TEXT/IMAGES THROUGHOUT THE APP
 export const APP_NAME = "Angel Giving";
@@ -17,13 +20,13 @@ export const GENERIC_ERROR_MESSAGE = `An error occurred. Please get in touch wit
 
 export const AP_LOGO: ImageProps = {
   href: "https://angelprotocol.io/",
-  src: angelProtocolLogoWht,
+  src: IS_AST ? angelProtocolLogoWht : angelGivingLogoWht,
   title: "Go to Marketing page",
 };
 
 export const AP_LOGO_LIGHT: ImageProps = {
   href: "https://angelprotocol.io/",
-  src: angelProtocolLogoBlu,
+  src: IS_AST ? angelProtocolLogoBlu : angelGivingLogoBlu,
   title: "Go to Marketing page",
 };
 

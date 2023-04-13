@@ -51,11 +51,16 @@ export default function App() {
                 element={IS_AST ? <Launchpad /> : <Registration />}
               />
               <Route path={`${appRoutes.gift}/*`} element={<Gift />} />
-              <Route index element={<Marketplace />} />
+              <Route path={appRoutes.marketplace} element={<Marketplace />} />
             </Route>
             <Route
               path="*"
-              element={<Navigate replace to={appRoutes.index} />}
+              element={
+                <Navigate
+                  replace
+                  to={IS_AST ? appRoutes.register : appRoutes.marketplace}
+                />
+              }
             />
           </Routes>
         </ModalContext>
