@@ -1,5 +1,4 @@
 export enum appRoutes {
-  index = "/",
   dashboard = "/dashboard",
   marketplace = "/marketplace",
   leaderboard = "/leaderboard",
