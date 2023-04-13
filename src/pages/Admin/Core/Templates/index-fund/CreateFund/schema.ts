@@ -1,18 +1,19 @@
-import * as Yup from "yup";
-import { FundCreatorValues } from "pages/Admin/types";
+import { object } from "yup";
+import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
 import { futureDate } from "schemas/date";
-import { positiveNumber, requiredPositiveNumber } from "schemas/number";
+import { requiredPositiveNumber } from "schemas/number";
 import { stringByteSchema } from "schemas/string";
 import { proposalShape } from "../../../../constants";
 
-const shape: SchemaShape<FundCreatorValues> = {
+const shape: SchemaShape<FormValues> = {
   ...proposalShape,
-  newFundMemberId: positiveNumber,
-  fundName: stringByteSchema(4, 64),
-  fundDescription: stringByteSchema(4, 1064),
-  expiryTime: futureDate,
-  expiryHeight: requiredPositiveNumber,
+  name: stringByteSchema(4, 64),
+  about: stringByteSchema(4, 1064),
+  expiry: object().shape<SchemaShape<FormValues["expiry"]>>({
+    time: futureDate,
+    height: requiredPositiveNumber,
+  }),
 };
 
-export const schema = Yup.object(shape);
+export const schema = object(shape);

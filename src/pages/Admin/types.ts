@@ -181,19 +181,6 @@ export type EndowmentUpdateValues = ProposalBase & {
   prevStatus?: EndowmentStatusText;
 };
 
-export type FundCreatorValues = ProposalBase & {
-  //new fund member
-  newFundMemberId: string;
-
-  //fund details
-  fundName: string;
-  fundDescription: string;
-  expiryHeight: string;
-  expiryTime: string;
-  isFundRotating: boolean; //defaulted to true
-  splitToLiquid: string; //handled by slider limits
-};
-
 export type FundSendPayload = {
   amount: number;
   recipient: string;

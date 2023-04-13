@@ -1,4 +1,4 @@
-import { FundCreatorValues as V } from "pages/Admin/types";
+import { FormValues } from "../types";
 import { GroupContainer } from "components/admin";
 import { Field } from "components/form";
 import Member from "./Member";
@@ -16,7 +16,7 @@ export default function MemberAdder() {
           ))}
         </div>
       )}
-      <Field<V>
+      <Field<FormValues>
         classes="field-admin-sec"
         label="Endowment id"
         name="newFundMemberId"
