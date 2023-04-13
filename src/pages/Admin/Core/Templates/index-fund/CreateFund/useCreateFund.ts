@@ -58,20 +58,13 @@ export default function useCreateFund() {
       members: newFundMembers,
       rotatingFund: getValues("isRotating"),
       splitToLiquid: split === INIT_SPLIT ? 0 : +split,
-      expiryTime: expiryTime === "" ? 0 : new Date(expiryTime).getTime() / 1000,
+      expiryTime:
+        expiryTime === ""
+          ? 0
+          : Math.floor(new Date(expiryTime).getTime() / 1000),
       expiryHeight: +expiryHeight,
     });
-    console.log({
-      dest,
-      data,
-      name: getValues("name"),
-      description: getValues("about"),
-      members: newFundMembers,
-      rotatingFund: getValues("isRotating"),
-      splitToLiquid: split === INIT_SPLIT ? 0 : +split,
-      expiryTime: expiryTime === "" ? 0 : new Date(expiryTime).getTime() / 1000,
-      expiryHeight: +expiryHeight,
-    });
+
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig,
       title: getValues("title"),
