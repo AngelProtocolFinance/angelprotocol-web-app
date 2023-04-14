@@ -21,14 +21,6 @@ export default class CW3 extends Contract {
     });
   }
 
-  createExecProposalMsg(proposal_id: number) {
-    return this.createExecuteContractMsg(this.address, {
-      execute: {
-        proposal_id,
-      },
-    });
-  }
-
   createProposalMsg(
     title: string,
     description: string,
