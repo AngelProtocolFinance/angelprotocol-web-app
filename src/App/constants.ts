@@ -9,7 +9,7 @@ export type LINKS = {
   SOCIAL_MEDIA_LINKS: SocialMediaLink[];
 };
 
-export const NON_AST_LINKS: LINKS = {
+export const CHARITY_LINKS: LINKS = {
   HEADER_LINKS: [
     { title: "For Non-Profits", href: BASE_DOMAIN, external: true },
     {

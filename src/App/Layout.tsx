@@ -6,11 +6,11 @@ import { AP_LOGO } from "constants/common";
 import { IS_AST } from "constants/env";
 import Footer from "./Footer";
 import Header from "./Header";
-import { AST_LINKS, NON_AST_LINKS } from "./constants";
+import { AST_LINKS, CHARITY_LINKS } from "./constants";
 
 const { HEADER_LINKS, GROUPS_DATA, SOCIAL_MEDIA_LINKS } = IS_AST
   ? AST_LINKS
-  : NON_AST_LINKS;
+  : CHARITY_LINKS;
 
 export default function Layout() {
   return (
