@@ -1,5 +1,11 @@
 import { AdminResources, ProposalDetails } from "services/types";
-import { AcceptedTokens, BalanceInfo, CW20 } from "types/contracts";
+import {
+  AcceptedTokens,
+  BalanceInfo,
+  CW20,
+  Proposal,
+  ProposalStatus,
+} from "types/contracts";
 import { AccountType } from "types/contracts/evm";
 import { idParamToNum } from "helpers";
 import { junoApi } from "..";
@@ -97,28 +103,43 @@ export const customApi = junoApi.injectEndpoints({
     }),
     proposalDetails: builder.query<
       ProposalDetails,
-      { id?: string; cw3: string }
+      { id?: string; multisig: string }
     >({
-      providesTags: ["multisig.proposal", "multisig.votes"],
-      async queryFn(args) {
-        const id = Number(args.id);
+      providesTags: [
+        "multisig.votes",
+        "multisig.members",
+        "multisig.proposals",
+      ],
+      async queryFn({ id: idParam, multisig }) {
+        const id = idParamToNum(idParam);
 
-        if (isNaN(id)) {
-          return { error: undefined };
-        }
+        const count = await queryContract("multisig.tx-count", {
+          multisig,
+          pending: false,
+          executed: true,
+        });
 
-        const [proposal, votes] = await Promise.all([
-          queryContract("multisig.proposal", { multisig: args.cw3, id }),
+        const [signed, signers, executed] = await Promise.all([
           queryContract("multisig.votes", {
-            multisig: args.cw3,
-            proposal_id: id,
+            multisig,
+            id,
+          }),
+          queryContract("multisig.members", { multisig }),
+          queryContract("multisig.proposals", {
+            multisig,
+            range: [0, count],
+            status: "executed",
           }),
         ]);
 
         return {
           data: {
-            ...proposal,
-            votes,
+            id,
+            title: `Proposal ${id}`,
+            description: "Some helpful description",
+            status: executed.some((p) => p.id === id) ? "executed" : "pending",
+            signed,
+            signers,
           },
         };
       },
@@ -155,11 +176,48 @@ export const customApi = junoApi.injectEndpoints({
         };
       },
     }),
+    proposals: builder.query<
+      { proposals: Proposal[]; next?: number },
+      { multisig: string; status: ProposalStatus; page: number }
+    >({
+      providesTags: ["multisig.tx-count", "multisig.proposals"],
+      async queryFn(args) {
+        const { status, multisig, page } = args;
+        const proposalsPerPage = 5;
+
+        const count = await queryContract("multisig.tx-count", {
+          multisig,
+          pending: status === "pending",
+          executed: status === "executed",
+        });
+
+        //get last 5 proposals
+        const range: [number, number] = [
+          Math.max(0, count - proposalsPerPage * args.page),
+          count,
+        ];
+
+        const proposals = await queryContract("multisig.proposals", {
+          multisig,
+          range,
+          status,
+        });
+        proposals.sort((a, b) => b.id - a.id);
+
+        return {
+          data: {
+            proposals,
+            next: range[0] > 0 ? page + 1 : undefined,
+          },
+        };
+      },
+    }),
   }),
 });
 
 export const {
   useIsMemberQuery,
+  useProposalsQuery,
   useAdminResourcesQuery,
   useProposalDetailsQuery,
   useEndowBalanceQuery,

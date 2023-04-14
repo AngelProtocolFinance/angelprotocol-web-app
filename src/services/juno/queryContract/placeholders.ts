@@ -9,6 +9,7 @@ export const placeholders: {
     | "multisig.members"
     | "erc20.balance"
     | "multisig.votes"
+    | "multisig.tx-count"
     | "index-fund.funds"
     | "index-fund.alliance-members"
   >]: ReturnType<ContractQueries[K]["transform"]>;
@@ -74,10 +75,6 @@ export const placeholders: {
     id: 1,
     title: "this prpposal rocks",
     description: "this is a description",
-    msgs: [],
     status: "pending",
-    expires: { at_time: 123 },
-    threshold: { absolute_percentage: { percentage: "0.5", total_weight: 2 } },
-    proposal_type: "normal",
   },
 };

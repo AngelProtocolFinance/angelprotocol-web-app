@@ -27,6 +27,7 @@ type Txs = {
   "multisig.add-owner": Tx<{ address: string }>;
   "multisig.remove-owner": Tx<{ address: string }>;
   "multisig.confirm-tx": Tx<{ id: number }>;
+  "multisig.revoke-tx": Tx<{ id: number }>;
   "multisig.execute-tx": Tx<{ id: number }>;
 
   "erc20.transfer": Tx<Transfer>;

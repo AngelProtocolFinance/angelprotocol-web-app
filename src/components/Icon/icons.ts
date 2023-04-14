@@ -29,6 +29,7 @@ import {
   BiSun,
 } from "react-icons/bi";
 import {
+  BsCircle,
   BsExclamationCircle,
   BsExclamationCircleFill,
   BsFilterLeft,
@@ -123,6 +124,7 @@ export const icons = {
   CaretLeft: AiFillCaretLeft,
   Check: BiCheck,
   CheckCircle: AiFillCheckCircle,
+  Circle: BsCircle,
   Clipboard: IoMdClipboard,
   ClipboardCheck: FaClipboardCheck,
   Clock: FaClock,

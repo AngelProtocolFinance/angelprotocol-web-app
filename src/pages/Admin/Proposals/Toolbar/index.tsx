@@ -4,7 +4,6 @@ import { useLatestBlockQuery } from "services/juno";
 import Icon from "components/Icon";
 import { humanize } from "helpers";
 import { adminRoutes } from "constants/routes";
-import GroupSelector from "./GroupSelector";
 import StatusSelector from "./StatusSelector";
 
 export default function Toolbar({ classes = "" }: { classes?: string }) {
@@ -14,7 +13,6 @@ export default function Toolbar({ classes = "" }: { classes?: string }) {
       className={`flex items-center gap-3 ${classes} border-b-2 pb-3 border-prim`}
     >
       <StatusSelector />
-      <GroupSelector />
       <p className="ml-auto text-sm flex items-center mr-2 text-gray-d1 dark:text-gray">
         <span className="font-heading uppercase text-3xs mr-2">
           current block{" "}
