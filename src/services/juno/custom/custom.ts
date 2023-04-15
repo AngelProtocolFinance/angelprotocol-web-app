@@ -165,7 +165,7 @@ export const customApi = junoApi.injectEndpoints({
             )
           );
 
-        const [liquid, locked] = await Promise.all([balances(0), balances(1)]);
+        const [locked, liquid] = await Promise.all([balances(0), balances(1)]);
 
         return {
           data: { liquid, locked },
