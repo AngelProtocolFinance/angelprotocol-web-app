@@ -9,6 +9,7 @@ import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
 import useTxSender from "hooks/useTxSender";
 import { roundDownToNum } from "helpers";
+import { blockTime } from "helpers/admin";
 import { cleanObject } from "helpers/cleanObject";
 import { INIT_SPLIT } from "./index";
 
@@ -56,7 +57,7 @@ export default function useCreateFund() {
         splitToLiquid === INIT_SPLIT
           ? 0
           : roundDownToNum(+splitToLiquid * 100, 0),
-      expiryTime: expiryTime === "" ? 0 : new Date(expiryTime).getTime() / 1000,
+      expiryTime: expiryTime === "" ? 0 : blockTime(expiryTime),
       expiryHeight: expiryHeight === "" ? 0 : +expiryHeight,
     };
 
