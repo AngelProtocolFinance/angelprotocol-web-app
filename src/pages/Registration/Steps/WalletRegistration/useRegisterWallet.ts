@@ -13,7 +13,7 @@ export default function useRegisterWallet() {
       const result = await updateReg({
         type: "wallet",
         reference: state.init.reference,
-        JunoWallet: address,
+        Wallet: address,
       });
 
       if ("error" in result) {

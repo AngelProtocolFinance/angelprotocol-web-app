@@ -22,7 +22,7 @@ function Dashboard() {
     handleMutationResult(
       await submitApplication({
         ref: init.reference,
-        chain_id: chainIds.juno,
+        chain_id: chainIds.polygon,
       }),
       handleError,
       () => {
