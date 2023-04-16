@@ -91,7 +91,7 @@ export type InitApplication = {
 };
 
 export type OrgData = { OrganizationName: string };
-export type WalletData = { JunoWallet: string };
+export type WalletData = { Wallet: string };
 
 export type DoneContact = {
   Registration: InitReg & OrgData;
