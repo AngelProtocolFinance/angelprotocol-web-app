@@ -93,36 +93,36 @@ export type InitApplication = {
 export type OrgData = { OrganizationName: string };
 export type WalletData = { Wallet: string };
 
-export type DoneContact = {
-  Registration: InitReg & OrgData;
-  ContactPerson: InitContact & ContactDetails;
-  Metadata: InitMeta;
+type Append<Reg extends InitApplication, T, U, V> = {
+  Registration: Reg["Registration"] & T;
+  ContactPerson: Reg["ContactPerson"] & U;
+  Metadata: Reg["Metadata"] & V;
 };
 
-export type DoneDocs = {
-  Registration: InitReg & OrgData & TDocumentation;
-  ContactPerson: InitContact & ContactDetails;
-  Metadata: InitMeta;
-};
+export type DoneContact = Append<InitApplication, OrgData, ContactDetails, {}>;
+export type DoneDocs = Append<DoneContact, TDocumentation, {}, {}>;
 
-export type DoneWallet = {
-  Registration: InitReg & OrgData & TDocumentation;
-  ContactPerson: InitContact & ContactDetails;
-  Metadata: InitMeta &
-    WalletData & {
-      EndowmentId?: number;
-      /** when created 
-      TODO: should be part of Registration status
-      Inactive | Rejected | {id: number}
-      */
-    };
+type NewEndow = {
+  EndowmentId?: number;
+  /** when created 
+TODO: should be part of Registration status
+Inactive | Rejected | {id: number}
+*/
 };
+export type DoneWallet = Append<DoneDocs, {}, {}, WalletData & NewEndow>;
+
+type ApplicationIDs = {
+  approve_tx_id?: string;
+  reject_tx_id?: string;
+};
+export type InReview = Append<DoneWallet, ApplicationIDs, {}, {}>;
 
 export type SavedRegistration =
   | InitApplication
   | DoneContact
   | DoneDocs
-  | DoneWallet;
+  | DoneWallet
+  | InReview;
 
 type ContactUpdate = {
   type: "contact details";
@@ -139,10 +139,6 @@ type WalletUpdate = {
   type: "wallet";
 } & WalletData;
 
-type ApplicationIDs = {
-  approve_tx_id?: string;
-  reject_tx_id?: string;
-};
 type ApplicationUpdate = { type: "application" } & (
   | Pick<Required<ApplicationIDs>, "approve_tx_id">
   | Pick<Required<ApplicationIDs>, "reject_tx_id">
