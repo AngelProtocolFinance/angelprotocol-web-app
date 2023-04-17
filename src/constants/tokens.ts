@@ -58,4 +58,16 @@ export const fiatTokens: TokenWithAmount[] = [
     balance: Number.MAX_VALUE,
     amount: "",
   },
+  {
+    min_donation_amnt: 30,
+    symbol: "EUR",
+    approved: true,
+    decimals: 2,
+    logo: "https://cdn-icons-png.flaticon.com/512/555/555417.png",
+    name: "EURO",
+    token_id: "EUR",
+    type: "fiat",
+    balance: Number.MAX_VALUE,
+    amount: "",
+  },
 ];
