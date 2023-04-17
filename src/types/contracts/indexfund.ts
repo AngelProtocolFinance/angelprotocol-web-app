@@ -17,7 +17,3 @@ export type FundDetails = {
   expiryTime: number;
   expiryHeight: number;
 };
-
-export type IndexFundOwnerPayload = {
-  new_owner: string;
-};

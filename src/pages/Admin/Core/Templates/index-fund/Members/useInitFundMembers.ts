@@ -1,12 +1,12 @@
 import { useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
-import { FundUpdateValues } from "pages/Admin/types";
+import { FormValues } from "./types";
 import { useContractQuery } from "services/juno";
 import { useGetter, useSetter } from "store/accessors";
 import { setMembers } from "slices/admin/fundMembers";
 
 export default function useInitFundMembers() {
-  const { watch } = useFormContext<FundUpdateValues>();
+  const { watch } = useFormContext<FormValues>();
   const fundId = watch("fundId");
   const fundIdRef = useRef<string | undefined>();
   const dispatch = useSetter();

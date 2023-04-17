@@ -1,4 +1,4 @@
-import { FundUpdateValues as FV } from "pages/Admin/types";
+import { FormValues as FV } from "./types";
 import Loader from "components/Loader";
 import { FormContainer, GroupContainer, Submitter } from "components/admin";
 import { Field, Label } from "components/form";

@@ -1,4 +1,4 @@
-import { FundDestroyValues as FD } from "pages/Admin/types";
+import { FormValues as FV } from "./types";
 import { FormContainer, Submitter } from "components/admin";
 import { Field, Label } from "components/form";
 import FundSelection from "../FundSelection";
@@ -8,13 +8,13 @@ export default function Form() {
   const { destroyFund, isSubmitDisabled } = useDestroyFund();
   return (
     <FormContainer onSubmit={destroyFund}>
-      <Field<FD>
+      <Field<FV>
         classes="field-admin"
         label="Proposal title"
         name="title"
         required
       />
-      <Field<FD, "textarea">
+      <Field<FV, "textarea">
         type="textarea"
         classes="field-admin"
         label="Proposal description"
@@ -24,7 +24,7 @@ export default function Form() {
       <Label required className="-mb-4">
         Fund to remove
       </Label>
-      <FundSelection<FD> fieldName="fundId" />
+      <FundSelection<FV> fieldName="fundId" />
       <Submitter type="submit" _classes="mt-4" disabled={isSubmitDisabled}>
         Submit
       </Submitter>

@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { FundCreatorValues as V } from "pages/Admin/types";
+import { FormValues as FV } from "./types";
 import { DivContainer, Submitter } from "components/admin";
 import { CheckField, Field, Label } from "components/form";
 import { INIT_SPLIT } from ".";
@@ -10,47 +10,42 @@ export default function Form() {
   const { createFund } = useCreateFund();
   return (
     <DivContainer>
-      <Field<V>
+      <Field<FV>
         classes="field-admin"
         label="Proposal title"
         name="title"
         required
       />
-      <Field<V, "textarea">
+      <Field<FV, "textarea">
         type="textarea"
         classes="field-admin"
         label="Proposal description"
         name="description"
         required
       />
-      <Field<V>
-        classes="field-admin"
-        label="Fund name"
-        name="fundName"
-        required
-      />
-      <Field<V, "textarea">
+      <Field<FV> classes="field-admin" label="Fund name" name="name" required />
+      <Field<FV, "textarea">
         type="textarea"
         classes="field-admin"
         label="Fund description"
-        name="fundDescription"
+        name="about"
         required
       />
-      <Field<V>
+      <Field<FV>
         classes="field-admin"
         label="Expiry height"
-        name="expiryHeight"
+        name="expiry.height"
         placeholder="700992312"
       />
-      <Field<V, "datetime-local">
+      <Field<FV, "datetime-local">
         classes="field-admin"
         type="datetime-local"
         label="Expiry time"
-        name="expiryHeight"
+        name="expiry.time"
       />
       <Slider />
-      <CheckField<V>
-        name="isFundRotating"
+      <CheckField<FV>
+        name="isRotating"
         classes="p-3 text-sm rounded bg-orange-l6 dark:bg-blue-d7 border border-prim"
       >
         Included on fund rotation
@@ -66,11 +61,11 @@ export default function Form() {
 }
 
 function Slider() {
-  const { register, watch, setValue } = useFormContext<V>();
-  const splitToLiq = watch("splitToLiquid");
+  const { register, watch, setValue } = useFormContext<FV>();
+  const splitToLiq = watch("liqSplit");
 
   function unspecifySplit() {
-    setValue("splitToLiquid", INIT_SPLIT);
+    setValue("liqSplit", INIT_SPLIT);
   }
 
   return (
@@ -86,7 +81,7 @@ function Slider() {
       </Label>
       <div className="rounded bg-orange-l6 dark:bg-blue-d7 grid items-center px-4 py-6 border border-prim">
         <input
-          {...register("splitToLiquid")}
+          {...register("liqSplit")}
           type="range"
           className="range"
           min="0"

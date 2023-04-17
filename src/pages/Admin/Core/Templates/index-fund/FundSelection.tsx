@@ -19,7 +19,7 @@ export default function FundSelection<T extends FundIdContext>(props: {
       </TableSection>
       <TableSection
         type="tbody"
-        rowClass="border-b hover:bg-blue hover:bg-blue/10 cursor-pointer select-none"
+        rowClass="border-b border-prim hover:bg-blue hover:bg-blue/10 cursor-pointer select-none"
         onRowSelect={handleSelectRow}
         selectedRow={activeRow}
         selectedClass="text-blue"
