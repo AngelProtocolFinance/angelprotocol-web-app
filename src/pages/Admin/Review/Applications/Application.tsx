@@ -11,7 +11,7 @@ export default function Application() {
   const { id = "" } = useParams();
   const [appId = "", ref = ""] = id.split(SEPARATOR);
   const query = useRegQuery(ref, {
-    skip: !ref || !appId || appId === "undefined",
+    skip: !ref || !appId,
   });
 
   return (

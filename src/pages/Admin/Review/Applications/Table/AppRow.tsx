@@ -19,7 +19,9 @@ export default function AppRow(props: EndowmentProposal) {
       </span>
 
       <Link
-        to={`application/${props.application_id}${SEPARATOR}${props.PK}`}
+        to={`application/${
+          props.application_id ?? "" /** appliation_id is a new field */
+        }${SEPARATOR}${props.PK}`}
         className="uppercase text-sm hover:text-blue active:text-orange flex gap-1 items-center"
       >
         <span>Review</span>
