@@ -174,7 +174,7 @@ export type EndowmentProposal = Pick<
   OrgData &
   TDocumentation &
   Pick<InitContact, "Email"> & {
-    poll_id: number;
+    application_id: number;
   };
 
 export type SubmitResult = {
