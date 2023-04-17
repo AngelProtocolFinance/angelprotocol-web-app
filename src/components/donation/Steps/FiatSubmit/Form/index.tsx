@@ -2,13 +2,15 @@ import { PropsWithChildren } from "react";
 import { useFormContext } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { FiatDonateValues } from "../types";
+import { useRequestWidgetUrlMutation } from "services/apes";
 import { WithWallet } from "contexts/WalletContext";
 import CountrySelector from "components/CountrySelector";
-import { Field, Label } from "components/form";
+import { Label } from "components/form";
 import { useSetter } from "store/accessors";
 import { SubmitStep, setStep } from "slices/donation";
 import { humanize } from "helpers";
 import { appRoutes } from "constants/routes";
+import { getISOCountryCode } from "./countryList";
 import getBreakdown from "./getBreakdown";
 
 export default function Form(props: WithWallet<SubmitStep>) {
@@ -21,9 +23,29 @@ export default function Form(props: WithWallet<SubmitStep>) {
   const { token } = props.details;
   const { id: endowId } = props.recipient;
   const { fromBal, fromGift } = getBreakdown(token);
-  const { handleSubmit, resetField } = useFormContext<FiatDonateValues>();
+  const {
+    handleSubmit,
+    resetField,
+    formState: { isSubmitting, isValid },
+  } = useFormContext<FiatDonateValues>();
+  const [submitRequest] = useRequestWidgetUrlMutation();
 
-  function submit(data: FiatDonateValues) {}
+  async function submit(data: FiatDonateValues) {
+    const options = {
+      amount: +token.amount,
+      charityName: props.recipient.name,
+      countryCode: getISOCountryCode(data.country.name),
+      endowmentId: props.recipient.id,
+      sourceCurrencyCode: token.symbol,
+      splitLiq: props.details.pctLiquidSplit.toString(),
+    };
+    try {
+      const response: any = await submitRequest(options);
+      window.location.href = response.data.widgetUrl;
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   return (
     <form
@@ -31,49 +53,10 @@ export default function Form(props: WithWallet<SubmitStep>) {
       className="grid gap-4 rounded-md w-full"
       autoComplete="off"
     >
-      {/* <h4 className="font-bold text-sm">Choose payment method:</h4>
-      <div className="flex">
-        <PaymentOption option="ACH Transfer" />
-        <PaymentOption option="SEPA" />
-      </div>
-      <div className="flex">
-        <PaymentOption option="Wire Transfer" />
-        <PaymentOption option="Credit/Debit Card" />
-      </div> */}
       <h4 className="font-bold text-sm">Enter your payment details:</h4>
-
-      {/* <Field<FiatDonateValues>
-        name="name"
-        label="Name on card"
-        placeholder="e.g. John Doe"
-        required
-      />
-      <div className="flex gap-5">
-        <Field<FiatDonateValues>
-          name="cardNumber"
-          label="Card number"
-          placeholder="xxxx xxxx xxxx xxxx"
-          required
-          classes={{ container: "w-3/5" }}
-        />
-        <Field<FiatDonateValues>
-          name="expiryDate"
-          label="Expiry Date"
-          placeholder="MM / YY"
-          required
-          classes={{ container: "w-1/5" }}
-        />
-        <Field<FiatDonateValues>
-          name="cvv"
-          label="CVV"
-          placeholder="xxx"
-          required
-          classes={{ container: "w-1/5" }}
-        />
-      </div> */}
       <div className="flex-col">
         <Label className="mb-2" htmlFor="country">
-          Country
+          Country of Origin *
         </Label>
         <CountrySelector<FiatDonateValues, "country">
           placeholder="Select a country"
@@ -122,7 +105,11 @@ export default function Form(props: WithWallet<SubmitStep>) {
           >
             Back
           </button>
-          <button className="btn-orange btn-donate" type="submit">
+          <button
+            className="btn-orange btn-donate"
+            type="submit"
+            disabled={isSubmitting || !isValid}
+          >
             Make Donation
           </button>
           <Link
