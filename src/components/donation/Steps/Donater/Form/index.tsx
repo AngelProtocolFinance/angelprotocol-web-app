@@ -67,7 +67,7 @@ export default function Form(props: {
         <button
           className="btn-orange btn-donate w-1/2"
           disabled={
-            !isValid || (wasCompleted ? false : !isDirty) || isSubmitting
+            !isValid || (wasCompleted ? false : isDirty) || isSubmitting
           }
           type="submit"
         >
