@@ -3,6 +3,7 @@ import { lazy } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import ModalContext from "contexts/ModalContext";
 import WalletContext from "contexts/WalletContext";
+import DonateFiatThanks from "components/DonateFiatThanks";
 import useScrollTop from "hooks/useScrollTop";
 import { chainOptions } from "constants/chainOptions";
 import { IS_AST } from "constants/env";
@@ -45,6 +46,10 @@ export default function App() {
                 element={<Donations />}
               />
               <Route path={`${appRoutes.donate}/:id`} element={<Donate />} />
+              <Route
+                path={appRoutes.donate_fiat_thanks}
+                element={<DonateFiatThanks />}
+              />
               <Route path={appRoutes.leaderboard} element={<Leaderboard />} />
               <Route
                 path={`${appRoutes.register}/*`}
