@@ -23,7 +23,7 @@ const testnet:Contracts = {
   "multisig/review":     "0x1edC050B5d84cbB0cA0b56356f3F7307efcd50Fb",
   accounts:              "0xf725Ff6235D53dA06Acb4a70AA33206a1447D550",
   "locked-withdraw":     "0x2d618cDa8cbd2FFc742DD9E8BBEa774B30d06665",
-  "charity-application": "0x2d618cDa8cbd2FFc742DD9E8BBEa774B30d06665",
+  "charity-application": "0x3516F641df05537a903D655844736eE991E69902",
   "gift-card":           "juno17pghl3qreyqnjlq6hun5ymshl0dkfeelcy738dkgk602lzmgcvaq2e4xav",
 }
 
