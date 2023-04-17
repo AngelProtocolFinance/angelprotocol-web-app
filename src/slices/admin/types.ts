@@ -1,11 +1,5 @@
 import { ApplicationStatus } from "types/aws";
-import { AllianceMember, ProposalStatus } from "types/contracts";
-
-export type AllianceMemberWithFlags = AllianceMember & {
-  isDeleted: boolean;
-  isAdded: boolean;
-  edits?: AllianceMember;
-};
+import { ProposalStatus } from "types/contracts";
 
 export type AddressWithFlags = {
   id: string;
