@@ -39,7 +39,7 @@ export default function useWithdraw() {
         propMeta.isAuthorized ||
         isDirect /** if whitelisted, could send this tx */,
       onSuccess: isPolygon
-        ? undefined //no need to POST to AWS if destination is juno
+        ? undefined //no need to POST to AWS if destination is polygon
         : async (response, chain) =>
             await logProposal(
               {

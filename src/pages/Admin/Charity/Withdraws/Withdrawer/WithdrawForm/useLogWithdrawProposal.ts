@@ -27,7 +27,7 @@ export default function useLogWithdrawProposal(successMeta?: TxSuccessMeta) {
     try {
       showModal(
         TxPrompt,
-        { loading: "Saving proposal informatin" },
+        { loading: "Saving proposal information" },
         { isDismissible: false }
       );
 
