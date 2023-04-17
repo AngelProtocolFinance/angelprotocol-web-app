@@ -20,6 +20,7 @@ export default function Review() {
         <Route path={`${adminRoutes.proposal}/:id`} element={<Proposal />} />
         <Route path={adminRoutes.proposals} element={<Proposals />} />
         <Route path={`${adminRoutes.templates}/*`} element={<Templates />} />
+        <Route path="application/:id" element={<div>application</div>} />
         <Route index element={<Applications />} />
       </Route>
     </Routes>

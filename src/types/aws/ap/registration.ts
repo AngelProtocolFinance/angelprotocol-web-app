@@ -139,7 +139,18 @@ type WalletUpdate = {
   type: "wallet";
 } & WalletData;
 
-export type RegistrationUpdate = ContactUpdate | DocsUpdate | WalletUpdate;
+type ApplicationUpdate = { type: "application" } & (
+  | {
+      approve_tx_id: string;
+    }
+  | { reject_tx_id: string }
+);
+
+export type RegistrationUpdate =
+  | ContactUpdate
+  | DocsUpdate
+  | WalletUpdate
+  | ApplicationUpdate;
 
 export type ContactUpdateResult = {
   ContactPerson: ContactDetails;
@@ -152,8 +163,13 @@ export type WalletUpdateResult = WalletData;
 export type Application = DoneWallet;
 
 /** shape used in Review proposals table */
+
+type ApplicationIDs = {
+  approve_tx_id?: string;
+  reject_tx_id?: string;
+};
 export type EndowmentProposal = Pick<
-  InitReg,
+  InitReg & ApplicationIDs,
   "PK" | "RegistrationDate" | "RegistrationStatus"
 > &
   OrgData &
