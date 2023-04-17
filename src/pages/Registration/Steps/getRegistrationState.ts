@@ -29,7 +29,7 @@ export function getRegistrationState(
         init: getInit(c),
         contact: formatContactPerson(c, r),
         documentation: formatDocumentation(r),
-        wallet: { address: m.JunoWallet },
+        wallet: { address: m.Wallet },
         status: r.RegistrationStatus,
         endowId: m.EndowmentId,
       },
@@ -138,7 +138,7 @@ export function genFileAsset(previews: FileObject[]): Asset {
 }
 
 function isDoneWallet(data: SavedRegistration): data is DoneWallet {
-  const key: keyof WalletData = "JunoWallet";
+  const key: keyof WalletData = "Wallet";
   return key in data.Metadata;
 }
 

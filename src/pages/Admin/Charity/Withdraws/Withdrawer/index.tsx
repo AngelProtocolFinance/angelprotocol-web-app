@@ -1,6 +1,6 @@
 import { useEndowBalanceQuery } from "services/juno/custom";
 import QueryLoader from "components/QueryLoader";
-import { isMatured } from "helpers/admin";
+import { hasElapsed } from "helpers/admin";
 import { useAdminResources } from "../../../Guard";
 import Tabs from "./Tabs";
 import WithdrawForm from "./WithdrawForm";
@@ -13,7 +13,7 @@ export default function Withdrawer() {
 
   const isLockAvailable =
     endow_type === "charity" ||
-    (endow_type === "normal" && isMatured(maturityTime));
+    (endow_type === "normal" && hasElapsed(maturityTime));
 
   return (
     <QueryLoader

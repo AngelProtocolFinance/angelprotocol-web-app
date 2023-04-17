@@ -8,6 +8,7 @@ import { TxPrompt } from "components/Prompt";
 import { useGetter } from "store/accessors";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
+import { blockTime } from "helpers/admin";
 import { INIT_SPLIT } from "./index";
 
 export default function useCreateFund() {
@@ -58,11 +59,8 @@ export default function useCreateFund() {
       members: newFundMembers,
       rotatingFund: getValues("isRotating"),
       splitToLiquid: split === INIT_SPLIT ? 0 : +split,
-      expiryTime:
-        expiryTime === ""
-          ? 0
-          : Math.floor(new Date(expiryTime).getTime() / 1000),
-      expiryHeight: +expiryHeight,
+      expiryTime: expiryTime === "" ? 0 : blockTime(expiryTime),
+      expiryHeight: expiryHeight === "" ? 0 : +expiryHeight,
     });
 
     const tx = createTx(wallet.address, "multisig.submit-transaction", {

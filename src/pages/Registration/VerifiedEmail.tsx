@@ -9,6 +9,7 @@ import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import Prompt from "components/Prompt";
 import { handleMutationResult, logger } from "helpers";
+import { hasElapsed } from "helpers/admin";
 import { APP_NAME } from "constants/common";
 import { appRoutes } from "constants/routes";
 import routes, { steps } from "./routes";
@@ -126,8 +127,7 @@ function extractJwtData(
     const jwtToken = pathNames[pathNames.length - 1];
     const jwtData = jwtDecode<JwtData>(jwtToken);
     const { authorization, exp, iat, user, ...application } = jwtData;
-    const isExpired = Math.floor(Date.now() / 1000) >= exp;
-    return { application, isExpired };
+    return { application, isExpired: hasElapsed(exp) };
   } catch (err) {
     logger.error(err);
     return undefined;

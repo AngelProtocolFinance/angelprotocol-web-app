@@ -2,6 +2,7 @@ import { Completed, TFee } from "slices/launchpad/types";
 import { SettingsPermission } from "types/contracts";
 import { Fee, NewAIF } from "types/contracts/evm";
 import { roundDownToNum } from "helpers";
+import { blockTime } from "helpers/admin";
 import { ADDRESS_ZERO } from "constants/evm";
 
 export default function toEVMAIF(
@@ -18,7 +19,7 @@ export default function toEVMAIF(
   return {
     owner: creator,
     withdrawBeforeMaturity: true, //not specified in launchpad design
-    maturityTime: new Date(maturity.date).getTime() / 1000,
+    maturityTime: blockTime(maturity.date),
     // maturityHeight: 0; //not specified in launchpad design
     maturityHeight: 0,
     name: about.name,

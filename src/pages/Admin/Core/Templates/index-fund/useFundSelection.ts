@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Path, useFormContext } from "react-hook-form";
 import { FundIdContext } from "pages/Admin/types";
 import { useContractQuery, useLatestBlockQuery } from "services/juno";
+import { hasElapsed } from "helpers/admin";
 
 export default function useFundSelection<T extends FundIdContext>(
   fieldName: Path<T>
@@ -24,8 +25,7 @@ export default function useFundSelection<T extends FundIdContext>(
           isExpired = fund.expiryHeight <= +blockHeight;
         }
         if (fund.expiryTime) {
-          isExpired =
-            +fund.expiryTime <= Math.floor(new Date().getTime() / 1000);
+          isExpired = hasElapsed(+fund.expiryTime);
         }
         return !isExpired;
       }),
