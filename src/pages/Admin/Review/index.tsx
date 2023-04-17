@@ -6,7 +6,7 @@ import Proposal from "../Proposal";
 import Proposals from "../Proposals";
 import { LINKS } from "../constants";
 import Applications from "./Applications";
-import Application from "./Applications/Application";
+import Application from "./Applications/Application/Application";
 import Templates from "./Templates";
 
 const LINK_GROUPS: LinkGroup[] = [

@@ -1,34 +1,10 @@
 import { PropsWithChildren } from "react";
-import { useParams } from "react-router-dom";
+import { TxType } from "./types";
 import { FileObject, InReview } from "types/aws";
-import { useRegQuery } from "services/aws/registration";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
-import QueryLoader from "components/QueryLoader";
-import { SEPARATOR } from "./constants";
 
-export default function Application() {
-  const { id = "" } = useParams();
-  const [appId = "", ref = ""] = id.split(SEPARATOR);
-  const query = useRegQuery(ref, {
-    skip: !ref || !appId,
-  });
-
-  return (
-    <QueryLoader
-      queryState={query}
-      messages={{
-        loading: "Getting registration details",
-        error: "Failed to get registration details",
-      }}
-    >
-      {(reg) => <Summary {...(reg as InReview)} appId={+appId} />}
-    </QueryLoader>
-  );
-}
-
-type TxType = "approve" | "reject";
-function Summary({
+export default function Summary({
   Registration: r,
   ContactPerson: c,
   appId,
@@ -71,7 +47,7 @@ type Props = {
   id: string;
   type: TxType;
 };
-function Proposer({ id, type }: Props) {
+function Review({ id, type }: Props) {
   return (
     <div>
       <button>approve</button>
