@@ -1,9 +1,11 @@
 import { PropsWithChildren } from "react";
-import { TxType } from "./types";
+import { Link } from "react-router-dom";
+import { TxType } from "../types";
 import { FileObject, InReview } from "types/aws";
 import { useModalContext } from "contexts/ModalContext";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
+import { adminRoutes } from "constants/routes";
 import Proposer from "./Proposer";
 
 export default function Summary({
@@ -40,7 +42,13 @@ export default function Summary({
         label="Audited Financial Report"
         docs={r.AuditedFinancialReports || []}
       />
-      {txId ? <Review appId={+appId} /> : <></>}
+      {txId ? (
+        <Link to={`../${adminRoutes.proposal}/${txId}`}>
+          Sign {txType} transaction
+        </Link>
+      ) : (
+        <ReviewOptions appId={+appId} />
+      )}
     </div>
   );
 }
@@ -48,7 +56,7 @@ export default function Summary({
 type Props = {
   appId: number;
 };
-function Review({ appId }: Props) {
+function ReviewOptions({ appId }: Props) {
   const { showModal } = useModalContext();
 
   const review = (type: TxType) => () => showModal(Proposer, { appId, type });

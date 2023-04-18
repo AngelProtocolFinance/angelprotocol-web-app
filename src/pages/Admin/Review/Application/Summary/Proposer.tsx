@@ -2,8 +2,8 @@ import { Dialog } from "@headlessui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { object } from "yup";
-import { ProposalBase } from "../../types";
-import { TxType } from "./types";
+import { ProposalBase } from "../../../types";
+import { TxType } from "../types";
 import { SchemaShape } from "schemas/types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
@@ -12,7 +12,7 @@ import { TxPrompt } from "components/Prompt";
 import { Field } from "components/form";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
-import { proposalShape } from "../../constants";
+import { proposalShape } from "../../../constants";
 
 type Props = {
   type: TxType;
@@ -93,9 +93,9 @@ export default function Proposer({ type, appId }: Props) {
       <button
         disabled={isSending}
         type="submit"
-        className="btn btn-orange mt-6 text-sm"
+        className="btn-orange mt-6 text-sm"
       >
-        {isSending ? `Submit ${type} proposal` : "Sending transaction..."}
+        {isSending ? "Sending transaction..." : `Submit ${type} proposal`}
       </button>
     </Dialog.Panel>
   );
