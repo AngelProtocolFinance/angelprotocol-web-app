@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { EndowmentProposal } from "types/aws";
 import Icon from "components/Icon";
 import { Cells } from "components/TableSection";
-import { SEPARATOR, statusColors } from "../constants";
+import { SEPARATOR, statusColors } from "../../constants";
 
 export default function AppRow(props: EndowmentProposal) {
   return (

@@ -5,8 +5,8 @@ import Layout from "../Layout";
 import Proposal from "../Proposal";
 import Proposals from "../Proposals";
 import { LINKS } from "../constants";
+import Application from "./Application";
 import Applications from "./Applications";
-import Application from "./Applications/Application/Application";
 import Templates from "./Templates";
 
 const LINK_GROUPS: LinkGroup[] = [

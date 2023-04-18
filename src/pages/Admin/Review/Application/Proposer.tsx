@@ -1,0 +1,102 @@
+import { Dialog } from "@headlessui/react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { FormProvider, useForm } from "react-hook-form";
+import { object } from "yup";
+import { ProposalBase } from "../../types";
+import { TxType } from "./types";
+import { SchemaShape } from "schemas/types";
+import { useAdminResources } from "pages/Admin/Guard";
+import { useModalContext } from "contexts/ModalContext";
+import { useGetWallet } from "contexts/WalletContext";
+import { TxPrompt } from "components/Prompt";
+import { Field } from "components/form";
+import { createTx, encodeTx } from "contracts/createTx/createTx";
+import useTxSender from "hooks/useTxSender";
+import { proposalShape } from "../../constants";
+
+type Props = {
+  type: TxType;
+  appId: number;
+};
+
+type FV = ProposalBase & /** meta */ Props;
+export default function Proposer({ type, appId }: Props) {
+  const methods = useForm<FV>({
+    resolver: yupResolver(object().shape<SchemaShape<FV>>(proposalShape)),
+    defaultValues: {
+      title: `${type} charity application`,
+      description: "",
+      appId,
+      type,
+    },
+  });
+
+  const { multisig, propMeta } = useAdminResources();
+  const { wallet } = useGetWallet();
+  const { showModal } = useModalContext();
+  const { sendTx, isSending } = useTxSender(true);
+
+  const { handleSubmit } = methods;
+
+  async function submit({ type, ...fv }: FV) {
+    if (!wallet)
+      return showModal(TxPrompt, {
+        error: "Wallet is not connected",
+      });
+
+    const [data, dest] = encodeTx(
+      type === "approve"
+        ? "charity-application.approve"
+        : "charity-application.reject",
+      {
+        id: fv.appId,
+      }
+    );
+
+    await sendTx({
+      content: {
+        type: "evm",
+        val: createTx(wallet.address, "multisig.submit-transaction", {
+          multisig,
+          title: fv.title,
+          description: fv.description,
+          destination: dest,
+          value: "0",
+          data,
+        }),
+      },
+      ...propMeta,
+    });
+  }
+
+  return (
+    <Dialog.Panel
+      onSubmit={handleSubmit(submit)}
+      as="form"
+      className="p-6 fixed-center z-10 grid gap-4 text-gray-d2 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded overflow-hidden"
+    >
+      <FormProvider {...methods}>
+        <Field<FV>
+          classes="field-admin"
+          label="Proposal title"
+          name="title"
+          required
+        />
+        <Field<FV, "textarea">
+          type="textarea"
+          classes="field-admin"
+          label="Proposal description"
+          name="description"
+          required
+        />
+      </FormProvider>
+      <button
+        disabled={isSending}
+        type="submit"
+        className="btn btn-orange mt-6 text-sm"
+      >
+        {isSending ? `Submit ${type} proposal` : "Sending transaction..."}
+      </button>
+    </Dialog.Panel>
+  );
+}

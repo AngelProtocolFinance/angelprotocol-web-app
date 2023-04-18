@@ -1,8 +1,10 @@
 import { PropsWithChildren } from "react";
 import { TxType } from "./types";
 import { FileObject, InReview } from "types/aws";
+import { useModalContext } from "contexts/ModalContext";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
+import Proposer from "./Proposer";
 
 export default function Summary({
   Registration: r,
@@ -38,20 +40,27 @@ export default function Summary({
         label="Audited Financial Report"
         docs={r.AuditedFinancialReports || []}
       />
-      {txId ? <></> : <></>}
+      {txId ? <Review appId={+appId} /> : <></>}
     </div>
   );
 }
 
 type Props = {
-  id: string;
-  type: TxType;
+  appId: number;
 };
-function Review({ id, type }: Props) {
+function Review({ appId }: Props) {
+  const { showModal } = useModalContext();
+
+  const review = (type: TxType) => () => showModal(Proposer, { appId, type });
+
   return (
     <div>
-      <button>approve</button>
-      <button>reject</button>
+      <button type="button" onClick={review("approve")}>
+        approve
+      </button>
+      <button type="button" onClick={review("reject")}>
+        reject
+      </button>
     </div>
   );
 }
