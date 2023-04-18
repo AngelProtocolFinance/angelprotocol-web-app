@@ -74,6 +74,9 @@ type Txs = {
     addresses: string[];
     amounts: string[];
   }>;
+
+  "charity-application.approve": Tx<{ id: number }>;
+  "charity-application.reject": Tx<{ id: number }>;
 };
 
 export type TxTypes = keyof Txs;

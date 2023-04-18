@@ -93,36 +93,36 @@ export type InitApplication = {
 export type OrgData = { OrganizationName: string };
 export type WalletData = { Wallet: string };
 
-export type DoneContact = {
-  Registration: InitReg & OrgData;
-  ContactPerson: InitContact & ContactDetails;
-  Metadata: InitMeta;
+type Append<Reg extends InitApplication, T, U, V> = {
+  Registration: Reg["Registration"] & T;
+  ContactPerson: Reg["ContactPerson"] & U;
+  Metadata: Reg["Metadata"] & V;
 };
 
-export type DoneDocs = {
-  Registration: InitReg & OrgData & TDocumentation;
-  ContactPerson: InitContact & ContactDetails;
-  Metadata: InitMeta;
-};
+export type DoneContact = Append<InitApplication, OrgData, ContactDetails, {}>;
+export type DoneDocs = Append<DoneContact, TDocumentation, {}, {}>;
 
-export type DoneWallet = {
-  Registration: InitReg & OrgData & TDocumentation;
-  ContactPerson: InitContact & ContactDetails;
-  Metadata: InitMeta &
-    WalletData & {
-      EndowmentId?: number;
-      /** when created 
-      TODO: should be part of Registration status
-      Inactive | Rejected | {id: number}
-      */
-    };
+type NewEndow = {
+  EndowmentId?: number;
+  /** when created 
+TODO: should be part of Registration status
+Inactive | Rejected | {id: number}
+*/
 };
+export type DoneWallet = Append<DoneDocs, {}, {}, WalletData & NewEndow>;
+
+type ApplicationIDs = {
+  approve_tx_id?: string;
+  reject_tx_id?: string;
+};
+export type InReview = Append<DoneWallet, ApplicationIDs, {}, {}>;
 
 export type SavedRegistration =
   | InitApplication
   | DoneContact
   | DoneDocs
-  | DoneWallet;
+  | DoneWallet
+  | InReview;
 
 type ContactUpdate = {
   type: "contact details";
@@ -139,12 +139,22 @@ type WalletUpdate = {
   type: "wallet";
 } & WalletData;
 
-export type RegistrationUpdate = ContactUpdate | DocsUpdate | WalletUpdate;
+type ApplicationUpdate = { type: "application" } & (
+  | Pick<Required<ApplicationIDs>, "approve_tx_id">
+  | Pick<Required<ApplicationIDs>, "reject_tx_id">
+);
+
+export type RegistrationUpdate =
+  | ContactUpdate
+  | DocsUpdate
+  | WalletUpdate
+  | ApplicationUpdate;
 
 export type ContactUpdateResult = {
   ContactPerson: ContactDetails;
   Registration: OrgData;
 };
+
 export type DocsUpdateResult = InitReg & TDocumentation;
 export type WalletUpdateResult = WalletData;
 
@@ -152,14 +162,15 @@ export type WalletUpdateResult = WalletData;
 export type Application = DoneWallet;
 
 /** shape used in Review proposals table */
+
 export type EndowmentProposal = Pick<
-  InitReg,
+  InitReg & ApplicationIDs,
   "PK" | "RegistrationDate" | "RegistrationStatus"
 > &
   OrgData &
   TDocumentation &
   Pick<InitContact, "Email"> & {
-    poll_id: number;
+    application_id: number;
   };
 
 export type SubmitResult = {

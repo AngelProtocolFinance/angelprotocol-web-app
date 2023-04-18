@@ -1,5 +1,7 @@
 import { RegistrationStatus } from "types/aws";
 
+export const SEPARATOR = "_";
+
 export const statusColors: { [key in RegistrationStatus]: { text: string } } = {
   Inactive: { text: "text-gray" },
   "Under Review": { text: "text-orange" },

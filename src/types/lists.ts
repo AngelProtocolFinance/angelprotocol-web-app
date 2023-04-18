@@ -40,6 +40,7 @@ export type Contract =
   | "multisig/review"
   | "accounts"
   | "locked-withdraw"
+  | "charity-application"
   | "gift-card";
 
 export type AccountType = "liquid" | "locked";

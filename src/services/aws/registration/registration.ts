@@ -91,6 +91,10 @@ const registration_api = aws.injectEndpoints({
                     draft.Metadata,
                     data as WalletUpdateResult
                   );
+                  break;
+                }
+                case "application": {
+                  draft.Registration = Object.assign(draft.Registration, data);
                 }
               }
               draft.reqId = draft.reqId + 1;

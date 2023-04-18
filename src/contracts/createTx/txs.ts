@@ -1,5 +1,6 @@
 import { TxArgs, TxTypes } from "./types";
 import { erc20 } from "contracts/evm/ERC20";
+import { charityApplication } from "contracts/evm/charity-application";
 import { indexFund } from "contracts/evm/index-fund";
 import { lockedWithdraw } from "contracts/evm/locked-withdraw";
 import { multisig } from "contracts/evm/multisig";
@@ -55,4 +56,9 @@ export const txs: { [T in TxTypes]: (args: TxArgs<T>) => string } = {
 
   "locked-withdraw.propose": (args) =>
     lockedWithdraw.encodeFunctionData("propose", toTuple(args)),
+
+  "charity-application.approve": ({ id }) =>
+    charityApplication.encodeFunctionData("approveCharity", [id]),
+  "charity-application.reject": ({ id }) =>
+    charityApplication.encodeFunctionData("rejectCharity", [id]),
 };
