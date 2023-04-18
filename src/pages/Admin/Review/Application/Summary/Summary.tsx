@@ -62,11 +62,19 @@ function ReviewOptions({ appId }: Props) {
   const review = (type: TxType) => () => showModal(Proposer, { appId, type });
 
   return (
-    <div>
-      <button type="button" onClick={review("approve")}>
+    <div className="flex items-center gap-2 justify-start mt-6">
+      <button
+        type="button"
+        className="min-w-[8rem] btn-orange px-2 py-1 text-sm"
+        onClick={review("approve")}
+      >
         approve
       </button>
-      <button type="button" onClick={review("reject")}>
+      <button
+        type="button"
+        className="min-w-[8rem] btn-red  px-2 py-1 text-sm"
+        onClick={review("reject")}
+      >
         reject
       </button>
     </div>
