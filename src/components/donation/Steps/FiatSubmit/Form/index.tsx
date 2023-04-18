@@ -1,10 +1,11 @@
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { FiatDonateValues } from "../types";
 import { useRequestWidgetUrlMutation } from "services/apes";
 import { WithWallet } from "contexts/WalletContext";
 import CountrySelector from "components/CountrySelector";
+import Loader from "components/Loader";
 import { Label } from "components/form";
 import { useSetter } from "store/accessors";
 import { SubmitStep, setStep } from "slices/donation";
@@ -26,11 +27,12 @@ export default function Form(props: WithWallet<SubmitStep>) {
   const {
     handleSubmit,
     resetField,
-    formState: { isSubmitting, isValid },
+    formState: { isValid },
   } = useFormContext<FiatDonateValues>();
   const [submitRequest] = useRequestWidgetUrlMutation();
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
   async function submit(data: FiatDonateValues) {
+    setIsSubmitting(true);
     const options = {
       amount: +token.amount,
       charityName: props.recipient.name,
@@ -44,10 +46,19 @@ export default function Form(props: WithWallet<SubmitStep>) {
       window.location.href = response.data.widgetUrl;
     } catch (e) {
       console.log(e);
+      setIsSubmitting(true);
     }
   }
 
-  return (
+  return isSubmitting ? (
+    <div className="grid gap-4 rounded-md w-full">
+      <Loader
+        bgColorClass="bg-blue dark:bg-white"
+        gapClass="gap-2"
+        widthClass="w-4"
+      />
+    </div>
+  ) : (
     <form
       onSubmit={handleSubmit(submit)}
       className="grid gap-4 rounded-md w-full"
@@ -108,7 +119,7 @@ export default function Form(props: WithWallet<SubmitStep>) {
           <button
             className="btn-orange btn-donate"
             type="submit"
-            disabled={isSubmitting || !isValid}
+            disabled={!isValid}
           >
             Make Donation
           </button>
