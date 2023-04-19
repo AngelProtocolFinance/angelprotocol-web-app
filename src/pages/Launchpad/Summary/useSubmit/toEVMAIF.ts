@@ -119,7 +119,7 @@ export default function toEVMAIF(
     },
     // settingsController: SettingsController; //not included in launchpad, for edit later
     parent: 0,
-    maturityWhitelist: [],
+    maturityWhitelist: maturity.beneficiaries.map((b) => b.addr),
     ignoreUserSplits: false,
     splitToLiquid: {
       min: 0,
