@@ -35,7 +35,7 @@ export default function Proposal() {
               <h4 className="text-lg">{proposal.title}</h4>
               <PollAction {...proposal} />
             </div>
-            <DetailLabel>ends</DetailLabel>
+            <DetailLabel>description</DetailLabel>
             <p className="mb-6 text-gray-d1 dark:text-gray">
               {proposal.description}
             </p>
