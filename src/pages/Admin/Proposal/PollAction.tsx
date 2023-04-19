@@ -1,7 +1,9 @@
 import React, { ReactNode } from "react";
 import { ProposalMeta } from "pages/Admin/types";
 import { ProposalDetails } from "services/types";
+import { LogProcessor } from "types/evm";
 import { TagPayload } from "types/third-party/redux";
+import { TxOnSuccess } from "types/tx";
 import { invalidateJunoTags } from "services/juno";
 import { defaultProposalTags } from "services/juno/tags";
 import { useModalContext } from "contexts/ModalContext";
@@ -13,11 +15,36 @@ import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
 import { useAdminResources } from "../Guard";
 
+const ERROR = "error";
+const processLog: LogProcessor = (logs) => {
+  const topic = Multisig.getEventTopic("ExecutionFailure");
+  const log = logs.find((l) => l.topics.includes(topic));
+  if (log) return ERROR;
+};
+
 export default function PollAction(props: ProposalDetails) {
   const { wallet } = useGetWallet();
   const sendTx = useTxSender();
   const { multisig, propMeta, config } = useAdminResources();
   const { showModal } = useModalContext();
+
+  const numSigned = props.signed.length;
+  const willExecute =
+    numSigned + 1 >= config.threshold && !config.requireExecution;
+
+  const onSuccess: TxOnSuccess = (result) => {
+    const { data, ...okTx } = result;
+    if (data === ERROR) {
+      return showModal(TxPrompt, {
+        error: "Some of transaction content failed to execute",
+        tx: okTx,
+      });
+    }
+    showModal(TxPrompt, {
+      success: { message: "Transaction executed" },
+      tx: okTx,
+    });
+  };
 
   async function executeProposal() {
     if (!wallet) {
@@ -30,28 +57,11 @@ export default function PollAction(props: ProposalDetails) {
           multisig,
           id: props.id,
         }),
-        log(logs) {
-          const topic = Multisig.getEventTopic("ExecutionFailure");
-          const log = logs.find((l) => l.topics.includes(topic));
-          if (log) return "error";
-        },
+        log: processLog,
       },
       isAuthorized: propMeta.isAuthorized,
       tagPayloads: extractTagFromMeta(props.meta),
-
-      onSuccess(result) {
-        const { data, ...okTx } = result;
-        if (data === "error") {
-          return showModal(TxPrompt, {
-            error: "Some of transaction content failed to execute",
-            tx: okTx,
-          });
-        }
-        showModal(TxPrompt, {
-          success: { message: "Transaction executed" },
-          tx: okTx,
-        });
-      },
+      onSuccess,
     });
   }
 
@@ -59,6 +69,7 @@ export default function PollAction(props: ProposalDetails) {
     if (!wallet) {
       return showModal(TxPrompt, { error: "Wallet is not connected" });
     }
+
     await sendTx({
       content: {
         type: "evm",
@@ -66,16 +77,17 @@ export default function PollAction(props: ProposalDetails) {
           multisig,
           id: props.id,
         }),
+        log: willExecute ? processLog : undefined,
       },
       isAuthorized: propMeta.isAuthorized,
       tagPayloads: [invalidateJunoTags(["multisig.votes"])],
+      onSuccess: willExecute ? onSuccess : undefined,
     });
   }
 
   const EXED = props.status === "executed";
   //for execution
-  const EX =
-    props.status === "pending" && props.signed.length >= config.threshold;
+  const EX = props.status === "pending" && numSigned >= config.threshold;
   //user signed
   const S = props.signed.some((s) => s === wallet?.address);
 
@@ -92,7 +104,11 @@ export default function PollAction(props: ProposalDetails) {
     if (S) {
       node = <Text>Signed</Text>;
     } else {
-      node = <Button onClick={sign}>Sign</Button>;
+      node = (
+        <Button onClick={sign}>
+          {willExecute ? "Sign and execute" : "Sign"}
+        </Button>
+      );
     }
   }
   return <>{node}</>;

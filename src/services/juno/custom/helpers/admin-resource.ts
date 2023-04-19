@@ -59,13 +59,15 @@ export async function getMeta(
     ? "Successful transaction"
     : "Proposal successfully created";
 
-  const meta = {
-    willExecute,
-    successMeta: { message, link: { url, description } },
-    tagPayloads,
-    isAuthorized:
-      (user && isEthereumAddress(user) && members.includes(user)) || false,
-  };
-
-  return [meta, { threshold, requireExecution }, members];
+  return [
+    {
+      willExecute,
+      successMeta: { message, link: { url, description } },
+      tagPayloads,
+      isAuthorized:
+        (user && isEthereumAddress(user) && members.includes(user)) || false,
+    },
+    { threshold, requireExecution },
+    members,
+  ];
 }
