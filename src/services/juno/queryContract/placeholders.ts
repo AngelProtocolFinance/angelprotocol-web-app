@@ -9,6 +9,8 @@ export const placeholders: {
     | "multisig.members"
     | "erc20.balance"
     | "multisig.votes"
+    | "multisig.threshold"
+    | "multisig.require-execution"
     | "multisig.tx-count"
     | "index-fund.funds"
     | "index-fund.alliance-members"
@@ -53,16 +55,6 @@ export const placeholders: {
     alliance_members: [],
   },
 
-  "multisig.config": {
-    group_addr: "juno123abc..",
-    threshold: {
-      absolute_percentage: {
-        percentage: "0.5",
-      },
-    },
-    max_voting_period: { time: 1000 },
-    require_execution: true,
-  },
   /**
    * not implemented in solidity multisig.
    * can only get array of ids

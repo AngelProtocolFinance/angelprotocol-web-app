@@ -1,13 +1,13 @@
 import * as Yup from "yup";
-import { CW3ConfigValues, FormCW3Config } from "pages/Admin/types";
+import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
 import { requiredPositiveNumber } from "schemas/number";
 import { proposalShape } from "../../../constants";
 
-const shape: SchemaShape<CW3ConfigValues<FormCW3Config>> = {
+const shape: SchemaShape<FormValues> = {
   ...proposalShape,
   threshold: requiredPositiveNumber,
-  duration: requiredPositiveNumber,
+  requireExecution: Yup.boolean(),
 };
 
 export const schema = Yup.object(shape);

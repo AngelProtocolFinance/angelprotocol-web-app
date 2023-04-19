@@ -1,4 +1,4 @@
-import { CW3Config, EndowmentDetails, ReviewCW3Config } from "types/contracts";
+import { EndowmentDetails } from "types/contracts";
 import { Transaction } from "types/contracts/evm/multisig";
 import { AccountType, ProviderId } from "types/lists";
 import { SenderArgs } from "types/tx";
@@ -17,10 +17,13 @@ export type EncodedQueryMember = {
   data: string; //base64 encoded msg
 };
 
+export type MultisigConfig = { threshold: number; requireExecution: boolean };
+
 type Base = {
   multisig: string;
   members: string[];
   id: number;
+  config: MultisigConfig;
   propMeta: Required<
     Pick<SenderArgs, "successMeta" | "tagPayloads" | "isAuthorized">
   > & {
@@ -30,15 +33,12 @@ type Base = {
 
 export type APResources = Base & {
   type: "ap";
-  config: CW3Config;
 };
 export type ReviewResources = Base & {
   type: "review";
-  config: ReviewCW3Config;
 };
 export type CharityResources = Base & {
   type: "charity";
-  config: CW3Config;
 } & EndowmentDetails;
 
 export type AdminResources = APResources | ReviewResources | CharityResources;

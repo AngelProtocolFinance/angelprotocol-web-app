@@ -9,5 +9,6 @@
   "function removeOwner(address)",
   "function confirmTransaction(uint256)",
   "function revokeConfirmation(uint256)",
-  "function executeTransaction(uint256)"
+  "function executeTransaction(uint256)",
+  "function changeRequirement(uint256)"
 ]

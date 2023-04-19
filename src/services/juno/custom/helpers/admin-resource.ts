@@ -1,5 +1,4 @@
-import { AdminResources } from "services/types";
-import { CW3Config } from "types/contracts";
+import { AdminResources, MultisigConfig } from "services/types";
 import { queryContract } from "services/juno/queryContract";
 import { isEthereumAddress } from "schemas/tests";
 import { contracts } from "constants/contracts";
@@ -36,23 +35,21 @@ export async function getMeta(
   endowId: number,
   multisig: string,
   user?: string
-): Promise<[AdminResources["propMeta"], CW3Config, string[] /** members */]> {
-  const [members, config] = await Promise.all([
+): Promise<
+  [AdminResources["propMeta"], MultisigConfig, string[] /** members */]
+> {
+  const [members, threshold, requireExecution] = await Promise.all([
     queryContract("multisig.members", { multisig }),
-    queryContract("multisig.config", { multisig }),
+    queryContract("multisig.threshold", { multisig }),
+    queryContract("multisig.require-execution", { multisig }),
     /** just set credential to none, if disconnected or non-juno wallet */
   ]);
 
-  const numMembers = members.length;
   const tagPayloads = [customApi.util.invalidateTags(defaultProposalTags)];
-  const willExecute =
-    /** single member */
-    numMembers === 1 ||
-    /** multiple members but threshold is lte 1/members given that execution is not required */
-    (!config.require_execution &&
-      Number(config.threshold.absolute_percentage.percentage) <=
-        1 / numMembers) ||
-    undefined;
+
+  /** in the context of tx submission */
+  const willExecute: true | undefined =
+    threshold === 1 && !requireExecution ? true : undefined;
 
   const url = willExecute
     ? `${appRoutes.admin}/${endowId}`
@@ -61,6 +58,7 @@ export async function getMeta(
   const message = willExecute
     ? "Successful transaction"
     : "Proposal successfully created";
+
   const meta = {
     willExecute,
     successMeta: { message, link: { url, description } },
@@ -69,5 +67,5 @@ export async function getMeta(
       (user && isEthereumAddress(user) && members.includes(user)) || false,
   };
 
-  return [meta, config, members];
+  return [meta, { threshold, requireExecution }, members];
 }

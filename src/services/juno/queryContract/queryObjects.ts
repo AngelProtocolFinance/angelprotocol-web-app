@@ -155,7 +155,19 @@ export const queryObjects: {
     },
     "migrated",
   ],
-  "multisig.config": ["", () => p["multisig.config"], "placeholder"],
+  "multisig.threshold": [
+    multisig.encodeFunctionData("required", []),
+    (result) => {
+      const d: BigNumber = multisig.decodeFunctionResult("required", result)[0];
+      return d.toNumber();
+    },
+    "migrated",
+  ],
+  "multisig.require-execution": [
+    multisig.encodeFunctionData("requireExecution", []),
+    (result) => multisig.decodeFunctionResult("requireExecution", result)[0],
+    "migrated",
+  ],
   "multisig.tx-count": [
     (options) =>
       multisig.encodeFunctionData("getTransactionCount", toTuple(options)),
@@ -201,8 +213,6 @@ export const queryObjects: {
         "transactions",
         result
       ) as unknown as DecodedTransaction;
-
-      console.log(d);
 
       return {
         id: args?.id ?? 0,

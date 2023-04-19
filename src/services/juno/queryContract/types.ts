@@ -1,5 +1,4 @@
 import {
-  CW3Config,
   EndowmentDetails,
   EndowmentState,
   FundDetails,
@@ -46,7 +45,8 @@ export interface ContractQueries {
 
   "multisig.members": Query<null, string[]>;
   "multisig.txs": Query<PageOptions, Pick<Transaction, "id" | "status">[]>;
-  "multisig.config": Query<null, CW3Config>;
+  "multisig.threshold": Query<null, number>;
+  "multisig.require-execution": Query<null, boolean>;
   "multisig.transaction": Query<{ id: number }, Transaction>;
   "multisig.tx-count": Query<{ pending: boolean; executed: boolean }, number>;
   "multisig.votes": Query<{ id: number }, string[]>;

@@ -30,7 +30,8 @@ export function getTagPayloads(type?: ProposalMeta["type"]): TagPayload[] {
 
     case "review_cw3_config":
     case "cw3_config":
-      _tags.push("multisig.config");
+      _tags.push("multisig.require-execution");
+      _tags.push("multisig.threshold");
       break;
 
     case "acc_invest":

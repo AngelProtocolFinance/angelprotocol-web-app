@@ -3,7 +3,6 @@ import { templateRoutes as routes } from "../../constants";
 import FundSender from "../../templates/cw3/FundSender";
 import Members from "../../templates/cw4/Members";
 import Nav from "./Nav";
-import ReviewCW3Configurer from "./ReviewCW3Configurer";
 
 export default function Templates() {
   return (
@@ -11,7 +10,6 @@ export default function Templates() {
       <Nav />
       <Routes>
         {/**_cw3 */}
-        <Route path={routes.cw3_config} element={<ReviewCW3Configurer />} />
         <Route path={routes.cw3_transfer} element={<FundSender />} />
         {/**_cw4 */}
         <Route path={routes.cw4_members} element={<Members />} />
