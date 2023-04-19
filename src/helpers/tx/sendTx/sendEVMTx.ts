@@ -23,6 +23,7 @@ export async function sendEVMTx(
     if (!receipt) {
       return {
         error: "Timeout: failed to confirm if transaction is finalized",
+        tx: { hash, chainID: wallet.chain.chain_id },
       };
     }
 
