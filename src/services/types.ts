@@ -1,9 +1,5 @@
-import {
-  CW3Config,
-  EndowmentDetails,
-  Proposal,
-  ReviewCW3Config,
-} from "types/contracts";
+import { CW3Config, EndowmentDetails, ReviewCW3Config } from "types/contracts";
+import { Transaction } from "types/contracts/evm/multisig";
 import { AccountType, ProviderId } from "types/lists";
 import { SenderArgs } from "types/tx";
 
@@ -47,7 +43,7 @@ export type CharityResources = Base & {
 
 export type AdminResources = APResources | ReviewResources | CharityResources;
 
-export type ProposalDetails = Proposal & {
+export type ProposalDetails = Transaction & {
   signers: string[];
   signed: string[];
 };

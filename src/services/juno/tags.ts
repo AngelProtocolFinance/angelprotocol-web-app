@@ -13,9 +13,9 @@ export const tags: ContractQueryTypes[] = [
   "erc20.balance",
 
   "multisig.members",
-  "multisig.proposals",
+  "multisig.txs",
   "multisig.config",
-  "multisig.proposal",
+  "multisig.transaction",
   "multisig.votes",
 
   "accounts.endowment",
@@ -23,6 +23,6 @@ export const tags: ContractQueryTypes[] = [
 ];
 
 export const defaultProposalTags: ContractQueryTypes[] = [
-  "multisig.proposals",
-  "multisig.proposal",
+  "multisig.txs",
+  "multisig.transaction",
 ];

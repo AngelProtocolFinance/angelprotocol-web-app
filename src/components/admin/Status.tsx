@@ -1,6 +1,6 @@
-import { ProposalStatus } from "types/contracts";
+import { TransactionStatus } from "types/lists";
 
-export function Status(props: { status: ProposalStatus }) {
+export function Status(props: { status: TransactionStatus }) {
   return (
     <p
       className={`text-xs uppercase px-2 py-1 rounded-sm ${
@@ -11,7 +11,7 @@ export function Status(props: { status: ProposalStatus }) {
     </p>
   );
 }
-export const statusClasses: { [key in ProposalStatus]: string } = {
+export const statusClasses: { [key in TransactionStatus]: string } = {
   executed: "bg-blue",
   pending: "bg-orange",
 };

@@ -67,14 +67,17 @@ export const placeholders: {
    * not implemented in solidity multisig.
    * can only get array of ids
    */
-  "multisig.proposals": [],
+  "multisig.txs": [],
   /**
    * not implemented in solidity multisig.
    */
-  "multisig.proposal": {
+  "multisig.transaction": {
     id: 1,
-    title: "this prpposal rocks",
-    description: "this is a description",
+    title: "title",
+    description: "description",
+    destination: "terra1...",
+    value: "100",
+    data: "0x...",
     status: "pending",
   },
 };

@@ -1,11 +1,12 @@
 import { Coin } from "@cosmjs/proto-signing";
+import { TransactionStatus } from "types/lists";
 import { Asset, Threshold, Vote } from "../common";
 
 type Duration = { time: number } | { height: number };
 
 export type PageOptions = {
   range: [number, number];
-  status: ProposalStatus;
+  status: TransactionStatus;
 };
 
 export type VotesPageOptions = {
@@ -18,22 +19,8 @@ export type CW3ListVoters = {
   voters: string[];
 };
 
-export type ProposalsRes = {
-  proposals: Proposal[];
-};
-
-export type ProposalStatus = "pending" | "executed";
-
 export type Expiration = { at_time: number } | { at_height: number };
-
 export type ProposalType = "normal" | "application";
-export type Proposal = {
-  id: number; //1
-  title: string; //"this prpposal rocks"
-  description: string; //"this is a description"
-  status: ProposalStatus;
-  meta?: string;
-};
 
 export interface CW3Config {
   group_addr: string; //"juno123abc.."

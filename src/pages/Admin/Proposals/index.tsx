@@ -13,12 +13,15 @@ export default function Proposals() {
 
   const {
     data: { proposals, next } = { proposals: [], next: undefined },
+    error,
     isLoading,
   } = useProposalsQuery({
     multisig,
     page: pageNum,
     status: activeStatus,
   });
+
+  console.log(error);
 
   function loadMoreProposals() {
     //loadMore button will be hidden if next page is undefined

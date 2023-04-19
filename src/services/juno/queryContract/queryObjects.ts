@@ -5,6 +5,7 @@ import {
   DecodedFund,
   DecodedGiftCardBalance,
   DecodedIndexFundConfig,
+  DecodedTransaction,
   toEndowStatusText,
   toEndowType,
   toSettingsPermission,
@@ -167,7 +168,7 @@ export const queryObjects: {
     },
     "migrated",
   ],
-  "multisig.proposals": [
+  "multisig.txs": [
     ({ range: [from, to], status }) => {
       return multisig.encodeFunctionData(
         "getTransactionIds",
@@ -187,15 +188,34 @@ export const queryObjects: {
 
       return ids.map((id) => ({
         id: id.toNumber(),
-        title: `Proposal #${id}`,
-        description: "No description",
         status: args?.status ?? "pending",
       }));
     },
 
     "semi-migrated",
   ],
-  "multisig.proposal": [() => "", () => p["multisig.proposal"], "placeholder"],
+  "multisig.transaction": [
+    ({ id }) => multisig.encodeFunctionData("transactions", [id]),
+    (result, args) => {
+      const d = multisig.decodeFunctionResult(
+        "transactions",
+        result
+      ) as unknown as DecodedTransaction;
+
+      console.log(d);
+
+      return {
+        id: args?.id ?? 0,
+        title: d.title,
+        description: d.description,
+        destination: d.destination,
+        value: d.value.toString(),
+        data: d.data,
+        status: d.executed ? "executed" : "pending",
+      };
+    },
+    "migrated",
+  ],
 
   "multisig.votes": [
     ({ id }) => multisig.encodeFunctionData("getConfirmations", [id]),
