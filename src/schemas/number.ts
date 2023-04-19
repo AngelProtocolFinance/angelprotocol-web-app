@@ -6,7 +6,7 @@ export const tokenConstraint = Yup.number()
   .typeError("invalid: must be a number")
   .test("max precision", "must not be greater than 6 digits", testTokenDigits);
 
-const positiveNumberConstraint = Yup.number()
+export const positiveNumberConstraint = Yup.number()
   .typeError("invalid: must be a number")
   //.positive treats 0 as negative
   .positive("must be more than 0");

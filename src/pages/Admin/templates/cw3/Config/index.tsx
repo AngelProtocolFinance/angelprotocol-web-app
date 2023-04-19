@@ -6,10 +6,11 @@ import Form from "./Form";
 import { schema } from "./schema";
 
 export default function Config() {
-  const { config } = useAdminResources();
+  const { config, members } = useAdminResources();
 
   const methods = useForm<FormValues>({
     resolver: yupResolver(schema),
+    context: { members: members.length },
     mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: {

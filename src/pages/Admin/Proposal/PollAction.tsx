@@ -16,7 +16,7 @@ import { useAdminResources } from "../Guard";
 export default function PollAction(props: ProposalDetails) {
   const { wallet } = useGetWallet();
   const sendTx = useTxSender();
-  const { multisig, propMeta } = useAdminResources();
+  const { multisig, propMeta, config } = useAdminResources();
   const { showModal } = useModalContext();
 
   async function executeProposal() {
@@ -74,7 +74,8 @@ export default function PollAction(props: ProposalDetails) {
 
   const EXED = props.status === "executed";
   //for execution
-  const EX = props.status === "pending" && props.signed.length >= 1;
+  const EX =
+    props.status === "pending" && props.signed.length >= config.threshold;
   //user signed
   const S = props.signed.some((s) => s === wallet?.address);
 

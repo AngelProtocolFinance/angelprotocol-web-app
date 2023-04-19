@@ -185,8 +185,6 @@ export const customApi = junoApi.injectEndpoints({
           status,
         });
 
-        console.log({ txs });
-
         const details = await Promise.all(
           txs.map((t) =>
             queryContract("multisig.transaction", { multisig, id: t.id }).then(
@@ -195,7 +193,7 @@ export const customApi = junoApi.injectEndpoints({
           )
         );
 
-        txs.sort((a, b) => b.id - a.id);
+        details.sort((a, b) => b.id - a.id);
 
         return {
           data: {
