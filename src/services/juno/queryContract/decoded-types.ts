@@ -123,6 +123,20 @@ export type DecodedIndexFundConfig = {
   alliance_members: string[];
 };
 
+export type DecodedTransaction = {
+  title: string;
+  description: string;
+  destination: string;
+  value: BigNumber;
+  data: string;
+  executed: false;
+  // string title;
+  //       string description;
+  //       address destination;
+  //       uint256 value;
+  //       bytes data;
+  //       bool executed;
+};
 // ////////// CONVERTERS ///////////////
 
 export function toSettingsPermission(p: Permission): SettingsPermission {

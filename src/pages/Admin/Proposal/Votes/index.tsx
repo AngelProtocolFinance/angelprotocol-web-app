@@ -28,7 +28,7 @@ export default function Votes({
         }),
       },
       isAuthorized: propMeta.isAuthorized,
-      tagPayloads: [invalidateJunoTags(["multisig.proposals"])],
+      tagPayloads: [invalidateJunoTags(["multisig.txs"])],
     });
   }
 

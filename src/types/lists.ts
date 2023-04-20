@@ -44,3 +44,4 @@ export type Contract =
   | "gift-card";
 
 export type AccountType = "liquid" | "locked";
+export type TransactionStatus = "pending" | "executed";

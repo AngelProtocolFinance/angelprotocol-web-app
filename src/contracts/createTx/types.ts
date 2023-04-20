@@ -36,6 +36,7 @@ type Txs = {
   "multisig.confirm-tx": Tx<{ id: number }>;
   "multisig.revoke-tx": Tx<{ id: number }>;
   "multisig.execute-tx": Tx<{ id: number }>;
+  "multisig.change-threshold": Tx<{ threshold: number }>;
 
   "erc20.transfer": Tx<Transfer>;
   "erc20.approve": Tx<Allowance>;

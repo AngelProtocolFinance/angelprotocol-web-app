@@ -1,16 +1,15 @@
 import {
-  CW3Config,
   EndowmentDetails,
   EndowmentState,
   FundDetails,
   GenericBalance,
   IndexFundConfig,
   PageOptions,
-  Proposal,
   RegistrarConfig,
   RegistrarConfigExtension,
 } from "types/contracts";
 import { AccountType } from "types/contracts/evm";
+import { Transaction } from "types/contracts/evm/multisig";
 import { Contract } from "types/lists";
 
 type Addr = { addr: string };
@@ -45,9 +44,10 @@ export interface ContractQueries {
   "erc20.balance": Query<Addr, string>;
 
   "multisig.members": Query<null, string[]>;
-  "multisig.proposals": Query<PageOptions, Proposal[]>;
-  "multisig.config": Query<null, CW3Config>;
-  "multisig.proposal": Query<{ id: number }, Proposal>;
+  "multisig.txs": Query<PageOptions, Pick<Transaction, "id" | "status">[]>;
+  "multisig.threshold": Query<null, number>;
+  "multisig.require-execution": Query<null, boolean>;
+  "multisig.transaction": Query<{ id: number }, Transaction>;
   "multisig.tx-count": Query<{ pending: boolean; executed: boolean }, number>;
   "multisig.votes": Query<{ id: number }, string[]>;
 

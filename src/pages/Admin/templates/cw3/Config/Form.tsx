@@ -1,41 +1,34 @@
-import { CW3ConfigValues, FormCW3Config } from "../../../types";
+import { FormValues as FV } from "./types";
 import { FormContainer, Submitter } from "components/admin";
 import { CheckField, Field } from "components/form";
 import useCreateProposal from "./useCreateProposal";
 
-type CV = CW3ConfigValues<FormCW3Config>;
-
 export default function Form() {
-  const { createProposal, isSubmitDisabled, isTime } = useCreateProposal();
+  const { createProposal, isSubmitDisabled } = useCreateProposal();
   return (
     <FormContainer onSubmit={createProposal}>
-      <Field<CV>
+      <Field<FV>
         classes="field-admin"
         label="Proposal title"
         name="title"
         required
       />
-      <Field<CV, "textarea">
+      <Field<FV, "textarea">
         type="textarea"
         classes="field-admin"
         label="Proposal description"
         name="description"
         required
       />
-      <Field<CV>
+      <Field<FV>
         classes="field-admin"
-        label="Pass threshold ( % )"
+        label="Number of signatures to pass tx"
         name="threshold"
         required
       />
-      <Field<CV>
-        classes="field-admin"
-        label={`Voting period (${isTime ? "seconds" : "blocks"})`}
-        name="duration"
-        required
-      />
-      <CheckField<CV>
-        name="require_execution"
+
+      <CheckField<FV>
+        name="requireExecution"
         classes="p-3 text-sm rounded bg-orange-l6 dark:bg-blue-d7 border border-prim"
       >
         Execution required

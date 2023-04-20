@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-import { Proposal } from "types/contracts";
+import { Transaction } from "types/contracts/evm/multisig";
 import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
 import { adminRoutes } from "constants/routes";
 
-type Props = { proposals: Proposal[] };
+type Props = { proposals: Transaction[] };
 export default function Table({ proposals }: Props) {
   return (
     <table>

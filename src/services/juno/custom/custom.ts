@@ -4,8 +4,10 @@ import {
   IERC20,
   ProposalDetails,
 } from "services/types";
-import { AcceptedTokens, Proposal, ProposalStatus } from "types/contracts";
+import { AcceptedTokens } from "types/contracts";
 import { AccountType } from "types/contracts/evm";
+import { Transaction } from "types/contracts/evm/multisig";
+import { TransactionStatus } from "types/lists";
 import { idParamToNum } from "helpers";
 import { junoApi } from "..";
 import { queryContract } from "../queryContract";
@@ -48,7 +50,8 @@ export const customApi = junoApi.injectEndpoints({
     >({
       providesTags: [
         "multisig.members",
-        "multisig.config",
+        "multisig.threshold",
+        "multisig.threshold",
         "accounts.endowment",
       ],
       async queryFn(args) {
@@ -104,39 +107,22 @@ export const customApi = junoApi.injectEndpoints({
       ProposalDetails,
       { id?: string; multisig: string }
     >({
-      providesTags: [
-        "multisig.votes",
-        "multisig.members",
-        "multisig.proposals",
-      ],
+      providesTags: ["multisig.votes", "multisig.members", "multisig.txs"],
       async queryFn({ id: idParam, multisig }) {
         const id = idParamToNum(idParam);
 
-        const count = await queryContract("multisig.tx-count", {
-          multisig,
-          pending: false,
-          executed: true,
-        });
-
-        const [signed, signers, executed] = await Promise.all([
+        const [signed, signers, transaction] = await Promise.all([
           queryContract("multisig.votes", {
             multisig,
             id,
           }),
           queryContract("multisig.members", { multisig }),
-          queryContract("multisig.proposals", {
-            multisig,
-            range: [0, count],
-            status: "executed",
-          }),
+          queryContract("multisig.transaction", { multisig, id }),
         ]);
 
         return {
           data: {
-            id,
-            title: `Proposal ${id}`,
-            description: "Some helpful description",
-            status: executed.some((p) => p.id === id) ? "executed" : "pending",
+            ...transaction,
             signed,
             signers,
           },
@@ -144,7 +130,7 @@ export const customApi = junoApi.injectEndpoints({
       },
     }),
     endowBalance: builder.query<EndowBalance, { id: number }>({
-      providesTags: ["multisig.proposal", "multisig.votes"],
+      providesTags: ["accounts.token-balance"],
       async queryFn(args) {
         //TODO: get this from registrar
         const tokens: AcceptedTokens = {
@@ -173,10 +159,10 @@ export const customApi = junoApi.injectEndpoints({
       },
     }),
     proposals: builder.query<
-      { proposals: Proposal[]; next?: number },
-      { multisig: string; status: ProposalStatus; page: number }
+      { proposals: Transaction[]; next?: number },
+      { multisig: string; status: TransactionStatus; page: number }
     >({
-      providesTags: ["multisig.tx-count", "multisig.proposals"],
+      providesTags: ["multisig.tx-count", "multisig.txs"],
       async queryFn(args) {
         const { status, multisig, page } = args;
         const proposalsPerPage = 5;
@@ -193,16 +179,25 @@ export const customApi = junoApi.injectEndpoints({
           count,
         ];
 
-        const proposals = await queryContract("multisig.proposals", {
+        const txs = await queryContract("multisig.txs", {
           multisig,
           range,
           status,
         });
-        proposals.sort((a, b) => b.id - a.id);
+
+        const details = await Promise.all(
+          txs.map((t) =>
+            queryContract("multisig.transaction", { multisig, id: t.id }).then(
+              (t) => ({ ...t, id: t.id })
+            )
+          )
+        );
+
+        details.sort((a, b) => b.id - a.id);
 
         return {
           data: {
-            proposals,
+            proposals: details,
             next: range[0] > 0 ? page + 1 : undefined,
           },
         };

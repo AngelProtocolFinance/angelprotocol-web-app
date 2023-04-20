@@ -1,28 +1,24 @@
 import { useFormContext } from "react-hook-form";
-import {
-  CW3ConfigUpdateMeta,
-  CW3ConfigValues,
-  FormCW3Config,
-} from "pages/Admin/types";
+import { FormValues as FV } from "./types";
+import { MultisigConfig } from "services/types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import Prompt from "components/Prompt";
-import CW3 from "contracts/CW3";
+import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
-import { genDiffMeta, getPayloadDiff, getTagPayloads } from "helpers/admin";
+import { getPayloadDiff, getTagPayloads } from "helpers/admin";
 
-type Key = keyof FormCW3Config;
-type Value = FormCW3Config[Key];
+type Key = keyof FV;
+type Value = FV[Key];
 
 export default function usePropose() {
   const { multisig, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
   const {
-    getValues,
     handleSubmit,
     formState: { isSubmitting, isDirty, isValid },
-  } = useFormContext<CW3ConfigValues<FormCW3Config>>();
+  } = useFormContext<FV>();
   const { showModal } = useModalContext();
   const sendTx = useTxSender();
 
@@ -30,10 +26,14 @@ export default function usePropose() {
     title,
     description,
     initial,
-    isTime,
-    ...newData
-  }: CW3ConfigValues<FormCW3Config>) {
-    const diff = getPayloadDiff(initial, newData);
+    threshold,
+    requireExecution,
+  }: FV) {
+    const config: MultisigConfig = {
+      threshold: +threshold,
+      requireExecution,
+    };
+    const diff = getPayloadDiff(initial, config);
     const diffEntries = Object.entries(diff) as [Key, Value][];
 
     if (diffEntries.length <= 0) {
@@ -45,42 +45,37 @@ export default function usePropose() {
       });
     }
 
-    const contract = new CW3(wallet, multisig);
+    if (!wallet) {
+      return showModal(Prompt, {
+        type: "error",
+        children: "Wallet is not connected",
+      });
+    }
 
-    const configUpdateMsg = contract.createEmbeddedUpdateConfigMsg({
-      threshold: {
-        absolute_percentage: {
-          percentage: `${newData.threshold / 100}`,
-        },
-      },
-      max_voting_period: isTime
-        ? { time: newData.duration }
-        : { height: newData.duration },
-      require_execution: newData.require_execution,
+    // const contract = new CW3(wallet, multisig);
+
+    const [data, dest] = encodeTx("multisig.change-threshold", {
+      multisig,
+      threshold: +threshold,
     });
 
-    const configUpdateMeta: CW3ConfigUpdateMeta = {
-      type: "cw3_config",
-      data: genDiffMeta(diffEntries, initial),
-    };
-
-    //proposal meta for preview
-    const proposalMsg = contract.createProposalMsg(
+    const tx = createTx(wallet.address, "multisig.submit-transaction", {
+      multisig,
       title,
       description,
-      [configUpdateMsg],
-      JSON.stringify(configUpdateMeta)
-    );
+      destination: dest,
+      value: "0",
+      data,
+    });
 
     await sendTx({
-      content: { type: "cosmos", val: [proposalMsg] },
+      content: { type: "evm", val: tx },
       ...propMeta,
       tagPayloads: getTagPayloads(propMeta.willExecute && "cw3_config"),
     });
   }
 
   return {
-    isTime: getValues("isTime"),
     createProposal: handleSubmit(createProposal),
     isSubmitDisabled: isSubmitting || !isValid || !isDirty,
   };

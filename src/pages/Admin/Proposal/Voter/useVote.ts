@@ -34,7 +34,9 @@ export default function useVote() {
 
     await sendTx({
       content: { type: "cosmos", val: [voteMsg] },
-      tagPayloads: [invalidateJunoTags(["multisig.proposals"])],
+      tagPayloads: [
+        invalidateJunoTags(["multisig.txs", "multisig.transaction"]),
+      ],
     });
   }
 

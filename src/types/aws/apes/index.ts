@@ -1,5 +1,4 @@
-import { ProposalStatus } from "../../contracts";
-import { NetworkType } from "../../lists";
+import { NetworkType, TransactionStatus } from "../../lists";
 import { WithBalance } from "../../utils";
 import { SortDirection } from "../ap";
 
@@ -71,7 +70,7 @@ export type WithdrawLog = {
   //from cw3 query
   amount: number;
   symbol: string;
-  proposal_status: ProposalStatus;
+  proposal_status: TransactionStatus;
 
   //only appears when tx is processed
   num_routes?: number;

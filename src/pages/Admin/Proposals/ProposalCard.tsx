@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import { Proposal } from "types/contracts";
+import { Transaction } from "types/contracts/evm/multisig";
 import { Status } from "components/admin";
 import { adminRoutes } from "constants/routes";
 
-export default function ProposalCard(props: Proposal) {
+export default function ProposalCard(props: Transaction) {
   return (
     <Link
       to={`../${adminRoutes.proposal}/${props.id}`}

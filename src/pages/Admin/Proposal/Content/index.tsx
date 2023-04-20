@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { Proposal } from "types/contracts";
+import { Transaction } from "types/contracts/evm/multisig";
 import Icon from "components/Icon";
 import { DetailLabel } from "components/admin";
 import Preview from "./Preview";
 
-export default function Content(props: Proposal) {
+export default function Content(props: Transaction) {
   const [isRawBlocksShown, setIsRawBlockShown] = useState(false);
 
   function toggleRawMessage() {
