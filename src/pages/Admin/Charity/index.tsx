@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { LinkGroup } from "../Sidebar/types";
+import { IS_AST } from "constants/env";
 import { adminRoutes } from "constants/routes";
 import Layout from "../Layout";
 import Proposal from "../Proposal";
@@ -8,6 +9,7 @@ import { LINKS } from "../constants";
 import Account from "./Account";
 import Contributions from "./Contributions";
 import Dashboard from "./Dashboard";
+import EditASTProfile from "./EditASTProfile";
 import EditProfile from "./EditProfile";
 import Invest from "./Invest";
 import Permissions from "./Permissions";
@@ -52,7 +54,10 @@ export default function Charity() {
         <Route path={adminRoutes.invest} element={<Invest />} />
         <Route path={adminRoutes.contributions} element={<Contributions />} />
         <Route path={adminRoutes.settings} element={<Settings />} />
-        <Route path={adminRoutes.edit_profile} element={<EditProfile />} />
+        <Route
+          path={adminRoutes.edit_profile}
+          element={IS_AST ? <EditASTProfile /> : <EditProfile />}
+        />
         <Route path={adminRoutes.permissions} element={<Permissions />} />
         <Route path={adminRoutes.widget_config}>
           <Route index element={<WidgetConfigurer />} />

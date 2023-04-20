@@ -109,6 +109,20 @@ export type EndowmentProfileUpdate = {
   url: string | null;
 };
 
+export type ASTProfileUpdate = {
+  //required
+  id: number;
+  owner: string;
+
+  /** optional, though set as required in this type
+  to force setting of default values - "", [], etc ..*/
+  image: string;
+  logo: string;
+  name: string;
+  overview: string;
+  tagline: string;
+};
+
 export type SortDirection = "asc" | "desc";
 export type EndowmentsSortKey = "name_internal" | "overall";
 
