@@ -16,7 +16,7 @@ export default function Whitelists({
       <p className="font-semibold mb-2">Contributors:</p>
 
       {isEmpty(donors) ? (
-        <Info>Anyone can contribute to this AIF</Info>
+        <Info>Anyone can contribute to this AST</Info>
       ) : (
         <ul className="list-disc list-inside grid gap-2">{donors}</ul>
       )}

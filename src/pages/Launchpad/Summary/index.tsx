@@ -32,12 +32,12 @@ export default function Summary() {
   return (
     <div>
       <h2 className="text-xl font-bold mb-8">
-        You're ready to create your AIF! Here's a summary:
+        You're ready to create your AST! Here's a summary:
       </h2>
       <About {...about} title="About" step={1} disabled={false} />
       <Management
         {...management}
-        title="AIF Management"
+        title="AST Management"
         step={2}
         disabled={false}
       />
@@ -64,7 +64,7 @@ export default function Summary() {
           className="text-sm px-8 btn-orange"
           onClick={() => submit(completed)}
         >
-          Create my AIF
+          Create my AST
         </button>
       </div>
     </div>

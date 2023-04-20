@@ -9,14 +9,14 @@ export default function WhitelistsForm(props: FormProps) {
       <Title className="mb-2">Whitelists</Title>
       <Desc className="mb-8">
         Here you can set who is able to deposit (contributors) or withdraw
-        (beneficiaries) from your AIF. You will be able to make changes to those
+        (beneficiaries) from your AST. You will be able to make changes to those
         lists in the future.
       </Desc>
       <Addresses<FV, "contributors">
         memberName="contributor"
         name="contributors"
         title="Contributors"
-        emptyMsg="Anyone can contribute to your AIF."
+        emptyMsg="Anyone can contribute to your AST."
         classes="mb-8"
       />
       <Addresses<FV, "beneficiaries">

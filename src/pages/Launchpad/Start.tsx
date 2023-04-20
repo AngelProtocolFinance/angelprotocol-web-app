@@ -36,7 +36,7 @@ export default function Start({ classes = "" }) {
       className={`grid content-start justify-items-center gap-8 padded-container w-full max-w-lg ${classes}`}
     >
       <h3 className="text-3xl font-bold text-center mb-4 break-words">
-        Angel Impact Fund
+        Angel Smart Treasury
       </h3>
 
       {state && (
