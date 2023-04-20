@@ -3,7 +3,6 @@ import { lazy } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import ModalContext from "contexts/ModalContext";
 import WalletContext from "contexts/WalletContext";
-import DonateFiatThanks from "components/DonateFiatThanks";
 import useScrollTop from "hooks/useScrollTop";
 import { chainOptions } from "constants/chainOptions";
 import { IS_AST } from "constants/env";
@@ -18,6 +17,7 @@ const Marketplace = lazy(() => import("pages/Marketplace"));
 const Registration = lazy(() => import("pages/Registration"));
 const Launchpad = lazy(() => import("pages/Launchpad"));
 const Donate = lazy(() => import("pages/Donate"));
+const DonateFiatThanks = lazy(() => import("pages/DonateFiatThanks"));
 const Gift = lazy(() => import("pages/Gift"));
 const DonateWidget = lazy(() => import("pages/DonateWidget"));
 
