@@ -16,7 +16,7 @@ export function Steps({ className = "", ...params }: Props) {
   const state = useGetter((state) => state.donation);
 
   return (
-    <div className={`justify-self-center grid ${className}`}>
+    <div className={`justify-self-center grid sm:w-full ${className}`}>
       {!isFinalized(state) && <Progress classes="my-12" />}
       <CurrentStep {...params} />
     </div>
