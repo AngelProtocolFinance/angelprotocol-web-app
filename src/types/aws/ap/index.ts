@@ -2,6 +2,18 @@ import { Keplr } from "@keplr-wallet/types";
 import { EndowmentTierNum, EndowmentType } from "../../contracts";
 import { NetworkType, UNSDG_NUMS } from "../../lists";
 
+type EndowmentBalances = {
+  // represents total cumulative balances
+  total_liq: number;
+  total_lock: number;
+  overall: number;
+
+  // represents tokens on hand balances (takes into account withdrawn funds)
+  on_hand_liq: number;
+  on_hand_lock: number;
+  on_hand_overall: number;
+};
+
 type EndowmentBase = {
   hq_country: string;
   endow_designation: EndowDesignation;
@@ -16,6 +28,16 @@ type EndowmentBase = {
 };
 
 export type EndowmentProfile = EndowmentBase & {
+  hq_country: string;
+  endow_designation: EndowDesignation;
+  active_in_countries?: string[];
+  categories: { sdgs: UNSDG_NUMS[] };
+  id: number;
+  image: string;
+  kyc_donors_only: boolean;
+
+  name: string;
+  tagline: string;
   contact_email: string;
   logo: string;
   overview: string;
@@ -32,18 +54,21 @@ export type EndowmentProfile = EndowmentBase & {
   };
   street_address?: string;
 
-  // represents total cumulative balances
-  total_liq: number;
-  total_lock: number;
-  overall: number;
-
-  // represents tokens on hand balances (takes into account withdrawn funds)
-  on_hand_liq: number;
-  on_hand_lock: number;
-  on_hand_overall: number;
-
   url?: string;
-};
+} & EndowmentBalances;
+
+//prettier-ignore
+export type ASTProfile = Pick<EndowmentProfile, 
+    "id" 
+  | "name" 
+  | "tagline"
+  > 
+  & Partial<Pick<EndowmentProfile, 
+    "logo"
+  | "image"
+  | "overview" 
+  >>
+  & EndowmentBalances
 
 export type EndowmentCard = EndowmentBase & {
   endow_type: EndowmentType;

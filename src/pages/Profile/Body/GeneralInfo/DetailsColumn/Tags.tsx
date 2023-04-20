@@ -1,21 +1,19 @@
 import { PropsWithChildren } from "react";
-import { useProfileContext } from "pages/Profile/ProfileContext";
+import { EndowmentProfile } from "types/aws";
 import Icon from "components/Icon";
 import { unsdgs } from "constants/unsdgs";
 import EndowDesignationTag from "./EndowDesignationTag";
 
-export default function Tags() {
-  const profile = useProfileContext();
-
+export default function Tags(props: EndowmentProfile) {
   return (
     <div className="flex flex-col items-start gap-3">
-      <EndowDesignationTag />
-      {profile.kyc_donors_only && (
+      <EndowDesignationTag {...props} />
+      {props.kyc_donors_only && (
         <Tag>
           Verification required <Icon type="Info" size={24} />
         </Tag>
       )}
-      {profile.categories.sdgs.map((unsdg_num) => (
+      {props.categories.sdgs.map((unsdg_num) => (
         <Tag key={unsdg_num}>
           SDG #{unsdg_num} : {unsdgs[unsdg_num].title}
         </Tag>

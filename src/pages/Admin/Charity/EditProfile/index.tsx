@@ -1,6 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FlatFormValues, FormValues } from "./types";
+import { endow } from "services/types";
 import { EndowmentProfile } from "types/aws";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useProfileQuery } from "services/aws/aws";
@@ -19,7 +20,7 @@ export default function EditProfile() {
 
   if (isLoading || isFetching)
     return <FormSkeleton classes="max-w-4xl justify-self-center mt-6" />;
-  if (isError || !profile)
+  if (isError || !profile || !endow(profile))
     return <FormError errorMessage="Failed to load profile" />;
 
   return <FormWithContext {...profile} />;
@@ -79,8 +80,8 @@ function FormWithContext(props: EndowmentProfile) {
       <Seo
         title={`${props.name} profile update - ${APP_NAME}`}
         description={`${props.overview.slice(0, 140)}`}
-        name={`${props.name}`}
-        image={`${props.logo}`}
+        name={props.name}
+        image={props.logo}
         url={`${DAPP_DOMAIN}/profile/${props.id}`}
       />
       <Form />

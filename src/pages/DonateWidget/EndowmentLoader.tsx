@@ -1,11 +1,11 @@
 import { ReactElement } from "react";
 import { useParams } from "react-router-dom";
-import { EndowmentProfile } from "types/aws";
+import { Profile } from "services/types";
 import { useProfileQuery } from "services/aws/aws";
 import QueryLoader from "components/QueryLoader";
 import { idParamToNum } from "helpers";
 
-type Props = { children(data: EndowmentProfile): ReactElement };
+type Props = { children(data: Profile): ReactElement };
 
 export default function EndowmentLoader({ children }: Props) {
   const { id } = useParams<{ id: string }>();

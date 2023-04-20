@@ -1,53 +1,50 @@
-import { useProfileContext } from "pages/Profile/ProfileContext";
+import { EndowmentProfile } from "types/aws";
 import ExtLink from "components/ExtLink";
 import Icon, { IconType } from "components/Icon";
 
-export default function Socials() {
-  const profile = useProfileContext();
-
+export default function Socials(
+  props: Pick<EndowmentProfile, "social_media_urls">
+) {
   return (
     <div className="flex items-center gap-3">
-      {profile.social_media_urls.facebook && (
+      {props.social_media_urls.facebook && (
         <SocialsIcon
-          href={profile.social_media_urls.facebook}
+          href={props.social_media_urls.facebook}
           iconType="Facebook"
         />
       )}
-      {profile.social_media_urls.linkedin && (
+      {props.social_media_urls.linkedin && (
         <SocialsIcon
-          href={profile.social_media_urls.linkedin}
+          href={props.social_media_urls.linkedin}
           iconType="LinkedinIn"
         />
       )}
-      {profile.social_media_urls.twitter && (
+      {props.social_media_urls.twitter && (
         <SocialsIcon
-          href={profile.social_media_urls.twitter}
+          href={props.social_media_urls.twitter}
           iconType="Twitter"
         />
       )}
-      {profile.social_media_urls.discord && (
+      {props.social_media_urls.discord && (
         <SocialsIcon
-          href={profile.social_media_urls.discord}
+          href={props.social_media_urls.discord}
           iconType="Discord"
         />
       )}
-      {profile.social_media_urls.instagram && (
+      {props.social_media_urls.instagram && (
         <SocialsIcon
-          href={profile.social_media_urls.instagram}
+          href={props.social_media_urls.instagram}
           iconType="Instagram"
         />
       )}
-      {profile.social_media_urls.youtube && (
+      {props.social_media_urls.youtube && (
         <SocialsIcon
-          href={profile.social_media_urls.youtube}
+          href={props.social_media_urls.youtube}
           iconType="Youtube"
         />
       )}
-      {profile.social_media_urls.tiktok && (
-        <SocialsIcon
-          href={profile.social_media_urls.tiktok}
-          iconType="Tiktok"
-        />
+      {props.social_media_urls.tiktok && (
+        <SocialsIcon href={props.social_media_urls.tiktok} iconType="Tiktok" />
       )}
     </div>
   );

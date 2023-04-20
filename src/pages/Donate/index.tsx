@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+import { endow } from "services/types";
 import banner from "assets/images/hero.png";
 import { useProfileQuery } from "services/aws/aws";
 import QueryLoader from "components/QueryLoader";
@@ -32,15 +33,15 @@ export default function Donate() {
           <>
             <Seo
               title={`Donate to ${profile.name} - ${APP_NAME}`}
-              description={`${profile.overview.slice(0, 140)}`}
-              name={`${profile.name}`}
-              image={`${profile.logo}`}
+              description={`${(profile?.overview ?? "").slice(0, 140)}`}
+              name={profile.name}
+              image={profile.image}
               url={`${DAPP_DOMAIN}/donate/${profile.id}`}
             />
             <Content
               name={profile.name}
               id={numId}
-              isKYCRequired={profile.kyc_donors_only}
+              isKYCRequired={endow(profile) && profile.kyc_donors_only}
             />
           </>
         )}
