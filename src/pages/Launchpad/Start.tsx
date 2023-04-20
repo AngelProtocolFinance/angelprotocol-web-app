@@ -38,7 +38,7 @@ export default function Start({ classes = "" }) {
       <h3 className="text-3xl font-bold text-center mb-4 break-words">
         Angel Smart Treasury
       </h3>
-      <p className="text-center sm:text-left text-lg">
+      <p className="text-center text-md">
         You can find all of the Angel Smart Treasuries(ASTs) that you've created
         and are also a member of in the wallet dropdown at the top-right side of
         the screen. Additionally, you can create a new AST by using the button
