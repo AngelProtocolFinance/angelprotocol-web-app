@@ -44,7 +44,7 @@ export default function Start({ classes = "" }) {
         the screen. Additionally, you can create a new AST by using the button
         below.
       </p>
-      {state && progress !== 7 && (
+      {state && (
         <Link
           to={`steps/${progress}`}
           className="btn btn-outline-filled w-full"
