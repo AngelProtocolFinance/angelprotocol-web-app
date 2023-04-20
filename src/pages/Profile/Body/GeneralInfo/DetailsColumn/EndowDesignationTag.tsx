@@ -1,6 +1,5 @@
 import { PropsWithChildren } from "react";
 import { EndowmentProfile } from "types/aws";
-import { useProfileContext } from "pages/Profile/ProfileContext";
 import Icon from "components/Icon";
 import { ENDOW_DESIGNATIONS } from "constants/common";
 

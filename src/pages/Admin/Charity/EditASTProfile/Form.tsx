@@ -67,7 +67,7 @@ export default function Form() {
           maxSize={MAX_SIZE_IN_BYTES}
         />
         <Label className="-mb-4" required>
-          Description of your organization
+          Overview
         </Label>
         <RichTextEditor<FV>
           fieldName="overview"

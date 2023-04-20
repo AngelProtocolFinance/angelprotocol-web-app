@@ -17,7 +17,7 @@ export default function EditASTProfile() {
 
   if (isLoading || isFetching)
     return <FormSkeleton classes="max-w-4xl justify-self-center mt-6" />;
-  if (isError || !profile || !endow(profile))
+  if (isError || !profile || endow(profile))
     return <FormError errorMessage="Failed to load profile" />;
 
   return <FormWithContext {...profile} />;
