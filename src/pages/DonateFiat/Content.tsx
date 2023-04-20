@@ -44,7 +44,7 @@ export default function Content(props: DonationRecipient) {
           },
           {
             title: "Donate",
-            to: `${appRoutes.donate}/${props.id}`,
+            to: `${appRoutes.donate_fiat}/${props.id}`,
           },
         ]}
       />
