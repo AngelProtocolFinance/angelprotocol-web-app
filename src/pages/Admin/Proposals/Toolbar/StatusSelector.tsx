@@ -26,7 +26,7 @@ export default function StatusSelector() {
             <option
               key={optionValue}
               value={optionValue}
-              className="text-sm uppercase p-1"
+              className="text-sm text-gray-d2 uppercase p-1"
             >
               {optionDescription}
             </option>
