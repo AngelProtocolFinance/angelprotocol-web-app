@@ -1,4 +1,5 @@
 import { Tupleable } from "../../evm";
+import { SettingsController } from "../account";
 
 type Categories = { sdgs: number[]; general: number[] };
 
@@ -24,6 +25,8 @@ type Duration = {
   enumData: /** 0 - height*/ 1 /** time */;
   data: { height: number; time: number };
 };
+
+export type AccountType = 0 /** locked */ | 1 /** liquid */ | 2 /** none */;
 
 export type ADDRESS_ZERO = "0x0000000000000000000000000000000000000000" & {
   __type: "address_zero";
@@ -73,38 +76,6 @@ export type DaoSetup = {
   token: DaoToken;
 };
 
-type Delegate = {
-  Addr: string | ADDRESS_ZERO;
-  expires: number; // datetime int of delegation expiry
-};
-export type SettingsPermission = {
-  ownerControlled: true;
-  govControlled: true;
-  modifiableAfterInit: true;
-  delegate: Delegate;
-};
-
-type SettingsController = {
-  endowmentController: SettingsPermission;
-  strategies: SettingsPermission;
-  whitelistedBeneficiaries: SettingsPermission;
-  whitelistedContributors: SettingsPermission;
-  maturityWhitelist: SettingsPermission;
-  maturityTime: SettingsPermission;
-  profile: SettingsPermission;
-  earningsFee: SettingsPermission;
-  withdrawFee: SettingsPermission;
-  depositFee: SettingsPermission;
-  aumFee: SettingsPermission;
-  kycDonorsOnly: SettingsPermission;
-  name: SettingsPermission;
-  image: SettingsPermission;
-  logo: SettingsPermission;
-  categories: SettingsPermission;
-  splitToLiquid: SettingsPermission;
-  ignoreUserSplits: SettingsPermission;
-};
-
 type SplitDetails = {
   min: number;
   max: number;
@@ -152,4 +123,16 @@ export interface NewAIF extends Tupleable {
   maturityWhitelist: string[];
   ignoreUserSplits: boolean;
   splitToLiquid: SplitDetails;
+}
+
+type DepositRequest = {
+  id: number;
+  lockedPercentage: number;
+  liquidPercentage: number;
+};
+
+export interface ERC20Deposit extends Tupleable {
+  details: DepositRequest;
+  token: string;
+  amount: string;
 }

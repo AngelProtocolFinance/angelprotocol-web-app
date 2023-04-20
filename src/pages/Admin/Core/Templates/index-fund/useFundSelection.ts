@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { Path, useFormContext } from "react-hook-form";
 import { FundIdContext } from "pages/Admin/types";
-import { useLatestBlockQuery } from "services/juno";
-import { useFundListQuery } from "services/juno/indexFund";
+import { useContractQuery, useLatestBlockQuery } from "services/juno";
+import { hasElapsed } from "helpers/admin";
 
 export default function useFundSelection<T extends FundIdContext>(
   fieldName: Path<T>
@@ -10,7 +10,10 @@ export default function useFundSelection<T extends FundIdContext>(
   const { setValue } = useFormContext<T>();
 
   const { data: blockHeight = "0" } = useLatestBlockQuery(null);
-  const { data: fundList = [] } = useFundListQuery(null);
+  const { data: fundList = [] } = useContractQuery("index-fund.funds", {
+    startAfter: 0,
+    limit: 10,
+  });
 
   const [activeRow, setActiveRow] = useState<number | undefined>();
 
@@ -18,12 +21,11 @@ export default function useFundSelection<T extends FundIdContext>(
     () =>
       fundList.filter((fund) => {
         let isExpired = false;
-        if (fund.expiry_height) {
-          isExpired = +fund.expiry_height <= +blockHeight;
+        if (fund.expiryHeight) {
+          isExpired = fund.expiryHeight <= +blockHeight;
         }
-        if (fund.expiry_time) {
-          isExpired =
-            +fund.expiry_time <= Math.floor(new Date().getTime() / 1000);
+        if (fund.expiryTime) {
+          isExpired = hasElapsed(+fund.expiryTime);
         }
         return !isExpired;
       }),

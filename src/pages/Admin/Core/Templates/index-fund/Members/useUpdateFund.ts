@@ -1,18 +1,16 @@
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { FundMemberUpdateMeta } from "pages/Admin/types";
-import { FundUpdateValues } from "pages/Admin/types";
+import { FormValues } from "./types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useGetWallet } from "contexts/WalletContext";
 import { useGetter } from "store/accessors";
-import CW3 from "contracts/CW3";
-import IndexFund from "contracts/IndexFund";
+import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 
 export default function useUpdateFund() {
-  const { trigger, reset, getValues } = useFormContext<FundUpdateValues>();
-  const { cw3, propMeta } = useAdminResources();
+  const { trigger, reset, getValues } = useFormContext<FormValues>();
+  const { multisig, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
   const [isLoading, setIsLoading] = useState(false);
   const fundMembers = useGetter((state) => state.admin.fundMembers);
@@ -36,10 +34,10 @@ export default function useUpdateFund() {
       const [toAdd, toRemove]: Diffs = fundMembers.reduce(
         ([toAdd, toRemove]: Diffs, fundMember) => {
           if (fundMember.isAdded) {
-            toAdd.push(fundMember.addr);
+            toAdd.push(fundMember.id);
           }
           if (fundMember.isDeleted) {
-            toRemove.push(fundMember.addr);
+            toRemove.push(fundMember.id);
           }
           return [toAdd, toRemove];
         },
@@ -49,41 +47,35 @@ export default function useUpdateFund() {
       if (toRemove.length <= 0 && toAdd.length <= 0) {
         throw new Error("No fund member changes");
       }
-      const indexFundContract = new IndexFund(wallet);
-      const embeddedExecuteMsg =
-        indexFundContract.createEmbeddedUpdateMembersMsg(
-          +fundId,
-          toAdd,
-          toRemove
-        );
 
-      const fundDetails = await indexFundContract.getFundDetails(+fundId);
+      if (!wallet) {
+        throw new Error("Wallet is not connected");
+      }
 
-      const fundUpdateMembersMeta: FundMemberUpdateMeta = {
-        type: "if_members",
-        data: { fundId: fundId, fundName: fundDetails.name, toRemove, toAdd },
-      };
+      const [data, dest] = encodeTx("index-fund.update-members", {
+        fundId: +fundId,
+        add: toAdd.map((a) => +a),
+        remove: toRemove.map((r) => +r),
+      });
 
-      const adminContract = new CW3(wallet, cw3);
-      const proposalTitle = getValues("title");
-      const proposalDescription = getValues("description");
-
-      const proposalMsg = adminContract.createProposalMsg(
-        proposalTitle,
-        proposalDescription,
-        [embeddedExecuteMsg],
-        JSON.stringify(fundUpdateMembersMeta)
-      );
+      const tx = createTx(wallet.address, "multisig.submit-transaction", {
+        multisig,
+        title: getValues("title"),
+        description: getValues("description"),
+        destination: dest,
+        value: "0",
+        data,
+      });
 
       await sendTx({
-        content: { type: "cosmos", val: [proposalMsg] },
+        content: { type: "evm", val: tx },
         ...propMeta,
       });
-      setIsLoading(false);
       reset();
     } catch (err) {
-      setIsLoading(false);
       handleError(err);
+    } finally {
+      setIsLoading(false);
     }
   }
 

@@ -3,7 +3,6 @@ import { useFormContext } from "react-hook-form";
 import { VoteValues as VV } from "./types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { invalidateJunoTags } from "services/juno";
-import { adminTags } from "services/juno/tags";
 import { useGetWallet } from "contexts/WalletContext";
 import CW3 from "contracts/CW3";
 import CW3Review from "contracts/CW3/CW3Review";
@@ -15,7 +14,7 @@ export default function useVote() {
     formState: { isValid },
   } = useFormContext<VV>();
   const { wallet } = useGetWallet();
-  const { cw3 } = useAdminResources();
+  const { multisig } = useAdminResources();
   const { sendTx, isSending } = useTxSender(true);
 
   async function vote({ type, proposalId, vote, reason }: VV) {
@@ -29,14 +28,14 @@ export default function useVote() {
       });
     } else {
       //normal cw3
-      const contract = new CW3(wallet, cw3);
+      const contract = new CW3(wallet, multisig);
       voteMsg = contract.createVoteMsg(proposalId, vote);
     }
 
     await sendTx({
       content: { type: "cosmos", val: [voteMsg] },
       tagPayloads: [
-        invalidateJunoTags([{ type: "admin", id: adminTags.proposals }]),
+        invalidateJunoTags(["multisig.txs", "multisig.transaction"]),
       ],
     });
   }

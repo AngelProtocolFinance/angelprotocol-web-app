@@ -1,0 +1,233 @@
+[
+  {
+    "inputs": [],
+    "name": "queryConfig",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "owner",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "applicationsReview",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "indexFundContract",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "accountsContract",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "treasury",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "subdaoGovCode",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "subdaoCw20TokenCode",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "subdaoBondingTokenCode",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "subdaoCw900Code",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "subdaoDistributorCode",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "subdaoEmitter",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "donationMatchCode",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "donationMatchCharitesContract",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "donationMatchEmitter",
+            "type": "address"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "max",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "min",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "defaultSplit",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct AngelCoreStruct.SplitDetails",
+            "name": "splitToLiquid",
+            "type": "tuple"
+          },
+          {
+            "internalType": "address",
+            "name": "haloToken",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "haloTokenLpContract",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "govContract",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "collectorAddr",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "collectorShare",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "charitySharesContract",
+            "type": "address"
+          },
+          {
+            "components": [
+              {
+                "internalType": "address[]",
+                "name": "cw20",
+                "type": "address[]"
+              }
+            ],
+            "internalType": "struct AngelCoreStruct.AcceptedTokens",
+            "name": "acceptedTokens",
+            "type": "tuple"
+          },
+          {
+            "internalType": "address",
+            "name": "fundraisingContract",
+            "type": "address"
+          },
+          {
+            "components": [
+              {
+                "internalType": "bool",
+                "name": "rebalanceLiquidInvestedProfits",
+                "type": "bool"
+              },
+              {
+                "internalType": "bool",
+                "name": "lockedInterestsToLiquid",
+                "type": "bool"
+              },
+              {
+                "internalType": "uint256",
+                "name": "interest_distribution",
+                "type": "uint256"
+              },
+              {
+                "internalType": "bool",
+                "name": "lockedPrincipleToLiquid",
+                "type": "bool"
+              },
+              {
+                "internalType": "uint256",
+                "name": "principle_distribution",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct AngelCoreStruct.RebalanceDetails",
+            "name": "rebalance",
+            "type": "tuple"
+          },
+          {
+            "internalType": "address",
+            "name": "swapsRouter",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "multisigFactory",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "multisigEmitter",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "charityProposal",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "lockedWithdrawal",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "proxyAdmin",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "usdcAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "wethAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "cw900lvAddress",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct RegistrarStorage.Config",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

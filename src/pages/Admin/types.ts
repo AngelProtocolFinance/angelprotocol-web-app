@@ -1,13 +1,10 @@
 import { Coin } from "@cosmjs/proto-signing";
 import { EndowmentProposal } from "types/aws";
 import {
-  AllianceMember,
   Asset,
-  CW4Member,
   EndowmentStatus,
   EndowmentStatusStrNum,
   EndowmentStatusText,
-  FundConfig,
   FundDetails,
   RegistrarConfigExtensionPayload,
   RegistrarOwnerPayload,
@@ -26,14 +23,14 @@ export type Templates =
   | "if_config"
   | "if_owner"
 
+  //cw4
+  | "cw4_members"
+
   //cw3
   | "cw3_config"
   | "cw3_transfer"
   | "cw3_application"
   | "review_cw3_config"
-
-  //cw4
-  | "cw4_members"
 
   //account
   | "acc_withdraw"
@@ -61,41 +58,15 @@ export type OwnerUpdateMeta = MetaConstructor<
   { owner: string; newOwner: string }
 >;
 /** _indexfund */
-export type AllianceEditMeta = MetaConstructor<
-  "if_alliance",
-  {
-    toAddMembers: AllianceMember[];
-    toRemoveMembers: AllianceMember[];
-    editedMembers: AllianceMember[];
-  }
->;
+export type AllianceEditMeta = MetaConstructor<"if_alliance", undefined>;
 export type CreateFundMeta = MetaConstructor<"if_create", FundPreview>;
 export type RemoveFundMeta = MetaConstructor<"if_remove", FundPreview>;
 
-export type FundMemberUpdateMeta = MetaConstructor<
-  "if_members",
-  {
-    fundId: string;
-    fundName: string;
-    toRemove: string[];
-    toAdd: string[];
-  }
->;
+export type FundMemberUpdateMeta = MetaConstructor<"if_members", undefined>;
 
-export type FundConfigUpdateMeta = MetaConstructor<
-  "if_config",
-  DiffSet<FundConfig>
->;
+export type FundConfigUpdateMeta = MetaConstructor<"if_config", undefined>;
 
-/** _cw4 */
-
-export type CW4MemberUpdateMeta = MetaConstructor<
-  "cw4_members",
-  {
-    toAdd: CW4Member[];
-    toRemove: string[];
-  }
->;
+export type CW4MemberUpdateMeta = MetaConstructor<"cw4_members", undefined>;
 
 /** _cw3 */
 export type ApplicationMeta = MetaConstructor<
@@ -179,7 +150,6 @@ export type ProposalBase = {
   description: string;
 };
 export type FundIdContext = { fundId: string };
-export type AllianceEditValues = ProposalBase & Required<AllianceMember>;
 
 export interface FormCW3Config {
   threshold: number;
@@ -210,23 +180,6 @@ export type EndowmentUpdateValues = ProposalBase & {
   //metadata
   prevStatus?: EndowmentStatusText;
 };
-export type FundConfigValues = ProposalBase &
-  FundConfig & { initialConfigPayload: FundConfig };
-
-export type FundCreatorValues = ProposalBase & {
-  //new fund member
-  newFundAddr: string;
-
-  //fund details
-  fundName: string;
-  fundDescription: string;
-  expiryHeight: string;
-  expiryTime: string;
-  isFundRotating: boolean; //defaulted to true
-  splitToLiquid: string; //handled by slider limits
-};
-
-export type FundDestroyValues = ProposalBase & { fundId: string };
 
 export type FundSendPayload = {
   amount: number;
@@ -239,13 +192,6 @@ export type FundSendPayload = {
 };
 
 export type FundSendValues = ProposalBase & FundSendPayload;
-export type FundUpdateValues = ProposalBase & {
-  fundId: string;
-  newMemberAddr: string;
-};
-
-export type IndexFundOwnerValues = ProposalBase &
-  RegistrarOwnerPayload & { initialOwner: string };
 
 export type MemberUpdatorValues = ProposalBase & {
   addr: string;

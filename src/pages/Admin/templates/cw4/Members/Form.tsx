@@ -1,43 +1,35 @@
-import { MemberUpdatorValues as T } from "pages/Admin/types";
-import { DivContainer, Submitter } from "components/admin";
-import { Field, Label } from "components/form";
-import Adder from "./Adder";
+import { useAdminResources } from "pages/Admin/Guard";
+import { useModalContext } from "contexts/ModalContext";
+import { ErrorStatus } from "components/Status";
+import { DivContainer } from "components/admin";
+import { isEmpty } from "helpers";
+import AddForm from "./Adder";
 import Member from "./Member";
-import useUpdateMembers from "./useUpdateMembers";
 
 export default function Form() {
-  const { updateMembers, apCW4Members } = useUpdateMembers();
+  const { members } = useAdminResources();
+  const { showModal } = useModalContext();
   return (
     <DivContainer>
-      <Field<T>
-        classes="field-admin"
-        label="Proposal title"
-        name="title"
-        required
-      />
-      <Field<T, "textarea">
-        type="textarea"
-        classes="field-admin"
-        label="Proposal description"
-        name="description"
-        required
-      />
-
-      <Label className="text-red dark:text-red-l2 -mb-3">Remove member</Label>
+      <h3>Members</h3>
       <div className="p-3 rounded border border-prim bg-orange-l6 dark:bg-blue-d7">
-        <div className="flex flex-col gap-2 mb-2">
-          {apCW4Members.map((member) => (
-            <Member key={member.addr} {...member} />
-          ))}
-        </div>
+        {isEmpty(members) ? (
+          <ErrorStatus classes="text-sm">No members found</ErrorStatus>
+        ) : (
+          <div className="flex flex-col gap-2">
+            {members.map((m) => (
+              <Member key={m} address={m} />
+            ))}
+          </div>
+        )}
       </div>
 
-      <Label className="text-green dark:text-green-l2 -mb-3">Add member</Label>
-      <Adder />
-
-      <Submitter type="button" onClick={updateMembers}>
-        Submit
-      </Submitter>
+      <button
+        className="btn-outline-filled justify-self-end text-sm py-1 -mt-2"
+        onClick={() => showModal(AddForm, { address: "", action: "add" })}
+      >
+        add member
+      </button>
     </DivContainer>
   );
 }

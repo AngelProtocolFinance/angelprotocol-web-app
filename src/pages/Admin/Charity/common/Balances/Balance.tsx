@@ -1,13 +1,17 @@
 import { PropsWithChildren } from "react";
-import { AccountType } from "types/contracts";
+import { AccountType } from "types/lists";
 import { useAdminResources } from "pages/Admin/Guard";
+import { useEndowBalanceQuery } from "services/juno/custom";
 import QueryLoader from "components/QueryLoader";
-import { humanize } from "helpers";
+import { condense, humanize } from "helpers";
 
 type Props = { type: AccountType };
 export default function Balance({ type }: Props) {
   const { id } = useAdminResources();
-  console.log({ id, type });
+
+  const query = useEndowBalanceQuery({
+    id,
+  });
 
   return (
     <div className="@container rounded border border-prim bg-orange-l6 dark:bg-blue-d6">
@@ -19,32 +23,30 @@ export default function Balance({ type }: Props) {
         <span className="capitalize">{type}</span> Account details.
       </p>
       <QueryLoader
-        queryState={{
-          data: { total: 0, free: 0, invested: 0, symbol: "USD" },
-          isLoading: false,
-          isError: false,
-        }}
+        queryState={query}
         classes={{ container: "text-sm text-gray-d1 dark:text-gray px-4" }}
         messages={{
           loading: "Fetching balances",
           error: "Failed to get balances",
         }}
       >
-        {({ total, free, invested, symbol }) => {
+        {({ [type]: balances }) => {
+          //TODO: show all token balances
+          const bal = balances[0].amount;
           return (
             <div className="grid grid-cols-[auto_1fr] gap-y-5 justify-self-start gap-x-8 @lg:flex @lg:gap-x-8 px-4">
               <Amount
                 title="Total value"
                 classes="col-span-full @lg:mr-auto"
-                symbol={symbol}
+                symbol="USD"
               >
-                {humanize(total, 2)}
+                {humanize(condense(bal), 2)}
               </Amount>
-              <Amount title="Free balance" symbol={symbol}>
-                {humanize(free, 2)}
+              <Amount title="Free balance" symbol="USD">
+                {humanize(condense(bal), 2)}
               </Amount>
-              <Amount title="Invested balance" symbol={symbol}>
-                {humanize(invested, 2)}
+              <Amount title="Invested balance" symbol="USD">
+                {humanize(0, 2)}
               </Amount>
             </div>
           );

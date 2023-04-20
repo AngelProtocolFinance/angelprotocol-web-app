@@ -25,7 +25,7 @@ export type SubmittedTx = { hash: string; chainID: string };
 
 export type TxLoading = { loading: string };
 export type TxError = { error: string; tx?: SubmittedTx };
-export type TxSuccess = SubmittedTx & { attrValue?: string };
+export type TxSuccess = SubmittedTx & { data: unknown };
 
 export type TxResult = TxError | TxSuccess;
 
@@ -54,7 +54,7 @@ export type SenderArgs = {
   successMeta?: TxSuccessMeta;
   isAuthorized?: boolean;
   content: TxContent;
-  onSuccess?(result: TxSuccess, chain: Chain): void;
+  onSuccess?: TxOnSuccess;
 };
 
 // //////////// TYPE GUARDS ////////////

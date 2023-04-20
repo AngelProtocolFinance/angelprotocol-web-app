@@ -1,9 +1,4 @@
-import {
-  CW3ConfigPayload,
-  EmbeddedBankMsg,
-  EmbeddedWasmMsg,
-  Vote,
-} from "types/contracts";
+import { EmbeddedBankMsg, EmbeddedWasmMsg, Vote } from "types/contracts";
 import { WalletState } from "contexts/WalletContext";
 import Contract from "../Contract";
 
@@ -13,20 +8,6 @@ export default class CW3 extends Contract {
   constructor(wallet: WalletState | undefined, address: string) {
     super(wallet);
     this.address = address;
-  }
-
-  createEmbeddedUpdateConfigMsg(payload: CW3ConfigPayload) {
-    return this.createEmbeddedWasmMsg(this.address, {
-      update_config: payload,
-    });
-  }
-
-  createExecProposalMsg(proposal_id: number) {
-    return this.createExecuteContractMsg(this.address, {
-      execute: {
-        proposal_id,
-      },
-    });
   }
 
   createProposalMsg(

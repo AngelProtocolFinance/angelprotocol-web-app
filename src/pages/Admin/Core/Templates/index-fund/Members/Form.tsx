@@ -1,4 +1,4 @@
-import { FundUpdateValues as FV } from "pages/Admin/types";
+import { FormValues as FV } from "./types";
 import Loader from "components/Loader";
 import { FormContainer, GroupContainer, Submitter } from "components/admin";
 import { Field, Label } from "components/form";
@@ -46,7 +46,7 @@ export default function Form() {
               (fundMembersCopy.length > 0 && (
                 <div className="flex flex-col gap-2 mb-2">
                   {fundMembersCopy.map((member) => (
-                    <Member key={member.addr} {...member} />
+                    <Member key={member.id} {...member} />
                   ))}
                 </div>
               )) || (

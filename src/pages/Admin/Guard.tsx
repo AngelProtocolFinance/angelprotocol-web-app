@@ -10,13 +10,13 @@ import Loader from "components/Loader";
 export function Guard(props: {
   children(resources: AdminResources): ReactNode;
 }) {
-  const { wallet } = useGetWallet();
   const { id } = useParams<AdminParams>();
+  const { wallet } = useGetWallet();
 
   const { data, isLoading, isError } = useAdminResourcesQuery(
     {
       user: wallet?.address,
-      endowmentId: id!,
+      endowmentId: id,
     },
     { skip: !id }
   );

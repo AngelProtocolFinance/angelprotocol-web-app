@@ -1,9 +1,7 @@
-import { AdminResources } from "services/types";
-import { CW3Config } from "types/contracts";
+import { AdminResources, MultisigConfig } from "services/types";
 import { queryContract } from "services/juno/queryContract";
-import { isJunoAddress } from "schemas/tests";
+import { isEthereumAddress } from "schemas/tests";
 import { contracts } from "constants/contracts";
-import { IS_TEST } from "constants/env";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { defaultProposalTags } from "../../tags";
 import { customApi } from "../custom";
@@ -16,8 +14,7 @@ const _charity: Admins = "charity";
 type CWs = {
   [key: number]:
     | {
-        cw3: string;
-        cw4: string;
+        multisig: string;
         type: Exclude<Admins, typeof _charity>;
       }
     | undefined;
@@ -25,45 +22,34 @@ type CWs = {
 
 export const apCWs: CWs = {
   [AP_ID]: {
-    cw3: contracts.cw3ApTeam,
-    cw4: contracts.cw4GrpApTeam,
+    multisig: contracts["multisig/ap"],
     type: "ap",
   },
   [REVIEWER_ID]: {
-    cw3: IS_TEST ? contracts.cw3ReviewTeam : contracts.cw3CharityReviewTeam,
-    cw4: IS_TEST
-      ? contracts.cw4GrpReviewTeam
-      : contracts.cw4GrpCharityReviewTeam,
+    multisig: contracts["multisig/review"],
     type: "review",
   },
 };
 
 export async function getMeta(
   endowId: number,
-  cw3: string,
+  multisig: string,
   user?: string
-): Promise<[AdminResources["propMeta"], CW3Config]> {
-  const [votersRes, config, voter] = await Promise.all([
-    queryContract("cw3ListVoters", cw3, null),
-    queryContract("cw3Config", cw3, null),
+): Promise<
+  [AdminResources["propMeta"], MultisigConfig, string[] /** members */]
+> {
+  const [members, threshold, requireExecution] = await Promise.all([
+    queryContract("multisig.members", { multisig }),
+    queryContract("multisig.threshold", { multisig }),
+    queryContract("multisig.require-execution", { multisig }),
     /** just set credential to none, if disconnected or non-juno wallet */
-    user && isJunoAddress(user)
-      ? queryContract("cw3Voter", cw3, {
-          addr: user,
-        })
-      : Promise.resolve({ weight: 0 }),
   ]);
 
-  const numVoters = votersRes.voters.length;
   const tagPayloads = [customApi.util.invalidateTags(defaultProposalTags)];
-  const willExecute =
-    /** single member */
-    numVoters === 1 ||
-    /** multiple members but threshold is lte 1/members given that execution is not required */
-    (!config.require_execution &&
-      Number(config.threshold.absolute_percentage.percentage) <=
-        1 / numVoters) ||
-    undefined;
+
+  /** in the context of tx submission */
+  const willExecute: true | undefined =
+    threshold === 1 && !requireExecution ? true : undefined;
 
   const url = willExecute
     ? `${appRoutes.admin}/${endowId}`
@@ -72,12 +58,16 @@ export async function getMeta(
   const message = willExecute
     ? "Successful transaction"
     : "Proposal successfully created";
-  const meta = {
-    willExecute,
-    successMeta: { message, link: { url, description } },
-    tagPayloads,
-    isAuthorized: !!voter.weight,
-  };
 
-  return [meta, config];
+  return [
+    {
+      willExecute,
+      successMeta: { message, link: { url, description } },
+      tagPayloads,
+      isAuthorized:
+        (user && isEthereumAddress(user) && members.includes(user)) || false,
+    },
+    { threshold, requireExecution },
+    members,
+  ];
 }

@@ -1,3 +1,4 @@
+import Decimal from "decimal.js";
 import { LogProcessor, SimulTx } from "types/evm";
 import { Estimate } from "types/tx";
 import { WalletState } from "contexts/WalletContext";
@@ -27,12 +28,18 @@ export async function estimateEVMFee(
     }),
   ]);
 
+  const adjusted = new Decimal(gas).mul(1.5).floor();
+
   const fee = condense(gasPrice, wallet.displayCoin.decimals)
-    .mul(gas)
+    .mul(adjusted)
     .toNumber();
-  /** include gas, and gasPrice - in local setup, wallet might give wrong estimatio */
+  /** include gas, and gasPrice - in local setup, wallet might give wrong estimation */
   return {
     fee: { amount: fee, symbol: wallet.displayCoin.symbol },
-    tx: { val: { ...tx, nonce, gas, gasPrice }, type: "evm", log },
+    tx: {
+      val: { ...tx, nonce, gas: adjusted.toHex(), gasPrice },
+      type: "evm",
+      log,
+    },
   };
 }

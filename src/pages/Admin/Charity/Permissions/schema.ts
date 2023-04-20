@@ -1,14 +1,13 @@
 import * as Yup from "yup";
 import { SchemaShape } from "schemas/types";
-import { SettingsPermissions } from "types/contracts";
+import { SettingsPermission } from "types/contracts";
 import { requiredWalletAddr } from "schemas/string";
 
-export type FormField = Omit<SettingsPermissions, "delegate"> & {
+export type FormField = Omit<SettingsPermission, "delegate"> & {
   name: string;
-} & (
-    | { delegated: true; delegate_address: string }
-    | { delegated: false; delegate_address: "" }
-  );
+  delegated: boolean;
+  delegate_address: string;
+};
 
 export type UpdateableFormValues = {
   accountFees: FormField;

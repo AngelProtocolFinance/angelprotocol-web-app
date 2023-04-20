@@ -1,5 +1,3 @@
-import { SplitDetails } from "./common";
-
 export type RebalanceDetails = {
   rebalance_liquid_invested_profits: boolean;
   locked_interests_to_liquid: boolean;
@@ -9,7 +7,8 @@ export type RebalanceDetails = {
 };
 
 export type AcceptedTokens = {
-  native: string[];
+  //this may not be final
+  //?? erc20
   cw20: string[];
 };
 
@@ -38,14 +37,8 @@ export type RegistrarConfigExtension = {
 
 export type RegistrarConfig = {
   owner: string;
-  version: string;
-  treasury: string;
-  rebalance: RebalanceDetails;
-  split_to_liquid: SplitDetails;
-  accepted_tokens: AcceptedTokens;
-  axelar_gateway: string;
-  axelar_ibc_channel: string;
-  axelar_chain_id: string;
+  acceptedTokens: AcceptedTokens;
+  ///add fields as needed
 };
 
 export type RegistrarConfigExtensionPayload = {

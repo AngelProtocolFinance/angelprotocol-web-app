@@ -10,27 +10,25 @@ export default function Member(props: AddressWithFlags) {
   const dispatch = useSetter();
   function memberItemAction() {
     if (props.isAdded) {
-      dispatch(undoAddMember(props.addr));
+      dispatch(undoAddMember(props.id));
     } else {
-      dispatch(toggleDeleteExistingMember(props.addr));
+      dispatch(toggleDeleteExistingMember(props.id));
     }
   }
   return (
     <li
-      className={`flex gap-1 text-gray-d2 items-center ${
+      className={`flex gap-1 text-gray-d2 dark:text-white items-center ${
         props.isDeleted ? "bg-red/30" : ""
       } ${props.isAdded ? "bg-green/30" : ""} rounded-md p-2 w-full`}
     >
       <Icon type="User" />
-      <span
-        className={`${props.isDeleted ? "line-through" : ""} text-sm font-mono`}
-      >
-        {props.addr}
+      <span className={`${props.isDeleted ? "line-through" : ""} text-sm ml-4`}>
+        {props.id}
       </span>
       <button
         onClick={memberItemAction}
         type="button"
-        className="bg-white/30 ml-2 rounded-md p-0.5 ml-auto"
+        className="bg-white/30 rounded-md p-0.5 ml-auto"
       >
         {props.isAdded || props.isDeleted ? (
           <Icon type="Undo" />

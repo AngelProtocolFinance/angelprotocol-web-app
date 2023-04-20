@@ -1,4 +1,6 @@
 import { Coin } from "@cosmjs/proto-signing";
+import { Tupleable } from "../evm";
+import { AccountType } from "../lists";
 import {
   Asset,
   Categories,
@@ -7,6 +9,7 @@ import {
   EndowmentType,
 } from "./common";
 import { CW20 } from "./cw20";
+import { ADDRESS_ZERO } from "./evm";
 
 export interface GenericBalance {
   native: Coin[];
@@ -51,6 +54,38 @@ type Vaults<T> = {
 
 export type AccountStrategies = Vaults<Strategy[]>;
 
+type Delegate = {
+  Addr: string | ADDRESS_ZERO;
+  expires: number; // datetime int of delegation expiry: 0 if no expiry
+};
+export type SettingsPermission = {
+  ownerControlled: boolean;
+  govControlled: boolean;
+  modifiableAfterInit: boolean;
+  delegate: Delegate;
+};
+
+export type SettingsController = {
+  endowmentController: SettingsPermission;
+  strategies: SettingsPermission;
+  whitelistedBeneficiaries: SettingsPermission;
+  whitelistedContributors: SettingsPermission;
+  maturityWhitelist: SettingsPermission;
+  maturityTime: SettingsPermission;
+  profile: SettingsPermission;
+  earningsFee: SettingsPermission;
+  withdrawFee: SettingsPermission;
+  depositFee: SettingsPermission;
+  aumFee: SettingsPermission;
+  kycDonorsOnly: SettingsPermission;
+  name: SettingsPermission;
+  image: SettingsPermission;
+  logo: SettingsPermission;
+  categories: SettingsPermission;
+  splitToLiquid: SettingsPermission;
+  ignoreUserSplits: SettingsPermission;
+};
+
 export interface EndowmentDetails {
   owner: string;
   categories: Categories;
@@ -61,10 +96,12 @@ export interface EndowmentDetails {
   status: EndowmentStatusText;
   //deposit_approved
   //withdraw_approved
-  maturity_time?: number;
-  invested_strategies: Vaults<string[]>;
+  maturityTime: number;
+  whitelistedBeneficiaries: string[];
+  maturityWhitelist: string[];
   //rebalance
   kyc_donors_only: boolean;
+  settingsController: SettingsController;
   //pending_redemptions
   //proposal_link
   //referral_id
@@ -90,8 +127,6 @@ export interface DepositPayload {
   locked_percentage: string; //"0.7"
   liquid_percentage: string; //"0.3"
 }
-
-export type AccountType = "locked" | "liquid";
 
 export interface WithdrawPayload {
   id: number;
@@ -136,3 +171,22 @@ export type EndowmentFee = {
   fee_percentage: string; // "0" - "1"
   active: boolean;
 };
+
+export interface SettingsControllerUpdate extends Tupleable {
+  id: number;
+  endowmentController: SettingsPermission;
+  name: SettingsPermission;
+  image: SettingsPermission;
+  logo: SettingsPermission;
+  categories: SettingsPermission;
+  kycDonorsOnly: SettingsPermission;
+  splitToLiquid: SettingsPermission;
+  ignoreUserSplits: SettingsPermission;
+  whitelistedBeneficiaries: SettingsPermission;
+  whitelistedContributors: SettingsPermission;
+  maturityWhitelist: SettingsPermission;
+  earningsFee: SettingsPermission;
+  depositFee: SettingsPermission;
+  withdrawFee: SettingsPermission;
+  aumFee: SettingsPermission;
+}

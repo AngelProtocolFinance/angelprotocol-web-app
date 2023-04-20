@@ -1,55 +1,78 @@
 import {
-  SettingsPermissions,
-  UpdateEndowmentControllerMsg,
+  SettingsController,
+  SettingsControllerUpdate,
+  SettingsPermission,
 } from "types/contracts";
-import { FormField, UpdateableFormValues } from "./schema";
+import { ADDRESS_ZERO } from "constants/evm";
+import { UpdateableFormValues } from "./schema";
 
 export default function createUpdateEndowmentControllerMsg(
   endowId: number,
-  formValues: Partial<UpdateableFormValues>
-): UpdateEndowmentControllerMsg {
-  const accountFees = createField(formValues.accountFees);
-  const beneficiaries_allowlist = createField(
-    formValues.beneficiaries_allowlist
+  changes: Partial<UpdateableFormValues>,
+  initial: SettingsController
+): SettingsControllerUpdate {
+  const accountFees = toPermission("accountFees", changes, initial.aumFee);
+  const beneficiaries_allowlist = toPermission(
+    "beneficiaries_allowlist",
+    changes,
+    initial.whitelistedBeneficiaries
   );
-  const contributors_allowlist = createField(formValues.contributors_allowlist);
-  const donationSplitParams = createField(formValues.donationSplitParams);
-  const profile = createField(formValues.profile);
+  const contributors_allowlist = toPermission(
+    "contributors_allowlist",
+    changes,
+    initial.whitelistedContributors
+  );
+  const donationSplitParams = toPermission(
+    "donationSplitParams",
+    changes,
+    initial.splitToLiquid
+  );
+  const profile = toPermission("profile", changes, initial.profile);
 
-  const updateMsg: UpdateEndowmentControllerMsg = {
+  const updateMsg: SettingsControllerUpdate = {
     id: endowId,
-    aum_fee: accountFees,
-    beneficiaries_allowlist,
-    categories: profile,
-    contributors_allowlist,
-    deposit_fee: accountFees,
-    earnings_fee: accountFees,
-    ignore_user_splits: donationSplitParams,
-    image: profile,
-    kyc_donors_only: profile,
-    logo: profile,
-    maturity_allowlist: beneficiaries_allowlist,
+    endowmentController: initial.endowmentController,
     name: profile,
-    split_to_liquid: donationSplitParams,
-    withdraw_fee: accountFees,
+    image: profile,
+    logo: profile,
+    categories: profile,
+    kycDonorsOnly: profile,
+    splitToLiquid: donationSplitParams,
+    ignoreUserSplits: donationSplitParams,
+    whitelistedBeneficiaries: beneficiaries_allowlist,
+    whitelistedContributors: contributors_allowlist,
+    maturityWhitelist: beneficiaries_allowlist,
+    earningsFee: accountFees,
+    depositFee: accountFees,
+    withdrawFee: accountFees,
+    aumFee: accountFees,
   };
+
   return updateMsg;
 }
 
-function createField(formField?: FormField): SettingsPermissions | undefined {
-  if (!formField) {
-    return undefined;
-  }
+function toPermission(
+  permission: keyof UpdateableFormValues,
+  changes: Partial<UpdateableFormValues>,
+  initial: SettingsPermission
+): SettingsPermission {
+  const val = changes[permission];
+  if (!val)
+    return {
+      ...initial,
+      delegate: {
+        Addr: ADDRESS_ZERO,
+        expires: 0,
+      },
+    };
 
-  const result: SettingsPermissions = {
-    gov_controlled: formField.gov_controlled,
-    modifiable: formField.modifiable,
-    owner_controlled: formField.owner_controlled,
+  return {
+    govControlled: val.govControlled,
+    modifiableAfterInit: val.modifiableAfterInit,
+    ownerControlled: val.ownerControlled,
+    delegate: {
+      Addr: val.delegate_address ? val.delegate_address : ADDRESS_ZERO,
+      expires: 0, //in design: no expiry for delegation,
+    },
   };
-
-  if (formField.delegated) {
-    result.delegate = { address: formField.delegate_address };
-  }
-
-  return result;
 }

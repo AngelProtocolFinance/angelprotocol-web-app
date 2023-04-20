@@ -1,136 +1,76 @@
-import { Token } from "types/aws";
 import {
-  AdminVoteInfo,
-  AllianceMember,
-  CW3Config,
-  CW3ListVoters,
-  CW4Member,
-  CW20Balance,
-  CW20Info,
-  EndowmentController,
   EndowmentDetails,
   EndowmentState,
   FundDetails,
   GenericBalance,
-  GovConfig,
-  GovStaker,
-  GovState,
   IndexFundConfig,
-  InquiredMember,
   PageOptions,
-  Polls,
-  Proposal,
-  QueryRes as Q,
   RegistrarConfig,
   RegistrarConfigExtension,
-  ReviewCW3Config,
-  Simulation,
-  VotesPageOptions,
 } from "types/contracts";
+import { AccountType } from "types/contracts/evm";
+import { Transaction } from "types/contracts/evm/multisig";
+import { Contract } from "types/lists";
 
 type Addr = { addr: string };
+
+type Query<Args, Result> = {
+  args: Args;
+  transform: (result: string, args?: Args) => Result;
+};
+
 export interface ContractQueries {
-  regConfig: {
-    args: null;
-    res: Q<RegistrarConfig>;
-    result: RegistrarConfig;
-  };
-  regConfigExtension: {
-    args: null;
-    res: Q<RegistrarConfigExtension>;
-    result: RegistrarConfigExtension;
-  };
+  "registrar.config": Query<null, RegistrarConfig>;
+  "registrar.config-extension": Query<null, RegistrarConfigExtension>;
 
-  ifFunds: {
-    args: null;
-    res: Q<{ funds: FundDetails[] }>;
-    result: FundDetails[];
-  };
-  ifAlliance: {
-    args: null;
-    res: Q<{ alliance_members: AllianceMember[] }>;
-    result: AllianceMember[];
-  };
-  ifConfig: { args: null; res: Q<IndexFundConfig>; result: IndexFundConfig };
+  "index-fund.funds": Query<
+    {
+      startAfter: number;
+      limit: number;
+    },
+    FundDetails[]
+  >;
+  "index-fund.alliance-members": Query<
+    {
+      startAfter: number;
+      limit: number;
+    },
+    string[]
+  >;
+  "index-fund.config": Query<null, IndexFundConfig>;
 
-  lpSimul: { args: null; res: Q<Simulation>; result: Simulation };
+  "gift-card.balance": Query<Addr, GenericBalance>;
 
-  giftcardBalance: {
-    args: Addr;
-    res: Q<GenericBalance>;
-    result: Token[];
-  };
+  "erc20.balance": Query<Addr, string>;
 
-  govStaker: { args: Addr; res: Q<GovStaker>; result: GovStaker };
-  govState: { args: null; res: Q<GovState>; result: GovState };
-  govConfig: { args: null; res: Q<GovConfig>; result: GovConfig };
-  govPolls: { args: null; res: Q<Polls>; result: Polls["polls"] };
+  "multisig.members": Query<null, string[]>;
+  "multisig.txs": Query<PageOptions, Pick<Transaction, "id" | "status">[]>;
+  "multisig.threshold": Query<null, number>;
+  "multisig.require-execution": Query<null, boolean>;
+  "multisig.transaction": Query<{ id: number }, Transaction>;
+  "multisig.tx-count": Query<{ pending: boolean; executed: boolean }, number>;
+  "multisig.votes": Query<{ id: number }, string[]>;
 
-  cw20Info: { args: null; res: Q<CW20Info>; result: CW20Info };
-  cw20Balance: { args: Addr; res: Q<CW20Balance>; result: number };
-
-  cw4Members: {
-    args: null;
-    res: Q<{ members: CW4Member[] }>;
-    result: CW4Member[];
-  };
-  cw4Member: { args: Addr; res: Q<InquiredMember>; result: InquiredMember };
-
-  cw3Voter: { args: Addr; res: Q<InquiredMember>; result: InquiredMember };
-  cw3ListVoters: { args: null; res: Q<CW3ListVoters>; result: CW3ListVoters };
-  cw3Config: { args: null; res: Q<CW3Config>; result: CW3Config };
-  reviewCw3Config: {
-    args: null;
-    res: Q<ReviewCW3Config>;
-    result: ReviewCW3Config;
-  };
-  cw3Proposals: {
-    args: PageOptions;
-    res: Q<{ proposals: Proposal[] }>;
-    result: Proposal[];
-  };
-  cw3Proposal: { args: { id: number }; res: Q<Proposal>; result: Proposal };
-  cw3Votes: {
-    args: VotesPageOptions;
-    res: Q<{ votes: AdminVoteInfo[] }>;
-    result: AdminVoteInfo[];
-  };
-
-  airdropIsClaimed: {
-    args: Addr & { stage: number };
-    res: Q<any>;
-    result: any;
-  }; //TODO update once to be used
-
-  accEndowment: {
-    args: { id: number };
-    res: Q<EndowmentDetails>;
-    result: EndowmentDetails;
-  };
-  accState: {
-    args: { id: number };
-    res: Q<EndowmentState>;
-    result: EndowmentState;
-  };
-
-  vaultBalance: {
-    args: { endowment_id: number };
-    res: Q<string>;
-    result: string;
-  };
-
-  endowmentController: {
-    args: { id: number };
-    res: Q<EndowmentController>;
-    result: EndowmentController;
-  };
+  "accounts.endowment": Query<{ id: number }, EndowmentDetails>;
+  "accounts.state": Query<{ id: number }, EndowmentState>;
+  "accounts.token-balance": Query<
+    { id: number; accounType: AccountType; token: string },
+    string
+  >;
 }
 
 export type ContractQueryTypes = keyof ContractQueries;
-export type Args<T extends ContractQueryTypes> = ContractQueries[T]["args"];
-export type WithAddrArgs<T extends ContractQueryTypes> =
-  ContractQueries[T]["args"] extends null
-    ? string
-    : ContractQueries[T]["args"] & { contract: string };
-export type Res<T extends ContractQueryTypes> = ContractQueries[T]["res"];
-export type Result<T extends ContractQueryTypes> = ContractQueries[T]["result"];
+
+type Empty = { [key: string]: never };
+type QueryArgs<T extends ContractQueryTypes> = ContractQueries[T]["args"];
+
+export type QueryOptions<T extends ContractQueryTypes> =
+  T extends `${infer C}.${string}`
+    ? C extends Contract
+      ? //if args is also null, options is empty
+        QueryArgs<T> extends null
+        ? Empty
+        : QueryArgs<T>
+      : //if contract address is not hardcoded, need to supply
+        Record<C, string> & (QueryArgs<T> extends null ? {} : QueryArgs<T>)
+    : Empty;

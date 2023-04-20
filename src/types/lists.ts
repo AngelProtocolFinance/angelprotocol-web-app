@@ -32,3 +32,16 @@ export type ProviderId =
   | "keplr-wc"
   | "keplr"
   | "web3auth-torus";
+
+export type Contract =
+  | "registrar"
+  | "index-fund"
+  | "multisig/ap"
+  | "multisig/review"
+  | "accounts"
+  | "locked-withdraw"
+  | "charity-application"
+  | "gift-card";
+
+export type AccountType = "liquid" | "locked";
+export type TransactionStatus = "pending" | "executed";

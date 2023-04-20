@@ -11,7 +11,7 @@ export default function AdminLinks(props: WalletState) {
     isFetching: isApFetching,
   } = useIsMemberQuery(
     { user: props.address, endowmentId: `${AP_ID}` },
-    { skip: props.chain.chain_id !== chainIds.juno }
+    { skip: props.chain.chain_id !== chainIds.polygon }
   );
   const {
     data: isReviewMember = false,
@@ -19,7 +19,7 @@ export default function AdminLinks(props: WalletState) {
     isFetching: isReviewFetching,
   } = useIsMemberQuery(
     { user: props.address, endowmentId: `${REVIEWER_ID}` },
-    { skip: props.chain.chain_id !== chainIds.juno }
+    { skip: props.chain.chain_id !== chainIds.polygon }
   );
 
   const isLoading =

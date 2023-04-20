@@ -1,96 +1,341 @@
+import { BigNumber } from "@ethersproject/bignumber";
+import {
+  DecodedEndowment,
+  DecodedEndowmentState,
+  DecodedFund,
+  DecodedGiftCardBalance,
+  DecodedIndexFundConfig,
+  DecodedTransaction,
+  toEndowStatusText,
+  toEndowType,
+  toSettingsPermission,
+} from "./decoded-types";
 import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
+import { RegistrarConfig } from "types/contracts";
+import { UNSDG_NUMS } from "types/lists";
+import { accounts } from "contracts/evm/Account";
+import { erc20 } from "contracts/evm/ERC20";
+import { giftCard } from "contracts/evm/gift-card";
+import { indexFund } from "contracts/evm/index-fund";
+import { multisig } from "contracts/evm/multisig";
+import { registrar } from "contracts/evm/registrar";
+import { toTuple } from "helpers";
+import { placeholders as p } from "./placeholders";
 
-export const queryObject: {
+type MigrationState =
+  | "migrated"
+  | "semi-migrated" /** working but with incomplete data */
+  | "placeholder"; /** encoder and decoders are wired but not yet complete */
+
+export const queryObjects: {
   [K in QT]: Q[K]["args"] extends null
-    ? object
-    : (args: Q[K]["args"]) => object;
+    ? [string, Q[K]["transform"], MigrationState]
+    : [(args: Q[K]["args"]) => string, Q[K]["transform"], MigrationState];
 } = {
   /** registrar */
-  regConfig: { config: {} },
-  regConfigExtension: { config_extension: {} },
+  "registrar.config": [
+    registrar.encodeFunctionData("queryConfig", []),
+    (result) => {
+      const decoded: RegistrarConfig = registrar.decodeFunctionResult(
+        "queryConfig",
+        result
+      )[0];
+      //select fields only
+      return {
+        owner: decoded.owner.toLowerCase(),
+        acceptedTokens: decoded.acceptedTokens,
+      };
+    },
+    "migrated",
+  ],
+  "registrar.config-extension": [
+    "",
+    () => p["registrar.config-extension"],
+    "placeholder",
+  ],
 
   /** index fund */
-  ifFunds: { funds_list: {} },
-  ifAlliance: { alliance_members: {} },
-  ifConfig: { config: {} },
+  "index-fund.funds": [
+    (args) => indexFund.encodeFunctionData("queryFundsList", toTuple(args)),
+    (result) => {
+      const decoded: DecodedFund[] = indexFund.decodeFunctionResult(
+        "queryFundsList",
+        result
+      )[0];
+      return decoded.map((f) => ({
+        id: f.id.toNumber(),
+        name: f.name,
+        description: f.description,
+        members: f.members.map((m) => m.toNumber()),
+        rotatingFund: f.rotatingFund,
+        splitToLiquid: f.splitToLiquid.toNumber(),
+        expiryTime: f.expiryTime.toNumber(),
+        expiryHeight: f.expiryHeight.toNumber(),
+      }));
+    },
+    "migrated",
+  ],
+  "index-fund.alliance-members": [
+    (args) =>
+      indexFund.encodeFunctionData("queryAllianceMembers", toTuple(args)),
+    (result) => {
+      const decoded: string[] = indexFund.decodeFunctionResult(
+        "queryAllianceMembers",
+        result
+      )[0];
+      return decoded.map((a) => a.toLowerCase());
+    },
+    "semi-migrated",
+  ],
+  "index-fund.config": [
+    indexFund.encodeFunctionData("queryConfig", []),
+    (result) => {
+      const d: DecodedIndexFundConfig = indexFund.decodeFunctionResult(
+        "queryConfig",
+        result
+      )[0];
+      return {
+        owner: d.owner.toLowerCase(),
+        registrarContract: d.registrarContract,
+        fundRotation: d.fundRotation.toNumber(),
+        fundMemberLimit: d.fundMemberLimit.toNumber(),
+        fundingGoal: d.fundingGoal.toNumber(),
+        alliance_members: d.alliance_members,
+      };
+    },
+    "migrated",
+  ],
 
-  /** gov */
-  govStaker({ addr }) {
-    return { staker: { address: addr } };
-  },
-  govState: { state: {} },
-  govConfig: { config: {} },
-  govPolls: { polls: {} },
-
-  /** cw20 */
-  cw20Info: {},
-  cw20Balance({ addr }) {
-    return { balance: { address: addr } };
-  },
+  /** erc20 */
+  "erc20.balance": [
+    ({ addr }) => erc20.encodeFunctionData("balanceOf", [addr]),
+    (result) => {
+      const decoded: BigNumber = erc20.decodeFunctionResult(
+        "balanceOf",
+        result
+      )[0];
+      return decoded.toString();
+    },
+    "migrated",
+  ],
 
   /** giftcard */
-  giftcardBalance({ addr }) {
-    return { balance: { address: addr } };
-  },
+  "gift-card.balance": [
+    ({ addr }) => giftCard.encodeFunctionData("queryBalance", [addr]),
+    (result) => {
+      const decoded: DecodedGiftCardBalance = giftCard.decodeFunctionResult(
+        "queryBalance",
+        result
+      )[0];
+      const {
+        coinNativeAmount,
+        /** amounts and addresses corresponds to one another */
+        Cw20CoinVerified_addr: addresses,
+        Cw20CoinVerified_amount: amounts,
+      } = decoded;
 
-  /** cw4 member */
-  cw4Members: { list_members: {} },
-  cw4Member({ addr }) {
-    return { member: { addr } };
-  },
-
-  /** cw3 voter */
-  cw3Voter({ addr }) {
-    return { voter: { address: addr } };
-  },
-  cw3ListVoters: { list_voters: {} },
-  cw3Config: { config: {} },
-  reviewCw3Config: { config: {} },
-  cw3Proposals(options) {
-    return { reverse_proposals: options };
-  },
-  cw3Proposal({ id }) {
-    return { proposal: { proposal_id: id } };
-  },
-  cw3Votes(options) {
-    return { list_votes: options };
-  },
-
-  /** airdrop */
-  airdropIsClaimed({ stage, addr }) {
-    return { is_claimed: { stage, address: addr } };
-  },
-
-  /** lp */
-  lpSimul: {
-    simulation: {
-      offer_asset: {
-        info: {
-          native_token: {
-            denom: "juno", //FUTURE: get from args
-          },
-        },
-        amount: "1000000", //FUTURE: get from args
-      },
-      block_time: Math.round(new Date().getTime() / 1000 + 10),
+      return {
+        cw20: addresses.map((addr, i) => ({
+          address: addr.toLowerCase(),
+          amount: amounts[i].toString(),
+        })),
+        native: [{ denom: "", amount: coinNativeAmount.toString() }],
+      };
     },
-  },
+    "placeholder",
+  ],
+
+  /** multisig */
+  "multisig.members": [
+    multisig.encodeFunctionData("getOwners", []),
+    (result) => {
+      const d: string[] = multisig.decodeFunctionResult("getOwners", result)[0];
+      //wallets outputs lowercase addresses, but addresses from contracts are not
+      return d.map((a) => a.toLowerCase());
+    },
+    "migrated",
+  ],
+  "multisig.threshold": [
+    multisig.encodeFunctionData("required", []),
+    (result) => {
+      const d: BigNumber = multisig.decodeFunctionResult("required", result)[0];
+      return d.toNumber();
+    },
+    "migrated",
+  ],
+  "multisig.require-execution": [
+    multisig.encodeFunctionData("requireExecution", []),
+    (result) => multisig.decodeFunctionResult("requireExecution", result)[0],
+    "migrated",
+  ],
+  "multisig.tx-count": [
+    (options) =>
+      multisig.encodeFunctionData("getTransactionCount", toTuple(options)),
+    (result) => {
+      const d: BigNumber = multisig.decodeFunctionResult(
+        "getTransactionCount",
+        result
+      )[0];
+      return d.toNumber();
+    },
+    "migrated",
+  ],
+  "multisig.txs": [
+    ({ range: [from, to], status }) => {
+      return multisig.encodeFunctionData(
+        "getTransactionIds",
+        toTuple({
+          from,
+          to,
+          pending: status === "pending",
+          executed: status === "executed",
+        })
+      );
+    },
+    (result, args) => {
+      const ids: BigNumber[] = multisig.decodeFunctionResult(
+        "getTransactionIds",
+        result
+      )[0];
+
+      return ids.map((id) => ({
+        id: id.toNumber(),
+        status: args?.status ?? "pending",
+      }));
+    },
+
+    "semi-migrated",
+  ],
+  "multisig.transaction": [
+    ({ id }) => multisig.encodeFunctionData("transactions", [id]),
+    (result, args) => {
+      const d = multisig.decodeFunctionResult(
+        "transactions",
+        result
+      ) as unknown as DecodedTransaction;
+
+      return {
+        id: args?.id ?? 0,
+        title: d.title,
+        description: d.description,
+        destination: d.destination,
+        value: d.value.toString(),
+        data: d.data,
+        status: d.executed ? "executed" : "pending",
+      };
+    },
+    "migrated",
+  ],
+
+  "multisig.votes": [
+    ({ id }) => multisig.encodeFunctionData("getConfirmations", [id]),
+    (result) => {
+      const d: string[] = multisig.decodeFunctionResult(
+        "getConfirmations",
+        result
+      )[0];
+      return d.map((s) => s.toLowerCase());
+    },
+
+    "migrated",
+  ],
 
   /** account */
-  accEndowment({ id }) {
-    return { endowment: { id } };
-  },
-  accState({ id }) {
-    return { state: { id } };
-  },
+  "accounts.endowment": [
+    ({ id }) => accounts.encodeFunctionData("queryEndowmentDetails", [id]),
+    (result) => {
+      const d: DecodedEndowment = accounts.decodeFunctionResult(
+        "queryEndowmentDetails",
+        result
+      )[0];
 
-  /** vault */
-  vaultBalance({ endowment_id }) {
-    return { balance: { endowment_id } };
-  },
+      const controller = d.settingsController;
+      return {
+        owner: d.owner.toLowerCase(),
+        categories: {
+          sdgs: d.categories.sdgs.map((s) => s.toNumber()) as UNSDG_NUMS[],
+          general: d.categories.general.map((s) =>
+            s.toNumber()
+          ) as UNSDG_NUMS[],
+        },
+        endow_type: toEndowType(d.endow_type),
+        status: toEndowStatusText(d.status),
+        maturityTime: d.maturityTime.toNumber(),
+        whitelistedBeneficiaries: d.whitelistedBeneficiaries.map((w) =>
+          w.toLowerCase()
+        ),
+        maturityWhitelist: d.maturityWhitelist.map((w) => w.toLowerCase()),
+        kyc_donors_only: d.kycDonorsOnly,
+        settingsController: {
+          endowmentController: toSettingsPermission(
+            controller.endowmentController
+          ),
+          strategies: toSettingsPermission(controller.endowmentController),
+          whitelistedBeneficiaries: toSettingsPermission(
+            controller.whitelistedBeneficiaries
+          ),
+          whitelistedContributors: toSettingsPermission(
+            controller.whitelistedContributors
+          ),
+          maturityWhitelist: toSettingsPermission(controller.maturityWhitelist),
+          maturityTime: toSettingsPermission(controller.maturityTime),
+          profile: toSettingsPermission(controller.profile),
+          earningsFee: toSettingsPermission(controller.earningsFee),
+          withdrawFee: toSettingsPermission(controller.withdrawFee),
+          depositFee: toSettingsPermission(controller.depositFee),
+          aumFee: toSettingsPermission(controller.aumFee),
+          kycDonorsOnly: toSettingsPermission(controller.kycDonorsOnly),
+          name: toSettingsPermission(controller.name),
+          image: toSettingsPermission(controller.image),
+          logo: toSettingsPermission(controller.logo),
+          categories: toSettingsPermission(controller.categories),
+          splitToLiquid: toSettingsPermission(controller.splitToLiquid),
+          ignoreUserSplits: toSettingsPermission(controller.ignoreUserSplits),
+        },
+      };
+    },
+    "migrated",
+  ],
+  "accounts.state": [
+    ({ id }) => accounts.encodeFunctionData("queryState", [id]),
+    (result) => {
+      const d: DecodedEndowmentState = accounts.decodeFunctionResult(
+        "queryState",
+        result
+      )[0];
 
-  /** (account) settings controller */
-  endowmentController({ id }) {
-    return { endowment_controller: { id } };
-  },
+      return {
+        //TODO: populate once needed
+        tokens_on_hand: {
+          locked: {
+            native: [],
+            cw20: [],
+          },
+          liquid: {
+            native: [],
+            cw20: [],
+          },
+        },
+        donations_received: {
+          locked: d.donationsReceived.locked.toNumber(),
+          liquid: d.donationsReceived.liquid.toNumber(),
+        },
+        closing_endowment: d.closingEndowment,
+        //FUTURE: index-fund can also be beneficiary
+        closing_beneficiary: d.closingBeneficiary.data.addr.toLowerCase(),
+      };
+    },
+    "migrated",
+  ],
+  "accounts.token-balance": [
+    (args) => accounts.encodeFunctionData("queryTokenAmount", toTuple(args)),
+    (result) => {
+      const d: BigNumber = accounts.decodeFunctionResult(
+        "queryTokenAmount",
+        result
+      )[0];
+      return d.toString();
+    },
+    "migrated",
+  ],
 };

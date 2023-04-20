@@ -1,6 +1,7 @@
 import { Coin } from "@cosmjs/proto-signing";
 import { Link } from "react-router-dom";
-import { AccountType, CW20, GenericBalance } from "types/contracts";
+import { CW20, GenericBalance } from "types/contracts";
+import { AccountType } from "types/lists";
 import Icon from "components/Icon";
 import Image from "components/Image";
 import TableSection, { Cells } from "components/TableSection";

@@ -1,13 +1,13 @@
+import type { BigNumber } from "@ethersproject/bignumber";
 import { useNavigate } from "react-router-dom";
 import { Completed } from "slices/launchpad/types";
-import { Chain } from "types/aws";
-import { SimulContractTx } from "types/evm";
-import { TxSuccess } from "types/tx";
+import { TxOnSuccess } from "types/tx";
 import { useSaveAIFMutation } from "services/aws/aws";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import { TxPrompt } from "components/Prompt";
-import { createEndowment } from "contracts/evm/Account";
+import { createTx } from "contracts/createTx/createTx";
+import { accounts } from "contracts/evm/Account";
 import useTxSender from "hooks/useTxSender";
 import { logger } from "helpers";
 import { chainIds } from "constants/chainIds";
@@ -47,15 +47,17 @@ export default function useSubmit() {
       }
 
       // //////////////// CONSTRUCT TX CONTENT ////////////////////
-      const tx: SimulContractTx = {
-        to: "0xf725Ff6235D53dA06Acb4a70AA33206a1447D550", //TODO: move to src/contracts/evm
-        from: wallet.address,
-        data: createEndowment.encode(toEVMAIF(completed, wallet.address)),
-      };
 
-      const onSuccess = async (result: TxSuccess, chain: Chain) => {
+      const tx = createTx(
+        wallet.address,
+        "accounts.create-endowment",
+        toEVMAIF(completed, wallet.address)
+      );
+
+      const onSuccess: TxOnSuccess = async (result, chain) => {
         // //////////////// LOG NEW AIF TO AWS ////////////////////
-        const { attrValue: endowId, ...okTx } = result;
+        const { data, ...okTx } = result;
+        const endowId = data as string | null;
         if (!endowId) {
           return showModal(TxPrompt, {
             error: "Endowment was created but failed to save to AWS",
@@ -83,7 +85,18 @@ export default function useSubmit() {
 
       // //////////////// SEND TRANSACTION  ////////////////////
       await sendTx({
-        content: { type: "evm", val: tx, log: createEndowment.log },
+        content: {
+          type: "evm",
+          val: tx,
+          log: (logs) => {
+            const ev = accounts.getEvent("EndowmentCreated");
+            const topic = accounts.getEventTopic(ev);
+            const log = logs.find((log) => log.topics.includes(topic));
+            if (!log) return null;
+            const [id] = accounts.decodeEventLog(ev, log.data, log.topics);
+            return (id as BigNumber).toString();
+          },
+        },
         isAuthorized: true,
         onSuccess,
       });

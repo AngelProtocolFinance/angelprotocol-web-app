@@ -1,22 +1,22 @@
 import { useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
-import { FundUpdateValues } from "pages/Admin/types";
-import { useFundListQuery } from "services/juno/indexFund";
+import { FormValues } from "./types";
+import { useContractQuery } from "services/juno";
 import { useGetter, useSetter } from "store/accessors";
 import { setMembers } from "slices/admin/fundMembers";
 
 export default function useInitFundMembers() {
-  const { watch } = useFormContext<FundUpdateValues>();
+  const { watch } = useFormContext<FormValues>();
   const fundId = watch("fundId");
   const fundIdRef = useRef<string | undefined>();
   const dispatch = useSetter();
 
-  const { fundMembers = [], isFundMembersLoading } = useFundListQuery(null, {
-    selectFromResult: ({ data, isLoading, isFetching }) => ({
-      fundMembers: data?.find((fund) => fund.id === +fundId)?.members,
-      isFundMembersLoading: isLoading || isFetching,
-    }),
+  const { data: funds = [], isLoading } = useContractQuery("index-fund.funds", {
+    startAfter: 0,
+    limit: 10,
   });
+
+  const fundMembers = funds.find((fund) => fund.id === +fundId)?.members || [];
   const fundMembersCopy = useGetter((state) => state.admin.fundMembers);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export default function useInitFundMembers() {
       dispatch(
         setMembers(
           fundMembers.map((member) => ({
-            addr: member,
+            id: `${member}`,
             isDeleted: false,
             isAdded: false,
           }))
@@ -43,7 +43,7 @@ export default function useInitFundMembers() {
 
   return {
     fundMembersCopy,
-    isFundMembersLoading,
+    isFundMembersLoading: isLoading,
     isFundSelected: fundId !== "",
   };
 }

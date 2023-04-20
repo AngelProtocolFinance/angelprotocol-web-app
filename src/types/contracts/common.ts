@@ -34,11 +34,6 @@ export type EmbeddedBankMsg = {
 
 export type Vote = "yes" | "no";
 
-export type CW4Member = {
-  addr: string;
-  weight: number;
-};
-
 type AbsolutePercentage = { absolute_percentage: { percentage: string } };
 export type Threshold = AbsolutePercentage; // | AbsoluteCount | Quorum;
 
@@ -48,7 +43,8 @@ export type EndowmentStatus = {
   frozen: 2;
   closed: 3;
 };
-export type EndowmentType = "charity" | "normal";
+
+export type EndowmentType = "charity" | "normal"; //TODO: move to types/lists
 export type EndowmentStatusText = keyof EndowmentStatus;
 export type EndowmentStatusNum = EndowmentStatus[EndowmentStatusText];
 export type EndowmentStatusStrNum = `${EndowmentStatusNum}`;

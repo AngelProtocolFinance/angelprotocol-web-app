@@ -1,0 +1,9 @@
+[
+  "function updateConfig(tuple(uint256,uint256,uint256)) returns (bool)",
+  "function updateOwner(address) returns (bool)",
+  "function createIndexFund(string,string,uint256[],bool,uint256,uint256,uint256) returns (bool)",
+  "function removeIndexFund(uint256) returns (bool)",
+  "function removeMember(uint256) returns (bool)",
+  "function updateFundMembers(uint256,uint256[],uint256[]) returns (bool)",
+  "function updateAllianceMemberList(address,string) returns (bool)"
+]

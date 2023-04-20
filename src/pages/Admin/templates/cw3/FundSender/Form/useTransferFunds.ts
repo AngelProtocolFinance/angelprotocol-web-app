@@ -1,17 +1,15 @@
 import { useFormContext } from "react-hook-form";
 import { FundSendMeta } from "pages/Admin/types";
 import { FundSendValues } from "pages/Admin/types";
-import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import Prompt from "components/Prompt";
 import CW3 from "contracts/CW3";
-import CW20 from "contracts/CW20";
+import { embedMsg } from "contracts/createCosmosMsg";
 import useTxSender from "hooks/useTxSender";
 import { scaleToStr } from "helpers";
 import { getTagPayloads } from "helpers/admin";
-import { contracts } from "constants/contracts";
 import { axlUSDCDenom, denoms, tokens } from "constants/tokens";
 
 export default function useTransferFunds() {
@@ -19,7 +17,7 @@ export default function useTransferFunds() {
     handleSubmit,
     formState: { isSubmitting, isValid, isDirty },
   } = useFormContext<FundSendValues>();
-  const { cw3, propMeta } = useAdminResources();
+  const { multisig, propMeta } = useAdminResources();
   //TODO: use wallet token[] to list amounts to transfer
   const { wallet } = useGetWallet();
   const { showModal } = useModalContext();
@@ -37,27 +35,21 @@ export default function useTransferFunds() {
       });
     }
 
-    let embeddedMsg: EmbeddedWasmMsg | EmbeddedBankMsg;
-    //this wallet is not even rendered when wallet is disconnected
-    const cw20Contract = new CW20(wallet, contracts.halo_token);
-    if (data.denom === denoms.halo) {
-      embeddedMsg = cw20Contract.createEmbeddedTransferMsg(
-        scaleToStr(data.amount), //halo decimals:6
-        data.recipient
-      );
-    } else {
-      embeddedMsg = cw20Contract.createEmbeddedBankMsg(
-        [
-          {
-            amount: scaleToStr(data.amount),
+    const scaled = scaleToStr(data.amount /** TODO: include decimal */);
+    const embedded =
+      data.denom === denoms.halo
+        ? embedMsg("cw20.transfer", {
+            cw20: "" /** TODO: for conversion to ERC20  */,
+            recipient: data.recipient,
+            amount: scaled,
+          })
+        : embedMsg("recipient.send", {
+            recipient: data.recipient,
             denom: denoms.axlusdc,
-          },
-        ],
-        data.recipient
-      );
-    }
+            amount: scaled,
+          });
 
-    const contract = new CW3(wallet, cw3);
+    const contract = new CW3(wallet, multisig);
     const fundTransferMeta: FundSendMeta = {
       type: "cw3_transfer",
       data: {
@@ -69,7 +61,7 @@ export default function useTransferFunds() {
     const proposalMsg = contract.createProposalMsg(
       data.title,
       data.description,
-      [embeddedMsg],
+      [embedded],
       JSON.stringify(fundTransferMeta)
     );
 

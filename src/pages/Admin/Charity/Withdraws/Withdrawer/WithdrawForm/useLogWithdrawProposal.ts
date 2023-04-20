@@ -1,4 +1,4 @@
-import { AccountType } from "types/contracts";
+import { AccountType } from "types/lists";
 import { TxOnSuccess, TxSuccessMeta } from "types/tx";
 import { invalidateApesTags } from "services/apes";
 import { useModalContext } from "contexts/ModalContext";
@@ -27,11 +27,11 @@ export default function useLogWithdrawProposal(successMeta?: TxSuccessMeta) {
     try {
       showModal(
         TxPrompt,
-        { loading: "Saving proposal informatin" },
+        { loading: "Saving proposal information" },
         { isDismissible: false }
       );
 
-      const proposal_id = idParamToNum(res.attrValue);
+      const proposal_id = idParamToNum(res.data as string | undefined);
 
       if (proposal_id === 0) throw new Error("Failed to get proposal id");
       const generatedToken = createAuthToken("angelprotocol-web-app");

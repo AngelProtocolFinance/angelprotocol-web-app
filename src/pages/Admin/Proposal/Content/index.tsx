@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { EmbeddedBankMsg, EmbeddedWasmMsg, Proposal } from "types/contracts";
+import { Transaction } from "types/contracts/evm/multisig";
 import Icon from "components/Icon";
 import { DetailLabel } from "components/admin";
 import Preview from "./Preview";
 
-export default function Content(props: Proposal) {
+export default function Content(props: Transaction) {
   const [isRawBlocksShown, setIsRawBlockShown] = useState(false);
 
   function toggleRawMessage() {
@@ -32,26 +32,6 @@ export default function Content(props: Proposal) {
           <Icon type="CaretLeft" />
         </button>
       </DetailLabel>
-
-      {isRawBlocksShown &&
-        props.msgs.map((msg, i) => <RawBlock key={i} {...msg} />)}
     </>
-  );
-}
-
-function RawBlock(props: EmbeddedWasmMsg | EmbeddedBankMsg) {
-  const isWASM = "wasm" in props;
-  const codeString = isWASM
-    ? JSON.stringify(JSON.parse(window.atob(props.wasm.execute.msg)), null, 2)
-    : JSON.stringify(props, null, 2);
-
-  return (
-    <div className="grid rounded text-gray-d1 dark:text-gray border border-prim bg-orange-l6 dark:bg-blue-d7 p-3 mb-6 text-sm">
-      <code className="font-mono whitespace-pre overflow-x-auto">
-        {isWASM && <span>to contract: {props.wasm.execute.contract_addr}</span>}
-        <br />
-        {codeString}
-      </code>
-    </div>
   );
 }

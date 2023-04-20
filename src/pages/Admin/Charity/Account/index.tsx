@@ -1,4 +1,4 @@
-import { AccountType } from "types/contracts";
+import { AccountType } from "types/lists";
 import Balances from "./Balances";
 import Positions from "./Positions";
 

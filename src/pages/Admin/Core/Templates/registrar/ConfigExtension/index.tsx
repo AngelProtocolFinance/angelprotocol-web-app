@@ -5,7 +5,7 @@ import {
   RegistrarConfigExtension,
   RegistrarConfigExtensionPayload,
 } from "types/contracts";
-import { useRegistrarConfigExtensionQuery } from "services/juno/registrar";
+import { useContractQuery } from "services/juno";
 import { FormError, FormSkeleton } from "components/admin";
 import Form from "./Form";
 import { schema } from "./schema";
@@ -15,7 +15,7 @@ export default function ConfigExtension() {
     data: config,
     isLoading,
     isError,
-  } = useRegistrarConfigExtensionQuery(null);
+  } = useContractQuery("registrar.config-extension", {});
   if (isLoading) return <FormSkeleton />;
   if (isError || !config)
     return <FormError errorMessage="failed to load registrar config" />;

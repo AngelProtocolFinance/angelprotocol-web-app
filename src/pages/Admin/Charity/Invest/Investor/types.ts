@@ -1,4 +1,4 @@
-import { AccountType } from "types/contracts";
+import { AccountType } from "types/lists";
 import { TokenWithAmount } from "types/slices";
 
 export type FormValues = {

@@ -1,17 +1,17 @@
 import { Link } from "react-router-dom";
-import { ProposalStatus } from "types/contracts";
+import { TransactionStatus } from "types/lists";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useWithdrawLogsQuery } from "services/apes";
 import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
 import { adminRoutes } from "constants/routes";
 
-const proposal_status: ProposalStatus = "open";
+const proposal_status: TransactionStatus = "pending";
 
 export default function OpenRequestsInfo() {
-  const { cw3 } = useAdminResources();
+  const { multisig } = useAdminResources();
   const queryState = useWithdrawLogsQuery({
-    cw3,
+    cw3: multisig,
     sort: "default",
     proposal_status,
   });

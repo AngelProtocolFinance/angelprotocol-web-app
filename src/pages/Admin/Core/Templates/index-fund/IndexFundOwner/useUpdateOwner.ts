@@ -1,28 +1,26 @@
 import { useFormContext } from "react-hook-form";
-import { OwnerUpdateMeta } from "pages/Admin/types";
-import { IndexFundOwnerValues } from "pages/Admin/types";
+import { FormValues as FV } from "./types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import Prompt from "components/Prompt";
-import CW3 from "contracts/CW3";
-import IndexFund from "contracts/IndexFund";
+import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 
 export default function useUpdateOwner() {
-  const { cw3, propMeta } = useAdminResources();
+  const { multisig, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },
-  } = useFormContext<IndexFundOwnerValues>();
+  } = useFormContext<FV>();
 
   const { showModal } = useModalContext();
   const sendTx = useTxSender();
 
-  async function updateOwner(data: IndexFundOwnerValues) {
+  async function updateOwner(fv: FV) {
     //check for changes
-    if (data.initialOwner === data.new_owner) {
+    if (fv.owner === fv.newOwner) {
       return showModal(Prompt, {
         type: "error",
         title: "Update Owner",
@@ -31,26 +29,28 @@ export default function useUpdateOwner() {
       });
     }
 
-    const indexFundContract = new IndexFund(wallet);
-    const configUpdateMsg = indexFundContract.createEmbeddedOwnerUpdateMsg({
-      new_owner: data.new_owner,
+    if (!wallet)
+      return showModal(Prompt, {
+        type: "error",
+        children: "Wallet is not connected",
+      });
+
+    const [data, dest] = encodeTx("index-fund.update-owner", {
+      newOwner: fv.newOwner,
     });
 
-    const ownerUpdateMeta: OwnerUpdateMeta = {
-      type: "if_owner",
-      data: { owner: data.initialOwner, newOwner: data.new_owner },
-    };
-
-    const adminContract = new CW3(wallet, cw3);
-    const proposalMsg = adminContract.createProposalMsg(
-      data.title,
-      data.description,
-      [configUpdateMsg],
-      JSON.stringify(ownerUpdateMeta)
-    );
-
     await sendTx({
-      content: { type: "cosmos", val: [proposalMsg] },
+      content: {
+        type: "evm",
+        val: createTx(wallet.address, "multisig.submit-transaction", {
+          multisig,
+          title: fv.title,
+          description: fv.description,
+          destination: dest,
+          value: "0",
+          data,
+        }),
+      },
       ...propMeta,
     });
   }

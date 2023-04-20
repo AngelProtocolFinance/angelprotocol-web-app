@@ -70,7 +70,7 @@ export default function Table({ className = "" }) {
               <>{name}</>
 
               <CheckField<FormValues>
-                name={`${fieldName}.owner_controlled`}
+                name={`${fieldName}.ownerControlled`}
                 classes={{
                   label: "uppercase text-xs font-bold",
                   input: "checkbox-orange",
@@ -79,7 +79,7 @@ export default function Table({ className = "" }) {
               />
               {isNormal ? (
                 <CheckField<FormValues>
-                  name={`${fieldName}.gov_controlled`}
+                  name={`${fieldName}.govControlled`}
                   classes={{
                     label: "uppercase text-xs font-bold",
                     input: "checkbox-orange",

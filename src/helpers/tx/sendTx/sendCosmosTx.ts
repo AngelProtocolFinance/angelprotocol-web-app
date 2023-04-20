@@ -23,7 +23,7 @@ export async function sendCosmosTx(
     return {
       hash: response.transactionHash,
       chainID: wallet.chain.chain_id,
-      attrValue: attribute && getWasmAttribute(attribute, response.rawLog),
+      data: attribute && getWasmAttribute(attribute, response.rawLog),
     };
   } catch (err) {
     logger.error(err);

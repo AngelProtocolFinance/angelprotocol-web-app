@@ -1,45 +1,46 @@
-import { AdminResources, ProposalDetails } from "services/types";
+import {
+  AdminResources,
+  EndowBalance,
+  IERC20,
+  ProposalDetails,
+} from "services/types";
+import { AcceptedTokens } from "types/contracts";
+import { AccountType } from "types/contracts/evm";
+import { Transaction } from "types/contracts/evm/multisig";
+import { TransactionStatus } from "types/lists";
 import { idParamToNum } from "helpers";
-import { contracts } from "constants/contracts";
 import { junoApi } from "..";
 import { queryContract } from "../queryContract";
-import { accountTags, adminTags } from "../tags";
 import { apCWs, getMeta } from "./helpers/admin-resource";
 
 export const customApi = junoApi.injectEndpoints({
   endpoints: (builder) => ({
     isMember: builder.query<boolean, { user: string; endowmentId?: string }>({
-      providesTags: [
-        { type: "admin", id: adminTags.voter },
-        { type: "account", id: accountTags.endowment },
-      ],
+      providesTags: ["multisig.members", "accounts.endowment"],
       async queryFn(args) {
         const numId = idParamToNum(args.endowmentId);
         const AP = apCWs[numId];
         /** special case for ap admin usage */
         if (AP) {
-          const { cw3 } = AP;
+          const { multisig } = AP;
           //skip endowment query, query hardcoded cw3 straight
-          const voter = await queryContract("cw3Voter", cw3, {
-            addr: args.user,
-          });
+          const members = await queryContract("multisig.members", { multisig });
+
           return {
-            data: !!voter.weight,
+            data: args.user in members,
           };
         }
 
-        const endowment = await queryContract(
-          "accEndowment",
-          contracts.accounts,
-          { id: numId }
-        );
+        const endowment = await queryContract("accounts.endowment", {
+          id: numId,
+        });
 
-        const voter = await queryContract("cw3Voter", endowment.owner, {
-          addr: args.user,
+        const members = await queryContract("multisig.members", {
+          multisig: endowment.owner,
         });
 
         return {
-          data: !!voter.weight,
+          data: args.user in members,
         };
       },
     }),
@@ -48,45 +49,53 @@ export const customApi = junoApi.injectEndpoints({
       { user?: string; endowmentId?: string }
     >({
       providesTags: [
-        { type: "admin", id: adminTags.voter },
-        { type: "admin", id: adminTags.voters },
-        { type: "admin", id: adminTags.config },
-        { type: "account", id: accountTags.endowment },
+        "multisig.members",
+        "multisig.threshold",
+        "multisig.threshold",
+        "accounts.endowment",
       ],
       async queryFn(args) {
         const numId = idParamToNum(args.endowmentId);
         const AP = apCWs[numId];
         /** special case for ap admin usage */
         if (AP) {
-          const { cw3, cw4, type } = AP;
+          const { multisig, type } = AP;
           //skip endowment query, query hardcoded cw3 straight
 
-          const [meta, config] = await getMeta(numId, cw3, args.user);
+          const [meta, config, members] = await getMeta(
+            numId,
+            multisig,
+            args.user
+          );
+
           return {
             data: {
               type: type as any,
               id: numId,
-              cw3,
-              cw4,
+              members,
+              multisig,
               propMeta: meta,
               config,
             },
           };
         }
 
-        const endowment = await queryContract(
-          "accEndowment",
-          contracts.accounts,
-          { id: numId }
+        const endowment = await queryContract("accounts.endowment", {
+          id: numId,
+        });
+
+        const [meta, config, members] = await getMeta(
+          numId,
+          endowment.owner,
+          args.user
         );
-        const [meta, config] = await getMeta(numId, endowment.owner, args.user);
 
         return {
           data: {
             type: "charity",
             id: numId,
-            cw3: endowment.owner,
-            cw4: config.group_addr,
+            members,
+            multisig: endowment.owner,
             config,
             propMeta: meta,
             ...endowment,
@@ -96,30 +105,100 @@ export const customApi = junoApi.injectEndpoints({
     }),
     proposalDetails: builder.query<
       ProposalDetails,
-      { id?: string; cw3: string; voter: string }
+      { id?: string; multisig: string }
     >({
-      providesTags: [
-        { type: "admin", id: adminTags.proposal },
-        { type: "admin", id: adminTags.votes },
-      ],
-      async queryFn(args) {
-        const id = Number(args.id);
+      providesTags: ["multisig.votes", "multisig.members", "multisig.txs"],
+      async queryFn({ id: idParam, multisig }) {
+        const id = idParamToNum(idParam);
 
-        if (isNaN(id)) {
-          return { error: undefined };
-        }
-
-        const [proposal, votesRes] = await Promise.all([
-          queryContract("cw3Proposal", args.cw3, { id }),
-          queryContract("cw3Votes", args.cw3, {
-            proposal_id: id,
+        const [signed, signers, transaction] = await Promise.all([
+          queryContract("multisig.votes", {
+            multisig,
+            id,
           }),
+          queryContract("multisig.members", { multisig }),
+          queryContract("multisig.transaction", { multisig, id }),
         ]);
 
         return {
           data: {
-            ...proposal,
-            votes: votesRes.votes,
+            ...transaction,
+            signed,
+            signers,
+          },
+        };
+      },
+    }),
+    endowBalance: builder.query<EndowBalance, { id: number }>({
+      providesTags: ["accounts.token-balance"],
+      async queryFn(args) {
+        //TODO: get this from registrar
+        const tokens: AcceptedTokens = {
+          cw20: ["0xaBCe32FBA4C591E8Ea5A5f711F7112dC08BCee74"],
+        };
+
+        const balances = (type: AccountType) =>
+          Promise.all(
+            tokens.cw20.map((t) =>
+              queryContract("accounts.token-balance", {
+                id: args.id,
+                accounType: type,
+                token: t,
+              }).then<IERC20>((b) => ({
+                address: t,
+                amount: b,
+              }))
+            )
+          );
+
+        const [locked, liquid] = await Promise.all([balances(0), balances(1)]);
+
+        return {
+          data: { liquid, locked },
+        };
+      },
+    }),
+    proposals: builder.query<
+      { proposals: Transaction[]; next?: number },
+      { multisig: string; status: TransactionStatus; page: number }
+    >({
+      providesTags: ["multisig.tx-count", "multisig.txs"],
+      async queryFn(args) {
+        const { status, multisig, page } = args;
+        const proposalsPerPage = 5;
+
+        const count = await queryContract("multisig.tx-count", {
+          multisig,
+          pending: status === "pending",
+          executed: status === "executed",
+        });
+
+        //get last 5 proposals
+        const range: [number, number] = [
+          Math.max(0, count - proposalsPerPage * args.page),
+          count,
+        ];
+
+        const txs = await queryContract("multisig.txs", {
+          multisig,
+          range,
+          status,
+        });
+
+        const details = await Promise.all(
+          txs.map((t) =>
+            queryContract("multisig.transaction", { multisig, id: t.id }).then(
+              (t) => ({ ...t, id: t.id })
+            )
+          )
+        );
+
+        details.sort((a, b) => b.id - a.id);
+
+        return {
+          data: {
+            proposals: details,
+            next: range[0] > 0 ? page + 1 : undefined,
           },
         };
       },
@@ -129,6 +208,8 @@ export const customApi = junoApi.injectEndpoints({
 
 export const {
   useIsMemberQuery,
+  useProposalsQuery,
   useAdminResourcesQuery,
   useProposalDetailsQuery,
+  useEndowBalanceQuery,
 } = customApi;
