@@ -13,7 +13,7 @@ import {
 import { NetworkType } from "types/lists";
 import { createAuthToken } from "helpers";
 import { chainIds } from "constants/chainIds";
-import { IS_TEST } from "constants/env";
+import { IS_AST, IS_TEST } from "constants/env";
 import { APIs } from "constants/urls";
 
 const network: NetworkType = IS_TEST ? "testnet" : "mainnet";
@@ -89,7 +89,7 @@ export const aws = createApi({
     profile: builder.query<Profile, number>({
       providesTags: ["profile"],
       query: (endowId) =>
-        true
+        IS_AST
           ? `/v1/ast/${chainIds.polygon}/${endowId}`
           : `/v2/profile/${network}/endowment/${endowId}`,
       transformResponse(r: EndowmentProfile) {
@@ -98,7 +98,7 @@ export const aws = createApi({
         return {
           ...r,
           tagline,
-          type: "endow_designation" in r ? "endowment" : "ast",
+          type: IS_AST ? "ast" : "endowment",
         };
       },
     }),

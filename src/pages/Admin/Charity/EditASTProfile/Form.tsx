@@ -35,13 +35,13 @@ export default function Form() {
         <Field<FV>
           classes="field-admin"
           name="name"
-          label="Name of your organization"
+          label="Endowment name"
           required
         />
         <Field<FV>
           classes="field-admin"
           name="tagline"
-          label="Tagline of your organization"
+          label="Endowment tagline"
           required
         />
         <Label className="-mb-4" required>
