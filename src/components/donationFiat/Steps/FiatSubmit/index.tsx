@@ -1,12 +1,11 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FiatDonateValues } from "./types";
-import { WithWallet } from "contexts/WalletContext";
 import { SubmitStep } from "slices/donation";
 import Form from "./Form";
 import { schema } from "./schema";
 
-export default function FiatSubmit(props: WithWallet<SubmitStep>) {
+export default function FiatSubmit(props: SubmitStep) {
   let defaultValues: FiatDonateValues = {
     name: "",
     cardNumber: "",

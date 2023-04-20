@@ -3,7 +3,6 @@ import { useFormContext } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { FiatDonateValues } from "../types";
 import { useRequestWidgetUrlMutation } from "services/apes";
-import { WithWallet } from "contexts/WalletContext";
 import CountrySelector from "components/CountrySelector";
 import Loader from "components/Loader";
 import { Label } from "components/form";
@@ -14,7 +13,7 @@ import { appRoutes } from "constants/routes";
 import { getISOCountryCode } from "./countryList";
 import getBreakdown from "./getBreakdown";
 
-export default function Form(props: WithWallet<SubmitStep>) {
+export default function Form(props: SubmitStep) {
   const dispatch = useSetter();
 
   function goBack() {
@@ -105,7 +104,7 @@ export default function Form(props: WithWallet<SubmitStep>) {
         </Row>
         <Row title="TOTAL">
           <span>
-            {token.symbol} {humanize(fromGift + 5, 2)}
+            {token.symbol} {humanize(fromBal + 5, 2)}
           </span>
         </Row>
         <div className="mt-14 grid grid-cols-2 gap-5">

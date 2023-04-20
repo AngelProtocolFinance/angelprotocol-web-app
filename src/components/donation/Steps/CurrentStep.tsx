@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 import { useGetWallet } from "contexts/WalletContext";
 import KYC from "components/KYC";
 import Status, { LoadingStatus } from "components/Status";
+import FiatSubmit from "components/donationFiat/Steps/FiatSubmit";
 import { useGetter, useSetter } from "store/accessors";
 import { resetDetails } from "slices/donation";
 import { IS_AST } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { ConfigParams } from "..";
 import Donater from "./Donater";
-import FiatSubmit from "./FiatSubmit";
 import Result from "./Result";
 import Submit from "./Submit";
 
@@ -39,7 +39,7 @@ export default function CurrentStep(props: ConfigParams) {
           {IS_AST ? "contribution" : "donation"} OR you can{" "}
           <Link
             className="font-bold underline hover:text-orange transition ease-in-out duration-300"
-            to={appRoutes.donate_fiat}
+            to={appRoutes.donate_fiat + `/${state.recipient?.id}`}
           >
             {IS_AST ? "contribute" : "donate"} with fiat
           </Link>
@@ -51,7 +51,7 @@ export default function CurrentStep(props: ConfigParams) {
     switch (state.step) {
       case 3: {
         return state.details.token.type === "fiat" ? (
-          <FiatSubmit {...state} wallet={wallet} />
+          <FiatSubmit {...state} />
         ) : (
           <Submit {...state} wallet={wallet} />
         );
