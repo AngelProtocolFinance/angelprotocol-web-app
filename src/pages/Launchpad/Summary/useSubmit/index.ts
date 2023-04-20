@@ -2,7 +2,7 @@ import type { BigNumber } from "@ethersproject/bignumber";
 import { useNavigate } from "react-router-dom";
 import { Completed } from "slices/launchpad/types";
 import { TxOnSuccess } from "types/tx";
-import { useSaveAIFMutation } from "services/aws/aws";
+import { useSaveASTMutation } from "services/aws/aws";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import { TxPrompt } from "components/Prompt";
@@ -13,11 +13,11 @@ import { logger } from "helpers";
 import { chainIds } from "constants/chainIds";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { appRoutes } from "constants/routes";
-import toEVMAIF from "./toEVMAIF";
+import toEVMAST from "./toEVMAST";
 
 export default function useSubmit() {
   const { wallet } = useGetWallet();
-  const [saveAIF] = useSaveAIFMutation();
+  const [saveAST] = useSaveASTMutation();
   const { showModal, closeModal } = useModalContext();
   const navigate = useNavigate();
   const sendTx = useTxSender();
@@ -51,11 +51,11 @@ export default function useSubmit() {
       const tx = createTx(
         wallet.address,
         "accounts.create-endowment",
-        toEVMAIF(completed, wallet.address)
+        toEVMAST(completed, wallet.address)
       );
 
       const onSuccess: TxOnSuccess = async (result, chain) => {
-        // //////////////// LOG NEW AIF TO AWS ////////////////////
+        // //////////////// LOG NEW AST TO AWS ////////////////////
         const { data, ...okTx } = result;
         const endowId = data as string | null;
         if (!endowId) {
@@ -65,7 +65,7 @@ export default function useSubmit() {
           });
         }
 
-        const saveResult = await saveAIF({
+        const saveResult = await saveAST({
           chainId: chain.chain_id,
           id: +endowId,
           registrant: wallet.address,
