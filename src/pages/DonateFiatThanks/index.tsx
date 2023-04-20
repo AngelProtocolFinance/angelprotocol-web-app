@@ -6,7 +6,7 @@ import { appRoutes } from "constants/routes";
 export default function DonateFiatThanks() {
   return (
     <div className="justify-self-center display-block m-auto max-w-[35rem] py-8 sm:py-20 scroll-mt-6">
-      <Icon type="CheckCircle" size={96} className="text-green mb-4 ml-10" />
+      <Icon type="CheckCircle" size={96} className="text-green mb-4 mx-auto" />
       <h3 className="text-2xl sm:text-3xl mb-8 sm:mb-12 text-center">
         Thank you for your {IS_AST ? "contribution" : "donation"} using one of
         our fiat on-ramp providers!

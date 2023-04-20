@@ -66,7 +66,7 @@ export default function Form(props: SubmitStep) {
       <h4 className="font-bold text-sm">Enter your payment details:</h4>
       <div className="flex-col">
         <Label className="mb-2" htmlFor="country">
-          Country of Origin *
+          Country of Residence *
         </Label>
         <CountrySelector<FiatDonateValues, "country">
           placeholder="Select a country"

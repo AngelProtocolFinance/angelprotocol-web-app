@@ -66,7 +66,6 @@ function hasBanner(location: Location): boolean {
       appRoutes.gift + "/*",
       appRoutes.donate + "/:id",
       appRoutes.donate_fiat + "/:id",
-      appRoutes.donate_fiat_thanks + "/:id",
       appRoutes.profile + "/:id",
     ].map((r) => ({ path: r })),
     location
