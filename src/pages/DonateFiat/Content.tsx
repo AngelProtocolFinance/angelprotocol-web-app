@@ -7,6 +7,7 @@ import {
   DonationState,
   setRecipient,
 } from "slices/donation";
+import { IS_AST } from "constants/env";
 import { appRoutes } from "constants/routes";
 
 export default function Content(props: DonationRecipient) {
@@ -36,17 +37,30 @@ export default function Content(props: DonationRecipient) {
     >
       <Breadcrumbs
         className="font-body font-normal text-sm justify-self-start sm:justify-self-auto mb-10 sm:mb-12"
-        items={[
-          { title: "Marketplace", to: appRoutes.marketplace },
-          {
-            title: props.name,
-            to: `${appRoutes.profile}/${props.id}`,
-          },
-          {
-            title: "Donate",
-            to: `${appRoutes.donate_fiat}/${props.id}`,
-          },
-        ]}
+        items={
+          !IS_AST
+            ? [
+                { title: "Marketplace", to: appRoutes.marketplace },
+                {
+                  title: props.name,
+                  to: `${appRoutes.profile}/${props.id}`,
+                },
+                {
+                  title: "Donate",
+                  to: `${appRoutes.donate_fiat}/${props.id}`,
+                },
+              ]
+            : [
+                {
+                  title: props.name,
+                  to: `${appRoutes.profile}/${props.id}`,
+                },
+                {
+                  title: "Contribute",
+                  to: `${appRoutes.donate_fiat}/${props.id}`,
+                },
+              ]
+        }
       />
 
       {isFinalized(state) && (
