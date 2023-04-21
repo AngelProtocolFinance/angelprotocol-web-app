@@ -1,6 +1,7 @@
 import { memo } from "react";
 import { LinkGroup, SocialMediaLink } from "../types";
 import { APP_NAME } from "constants/common";
+import { IS_AST } from "constants/env";
 import Links from "./Links";
 import Newsletter from "./Newsletter";
 import Socials from "./Socials";
@@ -12,7 +13,7 @@ function Footer({ linkGroups, socials }: Props) {
     <footer className="flex flex-col items-center text-white bg-blue dark:bg-blue-d3">
       <section className="padded-container flex flex-col gap-8 items-center justify-center w-full pt-8 pb-10 lg:flex-row lg:items-start lg:justify-between lg:gap-0 lg:pb-16">
         <Links groups={linkGroups} />
-        <Newsletter />
+        {!IS_AST && <Newsletter />}
       </section>
 
       <Separator />
