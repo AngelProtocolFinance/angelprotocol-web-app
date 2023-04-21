@@ -88,7 +88,7 @@ export function useEVMWC() {
           logo: WALLET_METADATA["evm-wc"].logo,
           providerId: "evm-wc",
           chainId: state.chainId,
-          address: state.address,
+          address: state.address.toLowerCase(),
         }
       : undefined;
 
