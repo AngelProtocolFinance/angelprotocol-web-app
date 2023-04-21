@@ -3,6 +3,7 @@ import { useFormContext } from "react-hook-form";
 import Image from "components/Image";
 import { getPossessiveForm } from "helpers";
 import { AP_LOGO } from "constants/common";
+import { PAYMENT_WORDS, titleCase } from "constants/env";
 import { FormValues } from "../schema";
 import Donater from "./Donater";
 
@@ -31,10 +32,11 @@ export default function WidgetExample({ trigger }: { trigger: boolean }) {
             {!formValues.hideText && (
               <>
                 <p className="font-body text-xs">
-                  Donate today to {getPossessiveForm(endowName)} endowment. Your
-                  donation will be protected and compounded in perpetuity to
-                  provide {endowName} with a long-term, sustainable runway. Give
-                  once, give forever!
+                  {titleCase(PAYMENT_WORDS.verb)} today to{" "}
+                  {getPossessiveForm(endowName)} endowment. Your donation will
+                  be protected and compounded in perpetuity to provide{" "}
+                  {endowName} with a long-term, sustainable runway. Give once,
+                  give forever!
                 </p>
                 <p className="font-body text-xs">
                   Make sure to check out the many crypto and fiat donation

@@ -1,5 +1,6 @@
 import { FormProvider } from "react-hook-form";
 import Copier from "components/Copier";
+import { PAYMENT_WORDS } from "constants/env";
 import WidgetExample from "./WidgetExample";
 import WidgetUrlGenerator from "./WidgetUrlGenerator";
 import useWidgetConfigurer from "./useWidgetConfigurer";
@@ -15,7 +16,7 @@ export default function WidgetConfigurer() {
       <div className="padded-container py-10 grid grid-rows-[auto_1fr] gap-10 w-full h-full py-5">
         <section className="flex flex-col gap-3 items-center text-center xl:items-start xl:text-left w-full">
           <h1 className={TITLE_STYLE}>
-            Accept donations from your website today!
+            Accept {PAYMENT_WORDS.noun.plural} from your website today!
           </h1>
           <div className="font-body text-sm sm:text-base">
             <p>
@@ -23,8 +24,8 @@ export default function WidgetConfigurer() {
               website and you're ready to go!
             </p>
             <p>
-              Your donors will be able to connect their crypto wallets and use
-              them to donate directly.
+              Your {PAYMENT_WORDS.payer}s will be able to connect their crypto
+              wallets and use them to {PAYMENT_WORDS.verb} directly.
             </p>
           </div>
         </section>
