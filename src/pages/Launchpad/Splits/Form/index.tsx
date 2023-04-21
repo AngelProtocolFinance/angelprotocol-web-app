@@ -28,7 +28,7 @@ export default function SplitsForm(props: FormProps) {
     <Form {...props}>
       <Title className="mb-2">Split of Contributions</Title>
       <Desc>
-        You can set the distribution of the contributions to your AIF. By
+        You can set the distribution of the contributions to your AST. By
         default, contributors are able to set how their contribution is split
         between your Locked account and your Liquid account. You can deactivate
         that to default to a value that you set or set minimum & maximum values.

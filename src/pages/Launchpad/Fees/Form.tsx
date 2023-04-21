@@ -35,7 +35,7 @@ export default function FeesForm(props: FormProps) {
     <Form {...props}>
       <Title className="mb-2">Fees</Title>
       <Desc className="mb-8">
-        Fees of 0.5% on balances and 2% on withdrawals are automatically sent to
+        Fees of 2% on balances and 1.5% on withdrawals are automatically sent to
         the protocol's treasury. Here, you can set additional fees that will be
         distributed to the address of your choice
       </Desc>
@@ -53,7 +53,7 @@ export default function FeesForm(props: FormProps) {
             <th className="sm:hidden" />
             <th className="max-sm:col-start-3 max-sm:border-r-0">active</th>
             <th className="text-left max-sm:hidden">payout address</th>
-            <th className="max-sm:hidden">rate</th>
+            <th className="max-sm:hidden">fee rate (%)</th>
           </Cells>
         </TableSection>
         <TableSection

@@ -17,7 +17,7 @@ export default function Success({ classes = "" }) {
         <Icon type="Check" className="text-white w-20 h-20" />
       </span>
       <h3 className="mt-10 text-[2rem] font-bold text-center">
-        Congratulations, your AIF has been successfully created!
+        Congratulations, your AST has been successfully created!
       </h3>
       <p className="mt-6 text-gray-d1 dark:text-gray text-center">
         Head up to your dashboard to fill your profile and start changing the

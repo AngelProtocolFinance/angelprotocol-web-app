@@ -13,7 +13,7 @@ import EditASTProfile from "./EditASTProfile";
 import EditProfile from "./EditProfile";
 import Invest from "./Invest";
 import Permissions from "./Permissions";
-import Settings from "./Settings";
+// import Settings from "./Settings";
 import Templates from "./Templates";
 import WidgetConfigurer from "./WidgetConfigurer";
 import Withdraws from "./Withdraws";
@@ -28,7 +28,7 @@ const LINK_GROUPS: LinkGroup[] = [
       LINKS.invest,
       LINKS.liquidAccount,
       LINKS.lockedAccount,
-      LINKS.settings,
+      // LINKS.settings,
     ],
   },
   { title: "Profile", links: [LINKS.edit_profile] },
@@ -53,7 +53,7 @@ export default function Charity() {
         </Route>
         <Route path={adminRoutes.invest} element={<Invest />} />
         <Route path={adminRoutes.contributions} element={<Contributions />} />
-        <Route path={adminRoutes.settings} element={<Settings />} />
+        {/*<Route path={adminRoutes.settings} element={<Settings />} />*/}
         <Route
           path={adminRoutes.edit_profile}
           element={IS_AST ? <EditASTProfile /> : <EditProfile />}

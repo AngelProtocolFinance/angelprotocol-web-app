@@ -8,10 +8,10 @@ import Members from "./Members";
 export default function ManageForm(props: FormProps) {
   return (
     <Form {...props}>
-      <Title className="mb-2">AIF Management</Title>
+      <Title className="mb-2">AST Management</Title>
       <Desc className="mb-8">
-        The Management of your AIF comprises one or more members that will be in
-        charge of taking key decisions for your AIF. Here, you can add members,
+        The Management of your AST comprises one or more members that will be in
+        charge of taking key decisions for your AST. Here, you can add members,
         decide how many signatories are necessary to execute decisions and how
         long decision requests are open for.
       </Desc>

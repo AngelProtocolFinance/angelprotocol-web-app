@@ -1,5 +1,5 @@
 import { SettingsControllerUpdate } from "types/contracts";
-import { AccountType, ERC20Deposit, NewAIF } from "types/contracts/evm";
+import { AccountType, ERC20Deposit, NewAST } from "types/contracts/evm";
 import { Allowance, Transfer } from "types/contracts/evm/erc20";
 import { NewTransaction } from "types/contracts/evm/multisig";
 import { Tupleable } from "types/evm";
@@ -18,7 +18,7 @@ type Tx<T extends Tupleable> = {
 
 type Txs = {
   // //// ACCOUNTS ////
-  "accounts.create-endowment": Tx<NewAIF>;
+  "accounts.create-endowment": Tx<NewAST>;
   "accounts.update-controller": Tx<SettingsControllerUpdate>;
   "accounts.deposit-erc20": Tx<ERC20Deposit>;
   "accounts.withdraw": Tx<{

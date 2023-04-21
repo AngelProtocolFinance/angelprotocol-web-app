@@ -53,7 +53,7 @@ export default function Members({ classes = "" }) {
       {isEmpty(fields) ? (
         <Info classes="mt-4">
           No members have been added yet - would be set to the creator of this
-          AIF
+          AST
         </Info>
       ) : (
         <table className="table-fixed rounded outline outline-1 outline-prim">

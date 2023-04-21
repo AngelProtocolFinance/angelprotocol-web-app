@@ -6,13 +6,13 @@ export default function AboutForm(props: FormProps) {
     <Form {...props}>
       <Title className="mb-2">About</Title>
       <Desc className="mb-8">
-        Tell us more about your Angel Impact Fund. You will be able to fill a
-        detailed profile once your AIF is created.
+        Tell us more about your Angel Smart Treasury. You will be able to fill a
+        detailed profile once your AST is created.
       </Desc>
       <Field
         name="name"
         label="Name"
-        placeholder="Name of your Angel Impact Fund"
+        placeholder="Name of your Angel Smart Treasury"
         required
         tooltip="Maximum 60 characters"
         classes={{ container: "mb-4" }}
@@ -20,7 +20,7 @@ export default function AboutForm(props: FormProps) {
       <Field
         name="tagline"
         label="Tagline"
-        placeholder="Tagline that best describes the purpose of your AIF"
+        placeholder="Tagline that best describes the purpose of your AST"
         required
         tooltip="Maximum 140 characters"
         classes={{ container: "mb-4" }}

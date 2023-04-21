@@ -24,7 +24,10 @@ export default function Maturity({
       </div>
       <p className="font-semibold mb-2">Maturity Whitelist:</p>
       {isEmpty(_beneficiaries) ? (
-        <Info>To be created multisig wallet is the only beneficiary</Info>
+        <Info>
+          No whitelist has been set - the Admin wallet will be the only
+          beneficiary at maturity
+        </Info>
       ) : (
         <ul className="grid gap-y-2 list-disc list-inside">
           {beneficiaries.map(({ addr, share }) => (
