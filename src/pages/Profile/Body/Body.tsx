@@ -1,4 +1,3 @@
-import { endow } from "services/types";
 import BookmarkBtn from "components/BookmarkBtn";
 import Breadcrumbs from "components/Breadcrumbs";
 import ExtLink from "components/ExtLink";
@@ -43,13 +42,13 @@ export default function Body() {
             <p className="w-full font-normal text-lg">{p.tagline}</p>
           </div>
           <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-center w-full font-semibold text-base">
-            {endow(p) && (
+            {p.hq_country && (
               <span className="flex items-center gap-2 uppercase">
                 <Icon type="MapPin" className="h-6 w-6 text-orange" />
                 {p.hq_country}
               </span>
             )}
-            {endow(p) && p.url && (
+            {p.url && (
               <span className="flex items-center gap-2">
                 <Icon type="Globe" className="h-6 w-6 text-orange" />
                 <ExtLink

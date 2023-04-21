@@ -15,9 +15,9 @@ export default function DetailsColumn({ className }: { className: string }) {
       <div
         className={`${className} flex flex-col gap-8 w-full lg:w-96 p-8 border border-prim rounded text-gray-d2 dark:bg-blue-d6  dark:text-white`}
       >
-        {endow(profile) && <Details {...profile} />}
+        <Details {...profile} />
         {endow(profile) && <Tags {...profile} />}
-        {endow(profile) && profile.social_media_urls && (
+        {profile.social_media_urls && (
           <Socials social_media_urls={profile.social_media_urls} />
         )}
         <DonateButton className="w-full" />

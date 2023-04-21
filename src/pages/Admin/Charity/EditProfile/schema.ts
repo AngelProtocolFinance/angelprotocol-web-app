@@ -1,4 +1,4 @@
-import * as Yup from "yup";
+import { array, object, string } from "yup";
 import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
 import { Country } from "types/countries";
@@ -19,7 +19,7 @@ export const MAX_SIZE_IN_BYTES = 1e6;
 
 // we only need to validate the pre-crop image and if we confirm it is valid
 // we can be sure that the cropped image is valid too
-const fileObj = Yup.object().shape<SchemaShape<ImgLink>>({
+const fileObj = object().shape<SchemaShape<ImgLink>>({
   precropFile: genFileSchema(MAX_SIZE_IN_BYTES, VALID_MIME_TYPES).when(
     "publicUrl",
     {
@@ -31,24 +31,34 @@ const fileObj = Yup.object().shape<SchemaShape<ImgLink>>({
 
 //construct strict shape to avoid hardcoding shape keys
 const shape: SchemaShape<FormValues> = {
-  categories_sdgs: Yup.array()
-    .min(1, "required")
-    .max(MAX_SDGS, `maximum ${MAX_SDGS} selections allowed`),
+  //not required for ASTs
+  categories_sdgs: array()
+    .max(MAX_SDGS, `maximum ${MAX_SDGS} selections allowed`)
+    .when("$isAST", {
+      is: true,
+      then: (schema) => schema.min(1, "required"),
+    }),
   tagline: requiredString.max(140, "max length is 140 chars"),
   image: fileObj,
   logo: fileObj,
   url: url.required("required"),
   // registration_number: no need to validate,
-  hq_country: Yup.object().shape<SchemaShape<Country>>({
+  hq_country: object().shape<SchemaShape<Country>>({
     name: requiredString,
   }),
-  endow_designation: Yup.object().shape<SchemaShape<OptionType<string>>>({
-    label: requiredString,
-    value: requiredString,
+  endow_designation: object().shape<SchemaShape<OptionType<string>>>({
+    label: string().when("$isAST", {
+      is: true,
+      then: requiredString,
+    }),
+    value: string().when("$isAST", {
+      is: true,
+      then: requiredString,
+    }),
   }),
   name: requiredString,
   overview: requiredString,
-  active_in_countries: Yup.array(),
+  active_in_countries: array(),
   social_media_url_facebook: url,
   social_media_url_twitter: url,
   social_media_url_linkedin: url,
@@ -58,4 +68,4 @@ const shape: SchemaShape<FormValues> = {
   social_media_url_tiktok: url,
 };
 
-export const schema = Yup.object().shape(shape);
+export const schema = object().shape(shape);

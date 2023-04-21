@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import { EndowmentProfile } from "types/aws";
+import { Profile } from "services/types";
 import { isEmpty } from "helpers";
 
 // import { chainIds } from "constants/chainIds";
@@ -8,7 +8,7 @@ import { isEmpty } from "helpers";
 // import Icon from "components/Icon";
 // import { getAddressUrl, maskAddress } from "helpers";
 
-export default function Details(props: EndowmentProfile) {
+export default function Details(props: Profile) {
   const { active_in_countries = [] } = props;
 
   return (

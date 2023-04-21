@@ -28,14 +28,6 @@ type EndowmentBase = {
 };
 
 export type EndowmentProfile = EndowmentBase & {
-  hq_country: string;
-  endow_designation: EndowDesignation;
-  active_in_countries?: string[];
-  categories: { sdgs: UNSDG_NUMS[] };
-  id: number;
-  image: string;
-  kyc_donors_only: boolean;
-
   name: string;
   tagline: string;
   contact_email: string;
@@ -57,16 +49,20 @@ export type EndowmentProfile = EndowmentBase & {
   url?: string;
 } & EndowmentBalances;
 
+const _npo_type: keyof EndowmentBase = "endow_designation";
+const _categories: keyof EndowmentBase = "categories";
 //prettier-ignore
 export type ASTProfile = Pick<EndowmentProfile, 
     "id" 
   | "name" 
   | "tagline"
   > 
-  & Partial<Pick<EndowmentProfile, 
-    "logo"
-  | "image"
-  | "overview" 
+  & Partial<Omit<EndowmentProfile,
+   "id"
+  |"name"
+  |"tagline"
+  | typeof _npo_type 
+  | typeof _categories
   >>
   & EndowmentBalances
 
@@ -107,20 +103,6 @@ export type EndowmentProfileUpdate = {
   tagline: string;
   tier: EndowmentTierNum /** 1 - 3  */;
   url: string | null;
-};
-
-export type ASTProfileUpdate = {
-  //required
-  id: number;
-  owner: string;
-
-  /** optional, though set as required in this type
-  to force setting of default values - "", [], etc ..*/
-  image: string;
-  logo: string;
-  name: string;
-  overview: string;
-  tagline: string;
 };
 
 export type SortDirection = "asc" | "desc";

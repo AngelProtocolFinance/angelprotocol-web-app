@@ -7,7 +7,7 @@ import EndowDesignationTag from "./EndowDesignationTag";
 export default function Tags(props: EndowmentProfile) {
   return (
     <div className="flex flex-col items-start gap-3">
-      <EndowDesignationTag {...props} />
+      {<EndowDesignationTag {...props} />}
       {props.kyc_donors_only && (
         <Tag>
           Verification required <Icon type="Info" size={24} />

@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { endow } from "services/types";
 import { isPrevDark, setToDarkMode, setToLightMode } from "helpers";
 import ApiKeyChecker from "./ApiKeyChecker";
 import EndowmentLoader from "./EndowmentLoader";
@@ -37,7 +36,7 @@ export default function DonateWidget() {
         {(p) => (
           <InnerComponent
             id={p.id}
-            isKYCRequired={endow(p) && p.kyc_donors_only}
+            isKYCRequired={p.kyc_donors_only ?? false}
             name={p.name}
           />
         )}

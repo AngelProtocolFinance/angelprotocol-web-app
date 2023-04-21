@@ -20,6 +20,7 @@ export default function useEditProfile() {
   const {
     reset,
     handleSubmit,
+    getValues,
     formState: { isSubmitting },
   } = useFormContext<FV>();
 
@@ -35,6 +36,7 @@ export default function useEditProfile() {
     categories_sdgs,
     active_in_countries,
     endow_designation,
+    type,
     ...newData
   }) => {
     try {
@@ -115,9 +117,10 @@ export default function useEditProfile() {
 
   return {
     reset,
-    editProfile: handleSubmit(editProfile),
+    editProfile: handleSubmit(editProfile, (error) => console.log(error)),
     isSubmitting,
     id,
+    type: getValues("type"),
   };
 }
 

@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import { endow } from "services/types";
 import banner from "assets/images/hero.png";
 import { useProfileQuery } from "services/aws/aws";
 import QueryLoader from "components/QueryLoader";
@@ -41,7 +40,7 @@ export default function Donate() {
             <Content
               name={profile.name}
               id={numId}
-              isKYCRequired={endow(profile) && profile.kyc_donors_only}
+              isKYCRequired={profile.kyc_donors_only ?? false}
             />
           </>
         )}
