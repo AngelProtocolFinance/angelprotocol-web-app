@@ -1,17 +1,20 @@
+import { toUtf8 } from "@cosmjs/encoding";
+import { hexlify } from "@ethersproject/bytes";
 import { SubmitHandler, useFormContext } from "react-hook-form";
 import { FormValues as FV, FlatFormValues } from "./types";
 import { EndowmentProfileUpdate } from "types/aws";
+import { ProviderId } from "types/lists";
+import { SemiPartial } from "types/utils";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useEditProfileMutation } from "services/aws/aws";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import { ImgLink } from "components/ImgEditor";
 import { TxPrompt } from "components/Prompt";
-import { isEmpty } from "helpers";
+import { getProvider, isEmpty } from "helpers";
 import { getPayloadDiff } from "helpers/admin";
 import { getFullURL, uploadFiles } from "helpers/uploadFiles";
 import { appRoutes } from "constants/routes";
-import { createADR36Payload } from "./createADR36Payload";
 
 // import optimizeImage from "./optimizeImage";
 
@@ -48,6 +51,13 @@ export default function useEditProfile() {
           error: "You need to connect your wallet to make this transaction.",
         });
       }
+
+      if (!isEVM(wallet.providerId)) {
+        return showModal(TxPrompt, {
+          error: "Please connect an EVM compatible wallet",
+        });
+      }
+
       if (!propMeta.isAuthorized) {
         return showModal(TxPrompt, {
           error: "You are not authorized to make this transaction.",
@@ -81,7 +91,7 @@ export default function useEditProfile() {
       /** already clean - no need to futher clean "": to unset values { field: val }, field must have a value 
      like ""; unlike contracts where if fields is not present, val is set to null.
     */
-      const updates: Partial<EndowmentProfileUpdate> = {
+      const updates: SemiPartial<EndowmentProfileUpdate, "id" | "owner"> = {
         ...diff,
         id,
         owner,
@@ -92,9 +102,15 @@ export default function useEditProfile() {
         { loading: "Signing changes" },
         { isDismissible: false }
       );
-      const payload = await createADR36Payload(updates, wallet!);
 
-      const result = await submit(payload); //wallet is asserted in admin guard
+      const provider = getProvider(wallet.providerId)!;
+
+      const rawSignature = await provider.request<string>({
+        method: "personal_sign",
+        params: [hexlify(toUtf8(JSON.stringify(updates))), wallet.address],
+      });
+
+      const result = await submit({ unsignedMsg: updates, rawSignature });
       if ("error" in result) {
         return showModal(TxPrompt, { error: "Failed to update profile" });
       }
@@ -109,6 +125,7 @@ export default function useEditProfile() {
         },
       });
     } catch (err) {
+      console.log(err);
       showModal(TxPrompt, {
         error: err instanceof Error ? err.message : "Unknown error occured",
       });
@@ -134,4 +151,17 @@ async function uploadImgs(
   return imgs.map((img) =>
     img.file && baseURL ? getFullURL(baseURL, img.file.name) : img.publicUrl
   );
+}
+
+function isEVM(id: ProviderId) {
+  switch (id) {
+    case "binance-wallet":
+    case "evm-wc":
+    case "metamask":
+    case "xdefi-evm":
+    case "web3auth-torus":
+      return true;
+    default:
+      return false;
+  }
 }
