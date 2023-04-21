@@ -123,14 +123,14 @@ export const LINKS: {
       size: 24,
     },
   },
-  settings: {
-    title: "Settings",
-    to: sidebarRoutes.settings,
-    icon: {
-      type: "PermDataSettings",
-      size: 24,
-    },
-  },
+  // settings: {
+  //   title: "Settings",
+  //   to: sidebarRoutes.settings,
+  //   icon: {
+  //     type: "PermDataSettings",
+  //     size: 24,
+  //   },
+  // },
   edit_profile: {
     title: "Edit Profile",
     to: sidebarRoutes.edit_profile,
