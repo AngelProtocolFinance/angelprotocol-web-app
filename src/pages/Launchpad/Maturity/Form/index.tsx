@@ -9,7 +9,7 @@ export default function MaturityForm(props: FormProps) {
     <Form {...props}>
       <Title className="mb-2">Maturity</Title>
       <Desc className="mb-8">
-        You can set the maturity date of your AIF. Upon reaching maturity, all
+        You can set the maturity date of your AST. Upon reaching maturity, all
         funds from both Liquid account and Locked account can be withdrawn by a
         list of addresses set in advance.
       </Desc>

@@ -1,11 +1,11 @@
 import { Completed, TFee } from "slices/launchpad/types";
 import { SettingsPermission } from "types/contracts";
-import { Fee, NewAIF } from "types/contracts/evm";
+import { Fee, NewAST } from "types/contracts/evm";
 import { roundDownToNum } from "helpers";
 import { blockTime } from "helpers/admin";
 import { ADDRESS_ZERO } from "constants/evm";
 
-export default function toEVMAIF(
+export default function toEVMAST(
   {
     1: about,
     2: management,
@@ -15,7 +15,7 @@ export default function toEVMAIF(
     6: fees,
   }: Completed,
   creator: string
-): NewAIF {
+): NewAST {
   return {
     owner: creator,
     withdrawBeforeMaturity: true, //not specified in launchpad design
