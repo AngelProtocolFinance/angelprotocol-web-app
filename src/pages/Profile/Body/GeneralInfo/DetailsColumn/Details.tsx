@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import { useProfileContext } from "pages/Profile/ProfileContext";
+import { Profile } from "services/types";
 import { isEmpty } from "helpers";
 
 // import { chainIds } from "constants/chainIds";
@@ -8,21 +8,20 @@ import { isEmpty } from "helpers";
 // import Icon from "components/Icon";
 // import { getAddressUrl, maskAddress } from "helpers";
 
-export default function Details() {
-  const profile = useProfileContext();
-  const { active_in_countries = [] } = profile;
+export default function Details(props: Profile) {
+  const { active_in_countries = [] } = props;
 
   return (
     <>
-      {!!profile.registration_number && (
-        <Detail title="registration no.">{profile.registration_number}</Detail>
+      {!!props.registration_number && (
+        <Detail title="registration no.">{props.registration_number}</Detail>
       )}
-      {!!profile.street_address && (
-        <Detail title="address">{profile.street_address}</Detail>
+      {!!props.street_address && (
+        <Detail title="address">{props.street_address}</Detail>
       )}
       <Detail title="active in">
         {isEmpty(active_in_countries)
-          ? profile.hq_country
+          ? props.hq_country
           : active_in_countries.join(", ")}
       </Detail>
       {/* <Detail title="endowment address">

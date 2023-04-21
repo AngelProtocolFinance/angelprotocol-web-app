@@ -35,17 +35,19 @@ export default function Profile() {
 }
 
 function Banner() {
-  const { image } = useProfileContext();
+  const { image = placeholderBanner } = useProfileContext();
   return (
     <div
       className="relative overlay w-full h-52 sm:h-72 bg-cover bg-center"
-      style={{ backgroundImage: `url('${image || placeholderBanner}')` }}
+      style={{
+        backgroundImage: `url('${image}')`,
+      }}
     />
   );
 }
 
 function Logo() {
-  const { logo } = useProfileContext();
+  const { logo = "" } = useProfileContext();
   return (
     <div className="padded-container flex justify-center items-center w-full overflow-visible h-0 isolate lg:justify-start">
       <Image

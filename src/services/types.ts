@@ -1,3 +1,4 @@
+import { ASTProfile, EndowmentProfile } from "types/aws";
 import { EndowmentDetails } from "types/contracts";
 import { Transaction } from "types/contracts/evm/multisig";
 import { AccountType, ProviderId } from "types/lists";
@@ -68,3 +69,16 @@ export interface IERC20 {
 }
 
 export type EndowBalance = { [key in AccountType]: IERC20[] };
+
+export type Profile =
+  | ({
+      type: "endowment";
+    } & EndowmentProfile)
+  | ({ type: "ast" } & ASTProfile);
+
+//type guard
+export function endow(
+  profile: Profile
+): profile is EndowmentProfile & { type: "endowment" } {
+  return profile.type === "endowment";
+}

@@ -33,11 +33,11 @@ export default function DonateWidget() {
   return (
     <ApiKeyChecker>
       <EndowmentLoader>
-        {(endowment) => (
+        {(p) => (
           <InnerComponent
-            id={endowment.id}
-            isKYCRequired={endowment.kyc_donors_only}
-            name={endowment.name}
+            id={p.id}
+            isKYCRequired={p.kyc_donors_only ?? false}
+            name={p.name}
           />
         )}
       </EndowmentLoader>

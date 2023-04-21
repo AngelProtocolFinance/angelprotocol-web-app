@@ -2,6 +2,18 @@ import { Keplr } from "@keplr-wallet/types";
 import { EndowmentTierNum, EndowmentType } from "../../contracts";
 import { NetworkType, UNSDG_NUMS } from "../../lists";
 
+type EndowmentBalances = {
+  // represents total cumulative balances
+  total_liq: number;
+  total_lock: number;
+  overall: number;
+
+  // represents tokens on hand balances (takes into account withdrawn funds)
+  on_hand_liq: number;
+  on_hand_lock: number;
+  on_hand_overall: number;
+};
+
 type EndowmentBase = {
   hq_country: string;
   endow_designation: EndowDesignation;
@@ -32,18 +44,25 @@ export type EndowmentProfile = EndowmentBase & {
   };
   street_address?: string;
 
-  // represents total cumulative balances
-  total_liq: number;
-  total_lock: number;
-  overall: number;
-
-  // represents tokens on hand balances (takes into account withdrawn funds)
-  on_hand_liq: number;
-  on_hand_lock: number;
-  on_hand_overall: number;
-
   url?: string;
-};
+} & EndowmentBalances;
+
+const _npo_type: keyof EndowmentBase = "endow_designation";
+const _categories: keyof EndowmentBase = "categories";
+//prettier-ignore
+export type ASTProfile = Pick<EndowmentProfile, 
+    "id" 
+  | "name" 
+  | "tagline"
+  > 
+  & Partial<Omit<EndowmentProfile,
+   "id"
+  |"name"
+  |"tagline"
+  | typeof _npo_type 
+  | typeof _categories
+  >>
+  & EndowmentBalances
 
 export type EndowmentCard = EndowmentBase & {
   endow_type: EndowmentType;

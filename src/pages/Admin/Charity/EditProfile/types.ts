@@ -1,3 +1,4 @@
+import { Profile } from "services/types";
 import { EndowmentProfileUpdate } from "types/aws";
 import { Country } from "types/countries";
 import { UNSDG_NUMS } from "types/lists";
@@ -42,5 +43,8 @@ export type FormValues = Omit<
   [_country]: Country;
   [_sdgs]: OptionType<UNSDG_NUMS>[];
   [_activity_countries]: OptionType<string>[];
+
+  //meta
+  type: Profile["type"];
   initial: FlatFormValues;
 };

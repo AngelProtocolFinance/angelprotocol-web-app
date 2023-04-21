@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
+import { Profile } from "../types";
 import {
   ADR36Payload,
   EndowmentCard,
@@ -11,7 +12,8 @@ import {
 } from "types/aws";
 import { NetworkType } from "types/lists";
 import { createAuthToken } from "helpers";
-import { IS_TEST } from "constants/env";
+import { chainIds } from "constants/chainIds";
+import { IS_AST, IS_TEST } from "constants/env";
 import { APIs } from "constants/urls";
 
 const network: NetworkType = IS_TEST ? "testnet" : "mainnet";
@@ -84,14 +86,19 @@ export const aws = createApi({
       },
       transformResponse: (response: { data: any }) => response,
     }),
-    profile: builder.query<EndowmentProfile, number>({
+    profile: builder.query<Profile, number>({
       providesTags: ["profile"],
-      query: (endowId) => `/v1/profile/${network}/endowment/${endowId}`,
-      transformResponse({ tagline, ...rest }: EndowmentProfile) {
+      query: (endowId) =>
+        IS_AST
+          ? `/v1/ast/${chainIds.polygon}/${endowId}`
+          : `/v2/profile/${network}/endowment/${endowId}`,
+      transformResponse(r: EndowmentProfile) {
         //transform cloudsearch placeholders
+        const tagline = r.tagline === " " ? "" : r.tagline;
         return {
-          tagline: tagline === " " ? "" : tagline,
-          ...rest,
+          ...r,
+          tagline,
+          type: IS_AST ? "ast" : "endowment",
         };
       },
     }),

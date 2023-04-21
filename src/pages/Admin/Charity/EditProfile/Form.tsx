@@ -22,7 +22,7 @@ const sdgOptions = Object.entries(unsdgs).map(([key, { title }]) =>
 );
 
 export default function Form() {
-  const { editProfile, isSubmitting, id, reset } = useEditProfile();
+  const { editProfile, isSubmitting, id, reset, type } = useEditProfile();
   return (
     <form
       onSubmit={editProfile}
@@ -109,25 +109,30 @@ export default function Form() {
       </Group>
 
       <Group title="Organization">
-        <Label className="-mb-4" required>
-          Aligned SDG#
-        </Label>
-        <Selector<FV, "categories_sdgs", UNSDG_NUMS, true>
-          multiple
-          name="categories_sdgs"
-          options={sdgOptions}
-          classes={{ button: "field-input-admin" }}
-        />
-        <Label className="-mb-4" required>
-          Endowment Designation
-        </Label>
-        <Selector<FV, "endow_designation", string, false>
-          name="endow_designation"
-          options={ENDOW_DESIGNATIONS.map((option) => ({
-            label: option.label,
-            value: option.value,
-          }))}
-        />
+        {type === "endowment" && (
+          <>
+            <Label className="-mb-4" required>
+              Aligned SDG#
+            </Label>
+            <Selector<FV, "categories_sdgs", UNSDG_NUMS, true>
+              multiple
+              name="categories_sdgs"
+              options={sdgOptions}
+              classes={{ button: "field-input-admin" }}
+            />
+            <Label className="-mb-4" required>
+              Endowment Designation
+            </Label>
+            <Selector<FV, "endow_designation", string, false>
+              name="endow_designation"
+              options={ENDOW_DESIGNATIONS.map((option) => ({
+                label: option.label,
+                value: option.value,
+              }))}
+            />
+          </>
+        )}
+
         <Label className="-mb-4" required>
           Headquarters
         </Label>
