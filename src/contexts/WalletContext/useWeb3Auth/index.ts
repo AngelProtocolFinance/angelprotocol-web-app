@@ -136,7 +136,7 @@ export default function useWeb3Auth() {
           logo: WEB3AUTH_LOGO,
           providerId: "web3auth-torus",
           chainId: state.chainId,
-          address: state.address,
+          address: state.address.toLowerCase(),
         }
       : undefined;
 

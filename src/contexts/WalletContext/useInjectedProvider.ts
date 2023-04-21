@@ -230,7 +230,7 @@ export default function useInjectedProvider(
           logo: WALLET_METADATA[providerId].logo,
           providerId,
           chainId,
-          address,
+          address: address.toLowerCase(),
         }
       : undefined;
 
