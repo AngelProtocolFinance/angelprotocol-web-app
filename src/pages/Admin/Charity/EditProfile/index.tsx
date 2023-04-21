@@ -80,7 +80,7 @@ function FormWithContext(props: Profile) {
   const methods = useForm<FormValues>({
     defaultValues: defaults,
     resolver: yupResolver(schema),
-    context: { isAST: props.type === "ast" },
+    context: { isEndow: props.type === "endowment" },
   });
   return (
     <FormProvider {...methods}>

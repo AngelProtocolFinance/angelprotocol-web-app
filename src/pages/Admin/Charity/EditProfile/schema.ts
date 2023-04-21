@@ -34,7 +34,7 @@ const shape: SchemaShape<FormValues> = {
   //not required for ASTs
   categories_sdgs: array()
     .max(MAX_SDGS, `maximum ${MAX_SDGS} selections allowed`)
-    .when("$isAST", {
+    .when("$isEndow", {
       is: true,
       then: (schema) => schema.min(1, "required"),
     }),
@@ -47,11 +47,11 @@ const shape: SchemaShape<FormValues> = {
     name: requiredString,
   }),
   endow_designation: object().shape<SchemaShape<OptionType<string>>>({
-    label: string().when("$isAST", {
+    label: string().when("$isEndow", {
       is: true,
       then: requiredString,
     }),
-    value: string().when("$isAST", {
+    value: string().when("$isEndow", {
       is: true,
       then: requiredString,
     }),

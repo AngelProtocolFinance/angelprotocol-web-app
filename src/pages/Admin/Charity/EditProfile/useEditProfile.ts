@@ -117,7 +117,7 @@ export default function useEditProfile() {
 
   return {
     reset,
-    editProfile: handleSubmit(editProfile, (error) => console.log(error)),
+    editProfile: handleSubmit(editProfile),
     isSubmitting,
     id,
     type: getValues("type"),
