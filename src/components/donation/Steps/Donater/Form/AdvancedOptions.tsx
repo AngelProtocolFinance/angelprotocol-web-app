@@ -2,6 +2,7 @@ import { useState } from "react";
 import { DonateValues } from "../types";
 import Icon from "components/Icon";
 import Split from "components/Split";
+import { PAYMENT_WORDS, titleCase } from "constants/env";
 
 type Props = { classes?: string; unfold?: boolean };
 
@@ -39,8 +40,8 @@ export default function AdvancedOptions({ classes = "", unfold }: Props) {
           <div className="flex items-center gap-4 px-4 py-3 text-center dark:bg-blue-d6 border border-prim rounded">
             <Icon type="Info" size={44} />
             <p className="text-sm leading-normal text-left">
-              Donations into the Endowment provide sustainable financial runaway
-              and allow your gift to give forever
+              {titleCase(PAYMENT_WORDS.noun.plural)} into the Endowment provide
+              sustainable financial runaway and allow your gift to give forever
             </p>
           </div>
         </div>

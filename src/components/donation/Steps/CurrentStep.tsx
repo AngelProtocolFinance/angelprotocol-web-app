@@ -6,7 +6,7 @@ import Status, { LoadingStatus } from "components/Status";
 import FiatSubmit from "components/donationFiat/Steps/FiatSubmit";
 import { useGetter, useSetter } from "store/accessors";
 import { resetDetails } from "slices/donation";
-import { IS_AST } from "constants/env";
+import { PAYMENT_WORDS } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { ConfigParams } from "..";
 import Donater from "./Donater";
@@ -36,12 +36,12 @@ export default function CurrentStep(props: ConfigParams) {
       return (
         <Status icon="Info" classes="justify-self-center">
           You need to connect your web3 wallet to make a crypto{" "}
-          {IS_AST ? "contribution" : "donation"} OR you can{" "}
+          {PAYMENT_WORDS.noun.singular} OR you can{" "}
           <Link
             className="font-bold underline hover:text-orange transition ease-in-out duration-300"
             to={appRoutes.donate_fiat + `/${state.recipient?.id}`}
           >
-            {IS_AST ? "contribute" : "donate"} with fiat
+            {PAYMENT_WORDS.verb} with fiat
           </Link>
           .
         </Status>

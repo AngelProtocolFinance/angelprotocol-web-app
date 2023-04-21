@@ -16,6 +16,7 @@ export const IS_TEST = NETWORK === "TESTNET" || NETWORK === "LOCAL";
 // NOUN AND ACTION WORDS RELATING TO PAYMENTS TO AP/AG ENDOWMENTS
 // (AST == Contribution/Contribute & Charity == Donation/Donate)
 export const PAYMENT_WORDS = {
+  payer: IS_AST ? "contributor" : "donor",
   noun: {
     singular: IS_AST ? "contribution" : "donation",
     plural: IS_AST ? "contributions" : "donations",
