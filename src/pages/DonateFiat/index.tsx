@@ -32,7 +32,7 @@ export default function DonateFiat() {
           <>
             <Seo
               title={`Donate to ${profile.name} - ${APP_NAME}`}
-              description={`${profile.overview.slice(0, 140)}`}
+              description={`${(profile?.overview ?? "").slice(0, 140)}`}
               name={`${profile.name}`}
               image={`${profile.logo}`}
               url={`${DAPP_DOMAIN}/donate/${profile.id}`}
@@ -40,7 +40,7 @@ export default function DonateFiat() {
             <Content
               name={profile.name}
               id={numId}
-              isKYCRequired={profile.kyc_donors_only}
+              isKYCRequired={profile.kyc_donors_only ?? false}
             />
           </>
         )}

@@ -27,7 +27,7 @@ export default function Success({
         </span>{" "}
         to <span className="font-extrabold">{name}</span>!
       </h3>
-      {IS_AST !== "AST" && (
+      {IS_AST && (
         <p className="text-center mb-8">
           If you requested it, a tax receipt has been sent to the email address
           provided.
