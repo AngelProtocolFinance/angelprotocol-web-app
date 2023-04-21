@@ -131,7 +131,6 @@ export default function useEditProfile() {
         },
       });
     } catch (err) {
-      console.log(err);
       showModal(TxPrompt, {
         error: err instanceof Error ? err.message : "Unknown error occured",
       });
