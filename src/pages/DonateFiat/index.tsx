@@ -5,6 +5,7 @@ import QueryLoader from "components/QueryLoader";
 import Seo from "components/Seo";
 import { idParamToNum } from "helpers";
 import { APP_NAME, DAPP_DOMAIN } from "constants/common";
+import { PAYMENT_WORDS, titleCase } from "constants/env";
 import Content from "./Content";
 
 export default function DonateFiat() {
@@ -31,8 +32,10 @@ export default function DonateFiat() {
         {(profile) => (
           <>
             <Seo
-              title={`Donate to ${profile.name} - ${APP_NAME}`}
-              description={`${profile.overview.slice(0, 140)}`}
+              title={`${titleCase(PAYMENT_WORDS.verb)} to ${
+                profile.name
+              } - ${APP_NAME}`}
+              description={`${(profile?.overview ?? "").slice(0, 140)}`}
               name={`${profile.name}`}
               image={`${profile.logo}`}
               url={`${DAPP_DOMAIN}/donate/${profile.id}`}
@@ -40,7 +43,7 @@ export default function DonateFiat() {
             <Content
               name={profile.name}
               id={numId}
-              isKYCRequired={profile.kyc_donors_only}
+              isKYCRequired={profile.kyc_donors_only ?? false}
             />
           </>
         )}

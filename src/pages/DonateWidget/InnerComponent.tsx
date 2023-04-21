@@ -6,6 +6,7 @@ import { useSetter } from "store/accessors";
 import { setRecipient } from "slices/donation";
 import { getPossessiveForm } from "helpers";
 import { AP_LOGO } from "constants/common";
+import { PAYMENT_WORDS, titleCase } from "constants/env";
 import useWidgetParams from "./useWidgetParams";
 
 export default function InnerComponent(props: {
@@ -34,10 +35,10 @@ export default function InnerComponent(props: {
           {!hideText && (
             <>
               <p className="font-body text-xs sm:text-base">
-                Donate today to {getPossessiveForm(props.name)} endowment. Your
-                donation will be protected and compounded in perpetuity to
-                provide {props.name} with a long-term, sustainable runway. Give
-                once, give forever!
+                {titleCase(PAYMENT_WORDS.verb)} today to{" "}
+                {getPossessiveForm(props.name)} endowment. Your donation will be
+                protected and compounded in perpetuity to provide {props.name}{" "}
+                with a long-term, sustainable runway. Give once, give forever!
               </p>
               <p className="font-body text-xs sm:text-base">
                 Make sure to check out the many crypto and fiat donation
