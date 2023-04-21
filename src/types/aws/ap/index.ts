@@ -28,8 +28,6 @@ type EndowmentBase = {
 };
 
 export type EndowmentProfile = EndowmentBase & {
-  name: string;
-  tagline: string;
   contact_email: string;
   logo: string;
   overview: string;
