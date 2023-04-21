@@ -99,7 +99,7 @@ export default function useEditProfile() {
 
       showModal(
         TxPrompt,
-        { loading: "Signing changes" },
+        { loading: "Signing changes.." },
         { isDismissible: false }
       );
 
@@ -109,6 +109,12 @@ export default function useEditProfile() {
         method: "personal_sign",
         params: [hexlify(toUtf8(JSON.stringify(updates))), wallet.address],
       });
+
+      showModal(
+        TxPrompt,
+        { loading: "Submitting changes.." },
+        { isDismissible: false }
+      );
 
       const result = await submit({ unsignedMsg: updates, rawSignature });
       if ("error" in result) {
