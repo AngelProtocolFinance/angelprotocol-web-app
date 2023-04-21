@@ -19,7 +19,7 @@ import { APIs } from "constants/urls";
 const network: NetworkType = IS_TEST ? "testnet" : "mainnet";
 
 const getWalletProfileQuery = (walletAddr: string) =>
-  `/v1/profile/${network}/user/${walletAddr}`;
+  `/v2/profile/${network}/user/${walletAddr}`;
 
 const awsBaseQuery = retry(
   fetchBaseQuery({
@@ -106,7 +106,7 @@ export const aws = createApi({
       invalidatesTags: ["endowments", "profile", "walletProfile"],
       query: (payload) => {
         return {
-          url: `/v1/profile/${network}/endowment`,
+          url: `/v2/profile/${network}/endowment`,
           method: "PUT",
           body: payload,
         };
