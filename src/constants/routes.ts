@@ -13,6 +13,8 @@ export enum appRoutes {
   endowment_admin = "/endowment-admin",
   donations = "/donations",
   donate = "/donate",
+  donate_fiat = "/donate-fiat",
+  donate_fiat_thanks = "/donate-fiat-thanks",
   donate_widget = "/donate-widget",
   gift = "/gift",
 }

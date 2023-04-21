@@ -4,6 +4,7 @@ import {
   ReceiptPayload,
   Token,
 } from "types/aws";
+import { NetworkType } from "types/lists";
 import { createAuthToken } from "helpers";
 import { IS_TEST } from "constants/env";
 import { apes } from "./apes";
@@ -41,6 +42,18 @@ const donations_api = apes.injectEndpoints({
     currencies: builder.query<Token[], void>({
       query: () => `v1/tokens/list${IS_TEST ? "/test" : ""}`,
     }),
+    requestWidgetUrl: builder.mutation<any, any>({
+      query: (payload) => {
+        const network: NetworkType = IS_TEST ? "testnet" : "mainnet";
+        const generatedToken = createAuthToken("angelprotocol-web-app");
+        return {
+          url: `/v1/fiat/meld-widget-proxy/${network}`,
+          method: "POST",
+          headers: { authorization: generatedToken },
+          body: payload,
+        };
+      },
+    }),
   }),
 });
 
@@ -48,7 +61,7 @@ export const {
   useRequestReceiptMutation,
   useDonationsQuery,
   useCurrenciesQuery,
-
+  useRequestWidgetUrlMutation,
   endpoints: {
     donations: { useLazyQuery: useLazyDonationsQuery },
   },

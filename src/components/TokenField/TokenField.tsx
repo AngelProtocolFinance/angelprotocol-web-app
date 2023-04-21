@@ -59,7 +59,7 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
         >
           {label}
         </label>
-        {withBalance && (
+        {withBalance && token.type !== "fiat" && (
           <Balance
             token={token}
             onSetAmount={onSetAmount}

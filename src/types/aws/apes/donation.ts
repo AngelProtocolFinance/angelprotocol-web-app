@@ -38,18 +38,15 @@ type TxBase = {
   transactionId: string;
   transactionDate: string;
   endowmentId: number;
-  walletAddress: string;
 };
 
 type CryptoTx = TxBase & {
   walletAddress: string; //user wallet address, undefined for
-  fiatRamp?: never;
-  paymentMethod?: never;
 };
 
 type FiatTx = TxBase & {
-  walletAddress?: never;
   fiatRamp: string;
+  destinationChainId: string;
   //payment methods
   //https://www.notion.so/6cbdfa08522e444fadd732d73a7e15ad?v=68fdb3f0310d42e0b7cb28684449bb81
   paymentMethod: string;
@@ -66,6 +63,5 @@ export type DonationsQueryParams = {
   limit?: number; // Number of items to be returned per request
 };
 
-type TxDetails = FiatTx | CryptoTx;
-
-export type TxLogPayload = TxDetails & { kycData?: KYCData };
+export type TxLogPayload = CryptoTx & { kycData?: KYCData };
+export type FiatLogPayload = FiatTx & { kycData?: KYCData };
