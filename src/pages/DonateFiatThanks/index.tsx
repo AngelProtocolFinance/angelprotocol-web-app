@@ -25,7 +25,7 @@ export default function DonateFiatThanks() {
         page.
       </p>
       <Link
-        to={appRoutes.index}
+        to={IS_AST ? appRoutes.register : appRoutes.marketplace}
         className="w-full sm:w-auto btn-orange btn-donate h-10 rounded-lg"
       >
         Back to the platform
