@@ -15,7 +15,7 @@ export default function Management({
       <p className="font-semibold mb-2">Members:</p>
       {isEmpty(_members) ? (
         <Info classes="mt-2">
-          No members set - creator of this AIF would be a default member
+          No members set - creator of this AST would be a default member
         </Info>
       ) : (
         <ul className="list-disc list-inside grid gap-y-2">{_members}</ul>

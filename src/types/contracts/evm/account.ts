@@ -82,7 +82,7 @@ type SplitDetails = {
   defaultSplit: number;
 };
 
-export interface NewAIF extends Tupleable {
+export interface NewAST extends Tupleable {
   owner: string;
   withdrawBeforeMaturity: true; //not specified in launchpad design
   maturityTime: number;

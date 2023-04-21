@@ -188,7 +188,7 @@ export type ADR36Payload = Pick<Signed, "chain_id" | "fee" | "memo"> & {
   signatures: Signature[];
 };
 
-export type NewAIF = {
+export type NewAST = {
   chainId: string;
   id: number;
   registrant: string;
