@@ -112,8 +112,8 @@ Inactive | Rejected | {id: number}
 export type DoneWallet = Append<DoneDocs, {}, {}, WalletData & NewEndow>;
 
 type ApplicationIDs = {
-  approve_tx_id?: string;
-  reject_tx_id?: string;
+  approve_tx_id?: number;
+  reject_tx_id?: number;
 };
 export type InReview = Append<DoneWallet, ApplicationIDs, {}, {}>;
 
