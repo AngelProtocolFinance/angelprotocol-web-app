@@ -11,7 +11,8 @@ export default function ChooseWallet() {
       <p className="mb-8 text-sm text-gray-d1 dark:text-gray mt-2">
         We recommend using a new wallet.
       </p>
-      <WalletConnector name="Web3 Auth" />
+      <WalletConnector name="Web3 Auth" label="Socal login or email" />
+      <WalletConnector name="Metamask" label="Metamask" />
       <Link
         to={`../${steps.doc}`}
         state={data.init}

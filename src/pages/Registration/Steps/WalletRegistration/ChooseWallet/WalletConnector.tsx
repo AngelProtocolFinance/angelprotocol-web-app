@@ -1,7 +1,13 @@
 import { useErrorContext } from "contexts/ErrorContext";
 import { useSetWallet } from "contexts/WalletContext";
 
-export default function WalletConnector({ name }: { name: string }) {
+export default function WalletConnector({
+  name,
+  label,
+}: {
+  name: string;
+  label: string;
+}) {
   const { connections } = useSetWallet();
   const { handleError } = useErrorContext();
   const connection = connections.find((c) => c.name === name)!;
@@ -18,7 +24,7 @@ export default function WalletConnector({ name }: { name: string }) {
   return (
     <button
       onClick={handleConnect}
-      className="flex items-center border border-prim w-full p-4 rounded"
+      className="flex items-center border border-prim w-full p-4 mb-2 rounded"
     >
       <img
         src={connection.logo}
