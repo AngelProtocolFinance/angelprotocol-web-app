@@ -7,6 +7,7 @@ import Body from "./Body";
 import PageError from "./PageError";
 import ProfileContext, { useProfileContext } from "./ProfileContext";
 import Skeleton from "./Skeleton";
+import Unpublished from "./Unpublished";
 
 export default function Profile() {
   const { id } = useParams<{ id: string }>();
@@ -21,6 +22,10 @@ export default function Profile() {
 
   if (isError || !data) {
     return <PageError />;
+  }
+
+  if (!data.published) {
+    return <Unpublished />;
   }
 
   return (
