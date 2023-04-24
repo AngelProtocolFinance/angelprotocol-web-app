@@ -60,11 +60,21 @@ const fieldShape: SchemaShape<FormField> = {
 };
 
 const shape: SchemaShape<FormValues> = {
-  accountFees: Yup.object().shape(fieldShape),
-  beneficiaries_allowlist: Yup.object().shape(fieldShape),
-  contributors_allowlist: Yup.object().shape(fieldShape),
-  donationSplitParams: Yup.object().shape(fieldShape),
-  profile: Yup.object().shape(fieldShape),
+  accountFees: Yup.object().shape(fieldShape, [
+    [govControlledKey, ownerControlledKey],
+  ]),
+  beneficiaries_allowlist: Yup.object().shape(fieldShape, [
+    [govControlledKey, ownerControlledKey],
+  ]),
+  contributors_allowlist: Yup.object().shape(fieldShape, [
+    [govControlledKey, ownerControlledKey],
+  ]),
+  donationSplitParams: Yup.object().shape(fieldShape, [
+    [govControlledKey, ownerControlledKey],
+  ]),
+  profile: Yup.object().shape(fieldShape, [
+    [govControlledKey, ownerControlledKey],
+  ]),
 };
 
 export const schema = Yup.object(shape);
