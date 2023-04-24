@@ -38,9 +38,6 @@ const shape: SchemaShape<FormValues> = {
   logo: fileObj,
   url: url,
   // registration_number: no need to validate,
-  hq_country: object().shape<SchemaShape<Country>>({
-    name: requiredString,
-  }),
   endow_designation: object().shape<SchemaShape<OptionType<string>>>({
     label: string().when("$isEndow", {
       is: true,
@@ -52,7 +49,6 @@ const shape: SchemaShape<FormValues> = {
     }),
   }),
   name: requiredString,
-  overview: Yup.string(),
   active_in_countries: array(),
   social_media_url_facebook: url,
   social_media_url_twitter: url,
