@@ -37,7 +37,7 @@ export default function useSubmit() {
     if (isValid) {
       trigger();
     }
-  }, [isValid]);
+  }, [isValid, trigger]);
 
   async function onSubmit({
     initialValues,
