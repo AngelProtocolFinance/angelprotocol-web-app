@@ -22,12 +22,12 @@ export type FormValues = UpdateableFormValues & {
   endowment_controller: FormField;
 };
 
-const deledatedKey: keyof FormField = "delegated";
+const delegatedKey: keyof FormField = "delegated";
 const ownerControlledKey: keyof FormField = "ownerControlled";
 const govControlledKey: keyof FormField = "govControlled";
 
 const fieldShape: SchemaShape<FormField> = {
-  delegate_address: Yup.string().when(deledatedKey, {
+  delegate_address: Yup.string().when(delegatedKey, {
     is: true,
     then: requiredWalletAddr(),
     otherwise: (schema) => schema.optional(),
