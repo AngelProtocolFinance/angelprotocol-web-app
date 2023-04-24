@@ -72,6 +72,7 @@ export default function MobileTable({ className = "" }) {
                       classes={{
                         label: "uppercase text-xs font-bold",
                         input: "checkbox-orange",
+                        error: "hidden",
                       }}
                       disabled={checkboxDisabled}
                     >
@@ -83,6 +84,7 @@ export default function MobileTable({ className = "" }) {
                         classes={{
                           label: "uppercase text-xs font-bold",
                           input: "checkbox-orange",
+                          error: "hidden",
                         }}
                         disabled={checkboxDisabled}
                       >
@@ -94,6 +96,7 @@ export default function MobileTable({ className = "" }) {
                       classes={{
                         label: "uppercase text-xs font-bold",
                         input: "checkbox-orange",
+                        error: "hidden",
                       }}
                       disabled={checkboxDisabled}
                     >
