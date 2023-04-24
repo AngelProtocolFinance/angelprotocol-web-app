@@ -11,7 +11,7 @@ export default function Unpublished() {
         This {IS_AST ? "AST" : "Endowment"} has no public profile
       </p>
       <Link
-        to={`${appRoutes.index}`}
+        to={IS_AST ? appRoutes.register : appRoutes.marketplace}
         className="text-blue-l5 hover:text-blue text-sm"
       >
         Go Back
