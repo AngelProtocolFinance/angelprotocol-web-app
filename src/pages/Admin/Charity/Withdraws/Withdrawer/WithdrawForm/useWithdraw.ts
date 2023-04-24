@@ -65,7 +65,7 @@ export default function useWithdraw() {
     };
 
     //only ran when !isPolygon
-    const onSuccess: TxOnSuccess = async ({ data, ...tx }, chain) => {
+    const onSuccess: TxOnSuccess = async ({ data, ...tx }) => {
       try {
         const proposalID = data as
           | undefined /** no log processor is passed (DIRECT withdraw )*/
