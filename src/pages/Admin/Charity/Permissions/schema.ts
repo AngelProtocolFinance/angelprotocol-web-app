@@ -27,15 +27,6 @@ const ownerControlledKey: keyof FormField = "ownerControlled";
 const govControlledKey: keyof FormField = "govControlled";
 
 const fieldShape: SchemaShape<FormField> = {
-  delegated: Yup.boolean().when([ownerControlledKey, govControlledKey], {
-    is: (
-      ownerControlled: FormField["ownerControlled"],
-      govControlled: FormField["govControlled"]
-    ) => !ownerControlled && !govControlled,
-    then: (schema) =>
-      schema.isFalse("Cannot give permissions only to Delegate wallet"),
-    otherwise: (schema) => schema.optional(),
-  }),
   delegate_address: Yup.string().when(deledatedKey, {
     is: true,
     then: requiredWalletAddr(),
@@ -47,7 +38,10 @@ const fieldShape: SchemaShape<FormField> = {
       schema.isFalse(
         "Cannot give permissions to both Admin Wallet and Governance"
       ),
-    otherwise: (schema) => schema.optional(),
+    otherwise: (schema) =>
+      schema.isTrue(
+        "Please give permissions to either Admin Wallet or Governance"
+      ),
   }),
   ownerControlled: Yup.boolean().when(govControlledKey, {
     is: true,
@@ -55,7 +49,10 @@ const fieldShape: SchemaShape<FormField> = {
       schema.isFalse(
         "Cannot give permissions to both Admin Wallet and Governance"
       ),
-    otherwise: (schema) => schema.optional(),
+    otherwise: (schema) =>
+      schema.isTrue(
+        "Please give permissions to either Admin Wallet or Governance"
+      ),
   }),
 };
 
