@@ -1,3 +1,4 @@
+import * as Yup from "yup";
 import { array, object, string } from "yup";
 import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
@@ -51,7 +52,7 @@ const shape: SchemaShape<FormValues> = {
     }),
   }),
   name: requiredString,
-  overview: requiredString,
+  overview: Yup.string(),
   active_in_countries: array(),
   social_media_url_facebook: url,
   social_media_url_twitter: url,
