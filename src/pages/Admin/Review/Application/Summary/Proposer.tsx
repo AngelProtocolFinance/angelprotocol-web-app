@@ -61,7 +61,14 @@ export default function Proposer({ type, appId, reference }: Props) {
 
     const onSuccess: TxOnSuccess = async (result) => {
       const { data, ...okTx } = result;
-      const txId = data as string;
+      const txId = data as string | null;
+
+      if (!txId) {
+        return showModal(TxPrompt, {
+          error: "Failed to retrieve transaction id",
+          tx: okTx,
+        });
+      }
 
       showModal(
         TxPrompt,
