@@ -1,5 +1,10 @@
 import { Link, LinkGroup, SocialMediaLink } from "./types";
-import { BASE_DOMAIN, DAPP_DOMAIN } from "constants/common";
+import {
+  BASE_DOMAIN,
+  DAPP_DOMAIN,
+  DOMAIN,
+  SUBDOMAIN_BUILDER,
+} from "constants/common";
 import { appRoutes } from "constants/routes";
 import { LITEPAPER } from "constants/urls";
 
@@ -153,7 +158,18 @@ export const CHARITY_LINKS: LINKS = {
 };
 
 export const AST_LINKS: LINKS = {
-  HEADER_LINKS: [],
+  HEADER_LINKS: [
+    {
+      title: "Read the Docs",
+      href: SUBDOMAIN_BUILDER("docs", DOMAIN),
+      external: true,
+    },
+    {
+      title: "Talk to Us",
+      href: `${BASE_DOMAIN}/talk-to-us/`,
+      external: true,
+    },
+  ],
   GROUPS_DATA: [],
   SOCIAL_MEDIA_LINKS: [],
 };
