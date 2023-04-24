@@ -43,11 +43,18 @@ export default function Summary({
         docs={r.AuditedFinancialReports || []}
       />
       {txId ? (
-        <Link to={`../${adminRoutes.proposal}/${txId}`}>
-          Sign {txType} transaction
+        <Link
+          to={`../${adminRoutes.proposal}/${txId}`}
+          className="text-sm text-blue hover:text-orange"
+        >
+          <span> Sign {txType} transaction</span>
+          <Icon
+            type="ArrowRight"
+            className="text-lg relative inline bottom-px"
+          />
         </Link>
       ) : (
-        <ReviewOptions appId={+appId} />
+        <ReviewOptions appId={+appId} reference={r.PK} />
       )}
     </div>
   );
@@ -55,11 +62,13 @@ export default function Summary({
 
 type Props = {
   appId: number;
+  reference: string;
 };
-function ReviewOptions({ appId }: Props) {
+function ReviewOptions({ appId, reference }: Props) {
   const { showModal } = useModalContext();
 
-  const review = (type: TxType) => () => showModal(Proposer, { appId, type });
+  const review = (type: TxType) => () =>
+    showModal(Proposer, { appId, type, reference });
 
   return (
     <div className="flex items-center gap-2 justify-start mt-6">

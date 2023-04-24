@@ -1,3 +1,4 @@
+import type { BigNumber } from "@ethersproject/bignumber";
 import { Dialog } from "@headlessui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
@@ -5,22 +6,26 @@ import { object } from "yup";
 import { ProposalBase } from "../../../types";
 import { TxType } from "../types";
 import { SchemaShape } from "schemas/types";
+import { TxOnSuccess } from "types/tx";
 import { useAdminResources } from "pages/Admin/Guard";
+import { useUpdateRegMutation } from "services/aws/registration";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import { TxPrompt } from "components/Prompt";
 import { Field } from "components/form";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
+import { multisig as Multisig } from "contracts/evm/multisig";
 import useTxSender from "hooks/useTxSender";
 import { proposalShape } from "../../../constants";
 
 type Props = {
   type: TxType;
   appId: number;
+  reference: string;
 };
 
 type FV = ProposalBase & /** meta */ Props;
-export default function Proposer({ type, appId }: Props) {
+export default function Proposer({ type, appId, reference }: Props) {
   const methods = useForm<FV>({
     resolver: yupResolver(object().shape<SchemaShape<FV>>(proposalShape)),
     defaultValues: {
@@ -35,6 +40,7 @@ export default function Proposer({ type, appId }: Props) {
   const { wallet } = useGetWallet();
   const { showModal } = useModalContext();
   const { sendTx, isSending } = useTxSender(true);
+  const [updateReg] = useUpdateRegMutation();
 
   const { handleSubmit } = methods;
 
@@ -53,6 +59,42 @@ export default function Proposer({ type, appId }: Props) {
       }
     );
 
+    const onSuccess: TxOnSuccess = async (result) => {
+      const { data, ...okTx } = result;
+      const txId = data as string | null;
+
+      if (!txId) {
+        return showModal(TxPrompt, {
+          error: "Failed to retrieve transaction id",
+          tx: okTx,
+        });
+      }
+
+      showModal(
+        TxPrompt,
+        { loading: "Saving application id..." },
+        { isDismissible: false }
+      );
+
+      const res = await updateReg({
+        type: "application",
+        reference,
+        approve_tx_id: +txId,
+      });
+
+      if ("error" in res) {
+        return showModal(TxPrompt, {
+          error:
+            "Failed to save application id. Please try to resubmit proposal",
+        });
+      }
+
+      showModal(TxPrompt, {
+        success: { message: "Proposal has been created" },
+        tx: okTx,
+      });
+    };
+
     await sendTx({
       content: {
         type: "evm",
@@ -64,8 +106,17 @@ export default function Proposer({ type, appId }: Props) {
           value: "0",
           data,
         }),
+        log: (logs) => {
+          const ev = Multisig.getEvent("Submission");
+          const topic = Multisig.getEventTopic(ev);
+          const log = logs.find((log) => log.topics.includes(topic));
+          if (!log) return null;
+          const [id] = Multisig.decodeEventLog(ev, log.data, log.topics);
+          return (id as BigNumber).toString();
+        },
       },
       ...propMeta,
+      onSuccess,
     });
   }
 
