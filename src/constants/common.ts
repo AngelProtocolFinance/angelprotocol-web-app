@@ -8,24 +8,26 @@ import { ImageProps } from "components/Image";
 import { IS_AST } from "./env";
 
 // CONFIGURE THE CONSTANTS BELOW TO DISPLAY THE DESIRED REPEATING TEXT/IMAGES THROUGHOUT THE APP
-export const APP_NAME = "Angel Giving";
-export const BASE_DOMAIN = "https://angelgiving.io";
-export const DAPP_DOMAIN = "https://app.angelgiving.io";
-export const SUBDOMAIN_BUILDER = (subdomain: string) =>
-  `https://${subdomain}.angelgiving.io`;
+export const APP_NAME = IS_AST ? "Angel Protocol" : "Angel Giving";
+export const DOMAIN = IS_AST ? "angelprotocol.io" : "angelgiving.io";
+
+export const BASE_DOMAIN = `https://${DOMAIN}`;
+export const DAPP_DOMAIN = `https://app.${DOMAIN}`;
+export const SUBDOMAIN_BUILDER = (subdomain: string, domain: string) =>
+  `https://${subdomain}.${domain}`;
 export const SEO_IMAGE =
   "https://charity-profile-images.s3.amazonaws.com/logo/angelprotocol-wings-bl.png";
-export const EMAIL_SUPPORT = "support@angelgiving.io";
+export const EMAIL_SUPPORT = `support@${DOMAIN}`;
 export const GENERIC_ERROR_MESSAGE = `An error occurred. Please get in touch with ${EMAIL_SUPPORT} if the problem persists.`;
 
 export const AP_LOGO: ImageProps = {
-  href: "https://angelprotocol.io/",
+  href: BASE_DOMAIN,
   src: IS_AST ? angelProtocolLogoWht : angelGivingLogoWht,
   title: "Go to Marketing page",
 };
 
 export const AP_LOGO_LIGHT: ImageProps = {
-  href: "https://angelprotocol.io/",
+  href: BASE_DOMAIN,
   src: IS_AST ? angelProtocolLogoBlu : angelGivingLogoBlu,
   title: "Go to Marketing page",
 };

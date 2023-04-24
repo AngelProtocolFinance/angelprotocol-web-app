@@ -10,7 +10,10 @@ import { KADO_API_KEY } from "constants/env";
 import IFrame from "./IFrame";
 import Modal from "./Modal";
 
-type KADO_NETWORK_VALUES = "ethereum" | "juno" | "terra";
+const KADO_NETWORKS = ["ethereum", "juno", "terra", "polygon"] as const;
+type KADO_NETWORK_VALUES = typeof KADO_NETWORKS[number];
+
+const NETWORK_LIST = KADO_NETWORKS.join(",");
 
 export default function KadoModal() {
   const dispatch = useSetter();
@@ -46,7 +49,7 @@ export default function KadoModal() {
         </button>
       </Modal.Title>
       <IFrame
-        src={`https://app.kado.money?apiKey=${KADO_API_KEY}&onPayCurrency=USD&onRevCurrency=USDC&onPayAmount=100${onToAddress}&cryptoList=USDC${network}&product=BUY&networkList=ethereum,juno,terra`}
+        src={`https://app.kado.money?apiKey=${KADO_API_KEY}&onPayCurrency=USD&onRevCurrency=USDC&onPayAmount=100${onToAddress}&cryptoList=USDC${network}&product=BUY&networkList=${NETWORK_LIST}`}
         className="w-full h-full border-none rounded-b"
         title="Buy with Kado"
         onLoad={handleOnLoad}
@@ -57,6 +60,9 @@ export default function KadoModal() {
 
 function getKadoNetworkValue(chainId: string): KADO_NETWORK_VALUES {
   switch (chainId) {
+    case chainIDs.polygonMain:
+    case chainIDs.polygonTest:
+      return "polygon";
     // if Binance, just default to ethereum
     case chainIDs.binanceMain:
     case chainIDs.binanceTest:
@@ -71,6 +77,6 @@ function getKadoNetworkValue(chainId: string): KADO_NETWORK_VALUES {
       return "terra";
     default:
       logger.error(`${chainId} is not supported`);
-      return "ethereum";
+      return "polygon";
   }
 }

@@ -12,7 +12,7 @@ import { TERMS_OF_USE } from "constants/urls";
 import { steps } from "../../../routes";
 import { useRegState } from "../../StepGuard";
 import { MB_LIMIT } from "../schema";
-import { CashEligibleCheckbox } from "./CashEligibleCheckbox";
+// import { CashEligibleCheckbox } from "./CashEligibleCheckbox";
 import Level from "./Level";
 import { Radio } from "./Radio";
 import useSubmit from "./useSubmit";
@@ -82,7 +82,9 @@ export default function Form() {
           error: "field-error",
         }}
       />
-      <Label className="mt-6 mb-2">Active countries</Label>
+      <Label className="mt-6 mb-2">
+        Select the countries your organization is active in
+      </Label>
       <ActivityCountries<FV, "activeInCountries"> name="activeInCountries" />
 
       <Separator classes="my-8" />
@@ -127,7 +129,7 @@ export default function Form() {
         <Radio value="No" />
       </div>
       <Separator classes="my-8" />
-      <CashEligibleCheckbox />
+      {/*<CashEligibleCheckbox />*/}
       <CheckField<FV>
         name="hasAuthority"
         required
