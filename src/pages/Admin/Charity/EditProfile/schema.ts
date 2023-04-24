@@ -20,13 +20,7 @@ export const MAX_SIZE_IN_BYTES = 1e6;
 // we only need to validate the pre-crop image and if we confirm it is valid
 // we can be sure that the cropped image is valid too
 const fileObj = object().shape<SchemaShape<ImgLink>>({
-  precropFile: genFileSchema(MAX_SIZE_IN_BYTES, VALID_MIME_TYPES).when(
-    "publicUrl",
-    {
-      is: (value: string) => !value,
-      then: (schema) => schema.required("required"),
-    }
-  ),
+  precropFile: genFileSchema(MAX_SIZE_IN_BYTES, VALID_MIME_TYPES),
 });
 
 //construct strict shape to avoid hardcoding shape keys
