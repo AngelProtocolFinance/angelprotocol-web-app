@@ -103,7 +103,7 @@ export const LINKS: {
     title: "Deposit",
     to: sidebarRoutes.deposits,
     icon: {
-      type: "MoneyBill",
+      type: "Deposit",
       size: 24,
     },
   },
