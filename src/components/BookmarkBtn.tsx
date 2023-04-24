@@ -70,7 +70,7 @@ export default function BookmarkBtn({ endowId, children }: Props) {
         onClick={toogleBookmark}
         disabled={isLoading}
         className={`flex items-center gap-1 ${
-          isBookmarked || isHovered ? "text-red" : "text-white"
+          isBookmarked || isHovered ? "text-red" : ""
         }`}
         onMouseOver={(e) => {
           e.preventDefault();
