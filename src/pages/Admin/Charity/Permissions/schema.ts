@@ -23,7 +23,6 @@ export type FormValues = UpdateableFormValues & {
 };
 
 const delegatedKey: keyof FormField = "delegated";
-const ownerControlledKey: keyof FormField = "ownerControlled";
 const govControlledKey: keyof FormField = "govControlled";
 
 const fieldShape: SchemaShape<FormField> = {
@@ -32,17 +31,8 @@ const fieldShape: SchemaShape<FormField> = {
     then: requiredWalletAddr(),
     otherwise: (schema) => schema.optional(),
   }),
-  govControlled: Yup.boolean().when(ownerControlledKey, {
-    is: true,
-    then: (schema) =>
-      schema.isFalse(
-        "Cannot give permissions to both Admin Wallet and Governance"
-      ),
-    otherwise: (schema) =>
-      schema.isTrue(
-        "Please give permissions to either Admin Wallet or Governance"
-      ),
-  }),
+  // it is sufficient to validate only `ownerControlled` field, since the way the validation is defined
+  // makes it necessary for the user to check either `govControlled` or `ownerControlled` to make the form valid.
   ownerControlled: Yup.boolean().when(govControlledKey, {
     is: true,
     then: (schema) =>
@@ -56,18 +46,12 @@ const fieldShape: SchemaShape<FormField> = {
   }),
 };
 
-/**
- * Defined fields that have cyclical validation dependency to pass.
- * For more details see https://github.com/jquense/yup/issues/176#issuecomment-367352042
- */
-const excludes: [string, string][] = [[govControlledKey, ownerControlledKey]];
-
 const shape: SchemaShape<FormValues> = {
-  accountFees: Yup.object().shape(fieldShape, excludes),
-  beneficiaries_allowlist: Yup.object().shape(fieldShape, excludes),
-  contributors_allowlist: Yup.object().shape(fieldShape, excludes),
-  donationSplitParams: Yup.object().shape(fieldShape, excludes),
-  profile: Yup.object().shape(fieldShape, excludes),
+  accountFees: Yup.object().shape(fieldShape),
+  beneficiaries_allowlist: Yup.object().shape(fieldShape),
+  contributors_allowlist: Yup.object().shape(fieldShape),
+  donationSplitParams: Yup.object().shape(fieldShape),
+  profile: Yup.object().shape(fieldShape),
 };
 
 export const schema = Yup.object(shape);
