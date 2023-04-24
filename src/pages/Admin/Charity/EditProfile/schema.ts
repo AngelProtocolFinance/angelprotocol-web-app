@@ -1,8 +1,6 @@
-import * as Yup from "yup";
 import { array, object, string } from "yup";
 import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
-import { Country } from "types/countries";
 import { ImgLink } from "components/ImgEditor";
 import { OptionType } from "components/Selector";
 import { genFileSchema } from "schemas/file";
