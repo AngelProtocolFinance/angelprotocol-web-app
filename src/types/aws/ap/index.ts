@@ -14,7 +14,7 @@ type EndowmentBalances = {
 };
 
 type EndowmentBase = {
-  hq_country: string;
+  hq_country?: string;
   endow_designation: EndowDesignation;
   active_in_countries?: string[];
   categories: { sdgs: UNSDG_NUMS[] };
@@ -29,7 +29,7 @@ type EndowmentBase = {
 export type EndowmentProfile = EndowmentBase & {
   contact_email: string;
   logo: string;
-  overview: string;
+  overview?: string;
   published: boolean;
   registration_number?: string;
   social_media_urls: {
