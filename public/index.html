@@ -194,5 +194,18 @@
       gtag("js", new Date());
       (process.env.REACT_APP_APP_TYPE === "AST") ? gtag('config', 'G-PWW5LK3ZN7') : gtag("config", "G-Z2YP33XHHD");
     </script>
+    <!-- START SmartLook script -->
+    <script type='text/javascript'>
+      (function () {
+        if (process.env.REACT_APP_APP_TYPE === "AST") {
+          window.smartlook||(function(d) {
+            var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];
+            var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';
+            c.charset='utf-8';c.src='https://web-sdk.smartlook.com/recorder.js';h.appendChild(c);
+            })(document);
+            smartlook('init', 'b78ba41db4f7ae0715167b9d19f512c878c22c2c', { region: 'eu' });
+          }
+      }();
+    </script>
   </body>
 </html>
