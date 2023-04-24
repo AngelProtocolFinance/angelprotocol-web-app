@@ -37,8 +37,9 @@ export default function Strategy(props: TStrategy) {
         <KeyVal title="Current balance">{humanize(invested)} USD</KeyVal>
         <button
           type="button"
+          disabled={true}
           onClick={() => showModal(Investor, props)}
-          className="mt-6 @lg:mt-0 btn-outline-filled px-8 py-2 ml-auto w-full @lg:w-auto col-span-full"
+          className="mt-6 @lg:mt-0 btn-outline-filled px-8 py-2 ml-auto w-full @lg:w-auto col-span-full disabled:bg-gray-l5"
         >
           invest
         </button>
