@@ -1,13 +1,13 @@
 import { ErrorMessage } from "@hookform/error-message";
-import { getTypedKeys } from "helpers";
 import MobileTable from "./MobileTable";
 import Table from "./Table";
+import { getFieldErrorName } from "./helpers/getFieldErrorName";
 import useSubmit from "./useSubmit";
 
 export default function Form() {
   const { isSubmitting, errors, reset, submit } = useSubmit();
 
-  const errorName = getTypedKeys(errors).find((errKey) => !!errors[errKey]);
+  const errorName = getFieldErrorName(errors);
 
   return (
     <form className="grid gap-6 w-full" onSubmit={submit}>
@@ -33,7 +33,7 @@ export default function Form() {
         {errorName && (
           <ErrorMessage
             errors={errors}
-            name={`${errorName}.delegate_address`}
+            name={errorName}
             as="span"
             className="field-error static text-sm"
           />

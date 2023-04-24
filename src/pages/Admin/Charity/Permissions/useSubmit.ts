@@ -8,7 +8,7 @@ import useTxSender from "hooks/useTxSender";
 import { isEmpty } from "helpers";
 import { getPayloadDiff, getTagPayloads } from "helpers/admin";
 import { UnexpectedStateError } from "errors/errors";
-import createUpdateEndowmentControllerMsg from "./createUpdateEndowmentControllerMsg";
+import { createUpdateEndowmentControllerMsg } from "./helpers";
 import { FormValues } from "./schema";
 import useUserAuthorization from "./useUserAuthorization";
 
