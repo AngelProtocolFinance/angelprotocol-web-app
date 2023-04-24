@@ -35,7 +35,7 @@ const shape: SchemaShape<FormValues> = {
   tagline: requiredString.max(140, "max length is 140 chars"),
   image: fileObj,
   logo: fileObj,
-  url: url.required("required"),
+  url: url,
   // registration_number: no need to validate,
   hq_country: object().shape<SchemaShape<Country>>({
     name: requiredString,
