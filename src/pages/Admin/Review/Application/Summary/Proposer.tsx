@@ -21,10 +21,11 @@ import { proposalShape } from "../../../constants";
 type Props = {
   type: TxType;
   appId: number;
+  reference: string;
 };
 
 type FV = ProposalBase & /** meta */ Props;
-export default function Proposer({ type, appId }: Props) {
+export default function Proposer({ type, appId, reference }: Props) {
   const methods = useForm<FV>({
     resolver: yupResolver(object().shape<SchemaShape<FV>>(proposalShape)),
     defaultValues: {
@@ -70,7 +71,7 @@ export default function Proposer({ type, appId }: Props) {
 
       const res = await updateReg({
         type: "application",
-        reference: "",
+        reference,
         approve_tx_id: +txId,
       });
 
