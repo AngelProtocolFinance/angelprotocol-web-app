@@ -91,7 +91,7 @@ export interface NewAST extends Tupleable {
   categories: Categories;
   tier: EndowTier; //not specified in launchpad design
   endow_type: EndowType; //not used in endowment creation
-  logo: "";
+  logo: string;
   image: "";
   cw4_members: string[]; // in launchpad design, weight is specified for each member
   kycDonorsOnly: false; //not specified in launchpad design
