@@ -1,6 +1,7 @@
 import { Completed, TFee } from "slices/launchpad/types";
 import { SettingsPermission } from "types/contracts";
 import { Fee, NewAST } from "types/contracts/evm";
+import angelProtocolRoundedLogo from "assets/images/angelprotocol-rounded-logo.png";
 import { roundDownToNum } from "helpers";
 import { blockTime } from "helpers/admin";
 import { ADDRESS_ZERO } from "constants/evm";
@@ -26,7 +27,7 @@ export default function toEVMAST(
     categories: { sdgs: [], general: [] }, //not specified in launchpad design
     tier: 0, //not specified in launchpad design
     endow_type: 1,
-    logo: "",
+    logo: angelProtocolRoundedLogo,
     image: "",
     cw4_members: [creator], //in launchpad design, weight is specified for each member
     kycDonorsOnly: false, //not specified in launchpad design
