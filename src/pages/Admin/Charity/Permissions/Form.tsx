@@ -1,7 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 import MobileTable from "./MobileTable";
 import Table from "./Table";
-import { getFieldErrorName } from "./helpers/getFieldErrorName";
+import { getFieldErrorName } from "./helpers";
 import useSubmit from "./useSubmit";
 
 export default function Form() {
