@@ -5364,7 +5364,7 @@ __metadata:
     eslint: ^8.3.0
     eslint-config-prettier: ^8.7.0
     eslint-plugin-prettier: ^4.2.1
-    ethereum-multicall: ^2.16.1
+    ethereum-multicall: ^2.17.0
     https-browserify: ^1.0.0
     husky: ^8.0.3
     is-mobile: ^4.0.0
@@ -8922,13 +8922,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ethereum-multicall@npm:^2.16.1":
-  version: 2.16.1
-  resolution: "ethereum-multicall@npm:2.16.1"
+"ethereum-multicall@npm:^2.17.0":
+  version: 2.17.0
+  resolution: "ethereum-multicall@npm:2.17.0"
   dependencies:
     "@ethersproject/providers": ^5.0.10
     ethers: ^5.0.15
-  checksum: d9413327b77697d1030011bd9b4af9501a4064924c849a9f07701bcbc9377524f1ead1838aadf725765ea28376895f1a40bd8c63bf87dbaa5ce8b10919768f2d
+  checksum: 7e3f9b6d5564a052b3176b30316872e0284b310eaf2b0e4d6abfe83219adfae04b55a922c404b76b0fe8430280c4eacddda973a3b9191d37f37e82b774855c87
   languageName: node
   linkType: hard
 
