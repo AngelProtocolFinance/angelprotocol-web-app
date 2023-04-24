@@ -102,7 +102,7 @@ export default function Table({ className = "" }) {
               <input
                 type="text"
                 className={`field-input min-w-[9rem] w-full truncate py-1.5 ${
-                  !errors[fieldName]
+                  !errors[fieldName]?.delegate_address
                     ? ""
                     : "border-red dark:border-red-l2 focus:border-red focus:dark:border-red-l2"
                 }`}

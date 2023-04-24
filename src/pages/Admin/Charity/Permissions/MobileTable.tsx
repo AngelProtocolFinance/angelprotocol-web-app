@@ -115,7 +115,7 @@ export default function MobileTable({ className = "" }) {
                       id={`del-addr-input-${fieldName}`}
                       disabled={delegateAddressDisabled}
                       className={`field-input truncate h-8 ${
-                        !errors[fieldName]
+                        !errors[fieldName]?.delegate_address
                           ? ""
                           : "border-red dark:border-red-l2 focus:border-red focus:dark:border-red-l2"
                       }`}
