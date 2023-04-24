@@ -56,22 +56,18 @@ const fieldShape: SchemaShape<FormField> = {
   }),
 };
 
+/**
+ * Defined fields that have cyclical validation dependency to pass.
+ * For more details see https://github.com/jquense/yup/issues/176#issuecomment-367352042
+ */
+const excludes: [string, string][] = [[govControlledKey, ownerControlledKey]];
+
 const shape: SchemaShape<FormValues> = {
-  accountFees: Yup.object().shape(fieldShape, [
-    [govControlledKey, ownerControlledKey],
-  ]),
-  beneficiaries_allowlist: Yup.object().shape(fieldShape, [
-    [govControlledKey, ownerControlledKey],
-  ]),
-  contributors_allowlist: Yup.object().shape(fieldShape, [
-    [govControlledKey, ownerControlledKey],
-  ]),
-  donationSplitParams: Yup.object().shape(fieldShape, [
-    [govControlledKey, ownerControlledKey],
-  ]),
-  profile: Yup.object().shape(fieldShape, [
-    [govControlledKey, ownerControlledKey],
-  ]),
+  accountFees: Yup.object().shape(fieldShape, excludes),
+  beneficiaries_allowlist: Yup.object().shape(fieldShape, excludes),
+  contributors_allowlist: Yup.object().shape(fieldShape, excludes),
+  donationSplitParams: Yup.object().shape(fieldShape, excludes),
+  profile: Yup.object().shape(fieldShape, excludes),
 };
 
 export const schema = Yup.object(shape);
