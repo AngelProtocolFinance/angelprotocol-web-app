@@ -10,14 +10,17 @@ import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import { TxPrompt } from "components/Prompt";
 import { createTx } from "contracts/createTx/createTx";
-import { multisig as Multisig } from "contracts/evm/multisig";
+import {
+  ExecutionFailureEvent,
+  multisig as Multisig,
+} from "contracts/evm/multisig";
 import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
 import { useAdminResources } from "../Guard";
 
 const ERROR = "error";
 const processLog: LogProcessor = (logs) => {
-  const topic = Multisig.getEventTopic("ExecutionFailure");
+  const topic = Multisig.getEventTopic(ExecutionFailureEvent);
   const log = logs.find((l) => l.topics.includes(topic));
   if (log) return ERROR;
 };
