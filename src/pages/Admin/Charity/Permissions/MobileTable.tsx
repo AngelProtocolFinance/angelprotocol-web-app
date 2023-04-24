@@ -84,7 +84,8 @@ export default function MobileTable({ className = "" }) {
                           label: "uppercase text-xs font-bold",
                           input: "checkbox-orange",
                         }}
-                        disabled={checkboxDisabled}
+                        disabled={true}
+                        // disabled={checkboxDisabled} --> hidden until available
                       >
                         Governance
                       </CheckField>
