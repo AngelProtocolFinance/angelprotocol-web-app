@@ -20,7 +20,7 @@ export default function toEVMAST(
   return {
     owner: creator,
     withdrawBeforeMaturity: true, //not specified in launchpad design
-    maturityTime: blockTime(maturity.date),
+    maturityTime: maturity.date ? blockTime(maturity.date) : 0,
     // maturityHeight: 0; //not specified in launchpad design
     maturityHeight: 0,
     name: about.name,
