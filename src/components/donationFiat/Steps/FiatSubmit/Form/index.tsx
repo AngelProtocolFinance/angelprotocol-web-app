@@ -10,7 +10,6 @@ import { useSetter } from "store/accessors";
 import { SubmitStep, setStep } from "slices/donation";
 import { humanize } from "helpers";
 import { appRoutes } from "constants/routes";
-import { getISOCountryCode } from "./countryList";
 import getBreakdown from "./getBreakdown";
 
 export default function Form(props: SubmitStep) {
@@ -35,7 +34,7 @@ export default function Form(props: SubmitStep) {
     const options = {
       amount: +token.amount,
       charityName: props.recipient.name,
-      countryCode: getISOCountryCode(data.country.name),
+      countryCode: data.country.code,
       endowmentId: props.recipient.id,
       sourceCurrencyCode: token.symbol,
       splitLiq: props.details.pctLiquidSplit.toString(),
