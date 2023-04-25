@@ -14,6 +14,7 @@ export default function FiatSubmit(props: SubmitStep) {
     country: {
       name: "",
       flag: "",
+      code: "",
     },
     paymentOption: "CARD",
   };

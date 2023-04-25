@@ -112,7 +112,7 @@ function formatDocumentation({
       value: sdg,
       label: `${sdg} - ${unsdgs[sdg].title}`,
     })),
-    hqCountry: { name: HqCountry, flag: "" },
+    hqCountry: { name: HqCountry, flag: "", code: "" },
     endowDesignation: { value: EndowDesignation, label: EndowDesignation },
     //level 2
     financialStatements: genFileAsset(fs || []),
