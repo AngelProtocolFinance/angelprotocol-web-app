@@ -107,6 +107,7 @@ import {
   RiMoneyDollarCircleFill,
 } from "react-icons/ri";
 import { SiHiveBlockchain } from "react-icons/si";
+import { TbPigMoney } from "react-icons/tb";
 import { TiArrowUnsorted } from "react-icons/ti";
 import { VscLoading, VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
 
@@ -136,6 +137,7 @@ export const icons = {
   Crop: IoCrop,
   Dash: GoDash,
   Dashboard: MdSpaceDashboard,
+  Deposit: TbPigMoney,
   Discord: FaDiscord,
   Dislike: AiOutlineDislike,
   DollarCircle: RiMoneyDollarCircleFill,
