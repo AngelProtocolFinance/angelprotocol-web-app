@@ -1,7 +1,6 @@
 import { array, object, string } from "yup";
 import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
-import { Country } from "types/countries";
 import { ImgLink } from "components/ImgEditor";
 import { OptionType } from "components/Selector";
 import { genFileSchema } from "schemas/file";
@@ -20,13 +19,7 @@ export const MAX_SIZE_IN_BYTES = 1e6;
 // we only need to validate the pre-crop image and if we confirm it is valid
 // we can be sure that the cropped image is valid too
 const fileObj = object().shape<SchemaShape<ImgLink>>({
-  precropFile: genFileSchema(MAX_SIZE_IN_BYTES, VALID_MIME_TYPES).when(
-    "publicUrl",
-    {
-      is: (value: string) => !value,
-      then: (schema) => schema.required("required"),
-    }
-  ),
+  precropFile: genFileSchema(MAX_SIZE_IN_BYTES, VALID_MIME_TYPES),
 });
 
 //construct strict shape to avoid hardcoding shape keys
@@ -41,11 +34,8 @@ const shape: SchemaShape<FormValues> = {
   tagline: requiredString.max(140, "max length is 140 chars"),
   image: fileObj,
   logo: fileObj,
-  url: url.required("required"),
+  url: url,
   // registration_number: no need to validate,
-  hq_country: object().shape<SchemaShape<Country>>({
-    name: requiredString,
-  }),
   endow_designation: object().shape<SchemaShape<OptionType<string>>>({
     label: string().when("$isEndow", {
       is: true,
@@ -57,7 +47,6 @@ const shape: SchemaShape<FormValues> = {
     }),
   }),
   name: requiredString,
-  overview: requiredString,
   active_in_countries: array(),
   social_media_url_facebook: url,
   social_media_url_twitter: url,

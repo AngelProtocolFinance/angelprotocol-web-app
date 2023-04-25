@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { SimulContractTx } from "types/evm";
 import { useAdminResources } from "pages/Admin/Guard";
@@ -8,7 +9,7 @@ import useTxSender from "hooks/useTxSender";
 import { isEmpty } from "helpers";
 import { getPayloadDiff, getTagPayloads } from "helpers/admin";
 import { UnexpectedStateError } from "errors/errors";
-import createUpdateEndowmentControllerMsg from "./createUpdateEndowmentControllerMsg";
+import { createUpdateEndowmentControllerMsg } from "./helpers";
 import { FormValues } from "./schema";
 import useUserAuthorization from "./useUserAuthorization";
 
@@ -21,13 +22,22 @@ export default function useSubmit() {
   } = useAdminResources<"charity">();
   const { handleError } = useErrorContext();
   const {
-    formState: { isSubmitting, errors },
+    formState: { isSubmitting, errors, isValid },
     handleSubmit,
     reset,
+    trigger,
   } = useFormContext<FormValues>();
   const { wallet } = useGetWallet();
   const sendTx = useTxSender();
   const { isUserOwner, userDelegated } = useUserAuthorization();
+
+  // if this effect is omitted and there are any errors,
+  // once form is changed to a valid state the error messages do not disappear
+  useEffect(() => {
+    if (isValid) {
+      trigger();
+    }
+  }, [isValid, trigger]);
 
   async function onSubmit({
     initialValues,

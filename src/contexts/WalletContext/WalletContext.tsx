@@ -284,10 +284,10 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
             ? wcConnections
             : [
                 web3AuthConnection,
-                keplrConnection,
                 metamaskConnection,
-                binanceWalletConnection,
                 xdefiConnection,
+                binanceWalletConnection,
+                keplrConnection,
                 ...terraConnections,
                 ...wcConnections,
               ],

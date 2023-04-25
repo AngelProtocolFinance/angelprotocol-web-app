@@ -64,18 +64,14 @@ export default function Form() {
           name="registration_number"
           label="Organization’s registration number"
         />
-        <Label className="-mb-4" required>
-          Banner image of your organization
-        </Label>
+        <Label className="-mb-4">Banner image of your organization</Label>
         <ImgEditor<FV, "image">
           name="image"
           accept={VALID_MIME_TYPES}
           aspect={[4, 1]}
           classes={{ container: "mb-4", dropzone: "w-full aspect-[4/1]" }}
         />
-        <Label className="-mb-4" required>
-          Logo of your organization
-        </Label>
+        <Label className="-mb-4">Logo of your organization</Label>
         <ImgEditor<FV, "logo">
           name="logo"
           accept={VALID_MIME_TYPES}
@@ -86,9 +82,7 @@ export default function Form() {
           }}
           maxSize={MAX_SIZE_IN_BYTES}
         />
-        <Label className="-mb-4" required>
-          Description of your organization
-        </Label>
+        <Label className="-mb-4">Description of your organization</Label>
         <RichTextEditor<FV>
           fieldName="overview"
           placeHolder="A short overview of your charity"
@@ -133,9 +127,7 @@ export default function Form() {
           </>
         )}
 
-        <Label className="-mb-4" required>
-          Headquarters
-        </Label>
+        <Label className="-mb-4">Headquarters</Label>
         <CountrySelector<FV, "hq_country">
           placeholder="Select a country"
           fieldName="hq_country"

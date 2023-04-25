@@ -72,6 +72,7 @@ export default function MobileTable({ className = "" }) {
                       classes={{
                         label: "uppercase text-xs font-bold",
                         input: "checkbox-orange",
+                        error: "hidden",
                       }}
                       disabled={checkboxDisabled}
                     >
@@ -83,6 +84,7 @@ export default function MobileTable({ className = "" }) {
                         classes={{
                           label: "uppercase text-xs font-bold",
                           input: "checkbox-orange",
+                          error: "hidden",
                         }}
                         disabled={true}
                         // disabled={checkboxDisabled} --> hidden until available
@@ -95,6 +97,7 @@ export default function MobileTable({ className = "" }) {
                       classes={{
                         label: "uppercase text-xs font-bold",
                         input: "checkbox-orange",
+                        error: "hidden",
                       }}
                       disabled={checkboxDisabled}
                     >
@@ -113,7 +116,7 @@ export default function MobileTable({ className = "" }) {
                       id={`del-addr-input-${fieldName}`}
                       disabled={delegateAddressDisabled}
                       className={`field-input truncate h-8 ${
-                        !errors[fieldName]
+                        !errors[fieldName]?.delegate_address
                           ? ""
                           : "border-red dark:border-red-l2 focus:border-red focus:dark:border-red-l2"
                       }`}
