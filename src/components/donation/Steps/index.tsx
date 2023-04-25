@@ -18,7 +18,6 @@ type Props = { className?: string } & ConfigParams;
 export function Steps({ className = "", ...params }: Props) {
   const { showModal } = useModalContext();
   const state = useGetter((state) => state.donation);
-  console.log("STATE [donation > Steps > index.tsx]", state);
   const handleOpenKado = useCallback(
     () => showModal(KadoModal, {}),
     [showModal]

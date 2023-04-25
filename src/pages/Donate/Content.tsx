@@ -13,7 +13,6 @@ import { appRoutes } from "constants/routes";
 export default function Content(props: DonationRecipient) {
   const dispatch = useSetter();
   const state = useGetter((state) => state.donation);
-  console.log("STATE [Donate Content.tsx]", state);
   useEffect(() => {
     dispatch(setRecipient(props));
   }, [dispatch, props]);
