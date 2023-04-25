@@ -1,11 +1,11 @@
 import { FormValues } from "./schema";
 
 export default function Message({
-  value,
+  verification_required,
 }: {
-  value: FormValues["contributor_verification_required"];
+  verification_required: FormValues["contributor_verification_required"];
 }) {
-  return value ? (
+  return verification_required === "true" ? (
     <span>
       Contributors <b>aren't</b> able to donate anonymously. Contributor
       verification <b>is</b> enforced.

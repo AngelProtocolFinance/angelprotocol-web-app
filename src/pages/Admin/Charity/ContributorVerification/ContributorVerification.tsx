@@ -13,8 +13,13 @@ export default function ContributorVerification() {
 
   const { showModal } = useModalContext();
 
+  const contributor_verification_required = watch(
+    "contributor_verification_required"
+  );
+
   const handleChange = () =>
     showModal(ChangeSettingsPrompt, {
+      currentValue: contributor_verification_required,
       onChange: (value) => setValue("contributor_verification_required", value),
     });
 
@@ -34,7 +39,7 @@ export default function ContributorVerification() {
       <div className="flex flex-col items-start gap-8 p-8 border border-prim rounded dark:bg-blue-d6">
         <span className="font-bold text-2xl">Contributor Verification</span>
         <div className="flex justify-between items-center w-full px-4 py-3 border border-prim rounded bg-gray-l6 dark:bg-blue-d5">
-          <Message value={watch("contributor_verification_required")} />
+          <Message verification_required={contributor_verification_required} />
           <button
             type="button"
             className="btn-outline-filled w-32 h-10 text-sm"

@@ -8,10 +8,13 @@ import { FormValues } from "./schema";
 
 type Value = FormValues["contributor_verification_required"];
 
-type Props = { onChange: (value: Value) => void };
+type Props = { currentValue: Value; onChange: (value: Value) => void };
 
-export default function ChangeSettingsPrompt({ onChange }: Props) {
-  const [value, setValue] = useState<Value>("true");
+export default function ChangeSettingsPrompt({
+  currentValue,
+  onChange,
+}: Props) {
+  const [value, setValue] = useState<Value>(currentValue);
   const { closeModal } = useModalContext();
 
   return (
@@ -42,7 +45,10 @@ export default function ChangeSettingsPrompt({ onChange }: Props) {
         <button
           type="button"
           className="inline-block btn-orange w-32 h-12 text-sm"
-          onClick={() => onChange(value)}
+          onClick={() => {
+            onChange(value);
+            closeModal();
+          }}
         >
           Change
         </button>
@@ -69,7 +75,7 @@ function RadioInternal({
         container: "px-4 py-3 border border-prim rounded cursor-pointer",
       }}
     >
-      <Message value={value} />
+      <Message verification_required={value} />
     </Radio>
   );
 }
