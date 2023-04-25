@@ -22,7 +22,10 @@ const strategy: TStrategy = {
   name: "Goldfinch Senior Pool (Coming Soon)",
   description:
     "The Senior Pool is a pool of capital that is diversified across all Borrower Pools on the Goldfinch protocol. Liquidity Providers (LPs) who provide capital into the Senior Pool are capital providers in search of passive, diversified exposure across all Borrower Pools. This capital is protected by junior (first-loss) capital in each Borrower Pool.",
-  provider: { name: "Provider Name & URL", url: "https://google.com" },
+  provider: {
+    name: "More information",
+    url: "https://app.goldfinch.finance/pools/senior",
+  },
   rating: "-",
   type: "Uncollateralized Lending",
   apy: 7.8,
