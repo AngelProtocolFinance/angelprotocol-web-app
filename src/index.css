@@ -158,7 +158,7 @@
   .field > input[aria-invalid="true"] {
     @apply border-red;
   }
-/* This css is required to handle filedropzone error UI  */
+  /* This css is required to handle filedropzone error UI  */
   .dropzone[aria-invalid="true"] {
     @apply border-red !important;
   }
@@ -188,6 +188,9 @@
 @layer components {
   .btn-outline-filled {
     @apply btn-outline bg-orange-l5 dark:bg-blue-d4 hover:bg-orange-l4 dark:hover:bg-blue-d3;
+  }
+  .btn-outline-gray {
+    @apply btn-outline bg-gray-l5 hover:bg-gray-l6 active:bg-gray-l4 dark:bg-bluegray-d1 dark:hover:bg-bluegray dark:active:bg-bluegray-d2;
   }
   .btn-gift {
     @apply text-base sm:text-sm;
