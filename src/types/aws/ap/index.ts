@@ -80,6 +80,7 @@ export type EndowmentProfileUpdate = {
   active_in_countries: string[];
   categories_general: string[];
   categories_sdgs: UNSDG_NUMS[];
+  contributor_verification_required: boolean;
   hq_country: string;
   endow_designation: string;
   image: string;
