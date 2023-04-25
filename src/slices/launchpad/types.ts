@@ -21,6 +21,7 @@ export type Beneficiary = {
   share: string; // "1" - "100"
 };
 export type TMaturity = {
+  willMature: boolean;
   date: string;
   beneficiaries: Beneficiary[];
 };
