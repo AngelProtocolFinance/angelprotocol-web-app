@@ -160,6 +160,11 @@ export const CHARITY_LINKS: LINKS = {
 export const AST_LINKS: LINKS = {
   HEADER_LINKS: [
     {
+      title: "GitHub",
+      href: "https://github.com/AngelProtocolFinance/angelprotocol-web-app",
+      external: true,
+    },
+    {
       title: "Read the Docs",
       href: SUBDOMAIN_BUILDER("docs", DOMAIN),
       external: true,
