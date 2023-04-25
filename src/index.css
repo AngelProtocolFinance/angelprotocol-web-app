@@ -90,6 +90,9 @@
   }
 
   .radio {
+    @apply flex items-center gap-4 cursor-pointer peer-disabled:cursor-default data-[required=true]:after:ml-1 data-[required=true]:after:content-['*'] data-[required=true]:after:text-red;
+  }
+  .radio > input {
     @apply cursor-pointer appearance-none h-4 relative aspect-square border rounded-full before:content-[''] before:h-2.5 before:aspect-square before:absolute-center before:rounded-full checked:before:bg-orange disabled:checked:before:bg-gray-l5 disabled:checked:before:dark:bg-bluegray focus:outline-none focus:ring-1 focus:ring-orange;
   }
 
