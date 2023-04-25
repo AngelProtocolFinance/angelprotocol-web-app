@@ -41,6 +41,7 @@ export const adminRoutes = {
   templates: "templates",
   widget_config: "widget-config",
   contributions: "contributions",
+  contributor_verification: "contributor-verification",
   permissions: "permissions",
 
   //charity

@@ -7,6 +7,7 @@ import Proposals from "../Proposals";
 import { LINKS } from "../constants";
 import Account from "./Account";
 import Contributions from "./Contributions";
+import ContributorVerification from "./ContributorVerification";
 import Dashboard from "./Dashboard";
 import EditProfile from "./EditProfile";
 import Invest from "./Invest";
@@ -34,7 +35,10 @@ const LINK_GROUPS: LinkGroup[] = [
     title: "Manage",
     links: [LINKS[adminRoutes.proposals]],
   },
-  { title: "Settings", links: [LINKS[adminRoutes.permissions]] },
+  {
+    title: "Settings",
+    links: [LINKS.contributor_verification, LINKS[adminRoutes.permissions]],
+  },
 ];
 
 export default function Charity() {
@@ -54,6 +58,10 @@ export default function Charity() {
         {/*<Route path={adminRoutes.settings} element={<Settings />} />*/}
         <Route path={adminRoutes.edit_profile} element={<EditProfile />} />
         <Route path={adminRoutes.permissions} element={<Permissions />} />
+        <Route
+          path={adminRoutes.contributor_verification}
+          element={<ContributorVerification />}
+        />
         <Route path={adminRoutes.widget_config}>
           <Route index element={<WidgetConfigurer />} />
           <Route path=":endowId" element={<WidgetConfigurer />} />
