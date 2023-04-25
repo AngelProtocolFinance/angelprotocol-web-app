@@ -18,6 +18,7 @@ type BaseFormShape = { [index: string]: Country };
 export const placeHolderCountryOption: Country = {
   name: "",
   flag: "",
+  code: "",
 };
 
 const nameKey: keyof Country = "name";

@@ -65,7 +65,7 @@ function FormWithContext(props: Profile) {
     endow_designation: designation
       ? getEndowDesignationLabelValuePair(designation)
       : { label: "", value: "" },
-    hq_country: { flag: "", name: props.hq_country ?? "" },
+    hq_country: { flag: "", name: props.hq_country ?? "", code: "" },
     categories_sdgs: sdgs.map((x) => getSDGLabelValuePair(x, unsdgs[x].title)),
     active_in_countries: active_in_countries.map((x) => ({
       label: x,
