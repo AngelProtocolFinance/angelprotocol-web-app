@@ -36,6 +36,8 @@ export default function Menu({
               key={`header-link-${link.title}`}
               className={styles}
               href={link.href}
+              target="_blank"
+              rel="noreferrer"
             >
               {link.title}
             </a>

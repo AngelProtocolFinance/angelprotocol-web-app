@@ -13,6 +13,8 @@ export default function DesktopNav({ classes, links }: Props) {
             key={`header-link-${link.title}`}
             className={styles}
             href={link.href}
+            target="_blank"
+            rel="noreferrer"
           >
             {link.title}
           </a>
