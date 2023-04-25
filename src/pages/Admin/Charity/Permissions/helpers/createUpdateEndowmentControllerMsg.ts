@@ -4,9 +4,9 @@ import {
   SettingsPermission,
 } from "types/contracts";
 import { ADDRESS_ZERO } from "constants/evm";
-import { UpdateableFormValues } from "./schema";
+import { UpdateableFormValues } from "../schema";
 
-export default function createUpdateEndowmentControllerMsg(
+export function createUpdateEndowmentControllerMsg(
   endowId: number,
   changes: Partial<UpdateableFormValues>,
   initial: SettingsController
