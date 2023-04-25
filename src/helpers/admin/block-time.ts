@@ -1,8 +1,9 @@
 /**
  *
- * @param timestamp - block timestamp in seconds
+ * @param timestamp - block timestamp in seconds or 0
  */
-export const hasElapsed = (timestamp: number) => timestamp <= blockTime("now");
+export const hasElapsed = (timestamp: number) =>
+  timestamp === 0 ? false : timestamp <= blockTime("now");
 
 /**
  *
