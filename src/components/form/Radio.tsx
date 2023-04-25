@@ -1,4 +1,3 @@
-import { ErrorMessage } from "@hookform/error-message";
 import { PropsWithChildren } from "react";
 import { Controller, FieldValues, Path, useFormContext } from "react-hook-form";
 import { Classes } from "./types";
@@ -21,7 +20,7 @@ export function Radio<T extends FieldValues, K extends Path<T>>({
   const { control } = useFormContext<T>();
 
   const id = `__${name}`;
-  const { container, input, lbl, error } = unpack(classes);
+  const { container, input, lbl } = unpack(classes);
 
   return (
     <Controller
@@ -29,7 +28,7 @@ export function Radio<T extends FieldValues, K extends Path<T>>({
       name={name}
       render={({
         field: { value: controlValue, onChange },
-        formState: { isSubmitting, errors },
+        formState: { isSubmitting },
       }) => (
         <div className={`flex items-center gap-4 ${container}`}>
           <input
@@ -46,14 +45,6 @@ export function Radio<T extends FieldValues, K extends Path<T>>({
               {children}
             </label>
           )}
-
-          <ErrorMessage
-            data-error
-            errors={errors}
-            name={name as any}
-            as="p"
-            className={error}
-          />
         </div>
       )}
     />
