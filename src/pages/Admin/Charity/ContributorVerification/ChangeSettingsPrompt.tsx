@@ -1,11 +1,17 @@
-import { PropsWithChildren } from "react";
+import { useState } from "react";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon/Icon";
 import Modal from "components/Modal";
+import { Radio } from "components/form";
+import Message from "./Message";
+import { FormValues } from "./schema";
 
-export default function ChangeSettingsPrompt({
-  children,
-}: PropsWithChildren<{}>) {
+type Value = FormValues["contributor_verification_required"];
+
+type Props = { onChange: (value: Value) => void };
+
+export default function ChangeSettingsPrompt({ onChange }: Props) {
+  const [value, setValue] = useState<Value>("true");
   const { closeModal } = useModalContext();
 
   return (
@@ -21,7 +27,10 @@ export default function ChangeSettingsPrompt({
           <Icon type="Close" size={24} />
         </button>
       </div>
-      {children}
+      <div className="flex flex-col justify-center gap-4 px-8 py-12">
+        <RadioInternal checkedValue={value} onChange={setValue} value="false" />
+        <RadioInternal checkedValue={value} onChange={setValue} value="true" />
+      </div>
       <div className="flex justify-end gap-3 p-3 sm:px-8 sm:py-4 empty:h-12 w-full text-center bg-orange-l6 dark:bg-blue-d7 border-t border-prim">
         <button
           type="button"
@@ -33,11 +42,34 @@ export default function ChangeSettingsPrompt({
         <button
           type="button"
           className="inline-block btn-orange w-32 h-12 text-sm"
-          onClick={closeModal}
+          onClick={() => onChange(value)}
         >
           Change
         </button>
       </div>
     </Modal>
+  );
+}
+
+function RadioInternal({
+  checkedValue,
+  value,
+  onChange,
+}: {
+  checkedValue: Value;
+  value: Value;
+  onChange: (value: Value) => void;
+}) {
+  return (
+    <Radio<Value>
+      checked={checkedValue === value}
+      onChange={onChange}
+      value={value}
+      classes={{
+        container: "px-4 py-3 border border-prim rounded cursor-pointer",
+      }}
+    >
+      <Message value={value} />
+    </Radio>
   );
 }
