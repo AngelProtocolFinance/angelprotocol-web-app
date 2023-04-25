@@ -3,6 +3,7 @@ import ThemeToggle from "App/Header/ThemeToggle";
 import { NavLink } from "react-router-dom";
 import { Link } from "../../types";
 import { useModalContext } from "contexts/ModalContext";
+import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import Image, { ImageProps } from "components/Image";
 import { createNavLinkStyler } from "helpers";
@@ -32,13 +33,13 @@ export default function Menu({
       <nav className="mt-8 grid gap-y-4 w-full px-6 font-extrabold font-heading text-white text-3xl">
         {links.map((link) =>
           link.external ? (
-            <a
+            <ExtLink
               key={`header-link-${link.title}`}
               className={styles}
               href={link.href}
             >
               {link.title}
-            </a>
+            </ExtLink>
           ) : (
             <NavLink
               key={`header-link-${link.title}`}
