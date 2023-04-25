@@ -72,7 +72,7 @@ export default function Form(props: SubmitStep) {
           fieldName="country"
           onReset={() => resetField("country")}
           classes={{
-            container: "px-4 bg-gray-l5 dark:bg-blue-d6",
+            container: "px-4 dark:bg-blue-d6",
             input: "py-3.5 placeholder:text-sm",
             error: "field-error",
           }}
