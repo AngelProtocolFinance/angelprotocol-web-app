@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { date, object } from "yup";
+import { date, lazy, object, string } from "yup";
 import { FV } from "./types";
 import { SchemaShape } from "schemas/types";
 import { dateToFormFormat } from "components/form";
@@ -13,13 +13,20 @@ export default withStepGuard<4>(function Maturity({ data }) {
   const methods = useForm<FV>({
     resolver: yupResolver(
       object().shape<SchemaShape<FV>>({
-        date: date()
-          .typeError("invalid date")
-          .min(new Date(), "must be in the future"),
+        date: lazy((val) =>
+          val === ""
+            ? string()
+            : date()
+                .typeError("invalid date")
+                .min(new Date(), "must be in the future")
+        ),
       })
     ),
     defaultValues: data
-      ? { ...data, date: dateToFormFormat(new Date(data.date)) }
+      ? {
+          ...data,
+          date: data.date ? "" : dateToFormFormat(new Date(data.date)),
+        }
       : {
           date: "",
           beneficiaries: [],
@@ -31,7 +38,7 @@ export default withStepGuard<4>(function Maturity({ data }) {
     <FormProvider {...methods}>
       <Form
         onSubmit={handleSubmit(({ date, ...data }) =>
-          update({ ...data, date: new Date(date).toISOString() })
+          update({ ...data, date: date ? new Date(date).toISOString() : "" })
         )}
       />
     </FormProvider>
