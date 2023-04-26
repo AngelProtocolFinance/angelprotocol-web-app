@@ -134,7 +134,7 @@ export const customApi = junoApi.injectEndpoints({
       async queryFn(args) {
         //TODO: get this from registrar
         const tokens: AcceptedTokens = {
-          cw20: ["0xaBCe32FBA4C591E8Ea5A5f711F7112dC08BCee74"],
+          cw20: ["0xe6b8a5CF854791412c1f6EFC7CAf629f5Df1c747"],
         };
 
         const balances = (type: AccountType) =>
