@@ -1,21 +1,16 @@
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
+import { TStrategy } from "types/aws";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import Modal from "components/Modal";
 import { LoadingStatus } from "components/Status";
 import TokenField from "components/TokenField";
-import { TStrategy } from "../strats";
 import AccountOptions from "./AccountOptions";
 import LockDuration from "./LockDuration";
 import useSubmit from "./useSubmit";
 
-export default function Form({
-  balances,
-  name,
-  description,
-  rating,
-}: TStrategy) {
+export default function Form({ name, description, rating }: TStrategy) {
   const { getValues, handleSubmit } = useFormContext<FV>();
   const { isSending } = useSubmit("13123", "liquid");
   const { closeModal } = useModalContext();
@@ -50,7 +45,7 @@ export default function Form({
         />
         <KeyValue title="Accepted Currency" value="USDC" />
       </div>
-      <AccountOptions balances={balances} classes="mx-8 mb-6" />
+      <AccountOptions balances={{ locked: 0, liquid: 0 }} classes="mx-8 mb-6" />
       <LockDuration classes="mx-8" />
       <TokenField<FV, "token">
         name="token"

@@ -1,3 +1,4 @@
+import { TStrategy } from "types/aws";
 import Balances from "../common/Balances";
 import Strategy from "./Strategy";
 import { strategies } from "./strats";
@@ -13,7 +14,7 @@ export default function Invest() {
         Featured Strategies
       </h3>
       <div className="grid gap-3">
-        {strategies.map((strategy, idx) => (
+        {strategies.map((strategy: TStrategy, idx: number) => (
           <Strategy key={idx} {...strategy} />
         ))}
       </div>

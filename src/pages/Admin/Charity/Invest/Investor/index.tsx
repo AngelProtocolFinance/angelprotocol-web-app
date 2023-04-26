@@ -1,13 +1,16 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues } from "./types";
+import { TStrategy } from "types/aws";
 import { TokenWithAmount } from "types/slices";
-import { TStrategy } from "../strats";
 import Form from "./Form";
 import { schema } from "./schema";
 
 export default function Investor(props: TStrategy) {
-  const { balances } = props;
+  const balances = {
+    locked: 0,
+    liquid: 0,
+  };
   const token: TokenWithAmount = {
     approved: true,
     decimals: 6,
