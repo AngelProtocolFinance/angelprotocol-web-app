@@ -13,10 +13,10 @@ export default function MyEndowments({ endowments, showEndowments }: Props) {
         showEndowments ? "max-h-56" : "max-h-0"
       } overflow-hidden transition-max-height duration-500 ease-in-out`}
     >
-      <div className={`grid p-2 gap-3`}>
-        <h3 className="text-sm text-gray-d1 dark:text-gray">
+      <div className="grid py-2 mt-5 gap-3">
+        <p className="text-sm text-gray-d1 dark:text-gray font-bold">
           Other {IS_AST ? "Angel Smart Treasuries" : "Endowments"}
-        </h3>
+        </p>
         <div className="overflow-y-auto max-h-40 scroller grid gap-3">
           {endowments.map((endowment) => (
             <div
