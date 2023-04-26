@@ -2,11 +2,13 @@ import { useState } from "react";
 import { VerificationRequired } from "./types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
+import useUpdateEndowmentProfile from "hooks/useUpdateEndowmentProfile";
 import ChangeSettingsPrompt from "./ChangeSettingsPrompt";
 import Message from "./Message";
 
 export default function ContributorVerification() {
-  const { contributor_verification_required } = useAdminResources<"charity">();
+  const { id, owner, contributor_verification_required } =
+    useAdminResources<"charity">();
 
   const originalValue = contributor_verification_required ? "yes" : "no";
 
@@ -14,6 +16,8 @@ export default function ContributorVerification() {
     useState<VerificationRequired>(originalValue);
 
   const { showModal } = useModalContext();
+
+  const updateProfile = useUpdateEndowmentProfile();
 
   const handleChange = () =>
     showModal(ChangeSettingsPrompt, {
@@ -25,9 +29,13 @@ export default function ContributorVerification() {
     <form
       className="grid gap-8"
       onReset={() => setVerificationRequired(originalValue)}
-      onSubmit={() => {
-        console.log("submitted", verificationRequired);
-      }}
+      onSubmit={() =>
+        updateProfile({
+          id,
+          owner,
+          contributor_verification_required: verificationRequired === "yes",
+        })
+      }
     >
       <h2 className="font-bold text-3xl">Other settings</h2>
       <div className="flex flex-col items-start gap-8 p-8 border border-prim rounded dark:bg-blue-d6">
