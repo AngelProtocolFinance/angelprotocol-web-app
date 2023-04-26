@@ -21,6 +21,7 @@ type EndowmentBase = {
   id: number;
   image: string;
   kyc_donors_only: boolean;
+  contributor_verification_required: boolean;
 
   name: string;
   tagline: string;

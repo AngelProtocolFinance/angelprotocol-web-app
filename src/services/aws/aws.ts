@@ -168,6 +168,7 @@ const endowCardObj: {
   id: "",
   image: "",
   kyc_donors_only: "",
+  contributor_verification_required: "",
   name: "",
   tagline: "",
   endow_type: "",
