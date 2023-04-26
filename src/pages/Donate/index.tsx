@@ -9,6 +9,7 @@ import { PAYMENT_WORDS, titleCase } from "constants/env";
 import Content from "./Content";
 
 const profile = {
+  type: "ast",
   name: "test",
   kyc_donors_only: false,
   contributor_verification_required: false,
@@ -49,7 +50,9 @@ export default function Donate() {
         name={profile.name}
         id={numId}
         isKYCRequired={profile.kyc_donors_only ?? false}
-        skipKycStep={!profile.contributor_verification_required}
+        skipKycStep={
+          profile.type === "ast" && !profile.contributor_verification_required
+        }
       />
       {/* </>
         )}
