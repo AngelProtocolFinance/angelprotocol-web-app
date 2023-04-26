@@ -76,6 +76,7 @@ export interface DecodedEndowment {
   //invested_strategies:
   //rebalance
   kycDonorsOnly: boolean;
+  contributorVerificationRequired: boolean;
   settingsController: SettingsController;
   //pending_redemptions
   //proposal_link

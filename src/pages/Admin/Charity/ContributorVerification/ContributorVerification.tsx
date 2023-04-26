@@ -1,12 +1,17 @@
 import { useState } from "react";
 import { VerificationRequired } from "./types";
+import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import ChangeSettingsPrompt from "./ChangeSettingsPrompt";
 import Message from "./Message";
 
 export default function ContributorVerification() {
+  const { contributor_verification_required } = useAdminResources<"charity">();
+
+  const originalValue = contributor_verification_required ? "yes" : "no";
+
   const [verificationRequired, setVerificationRequired] =
-    useState<VerificationRequired>("yes");
+    useState<VerificationRequired>(originalValue);
 
   const { showModal } = useModalContext();
 
@@ -19,7 +24,7 @@ export default function ContributorVerification() {
   return (
     <form
       className="grid gap-8"
-      // onReset={() => reset()}
+      onReset={() => setVerificationRequired(originalValue)}
       onSubmit={() => {
         console.log("submitted", verificationRequired);
       }}

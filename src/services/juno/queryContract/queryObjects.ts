@@ -266,6 +266,7 @@ export const queryObjects: {
         ),
         maturityWhitelist: d.maturityWhitelist.map((w) => w.toLowerCase()),
         kyc_donors_only: d.kycDonorsOnly,
+        contributor_verification_required: d.contributorVerificationRequired,
         settingsController: {
           endowmentController: toSettingsPermission(
             controller.endowmentController
