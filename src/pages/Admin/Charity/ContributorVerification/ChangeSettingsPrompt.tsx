@@ -1,20 +1,21 @@
 import { useState } from "react";
+import { VerificationRequired } from "./types";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon/Icon";
 import Modal from "components/Modal";
 import { Radio } from "components/form";
 import Message from "./Message";
-import { FormValues } from "./schema";
 
-type Value = FormValues["contributor_verification_required"];
-
-type Props = { currentValue: Value; onChange: (value: Value) => void };
+type Props = {
+  currentValue: VerificationRequired;
+  onChange: (value: VerificationRequired) => void;
+};
 
 export default function ChangeSettingsPrompt({
   currentValue,
   onChange,
 }: Props) {
-  const [value, setValue] = useState<Value>(currentValue);
+  const [value, setValue] = useState<VerificationRequired>(currentValue);
   const { closeModal } = useModalContext();
 
   return (
@@ -62,12 +63,12 @@ function RadioInternal({
   value,
   onChange,
 }: {
-  checkedValue: Value;
-  value: Value;
-  onChange: (value: Value) => void;
+  checkedValue: VerificationRequired;
+  value: VerificationRequired;
+  onChange: (value: VerificationRequired) => void;
 }) {
   return (
-    <Radio<Value>
+    <Radio<VerificationRequired>
       checked={checkedValue === value}
       onChange={onChange}
       value={value}
