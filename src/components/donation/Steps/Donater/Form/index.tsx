@@ -2,7 +2,7 @@ import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { matchRoutes, useLocation } from "react-router-dom";
-import { DonateValues as DV } from "../types";
+import { DonateValues } from "../types";
 import CountrySelector from "components/CountrySelector";
 import TokenField from "components/TokenField";
 import { Label } from "components/form";
@@ -22,7 +22,7 @@ export default function Form(props: {
     getValues,
     watch,
     formState: { isValid, isDirty, isSubmitting },
-  } = useFormContext<DV>();
+  } = useFormContext<DonateValues>();
 
   const isInsideWidget = useIsInsideWidget();
 
@@ -30,7 +30,7 @@ export default function Form(props: {
 
   const dispatch = useDispatch();
 
-  function submit(data: DV) {
+  function submit(data: DonateValues) {
     dispatch(setDetails(data));
     reset();
   }
@@ -45,7 +45,7 @@ export default function Form(props: {
       className="grid rounded-md w-full"
       autoComplete="off"
     >
-      <TokenField<DV, "token">
+      <TokenField<DonateValues, "token">
         name="token"
         tokens={getValues("tokens")}
         withGiftcard
@@ -62,7 +62,7 @@ export default function Form(props: {
           <Label className="mb-2" htmlFor="country">
             Country of Residence *
           </Label>
-          <CountrySelector<DV, "country">
+          <CountrySelector<DonateValues, "country">
             placeholder="Select a country"
             fieldName="country"
             onReset={() => resetField("country")}
