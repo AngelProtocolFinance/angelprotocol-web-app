@@ -7,7 +7,7 @@ import { FormValues } from "./schema";
 export default function ContributorVerification() {
   const { handleSubmit, reset, setValue, watch } = useForm<FormValues>({
     defaultValues: {
-      contributor_verification_required: "true",
+      contributor_verification_required: "yes",
     },
   });
 

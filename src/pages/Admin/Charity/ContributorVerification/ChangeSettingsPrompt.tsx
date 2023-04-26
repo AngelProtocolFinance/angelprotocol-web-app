@@ -31,8 +31,8 @@ export default function ChangeSettingsPrompt({
         </button>
       </div>
       <div className="flex flex-col justify-center gap-4 px-8 py-12">
-        <RadioInternal checkedValue={value} onChange={setValue} value="false" />
-        <RadioInternal checkedValue={value} onChange={setValue} value="true" />
+        <RadioInternal checkedValue={value} onChange={setValue} value="no" />
+        <RadioInternal checkedValue={value} onChange={setValue} value="yes" />
       </div>
       <div className="flex justify-center md:justify-end gap-3 p-3 sm:px-8 sm:py-4 empty:h-12 w-full text-center bg-orange-l6 dark:bg-blue-d7 border-t border-prim">
         <button

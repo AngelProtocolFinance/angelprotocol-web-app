@@ -5,7 +5,7 @@ export default function Message({
 }: {
   verification_required: FormValues["contributor_verification_required"];
 }) {
-  return verification_required === "true" ? (
+  return verification_required === "yes" ? (
     <span>
       Contributors <b>aren't</b> able to donate anonymously. Contributor
       verification <b>is</b> enforced.
