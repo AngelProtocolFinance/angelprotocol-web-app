@@ -13,7 +13,6 @@ import { appRoutes } from "constants/routes";
 export default function Content(props: DonationRecipient) {
   const dispatch = useSetter();
   const state = useGetter((state) => state.donation);
-
   useEffect(() => {
     dispatch(setRecipient(props));
   }, [dispatch, props]);
@@ -32,7 +31,7 @@ export default function Content(props: DonationRecipient) {
 
   return (
     <div
-      className="justify-self-center grid padded-container max-w-[35rem] py-8 sm:py-20 scroll-mt-6"
+      className="justify-self-center grid padded-container max-w-[35rem] py-8 @sm:py-20 scroll-mt-6"
       id={CONTAINER_ID}
     >
       {!IS_AST && (
@@ -46,7 +45,7 @@ export default function Content(props: DonationRecipient) {
             },
             {
               title: "Donate",
-              to: `${appRoutes.donate_fiat}/${props.id}`,
+              to: `${appRoutes.donate}/${props.id}`,
             },
           ]}
         />
