@@ -20,6 +20,13 @@ const donation = createSlice({
       return { step: 1, recipient: payload };
     },
     setDetails: (state, { payload }: PayloadAction<DonationDetails>) => {
+      if (state.recipient?.skipKycStep) {
+        return {
+          ...(state as SubmitStep),
+          step: 3,
+          details: payload,
+        };
+      }
       return {
         ...(state as KYCStep),
         step: 2,

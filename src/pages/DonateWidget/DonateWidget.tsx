@@ -38,6 +38,7 @@ export default function DonateWidget() {
             id={p.id}
             isKYCRequired={p.kyc_donors_only ?? false}
             name={p.name}
+            skipKycStep={!p.contributor_verification_required}
           />
         )}
       </EndowmentLoader>
