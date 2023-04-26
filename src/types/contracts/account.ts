@@ -101,7 +101,6 @@ export interface EndowmentDetails {
   maturityWhitelist: string[];
   //rebalance
   kyc_donors_only: boolean;
-  contributor_verification_required: boolean;
   settingsController: SettingsController;
   //pending_redemptions
   //proposal_link

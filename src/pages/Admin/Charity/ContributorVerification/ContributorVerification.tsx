@@ -7,13 +7,9 @@ import ChangeSettingsPrompt from "./ChangeSettingsPrompt";
 import Message from "./Message";
 
 export default function ContributorVerification() {
-  const { id, owner, contributor_verification_required } =
-    useAdminResources<"charity">();
-
-  const originalValue = contributor_verification_required ? "yes" : "no";
-
+  const { id, owner } = useAdminResources<"charity">();
   const [verificationRequired, setVerificationRequired] =
-    useState<VerificationRequired>(originalValue);
+    useState<VerificationRequired>("yes");
 
   const { showModal } = useModalContext();
 
@@ -28,7 +24,7 @@ export default function ContributorVerification() {
   return (
     <form
       className="grid gap-8"
-      onReset={() => setVerificationRequired(originalValue)}
+      // onReset={() => setVerificationRequired(originalValue)}
       onSubmit={() =>
         updateProfile({
           id,
