@@ -3,7 +3,7 @@ import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { SimulContractTx, SimulSendNativeTx } from "types/evm";
 import { Estimate, TxContent } from "types/tx";
 import { WalletState } from "contexts/WalletContext";
-import { SubmitStep } from "slices/donation";
+import { FiatWallet, SubmitStep, isFiat } from "slices/donation";
 import GiftCard from "contracts/GiftCard";
 import createCosmosMsg from "contracts/createCosmosMsg";
 import { createTx } from "contracts/createTx/createTx";
@@ -18,14 +18,23 @@ export async function estimateDonation({
   wallet,
   terraWallet,
 }: SubmitStep & {
-  wallet: WalletState;
+  wallet: WalletState | FiatWallet;
   terraWallet?: ConnectedWallet;
 }): Promise<Estimate | null> {
-  const { chain } = wallet;
-
   let content: TxContent;
   // ///////////// GET TX CONTENT ///////////////
   try {
+    if (isFiat(wallet) || token.type === "fiat") {
+      return {
+        fee: { amount: 5, symbol: token.symbol },
+        tx: {
+          /** not used */
+        } as any,
+      };
+    }
+
+    const { chain } = wallet;
+
     if (chain.type === "juno-native") {
       const { fromBal, fromGift } = getBreakdown(token);
 
