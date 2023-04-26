@@ -57,7 +57,12 @@ const donation = createSlice({
     },
 
     setStep(state, { payload }: PayloadAction<number>) {
-      state.step = payload as DonationState["step"];
+      const step = payload as DonationState["step"];
+      if (step === 2 && state.recipient?.skipKycStep) {
+        state.step = 1;
+      } else {
+        state.step = step;
+      }
     },
   },
 });
