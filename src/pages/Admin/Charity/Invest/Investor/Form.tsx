@@ -20,7 +20,7 @@ export default function Form({ name, description, rating }: TStrategy) {
         alert("show summary");
       })}
       as="form"
-      className="max-h-[95vh] overflow-y-auto max-w-[37.5rem] w-[95vw] sm:w-full fixed-center z-20 bg-gray-l6 dark:bg-blue-d6 border border-prim rounded overflow-scroll"
+      className="max-h-[95vh] overflow-y-auto max-w-[37.5rem] w-[95vw] sm:w-full fixed-center z-20 bg-gray-l6 dark:bg-blue-d6 border border-prim rounded"
     >
       <div className="relative border-b border-prim py-5 text-center bg-orange-l6 dark:bg-blue-d7">
         <span className="font-bold font-heading text-lg">Invest</span>
