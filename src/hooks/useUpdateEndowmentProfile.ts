@@ -1,27 +1,26 @@
 import { toUtf8 } from "@cosmjs/encoding";
 import { hexlify } from "@ethersproject/bytes";
 import { EndowmentProfileUpdate } from "types/aws";
-import { ProviderId } from "types/lists";
 import { SemiPartial } from "types/utils";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useEditProfileMutation } from "services/aws/aws";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import { TxPrompt } from "components/Prompt";
-import { getProvider } from "helpers";
+import { getProvider, isEVM } from "helpers";
 import { cleanObject } from "helpers/cleanObject";
 import { appRoutes } from "constants/routes";
 
 // import optimizeImage from "./optimizeImage";
 
-export default function useEditProfile() {
+export default function useUpdateEndowmentProfile() {
   const { propMeta } = useAdminResources<"charity">();
 
   const { showModal } = useModalContext();
   const { wallet } = useGetWallet();
   const [submit] = useEditProfileMutation();
 
-  const editProfile = async (
+  const updateProfile = async (
     endowProfileUpdate: SemiPartial<EndowmentProfileUpdate, "id" | "owner">
   ) => {
     try {
@@ -88,18 +87,5 @@ export default function useEditProfile() {
     }
   };
 
-  return editProfile;
-}
-
-function isEVM(id: ProviderId) {
-  switch (id) {
-    case "binance-wallet":
-    case "evm-wc":
-    case "metamask":
-    case "xdefi-evm":
-    case "web3auth-torus":
-      return true;
-    default:
-      return false;
-  }
+  return updateProfile;
 }
