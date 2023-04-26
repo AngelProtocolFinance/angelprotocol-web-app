@@ -19,6 +19,7 @@ export default function useDonations() {
 
   const [params, setParams] = useState<DonationsQueryParams>({
     id: address || "",
+    chain_id: "80001",
   });
 
   const queryState = useDonationsQuery(params, {

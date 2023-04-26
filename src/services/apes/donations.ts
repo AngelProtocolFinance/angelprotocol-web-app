@@ -32,9 +32,9 @@ const donations_api = apes.injectEndpoints({
     }),
     donations: builder.query<DonationResult, DonationsQueryParams>({
       providesTags: ["donations"],
-      query: ({ id, ...rest }) => {
+      query: ({ id, chain_id, ...rest }) => {
         return {
-          url: `v3/donation/${id}${IS_TEST ? "/testnet" : ""}`,
+          url: `v3/donation/${chain_id}/${id}`,
           params: rest,
         };
       },

@@ -45,6 +45,7 @@ export default function Filter({
   async function submit(data: FV) {
     setParams((prev) => ({
       id: prev.id,
+      chain_id: prev.chain_id,
       ...cleanObject({
         afterDate: data.startDate ? new Date(data.startDate).toISOString() : "",
         beforeDate: data.endDate ? new Date(data.endDate).toISOString() : "",
@@ -58,7 +59,7 @@ export default function Filter({
 
   const onReset: FormEventHandler<HTMLFormElement> = () => {
     reset();
-    setParams((prev) => ({ id: prev.id }));
+    setParams((prev) => ({ id: prev.id, chain_id: prev.chain_id }));
     buttonRef.current?.click();
   };
   return (

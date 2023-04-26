@@ -54,6 +54,7 @@ type FiatTx = TxBase & {
 
 export type DonationsQueryParams = {
   id: string;
+  chain_id: string;
   afterDate?: string;
   beforeDate?: string;
   chainName?: string;
