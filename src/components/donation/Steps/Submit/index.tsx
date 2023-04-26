@@ -53,7 +53,7 @@ export default function Submit(props: WithWallet<SubmitStep>) {
         />
         <span>{token.symbol}</span>
       </Row>
-      {isFiat(props.wallet) ? (
+      {isFiat(props.wallet) || token.type === "fiat" ? (
         <></>
       ) : (
         <Row title="Blockchain:">
