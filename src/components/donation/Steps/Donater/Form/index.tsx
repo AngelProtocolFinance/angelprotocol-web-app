@@ -56,7 +56,9 @@ export default function Form(props: {
 
       {tokenType === "fiat" && (
         <>
-          <h4 className="font-bold text-sm">Enter your payment details:</h4>
+          <h4 className="font-bold text-sm mb-2 mt-4">
+            Enter your payment details:
+          </h4>
           <Label className="mb-2" htmlFor="country">
             Country of Residence *
           </Label>
