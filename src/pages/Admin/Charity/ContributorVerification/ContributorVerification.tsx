@@ -1,15 +1,40 @@
 import { useState } from "react";
 import { VerificationRequired } from "./types";
+import { Profile } from "services/types";
 import { useAdminResources } from "pages/Admin/Guard";
+import { useProfileQuery } from "services/aws/aws";
 import { useModalContext } from "contexts/ModalContext";
+import QueryLoader from "components/QueryLoader";
 import useUpdateEndowmentProfile from "hooks/useUpdateEndowmentProfile";
 import ChangeSettingsPrompt from "./ChangeSettingsPrompt";
 import Message from "./Message";
 
 export default function ContributorVerification() {
+  const { id } = useAdminResources<"charity">();
+  const queryState = useProfileQuery(id, { skip: id === 0 });
+
+  return (
+    <QueryLoader
+      queryState={queryState}
+      messages={{
+        loading: "Getting endowment info..",
+        error: "Failed to get endowment info",
+      }}
+      classes={{ container: "text-center mt-8" }}
+    >
+      {(profile) => <Content profile={profile} />}
+    </QueryLoader>
+  );
+}
+
+function Content({ profile }: { profile: Profile }) {
+  const originalValue: VerificationRequired =
+    profile.contributor_verification_required ? "yes" : "no";
+
   const { id, owner } = useAdminResources<"charity">();
+
   const [verificationRequired, setVerificationRequired] =
-    useState<VerificationRequired>("yes");
+    useState(originalValue);
 
   const { showModal } = useModalContext();
 
@@ -24,7 +49,7 @@ export default function ContributorVerification() {
   return (
     <form
       className="grid gap-8"
-      // onReset={() => setVerificationRequired(originalValue)}
+      onReset={() => setVerificationRequired(originalValue)}
       onSubmit={() =>
         updateProfile({
           id,
