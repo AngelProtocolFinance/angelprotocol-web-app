@@ -7,6 +7,7 @@ import {
   EndowmentsQueryParams,
   NewAST,
   PaginatedAWSQueryRes,
+  TStrategy,
   WalletProfile,
 } from "types/aws";
 import { NetworkType } from "types/lists";
@@ -39,7 +40,14 @@ const awsBaseQuery = retry(
 );
 
 export const aws = createApi({
-  tagTypes: ["airdrop", "admin", "walletProfile", "profile", "endowments"],
+  tagTypes: [
+    "airdrop",
+    "admin",
+    "walletProfile",
+    "profile",
+    "endowments",
+    "strategy",
+  ],
   reducerPath: "aws",
   baseQuery: awsBaseQuery,
   endpoints: (builder) => ({
@@ -52,6 +60,15 @@ export const aws = createApi({
         return {
           url: `/v3/endowments/${network}`,
           params: { ...params, return: endowCardFields },
+        };
+      },
+    }),
+    strategyCards: builder.query<TStrategy[], {}>({
+      providesTags: ["strategy"],
+      query: (params) => {
+        return {
+          url: `/v1/strategy/list`,
+          params: { ...params },
         };
       },
     }),
@@ -138,6 +155,7 @@ export const {
   useToggleBookmarkMutation,
   useSaveASTMutation,
   useEndowmentCardsQuery,
+  useStrategyCardsQuery,
   useEndowmentIdNamesQuery,
   useProfileQuery,
   useEditProfileMutation,
