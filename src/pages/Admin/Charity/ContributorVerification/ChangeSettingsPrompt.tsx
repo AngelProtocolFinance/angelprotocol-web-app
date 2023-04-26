@@ -76,7 +76,7 @@ function RadioInternal({
         container: "px-4 py-3 border border-prim rounded cursor-pointer",
       }}
     >
-      <Message verification_required={value} />
+      <Message verificationRequired={value} />
     </Radio>
   );
 }

@@ -1,9 +1,9 @@
 import { VerificationRequired } from "./types";
 
-type Props = { verification_required: VerificationRequired };
+type Props = { verificationRequired: VerificationRequired };
 
-export default function Message({ verification_required }: Props) {
-  return verification_required === "yes" ? (
+export default function Message({ verificationRequired }: Props) {
+  return verificationRequired === "yes" ? (
     <span>
       Contributors <b>aren't</b> able to donate anonymously. Contributor
       verification <b>is</b> enforced.
