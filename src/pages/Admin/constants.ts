@@ -99,6 +99,14 @@ export const LINKS: {
     },
     end: true,
   },
+  deposits: {
+    title: "Deposit",
+    to: sidebarRoutes.deposits,
+    icon: {
+      type: "Deposit",
+      size: 24,
+    },
+  },
   withdraws: {
     title: "Withdraw",
     to: sidebarRoutes.withdraws,

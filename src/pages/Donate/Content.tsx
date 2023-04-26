@@ -35,33 +35,22 @@ export default function Content(props: DonationRecipient) {
       className="justify-self-center grid padded-container max-w-[35rem] py-8 sm:py-20 scroll-mt-6"
       id={CONTAINER_ID}
     >
-      <Breadcrumbs
-        className="font-body font-normal text-sm justify-self-start sm:justify-self-auto mb-10 sm:mb-12"
-        items={
-          !IS_AST
-            ? [
-                { title: "Marketplace", to: appRoutes.marketplace },
-                {
-                  title: props.name,
-                  to: `${appRoutes.profile}/${props.id}`,
-                },
-                {
-                  title: "Donate",
-                  to: `${appRoutes.donate_fiat}/${props.id}`,
-                },
-              ]
-            : [
-                {
-                  title: props.name,
-                  to: `${appRoutes.profile}/${props.id}`,
-                },
-                {
-                  title: "Contribute",
-                  to: `${appRoutes.donate_fiat}/${props.id}`,
-                },
-              ]
-        }
-      />
+      {!IS_AST && (
+        <Breadcrumbs
+          className="font-body font-normal text-sm justify-self-start sm:justify-self-auto mb-10 sm:mb-12"
+          items={[
+            { title: "Marketplace", to: appRoutes.marketplace },
+            {
+              title: props.name,
+              to: `${appRoutes.profile}/${props.id}`,
+            },
+            {
+              title: "Donate",
+              to: `${appRoutes.donate_fiat}/${props.id}`,
+            },
+          ]}
+        />
+      )}
 
       {isFinalized(state) && (
         <h3 className="text-center text-xl sm:text-3xl leading-snug mb-4">

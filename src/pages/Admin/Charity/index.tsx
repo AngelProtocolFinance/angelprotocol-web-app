@@ -8,6 +8,7 @@ import { LINKS } from "../constants";
 import Account from "./Account";
 import Contributions from "./Contributions";
 import Dashboard from "./Dashboard";
+import Deposits from "./Deposits";
 import EditProfile from "./EditProfile";
 import Invest from "./Invest";
 import Permissions from "./Permissions";
@@ -18,7 +19,7 @@ import Withdraws from "./Withdraws";
 
 const LINK_GROUPS: LinkGroup[] = [
   {
-    links: [LINKS.index, LINKS.withdraws, LINKS.contributions],
+    links: [LINKS.index, LINKS.deposits, LINKS.withdraws, LINKS.contributions],
   },
   {
     title: "Invest",
@@ -44,6 +45,7 @@ export default function Charity() {
         <Route path={`${adminRoutes.proposal}/:id`} element={<Proposal />} />
         <Route path={adminRoutes.proposals} element={<Proposals />} />
         <Route path={`${adminRoutes.templates}/*`} element={<Templates />} />
+        <Route path={adminRoutes.deposits} element={<Deposits />} />
         <Route path={adminRoutes.withdraws} element={<Withdraws />} />
         <Route path={adminRoutes.account}>
           <Route path="liquid" element={<Account type="liquid" />} />

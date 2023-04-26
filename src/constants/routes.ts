@@ -46,6 +46,7 @@ export const adminRoutes = {
   //charity
   edit_profile: "edit-profile",
   withdraws: "withdraws",
+  deposits: "deposits",
   // settings: "settings",
   invest: "invest-dashboard",
   account: "account",
