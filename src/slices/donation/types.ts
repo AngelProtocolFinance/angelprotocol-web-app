@@ -1,3 +1,4 @@
+import { Token } from "types/aws";
 import { Country } from "types/countries";
 import { TokenWithAmount } from "types/slices";
 import { EstimatedTx } from "types/tx";
@@ -13,6 +14,9 @@ export type DonationRecipient = {
 export type DonationDetails = {
   token: TokenWithAmount;
   pctLiquidSplit: number; // <input range value transformed to number via onChange
+
+  //for fiat donations
+  country: Country;
 
   //meta
   chainId: string;
@@ -62,15 +66,19 @@ export type TxStep = {
   status: TxStatus;
 } & Omit<SubmitStep, "step">;
 
-export type DonateBaseArgs = {
-  wallet: WalletState;
-  donation: SubmitStep;
+export type FiatWallet = {
+  tokens: FiatToken[];
 };
 
-export type DonateArgs = DonateBaseArgs & {
+export type DonateArgs = { donation: SubmitStep } & {
+  wallet: WalletState | FiatWallet;
   tx: EstimatedTx;
 };
 
-export type FiatDonateArgs = DonateBaseArgs & {
-  externalSessionId: string;
-};
+export type FiatToken = Pick<Token, "symbol" | "min_donation_amnt" | "logo">;
+export type WithWallet<T> = T & { wallet: WalletState | FiatWallet };
+
+//isFiatWallet
+export function isFiat(wallet: WalletState | FiatWallet): wallet is FiatWallet {
+  return !!(wallet as FiatWallet).tokens;
+}
