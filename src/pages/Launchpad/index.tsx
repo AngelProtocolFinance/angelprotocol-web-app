@@ -1,4 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom";
+import Seo from "components/Seo";
+import { APP_NAME, DAPP_DOMAIN } from "constants/common";
 import About from "./About";
 import Fees from "./Fees";
 import Layout from "./Layout";
@@ -15,6 +17,10 @@ import { routes, steps } from "./constants";
 export default function Launchpad() {
   return (
     <Routes>
+      <Seo
+        title={`Create your Angel Smart Treasury - ${APP_NAME}`}
+        url={`${DAPP_DOMAIN}/register`}
+      />
       <Route
         path="steps"
         element={<Layout classes="my-0 md:my-20 justify-self-center" />}
