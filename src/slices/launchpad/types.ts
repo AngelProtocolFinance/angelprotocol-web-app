@@ -5,7 +5,7 @@ export type TManagement = {
   members: Member[];
   //proposal config defaulted to percentage
   proposal: {
-    threshold: string; // "1" - "100"
+    threshold: number; // integer
     duration: string; // in hours
     isAutoExecute: boolean;
   };
