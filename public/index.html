@@ -79,6 +79,20 @@
       fbq("init", "7226646407406481");
       fbq("track", "PageView");
     </script>
+    <!-- END HotJar Tracking Code -->
+    <!-- START SmartLook script -->
+    <script type='text/javascript'>
+      if (process.env.REACT_APP_APP_TYPE === "AST") {
+        window.smartlook||(function(d) {
+          var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];
+          var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';
+          c.charset='utf-8';c.src='https://web-sdk.smartlook.com/recorder.js';h.appendChild(c);
+          })(document);
+          smartlook('init', 'b78ba41db4f7ae0715167b9d19f512c878c22c2c', { region: 'eu' });
+        }
+    </script>
+    <!-- END SmartLook script -->
+    <!-- Intercom code -->
     <script>
       window.intercomSettings = {
         api_base: "https://api-iam.intercom.io",
@@ -162,20 +176,6 @@
         src="https://www.facebook.com/tr?id=7226646407406481&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Meta Pixel Code -->
-    <!-- START SmartLook script -->
-    <script type='text/javascript'>
-      (function () {
-        if (process.env.REACT_APP_APP_TYPE === "AST") {
-          window.smartlook||(function(d) {
-            var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];
-            var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';
-            c.charset='utf-8';c.src='https://web-sdk.smartlook.com/recorder.js';h.appendChild(c);
-            })(document);
-            smartlook('init', 'b78ba41db4f7ae0715167b9d19f512c878c22c2c', { region: 'eu' });
-          }
-      }();
-    </script>
-    <!-- END SmartLook script -->
   </head>
   <body class="grid min-h-screen">
     <noscript>You need to enable JavaScript to run this app.</noscript>
