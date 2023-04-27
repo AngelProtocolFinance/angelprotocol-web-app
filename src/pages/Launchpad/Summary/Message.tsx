@@ -1,6 +1,7 @@
 import { PropsWithChildren, useState } from "react";
 import { Completed } from "slices/launchpad/types";
 import Copier from "components/Copier";
+import ExtLink from "components/ExtLink";
 import { DrawerIcon } from "components/Icon";
 import toEVMAST from "./toEVMAST";
 
@@ -24,7 +25,15 @@ export default function Message(props: Completed) {
             Use this message to instantiate ASTs configured like such from your
             app. Don't forget to update the <Mono>address</Mono> field to
             addresses provided by your users, or create a message right after
-            this one to change the <Mono>address</Mono> field
+            this one to change the <Mono>address</Mono> field. You can find more
+            information{" "}
+            <ExtLink
+              href="https://docs.angelprotocol.io/technical/basics/creating-an-ast.html"
+              className="text-white hover:text-orange-l1 transition ease-in-out duration-300"
+            >
+              here
+            </ExtLink>
+            .
           </p>
           <div className="relative grid rounded text-gray-d1 dark:text-gray border border-prim bg-orange-l6 dark:bg-blue-d7 p-3 mb-6 text-sm">
             <Copier
