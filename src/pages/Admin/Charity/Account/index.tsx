@@ -1,5 +1,4 @@
 import { AccountType } from "types/lists";
-import { DAPP_DOMAIN } from "constants/common";
 import { titleCase } from "constants/env";
 import { adminRoutes } from "constants/routes";
 import Seo from "../Seo";
@@ -11,7 +10,7 @@ export default function Account({ type }: { type: AccountType }) {
     <div>
       <Seo
         title={`${titleCase(type)} Account`}
-        url={`${DAPP_DOMAIN}/${adminRoutes.account}/${type}`}
+        url={`${adminRoutes.account}/${type}`}
       />
       <h2 className="font-bold text-[2rem] capitalize mb-8 max-sm:text-center">
         {type} Account

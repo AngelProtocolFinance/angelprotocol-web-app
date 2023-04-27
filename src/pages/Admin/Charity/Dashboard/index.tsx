@@ -1,14 +1,12 @@
 import { useAdminResources } from "pages/Admin/Guard";
 import { useProposalsQuery } from "services/juno/custom";
 import QueryLoader from "components/QueryLoader";
-import { DAPP_DOMAIN } from "constants/common";
-import { appRoutes } from "constants/routes";
 import Seo from "../Seo";
 import Balances from "../common/Balances";
 import Table from "./Table";
 
 export default function Dashboard() {
-  const { id, endow_type, multisig } = useAdminResources<"charity">();
+  const { endow_type, multisig } = useAdminResources<"charity">();
   const { data, ...rest } = useProposalsQuery({
     multisig,
     status: "pending",
@@ -19,7 +17,6 @@ export default function Dashboard() {
     <div className="grid content-start mt-6">
       <Seo
         title={`${endow_type === "charity" ? "Endowment" : "AST"} Dashboard`}
-        url={`${DAPP_DOMAIN}/${appRoutes.admin}/${id}`}
       />
       <h3 className="uppercase font-extrabold text-2xl mb-4">Balances</h3>
       <Balances />
