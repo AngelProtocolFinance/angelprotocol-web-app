@@ -7,7 +7,6 @@ import Modal from "components/Modal";
 import { LoadingStatus } from "components/Status";
 import TokenField from "components/TokenField";
 import AccountOptions from "./AccountOptions";
-import LockDuration from "./LockDuration";
 import useSubmit from "./useSubmit";
 
 export default function Form({ name, description, rating }: TStrategy) {
@@ -46,7 +45,6 @@ export default function Form({ name, description, rating }: TStrategy) {
         <KeyValue title="Accepted Currency" value="USDC" />
       </div>
       <AccountOptions balances={{ locked: 0, liquid: 0 }} classes="mx-8 mb-6" />
-      <LockDuration classes="mx-8" />
       <TokenField<FV, "token">
         name="token"
         tokens={getValues("tokens")}
@@ -68,11 +66,12 @@ export default function Form({ name, description, rating }: TStrategy) {
           Cancel
         </button>
         <button
-          disabled={isSending}
+          disabled={true} // isSending
           type="submit"
-          className="text-sm min-w-[8rem] py-2 btn-orange"
+          className="text-sm min-w-[8rem] py-2 btn-orange disabled:bg-gray-l1"
         >
           {isSending ? <LoadingStatus>Processing...</LoadingStatus> : "Invest"}
+          <span className="text-xs pl-1">(Coming soon)</span>
         </button>
       </div>
     </Modal>
