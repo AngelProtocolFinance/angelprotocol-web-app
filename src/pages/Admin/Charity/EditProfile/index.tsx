@@ -6,6 +6,7 @@ import { useAdminResources } from "pages/Admin/Guard";
 import { useProfileQuery } from "services/aws/aws";
 import { FormError, FormSkeleton } from "components/admin";
 import { DAPP_DOMAIN } from "constants/common";
+import { adminRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
 import Seo from "../Seo";
 import Form from "./Form";
@@ -86,7 +87,7 @@ function FormWithContext(props: Profile) {
     <FormProvider {...methods}>
       <Seo
         title={`${props.name} profile update`}
-        url={`${DAPP_DOMAIN}/profile/${props.id}`}
+        url={`${DAPP_DOMAIN}/${adminRoutes.edit_profile}/${props.id}`}
       />
       <Form />
     </FormProvider>
