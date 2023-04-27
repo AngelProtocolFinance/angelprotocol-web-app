@@ -36,7 +36,7 @@ export default function ManageForm(props: FormProps) {
 
       <div className="content-start border border-prim p-4 md:p-8 rounded">
         <h2 className="font-bold text-center sm:text-left text-xl mb-8">
-          Proposal settings
+          Settings
         </h2>
         <div className="border border-prim rounded divide-y divide-prim">
           <Container
