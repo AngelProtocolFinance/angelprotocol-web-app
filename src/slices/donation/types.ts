@@ -9,6 +9,7 @@ export type DonationRecipient = {
   id: number;
   name: string;
   isKYCRequired: boolean;
+  skipKycStep: boolean;
 };
 
 export type DonationDetails = {

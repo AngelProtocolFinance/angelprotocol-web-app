@@ -9,7 +9,12 @@ export default function Deposits() {
     <div className="grid gap-8 justify-items-center">
       <h2 className="text-center font-bold text-3xl -mb-2">Deposit</h2>
       <div className={container}>
-        <Content name={"your AST"} id={id} isKYCRequired={false} />
+        <Content
+          name={"your AST"}
+          id={id}
+          isKYCRequired={false}
+          skipKycStep={true}
+        />
       </div>
     </div>
   );

@@ -44,6 +44,10 @@ export default function Donate() {
               name={profile.name}
               id={numId}
               isKYCRequired={profile.kyc_donors_only ?? false}
+              skipKycStep={
+                profile.type === "ast" &&
+                !profile.contributor_verification_required
+              }
             />
           </>
         )}

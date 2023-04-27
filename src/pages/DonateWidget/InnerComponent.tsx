@@ -13,6 +13,7 @@ export default function InnerComponent(props: {
   id: number;
   name: string;
   isKYCRequired: boolean;
+  skipKycStep: boolean;
 }) {
   const { hideText, ...rest } = useWidgetParams();
 
