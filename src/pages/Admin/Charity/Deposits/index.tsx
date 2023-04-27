@@ -13,7 +13,7 @@ export default function Deposits() {
           name={"your AST"}
           id={id}
           isKYCRequired={false}
-          skipKycStep={false}
+          skipKycStep={true}
         />
       </div>
     </div>
