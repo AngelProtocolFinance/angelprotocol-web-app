@@ -38,7 +38,7 @@ export default function ManageForm(props: FormProps) {
         <h2 className="font-bold text-center sm:text-left text-xl mb-8">
           Settings
         </h2>
-        <div className="border border-prim rounded divide-y divide-prim">
+        <div className="@container border border-prim rounded divide-y divide-prim">
           <Container
             onBtnClick={() =>
               showModal(ThresholdForm, {
@@ -89,11 +89,11 @@ const Container = ({
   children,
   onBtnClick,
 }: PropsWithChildren<{ onBtnClick(): void }>) => (
-  <div className="flex items-center py-3 px-4 justify-between">
+  <div className="grid @lg:flex @lg:items-center py-3 px-4 @lg:justify-between">
     {children}
     <button
       type="button"
-      className="btn-outline-filled px-8 py-2 text-sm"
+      className="btn-outline-filled px-8 py-2 text-sm mt-4 @lg:mt-0"
       onClick={onBtnClick}
     >
       change
