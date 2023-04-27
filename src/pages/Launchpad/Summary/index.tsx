@@ -7,6 +7,7 @@ import About from "./About";
 import Fees from "./Fees";
 import Management from "./Management";
 import Maturity from "./Maturity";
+import Message from "./Message";
 import Splits from "./Splits";
 import Whitelists from "./Whitelists";
 import useSubmit from "./useSubmit";
@@ -55,6 +56,7 @@ export default function Summary() {
         disabled={false}
       />
       <Fees fees={fees} title="Fees" step={6} disabled={false} />
+      <Message {...completed} />
       <div className="grid grid-cols-2 sm:flex gap-2 border-t border-prim pt-8">
         <Link to={`../${steps[6]}`} className="text-sm px-8 btn-outline-filled">
           Back
