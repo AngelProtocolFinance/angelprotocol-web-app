@@ -1,5 +1,8 @@
 import { useEffect } from "react";
+import Seo from "components/Seo";
 import { isPrevDark, setToDarkMode, setToLightMode } from "helpers";
+import { APP_NAME, DAPP_DOMAIN } from "constants/common";
+import { PAYMENT_WORDS, titleCase } from "constants/env";
 import ApiKeyChecker from "./ApiKeyChecker";
 import EndowmentLoader from "./EndowmentLoader";
 import InnerComponent from "./InnerComponent";
@@ -34,14 +37,25 @@ export default function DonateWidget() {
     <ApiKeyChecker>
       <EndowmentLoader>
         {(p) => (
-          <InnerComponent
-            id={p.id}
-            isKYCRequired={p.kyc_donors_only ?? false}
-            name={p.name}
-            skipKycStep={
-              p.type === "ast" && !p.contributor_verification_required
-            }
-          />
+          <>
+            <Seo
+              title={`${titleCase(PAYMENT_WORDS.verb)} to ${
+                p.name
+              } - ${APP_NAME}`}
+              description={(p.overview ?? "").slice(0, 140)}
+              name={p.name}
+              image={`${p.logo}`}
+              url={`${DAPP_DOMAIN}/donate_widget/${p.id}`}
+            />
+            <InnerComponent
+              id={p.id}
+              isKYCRequired={p.kyc_donors_only ?? false}
+              name={p.name}
+              skipKycStep={
+                p.type === "ast" && !p.contributor_verification_required
+              }
+            />
+          </>
         )}
       </EndowmentLoader>
     </ApiKeyChecker>
