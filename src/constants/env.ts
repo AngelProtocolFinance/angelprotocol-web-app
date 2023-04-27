@@ -10,7 +10,7 @@ export const NETWORK:
 
 const APP_TYPE = process.env.REACT_APP_APP_TYPE;
 
-export const IS_AST = APP_TYPE === "AST";
+export const IS_AST = APP_TYPE !== "AST";
 export const IS_TEST = NETWORK === "TESTNET" || NETWORK === "LOCAL";
 
 // NOUN AND ACTION WORDS RELATING TO PAYMENTS TO AP/AG ENDOWMENTS

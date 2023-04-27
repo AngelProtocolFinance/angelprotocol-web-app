@@ -1,5 +1,4 @@
-import { Link } from "react-router-dom";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { isCompleted } from "slices/launchpad/types";
 import { useGetter } from "store/accessors";
 import { steps } from "../constants";

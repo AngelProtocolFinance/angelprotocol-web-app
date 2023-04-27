@@ -123,6 +123,8 @@ export interface NewAST extends Tupleable {
   maturityWhitelist: string[];
   ignoreUserSplits: boolean;
   splitToLiquid: SplitDetails;
+
+  referral_id: number;
 }
 
 type DepositRequest = {

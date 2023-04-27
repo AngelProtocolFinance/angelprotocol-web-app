@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { FV } from "./types";
 import { TFees } from "slices/launchpad/types";
 import TableSection, { Cells } from "components/TableSection";
+import { Field } from "components/form";
 import useHandleScreenResize, { SCREEN_SM } from "hooks/useHandleScreenResize";
 import Form, { Desc, FormProps, Title } from "../common/Form";
 import NavButtons from "../common/NavButtons";
@@ -81,7 +83,12 @@ export default function FeesForm(props: FormProps) {
           />
         </TableSection>
       </table>
-      <NavButtons curr={6} classes="mt-8" />
+      <Field<FV>
+        label="Referral ID:"
+        name="referral_id"
+        classes={{ container: "my-8" }}
+      />
+      <NavButtons curr={6} />
     </Form>
   );
 }
