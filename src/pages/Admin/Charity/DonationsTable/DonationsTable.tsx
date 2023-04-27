@@ -5,7 +5,10 @@ import Table from "./Table";
 
 export default function DonationsTable({ classes = "" }) {
   const { id } = useAdminResources();
-  const { data, ...rest } = useDonationsQuery({ id: id.toString() });
+  const { data, ...rest } = useDonationsQuery({
+    id: id.toString(),
+    chain_id: "80001",
+  });
 
   return (
     <div className={classes}>
