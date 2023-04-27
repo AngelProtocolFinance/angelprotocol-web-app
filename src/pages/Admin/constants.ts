@@ -65,6 +65,14 @@ const _to: keyof Link = "to";
 export const LINKS: {
   [key in keyof SidebarRoutes]: Link & { [_to]: SidebarRoutes[key] };
 } = {
+  contributor_verification: {
+    title: "Contributor Verification",
+    to: sidebarRoutes.contributor_verification,
+    icon: {
+      type: "SecurityScan",
+      size: 24,
+    },
+  },
   liquidAccount: {
     title: "Liquid Account",
     to: sidebarRoutes.liquidAccount,
