@@ -36,23 +36,24 @@ export default function DonateWidget() {
   return (
     <ApiKeyChecker>
       <EndowmentLoader>
-        {(p) => (
+        {(profile) => (
           <>
             <Seo
               title={`${titleCase(PAYMENT_WORDS.verb)} to ${
-                p.name
+                profile.name
               } - ${APP_NAME}`}
-              description={(p.overview ?? "").slice(0, 140)}
-              name={p.name}
-              image={`${p.logo}`}
-              url={`${DAPP_DOMAIN}/donate_widget/${p.id}`}
+              description={(profile.overview ?? "").slice(0, 140)}
+              name={profile.name}
+              image={`${profile.logo}`}
+              url={`${DAPP_DOMAIN}/donate_widget/${profile.id}`}
             />
             <InnerComponent
-              id={p.id}
-              isKYCRequired={p.kyc_donors_only ?? false}
-              name={p.name}
+              id={profile.id}
+              isKYCRequired={profile.kyc_donors_only ?? false}
+              name={profile.name}
               skipKycStep={
-                p.type === "ast" && !p.contributor_verification_required
+                profile.type === "ast" &&
+                !profile.contributor_verification_required
               }
             />
           </>
