@@ -6,6 +6,8 @@ import { useProfileQuery } from "services/aws/aws";
 import { useModalContext } from "contexts/ModalContext";
 import QueryLoader from "components/QueryLoader";
 import useUpdateEndowmentProfile from "hooks/useUpdateEndowmentProfile";
+import { adminRoutes } from "constants/routes";
+import Seo from "../Seo";
 import ChangeSettingsPrompt from "./ChangeSettingsPrompt";
 import Message from "./Message";
 
@@ -22,7 +24,16 @@ export default function ContributorVerification() {
       }}
       classes={{ container: "text-center mt-8" }}
     >
-      {(profile) => <Content profile={profile} />}
+      {(profile) => (
+        <>
+          <Seo
+            title="Contributor Verification"
+            url={adminRoutes.contributor_verification}
+          />
+
+          <Content profile={profile} />
+        </>
+      )}
     </QueryLoader>
   );
 }
