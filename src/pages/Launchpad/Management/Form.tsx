@@ -1,4 +1,4 @@
-import { PropsWithChildren, ReactNode, useEffect } from "react";
+import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { FV } from "./types";
 import { useModalContext } from "contexts/ModalContext";
@@ -18,7 +18,7 @@ export default function ManageForm(props: FormProps) {
 
   /** watch for members and adjust threshold accordingly */
   useEffect(() => {
-    const n = members.length;
+    const n = members.length || 1;
     const threshold = getValues("proposal.threshold");
     if (n < +threshold) setValue("proposal.threshold", n);
   }, [members]);
@@ -42,8 +42,8 @@ export default function ManageForm(props: FormProps) {
         <div className="border border-prim rounded px-4">
           <div className="flex items-center py-3">
             <p>
-              Proposals can be executed when {threshold} out {members.length}{" "}
-              members cast their vote.
+              Proposals can be executed when {threshold} out{" "}
+              {members.length || 1} members cast their vote.
             </p>
             <button
               type="button"
@@ -60,12 +60,6 @@ export default function ManageForm(props: FormProps) {
             </button>
           </div>
         </div>
-        <Field<FV>
-          name="proposal.threshold"
-          label="Pass threshold ( % )"
-          classes={{ container: "mt-8 mb-4" }}
-          required
-        />
         <Field<FV>
           name="proposal.duration"
           label="Duration ( hours )"
