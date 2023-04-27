@@ -3,6 +3,8 @@ import { FormProvider, useForm } from "react-hook-form";
 import { SettingsPermission } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { ADDRESS_ZERO } from "constants/evm";
+import { adminRoutes } from "constants/routes";
+import Seo from "../Seo";
 import Form from "./Form";
 import { FormField, FormValues, UpdateableFormValues, schema } from "./schema";
 
@@ -35,6 +37,8 @@ export default function Permissions() {
 
   return (
     <div className="grid gap-6">
+      <Seo title="Permissions" url={adminRoutes.permissions} />
+
       <h2 className="font-bold text-3xl">Permissions</h2>
 
       <FormProvider {...methods}>
