@@ -6,7 +6,7 @@ import { SchemaShape } from "schemas/types";
 import { useGetWallet } from "contexts/WalletContext";
 import { useLaunchpad } from "slices/launchpad";
 import { requiredPercent, requiredPositiveNumber } from "schemas/number";
-import { isJunoAddress } from "schemas/tests";
+import { isEthereumAddress } from "schemas/tests";
 import { withStepGuard } from "../withStepGuard";
 import Form from "./Form";
 
@@ -25,8 +25,8 @@ export default withStepGuard<2>(function Management({ data }) {
     ),
     defaultValues: data || {
       members:
-        wallet?.address && isJunoAddress(wallet.address)
-          ? [{ addr: wallet.address, weight: "1" }]
+        wallet?.address && isEthereumAddress(wallet.address)
+          ? [wallet.address]
           : [],
 
       proposal: {

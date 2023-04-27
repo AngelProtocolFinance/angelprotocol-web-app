@@ -8,7 +8,7 @@ export default function Management({
   proposal,
   ...props
 }: SectionProps<TManagement>) {
-  const _members = members.map((m) => <li key={m.addr}>{m.addr}</li>);
+  const _members = members.map((m) => <li key={m}>{m}</li>);
 
   return (
     <Section {...props}>

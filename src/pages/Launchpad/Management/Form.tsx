@@ -50,7 +50,7 @@ export default function ManageForm(props: FormProps) {
               className="btn-outline-filled px-8 py-2 text-sm"
               onClick={() =>
                 showModal(ThresholdForm, {
-                  added: getValues("members").map((m) => m.addr),
+                  added: getValues("members").map((m) => m),
                   initial: threshold,
                   onChange: (v) => setValue("proposal.threshold", v),
                 })

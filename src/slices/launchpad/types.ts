@@ -1,8 +1,7 @@
 /** Types primed to be for form usage */
-export type Member = { addr: string; weight: string };
 export type TAbout = { name: string; tagline: string };
 export type TManagement = {
-  members: Member[];
+  members: string[];
   //proposal config defaulted to percentage
   proposal: {
     threshold: number; // integer
