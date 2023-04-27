@@ -2,7 +2,10 @@ import { useParams } from "react-router-dom";
 import { ProposalParams } from "pages/Admin/types";
 import { useProposalDetailsQuery } from "services/juno/custom";
 import QueryLoader from "components/QueryLoader";
+import Seo from "components/Seo";
 import { DetailLabel, Status } from "components/admin";
+import { APP_NAME, DAPP_DOMAIN } from "constants/common";
+import { adminRoutes } from "constants/routes";
 import { useAdminResources } from "../Guard";
 import PollAction from "./PollAction";
 import Stats from "./Stats";
@@ -27,6 +30,12 @@ export default function Proposal() {
       >
         {(proposal) => (
           <div className="rounded p-4 border border-prim dark:bg-blue-d6 bg-white">
+            <Seo
+              title={`Proposal ${proposal.id} - ${APP_NAME}`}
+              description={proposal.description.slice(0, 140)}
+              name={proposal.title}
+              url={`${DAPP_DOMAIN}/${adminRoutes.proposal}/${proposal.id}`}
+            />
             <div className="flex justify-between flex-wrap">
               <p>ID : {proposal.id}</p>
               <Status status={proposal.status} />
