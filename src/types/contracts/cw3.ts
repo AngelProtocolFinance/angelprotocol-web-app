@@ -1,5 +1,5 @@
 import { TransactionStatus } from "types/lists";
-import { Vote } from "../common";
+import { Vote } from "./common";
 
 export type PageOptions = {
   range: [number, number];
