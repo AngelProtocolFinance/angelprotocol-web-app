@@ -141,7 +141,7 @@ function toEndowFee(fee: TFee): Fee {
 
 const defaultPermission: SettingsPermission = {
   ownerControlled: true,
-  govControlled: true,
+  govControlled: false,
   modifiableAfterInit: true,
   delegate: {
     Addr: ADDRESS_ZERO,
