@@ -2,10 +2,14 @@ import { PropsWithChildren } from "react";
 import { Link } from "react-router-dom";
 import { TxType } from "../types";
 import { FileObject, InReview } from "types/aws";
+import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
-import { adminRoutes } from "constants/routes";
+import Seo from "components/Seo";
+import { APP_NAME, DAPP_DOMAIN } from "constants/common";
+import { adminRoutes, appRoutes } from "constants/routes";
+import { SEPARATOR } from "../../constants";
 import Proposer from "./Proposer";
 
 export default function Summary({
@@ -13,11 +17,18 @@ export default function Summary({
   ContactPerson: c,
   appId,
 }: InReview & { appId: number }) {
+  const { id } = useAdminResources();
+
   const txId = r.approve_tx_id || r.reject_tx_id;
   const txType: TxType = r.approve_tx_id ? "approve" : "reject";
 
   return (
     <div className="w-full p-6 grid content-start gap-2 rounded bg-white dark:bg-blue-d6 border border-prim">
+      <Seo
+        title={`Summary - ${APP_NAME}`}
+        description={`Application Summary for ${r.OrganizationName}`}
+        url={`${DAPP_DOMAIN}/${appRoutes.admin}/${id}/${adminRoutes.application}/${appId}${SEPARATOR}${r.PK}`}
+      />
       <h3 className="text-xl font-semibold">{r.OrganizationName}</h3>
       <p className="text-sm mb-6 flex items-center gap-1">
         <ExtLink href={r.Website}>
