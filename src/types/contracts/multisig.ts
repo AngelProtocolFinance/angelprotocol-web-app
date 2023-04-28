@@ -1,5 +1,5 @@
 import { TransactionStatus } from "types/lists";
-import { Tupleable } from "../../evm";
+import { Tupleable } from "../evm";
 
 export interface NewTransaction extends Tupleable {
   title: string;
@@ -29,3 +29,8 @@ export interface TransactionIDsPageOptions extends Tupleable {
   pending: boolean;
   executed: boolean;
 }
+
+export type PageOptions = {
+  range: [number, number];
+  status: TransactionStatus;
+};

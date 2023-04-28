@@ -1,6 +1,6 @@
 import { ASTProfile, EndowmentProfile } from "types/aws";
 import { EndowmentDetails } from "types/contracts";
-import { Transaction } from "types/contracts/evm/multisig";
+import { Transaction } from "types/contracts/multisig";
 import { AccountType, ProviderId } from "types/lists";
 import { SenderArgs } from "types/tx";
 
