@@ -1,6 +1,6 @@
 import { EmbeddedBankMsg, EmbeddedWasmMsg, Vote } from "types/contracts";
 import { WalletState } from "contexts/WalletContext";
-import Contract from "../Contract";
+import Contract from "./Contract";
 
 export default class CW3 extends Contract {
   address: string;
