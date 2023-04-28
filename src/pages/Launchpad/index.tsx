@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import Seo from "components/Seo";
 import { APP_NAME, DAPP_DOMAIN } from "constants/common";
 import About from "./About";
+import ConnectWallet from "./ConnectWallet";
 import Fees from "./Fees";
 import Layout from "./Layout";
 import Management from "./Management";
@@ -31,7 +32,8 @@ export default function Launchpad() {
           <Route path={steps[4]} element={<Maturity step={4} />} />
           <Route path={steps[5]} element={<Splits step={5} />} />
           <Route path={steps[6]} element={<Fees step={6} />} />
-          <Route path={steps[7]} element={<Summary />} />
+          <Route path={steps[7]} element={<ConnectWallet step={7} />} />
+          <Route path={steps[8]} element={<Summary />} />
           <Route index element={<About step={1} />} />
           <Route path="*" element={<Navigate to="." />} />
         </Route>

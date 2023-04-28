@@ -62,6 +62,9 @@ export default function Progress({ step, classes = "" }: Props) {
             Fees
           </Step>
           <Step isDone={p >= 7} isCurr={step === 7}>
+            Connect Wallet
+          </Step>
+          <Step isDone={p >= 8} isCurr={step === 8}>
             Summary
           </Step>
         </>
