@@ -1,4 +1,7 @@
 import { Route, Routes } from "react-router-dom";
+import Seo from "components/Seo";
+import { DAPP_DOMAIN } from "constants/common";
+import { adminRoutes } from "constants/routes";
 import { templateRoutes as routes } from "../../constants";
 import Config from "../../templates/cw3/Config";
 import FundSender from "../../templates/cw3/FundSender";
@@ -16,6 +19,7 @@ import RegistrarOwner from "./registrar/Owner";
 export default function Templates() {
   return (
     <div className="grid gap-2 grid-cols-[auto_1fr]">
+      <Seo title="Templates" url={`${DAPP_DOMAIN}/${adminRoutes.templates}`} />
       <Nav />
       <Routes>
         {/** _index-fund */}
