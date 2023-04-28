@@ -85,7 +85,7 @@ export default function Form() {
         <Label className="-mb-4">Description of your organization</Label>
         <RichTextEditor<FV>
           fieldName="overview"
-          placeHolder="A short overview of your charity"
+          placeHolder="A short overview of your organization"
           charLimit={4000}
           classes={{
             container:
