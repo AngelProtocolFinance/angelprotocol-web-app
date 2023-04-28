@@ -39,6 +39,7 @@ export default function useWidgetConfigurer() {
   }, []);
 
   return {
+    endowId,
     updateTriggered,
     methods,
     widgetSnippet,

@@ -4,10 +4,10 @@ import { FlatFormValues, FormValues } from "./types";
 import { Profile, endow } from "services/types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useProfileQuery } from "services/aws/aws";
-import Seo from "components/Seo";
 import { FormError, FormSkeleton } from "components/admin";
-import { APP_NAME, DAPP_DOMAIN } from "constants/common";
+import { adminRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
+import Seo from "../Seo";
 import Form from "./Form";
 import { getEndowDesignationLabelValuePair } from "./getEndowDesignationLabelValuePair";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
@@ -17,12 +17,21 @@ export default function EditProfile() {
   const { id } = useAdminResources();
   const { data: profile, isLoading, isFetching, isError } = useProfileQuery(id);
 
-  if (isLoading || isFetching)
-    return <FormSkeleton classes="max-w-4xl justify-self-center mt-6" />;
-  if (isError || !profile)
-    return <FormError errorMessage="Failed to load profile" />;
+  const content =
+    isLoading || isFetching ? (
+      <FormSkeleton classes="max-w-4xl justify-self-center mt-6" />
+    ) : isError || !profile ? (
+      <FormError errorMessage="Failed to load profile" />
+    ) : (
+      <FormWithContext {...profile} />
+    );
 
-  return <FormWithContext {...profile} />;
+  return (
+    <>
+      <Seo title="Edit Profile" url={`${adminRoutes.edit_profile}/${id}`} />
+      {content}
+    </>
+  );
 }
 
 function FormWithContext(props: Profile) {
@@ -84,13 +93,6 @@ function FormWithContext(props: Profile) {
   });
   return (
     <FormProvider {...methods}>
-      <Seo
-        title={`${props.name} profile update - ${APP_NAME}`}
-        description={`${(props?.overview ?? "").slice(0, 140)}`}
-        name={props.name}
-        image={props.logo}
-        url={`${DAPP_DOMAIN}/profile/${props.id}`}
-      />
       <Form />
     </FormProvider>
   );

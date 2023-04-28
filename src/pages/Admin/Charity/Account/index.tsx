@@ -1,10 +1,17 @@
 import { AccountType } from "types/lists";
+import { titleCase } from "constants/env";
+import { adminRoutes } from "constants/routes";
+import Seo from "../Seo";
 import Balances from "./Balances";
 import Positions from "./Positions";
 
 export default function Account({ type }: { type: AccountType }) {
   return (
     <div>
+      <Seo
+        title={`${titleCase(type)} Account`}
+        url={`${adminRoutes.account}/${type}`}
+      />
       <h2 className="font-bold text-[2rem] capitalize mb-8 max-sm:text-center">
         {type} Account
       </h2>

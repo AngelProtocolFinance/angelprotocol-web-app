@@ -50,4 +50,6 @@ export const adminRoutes = {
   // settings: "settings",
   invest: "invest-dashboard",
   account: "account",
+
+  application: "application",
 } as const;

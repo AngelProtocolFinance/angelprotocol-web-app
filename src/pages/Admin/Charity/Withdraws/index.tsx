@@ -1,4 +1,6 @@
 import QueryLoader from "components/QueryLoader";
+import { adminRoutes } from "constants/routes";
+import Seo from "../Seo";
 import OpenRequestsInfo from "./OpenRequestsInfo";
 import Transactions from "./Transactions";
 import Withdrawer from "./Withdrawer";
@@ -11,6 +13,8 @@ export default function Withdraws() {
   // isLoadingNextPage should not affect the whole QueryLoader
   return (
     <div className="grid gap-8 justify-items-center">
+      <Seo title="Withdraws" url={adminRoutes.withdraws} />
+
       <OpenRequestsInfo />
 
       <h2 className="text-center font-bold text-3xl -mb-2">Withdraw</h2>

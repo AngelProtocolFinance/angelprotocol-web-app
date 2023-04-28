@@ -6,6 +6,8 @@ import { useProfileQuery } from "services/aws/aws";
 import { useModalContext } from "contexts/ModalContext";
 import QueryLoader from "components/QueryLoader";
 import useUpdateEndowmentProfile from "hooks/useUpdateEndowmentProfile";
+import { adminRoutes } from "constants/routes";
+import Seo from "../Seo";
 import ChangeSettingsPrompt from "./ChangeSettingsPrompt";
 import Message from "./Message";
 
@@ -14,16 +16,23 @@ export default function ContributorVerification() {
   const queryState = useProfileQuery(id, { skip: id === 0 });
 
   return (
-    <QueryLoader
-      queryState={queryState}
-      messages={{
-        loading: "Getting endowment info..",
-        error: "Failed to get endowment info",
-      }}
-      classes={{ container: "text-center mt-8" }}
-    >
-      {(profile) => <Content profile={profile} />}
-    </QueryLoader>
+    <>
+      <Seo
+        title="Contributor Verification"
+        url={adminRoutes.contributor_verification}
+      />
+
+      <QueryLoader
+        queryState={queryState}
+        messages={{
+          loading: "Getting endowment info..",
+          error: "Failed to get endowment info",
+        }}
+        classes={{ container: "text-center mt-8" }}
+      >
+        {(profile) => <Content profile={profile} />}
+      </QueryLoader>
+    </>
   );
 }
 

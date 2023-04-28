@@ -46,6 +46,7 @@ export const proposalShape: SchemaShape<ProposalBase> = {
 };
 
 const {
+  application,
   proposal,
   templates: templatesRoute,
   account,
