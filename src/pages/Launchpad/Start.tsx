@@ -49,7 +49,7 @@ export default function Start({ classes = "" }) {
           to={`steps/${progress}`}
           className="btn btn-outline-filled w-full"
         >
-          Resume registration ( {progress}/7 )
+          Resume registration ( {progress}/8 )
         </Link>
       )}
 
