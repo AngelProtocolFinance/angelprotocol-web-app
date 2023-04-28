@@ -1,39 +1,38 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { object } from "yup";
+import { number, object } from "yup";
 import { SchemaShape } from "schemas/types";
 import { useModalContext } from "contexts/ModalContext";
 import Modal from "components/Modal";
 import { Field } from "components/form";
-import { requiredWalletAddr } from "schemas/string";
-import { chainIds } from "constants/chainIds";
 
 export type Props = {
-  initial?: string;
+  initial: number;
   added: string[];
-  onChange(member: string): void;
+  onChange(threshold: number): void;
 };
 
-type FV = { addr: string };
+type FV = { threshold: number };
 
-export default function MemberForm({ onChange, added, initial }: Props) {
+export default function ThresholdForm({ onChange, added, initial }: Props) {
   const { closeModal } = useModalContext();
-  const isEdit = initial !== undefined;
   const methods = useForm<FV>({
-    defaultValues: initial ? { addr: initial } : { addr: "" },
+    defaultValues: { threshold: initial },
     resolver: yupResolver(
       object().shape<SchemaShape<FV>>({
-        addr: requiredWalletAddr(chainIds.polygon).notOneOf(
-          initial ? [] : added,
-          "address already added"
-        ),
+        threshold: number()
+          .typeError("required")
+          .integer("no decimals")
+          .min(1, "at least 1")
+          //if no members set, default to 1
+          .max(added.length || 1, "can't be more than number of members"),
       })
     ),
   });
   const { handleSubmit } = methods;
 
-  const submit: SubmitHandler<FV> = (data) => {
-    onChange(data.addr);
+  const submit: SubmitHandler<FV> = ({ threshold }) => {
+    onChange(+threshold);
     closeModal();
   };
 
@@ -44,15 +43,17 @@ export default function MemberForm({ onChange, added, initial }: Props) {
       className="p-6 fixed-center z-10 grid gap-4 text-gray-d2 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded overflow-hidden"
     >
       <FormProvider {...methods}>
-        <Field<FV>
-          name="addr"
-          label="Member address"
+        <Field<FV, "number">
+          type="number"
+          step={1}
+          name="threshold"
+          label="Number of signatures to pass"
+          classes={{ container: "mt-8 mb-4" }}
           required
-          disabled={isEdit}
         />
       </FormProvider>
       <button type="submit" className="btn btn-orange mt-6">
-        Add member
+        Submit
       </button>
     </Modal>
   );

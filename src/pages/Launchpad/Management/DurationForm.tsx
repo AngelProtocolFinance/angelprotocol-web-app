@@ -5,35 +5,29 @@ import { SchemaShape } from "schemas/types";
 import { useModalContext } from "contexts/ModalContext";
 import Modal from "components/Modal";
 import { Field } from "components/form";
-import { requiredWalletAddr } from "schemas/string";
-import { chainIds } from "constants/chainIds";
+import { requiredPositiveNumber } from "schemas/number";
 
 export type Props = {
-  initial?: string;
-  added: string[];
-  onChange(member: string): void;
+  initial: string;
+  onChange(duration: string): void;
 };
 
-type FV = { addr: string };
+type FV = { duration: string };
 
-export default function MemberForm({ onChange, added, initial }: Props) {
+export default function DurationForm({ onChange, initial }: Props) {
   const { closeModal } = useModalContext();
-  const isEdit = initial !== undefined;
   const methods = useForm<FV>({
-    defaultValues: initial ? { addr: initial } : { addr: "" },
+    defaultValues: { duration: initial },
     resolver: yupResolver(
       object().shape<SchemaShape<FV>>({
-        addr: requiredWalletAddr(chainIds.polygon).notOneOf(
-          initial ? [] : added,
-          "address already added"
-        ),
+        duration: requiredPositiveNumber,
       })
     ),
   });
   const { handleSubmit } = methods;
 
-  const submit: SubmitHandler<FV> = (data) => {
-    onChange(data.addr);
+  const submit: SubmitHandler<FV> = ({ duration }) => {
+    onChange(duration);
     closeModal();
   };
 
@@ -45,14 +39,14 @@ export default function MemberForm({ onChange, added, initial }: Props) {
     >
       <FormProvider {...methods}>
         <Field<FV>
-          name="addr"
-          label="Member address"
+          name="duration"
+          label="Duration (hours)"
+          classes={{ container: "mt-8 mb-4" }}
           required
-          disabled={isEdit}
         />
       </FormProvider>
       <button type="submit" className="btn btn-orange mt-6">
-        Add member
+        Submit
       </button>
     </Modal>
   );

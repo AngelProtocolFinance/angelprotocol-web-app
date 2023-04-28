@@ -1,6 +1,5 @@
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { FV } from "./types";
-import { Member } from "slices/launchpad/types";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
@@ -11,27 +10,18 @@ import MemberForm from "./MemberForm";
 
 const name: keyof FV = "members";
 
-type MemberItem = Member & { idx: number };
-
 export default function Members({ classes = "" }) {
   const { showModal } = useModalContext();
   const { getValues } = useFormContext<FV>();
-  const { fields, append, remove, update } = useFieldArray({
+  const { fields, append, remove } = useFieldArray({
     name,
   });
 
-  async function handleAdd(member: Member) {
+  async function handleAdd(member: string) {
     append(member);
   }
   async function handleRemove(index: number) {
     remove(index);
-  }
-  async function handleEdit(member: MemberItem) {
-    showModal(MemberForm, {
-      onChange: (m) => update(member.idx, m),
-      initial: member,
-      added: getValues("members").map((m) => m.addr),
-    });
   }
 
   return (
@@ -42,7 +32,7 @@ export default function Members({ classes = "" }) {
         onClick={() =>
           showModal(MemberForm, {
             onChange: handleAdd,
-            added: getValues("members").map((m) => m.addr),
+            added: getValues("members").map((m) => m),
           })
         }
         className="btn-outline-filled sm:justify-self-end text-sm py-3 px-8 gap-3 mb-5"
@@ -63,7 +53,6 @@ export default function Members({ classes = "" }) {
           >
             <Cells type="th" cellClass="text-xs uppercase text-left py-3 px-4">
               <>member</>
-              <>Vote weight</>
               <></>
             </Cells>
           </TableSection>
@@ -72,12 +61,7 @@ export default function Members({ classes = "" }) {
             rowClass="border-b border-prim last:border-none even:bg-orange-l6 even:dark:bg-blue-d7"
           >
             {fields.map((field, idx) => (
-              <Row
-                key={field.id}
-                idx={idx}
-                onRemove={handleRemove}
-                onEdit={handleEdit}
-              />
+              <Row key={field.id} idx={idx} onRemove={handleRemove} />
             ))}
           </TableSection>
         </table>
@@ -89,27 +73,14 @@ export default function Members({ classes = "" }) {
 type Props = {
   idx: number;
   onRemove(idx: number): void;
-  onEdit(member: MemberItem): void;
 };
 
-function Row({ idx, onRemove, onEdit }: Props) {
+function Row({ idx, onRemove }: Props) {
   const { getValues } = useFormContext<FV>();
   const member = getValues(`members.${idx}`);
-  const { addr, weight } = member;
   return (
     <Cells type="td" cellClass="py-3 px-4 text-sm">
-      <div className="truncate w-[4.8rem] sm:w-28 md:w-full">{addr}</div>
-      <td className="font-work">
-        {weight}{" "}
-        <button
-          onClick={() => onEdit({ ...member, idx })}
-          type="button"
-          className="inline-block underline"
-        >
-          (change)
-        </button>
-      </td>
-
+      <div className="truncate w-[4.8rem] sm:w-28 md:w-full">{member}</div>
       <td className="w-14 h-full relative">
         <button
           className="text-center absolute-center"

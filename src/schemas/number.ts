@@ -32,7 +32,7 @@ export const tokenAmountString = Yup.lazy((value) =>
     : tokenConstraint
 );
 
-function lazyNumber(constraint: any, isRequired?: true) {
+export function lazyNumber(constraint: any, isRequired?: true) {
   return Yup.lazy((value) => {
     if (value === "") {
       return isRequired ? Yup.string().required("required") : Yup.string();
