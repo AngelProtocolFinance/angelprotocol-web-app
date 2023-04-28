@@ -31,7 +31,7 @@ export default function Proposals() {
   return (
     <div className="grid content-start rounded font-work">
       <Seo
-        title={`Proposals - ${APP_NAME}`}
+        title={`Decision Center - ${APP_NAME}`}
         url={`${DAPP_DOMAIN}/${adminRoutes.proposals}`}
       />
 

@@ -16,25 +16,23 @@ export default function ContributorVerification() {
   const queryState = useProfileQuery(id, { skip: id === 0 });
 
   return (
-    <QueryLoader
-      queryState={queryState}
-      messages={{
-        loading: "Getting endowment info..",
-        error: "Failed to get endowment info",
-      }}
-      classes={{ container: "text-center mt-8" }}
-    >
-      {(profile) => (
-        <>
-          <Seo
-            title="Contributor Verification"
-            url={adminRoutes.contributor_verification}
-          />
+    <>
+      <Seo
+        title="Contributor Verification"
+        url={adminRoutes.contributor_verification}
+      />
 
-          <Content profile={profile} />
-        </>
-      )}
-    </QueryLoader>
+      <QueryLoader
+        queryState={queryState}
+        messages={{
+          loading: "Getting endowment info..",
+          error: "Failed to get endowment info",
+        }}
+        classes={{ container: "text-center mt-8" }}
+      >
+        {(profile) => <Content profile={profile} />}
+      </QueryLoader>
+    </>
   );
 }
 

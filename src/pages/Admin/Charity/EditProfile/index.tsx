@@ -17,12 +17,21 @@ export default function EditProfile() {
   const { id } = useAdminResources();
   const { data: profile, isLoading, isFetching, isError } = useProfileQuery(id);
 
-  if (isLoading || isFetching)
-    return <FormSkeleton classes="max-w-4xl justify-self-center mt-6" />;
-  if (isError || !profile)
-    return <FormError errorMessage="Failed to load profile" />;
+  const content =
+    isLoading || isFetching ? (
+      <FormSkeleton classes="max-w-4xl justify-self-center mt-6" />
+    ) : isError || !profile ? (
+      <FormError errorMessage="Failed to load profile" />
+    ) : (
+      <FormWithContext {...profile} />
+    );
 
-  return <FormWithContext {...profile} />;
+  return (
+    <>
+      <Seo title="Edit Profile" url={`${adminRoutes.edit_profile}/${id}`} />
+      {content}
+    </>
+  );
 }
 
 function FormWithContext(props: Profile) {
@@ -84,10 +93,6 @@ function FormWithContext(props: Profile) {
   });
   return (
     <FormProvider {...methods}>
-      <Seo
-        title={`${props.name} profile update`}
-        url={`${adminRoutes.edit_profile}/${props.id}`}
-      />
       <Form />
     </FormProvider>
   );

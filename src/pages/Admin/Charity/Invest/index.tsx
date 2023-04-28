@@ -6,7 +6,7 @@ import Strategies from "./Strategies";
 export default function Invest() {
   return (
     <div>
-      <Seo title="Invest" url={adminRoutes.invest} />
+      <Seo title="Invest Dashboard" url={adminRoutes.invest} />
 
       <h3 className="font-bold text-[2rem] mb-8 max-sm:text-center">
         Invest Dashboard
