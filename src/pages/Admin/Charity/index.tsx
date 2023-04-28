@@ -17,6 +17,7 @@ import Invest from "./Invest";
 import Permissions from "./Permissions";
 // import Settings from "./Settings";
 import Templates from "./Templates";
+import Whitelists from "./Whitelists";
 import WidgetConfigurer from "./WidgetConfigurer";
 import Withdraws from "./Withdraws";
 
@@ -36,7 +37,7 @@ const COMMON: LinkGroup[] = [
   { title: "Profile", links: [LINKS.edit_profile] },
   {
     title: "Manage",
-    links: [LINKS[adminRoutes.proposals]],
+    links: [LINKS[adminRoutes.proposals], LINKS[adminRoutes.whitelists]],
   },
 ];
 
@@ -71,6 +72,7 @@ export default function Charity() {
         </Route>
         <Route path={adminRoutes.invest} element={<Invest />} />
         <Route path={adminRoutes.contributions} element={<Contributions />} />
+        <Route path={adminRoutes.whitelists} element={<Whitelists />} />
         {/*<Route path={adminRoutes.settings} element={<Settings />} />*/}
         <Route path={adminRoutes.edit_profile} element={<EditProfile />} />
         <Route path={adminRoutes.permissions} element={<Permissions />} />
