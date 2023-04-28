@@ -67,11 +67,11 @@ function toPermission(
     };
 
   return {
+    ownerControlled: val.ownerControlled,
     govControlled: val.govControlled,
     modifiableAfterInit: val.modifiableAfterInit,
-    ownerControlled: val.ownerControlled,
     delegate: {
-      Addr: val.delegate_address ? val.delegate_address : ADDRESS_ZERO,
+      Addr: val.delegated ? val.delegate_address : ADDRESS_ZERO,
       expires: 0, //in design: no expiry for delegation,
     },
   };
