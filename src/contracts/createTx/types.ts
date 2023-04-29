@@ -78,6 +78,8 @@ type Txs = {
 
   "charity-application.approve": Tx<{ id: number }>;
   "charity-application.reject": Tx<{ id: number }>;
+
+  "registrar.update-owner": Tx<{ newOwner: string }>;
 };
 
 export type TxTypes = keyof Txs;

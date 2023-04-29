@@ -4,6 +4,7 @@ import { charityApplication } from "contracts/evm/charity-application";
 import { indexFund } from "contracts/evm/index-fund";
 import { lockedWithdraw } from "contracts/evm/locked-withdraw";
 import { multisig } from "contracts/evm/multisig";
+import { registrar } from "contracts/evm/registrar";
 import { toTuple } from "helpers";
 import { accounts } from "../evm/Account";
 
@@ -63,4 +64,7 @@ export const txs: { [T in TxTypes]: (args: TxArgs<T>) => string } = {
     charityApplication.encodeFunctionData("approveCharity", [id]),
   "charity-application.reject": ({ id }) =>
     charityApplication.encodeFunctionData("rejectCharity", [id]),
+
+  "registrar.update-owner": ({ newOwner }) =>
+    registrar.encodeFunctionData("updateOwner", [newOwner]),
 };
