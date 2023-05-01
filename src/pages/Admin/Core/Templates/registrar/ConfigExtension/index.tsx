@@ -29,6 +29,7 @@ function Context(p: RegistrarConfig) {
     splitMin: p.splitToLiquid.min,
     splitDefault: p.splitToLiquid.defaultSplit,
     collectorShare: p.collectorShare,
+    acceptedTokens: p.acceptedTokens,
     subdaoGovCode: p.subdaoGovCode,
     subdaoCw20TokenCode: p.subdaoCw20TokenCode,
     subdaoBondingTokenCode: p.subdaoBondingTokenCode,

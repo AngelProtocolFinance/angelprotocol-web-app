@@ -41,7 +41,9 @@ export const queryObjects: {
       )[0];
       return {
         owner: d.owner.toLowerCase(),
-        acceptedTokens: d.acceptedTokens,
+        acceptedTokens: {
+          cw20: d.acceptedTokens.cw20.map((t) => t.toLowerCase()),
+        },
         applicationsReview: d.applicationsReview.toLowerCase(),
         indexFundContract: d.indexFundContract.toLowerCase(),
         accountsContract: d.accountsContract.toLowerCase(),
@@ -67,7 +69,6 @@ export const queryObjects: {
         collectorAddr: d.collectorAddr.toLowerCase(),
         collectorShare: d.collectorShare.toNumber(),
         charitySharesContract: d.charitySharesContract.toLowerCase(),
-        acceptekTokens: d.acceptedTokens.cw20.map((t) => t.toLowerCase()),
         fundraisingContract: d.fundraisingContract.toLowerCase(),
         rebalance: {
           rebalanceLiquidInvestedProfits: d.rebalance.lockedInterestsToLiquid,

@@ -69,6 +69,11 @@ export default function Form() {
         />
         <Field<FV>
           classes="field-admin-sec"
+          label="Charity Application"
+          name="charityProposal"
+        />
+        <Field<FV>
+          classes="field-admin-sec"
           label="Donation Match"
           name="donationMatchCharitesContract"
         />

@@ -72,6 +72,7 @@ export type RegistrarConfigPayload = {
   splitMin: number;
   splitDefault: number;
   collectorShare: number;
+  acceptedTokens: AcceptedTokens;
   subdaoGovCode: string;
   subdaoCw20TokenCode: string;
   subdaoBondingTokenCode: string;

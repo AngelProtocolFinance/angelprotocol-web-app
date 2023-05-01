@@ -5,6 +5,7 @@ export type Fields = Pick<
   RegistrarConfigPayload,
   | "accountsContract"
   | "applicationsReview"
+  | "charityProposal"
   | "charitySharesContract"
   | "donationMatchCharitesContract"
   | "fundraisingContract"
