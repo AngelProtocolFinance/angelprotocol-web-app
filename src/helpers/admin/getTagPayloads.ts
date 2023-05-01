@@ -50,9 +50,6 @@ export function getTagPayloads(type?: ProposalMeta["type"]): TagPayload[] {
     case "reg_owner":
       _tags.push("registrar.config");
       break;
-    case "reg_config_extension":
-      _tags.push("registrar.config-extension");
-      break;
   }
 
   return [invalidateJunoTags(_tags)];

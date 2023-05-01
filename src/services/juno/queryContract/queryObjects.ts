@@ -5,13 +5,13 @@ import {
   DFund,
   DGiftCardBalance,
   DIndexFundConfig,
+  DRegistrarConfig,
   DTransaction,
   toEndowStatusText,
   toEndowType,
   toSettingsPermission,
 } from "./decoded-types";
 import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
-import { RegistrarConfig } from "types/contracts";
 import { UNSDG_NUMS } from "types/lists";
 import { accounts } from "contracts/evm/Account";
 import { erc20 } from "contracts/evm/ERC20";
@@ -20,7 +20,6 @@ import { indexFund } from "contracts/evm/index-fund";
 import { multisig } from "contracts/evm/multisig";
 import { registrar } from "contracts/evm/registrar";
 import { toTuple } from "helpers";
-import { placeholders as p } from "./placeholders";
 
 type MigrationState =
   | "migrated"
@@ -36,22 +35,59 @@ export const queryObjects: {
   "registrar.config": [
     registrar.encodeFunctionData("queryConfig", []),
     (result) => {
-      const decoded: RegistrarConfig = registrar.decodeFunctionResult(
+      const d: DRegistrarConfig = registrar.decodeFunctionResult(
         "queryConfig",
         result
       )[0];
-      //select fields only
       return {
-        owner: decoded.owner.toLowerCase(),
-        acceptedTokens: decoded.acceptedTokens,
+        owner: d.owner.toLowerCase(),
+        acceptedTokens: d.acceptedTokens,
+        applicationsReview: d.applicationsReview.toLowerCase(),
+        indexFundContract: d.indexFundContract.toLowerCase(),
+        accountsContract: d.accountsContract.toLowerCase(),
+        treasury: d.treasury.toLowerCase(),
+        subdaoGovCode: d.subdaoGovCode.toLowerCase(),
+        subdaoCw20TokenCode: d.subdaoCw20TokenCode.toLowerCase(),
+        subdaoBondingTokenCode: d.subdaoBondingTokenCode.toLowerCase(),
+        subdaoCw900Code: d.subdaoCw900Code.toLowerCase(),
+        subdaoDistributorCode: d.subdaoDistributorCode.toLowerCase(),
+        subdaoEmitter: d.subdaoEmitter.toLowerCase(),
+        donationMatchCode: d.donationMatchCode.toLowerCase(),
+        donationMatchCharitesContract:
+          d.donationMatchCharitesContract.toLowerCase(),
+        donationMatchEmitter: d.donationMatchEmitter.toLowerCase(),
+        splitToLiquid: {
+          min: d.splitToLiquid.min.toNumber(),
+          max: d.splitToLiquid.max.toNumber(),
+          defaultSplit: d.splitToLiquid.defaultSplit.toNumber(),
+        },
+        haloToken: d.haloToken.toLowerCase(),
+        haloTokenLpContract: d.haloTokenLpContract.toLowerCase(),
+        govContract: d.govContract.toLowerCase(),
+        collectorAddr: d.collectorAddr.toLowerCase(),
+        collectorShare: d.collectorShare.toNumber(),
+        charitySharesContract: d.charitySharesContract.toLowerCase(),
+        acceptekTokens: d.acceptedTokens.cw20.map((t) => t.toLowerCase()),
+        fundraisingContract: d.fundraisingContract.toLowerCase(),
+        rebalance: {
+          rebalanceLiquidInvestedProfits: d.rebalance.lockedInterestsToLiquid,
+          lockedInterestsToLiquid: d.rebalance.lockedInterestsToLiquid,
+          interest_distribution: d.rebalance.interest_distribution.toNumber(),
+          lockedPrincipleToLiquid: d.rebalance.lockedPrincipleToLiquid,
+          principle_distribution: d.rebalance.principle_distribution.toNumber(),
+        },
+        swapsRouter: d.swapsRouter.toLowerCase(),
+        multisigFactory: d.multisigFactory.toLowerCase(),
+        multisigEmitter: d.multisigEmitter.toLowerCase(),
+        charityProposal: d.charityProposal.toLowerCase(),
+        lockedWithdrawal: d.lockedWithdrawal.toLowerCase(),
+        proxyAdmin: d.proxyAdmin.toLowerCase(),
+        usdcAddress: d.usdcAddress.toLowerCase(),
+        wethAddress: d.wethAddress.toLowerCase(),
+        cw900lvAddress: d.cw900lvAddress.toLowerCase(),
       };
     },
     "migrated",
-  ],
-  "registrar.config-extension": [
-    "",
-    () => p["registrar.config-extension"],
-    "placeholder",
   ],
 
   /** index fund */

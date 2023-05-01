@@ -5,7 +5,6 @@ import {
   GenericBalance,
   IndexFundConfig,
   RegistrarConfig,
-  RegistrarConfigExtension,
 } from "types/contracts";
 import { AccountType } from "types/contracts/evm";
 import { PageOptions, Transaction } from "types/contracts/multisig";
@@ -20,8 +19,6 @@ type Query<Args, Result> = {
 
 export interface ContractQueries {
   "registrar.config": Query<null, RegistrarConfig>;
-  "registrar.config-extension": Query<null, RegistrarConfigExtension>;
-
   "index-fund.funds": Query<
     {
       startAfter: number;

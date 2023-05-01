@@ -1,10 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { RegistrarConfigExtensionValues } from "pages/Admin/types";
-import {
-  RegistrarConfigExtension,
-  RegistrarConfigExtensionPayload,
-} from "types/contracts";
+import { FormValues } from "./types";
+import { RegistrarConfig, RegistrarConfigPayload } from "types/contracts";
 import { useContractQuery } from "services/juno";
 import { FormError, FormSkeleton } from "components/admin";
 import Form from "./Form";
@@ -15,46 +12,54 @@ export default function ConfigExtension() {
     data: config,
     isLoading,
     isError,
-  } = useContractQuery("registrar.config-extension", {});
+  } = useContractQuery("registrar.config", {});
   if (isLoading) return <FormSkeleton />;
   if (isError || !config)
     return <FormError errorMessage="failed to load registrar config" />;
   return <Context {...config} />;
 }
 
-function Context(props: RegistrarConfigExtension) {
-  const initialConfigPayload: RegistrarConfigExtensionPayload = {
-    accounts_contract: props.accounts_contract || "",
-    accounts_settings_controller: props.accounts_settings_controller || "",
-    applications_review: props.applications_review || "",
-    charity_shares_contract: props.charity_shares_contract || "",
-    collector_addr: props.collector_addr || "",
-    donation_match_charites_contract:
-      props.donation_match_charites_contract || "",
-    fundraising_contract: "",
-    gov_contract: props.gov_contract || "",
-    halo_token_lp_contract: props.halo_token_lp_contract || "",
-    halo_token: props.halo_token || "",
-    index_fund_contract: props.index_fund || "",
-    swap_factory: props.swap_factory || "",
-    swaps_router: props.swaps_router || "",
-
-    //wasm codes
-    /** NaN is blank ("") for <input type="number />"
-     *  can't directly use "" since string is not assignable to number
-     */
-    cw3_code: props.cw3_code || NaN,
-    cw4_code: props.cw4_code || NaN,
-    subdao_bonding_token_code: props.subdao_bonding_token_code || NaN,
-    subdao_cw20_token_code: props.subdao_cw20_token_code || NaN,
-    subdao_cw900_code: props.subdao_cw900_code || NaN,
-    subdao_distributor_code: props.subdao_distributor_code || NaN,
-    subdao_gov_code: props.subdao_gov_code || NaN,
+function Context(p: RegistrarConfig) {
+  const initial: RegistrarConfigPayload = {
+    accountsContract: p.accountsContract,
+    taxRate: 1, // not present in config
+    rebalance: p.rebalance,
+    approved_charities: [], // not present in config
+    splitMax: p.splitToLiquid.max,
+    splitMin: p.splitToLiquid.min,
+    splitDefault: p.splitToLiquid.defaultSplit,
+    collectorShare: p.collectorShare,
+    subdaoGovCode: p.subdaoGovCode,
+    subdaoCw20TokenCode: p.subdaoCw20TokenCode,
+    subdaoBondingTokenCode: p.subdaoBondingTokenCode,
+    subdaoCw900Code: p.subdaoCw900Code,
+    subdaoDistributorCode: p.subdaoDistributorCode,
+    subdaoEmitter: p.subdaoEmitter,
+    donationMatchCode: p.donationMatchCode,
+    indexFundContract: p.indexFundContract,
+    govContract: p.govContract,
+    treasury: p.treasury,
+    donationMatchCharitesContract: p.donationMatchCharitesContract,
+    donationMatchEmitter: p.donationMatchEmitter,
+    haloToken: p.haloToken,
+    haloTokenLpContract: p.haloTokenLpContract,
+    charitySharesContract: p.charitySharesContract,
+    fundraisingContract: p.fundraisingContract,
+    applicationsReview: p.applicationsReview,
+    swapsRouter: p.swapsRouter,
+    multisigFactory: p.multisigFactory,
+    multisigEmitter: p.multisigEmitter,
+    charityProposal: p.charityProposal,
+    lockedWithdrawal: p.lockedWithdrawal,
+    proxyAdmin: p.proxyAdmin,
+    usdcAddress: p.usdcAddress,
+    wethAddress: p.wethAddress,
+    cw900lvAddress: p.cw900lvAddress,
   };
 
-  const methods = useForm<RegistrarConfigExtensionValues>({
+  const methods = useForm<FormValues>({
     resolver: yupResolver(schema),
-    defaultValues: { ...initialConfigPayload, initialConfigPayload },
+    defaultValues: { ...initial, initial },
   });
 
   return (

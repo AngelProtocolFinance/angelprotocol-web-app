@@ -59,9 +59,3 @@ export type Asset = {
   info: { native: string } | { cw20: string };
   amount: string;
 };
-
-export type SplitDetails = {
-  max: string;
-  min: string;
-  default: string;
-};

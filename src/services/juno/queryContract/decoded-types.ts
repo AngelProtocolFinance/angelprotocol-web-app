@@ -8,7 +8,10 @@ import {
   EndowmentType,
   FundDetails,
   IndexFundConfig,
+  RebalanceDetails,
+  RegistrarConfig,
   SettingsController,
+  SplitDetails,
 } from "types/contracts";
 import { SettingsPermission } from "types/contracts";
 import { Mapped } from "types/utils";
@@ -32,6 +35,25 @@ enum BeneficiaryEnum {
   Wallet,
   None,
 }
+
+type DRebalanceDetails = OverrideProperties<
+  RebalanceDetails,
+  {
+    interest_distribution: BigNumber;
+    principle_distribution: BigNumber;
+  }
+>;
+
+type DSplitDetails = Mapped<SplitDetails, BigNumber>;
+
+export type DRegistrarConfig = OverrideProperties<
+  RegistrarConfig,
+  {
+    rebalance: DRebalanceDetails;
+    splitToLiquid: DSplitDetails;
+    collectorShare: BigNumber;
+  }
+>;
 
 type DDelegate = OverrideProperties<Delegate, { expires: BigNumber }>;
 
