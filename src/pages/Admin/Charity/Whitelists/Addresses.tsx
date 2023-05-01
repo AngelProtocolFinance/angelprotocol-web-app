@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   FieldValues,
   Path,
@@ -5,11 +6,13 @@ import {
   useFormContext,
 } from "react-hook-form";
 import { useModalContext } from "contexts/ModalContext";
-import Icon from "components/Icon";
+import Icon, { DrawerIcon } from "components/Icon";
 import Status from "components/Status";
-import TableSection, { Cells } from "components/TableSection";
+import { Cells } from "components/TableSection";
 import { isEmpty } from "helpers";
 import AddressForm from "./AddressForm";
+import AllowanceTable from "./AllowanceTable";
+import LoadMoreBtn from "./LoadMoreBtn";
 
 type Props<T extends FieldValues, K extends Path<T>> = {
   name: T[K] extends string[] ? K : never;
@@ -71,21 +74,26 @@ export default function Addresses<T extends FieldValues, K extends Path<T>>({
           {emptyMsg}
         </Status>
       ) : (
-        <table className="table-fixed rounded outline outline-1 outline-prim">
-          <TableSection
-            type="tbody"
-            rowClass="border-b border-prim divide-x divide-prim last:border-none odd:bg-orange-l6 odd:dark:bg-blue-d7"
-          >
-            {fields.map((field, idx) => (
-              <Row
-                key={field.id}
-                idx={idx}
-                onRemove={handleRemove}
-                name={name}
-              />
-            ))}
-          </TableSection>
-        </table>
+        <>
+          <table className="table-fixed rounded outline outline-1 outline-prim">
+            <tbody>
+              {fields.map((field, idx) => (
+                <Row
+                  key={field.id}
+                  idx={idx}
+                  onRemove={handleRemove}
+                  name={name}
+                />
+              ))}
+            </tbody>
+          </table>
+          <LoadMoreBtn
+            disabled
+            isLoading={false}
+            onClick={() => {}}
+            title={title}
+          />
+        </>
       )}
     </div>
   );
@@ -100,22 +108,44 @@ type RowProps = {
 function Row({ idx, onRemove, name }: RowProps) {
   const { getValues } = useFormContext();
   const addr = getValues(`${name}.${idx}`);
+  const [open, setOpen] = useState(false);
+  const isBeneficieary = name === "beneficiaries";
   return (
-    <Cells type="td" cellClass="py-3 px-4 text-sm">
-      <div className="truncate w-24 sm:w-full">{addr}</div>
-      <td className="w-16 h-full relative">
-        <button
-          className="text-center absolute-center"
-          type="button"
-          onClick={() => onRemove(idx)}
-        >
-          <Icon
-            type="CloseCircle"
-            size={22}
-            className="text-gray-d1 dark:text-gray"
-          />
-        </button>
-      </td>
-    </Cells>
+    <>
+      <tr className="border-b border-prim divide-x divide-prim last:border-none odd:bg-orange-l6 odd:dark:bg-blue-d7">
+        <Cells type="td" cellClass="py-3 px-4 text-sm">
+          {isBeneficieary ? (
+            <td className="w-16 h-full relative">
+              <button
+                className="text-center absolute-center"
+                type="button"
+                onClick={() => setOpen(!open)}
+              >
+                <DrawerIcon
+                  isOpen={open}
+                  size={25}
+                  className="mx-0 dark:text-gray shrink-0"
+                />
+              </button>
+            </td>
+          ) : null}
+          <div className="truncate w-24 sm:w-full">{addr}</div>
+          <td className="w-16 h-full relative">
+            <button
+              className="text-center absolute-center"
+              type="button"
+              onClick={() => onRemove(idx)}
+            >
+              <Icon
+                type="CloseCircle"
+                size={22}
+                className="text-gray-d1 dark:text-gray"
+              />
+            </button>
+          </td>
+        </Cells>
+      </tr>
+      {open ? <AllowanceTable /> : null}
+    </>
   );
 }
