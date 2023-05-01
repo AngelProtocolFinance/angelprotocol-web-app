@@ -4,7 +4,7 @@ import Info from "../common/Info";
 import Section, { SectionProps } from "./Section";
 
 export default function Fees({
-  fees,
+  fees: { referral_id, ...fees },
   ...props
 }: SectionProps<{ fees: TFees }>) {
   const _fees = Object.entries(fees).reduce(
@@ -22,6 +22,14 @@ export default function Fees({
       ) : (
         <div className="grid gap-6">{_fees}</div>
       )}
+      <div className="grid mt-6">
+        <span className="font-semibold mb-2">Referral ID:</span>
+        {!referral_id ? (
+          <Info>No referral ID set</Info>
+        ) : (
+          <span>{referral_id}</span>
+        )}
+      </div>
     </Section>
   );
 }

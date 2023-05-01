@@ -127,6 +127,8 @@ export default function toEVMAST(
       max: 100,
       defaultSplit: 50,
     },
+
+    referral_id: fees.referral_id || 0,
   };
 }
 

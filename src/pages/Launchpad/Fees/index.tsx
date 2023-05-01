@@ -5,7 +5,7 @@ import { FV } from "./types";
 import { SchemaShape } from "schemas/types";
 import { TFee, TFees } from "slices/launchpad/types";
 import { useLaunchpad } from "slices/launchpad";
-import { requiredPercent } from "schemas/number";
+import { positiveNumber, requiredPercent } from "schemas/number";
 import { requiredWalletAddr } from "schemas/string";
 import { chainIds } from "constants/chainIds";
 import { withStepGuard } from "../withStepGuard";
@@ -30,6 +30,7 @@ export default withStepGuard<6>(function Fees({ data }) {
         deposit: object().shape(fee),
         withdrawal: object().shape(fee),
         earnings: object().shape(fee),
+        referral_id: positiveNumber,
       })
     ),
     defaultValues: data || {

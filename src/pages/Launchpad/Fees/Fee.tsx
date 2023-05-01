@@ -9,7 +9,7 @@ import Toggle from "../common/Toggle";
 import { keys } from "./constants";
 
 type Props = {
-  name: keyof TFees;
+  name: keyof Omit<TFees, "referral_id">;
   title: string;
   isOpen: boolean;
   onToggle(name: keyof TFees): void;

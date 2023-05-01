@@ -37,6 +37,7 @@ export type TFees = {
   withdrawal: TFee;
   deposit: TFee;
   earnings: TFee;
+  referral_id?: number;
 };
 
 export type TFee = {
