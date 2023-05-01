@@ -1,13 +1,14 @@
 import { useAdminResources } from "pages/Admin/Guard";
 import { useDonationsQuery } from "services/apes";
 import QueryLoader from "components/QueryLoader";
+import { chainIds } from "constants/chainIds";
 import Table from "./Table";
 
 export default function DonationsTable({ classes = "" }) {
   const { id } = useAdminResources();
   const { data, ...rest } = useDonationsQuery({
     id: id.toString(),
-    chain_id: "80001",
+    chain_id: chainIds.polygon,
   });
 
   return (
