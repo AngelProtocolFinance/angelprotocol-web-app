@@ -1,3 +1,4 @@
+import { OmitIndexSignature } from "type-fest";
 import { TransactionStatus } from "types/lists";
 import { Tupleable } from "../evm";
 
@@ -34,3 +35,5 @@ export type PageOptions = {
   range: [number, number];
   status: TransactionStatus;
 };
+
+type Y = OmitIndexSignature<TransactionIDsPageOptions>;

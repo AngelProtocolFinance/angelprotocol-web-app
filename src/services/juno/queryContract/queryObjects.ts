@@ -1,11 +1,11 @@
 import { BigNumber } from "@ethersproject/bignumber";
 import {
-  DecodedEndowment,
-  DecodedEndowmentState,
-  DecodedFund,
-  DecodedGiftCardBalance,
-  DecodedIndexFundConfig,
-  DecodedTransaction,
+  DEndowment,
+  DEndowmentState,
+  DFund,
+  DGiftCardBalance,
+  DIndexFundConfig,
+  DTransaction,
   toEndowStatusText,
   toEndowType,
   toSettingsPermission,
@@ -58,7 +58,7 @@ export const queryObjects: {
   "index-fund.funds": [
     (args) => indexFund.encodeFunctionData("queryFundsList", toTuple(args)),
     (result) => {
-      const decoded: DecodedFund[] = indexFund.decodeFunctionResult(
+      const decoded: DFund[] = indexFund.decodeFunctionResult(
         "queryFundsList",
         result
       )[0];
@@ -90,7 +90,7 @@ export const queryObjects: {
   "index-fund.config": [
     indexFund.encodeFunctionData("queryConfig", []),
     (result) => {
-      const d: DecodedIndexFundConfig = indexFund.decodeFunctionResult(
+      const d: DIndexFundConfig = indexFund.decodeFunctionResult(
         "queryConfig",
         result
       )[0];
@@ -123,7 +123,7 @@ export const queryObjects: {
   "gift-card.balance": [
     ({ addr }) => giftCard.encodeFunctionData("queryBalance", [addr]),
     (result) => {
-      const decoded: DecodedGiftCardBalance = giftCard.decodeFunctionResult(
+      const decoded: DGiftCardBalance = giftCard.decodeFunctionResult(
         "queryBalance",
         result
       )[0];
@@ -212,7 +212,7 @@ export const queryObjects: {
       const d = multisig.decodeFunctionResult(
         "transactions",
         result
-      ) as unknown as DecodedTransaction;
+      ) as unknown as DTransaction;
 
       return {
         id: args?.id ?? 0,
@@ -244,7 +244,7 @@ export const queryObjects: {
   "accounts.endowment": [
     ({ id }) => accounts.encodeFunctionData("queryEndowmentDetails", [id]),
     (result) => {
-      const d: DecodedEndowment = accounts.decodeFunctionResult(
+      const d: DEndowment = accounts.decodeFunctionResult(
         "queryEndowmentDetails",
         result
       )[0];
@@ -265,7 +265,7 @@ export const queryObjects: {
           w.toLowerCase()
         ),
         maturityWhitelist: d.maturityWhitelist.map((w) => w.toLowerCase()),
-        kyc_donors_only: d.kycDonorsOnly,
+        kycDonorsOnly: d.kycDonorsOnly,
         settingsController: {
           endowmentController: toSettingsPermission(
             controller.endowmentController
@@ -299,7 +299,7 @@ export const queryObjects: {
   "accounts.state": [
     ({ id }) => accounts.encodeFunctionData("queryState", [id]),
     (result) => {
-      const d: DecodedEndowmentState = accounts.decodeFunctionResult(
+      const d: DEndowmentState = accounts.decodeFunctionResult(
         "queryState",
         result
       )[0];

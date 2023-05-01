@@ -1,11 +1,17 @@
 import type { BigNumber } from "@ethersproject/bignumber";
-import { EndowmentStatusText, EndowmentType } from "types/contracts";
+import { OverrideProperties } from "type-fest";
+import {
+  Categories,
+  Delegate,
+  EndowmentDetails,
+  EndowmentStatusText,
+  EndowmentType,
+  FundDetails,
+  IndexFundConfig,
+  SettingsController,
+} from "types/contracts";
 import { SettingsPermission } from "types/contracts";
-
-type Categories = {
-  sdgs: BigNumber[]; // u8 maps one of the 17 UN SDG
-  general: BigNumber[]; //??
-};
+import { Mapped } from "types/utils";
 
 enum EndowmentTypeEnum {
   Charity,
@@ -27,62 +33,34 @@ enum BeneficiaryEnum {
   None,
 }
 
-type Delegate = {
-  Addr: string;
-  expires: BigNumber;
-};
+type DDelegate = OverrideProperties<Delegate, { expires: BigNumber }>;
 
-type Permission = {
-  ownerControlled: boolean;
-  govControlled: boolean;
-  modifiableAfterInit: boolean;
-  delegate: Delegate;
-};
+type DPermission = OverrideProperties<
+  SettingsPermission,
+  { delegate: DDelegate }
+>;
+type DSettingsController = Mapped<SettingsController, DPermission>;
 
-type SettingsController = {
-  endowmentController: Permission;
-  strategies: Permission;
-  whitelistedBeneficiaries: Permission;
-  whitelistedContributors: Permission;
-  maturityWhitelist: Permission;
-  maturityTime: Permission;
-  profile: Permission;
-  earningsFee: Permission;
-  withdrawFee: Permission;
-  depositFee: Permission;
-  aumFee: Permission;
-  kycDonorsOnly: Permission;
-  name: Permission;
-  image: Permission;
-  logo: Permission;
-  categories: Permission;
-  splitToLiquid: Permission;
-  ignoreUserSplits: Permission;
-};
+type DCategories = OverrideProperties<
+  Categories,
+  {
+    sdgs: BigNumber[];
+    general: BigNumber[];
+  }
+>;
 
-export interface DecodedEndowment {
-  owner: string;
-  categories: Categories;
-  //tier
-  endow_type: EndowmentTypeEnum;
-  //logo
-  //image
-  status: EndowmentStatusEnum;
-  //deposit_approved
-  //withdraw_approved
-  maturityTime: BigNumber;
-  whitelistedBeneficiaries: string[];
-  maturityWhitelist: string[];
-  //invested_strategies:
-  //rebalance
-  kycDonorsOnly: boolean;
-  settingsController: SettingsController;
-  //pending_redemptions
-  //proposal_link
-  //referral_id
-}
+export type DEndowment = OverrideProperties<
+  EndowmentDetails,
+  {
+    categories: DCategories;
+    endow_type: EndowmentTypeEnum;
+    status: EndowmentStatusEnum;
+    maturityTime: BigNumber;
+    settingsController: DSettingsController;
+  }
+>;
 
-export interface DecodedEndowmentState {
+export interface DEndowmentState {
   donationsReceived: {
     liquid: BigNumber;
     locked: BigNumber;
@@ -97,49 +75,43 @@ export interface DecodedEndowmentState {
   };
 }
 
-export interface DecodedFund {
-  id: BigNumber;
-  name: string;
-  description: string;
-  members: BigNumber[];
-  rotatingFund: boolean;
-  splitToLiquid: BigNumber; //1-100
-  expiryTime: BigNumber;
-  expiryHeight: BigNumber;
-}
+export type DFund = OverrideProperties<
+  FundDetails,
+  {
+    id: BigNumber;
+    members: BigNumber[];
+    splitToLiquid: BigNumber;
+    expiryTime: BigNumber;
+    expiryHeight: BigNumber;
+  }
+>;
 
-export type DecodedGiftCardBalance = {
+export type DGiftCardBalance = {
   coinNativeAmount: BigNumber;
   Cw20CoinVerified_amount: BigNumber[];
   Cw20CoinVerified_addr: string[];
 };
 
-export type DecodedIndexFundConfig = {
-  owner: string;
-  registrarContract: string;
-  fundRotation: BigNumber;
-  fundMemberLimit: BigNumber;
-  fundingGoal: BigNumber;
-  alliance_members: string[];
-};
+export type DIndexFundConfig = OverrideProperties<
+  IndexFundConfig,
+  {
+    fundRotation: BigNumber;
+    fundMemberLimit: BigNumber;
+    fundingGoal: BigNumber;
+  }
+>;
 
-export type DecodedTransaction = {
+export type DTransaction = {
   title: string;
   description: string;
   destination: string;
   value: BigNumber;
   data: string;
   executed: false;
-  // string title;
-  //       string description;
-  //       address destination;
-  //       uint256 value;
-  //       bytes data;
-  //       bool executed;
 };
 // ////////// CONVERTERS ///////////////
 
-export function toSettingsPermission(p: Permission): SettingsPermission {
+export function toSettingsPermission(p: DPermission): SettingsPermission {
   return {
     ownerControlled: p.ownerControlled,
     govControlled: p.govControlled,

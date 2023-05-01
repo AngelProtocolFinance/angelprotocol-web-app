@@ -7,3 +7,5 @@ export type WithBalance<T extends object> = T & { balance: number };
 export type SemiPartial<T, K extends keyof T> = { [key in K]: T[key] } & {
   [key in Exclude<keyof T, K>]?: T[key];
 };
+
+export type Mapped<T, TType> = { [key in keyof T]: TType };
