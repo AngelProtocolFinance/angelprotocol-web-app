@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Transaction } from "types/contracts/evm/multisig";
+import { Transaction } from "types/contracts/multisig";
 import Icon from "components/Icon";
 import { DetailLabel } from "components/admin";
 import Preview from "./Preview";

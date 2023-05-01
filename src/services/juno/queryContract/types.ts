@@ -4,12 +4,11 @@ import {
   FundDetails,
   GenericBalance,
   IndexFundConfig,
-  PageOptions,
   RegistrarConfig,
   RegistrarConfigExtension,
 } from "types/contracts";
 import { AccountType } from "types/contracts/evm";
-import { Transaction } from "types/contracts/evm/multisig";
+import { PageOptions, Transaction } from "types/contracts/multisig";
 import { Contract } from "types/lists";
 
 type Addr = { addr: string };
