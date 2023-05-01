@@ -1,7 +1,4 @@
-import {
-  RegistrarConfigExtensionPayload,
-  RegistrarOwnerPayload,
-} from "types/contracts";
+import { RegistrarConfigExtensionPayload } from "types/contracts";
 import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 
@@ -13,12 +10,6 @@ export default class Registrar extends Contract {
   ) {
     return this.createEmbeddedWasmMsg(Registrar.address, {
       update_config_extension: payload,
-    });
-  }
-
-  createEmbeddedOwnerUpdateMsg(payload: RegistrarOwnerPayload) {
-    return this.createEmbeddedWasmMsg(Registrar.address, {
-      update_owner: payload,
     });
   }
 }

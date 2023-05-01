@@ -1,11 +1,10 @@
 import { useFormContext } from "react-hook-form";
-import { OwnerUpdateMeta, RegistrarOwnerValues } from "pages/Admin/types";
+import { RegistrarOwnerValues } from "pages/Admin/types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import Prompt from "components/Prompt";
-import CW3 from "contracts/CW3";
-import Registrar from "contracts/Registrar";
+import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 
 export default function useUpdateOwner() {
@@ -19,9 +18,9 @@ export default function useUpdateOwner() {
   const { showModal } = useModalContext();
   const sendTx = useTxSender();
 
-  async function updateOwner(data: RegistrarOwnerValues) {
+  async function updateOwner(rv: RegistrarOwnerValues) {
     //check for changes
-    if (data.initialOwner === data.new_owner) {
+    if (rv.initialOwner === rv.new_owner) {
       return showModal(Prompt, {
         type: "error",
         title: "Update Owner",
@@ -30,26 +29,29 @@ export default function useUpdateOwner() {
       });
     }
 
-    const registrarContract = new Registrar(wallet);
-    const configUpdateMsg = registrarContract.createEmbeddedOwnerUpdateMsg({
-      new_owner: data.new_owner,
+    if (!wallet) {
+      return showModal(Prompt, {
+        type: "error",
+        children: "Wallet is not connected",
+      });
+    }
+
+    const [data, dest] = encodeTx("registrar.update-owner", {
+      newOwner: rv.new_owner,
     });
 
-    const ownerUpdateMeta: OwnerUpdateMeta = {
-      type: "reg_owner",
-      data: { owner: data.initialOwner, newOwner: data.new_owner },
-    };
-
-    const adminContract = new CW3(wallet, multisig);
-    const proposalMsg = adminContract.createProposalMsg(
-      data.title,
-      data.description,
-      [configUpdateMsg],
-      JSON.stringify(ownerUpdateMeta)
-    );
-
     await sendTx({
-      content: { type: "cosmos", val: [proposalMsg] },
+      content: {
+        type: "evm",
+        val: createTx(wallet.address, "multisig.submit-transaction", {
+          multisig,
+          title: rv.title,
+          description: rv.description,
+          destination: dest,
+          value: "0",
+          data,
+        }),
+      },
       ...propMeta,
     });
   }
