@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 import { isCompleted } from "slices/launchpad/types";
+import { useGetWallet } from "contexts/WalletContext";
 import { useGetter } from "store/accessors";
 import { steps } from "../constants";
 import About from "./About";
@@ -14,7 +15,7 @@ import useSubmit from "./useSubmit";
 
 export default function Summary() {
   const state = useGetter((state) => state.launchpad);
-
+  const { wallet } = useGetWallet();
   const submit = useSubmit();
 
   if (!isCompleted(state)) return <Navigate to={`../${state.progress}`} />;
@@ -61,13 +62,19 @@ export default function Summary() {
         <Link to={`../${steps[7]}`} className="text-sm px-8 btn-outline-filled">
           Back
         </Link>
-        <button
-          type="button"
-          className="text-sm px-8 btn-orange"
-          onClick={() => submit(completed)}
-        >
-          Create my AST
-        </button>
+        {wallet ? (
+          <button
+            type="button"
+            className="text-sm px-8 btn-orange"
+            onClick={() => submit(completed)}
+          >
+            Create my AST
+          </button>
+        ) : (
+          <Link to={`../${steps[7]}`} className="text-sm px-8 btn-orange">
+            Connect Wallet
+          </Link>
+        )}
       </div>
     </div>
   );
