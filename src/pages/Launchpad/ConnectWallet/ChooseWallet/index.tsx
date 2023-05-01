@@ -9,7 +9,7 @@ export default function ChooseWallet() {
       <p className="mb-8 text-sm text-gray-d1 dark:text-gray mt-2">
         We recommend using a new wallet.
       </p>
-      <WalletConnector name="Web3 Auth" label="Socal login or email" />
+      <WalletConnector name="Web3 Auth" label="Social login or email" />
       <WalletConnector name="Metamask" label="Metamask" />
       <div className="grid grid-cols-2 md:flex gap-3 items-center mt-8">
         <Link
