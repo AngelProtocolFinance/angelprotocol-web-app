@@ -84,7 +84,7 @@ export default function FeesForm(props: FormProps) {
         </TableSection>
       </table>
       <Field<FV>
-        label="Referral ID:"
+        label="Provide the ID of an AST that you control if you are setting up ASTs for third parties and would like to benefit from our 20% revenue share program."
         name="referral_id"
         classes={{ container: "my-8" }}
       />
