@@ -10,7 +10,6 @@ import Status from "components/Status";
 import { Cells } from "components/TableSection";
 import { isEmpty } from "helpers";
 import AddressForm from "./AddressForm";
-import LoadMoreBtn from "./LoadMoreBtn";
 
 type Props<T extends FieldValues, K extends Path<T>> = {
   name: T[K] extends string[] ? K : never;
@@ -72,26 +71,18 @@ export default function Addresses<T extends FieldValues, K extends Path<T>>({
           {emptyMsg}
         </Status>
       ) : (
-        <>
-          <table className="table-fixed rounded outline outline-1 outline-prim">
-            <tbody>
-              {fields.map((field, idx) => (
-                <Row
-                  key={field.id}
-                  idx={idx}
-                  onRemove={handleRemove}
-                  name={name}
-                />
-              ))}
-            </tbody>
-          </table>
-          <LoadMoreBtn
-            disabled
-            isLoading={false}
-            onClick={() => {}}
-            title={title}
-          />
-        </>
+        <table className="table-fixed rounded outline outline-1 outline-prim">
+          <tbody>
+            {fields.map((field, idx) => (
+              <Row
+                key={field.id}
+                idx={idx}
+                onRemove={handleRemove}
+                name={name}
+              />
+            ))}
+          </tbody>
+        </table>
       )}
     </div>
   );
