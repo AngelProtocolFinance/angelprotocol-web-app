@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   FieldValues,
   Path,
@@ -6,12 +5,11 @@ import {
   useFormContext,
 } from "react-hook-form";
 import { useModalContext } from "contexts/ModalContext";
-import Icon, { DrawerIcon } from "components/Icon";
+import Icon from "components/Icon";
 import Status from "components/Status";
 import { Cells } from "components/TableSection";
 import { isEmpty } from "helpers";
 import AddressForm from "./AddressForm";
-import AllowanceTable from "./AllowanceTable";
 import LoadMoreBtn from "./LoadMoreBtn";
 
 type Props<T extends FieldValues, K extends Path<T>> = {
@@ -108,44 +106,24 @@ type RowProps = {
 function Row({ idx, onRemove, name }: RowProps) {
   const { getValues } = useFormContext();
   const addr = getValues(`${name}.${idx}`);
-  const [open, setOpen] = useState(false);
-  const isBeneficieary = name === "beneficiaries";
   return (
-    <>
-      <tr className="border-b border-prim divide-x divide-prim last:border-none odd:bg-orange-l6 odd:dark:bg-blue-d7">
-        <Cells type="td" cellClass="py-3 px-4 text-sm">
-          {isBeneficieary ? (
-            <td className="w-16 h-full relative">
-              <button
-                className="text-center absolute-center"
-                type="button"
-                onClick={() => setOpen(!open)}
-              >
-                <DrawerIcon
-                  isOpen={open}
-                  size={25}
-                  className="mx-0 dark:text-gray shrink-0"
-                />
-              </button>
-            </td>
-          ) : null}
-          <div className="truncate w-24 sm:w-full">{addr}</div>
-          <td className="w-16 h-full relative">
-            <button
-              className="text-center absolute-center"
-              type="button"
-              onClick={() => onRemove(idx)}
-            >
-              <Icon
-                type="CloseCircle"
-                size={22}
-                className="text-gray-d1 dark:text-gray"
-              />
-            </button>
-          </td>
-        </Cells>
-      </tr>
-      {open ? <AllowanceTable /> : null}
-    </>
+    <tr className="border-b border-prim divide-x divide-prim last:border-none odd:bg-orange-l6 odd:dark:bg-blue-d7">
+      <Cells type="td" cellClass="py-3 px-4 text-sm">
+        <div className="truncate w-24 sm:w-full">{addr}</div>
+        <td className="w-16 h-full relative">
+          <button
+            className="text-center absolute-center"
+            type="button"
+            onClick={() => onRemove(idx)}
+          >
+            <Icon
+              type="CloseCircle"
+              size={22}
+              className="text-gray-d1 dark:text-gray"
+            />
+          </button>
+        </td>
+      </Cells>
+    </tr>
   );
 }
