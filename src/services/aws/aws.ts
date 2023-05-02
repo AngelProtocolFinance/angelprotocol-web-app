@@ -58,7 +58,7 @@ export const aws = createApi({
       providesTags: ["endowments"],
       query: (params) => {
         return {
-          url: `/v3/endowments/${network}`,
+          url: `/v4/endowments/${network}`,
           params: { ...params, return: endowCardFields },
         };
       },
@@ -79,7 +79,7 @@ export const aws = createApi({
       providesTags: ["endowments"],
       query: (params) => {
         return {
-          url: `/v3/endowments/${network}`,
+          url: `/v4/endowments/${network}`,
           params: { ...params, return: ENDOW_ID_NAME_FIELDS },
         };
       },
