@@ -53,17 +53,18 @@ export type Completed = {
   4: TMaturity;
   5: TSplits;
   6: TFees;
+  7: null;
 };
 
 type Pending = Partial<Completed>;
-type CompleteStep = 7;
-
+type CompleteStep = 8;
 type Step1 = Pick<Pending, 1>;
 type Step2 = Step1 & Pick<Pending, 2>;
 type Step3 = Step2 & Pick<Pending, 3>;
 type Step4 = Step3 & Pick<Pending, 4>;
 type Step5 = Step4 & Pick<Pending, 5>;
 type Step6 = Step5 & Pick<Pending, 6>;
+type Step7 = Step6 & Pick<Pending, 7>;
 
 export type Steps = keyof Completed;
 
@@ -72,13 +73,13 @@ export type Progress = Steps | CompleteStep;
 export type Meta = { progress: Progress };
 
 export type LaunchState = Meta &
-  (Step1 | Step2 | Step3 | Step4 | Step5 | Step6 | Completed);
+  (Step1 | Step2 | Step3 | Step4 | Step5 | Step6 | Step7 | Completed);
 
-const steps: `${keyof Completed}`[] = ["1", "2", "3", "4", "5", "6"];
+const steps: `${keyof Completed}`[] = ["1", "2", "3", "4", "5", "6", "7"];
 // typeguard LaunchState is a Completed
 export const isCompleted = (state: LaunchState): state is Meta & Completed => {
   const completed = Object.keys(state);
   return (
-    state.progress === 7 && steps.every((step) => completed.includes(step))
+    state.progress === 8 && steps.every((step) => completed.includes(step))
   );
 };

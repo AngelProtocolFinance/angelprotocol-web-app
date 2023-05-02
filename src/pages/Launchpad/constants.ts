@@ -7,6 +7,7 @@ export const steps: { [K in Exclude<Progress, 1>]: `${K}` } = {
   5: "5",
   6: "6",
   7: "7", // complete
+  8: "8",
 };
 
 export const routes = {
