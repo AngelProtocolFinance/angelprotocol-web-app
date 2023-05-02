@@ -35,5 +35,3 @@ export type PageOptions = {
   range: [number, number];
   status: TransactionStatus;
 };
-
-type Y = OmitIndexSignature<TransactionIDsPageOptions>;
