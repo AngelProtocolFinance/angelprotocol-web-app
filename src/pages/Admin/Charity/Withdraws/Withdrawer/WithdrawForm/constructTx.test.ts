@@ -132,6 +132,7 @@ function endowDetails<T extends keyof ED>(overrides?: Override<T>[]): ED {
     status: "approved",
     maturityTime: 1000,
     whitelistedBeneficiaries: [],
+    whitelistedContributors: [],
     maturityWhitelist: [],
     kyc_donors_only: false,
     settingsController: {} as any, //not relevant to this test

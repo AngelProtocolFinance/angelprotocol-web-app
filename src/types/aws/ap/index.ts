@@ -102,6 +102,8 @@ export type EndowmentProfileUpdate = {
   tagline: string;
   tier: EndowmentTierNum /** 1 - 3  */;
   url: string | null;
+  whitelistedBeneficiaries: string[];
+  whitelistedContributors: string[];
 };
 
 export type SortDirection = "asc" | "desc";

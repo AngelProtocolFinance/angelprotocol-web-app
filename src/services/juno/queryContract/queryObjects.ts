@@ -264,6 +264,9 @@ export const queryObjects: {
         whitelistedBeneficiaries: d.whitelistedBeneficiaries.map((w) =>
           w.toLowerCase()
         ),
+        whitelistedContributors: d.whitelistedContributors.map((w) =>
+          w.toLowerCase()
+        ),
         maturityWhitelist: d.maturityWhitelist.map((w) => w.toLowerCase()),
         kyc_donors_only: d.kycDonorsOnly,
         settingsController: {

@@ -39,7 +39,7 @@ export default function MemberForm({ onAdd, name, added }: Props) {
       className="p-6 fixed-center z-10 grid gap-4 text-gray-d2 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded overflow-hidden"
     >
       <FormProvider {...methods}>
-        <Field name="addr" label="Address" required />
+        <Field name="addr" label={`${name} Wallet Address`} required />
       </FormProvider>
       <button
         type="submit"

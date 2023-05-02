@@ -72,6 +72,7 @@ export interface DecodedEndowment {
   //withdraw_approved
   maturityTime: BigNumber;
   whitelistedBeneficiaries: string[];
+  whitelistedContributors: string[];
   maturityWhitelist: string[];
   //invested_strategies:
   //rebalance
