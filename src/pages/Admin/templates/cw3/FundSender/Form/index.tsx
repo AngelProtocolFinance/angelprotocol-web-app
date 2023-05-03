@@ -26,7 +26,9 @@ export default function Form(props: Chain) {
       <TokenField<FV, "token">
         name="token"
         label="Amount"
-        tokens={props.tokens.map((t) => ({ ...t, amount: "0" }))}
+        tokens={[props.native_currency]
+          .concat(props.tokens)
+          .map((t) => ({ ...t, amount: "0" }))}
         classes={{ inputContainer: "bg-orange-l6 dark:bg-blue-d7" }}
         withBalance
       />
