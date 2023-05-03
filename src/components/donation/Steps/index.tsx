@@ -3,6 +3,7 @@ import { useModalContext } from "contexts/ModalContext";
 import KadoModal from "components/KadoModal";
 import { useGetter } from "store/accessors";
 import { DonationState } from "slices/donation";
+import { PAYMENT_WORDS } from "constants/env";
 import CurrentStep from "./CurrentStep";
 import Progress from "./Progress";
 
@@ -33,7 +34,7 @@ export function Steps({ className = "", ...params }: Props) {
               className="font-bold underline hover:text-orange transition ease-in-out duration-300"
               onClick={handleOpenKado}
             >
-              Buy some to make your donation
+              Buy some to make your {PAYMENT_WORDS.noun.singular}
             </button>
           </span>
           <Progress classes="my-12" />
