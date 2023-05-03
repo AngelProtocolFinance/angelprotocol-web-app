@@ -11,7 +11,7 @@ const minKey: Key = "min_donation_amnt";
 const balKey: Key = "balance";
 const giftKey: Key = "gift";
 
-export const tokenShape: SchemaShape<TWA> = {
+export const tokenShape = (withMin = true): SchemaShape<TWA> => ({
   amount: Yup.lazy((amount: string) =>
     amount === ""
       ? Yup.string().required("required")
@@ -22,11 +22,11 @@ export const tokenShape: SchemaShape<TWA> = {
             Gift,
             any
           ];
-          return !!minAmount
+          return withMin && !!minAmount
             ? schema
                 .min(minAmount || 0, `amount must be at least ${minAmount}`)
                 .max(balance + (gift || 0), "not enough balance")
             : schema.max(balance + (gift || 0), "not enough balance");
         })
   ),
-};
+});
