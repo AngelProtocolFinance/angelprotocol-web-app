@@ -1,21 +1,15 @@
 import { useFormContext } from "react-hook-form";
-import {
-  RegistrarConfigExtensionValues as RV,
-  RegistrarConfigUpdateMeta,
-} from "pages/Admin/types";
-import { RegistrarConfigExtensionPayload as RP } from "types/contracts";
+import { FormValues as FV } from "./types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import Prompt from "components/Prompt";
-import CW3 from "contracts/CW3";
-import Registrar from "contracts/Registrar";
+import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
-import { genDiffMeta, getPayloadDiff } from "helpers/admin";
-import { cleanObject } from "helpers/cleanObject";
+import { getPayloadDiff } from "helpers/admin";
 
-type Key = keyof RP;
-type Value = RP[Key];
+type Key = keyof FV;
+type Value = FV[Key];
 
 export default function useConfigureRegistrar() {
   const { multisig, propMeta } = useAdminResources();
@@ -23,18 +17,18 @@ export default function useConfigureRegistrar() {
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },
-  } = useFormContext<RV>();
+  } = useFormContext<FV>();
   const { showModal } = useModalContext();
   const sendTx = useTxSender();
 
   async function configureRegistrar({
     title,
     description,
-    initialConfigPayload,
-    ...data //registrarConfig
-  }: RV) {
+    initial,
+    ...fv //registrarConfig
+  }: FV) {
     //check for changes
-    const diff = getPayloadDiff(initialConfigPayload, data);
+    const diff = getPayloadDiff(initial, fv);
     const diffEntries = Object.entries(diff) as [Key, Value][];
     if (diffEntries.length === 0) {
       return showModal(Prompt, {
@@ -45,27 +39,30 @@ export default function useConfigureRegistrar() {
       });
     }
 
-    const registrarContract = new Registrar(wallet);
-    const configUpdateMsg =
-      registrarContract.createEmbeddedConfigExtensionUpdateMsg(
-        cleanObject(diff)
-      );
+    if (!wallet) {
+      return showModal(Prompt, {
+        type: "error",
+        children: "Wallet is not connected",
+      });
+    }
 
-    const configUpdateMeta: RegistrarConfigUpdateMeta = {
-      type: "reg_config_extension",
-      data: genDiffMeta(diffEntries, initialConfigPayload),
-    };
-
-    const adminContract = new CW3(wallet, multisig);
-    const proposalMsg = adminContract.createProposalMsg(
-      title,
-      description,
-      [configUpdateMsg],
-      JSON.stringify(configUpdateMeta)
-    );
+    const [data, dest] = encodeTx("registrar.update-config", {
+      ...initial,
+      ...fv,
+    });
 
     await sendTx({
-      content: { type: "cosmos", val: [proposalMsg] },
+      content: {
+        type: "evm",
+        val: createTx(wallet.address, "multisig.submit-transaction", {
+          multisig,
+          title,
+          description,
+          destination: dest,
+          value: "0",
+          data,
+        }),
+      },
       ...propMeta,
     });
   }
