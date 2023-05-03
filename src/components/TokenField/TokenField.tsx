@@ -20,10 +20,13 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
   label,
   tokens,
   name,
+  classes,
+  scale,
+
+  //flags
   withGiftcard,
   withBalance,
-  scale,
-  classes,
+  withMininum,
 }: Props<T, K>) {
   const {
     register,
@@ -94,9 +97,11 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
           className="static field-error text-left my-1"
         />
       </div>
-      <p className="text-xs mb-3">
-        Minimal amount: {token.symbol} {token.min_donation_amnt}
-      </p>
+      {withMininum && (
+        <p className="text-xs mb-3">
+          Minimal amount: {token.symbol} {token.min_donation_amnt}
+        </p>
+      )}
       {scale && <Steps scale={scale} token={token} onSetAmount={onSetAmount} />}
     </div>
   );
