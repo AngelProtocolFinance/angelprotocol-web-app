@@ -18,8 +18,7 @@ const _owner: K = "owner";
 const _npo_type: K = "endow_designation";
 const _contributor_verification_required: K =
   "contributor_verification_required";
-const _whitelistedContributors: K = "whitelistedContributors";
-const _whitelistedBeneficiaries: K = "whitelistedBeneficiaries";
+
 export type FlatFormValues = Omit<
   EndowmentProfileUpdate,
   /** to flatten */
@@ -30,8 +29,6 @@ export type FlatFormValues = Omit<
   | typeof _tier
   | typeof _owner
   | typeof _contributor_verification_required
-  | typeof _whitelistedBeneficiaries
-  | typeof _whitelistedContributors
 >;
 
 export type FormValues = Omit<
