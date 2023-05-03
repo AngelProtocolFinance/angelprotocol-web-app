@@ -1,6 +1,3 @@
-export const apesTags = {
-  chain: "chain",
-  withdraw_logs: "withdraw-logs",
-  donations: "donations",
-  tokens: "tokens",
-};
+export const tags = ["chain", "withdraw_logs", "donations", "tokens"] as const;
+
+export type ApesTag = typeof tags[number];

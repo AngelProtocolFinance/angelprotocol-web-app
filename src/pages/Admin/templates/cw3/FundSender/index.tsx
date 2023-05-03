@@ -26,7 +26,14 @@ export default function FundSender() {
         error: <FormError errorMessage="Failed to get token list" />,
       }}
     >
-      {(chain) => <Context {...chain} />}
+      {(chain) => (
+        <Context
+          {...chain}
+          key={
+            query.requestId /** re-render context on new request (invalidated) */
+          }
+        />
+      )}
     </QueryLoader>
   );
 }
