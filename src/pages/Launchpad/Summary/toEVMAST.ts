@@ -128,7 +128,7 @@ export default function toEVMAST(
       defaultSplit: 50,
     },
 
-    referral_id: fees.referral_id || 0,
+    // referral_id: fees.referral_id || 0, //TODO: add on later ver of contracts
   };
 }
 
