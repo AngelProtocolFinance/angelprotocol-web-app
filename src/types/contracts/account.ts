@@ -191,3 +191,9 @@ export interface SettingsControllerUpdate extends Tupleable {
   withdrawFee: SettingsPermission;
   aumFee: SettingsPermission;
 }
+
+export interface SettingsWhitelistsUpdate extends Tupleable {
+  id: number;
+  whitelistedBeneficiaries: string[];
+  whitelistedContributors: string[];
+}
