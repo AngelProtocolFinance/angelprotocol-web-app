@@ -1,19 +1,18 @@
 import { SubmitHandler, useFormContext } from "react-hook-form";
 import { FormValues } from "./types";
-import { EndowmentProfileUpdate } from "types/aws";
-import { SemiPartial } from "types/utils";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import { TxPrompt } from "components/Prompt";
-import useUpdateEndowmentProfile from "hooks/useUpdateEndowmentProfile";
+import { createTx } from "contracts/createTx/createTx";
+import useTxSender from "hooks/useTxSender";
 import { isEVM } from "helpers";
-import { getPayloadDiff } from "helpers/admin";
+import { getPayloadDiff, getTagPayloads } from "helpers/admin";
 
 // import optimizeImage from "./optimizeImage";
 
 export default function useEditWhitelists() {
-  const { id, owner, propMeta } = useAdminResources<"charity">();
+  const { id, propMeta } = useAdminResources<"charity">();
   const {
     reset,
     handleSubmit,
@@ -22,7 +21,7 @@ export default function useEditWhitelists() {
 
   const { showModal } = useModalContext();
   const { wallet } = useGetWallet();
-  const updateProfile = useUpdateEndowmentProfile();
+  const sendTx = useTxSender();
 
   const editWhitelists: SubmitHandler<FormValues> = async ({
     initial,
@@ -65,13 +64,18 @@ export default function useEditWhitelists() {
       /** already clean - no need to futher clean "": to unset values { field: val }, field must have a value 
      like ""; unlike contracts where if fields is not present, val is set to null.
     */
-      const updates: SemiPartial<EndowmentProfileUpdate, "id" | "owner"> = {
-        ...diff,
+      const updates = {
         id,
-        owner,
+        whitelistedContributors: diff.contributors || [],
+        whitelistedBeneficiaries: diff.beneficiaries || [],
       };
-
-      await updateProfile(updates);
+      let tx = createTx(wallet.address, "accounts.update-settings", updates);
+      await sendTx({
+        content: { type: "evm", val: tx },
+        ...propMeta,
+        isAuthorized: true,
+        tagPayloads: getTagPayloads(propMeta.willExecute && "endow_controller"),
+      });
     } catch (err) {
       showModal(TxPrompt, {
         error: err instanceof Error ? err.message : "Unknown error occured",
