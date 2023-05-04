@@ -15,6 +15,7 @@ type Props<T extends FV> = PropsWithChildren<{
   classes?: Classes;
   disabled?: boolean;
   required?: boolean;
+  onChange?(value: boolean): void;
 }>;
 
 export default function Toggle<T extends FV>({
@@ -23,6 +24,7 @@ export default function Toggle<T extends FV>({
   disabled,
   required,
   classes,
+  onChange: onChangeProp,
 }: Props<T>) {
   const {
     formState: { isSubmitting, errors },
@@ -44,7 +46,10 @@ export default function Toggle<T extends FV>({
         <Switch
           disabled={disabled || isSubmitting}
           checked={value}
-          onChange={onChange}
+          onChange={(val) => {
+            onChange(val);
+            onChangeProp?.(val);
+          }}
           className="border border-prim peer relative inline-flex h-8 w-14 items-center rounded-full transition-colors"
         >
           <span

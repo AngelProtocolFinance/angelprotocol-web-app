@@ -12,7 +12,7 @@ export default function toEVMAST(
     2: management,
     3: whitelists,
     4: maturity,
-    5: splits,
+    5: splits, //locked
     6: fees,
   }: Completed,
   creator: string
@@ -50,9 +50,10 @@ export default function toEVMAST(
     whitelistedBeneficiaries: whitelists.beneficiaries,
     whitelistedContributors: whitelists.contributors,
 
-    splitMax: +splits.max,
-    splitMin: +splits.min,
-    splitDefault: +splits.default,
+    //not used in contract
+    splitMax: 100 - +splits.max,
+    splitMin: 100 - +splits.min,
+    splitDefault: 100 - +splits.default,
 
     // //fees
     earningsFee: toEndowFee(fees.earnings),
@@ -121,11 +122,11 @@ export default function toEVMAST(
     // settingsController: SettingsController; //not included in launchpad, for edit later
     parent: 0,
     maturityWhitelist: maturity.beneficiaries.map((b) => b.addr),
-    ignoreUserSplits: false,
+    ignoreUserSplits: !splits.isCustom,
     splitToLiquid: {
-      min: 0,
-      max: 100,
-      defaultSplit: 50,
+      min: 100 - +splits.max,
+      max: 100 - +splits.min,
+      defaultSplit: 100 - +splits.default,
     },
 
     // referral_id: fees.referral_id || 0, //TODO: add on later ver of contracts
