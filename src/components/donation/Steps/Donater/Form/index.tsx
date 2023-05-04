@@ -8,6 +8,7 @@ import TokenField from "components/TokenField";
 import { Label } from "components/form";
 import { useGetter } from "store/accessors";
 import { setDetails } from "slices/donation";
+import { PAYMENT_WORDS } from "constants/env";
 import { appRoutes } from "constants/routes";
 import AdvancedOptions from "./AdvancedOptions";
 
@@ -48,10 +49,10 @@ export default function Form(props: {
       <TokenField<DonateValues, "token">
         name="token"
         tokens={getValues("tokens")}
-        label="Enter the donation amount:"
-        classes={{ label: "text-lg", inputContainer: "dark:bg-blue-d6" }}
         withGiftcard
         withBalance
+        label={`Enter the ${PAYMENT_WORDS.noun.singular} amount:`}
+        classes={{ label: "text-lg", inputContainer: "dark:bg-blue-d6" }}
         withMininum
       />
 

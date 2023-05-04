@@ -4,6 +4,7 @@ import { DonateValues } from "./types";
 import { TokenWithAmount as TWA } from "types/slices";
 import { FormStep, WithWallet, fiatWallet, isFiat } from "slices/donation";
 import { isEmpty } from "helpers";
+import { IS_AST } from "constants/env";
 // import { fiatTokens } from "constants/tokens";
 import { ConfigParams } from "..";
 import Form from "./Form";
@@ -14,7 +15,7 @@ export default function Donater({
   config: {
     availCurrs = [],
     hideAdvOpts = false,
-    liquidPct = 0,
+    liquidPct = IS_AST ? 100 : 0,
     unfoldAdvOpts = false,
   },
   ...state
