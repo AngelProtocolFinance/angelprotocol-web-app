@@ -1,6 +1,6 @@
 import {
+  EndowmentSettingsUpdate,
   SettingsControllerUpdate,
-  SettingsWhitelistsUpdate,
 } from "types/contracts";
 import { AccountType, ERC20Deposit, NewAST } from "types/contracts/evm";
 import { Allowance, Transfer } from "types/contracts/evm/erc20";
@@ -23,7 +23,7 @@ type Txs = {
   // //// ACCOUNTS ////
   "accounts.create-endowment": Tx<NewAST>;
   "accounts.update-controller": Tx<SettingsControllerUpdate>;
-  "accounts.update-settings": Tx<SettingsWhitelistsUpdate>;
+  "accounts.update-settings": Tx<EndowmentSettingsUpdate>;
   "accounts.deposit-erc20": Tx<ERC20Deposit>;
   "accounts.withdraw": Tx<{
     id: number;

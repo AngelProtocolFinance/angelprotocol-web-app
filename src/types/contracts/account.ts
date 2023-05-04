@@ -9,7 +9,7 @@ import {
   EndowmentType,
 } from "./common";
 import { CW20 } from "./cw20";
-import { ADDRESS_ZERO } from "./evm";
+import { ADDRESS_ZERO, SplitDetails } from "./evm";
 
 export interface GenericBalance {
   native: Coin[];
@@ -192,8 +192,13 @@ export interface SettingsControllerUpdate extends Tupleable {
   aumFee: SettingsPermission;
 }
 
-export interface SettingsWhitelistsUpdate extends Tupleable {
+export interface EndowmentSettingsUpdate extends Tupleable {
   id: number;
+  donationMatchActive: boolean;
   whitelistedBeneficiaries: string[];
   whitelistedContributors: string[];
+  maturity_whitelist_add: string[];
+  maturity_whitelist_remove: string[];
+  splitToLiquid: SplitDetails;
+  ignoreUserSplits: boolean;
 }

@@ -76,7 +76,7 @@ export type DaoSetup = {
   token: DaoToken;
 };
 
-type SplitDetails = {
+export type SplitDetails = {
   min: number;
   max: number;
   defaultSplit: number;
