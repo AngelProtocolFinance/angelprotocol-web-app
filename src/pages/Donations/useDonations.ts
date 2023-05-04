@@ -8,6 +8,7 @@ import {
 } from "services/apes";
 import { useSetter } from "store/accessors";
 import useDebouncer from "hooks/useDebouncer";
+import { chainIds } from "constants/chainIds";
 
 export default function useDonations() {
   const { address } = useParams<{ address: string }>();
@@ -19,7 +20,7 @@ export default function useDonations() {
 
   const [params, setParams] = useState<DonationsQueryParams>({
     id: address || "",
-    chain_id: "80001",
+    chain_id: chainIds.polygon,
   });
 
   const queryState = useDonationsQuery(params, {
