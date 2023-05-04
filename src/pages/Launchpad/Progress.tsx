@@ -1,7 +1,9 @@
 import { PropsWithChildren, useState } from "react";
+import { Link } from "react-router-dom";
 import { DrawerIcon } from "components/Icon";
 import { useGetter } from "store/accessors";
 import useHandleScreenResize, { SCREEN_MD } from "hooks/useHandleScreenResize";
+import { steps } from "./constants";
 
 type Props = { step: number; classes?: string };
 
@@ -31,7 +33,7 @@ export default function Progress({ step, classes = "" }: Props) {
   return (
     <div className={`py-4 pl-6 pr-4 ${classes} dark:text-gray`}>
       <div className="relative">
-        <Step classes="relative" isDone={p >= 1} isCurr={step === 1}>
+        <Step classes="relative" isDone={p >= 1} isCurr={step === 1} step={""}>
           About
         </Step>
         <button
@@ -46,25 +48,25 @@ export default function Progress({ step, classes = "" }: Props) {
 
       {isOtherStepsShown && (
         <>
-          <Step isDone={p >= 2} isCurr={step === 2}>
+          <Step isDone={p >= 2} isCurr={step === 2} step={steps[2]}>
             Management
           </Step>
-          <Step isDone={p >= 3} isCurr={step === 3}>
+          <Step isDone={p >= 3} isCurr={step === 3} step={steps[3]}>
             Whitelists
           </Step>
-          <Step isDone={p >= 4} isCurr={step === 4}>
+          <Step isDone={p >= 4} isCurr={step === 4} step={steps[4]}>
             Maturity
           </Step>
-          <Step isDone={p >= 5} isCurr={step === 5}>
+          <Step isDone={p >= 5} isCurr={step === 5} step={steps[5]}>
             Split of Contribution
           </Step>
-          <Step isDone={p >= 6} isCurr={step === 6}>
+          <Step isDone={p >= 6} isCurr={step === 6} step={steps[6]}>
             Fees
           </Step>
-          <Step isDone={p >= 7} isCurr={step === 7}>
+          <Step isDone={p >= 7} isCurr={step === 7} step={steps[7]}>
             Connect Wallet
           </Step>
-          <Step isDone={p >= 8} isCurr={step === 8}>
+          <Step isDone={p >= 8} isCurr={step === 8} step={steps[8]}>
             Summary
           </Step>
         </>
@@ -76,12 +78,14 @@ export default function Progress({ step, classes = "" }: Props) {
 type StepProps = {
   isDone: boolean;
   isCurr: boolean;
+  step: string;
   classes?: string;
 };
 function Step({
   children,
   isDone,
   isCurr,
+  step,
   classes = "",
 }: PropsWithChildren<StepProps>) {
   return (
@@ -99,13 +103,14 @@ function Step({
             isDone ? "bg-orange" : "bg-gray-l3 dark:bg-bluegray"
           } rounded-full transform -translate-x-1/2`}
         />
-        <span
+        <Link
+          to={step}
           className={`text-sm ${
             isCurr ? "text-orange" : "text-gray-d1 dark:text-gray"
           }`}
         >
           {children}
-        </span>
+        </Link>
       </div>
     </div>
   );
