@@ -1,8 +1,8 @@
 import { useAdminResources } from "pages/Admin/Guard";
 import { useDonationsQuery } from "services/apes";
 import QueryLoader from "components/QueryLoader";
-import { PAYMENT_WORDS } from "constants/env";
 import { chainIds } from "constants/chainIds";
+import { PAYMENT_WORDS } from "constants/env";
 import Table from "./Table";
 
 export default function DonationsTable({ classes = "" }) {
