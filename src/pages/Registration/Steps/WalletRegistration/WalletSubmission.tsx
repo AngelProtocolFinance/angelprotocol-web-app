@@ -20,7 +20,7 @@ export default function WalletSubmission({
   const { isSubmitting, registerWallet } = useRegisterWallet();
   const { data } = useRegState<3>();
 
-  if (providerId !== "web3auth-torus") {
+  if (!(providerId === "web3auth-torus" || providerId === "metamask")) {
     return (
       <div className="text-center md:text-left">
         <h3 className="text-lg mb-4 flex items-center justify-center md:justify-start gap-3">

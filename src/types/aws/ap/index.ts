@@ -62,7 +62,7 @@ export type ASTProfile = Pick<EndowmentProfile,
   | typeof _npo_type 
   | typeof _categories
   >>
-  & EndowmentBalances
+  & Partial<EndowmentBalances>
 
 export type EndowmentCard = EndowmentBase & {
   endow_type: EndowmentType;

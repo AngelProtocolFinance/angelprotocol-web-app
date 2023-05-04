@@ -67,4 +67,6 @@ export const txs: { [T in TxTypes]: (args: TxArgs<T>) => string } = {
 
   "registrar.update-owner": ({ newOwner }) =>
     registrar.encodeFunctionData("updateOwner", [newOwner]),
+  "registrar.update-config": (config) =>
+    registrar.encodeFunctionData("updateConfig", [toTuple(config)]),
 };

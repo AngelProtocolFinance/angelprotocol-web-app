@@ -1,3 +1,4 @@
+import { OmitIndexSignature } from "type-fest";
 import { TransactionStatus } from "types/lists";
 import { Tupleable } from "../evm";
 

@@ -14,6 +14,7 @@ import { chainIds } from "constants/chainIds";
 import { IS_TEST, JUNO_LCD_OVERRIDE, JUNO_RPC_OVERRIDE } from "constants/env";
 import { APIs } from "constants/urls";
 import { fetchBalances } from "./helpers/fetchBalances";
+import { tags } from "./tags";
 
 export const apes = createApi({
   reducerPath: "apes",
@@ -21,7 +22,7 @@ export const apes = createApi({
     baseUrl: APIs.apes,
     mode: "cors",
   }),
-  tagTypes: ["chain", "withdraw_logs", "donations", "tokens"],
+  tagTypes: tags,
   endpoints: (builder) => ({
     chains: builder.query<BaseChain[], unknown>({
       query: () => `v1/chains${IS_TEST ? "/test" : ""}`,

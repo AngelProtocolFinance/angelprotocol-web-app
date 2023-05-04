@@ -1,72 +1,56 @@
 import { useFormContext } from "react-hook-form";
-import { FundSendMeta } from "pages/Admin/types";
-import { FundSendValues } from "pages/Admin/types";
+import { FormValues as FV } from "../types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import Prompt from "components/Prompt";
-import CW3 from "contracts/CW3";
-import { embedMsg } from "contracts/createCosmosMsg";
+import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
-import { scaleToStr } from "helpers";
+import { scale } from "helpers";
 import { getTagPayloads } from "helpers/admin";
-import { axlUSDCDenom, denoms, tokens } from "constants/tokens";
 
 export default function useTransferFunds() {
   const {
     handleSubmit,
     formState: { isSubmitting, isValid, isDirty },
-  } = useFormContext<FundSendValues>();
+  } = useFormContext<FV>();
   const { multisig, propMeta } = useAdminResources();
   //TODO: use wallet token[] to list amounts to transfer
   const { wallet } = useGetWallet();
   const { showModal } = useModalContext();
   const sendTx = useTxSender();
 
-  async function transferFunds(data: FundSendValues) {
-    const balance =
-      data.denom === axlUSDCDenom ? data.usdBalance : data.haloBalance;
-    if (data.amount > balance) {
+  async function transferFunds(fv: FV) {
+    if (!wallet) {
       return showModal(Prompt, {
         type: "error",
-        title: "Transfer Funds",
-        headline: "Insufficient Balance",
-        children: `Not enough ${tokens[data.denom]} balance`,
+        children: "Wallet is not connected",
       });
     }
 
-    const scaled = scaleToStr(data.amount /** TODO: include decimal */);
-    const embedded =
-      data.denom === denoms.halo
-        ? embedMsg("cw20.transfer", {
-            cw20: "" /** TODO: for conversion to ERC20  */,
-            recipient: data.recipient,
-            amount: scaled,
-          })
-        : embedMsg("recipient.send", {
-            recipient: data.recipient,
-            denom: denoms.axlusdc,
-            amount: scaled,
-          });
+    const { token, recipient } = fv;
+    const scaledAmount = scale(token.amount, token.decimals).toHex();
 
-    const contract = new CW3(wallet, multisig);
-    const fundTransferMeta: FundSendMeta = {
-      type: "cw3_transfer",
-      data: {
-        amount: data.amount,
-        denom: data.denom,
-        recipient: data.recipient,
-      },
-    };
-    const proposalMsg = contract.createProposalMsg(
-      data.title,
-      data.description,
-      [embedded],
-      JSON.stringify(fundTransferMeta)
-    );
+    const [data, dest, value] =
+      token.type === "erc20"
+        ? encodeTx("erc20.transfer", {
+            erc20: token.token_id,
+            to: recipient,
+            amount: scaledAmount,
+          }).concat(["0"])
+        : ["0x" /** empty data */, recipient, scaledAmount];
+
+    const tx = createTx(wallet.address, "multisig.submit-transaction", {
+      multisig,
+      title: fv.title,
+      description: fv.description,
+      destination: dest,
+      value,
+      data,
+    });
 
     await sendTx({
-      content: { type: "cosmos", val: [proposalMsg] },
+      content: { type: "evm", val: tx },
       ...propMeta,
       tagPayloads: getTagPayloads(propMeta.willExecute && "cw3_transfer"),
     });

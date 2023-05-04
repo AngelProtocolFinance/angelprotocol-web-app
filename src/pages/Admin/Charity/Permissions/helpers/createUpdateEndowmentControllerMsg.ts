@@ -11,23 +11,22 @@ export function createUpdateEndowmentControllerMsg(
   changes: Partial<UpdateableFormValues>,
   initial: SettingsController
 ): SettingsControllerUpdate {
-  const accountFees = toPermission("accountFees", changes, initial.aumFee);
+  const toPermission = converter(changes);
+
+  const accountFees = toPermission("accountFees", initial.aumFee);
   const beneficiaries_allowlist = toPermission(
     "beneficiaries_allowlist",
-    changes,
     initial.whitelistedBeneficiaries
   );
   const contributors_allowlist = toPermission(
     "contributors_allowlist",
-    changes,
     initial.whitelistedContributors
   );
   const donationSplitParams = toPermission(
     "donationSplitParams",
-    changes,
     initial.splitToLiquid
   );
-  const profile = toPermission("profile", changes, initial.profile);
+  const profile = toPermission("profile", initial.profile);
 
   const updateMsg: SettingsControllerUpdate = {
     id: endowId,
@@ -51,28 +50,26 @@ export function createUpdateEndowmentControllerMsg(
   return updateMsg;
 }
 
-function toPermission(
-  permission: keyof UpdateableFormValues,
-  changes: Partial<UpdateableFormValues>,
-  initial: SettingsPermission
-): SettingsPermission {
-  const val = changes[permission];
-  if (!val)
+const converter =
+  (changes: Partial<UpdateableFormValues>) =>
+  (permission: keyof UpdateableFormValues, initial: SettingsPermission) => {
+    const val = changes[permission];
+    if (!val)
+      return {
+        ...initial,
+        delegate: {
+          Addr: ADDRESS_ZERO,
+          expires: 0,
+        },
+      };
+
     return {
-      ...initial,
+      ownerControlled: val.ownerControlled,
+      govControlled: val.govControlled,
+      modifiableAfterInit: val.modifiableAfterInit,
       delegate: {
-        Addr: ADDRESS_ZERO,
-        expires: 0,
+        Addr: val.delegated ? val.delegate_address : ADDRESS_ZERO,
+        expires: 0, //in design: no expiry for delegation,
       },
     };
-
-  return {
-    ownerControlled: val.ownerControlled,
-    govControlled: val.govControlled,
-    modifiableAfterInit: val.modifiableAfterInit,
-    delegate: {
-      Addr: val.delegated ? val.delegate_address : ADDRESS_ZERO,
-      expires: 0, //in design: no expiry for delegation,
-    },
   };
-}

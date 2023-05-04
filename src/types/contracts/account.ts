@@ -54,7 +54,7 @@ type Vaults<T> = {
 
 export type AccountStrategies = Vaults<Strategy[]>;
 
-type Delegate = {
+export type Delegate = {
   Addr: string | ADDRESS_ZERO;
   expires: number; // datetime int of delegation expiry: 0 if no expiry
 };
@@ -100,7 +100,7 @@ export interface EndowmentDetails {
   whitelistedBeneficiaries: string[];
   maturityWhitelist: string[];
   //rebalance
-  kyc_donors_only: boolean;
+  kycDonorsOnly: boolean;
   settingsController: SettingsController;
   //pending_redemptions
   //proposal_link

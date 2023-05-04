@@ -74,7 +74,8 @@ export default function MobileTable({ className = "" }) {
                         input: "checkbox-orange",
                         error: "hidden",
                       }}
-                      disabled={checkboxDisabled}
+                      disabled={true}
+                      // disabled={checkboxDisabled} --> hidden until available
                     >
                       Admin wallet
                     </CheckField>

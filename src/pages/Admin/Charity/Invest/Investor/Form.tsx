@@ -55,6 +55,7 @@ export default function Form({ name, description, rating }: TStrategy) {
           label: "font-heading text-base mb-2",
           inputContainer: "bg-white dark:bg-blue-d7",
         }}
+        withMininum
       />
       <div className="mt-8 px-8 py-4 gap-x-3 border-t border-prim flex justify-end">
         <button

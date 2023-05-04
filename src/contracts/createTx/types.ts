@@ -1,4 +1,7 @@
-import { SettingsControllerUpdate } from "types/contracts";
+import {
+  RegistrarConfigPayload,
+  SettingsControllerUpdate,
+} from "types/contracts";
 import { AccountType, ERC20Deposit, NewAST } from "types/contracts/evm";
 import { Allowance, Transfer } from "types/contracts/evm/erc20";
 import { NewTransaction } from "types/contracts/multisig";
@@ -80,6 +83,7 @@ type Txs = {
   "charity-application.reject": Tx<{ id: number }>;
 
   "registrar.update-owner": Tx<{ newOwner: string }>;
+  "registrar.update-config": Tx<RegistrarConfigPayload>;
 };
 
 export type TxTypes = keyof Txs;
