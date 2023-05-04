@@ -1,10 +1,12 @@
 import { ProposalMeta } from "pages/Admin/types";
 import { TagPayload } from "types/third-party/redux";
+import { ApesTag, invalidateApesTags } from "services/apes";
 import { invalidateJunoTags } from "services/juno";
 import { defaultProposalTags } from "services/juno/tags";
 
 export function getTagPayloads(type?: ProposalMeta["type"]): TagPayload[] {
   const _tags = [...defaultProposalTags];
+  const _apes: ApesTag[] = [];
 
   switch (type) {
     case "endow_controller":
@@ -33,6 +35,9 @@ export function getTagPayloads(type?: ProposalMeta["type"]): TagPayload[] {
       _tags.push("multisig.require-execution");
       _tags.push("multisig.threshold");
       break;
+    case "cw3_transfer":
+      _apes.push("chain");
+      break;
 
     case "acc_invest":
     case "acc_withdraw":
@@ -52,5 +57,5 @@ export function getTagPayloads(type?: ProposalMeta["type"]): TagPayload[] {
       break;
   }
 
-  return [invalidateJunoTags(_tags)];
+  return [invalidateJunoTags(_tags), invalidateApesTags(_apes)];
 }
