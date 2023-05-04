@@ -53,8 +53,6 @@ export default function Form(props: {
         withBalance
         label={`Enter the ${PAYMENT_WORDS.noun.singular} amount:`}
         classes={{ label: "text-lg", inputContainer: "dark:bg-blue-d6" }}
-        withGiftcard
-        withBalance
         withMininum
       />
 
