@@ -22,7 +22,7 @@ export function handleMutationResult<T extends any>(
       const d: any = result.error.data;
       if (typeof d === "string") {
         onError(d);
-      } else if ("message" in d) {
+      } else if (withMsg(d)) {
         onError(d.message);
 
         /** update with other aws error formats */
@@ -43,4 +43,8 @@ function isServerError(
   error: FetchBaseQueryError
 ): error is { data: any; status: number } {
   return "status" in error && typeof error.status === "number" && !!error.data;
+}
+
+function withMsg(val: unknown): val is { message: string } {
+  return typeof val === "object" && val !== null && "message" in val;
 }
