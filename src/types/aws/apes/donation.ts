@@ -65,4 +65,3 @@ export type DonationsQueryParams = {
 };
 
 export type TxLogPayload = CryptoTx & { kycData?: KYCData };
-export type FiatLogPayload = FiatTx & { kycData?: KYCData };
