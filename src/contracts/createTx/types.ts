@@ -1,4 +1,5 @@
 import {
+  NewFund,
   RegistrarConfigPayload,
   SettingsControllerUpdate,
 } from "types/contracts";
@@ -51,15 +52,7 @@ type Txs = {
     fundingGoal: number;
   }>;
   "index-fund.update-owner": Tx<{ newOwner: string }>;
-  "index-fund.create-fund": Tx<{
-    name: string;
-    description: string;
-    members: number[];
-    rotatingFund: boolean;
-    splitToLiquid: number;
-    expiryTime: number;
-    expiryHeight: number;
-  }>;
+  "index-fund.create-fund": Tx<NewFund>;
   "index-fund.remove-fund": Tx<{ id: number }>;
   "index-fund.remove-member": Tx<{ id: number }>;
   "index-fund.update-members": Tx<{

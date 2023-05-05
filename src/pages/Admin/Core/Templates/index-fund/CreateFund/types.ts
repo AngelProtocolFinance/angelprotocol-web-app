@@ -1,24 +1,12 @@
+import { Except } from "type-fest";
 import { ProposalBase } from "../../../../types";
+import { NewFund } from "types/contracts";
 
-export type FormValues = ProposalBase & /**
- * title
- * description
- */ {
-  //fund
-  name: string;
-  about: string;
-  fund: string;
-  members: string[];
-  isRotating: boolean;
-  liqSplit: string;
-  expiry: {
-    time: string;
+export type FormValues = ProposalBase &
+  Except<NewFund, "description"> & {
+    about: string;
+    newFundMemberId: string;
+
+    //meta
     height: string;
   };
-
-  //member id
-  newFundMemberId: string;
-
-  //meta
-  height: string;
-};
