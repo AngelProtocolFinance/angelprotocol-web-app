@@ -19,8 +19,3 @@ const leaderboard_api = aws.injectEndpoints({
 });
 
 export const { useLeaderboardsQuery } = leaderboard_api;
-
-export const placeholderUpdate: Update = {
-  endowments: [],
-  last_update: new Date().toISOString(),
-};
