@@ -5,6 +5,7 @@ import { isTxResultError } from "types/tx";
 import { invalidateApesTags } from "services/apes";
 import { createAuthToken, logger } from "helpers";
 import { sendTx } from "helpers/tx";
+import { chainIds } from "constants/chainIds";
 import { IS_TEST } from "constants/env";
 import { APIs } from "constants/urls";
 // import { SERVICE_PROVIDER } from "constants/fiatTransactions";
@@ -85,6 +86,7 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
         ...kycData /** receipt is sent to user if kyc is provider upfront */,
         amount: +token.amount,
         chainId: wallet.chain.chain_id,
+        destinationChainId: chainIds.polygon,
         chainName: wallet.chain.chain_name,
         charityName: recipient.name,
         denomination: token.symbol,
@@ -96,7 +98,6 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
       });
 
       updateTx({ hash });
-
       //invalidate cache entries
       dispatch(invalidateApesTags(["chain", "donations"]));
     } catch (err) {
