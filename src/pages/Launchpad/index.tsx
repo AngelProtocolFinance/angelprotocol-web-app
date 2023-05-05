@@ -27,13 +27,13 @@ export default function Launchpad() {
           path="steps"
           element={<Layout classes="my-0 md:my-20 justify-self-center" />}
         >
-          <Route path={steps[2]} element={<Management step={2} />} />
-          <Route path={steps[3]} element={<Whitelists step={3} />} />
-          <Route path={steps[4]} element={<Maturity step={4} />} />
-          <Route path={steps[5]} element={<Splits step={5} />} />
-          <Route path={steps[6]} element={<Fees step={6} />} />
-          <Route path={steps[7]} element={<ConnectWallet step={7} />} />
-          <Route path={steps[8]} element={<Summary />} />
+          <Route path={steps[2].path} element={<Management step={2} />} />
+          <Route path={steps[3].path} element={<Whitelists step={3} />} />
+          <Route path={steps[4].path} element={<Maturity step={4} />} />
+          <Route path={steps[5].path} element={<Splits step={5} />} />
+          <Route path={steps[6].path} element={<Fees step={6} />} />
+          <Route path={steps[7].path} element={<ConnectWallet step={7} />} />
+          <Route path={steps[8].path} element={<Summary />} />
           <Route index element={<About step={1} />} />
           <Route path="*" element={<Navigate to="." />} />
         </Route>

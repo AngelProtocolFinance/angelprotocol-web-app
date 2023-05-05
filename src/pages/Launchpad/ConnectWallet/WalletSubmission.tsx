@@ -38,7 +38,7 @@ export default function WalletSubmission({
       </button>
       <div className="grid grid-cols-2 md:flex gap-3 items-center mt-8">
         <Link
-          to={`../${steps[6]}`}
+          to={`../${steps[6].path}`}
           className="min-w-[8rem] btn-outline-filled btn-reg"
         >
           Back
