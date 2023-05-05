@@ -8,7 +8,7 @@ import {
 import { appRoutes } from "constants/routes";
 import { LITEPAPER } from "constants/urls";
 
-export type LINKS = {
+type LINKS = {
   HEADER_LINKS: Link[];
   GROUPS_DATA: LinkGroup[];
   SOCIAL_MEDIA_LINKS: SocialMediaLink[];

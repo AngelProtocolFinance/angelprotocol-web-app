@@ -5,7 +5,6 @@ export * from "./extractFeeData";
 export * from "./getPossessiveForm";
 export * from "./evm";
 export * from "./getTxUrl";
-export * from "./getAddressUrl";
 export * from "./idParamToNum";
 export * from "./isEmpty";
 export * from "./isEVM";

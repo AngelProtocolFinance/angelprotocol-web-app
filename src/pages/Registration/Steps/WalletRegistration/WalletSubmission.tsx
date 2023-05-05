@@ -8,8 +8,6 @@ import { LoadText, Separator } from "components/registration";
 import { useRegState } from "../StepGuard";
 import useRegisterWallet from "./useRegisterWallet";
 
-export type Wallet = { address: string };
-
 export default function WalletSubmission({
   address,
   providerId,
