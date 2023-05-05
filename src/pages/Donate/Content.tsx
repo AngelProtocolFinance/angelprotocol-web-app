@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { memo, useEffect, useRef } from "react";
 import Breadcrumbs from "components/Breadcrumbs";
 import { Steps } from "components/donation";
 import { useGetter, useSetter } from "store/accessors";
@@ -10,7 +10,7 @@ import {
 import { IS_AST, PAYMENT_WORDS } from "constants/env";
 import { appRoutes } from "constants/routes";
 
-export default function Content(props: DonationRecipient) {
+function Content(props: DonationRecipient) {
   const dispatch = useSetter();
   const state = useGetter((state) => state.donation);
   useEffect(() => {
@@ -51,7 +51,7 @@ export default function Content(props: DonationRecipient) {
         />
       )}
 
-      {isFinalized(state) && (
+      {!isFinalized(state) && (
         <h3 className="text-center text-xl sm:text-3xl leading-snug mb-4">
           You're about to make a {PAYMENT_WORDS.noun.singular} to{" "}
           {state.recipient?.name}
@@ -68,3 +68,6 @@ function isFinalized(state: DonationState): boolean {
     state.step === 4 && (state.status === "error" || "hash" in state.status)
   );
 }
+
+//memoize to prevent useEffect ( based on props ) from running when parent re-renders with the same props
+export default memo(Content);
