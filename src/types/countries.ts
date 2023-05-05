@@ -3,5 +3,3 @@ export type Country = {
   flag: string;
   code: string;
 };
-
-export type Regions = { [region: string]: Country[] };

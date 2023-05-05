@@ -4,20 +4,6 @@ import { Transaction } from "types/contracts/multisig";
 import { AccountType, ProviderId } from "types/lists";
 import { SenderArgs } from "types/tx";
 
-export type ContractQueryArgs<T = object> = {
-  address: string;
-  msg: T;
-};
-
-export type MultiContractQueryArgs = ContractQueryArgs<AggregatedQuery>;
-export type AggregatedQuery = {
-  aggregate: { queries: EncodedQueryMember[] };
-};
-export type EncodedQueryMember = {
-  address: string;
-  data: string; //base64 encoded msg
-};
-
 export type MultisigConfig = { threshold: number; requireExecution: boolean };
 
 type Base = {
@@ -32,13 +18,13 @@ type Base = {
   };
 };
 
-export type APResources = Base & {
+type APResources = Base & {
   type: "ap";
 };
-export type ReviewResources = Base & {
+type ReviewResources = Base & {
   type: "review";
 };
-export type CharityResources = Base & {
+type CharityResources = Base & {
   type: "charity";
 } & EndowmentDetails;
 
@@ -48,14 +34,6 @@ export type ProposalDetails = Transaction & {
   signers: string[];
   signed: string[];
 };
-
-export type JunoTags =
-  | "gov"
-  | "indexfund"
-  | "admin"
-  | "account"
-  | "registrar"
-  | "custom";
 
 export type ChainQueryArgs = {
   address: string;
