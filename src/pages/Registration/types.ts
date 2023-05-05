@@ -1,9 +1,4 @@
-import {
-  ContactRoles,
-  FileObject,
-  ReferralMethods,
-  RegistrationStatus,
-} from "types/aws";
+import { ContactRoles, ReferralMethods, RegistrationStatus } from "types/aws";
 import { EndowmentTierNum } from "types/contracts";
 import { Country } from "types/countries";
 import { UNSDG_NUMS } from "types/lists";
