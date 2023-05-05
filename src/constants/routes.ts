@@ -18,19 +18,6 @@ export enum appRoutes {
   gift = "/gift",
 }
 
-export enum governRoutes {
-  index = "",
-  pollDetails = "pollDetails",
-}
-
-export enum profileRoutes {
-  overview = "overview",
-  endowment = "endowment",
-  programs = "programs",
-  media = "media",
-  governance = "governance",
-}
-
 export const adminRoutes = {
   //base routes
   index_review: "",

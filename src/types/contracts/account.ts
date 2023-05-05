@@ -166,12 +166,6 @@ export type UpdateStategyPayload = {
   strategies: Strategy[];
 };
 
-export type EndowmentFee = {
-  payout_address: string;
-  fee_percentage: string; // "0" - "1"
-  active: boolean;
-};
-
 export interface SettingsControllerUpdate extends Tupleable {
   id: number;
   endowmentController: SettingsPermission;

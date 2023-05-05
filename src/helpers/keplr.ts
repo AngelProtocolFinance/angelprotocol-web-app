@@ -23,7 +23,7 @@ export function getKeplrWCClient() {
   return new KeplrWalletConnectV1(connector, { sendTx });
 }
 
-export function getKeplr(providerId: ProviderId) {
+function getKeplr(providerId: ProviderId) {
   return providerId === "keplr-wc"
     ? getKeplrWCClient()
     : (window as Dwindow).keplr!;

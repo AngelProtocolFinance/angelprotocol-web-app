@@ -30,7 +30,6 @@ export const EXPECTED_NETWORK_TYPE: NetworkType = IS_TEST
   ? "testnet"
   : "mainnet";
 
-export const INFURA_ID = process.env.REACT_APP_INFURA_ID;
 export const KADO_API_KEY = process.env.REACT_APP_KADO_API_KEY;
 export const APES_SECRECT = process.env.REACT_APP_APES_AUTH_SECRET_KEY;
 export const ANGEL_SECRECT = process.env.REACT_APP_ANGEL_AUTH_SECRET_KEY;

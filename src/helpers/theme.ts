@@ -2,7 +2,7 @@
  * this module should be accessible to top level index.tsx, so theme can be loaded immediately
  */
 
-export type Theme = "dark" | "light";
+type Theme = "dark" | "light";
 const DARK: Theme = "dark";
 const LIGHT: Theme = "light";
 const THEME_KEY = "__ap_theme";

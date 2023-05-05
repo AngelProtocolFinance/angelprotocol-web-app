@@ -2,7 +2,6 @@ import haloIcon from "assets/icons/currencies/halo_outline.png";
 import junoIcon from "assets/icons/currencies/juno.svg";
 import unknownTokenIcon from "assets/icons/currencies/token.svg";
 import usdcIcon from "assets/icons/currencies/usdc.svg";
-import { IS_TEST } from "./env";
 
 export enum denoms {
   uusdx = "uusdx",
@@ -12,9 +11,6 @@ export enum denoms {
   ujunox = "ujunox",
   dusd = "0xaBCe32FBA4C591E8Ea5A5f711F7112dC08BCee74",
 }
-
-export const junoDenom = IS_TEST ? denoms.ujunox : denoms.ujuno;
-export const axlUSDCDenom = IS_TEST ? denoms.uusdx : denoms.axlusdc;
 
 const _symbols: { [key in denoms]: string } = {
   [denoms.uusdx]: "USDC",

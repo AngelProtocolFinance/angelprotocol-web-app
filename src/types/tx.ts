@@ -23,9 +23,9 @@ export type EstimatedTx =
 
 export type SubmittedTx = { hash: string; chainID: string };
 
-export type TxLoading = { loading: string };
-export type TxError = { error: string; tx?: SubmittedTx };
-export type TxSuccess = SubmittedTx & { data: unknown };
+type TxLoading = { loading: string };
+type TxError = { error: string; tx?: SubmittedTx };
+type TxSuccess = SubmittedTx & { data: unknown };
 
 export type TxResult = TxError | TxSuccess;
 
@@ -35,7 +35,7 @@ export type TxContent =
   | { type: "terra"; val: Msg[]; wallet: ConnectedWallet }
   | { type: "evm"; val: SimulTx; log?: LogProcessor };
 
-export type Fee = { amount: number; symbol: string };
+type Fee = { amount: number; symbol: string };
 export type Estimate = { fee: Fee; tx: EstimatedTx };
 
 // //////////// HOOK SENDER & PROMPT ////////////
