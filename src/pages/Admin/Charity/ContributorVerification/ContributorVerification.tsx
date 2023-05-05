@@ -84,11 +84,11 @@ function Content({ profile }: { profile: Profile }) {
         <div className="flex justify-start gap-3 w-full">
           <button
             type="reset"
-            className="btn-outline-gray grow max-w-[11rem] h-12 text-sm"
+            className="btn-outline-filled grow max-w-[11rem] h-12 text-sm"
           >
             Reset
           </button>
-          <button type="submit" className="btn-outline-gray w-44 h-12 text-sm">
+          <button type="submit" className="btn-orange w-44 h-12 text-sm">
             Submit changes
           </button>
         </div>
