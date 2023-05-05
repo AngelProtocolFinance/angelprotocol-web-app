@@ -17,3 +17,13 @@ export type FundDetails = {
   expiryTime: number;
   expiryHeight: number;
 };
+
+export type NewFund = {
+  name: string;
+  description: string;
+  members: string[]; //uint256[]
+  rotatingFund: boolean;
+  splitToLiquid: string; // "1-100"
+  expiryTime: string; // uint256
+  expiryHeight: string; // uint256
+};
