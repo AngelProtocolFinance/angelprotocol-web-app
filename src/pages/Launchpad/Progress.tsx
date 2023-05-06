@@ -5,7 +5,7 @@ import { useGetter } from "store/accessors";
 import useHandleScreenResize, { SCREEN_MD } from "hooks/useHandleScreenResize";
 import { steps } from "./constants";
 
-type Props = { currentStep: number; classes?: string };
+type Props = { currentStep: string; classes?: string };
 
 type Steps = keyof typeof steps;
 const labels: { [K in Steps]: string } = {
@@ -48,7 +48,7 @@ export default function Progress({ currentStep, classes = "" }: Props) {
           classes="relative"
           currentStep={currentStep}
           progress={p}
-          step={1}
+          step={"1"}
         >
           About
         </Step>
@@ -64,7 +64,7 @@ export default function Progress({ currentStep, classes = "" }: Props) {
 
       {isOtherStepsShown &&
         Object.entries(labels).map(([_step, label]) => (
-          <Step currentStep={currentStep} progress={p} step={+_step}>
+          <Step currentStep={currentStep} progress={p} step={_step}>
             {label}
           </Step>
         ))}
@@ -73,8 +73,8 @@ export default function Progress({ currentStep, classes = "" }: Props) {
 }
 
 type StepProps = {
-  step: number;
-  currentStep: number;
+  step: string;
+  currentStep: string;
   progress: number;
   classes?: string;
 };
@@ -85,7 +85,7 @@ function Step({
   progress,
   classes = "",
 }: PropsWithChildren<StepProps>) {
-  const isDone = progress >= step;
+  const isDone = progress >= parseInt(step);
   const isCurr = currentStep === step;
   return (
     <div className={`group ${classes}`}>
