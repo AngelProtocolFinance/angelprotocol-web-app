@@ -1,11 +1,13 @@
 import { PropsWithChildren, useState } from "react";
+import { Link } from "react-router-dom";
 import { DrawerIcon } from "components/Icon";
 import { useGetter } from "store/accessors";
 import useHandleScreenResize, { SCREEN_MD } from "hooks/useHandleScreenResize";
+import { allSteps, steps } from "./constants";
 
-type Props = { step: number; classes?: string };
+type Props = { currentStep: string; classes?: string };
 
-export default function Progress({ step, classes = "" }: Props) {
+export default function Progress({ currentStep, classes = "" }: Props) {
   const { progress: p } = useGetter((state) => state.launchpad);
   const [isOtherStepsShown, setIsOtherStepsShown] = useState(true);
 
@@ -31,7 +33,12 @@ export default function Progress({ step, classes = "" }: Props) {
   return (
     <div className={`py-4 pl-6 pr-4 ${classes} dark:text-gray`}>
       <div className="relative">
-        <Step classes="relative" isDone={p >= 1} isCurr={step === 1}>
+        <Step
+          classes="relative"
+          currentStep={currentStep}
+          progress={p}
+          step={allSteps[1]}
+        >
           About
         </Step>
         <button
@@ -44,46 +51,31 @@ export default function Progress({ step, classes = "" }: Props) {
         </button>
       </div>
 
-      {isOtherStepsShown && (
-        <>
-          <Step isDone={p >= 2} isCurr={step === 2}>
-            Management
+      {isOtherStepsShown &&
+        Object.values(steps).map((step) => (
+          <Step currentStep={currentStep} progress={p} step={step}>
+            {step.label}
           </Step>
-          <Step isDone={p >= 3} isCurr={step === 3}>
-            Whitelists
-          </Step>
-          <Step isDone={p >= 4} isCurr={step === 4}>
-            Maturity
-          </Step>
-          <Step isDone={p >= 5} isCurr={step === 5}>
-            Split of Contribution
-          </Step>
-          <Step isDone={p >= 6} isCurr={step === 6}>
-            Fees
-          </Step>
-          <Step isDone={p >= 7} isCurr={step === 7}>
-            Connect Wallet
-          </Step>
-          <Step isDone={p >= 8} isCurr={step === 8}>
-            Summary
-          </Step>
-        </>
-      )}
+        ))}
     </div>
   );
 }
 
 type StepProps = {
-  isDone: boolean;
-  isCurr: boolean;
+  currentStep: string;
+  progress: number;
+  step: { path: string; label: string };
   classes?: string;
 };
 function Step({
   children,
-  isDone,
-  isCurr,
+  currentStep,
+  progress,
+  step,
   classes = "",
 }: PropsWithChildren<StepProps>) {
+  const isDone = progress >= parseInt(step.path);
+  const isCurr = currentStep === step.path;
   return (
     <div className={`group ${classes}`}>
       {/** line */}
@@ -92,7 +84,13 @@ function Step({
           isDone ? "border-orange" : "border-prim"
         } my-2 group-first:hidden`}
       />
-      <div className="flex items-center">
+      <Link
+        to={step.path}
+        onClick={(e) => (!isDone ? e.preventDefault() : {})}
+        className={`flex items-center ${
+          isDone ? "cursor-pointer" : "cursor-not-allowed"
+        }`}
+      >
         {/** circle */}
         <div
           className={`w-4 aspect-square ${
@@ -106,7 +104,7 @@ function Step({
         >
           {children}
         </span>
-      </div>
+      </Link>
     </div>
   );
 }
