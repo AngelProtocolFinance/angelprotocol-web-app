@@ -1,14 +1,14 @@
 import { PropsWithChildren, useState } from "react";
 import { Link } from "react-router-dom";
+import { Progress as TProgress } from "slices/launchpad/types";
 import { DrawerIcon } from "components/Icon";
 import { useGetter } from "store/accessors";
 import useHandleScreenResize, { SCREEN_MD } from "hooks/useHandleScreenResize";
-import { steps } from "./constants";
 
 type Props = { currentStep: string; classes?: string };
 
-type Steps = keyof typeof steps;
-const labels: { [K in Steps]: string } = {
+const steps: { [K in TProgress]: string } = {
+  "1": "About",
   "2": "Management",
   "3": "Whitelists",
   "4": "Maturity",
@@ -17,6 +17,7 @@ const labels: { [K in Steps]: string } = {
   "7": "Connect Wallet",
   "8": "Summary",
 };
+const [[_1, about], ...others] = Object.entries(steps);
 
 export default function Progress({ currentStep, classes = "" }: Props) {
   const { progress: p } = useGetter((state) => state.launchpad);
@@ -48,9 +49,9 @@ export default function Progress({ currentStep, classes = "" }: Props) {
           classes="relative"
           currentStep={currentStep}
           progress={p}
-          step={"1"}
+          step={_1}
         >
-          About
+          {about}
         </Step>
         <button
           className="absolute top-1/2 -right-5 transform -translate-y-1/2 md:hidden"
@@ -63,8 +64,8 @@ export default function Progress({ currentStep, classes = "" }: Props) {
       </div>
 
       {isOtherStepsShown &&
-        Object.entries(labels).map(([_step, label]) => (
-          <Step currentStep={currentStep} progress={p} step={_step}>
+        others.map(([step, label]) => (
+          <Step currentStep={currentStep} progress={p} step={step}>
             {label}
           </Step>
         ))}
