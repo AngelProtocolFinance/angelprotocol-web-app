@@ -73,16 +73,16 @@ export default function Progress({ currentStep, classes = "" }: Props) {
 }
 
 type StepProps = {
-  step: string;
   currentStep: string;
   progress: number;
+  step: string;
   classes?: string;
 };
 function Step({
   children,
-  step,
   currentStep,
   progress,
+  step,
   classes = "",
 }: PropsWithChildren<StepProps>) {
   const isDone = progress >= parseInt(step);
