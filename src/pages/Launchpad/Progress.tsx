@@ -3,9 +3,20 @@ import { Link } from "react-router-dom";
 import { DrawerIcon } from "components/Icon";
 import { useGetter } from "store/accessors";
 import useHandleScreenResize, { SCREEN_MD } from "hooks/useHandleScreenResize";
-import { allSteps, steps } from "./constants";
+import { steps } from "./constants";
 
-type Props = { currentStep: string; classes?: string };
+type Props = { currentStep: number; classes?: string };
+
+type Steps = keyof typeof steps;
+const labels: { [K in Steps]: string } = {
+  "2": "Management",
+  "3": "Whitelists",
+  "4": "Maturity",
+  "5": "Split of Contribution",
+  "6": "Fees",
+  "7": "Connect Wallet",
+  "8": "Summary",
+};
 
 export default function Progress({ currentStep, classes = "" }: Props) {
   const { progress: p } = useGetter((state) => state.launchpad);
