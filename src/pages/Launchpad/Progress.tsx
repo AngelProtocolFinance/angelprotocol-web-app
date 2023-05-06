@@ -48,7 +48,7 @@ export default function Progress({ currentStep, classes = "" }: Props) {
           classes="relative"
           currentStep={currentStep}
           progress={p}
-          step={allSteps[1]}
+          step={1}
         >
           About
         </Step>
@@ -63,9 +63,9 @@ export default function Progress({ currentStep, classes = "" }: Props) {
       </div>
 
       {isOtherStepsShown &&
-        Object.values(steps).map((step) => (
-          <Step currentStep={currentStep} progress={p} step={step}>
-            {step.label}
+        Object.entries(labels).map(([_step, label]) => (
+          <Step currentStep={currentStep} progress={p} step={+_step}>
+            {label}
           </Step>
         ))}
     </div>
@@ -73,20 +73,20 @@ export default function Progress({ currentStep, classes = "" }: Props) {
 }
 
 type StepProps = {
-  currentStep: string;
+  step: number;
+  currentStep: number;
   progress: number;
-  step: { path: string; label: string };
   classes?: string;
 };
 function Step({
   children,
+  step,
   currentStep,
   progress,
-  step,
   classes = "",
 }: PropsWithChildren<StepProps>) {
-  const isDone = progress >= parseInt(step.path);
-  const isCurr = currentStep === step.path;
+  const isDone = progress >= step;
+  const isCurr = currentStep === step;
   return (
     <div className={`group ${classes}`}>
       {/** line */}
@@ -95,27 +95,23 @@ function Step({
           isDone ? "border-orange" : "border-prim"
         } my-2 group-first:hidden`}
       />
-      <Link
-        to={step.path}
-        onClick={(e) => (!isDone ? e.preventDefault() : {})}
-        className={`flex items-center ${
-          isDone ? "cursor-pointer" : "cursor-not-allowed"
-        }`}
-      >
+      <div className="flex items-center">
         {/** circle */}
         <div
           className={`w-4 aspect-square ${
             isDone ? "bg-orange" : "bg-gray-l3 dark:bg-bluegray"
           } rounded-full transform -translate-x-1/2`}
         />
-        <span
-          className={`text-sm ${
+        <Link
+          aria-disabled={!isDone || isCurr}
+          to={step.toString()}
+          className={`text-sm aria-disabled:pointer-events-none ${
             isCurr ? "text-orange" : "text-gray-d1 dark:text-gray"
           }`}
         >
           {children}
-        </span>
-      </Link>
+        </Link>
+      </div>
     </div>
   );
 }
