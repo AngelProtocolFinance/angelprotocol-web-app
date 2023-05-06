@@ -5,8 +5,9 @@ import Progress from "./Progress";
 export default function Layout({ classes = "" }) {
   /** no need to check for /launchpad,since `<Routes/>
    *  always falls back to home outside of /launchpad/1-7 pattern */
-  const step =
-    useMatch(`${appRoutes.register}/steps/:step`)?.params.step || "1";
+  const step = +(
+    useMatch(`${appRoutes.register}/steps/:step`)?.params.step || "1"
+  );
 
   return (
     <div
