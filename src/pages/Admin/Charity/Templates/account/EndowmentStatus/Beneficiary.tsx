@@ -2,10 +2,10 @@ import { RadioGroup } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import { Fragment } from "react";
 import { useController } from "react-hook-form";
+import { FormValues as FV, Beneficiary as TBeneficiary } from "./types";
 import { Field, Label } from "components/form";
-import { Beneficiary , FormValues as FV} from "./types";
 
-const types: Beneficiary["type"][] = ["wallet", "indexfund", "endowment"];
+const types: TBeneficiary["type"][] = ["wallet", "indexfund", "endowment"];
 
 export default function Beneficiary() {
   const {
