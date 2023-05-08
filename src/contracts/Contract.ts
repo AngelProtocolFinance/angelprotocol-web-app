@@ -42,19 +42,6 @@ export default class Contract {
     this.walletAddress = wallet?.address || "";
   }
 
-  //for on-demand query, use RTK where possible
-  async query<T>(to: string, message: Record<string, unknown>) {
-    this.verifyWallet();
-    const { chain_id, rpc_url } = this.wallet!.chain;
-    const client = await getKeplrClient(
-      this.wallet?.providerId!,
-      chain_id,
-      rpc_url
-    );
-    const jsonObject = await client.queryContractSmart(to, message);
-    return JSON.parse(jsonObject) as T;
-  }
-
   async estimateFee(msgs: readonly EncodeObject[]): Promise<StdFee> {
     try {
       this.verifyWallet();
