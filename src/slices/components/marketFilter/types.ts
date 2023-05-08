@@ -1,6 +1,6 @@
 import { EndowDesignation, EndowmentsSortKey, SortDirection } from "types/aws";
-import { EndowmentTierNum, EndowmentType } from "types/contracts";
-import { UNSDG_NUMS } from "types/lists";
+import { EndowmentTierNum } from "types/contracts";
+import { EndowmentType, UNSDG_NUMS } from "types/lists";
 
 export type Sort = { key: EndowmentsSortKey; direction: SortDirection };
 export type SdgGroups = { [group: number]: UNSDG_NUMS[] };

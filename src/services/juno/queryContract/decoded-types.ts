@@ -4,8 +4,8 @@ import {
   Categories,
   Delegate,
   EndowmentDetails,
+  EndowmentStatus,
   EndowmentStatusText,
-  EndowmentType,
   FundDetails,
   IndexFundConfig,
   RebalanceDetails,
@@ -14,19 +14,13 @@ import {
   SplitDetails,
 } from "types/contracts";
 import { SettingsPermission } from "types/contracts";
+import { EndowmentType } from "types/lists";
 import { Mapped } from "types/utils";
 
 enum EndowmentTypeEnum {
   Charity,
   Normal,
   None,
-}
-
-enum EndowmentStatusEnum {
-  Inactive,
-  Approved,
-  Frozen,
-  Closed,
 }
 
 enum BeneficiaryEnum {
@@ -76,7 +70,7 @@ export type DEndowment = OverrideProperties<
   {
     categories: DCategories;
     endow_type: EndowmentTypeEnum;
-    status: EndowmentStatusEnum;
+    status: EndowmentStatus;
     maturityTime: BigNumber;
     settingsController: DSettingsController;
   }
@@ -157,16 +151,16 @@ export function toEndowType(type: EndowmentTypeEnum): EndowmentType {
 }
 
 export function toEndowStatusText(
-  status: EndowmentStatusEnum
+  status: EndowmentStatus
 ): EndowmentStatusText {
   switch (status) {
-    case EndowmentStatusEnum.Inactive:
+    case EndowmentStatus.Inactive:
       return "inactive";
-    case EndowmentStatusEnum.Approved:
+    case EndowmentStatus.Approved:
       return "approved";
-    case EndowmentStatusEnum.Frozen:
+    case EndowmentStatus.Frozen:
       return "frozen";
-    case EndowmentStatusEnum.Closed:
+    case EndowmentStatus.Closed:
       return "closed";
     default:
       return "inactive";

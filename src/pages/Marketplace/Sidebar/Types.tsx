@@ -1,4 +1,4 @@
-import { EndowmentType } from "types/contracts";
+import { EndowmentType } from "types/lists";
 import { useGetter, useSetter } from "store/accessors";
 import { setTypes } from "slices/components/marketFilter";
 import { FilterOption, FlatFilter } from "./common";

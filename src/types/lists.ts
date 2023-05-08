@@ -45,3 +45,4 @@ export type Contract =
 
 export type AccountType = "liquid" | "locked";
 export type TransactionStatus = "pending" | "executed";
+export type EndowmentType = "charity" | "normal";

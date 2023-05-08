@@ -1,5 +1,4 @@
 import { EndowmentStatusMeta } from "pages/Admin/types";
-import { EndowmentStatus, EndowmentStatusNum } from "types/contracts";
 import KeyValue from "./common/KeyValue";
 import PreviewContainer from "./common/PreviewContainer";
 
@@ -15,7 +14,7 @@ export default function EndowmentStatusUpdate(
       </KeyValue>
       <KeyValue _key="proposed status">
         <span className="uppercase font-heading font-bold">
-          {statusText[props.toStatus]}
+          {props.toStatus}
         </span>
       </KeyValue>
       {props.beneficiary && (
@@ -26,10 +25,3 @@ export default function EndowmentStatusUpdate(
     </PreviewContainer>
   );
 }
-
-const statusText: { [key in EndowmentStatusNum]: keyof EndowmentStatus } = {
-  0: "inactive",
-  1: "approved",
-  2: "frozen",
-  3: "closed",
-};

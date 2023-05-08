@@ -21,12 +21,21 @@ type Threshold = {
   //2 - threshold quorum
 };
 
+/**
+ * 0 - height
+ * 1 - time
+ */
 type Duration = {
-  enumData: /** 0 - height*/ 1 /** time */;
+  enumData: /** 0 | */ 1;
   data: { height: number; time: number };
 };
 
-export type AccountType = 0 /** locked */ | 1 /** liquid */ | 2 /** none */;
+/**
+ * 0 - locked
+ * 1 - liquid
+ * 2 - none
+ */
+export type AccountType = 0 | 1 | 2;
 
 export type ADDRESS_ZERO = "0x0000000000000000000000000000000000000000" & {
   __type: "address_zero";
@@ -80,6 +89,20 @@ type SplitDetails = {
   min: number;
   max: number;
   defaultSplit: number;
+};
+
+/**
+ * 0 - endowment
+ * 1 - indexfund
+ * 2 - wallet
+ * 3 - none
+ */
+export type Beneficiary = {
+  data: {
+    id: number; //for index-fund or endowment
+    addr: string; // wallet
+  };
+  enumData: 0 | 1 | 2 | 3;
 };
 
 export interface NewAST extends Tupleable {
