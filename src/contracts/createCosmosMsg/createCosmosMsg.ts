@@ -1,8 +1,13 @@
 import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
 import { toUtf8 } from "@cosmjs/encoding";
 import { MsgSendEncodeObject } from "@cosmjs/stargate";
-import { MsgOptions, MsgSendType, MsgTypes } from "./types";
-import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/contracts";
+import {
+  EmbeddedBankMsg,
+  EmbeddedWasmMsg,
+  MsgOptions,
+  MsgSendType,
+  MsgTypes,
+} from "./types";
 import { toBase64 } from "helpers";
 import { msgs } from "./msgs";
 

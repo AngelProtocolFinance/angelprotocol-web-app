@@ -28,7 +28,7 @@ export default function useUpdateStatus() {
       //only review team can change status from "Inactive"
       //NOTE: if this template will be used other than Charity: further check authority
     } else {
-      if (status === prevStatus) {
+      if (status.value === prevStatus) {
         return showModal(Prompt, {
           type: "error",
           title: "Update Status",
@@ -65,7 +65,7 @@ export default function useUpdateStatus() {
 
     const [data, dest] = encodeTx("accounts.update-status", {
       id: +fv.id,
-      status: toNum(status),
+      status: toNum(status.value),
       beneficiary,
     });
 

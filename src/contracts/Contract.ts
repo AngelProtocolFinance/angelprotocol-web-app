@@ -10,10 +10,9 @@ import {
   isDeliverTxFailure,
 } from "@cosmjs/stargate";
 import { Chain } from "types/aws";
-import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/contracts";
 import { CosmosTx } from "types/tx";
 import { WalletState } from "contexts/WalletContext";
-import { logger, toBase64 } from "helpers";
+import { logger } from "helpers";
 import { getKeplrClient } from "helpers/keplr";
 import {
   CosmosTxSimulationFail,
@@ -104,33 +103,6 @@ export default class Contract {
         sender: this.walletAddress,
         msg: toUtf8(JSON.stringify(msg)),
         funds,
-      },
-    };
-  }
-
-  createEmbeddedWasmMsg(
-    to: string,
-    msg: object,
-    funds: Coin[] = []
-  ): EmbeddedWasmMsg {
-    return {
-      wasm: {
-        execute: {
-          contract_addr: to,
-          funds,
-          msg: toBase64(msg),
-        },
-      },
-    };
-  }
-
-  createEmbeddedBankMsg(funds: Coin[], to: string): EmbeddedBankMsg {
-    return {
-      bank: {
-        send: {
-          to_address: to,
-          amount: funds,
-        },
       },
     };
   }

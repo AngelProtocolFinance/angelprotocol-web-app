@@ -165,7 +165,7 @@ export type CW3ConfigValues<T extends FormCW3Config> = ProposalBase &
 
 export type EndowmentUpdateValues = ProposalBase & {
   id: number;
-  status: Exclude<EndowmentStatusStrNum, "0">;
+  status: Exclude<EndowmentStatusText, "closed">;
   //address to transfer funds when endowment will be closed
 
   //beneficiary type

@@ -1,26 +1,4 @@
-import { Coin } from "@cosmjs/proto-signing";
 import { UNSDG_NUMS } from "types/lists";
-
-export type EmbeddedWasmMsg = {
-  wasm: {
-    execute: {
-      contract_addr: string;
-      funds: Coin[];
-      msg: string; //base64 endocoded msg object
-    };
-  };
-};
-
-export type EmbeddedBankMsg = {
-  bank: {
-    send: {
-      amount: Coin[];
-      to_address: string;
-    };
-  };
-};
-
-export type Vote = "yes" | "no";
 
 export enum EndowmentStatus {
   Inactive,

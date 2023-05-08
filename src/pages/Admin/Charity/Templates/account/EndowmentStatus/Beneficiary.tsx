@@ -2,16 +2,16 @@ import { RadioGroup } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import { Fragment } from "react";
 import { useController } from "react-hook-form";
-import { EndowmentUpdateValues as V } from "pages/Admin/types";
 import { Field, Label } from "components/form";
+import { Beneficiary , FormValues as FV} from "./types";
 
-const types: V["beneficiaryType"][] = ["wallet", "index fund", "endowment"];
+const types: Beneficiary["type"][] = ["wallet", "indexfund", "endowment"];
 
 export default function Beneficiary() {
   const {
     formState: { errors },
     field: { value: type, onChange: onTypeChange },
-  } = useController<Pick<V, "beneficiaryType">>({ name: "beneficiaryType" });
+  } = useController<FV>({ name: "beneficiary.type" });
 
   return (
     <div className="mt-6">
@@ -21,7 +21,7 @@ export default function Beneficiary() {
       <ErrorMessage
         as="p"
         errors={errors}
-        name="beneficiaryType"
+        name="beneficiary.type"
         className="font-mono font-semibold text-left text-red-l1 text-xs mb-2"
       />
       <RadioGroup
@@ -45,28 +45,28 @@ export default function Beneficiary() {
         ))}
       </RadioGroup>
       {type === "wallet" && (
-        <Field<V>
+        <Field<FV>
           classes="field-admin"
           label="Wallet address"
-          name="wallet"
+          name="beneficiary.id"
           placeholder="juno123abc..."
           required
         />
       )}
       {type === "endowment" && (
-        <Field<V>
+        <Field<FV>
           classes="field-admin"
           label="Endowment id"
-          name="endowmentId"
+          name="beneficiary.id"
           placeholder="1"
           required
         />
       )}
       {type === "index fund" && (
-        <Field<V>
+        <Field<FV>
           classes="field-admin"
           label="Fund id"
-          name="indexFund"
+          name="beneficiary.id"
           placeholder="1"
           required
         />

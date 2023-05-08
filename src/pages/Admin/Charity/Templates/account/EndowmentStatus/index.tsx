@@ -16,7 +16,10 @@ export default function EndowmentStatus() {
     reValidateMode: "onChange",
     resolver: yupResolver(schema),
     defaultValues: {
-      status: "approved",
+      status: {
+        value: status,
+        label: status,
+      },
       beneficiary: {
         type: "wallet",
         id: wallet && isEthereumAddress(wallet.address) ? wallet.address : "",
