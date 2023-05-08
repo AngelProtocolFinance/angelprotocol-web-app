@@ -29,13 +29,9 @@ export function Steps({ className = "", ...params }: Props) {
       {!isFinalized(state) && (
         <>
           <span className="text-center font-normal text-xs sm:text-sm">
-            Don't have crypto in your wallet?{" "}
-            <button
-              className="font-bold underline hover:text-orange transition ease-in-out duration-300"
-              onClick={handleOpenKado}
-            >
-              Buy some to make your {PAYMENT_WORDS.noun.singular}
-            </button>
+            Connect the wallet of your choice to donate crypto. <br />
+            Continue below to {PAYMENT_WORDS.verb} fiat (Dollars, GBP, AUD,
+            Euro)
           </span>
           <Progress classes="my-12" />
         </>
