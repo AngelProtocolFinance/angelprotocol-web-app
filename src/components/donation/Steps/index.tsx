@@ -1,6 +1,3 @@
-import { useCallback } from "react";
-import { useModalContext } from "contexts/ModalContext";
-import KadoModal from "components/KadoModal";
 import { useGetter } from "store/accessors";
 import { DonationState } from "slices/donation";
 import { PAYMENT_WORDS } from "constants/env";
@@ -17,12 +14,7 @@ export type ConfigParams = {
 type Props = { className?: string } & ConfigParams;
 
 export function Steps({ className = "", ...params }: Props) {
-  const { showModal } = useModalContext();
   const state = useGetter((state) => state.donation);
-  const handleOpenKado = useCallback(
-    () => showModal(KadoModal, {}),
-    [showModal]
-  );
 
   return (
     <div className={`justify-self-center grid ${className}`}>
