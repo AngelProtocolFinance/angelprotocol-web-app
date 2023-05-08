@@ -33,6 +33,19 @@ type Txs = {
     amounts: string[];
   }>;
 
+  "accounts.invest": Tx<{
+    id: number;
+    account: AccountType;
+    vaults: string[];
+    tokens: string[];
+    amounts: string[]; //uint256
+  }>;
+  "accounts.redeem": Tx<{
+    id: number;
+    account: AccountType;
+    vaults: string[];
+  }>;
+
   // //// MULTISIG ////
   "multisig.submit-transaction": Tx<NewTransaction>;
   "multisig.add-owner": Tx<{ address: string }>;

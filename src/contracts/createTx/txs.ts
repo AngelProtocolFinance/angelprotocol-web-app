@@ -19,6 +19,9 @@ export const txs: { [T in TxTypes]: (args: TxArgs<T>) => string } = {
   "accounts.withdraw": (args) =>
     accounts.encodeFunctionData("withdraw", toTuple(args)),
 
+  "accounts.invest": () => "", //future
+  "accounts.redeem": () => "", //future
+
   // //// MULTISIG ////
   "multisig.submit-transaction": (tx) =>
     multisig.encodeFunctionData("submitTransaction", toTuple(tx)),

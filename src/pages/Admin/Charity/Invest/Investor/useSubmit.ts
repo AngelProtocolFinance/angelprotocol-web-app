@@ -1,10 +1,10 @@
 import { FormValues } from "./types";
-import { ProposalMeta } from "pages/Admin/types";
 import { AccountType } from "types/lists";
 import { useAdminResources } from "pages/Admin/Guard";
+import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import Account from "contracts/Account";
-import CW3 from "contracts/CW3";
+import { TxPrompt } from "components/Prompt";
+import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { scaleToStr } from "helpers";
 import { getTagPayloads } from "helpers/admin";
@@ -13,36 +13,32 @@ export default function useSubmit(vault: string, type: AccountType) {
   const { multisig, id, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
   const { sendTx, isSending } = useTxSender(true);
+  const { showModal } = useModalContext();
 
   async function submit({ token }: FormValues) {
-    const account = new Account(wallet);
+    if (!wallet) {
+      return showModal(TxPrompt, { error: "Wallet is not connected" });
+    }
 
-    const msg = account.createEmbeddedInvestMsg({
+    const [data, dest] = encodeTx("accounts.invest", {
       id,
-      acct_type: type,
-      vaults: [
-        [
-          vault,
-          {
-            info: { native: token.token_id },
-            amount: scaleToStr(token.amount),
-          },
-        ],
-      ],
+      account: type === "locked" ? 0 : 1,
+      vaults: [vault],
+      tokens: [token.token_id],
+      amounts: [scaleToStr(token.amount)],
     });
 
-    const cw3contract = new CW3(wallet, multisig);
-    //proposal meta for preview
-    const meta: ProposalMeta = { type: "acc_invest" };
-    const proposal = cw3contract.createProposalMsg(
-      "Invest",
-      `Invest funds to: ${vault}`,
-      [msg],
-      JSON.stringify(meta)
-    );
+    const tx = createTx(wallet.address, "multisig.submit-transaction", {
+      multisig,
+      title: "Invest",
+      description: `Invest funds to: ${vault}`,
+      destination: dest,
+      value: "0",
+      data,
+    });
 
     await sendTx({
-      content: { type: "cosmos", val: [proposal] },
+      content: { type: "evm", val: tx },
       ...propMeta,
       tagPayloads: getTagPayloads(propMeta.willExecute && "acc_invest"),
     });
