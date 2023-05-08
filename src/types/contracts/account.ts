@@ -2,7 +2,6 @@ import { Coin } from "@cosmjs/proto-signing";
 import { Tupleable } from "../evm";
 import { AccountType } from "../lists";
 import {
-  Asset,
   Categories,
   EndowmentStatus,
   EndowmentStatusText,
@@ -126,27 +125,6 @@ export interface DepositPayload {
   id: number;
   locked_percentage: string; //"0.7"
   liquid_percentage: string; //"0.3"
-}
-
-export interface WithdrawPayload {
-  id: number;
-  acct_type: AccountType;
-  beneficiary: string;
-  assets: Asset[];
-}
-
-export interface InvestPayload {
-  id: number;
-  acct_type: AccountType;
-  vaults: [string /**vault addr */, Asset][];
-}
-
-type VaultWithBalance = [string /**vault addr */, string /**balance */];
-
-export interface RedeemPayload {
-  id: number;
-  acct_type: AccountType;
-  vaults: VaultWithBalance[];
 }
 
 export type Beneficiary =

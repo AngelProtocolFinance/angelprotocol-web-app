@@ -1,11 +1,5 @@
 import { Coin } from "@cosmjs/proto-signing";
-import {
-  DepositPayload,
-  InvestPayload,
-  RedeemPayload,
-  StatusChangePayload,
-  WithdrawPayload,
-} from "types/contracts";
+import { DepositPayload, StatusChangePayload } from "types/contracts";
 import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 
@@ -17,24 +11,6 @@ export default class Account extends Contract {
   createEmbeddedChangeEndowmentStatusMsg(payload: StatusChangePayload) {
     return this.createEmbeddedWasmMsg(Account.address, {
       update_endowment_status: payload,
-    });
-  }
-
-  createEmbeddedWithdrawMsg(payload: WithdrawPayload) {
-    return this.createEmbeddedWasmMsg(Account.address, {
-      withdraw: payload,
-    });
-  }
-
-  createEmbeddedInvestMsg(payload: InvestPayload) {
-    return this.createEmbeddedWasmMsg(Account.address, {
-      vaults_invest: payload,
-    });
-  }
-
-  createEmbeddedRedeemMsg(payload: RedeemPayload) {
-    return this.createEmbeddedWasmMsg(Account.address, {
-      vaults_redeem: payload,
     });
   }
 
