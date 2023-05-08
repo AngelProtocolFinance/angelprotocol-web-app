@@ -22,17 +22,14 @@ export type EmbeddedBankMsg = {
 
 export type Vote = "yes" | "no";
 
-export type EndowmentStatus = {
-  inactive: 0;
-  approved: 1;
-  frozen: 2;
-  closed: 3;
-};
+export enum EndowmentStatus {
+  Inactive,
+  Approved,
+  Frozen,
+  Closed,
+}
 
-export type EndowmentType = "charity" | "normal"; //TODO: move to types/lists
-export type EndowmentStatusText = keyof EndowmentStatus;
-export type EndowmentStatusNum = EndowmentStatus[EndowmentStatusText];
-export type EndowmentStatusStrNum = `${EndowmentStatusNum}`;
+export type EndowmentStatusText = Lowercase<keyof typeof EndowmentStatus>;
 export type EndowmentTierNum = 1 | 2 | 3;
 
 export type Categories = {

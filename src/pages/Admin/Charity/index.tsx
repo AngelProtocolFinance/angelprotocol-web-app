@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { LinkGroup } from "../Sidebar/types";
-import { EndowmentType } from "types/contracts";
+import { EndowmentType } from "types/lists";
 import { adminRoutes } from "constants/routes";
 import { useAdminResources } from "../Guard";
 import Layout from "../Layout";

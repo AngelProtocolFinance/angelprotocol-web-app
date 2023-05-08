@@ -1,36 +1,24 @@
 import { useFormContext } from "react-hook-form";
-import { EndowmentStatusMeta, EndowmentUpdateValues } from "pages/Admin/types";
-import {
-  Beneficiary,
-  EndowmentStatus,
-  EndowmentStatusNum,
-  StatusChangePayload,
-} from "types/contracts";
+import { FormValues as FV } from "./types";
+import { EndowmentStatusText } from "types/contracts";
+import { Beneficiary } from "types/contracts/evm";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
-import Prompt from "components/Prompt";
-import Account from "contracts/Account";
-import CW3 from "contracts/CW3";
+import Prompt, { TxPrompt } from "components/Prompt";
+import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
-import { cleanObject } from "helpers/cleanObject";
 
 export default function useUpdateStatus() {
-  const { handleSubmit } = useFormContext<EndowmentUpdateValues>();
+  const { handleSubmit } = useFormContext<FV>();
   const { multisig, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
   const sendTx = useTxSender();
   const { showModal } = useModalContext();
 
-  async function updateStatus(data: EndowmentUpdateValues) {
-    if (!data.prevStatus) {
-      return showModal(Prompt, {
-        type: "error",
-        title: "Update Status",
-        headline: "Endowment not found",
-      });
-    } else if (data.prevStatus === "closed") {
+  async function updateStatus({ prevStatus, status, ...fv }: FV) {
+    if (prevStatus === "closed") {
       return showModal(Prompt, {
         type: "error",
         title: "Update Status",
@@ -40,8 +28,7 @@ export default function useUpdateStatus() {
       //only review team can change status from "Inactive"
       //NOTE: if this template will be used other than Charity: further check authority
     } else {
-      const prevStatusNum = endowmentStatus[data.prevStatus];
-      if (+data.status === prevStatusNum) {
+      if (status === prevStatus) {
         return showModal(Prompt, {
           type: "error",
           title: "Update Status",
@@ -51,58 +38,48 @@ export default function useUpdateStatus() {
       }
     }
 
-    const [beneficiary, beneficiaryMeta] = (function (): [Beneficiary, string] {
-      switch (data.beneficiaryType) {
-        case "index fund":
+    if (!wallet) {
+      return showModal(TxPrompt, { error: "Wallet is not connected" });
+    }
+
+    const [beneficiary] = (function (): [Beneficiary, string] {
+      const { id, type } = fv.beneficiary;
+      switch (type) {
+        case "indexfund":
           return [
-            { indexfund: { id: data.indexFund } },
-            `index fund sdg: ${data.indexFund}`,
+            { data: { id: +id, addr: "" }, enumData: 1 },
+            `index fund sdg: ${fv.id}`,
           ];
         case "endowment":
           return [
-            { endowment: { id: data.endowmentId } },
-            `endowment id: ${data.endowmentId}`,
+            { data: { id: +id, addr: "" }, enumData: 0 },
+            `endowment id: ${fv.id}`,
           ];
-        default:
+        default: //wallet
           return [
-            { wallet: { address: data.wallet } },
-            `wallet addr: ${data.wallet}`,
+            { data: { id: 0, addr: id }, enumData: 3 },
+            `wallet addr: ${fv.id}`,
           ];
       }
     })();
 
-    const statusChangePayload: StatusChangePayload = {
+    const [data, dest] = encodeTx("accounts.update-status", {
+      id: +fv.id,
+      status: toNum(status),
       beneficiary,
-      status: +data.status as EndowmentStatusNum,
-      endowment_id: data.id,
-    };
+    });
 
-    const accountContract = new Account(wallet);
-    const embeddedMsg = accountContract.createEmbeddedChangeEndowmentStatusMsg(
-      cleanObject(statusChangePayload)
-    );
-
-    //construct endowment payload preview
-    const statusUpdateMeta: EndowmentStatusMeta = {
-      type: "acc_endow_status",
-      data: {
-        id: data.id,
-        fromStatus: data.prevStatus,
-        toStatus: data.status,
-        beneficiary: beneficiaryMeta,
-      },
-    };
-
-    const adminContract = new CW3(wallet, multisig);
-    const proposalMsg = adminContract.createProposalMsg(
-      data.title,
-      data.description,
-      [embeddedMsg],
-      JSON.stringify(statusUpdateMeta)
-    );
+    const tx = createTx(wallet.address, "multisig.submit-transaction", {
+      multisig,
+      title: fv.title,
+      description: fv.description,
+      destination: dest,
+      value: "0",
+      data,
+    });
 
     await sendTx({
-      content: { type: "cosmos", val: [proposalMsg] },
+      content: { type: "evm", val: tx },
       ...propMeta,
       tagPayloads: getTagPayloads(propMeta.willExecute && "acc_endow_status"),
     });
@@ -111,9 +88,15 @@ export default function useUpdateStatus() {
   return { updateStatus: handleSubmit(updateStatus) };
 }
 
-const endowmentStatus: EndowmentStatus = {
-  inactive: 0,
-  approved: 1,
-  frozen: 2,
-  closed: 3,
+const toNum = (s: EndowmentStatusText) => {
+  switch (s) {
+    case "inactive":
+      return 0;
+    case "approved":
+      return 1;
+    case "frozen":
+      return 2;
+    default: //closed
+      return 3;
+  }
 };

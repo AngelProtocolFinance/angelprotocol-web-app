@@ -2,21 +2,17 @@ import { RadioGroup } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import { Fragment } from "react";
 import { useController } from "react-hook-form";
-import { EndowmentUpdateValues as V } from "pages/Admin/types";
+// import { EndowmentUpdateValues as V } from "pages/Admin/types";
+import { FormValues as FV } from "./types";
 import Beneficiary from "./Beneficiary";
 
-const statuses: V["status"][] = ["1", "2", "3"];
-const text: { [key in V["status"]]: string } = {
-  1: "Approve",
-  2: "Frozen",
-  3: "Closed",
-};
+const statuses: FV["status"][] = ["approved", "closed", "frozen", "inactive"];
 
 export default function StatusOptions() {
   const {
     formState: { errors },
     field: { value: status, onChange: onStatusChange },
-  } = useController<Pick<V, "status">>({ name: "status" });
+  } = useController<Pick<FV, "status">>({ name: "status" });
 
   return (
     <>
@@ -26,15 +22,15 @@ export default function StatusOptions() {
         name="plan"
         className="flex gap-2"
       >
-        {statuses.map((status) => (
-          <RadioGroup.Option key={status} value={status} as={Fragment}>
+        {statuses.map((s) => (
+          <RadioGroup.Option key={s} value={s} as={Fragment}>
             {({ checked }) => (
               <span
                 className={`${
                   checked ? "bg-blue/20" : ""
                 } text-gray-d2 w-36 cursor-pointer rounded-sm border border-gray-d2/40 px-3 py-1 text-center text-sm uppercase`}
               >
-                {text[status]}
+                {s}
               </span>
             )}
           </RadioGroup.Option>
@@ -46,7 +42,7 @@ export default function StatusOptions() {
         name="status"
         className="font-mono font-semibold text-right text-red-l1 text-xs m-1"
       />
-      {status === "3" && <Beneficiary />}
+      {status === "closed" && <Beneficiary />}
     </>
   );
 }

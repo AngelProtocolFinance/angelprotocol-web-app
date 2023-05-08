@@ -3,7 +3,12 @@ import {
   RegistrarConfigPayload,
   SettingsControllerUpdate,
 } from "types/contracts";
-import { AccountType, ERC20Deposit, NewAST } from "types/contracts/evm";
+import {
+  AccountType,
+  Beneficiary,
+  ERC20Deposit,
+  NewAST,
+} from "types/contracts/evm";
 import { Allowance, Transfer } from "types/contracts/evm/erc20";
 import { NewTransaction } from "types/contracts/multisig";
 import { Tupleable } from "types/evm";
@@ -32,7 +37,11 @@ type Txs = {
     addresses: string[];
     amounts: string[];
   }>;
-
+  "accounts.update-status": Tx<{
+    id: number;
+    status: number;
+    beneficiary: Beneficiary;
+  }>;
   "accounts.invest": Tx<{
     id: number;
     account: AccountType;

@@ -1,14 +1,9 @@
 import { Coin } from "@cosmjs/proto-signing";
 import { Tupleable } from "../evm";
-import { AccountType } from "../lists";
-import {
-  Categories,
-  EndowmentStatus,
-  EndowmentStatusText,
-  EndowmentType,
-} from "./common";
+import { AccountType, EndowmentType } from "../lists";
+import { Categories, EndowmentStatusText } from "./common";
 import { CW20 } from "./cw20";
-import { ADDRESS_ZERO } from "./evm";
+import { ADDRESS_ZERO, Beneficiary } from "./evm";
 
 export interface GenericBalance {
   native: Coin[];
@@ -127,14 +122,9 @@ export interface DepositPayload {
   liquid_percentage: string; //"0.3"
 }
 
-export type Beneficiary =
-  | { endowment: { id: number } }
-  | { indexfund: { id: number } }
-  | { wallet: { address: string } };
-
 export type StatusChangePayload = {
   endowment_id: number;
-  status: EndowmentStatus[keyof EndowmentStatus];
+  status: EndowmentStatusText;
   beneficiary?: Beneficiary;
 };
 
