@@ -13,7 +13,7 @@ export default function ChooseWallet() {
       <WalletConnector name="Metamask" label="Metamask" />
       <div className="grid grid-cols-2 md:flex gap-3 items-center mt-8">
         <Link
-          to={`../${steps[6].path}`}
+          to={`../${steps[6]}`}
           className="min-w-[8rem] btn-outline-filled btn-reg"
         >
           Back

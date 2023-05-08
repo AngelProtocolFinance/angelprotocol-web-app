@@ -1,11 +1,23 @@
 import { PropsWithChildren, useState } from "react";
 import { Link } from "react-router-dom";
+import { Progress as TProgress } from "slices/launchpad/types";
 import { DrawerIcon } from "components/Icon";
 import { useGetter } from "store/accessors";
 import useHandleScreenResize, { SCREEN_MD } from "hooks/useHandleScreenResize";
-import { allSteps, steps } from "./constants";
 
 type Props = { currentStep: string; classes?: string };
+
+const steps: { [K in TProgress]: string } = {
+  "1": "About",
+  "2": "Management",
+  "3": "Whitelists",
+  "4": "Maturity",
+  "5": "Split of Contribution",
+  "6": "Fees",
+  "7": "Connect Wallet",
+  "8": "Summary",
+};
+const [[_1, about], ...others] = Object.entries(steps);
 
 export default function Progress({ currentStep, classes = "" }: Props) {
   const { progress: p } = useGetter((state) => state.launchpad);
@@ -37,9 +49,9 @@ export default function Progress({ currentStep, classes = "" }: Props) {
           classes="relative"
           currentStep={currentStep}
           progress={p}
-          step={allSteps[1]}
+          step={_1}
         >
-          About
+          {about}
         </Step>
         <button
           className="absolute top-1/2 -right-5 transform -translate-y-1/2 md:hidden"
@@ -52,9 +64,9 @@ export default function Progress({ currentStep, classes = "" }: Props) {
       </div>
 
       {isOtherStepsShown &&
-        Object.values(steps).map((step) => (
+        others.map(([step, label]) => (
           <Step currentStep={currentStep} progress={p} step={step}>
-            {step.label}
+            {label}
           </Step>
         ))}
     </div>
@@ -64,7 +76,7 @@ export default function Progress({ currentStep, classes = "" }: Props) {
 type StepProps = {
   currentStep: string;
   progress: number;
-  step: { path: string; label: string };
+  step: string;
   classes?: string;
 };
 function Step({
@@ -74,8 +86,8 @@ function Step({
   step,
   classes = "",
 }: PropsWithChildren<StepProps>) {
-  const isDone = progress >= parseInt(step.path);
-  const isCurr = currentStep === step.path;
+  const isDone = progress >= parseInt(step);
+  const isCurr = currentStep === step;
   return (
     <div className={`group ${classes}`}>
       {/** line */}
@@ -84,27 +96,23 @@ function Step({
           isDone ? "border-orange" : "border-prim"
         } my-2 group-first:hidden`}
       />
-      <Link
-        to={step.path}
-        onClick={(e) => (!isDone ? e.preventDefault() : {})}
-        className={`flex items-center ${
-          isDone ? "cursor-pointer" : "cursor-not-allowed"
-        }`}
-      >
+      <div className="flex items-center">
         {/** circle */}
         <div
           className={`w-4 aspect-square ${
             isDone ? "bg-orange" : "bg-gray-l3 dark:bg-bluegray"
           } rounded-full transform -translate-x-1/2`}
         />
-        <span
-          className={`text-sm ${
+        <Link
+          aria-disabled={!isDone || isCurr}
+          to={step.toString()}
+          className={`text-sm aria-disabled:pointer-events-none ${
             isCurr ? "text-orange" : "text-gray-d1 dark:text-gray"
           }`}
         >
           {children}
-        </span>
-      </Link>
+        </Link>
+      </div>
     </div>
   );
 }
