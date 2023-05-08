@@ -77,10 +77,7 @@ export type WithdrawLog = {
   routes?: WithdrawRoute[];
 };
 
-export type WithdrawLogSortKey = Extract<
-  keyof WithdrawLog,
-  "start_time" | "amount"
->;
+type WithdrawLogSortKey = Extract<keyof WithdrawLog, "start_time" | "amount">;
 
 export type WithdrawLogQueryParams = {
   cw3: string; // CW3 address

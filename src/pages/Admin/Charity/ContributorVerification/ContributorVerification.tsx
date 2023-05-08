@@ -59,13 +59,14 @@ function Content({ profile }: { profile: Profile }) {
     <form
       className="grid gap-8"
       onReset={() => setVerificationRequired(originalValue)}
-      onSubmit={() =>
+      onSubmit={(e) => {
+        e.preventDefault();
         updateProfile({
           id,
           owner,
           contributor_verification_required: verificationRequired === "yes",
-        })
-      }
+        });
+      }}
     >
       <h2 className="font-bold text-3xl">Other settings</h2>
       <div className="flex flex-col items-start gap-8 p-8 border border-prim rounded dark:bg-blue-d6">
@@ -83,11 +84,11 @@ function Content({ profile }: { profile: Profile }) {
         <div className="flex justify-start gap-3 w-full">
           <button
             type="reset"
-            className="btn-outline-gray grow max-w-[11rem] h-12 text-sm"
+            className="btn-outline-filled grow max-w-[11rem] h-12 text-sm"
           >
             Reset
           </button>
-          <button type="submit" className="btn-outline-gray w-44 h-12 text-sm">
+          <button type="submit" className="btn-orange w-44 h-12 text-sm">
             Submit changes
           </button>
         </div>

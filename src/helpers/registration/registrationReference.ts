@@ -7,7 +7,3 @@ export function getSavedRegistrationReference() {
 export function storeRegistrationReference(ref: string) {
   localStorage.setItem(registrationRefKey, ref);
 }
-
-export function removeSavedRegistrationReference() {
-  localStorage.removeItem(registrationRefKey);
-}

@@ -1,10 +1,5 @@
 import { ADDRESS_ZERO as TADDR_0 } from "types/contracts/evm";
 
-export const EIP1193Events = {
-  accountsChanged: "accountsChanged",
-  chainChanged: "chainChanged",
-};
-
 export const EIPMethods = {
   eth_requestAccounts: "eth_requestAccounts", //EIP-1102
   wallet_addEthereumChain: "wallet_addEthereumChain", //EIP-3085

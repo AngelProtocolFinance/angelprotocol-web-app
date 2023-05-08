@@ -11,7 +11,7 @@ export const positiveNumberConstraint = Yup.number()
   //.positive treats 0 as negative
   .positive("must be more than 0");
 
-export const percentConstraint = Yup.number()
+const percentConstraint = Yup.number()
   .typeError("invalid: must be a number")
   .positive("must be more than 0")
   .max(100, "invalid: should not be greater than 100");
@@ -19,20 +19,8 @@ export const percentConstraint = Yup.number()
 export const requiredTokenAmount = Yup.lazy((value) =>
   value === "" ? Yup.string().required("required") : tokenConstraint
 );
-export const tokenAmount = Yup.lazy((value) =>
-  value === "" ? Yup.string() : tokenConstraint
-);
 
-//validate but revert back to string
-export const tokenAmountString = Yup.lazy((value) =>
-  value === ""
-    ? Yup.string()
-    : tokenConstraint.isValidSync(value)
-    ? Yup.string()
-    : tokenConstraint
-);
-
-export function lazyNumber(constraint: any, isRequired?: true) {
+function lazyNumber(constraint: any, isRequired?: true) {
   return Yup.lazy((value) => {
     if (value === "") {
       return isRequired ? Yup.string().required("required") : Yup.string();

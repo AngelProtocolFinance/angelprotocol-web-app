@@ -1,18 +1,6 @@
 import { Coin } from "@cosmjs/proto-signing";
 import { UNSDG_NUMS } from "types/lists";
 
-export interface ERC20Token {
-  contractAddress: string;
-  decimals: number;
-  symbol: string;
-  name: string;
-  balance: string;
-}
-
-export interface QueryRes<T> {
-  data: T;
-}
-
 export type EmbeddedWasmMsg = {
   wasm: {
     execute: {
@@ -33,9 +21,6 @@ export type EmbeddedBankMsg = {
 };
 
 export type Vote = "yes" | "no";
-
-type AbsolutePercentage = { absolute_percentage: { percentage: string } };
-export type Threshold = AbsolutePercentage; // | AbsoluteCount | Quorum;
 
 export type EndowmentStatus = {
   inactive: 0;
@@ -58,10 +43,4 @@ export type Categories = {
 export type Asset = {
   info: { native: string } | { cw20: string };
   amount: string;
-};
-
-export type SplitDetails = {
-  max: string;
-  min: string;
-  default: string;
 };

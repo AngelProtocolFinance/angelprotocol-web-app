@@ -5,8 +5,6 @@ import { Separator } from "components/registration";
 import { useLaunchpad } from "slices/launchpad";
 import { steps } from "../constants";
 
-export type Wallet = { address: string };
-
 export default function WalletSubmission({
   address,
   providerId,

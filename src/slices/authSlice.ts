@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import jwtDecode, { JwtPayload } from "jwt-decode";
 
-export const TCA_TOKEN_KEY = "tca";
+const TCA_TOKEN_KEY = "tca";
 type State = { tca: string | null };
 
 const authSlice = createSlice({
@@ -21,7 +21,6 @@ const authSlice = createSlice({
 });
 
 export default authSlice.reducer;
-export const { saveToken, deleteToken } = authSlice.actions;
 
 function getSavedToken(): State {
   const savedToken = localStorage.getItem(TCA_TOKEN_KEY);

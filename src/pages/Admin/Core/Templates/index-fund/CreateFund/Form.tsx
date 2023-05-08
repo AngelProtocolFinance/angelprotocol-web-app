@@ -34,18 +34,18 @@ export default function Form() {
       <Field<FV>
         classes="field-admin"
         label="Expiry height"
-        name="expiry.height"
+        name="expiryHeight"
         placeholder="700992312"
       />
       <Field<FV, "datetime-local">
         classes="field-admin"
         type="datetime-local"
         label="Expiry time"
-        name="expiry.time"
+        name="expiryTime"
       />
       <Slider />
       <CheckField<FV>
-        name="isRotating"
+        name="rotatingFund"
         classes="p-3 text-sm rounded bg-orange-l6 dark:bg-blue-d7 border border-prim"
       >
         Included on fund rotation
@@ -62,10 +62,10 @@ export default function Form() {
 
 function Slider() {
   const { register, watch, setValue } = useFormContext<FV>();
-  const splitToLiq = watch("liqSplit");
+  const splitToLiq = watch("splitToLiquid");
 
   function unspecifySplit() {
-    setValue("liqSplit", INIT_SPLIT);
+    setValue("splitToLiquid", INIT_SPLIT);
   }
 
   return (
@@ -81,7 +81,7 @@ function Slider() {
       </Label>
       <div className="rounded bg-orange-l6 dark:bg-blue-d7 grid items-center px-4 py-6 border border-prim">
         <input
-          {...register("liqSplit")}
+          {...register("splitToLiquid")}
           type="range"
           className="range"
           min="0"

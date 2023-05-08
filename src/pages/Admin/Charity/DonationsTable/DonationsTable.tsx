@@ -1,13 +1,15 @@
 import { useAdminResources } from "pages/Admin/Guard";
 import { useDonationsQuery } from "services/apes";
 import QueryLoader from "components/QueryLoader";
+import { chainIds } from "constants/chainIds";
+import { PAYMENT_WORDS } from "constants/env";
 import Table from "./Table";
 
 export default function DonationsTable({ classes = "" }) {
   const { id } = useAdminResources();
   const { data, ...rest } = useDonationsQuery({
     id: id.toString(),
-    chain_id: "80001",
+    chain_id: chainIds.polygon,
   });
 
   return (
@@ -15,9 +17,9 @@ export default function DonationsTable({ classes = "" }) {
       <QueryLoader
         queryState={{ data: data?.Items, ...rest }}
         messages={{
-          loading: "Fetching donations..",
-          error: "Failed to get donations",
-          empty: "No donations found",
+          loading: `Fetching ${PAYMENT_WORDS.noun.plural}..`,
+          error: `Failed to get ${PAYMENT_WORDS.noun.plural}`,
+          empty: `No ${PAYMENT_WORDS.noun.plural} found`,
         }}
       >
         {(donations) => <Table donations={donations} />}

@@ -10,10 +10,8 @@ const shape: SchemaShape<FormValues> = {
   ...proposalShape,
   name: stringByteSchema(4, 64),
   about: stringByteSchema(4, 1064),
-  expiry: object().shape<SchemaShape<FormValues["expiry"]>>({
-    time: futureDate,
-    height: requiredPositiveNumber,
-  }),
+  expiryTime: futureDate,
+  expiryHeight: requiredPositiveNumber,
 };
 
 export const schema = object(shape);

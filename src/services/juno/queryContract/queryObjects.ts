@@ -1,17 +1,17 @@
 import { BigNumber } from "@ethersproject/bignumber";
 import {
-  DecodedEndowment,
-  DecodedEndowmentState,
-  DecodedFund,
-  DecodedGiftCardBalance,
-  DecodedIndexFundConfig,
-  DecodedTransaction,
+  DEndowment,
+  DEndowmentState,
+  DFund,
+  DGiftCardBalance,
+  DIndexFundConfig,
+  DRegistrarConfig,
+  DTransaction,
   toEndowStatusText,
   toEndowType,
   toSettingsPermission,
 } from "./decoded-types";
 import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
-import { RegistrarConfig } from "types/contracts";
 import { UNSDG_NUMS } from "types/lists";
 import { accounts } from "contracts/evm/Account";
 import { erc20 } from "contracts/evm/ERC20";
@@ -20,7 +20,6 @@ import { indexFund } from "contracts/evm/index-fund";
 import { multisig } from "contracts/evm/multisig";
 import { registrar } from "contracts/evm/registrar";
 import { toTuple } from "helpers";
-import { placeholders as p } from "./placeholders";
 
 type MigrationState =
   | "migrated"
@@ -36,29 +35,67 @@ export const queryObjects: {
   "registrar.config": [
     registrar.encodeFunctionData("queryConfig", []),
     (result) => {
-      const decoded: RegistrarConfig = registrar.decodeFunctionResult(
+      const d: DRegistrarConfig = registrar.decodeFunctionResult(
         "queryConfig",
         result
       )[0];
-      //select fields only
       return {
-        owner: decoded.owner.toLowerCase(),
-        acceptedTokens: decoded.acceptedTokens,
+        owner: d.owner.toLowerCase(),
+        acceptedTokens: {
+          cw20: d.acceptedTokens.cw20.map((t) => t.toLowerCase()),
+        },
+        applicationsReview: d.applicationsReview.toLowerCase(),
+        indexFundContract: d.indexFundContract.toLowerCase(),
+        accountsContract: d.accountsContract.toLowerCase(),
+        treasury: d.treasury.toLowerCase(),
+        subdaoGovCode: d.subdaoGovCode.toLowerCase(),
+        subdaoCw20TokenCode: d.subdaoCw20TokenCode.toLowerCase(),
+        subdaoBondingTokenCode: d.subdaoBondingTokenCode.toLowerCase(),
+        subdaoCw900Code: d.subdaoCw900Code.toLowerCase(),
+        subdaoDistributorCode: d.subdaoDistributorCode.toLowerCase(),
+        subdaoEmitter: d.subdaoEmitter.toLowerCase(),
+        donationMatchCode: d.donationMatchCode.toLowerCase(),
+        donationMatchCharitesContract:
+          d.donationMatchCharitesContract.toLowerCase(),
+        donationMatchEmitter: d.donationMatchEmitter.toLowerCase(),
+        splitToLiquid: {
+          min: d.splitToLiquid.min.toNumber(),
+          max: d.splitToLiquid.max.toNumber(),
+          defaultSplit: d.splitToLiquid.defaultSplit.toNumber(),
+        },
+        haloToken: d.haloToken.toLowerCase(),
+        haloTokenLpContract: d.haloTokenLpContract.toLowerCase(),
+        govContract: d.govContract.toLowerCase(),
+        collectorAddr: d.collectorAddr.toLowerCase(),
+        collectorShare: d.collectorShare.toNumber(),
+        charitySharesContract: d.charitySharesContract.toLowerCase(),
+        fundraisingContract: d.fundraisingContract.toLowerCase(),
+        rebalance: {
+          rebalanceLiquidInvestedProfits: d.rebalance.lockedInterestsToLiquid,
+          lockedInterestsToLiquid: d.rebalance.lockedInterestsToLiquid,
+          interest_distribution: d.rebalance.interest_distribution.toNumber(),
+          lockedPrincipleToLiquid: d.rebalance.lockedPrincipleToLiquid,
+          principle_distribution: d.rebalance.principle_distribution.toNumber(),
+        },
+        swapsRouter: d.swapsRouter.toLowerCase(),
+        multisigFactory: d.multisigFactory.toLowerCase(),
+        multisigEmitter: d.multisigEmitter.toLowerCase(),
+        charityProposal: d.charityProposal.toLowerCase(),
+        lockedWithdrawal: d.lockedWithdrawal.toLowerCase(),
+        proxyAdmin: d.proxyAdmin.toLowerCase(),
+        usdcAddress: d.usdcAddress.toLowerCase(),
+        wethAddress: d.wethAddress.toLowerCase(),
+        cw900lvAddress: d.cw900lvAddress.toLowerCase(),
       };
     },
     "migrated",
-  ],
-  "registrar.config-extension": [
-    "",
-    () => p["registrar.config-extension"],
-    "placeholder",
   ],
 
   /** index fund */
   "index-fund.funds": [
     (args) => indexFund.encodeFunctionData("queryFundsList", toTuple(args)),
     (result) => {
-      const decoded: DecodedFund[] = indexFund.decodeFunctionResult(
+      const decoded: DFund[] = indexFund.decodeFunctionResult(
         "queryFundsList",
         result
       )[0];
@@ -90,7 +127,7 @@ export const queryObjects: {
   "index-fund.config": [
     indexFund.encodeFunctionData("queryConfig", []),
     (result) => {
-      const d: DecodedIndexFundConfig = indexFund.decodeFunctionResult(
+      const d: DIndexFundConfig = indexFund.decodeFunctionResult(
         "queryConfig",
         result
       )[0];
@@ -123,7 +160,7 @@ export const queryObjects: {
   "gift-card.balance": [
     ({ addr }) => giftCard.encodeFunctionData("queryBalance", [addr]),
     (result) => {
-      const decoded: DecodedGiftCardBalance = giftCard.decodeFunctionResult(
+      const decoded: DGiftCardBalance = giftCard.decodeFunctionResult(
         "queryBalance",
         result
       )[0];
@@ -212,7 +249,7 @@ export const queryObjects: {
       const d = multisig.decodeFunctionResult(
         "transactions",
         result
-      ) as unknown as DecodedTransaction;
+      ) as unknown as DTransaction;
 
       return {
         id: args?.id ?? 0,
@@ -244,7 +281,7 @@ export const queryObjects: {
   "accounts.endowment": [
     ({ id }) => accounts.encodeFunctionData("queryEndowmentDetails", [id]),
     (result) => {
-      const d: DecodedEndowment = accounts.decodeFunctionResult(
+      const d: DEndowment = accounts.decodeFunctionResult(
         "queryEndowmentDetails",
         result
       )[0];
@@ -268,7 +305,7 @@ export const queryObjects: {
           w.toLowerCase()
         ),
         maturityWhitelist: d.maturityWhitelist.map((w) => w.toLowerCase()),
-        kyc_donors_only: d.kycDonorsOnly,
+        kycDonorsOnly: d.kycDonorsOnly,
         settingsController: {
           endowmentController: toSettingsPermission(
             controller.endowmentController
@@ -302,7 +339,7 @@ export const queryObjects: {
   "accounts.state": [
     ({ id }) => accounts.encodeFunctionData("queryState", [id]),
     (result) => {
-      const d: DecodedEndowmentState = accounts.decodeFunctionResult(
+      const d: DEndowmentState = accounts.decodeFunctionResult(
         "queryState",
         result
       )[0];

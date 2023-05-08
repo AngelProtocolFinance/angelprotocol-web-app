@@ -1,6 +1,7 @@
 export type Donation = {
   amount: number;
   chainId: string;
+  destinationChainId: string;
   chainName: string;
   charityName: string;
   date: string;
@@ -27,31 +28,6 @@ export type KYCData = {
 export type ReceiptPayload = KYCData & {
   transactionId: string; // tx hash
 };
-
-type TxBase = {
-  amount: number;
-  chainId: string;
-  chainName: string;
-  charityName: string;
-  denomination: string;
-  splitLiq: string; //"50"
-  transactionId: string;
-  transactionDate: string;
-  endowmentId: number;
-};
-
-type CryptoTx = TxBase & {
-  walletAddress: string; //user wallet address, undefined for
-};
-
-type FiatTx = TxBase & {
-  fiatRamp: string;
-  destinationChainId: string;
-  //payment methods
-  //https://www.notion.so/6cbdfa08522e444fadd732d73a7e15ad?v=68fdb3f0310d42e0b7cb28684449bb81
-  paymentMethod: string;
-};
-
 export type DonationsQueryParams = {
   id: string;
   chain_id: string;
@@ -64,5 +40,17 @@ export type DonationsQueryParams = {
   limit?: number; // Number of items to be returned per request
 };
 
-export type TxLogPayload = CryptoTx & { kycData?: KYCData };
-export type FiatLogPayload = FiatTx & { kycData?: KYCData };
+export type TxLogPayload = {
+  amount: number;
+  chainId: string;
+  destinationChainId: string;
+  chainName: string;
+  charityName: string;
+  denomination: string;
+  splitLiq: string; //"50"
+  transactionId: string;
+  transactionDate: string;
+  endowmentId: number;
+  walletAddress: string;
+  kycData?: KYCData;
+};

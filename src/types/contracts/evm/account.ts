@@ -124,7 +124,7 @@ export interface NewAST extends Tupleable {
   ignoreUserSplits: boolean;
   splitToLiquid: SplitDetails;
 
-  referral_id: number;
+  // referral_id: number; TODO: add later
 }
 
 type DepositRequest = {

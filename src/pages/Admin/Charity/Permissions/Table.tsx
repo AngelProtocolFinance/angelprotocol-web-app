@@ -76,7 +76,8 @@ export default function Table({ className = "" }) {
                   input: "checkbox-orange",
                   error: "hidden",
                 }}
-                disabled={checkboxDisabled}
+                disabled={true}
+                // disabled={checkboxDisabled} --> hidden until available
               />
               {isNormal ? (
                 <CheckField<FormValues>

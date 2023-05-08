@@ -30,12 +30,10 @@ function FundContext(props: { height: string }) {
     mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: {
-      liqSplit: INIT_SPLIT,
-      isRotating: false,
-      expiry: {
-        height: props.height,
-        time: "",
-      },
+      splitToLiquid: INIT_SPLIT,
+      rotatingFund: false,
+      expiryHeight: props.height,
+      expiryTime: "",
     },
   });
 

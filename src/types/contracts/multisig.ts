@@ -23,13 +23,6 @@ export interface Transaction {
   meta?: string;
 }
 
-export interface TransactionIDsPageOptions extends Tupleable {
-  from: number;
-  to: number;
-  pending: boolean;
-  executed: boolean;
-}
-
 export type PageOptions = {
   range: [number, number];
   status: TransactionStatus;

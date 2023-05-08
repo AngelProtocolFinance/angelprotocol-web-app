@@ -24,6 +24,7 @@ const donation = createSlice({
         return {
           ...(state as SubmitStep),
           step: 3,
+          kyc: "skipped",
           details: payload,
         };
       }

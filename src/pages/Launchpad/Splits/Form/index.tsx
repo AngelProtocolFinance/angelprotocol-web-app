@@ -1,4 +1,4 @@
-import { PropsWithChildren, useEffect } from "react";
+import { PropsWithChildren } from "react";
 import { useFormContext } from "react-hook-form";
 import { FV } from "../types";
 import Form, {
@@ -16,14 +16,6 @@ export default function SplitsForm(props: FormProps) {
   const { watch, resetField } = useFormContext<FV>();
   const isCustom = watch("isCustom");
 
-  useEffect(() => {
-    if (!isCustom) {
-      resetField("default", { defaultValue: "50" }); //reset to these defaults - since persisted value is used as default value
-      resetField("min", { defaultValue: "0" });
-      resetField("max", { defaultValue: "100" });
-    }
-  }, [isCustom, resetField]);
-
   return (
     <Form {...props}>
       <Title className="mb-2">Split of Contributions</Title>
@@ -33,7 +25,17 @@ export default function SplitsForm(props: FormProps) {
         between your Locked account and your Liquid account. You can deactivate
         that to default to a value that you set or set minimum & maximum values.
       </Desc>
-      <Toggle<FV> name="isCustom" classes={{ container: "my-9 text-sm" }}>
+      <Toggle<FV>
+        name="isCustom"
+        classes={{ container: "my-9 text-sm" }}
+        onChange={(isCustom) => {
+          if (!isCustom) {
+            //reset to these defaults - since persisted value is used as default value
+            resetField("min", { defaultValue: "0" });
+            resetField("max", { defaultValue: "100" });
+          }
+        }}
+      >
         Allow contributors to define a Locked/Liquid Split
       </Toggle>
 
@@ -47,7 +49,6 @@ export default function SplitsForm(props: FormProps) {
           names={{ min: "defaultMin", max: "default" }}
           hidden="max"
           hideLabels
-          disabled={!isCustom}
         >
           {(min, max, disabled) => (
             <div className="flex justify-between text-sm">

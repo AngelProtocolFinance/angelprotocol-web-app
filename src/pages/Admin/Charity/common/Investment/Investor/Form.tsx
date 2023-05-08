@@ -23,6 +23,7 @@ export default function Form({
         label="Enter the amount to invest:"
         scale={[10, 20, 50, 100, 250]}
         classes={{ container: "px-8 pt-8" }}
+        withMininum
       />
     </TxModal>
   );

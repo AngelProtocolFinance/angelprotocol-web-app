@@ -11,7 +11,7 @@ export function Status(props: { status: TransactionStatus }) {
     </p>
   );
 }
-export const statusClasses: { [key in TransactionStatus]: string } = {
+const statusClasses: { [key in TransactionStatus]: string } = {
   executed: "bg-blue",
   pending: "bg-orange",
 };
