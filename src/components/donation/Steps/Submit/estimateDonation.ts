@@ -4,13 +4,11 @@ import { SimulContractTx, SimulSendNativeTx } from "types/evm";
 import { Estimate, TxContent } from "types/tx";
 import { WalletState } from "contexts/WalletContext";
 import { FiatWallet, SubmitStep, isFiat } from "slices/donation";
-import GiftCard from "contracts/GiftCard";
 import createCosmosMsg from "contracts/createCosmosMsg";
 import { createTx } from "contracts/createTx/createTx";
 import { logger, scale, scaleToStr } from "helpers";
 import { estimateTx } from "helpers/tx";
 import { ap_wallets } from "constants/ap_wallets";
-import getBreakdown from "./getBreakdown";
 
 export async function estimateDonation({
   recipient,
@@ -36,38 +34,23 @@ export async function estimateDonation({
     const { chain } = wallet;
 
     if (chain.type === "juno-native") {
-      const { fromBal, fromGift } = getBreakdown(token);
+      const sender = wallet.address;
+      const scaledAmount = scaleToStr(token.amount, token.decimals);
+      const to = ap_wallets.juno_deposit;
+      const msg =
+        token.type === "juno-native" || token.type === "ibc"
+          ? createCosmosMsg(sender, "recipient.send", {
+              recipient: to,
+              amount: scaledAmount,
+              denom: token.token_id,
+            })
+          : createCosmosMsg(sender, "cw20.transfer", {
+              recipient: to,
+              amount: scaledAmount,
+              cw20: token.token_id,
+            });
 
-      const msgs = [];
-      if (fromBal) {
-        const scaledAmount = scaleToStr(fromBal, token.decimals);
-        const sender = wallet.address;
-        const recipient = ap_wallets.juno_deposit;
-        msgs.push(
-          token.type === "juno-native" || token.type === "ibc"
-            ? createCosmosMsg(sender, "recipient.send", {
-                recipient,
-                amount: scaledAmount,
-                denom: token.token_id,
-              })
-            : createCosmosMsg(sender, "cw20.transfer", {
-                recipient,
-                amount: scaledAmount,
-                cw20: token.token_id,
-              })
-        );
-      }
-      if (fromGift) {
-        msgs.push(
-          new GiftCard(wallet).createSpendMsg(
-            recipient.id,
-            fromGift,
-            token,
-            pctLiquidSplit
-          )
-        );
-      }
-      content = { type: "cosmos", val: msgs };
+      content = { type: "cosmos", val: [msg] };
     }
     // terra native transaction, send or contract interaction
     else if (chain.type === "terra-native") {
@@ -89,15 +72,24 @@ export async function estimateDonation({
     }
     // evm transactions
     else {
-      const scaledAmount = scale(token.amount, token.decimals).toHex();
-      const tx: SimulSendNativeTx | SimulContractTx =
-        token.type === "evm-native"
-          ? { from: wallet.address, value: scaledAmount, to: ap_wallets.eth }
-          : createTx(wallet.address, "erc20.transfer", {
+      const tx: SimulSendNativeTx | SimulContractTx = (() => {
+        const scaledAmount = scale(token.amount, token.decimals).toHex();
+        switch (token.type) {
+          case "evm-native":
+            return {
+              from: wallet.address,
+              value: scaledAmount,
+              to: ap_wallets.eth,
+            };
+          default: {
+            return createTx(wallet.address, "erc20.transfer", {
               erc20: token.token_id,
               to: ap_wallets.eth,
               amount: scaledAmount,
             });
+          }
+        }
+      })();
 
       content = { type: "evm", val: tx };
     }

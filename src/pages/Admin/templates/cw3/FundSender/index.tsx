@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues } from "./types";
-import { Chain } from "types/aws";
+import { Chain } from "types/tx";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useChainQuery } from "services/apes";
 import QueryLoader from "components/QueryLoader";

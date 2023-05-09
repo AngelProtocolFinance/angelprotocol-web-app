@@ -1,4 +1,4 @@
-import { TokenWithBalance as TWB } from "./aws";
+import { TokenWithBalance as TWB } from "types/tx";
 
 const _type: keyof TWB = "type";
 

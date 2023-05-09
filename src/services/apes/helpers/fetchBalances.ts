@@ -1,7 +1,8 @@
 import { Coin } from "@cosmjs/proto-signing";
-import { FetchedChain, Token, TokenWithBalance } from "types/aws";
+import { FetchedChain, Token } from "types/aws";
 import { CW20Balance } from "types/contracts";
 import { ProviderId } from "types/lists";
+import { TokenWithBalance } from "types/tx";
 import { queryContract } from "services/juno/queryContract";
 import { condenseToNum, getProvider, toBase64 } from "helpers";
 
@@ -58,11 +59,13 @@ export async function fetchBalances(
     const native = tokens.natives[0]; //evm chains have only one gas token
     const provider = getProvider(providerId)!;
 
-    const [nativeBal, ...erc20s] = await Promise.allSettled([
+    const [nativeBal, gift, ...erc20s] = await Promise.allSettled([
       provider.request<string>({
         method: "eth_getBalance",
         params: [address, "latest"],
       }),
+      queryContract("gift-card.balance", { addr: address }),
+
       ...tokens.alts.map((t) =>
         queryContract("erc20.balance", {
           erc20: t.token_id,

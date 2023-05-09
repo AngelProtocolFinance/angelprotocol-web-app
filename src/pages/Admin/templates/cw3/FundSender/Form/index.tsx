@@ -1,6 +1,6 @@
 import { FormValues as FV } from "../types";
 import { FundSendValues as FS } from "pages/Admin/types";
-import { Chain } from "types/aws";
+import { Chain } from "types/tx";
 import TokenField from "components/TokenField";
 import { FormContainer, Submitter } from "components/admin";
 import { Field } from "components/form";

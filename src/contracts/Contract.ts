@@ -9,8 +9,7 @@ import {
   calculateFee,
   isDeliverTxFailure,
 } from "@cosmjs/stargate";
-import { Chain } from "types/aws";
-import { CosmosTx } from "types/tx";
+import { Chain, CosmosTx } from "types/tx";
 import { WalletState } from "contexts/WalletContext";
 import { logger } from "helpers";
 import { getKeplrClient } from "helpers/keplr";

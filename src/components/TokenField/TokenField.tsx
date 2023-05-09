@@ -9,7 +9,7 @@ import {
 } from "react-hook-form";
 import { OnSetAmount, Props } from "./types";
 import { TokenWithAmount } from "types/slices";
-import Balance from "./Balance";
+import { humanize } from "helpers";
 import Steps from "./Steps";
 import TokenSelector from "./TokenSelector";
 
@@ -63,11 +63,13 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
           {label}
         </label>
         {withBalance && token.type !== "fiat" && (
-          <Balance
-            token={token}
-            onSetAmount={onSetAmount}
-            isGiftEnabled={!!withGiftcard}
-          />
+          <button
+            type="button"
+            onClick={() => onSetAmount(token.balance)}
+            className="text-right hover:text-blue text-xs flex"
+          >
+            BAL: {humanize(+token.balance, 3)} {token.symbol}
+          </button>
         )}
       </div>
 
