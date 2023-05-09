@@ -173,7 +173,10 @@ export function toEndowStatusText(
 
 export function toBalMap(d: DGenericBalance): GenericBalMap {
   const erc20s = d.Cw20CoinVerified_addr.reduce((prev, curr, i) => {
-    return { ...prev, [curr.toLowerCase()]: d.Cw20CoinVerified_amount[i] };
+    return {
+      ...prev,
+      [curr.toLowerCase()]: d.Cw20CoinVerified_amount[i].toString(),
+    };
   }, {});
 
   return { ...erc20s, native: d.coinNativeAmount.toString() };

@@ -39,10 +39,16 @@ export const apes = createApi({
       async queryFn({ address, chainId, providerId }, api, options, baseQuery) {
         try {
           const { data } = await baseQuery(`v1/chain/${chainId}`);
-          const chain = overrideURLs(data as FetchedChain);
+          const chain = overrides(data as FetchedChain);
 
           const [native, ...tokens] = await fetchBalances(
-            chain,
+            {
+              ...chain,
+              tokens: chain.tokens.map((t) => ({
+                ...t,
+                token_id: t.token_id.toLowerCase(),
+              })),
+            },
             address,
             providerId
           );
@@ -69,7 +75,7 @@ export const apes = createApi({
   }),
 });
 
-function overrideURLs(chain: FetchedChain): FetchedChain {
+function overrides(chain: FetchedChain): FetchedChain {
   if (chain.chain_id === chainIds.juno) {
     return {
       ...chain,

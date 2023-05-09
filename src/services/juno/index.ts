@@ -58,7 +58,11 @@ export const {
 type Base = BaseQueryFn<any, unknown, unknown, {}, {}>;
 export function useContractQuery<T extends QT>(
   type: T,
-  options: QueryOptions<T>
+  options: QueryOptions<T>,
+  skip?: boolean
 ): TypedUseQueryHookResult<ReturnType<Q[T]["transform"]>, any, Base> {
-  return junoApi.endpoints.contract.useQuery({ type, options }) as any;
+  return junoApi.endpoints.contract.useQuery(
+    { type, options },
+    { skip }
+  ) as any;
 }
