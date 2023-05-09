@@ -65,7 +65,7 @@ export default function Progress({ currentStep, classes = "" }: Props) {
 
       {isOtherStepsShown &&
         others.map(([step, label]) => (
-          <Step currentStep={currentStep} progress={p} step={step}>
+          <Step currentStep={currentStep} progress={p} step={step} key={step}>
             {label}
           </Step>
         ))}
