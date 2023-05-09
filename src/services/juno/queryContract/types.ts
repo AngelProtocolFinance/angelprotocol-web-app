@@ -1,3 +1,4 @@
+import { Token } from "types/aws";
 import {
   EndowmentDetails,
   EndowmentState,
@@ -38,6 +39,7 @@ export interface ContractQueries {
   "gift-card.balance": Query<Addr, GenericBalMap>;
 
   "erc20.balance": Query<Addr, string>;
+  "erc20.allowance": Query<{ owner: string; spender: string }, string>;
 
   "multisig.members": Query<null, string[]>;
   "multisig.txs": Query<PageOptions, Pick<Transaction, "id" | "status">[]>;

@@ -22,15 +22,10 @@ import { multisig } from "contracts/evm/multisig";
 import { registrar } from "contracts/evm/registrar";
 import { toTuple } from "helpers";
 
-type MigrationState =
-  | "migrated"
-  | "semi-migrated" /** working but with incomplete data */
-  | "placeholder"; /** encoder and decoders are wired but not yet complete */
-
 export const queryObjects: {
   [K in QT]: Q[K]["args"] extends null
-    ? [string, Q[K]["transform"], MigrationState]
-    : [(args: Q[K]["args"]) => string, Q[K]["transform"], MigrationState];
+    ? [string, Q[K]["transform"]]
+    : [(args: Q[K]["args"]) => string, Q[K]["transform"]];
 } = {
   /** registrar */
   "registrar.config": [
@@ -89,7 +84,6 @@ export const queryObjects: {
         cw900lvAddress: d.cw900lvAddress.toLowerCase(),
       };
     },
-    "migrated",
   ],
 
   /** index fund */
@@ -111,7 +105,6 @@ export const queryObjects: {
         expiryHeight: f.expiryHeight.toNumber(),
       }));
     },
-    "migrated",
   ],
   "index-fund.alliance-members": [
     (args) =>
@@ -123,7 +116,6 @@ export const queryObjects: {
       )[0];
       return decoded.map((a) => a.toLowerCase());
     },
-    "semi-migrated",
   ],
   "index-fund.config": [
     indexFund.encodeFunctionData("queryConfig", []),
@@ -141,7 +133,6 @@ export const queryObjects: {
         alliance_members: d.alliance_members,
       };
     },
-    "migrated",
   ],
 
   /** erc20 */
@@ -154,7 +145,16 @@ export const queryObjects: {
       )[0];
       return decoded.toString();
     },
-    "migrated",
+  ],
+  "erc20.allowance": [
+    (args) => erc20.encodeFunctionData("allowance", toTuple(args)),
+    (result) => {
+      const decoded: BigNumber = erc20.decodeFunctionResult(
+        "allowance",
+        result
+      )[0];
+      return decoded.toString();
+    },
   ],
 
   /** giftcard */
@@ -167,7 +167,6 @@ export const queryObjects: {
       )[0];
       return toBalMap(d);
     },
-    "migrated",
   ],
 
   /** multisig */
@@ -178,7 +177,6 @@ export const queryObjects: {
       //wallets outputs lowercase addresses, but addresses from contracts are not
       return d.map((a) => a.toLowerCase());
     },
-    "migrated",
   ],
   "multisig.threshold": [
     multisig.encodeFunctionData("required", []),
@@ -186,12 +184,10 @@ export const queryObjects: {
       const d: BigNumber = multisig.decodeFunctionResult("required", result)[0];
       return d.toNumber();
     },
-    "migrated",
   ],
   "multisig.require-execution": [
     multisig.encodeFunctionData("requireExecution", []),
     (result) => multisig.decodeFunctionResult("requireExecution", result)[0],
-    "migrated",
   ],
   "multisig.tx-count": [
     (options) =>
@@ -203,7 +199,6 @@ export const queryObjects: {
       )[0];
       return d.toNumber();
     },
-    "migrated",
   ],
   "multisig.txs": [
     ({ range: [from, to], status }) => {
@@ -228,8 +223,6 @@ export const queryObjects: {
         status: args?.status ?? "pending",
       }));
     },
-
-    "semi-migrated",
   ],
   "multisig.transaction": [
     ({ id }) => multisig.encodeFunctionData("transactions", [id]),
@@ -249,7 +242,6 @@ export const queryObjects: {
         status: d.executed ? "executed" : "pending",
       };
     },
-    "migrated",
   ],
 
   "multisig.votes": [
@@ -261,8 +253,6 @@ export const queryObjects: {
       )[0];
       return d.map((s) => s.toLowerCase());
     },
-
-    "migrated",
   ],
 
   /** account */
@@ -319,7 +309,6 @@ export const queryObjects: {
         },
       };
     },
-    "migrated",
   ],
   "accounts.state": [
     ({ id }) => accounts.encodeFunctionData("queryState", [id]),
@@ -350,7 +339,6 @@ export const queryObjects: {
         },
       };
     },
-    "migrated",
   ],
   "accounts.token-balance": [
     (args) => accounts.encodeFunctionData("queryTokenAmount", toTuple(args)),
@@ -361,6 +349,5 @@ export const queryObjects: {
       )[0];
       return d.toString();
     },
-    "migrated",
   ],
 };

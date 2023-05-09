@@ -35,7 +35,7 @@ export default function CoinBalances({ smallAmountsHidden, tokens }: Props) {
     <>
       {filtered.map((t) => (
         <div
-          key={t.token_id}
+          key={t.token_id + t.type}
           className="flex items-center font-heading font-bold text-sm"
         >
           <Image src={t.logo} className="w-6 h-6" />
