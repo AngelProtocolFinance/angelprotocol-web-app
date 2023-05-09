@@ -3,6 +3,7 @@ import { FetchedChain, Token } from "types/aws";
 import { CW20Balance } from "types/contracts";
 import { ProviderId } from "types/lists";
 import { TokenWithBalance } from "types/tx";
+import giftIcon from "assets/icons/currencies/gift.svg";
 import { queryContract } from "services/juno/queryContract";
 import { condenseToNum, getProvider, toBase64 } from "helpers";
 
@@ -39,19 +40,16 @@ export async function fetchBalances(
         result.status === "fulfilled" ? result.value : { amount: "", denom: "" }
       )
     );
-    const gifts = {};
 
     return tokens.natives
       .map((t) => ({
         ...t,
         balance: getBal(natives, t),
-        gift: getBal(gifts, t),
       }))
       .concat(
         tokens.alts.map((t) => ({
           ...t,
           balance: getBal(cw20map, t),
-          gift: getBal(gifts, t),
         }))
       );
   } else {
@@ -83,6 +81,31 @@ export async function fetchBalances(
       )
     );
 
+    let gifts: TokenWithBalance[] = [];
+    if (gift.status === "fulfilled") {
+      const { native, ...erc20s } = gift.value;
+      if (native !== "0") {
+        gifts.push({
+          ...chain.native_currency,
+          type: "evm-native-gift",
+          logo: giftIcon,
+          token_id: chain.native_currency.token_id + "-gift",
+          balance: 10,
+        });
+      }
+      for (const t of chain.tokens) {
+        if (t.token_id in erc20s) {
+          gifts.push({
+            ...t,
+            type: "erc20-gift",
+            logo: giftIcon,
+            token_id: t.token_id + "-gift",
+            balance: condenseToNum(erc20s[t.token_id], t.decimals),
+          });
+        }
+      }
+    }
+
     return [
       {
         ...native,
@@ -91,12 +114,12 @@ export async function fetchBalances(
           native.decimals
         ),
       },
-    ].concat(
-      tokens.alts.map((t) => ({
+      ...tokens.alts.map((t) => ({
         ...t,
         balance: getBal(erc20map, t),
-      }))
-    );
+      })),
+      ...gifts,
+    ];
   }
 }
 
