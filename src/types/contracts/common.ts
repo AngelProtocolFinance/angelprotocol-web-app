@@ -28,8 +28,3 @@ export type Categories = {
   sdgs: UNSDG_NUMS[]; // u8 maps one of the 17 UN SDG
   general: number[]; //??
 };
-
-export type Asset = {
-  info: { native: string } | { cw20: string };
-  amount: string;
-};

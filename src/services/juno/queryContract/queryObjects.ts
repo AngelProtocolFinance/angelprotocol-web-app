@@ -168,7 +168,7 @@ export const queryObjects: {
 
       return toBalMap(d);
     },
-    "placeholder",
+    "migrated",
   ],
 
   /** multisig */

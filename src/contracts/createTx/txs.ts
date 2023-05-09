@@ -1,6 +1,7 @@
 import { TxArgs, TxTypes } from "./types";
 import { erc20 } from "contracts/evm/ERC20";
 import { charityApplication } from "contracts/evm/charity-application";
+import { giftCard } from "contracts/evm/gift-card";
 import { indexFund } from "contracts/evm/index-fund";
 import { lockedWithdraw } from "contracts/evm/locked-withdraw";
 import { multisig } from "contracts/evm/multisig";
@@ -72,4 +73,7 @@ export const txs: { [T in TxTypes]: (args: TxArgs<T>) => string } = {
     registrar.encodeFunctionData("updateOwner", [newOwner]),
   "registrar.update-config": (config) =>
     registrar.encodeFunctionData("updateConfig", [toTuple(config)]),
+
+  "gift-card.spend": (gift) =>
+    giftCard.encodeFunctionData("executeSpend", toTuple(gift)),
 };

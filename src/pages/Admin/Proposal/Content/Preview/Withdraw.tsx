@@ -19,9 +19,7 @@ export default function Withdraw({
       <KeyValue _key="assets" _classes="flex-col mt-4 gap-2">
         <TableSection type="tbody" rowClass="">
           {assets.map((asset) => {
-            const denom =
-              "native" in asset.info ? asset.info.native : asset.info.cw20;
-
+            const denom = ""; /** future */
             return (
               <Cells key={denom} cellClass="" type="td">
                 <Image

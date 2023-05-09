@@ -6,6 +6,7 @@ import {
 } from "types/contracts";
 import { AccountType, ERC20Deposit, NewAST } from "types/contracts/evm";
 import { Allowance, Transfer } from "types/contracts/evm/erc20";
+import { GiftToSpend } from "types/contracts/gift-card";
 import { NewTransaction } from "types/contracts/multisig";
 import { Tupleable } from "types/evm";
 import { Contract } from "types/lists";
@@ -95,6 +96,8 @@ type Txs = {
 
   "registrar.update-owner": Tx<{ newOwner: string }>;
   "registrar.update-config": Tx<RegistrarConfigPayload>;
+
+  "gift-card.spend": Tx<GiftToSpend>;
 };
 
 export type TxTypes = keyof Txs;
