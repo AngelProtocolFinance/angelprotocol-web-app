@@ -76,4 +76,8 @@ export const txs: { [T in TxTypes]: (args: TxArgs<T>) => string } = {
 
   "gift-card.spend": (gift) =>
     giftCard.encodeFunctionData("executeSpend", toTuple(gift)),
+  "gift-card.deposit-native": (flow) =>
+    giftCard.encodeFunctionData("executeDeposit", toTuple(flow)),
+  "gift-card.deposit-erc20": (flow) =>
+    giftCard.encodeFunctionData("executeDepositERC20", toTuple(flow)),
 };

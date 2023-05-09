@@ -9,10 +9,3 @@ export type Asset = {
   addr: string;
   name: "";
 };
-
-export type GiftToSpend = {
-  asset: Asset;
-  id: number;
-  lockedPCT: number;
-  liquidPCT: number;
-};
