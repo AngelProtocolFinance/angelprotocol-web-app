@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { LinkGroup } from "../Sidebar/types";
 import { EndowmentType } from "types/lists";
 import { adminRoutes } from "constants/routes";
@@ -83,6 +83,7 @@ export default function Charity() {
           <Route path=":endowId" element={<WidgetConfigurer />} />
         </Route>
         <Route index element={<Dashboard />} />
+        <Route path="*" element={<Navigate replace to={adminRoutes.index} />} />
       </Route>
     </Routes>
   );
