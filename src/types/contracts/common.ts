@@ -7,6 +7,20 @@ export enum EndowmentStatus {
   Closed,
 }
 
+/**
+ * 0 Endowment
+ * 1 IndexFund
+ * 2 Wallet
+ * 3 None
+ */
+export type Beneficiary = {
+  data: {
+    id: number; //for index-fund or endowment
+    addr: string; // wallet
+  };
+  enumData: 0 | 1 | 2 | 3;
+};
+
 export type EndowmentStatusText = Lowercase<keyof typeof EndowmentStatus>;
 export type EndowmentTierNum = 1 | 2 | 3;
 

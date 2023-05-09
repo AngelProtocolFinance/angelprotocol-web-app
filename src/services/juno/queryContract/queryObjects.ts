@@ -3,10 +3,11 @@ import {
   DEndowment,
   DEndowmentState,
   DFund,
-  DGiftCardBalance,
+  DGenericBalance,
   DIndexFundConfig,
   DRegistrarConfig,
   DTransaction,
+  toBalMap,
   toEndowStatusText,
   toEndowType,
   toSettingsPermission,
@@ -160,24 +161,12 @@ export const queryObjects: {
   "gift-card.balance": [
     ({ addr }) => giftCard.encodeFunctionData("queryBalance", [addr]),
     (result) => {
-      const decoded: DGiftCardBalance = giftCard.decodeFunctionResult(
+      const d: DGenericBalance = giftCard.decodeFunctionResult(
         "queryBalance",
         result
       )[0];
-      const {
-        coinNativeAmount,
-        /** amounts and addresses corresponds to one another */
-        Cw20CoinVerified_addr: addresses,
-        Cw20CoinVerified_amount: amounts,
-      } = decoded;
 
-      return {
-        cw20: addresses.map((addr, i) => ({
-          address: addr.toLowerCase(),
-          amount: amounts[i].toString(),
-        })),
-        native: [{ denom: "", amount: coinNativeAmount.toString() }],
-      };
+      return toBalMap(d);
     },
     "placeholder",
   ],
@@ -343,23 +332,23 @@ export const queryObjects: {
 
       return {
         //TODO: populate once needed
-        tokens_on_hand: {
-          locked: {
-            native: [],
-            cw20: [],
-          },
-          liquid: {
-            native: [],
-            cw20: [],
-          },
+        donationsReceived: {
+          locked: d.donationsReceived.locked.toString(),
+          liquid: d.donationsReceived.liquid.toString(),
         },
-        donations_received: {
-          locked: d.donationsReceived.locked.toNumber(),
-          liquid: d.donationsReceived.liquid.toNumber(),
+        balances: {
+          liquid: toBalMap(d.balances.liquid),
+          locked: toBalMap(d.balances.locked),
         },
-        closing_endowment: d.closingEndowment,
+        closingEndowment: d.closingEndowment,
         //FUTURE: index-fund can also be beneficiary
-        closing_beneficiary: d.closingBeneficiary.data.addr.toLowerCase(),
+        closingBeneficiary: {
+          data: {
+            id: d.closingBeneficiary.data.id.toNumber(),
+            addr: d.closingBeneficiary.data.addr.toLowerCase(),
+          },
+          enumData: d.closingBeneficiary.enumData.toNumber() as any,
+        },
       };
     },
     "migrated",

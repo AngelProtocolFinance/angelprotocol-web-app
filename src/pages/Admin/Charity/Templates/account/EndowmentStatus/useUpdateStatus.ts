@@ -1,7 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
-import { EndowmentStatusText } from "types/contracts";
-import { Beneficiary } from "types/contracts/evm";
+import { Beneficiary, EndowmentStatusText } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";

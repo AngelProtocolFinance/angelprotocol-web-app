@@ -1,12 +1,14 @@
 import type { BigNumber } from "@ethersproject/bignumber";
 import { OverrideProperties } from "type-fest";
 import {
+  Beneficiary,
   Categories,
   Delegate,
   EndowmentDetails,
   EndowmentStatus,
   EndowmentStatusText,
   FundDetails,
+  GenericBalMap,
   IndexFundConfig,
   RebalanceDetails,
   RegistrarConfig,
@@ -76,19 +78,34 @@ export type DEndowment = OverrideProperties<
   }
 >;
 
+export type DGenericBalance = {
+  coinNativeAmount: BigNumber;
+  Cw20CoinVerified_amount: BigNumber[];
+  address: string[];
+};
+
+type DBeneficiaryData = OverrideProperties<
+  Beneficiary["data"],
+  { id: BigNumber }
+>;
+type DBeneficiary = OverrideProperties<
+  Beneficiary,
+  {
+    data: DBeneficiaryData;
+    enumData: BigNumber;
+  }
+>;
 export interface DEndowmentState {
   donationsReceived: {
     liquid: BigNumber;
     locked: BigNumber;
   };
-  closingEndowment: boolean;
-  closingBeneficiary: {
-    data: {
-      id: BigNumber;
-      addr: string;
-    };
-    enumData: BeneficiaryEnum;
+  balances: {
+    locked: DGenericBalance;
+    liquid: DGenericBalance;
   };
+  closingEndowment: boolean;
+  closingBeneficiary: DBeneficiary;
 }
 
 export type DFund = OverrideProperties<
@@ -101,12 +118,6 @@ export type DFund = OverrideProperties<
     expiryHeight: BigNumber;
   }
 >;
-
-export type DGiftCardBalance = {
-  coinNativeAmount: BigNumber;
-  Cw20CoinVerified_amount: BigNumber[];
-  Cw20CoinVerified_addr: string[];
-};
 
 export type DIndexFundConfig = OverrideProperties<
   IndexFundConfig,
@@ -165,4 +176,11 @@ export function toEndowStatusText(
     default:
       return "inactive";
   }
+}
+
+export function toBalMap(d: DGenericBalance): GenericBalMap {
+  const erc20s = d.address.reduce((prev, curr, i) => {
+    return { ...prev, [curr.toLowerCase()]: d.Cw20CoinVerified_amount[i] };
+  }, {});
+  return { ...erc20s, native: d.coinNativeAmount.toString() };
 }

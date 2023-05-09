@@ -91,20 +91,6 @@ type SplitDetails = {
   defaultSplit: number;
 };
 
-/**
- * 0 - endowment
- * 1 - indexfund
- * 2 - wallet
- * 3 - none
- */
-export type Beneficiary = {
-  data: {
-    id: number; //for index-fund or endowment
-    addr: string; // wallet
-  };
-  enumData: 0 | 1 | 2 | 3;
-};
-
 export interface NewAST extends Tupleable {
   owner: string;
   withdrawBeforeMaturity: true; //not specified in launchpad design

@@ -2,7 +2,7 @@ import {
   EndowmentDetails,
   EndowmentState,
   FundDetails,
-  GenericBalance,
+  GenericBalMap,
   IndexFundConfig,
   RegistrarConfig,
 } from "types/contracts";
@@ -35,7 +35,7 @@ export interface ContractQueries {
   >;
   "index-fund.config": Query<null, IndexFundConfig>;
 
-  "gift-card.balance": Query<Addr, GenericBalance>;
+  "gift-card.balance": Query<Addr, GenericBalMap>;
 
   "erc20.balance": Query<Addr, string>;
 

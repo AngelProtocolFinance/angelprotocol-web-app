@@ -21,7 +21,6 @@ export const placeholders: {
   >]: ReturnType<ContractQueries[K]["transform"]>;
 } = {
   "gift-card.balance": {
-    cw20: [],
-    native: [],
+    native: "0",
   },
 };
