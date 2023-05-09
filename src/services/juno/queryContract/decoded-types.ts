@@ -25,13 +25,6 @@ enum EndowmentTypeEnum {
   None,
 }
 
-enum BeneficiaryEnum {
-  EndowmentId,
-  IndexFund,
-  Wallet,
-  None,
-}
-
 type DRebalanceDetails = OverrideProperties<
   RebalanceDetails,
   {
