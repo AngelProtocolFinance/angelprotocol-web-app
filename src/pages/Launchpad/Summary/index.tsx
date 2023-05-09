@@ -58,10 +58,7 @@ export default function Summary() {
       <Fees fees={fees} title="Fees" step={6} disabled={false} />
       <Message {...completed} />
       <div className="grid grid-cols-2 sm:flex gap-2 border-t border-prim pt-8">
-        <Link
-          to={`../${steps[7].path}`}
-          className="text-sm px-8 btn-outline-filled"
-        >
+        <Link to={`../${steps[7]}`} className="text-sm px-8 btn-outline-filled">
           Back
         </Link>
         {wallet ? (
@@ -73,7 +70,7 @@ export default function Summary() {
             Create my AST
           </button>
         ) : (
-          <Link to={`../${steps[7].path}`} className="text-sm px-8 btn-orange">
+          <Link to={`../${steps[7]}`} className="text-sm px-8 btn-orange">
             Connect Wallet
           </Link>
         )}
