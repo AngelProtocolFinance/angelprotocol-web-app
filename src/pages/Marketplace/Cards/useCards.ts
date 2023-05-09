@@ -27,17 +27,21 @@ export default function useCards() {
   const { activities, headquarters } = region;
   const hqCountries = useMemo(
     () =>
-      Object.entries(headquarters)
-        .flatMap(([, countries]) => (countries ? countries : []))
-        .join(","),
+      encodeURI(
+        Object.entries(headquarters)
+          .flatMap(([, countries]) => (countries ? countries : []))
+          .join(",")
+      ),
     [headquarters]
   );
 
   const activityCountries = useMemo(
     () =>
-      Object.entries(activities)
-        .flatMap(([, countries]) => (countries ? countries : []))
-        .join(","),
+      encodeURI(
+        Object.entries(activities)
+          .flatMap(([, countries]) => (countries ? countries : []))
+          .join(",")
+      ),
     [activities]
   );
   const designations = endow_designation.join(",");
