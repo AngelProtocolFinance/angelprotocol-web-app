@@ -89,8 +89,7 @@ export async function fetchBalances(
           ...chain.native_currency,
           type: "evm-native-gift",
           logo: giftIcon,
-          token_id: chain.native_currency.token_id + "-gift",
-          balance: 10,
+          balance: condenseToNum(native, chain.native_currency.decimals),
         });
       }
       for (const t of chain.tokens) {
@@ -99,7 +98,6 @@ export async function fetchBalances(
             ...t,
             type: "erc20-gift",
             logo: giftIcon,
-            token_id: t.token_id + "-gift",
             balance: condenseToNum(erc20s[t.token_id], t.decimals),
           });
         }
