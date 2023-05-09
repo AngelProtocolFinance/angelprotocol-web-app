@@ -10,6 +10,7 @@ import { createTx } from "contracts/createTx/createTx";
 import { logger, scale, scaleToStr } from "helpers";
 import { estimateTx } from "helpers/tx";
 import { ap_wallets } from "constants/ap_wallets";
+import { ADDRESS_ZERO } from "constants/evm";
 
 export async function estimateDonation({
   recipient,
@@ -96,7 +97,7 @@ export async function estimateDonation({
             const asset: Asset = {
               info: isNative ? 1 : 0,
               amount: scaledAmount,
-              addr: isNative ? "" : token.token_id,
+              addr: isNative ? ADDRESS_ZERO : token.token_id,
               name: "",
             };
             return createTx(wallet.address, "gift-card.spend", {

@@ -74,7 +74,7 @@ export type DEndowment = OverrideProperties<
 export type DGenericBalance = {
   coinNativeAmount: BigNumber;
   Cw20CoinVerified_amount: BigNumber[];
-  address: string[];
+  Cw20CoinVerified_addr: string[];
 };
 
 type DBeneficiaryData = OverrideProperties<
@@ -172,8 +172,9 @@ export function toEndowStatusText(
 }
 
 export function toBalMap(d: DGenericBalance): GenericBalMap {
-  const erc20s = d.address.reduce((prev, curr, i) => {
+  const erc20s = d.Cw20CoinVerified_addr.reduce((prev, curr, i) => {
     return { ...prev, [curr.toLowerCase()]: d.Cw20CoinVerified_amount[i] };
   }, {});
+
   return { ...erc20s, native: d.coinNativeAmount.toString() };
 }

@@ -63,7 +63,6 @@ export async function fetchBalances(
         params: [address, "latest"],
       }),
       queryContract("gift-card.balance", { addr: address }),
-
       ...tokens.alts.map((t) =>
         queryContract("erc20.balance", {
           erc20: t.token_id,
@@ -85,21 +84,11 @@ export async function fetchBalances(
     if (gift.status === "fulfilled") {
       const { native, ...erc20s } = gift.value;
       if (native !== "0") {
-        gifts.push({
-          ...chain.native_currency,
-          type: "evm-native-gift",
-          logo: giftIcon,
-          balance: condenseToNum(native, chain.native_currency.decimals),
-        });
+        gifts.push(toGift(chain.native_currency, native));
       }
       for (const t of chain.tokens) {
         if (t.token_id in erc20s) {
-          gifts.push({
-            ...t,
-            type: "erc20-gift",
-            logo: giftIcon,
-            balance: condenseToNum(erc20s[t.token_id], t.decimals),
-          });
+          gifts.push(toGift(t, erc20s[t.token_id]));
         }
       }
     }
@@ -119,6 +108,18 @@ export async function fetchBalances(
       ...gifts,
     ];
   }
+}
+
+function toGift(token: Token, bal: string): TokenWithBalance {
+  const t = token.type;
+  return {
+    ...token,
+    balance: condenseToNum(bal, token.decimals),
+    type:
+      t === "erc20" ? "erc20-gift" : t === "evm-native" ? "evm-native-gift" : t,
+    logo: giftIcon,
+    min_donation_amnt: 0,
+  };
 }
 
 function segragate(tokens: Token[]): { [key in TokenType]: Token[] } {

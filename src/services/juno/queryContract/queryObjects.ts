@@ -165,7 +165,6 @@ export const queryObjects: {
         "queryBalance",
         result
       )[0];
-
       return toBalMap(d);
     },
     "migrated",

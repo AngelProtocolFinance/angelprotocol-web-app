@@ -5,7 +5,7 @@ import { WalletState } from "contexts/WalletContext";
 import { SubmitStep } from "slices/gift";
 import { createTx } from "contracts/createTx/createTx";
 import { giftCard } from "contracts/evm/gift-card";
-import { logger, scaleToStr } from "helpers";
+import { logger, scale } from "helpers";
 import { estimateTx as estimateGas } from "helpers/tx";
 import { ADDRESS_ZERO } from "constants/evm";
 
@@ -17,7 +17,7 @@ export async function estimateTx({
 }): Promise<Estimate | null> {
   try {
     // const gcContract = new GiftCard(wallet);
-    const scaled = scaleToStr(token.amount, token.decimals);
+    const scaled = scale(token.amount, token.decimals).toHex();
     const erc20: Asset = {
       info: 0,
       amount: scaled,
@@ -28,10 +28,15 @@ export async function estimateTx({
     const to = recipient || ADDRESS_ZERO;
     const tx =
       token.type === "evm-native"
-        ? createTx(wallet.address, "gift-card.deposit-native", {
-            from: wallet.address,
-            to,
-          })
+        ? createTx(
+            wallet.address,
+            "gift-card.deposit-native",
+            {
+              from: wallet.address,
+              to,
+            },
+            scaled
+          )
         : createTx(wallet.address, "gift-card.deposit-erc20", {
             from: wallet.address,
             to,

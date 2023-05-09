@@ -16,7 +16,7 @@ export type SimulSendNativeTx = Pick<
 export type SimulContractTx = Pick<
   EVMTx & { data: string },
   "from" | "to" | "data"
->;
+> & { value?: string };
 
 export type SimulTx = SimulContractTx | SimulSendNativeTx;
 
