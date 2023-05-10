@@ -1,13 +1,12 @@
 import { EstimateStatus } from "./types";
 import { Estimate } from "types/tx";
-import { useContractQuery } from "services/juno";
 import { WithWallet } from "contexts/WalletContext";
 import { useSetter } from "store/accessors";
-import { SubmitStep } from "slices/gift";
+import { SubmitStep, setDetails } from "slices/gift";
 import { purchase } from "slices/gift/purchase";
 import { createTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
-import { scale } from "helpers";
+import { scaleToStr } from "helpers";
 import { contracts } from "constants/contracts";
 
 type Props = {
@@ -16,19 +15,9 @@ type Props = {
 
 export default function CompleteBtn({ estimate, ...props }: Props) {
   const { details, wallet } = props;
-  const { token_id, type, amount, decimals, symbol } = details.token;
+  const { token_id, amount, decimals, symbol } = details.token;
   const gc = contracts["gift-card"];
   const sendTx = useTxSender();
-
-  const { data: allowance = "0", isLoading } = useContractQuery(
-    "erc20.allowance",
-    {
-      erc20: token_id,
-      owner: wallet.address,
-      spender: gc,
-    },
-    type !== "erc20"
-  );
 
   const dispatch = useSetter();
   function submit({ tx }: Estimate) {
@@ -41,24 +30,20 @@ export default function CompleteBtn({ estimate, ...props }: Props) {
       spender,
       amount,
     });
-    await sendTx({ content: { type: "evm", val: tx }, isAuthorized: true });
+    await sendTx({
+      content: { type: "evm", val: tx },
+      isAuthorized: true,
+    });
+    //re-set details to render summary
+    dispatch(setDetails(details));
   }
 
-  if (type === "erc20" && isLoading) {
-    return (
-      <button className="btn-orange btn-gift" disabled={true}>
-        Checking allowance
-      </button>
-    );
-  }
-
-  const scaled = scale(amount, decimals);
-  if (type === "erc20" && scaled.gt(allowance)) {
+  if (estimate === "for-approval") {
     return (
       <button
         className="btn-orange btn-gift"
         type="button"
-        onClick={() => approve(token_id, scaled.toString(), gc)}
+        onClick={() => approve(token_id, scaleToStr(amount, decimals), gc)}
       >
         Approve {symbol}
       </button>

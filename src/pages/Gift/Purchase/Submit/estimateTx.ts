@@ -1,12 +1,14 @@
 import type { BigNumber } from "@ethersproject/bignumber";
 import { Asset } from "types/contracts";
 import { Estimate } from "types/tx";
+import { queryContract } from "services/juno/queryContract";
 import { WalletState } from "contexts/WalletContext";
 import { SubmitStep } from "slices/gift";
 import { createTx } from "contracts/createTx/createTx";
 import { giftCard } from "contracts/evm/gift-card";
 import { logger, scale } from "helpers";
 import { estimateTx as estimateGas } from "helpers/tx";
+import { contracts } from "constants/contracts";
 import { ADDRESS_ZERO } from "constants/evm";
 
 export async function estimateTx({
@@ -14,13 +16,24 @@ export async function estimateTx({
   wallet,
 }: SubmitStep & {
   wallet: WalletState;
-}): Promise<Estimate | null> {
+}): Promise<Estimate | null | "for-approval"> {
   try {
-    // const gcContract = new GiftCard(wallet);
-    const scaled = scale(token.amount, token.decimals).toHex();
+    const scaled = scale(token.amount, token.decimals);
+
+    if (token.type === "erc20") {
+      const allowance = await queryContract("erc20.allowance", {
+        erc20: token.token_id,
+        owner: wallet.address,
+        spender: contracts["gift-card"],
+      });
+      if (scaled.gt(allowance)) {
+        return "for-approval";
+      }
+    }
+
     const erc20: Asset = {
       info: 0,
-      amount: scaled,
+      amount: scaled.toString(),
       addr: token.token_id,
       name: "",
     };
@@ -35,7 +48,7 @@ export async function estimateTx({
               from: wallet.address,
               to,
             },
-            scaled
+            scaled.toHex()
           )
         : createTx(wallet.address, "gift-card.deposit-erc20", {
             from: wallet.address,

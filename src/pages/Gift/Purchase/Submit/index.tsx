@@ -109,6 +109,9 @@ function TxTotal({
           </LoadingStatus>
         </>
       );
+    case "for-approval":
+      return <></>;
+
     default:
       const { fee } = estimate;
       const total =
