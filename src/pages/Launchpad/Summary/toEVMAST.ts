@@ -31,15 +31,7 @@ export default function toEVMAST(
     image: "",
     cw4_members: isEmpty(management.members) ? [creator] : management.members, //in launchpad design, weight is specified for each member
     kycDonorsOnly: false, //not specified in launchpad design
-    cw3Threshold: {
-      enumData: 1,
-      data: {
-        weight: 0,
-        percentage: +management.proposal.threshold,
-        threshold: 0,
-        quorum: 0,
-      },
-    },
+    threshold: +management.proposal.threshold,
     cw3MaxVotingPeriod: {
       enumData: 1,
       data: {
