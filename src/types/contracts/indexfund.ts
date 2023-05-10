@@ -27,3 +27,20 @@ export type NewFund = {
   expiryTime: string; // uint256
   expiryHeight: string; // uint256
 };
+
+export type IndexFundConfigUpdate = {
+  fundRotation: number;
+  fundMemberLimit: number;
+  fundingGoal: number;
+};
+
+export type AllianceListUpdate = {
+  address: string;
+  action: "add" | "remove";
+};
+
+export type FundMemberUpdate = {
+  fundId: number;
+  add: number[];
+  remove: number[];
+};
