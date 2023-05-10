@@ -10,6 +10,7 @@
 import { Token } from "types/aws";
 import {
   AllianceListUpdate,
+  EndowmentStatusText,
   FundDetails,
   FundMemberUpdate,
   IndexFundConfigUpdate,
@@ -27,11 +28,16 @@ type Address = { address: string };
 //   "accounts.deposit-erc20": (args) =>
 /**@@ Not Implemented */
 //   "accounts.withdraw": (args) =>
-export type Withdraw = {
+export type AWithdraw = {
   beneficiary: string;
   tokens: (Pick<Token, "symbol" | "logo"> & { amount: number })[];
 };
 //   "accounts.update-status": (args) => "",
+export type AStatus = {
+  from: EndowmentStatusText;
+  to: EndowmentStatusText;
+  beneficiary: string; //endow id: .. | index fund: .. |
+};
 //   "accounts.invest": () => "", //future
 //   "accounts.redeem": () => "", //future
 
