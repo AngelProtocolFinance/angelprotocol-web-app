@@ -79,9 +79,11 @@ export type IFFundMembers = FundMemberUpdate;
 export type IFAllianceList = AllianceListUpdate;
 
 //   "locked-withdraw.propose": (args) =>
-
+// @@ AWithdraw
 //   "charity-application.approve": ({ id }) =>
+/**@@ Not Implemented */
 //   "charity-application.reject": ({ id }) =>
+/**@@ Not Implemented */
 
 //   "registrar.update-owner": ({ newOwner }) =>
 export type RegOwner = { curr: string; new: string };
