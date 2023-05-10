@@ -1,4 +1,3 @@
-import { Token } from "types/aws";
 import {
   EndowmentDetails,
   EndowmentState,
