@@ -28,3 +28,8 @@ export type TransferMeta = {
   to: string;
   token: MetaToken;
 };
+
+export type MultisigMemberMeta = {
+  address: string;
+  action: "add" | "remove";
+};

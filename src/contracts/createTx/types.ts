@@ -20,6 +20,7 @@ import { Contract } from "types/lists";
 import { DiffSet } from "types/utils";
 import {
   AccountStatusMeta,
+  MultisigMemberMeta,
   OwnerMeta,
   ThresholdMeta,
   TransferMeta,
@@ -38,7 +39,7 @@ type Tx<T extends Tupleable, M> = {
   args: T;
 };
 
-type Addr = { address: string };
+export type Addr = { address: string };
 export type ID = { id: number };
 
 type Txs = {
@@ -85,8 +86,8 @@ type Txs = {
 
   // //// MULTISIG ////
   "multisig.submit-transaction": Tx<NewTransaction, never>; //no meta
-  "multisig.add-owner": Tx<Addr, Addr>;
-  "multisig.remove-owner": Tx<Addr, Addr>;
+  "multisig.add-owner": Tx<Addr, MultisigMemberMeta>;
+  "multisig.remove-owner": Tx<Addr, MultisigMemberMeta>;
   "multisig.confirm-tx": Tx<ID, never>; //no meta
   "multisig.revoke-tx": Tx<ID, never>; //no meta
   "multisig.execute-tx": Tx<ID, never>; //no meta

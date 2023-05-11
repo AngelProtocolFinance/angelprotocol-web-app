@@ -1,11 +1,11 @@
 import { TxMeta } from "contracts/createTx/types";
 import DiffTable from "./DiffTable";
-import EndowmentApplication from "./EndowmentApplication";
 import EndowmentStatusUpdate from "./EndowmentStatusUpdate";
 import Fund from "./Fund";
 import FundMemberUpdate from "./FundMemberUpdate";
 import FundToDelete from "./FundToDelete";
 import FundTransfer from "./FundTransfer";
+import MultisigMember from "./MultisigMember";
 import OwnerUpdate from "./OwnerUpdate";
 import ThresholdUpdate from "./ThresholdUpdate";
 import Withdraw from "./Withdraw";
@@ -18,31 +18,30 @@ export default function Preview(props: TxMeta) {
       return <Fund {...props.data} />;
     case "index-fund.remove-fund":
       return <FundToDelete {...props.data} />;
+    case "index-fund.update-members":
+      return <FundMemberUpdate {...props.data} />;
+    case "index-fund.config":
+      return <DiffTable diffSet={props.data} />;
     case "index-fund.update-owner":
     case "registrar.update-owner":
       return <OwnerUpdate {...props.data} />;
-    case "index-fund.update-members":
-      return <FundMemberUpdate {...props.data} />;
 
     /** multisig */
     case "multisig.change-threshold":
       return <ThresholdUpdate {...props.data} />;
+    case "multisig.add-owner":
+    case "multisig.remove-owner":
+      return <MultisigMember {...props.data} />;
 
     /** _account */
     case "accounts.withdraw":
       return <Withdraw {...props.data} />;
-
     case "accounts.update-status":
       return <EndowmentStatusUpdate {...props.data} />;
 
     case "erc20.transfer":
       return <FundTransfer {...props.data} />;
 
-    /** _registrar */
-    case "reg_config_extension":
-      return <DiffTable diffSet={props.data} />;
-    case "reg_owner":
-      return <OwnerUpdate {...props.data} />;
     default:
       return <div className="p-2">no preview</div>;
   }
