@@ -16,9 +16,18 @@ import { Allowance, Transfer } from "types/contracts/evm/erc20";
 import { NewTransaction } from "types/contracts/multisig";
 import { Tupleable } from "types/evm";
 import { Contract } from "types/lists";
+import { DiffSet } from "types/utils";
+import {
+  AccountStatusMeta,
+  OwnerMeta,
+  ThresholdMeta,
+  TransferMeta,
+  WithdrawMeta,
+} from "./meta";
 
-type Tx<T extends Tupleable, M = any> = {
+type Tx<T extends Tupleable, M> = {
   tags: string[]; //tags to invalidate.
+  meta: M;
   /**
    * or create static map
    * [event_topic]: query_tag[]
@@ -33,67 +42,88 @@ type ID = { id: number };
 
 type Txs = {
   // //// ACCOUNTS ////
-  "accounts.create-endowment": Tx<NewAST, null>; //no meta
-  "accounts.update-controller": Tx<SettingsControllerUpdate, null>; //future
-  "accounts.deposit-erc20": Tx<ERC20Deposit>;
-  "accounts.withdraw": Tx<{
-    id: number;
-    type: AccountType;
-    beneficiary: string;
-    addresses: string[];
-    amounts: string[];
-  }>;
-  "accounts.update-status": Tx<{
-    id: number;
-    status: number;
-    beneficiary: Beneficiary;
-  }>;
-  "accounts.invest": Tx<{
-    id: number;
-    account: AccountType;
-    vaults: string[];
-    tokens: string[];
-    amounts: string[]; //uint256
-  }>;
-  "accounts.redeem": Tx<{
-    id: number;
-    account: AccountType;
-    vaults: string[];
-  }>;
+  "accounts.create-endowment": Tx<NewAST, never>; //not multisig tx
+  "accounts.update-controller": Tx<SettingsControllerUpdate, never>; //future
+  "accounts.deposit-erc20": Tx<ERC20Deposit, never>; //not multisig tx
+  "accounts.withdraw": Tx<
+    {
+      id: number;
+      type: AccountType;
+      beneficiary: string;
+      addresses: string[];
+      amounts: string[];
+    },
+    WithdrawMeta
+  >;
+  "accounts.update-status": Tx<
+    {
+      id: number;
+      status: number;
+      beneficiary: Beneficiary;
+    },
+    AccountStatusMeta
+  >;
+  "accounts.invest": Tx<
+    {
+      id: number;
+      account: AccountType;
+      vaults: string[];
+      tokens: string[];
+      amounts: string[]; //uint256
+    },
+    never //future
+  >;
+  "accounts.redeem": Tx<
+    {
+      id: number;
+      account: AccountType;
+      vaults: string[];
+    },
+    never //future
+  >;
 
   // //// MULTISIG ////
-  "multisig.submit-transaction": Tx<NewTransaction>;
-  "multisig.add-owner": Tx<Addr>;
-  "multisig.remove-owner": Tx<Addr>;
-  "multisig.confirm-tx": Tx<ID>;
-  "multisig.revoke-tx": Tx<ID>;
-  "multisig.execute-tx": Tx<ID>;
-  "multisig.change-threshold": Tx<{ threshold: number }>;
+  "multisig.submit-transaction": Tx<NewTransaction, never>; //no meta
+  "multisig.add-owner": Tx<Addr, Addr>;
+  "multisig.remove-owner": Tx<Addr, Addr>;
+  "multisig.confirm-tx": Tx<ID, never>; //no meta
+  "multisig.revoke-tx": Tx<ID, never>; //no meta
+  "multisig.execute-tx": Tx<ID, never>; //no meta
+  "multisig.change-threshold": Tx<{ threshold: number }, ThresholdMeta>;
 
-  "erc20.transfer": Tx<Transfer>;
-  "erc20.approve": Tx<Allowance>;
+  "erc20.transfer": Tx<Transfer, TransferMeta>;
+  "erc20.approve": Tx<Allowance, never>; //not multisig tx
 
   // //// INDEX FUND ////
-  "index-fund.config": Tx<IndexFundConfigUpdate>;
-  "index-fund.update-owner": Tx<{ newOwner: string }>;
-  "index-fund.create-fund": Tx<NewFund>;
-  "index-fund.remove-fund": Tx<ID>;
-  "index-fund.remove-member": Tx<ID>;
-  "index-fund.update-members": Tx<FundMemberUpdate>;
-  "index-fund.update-alliance-list": Tx<AllianceListUpdate>;
+  "index-fund.config": Tx<
+    IndexFundConfigUpdate,
+    DiffSet<IndexFundConfigUpdate>
+  >;
+  "index-fund.update-owner": Tx<{ newOwner: string }, OwnerMeta>;
+  "index-fund.create-fund": Tx<NewFund, NewFund>;
+  "index-fund.remove-fund": Tx<ID, ID>;
+  "index-fund.remove-member": Tx<ID, ID>;
+  "index-fund.update-members": Tx<FundMemberUpdate, FundMemberUpdate>;
+  "index-fund.update-alliance-list": Tx<AllianceListUpdate, AllianceListUpdate>;
 
-  "locked-withdraw.propose": Tx<{
-    id: number;
-    beneficiary: string;
-    addresses: string[];
-    amounts: string[];
-  }>;
+  "locked-withdraw.propose": Tx<
+    {
+      id: number;
+      beneficiary: string;
+      addresses: string[];
+      amounts: string[];
+    },
+    WithdrawMeta
+  >;
 
-  "charity-application.approve": Tx<ID>;
-  "charity-application.reject": Tx<ID>;
+  "charity-application.approve": Tx<ID, never>; //info already in /application page
+  "charity-application.reject": Tx<ID, never>; //info already in /application page
 
-  "registrar.update-owner": Tx<{ newOwner: string }>;
-  "registrar.update-config": Tx<RegistrarConfigPayload>;
+  "registrar.update-owner": Tx<{ newOwner: string }, OwnerMeta>;
+  "registrar.update-config": Tx<
+    RegistrarConfigPayload,
+    DiffSet<RegistrarConfigPayload>
+  >;
 };
 
 export type TxTypes = keyof Txs;
