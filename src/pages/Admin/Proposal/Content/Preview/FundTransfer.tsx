@@ -1,24 +1,22 @@
-import { FundSendMeta } from "pages/Admin/types";
+import { TransferMeta } from "contracts/createTx/meta";
 import { humanize } from "helpers";
 import { symbols } from "constants/tokens";
 import KeyValue from "./common/KeyValue";
 import PreviewContainer from "./common/PreviewContainer";
 
-export default function FundTransfer(props: FundSendMeta["data"]) {
+export default function FundTransfer({ to, token }: TransferMeta) {
   return (
     <PreviewContainer>
       <KeyValue _key="from">
-        <span className="uppercase text-xs font-heading">
-          admin group contract
-        </span>
+        <span className="uppercase text-xs font-heading">multisig wallet</span>
       </KeyValue>
       <KeyValue _key="total amount" _classes="border-t border-prim mt-2">
         <span>
-          {humanize(props.amount, 3)} {symbols[props.denom]}
+          {humanize(token.amount, 3)} {token.symbol}
         </span>
       </KeyValue>
       <KeyValue _key="recipient">
-        <span className="text-sm">{props.recipient}</span>
+        <span className="text-sm">{to}</span>
       </KeyValue>
     </PreviewContainer>
   );

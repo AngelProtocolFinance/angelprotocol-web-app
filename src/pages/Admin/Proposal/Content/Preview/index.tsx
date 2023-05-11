@@ -7,6 +7,7 @@ import FundMemberUpdate from "./FundMemberUpdate";
 import FundToDelete from "./FundToDelete";
 import FundTransfer from "./FundTransfer";
 import OwnerUpdate from "./OwnerUpdate";
+import ThresholdUpdate from "./ThresholdUpdate";
 import Withdraw from "./Withdraw";
 
 export default function Preview(props: TxMeta) {
@@ -23,20 +24,19 @@ export default function Preview(props: TxMeta) {
     case "index-fund.update-members":
       return <FundMemberUpdate {...props.data} />;
 
-    /** _cw3 */
-    case "cw3_config":
-      return <DiffTable diffSet={props.data} />;
-    case "cw3_transfer":
-      return <FundTransfer {...props.data} />;
-    case "cw3_application":
-      return <EndowmentApplication {...props.data} />;
+    /** multisig */
+    case "multisig.change-threshold":
+      return <ThresholdUpdate {...props.data} />;
 
     /** _account */
-    case "acc_withdraw":
+    case "accounts.withdraw":
       return <Withdraw {...props.data} />;
 
-    case "acc_endow_status":
+    case "accounts.update-status":
       return <EndowmentStatusUpdate {...props.data} />;
+
+    case "erc20.transfer":
+      return <FundTransfer {...props.data} />;
 
     /** _registrar */
     case "reg_config_extension":
