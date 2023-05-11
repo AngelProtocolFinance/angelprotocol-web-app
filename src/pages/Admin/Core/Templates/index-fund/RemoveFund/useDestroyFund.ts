@@ -33,7 +33,9 @@ export default function useDestroyFund() {
         children: "Please connect your wallet to continue",
       });
     }
-    const [data, dest] = encodeTx("index-fund.remove-fund", { id: +fv.fundId });
+    const [data, dest, meta] = encodeTx("index-fund.remove-fund", {
+      id: +fv.fundId,
+    });
 
     await sendTx({
       content: {
@@ -45,6 +47,7 @@ export default function useDestroyFund() {
           destination: dest,
           value: "0",
           data,
+          meta: meta.encoded,
         }),
       },
       ...propMeta,

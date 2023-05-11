@@ -53,7 +53,7 @@ export default function useCreateFund() {
     const expiryTime = getValues("expiryTime");
     const split = getValues("splitToLiquid");
 
-    const [data, dest] = encodeTx("index-fund.create-fund", {
+    const [data, dest, meta] = encodeTx("index-fund.create-fund", {
       name: getValues("name"),
       description: getValues("about"),
       members: newFundMembers.map((m) => m.toString()),
@@ -70,6 +70,7 @@ export default function useCreateFund() {
       destination: dest,
       value: "0",
       data,
+      meta: meta.encoded,
     });
 
     await sendTx({

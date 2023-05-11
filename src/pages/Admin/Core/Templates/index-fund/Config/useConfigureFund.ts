@@ -41,7 +41,7 @@ export default function useConfigureFund() {
       return showModal(TxPrompt, { error: "Wallet is not connected" });
     }
 
-    const [configData, dest] = encodeTx("index-fund.config", data);
+    const [configData, dest, meta] = encodeTx("index-fund.config", data);
 
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig,
@@ -50,6 +50,7 @@ export default function useConfigureFund() {
       destination: dest,
       value: "0",
       data: configData,
+      meta: meta.encoded,
     });
 
     await sendTx({

@@ -109,6 +109,7 @@ export default function Proposer({ type, appId, reference }: Props) {
           destination: dest,
           value: "0",
           data,
+          meta: "",
         }),
         log: (logs) => {
           const ev = Multisig.getEvent("Submission");

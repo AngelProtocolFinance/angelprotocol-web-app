@@ -52,7 +52,7 @@ export default function useUpdateFund() {
         throw new Error("Wallet is not connected");
       }
 
-      const [data, dest] = encodeTx("index-fund.update-members", {
+      const [data, dest, meta] = encodeTx("index-fund.update-members", {
         fundId: +fundId,
         add: toAdd.map((a) => +a),
         remove: toRemove.map((r) => +r),
@@ -65,6 +65,7 @@ export default function useUpdateFund() {
         destination: dest,
         value: "0",
         data,
+        meta: meta.encoded,
       });
 
       await sendTx({

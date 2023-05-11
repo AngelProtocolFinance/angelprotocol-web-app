@@ -36,7 +36,7 @@ export default function useUpdateOwner() {
       });
     }
 
-    const [data, dest] = encodeTx("registrar.update-owner", {
+    const [data, dest, meta] = encodeTx("registrar.update-owner", {
       newOwner: rv.new_owner,
     });
 
@@ -50,6 +50,7 @@ export default function useUpdateOwner() {
           destination: dest,
           value: "0",
           data,
+          meta: meta.encoded,
         }),
       },
       ...propMeta,

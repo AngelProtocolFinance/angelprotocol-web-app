@@ -52,7 +52,7 @@ export default function usePropose() {
       });
     }
 
-    const [data, dest] = encodeTx("multisig.change-threshold", {
+    const [data, dest, meta] = encodeTx("multisig.change-threshold", {
       multisig,
       threshold: +threshold,
     });
@@ -64,6 +64,7 @@ export default function usePropose() {
       destination: dest,
       value: "0",
       data,
+      meta: meta.encoded,
     });
 
     await sendTx({

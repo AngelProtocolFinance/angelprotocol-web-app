@@ -46,7 +46,7 @@ export default function useConfigureRegistrar() {
       });
     }
 
-    const [data, dest] = encodeTx("registrar.update-config", {
+    const [data, dest, meta] = encodeTx("registrar.update-config", {
       ...initial,
       ...fv,
     });
@@ -61,6 +61,7 @@ export default function useConfigureRegistrar() {
           destination: dest,
           value: "0",
           data,
+          meta: meta.encoded,
         }),
       },
       ...propMeta,
