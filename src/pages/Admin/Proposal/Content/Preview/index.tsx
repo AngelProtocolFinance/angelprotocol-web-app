@@ -1,4 +1,4 @@
-import { ProposalMeta } from "pages/Admin/types";
+import { TxMeta } from "contracts/createTx/types";
 import DiffTable from "./DiffTable";
 import EndowmentApplication from "./EndowmentApplication";
 import EndowmentStatusUpdate from "./EndowmentStatusUpdate";
@@ -7,12 +7,12 @@ import FundTransfer from "./FundTransfer";
 import OwnerUpdate from "./OwnerUpdate";
 import Withdraw from "./Withdraw";
 
-export default function Preview(props: ProposalMeta) {
-  switch (props.type) {
+export default function Preview(props: TxMeta) {
+  switch (props.id) {
     /**_indexfund */
-    case "if_create":
-      return <Fund {...props.data} />;
-    case "if_remove":
+    case "index-fund.create-fund":
+      return props.data ? <Fund {...props.data} /> : <></>;
+    case "index-fund.remove-fund":
       return <Fund {...props.data} />;
 
     case "if_owner":
