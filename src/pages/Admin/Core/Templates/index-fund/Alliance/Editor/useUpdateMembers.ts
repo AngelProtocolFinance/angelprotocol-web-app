@@ -18,7 +18,7 @@ export default function useUpdateMembers(action: FormProps["action"]) {
       return showModal(TxPrompt, { error: "Wallet is not connected" });
     }
 
-    const [data, dest] = encodeTx("index-fund.update-alliance-list", {
+    const [data, dest, meta] = encodeTx("index-fund.update-alliance-list", {
       address: fv.address,
       action,
     });
@@ -30,6 +30,7 @@ export default function useUpdateMembers(action: FormProps["action"]) {
       destination: dest,
       value: "0",
       data,
+      meta: meta.encoded,
     });
 
     await sendTx({

@@ -73,7 +73,7 @@ export default function useSubmit() {
       if (userDelegated) {
         tx = createTx(wallet.address, "accounts.update-controller", args);
       } else {
-        const [data, dest] = encodeTx("accounts.update-controller", args);
+        const [data, dest, meta] = encodeTx("accounts.update-controller", args);
         tx = createTx(wallet.address, "multisig.submit-transaction", {
           multisig,
           title: `Update permission settings`,
@@ -81,6 +81,7 @@ export default function useSubmit() {
           destination: dest,
           value: "0",
           data,
+          meta: meta.encoded,
         });
       }
 

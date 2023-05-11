@@ -50,7 +50,7 @@ export function constructTx(
   const isLockedCharity =
     endow.endow_type === "charity" && wv.type === "locked";
 
-  const [data, dest] = isLockedCharity
+  const [data, dest, meta] = isLockedCharity
     ? encodeTx("locked-withdraw.propose", {
         id,
         beneficiary,
@@ -88,6 +88,7 @@ export function constructTx(
         destination: dest,
         value: "0",
         data,
+        meta: meta.encoded,
       });
 
   return { tx, isDirect, isPolygon };

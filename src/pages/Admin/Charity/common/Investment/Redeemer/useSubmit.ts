@@ -18,7 +18,7 @@ export default function useSubmit(vault: string, type: AccountType) {
       return showModal(TxPrompt, { error: "Wallet is not connected" });
     }
 
-    const [data, dest] = encodeTx("accounts.redeem", {
+    const [data, dest, meta] = encodeTx("accounts.redeem", {
       id,
       account: type === "locked" ? 0 : 1,
       vaults: [vault],
@@ -31,6 +31,7 @@ export default function useSubmit(vault: string, type: AccountType) {
       destination: dest,
       value: "0",
       data,
+      meta: meta.encoded,
     });
 
     await sendTx({

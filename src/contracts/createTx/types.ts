@@ -137,6 +137,7 @@ export type TxOptions<T extends TxTypes> = T extends `${infer C}.${string}`
     : { [key in C]: string } & Txs[T]["args"]
   : Empty;
 
+export type Metadata<T extends TxTypes> = Txs[T]["meta"];
 export type TxMeta = ValueOf<{
-  [K in keyof Txs]: { type: K; data?: Txs[K]["meta"] };
+  [K in keyof Txs]: { id: K; data?: Txs[K]["meta"] };
 }>;

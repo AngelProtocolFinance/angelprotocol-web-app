@@ -63,7 +63,7 @@ export default function useUpdateStatus() {
       }
     })();
 
-    const [data, dest] = encodeTx("accounts.update-status", {
+    const [data, dest, meta] = encodeTx("accounts.update-status", {
       id: +fv.id,
       status: toNum(status.value),
       beneficiary,
@@ -76,6 +76,7 @@ export default function useUpdateStatus() {
       destination: dest,
       value: "0",
       data,
+      meta: meta.encoded,
     });
 
     await sendTx({
