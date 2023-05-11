@@ -34,13 +34,17 @@ export default function Preview(props: TxMeta) {
       return <MultisigMember {...props.data} />;
 
     /** _account */
-    case "accounts.withdraw":
-      return <Withdraw {...props.data} />;
     case "accounts.update-status":
       return <EndowmentStatusUpdate {...props.data} />;
+    case "accounts.withdraw":
+    case "locked-withdraw.propose":
+      return <Withdraw {...props.data} />;
 
     case "erc20.transfer":
       return <FundTransfer {...props.data} />;
+
+    case "registrar.update-config":
+      return <DiffTable diffSet={props.data} />;
 
     default:
       return <div className="p-2">no preview</div>;
