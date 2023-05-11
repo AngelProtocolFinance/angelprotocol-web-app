@@ -1,3 +1,4 @@
+import { ValueOf } from "type-fest";
 import {
   AllianceListUpdate,
   FundMemberUpdate,
@@ -135,3 +136,7 @@ export type TxOptions<T extends TxTypes> = T extends `${infer C}.${string}`
     ? Txs[T]["args"]
     : { [key in C]: string } & Txs[T]["args"]
   : Empty;
+
+export type TxMeta = ValueOf<{
+  [K in keyof Txs]: { type: K; data?: Txs[K]["meta"] };
+}>;
