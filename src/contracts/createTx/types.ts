@@ -39,7 +39,7 @@ type Tx<T extends Tupleable, M> = {
 };
 
 type Addr = { address: string };
-type ID = { id: number };
+export type ID = { id: number };
 
 type Txs = {
   // //// ACCOUNTS ////
