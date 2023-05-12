@@ -23,10 +23,7 @@ export default function Details(props: WalletState) {
     isFetching,
     isError,
     error,
-  } = useWalletProfileQuery(props.address, {
-    refetchOnFocus: true,
-    refetchOnMountOrArgChange: true,
-  });
+  } = useWalletProfileQuery(props.address);
   useEffect(() => {
     if (!isLoading && !isFetching && isError) {
       logger.error(error);

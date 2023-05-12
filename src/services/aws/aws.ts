@@ -137,6 +137,8 @@ export const aws = createApi({
       },
     }),
     saveAST: builder.mutation<unknown, NewAST>({
+      invalidatesTags: (result, error) =>
+        error ? [] : ["endowments", "profile", "walletProfile"],
       query: (payload) => {
         const token = createAuthToken("app-user");
         return {
