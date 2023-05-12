@@ -1,4 +1,4 @@
-import { ID, TxMeta } from "contracts/createTx/types";
+import { ID } from "contracts/createTx/types";
 import KeyValue from "./common/KeyValue";
 import PreviewContainer from "./common/PreviewContainer";
 

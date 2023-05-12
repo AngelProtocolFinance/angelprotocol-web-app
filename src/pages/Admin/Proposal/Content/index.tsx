@@ -32,11 +32,9 @@ export default function Content(props: Transaction) {
         </button>
       </DetailLabel>
       {dataShown && (
-        <div className="grid rounded text-gray-d1 dark:text-gray border border-prim bg-orange-l6 dark:bg-blue-d7 p-3 mb-6 text-sm">
-          <code className="font-mono whitespace-pre overflow-x-auto">
-            {props.data}
-          </code>
-        </div>
+        <code className="grid rounded text-gray-d1 dark:text-gray border border-prim bg-orange-l6 dark:bg-blue-d7 p-3 mb-6 text-sm break-all">
+          {props.data}
+        </code>
       )}
     </>
   );
