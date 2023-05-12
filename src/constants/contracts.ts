@@ -24,7 +24,7 @@ const testnet:Contracts = {
   accounts:              "0xf725Ff6235D53dA06Acb4a70AA33206a1447D550",
   "locked-withdraw":     "0x2d618cDa8cbd2FFc742DD9E8BBEa774B30d06665",
   "charity-application": "0x14A7bb3A01D9011D39FC0ECb5d09C84f7F596e4B",
-  "gift-card":           "juno17pghl3qreyqnjlq6hun5ymshl0dkfeelcy738dkgk602lzmgcvaq2e4xav",
+  "gift-card":           "0x47e49a7700c9D79412bb47385eD349106d4941F9",
 }
 
 export const contracts: Contracts = NETWORK === "TESTNET" ? testnet : mainnet;

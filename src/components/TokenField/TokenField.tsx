@@ -9,7 +9,7 @@ import {
 } from "react-hook-form";
 import { OnSetAmount, Props } from "./types";
 import { TokenWithAmount } from "types/slices";
-import Balance from "./Balance";
+import { humanize } from "helpers";
 import Steps from "./Steps";
 import TokenSelector from "./TokenSelector";
 
@@ -63,11 +63,13 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
           {label}
         </label>
         {withBalance && token.type !== "fiat" && (
-          <Balance
-            token={token}
-            onSetAmount={onSetAmount}
-            isGiftEnabled={!!withGiftcard}
-          />
+          <button
+            type="button"
+            onClick={() => onSetAmount(token.balance)}
+            className="text-right hover:text-blue text-xs flex"
+          >
+            BAL: {humanize(+token.balance, 3)} {token.symbol}
+          </button>
         )}
       </div>
 
@@ -86,7 +88,15 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
           placeholder="0.0000"
           className="text-sm py-3 dark:text-gray"
         />
-        <TokenSelector tokens={tokens} token={token} onChange={onChange} />
+        <TokenSelector
+          tokens={tokens.filter(
+            (t) =>
+              withGiftcard ||
+              !(t.type === "evm-native-gift" || t.type === "erc20-gift")
+          )}
+          token={token}
+          onChange={onChange}
+        />
       </div>
       <div className="empty:mb-2">
         <ErrorMessage

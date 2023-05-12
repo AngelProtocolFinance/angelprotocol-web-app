@@ -59,10 +59,10 @@ function CurrStep(props: GiftState) {
       );
     }
 
-    if (wallet.chain.chain_id !== chainIds.juno) {
+    if (wallet.chain.chain_id !== chainIds.polygon) {
       return (
         <ErrorStatus classes="justify-self-center">
-          Kindly switch to Juno {IS_TEST ? "Testnet" : "Mainnet"}
+          Kindly switch to Polygon {IS_TEST ? "Testnet" : "Mainnet"}
         </ErrorStatus>
       );
     }

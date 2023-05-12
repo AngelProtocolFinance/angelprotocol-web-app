@@ -1,18 +1,16 @@
 import { PropsWithChildren, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { EstimateStatus } from "./types";
 import { TokenWithAmount } from "types/slices";
-import { Estimate } from "types/tx";
 import { WithWallet } from "contexts/WalletContext";
 import Image from "components/Image";
 import { ErrorStatus, LoadingStatus } from "components/Status";
 import { useSetter } from "store/accessors";
 import { SubmitStep, setStep } from "slices/gift";
-import { purchase } from "slices/gift/purchase";
 import { humanize } from "helpers";
 import { appRoutes } from "constants/routes";
+import CompleteBtn from "./CompleteBtn";
 import { estimateTx } from "./estimateTx";
-
-type EstimateStatus = Estimate | "loading" | "error";
 
 export default function Submit(props: WithWallet<SubmitStep>) {
   const dispatch = useSetter();
@@ -30,14 +28,8 @@ export default function Submit(props: WithWallet<SubmitStep>) {
     dispatch(setStep(props.step - 1));
   }
 
-  function submit({ tx }: Estimate) {
-    dispatch(purchase({ wallet: props.wallet, tx, details: props.details }));
-  }
-
   const { token } = props.details;
   const { chain } = props.wallet;
-
-  const isNotEstimated = estimate === "error" || estimate === "loading";
 
   return (
     <div className="grid content-start">
@@ -65,20 +57,7 @@ export default function Submit(props: WithWallet<SubmitStep>) {
         >
           Back
         </button>
-        <button
-          className="btn-orange btn-gift"
-          onClick={
-            isNotEstimated
-              ? undefined
-              : () => {
-                  submit(estimate);
-                }
-          }
-          disabled={isNotEstimated}
-          type="submit"
-        >
-          Complete
-        </button>
+        <CompleteBtn {...props} estimate={estimate} />
         <Link
           to={appRoutes.marketplace}
           className="btn-gift btn-outline-filled col-span-full"
@@ -130,6 +109,9 @@ function TxTotal({
           </LoadingStatus>
         </>
       );
+    case "for-approval":
+      return <></>;
+
     default:
       const { fee } = estimate;
       const total =

@@ -2,9 +2,20 @@ import { EncodeObject } from "@cosmjs/proto-signing";
 import { StdFee } from "@cosmjs/stargate";
 import { CreateTxOptions, Msg } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
-import { Chain } from "./aws";
+import { OverrideProperties } from "type-fest";
+import { FetchedChain, Token, TokenType } from "./aws";
 import { EVMTx, LogProcessor, SimulTx } from "./evm";
 import { TagPayload } from "./third-party/redux";
+
+export type TokenWithBalance = OverrideProperties<
+  Token,
+  { type: TokenType | "erc20-gift" | "evm-native-gift" }
+> & { balance: number };
+
+export type Chain = Omit<FetchedChain, "native_currency" | "tokens"> & {
+  tokens: TokenWithBalance[];
+  native_currency: TokenWithBalance;
+};
 
 // //////////// SEND TX ////////////
 export type CosmosTx = {

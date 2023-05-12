@@ -6,27 +6,28 @@ import { tokenConstraint } from "./number";
 type Key = keyof TWA;
 type Min = TWA["min_donation_amnt"];
 type Bal = TWA["balance"];
-type Gift = TWA["gift"];
 const minKey: Key = "min_donation_amnt";
 const balKey: Key = "balance";
-const giftKey: Key = "gift";
+const typeKey: Key = "type";
 
 export const tokenShape = (withMin = true): SchemaShape<TWA> => ({
   amount: Yup.lazy((amount: string) =>
     amount === ""
       ? Yup.string().required("required")
-      : tokenConstraint.when([minKey, balKey, giftKey], (...args: any[]) => {
-          const [minAmount, balance, gift, schema] = args as [
+      : tokenConstraint.when([minKey, balKey, typeKey], (...args: any[]) => {
+          const [minAmount, balance, type, schema] = args as [
             Min,
             Bal,
-            Gift,
+            TWA["type"],
             any
           ];
-          return withMin && !!minAmount
+          return withMin &&
+            !!minAmount &&
+            !(type === "erc20-gift" || type === "evm-native-gift")
             ? schema
                 .min(minAmount || 0, `amount must be at least ${minAmount}`)
-                .max(balance + (gift || 0), "not enough balance")
-            : schema.max(balance + (gift || 0), "not enough balance");
+                .max(balance, "not enough balance")
+            : schema.max(balance, "not enough balance");
         })
   ),
 });

@@ -7,7 +7,6 @@ import { Contract } from "types/lists";
 import { contracts } from "constants/contracts";
 import { EIPMethods } from "constants/evm";
 import { POLYGON_RPC } from "constants/urls";
-import { placeholders } from "./placeholders";
 import { queryObjects } from "./queryObjects";
 
 type Result = { result: string } | { error: { code: number; message: string } };
@@ -23,10 +22,8 @@ export async function queryContract<T extends QT>(
   const contract =
     contract_key in contracts ? contracts[contract_key as Contract] : c;
 
-  const [query, transform, state] = queryObjects[type];
+  const [query, transform] = queryObjects[type];
   const data = typeof query === "function" ? query(args) : query;
-
-  if (state === "placeholder") return placeholders[type] as any;
 
   const result = await fetch(POLYGON_RPC, {
     method: "POST",
