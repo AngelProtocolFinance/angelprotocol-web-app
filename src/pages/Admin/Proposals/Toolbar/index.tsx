@@ -22,7 +22,7 @@ export default function Toolbar({ classes = "" }: { classes?: string }) {
       </p>
 
       <Link
-        to={`../${adminRoutes.templates}/${templates.cw4_members}`}
+        to={`../${adminRoutes.templates}/${templates["multisig.owners"]}`}
         className="px-3 py-2 text-white bg-blue hover:bg-blue-l1 text-sm uppercase text-center rounded"
       >
         + Create a proposal

@@ -70,7 +70,7 @@ export default function usePropose() {
     await sendTx({
       content: { type: "evm", val: tx },
       ...propMeta,
-      tagPayloads: getTagPayloads(propMeta.willExecute && "cw3_config"),
+      tagPayloads: getTagPayloads(propMeta.willExecute && meta.id),
     });
   }
 

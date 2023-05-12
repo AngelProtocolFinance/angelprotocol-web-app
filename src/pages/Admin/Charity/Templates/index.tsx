@@ -14,11 +14,14 @@ export default function Templates() {
       <Nav />
       <Routes>
         {/**_cw3 */}
-        <Route path={routes.cw3_config} element={<Config />} />
-        <Route path={routes.cw3_transfer} element={<FundSender />} />
+        <Route path={routes["multisig.config"]} element={<Config />} />
+        <Route
+          path={routes["multisig.fund-transfer"]}
+          element={<FundSender />}
+        />
 
         {/**_cw4 */}
-        <Route path={routes.cw4_members} element={<Members />} />
+        <Route path={routes["multisig.owners"]} element={<Members />} />
       </Routes>
     </div>
   );

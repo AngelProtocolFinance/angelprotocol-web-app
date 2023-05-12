@@ -86,7 +86,9 @@ export default function useUpdateStatus() {
     await sendTx({
       content: { type: "evm", val: tx },
       ...propMeta,
-      tagPayloads: getTagPayloads(propMeta.willExecute && "acc_endow_status"),
+      tagPayloads: getTagPayloads(
+        propMeta.willExecute && "accounts.update-status"
+      ),
     });
   }
 

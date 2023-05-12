@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { ProposalMeta } from "pages/Admin/types";
+import { TxMeta } from "contracts/createTx/types";
 import { ProposalDetails } from "services/types";
 import { LogProcessor } from "types/evm";
 import { TagPayload } from "types/third-party/redux";
@@ -128,6 +128,6 @@ function extractTagFromMeta(
   if (!proposalMeta) {
     return [invalidateJunoTags(defaultProposalTags)];
   }
-  const parsedProposalMeta: ProposalMeta = JSON.parse(proposalMeta);
-  return getTagPayloads(parsedProposalMeta.type);
+  const parsedProposalMeta: TxMeta = JSON.parse(window.atob(proposalMeta));
+  return getTagPayloads(parsedProposalMeta.id);
 }

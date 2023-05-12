@@ -73,7 +73,7 @@ export default function useTransferFunds() {
     await sendTx({
       content: { type: "evm", val: tx },
       ...propMeta,
-      tagPayloads: getTagPayloads(propMeta.willExecute && "cw3_transfer"),
+      tagPayloads: getTagPayloads(propMeta.willExecute && meta.id),
     });
   }
 

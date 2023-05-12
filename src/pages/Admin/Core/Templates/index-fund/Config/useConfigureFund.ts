@@ -61,7 +61,7 @@ export default function useConfigureFund() {
     await sendTx({
       content: { type: "evm", val: tx },
       ...propMeta,
-      tagPayloads: getTagPayloads(propMeta.willExecute && "if_config"),
+      tagPayloads: getTagPayloads(propMeta.willExecute && meta.id),
     });
   }
 

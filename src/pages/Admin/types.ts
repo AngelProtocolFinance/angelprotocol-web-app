@@ -27,7 +27,7 @@ export type Templates =
       | "registrar.update-owner"
       | "registrar.update-config"
     >
-  | "multisig.owner" //combined add | remove in one template
+  | "multisig.owners" //combined add | remove in one template
   | "multisig.config" //combined threshold | execution required in one template
   | "multisig.fund-transfer"; // erc20 transfer and native transfer
 

@@ -42,7 +42,7 @@ export default function useUpdateMembers(action: FormProps["action"]) {
     await sendTx({
       content: { type: "evm", val: tx },
       ...propMeta,
-      tagPayloads: getTagPayloads(propMeta.willExecute && "cw4_members"),
+      tagPayloads: getTagPayloads(propMeta.willExecute && meta.id),
     });
   }
 

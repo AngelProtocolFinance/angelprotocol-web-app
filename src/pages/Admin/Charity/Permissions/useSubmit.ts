@@ -89,7 +89,9 @@ export default function useSubmit() {
         content: { type: "evm", val: tx },
         ...propMeta,
         isAuthorized: userDelegated || isUserOwner,
-        tagPayloads: getTagPayloads(propMeta.willExecute && "endow_controller"),
+        tagPayloads: getTagPayloads(
+          propMeta.willExecute && "accounts.update-controller"
+        ),
       });
     } catch (error) {
       handleError(error);

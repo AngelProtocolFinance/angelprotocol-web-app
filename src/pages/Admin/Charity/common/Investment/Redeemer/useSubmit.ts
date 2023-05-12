@@ -37,7 +37,7 @@ export default function useSubmit(vault: string, type: AccountType) {
     await sendTx({
       content: { type: "evm", val: tx },
       ...propMeta,
-      tagPayloads: getTagPayloads(propMeta.willExecute && "acc_redeem"),
+      tagPayloads: getTagPayloads(propMeta.willExecute && meta.id),
     });
   }
 
