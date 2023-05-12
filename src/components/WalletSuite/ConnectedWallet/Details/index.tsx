@@ -24,7 +24,6 @@ export default function Details(props: WalletState) {
     isError,
     error,
   } = useWalletProfileQuery(props.address);
-
   useEffect(() => {
     if (!isLoading && !isFetching && isError) {
       logger.error(error);
