@@ -1,4 +1,5 @@
 import { useFormContext } from "react-hook-form";
+import { Entries } from "type-fest";
 import { FormValues as FV } from "./types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
@@ -6,10 +7,7 @@ import { useGetWallet } from "contexts/WalletContext";
 import Prompt from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
-import { getPayloadDiff } from "helpers/admin";
-
-type Key = keyof FV;
-type Value = FV[Key];
+import { genDiffMeta, getPayloadDiff } from "helpers/admin";
 
 export default function useConfigureRegistrar() {
   const { multisig, propMeta } = useAdminResources();
@@ -29,7 +27,7 @@ export default function useConfigureRegistrar() {
   }: FV) {
     //check for changes
     const diff = getPayloadDiff(initial, fv);
-    const diffEntries = Object.entries(diff) as [Key, Value][];
+    const diffEntries = Object.entries(diff) as Entries<typeof initial>;
     if (diffEntries.length === 0) {
       return showModal(Prompt, {
         type: "error",
@@ -46,10 +44,14 @@ export default function useConfigureRegistrar() {
       });
     }
 
-    const [data, dest, meta] = encodeTx("registrar.update-config", {
-      ...initial,
-      ...fv,
-    });
+    const [data, dest, meta] = encodeTx(
+      "registrar.update-config",
+      {
+        ...initial,
+        ...fv,
+      },
+      genDiffMeta(diffEntries, initial)
+    );
 
     await sendTx({
       content: {
