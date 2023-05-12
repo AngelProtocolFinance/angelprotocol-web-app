@@ -3,6 +3,7 @@ import { EndowmentDetails } from "types/contracts";
 import { AccountType } from "types/contracts/evm/account";
 import { SimulContractTx } from "types/evm";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
+import { WithdrawMeta } from "contracts/createTx/meta";
 import { scaleToStr } from "helpers";
 import { ap_wallets } from "constants/ap_wallets";
 import { chainIds } from "constants/chainIds";
@@ -47,23 +48,40 @@ export function constructTx(
   const isPolygon = wv.network === chainIds.polygon;
   const beneficiary = isPolygon ? wv.beneficiary : ap_wallets.polygon_withdraw;
 
+  const metadata: WithdrawMeta = {
+    beneficiary,
+    tokens: wv.amounts.map((a) => ({
+      logo: "" /** TODO: ap-justin */,
+      symbol: "" /** TODO: ap-justin */,
+      amount: +a.value,
+    })),
+  };
+
   const isLockedCharity =
     endow.endow_type === "charity" && wv.type === "locked";
 
   const [data, dest, meta] = isLockedCharity
-    ? encodeTx("locked-withdraw.propose", {
-        id,
-        beneficiary,
-        addresses,
-        amounts,
-      })
-    : encodeTx("accounts.withdraw", {
-        id,
-        type: accType,
-        beneficiary,
-        addresses,
-        amounts,
-      });
+    ? encodeTx(
+        "locked-withdraw.propose",
+        {
+          id,
+          beneficiary,
+          addresses,
+          amounts,
+        },
+        metadata
+      )
+    : encodeTx(
+        "accounts.withdraw",
+        {
+          id,
+          type: accType,
+          beneficiary,
+          addresses,
+          amounts,
+        },
+        metadata
+      );
 
   //prettier-ignore
   const isDirect =
