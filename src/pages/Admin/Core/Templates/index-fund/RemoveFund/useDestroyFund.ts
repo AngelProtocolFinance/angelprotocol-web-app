@@ -1,5 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
+import { ID } from "contracts/createTx/types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
@@ -33,9 +34,8 @@ export default function useDestroyFund() {
         children: "Please connect your wallet to continue",
       });
     }
-    const [data, dest, meta] = encodeTx("index-fund.remove-fund", {
-      id: +fv.fundId,
-    });
+    const id: ID = { id: +fv.fundId };
+    const [data, dest, meta] = encodeTx("index-fund.remove-fund", id, id);
 
     await sendTx({
       content: {

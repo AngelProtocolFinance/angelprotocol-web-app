@@ -35,9 +35,13 @@ export default function useUpdateOwner() {
         children: "Wallet is not connected",
       });
 
-    const [data, dest, meta] = encodeTx("index-fund.update-owner", {
-      newOwner: fv.newOwner,
-    });
+    const [data, dest, meta] = encodeTx(
+      "index-fund.update-owner",
+      {
+        newOwner: fv.newOwner,
+      },
+      { curr: fv.owner, new: fv.newOwner }
+    );
 
     await sendTx({
       content: {
