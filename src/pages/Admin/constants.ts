@@ -5,34 +5,28 @@ import { SchemaShape } from "schemas/types";
 import { stringByteSchema } from "schemas/string";
 import { adminRoutes } from "constants/routes";
 
-export const templates: { [key in Templates]: string } = {
-  //index fund
-  if_alliance: "if_alliance",
-  if_create: "if_create",
-  if_remove: "if_remove",
-  if_members: "if_members",
-  if_config: "if_config",
-  if_owner: "if_owner",
+export const templates: {
+  [K in Templates]: K extends `${infer Contract}.${infer Method}`
+    ? `${Contract}_${Method}`
+    : string;
+} = {
+  "index-fund.update-alliance-list": "index-fund_update-alliance-list",
+  "index-fund.create-fund": "index-fund_create-fund",
+  "index-fund.remove-fund": "index-fund_remove-fund",
+  "index-fund.update-members": "index-fund_update-members",
+  "index-fund.config": "index-fund_config",
+  "index-fund.update-owner": "index-fund_update-owner",
 
-  //cw3
-  cw3_config: "cw3_config",
-  cw3_transfer: "cw3_transfer",
-  cw3_application: "",
-  review_cw3_config: "review_cw3_config",
+  "multisig.config": "multisig_config",
+  "multisig.owner": "multisig_owner",
+  "multisig.fund-transfer": "multisig_fund-transfer",
 
-  //cw4
-  cw4_members: "cw4_members",
+  "accounts.withdraw": "accounts_withdraw", //includes locked-withdraw
+  "accounts.update-status": "accounts_update-status",
+  "accounts.update-controller": "accounts_update-controller",
 
-  //account
-  acc_withdraw: "acc_withdraw",
-  acc_profile: "acc_profile",
-  acc_endow_status: "acc_endow_status",
-
-  //registrar
-  reg_config_extension: "reg_config_extension",
-  reg_owner: "reg_owner",
-
-  endow_controller: "endow_controller",
+  "registrar.update-config": "registrar_update-config",
+  "registrar.update-owner": "registrar_update-owner",
 };
 
 export const templateRoutes: { [key in Templates | "index"]: string } = {
