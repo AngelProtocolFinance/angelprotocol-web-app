@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { RegistrarOwnerValues } from "pages/Admin/types";
+import { FormValues as FV } from "./types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
@@ -13,14 +13,14 @@ export default function useUpdateOwner() {
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },
-  } = useFormContext<RegistrarOwnerValues>();
+  } = useFormContext<FV>();
 
   const { showModal } = useModalContext();
   const sendTx = useTxSender();
 
-  async function updateOwner(rv: RegistrarOwnerValues) {
+  async function updateOwner(fv: FV) {
     //check for changes
-    if (rv.initialOwner === rv.new_owner) {
+    if (fv.initialOwner === fv.newOwner) {
       return showModal(Prompt, {
         type: "error",
         title: "Update Owner",
@@ -36,17 +36,21 @@ export default function useUpdateOwner() {
       });
     }
 
-    const [data, dest, meta] = encodeTx("registrar.update-owner", {
-      newOwner: rv.new_owner,
-    });
+    const [data, dest, meta] = encodeTx(
+      "registrar.update-owner",
+      {
+        newOwner: fv.newOwner,
+      },
+      { curr: fv.initialOwner, new: fv.newOwner }
+    );
 
     await sendTx({
       content: {
         type: "evm",
         val: createTx(wallet.address, "multisig.submit-transaction", {
           multisig,
-          title: rv.title,
-          description: rv.description,
+          title: fv.title,
+          description: fv.description,
           destination: dest,
           value: "0",
           data,
