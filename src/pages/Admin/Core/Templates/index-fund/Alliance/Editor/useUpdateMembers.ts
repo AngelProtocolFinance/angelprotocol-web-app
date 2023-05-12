@@ -1,4 +1,5 @@
 import { FormProps, FormValues } from "./types";
+import { AllianceListUpdate } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
@@ -18,10 +19,15 @@ export default function useUpdateMembers(action: FormProps["action"]) {
       return showModal(TxPrompt, { error: "Wallet is not connected" });
     }
 
-    const [data, dest, meta] = encodeTx("index-fund.update-alliance-list", {
+    const update: AllianceListUpdate = {
       address: fv.address,
       action,
-    });
+    };
+    const [data, dest, meta] = encodeTx(
+      "index-fund.update-alliance-list",
+      update,
+      update
+    );
 
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig,
