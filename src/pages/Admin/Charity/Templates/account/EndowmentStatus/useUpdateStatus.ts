@@ -42,7 +42,7 @@ export default function useUpdateStatus() {
       return showModal(TxPrompt, { error: "Wallet is not connected" });
     }
 
-    const [beneficiary] = (function (): [Beneficiary, string] {
+    const [beneficiary, beneficiaryMeta] = (function (): [Beneficiary, string] {
       const { id, type } = fv.beneficiary;
       switch (type) {
         case "indexfund":
@@ -63,11 +63,15 @@ export default function useUpdateStatus() {
       }
     })();
 
-    const [data, dest, meta] = encodeTx("accounts.update-status", {
-      id: +fv.id,
-      status: toNum(status.value),
-      beneficiary,
-    });
+    const [data, dest, meta] = encodeTx(
+      "accounts.update-status",
+      {
+        id: +fv.id,
+        status: toNum(status.value),
+        beneficiary,
+      },
+      { from: prevStatus, to: status.value, beneficiary: beneficiaryMeta }
+    );
 
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig,
