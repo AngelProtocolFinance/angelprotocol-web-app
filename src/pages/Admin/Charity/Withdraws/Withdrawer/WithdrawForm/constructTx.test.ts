@@ -8,7 +8,11 @@ import { constructTx } from "./constructTx";
 //mock so not to deal with encoded strings
 jest.mock("contracts/createTx/createTx", () => ({
   __esModule: true,
-  encodeTx: (type: TxTypes) => [type, type.split(".")[0]],
+  encodeTx: (type: TxTypes) => [
+    type,
+    type.split(".")[0],
+    { id: "", encoded: "" },
+  ],
   createTx: (sender: string, type: TxTypes, options: any): SimulContractTx => ({
     from: sender,
     to: type.split(".")[0],
