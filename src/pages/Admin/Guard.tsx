@@ -6,6 +6,7 @@ import { useAdminResourcesQuery } from "services/juno/custom";
 import { useGetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import Loader from "components/Loader";
+import PermissionHandler from "./PermissionHandler";
 
 export function Guard(props: {
   children(resources: AdminResources): ReactNode;
@@ -28,7 +29,9 @@ export function Guard(props: {
     return <GuardPrompt message="Error getting admin resources" />;
 
   return (
-    <context.Provider value={data}>{props.children(data)}</context.Provider>
+    <context.Provider value={data}>
+      <PermissionHandler data={data}>{props.children(data)}</PermissionHandler>
+    </context.Provider>
   );
 }
 
