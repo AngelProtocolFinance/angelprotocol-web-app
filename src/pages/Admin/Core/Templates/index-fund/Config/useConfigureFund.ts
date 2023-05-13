@@ -7,6 +7,7 @@ import Prompt, { TxPrompt } from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { getPayloadDiff } from "helpers/admin";
+import { isPolygonChain } from "helpers/isPolygonChain";
 
 export default function useConfigureFund() {
   const { multisig, propMeta } = useAdminResources();
@@ -39,6 +40,12 @@ export default function useConfigureFund() {
 
     if (!wallet) {
       return showModal(TxPrompt, { error: "Wallet is not connected" });
+    }
+
+    if (!isPolygonChain(wallet.chain.chain_id)) {
+      return showModal(TxPrompt, {
+        error: "Please connect on Polygon Network",
+      });
     }
 
     const [configData, dest] = encodeTx("index-fund.config", data);

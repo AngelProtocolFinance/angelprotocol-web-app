@@ -9,6 +9,7 @@ import { useGetWallet } from "contexts/WalletContext";
 import { TxPrompt } from "components/Prompt";
 import { getProvider, isEVM } from "helpers";
 import { cleanObject } from "helpers/cleanObject";
+import { isPolygonChain } from "helpers/isPolygonChain";
 import { appRoutes } from "constants/routes";
 
 // import optimizeImage from "./optimizeImage";
@@ -36,6 +37,12 @@ export default function useUpdateEndowmentProfile() {
       if (!isEVM(wallet.providerId)) {
         return showModal(TxPrompt, {
           error: "Please connect an EVM compatible wallet",
+        });
+      }
+
+      if (!isPolygonChain(wallet.chain.chain_id)) {
+        return showModal(TxPrompt, {
+          error: "Please connect on Polygon Network",
         });
       }
 

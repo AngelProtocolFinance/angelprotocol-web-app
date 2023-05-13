@@ -8,6 +8,7 @@ import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { scaleToStr } from "helpers";
 import { getTagPayloads } from "helpers/admin";
+import { isPolygonChain } from "helpers/isPolygonChain";
 
 export default function useSubmit(vault: string, type: AccountType) {
   const { multisig, id, propMeta } = useAdminResources();
@@ -18,6 +19,12 @@ export default function useSubmit(vault: string, type: AccountType) {
   async function submit({ token }: FormValues) {
     if (!wallet) {
       return showModal(TxPrompt, { error: "Wallet is not connected" });
+    }
+
+    if (!isPolygonChain(wallet.chain.chain_id)) {
+      return showModal(TxPrompt, {
+        error: "Please connect on Polygon Network",
+      });
     }
 
     const [data, dest] = encodeTx("accounts.invest", {

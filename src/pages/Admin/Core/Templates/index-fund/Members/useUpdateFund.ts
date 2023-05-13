@@ -7,6 +7,7 @@ import { useGetWallet } from "contexts/WalletContext";
 import { useGetter } from "store/accessors";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
+import { isPolygonChain } from "helpers/isPolygonChain";
 
 export default function useUpdateFund() {
   const { trigger, reset, getValues } = useFormContext<FormValues>();
@@ -50,6 +51,10 @@ export default function useUpdateFund() {
 
       if (!wallet) {
         throw new Error("Wallet is not connected");
+      }
+
+      if (!isPolygonChain(wallet.chain.chain_id)) {
+        throw new Error("Please connect on Polygon Network");
       }
 
       const [data, dest] = encodeTx("index-fund.update-members", {

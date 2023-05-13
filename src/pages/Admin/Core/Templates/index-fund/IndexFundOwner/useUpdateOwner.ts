@@ -6,6 +6,7 @@ import { useGetWallet } from "contexts/WalletContext";
 import Prompt from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
+import { isPolygonChain } from "helpers/isPolygonChain";
 
 export default function useUpdateOwner() {
   const { multisig, propMeta } = useAdminResources();
@@ -34,6 +35,13 @@ export default function useUpdateOwner() {
         type: "error",
         children: "Wallet is not connected",
       });
+
+    if (!isPolygonChain(wallet.chain.chain_id)) {
+      return showModal(Prompt, {
+        type: "error",
+        children: "Please connect on Polygon Network",
+      });
+    }
 
     const [data, dest] = encodeTx("index-fund.update-owner", {
       newOwner: fv.newOwner,

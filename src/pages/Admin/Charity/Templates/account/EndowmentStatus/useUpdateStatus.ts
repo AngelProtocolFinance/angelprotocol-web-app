@@ -9,6 +9,7 @@ import Prompt, { TxPrompt } from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
+import { isPolygonChain } from "helpers/isPolygonChain";
 
 export default function useUpdateStatus() {
   const { handleSubmit } = useFormContext<FV>();
@@ -40,6 +41,12 @@ export default function useUpdateStatus() {
 
     if (!wallet) {
       return showModal(TxPrompt, { error: "Wallet is not connected" });
+    }
+
+    if (!isPolygonChain(wallet.chain.chain_id)) {
+      return showModal(TxPrompt, {
+        error: "Please connect on Polygon Network",
+      });
     }
 
     const [beneficiary] = (function (): [Beneficiary, string] {

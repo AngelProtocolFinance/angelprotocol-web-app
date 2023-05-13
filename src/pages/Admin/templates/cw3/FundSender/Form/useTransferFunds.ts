@@ -8,6 +8,7 @@ import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { scale } from "helpers";
 import { getTagPayloads } from "helpers/admin";
+import { isPolygonChain } from "helpers/isPolygonChain";
 
 export default function useTransferFunds() {
   const {
@@ -25,6 +26,13 @@ export default function useTransferFunds() {
       return showModal(Prompt, {
         type: "error",
         children: "Wallet is not connected",
+      });
+    }
+
+    if (!isPolygonChain(wallet.chain.chain_id)) {
+      return showModal(Prompt, {
+        type: "error",
+        children: "Please connect on Polygon Network",
       });
     }
 

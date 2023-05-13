@@ -6,6 +6,7 @@ import { useGetWallet } from "contexts/WalletContext";
 import Prompt from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
+import { isPolygonChain } from "helpers/isPolygonChain";
 
 export default function useDestroyFund() {
   const {
@@ -33,6 +34,14 @@ export default function useDestroyFund() {
         children: "Please connect your wallet to continue",
       });
     }
+
+    if (!isPolygonChain(wallet.chain.chain_id)) {
+      return showModal(Prompt, {
+        type: "error",
+        children: "Please connect on Polygon Network",
+      });
+    }
+
     const [data, dest] = encodeTx("index-fund.remove-fund", { id: +fv.fundId });
 
     await sendTx({

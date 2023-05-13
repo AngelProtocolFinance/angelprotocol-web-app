@@ -9,6 +9,7 @@ import { useGetter } from "store/accessors";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { blockTime } from "helpers/admin";
+import { isPolygonChain } from "helpers/isPolygonChain";
 import { INIT_SPLIT } from "./index";
 
 export default function useCreateFund() {
@@ -38,6 +39,12 @@ export default function useCreateFund() {
     if (!wallet) {
       return showModal(TxPrompt, {
         error: "Wallet not connected",
+      });
+    }
+
+    if (!isPolygonChain(wallet.chain.chain_id)) {
+      return showModal(TxPrompt, {
+        error: "Please connect on Polygon Network",
       });
     }
 

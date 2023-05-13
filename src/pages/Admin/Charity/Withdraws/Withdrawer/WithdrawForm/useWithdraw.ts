@@ -5,6 +5,7 @@ import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { TxPrompt } from "components/Prompt";
 import useTxSender from "hooks/useTxSender";
+import { isPolygonChain } from "helpers/isPolygonChain";
 import { chainIds } from "constants/chainIds";
 import { constructTx } from "./constructTx";
 import useLogWithdrawProposal from "./useLogWithdrawProposal";
@@ -23,6 +24,12 @@ export default function useWithdraw() {
   async function withdraw(data: WithdrawValues) {
     if (!wallet) {
       return showModal(TxPrompt, { error: "Wallet not connected" });
+    }
+
+    if (!isPolygonChain(wallet.chain.chain_id)) {
+      return showModal(TxPrompt, {
+        error: "Please connect on Polygon Network",
+      });
     }
 
     const { tx, isDirect, isPolygon } = constructTx(

@@ -8,6 +8,7 @@ import Prompt from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { getPayloadDiff, getTagPayloads } from "helpers/admin";
+import { isPolygonChain } from "helpers/isPolygonChain";
 
 type Key = keyof FV;
 type Value = FV[Key];
@@ -49,6 +50,13 @@ export default function usePropose() {
       return showModal(Prompt, {
         type: "error",
         children: "Wallet is not connected",
+      });
+    }
+
+    if (!isPolygonChain(wallet.chain.chain_id)) {
+      return showModal(Prompt, {
+        type: "error",
+        children: "Please connect on Polygon Network",
       });
     }
 

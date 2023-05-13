@@ -8,6 +8,7 @@ import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { isEmpty } from "helpers";
 import { getPayloadDiff, getTagPayloads } from "helpers/admin";
+import { isPolygonChain } from "helpers/isPolygonChain";
 import { UnexpectedStateError } from "errors/errors";
 import { createUpdateEndowmentControllerMsg } from "./helpers";
 import { FormValues } from "./schema";
@@ -59,6 +60,10 @@ export default function useSubmit() {
 
       if (!wallet) {
         return alert("wallet not connected");
+      }
+
+      if (!isPolygonChain(wallet.chain.chain_id)) {
+        return alert("Please connect on Polygon Network");
       }
 
       const args = createUpdateEndowmentControllerMsg(id, diff, settings);
