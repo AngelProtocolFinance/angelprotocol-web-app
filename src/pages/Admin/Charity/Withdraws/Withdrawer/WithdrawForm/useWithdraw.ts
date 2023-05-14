@@ -44,14 +44,7 @@ export default function useWithdraw() {
     );
 
     //only used when !isPolygon && !isDirect
-    const FAILED_PROPOSAL_ID = "-1";
     const processLog: LogProcessor = (logs) => {
-      if (propMeta.willExecute) {
-        const topic = Multisig.getEventTopic(ExecutionFailureEvent);
-        const log = logs.find((l) => l.topics.includes(topic));
-        if (log) return FAILED_PROPOSAL_ID;
-      }
-
       const submissionTopic = Multisig.getEventTopic(SubmissionEvent);
       const log = logs.find((l) => l.topics.includes(submissionTopic));
       if (!log) return null;
@@ -69,15 +62,7 @@ export default function useWithdraw() {
       try {
         const proposalID = data as
           | undefined /** no log processor is passed (DIRECT withdraw )*/
-          | null /** log processor is passed but failed get log */
-          | string; /** if auto-execute and failed, returns "-1", else return proposal_id  */
-
-        if (proposalID === FAILED_PROPOSAL_ID) {
-          return showModal(TxPrompt, {
-            error: "Withdraw proposal failed to auto-execute",
-            tx,
-          });
-        }
+          | null; /** log processor is passed but failed get log */
 
         if (proposalID === null) {
           return showModal(TxPrompt, {
