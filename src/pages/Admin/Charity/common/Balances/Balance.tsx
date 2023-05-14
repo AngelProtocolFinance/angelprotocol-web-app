@@ -1,9 +1,11 @@
 import { PropsWithChildren } from "react";
+import { Link } from "react-router-dom";
 import { AccountType } from "types/lists";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useEndowBalanceQuery } from "services/juno/custom";
 import QueryLoader from "components/QueryLoader";
 import { condense, humanize } from "helpers";
+import { adminRoutes, appRoutes } from "constants/routes";
 
 type Props = { type: AccountType };
 export default function Balance({ type }: Props) {
@@ -12,6 +14,8 @@ export default function Balance({ type }: Props) {
   const query = useEndowBalanceQuery({
     id,
   });
+
+  const link = `${appRoutes.admin}/${id}/${adminRoutes.account}/${type}`;
 
   return (
     <div className="@container rounded border border-prim bg-orange-l6 dark:bg-blue-d6">
@@ -52,9 +56,12 @@ export default function Balance({ type }: Props) {
           );
         }}
       </QueryLoader>
-      <div className="text-center py-3 text-sm font-bold uppercase border-t border-prim mt-4 bg-orange-l5 dark:bg-blue-d6 ">
+      <Link
+        to={link}
+        className="block text-center py-3 text-sm font-bold uppercase border-t border-prim mt-4 bg-orange-l5 dark:bg-blue-d6 "
+      >
         See details
-      </div>
+      </Link>
     </div>
   );
 }

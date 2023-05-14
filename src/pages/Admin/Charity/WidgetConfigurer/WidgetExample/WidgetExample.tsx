@@ -47,13 +47,9 @@ export default function WidgetExample({ trigger }: { trigger: boolean }) {
             )}
             <div className="justify-self-center grid mt-5 w-3/4">
               <span className="text-center font-normal text-xs">
-                Don't have crypto in your wallet?{" "}
-                <button
-                  type="button"
-                  className="font-bold underline hover:text-orange transition ease-in-out duration-300"
-                >
-                  Buy some to make your donation
-                </button>
+                Connect the wallet of your choice to donate crypto. <br />
+                Continue below to {PAYMENT_WORDS.verb} fiat (Dollars, GBP, AUD,
+                Euro)
               </span>
               <div className="my-12 text-sm mb-10 grid grid-cols-3 justify-items-center gap-2">
                 <p className="text-center">Donation method</p>

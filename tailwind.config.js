@@ -52,6 +52,7 @@ module.exports = {
       },
 
       bluegray: {
+        d2: "#243845",
         d1: "#283E4D",
         DEFAULT: "#3D5F76",
       },

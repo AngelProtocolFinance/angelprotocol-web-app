@@ -1,5 +1,5 @@
-import { EndowmentTierNum, EndowmentType } from "../../contracts";
-import { NetworkType, UNSDG_NUMS } from "../../lists";
+import { EndowmentTierNum } from "../../contracts";
+import { EndowmentType, NetworkType, UNSDG_NUMS } from "../../lists";
 
 type EndowmentBalances = {
   // represents total cumulative balances
@@ -21,6 +21,7 @@ type EndowmentBase = {
   id: number;
   image: string;
   kyc_donors_only: boolean;
+  contributor_verification_required: boolean;
 
   name: string;
   tagline: string;
@@ -61,7 +62,7 @@ export type ASTProfile = Pick<EndowmentProfile,
   | typeof _npo_type 
   | typeof _categories
   >>
-  & EndowmentBalances
+  & Partial<EndowmentBalances>
 
 export type EndowmentCard = EndowmentBase & {
   endow_type: EndowmentType;
@@ -80,6 +81,7 @@ export type EndowmentProfileUpdate = {
   active_in_countries: string[];
   categories_general: string[];
   categories_sdgs: UNSDG_NUMS[];
+  contributor_verification_required: boolean;
   hq_country: string;
   endow_designation: string;
   image: string;
@@ -138,6 +140,22 @@ export interface LeaderboardEntry {
   //tier: EndowmentTier
   //charity_owner:string
 }
+
+export type TStrategy = {
+  strategy_key: string;
+  chain_id: string;
+  apy: number; // 5.2
+  contract: string;
+  description: string;
+  icon: string;
+  market_cap: number; // 100,024,000 USD
+  name: string;
+  provider: { name: string; url: string; icon: string };
+  rating: string; // "AAA";
+  type: string; // "Uncollateralized Lending";
+  vaults: { locked: string; liquid: string };
+  website: string;
+};
 
 export interface Update {
   endowments: LeaderboardEntry[];

@@ -1,5 +1,5 @@
 import { WithoutInstallers } from "contexts/WalletContext/types";
-import { Chain } from "types/aws";
+import { Chain } from "types/tx";
 import { WALLET_METADATA } from "contexts/WalletContext/constants";
 import { chainIds } from "constants/chainIds";
 import { EMAIL_SUPPORT } from "constants/common";
@@ -27,17 +27,6 @@ export abstract class APError extends Error implements IAPError {
       cause: this.cause,
       discriminator: this.discriminator,
     };
-  }
-}
-
-export class LogApplicationUpdateError extends Error {
-  chainId: string;
-  pollId: string;
-  constructor(chainId: string, pollId: string) {
-    super("Failed to log the Poll ID of your proposal");
-    this.chainId = chainId;
-    this.pollId = pollId;
-    this.name = "ApplicationReviewPollUpdateError";
   }
 }
 

@@ -1,21 +1,15 @@
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
+import { TStrategy } from "types/aws";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import Modal from "components/Modal";
 import { LoadingStatus } from "components/Status";
 import TokenField from "components/TokenField";
-import { TStrategy } from "../strats";
 import AccountOptions from "./AccountOptions";
-import LockDuration from "./LockDuration";
 import useSubmit from "./useSubmit";
 
-export default function Form({
-  balances,
-  name,
-  description,
-  rating,
-}: TStrategy) {
+export default function Form({ name, description, rating }: TStrategy) {
   const { getValues, handleSubmit } = useFormContext<FV>();
   const { isSending } = useSubmit("13123", "liquid");
   const { closeModal } = useModalContext();
@@ -25,7 +19,7 @@ export default function Form({
         alert("show summary");
       })}
       as="form"
-      className="max-h-[95vh] overflow-y-auto max-w-[37.5rem] w-[95vw] sm:w-full fixed-center z-20 bg-gray-l6 dark:bg-blue-d6 border border-prim rounded overflow-scroll"
+      className="max-h-[95vh] overflow-y-auto max-w-[37.5rem] w-[95vw] sm:w-full fixed-center z-20 bg-gray-l6 dark:bg-blue-d6 border border-prim rounded"
     >
       <div className="relative border-b border-prim py-5 text-center bg-orange-l6 dark:bg-blue-d7">
         <span className="font-bold font-heading text-lg">Invest</span>
@@ -50,8 +44,7 @@ export default function Form({
         />
         <KeyValue title="Accepted Currency" value="USDC" />
       </div>
-      <AccountOptions balances={balances} classes="mx-8 mb-6" />
-      <LockDuration classes="mx-8" />
+      <AccountOptions balances={{ locked: 0, liquid: 0 }} classes="mx-8 mb-6" />
       <TokenField<FV, "token">
         name="token"
         tokens={getValues("tokens")}
@@ -62,6 +55,7 @@ export default function Form({
           label: "font-heading text-base mb-2",
           inputContainer: "bg-white dark:bg-blue-d7",
         }}
+        withMininum
       />
       <div className="mt-8 px-8 py-4 gap-x-3 border-t border-prim flex justify-end">
         <button
@@ -73,11 +67,12 @@ export default function Form({
           Cancel
         </button>
         <button
-          disabled={isSending}
+          disabled={true} // isSending
           type="submit"
-          className="text-sm min-w-[8rem] py-2 btn-orange"
+          className="text-sm min-w-[8rem] py-2 btn-orange disabled:bg-gray-l1"
         >
           {isSending ? <LoadingStatus>Processing...</LoadingStatus> : "Invest"}
+          <span className="text-xs pl-1">(Coming soon)</span>
         </button>
       </div>
     </Modal>

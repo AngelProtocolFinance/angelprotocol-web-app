@@ -1,4 +1,5 @@
 import { Interface } from "@ethersproject/abi";
-import abi from "./abi.json";
+import balance from "./balance.json";
+import txs from "./txs.json";
 
-export const giftCard = new Interface(abi);
+export const giftCard = new Interface([...balance, ...txs]);

@@ -1,7 +1,5 @@
 import { KYC, KYCStep } from "slices/donation";
 
-export type PrevTxDetails = { txHash: string; chainId: string };
-
 export type FormValues = KYC;
 
 export type OnDonation = {

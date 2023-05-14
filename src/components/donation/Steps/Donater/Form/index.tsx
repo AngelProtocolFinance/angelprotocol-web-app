@@ -3,9 +3,12 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { matchRoutes, useLocation } from "react-router-dom";
 import { DonateValues } from "../types";
+import CountrySelector from "components/CountrySelector";
 import TokenField from "components/TokenField";
+import { Label } from "components/form";
 import { useGetter } from "store/accessors";
 import { setDetails } from "slices/donation";
+import { PAYMENT_WORDS } from "constants/env";
 import { appRoutes } from "constants/routes";
 import AdvancedOptions from "./AdvancedOptions";
 
@@ -15,8 +18,10 @@ export default function Form(props: {
 }) {
   const {
     reset,
+    resetField,
     handleSubmit,
     getValues,
+    watch,
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<DonateValues>();
 
@@ -33,6 +38,8 @@ export default function Form(props: {
 
   const wasCompleted = !!getValues("token.amount");
 
+  const tokenType = watch("token.type");
+
   return (
     <form
       onSubmit={handleSubmit(submit)}
@@ -44,9 +51,32 @@ export default function Form(props: {
         tokens={getValues("tokens")}
         withGiftcard
         withBalance
-        label="Enter the donation amount:"
+        label={`Enter the ${PAYMENT_WORDS.noun.singular} amount:`}
         classes={{ label: "text-lg", inputContainer: "dark:bg-blue-d6" }}
+        withMininum
       />
+
+      {tokenType === "fiat" && (
+        <>
+          <h4 className="font-bold text-sm mb-2 mt-4">
+            Enter your payment details:
+          </h4>
+          <Label className="mb-2" htmlFor="country">
+            Country of Residence *
+          </Label>
+          <CountrySelector<DonateValues, "country">
+            placeholder="Select a country"
+            fieldName="country"
+            onReset={() => resetField("country")}
+            classes={{
+              container: "px-4 dark:bg-blue-d6",
+              input: "py-3.5 placeholder:text-sm",
+              error: "field-error",
+            }}
+          />
+        </>
+      )}
+
       {!props.hideAdvOpts && (
         <AdvancedOptions classes="mt-10" unfold={props.unfoldAdvOpts} />
       )}

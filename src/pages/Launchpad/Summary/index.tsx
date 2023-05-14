@@ -1,19 +1,20 @@
-import { Link } from "react-router-dom";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { isCompleted } from "slices/launchpad/types";
+import { useGetWallet } from "contexts/WalletContext";
 import { useGetter } from "store/accessors";
 import { steps } from "../constants";
 import About from "./About";
 import Fees from "./Fees";
 import Management from "./Management";
 import Maturity from "./Maturity";
+import Message from "./Message";
 import Splits from "./Splits";
 import Whitelists from "./Whitelists";
 import useSubmit from "./useSubmit";
 
 export default function Summary() {
   const state = useGetter((state) => state.launchpad);
-
+  const { wallet } = useGetWallet();
   const submit = useSubmit();
 
   if (!isCompleted(state)) return <Navigate to={`../${state.progress}`} />;
@@ -55,17 +56,24 @@ export default function Summary() {
         disabled={false}
       />
       <Fees fees={fees} title="Fees" step={6} disabled={false} />
+      <Message {...completed} />
       <div className="grid grid-cols-2 sm:flex gap-2 border-t border-prim pt-8">
-        <Link to={`../${steps[6]}`} className="text-sm px-8 btn-outline-filled">
+        <Link to={`../${steps[7]}`} className="text-sm px-8 btn-outline-filled">
           Back
         </Link>
-        <button
-          type="button"
-          className="text-sm px-8 btn-orange"
-          onClick={() => submit(completed)}
-        >
-          Create my AST
-        </button>
+        {wallet ? (
+          <button
+            type="button"
+            className="text-sm px-8 btn-orange"
+            onClick={() => submit(completed)}
+          >
+            Create my AST
+          </button>
+        ) : (
+          <Link to={`../${steps[7]}`} className="text-sm px-8 btn-orange">
+            Connect Wallet
+          </Link>
+        )}
       </div>
     </div>
   );

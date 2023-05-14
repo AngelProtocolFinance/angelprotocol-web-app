@@ -6,9 +6,9 @@ export default function Balances() {
 
   return (
     <div className="flex flex-col items-center gap-4 w-full">
-      <Balance title="Total Value" amount={on_hand_overall} />
-      <Balance title="Total Endowment Account" amount={on_hand_lock} />
-      <Balance title="Total Current Account" amount={on_hand_liq} />
+      <Balance title="Total Value" amount={on_hand_overall || 0} />
+      <Balance title="Total Endowment Account" amount={on_hand_lock || 0} />
+      <Balance title="Total Current Account" amount={on_hand_liq || 0} />
     </div>
   );
 }

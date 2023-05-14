@@ -1,37 +1,40 @@
-import { FormValues } from "./types";
 import { AccountType } from "types/lists";
 import { useAdminResources } from "pages/Admin/Guard";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import Account from "contracts/Account";
-import CW3 from "contracts/CW3";
+import { useModalContext } from "contexts/ModalContext";
+import { useGetWallet } from "contexts/WalletContext";
+import { TxPrompt } from "components/Prompt";
+import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
-import { scaleToStr } from "helpers";
 import { getTagPayloads } from "helpers/admin";
 
 export default function useSubmit(vault: string, type: AccountType) {
   const { multisig, id, propMeta } = useAdminResources();
-  const { wallet } = useGetWallet();
   const { sendTx, isSending } = useTxSender(true);
+  const { wallet } = useGetWallet();
+  const { showModal } = useModalContext();
 
-  async function submit({ token }: FormValues) {
-    const account = new Account(wallet);
+  async function submit() {
+    if (!wallet) {
+      return showModal(TxPrompt, { error: "Wallet is not connected" });
+    }
 
-    const msg = account.createEmbeddedRedeemMsg({
+    const [data, dest] = encodeTx("accounts.redeem", {
       id,
-      acct_type: type,
-      vaults: [[vault, scaleToStr(token.amount)]],
+      account: type === "locked" ? 0 : 1,
+      vaults: [vault],
     });
 
-    const cw3contract = new CW3(wallet, multisig);
-    //proposal meta for preview
-    const proposal = cw3contract.createProposalMsg(
-      "Redeem",
-      `redeem funds from: ${vault}`,
-      [msg]
-    );
+    const tx = createTx(wallet.address, "multisig.submit-transaction", {
+      multisig,
+      title: "Redeem",
+      description: `Redeem funds to: ${vault}`,
+      destination: dest,
+      value: "0",
+      data,
+    });
 
     await sendTx({
-      content: { type: "cosmos", val: [proposal] },
+      content: { type: "evm", val: tx },
       ...propMeta,
       tagPayloads: getTagPayloads(propMeta.willExecute && "acc_redeem"),
     });

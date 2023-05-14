@@ -2,7 +2,7 @@ import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "../types";
 import { CheckField } from "components/form";
 
-export const CASH_ELIGIBLE_COUNTRIES = [
+const CASH_ELIGIBLE_COUNTRIES = [
   "New Zealand",
   "United States",
   "United Kingdom",

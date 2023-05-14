@@ -17,7 +17,6 @@ const Marketplace = lazy(() => import("pages/Marketplace"));
 const Registration = lazy(() => import("pages/Registration"));
 const Launchpad = lazy(() => import("pages/Launchpad"));
 const Donate = lazy(() => import("pages/Donate"));
-const DonateFiat = lazy(() => import("pages/DonateFiat")); // TO DO: CHANGE THIS TO A PAGE THAT IS WALLET-LESS, FIAT ONLY DONATION FLOW!
 const DonateFiatThanks = lazy(() => import("pages/DonateFiatThanks"));
 const Gift = lazy(() => import("pages/Gift"));
 const DonateWidget = lazy(() => import("pages/DonateWidget"));
@@ -47,10 +46,6 @@ export default function App() {
                 element={<Donations />}
               />
               <Route path={`${appRoutes.donate}/:id`} element={<Donate />} />
-              <Route
-                path={`${appRoutes.donate_fiat}/:id`}
-                element={<DonateFiat />}
-              />
               <Route
                 path={appRoutes.donate_fiat_thanks}
                 element={<DonateFiatThanks />}

@@ -16,6 +16,8 @@ const _id: K = "id";
 const _tier: K = "tier";
 const _owner: K = "owner";
 const _npo_type: K = "endow_designation";
+const _contributor_verification_required: K =
+  "contributor_verification_required";
 
 export type FlatFormValues = Omit<
   EndowmentProfileUpdate,
@@ -26,6 +28,7 @@ export type FlatFormValues = Omit<
   | typeof _id
   | typeof _tier
   | typeof _owner
+  | typeof _contributor_verification_required
 >;
 
 export type FormValues = Omit<

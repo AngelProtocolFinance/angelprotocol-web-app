@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { EndowmentProposal } from "types/aws";
 import Icon from "components/Icon";
 import { Cells } from "components/TableSection";
+import { adminRoutes } from "constants/routes";
 import { SEPARATOR, statusColors } from "../../constants";
 
 export default function AppRow(props: EndowmentProposal) {
@@ -19,7 +20,7 @@ export default function AppRow(props: EndowmentProposal) {
       </span>
 
       <Link
-        to={`application/${
+        to={`${adminRoutes.application}/${
           props.application_id ?? "" /** appliation_id is a new field */
         }${SEPARATOR}${props.PK}`}
         className="uppercase text-sm hover:text-blue active:text-orange flex gap-1 items-center"

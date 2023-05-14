@@ -6,7 +6,7 @@ import {
 } from "services/types";
 import { AcceptedTokens } from "types/contracts";
 import { AccountType } from "types/contracts/evm";
-import { Transaction } from "types/contracts/evm/multisig";
+import { Transaction } from "types/contracts/multisig";
 import { TransactionStatus } from "types/lists";
 import { idParamToNum } from "helpers";
 import { junoApi } from "..";

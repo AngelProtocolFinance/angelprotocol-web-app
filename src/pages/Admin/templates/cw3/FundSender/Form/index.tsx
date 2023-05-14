@@ -1,10 +1,12 @@
+import { FormValues as FV } from "../types";
 import { FundSendValues as FS } from "pages/Admin/types";
+import { Chain } from "types/tx";
+import TokenField from "components/TokenField";
 import { FormContainer, Submitter } from "components/admin";
 import { Field } from "components/form";
-import Amount from "./Amount";
 import useTransferFunds from "./useTransferFunds";
 
-export default function Form() {
+export default function Form(props: Chain) {
   const { transferFunds, isSubmitDisabled } = useTransferFunds();
   return (
     <FormContainer onSubmit={transferFunds}>
@@ -21,7 +23,16 @@ export default function Form() {
         name="description"
         required
       />
-      <Amount />
+      <TokenField<FV, "token">
+        name="token"
+        label="Amount"
+        tokens={[props.native_currency]
+          .concat(props.tokens)
+          .map((t) => ({ ...t, amount: "0" }))}
+        classes={{ inputContainer: "bg-orange-l6 dark:bg-blue-d7" }}
+        withBalance
+      />
+
       <Field<FS>
         classes="field-admin"
         label="Recipient"

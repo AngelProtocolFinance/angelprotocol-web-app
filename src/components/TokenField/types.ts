@@ -20,10 +20,13 @@ export type Props<T extends FieldValues, K extends Path<T>> = {
   name: T[K] extends TokenWithAmount ? K : never;
   label: string;
   tokens: TokenWithAmount[];
-  withGiftcard?: true;
-  withBalance?: true;
   scale?: Scale;
   classes?: Classes;
+
+  //flags
+  withGiftcard?: true;
+  withBalance?: true;
+  withMininum?: true;
 };
 
 export type SelectorProps = {

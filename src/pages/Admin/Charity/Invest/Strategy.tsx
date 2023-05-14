@@ -1,13 +1,22 @@
 import { PropsWithChildren } from "react";
+import { TStrategy } from "types/aws";
 import { useModalContext } from "contexts/ModalContext";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import { humanize } from "helpers";
 import Investor from "./Investor";
-import { TStrategy } from "./strats";
 
 export default function Strategy(props: TStrategy) {
-  const { name, invested, description, provider, type, rating, apy } = props;
+  const {
+    name,
+    market_cap,
+    description,
+    provider,
+    type,
+    rating,
+    apy,
+    website,
+  } = props;
   const { showModal } = useModalContext();
 
   return (
@@ -18,7 +27,7 @@ export default function Strategy(props: TStrategy) {
       </p>
       <div className="flex flex-col @lg:flex-row justify-between items-start @lg:items-center mx-6 mb-6">
         <ExtLink
-          href={provider.url}
+          href={website}
           className="text-sm text-gray-d1 dark:text-gray underline mb-5 @lg:mb-0"
         >
           {provider.name}
@@ -34,12 +43,11 @@ export default function Strategy(props: TStrategy) {
         <KeyVal title="APY" tooltip="some tooltip">
           {apy}%
         </KeyVal>
-        <KeyVal title="Current balance">{humanize(invested)} USD</KeyVal>
+        <KeyVal title="Market Cap">{humanize(market_cap, 0)} USD</KeyVal>
         <button
           type="button"
-          disabled={true}
           onClick={() => showModal(Investor, props)}
-          className="mt-6 @lg:mt-0 btn-outline-filled px-8 py-2 ml-auto w-full @lg:w-auto col-span-full disabled:bg-gray-l5"
+          className="mt-6 @lg:mt-0 btn-outline-filled px-8 py-2 ml-auto w-full @lg:w-auto col-span-full"
         >
           invest
         </button>

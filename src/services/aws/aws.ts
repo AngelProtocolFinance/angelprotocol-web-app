@@ -7,6 +7,7 @@ import {
   EndowmentsQueryParams,
   NewAST,
   PaginatedAWSQueryRes,
+  TStrategy,
   WalletProfile,
 } from "types/aws";
 import { NetworkType } from "types/lists";
@@ -39,7 +40,14 @@ const awsBaseQuery = retry(
 );
 
 export const aws = createApi({
-  tagTypes: ["airdrop", "admin", "walletProfile", "profile", "endowments"],
+  tagTypes: [
+    "airdrop",
+    "admin",
+    "walletProfile",
+    "profile",
+    "endowments",
+    "strategy",
+  ],
   reducerPath: "aws",
   baseQuery: awsBaseQuery,
   endpoints: (builder) => ({
@@ -50,8 +58,17 @@ export const aws = createApi({
       providesTags: ["endowments"],
       query: (params) => {
         return {
-          url: `/v3/endowments/${network}`,
+          url: `/v4/endowments/${network}`,
           params: { ...params, return: endowCardFields },
+        };
+      },
+    }),
+    strategyCards: builder.query<TStrategy[], {}>({
+      providesTags: ["strategy"],
+      query: (params) => {
+        return {
+          url: `/v1/strategy/list`,
+          params: { ...params },
         };
       },
     }),
@@ -62,7 +79,7 @@ export const aws = createApi({
       providesTags: ["endowments"],
       query: (params) => {
         return {
-          url: `/v3/endowments/${network}`,
+          url: `/v4/endowments/${network}`,
           params: { ...params, return: ENDOW_ID_NAME_FIELDS },
         };
       },
@@ -120,6 +137,8 @@ export const aws = createApi({
       },
     }),
     saveAST: builder.mutation<unknown, NewAST>({
+      invalidatesTags: (result, error) =>
+        error ? [] : ["endowments", "profile", "walletProfile"],
       query: (payload) => {
         const token = createAuthToken("app-user");
         return {
@@ -138,6 +157,7 @@ export const {
   useToggleBookmarkMutation,
   useSaveASTMutation,
   useEndowmentCardsQuery,
+  useStrategyCardsQuery,
   useEndowmentIdNamesQuery,
   useProfileQuery,
   useEditProfileMutation,
@@ -168,6 +188,7 @@ const endowCardObj: {
   id: "",
   image: "",
   kyc_donors_only: "",
+  contributor_verification_required: "",
   name: "",
   tagline: "",
   endow_type: "",

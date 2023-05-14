@@ -1,10 +1,17 @@
 import { NetworkType, TransactionStatus } from "../../lists";
-import { WithBalance } from "../../utils";
 import { SortDirection } from "../ap";
 
 /**
  * put all aws/apes definitions here, if big category exist, separate in a file
  */
+
+export type TokenType =
+  | "juno-native"
+  | "terra-native"
+  | "evm-native"
+  | "erc20"
+  | "cw20"
+  | "ibc";
 
 export type Token = {
   approved: boolean; // true
@@ -14,18 +21,8 @@ export type Token = {
   name: string; // "Stader LunaX Token"
   symbol: string; // DB Partition key ex., "LunaX"
   token_id: string; // "ujuno" | "0xaSD123..." | "ibc/ASH3438hfd..."
-  type:
-    | "juno-native"
-    | "terra-native"
-    | "evm-native"
-    | "erc20"
-    | "cw20"
-    | "ibc"
-    | "placeholder"
-    | "fiat";
+  type: TokenType;
 };
-
-export type TokenWithBalance = WithBalance<Token> & { gift?: number };
 
 export type BaseChain = {
   chain_id: string;
@@ -40,11 +37,6 @@ export type FetchedChain = BaseChain & {
   rpc_url: string; // https://api.avax-test.network/ext/bc/C/rpc
   tokens: Token[];
   type: "juno-native" | "terra-native" | "evm-native" | "placeholder"; // | "sol" | "btc" | ...
-};
-
-export type Chain = Omit<FetchedChain, "native_currency" | "tokens"> & {
-  tokens: TokenWithBalance[];
-  native_currency: TokenWithBalance;
 };
 
 export type RouteStatus = "OK" | "DEPOSIT_CONFIRMED" | "PENDING";
@@ -78,10 +70,7 @@ export type WithdrawLog = {
   routes?: WithdrawRoute[];
 };
 
-export type WithdrawLogSortKey = Extract<
-  keyof WithdrawLog,
-  "start_time" | "amount"
->;
+type WithdrawLogSortKey = Extract<keyof WithdrawLog, "start_time" | "amount">;
 
 export type WithdrawLogQueryParams = {
   cw3: string; // CW3 address

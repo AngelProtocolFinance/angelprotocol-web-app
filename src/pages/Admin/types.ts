@@ -3,10 +3,9 @@ import { EndowmentProposal } from "types/aws";
 import {
   Asset,
   EndowmentStatus,
-  EndowmentStatusStrNum,
   EndowmentStatusText,
   FundDetails,
-  RegistrarConfigExtensionPayload,
+  RegistrarConfigPayload,
   RegistrarOwnerPayload,
 } from "types/contracts";
 import { DiffSet } from "types/utils";
@@ -101,8 +100,8 @@ export type EndowmentStatusMeta = MetaConstructor<
   "acc_endow_status",
   {
     id: number;
-    fromStatus: keyof EndowmentStatus;
-    toStatus: EndowmentStatusStrNum;
+    fromStatus: EndowmentStatus;
+    toStatus: EndowmentStatus;
     beneficiary?: string;
   }
 >;
@@ -110,7 +109,7 @@ export type EndowmentStatusMeta = MetaConstructor<
 /** _registrar */
 export type RegistrarConfigUpdateMeta = MetaConstructor<
   "reg_config_extension",
-  DiffSet<RegistrarConfigExtensionPayload>
+  DiffSet<RegistrarConfigPayload>
 >;
 
 export type ProposalMeta =
@@ -166,7 +165,7 @@ export type CW3ConfigValues<T extends FormCW3Config> = ProposalBase &
 
 export type EndowmentUpdateValues = ProposalBase & {
   id: number;
-  status: Exclude<EndowmentStatusStrNum, "0">;
+  status: Exclude<EndowmentStatusText, "closed">;
   //address to transfer funds when endowment will be closed
 
   //beneficiary type
@@ -199,8 +198,8 @@ export type MemberUpdatorValues = ProposalBase & {
 };
 
 export type RegistrarConfigExtensionValues = ProposalBase &
-  RegistrarConfigExtensionPayload & {
-    initialConfigPayload: RegistrarConfigExtensionPayload;
+  RegistrarConfigPayload & {
+    initialConfigPayload: RegistrarConfigPayload;
   };
 
 export type RegistrarOwnerValues = ProposalBase &

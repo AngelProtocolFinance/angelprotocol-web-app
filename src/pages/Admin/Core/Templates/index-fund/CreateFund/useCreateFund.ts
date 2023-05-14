@@ -29,8 +29,8 @@ export default function useCreateFund() {
       "description",
       "name",
       "about",
-      "expiry.height",
-      "expiry.time",
+      "expiryHeight",
+      "expiryTime",
     ]);
 
     if (!isValid) return;
@@ -42,7 +42,7 @@ export default function useCreateFund() {
     }
 
     const currHeight = getValues("height");
-    let expiryHeight = getValues("expiry.height");
+    let expiryHeight = getValues("expiryHeight");
 
     if (+expiryHeight < +currHeight) {
       return showModal(TxPrompt, {
@@ -50,17 +50,17 @@ export default function useCreateFund() {
       });
     }
 
-    const expiryTime = getValues("expiry.time");
-    const split = getValues("liqSplit");
+    const expiryTime = getValues("expiryTime");
+    const split = getValues("splitToLiquid");
 
     const [data, dest] = encodeTx("index-fund.create-fund", {
       name: getValues("name"),
       description: getValues("about"),
-      members: newFundMembers,
-      rotatingFund: getValues("isRotating"),
-      splitToLiquid: split === INIT_SPLIT ? 0 : +split,
-      expiryTime: expiryTime === "" ? 0 : blockTime(expiryTime),
-      expiryHeight: expiryHeight === "" ? 0 : +expiryHeight,
+      members: newFundMembers.map((m) => m.toString()),
+      rotatingFund: getValues("rotatingFund"),
+      splitToLiquid: split === INIT_SPLIT ? "0" : split,
+      expiryTime: expiryTime === "" ? "0" : blockTime(expiryTime).toString(),
+      expiryHeight: expiryHeight === "" ? "0" : expiryHeight,
     });
 
     const tx = createTx(wallet.address, "multisig.submit-transaction", {

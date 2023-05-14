@@ -77,7 +77,7 @@ export default function Form() {
         fieldName="hqCountry"
         placeholder="Select a country"
         classes={{
-          container: "px-4 bg-orange-l6 dark:bg-blue-d7",
+          container: "px-4",
           input: "text-sm py-3.5",
           error: "field-error",
         }}

@@ -30,7 +30,7 @@ export const purchase = createAsyncThunk<void, Args>(
       }
 
       const { hash, data } = result;
-      const depositID = data as undefined | string;
+      const depositID = data as null | string;
       if (details.recipient) {
         return updateTx({ hash: result.hash });
       }

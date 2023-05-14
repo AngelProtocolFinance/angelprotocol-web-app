@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Transaction } from "types/contracts/evm/multisig";
+import { Transaction } from "types/contracts/multisig";
 import { Status } from "components/admin";
 import { adminRoutes } from "constants/routes";
 

@@ -2,6 +2,7 @@ import * as Yup from "yup";
 import { SchemaShape } from "schemas/types";
 import { SettingsPermission } from "types/contracts";
 import { requiredWalletAddr } from "schemas/string";
+import { chainIds } from "constants/chainIds";
 
 export type FormField = Omit<SettingsPermission, "delegate"> & {
   name: string;
@@ -28,7 +29,7 @@ const govControlledKey: keyof FormField = "govControlled";
 const fieldShape: SchemaShape<FormField> = {
   delegate_address: Yup.string().when(delegatedKey, {
     is: true,
-    then: requiredWalletAddr(),
+    then: requiredWalletAddr(chainIds.polygon),
     otherwise: (schema) => schema.optional(),
   }),
   // it is sufficient to validate only `ownerControlled` field, since the way the validation is defined

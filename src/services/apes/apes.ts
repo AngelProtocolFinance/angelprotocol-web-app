@@ -1,19 +1,20 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { ChainQueryArgs } from "services/types";
+import { ChainQueryArgs } from "../types";
 import {
   BaseChain,
-  Chain,
   FetchedChain,
   PaginatedAWSQueryRes,
   Token,
   WithdrawLog,
   WithdrawLogQueryParams,
 } from "types/aws";
+import { Chain } from "types/tx";
 import { UnsupportedChainError } from "errors/errors";
 import { chainIds } from "constants/chainIds";
 import { IS_TEST, JUNO_LCD_OVERRIDE, JUNO_RPC_OVERRIDE } from "constants/env";
 import { APIs } from "constants/urls";
 import { fetchBalances } from "./helpers/fetchBalances";
+import { tags } from "./tags";
 
 export const apes = createApi({
   reducerPath: "apes",
@@ -21,7 +22,7 @@ export const apes = createApi({
     baseUrl: APIs.apes,
     mode: "cors",
   }),
-  tagTypes: ["chain", "withdraw_logs", "donations", "tokens"],
+  tagTypes: tags,
   endpoints: (builder) => ({
     chains: builder.query<BaseChain[], unknown>({
       query: () => `v1/chains${IS_TEST ? "/test" : ""}`,
@@ -38,10 +39,16 @@ export const apes = createApi({
       async queryFn({ address, chainId, providerId }, api, options, baseQuery) {
         try {
           const { data } = await baseQuery(`v1/chain/${chainId}`);
-          const chain = overrideURLs(data as FetchedChain);
+          const chain = overrides(data as FetchedChain);
 
           const [native, ...tokens] = await fetchBalances(
-            chain,
+            {
+              ...chain,
+              tokens: chain.tokens.map((t) => ({
+                ...t,
+                token_id: t.token_id.toLowerCase(),
+              })),
+            },
             address,
             providerId
           );
@@ -68,7 +75,7 @@ export const apes = createApi({
   }),
 });
 
-function overrideURLs(chain: FetchedChain): FetchedChain {
+function overrides(chain: FetchedChain): FetchedChain {
   if (chain.chain_id === chainIds.juno) {
     return {
       ...chain,

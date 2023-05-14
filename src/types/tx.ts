@@ -2,9 +2,20 @@ import { EncodeObject } from "@cosmjs/proto-signing";
 import { StdFee } from "@cosmjs/stargate";
 import { CreateTxOptions, Msg } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
-import { Chain } from "./aws";
+import { OverrideProperties } from "type-fest";
+import { FetchedChain, Token, TokenType } from "./aws";
 import { EVMTx, LogProcessor, SimulTx } from "./evm";
 import { TagPayload } from "./third-party/redux";
+
+export type TokenWithBalance = OverrideProperties<
+  Token,
+  { type: TokenType | "erc20-gift" | "evm-native-gift" }
+> & { balance: number };
+
+export type Chain = Omit<FetchedChain, "native_currency" | "tokens"> & {
+  tokens: TokenWithBalance[];
+  native_currency: TokenWithBalance;
+};
 
 // //////////// SEND TX ////////////
 export type CosmosTx = {
@@ -23,9 +34,9 @@ export type EstimatedTx =
 
 export type SubmittedTx = { hash: string; chainID: string };
 
-export type TxLoading = { loading: string };
-export type TxError = { error: string; tx?: SubmittedTx };
-export type TxSuccess = SubmittedTx & { data: unknown };
+type TxLoading = { loading: string };
+type TxError = { error: string; tx?: SubmittedTx };
+type TxSuccess = SubmittedTx & { data: unknown };
 
 export type TxResult = TxError | TxSuccess;
 
@@ -35,7 +46,7 @@ export type TxContent =
   | { type: "terra"; val: Msg[]; wallet: ConnectedWallet }
   | { type: "evm"; val: SimulTx; log?: LogProcessor };
 
-export type Fee = { amount: number; symbol: string };
+type Fee = { amount: number; symbol: string };
 export type Estimate = { fee: Fee; tx: EstimatedTx };
 
 // //////////// HOOK SENDER & PROMPT ////////////

@@ -3,16 +3,14 @@ import { PropsWithChildren, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { TokenWithAmount } from "types/slices";
 import { Estimate } from "types/tx";
-import { WithWallet } from "contexts/WalletContext";
 import Image from "components/Image";
 import { ErrorStatus, LoadingStatus } from "components/Status";
 import { useSetter } from "store/accessors";
-import { SubmitStep, setStep } from "slices/donation";
+import { SubmitStep, WithWallet, isFiat, setStep } from "slices/donation";
 import { sendDonation } from "slices/donation/sendDonation";
 import { humanize } from "helpers";
 import { appRoutes } from "constants/routes";
 import { estimateDonation } from "./estimateDonation";
-import getBreakdown from "./getBreakdown";
 
 type EstimateStatus = Estimate | "loading" | "error";
 
@@ -35,16 +33,13 @@ export default function Submit(props: WithWallet<SubmitStep>) {
 
   function submit({ tx }: Estimate) {
     const { wallet, ...donation } = props;
-    dispatch(sendDonation({ donation, wallet, tx }));
+    dispatch(sendDonation({ donation: donation, wallet: wallet, tx }));
   }
 
   const { token } = props.details;
-  const { chain } = props.wallet;
   const { id: endowId } = props.recipient;
 
   const isNotEstimated = estimate === "error" || estimate === "loading";
-
-  const { fromBal, fromGift } = getBreakdown(token);
 
   return (
     <div className="grid content-start">
@@ -55,19 +50,18 @@ export default function Submit(props: WithWallet<SubmitStep>) {
         />
         <span>{token.symbol}</span>
       </Row>
-      <Row title="Blockchain:">
-        <span>{chain.chain_name}</span>
-      </Row>
+      {isFiat(props.wallet) || token.type === "fiat" ? (
+        <></>
+      ) : (
+        <Row title="Blockchain:">
+          <span>{props.wallet.chain.chain_name}</span>
+        </Row>
+      )}
       <Row title="Amount:">
         <span>
-          {token.symbol} {humanize(fromBal, 4)}
+          {token.symbol} {humanize(token.amount, 4)}
         </span>
       </Row>
-      {fromGift ? (
-        <Row title="Giftcard:">
-          {token.symbol} {humanize(fromGift, 4)}
-        </Row>
-      ) : null}
       <TxTotal estimate={estimate} token={token} />
       <div className="mt-14 grid grid-cols-2 gap-5">
         <button

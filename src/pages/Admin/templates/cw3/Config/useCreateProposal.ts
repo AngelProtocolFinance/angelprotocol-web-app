@@ -52,8 +52,6 @@ export default function usePropose() {
       });
     }
 
-    // const contract = new CW3(wallet, multisig);
-
     const [data, dest] = encodeTx("multisig.change-threshold", {
       multisig,
       threshold: +threshold,

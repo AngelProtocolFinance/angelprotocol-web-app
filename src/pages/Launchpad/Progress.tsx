@@ -1,11 +1,25 @@
 import { PropsWithChildren, useState } from "react";
+import { Link } from "react-router-dom";
+import { Progress as TProgress } from "slices/launchpad/types";
 import { DrawerIcon } from "components/Icon";
 import { useGetter } from "store/accessors";
 import useHandleScreenResize, { SCREEN_MD } from "hooks/useHandleScreenResize";
 
-type Props = { step: number; classes?: string };
+type Props = { currentStep: string; classes?: string };
 
-export default function Progress({ step, classes = "" }: Props) {
+const steps: { [K in TProgress]: string } = {
+  "1": "About",
+  "2": "Management",
+  "3": "Whitelists",
+  "4": "Maturity",
+  "5": "Split of Contribution",
+  "6": "Fees",
+  "7": "Connect Wallet",
+  "8": "Summary",
+};
+const [[_1, about], ...others] = Object.entries(steps);
+
+export default function Progress({ currentStep, classes = "" }: Props) {
   const { progress: p } = useGetter((state) => state.launchpad);
   const [isOtherStepsShown, setIsOtherStepsShown] = useState(true);
 
@@ -31,8 +45,13 @@ export default function Progress({ step, classes = "" }: Props) {
   return (
     <div className={`py-4 pl-6 pr-4 ${classes} dark:text-gray`}>
       <div className="relative">
-        <Step classes="relative" isDone={p >= 1} isCurr={step === 1}>
-          About
+        <Step
+          classes="relative"
+          currentStep={currentStep}
+          progress={p}
+          step={_1}
+        >
+          {about}
         </Step>
         <button
           className="absolute top-1/2 -right-5 transform -translate-y-1/2 md:hidden"
@@ -44,43 +63,31 @@ export default function Progress({ step, classes = "" }: Props) {
         </button>
       </div>
 
-      {isOtherStepsShown && (
-        <>
-          <Step isDone={p >= 2} isCurr={step === 2}>
-            Management
+      {isOtherStepsShown &&
+        others.map(([step, label]) => (
+          <Step currentStep={currentStep} progress={p} step={step} key={step}>
+            {label}
           </Step>
-          <Step isDone={p >= 3} isCurr={step === 3}>
-            Whitelists
-          </Step>
-          <Step isDone={p >= 4} isCurr={step === 4}>
-            Maturity
-          </Step>
-          <Step isDone={p >= 5} isCurr={step === 5}>
-            Split of Contribution
-          </Step>
-          <Step isDone={p >= 6} isCurr={step === 6}>
-            Fees
-          </Step>
-          <Step isDone={p >= 7} isCurr={step === 7}>
-            Summary
-          </Step>
-        </>
-      )}
+        ))}
     </div>
   );
 }
 
 type StepProps = {
-  isDone: boolean;
-  isCurr: boolean;
+  currentStep: string;
+  progress: number;
+  step: string;
   classes?: string;
 };
 function Step({
   children,
-  isDone,
-  isCurr,
+  currentStep,
+  progress,
+  step,
   classes = "",
 }: PropsWithChildren<StepProps>) {
+  const isDone = progress >= parseInt(step);
+  const isCurr = currentStep === step;
   return (
     <div className={`group ${classes}`}>
       {/** line */}
@@ -96,13 +103,15 @@ function Step({
             isDone ? "bg-orange" : "bg-gray-l3 dark:bg-bluegray"
           } rounded-full transform -translate-x-1/2`}
         />
-        <span
-          className={`text-sm ${
+        <Link
+          aria-disabled={!isDone || isCurr}
+          to={step.toString()}
+          className={`text-sm aria-disabled:pointer-events-none ${
             isCurr ? "text-orange" : "text-gray-d1 dark:text-gray"
           }`}
         >
           {children}
-        </span>
+        </Link>
       </div>
     </div>
   );

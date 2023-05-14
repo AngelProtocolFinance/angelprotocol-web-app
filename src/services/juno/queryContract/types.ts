@@ -2,14 +2,12 @@ import {
   EndowmentDetails,
   EndowmentState,
   FundDetails,
-  GenericBalance,
+  GenericBalMap,
   IndexFundConfig,
-  PageOptions,
   RegistrarConfig,
-  RegistrarConfigExtension,
 } from "types/contracts";
 import { AccountType } from "types/contracts/evm";
-import { Transaction } from "types/contracts/evm/multisig";
+import { PageOptions, Transaction } from "types/contracts/multisig";
 import { Contract } from "types/lists";
 
 type Addr = { addr: string };
@@ -21,8 +19,6 @@ type Query<Args, Result> = {
 
 export interface ContractQueries {
   "registrar.config": Query<null, RegistrarConfig>;
-  "registrar.config-extension": Query<null, RegistrarConfigExtension>;
-
   "index-fund.funds": Query<
     {
       startAfter: number;
@@ -39,9 +35,10 @@ export interface ContractQueries {
   >;
   "index-fund.config": Query<null, IndexFundConfig>;
 
-  "gift-card.balance": Query<Addr, GenericBalance>;
+  "gift-card.balance": Query<Addr, GenericBalMap>;
 
   "erc20.balance": Query<Addr, string>;
+  "erc20.allowance": Query<{ owner: string; spender: string }, string>;
 
   "multisig.members": Query<null, string[]>;
   "multisig.txs": Query<PageOptions, Pick<Transaction, "id" | "status">[]>;

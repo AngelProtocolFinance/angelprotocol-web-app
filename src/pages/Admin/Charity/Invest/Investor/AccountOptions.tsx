@@ -3,9 +3,13 @@ import { UseFormRegisterReturn, useFormContext } from "react-hook-form";
 import { FormValues } from "./types";
 import { AccountType } from "types/lists";
 import { humanize } from "helpers";
-import { TStrategy } from "../strats";
 
-type Props = Pick<TStrategy, "balances"> & { classes?: string };
+type UserBalances = {
+  locked: number;
+  liquid: number;
+};
+
+type Props = { balances: UserBalances; classes?: string };
 
 export default function AccountOptions({ balances, classes = "" }: Props) {
   const { register, watch, setValue, trigger, getFieldState } =

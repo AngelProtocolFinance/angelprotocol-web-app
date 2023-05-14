@@ -1,22 +1,18 @@
+import { adminRoutes } from "constants/routes";
+import Seo from "../Seo";
 import Balances from "../common/Balances";
-import Strategy from "./Strategy";
-import { strategies } from "./strats";
+import Strategies from "./Strategies";
 
 export default function Invest() {
   return (
     <div>
+      <Seo title="Invest Dashboard" url={adminRoutes.invest} />
+
       <h3 className="font-bold text-[2rem] mb-8 max-sm:text-center">
         Invest Dashboard
       </h3>
       <Balances />
-      <h3 className="font-bold text-2xl my-8 text-center @lg:text-left">
-        Featured Strategies
-      </h3>
-      <div className="grid gap-3">
-        {strategies.map((strategy, idx) => (
-          <Strategy key={idx} {...strategy} />
-        ))}
-      </div>
+      <Strategies />
     </div>
   );
 }

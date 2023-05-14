@@ -133,7 +133,7 @@ function endowDetails<T extends keyof ED>(overrides?: Override<T>[]): ED {
     maturityTime: 1000,
     whitelistedBeneficiaries: [],
     maturityWhitelist: [],
-    kyc_donors_only: false,
+    kycDonorsOnly: false,
     settingsController: {} as any, //not relevant to this test
     ...(overrides || []).reduce(
       (prev, curr) => ({ ...prev, [curr[0]]: curr[1] }),

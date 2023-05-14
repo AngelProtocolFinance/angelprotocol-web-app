@@ -22,7 +22,7 @@ export default function Recipient({ classes = "" }: { classes?: string }) {
         id={fieldName}
         type="text"
         className="font-work"
-        placeholder="e.g. juno123abc8910xyz.."
+        placeholder="e.g. 0x51d0e5cff.."
         autoComplete="off"
       />
       <ErrorMessage data-error as="p" errors={errors} name={fieldName} />

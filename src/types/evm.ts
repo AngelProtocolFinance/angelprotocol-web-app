@@ -16,7 +16,7 @@ export type SimulSendNativeTx = Pick<
 export type SimulContractTx = Pick<
   EVMTx & { data: string },
   "from" | "to" | "data"
->;
+> & { value?: string };
 
 export type SimulTx = SimulContractTx | SimulSendNativeTx;
 
@@ -28,7 +28,7 @@ export interface RequestArguments {
   readonly params?: readonly unknown[] | object;
 }
 
-export type TxLog = {
+type TxLog = {
   address: string;
   topics: string[];
   data: string;
@@ -54,8 +54,6 @@ export type InjectedProvider = {
   removeListener?(ev: "accountsChanged", listener: AccountChangeHandler): any;
   removeAllListeners?: any;
 };
-
-export type WCProvider = Pick<InjectedProvider, "request">;
 
 export type Primitives = number | string | boolean;
 export type Tupleable = {

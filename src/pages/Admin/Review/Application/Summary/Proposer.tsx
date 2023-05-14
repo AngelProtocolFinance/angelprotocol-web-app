@@ -90,7 +90,11 @@ export default function Proposer({ type, appId, reference }: Props) {
       }
 
       showModal(TxPrompt, {
-        success: { message: "Proposal has been created" },
+        success: {
+          message: `Proposal has been created${
+            propMeta.willExecute ? " and auto-executed" : "."
+          }`,
+        },
         tx: okTx,
       });
     };

@@ -13,23 +13,9 @@ export enum appRoutes {
   endowment_admin = "/endowment-admin",
   donations = "/donations",
   donate = "/donate",
-  donate_fiat = "/donate-fiat",
   donate_fiat_thanks = "/donate-fiat-thanks",
   donate_widget = "/donate-widget",
   gift = "/gift",
-}
-
-export enum governRoutes {
-  index = "",
-  pollDetails = "pollDetails",
-}
-
-export enum profileRoutes {
-  overview = "overview",
-  endowment = "endowment",
-  programs = "programs",
-  media = "media",
-  governance = "governance",
 }
 
 export const adminRoutes = {
@@ -41,6 +27,7 @@ export const adminRoutes = {
   templates: "templates",
   widget_config: "widget-config",
   contributions: "contributions",
+  contributor_verification: "contributor-verification",
   permissions: "permissions",
 
   //charity
@@ -50,4 +37,6 @@ export const adminRoutes = {
   // settings: "settings",
   invest: "invest-dashboard",
   account: "account",
+
+  application: "application",
 } as const;

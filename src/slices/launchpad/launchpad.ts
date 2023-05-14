@@ -20,7 +20,7 @@ const launchpad = createSlice({
       { payload }: PayloadAction<{ step: Steps; payload: Completed[Steps] }>
     ) => {
       //if completed, don't update
-      if (state.progress < 7) {
+      if (state.progress < 8) {
         state.progress = (payload.step + 1) as Progress;
       }
 
@@ -45,7 +45,7 @@ export function useLaunchpad<T extends Steps>(step: T) {
   return {
     update(payload: Completed[T]) {
       dispatch(launchpad.actions.update({ step, payload }));
-      if (state.progress === 7) {
+      if (state.progress === 8) {
         //if completed, always navigate to summary
         navigate(`../${state.progress}`);
       } else {

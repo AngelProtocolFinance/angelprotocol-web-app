@@ -14,7 +14,7 @@ export default function projectFunds(
   return projectFunds(years - 1, new_locked, new_liq, apy, harvest_rate);
 }
 
-export function getNextYearVal(
+function getNextYearVal(
   apy: number, //annual rate
   mode: number, //num times compounded on course of period
   pv: number // current value

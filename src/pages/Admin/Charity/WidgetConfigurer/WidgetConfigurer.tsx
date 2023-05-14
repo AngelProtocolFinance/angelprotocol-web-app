@@ -1,6 +1,8 @@
 import { FormProvider } from "react-hook-form";
 import Copier from "components/Copier";
 import { PAYMENT_WORDS } from "constants/env";
+import { adminRoutes } from "constants/routes";
+import Seo from "../Seo";
 import WidgetExample from "./WidgetExample";
 import WidgetUrlGenerator from "./WidgetUrlGenerator";
 import useWidgetConfigurer from "./useWidgetConfigurer";
@@ -8,11 +10,25 @@ import useWidgetConfigurer from "./useWidgetConfigurer";
 const TITLE_STYLE = "text-lg sm:text-2xl";
 
 export default function WidgetConfigurer() {
-  const { updateTriggered, widgetSnippet, methods, handleUpdateSnippet } =
-    useWidgetConfigurer();
+  const {
+    endowId,
+    updateTriggered,
+    widgetSnippet,
+    methods,
+    handleUpdateSnippet,
+  } = useWidgetConfigurer();
 
   return (
     <FormProvider {...methods}>
+      <Seo
+        title={`Widget Configuration${
+          endowId === 0 ? "" : ` for Endowment ${endowId}`
+        }`}
+        url={`${adminRoutes.contributor_verification}${
+          endowId === 0 ? "" : `/${endowId}`
+        }`}
+      />
+
       <div className="padded-container py-10 grid grid-rows-[auto_1fr] gap-10 w-full h-full py-5">
         <section className="flex flex-col gap-3 items-center text-center xl:items-start xl:text-left w-full">
           <h1 className={TITLE_STYLE}>

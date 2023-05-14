@@ -1,7 +1,13 @@
-import { SettingsControllerUpdate } from "types/contracts";
+import {
+  Beneficiary,
+  NewFund,
+  RegistrarConfigPayload,
+  SettingsControllerUpdate,
+} from "types/contracts";
 import { AccountType, ERC20Deposit, NewAST } from "types/contracts/evm";
 import { Allowance, Transfer } from "types/contracts/evm/erc20";
-import { NewTransaction } from "types/contracts/evm/multisig";
+import { Asset } from "types/contracts/gift-card";
+import { NewTransaction } from "types/contracts/multisig";
 import { Tupleable } from "types/evm";
 import { Contract } from "types/lists";
 
@@ -28,6 +34,23 @@ type Txs = {
     addresses: string[];
     amounts: string[];
   }>;
+  "accounts.update-status": Tx<{
+    id: number;
+    status: number;
+    beneficiary: Beneficiary;
+  }>;
+  "accounts.invest": Tx<{
+    id: number;
+    account: AccountType;
+    vaults: string[];
+    tokens: string[];
+    amounts: string[]; //uint256
+  }>;
+  "accounts.redeem": Tx<{
+    id: number;
+    account: AccountType;
+    vaults: string[];
+  }>;
 
   // //// MULTISIG ////
   "multisig.submit-transaction": Tx<NewTransaction>;
@@ -48,15 +71,7 @@ type Txs = {
     fundingGoal: number;
   }>;
   "index-fund.update-owner": Tx<{ newOwner: string }>;
-  "index-fund.create-fund": Tx<{
-    name: string;
-    description: string;
-    members: number[];
-    rotatingFund: boolean;
-    splitToLiquid: number;
-    expiryTime: number;
-    expiryHeight: number;
-  }>;
+  "index-fund.create-fund": Tx<NewFund>;
   "index-fund.remove-fund": Tx<{ id: number }>;
   "index-fund.remove-member": Tx<{ id: number }>;
   "index-fund.update-members": Tx<{
@@ -78,6 +93,18 @@ type Txs = {
 
   "charity-application.approve": Tx<{ id: number }>;
   "charity-application.reject": Tx<{ id: number }>;
+
+  "registrar.update-owner": Tx<{ newOwner: string }>;
+  "registrar.update-config": Tx<RegistrarConfigPayload>;
+
+  "gift-card.spend": Tx<{
+    asset: Asset;
+    id: number;
+    lockedPCT: number;
+    liquidPCT: number;
+  }>;
+  "gift-card.deposit-native": Tx<{ from: string; to: string }>;
+  "gift-card.deposit-erc20": Tx<{ from: string; to: string; asset: Asset }>;
 };
 
 export type TxTypes = keyof Txs;
