@@ -10,11 +10,7 @@ import { AP_ID } from "services/juno/custom";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { TxPrompt } from "components/Prompt";
-import {
-  ExecutionFailureEvent,
-  multisig as Multisig,
-  SubmissionEvent,
-} from "contracts/evm/multisig";
+import { multisig as Multisig, SubmissionEvent } from "contracts/evm/multisig";
 import useTxSender from "hooks/useTxSender";
 import { createAuthToken, logger } from "helpers";
 import { chainIds } from "constants/chainIds";
