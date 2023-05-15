@@ -63,7 +63,7 @@ export default function useSubmit() {
       }
 
       if (!isPolygonChain(wallet.chain.chain_id)) {
-        return alert("Please connect on Polygon Network");
+        return alert("Please connect to the Polygon Network");
       }
 
       const args = createUpdateEndowmentControllerMsg(id, diff, settings);

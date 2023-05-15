@@ -32,7 +32,7 @@ export default function useTransferFunds() {
     if (!isPolygonChain(wallet.chain.chain_id)) {
       return showModal(Prompt, {
         type: "error",
-        children: "Please connect on Polygon Network",
+        children: "Please connect to the Polygon Network",
       });
     }
 

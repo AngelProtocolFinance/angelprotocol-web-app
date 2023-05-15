@@ -21,7 +21,7 @@ export default function useSubmit(vault: string, type: AccountType) {
 
     if (!isPolygonChain(wallet.chain.chain_id)) {
       return showModal(TxPrompt, {
-        error: "Please connect on Polygon Network",
+        error: "Please connect to the Polygon Network",
       });
     }
 

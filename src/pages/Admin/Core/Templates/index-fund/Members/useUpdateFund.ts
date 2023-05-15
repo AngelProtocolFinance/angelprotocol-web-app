@@ -54,7 +54,7 @@ export default function useUpdateFund() {
       }
 
       if (!isPolygonChain(wallet.chain.chain_id)) {
-        throw new Error("Please connect on Polygon Network");
+        throw new Error("Please connect to the Polygon Network");
       }
 
       const [data, dest] = encodeTx("index-fund.update-members", {
