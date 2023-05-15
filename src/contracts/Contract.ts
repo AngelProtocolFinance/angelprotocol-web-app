@@ -1,16 +1,12 @@
-import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
-import { toUtf8 } from "@cosmjs/encoding";
 import { EncodeObject } from "@cosmjs/proto-signing";
 import {
-  Coin,
   DeliverTxResponse,
   GasPrice,
   StdFee,
   calculateFee,
   isDeliverTxFailure,
 } from "@cosmjs/stargate";
-import { Chain } from "types/aws";
-import { CosmosTx } from "types/tx";
+import { Chain, CosmosTx } from "types/tx";
 import { WalletState } from "contexts/WalletContext";
 import { logger } from "helpers";
 import { getKeplrClient } from "helpers/keplr";
@@ -76,22 +72,6 @@ export default class Contract {
     );
     const result = await client.signAndBroadcast(this.walletAddress, msgs, fee);
     return validateTransactionSuccess(result, this.wallet!.chain);
-  }
-
-  createExecuteContractMsg(
-    to: string,
-    msg: object,
-    funds: Coin[] = []
-  ): MsgExecuteContractEncodeObject {
-    return {
-      typeUrl: "/cosmwasm.wasm.v1.MsgExecuteContract",
-      value: {
-        contract: to,
-        sender: this.walletAddress,
-        msg: toUtf8(JSON.stringify(msg)),
-        funds,
-      },
-    };
   }
 
   private verifyWallet() {

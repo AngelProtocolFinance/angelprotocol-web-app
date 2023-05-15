@@ -1,30 +1,26 @@
-import { Coin } from "@cosmjs/proto-signing";
 import { Tupleable } from "../evm";
 import { AccountType, EndowmentType } from "../lists";
-import { Categories, EndowmentStatusText } from "./common";
-import { CW20 } from "./cw20";
-import { ADDRESS_ZERO, Beneficiary } from "./evm";
+import { Beneficiary, Categories, EndowmentStatusText } from "./common";
+import { ADDRESS_ZERO } from "./evm";
 
-export interface GenericBalance {
-  native: Coin[];
-  cw20: CW20[];
-}
+//transformed GenericBalance
+export type GenericBalMap = { native: string } & { [index: string]: string }; //erc20s
 
 export interface BalanceInfo {
-  locked: GenericBalance;
-  liquid: GenericBalance;
+  locked: GenericBalMap;
+  liquid: GenericBalMap;
 }
 
 export interface DonationsReceived {
-  locked: number;
-  liquid: number;
+  liquid: string; // uint256
+  locked: string; // uint256
 }
 
 export interface EndowmentState {
-  tokens_on_hand: BalanceInfo;
-  donations_received: DonationsReceived;
-  closing_endowment: boolean;
-  closing_beneficiary?: string;
+  donationsReceived: DonationsReceived;
+  balances: BalanceInfo;
+  closingEndowment: boolean;
+  closingBeneficiary: Beneficiary;
 }
 
 /** 

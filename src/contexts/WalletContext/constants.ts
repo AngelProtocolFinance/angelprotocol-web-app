@@ -1,5 +1,6 @@
 import { WithoutInstallers } from "./types";
-import { BaseChain, Chain } from "types/aws";
+import { BaseChain } from "types/aws";
+import { Chain } from "types/tx";
 import tokenLogo from "assets/icons/currencies/token.svg";
 import binanceWalletIcon from "assets/icons/wallets/binance.png";
 import keplrIcon from "assets/icons/wallets/keplr.png";
@@ -57,7 +58,7 @@ export const placeholderChain: Chain = {
   chain_id: "placeholder",
   chain_name: "placeholder",
   native_currency: {
-    type: "placeholder",
+    type: "evm-native",
     symbol: "NATIVE",
     logo: tokenLogo,
     decimals: 18,
@@ -72,7 +73,7 @@ export const placeholderChain: Chain = {
   lcd_url: "https://lcd-token.placeholder.com",
   tokens: [
     {
-      type: "placeholder",
+      type: "erc20",
       symbol: "TOKEN",
       logo: tokenLogo,
       decimals: 18,

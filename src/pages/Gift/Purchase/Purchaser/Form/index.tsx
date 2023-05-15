@@ -36,7 +36,6 @@ export default function Form({ classes = "" }) {
         scale={[10, 20, 50, 100, 250]}
         classes={{ label: "text-lg", inputContainer: "dark:bg-blue-d6" }}
         withBalance
-        withMininum
       />
 
       <Recipient classes="mt-8" />
