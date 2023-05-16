@@ -1,5 +1,5 @@
 import { Tupleable } from "types/evm";
-import { isTupleable } from "helpers/evm";
+import { isPrimitive } from "helpers/evm";
 import { isEmpty } from "helpers/isEmpty";
 
 type Flat = Record<string, string | number | boolean>;
@@ -10,11 +10,7 @@ export function flatten(obj: Tupleable, curr: Flat = {}, path = ""): Flat {
   if (entries.length === 0) return curr;
 
   return entries.reduce((result, [key, val]) => {
-    if (
-      typeof val === "number" ||
-      typeof val === "string" ||
-      typeof val === "boolean"
-    ) {
+    if (isPrimitive(val)) {
       result[append(key, path)] = val;
       return result;
     }
@@ -24,7 +20,7 @@ export function flatten(obj: Tupleable, curr: Flat = {}, path = ""): Flat {
       const mapped: Flat[] = val.map<Flat>((v, i) => {
         const k = `${key}.${i}`;
         const p = append(k, path);
-        return isTupleable(v) ? flatten(v, result, p) : { [p]: v };
+        return isPrimitive(v) ? { [p]: v } : flatten(v, result, p);
       });
       return mapped.reduce((acc, curr) => ({ ...acc, ...curr }), result);
     }
