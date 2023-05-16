@@ -1,13 +1,11 @@
-import { DiffSet } from "types/utils";
+import { Diff, PrimitiveValue } from "types/utils";
 import placeHolderImage from "assets/images/home-banner.jpg";
 import Image from "components/Image";
 import TableSection, { Cells } from "components/TableSection";
 import { bucketURL } from "helpers/uploadFiles";
 import PreviewContainer from "./common/PreviewContainer";
 
-export default function DiffTable<T extends object>(props: {
-  diffSet: DiffSet<T>;
-}) {
+export default function DiffTable(props: { diffs: Diff[] }) {
   return (
     <PreviewContainer>
       <table>
@@ -23,7 +21,7 @@ export default function DiffTable<T extends object>(props: {
           </Cells>
         </TableSection>
         <TableSection type="tbody" rowClass="border-b border-prim">
-          {props.diffSet.map(([key, prev, next]) => (
+          {props.diffs.map(([key, prev, next]) => (
             <Cells
               type="td"
               cellClass="text-right p-2 border-r border-prim truncate max-w-2xl"
@@ -42,11 +40,7 @@ export default function DiffTable<T extends object>(props: {
   );
 }
 
-function createColumn<T extends object>(value: T[keyof T]): JSX.Element {
-  if (!value) {
-    return <>not set</>;
-  }
-
+function createColumn(value: PrimitiveValue): JSX.Element {
   // if the string value starts with the IPFS gateway URL value, this is surely a file
   // the user has uploaded and a preview should be displayed
   if (typeof value === "string" && value.startsWith(bucketURL)) {

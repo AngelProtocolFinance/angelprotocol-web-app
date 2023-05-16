@@ -8,9 +8,8 @@ import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { isEmpty } from "helpers";
 import { getPayloadDiff, getTagPayloads } from "helpers/admin";
-import { Obj } from "helpers/admin/flatten";
 import { UnexpectedStateError } from "errors/errors";
-import { createUpdateEndowmentControllerMsg } from "./helpers";
+import { controllerUpdate } from "./helpers";
 import { FormValues } from "./schema";
 import useUserAuthorization from "./useUserAuthorization";
 
@@ -41,9 +40,9 @@ export default function useSubmit() {
   }, [isValid, trigger]);
 
   async function onSubmit({
-    initialValues,
+    initial,
     endowment_controller,
-    ...newValues
+    ...fv
   }: FormValues) {
     try {
       if (!endowment_controller.modifiableAfterInit) {
@@ -52,7 +51,8 @@ export default function useSubmit() {
         );
       }
 
-      const diff = getPayloadDiff(initialValues, newValues);
+      const update = controllerUpdate(id, fv, settings);
+      const diff = getPayloadDiff(initial, update);
 
       if (isEmpty(Object.entries(diff))) {
         return handleError("No changes detected");
@@ -62,8 +62,6 @@ export default function useSubmit() {
         return alert("wallet not connected");
       }
 
-      const args = createUpdateEndowmentControllerMsg(id, diff, settings);
-
       let tx: SimulContractTx;
 
       // Unauthorized & non-delegated users wouldn't even be able to submit,
@@ -72,9 +70,12 @@ export default function useSubmit() {
       // Users who are delegates for the whole controller can send direct update msg,
       // thus bypassing the need to create a proposal (even if they are a member of CW3 owners)
       if (userDelegated) {
-        tx = createTx(wallet.address, "accounts.update-controller", args);
+        tx = createTx(wallet.address, "accounts.update-controller", update);
       } else {
-        const [data, dest, meta] = encodeTx("accounts.update-controller", args);
+        const [data, dest, meta] = encodeTx(
+          "accounts.update-controller",
+          update
+        );
         tx = createTx(wallet.address, "multisig.submit-transaction", {
           multisig,
           title: `Update permission settings`,

@@ -21,7 +21,8 @@ export default function Preview(props: TxMeta) {
     case "index-fund.update-members":
       return <FundMemberUpdate {...props.data} />;
     case "index-fund.config":
-      return <DiffTable diffSet={props.data} />;
+    case "registrar.update-config":
+      return <DiffTable diffs={props.data} />;
     case "index-fund.update-owner":
     case "registrar.update-owner":
       return <OwnerUpdate {...props.data} />;
@@ -42,9 +43,6 @@ export default function Preview(props: TxMeta) {
 
     case "erc20.transfer":
       return <FundTransfer {...props.data} />;
-
-    case "registrar.update-config":
-      return <DiffTable diffSet={props.data} />;
 
     default:
       return <div className="p-2">no preview</div>;

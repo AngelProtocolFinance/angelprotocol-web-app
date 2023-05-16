@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 import { SchemaShape } from "schemas/types";
-import { SettingsPermission } from "types/contracts";
+import { SettingsControllerUpdate, SettingsPermission } from "types/contracts";
 import { requiredWalletAddr } from "schemas/string";
 import { chainIds } from "constants/chainIds";
 
@@ -19,7 +19,7 @@ export type UpdateableFormValues = {
 };
 
 export type FormValues = UpdateableFormValues & {
-  initialValues: UpdateableFormValues;
+  initial: SettingsControllerUpdate;
   endowment_controller: FormField;
 };
 

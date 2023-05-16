@@ -6,11 +6,13 @@ import { ADDRESS_ZERO } from "constants/evm";
 import { adminRoutes } from "constants/routes";
 import Seo from "../Seo";
 import Form from "./Form";
+import { controllerUpdate } from "./helpers";
 import { FormField, FormValues, UpdateableFormValues, schema } from "./schema";
 
 export default function Permissions() {
-  const { settingsController: controller } = useAdminResources<"charity">();
-  const initialValues: UpdateableFormValues = {
+  const { settingsController: controller, id } = useAdminResources<"charity">();
+
+  const fv: UpdateableFormValues = {
     accountFees: createField(controller.aumFee, "Changes to account fees"),
     beneficiaries_allowlist: createField(
       controller.whitelistedBeneficiaries,
@@ -26,11 +28,12 @@ export default function Permissions() {
     ),
     profile: createField(controller.name, "Changes to profile"),
   };
+
   const methods = useForm<FormValues>({
     defaultValues: {
-      initialValues,
+      initial: controllerUpdate(id, fv, controller),
       endowment_controller: createField(controller.endowmentController),
-      ...initialValues,
+      ...fv,
     },
     resolver: yupResolver(schema),
   });
