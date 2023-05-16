@@ -1,6 +1,6 @@
 import { Primitives, Tuple, Tupleable } from "types/evm";
 
-function isTupleable(val: Primitives | Tupleable): val is Tupleable {
+export function isTupleable(val: Primitives | Tupleable): val is Tupleable {
   return !(
     typeof val === "number" ||
     typeof val === "string" ||
