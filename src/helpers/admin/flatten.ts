@@ -6,13 +6,6 @@ export type Obj = {
 };
 type Flat = Record<string, Primitive>;
 
-const append = (key: string, path = "") => (path ? `${path}.${key}` : key);
-const isPrimitive = (val: Obj[string]): val is Primitive =>
-  typeof val === "string" ||
-  typeof val === "number" ||
-  typeof val === "boolean" ||
-  val == null;
-
 export function flatten(obj: Obj, curr: Flat = {}, path = ""): Flat {
   const entries = Object.entries(obj);
   if (entries.length === 0) return curr;
@@ -36,3 +29,10 @@ export function flatten(obj: Obj, curr: Flat = {}, path = ""): Flat {
     return { ...result, ...flatten(val, result, append(key, path)) };
   }, curr);
 }
+
+const append = (key: string, path = "") => (path ? `${path}.${key}` : key);
+const isPrimitive = (val: Obj[string]): val is Primitive =>
+  typeof val === "string" ||
+  typeof val === "number" ||
+  typeof val === "boolean" ||
+  val == null;
