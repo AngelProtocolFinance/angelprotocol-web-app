@@ -1,11 +1,19 @@
-import { Tupleable } from "types/evm";
-import { isPrimitive } from "helpers/evm";
+import { Primitive } from "type-fest";
 import { isEmpty } from "helpers/isEmpty";
 
-type Flat = Record<string, string | number | boolean>;
-const append = (key: string, path = "") => (path ? `${path}.${key}` : key);
+export type Obj = {
+  [index: string]: Primitive | Primitive[] | Obj | Obj[] | (Primitive | Obj)[];
+};
+type Flat = Record<string, Primitive>;
 
-export function flatten(obj: Tupleable, curr: Flat = {}, path = ""): Flat {
+const append = (key: string, path = "") => (path ? `${path}.${key}` : key);
+const isPrimitive = (val: Obj[string]): val is Primitive =>
+  typeof val === "string" ||
+  typeof val === "number" ||
+  typeof val === "boolean" ||
+  val == null;
+
+export function flatten(obj: Obj, curr: Flat = {}, path = ""): Flat {
   const entries = Object.entries(obj);
   if (entries.length === 0) return curr;
 

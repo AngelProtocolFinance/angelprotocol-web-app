@@ -55,15 +55,15 @@ export type InjectedProvider = {
   removeAllListeners?: any;
 };
 
-export type Primitives = number | string | boolean;
+export type Primitive = number | string | boolean;
 export type Tupleable = {
   [index: string]:
-    | Primitives
-    | Primitives[]
+    | Primitive
+    | Primitive[]
     | Tupleable
     | Tupleable[]
-    | (Primitives | Tupleable)[];
+    | (Primitive | Tupleable)[];
   // | add future combination here
 };
 
-export type Tuple = (Primitives | Tuple)[];
+export type Tuple = (Primitive | Tuple)[];
