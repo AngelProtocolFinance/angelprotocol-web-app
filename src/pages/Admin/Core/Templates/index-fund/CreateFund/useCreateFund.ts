@@ -3,7 +3,6 @@ import { useFormContext } from "react-hook-form";
 import { FormValues } from "./types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
 import { TxPrompt } from "components/Prompt";
 import { useGetter } from "store/accessors";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
@@ -12,8 +11,7 @@ import { blockTime } from "helpers/admin";
 import { INIT_SPLIT } from "./index";
 
 export default function useCreateFund() {
-  const { multisig, propMeta } = useAdminResources();
-  const { wallet } = useGetWallet();
+  const { multisig, propMeta, getWallet } = useAdminResources();
   const sendTx = useTxSender();
   const { showModal } = useModalContext();
   const { trigger, getValues } = useFormContext<FormValues>();
@@ -34,12 +32,8 @@ export default function useCreateFund() {
     ]);
 
     if (!isValid) return;
-
-    if (!wallet) {
-      return showModal(TxPrompt, {
-        error: "Wallet not connected",
-      });
-    }
+    const wallet = getWallet();
+    if (typeof wallet === "function") return wallet();
 
     const currHeight = getValues("height");
     let expiryHeight = getValues("expiryHeight");

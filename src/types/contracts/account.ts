@@ -1,36 +1,26 @@
-import { Coin } from "@cosmjs/proto-signing";
 import { Tupleable } from "../evm";
-import { AccountType } from "../lists";
-import {
-  Asset,
-  Categories,
-  EndowmentStatus,
-  EndowmentStatusText,
-  EndowmentType,
-} from "./common";
-import { CW20 } from "./cw20";
+import { AccountType, EndowmentType } from "../lists";
+import { Beneficiary, Categories, EndowmentStatusText } from "./common";
 import { ADDRESS_ZERO, SplitDetails } from "./evm";
 
-export interface GenericBalance {
-  native: Coin[];
-  cw20: CW20[];
-}
+//transformed GenericBalance
+export type GenericBalMap = { native: string } & { [index: string]: string }; //erc20s
 
 export interface BalanceInfo {
-  locked: GenericBalance;
-  liquid: GenericBalance;
+  locked: GenericBalMap;
+  liquid: GenericBalMap;
 }
 
 export interface DonationsReceived {
-  locked: number;
-  liquid: number;
+  liquid: string; // uint256
+  locked: string; // uint256
 }
 
 export interface EndowmentState {
-  tokens_on_hand: BalanceInfo;
-  donations_received: DonationsReceived;
-  closing_endowment: boolean;
-  closing_beneficiary?: string;
+  donationsReceived: DonationsReceived;
+  balances: BalanceInfo;
+  closingEndowment: boolean;
+  closingBeneficiary: Beneficiary;
 }
 
 /** 
@@ -129,35 +119,9 @@ export interface DepositPayload {
   liquid_percentage: string; //"0.3"
 }
 
-export interface WithdrawPayload {
-  id: number;
-  acct_type: AccountType;
-  beneficiary: string;
-  assets: Asset[];
-}
-
-export interface InvestPayload {
-  id: number;
-  acct_type: AccountType;
-  vaults: [string /**vault addr */, Asset][];
-}
-
-type VaultWithBalance = [string /**vault addr */, string /**balance */];
-
-export interface RedeemPayload {
-  id: number;
-  acct_type: AccountType;
-  vaults: VaultWithBalance[];
-}
-
-export type Beneficiary =
-  | { endowment: { id: number } }
-  | { indexfund: { id: number } }
-  | { wallet: { address: string } };
-
 export type StatusChangePayload = {
   endowment_id: number;
-  status: EndowmentStatus[keyof EndowmentStatus];
+  status: EndowmentStatusText;
   beneficiary?: Beneficiary;
 };
 
@@ -186,7 +150,7 @@ export interface SettingsControllerUpdate extends Tupleable {
   aumFee: SettingsPermission;
 }
 
-export interface EndowmentSettingsUpdate extends Tupleable {
+export type EndowmentSettingsUpdate = {
   id: number;
   donationMatchActive: boolean;
   whitelistedBeneficiaries: string[];
@@ -195,4 +159,4 @@ export interface EndowmentSettingsUpdate extends Tupleable {
   maturity_whitelist_remove: string[];
   splitToLiquid: SplitDetails;
   ignoreUserSplits: boolean;
-}
+};

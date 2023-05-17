@@ -1,7 +1,9 @@
 import { Coin } from "@cosmjs/proto-signing";
-import { FetchedChain, Token, TokenWithBalance } from "types/aws";
+import { FetchedChain, Token } from "types/aws";
 import { CW20Balance } from "types/contracts";
 import { ProviderId } from "types/lists";
+import { TokenWithBalance } from "types/tx";
+import giftIcon from "assets/icons/currencies/gift.svg";
 import { queryContract } from "services/juno/queryContract";
 import { condenseToNum, getProvider, toBase64 } from "helpers";
 
@@ -16,7 +18,7 @@ export async function fetchBalances(
 ): Promise<TokenWithBalance[]> {
   const tokens = segragate([chain.native_currency, ...chain.tokens]); //n,s
   if (chain.type === "juno-native" || chain.type === "terra-native") {
-    const [natives, gifts, ...cw20s] = await Promise.allSettled([
+    const [natives, ...cw20s] = await Promise.allSettled([
       fetch(chain.lcd_url + `/cosmos/bank/v1beta1/balances/${address}`)
         .then<CosmosBalances>((res) => {
           if (!res.ok) throw new Error("failed to get native balances");
@@ -24,17 +26,7 @@ export async function fetchBalances(
         })
         //transform for easy access
         .then(({ balances }) => toMap(balances)),
-      queryContract("gift-card.balance", {
-        addr: address,
-      }).then(({ native, cw20 }) =>
-        toMap([
-          ...native,
-          ...cw20.map<Coin>(({ address, amount }) => ({
-            denom: address,
-            amount: amount,
-          })),
-        ])
-      ),
+
       ...tokens.alts.map((x) =>
         cw20Balance(x.token_id, address, chain.lcd_url).then<Coin>((res) => ({
           amount: res,
@@ -53,13 +45,11 @@ export async function fetchBalances(
       .map((t) => ({
         ...t,
         balance: getBal(natives, t),
-        gift: getBal(gifts, t),
       }))
       .concat(
         tokens.alts.map((t) => ({
           ...t,
           balance: getBal(cw20map, t),
-          gift: getBal(gifts, t),
         }))
       );
   } else {
@@ -67,11 +57,12 @@ export async function fetchBalances(
     const native = tokens.natives[0]; //evm chains have only one gas token
     const provider = getProvider(providerId)!;
 
-    const [nativeBal, ...erc20s] = await Promise.allSettled([
+    const [nativeBal, gift, ...erc20s] = await Promise.allSettled([
       provider.request<string>({
         method: "eth_getBalance",
         params: [address, "latest"],
       }),
+      queryContract("gift-card.balance", { addr: address }),
       ...tokens.alts.map((t) =>
         queryContract("erc20.balance", {
           erc20: t.token_id,
@@ -89,6 +80,19 @@ export async function fetchBalances(
       )
     );
 
+    let gifts: TokenWithBalance[] = [];
+    if (gift.status === "fulfilled") {
+      const { native, ...erc20s } = gift.value;
+      if (native !== "0") {
+        gifts.push(toGift(chain.native_currency, native));
+      }
+      for (const t of chain.tokens) {
+        if (t.token_id in erc20s) {
+          gifts.push(toGift(t, erc20s[t.token_id]));
+        }
+      }
+    }
+
     return [
       {
         ...native,
@@ -97,13 +101,25 @@ export async function fetchBalances(
           native.decimals
         ),
       },
-    ].concat(
-      tokens.alts.map((t) => ({
+      ...tokens.alts.map((t) => ({
         ...t,
         balance: getBal(erc20map, t),
-      }))
-    );
+      })),
+      ...gifts,
+    ];
   }
+}
+
+function toGift(token: Token, bal: string): TokenWithBalance {
+  const t = token.type;
+  return {
+    ...token,
+    balance: condenseToNum(bal, token.decimals),
+    type:
+      t === "erc20" ? "erc20-gift" : t === "evm-native" ? "evm-native-gift" : t,
+    logo: giftIcon,
+    min_donation_amnt: 0,
+  };
 }
 
 function segragate(tokens: Token[]): { [key in TokenType]: Token[] } {

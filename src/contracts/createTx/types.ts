@@ -1,4 +1,5 @@
 import {
+  Beneficiary,
   EndowmentSettingsUpdate,
   NewFund,
   RegistrarConfigPayload,
@@ -6,6 +7,7 @@ import {
 } from "types/contracts";
 import { AccountType, ERC20Deposit, NewAST } from "types/contracts/evm";
 import { Allowance, Transfer } from "types/contracts/evm/erc20";
+import { Asset } from "types/contracts/gift-card";
 import { NewTransaction } from "types/contracts/multisig";
 import { Tupleable } from "types/evm";
 import { Contract } from "types/lists";
@@ -33,6 +35,23 @@ type Txs = {
     beneficiary: string;
     addresses: string[];
     amounts: string[];
+  }>;
+  "accounts.update-status": Tx<{
+    id: number;
+    status: number;
+    beneficiary: Beneficiary;
+  }>;
+  "accounts.invest": Tx<{
+    id: number;
+    account: AccountType;
+    vaults: string[];
+    tokens: string[];
+    amounts: string[]; //uint256
+  }>;
+  "accounts.redeem": Tx<{
+    id: number;
+    account: AccountType;
+    vaults: string[];
   }>;
 
   // //// MULTISIG ////
@@ -79,6 +98,15 @@ type Txs = {
 
   "registrar.update-owner": Tx<{ newOwner: string }>;
   "registrar.update-config": Tx<RegistrarConfigPayload>;
+
+  "gift-card.spend": Tx<{
+    asset: Asset;
+    id: number;
+    lockedPCT: number;
+    liquidPCT: number;
+  }>;
+  "gift-card.deposit-native": Tx<{ from: string; to: string }>;
+  "gift-card.deposit-erc20": Tx<{ from: string; to: string; asset: Asset }>;
 };
 
 export type TxTypes = keyof Txs;

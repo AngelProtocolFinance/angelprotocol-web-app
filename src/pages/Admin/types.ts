@@ -3,7 +3,6 @@ import { EndowmentProposal } from "types/aws";
 import {
   Asset,
   EndowmentStatus,
-  EndowmentStatusStrNum,
   EndowmentStatusText,
   FundDetails,
   RegistrarConfigPayload,
@@ -101,8 +100,8 @@ export type EndowmentStatusMeta = MetaConstructor<
   "acc_endow_status",
   {
     id: number;
-    fromStatus: keyof EndowmentStatus;
-    toStatus: EndowmentStatusStrNum;
+    fromStatus: EndowmentStatus;
+    toStatus: EndowmentStatus;
     beneficiary?: string;
   }
 >;
@@ -166,7 +165,7 @@ export type CW3ConfigValues<T extends FormCW3Config> = ProposalBase &
 
 export type EndowmentUpdateValues = ProposalBase & {
   id: number;
-  status: Exclude<EndowmentStatusStrNum, "0">;
+  status: Exclude<EndowmentStatusText, "closed">;
   //address to transfer funds when endowment will be closed
 
   //beneficiary type

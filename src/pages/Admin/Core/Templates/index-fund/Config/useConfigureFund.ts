@@ -2,15 +2,13 @@ import { useFormContext } from "react-hook-form";
 import { FormValues } from "./types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
-import Prompt, { TxPrompt } from "components/Prompt";
+import Prompt from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { getPayloadDiff } from "helpers/admin";
 
 export default function useConfigureFund() {
-  const { multisig, propMeta } = useAdminResources();
-  const { wallet } = useGetWallet();
+  const { multisig, propMeta, getWallet } = useAdminResources();
   const {
     handleSubmit,
     formState: { isSubmitting, isDirty, isValid },
@@ -37,9 +35,8 @@ export default function useConfigureFund() {
       });
     }
 
-    if (!wallet) {
-      return showModal(TxPrompt, { error: "Wallet is not connected" });
-    }
+    const wallet = getWallet();
+    if (typeof wallet === "function") return wallet();
 
     const [configData, dest] = encodeTx("index-fund.config", data);
 

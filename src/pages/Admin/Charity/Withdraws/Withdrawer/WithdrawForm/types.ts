@@ -1,5 +1,5 @@
 import { IERC20 } from "services/types";
-import { EndowmentType } from "types/contracts";
+import { EndowmentType } from "types/lists";
 import { AccountType } from "types/lists";
 
 export type Amount = {

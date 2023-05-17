@@ -1,12 +1,14 @@
 import type { BigNumber } from "@ethersproject/bignumber";
 import { OverrideProperties } from "type-fest";
 import {
+  Beneficiary,
   Categories,
   Delegate,
   EndowmentDetails,
+  EndowmentStatus,
   EndowmentStatusText,
-  EndowmentType,
   FundDetails,
+  GenericBalMap,
   IndexFundConfig,
   RebalanceDetails,
   RegistrarConfig,
@@ -14,25 +16,12 @@ import {
   SplitDetails,
 } from "types/contracts";
 import { SettingsPermission } from "types/contracts";
+import { EndowmentType } from "types/lists";
 import { Mapped } from "types/utils";
 
 enum EndowmentTypeEnum {
   Charity,
   Normal,
-  None,
-}
-
-enum EndowmentStatusEnum {
-  Inactive,
-  Approved,
-  Frozen,
-  Closed,
-}
-
-enum BeneficiaryEnum {
-  EndowmentId,
-  IndexFund,
-  Wallet,
   None,
 }
 
@@ -76,25 +65,40 @@ export type DEndowment = OverrideProperties<
   {
     categories: DCategories;
     endow_type: EndowmentTypeEnum;
-    status: EndowmentStatusEnum;
+    status: EndowmentStatus;
     maturityTime: BigNumber;
     settingsController: DSettingsController;
   }
 >;
 
+export type DGenericBalance = {
+  coinNativeAmount: BigNumber;
+  Cw20CoinVerified_amount: BigNumber[];
+  Cw20CoinVerified_addr: string[];
+};
+
+type DBeneficiaryData = OverrideProperties<
+  Beneficiary["data"],
+  { id: BigNumber }
+>;
+type DBeneficiary = OverrideProperties<
+  Beneficiary,
+  {
+    data: DBeneficiaryData;
+    enumData: BigNumber;
+  }
+>;
 export interface DEndowmentState {
   donationsReceived: {
     liquid: BigNumber;
     locked: BigNumber;
   };
-  closingEndowment: boolean;
-  closingBeneficiary: {
-    data: {
-      id: BigNumber;
-      addr: string;
-    };
-    enumData: BeneficiaryEnum;
+  balances: {
+    locked: DGenericBalance;
+    liquid: DGenericBalance;
   };
+  closingEndowment: boolean;
+  closingBeneficiary: DBeneficiary;
 }
 
 export type DFund = OverrideProperties<
@@ -107,12 +111,6 @@ export type DFund = OverrideProperties<
     expiryHeight: BigNumber;
   }
 >;
-
-export type DGiftCardBalance = {
-  coinNativeAmount: BigNumber;
-  Cw20CoinVerified_amount: BigNumber[];
-  Cw20CoinVerified_addr: string[];
-};
 
 export type DIndexFundConfig = OverrideProperties<
   IndexFundConfig,
@@ -157,18 +155,29 @@ export function toEndowType(type: EndowmentTypeEnum): EndowmentType {
 }
 
 export function toEndowStatusText(
-  status: EndowmentStatusEnum
+  status: EndowmentStatus
 ): EndowmentStatusText {
   switch (status) {
-    case EndowmentStatusEnum.Inactive:
+    case EndowmentStatus.Inactive:
       return "inactive";
-    case EndowmentStatusEnum.Approved:
+    case EndowmentStatus.Approved:
       return "approved";
-    case EndowmentStatusEnum.Frozen:
+    case EndowmentStatus.Frozen:
       return "frozen";
-    case EndowmentStatusEnum.Closed:
+    case EndowmentStatus.Closed:
       return "closed";
     default:
       return "inactive";
   }
+}
+
+export function toBalMap(d: DGenericBalance): GenericBalMap {
+  const erc20s = d.Cw20CoinVerified_addr.reduce((prev, curr, i) => {
+    return {
+      ...prev,
+      [curr.toLowerCase()]: d.Cw20CoinVerified_amount[i].toString(),
+    };
+  }, {});
+
+  return { ...erc20s, native: d.coinNativeAmount.toString() };
 }

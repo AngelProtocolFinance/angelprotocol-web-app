@@ -1,6 +1,7 @@
 import { TxArgs, TxTypes } from "./types";
 import { erc20 } from "contracts/evm/ERC20";
 import { charityApplication } from "contracts/evm/charity-application";
+import { giftCard } from "contracts/evm/gift-card";
 import { indexFund } from "contracts/evm/index-fund";
 import { lockedWithdraw } from "contracts/evm/locked-withdraw";
 import { multisig } from "contracts/evm/multisig";
@@ -20,6 +21,9 @@ export const txs: { [T in TxTypes]: (args: TxArgs<T>) => string } = {
     accounts.encodeFunctionData("depositERC20", toTuple(args)),
   "accounts.withdraw": (args) =>
     accounts.encodeFunctionData("withdraw", toTuple(args)),
+  "accounts.update-status": (args) => "",
+  "accounts.invest": () => "", //future
+  "accounts.redeem": () => "", //future
 
   // //// MULTISIG ////
   "multisig.submit-transaction": (tx) =>
@@ -71,4 +75,11 @@ export const txs: { [T in TxTypes]: (args: TxArgs<T>) => string } = {
     registrar.encodeFunctionData("updateOwner", [newOwner]),
   "registrar.update-config": (config) =>
     registrar.encodeFunctionData("updateConfig", [toTuple(config)]),
+
+  "gift-card.spend": (gift) =>
+    giftCard.encodeFunctionData("executeSpend", toTuple(gift)),
+  "gift-card.deposit-native": (flow) =>
+    giftCard.encodeFunctionData("executeDeposit", toTuple(flow)),
+  "gift-card.deposit-erc20": (flow) =>
+    giftCard.encodeFunctionData("executeDepositERC20", toTuple(flow)),
 };

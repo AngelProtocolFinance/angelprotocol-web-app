@@ -1,6 +1,5 @@
 import { useModalContext } from "contexts/ModalContext";
 import { humanize, maskAddress } from "helpers";
-import Investor from "./Investor";
 import Redeemer from "./Redeemer";
 
 // type Action = "invest" | "redeem";
@@ -30,9 +29,7 @@ export default function Investment() {
         </div>
         <button
           type="button"
-          onClick={() =>
-            showModal(action === "invest" ? Investor : Redeemer, props)
-          }
+          onClick={() => showModal(Redeemer, {})}
           className="btn-outline-filled px-8 py-2 text-sm mt-6 @md:mt-0 @md:text-base"
         >
           {action}
