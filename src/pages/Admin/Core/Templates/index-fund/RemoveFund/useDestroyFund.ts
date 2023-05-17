@@ -2,7 +2,6 @@ import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
 import Prompt from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
@@ -14,8 +13,7 @@ export default function useDestroyFund() {
   } = useFormContext<FV>();
   const { showModal } = useModalContext();
   const sendTx = useTxSender();
-  const { multisig, propMeta } = useAdminResources();
-  const { wallet } = useGetWallet();
+  const { multisig, propMeta, getWallet } = useAdminResources();
 
   async function destroyFund(fv: FV) {
     if (fv.fundId === "") {
@@ -27,12 +25,8 @@ export default function useDestroyFund() {
       });
     }
 
-    if (!wallet) {
-      return showModal(Prompt, {
-        type: "error",
-        children: "Please connect your wallet to continue",
-      });
-    }
+    const wallet = getWallet();
+    if (typeof wallet === "function") return wallet();
     const [data, dest] = encodeTx("index-fund.remove-fund", { id: +fv.fundId });
 
     await sendTx({

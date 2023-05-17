@@ -3,16 +3,14 @@ import { FormValues as FV } from "./types";
 import { Beneficiary, EndowmentStatusText } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
-import Prompt, { TxPrompt } from "components/Prompt";
+import Prompt from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
 
 export default function useUpdateStatus() {
   const { handleSubmit } = useFormContext<FV>();
-  const { multisig, propMeta } = useAdminResources();
-  const { wallet } = useGetWallet();
+  const { multisig, propMeta, getWallet } = useAdminResources();
   const sendTx = useTxSender();
   const { showModal } = useModalContext();
 
@@ -37,9 +35,8 @@ export default function useUpdateStatus() {
       }
     }
 
-    if (!wallet) {
-      return showModal(TxPrompt, { error: "Wallet is not connected" });
-    }
+    const wallet = getWallet();
+    if (typeof wallet === "function") return wallet();
 
     const [beneficiary] = (function (): [Beneficiary, string] {
       const { id, type } = fv.beneficiary;

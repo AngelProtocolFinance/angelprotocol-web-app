@@ -3,15 +3,13 @@ import { useFormContext } from "react-hook-form";
 import { FormValues } from "./types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useErrorContext } from "contexts/ErrorContext";
-import { useGetWallet } from "contexts/WalletContext";
 import { useGetter } from "store/accessors";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 
 export default function useUpdateFund() {
   const { trigger, reset, getValues } = useFormContext<FormValues>();
-  const { multisig, propMeta } = useAdminResources();
-  const { wallet } = useGetWallet();
+  const { multisig, propMeta, getWallet } = useAdminResources();
   const [isLoading, setIsLoading] = useState(false);
   const fundMembers = useGetter((state) => state.admin.fundMembers);
   const { handleError } = useErrorContext();
@@ -47,10 +45,8 @@ export default function useUpdateFund() {
       if (toRemove.length <= 0 && toAdd.length <= 0) {
         throw new Error("No fund member changes");
       }
-
-      if (!wallet) {
-        throw new Error("Wallet is not connected");
-      }
+      const wallet = getWallet();
+      if (typeof wallet === "function") return wallet();
 
       const [data, dest] = encodeTx("index-fund.update-members", {
         fundId: +fundId,
