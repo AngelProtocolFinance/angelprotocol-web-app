@@ -1,9 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";
 import { useAdminResources } from "pages/Admin/Guard";
-import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import { TxPrompt } from "components/Prompt";
 import useTxSender from "hooks/useTxSender";
 import { chainIds } from "constants/chainIds";
 import { constructTx } from "./constructTx";
@@ -11,19 +8,16 @@ import useLogWithdrawProposal from "./useLogWithdrawProposal";
 
 export default function useWithdraw() {
   const { handleSubmit } = useFormContext<WithdrawValues>();
-  const { showModal } = useModalContext();
 
-  const { multisig, id, propMeta, ...endow } = useAdminResources<"charity">();
-
-  const { wallet } = useGetWallet();
+  const { multisig, id, propMeta, getWallet, ...endow } =
+    useAdminResources<"charity">();
 
   const sendTx = useTxSender();
   const logProposal = useLogWithdrawProposal(propMeta.successMeta);
 
   async function withdraw(data: WithdrawValues) {
-    if (!wallet) {
-      return showModal(TxPrompt, { error: "Wallet not connected" });
-    }
+    const wallet = getWallet();
+    if (typeof wallet === "function") return wallet();
 
     const { tx, isDirect, isPolygon } = constructTx(
       wallet.address,

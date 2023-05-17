@@ -3,7 +3,6 @@ import { useFormContext } from "react-hook-form";
 import { SimulContractTx } from "types/evm";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useErrorContext } from "contexts/ErrorContext";
-import { useGetWallet } from "contexts/WalletContext";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { isEmpty } from "helpers";
@@ -19,6 +18,7 @@ export default function useSubmit() {
     multisig,
     propMeta,
     settingsController: settings,
+    getWallet,
   } = useAdminResources<"charity">();
   const { handleError } = useErrorContext();
   const {
@@ -27,7 +27,6 @@ export default function useSubmit() {
     reset,
     trigger,
   } = useFormContext<FormValues>();
-  const { wallet } = useGetWallet();
   const sendTx = useTxSender();
   const { isUserOwner, userDelegated } = useUserAuthorization();
 
@@ -57,9 +56,8 @@ export default function useSubmit() {
         return handleError("No changes detected");
       }
 
-      if (!wallet) {
-        return alert("wallet not connected");
-      }
+      const wallet = getWallet();
+      if (typeof wallet === "function") return wallet();
 
       const args = createUpdateEndowmentControllerMsg(id, diff, settings);
 

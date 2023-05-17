@@ -25,7 +25,7 @@ const processLog: LogProcessor = (logs) => {
 export default function PollAction(props: ProposalDetails) {
   const { wallet } = useGetWallet();
   const sendTx = useTxSender();
-  const { multisig, propMeta, config } = useAdminResources();
+  const { multisig, propMeta, config, getWallet } = useAdminResources();
   const { showModal } = useModalContext();
 
   const numSigned = props.signed.length;
@@ -47,9 +47,9 @@ export default function PollAction(props: ProposalDetails) {
   };
 
   async function executeProposal() {
-    if (!wallet) {
-      return showModal(TxPrompt, { error: "Wallet is not connected" });
-    }
+    const wallet = getWallet();
+    if (typeof wallet === "function") return wallet();
+
     await sendTx({
       content: {
         type: "evm",
@@ -66,9 +66,8 @@ export default function PollAction(props: ProposalDetails) {
   }
 
   async function sign() {
-    if (!wallet) {
-      return showModal(TxPrompt, { error: "Wallet is not connected" });
-    }
+    const wallet = getWallet();
+    if (typeof wallet === "function") return wallet();
 
     await sendTx({
       content: {

@@ -2,14 +2,12 @@ import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
 import Prompt from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 
 export default function useUpdateOwner() {
-  const { multisig, propMeta } = useAdminResources();
-  const { wallet } = useGetWallet();
+  const { multisig, propMeta, getWallet } = useAdminResources();
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },
@@ -29,11 +27,8 @@ export default function useUpdateOwner() {
       });
     }
 
-    if (!wallet)
-      return showModal(Prompt, {
-        type: "error",
-        children: "Wallet is not connected",
-      });
+    const wallet = getWallet();
+    if (typeof wallet === "function") return wallet();
 
     const [data, dest] = encodeTx("index-fund.update-owner", {
       newOwner: fv.newOwner,
