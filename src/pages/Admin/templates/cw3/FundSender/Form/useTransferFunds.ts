@@ -1,9 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "../types";
 import { useAdminResources } from "pages/Admin/Guard";
-import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
-import Prompt from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { scale } from "helpers";
@@ -14,19 +11,12 @@ export default function useTransferFunds() {
     handleSubmit,
     formState: { isSubmitting, isValid, isDirty },
   } = useFormContext<FV>();
-  const { multisig, propMeta } = useAdminResources();
-  //TODO: use wallet token[] to list amounts to transfer
-  const { wallet } = useGetWallet();
-  const { showModal } = useModalContext();
+  const { multisig, propMeta, getWallet } = useAdminResources();
   const sendTx = useTxSender();
 
   async function transferFunds(fv: FV) {
-    if (!wallet) {
-      return showModal(Prompt, {
-        type: "error",
-        children: "Wallet is not connected",
-      });
-    }
+    const wallet = getWallet();
+    if (typeof wallet === "function") return wallet();
 
     const { token, recipient } = fv;
     const scaledAmount = scale(token.amount, token.decimals).toHex();

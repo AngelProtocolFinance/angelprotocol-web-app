@@ -10,7 +10,6 @@ import { TxOnSuccess } from "types/tx";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useUpdateRegMutation } from "services/aws/registration";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
 import { TxPrompt } from "components/Prompt";
 import { Field } from "components/form";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
@@ -36,8 +35,7 @@ export default function Proposer({ type, appId, reference }: Props) {
     },
   });
 
-  const { multisig, propMeta } = useAdminResources();
-  const { wallet } = useGetWallet();
+  const { multisig, propMeta, getWallet } = useAdminResources();
   const { showModal } = useModalContext();
   const { sendTx, isSending } = useTxSender(true);
   const [updateReg] = useUpdateRegMutation();
@@ -45,10 +43,8 @@ export default function Proposer({ type, appId, reference }: Props) {
   const { handleSubmit } = methods;
 
   async function submit({ type, ...fv }: FV) {
-    if (!wallet)
-      return showModal(TxPrompt, {
-        error: "Wallet is not connected",
-      });
+    const wallet = getWallet();
+    if (typeof wallet === "function") return wallet();
 
     const [data, dest] = encodeTx(
       type === "approve"

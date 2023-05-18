@@ -3,7 +3,6 @@ import { FormValues as FV } from "./types";
 import { MultisigConfig } from "services/types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
 import Prompt from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
@@ -13,8 +12,7 @@ type Key = keyof FV;
 type Value = FV[Key];
 
 export default function usePropose() {
-  const { multisig, propMeta } = useAdminResources();
-  const { wallet } = useGetWallet();
+  const { multisig, propMeta, getWallet } = useAdminResources();
   const {
     handleSubmit,
     formState: { isSubmitting, isDirty, isValid },
@@ -45,12 +43,8 @@ export default function usePropose() {
       });
     }
 
-    if (!wallet) {
-      return showModal(Prompt, {
-        type: "error",
-        children: "Wallet is not connected",
-      });
-    }
+    const wallet = getWallet();
+    if (typeof wallet === "function") return wallet();
 
     const [data, dest] = encodeTx("multisig.change-threshold", {
       multisig,

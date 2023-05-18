@@ -1,24 +1,18 @@
 import { FormValues } from "./types";
 import { AccountType } from "types/lists";
 import { useAdminResources } from "pages/Admin/Guard";
-import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import { TxPrompt } from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { scaleToStr } from "helpers";
 import { getTagPayloads } from "helpers/admin";
 
 export default function useSubmit(vault: string, type: AccountType) {
-  const { multisig, id, propMeta } = useAdminResources();
-  const { wallet } = useGetWallet();
+  const { multisig, id, propMeta, getWallet } = useAdminResources();
   const { sendTx, isSending } = useTxSender(true);
-  const { showModal } = useModalContext();
 
   async function submit({ token }: FormValues) {
-    if (!wallet) {
-      return showModal(TxPrompt, { error: "Wallet is not connected" });
-    }
+    const wallet = getWallet();
+    if (typeof wallet === "function") return wallet();
 
     const [data, dest] = encodeTx("accounts.invest", {
       id,

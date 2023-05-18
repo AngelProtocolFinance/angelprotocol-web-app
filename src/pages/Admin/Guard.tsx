@@ -3,15 +3,21 @@ import { useParams } from "react-router-dom";
 import { AdminParams } from "./types";
 import { AdminResources } from "services/types";
 import { useAdminResourcesQuery } from "services/juno/custom";
-import { useGetWallet } from "contexts/WalletContext";
+import { useModalContext } from "contexts/ModalContext";
+import { WalletState, useGetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import Loader from "components/Loader";
+import { TxPrompt } from "components/Prompt";
+import { chainIds } from "constants/chainIds";
+
+type WalletOrPrompt = { getWallet: () => WalletState | (() => void) };
 
 export function Guard(props: {
   children(resources: AdminResources): ReactNode;
 }) {
   const { id } = useParams<AdminParams>();
   const { wallet } = useGetWallet();
+  const { showModal } = useModalContext();
 
   const { data, isLoading, isError } = useAdminResourcesQuery(
     {
@@ -21,6 +27,17 @@ export function Guard(props: {
     { skip: !id }
   );
 
+  function getWallet() {
+    if (!wallet) {
+      return () => showModal(TxPrompt, { error: "Wallet is not connected" });
+    }
+    if (wallet.chain.chain_id !== chainIds.polygon) {
+      return () =>
+        showModal(TxPrompt, { error: "Kindly switch to polygon network" });
+    }
+    return wallet;
+  }
+
   if (isLoading)
     return <GuardPrompt message="Getting admin resources" showLoader />;
 
@@ -28,14 +45,16 @@ export function Guard(props: {
     return <GuardPrompt message="Error getting admin resources" />;
 
   return (
-    <context.Provider value={data}>{props.children(data)}</context.Provider>
+    <context.Provider value={{ ...data, getWallet }}>
+      {props.children(data)}
+    </context.Provider>
   );
 }
 
-const context = createContext({} as AdminResources);
+const context = createContext({} as AdminResources & WalletOrPrompt);
 export const useAdminResources = <
   T extends AdminResources["type"] = any
->(): Extract<AdminResources, { type: T }> => {
+>(): Extract<AdminResources, { type: T }> & WalletOrPrompt => {
   const val = useContext(context);
 
   if (Object.entries(val).length <= 0) {
