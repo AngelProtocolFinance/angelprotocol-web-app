@@ -1,4 +1,5 @@
-import { TWhitelists } from "slices/launchpad/types";
-
-export type FV = TWhitelists;
-export type FormValues = { initial: TWhitelists } & TWhitelists;
+export type WhiteLists = {
+  contributors: string[];
+  beneficiaries: string[];
+};
+export type FormValues = { initial: WhiteLists } & WhiteLists;

@@ -1,23 +1,22 @@
 import { FormProvider, useForm } from "react-hook-form";
-import { FV, FormValues } from "./types";
-import { useAdminResources } from "pages/Admin/Guard";
+import { FormValues as FV, WhiteLists } from "./types";
+import { useAdminResources } from "../../Guard";
 import Form from "./Form";
 
 export default function Whitelists() {
   const { whitelistedBeneficiaries, whitelistedContributors } =
     useAdminResources<"charity">();
-  const flatInitial: FV = {
+
+  const initial: WhiteLists = {
     contributors: whitelistedContributors,
     beneficiaries: whitelistedBeneficiaries,
   };
 
-  const defaults: FormValues = {
-    ...flatInitial,
-    initial: flatInitial,
-  };
-
-  const methods = useForm<FormValues>({
-    defaultValues: defaults,
+  const methods = useForm<FV>({
+    defaultValues: {
+      ...initial,
+      initial,
+    },
   });
 
   return (

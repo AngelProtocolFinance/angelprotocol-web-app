@@ -3,17 +3,15 @@ import { FormValues } from "./types";
 import { EndowmentSettingsUpdate } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
 import { TxPrompt } from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
-import { isEVM } from "helpers";
 import { getPayloadDiff, getTagPayloads } from "helpers/admin";
 
 // import optimizeImage from "./optimizeImage";
 
 export default function useEditWhitelists() {
-  const { id, propMeta, multisig } = useAdminResources<"charity">();
+  const { id, propMeta, multisig, getWallet } = useAdminResources<"charity">();
   const {
     reset,
     handleSubmit,
@@ -21,7 +19,6 @@ export default function useEditWhitelists() {
   } = useFormContext<FormValues>();
 
   const { showModal } = useModalContext();
-  const { wallet } = useGetWallet();
   const sendTx = useTxSender();
 
   const editWhitelists: SubmitHandler<FormValues> = async ({
@@ -30,26 +27,11 @@ export default function useEditWhitelists() {
     beneficiaries,
   }) => {
     try {
+      const wallet = getWallet();
+      if (typeof wallet === "function") return wallet();
       /** special case for edit profile: since upload happens prior
        * to tx submission. Other users of useTxSender
        */
-      if (!wallet) {
-        return showModal(TxPrompt, {
-          error: "You need to connect your wallet to make this transaction.",
-        });
-      }
-
-      if (!isEVM(wallet.providerId)) {
-        return showModal(TxPrompt, {
-          error: "Please connect an EVM compatible wallet",
-        });
-      }
-
-      if (!propMeta.isAuthorized) {
-        return showModal(TxPrompt, {
-          error: "You are not authorized to make this transaction.",
-        });
-      }
 
       const changes = {
         contributors,
@@ -79,10 +61,7 @@ export default function useEditWhitelists() {
         },
         ignoreUserSplits: false,
       };
-      // tried this too
-      // let tx = createTx(wallet.address, "accounts.update-settings", updates);
 
-      // tried this too
       const [data, dest] = encodeTx("accounts.update-settings", updates);
       let tx = createTx(wallet.address, "multisig.submit-transaction", {
         multisig,

@@ -4,10 +4,10 @@ import { FV } from "../types";
 import { Beneficiary } from "slices/launchpad/types";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
+import { Info } from "components/Status";
 import TableSection, { Cells } from "components/TableSection";
 import { isEmpty } from "helpers";
 import { Group, GroupTitle } from "../../common/Form";
-import Info from "../../common/Info";
 import MemberForm from "./AddForm";
 
 const name: keyof FV = "beneficiaries";

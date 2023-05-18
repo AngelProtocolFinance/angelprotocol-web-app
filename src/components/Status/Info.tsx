@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import Status from "components/Status";
+import Status from "./Status";
 
 type Props = PropsWithChildren<{
   classes?: string;

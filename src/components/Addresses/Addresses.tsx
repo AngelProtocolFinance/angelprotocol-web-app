@@ -5,12 +5,11 @@ import {
   useFormContext,
 } from "react-hook-form";
 import { useModalContext } from "contexts/ModalContext";
-import Icon from "components/Icon";
-import TableSection, { Cells } from "components/TableSection";
 import { isEmpty } from "helpers";
-import { Group, GroupTitle } from "../common/Form";
-import Info from "../common/Info";
-import AddressForm from "./AddressForm";
+import Icon from "../Icon";
+import Info from "../Status/Info";
+import TableSection, { Cells } from "../TableSection";
+import AddressForm from "./AddForm";
 
 type Props<T extends FieldValues, K extends Path<T>> = {
   name: T[K] extends string[] ? K : never;
@@ -41,8 +40,10 @@ export default function Addresses<T extends FieldValues, K extends Path<T>>({
   }
 
   return (
-    <Group className={classes}>
-      <GroupTitle className="mb-8">{title}</GroupTitle>
+    <div
+      className={`${classes} grid content-start border border-prim p-4 md:p-8 rounded`}
+    >
+      <h4 className="text-xl font-bold mb-8">{title}</h4>
       <button
         type="button"
         onClick={() =>
@@ -76,7 +77,7 @@ export default function Addresses<T extends FieldValues, K extends Path<T>>({
           </TableSection>
         </table>
       )}
-    </Group>
+    </div>
   );
 }
 

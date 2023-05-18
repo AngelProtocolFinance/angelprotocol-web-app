@@ -1,5 +1,5 @@
-import { FV } from "./types";
-import Addresses from "./Addresses";
+import { FormValues as FV } from "./types";
+import Addresses from "components/Addresses";
 import useEditWhitelists from "./useEditWhitelists";
 
 export default function WhitelistsForm() {
@@ -34,7 +34,7 @@ export default function WhitelistsForm() {
           disabled={isSubmitting}
           className="text-sm px-8 btn-outline-filled"
         >
-          Cancel
+          Reset Changes
         </button>
         <button
           type="submit"
