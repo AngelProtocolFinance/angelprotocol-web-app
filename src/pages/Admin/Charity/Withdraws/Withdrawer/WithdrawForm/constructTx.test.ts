@@ -135,10 +135,13 @@ function endowDetails<T extends keyof ED>(overrides?: Override<T>[]): ED {
     whitelistedContributors: [],
     maturityWhitelist: [],
     kycDonorsOnly: false,
+    donationMatchActive: false,
     settingsController: {} as any, //not relevant to this test
     ...(overrides || []).reduce(
       (prev, curr) => ({ ...prev, [curr[0]]: curr[1] }),
       {}
     ),
+    ignoreUserSplits: false,
+    splitToLiquid: { min: 0, max: 100, defaultSplit: 50 },
   };
 }

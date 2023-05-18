@@ -1,5 +1,5 @@
 import { FormProvider, useForm } from "react-hook-form";
-import { FormValues as FV, WhiteLists } from "./types";
+import { FormValues as FV } from "./types";
 import { EndowmentSettingsUpdate } from "types/contracts";
 import { useAdminResources } from "../../Guard";
 import Form from "./Form";
