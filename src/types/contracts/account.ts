@@ -92,10 +92,13 @@ export interface EndowmentDetails {
   maturityWhitelist: string[];
   //rebalance
   kycDonorsOnly: boolean;
+  donationMatchActive: boolean;
   settingsController: SettingsController;
   //pending_redemptions
   //proposal_link
   //referral_id
+  ignoreUserSplits: boolean;
+  splitToLiquid: SplitDetails;
 }
 
 export type Holding = { address: string; amount: string };
@@ -152,11 +155,11 @@ export interface SettingsControllerUpdate extends Tupleable {
 
 export type EndowmentSettingsUpdate = {
   id: number;
-  donationMatchActive: boolean;
+  donationMatchActive: boolean; //not used in update
   whitelistedBeneficiaries: string[];
   whitelistedContributors: string[];
   maturity_whitelist_add: string[];
   maturity_whitelist_remove: string[];
-  splitToLiquid: SplitDetails;
-  ignoreUserSplits: boolean;
+  splitToLiquid: SplitDetails; //not used in update
+  ignoreUserSplits: boolean; //not used in update
 };

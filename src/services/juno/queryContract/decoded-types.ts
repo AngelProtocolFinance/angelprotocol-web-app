@@ -68,6 +68,7 @@ export type DEndowment = OverrideProperties<
     status: EndowmentStatus;
     maturityTime: BigNumber;
     settingsController: DSettingsController;
+    splitToLiquid: DSplitDetails;
   }
 >;
 
@@ -180,4 +181,12 @@ export function toBalMap(d: DGenericBalance): GenericBalMap {
   }, {});
 
   return { ...erc20s, native: d.coinNativeAmount.toString() };
+}
+
+export function toSplit(d: DSplitDetails): SplitDetails {
+  return {
+    min: d.min.toNumber(),
+    max: d.max.toNumber(),
+    defaultSplit: d.defaultSplit.toNumber(),
+  };
 }
