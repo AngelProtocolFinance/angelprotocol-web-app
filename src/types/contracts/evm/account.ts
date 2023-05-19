@@ -8,19 +8,6 @@ type EndowTier = 0; // none | 1 Level1 | 2 Level2 | 3; Level3
 //use normal by default
 type EndowType = /** 0 - charity  */ 1 /** normal */ /** | 2 - none */;
 
-//use percentage by default
-type Threshold = {
-  //0 - absolute count
-  enumData: 1; //absolute percentage
-  data: {
-    weight: number; //absolute count
-    percentage: number; //absolute percentage
-    threshold: number; // threshold quorum
-    quorum: number; // threshold quorum
-  };
-  //2 - threshold quorum
-};
-
 /**
  * 0 - height
  * 1 - time
@@ -118,7 +105,7 @@ export interface NewAST extends Tupleable {
   image: "";
   cw4_members: string[]; // in launchpad design, weight is specified for each member
   kycDonorsOnly: false; //not specified in launchpad design
-  cw3Threshold: Threshold;
+  threshold: number;
   cw3MaxVotingPeriod: Duration;
 
   whitelistedBeneficiaries: string[];
@@ -133,7 +120,7 @@ export interface NewAST extends Tupleable {
   earningsFee: Fee;
   withdrawFee: Fee;
   depositFee: Fee;
-  aumFee: Fee; //not included in launchpad, for edit later
+  balanceFee: Fee; //not included in launchpad, for edit later
 
   //dao
   dao: DaoSetup; //just set to placeholder - overriden by creatDao:bool
@@ -143,11 +130,11 @@ export interface NewAST extends Tupleable {
   settingsController: SettingsController; //not included in launchpad, for edit later
   parent: number;
 
-  maturityWhitelist: string[];
+  maturityAllowlist: string[];
   ignoreUserSplits: boolean;
   splitToLiquid: SplitDetails;
 
-  // referral_id: number; TODO: add later
+  referralId: number;
 }
 
 type DepositRequest = {

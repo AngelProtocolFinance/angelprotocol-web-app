@@ -15,7 +15,6 @@ import {
   SettingsController,
   SplitDetails,
 } from "types/contracts";
-import { SettingsPermission } from "types/contracts";
 import { EndowmentType } from "types/lists";
 import { Mapped } from "types/utils";
 
@@ -46,11 +45,7 @@ export type DRegistrarConfig = OverrideProperties<
 
 type DDelegate = OverrideProperties<Delegate, { expires: BigNumber }>;
 
-type DPermission = OverrideProperties<
-  SettingsPermission,
-  { delegate: DDelegate }
->;
-type DSettingsController = Mapped<SettingsController, DPermission>;
+type DSettingsController = Mapped<SettingsController, DDelegate>;
 
 type DCategories = OverrideProperties<
   Categories,
@@ -132,16 +127,8 @@ export type DTransaction = {
 };
 // ////////// CONVERTERS ///////////////
 
-export function toSettingsPermission(p: DPermission): SettingsPermission {
-  return {
-    ownerControlled: p.ownerControlled,
-    govControlled: p.govControlled,
-    modifiableAfterInit: p.modifiableAfterInit,
-    delegate: {
-      Addr: p.delegate.Addr,
-      expires: p.delegate.expires.toNumber(),
-    },
-  };
+export function toDelegate(d: DDelegate): Delegate {
+  return { addr: d.addr.toLowerCase(), expires: d.expires.toNumber() };
 }
 
 export function toEndowType(type: EndowmentTypeEnum): EndowmentType {

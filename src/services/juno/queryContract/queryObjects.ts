@@ -8,9 +8,9 @@ import {
   DRegistrarConfig,
   DTransaction,
   toBalMap,
+  toDelegate,
   toEndowStatusText,
   toEndowType,
-  toSettingsPermission,
   toSplit,
 } from "./decoded-types";
 import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
@@ -273,40 +273,34 @@ export const queryObjects: {
         endow_type: toEndowType(d.endow_type),
         status: toEndowStatusText(d.status),
         maturityTime: d.maturityTime.toNumber(),
-        whitelistedBeneficiaries: d.whitelistedBeneficiaries.map((w) =>
+        allowlistedBeneficiaries: d.allowlistedBeneficiaries.map((w) =>
           w.toLowerCase()
         ),
-        whitelistedContributors: d.whitelistedContributors.map((w) =>
+        allowlistedContributors: d.allowlistedBeneficiaries.map((w) =>
           w.toLowerCase()
         ),
-        maturityWhitelist: d.maturityWhitelist.map((w) => w.toLowerCase()),
+        maturityAllowlist: d.maturityAllowlist.map((w) => w.toLowerCase()),
         kycDonorsOnly: d.kycDonorsOnly,
         donationMatchActive: d.donationMatchActive,
         settingsController: {
-          endowmentController: toSettingsPermission(
-            controller.endowmentController
+          strategies: toDelegate(controller.strategies),
+          allowlistedBeneficiaries: toDelegate(
+            controller.allowlistedBeneficiaries
           ),
-          strategies: toSettingsPermission(controller.endowmentController),
-          whitelistedBeneficiaries: toSettingsPermission(
-            controller.whitelistedBeneficiaries
+          allowlistedContributors: toDelegate(
+            controller.allowlistedContributors
           ),
-          whitelistedContributors: toSettingsPermission(
-            controller.whitelistedContributors
-          ),
-          maturityWhitelist: toSettingsPermission(controller.maturityWhitelist),
-          maturityTime: toSettingsPermission(controller.maturityTime),
-          profile: toSettingsPermission(controller.profile),
-          earningsFee: toSettingsPermission(controller.earningsFee),
-          withdrawFee: toSettingsPermission(controller.withdrawFee),
-          depositFee: toSettingsPermission(controller.depositFee),
-          aumFee: toSettingsPermission(controller.aumFee),
-          kycDonorsOnly: toSettingsPermission(controller.kycDonorsOnly),
-          name: toSettingsPermission(controller.name),
-          image: toSettingsPermission(controller.image),
-          logo: toSettingsPermission(controller.logo),
-          categories: toSettingsPermission(controller.categories),
-          splitToLiquid: toSettingsPermission(controller.splitToLiquid),
-          ignoreUserSplits: toSettingsPermission(controller.ignoreUserSplits),
+          maturityAllowlist: toDelegate(controller.maturityAllowlist),
+          maturityTime: toDelegate(controller.maturityTime),
+          withdrawFee: toDelegate(controller.withdrawFee),
+          depositFee: toDelegate(controller.depositFee),
+          balanceFee: toDelegate(controller.balanceFee),
+          name: toDelegate(controller.name),
+          image: toDelegate(controller.image),
+          logo: toDelegate(controller.logo),
+          categories: toDelegate(controller.categories),
+          splitToLiquid: toDelegate(controller.splitToLiquid),
+          ignoreUserSplits: toDelegate(controller.ignoreUserSplits),
         },
         ignoreUserSplits: d.ignoreUserSplits,
         splitToLiquid: toSplit(d.splitToLiquid),

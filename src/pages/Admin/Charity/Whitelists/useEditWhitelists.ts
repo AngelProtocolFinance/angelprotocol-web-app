@@ -31,8 +31,8 @@ export default function useEditWhitelists() {
 
       const update: EndowmentSettingsUpdate = {
         ...initial,
-        whitelistedBeneficiaries: contributors,
-        whitelistedContributors: isEmpty(beneficiaries)
+        allowlistedBeneficiaries: contributors,
+        allowlistedContributors: isEmpty(beneficiaries)
           ? [multisig]
           : beneficiaries,
       };

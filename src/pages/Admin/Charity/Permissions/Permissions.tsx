@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { SettingsPermission } from "types/contracts";
+import { Delegate } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { ADDRESS_ZERO } from "constants/evm";
 import { adminRoutes } from "constants/routes";
@@ -13,13 +13,13 @@ export default function Permissions() {
   const { settingsController: controller, id } = useAdminResources<"charity">();
 
   const fv: UpdateableFormValues = {
-    accountFees: createField(controller.aumFee, "Changes to account fees"),
+    accountFees: createField(controller.depositFee, "Changes to account fees"),
     beneficiaries_allowlist: createField(
-      controller.whitelistedBeneficiaries,
+      controller.allowlistedBeneficiaries,
       "Changes to beneficiaries whitelist"
     ),
     contributors_allowlist: createField(
-      controller.whitelistedContributors,
+      controller.allowlistedContributors,
       "Changes to contributors whitelist"
     ),
     donationSplitParams: createField(
@@ -32,7 +32,6 @@ export default function Permissions() {
   const methods = useForm<FormValues>({
     defaultValues: {
       initial: controllerUpdate(id, fv, controller),
-      endowment_controller: createField(controller.endowmentController),
       ...fv,
     },
     resolver: yupResolver(schema),
@@ -51,14 +50,14 @@ export default function Permissions() {
   );
 }
 
-function createField(settings: SettingsPermission, name = ""): FormField {
-  const isDelegated = settings.delegate.Addr !== ADDRESS_ZERO;
+function createField(delegate: Delegate, name = ""): FormField {
+  const isDelegated = delegate.addr !== ADDRESS_ZERO;
   return {
     name,
-    govControlled: settings.govControlled,
-    modifiableAfterInit: settings.modifiableAfterInit,
-    ownerControlled: settings.ownerControlled,
-    delegated: isDelegated,
-    delegate_address: isDelegated ? settings.delegate.Addr : "",
+    isActive: isDelegated,
+    addr: isDelegated ? delegate.addr : "",
+    ownerControlled: true,
+    govControlled: false,
+    modifiableAfterInit: true,
   };
 }

@@ -92,7 +92,7 @@ export default function Table({ className = "" }) {
                 />
               ) : null}
               <CheckField<FormValues>
-                name={`${fieldName}.delegated`}
+                name={`${fieldName}.isActive`}
                 classes={{
                   label: "uppercase text-xs font-bold",
                   input: "checkbox-orange",
@@ -104,12 +104,12 @@ export default function Table({ className = "" }) {
               <input
                 type="text"
                 className={`field-input min-w-[9rem] w-full truncate py-1.5 ${
-                  !errors[fieldName]?.delegate_address
+                  !errors[fieldName]?.addr
                     ? ""
                     : "border-red dark:border-red-l2 focus:border-red focus:dark:border-red-l2"
                 }`}
                 placeholder="Wallet address..."
-                {...register(`${fieldName}.delegate_address`)}
+                {...register(`${fieldName}.addr`)}
                 disabled={delegateAddressDisabled}
                 autoComplete="off"
                 spellCheck={false}

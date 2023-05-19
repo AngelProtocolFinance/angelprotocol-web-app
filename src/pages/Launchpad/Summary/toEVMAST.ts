@@ -1,5 +1,5 @@
 import { Completed, TFee } from "slices/launchpad/types";
-import { SettingsPermission } from "types/contracts";
+import { Delegate } from "types/contracts";
 import { Fee, NewAST } from "types/contracts/evm";
 import angelProtocolRoundedLogo from "assets/images/angelprotocol-rounded-logo.png";
 import { isEmpty, roundDownToNum } from "helpers";
@@ -31,15 +31,7 @@ export default function toEVMAST(
     image: "",
     cw4_members: isEmpty(management.members) ? [creator] : management.members, //in launchpad design, weight is specified for each member
     kycDonorsOnly: false, //not specified in launchpad design
-    cw3Threshold: {
-      enumData: 1,
-      data: {
-        weight: 0,
-        percentage: +management.proposal.threshold,
-        threshold: 0,
-        quorum: 0,
-      },
-    },
+    threshold: +management.proposal.threshold,
     cw3MaxVotingPeriod: {
       enumData: 1,
       data: {
@@ -59,7 +51,7 @@ export default function toEVMAST(
     earningsFee: toEndowFee(fees.earnings),
     withdrawFee: toEndowFee(fees.withdrawal),
     depositFee: toEndowFee(fees.deposit),
-    aumFee: toEndowFee({ isActive: false, receiver: "", rate: "0" }), //not included in launchpad, for edit later
+    balanceFee: toEndowFee({ isActive: false, receiver: "", rate: "0" }), //not included in launchpad, for edit later
 
     //dao (overriden by bool createDao ):not included in launchpad, for edit later
     dao: {
@@ -100,28 +92,24 @@ export default function toEVMAST(
     proposalLink: 0, //not specified in launchpad design
 
     settingsController: {
-      endowmentController: defaultPermission,
-      strategies: defaultPermission,
-      whitelistedBeneficiaries: defaultPermission,
-      whitelistedContributors: defaultPermission,
-      maturityWhitelist: defaultPermission,
-      maturityTime: defaultPermission,
-      profile: defaultPermission,
-      earningsFee: defaultPermission,
-      withdrawFee: defaultPermission,
-      depositFee: defaultPermission,
-      aumFee: defaultPermission,
-      kycDonorsOnly: defaultPermission,
-      name: defaultPermission,
-      image: defaultPermission,
-      logo: defaultPermission,
-      categories: defaultPermission,
-      splitToLiquid: defaultPermission,
-      ignoreUserSplits: defaultPermission,
+      strategies: defaultDelegate,
+      allowlistedBeneficiaries: defaultDelegate,
+      allowlistedContributors: defaultDelegate,
+      maturityAllowlist: defaultDelegate,
+      maturityTime: defaultDelegate,
+      withdrawFee: defaultDelegate,
+      depositFee: defaultDelegate,
+      balanceFee: defaultDelegate,
+      name: defaultDelegate,
+      image: defaultDelegate,
+      logo: defaultDelegate,
+      categories: defaultDelegate,
+      splitToLiquid: defaultDelegate,
+      ignoreUserSplits: defaultDelegate,
     },
     // settingsController: SettingsController; //not included in launchpad, for edit later
     parent: 0,
-    maturityWhitelist: maturity.beneficiaries.map((b) => b.addr),
+    maturityAllowlist: maturity.beneficiaries.map((b) => b.addr),
     ignoreUserSplits: !splits.isCustom,
     splitToLiquid: {
       min: 100 - +splits.max,
@@ -129,7 +117,7 @@ export default function toEVMAST(
       defaultSplit: 100 - +splits.default,
     },
 
-    // referral_id: fees.referral_id || 0, //TODO: add on later ver of contracts
+    referralId: fees.referral_id || 0,
   };
 }
 
@@ -142,12 +130,7 @@ function toEndowFee(fee: TFee): Fee {
   };
 }
 
-const defaultPermission: SettingsPermission = {
-  ownerControlled: true,
-  govControlled: false,
-  modifiableAfterInit: true,
-  delegate: {
-    Addr: ADDRESS_ZERO,
-    expires: 0,
-  },
+const defaultDelegate: Delegate = {
+  addr: ADDRESS_ZERO,
+  expires: 0,
 };

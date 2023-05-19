@@ -1,4 +1,8 @@
-import { SettingsController, SettingsControllerUpdate } from "types/contracts";
+import {
+  Delegate,
+  SettingsController,
+  SettingsControllerUpdate,
+} from "types/contracts";
 import { ADDRESS_ZERO } from "constants/evm";
 import { UpdateableFormValues } from "../schema";
 
@@ -16,35 +20,33 @@ export function controllerUpdate(
 
   return {
     id: endowId,
-    endowmentController: controller.endowmentController,
-    name: profile,
-    image: profile,
-    logo: profile,
-    categories: profile,
-    kycDonorsOnly: profile,
-    splitToLiquid: donationSplitParams,
-    ignoreUserSplits: donationSplitParams,
-    whitelistedBeneficiaries: beneficiaries_allowlist,
-    whitelistedContributors: contributors_allowlist,
-    maturityWhitelist: beneficiaries_allowlist,
-    earningsFee: accountFees,
-    depositFee: accountFees,
-    withdrawFee: accountFees,
-    aumFee: accountFees,
+    settingsController: {
+      strategies: controller.strategies,
+      allowlistedBeneficiaries: beneficiaries_allowlist,
+      allowlistedContributors: contributors_allowlist,
+      maturityAllowlist: controller.maturityAllowlist,
+      maturityTime: controller.maturityTime,
+      withdrawFee: accountFees,
+      depositFee: accountFees,
+      balanceFee: accountFees,
+      name: profile,
+      image: profile,
+      logo: profile,
+      categories: profile,
+      splitToLiquid: donationSplitParams,
+      ignoreUserSplits: donationSplitParams,
+    },
   };
 }
 
+//no need to check against initial values as `fv` is initialized with SettingsConroller
+
 const converter =
-  //no need to check against initial values as `fv` is initialized with SettingsConroller
-  (fv: UpdateableFormValues) => (permission: keyof UpdateableFormValues) => {
+  (fv: UpdateableFormValues) =>
+  (permission: keyof UpdateableFormValues): Delegate => {
     const val = fv[permission];
     return {
-      ownerControlled: val.ownerControlled,
-      govControlled: val.govControlled,
-      modifiableAfterInit: val.modifiableAfterInit,
-      delegate: {
-        Addr: val.delegated ? val.delegate_address : ADDRESS_ZERO,
-        expires: 0, //in design: no expiry for delegation,
-      },
+      addr: val.isActive ? val.addr : ADDRESS_ZERO,
+      expires: 0, //in design: no expiry for delegation,
     };
   };

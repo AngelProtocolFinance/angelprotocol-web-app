@@ -4,8 +4,8 @@ import { FormField, FormValues } from "../schema";
 
 // this object is created only to be able to iterate over `FormField` keys
 const formFieldSample: FormField = {
-  delegate_address: "",
-  delegated: false,
+  addr: "",
+  isActive: false,
   govControlled: false,
   modifiableAfterInit: false,
   name: "",
@@ -18,12 +18,7 @@ export function getFieldErrorName(
   const errorKey = getTypedKeys(errors).find((errKey) => !!errors[errKey]);
 
   // shouldn't be any of the below, but have the check to narrow down the key type
-  if (
-    !errorKey ||
-    errorKey === "endowment_controller" ||
-    errorKey === "initial" ||
-    errorKey === "root"
-  ) {
+  if (!errorKey || errorKey === "initial" || errorKey === "root") {
     return errorKey;
   }
 

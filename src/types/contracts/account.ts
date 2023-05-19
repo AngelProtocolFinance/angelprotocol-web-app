@@ -1,4 +1,3 @@
-import { Tupleable } from "../evm";
 import { AccountType, EndowmentType } from "../lists";
 import { Beneficiary, Categories, EndowmentStatusText } from "./common";
 import { ADDRESS_ZERO, SplitDetails } from "./evm";
@@ -45,35 +44,25 @@ type Vaults<T> = {
 export type AccountStrategies = Vaults<Strategy[]>;
 
 export type Delegate = {
-  Addr: string | ADDRESS_ZERO;
+  addr: string | ADDRESS_ZERO;
   expires: number; // datetime int of delegation expiry: 0 if no expiry
-};
-export type SettingsPermission = {
-  ownerControlled: boolean;
-  govControlled: boolean;
-  modifiableAfterInit: boolean;
-  delegate: Delegate;
 };
 
 export type SettingsController = {
-  endowmentController: SettingsPermission;
-  strategies: SettingsPermission;
-  whitelistedBeneficiaries: SettingsPermission;
-  whitelistedContributors: SettingsPermission;
-  maturityWhitelist: SettingsPermission;
-  maturityTime: SettingsPermission;
-  profile: SettingsPermission;
-  earningsFee: SettingsPermission;
-  withdrawFee: SettingsPermission;
-  depositFee: SettingsPermission;
-  aumFee: SettingsPermission;
-  kycDonorsOnly: SettingsPermission;
-  name: SettingsPermission;
-  image: SettingsPermission;
-  logo: SettingsPermission;
-  categories: SettingsPermission;
-  splitToLiquid: SettingsPermission;
-  ignoreUserSplits: SettingsPermission;
+  strategies: Delegate;
+  allowlistedBeneficiaries: Delegate;
+  allowlistedContributors: Delegate;
+  maturityAllowlist: Delegate;
+  maturityTime: Delegate;
+  withdrawFee: Delegate;
+  depositFee: Delegate;
+  balanceFee: Delegate;
+  name: Delegate;
+  image: Delegate;
+  logo: Delegate;
+  categories: Delegate;
+  splitToLiquid: Delegate;
+  ignoreUserSplits: Delegate;
 };
 
 export interface EndowmentDetails {
@@ -87,9 +76,9 @@ export interface EndowmentDetails {
   //deposit_approved
   //withdraw_approved
   maturityTime: number;
-  whitelistedBeneficiaries: string[];
-  whitelistedContributors: string[];
-  maturityWhitelist: string[];
+  allowlistedBeneficiaries: string[];
+  allowlistedContributors: string[];
+  maturityAllowlist: string[];
   //rebalance
   kycDonorsOnly: boolean;
   donationMatchActive: boolean;
@@ -134,30 +123,16 @@ export type UpdateStategyPayload = {
   strategies: Strategy[];
 };
 
-export interface SettingsControllerUpdate extends Tupleable {
+export type SettingsControllerUpdate = {
   id: number;
-  endowmentController: SettingsPermission;
-  name: SettingsPermission;
-  image: SettingsPermission;
-  logo: SettingsPermission;
-  categories: SettingsPermission;
-  kycDonorsOnly: SettingsPermission;
-  splitToLiquid: SettingsPermission;
-  ignoreUserSplits: SettingsPermission;
-  whitelistedBeneficiaries: SettingsPermission;
-  whitelistedContributors: SettingsPermission;
-  maturityWhitelist: SettingsPermission;
-  earningsFee: SettingsPermission;
-  depositFee: SettingsPermission;
-  withdrawFee: SettingsPermission;
-  aumFee: SettingsPermission;
-}
+  settingsController: SettingsController;
+};
 
 export type EndowmentSettingsUpdate = {
   id: number;
   donationMatchActive: boolean; //not used in update
-  whitelistedBeneficiaries: string[];
-  whitelistedContributors: string[];
+  allowlistedBeneficiaries: string[];
+  allowlistedContributors: string[];
   maturity_whitelist_add: string[];
   maturity_whitelist_remove: string[];
   splitToLiquid: SplitDetails; //not used in update

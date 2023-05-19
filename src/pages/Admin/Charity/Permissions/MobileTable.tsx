@@ -94,7 +94,7 @@ export default function MobileTable({ className = "" }) {
                       </CheckField>
                     )}
                     <CheckField<FormValues>
-                      name={`${fieldName}.delegated`}
+                      name={`${fieldName}.isActive`}
                       classes={{
                         label: "uppercase text-xs font-bold",
                         input: "checkbox-orange",
@@ -117,14 +117,14 @@ export default function MobileTable({ className = "" }) {
                       id={`del-addr-input-${fieldName}`}
                       disabled={delegateAddressDisabled}
                       className={`field-input truncate h-8 ${
-                        !errors[fieldName]?.delegate_address
+                        !errors[fieldName]?.addr
                           ? ""
                           : "border-red dark:border-red-l2 focus:border-red focus:dark:border-red-l2"
                       }`}
                       type="text"
                       autoComplete="off"
                       spellCheck={false}
-                      {...register(`${fieldName}.delegate_address`)}
+                      {...register(`${fieldName}.addr`)}
                     />
                   </div>
                   <div className="flex justify-between items-center p-4">

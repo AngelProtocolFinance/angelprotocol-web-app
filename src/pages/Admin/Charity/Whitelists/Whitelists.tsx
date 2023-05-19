@@ -6,8 +6,8 @@ import Form from "./Form";
 
 export default function Whitelists() {
   const {
-    whitelistedBeneficiaries,
-    whitelistedContributors,
+    allowlistedBeneficiaries,
+    allowlistedContributors,
     id,
     donationMatchActive,
     splitToLiquid,
@@ -17,8 +17,8 @@ export default function Whitelists() {
   const initial: EndowmentSettingsUpdate = {
     id,
     donationMatchActive,
-    whitelistedBeneficiaries,
-    whitelistedContributors,
+    allowlistedBeneficiaries,
+    allowlistedContributors,
     maturity_whitelist_add: [], //not included in form
     maturity_whitelist_remove: [], //not included in form
     splitToLiquid,

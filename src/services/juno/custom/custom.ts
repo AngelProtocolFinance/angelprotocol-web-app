@@ -27,7 +27,7 @@ export const customApi = junoApi.injectEndpoints({
           const members = await queryContract("multisig.members", { multisig });
 
           return {
-            data: args.user in members,
+            data: members.includes(args.user),
           };
         }
 
@@ -40,7 +40,7 @@ export const customApi = junoApi.injectEndpoints({
         });
 
         return {
-          data: args.user in members,
+          data: members.includes(args.user),
         };
       },
     }),
@@ -50,7 +50,6 @@ export const customApi = junoApi.injectEndpoints({
     >({
       providesTags: [
         "multisig.members",
-        "multisig.threshold",
         "multisig.threshold",
         "accounts.endowment",
       ],
