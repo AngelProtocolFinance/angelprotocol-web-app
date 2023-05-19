@@ -81,7 +81,7 @@ describe("AST withdraw transactions", () => {
   });
   test("withdraw locked: sender in maturity whitelist", () => {
     const endow = endowDetails([
-      ["maturityWhitelist", ["sender"]],
+      ["maturityAllowlist", ["sender"]],
       ["endow_type", "normal"],
     ]);
     const fv = formValues();
@@ -132,7 +132,7 @@ function endowDetails<T extends keyof ED>(overrides?: Override<T>[]): ED {
     status: "approved",
     maturityTime: 1000,
     whitelistedBeneficiaries: [],
-    maturityWhitelist: [],
+    maturityAllowlist: [],
     kycDonorsOnly: false,
     settingsController: {} as any, //not relevant to this test
     ...(overrides || []).reduce(

@@ -70,7 +70,7 @@ export function constructTx(
       endow.endow_type === "normal" &&
       (
         (wv.type === "liquid" && endow.whitelistedBeneficiaries.includes(sender)) ||
-        (wv.type === "locked" && endow.maturityWhitelist.includes(sender))
+        (wv.type === "locked" && endow.maturityAllowlist.includes(sender))
       );
 
   const tx: SimulContractTx = isDirect

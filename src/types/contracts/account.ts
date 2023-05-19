@@ -48,12 +48,6 @@ export type Delegate = {
   addr: string | ADDRESS_ZERO;
   expires: number; // datetime int of delegation expiry: 0 if no expiry
 };
-export type SettingsPermission = {
-  ownerControlled: boolean;
-  govControlled: boolean;
-  modifiableAfterInit: boolean;
-  delegate: Delegate;
-};
 
 export type SettingsController = {
   strategies: Delegate;
@@ -84,7 +78,7 @@ export interface EndowmentDetails {
   //withdraw_approved
   maturityTime: number;
   whitelistedBeneficiaries: string[];
-  maturityWhitelist: string[];
+  maturityAllowlist: string[];
   //rebalance
   kycDonorsOnly: boolean;
   settingsController: SettingsController;
