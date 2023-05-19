@@ -13,7 +13,7 @@ import { useModalContext } from "contexts/ModalContext";
 import { TxPrompt } from "components/Prompt";
 import { Field } from "components/form";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
-import { multisig as Multisig } from "contracts/evm/multisig";
+import { multisig as Multisig, SubmissionEvent } from "contracts/evm/multisig";
 import useTxSender from "hooks/useTxSender";
 import { proposalShape } from "../../../constants";
 
@@ -107,11 +107,14 @@ export default function Proposer({ type, appId, reference }: Props) {
           data,
         }),
         log: (logs) => {
-          const ev = Multisig.getEvent("Submission");
-          const topic = Multisig.getEventTopic(ev);
+          const topic = Multisig.getEventTopic(SubmissionEvent);
           const log = logs.find((log) => log.topics.includes(topic));
           if (!log) return null;
-          const [id] = Multisig.decodeEventLog(ev, log.data, log.topics);
+          const [id] = Multisig.decodeEventLog(
+            SubmissionEvent,
+            log.data,
+            log.topics
+          );
           return (id as BigNumber).toString();
         },
       },

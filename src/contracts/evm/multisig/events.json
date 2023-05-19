@@ -1,3 +1,4 @@
 [
-  "event Submission(uint256 indexed,tuple(string,string,address,uint256,bytes,bool))"
+  "event Submission(uint256 indexed,tuple(string,string,address,uint256,bytes,bool))",
+  "event ExecutionFailure(uint256 indexed)"
 ]
