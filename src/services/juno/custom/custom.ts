@@ -51,7 +51,6 @@ export const customApi = junoApi.injectEndpoints({
       providesTags: [
         "multisig.members",
         "multisig.threshold",
-        "multisig.threshold",
         "accounts.endowment",
       ],
       async queryFn(args) {
