@@ -43,7 +43,7 @@ export default function useEditWhitelists() {
         return showModal(TxPrompt, { error: "No changes detected" });
       }
 
-      const [data, dest] = encodeTx("accounts.update-settings", update);
+      const [data, dest, meta] = encodeTx("accounts.update-settings", update);
       let tx = createTx(wallet.address, "multisig.submit-transaction", {
         multisig,
         title: `Update whitelists settings`,
@@ -51,13 +51,14 @@ export default function useEditWhitelists() {
         destination: dest,
         value: "0",
         data,
+        meta: meta.encoded,
       });
 
       await sendTx({
         content: { type: "evm", val: tx },
         ...propMeta,
         isAuthorized: true,
-        tagPayloads: getTagPayloads(propMeta.willExecute && "endow_controller"),
+        tagPayloads: getTagPayloads(propMeta.willExecute && meta.id),
       });
     } catch (err) {
       showModal(TxPrompt, {

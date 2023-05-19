@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { FormValues } from "./types";
+import { FundMemberUpdate } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useGetter } from "store/accessors";
@@ -48,11 +49,17 @@ export default function useUpdateFund() {
       const wallet = getWallet();
       if (typeof wallet === "function") return wallet();
 
-      const [data, dest] = encodeTx("index-fund.update-members", {
+      const update: FundMemberUpdate = {
         fundId: +fundId,
         add: toAdd.map((a) => +a),
         remove: toRemove.map((r) => +r),
-      });
+      };
+
+      const [data, dest, meta] = encodeTx(
+        "index-fund.update-members",
+        update,
+        update
+      );
 
       const tx = createTx(wallet.address, "multisig.submit-transaction", {
         multisig,
@@ -61,6 +68,7 @@ export default function useUpdateFund() {
         destination: dest,
         value: "0",
         data,
+        meta: meta.encoded,
       });
 
       await sendTx({

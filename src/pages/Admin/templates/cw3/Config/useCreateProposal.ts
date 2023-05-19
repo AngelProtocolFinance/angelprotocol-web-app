@@ -46,7 +46,7 @@ export default function usePropose() {
     const wallet = getWallet();
     if (typeof wallet === "function") return wallet();
 
-    const [data, dest] = encodeTx("multisig.change-threshold", {
+    const [data, dest, meta] = encodeTx("multisig.change-threshold", {
       multisig,
       threshold: +threshold,
     });
@@ -58,12 +58,13 @@ export default function usePropose() {
       destination: dest,
       value: "0",
       data,
+      meta: meta.encoded,
     });
 
     await sendTx({
       content: { type: "evm", val: tx },
       ...propMeta,
-      tagPayloads: getTagPayloads(propMeta.willExecute && "cw3_config"),
+      tagPayloads: getTagPayloads(propMeta.willExecute && meta.id),
     });
   }
 

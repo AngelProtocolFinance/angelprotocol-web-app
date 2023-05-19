@@ -12,12 +12,13 @@ export default function useUpdateMembers(action: FormProps["action"]) {
     const wallet = getWallet();
     if (typeof wallet === "function") return wallet();
 
-    const [data, dest] = encodeTx(
+    const [data, dest, meta] = encodeTx(
       action === "add" ? "multisig.add-owner" : "multisig.remove-owner",
       {
         multisig,
         address: fv.address,
-      }
+      },
+      { action, address: fv.address }
     );
 
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
@@ -27,12 +28,13 @@ export default function useUpdateMembers(action: FormProps["action"]) {
       destination: dest,
       value: "0",
       data,
+      meta: meta.encoded,
     });
 
     await sendTx({
       content: { type: "evm", val: tx },
       ...propMeta,
-      tagPayloads: getTagPayloads(propMeta.willExecute && "cw4_members"),
+      tagPayloads: getTagPayloads(propMeta.willExecute && meta.id),
     });
   }
 

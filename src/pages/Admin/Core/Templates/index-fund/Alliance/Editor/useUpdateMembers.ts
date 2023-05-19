@@ -1,4 +1,5 @@
 import { FormProps, FormValues } from "./types";
+import { AllianceListUpdate } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
@@ -12,10 +13,15 @@ export default function useUpdateMembers(action: FormProps["action"]) {
     const wallet = getWallet();
     if (typeof wallet === "function") return wallet();
 
-    const [data, dest] = encodeTx("index-fund.update-alliance-list", {
+    const update: AllianceListUpdate = {
       address: fv.address,
       action,
-    });
+    };
+    const [data, dest, meta] = encodeTx(
+      "index-fund.update-alliance-list",
+      update,
+      update
+    );
 
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig,
@@ -24,12 +30,13 @@ export default function useUpdateMembers(action: FormProps["action"]) {
       destination: dest,
       value: "0",
       data,
+      meta: meta.encoded,
     });
 
     await sendTx({
       content: { type: "evm", val: tx },
       ...propMeta,
-      tagPayloads: getTagPayloads(propMeta.willExecute && "cw4_members"),
+      tagPayloads: getTagPayloads(propMeta.willExecute && meta.id),
     });
   }
 

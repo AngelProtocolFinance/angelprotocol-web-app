@@ -1,11 +1,12 @@
 import { useFormContext } from "react-hook-form";
+import { Entries } from "type-fest";
 import { FormValues } from "./types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import Prompt from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
-import { getPayloadDiff } from "helpers/admin";
+import { genDiffMeta, getPayloadDiff, getTagPayloads } from "helpers/admin";
 
 export default function useConfigureFund() {
   const { multisig, propMeta, getWallet } = useAdminResources();
@@ -25,7 +26,7 @@ export default function useConfigureFund() {
     //check for changes
     const diff = getPayloadDiff(initial, data);
 
-    const diffEntries = Object.entries(diff);
+    const diffEntries = Object.entries(diff) as Entries<typeof data>;
     if (diffEntries.length <= 0) {
       return showModal(Prompt, {
         type: "error",
@@ -38,7 +39,11 @@ export default function useConfigureFund() {
     const wallet = getWallet();
     if (typeof wallet === "function") return wallet();
 
-    const [configData, dest] = encodeTx("index-fund.config", data);
+    const [configData, dest, meta] = encodeTx(
+      "index-fund.config",
+      data,
+      genDiffMeta(diffEntries, data)
+    );
 
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig,
@@ -47,11 +52,13 @@ export default function useConfigureFund() {
       destination: dest,
       value: "0",
       data: configData,
+      meta: meta.encoded,
     });
 
     await sendTx({
       content: { type: "evm", val: tx },
       ...propMeta,
+      tagPayloads: getTagPayloads(propMeta.willExecute && meta.id),
     });
   }
 

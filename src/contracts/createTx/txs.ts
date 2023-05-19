@@ -1,13 +1,13 @@
 import { TxArgs, TxTypes } from "./types";
-import { erc20 } from "contracts/evm/ERC20";
-import { charityApplication } from "contracts/evm/charity-application";
-import { giftCard } from "contracts/evm/gift-card";
-import { indexFund } from "contracts/evm/index-fund";
-import { lockedWithdraw } from "contracts/evm/locked-withdraw";
-import { multisig } from "contracts/evm/multisig";
-import { registrar } from "contracts/evm/registrar";
 import { toTuple } from "helpers";
 import { accounts } from "../evm/Account";
+import { erc20 } from "../evm/ERC20";
+import { charityApplication } from "../evm/charity-application";
+import { giftCard } from "../evm/gift-card";
+import { indexFund } from "../evm/index-fund";
+import { lockedWithdraw } from "../evm/locked-withdraw";
+import { multisig } from "../evm/multisig";
+import { registrar } from "../evm/registrar";
 
 export const txs: { [T in TxTypes]: (args: TxArgs<T>) => string } = {
   // //// ACCOUNTS ////

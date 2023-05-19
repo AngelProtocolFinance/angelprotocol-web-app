@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { FormValues } from "./types";
+import { NewFund } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { TxPrompt } from "components/Prompt";
@@ -47,7 +48,7 @@ export default function useCreateFund() {
     const expiryTime = getValues("expiryTime");
     const split = getValues("splitToLiquid");
 
-    const [data, dest] = encodeTx("index-fund.create-fund", {
+    const newFund: NewFund = {
       name: getValues("name"),
       description: getValues("about"),
       members: newFundMembers.map((m) => m.toString()),
@@ -55,7 +56,13 @@ export default function useCreateFund() {
       splitToLiquid: split === INIT_SPLIT ? "0" : split,
       expiryTime: expiryTime === "" ? "0" : blockTime(expiryTime).toString(),
       expiryHeight: expiryHeight === "" ? "0" : expiryHeight,
-    });
+    };
+
+    const [data, dest, meta] = encodeTx(
+      "index-fund.create-fund",
+      newFund,
+      newFund
+    );
 
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig,
@@ -64,6 +71,7 @@ export default function useCreateFund() {
       destination: dest,
       value: "0",
       data,
+      meta: meta.encoded,
     });
 
     await sendTx({

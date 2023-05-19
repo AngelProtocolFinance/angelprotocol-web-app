@@ -7,6 +7,7 @@ import { DetailLabel, Status } from "components/admin";
 import { APP_NAME, DAPP_DOMAIN } from "constants/common";
 import { adminRoutes } from "constants/routes";
 import { useAdminResources } from "../Guard";
+import Content from "./Content";
 import PollAction from "./PollAction";
 import Stats from "./Stats";
 import Votes from "./Votes";
@@ -48,6 +49,7 @@ export default function Proposal() {
             <p className="mb-6 text-gray-d1 dark:text-gray">
               {proposal.description}
             </p>
+            <Content {...proposal} />
             <h4 className="mt-6 uppercase text-lg py-2 border-b-2 border-prim">
               Votes
             </h4>

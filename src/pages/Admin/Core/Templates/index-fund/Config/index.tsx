@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { FormValues, Config as TConfig } from "./types";
-import { IndexFundConfig } from "types/contracts";
+import { FormValues } from "./types";
+import { IndexFundConfig, IndexFundConfigUpdate } from "types/contracts";
 import { useContractQuery } from "services/juno";
 import QueryLoader from "components/QueryLoader";
 import { FormError, FormSkeleton } from "components/admin";
@@ -25,7 +25,7 @@ export default function Config() {
 }
 
 function FundConfigContext(props: IndexFundConfig) {
-  const initial: TConfig = {
+  const initial: IndexFundConfigUpdate = {
     fundRotation: props.fundRotation,
     fundMemberLimit: props.fundMemberLimit,
     fundingGoal: props.fundingGoal,

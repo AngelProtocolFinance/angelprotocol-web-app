@@ -14,7 +14,7 @@ export default function useSubmit(vault: string, type: AccountType) {
     const wallet = getWallet();
     if (typeof wallet === "function") return wallet();
 
-    const [data, dest] = encodeTx("accounts.invest", {
+    const [data, dest, meta] = encodeTx("accounts.invest", {
       id,
       account: type === "locked" ? 0 : 1,
       vaults: [vault],
@@ -29,12 +29,13 @@ export default function useSubmit(vault: string, type: AccountType) {
       destination: dest,
       value: "0",
       data,
+      meta: meta.encoded,
     });
 
     await sendTx({
       content: { type: "evm", val: tx },
       ...propMeta,
-      tagPayloads: getTagPayloads(propMeta.willExecute && "acc_invest"),
+      tagPayloads: getTagPayloads(propMeta.willExecute && meta.id),
     });
   }
 

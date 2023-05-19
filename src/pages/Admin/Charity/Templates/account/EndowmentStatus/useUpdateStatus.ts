@@ -38,7 +38,7 @@ export default function useUpdateStatus() {
     const wallet = getWallet();
     if (typeof wallet === "function") return wallet();
 
-    const [beneficiary] = (function (): [Beneficiary, string] {
+    const [beneficiary, beneficiaryMeta] = (function (): [Beneficiary, string] {
       const { id, type } = fv.beneficiary;
       switch (type) {
         case "indexfund":
@@ -59,11 +59,15 @@ export default function useUpdateStatus() {
       }
     })();
 
-    const [data, dest] = encodeTx("accounts.update-status", {
-      id: +fv.id,
-      status: toNum(status.value),
-      beneficiary,
-    });
+    const [data, dest, meta] = encodeTx(
+      "accounts.update-status",
+      {
+        id: +fv.id,
+        status: toNum(status.value),
+        beneficiary,
+      },
+      { from: prevStatus, to: status.value, beneficiary: beneficiaryMeta }
+    );
 
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig,
@@ -72,12 +76,15 @@ export default function useUpdateStatus() {
       destination: dest,
       value: "0",
       data,
+      meta: meta.encoded,
     });
 
     await sendTx({
       content: { type: "evm", val: tx },
       ...propMeta,
-      tagPayloads: getTagPayloads(propMeta.willExecute && "acc_endow_status"),
+      tagPayloads: getTagPayloads(
+        propMeta.willExecute && "accounts.update-status"
+      ),
     });
   }
 

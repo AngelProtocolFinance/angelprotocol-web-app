@@ -1,5 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
+import { ID } from "contracts/createTx/types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import Prompt from "components/Prompt";
@@ -27,7 +28,8 @@ export default function useDestroyFund() {
 
     const wallet = getWallet();
     if (typeof wallet === "function") return wallet();
-    const [data, dest] = encodeTx("index-fund.remove-fund", { id: +fv.fundId });
+    const id: ID = { id: +fv.fundId };
+    const [data, dest, meta] = encodeTx("index-fund.remove-fund", id, id);
 
     await sendTx({
       content: {
@@ -39,6 +41,7 @@ export default function useDestroyFund() {
           destination: dest,
           value: "0",
           data,
+          meta: meta.encoded,
         }),
       },
       ...propMeta,
