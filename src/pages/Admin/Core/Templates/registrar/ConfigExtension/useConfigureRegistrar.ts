@@ -1,12 +1,12 @@
 import { useFormContext } from "react-hook-form";
-import { Entries } from "type-fest";
 import { FormValues as FV } from "./types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import Prompt from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
-import { genDiffMeta, getPayloadDiff } from "helpers/admin";
+import { isEmpty } from "helpers";
+import { getPayloadDiff } from "helpers/admin";
 
 export default function useConfigureRegistrar() {
   const { multisig, propMeta, getWallet } = useAdminResources();
@@ -25,8 +25,7 @@ export default function useConfigureRegistrar() {
   }: FV) {
     //check for changes
     const diff = getPayloadDiff(initial, fv);
-    const diffEntries = Object.entries(diff) as Entries<typeof initial>;
-    if (diffEntries.length === 0) {
+    if (isEmpty(diff)) {
       return showModal(Prompt, {
         type: "error",
         title: "Update Registrar",
@@ -44,7 +43,7 @@ export default function useConfigureRegistrar() {
         ...initial,
         ...fv,
       },
-      genDiffMeta(diffEntries, initial)
+      diff
     );
 
     await sendTx({

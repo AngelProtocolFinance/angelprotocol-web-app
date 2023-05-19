@@ -6,10 +6,8 @@ import { useModalContext } from "contexts/ModalContext";
 import Prompt from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
+import { isEmpty } from "helpers";
 import { getPayloadDiff, getTagPayloads } from "helpers/admin";
-
-type Key = keyof FV;
-type Value = FV[Key];
 
 export default function usePropose() {
   const { multisig, propMeta, getWallet } = useAdminResources();
@@ -32,9 +30,8 @@ export default function usePropose() {
       requireExecution,
     };
     const diff = getPayloadDiff(initial, config);
-    const diffEntries = Object.entries(diff) as [Key, Value][];
 
-    if (diffEntries.length <= 0) {
+    if (isEmpty(diff)) {
       return showModal(Prompt, {
         type: "error",
         title: "Create Proposal",

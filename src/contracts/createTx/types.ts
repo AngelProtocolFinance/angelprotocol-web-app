@@ -15,7 +15,7 @@ import { Asset } from "types/contracts/gift-card";
 import { NewTransaction } from "types/contracts/multisig";
 import { Tupleable } from "types/evm";
 import { Contract } from "types/lists";
-import { DiffSet } from "types/utils";
+import { Diff } from "types/utils";
 import {
   AccountStatusMeta,
   MultisigMemberMeta,
@@ -96,10 +96,7 @@ type Txs = {
   "erc20.approve": Tx<Allowance, never>; //not multisig tx
 
   // //// INDEX FUND ////
-  "index-fund.config": Tx<
-    IndexFundConfigUpdate,
-    DiffSet<IndexFundConfigUpdate>
-  >;
+  "index-fund.config": Tx<IndexFundConfigUpdate, Diff[]>;
   "index-fund.update-owner": Tx<{ newOwner: string }, OwnerMeta>;
   "index-fund.create-fund": Tx<NewFund, NewFund>;
   "index-fund.remove-fund": Tx<ID, ID>;
@@ -136,10 +133,7 @@ type Txs = {
   >;
 
   "registrar.update-owner": Tx<{ newOwner: string }, OwnerMeta>;
-  "registrar.update-config": Tx<
-    RegistrarConfigPayload,
-    DiffSet<RegistrarConfigPayload>
-  >;
+  "registrar.update-config": Tx<RegistrarConfigPayload, Diff[]>;
 };
 
 export type TxTypes = keyof Txs;

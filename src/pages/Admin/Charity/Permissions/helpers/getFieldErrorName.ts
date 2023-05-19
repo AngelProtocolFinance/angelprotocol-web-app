@@ -21,7 +21,7 @@ export function getFieldErrorName(
   if (
     !errorKey ||
     errorKey === "endowment_controller" ||
-    errorKey === "initialValues" ||
+    errorKey === "initial" ||
     errorKey === "root"
   ) {
     return errorKey;
