@@ -3,7 +3,7 @@ import { Templates } from "pages/Admin/types";
 import { ProposalBase } from "pages/Admin/types";
 import { SchemaShape } from "schemas/types";
 import { stringByteSchema } from "schemas/string";
-import { IS_AST, PAYMENT_WORDS } from "constants/env";
+import { PAYMENT_WORDS, titleCase } from "constants/env";
 import { adminRoutes } from "constants/routes";
 
 export const templates: { [key in Templates]: string } = {
@@ -76,7 +76,7 @@ export const LINKS: {
     },
   },
   liquidAccount: {
-    title: `${IS_AST ? "Liquid" : "Current"} Account`,
+    title: `${titleCase(PAYMENT_WORDS.accounts.liquid)} Account`,
     to: sidebarRoutes.liquidAccount,
     icon: {
       type: "WaterDrop",
@@ -84,7 +84,7 @@ export const LINKS: {
     },
   },
   lockedAccount: {
-    title: `${IS_AST ? "Locked" : "Endowment"} Account`,
+    title: `${titleCase(PAYMENT_WORDS.accounts.locked)} Account`,
     to: sidebarRoutes.lockedAccount,
     icon: {
       type: "Lock",
@@ -126,7 +126,7 @@ export const LINKS: {
     },
   },
   contributions: {
-    title: PAYMENT_WORDS.noun.plural,
+    title: titleCase(PAYMENT_WORDS.noun.plural),
     to: sidebarRoutes.contributions,
     icon: {
       type: "DollarCircle",

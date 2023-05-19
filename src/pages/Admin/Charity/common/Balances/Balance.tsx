@@ -5,6 +5,7 @@ import { useAdminResources } from "pages/Admin/Guard";
 import { useEndowBalanceQuery } from "services/juno/custom";
 import QueryLoader from "components/QueryLoader";
 import { condense, humanize } from "helpers";
+import { PAYMENT_WORDS } from "constants/env";
 import { adminRoutes, appRoutes } from "constants/routes";
 
 type Props = { type: AccountType };
@@ -20,11 +21,12 @@ export default function Balance({ type }: Props) {
   return (
     <div className="@container rounded border border-prim bg-orange-l6 dark:bg-blue-d6">
       <h4 className="uppercase text-xl font-bold mb-5 pt-5 px-4">
-        {type} account
+        {PAYMENT_WORDS.accounts[type]} account
       </h4>
       <p className="text-sm text-gray-d1 dark:text-gray mb-8 px-4">
         Balances are estimations. Click See details to view{" "}
-        <span className="capitalize">{type}</span> Account details.
+        <span className="capitalize">{PAYMENT_WORDS.accounts[type]}</span>{" "}
+        Account details.
       </p>
       <QueryLoader
         queryState={query}

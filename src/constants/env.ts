@@ -22,6 +22,10 @@ export const PAYMENT_WORDS = {
     plural: IS_AST ? "contributions" : "donations",
   },
   verb: IS_AST ? "contribute" : "donate",
+  accounts: {
+    locked: IS_AST ? "locked" : "endowment",
+    liquid: IS_AST ? "liquid" : "current",
+  },
 };
 export const titleCase = (word: string) =>
   word.charAt(0).toUpperCase() + word.substr(1);
