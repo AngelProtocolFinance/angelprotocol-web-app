@@ -45,7 +45,7 @@ type Vaults<T> = {
 export type AccountStrategies = Vaults<Strategy[]>;
 
 export type Delegate = {
-  Addr: string | ADDRESS_ZERO;
+  addr: string | ADDRESS_ZERO;
   expires: number; // datetime int of delegation expiry: 0 if no expiry
 };
 export type SettingsPermission = {
@@ -56,24 +56,20 @@ export type SettingsPermission = {
 };
 
 export type SettingsController = {
-  endowmentController: SettingsPermission;
-  strategies: SettingsPermission;
-  whitelistedBeneficiaries: SettingsPermission;
-  whitelistedContributors: SettingsPermission;
-  maturityWhitelist: SettingsPermission;
-  maturityTime: SettingsPermission;
-  profile: SettingsPermission;
-  earningsFee: SettingsPermission;
-  withdrawFee: SettingsPermission;
-  depositFee: SettingsPermission;
-  aumFee: SettingsPermission;
-  kycDonorsOnly: SettingsPermission;
-  name: SettingsPermission;
-  image: SettingsPermission;
-  logo: SettingsPermission;
-  categories: SettingsPermission;
-  splitToLiquid: SettingsPermission;
-  ignoreUserSplits: SettingsPermission;
+  strategies: Delegate;
+  allowlistedBeneficiaries: Delegate;
+  allowlistedContributors: Delegate;
+  maturityAllowlist: Delegate;
+  maturityTime: Delegate;
+  withdrawFee: Delegate;
+  depositFee: Delegate;
+  balanceFee: Delegate;
+  name: Delegate;
+  image: Delegate;
+  logo: Delegate;
+  categories: Delegate;
+  splitToLiquid: Delegate;
+  ignoreUserSplits: Delegate;
 };
 
 export interface EndowmentDetails {
@@ -132,19 +128,5 @@ export type UpdateStategyPayload = {
 
 export interface SettingsControllerUpdate extends Tupleable {
   id: number;
-  endowmentController: SettingsPermission;
-  name: SettingsPermission;
-  image: SettingsPermission;
-  logo: SettingsPermission;
-  categories: SettingsPermission;
-  kycDonorsOnly: SettingsPermission;
-  splitToLiquid: SettingsPermission;
-  ignoreUserSplits: SettingsPermission;
-  whitelistedBeneficiaries: SettingsPermission;
-  whitelistedContributors: SettingsPermission;
-  maturityWhitelist: SettingsPermission;
-  earningsFee: SettingsPermission;
-  depositFee: SettingsPermission;
-  withdrawFee: SettingsPermission;
-  aumFee: SettingsPermission;
+  settingsController: SettingsController;
 }
