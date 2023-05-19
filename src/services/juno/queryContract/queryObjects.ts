@@ -11,6 +11,7 @@ import {
   toEndowStatusText,
   toEndowType,
   toSettingsPermission,
+  toSplit,
 } from "./decoded-types";
 import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
 import { UNSDG_NUMS } from "types/lists";
@@ -54,11 +55,7 @@ export const queryObjects: {
         donationMatchCharitesContract:
           d.donationMatchCharitesContract.toLowerCase(),
         donationMatchEmitter: d.donationMatchEmitter.toLowerCase(),
-        splitToLiquid: {
-          min: d.splitToLiquid.min.toNumber(),
-          max: d.splitToLiquid.max.toNumber(),
-          defaultSplit: d.splitToLiquid.defaultSplit.toNumber(),
-        },
+        splitToLiquid: toSplit(d.splitToLiquid),
         haloToken: d.haloToken.toLowerCase(),
         haloTokenLpContract: d.haloTokenLpContract.toLowerCase(),
         govContract: d.govContract.toLowerCase(),
@@ -279,8 +276,12 @@ export const queryObjects: {
         whitelistedBeneficiaries: d.whitelistedBeneficiaries.map((w) =>
           w.toLowerCase()
         ),
+        whitelistedContributors: d.whitelistedContributors.map((w) =>
+          w.toLowerCase()
+        ),
         maturityWhitelist: d.maturityWhitelist.map((w) => w.toLowerCase()),
         kycDonorsOnly: d.kycDonorsOnly,
+        donationMatchActive: d.donationMatchActive,
         settingsController: {
           endowmentController: toSettingsPermission(
             controller.endowmentController
@@ -307,6 +308,8 @@ export const queryObjects: {
           splitToLiquid: toSettingsPermission(controller.splitToLiquid),
           ignoreUserSplits: toSettingsPermission(controller.ignoreUserSplits),
         },
+        ignoreUserSplits: d.ignoreUserSplits,
+        splitToLiquid: toSplit(d.splitToLiquid),
       };
     },
   ],

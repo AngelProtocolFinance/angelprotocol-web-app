@@ -173,6 +173,14 @@ export const LINKS: {
       size: 24,
     },
   },
+  whitelists: {
+    title: "Whitelists",
+    to: sidebarRoutes.whitelists,
+    icon: {
+      type: "FactCheck",
+      size: 24,
+    },
+  },
   widget_config: {
     title: "Widget Configuration",
     to: sidebarRoutes.widget_config,

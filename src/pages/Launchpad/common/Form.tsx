@@ -41,7 +41,7 @@ const Group: FC<Props> = ({ className = "", children }) => {
 };
 
 const GroupTitle: FC<Props> = ({ className = "", children }) => {
-  return <div className={`${className} text-xl font-bold `}>{children}</div>;
+  return <div className={`${className} text-xl font-bold`}>{children}</div>;
 };
 
 export { Form as default, Title, Desc, Group, GroupTitle };

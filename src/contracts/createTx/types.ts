@@ -1,5 +1,6 @@
 import {
   Beneficiary,
+  EndowmentSettingsUpdate,
   NewFund,
   RegistrarConfigPayload,
   SettingsControllerUpdate,
@@ -26,6 +27,7 @@ type Txs = {
   // //// ACCOUNTS ////
   "accounts.create-endowment": Tx<NewAST>;
   "accounts.update-controller": Tx<SettingsControllerUpdate>;
+  "accounts.update-settings": Tx<EndowmentSettingsUpdate>;
   "accounts.deposit-erc20": Tx<ERC20Deposit>;
   "accounts.withdraw": Tx<{
     id: number;

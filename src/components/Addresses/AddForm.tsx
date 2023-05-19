@@ -15,7 +15,7 @@ type Props = {
 };
 
 type FV = { addr: string };
-export default function MemberForm({ onAdd, name, added }: Props) {
+export default function AddForm({ onAdd, name, added }: Props) {
   const { closeModal } = useModalContext();
   const methods = useForm<FV>({
     resolver: yupResolver(
