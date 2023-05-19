@@ -77,7 +77,7 @@ export interface EndowmentDetails {
   //deposit_approved
   //withdraw_approved
   maturityTime: number;
-  whitelistedBeneficiaries: string[];
+  allowlistedBeneficiaries: string[];
   maturityAllowlist: string[];
   //rebalance
   kycDonorsOnly: boolean;

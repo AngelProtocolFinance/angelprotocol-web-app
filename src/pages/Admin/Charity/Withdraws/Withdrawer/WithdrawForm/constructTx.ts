@@ -69,7 +69,7 @@ export function constructTx(
   const isDirect =
       endow.endow_type === "normal" &&
       (
-        (wv.type === "liquid" && endow.whitelistedBeneficiaries.includes(sender)) ||
+        (wv.type === "liquid" && endow.allowlistedBeneficiaries.includes(sender)) ||
         (wv.type === "locked" && endow.maturityAllowlist.includes(sender))
       );
 

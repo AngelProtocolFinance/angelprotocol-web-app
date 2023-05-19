@@ -93,7 +93,7 @@ describe("AST withdraw transactions", () => {
   });
   test("withdraw liquid: sender in beneficiary whitelist", () => {
     const endow = endowDetails([
-      ["whitelistedBeneficiaries", ["sender"]],
+      ["allowlistedBeneficiaries", ["sender"]],
       ["endow_type", "normal"],
     ]);
 
@@ -131,7 +131,7 @@ function endowDetails<T extends keyof ED>(overrides?: Override<T>[]): ED {
     endow_type: "charity",
     status: "approved",
     maturityTime: 1000,
-    whitelistedBeneficiaries: [],
+    allowlistedBeneficiaries: [],
     maturityAllowlist: [],
     kycDonorsOnly: false,
     settingsController: {} as any, //not relevant to this test

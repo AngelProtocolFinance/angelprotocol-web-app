@@ -276,7 +276,7 @@ export const queryObjects: {
         endow_type: toEndowType(d.endow_type),
         status: toEndowStatusText(d.status),
         maturityTime: d.maturityTime.toNumber(),
-        whitelistedBeneficiaries: d.whitelistedBeneficiaries.map((w) =>
+        allowlistedBeneficiaries: d.allowlistedBeneficiaries.map((w) =>
           w.toLowerCase()
         ),
         maturityAllowlist: d.maturityAllowlist.map((w) => w.toLowerCase()),
