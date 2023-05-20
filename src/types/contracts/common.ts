@@ -1,4 +1,11 @@
-import { UNSDG_NUMS } from "types/lists";
+import { AngelCoreStruct } from "../typechain-types/contracts/core/struct.sol/AngelCoreStruct";
+import { UNSDG_NUMS } from "../lists";
+import { Mapped, Plain } from "../utils";
+
+export type SplitDetails = Mapped<
+  Plain<AngelCoreStruct.SplitDetailsStruct>,
+  number
+>;
 
 export enum EndowmentStatus {
   Inactive,
