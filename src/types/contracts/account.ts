@@ -4,6 +4,7 @@ import {
   AccountStorage,
   AngelCoreStruct,
 } from "../typechain-types/contracts/core/accounts/IAccounts";
+import { AccountMessages as AccountsUpdateEndowmentSettingsControllerMessages } from "../typechain-types/contracts/core/accounts/facets/AccountsUpdateEndowmentSettingsController";
 import { AccountType, EndowmentType, UNSDG_NUMS } from "../lists";
 import { Mapped, Plain } from "../utils";
 import {
@@ -123,16 +124,10 @@ export type SettingsControllerUpdate = {
   settingsController: SettingsController;
 };
 
-export type EndowmentSettingsUpdate = {
-  id: number;
-  donationMatchActive: boolean; //not used in update
-  allowlistedBeneficiaries: string[];
-  allowlistedContributors: string[];
-  maturity_whitelist_add: string[];
-  maturity_whitelist_remove: string[];
-  splitToLiquid: SplitDetails; //not used in update
-  ignoreUserSplits: boolean; //not used in update
-};
+export type EndowmentSettingsUpdate = OverrideProperties<
+  Plain<AccountsUpdateEndowmentSettingsControllerMessages.UpdateEndowmentSettingsRequestStruct>,
+  { id: number; splitToLiquid: SplitDetails }
+>;
 
 type DurationData = Mapped<AngelCoreStruct.DurationDataStruct, number>;
 /**
