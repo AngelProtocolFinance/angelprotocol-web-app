@@ -1,7 +1,6 @@
 import {
   EndowmentDetails,
   EndowmentState,
-  FundDetails,
   GenericBalMap,
   IndexFundConfig,
   RegistrarConfig,
@@ -19,13 +18,6 @@ type Query<Args, Result> = {
 
 export interface ContractQueries {
   "registrar.config": Query<null, RegistrarConfig>;
-  "index-fund.funds": Query<
-    {
-      startAfter: number;
-      limit: number;
-    },
-    FundDetails[]
-  >;
   "index-fund.config": Query<null, IndexFundConfig>;
   "gift-card.balance": Query<Addr, GenericBalMap>;
 

@@ -69,26 +69,6 @@ export const queryObjects: {
     },
   ],
 
-  /** index fund */
-  "index-fund.funds": [
-    (args) => indexFund.encodeFunctionData("queryFundsList", toTuple(args)),
-    (result) => {
-      const decoded: DFund[] = indexFund.decodeFunctionResult(
-        "queryFundsList",
-        result
-      )[0];
-      return decoded.map((f) => ({
-        id: f.id.toNumber(),
-        name: f.name,
-        description: f.description,
-        members: f.members.map((m) => m.toNumber()),
-        rotatingFund: f.rotatingFund,
-        splitToLiquid: f.splitToLiquid.toNumber(),
-        expiryTime: f.expiryTime.toNumber(),
-        expiryHeight: f.expiryHeight.toNumber(),
-      }));
-    },
-  ],
   "index-fund.config": [
     indexFund.encodeFunctionData("queryConfig", []),
     (result) => {
