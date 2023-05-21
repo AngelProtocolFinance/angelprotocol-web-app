@@ -1,7 +1,6 @@
 import type { BigNumber } from "@ethersproject/bignumber";
 import { OverrideProperties } from "type-fest";
 import {
-  Beneficiary,
   Delegate,
   EndowmentStatus,
   EndowmentStatusText,
@@ -25,30 +24,6 @@ export type DGenericBalance = {
   Cw20CoinVerified_amount: BigNumber[];
   Cw20CoinVerified_addr: string[];
 };
-
-type DBeneficiaryData = OverrideProperties<
-  Beneficiary["data"],
-  { id: BigNumber }
->;
-type DBeneficiary = OverrideProperties<
-  Beneficiary,
-  {
-    data: DBeneficiaryData;
-    enumData: BigNumber;
-  }
->;
-export interface DEndowmentState {
-  donationsReceived: {
-    liquid: BigNumber;
-    locked: BigNumber;
-  };
-  balances: {
-    locked: DGenericBalance;
-    liquid: DGenericBalance;
-  };
-  closingEndowment: boolean;
-  closingBeneficiary: DBeneficiary;
-}
 
 export type DFund = OverrideProperties<
   FundDetails,

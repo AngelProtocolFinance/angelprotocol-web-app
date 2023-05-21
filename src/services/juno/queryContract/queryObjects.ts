@@ -1,6 +1,5 @@
 import { BigNumber } from "@ethersproject/bignumber";
 import {
-  DEndowmentState,
   DGenericBalance,
   toBalMap,
   toDelegate,
