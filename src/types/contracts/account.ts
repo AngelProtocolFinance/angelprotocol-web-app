@@ -5,7 +5,7 @@ import {
   AngelCoreStruct,
 } from "../typechain-types/contracts/core/accounts/IAccounts";
 import { AccountMessages as AccountsUpdateEndowmentSettingsControllerMessages } from "../typechain-types/contracts/core/accounts/facets/AccountsUpdateEndowmentSettingsController";
-import { AccountType, EndowmentType, UNSDG_NUMS } from "../lists";
+import { EndowmentType, UNSDG_NUMS } from "../lists";
 import { Mapped, Plain } from "../utils";
 import {
   Beneficiary,
@@ -22,6 +22,13 @@ export interface BalanceInfo {
   locked: GenericBalMap;
   liquid: GenericBalMap;
 }
+
+/**
+ * 0 - locked
+ * 1 - liquid
+ * 2 - none
+ */
+export type AccountType = 0 | 1 | 2;
 
 export type EndowmentState = OverrideProperties<
   AccountMessages.StateResponseStruct,
