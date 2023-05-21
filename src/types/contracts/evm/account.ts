@@ -1,5 +1,6 @@
 import { Tupleable } from "../../evm";
 import { SettingsController } from "../account";
+import { SplitDetails } from "../common";
 
 type Categories = { sdgs: number[]; general: number[] };
 
@@ -70,12 +71,6 @@ export type DaoSetup = {
   proposalDeposit: number; //: Uint128,
   snapshotPeriod: number; //: u64,
   token: DaoToken;
-};
-
-export type SplitDetails = {
-  min: number;
-  max: number;
-  defaultSplit: number;
 };
 
 /**

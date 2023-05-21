@@ -1,6 +1,12 @@
-import { AccountType, EndowmentType } from "../lists";
-import { Beneficiary, Categories, EndowmentStatusText } from "./common";
-import { ADDRESS_ZERO, SplitDetails } from "./evm";
+import { OverrideProperties } from "type-fest";
+import {
+  AccountStorage,
+  AngelCoreStruct,
+} from "../typechain-types/contracts/core/accounts/IAccounts";
+import { AccountType, EndowmentType, UNSDG_NUMS } from "../lists";
+import { Mapped, Plain } from "../utils";
+import { Beneficiary, EndowmentStatusText, SplitDetails } from "./common";
+import { ADDRESS_ZERO } from "./evm";
 
 //transformed GenericBalance
 export type GenericBalMap = { native: string } & { [index: string]: string }; //erc20s
@@ -43,52 +49,47 @@ type Vaults<T> = {
 
 export type AccountStrategies = Vaults<Strategy[]>;
 
-export type Delegate = {
-  addr: string | ADDRESS_ZERO;
-  expires: number; // datetime int of delegation expiry: 0 if no expiry
-};
+export type Delegate = OverrideProperties<
+  AngelCoreStruct.DelegateStruct,
+  {
+    addr: string | ADDRESS_ZERO;
+    expires: number; // datetime int of delegation expiry: 0 if no expiry
+  }
+>;
 
-export type SettingsController = {
-  strategies: Delegate;
-  allowlistedBeneficiaries: Delegate;
-  allowlistedContributors: Delegate;
-  maturityAllowlist: Delegate;
-  maturityTime: Delegate;
-  withdrawFee: Delegate;
-  depositFee: Delegate;
-  balanceFee: Delegate;
-  name: Delegate;
-  image: Delegate;
-  logo: Delegate;
-  categories: Delegate;
-  splitToLiquid: Delegate;
-  ignoreUserSplits: Delegate;
-};
+export type SettingsController = Mapped<
+  AngelCoreStruct.SettingsControllerStruct,
+  Delegate
+>;
 
-export interface EndowmentDetails {
-  owner: string;
-  categories: Categories;
-  //tier
-  endow_type: EndowmentType;
-  //logo
-  //image
-  status: EndowmentStatusText;
-  //deposit_approved
-  //withdraw_approved
-  maturityTime: number;
-  allowlistedBeneficiaries: string[];
-  allowlistedContributors: string[];
-  maturityAllowlist: string[];
-  //rebalance
-  kycDonorsOnly: boolean;
-  donationMatchActive: boolean;
-  settingsController: SettingsController;
-  //pending_redemptions
-  //proposal_link
-  //referral_id
-  ignoreUserSplits: boolean;
-  splitToLiquid: SplitDetails;
-}
+type Categories = OverrideProperties<
+  AngelCoreStruct.CategoriesStruct,
+  { sdgs: UNSDG_NUMS[]; general: number[] }
+>;
+
+export type EndowmentDetails = OverrideProperties<
+  Pick<
+    Plain<AccountStorage.EndowmentStruct>,
+    | "categories"
+    | "endow_type"
+    | "maturityTime"
+    | "allowlistedBeneficiaries"
+    | "allowlistedContributors"
+    | "maturityAllowlist"
+    | "kycDonorsOnly"
+    | "donationMatchActive"
+    | "settingsController"
+    | "ignoreUserSplits"
+    | "splitToLiquid"
+  >,
+  {
+    categories: Categories;
+    endow_type: EndowmentType;
+    maturityTime: number;
+    settingsController: SettingsController;
+    splitToLiquid: SplitDetails;
+  }
+>;
 
 export type Holding = { address: string; amount: string };
 export interface Holdings {

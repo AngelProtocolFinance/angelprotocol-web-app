@@ -15,6 +15,7 @@ import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
 import { UNSDG_NUMS } from "types/lists";
 import { IndexFundStorage } from "types/typechain-types/contracts/core/index-fund/IndexFund";
 import { RegistrarStorage } from "types/typechain-types/contracts/core/registrar/interfaces/IRegistrar";
+import { MultiSigStorage } from "types/typechain-types/contracts/multisigs/MultiSigGeneric";
 import { accounts } from "contracts/evm/Account";
 import { erc20 } from "contracts/evm/ERC20";
 import { giftCard } from "contracts/evm/gift-card";
@@ -177,10 +178,8 @@ export const queryObjects: {
   "multisig.transaction": [
     ({ id }) => multisig.encodeFunctionData("transactions", [id]),
     (result, args) => {
-      const d = multisig.decodeFunctionResult(
-        "transactions",
-        result
-      ) as unknown as DTransaction;
+      const d: MultiSigStorage.TransactionStructOutput =
+        multisig.decodeFunctionResult("transactions", result) as any;
 
       return {
         id: args?.id ?? 0,
@@ -190,6 +189,7 @@ export const queryObjects: {
         value: d.value.toString(),
         data: d.data,
         status: d.executed ? "executed" : "pending",
+        metadata: d.metadata,
       };
     },
   ],

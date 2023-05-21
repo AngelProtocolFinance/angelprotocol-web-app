@@ -13,5 +13,11 @@ export type SemiPartial<T, K extends keyof T> = { [key in K]: T[key] } & {
 export type Mapped<T, TType> = { [key in keyof T]: TType };
 
 export type Plain<T> = {
-  [K in keyof T]: T[K] extends PromiseOrValue<infer U> ? U : T[K];
+  [K in keyof T]: T[K] extends
+    | PromiseOrValue<infer U>
+    | PromiseOrValue<infer U>[]
+    ? T[K] extends PromiseOrValue<infer U>[]
+      ? U[]
+      : U
+    : T[K];
 };
