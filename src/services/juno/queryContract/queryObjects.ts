@@ -1,18 +1,15 @@
 import { BigNumber } from "@ethersproject/bignumber";
 import {
-  DEndowment,
   DEndowmentState,
-  DFund,
   DGenericBalance,
-  DTransaction,
   toBalMap,
   toDelegate,
-  toEndowStatusText,
   toEndowType,
   toSplit,
 } from "./decoded-types";
 import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
 import { UNSDG_NUMS } from "types/lists";
+import { AccountStorage } from "types/typechain-types/contracts/core/accounts/IAccounts";
 import { IndexFundStorage } from "types/typechain-types/contracts/core/index-fund/IndexFund";
 import { RegistrarStorage } from "types/typechain-types/contracts/core/registrar/interfaces/IRegistrar";
 import { MultiSigStorage } from "types/typechain-types/contracts/multisigs/MultiSigGeneric";
@@ -209,22 +206,17 @@ export const queryObjects: {
   "accounts.endowment": [
     ({ id }) => accounts.encodeFunctionData("queryEndowmentDetails", [id]),
     (result) => {
-      const d: DEndowment = accounts.decodeFunctionResult(
-        "queryEndowmentDetails",
-        result
-      )[0];
+      const d: AccountStorage.EndowmentStructOutput =
+        accounts.decodeFunctionResult("queryEndowmentDetails", result)[0];
 
       const controller = d.settingsController;
       return {
         owner: d.owner.toLowerCase(),
         categories: {
           sdgs: d.categories.sdgs.map((s) => s.toNumber()) as UNSDG_NUMS[],
-          general: d.categories.general.map((s) =>
-            s.toNumber()
-          ) as UNSDG_NUMS[],
+          general: d.categories.general.map((s) => s.toNumber()),
         },
         endow_type: toEndowType(d.endow_type),
-        status: toEndowStatusText(d.status),
         maturityTime: d.maturityTime.toNumber(),
         allowlistedBeneficiaries: d.allowlistedBeneficiaries.map((w) =>
           w.toLowerCase()

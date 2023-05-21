@@ -2,19 +2,15 @@ import type { BigNumber } from "@ethersproject/bignumber";
 import { OverrideProperties } from "type-fest";
 import {
   Beneficiary,
-  Categories,
   Delegate,
-  EndowmentDetails,
   EndowmentStatus,
   EndowmentStatusText,
   FundDetails,
   GenericBalMap,
-  SettingsController,
   SplitDetails,
 } from "types/contracts";
 import { EndowmentType } from "types/lists";
 import { AngelCoreStruct } from "types/typechain-types/contracts/core/struct.sol/AngelCoreStruct";
-import { Mapped } from "types/utils";
 
 enum EndowmentTypeEnum {
   Charity,
@@ -23,28 +19,6 @@ enum EndowmentTypeEnum {
 }
 
 type DDelegate = OverrideProperties<Delegate, { expires: BigNumber }>;
-
-type DSettingsController = Mapped<SettingsController, DDelegate>;
-
-type DCategories = OverrideProperties<
-  Categories,
-  {
-    sdgs: BigNumber[];
-    general: BigNumber[];
-  }
->;
-
-export type DEndowment = OverrideProperties<
-  EndowmentDetails,
-  {
-    categories: DCategories;
-    endow_type: EndowmentTypeEnum;
-    status: EndowmentStatus;
-    maturityTime: BigNumber;
-    settingsController: DSettingsController;
-    splitToLiquid: DSplitDetails;
-  }
->;
 
 export type DGenericBalance = {
   coinNativeAmount: BigNumber;
