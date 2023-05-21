@@ -1,11 +1,11 @@
 import {
+  AccountType,
   EndowmentDetails,
   EndowmentState,
   GenericBalMap,
   IndexFundConfig,
   RegistrarConfig,
 } from "types/contracts";
-import { AccountType } from "types/contracts/evm";
 import { PageOptions, Transaction } from "types/contracts/multisig";
 import { Contract } from "types/lists";
 
