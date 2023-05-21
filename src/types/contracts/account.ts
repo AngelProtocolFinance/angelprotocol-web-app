@@ -133,3 +133,96 @@ export type EndowmentSettingsUpdate = {
   splitToLiquid: SplitDetails; //not used in update
   ignoreUserSplits: boolean; //not used in update
 };
+
+type DurationData = Mapped<AngelCoreStruct.DurationDataStruct, number>;
+/**
+ * 0 - height
+ * 1 - time
+ */
+type Duration = OverrideProperties<
+  AngelCoreStruct.DurationStruct,
+  { data: DurationData; enumData: 0 | 1 }
+>;
+
+export type Fee = OverrideProperties<
+  Plain<AngelCoreStruct.EndowmentFeeStruct>,
+  { feePercentage: number }
+>;
+
+type VETypeData = Mapped<AngelCoreStruct.VeTypeDataStruct, number>;
+
+/**
+ * 0 - constant
+ * 1 - linear
+ * 2 - sqrt
+ */
+type VEType = OverrideProperties<
+  AngelCoreStruct.VeTypeStruct,
+  { ve_type: 0 | 1 | 2; data: VETypeData }
+>;
+
+type DaoTokenData = OverrideProperties<
+  Plain<AngelCoreStruct.DaoTokenDataStruct>,
+  {
+    newCw20InitialSupply: string;
+    bondingveveType: VEType;
+    bondingveDecimals: number;
+    bondingveReserveDecimals: number;
+    bondingveUnbondingPeriod: number;
+  }
+>;
+
+/**
+ * 0 - existing CW20
+ * 1 - new CW20
+ * 2 - bonding curve
+ */
+type DaoToken = OverrideProperties<
+  AngelCoreStruct.DaoTokenStruct,
+  {
+    token: 0 | 1 | 2;
+    data: DaoTokenData;
+  }
+>;
+
+type DaoSetup = OverrideProperties<
+  Mapped<AngelCoreStruct.DaoSetupStruct, number>,
+  { token: DaoToken }
+>;
+
+export type NewAST = OverrideProperties<
+  Plain<AccountMessages.CreateEndowmentRequestStruct>,
+  {
+    maturityTime: number;
+    maturityHeight: number;
+    categories: Categories;
+    /**
+     * 0 - none
+     * 1 - Level 1
+     * 2 - Level 2
+     * 3 - Level 3
+     */
+    tier: 0 | 1 | 2 | 3;
+    /**
+     * 0 - charity
+     * 1 - normal
+     * 2 - none
+     */
+    endow_type: 0 | 1 | 2;
+    threshold: number;
+    cw3MaxVotingPeriod: Duration;
+    splitMax: number;
+    splitMin: number;
+    splitDefault: number;
+    earningsFee: Fee;
+    withdrawFee: Fee;
+    depositFee: Fee;
+    balanceFee: Fee;
+    dao: DaoSetup;
+    proposalLink: number;
+    settingsController: SettingsController;
+    parent: number;
+    splitToLiquid: SplitDetails;
+    referralId: number;
+  }
+>;

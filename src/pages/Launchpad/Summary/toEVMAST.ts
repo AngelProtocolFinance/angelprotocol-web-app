@@ -1,6 +1,5 @@
 import { Completed, TFee } from "slices/launchpad/types";
-import { Delegate } from "types/contracts";
-import { Fee, NewAST } from "types/contracts/evm";
+import { Delegate, Fee, NewAST } from "types/contracts";
 import angelProtocolRoundedLogo from "assets/images/angelprotocol-rounded-logo.png";
 import { isEmpty, roundDownToNum } from "helpers";
 import { blockTime } from "helpers/admin";
@@ -39,8 +38,8 @@ export default function toEVMAST(
         time: roundDownToNum(+management.proposal.duration * 60 * 60, 0),
       },
     },
-    whitelistedBeneficiaries: whitelists.beneficiaries,
-    whitelistedContributors: whitelists.contributors,
+    allowlistedBeneficiaries: whitelists.beneficiaries,
+    allowlistedContributors: whitelists.contributors,
 
     //not used in contract
     splitMax: 100 - +splits.max,
@@ -66,11 +65,11 @@ export default function toEVMAST(
         token: 0,
         data: {
           existingCw20Data: ADDRESS_ZERO,
-          newCw20InitialSupply: 0,
+          newCw20InitialSupply: "0",
           newCw20Name: "",
           newCw20Symbol: "",
-          bondingCurveCurveType: {
-            curve_type: 0,
+          bondingveveType: {
+            ve_type: 0,
             data: {
               value: 0,
               scale: 0,
@@ -78,12 +77,12 @@ export default function toEVMAST(
               power: 0,
             },
           },
-          bondingCurveName: "",
-          bondingCurveSymbol: "",
-          bondingCurveDecimals: 0,
-          bondingCurveReserveDenom: ADDRESS_ZERO,
-          bondingCurveReserveDecimals: 0,
-          bondingCurveUnbondingPeriod: 0,
+          bondingveName: "",
+          bondingveSymbol: "",
+          bondingveDecimals: 0,
+          bondingveReserveDenom: ADDRESS_ZERO,
+          bondingveReserveDecimals: 0,
+          bondingveUnbondingPeriod: 0,
         },
       },
     },

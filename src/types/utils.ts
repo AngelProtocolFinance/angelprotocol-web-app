@@ -1,3 +1,4 @@
+import { Merge } from "type-fest";
 import { PromiseOrValue } from "./typechain-types/common";
 
 export type PartialRecord<K extends keyof any, T> = Partial<Record<K, T>>;

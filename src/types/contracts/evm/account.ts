@@ -1,22 +1,4 @@
 import { Tupleable } from "../../evm";
-import { SettingsController } from "../account";
-import { SplitDetails } from "../common";
-
-type Categories = { sdgs: number[]; general: number[] };
-
-type EndowTier = 0; // none | 1 Level1 | 2 Level2 | 3; Level3
-
-//use normal by default
-type EndowType = /** 0 - charity  */ 1 /** normal */ /** | 2 - none */;
-
-/**
- * 0 - height
- * 1 - time
- */
-type Duration = {
-  enumData: /** 0 | */ 1;
-  data: { height: number; time: number };
-};
 
 /**
  * 0 - locked
@@ -86,51 +68,6 @@ export type Beneficiary = {
   };
   enumData: 0 | 1 | 2 | 3;
 };
-
-export interface NewAST extends Tupleable {
-  owner: string;
-  withdrawBeforeMaturity: true; //not specified in launchpad design
-  maturityTime: number;
-  maturityHeight: 0; //not used in endowment  creation
-  name: string;
-  categories: Categories;
-  tier: EndowTier; //not specified in launchpad design
-  endow_type: EndowType; //not used in endowment creation
-  logo: string;
-  image: "";
-  cw4_members: string[]; // in launchpad design, weight is specified for each member
-  kycDonorsOnly: false; //not specified in launchpad design
-  threshold: number;
-  cw3MaxVotingPeriod: Duration;
-
-  whitelistedBeneficiaries: string[];
-  whitelistedContributors: string[];
-
-  //splits
-  splitMax: number;
-  splitMin: number;
-  splitDefault: number;
-
-  //fees
-  earningsFee: Fee;
-  withdrawFee: Fee;
-  depositFee: Fee;
-  balanceFee: Fee; //not included in launchpad, for edit later
-
-  //dao
-  dao: DaoSetup; //just set to placeholder - overriden by creatDao:bool
-  createDao: false; //not included in launchpad, for edit later
-  proposalLink: 0;
-
-  settingsController: SettingsController; //not included in launchpad, for edit later
-  parent: number;
-
-  maturityAllowlist: string[];
-  ignoreUserSplits: boolean;
-  splitToLiquid: SplitDetails;
-
-  referralId: number;
-}
 
 type DepositRequest = {
   id: number;

@@ -9,7 +9,8 @@ import {
   RegistrarConfigPayload,
   SettingsControllerUpdate,
 } from "types/contracts";
-import { AccountType, ERC20Deposit, NewAST } from "types/contracts/evm";
+import { NewAST } from "types/contracts";
+import { AccountType, ERC20Deposit } from "types/contracts/evm";
 import { Allowance, Transfer } from "types/contracts/evm/erc20";
 import { Asset } from "types/contracts/gift-card";
 import { NewTransaction } from "types/contracts/multisig";
