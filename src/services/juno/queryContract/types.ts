@@ -26,15 +26,7 @@ export interface ContractQueries {
     },
     FundDetails[]
   >;
-  "index-fund.alliance-members": Query<
-    {
-      startAfter: number;
-      limit: number;
-    },
-    string[]
-  >;
   "index-fund.config": Query<null, IndexFundConfig>;
-
   "gift-card.balance": Query<Addr, GenericBalMap>;
 
   "erc20.balance": Query<Addr, string>;

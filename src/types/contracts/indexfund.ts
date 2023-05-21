@@ -1,11 +1,11 @@
-export type IndexFundConfig = {
-  owner: string;
-  registrarContract: string;
-  fundRotation: number;
-  fundMemberLimit: number;
-  fundingGoal: number;
-  alliance_members: string[];
-};
+import { OverrideProperties } from "type-fest";
+import { IndexFundStorage } from "../typechain-types/contracts/core/index-fund/IndexFund";
+import { Plain } from "types/utils";
+
+export type IndexFundConfig = OverrideProperties<
+  Plain<IndexFundStorage.ConfigStruct>,
+  { fundRotation: number; fundMemberLimit: number; fundingGoal: number }
+>;
 
 export type FundDetails = {
   id: number;

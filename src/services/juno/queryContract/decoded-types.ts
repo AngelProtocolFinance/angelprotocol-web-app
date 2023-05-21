@@ -9,13 +9,11 @@ import {
   EndowmentStatusText,
   FundDetails,
   GenericBalMap,
-  IndexFundConfig,
-  RebalanceDetails,
-  RegistrarConfig,
   SettingsController,
   SplitDetails,
 } from "types/contracts";
 import { EndowmentType } from "types/lists";
+import { AngelCoreStruct } from "types/typechain-types/contracts/core/struct.sol/AngelCoreStruct";
 import { Mapped } from "types/utils";
 
 enum EndowmentTypeEnum {
@@ -23,25 +21,6 @@ enum EndowmentTypeEnum {
   Normal,
   None,
 }
-
-type DRebalanceDetails = OverrideProperties<
-  RebalanceDetails,
-  {
-    interest_distribution: BigNumber;
-    principle_distribution: BigNumber;
-  }
->;
-
-type DSplitDetails = Mapped<SplitDetails, BigNumber>;
-
-export type DRegistrarConfig = OverrideProperties<
-  RegistrarConfig,
-  {
-    rebalance: DRebalanceDetails;
-    splitToLiquid: DSplitDetails;
-    collectorShare: BigNumber;
-  }
->;
 
 type DDelegate = OverrideProperties<Delegate, { expires: BigNumber }>;
 
@@ -108,15 +87,6 @@ export type DFund = OverrideProperties<
   }
 >;
 
-export type DIndexFundConfig = OverrideProperties<
-  IndexFundConfig,
-  {
-    fundRotation: BigNumber;
-    fundMemberLimit: BigNumber;
-    fundingGoal: BigNumber;
-  }
->;
-
 export type DTransaction = {
   title: string;
   description: string;
@@ -170,7 +140,9 @@ export function toBalMap(d: DGenericBalance): GenericBalMap {
   return { ...erc20s, native: d.coinNativeAmount.toString() };
 }
 
-export function toSplit(d: DSplitDetails): SplitDetails {
+export function toSplit(
+  d: AngelCoreStruct.SplitDetailsStructOutput
+): SplitDetails {
   return {
     min: d.min.toNumber(),
     max: d.max.toNumber(),

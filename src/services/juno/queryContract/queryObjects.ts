@@ -4,8 +4,6 @@ import {
   DEndowmentState,
   DFund,
   DGenericBalance,
-  DIndexFundConfig,
-  DRegistrarConfig,
   DTransaction,
   toBalMap,
   toDelegate,
@@ -15,6 +13,8 @@ import {
 } from "./decoded-types";
 import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
 import { UNSDG_NUMS } from "types/lists";
+import { IndexFundStorage } from "types/typechain-types/contracts/core/index-fund/IndexFund";
+import { RegistrarStorage } from "types/typechain-types/contracts/core/registrar/interfaces/IRegistrar";
 import { accounts } from "contracts/evm/Account";
 import { erc20 } from "contracts/evm/ERC20";
 import { giftCard } from "contracts/evm/gift-card";
@@ -32,15 +32,9 @@ export const queryObjects: {
   "registrar.config": [
     registrar.encodeFunctionData("queryConfig", []),
     (result) => {
-      const d: DRegistrarConfig = registrar.decodeFunctionResult(
-        "queryConfig",
-        result
-      )[0];
+      const d: RegistrarStorage.ConfigStructOutput =
+        registrar.decodeFunctionResult("queryConfig", result)[0];
       return {
-        owner: d.owner.toLowerCase(),
-        acceptedTokens: {
-          cw20: d.acceptedTokens.cw20.map((t) => t.toLowerCase()),
-        },
         applicationsReview: d.applicationsReview.toLowerCase(),
         indexFundContract: d.indexFundContract.toLowerCase(),
         accountsContract: d.accountsContract.toLowerCase(),
@@ -59,17 +53,9 @@ export const queryObjects: {
         haloToken: d.haloToken.toLowerCase(),
         haloTokenLpContract: d.haloTokenLpContract.toLowerCase(),
         govContract: d.govContract.toLowerCase(),
-        collectorAddr: d.collectorAddr.toLowerCase(),
         collectorShare: d.collectorShare.toNumber(),
         charitySharesContract: d.charitySharesContract.toLowerCase(),
         fundraisingContract: d.fundraisingContract.toLowerCase(),
-        rebalance: {
-          rebalanceLiquidInvestedProfits: d.rebalance.lockedInterestsToLiquid,
-          lockedInterestsToLiquid: d.rebalance.lockedInterestsToLiquid,
-          interest_distribution: d.rebalance.interest_distribution.toNumber(),
-          lockedPrincipleToLiquid: d.rebalance.lockedPrincipleToLiquid,
-          principle_distribution: d.rebalance.principle_distribution.toNumber(),
-        },
         swapsRouter: d.swapsRouter.toLowerCase(),
         multisigFactory: d.multisigFactory.toLowerCase(),
         multisigEmitter: d.multisigEmitter.toLowerCase(),
@@ -103,31 +89,18 @@ export const queryObjects: {
       }));
     },
   ],
-  "index-fund.alliance-members": [
-    (args) =>
-      indexFund.encodeFunctionData("queryAllianceMembers", toTuple(args)),
-    (result) => {
-      const decoded: string[] = indexFund.decodeFunctionResult(
-        "queryAllianceMembers",
-        result
-      )[0];
-      return decoded.map((a) => a.toLowerCase());
-    },
-  ],
   "index-fund.config": [
     indexFund.encodeFunctionData("queryConfig", []),
     (result) => {
-      const d: DIndexFundConfig = indexFund.decodeFunctionResult(
-        "queryConfig",
-        result
-      )[0];
+      const d: IndexFundStorage.ConfigStructOutput =
+        indexFund.decodeFunctionResult("queryConfig", result)[0];
+
       return {
         owner: d.owner.toLowerCase(),
-        registrarContract: d.registrarContract,
+        registrarContract: d.registrarContract.toLowerCase(),
         fundRotation: d.fundRotation.toNumber(),
         fundMemberLimit: d.fundMemberLimit.toNumber(),
         fundingGoal: d.fundingGoal.toNumber(),
-        alliance_members: d.alliance_members,
       };
     },
   ],
