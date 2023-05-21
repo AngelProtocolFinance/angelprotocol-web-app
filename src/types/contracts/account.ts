@@ -1,11 +1,17 @@
 import { OverrideProperties } from "type-fest";
 import {
+  AccountMessages,
   AccountStorage,
   AngelCoreStruct,
 } from "../typechain-types/contracts/core/accounts/IAccounts";
 import { AccountType, EndowmentType, UNSDG_NUMS } from "../lists";
 import { Mapped, Plain } from "../utils";
-import { Beneficiary, EndowmentStatusText, SplitDetails } from "./common";
+import {
+  Beneficiary,
+  DonationsReceived,
+  EndowmentStatusText,
+  SplitDetails,
+} from "./common";
 import { ADDRESS_ZERO } from "./evm";
 
 //transformed GenericBalance
@@ -16,26 +22,14 @@ export interface BalanceInfo {
   liquid: GenericBalMap;
 }
 
-export interface DonationsReceived {
-  liquid: string; // uint256
-  locked: string; // uint256
-}
-
-export interface EndowmentState {
-  donationsReceived: DonationsReceived;
-  balances: BalanceInfo;
-  closingEndowment: boolean;
-  closingBeneficiary: Beneficiary;
-}
-
-/** 
-interface RebalanceDetails {
-  rebalance_liquid_invested_profits: boolean; // should invested portions of the liquid account be rebalanced?
-  locked_interests_to_liquid: boolean; // should Locked acct interest earned be distributed to the Liquid Acct?
-  interest_distribution: string; // % of Locked acct interest earned to be distributed to the Liquid Acct
-  locked_principle_to_liquid: boolean; // should Locked acct principle be distributed to the Liquid Acct?
-  principle_distribution: string; // % of Locked acct principle to be distributed to the Liquid Acct
-} */
+export type EndowmentState = OverrideProperties<
+  AccountMessages.StateResponseStruct,
+  {
+    donationsReceived: DonationsReceived;
+    closingEndowment: boolean;
+    closingBeneficiary: Beneficiary;
+  }
+>;
 
 export interface Strategy {
   vault: string; // Vault SC Address

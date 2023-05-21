@@ -9,7 +9,10 @@ import {
 } from "./decoded-types";
 import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
 import { UNSDG_NUMS } from "types/lists";
-import { AccountStorage } from "types/typechain-types/contracts/core/accounts/IAccounts";
+import {
+  AccountMessages,
+  AccountStorage,
+} from "types/typechain-types/contracts/core/accounts/IAccounts";
 import { IndexFundStorage } from "types/typechain-types/contracts/core/index-fund/IndexFund";
 import { RegistrarStorage } from "types/typechain-types/contracts/core/registrar/interfaces/IRegistrar";
 import { MultiSigStorage } from "types/typechain-types/contracts/multisigs/MultiSigGeneric";
@@ -255,10 +258,9 @@ export const queryObjects: {
   "accounts.state": [
     ({ id }) => accounts.encodeFunctionData("queryState", [id]),
     (result) => {
-      const d: DEndowmentState = accounts.decodeFunctionResult(
-        "queryState",
-        result
-      )[0];
+      const d: AccountMessages.StateResponseStructOutput =
+        accounts.decodeFunctionResult("queryState", result)[0];
+      const bene = d.closingBeneficiary;
 
       return {
         //TODO: populate once needed
@@ -266,18 +268,15 @@ export const queryObjects: {
           locked: d.donationsReceived.locked.toString(),
           liquid: d.donationsReceived.liquid.toString(),
         },
-        balances: {
-          liquid: toBalMap(d.balances.liquid),
-          locked: toBalMap(d.balances.locked),
-        },
         closingEndowment: d.closingEndowment,
         //FUTURE: index-fund can also be beneficiary
         closingBeneficiary: {
           data: {
-            id: d.closingBeneficiary.data.id.toNumber(),
-            addr: d.closingBeneficiary.data.addr.toLowerCase(),
+            endowId: bene.data.endowId,
+            fundId: bene.data.fundId.toNumber(),
+            addr: bene.data.addr.toLowerCase(),
           },
-          enumData: d.closingBeneficiary.enumData.toNumber() as any,
+          enumData: bene.enumData as any /** 0 | 1 | 2 | 3 */,
         },
       };
     },
