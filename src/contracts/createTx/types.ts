@@ -1,7 +1,9 @@
 import { ValueOf } from "type-fest";
 import {
+  AccountType,
   AllianceListUpdate,
   Beneficiary,
+  ERC20Deposit,
   EndowmentSettingsUpdate,
   FundMemberUpdate,
   IndexFundConfigUpdate,
@@ -10,7 +12,6 @@ import {
   SettingsControllerUpdate,
 } from "types/contracts";
 import { NewAST } from "types/contracts";
-import { AccountType, ERC20Deposit } from "types/contracts/evm";
 import { Allowance, Transfer } from "types/contracts/evm/erc20";
 import { Asset } from "types/contracts/gift-card";
 import { NewTransaction } from "types/contracts/multisig";

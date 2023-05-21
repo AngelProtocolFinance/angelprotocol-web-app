@@ -4,6 +4,7 @@ import {
   AccountStorage,
   AngelCoreStruct,
 } from "../typechain-types/contracts/core/accounts/IAccounts";
+import { AccountMessages as AccountDepositWithdrawEndowmentsMessages } from "../typechain-types/contracts/core/accounts/facets/AccountDepositWithdrawEndowments";
 import { AccountMessages as AccountsUpdateEndowmentSettingsControllerMessages } from "../typechain-types/contracts/core/accounts/facets/AccountsUpdateEndowmentSettingsController";
 import { EndowmentType, UNSDG_NUMS } from "../lists";
 import { Mapped, Plain } from "../utils";
@@ -13,7 +14,10 @@ import {
   EndowmentStatusText,
   SplitDetails,
 } from "./common";
-import { ADDRESS_ZERO } from "./evm";
+
+export type ADDRESS_ZERO = "0x0000000000000000000000000000000000000000" & {
+  __type: "address_zero";
+};
 
 //transformed GenericBalance
 export type GenericBalMap = { native: string } & { [index: string]: string }; //erc20s
@@ -108,12 +112,6 @@ export interface Source {
   vault: string; //"juno123addr.."
 }
 
-export interface DepositPayload {
-  id: number;
-  locked_percentage: string; //"0.7"
-  liquid_percentage: string; //"0.3"
-}
-
 export type StatusChangePayload = {
   endowment_id: number;
   status: EndowmentStatusText;
@@ -135,6 +133,17 @@ export type EndowmentSettingsUpdate = OverrideProperties<
   Plain<AccountsUpdateEndowmentSettingsControllerMessages.UpdateEndowmentSettingsRequestStruct>,
   { id: number; splitToLiquid: SplitDetails }
 >;
+
+type DepositRequest = Mapped<
+  AccountDepositWithdrawEndowmentsMessages.DepositRequestStruct,
+  number
+>;
+
+export type ERC20Deposit = {
+  details: DepositRequest;
+  tokenAddress: string;
+  amount: string;
+};
 
 type DurationData = Mapped<AngelCoreStruct.DurationDataStruct, number>;
 /**
