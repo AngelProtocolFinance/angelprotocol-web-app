@@ -119,10 +119,10 @@ export type UpdateStategyPayload = {
   strategies: Strategy[];
 };
 
-export type SettingsControllerUpdate = {
-  id: number;
-  settingsController: SettingsController;
-};
+export type SettingsControllerUpdate = OverrideProperties<
+  AccountsUpdateEndowmentSettingsControllerMessages.UpdateEndowmentControllerRequestStruct,
+  { id: number; settingsController: SettingsController }
+>;
 
 export type EndowmentSettingsUpdate = OverrideProperties<
   Plain<AccountsUpdateEndowmentSettingsControllerMessages.UpdateEndowmentSettingsRequestStruct>,
