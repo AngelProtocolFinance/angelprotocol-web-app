@@ -1,7 +1,6 @@
 import { ValueOf } from "type-fest";
 import {
   AccountType,
-  Beneficiary,
   CloseEndowmentRequest,
   ERC20Deposit,
   EndowmentSettingsUpdate,
@@ -12,14 +11,13 @@ import {
   SettingsControllerUpdate,
 } from "types/contracts";
 import { NewAST } from "types/contracts";
-import { Allowance, Transfer } from "types/contracts/evm/erc20";
+import { Allowance, Transfer } from "types/contracts/erc20";
 import { Asset } from "types/contracts/gift-card";
 import { NewTransaction } from "types/contracts/multisig";
 import { Tupleable } from "types/evm";
 import { Contract } from "types/lists";
 import { Diff } from "types/utils";
 import {
-  AccountStatusMeta,
   MultisigMemberMeta,
   OwnerMeta,
   ThresholdMeta,
