@@ -1,6 +1,6 @@
 import { Interface } from "@ethersproject/abi";
 import { Contract, ContractInterface } from "ethers";
-import { Registrar as TRegistrar } from "types/typechain-types";
+import { Registrar as TRegistrar } from "types/typechain-types/contracts/core/registrar/registrar.sol/Registrar";
 import { contracts } from "constants/contracts";
 import config from "./abi/config.json";
 import txs from "./abi/txs.json";

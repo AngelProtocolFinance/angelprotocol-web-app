@@ -11,7 +11,7 @@ import {
 } from "ethers";
 import type { Provider, TransactionRequest } from "@ethersproject/providers";
 import type { PromiseOrValue } from "../../common";
-import type { Halo, HaloInterface } from "../../contracts/Halo";
+import type { Halo, HaloInterface } from "../../contracts/halo";
 
 const _abi = [
   {
