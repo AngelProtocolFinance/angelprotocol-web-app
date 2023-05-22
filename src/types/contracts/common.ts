@@ -29,17 +29,4 @@ export type Beneficiary = OverrideProperties<
   { data: BeneficiaryData; enumData: 0 | 1 | 2 | 3 }
 >;
 
-export enum EndowmentStatus {
-  Inactive,
-  Approved,
-  Frozen,
-  Closed,
-}
-
-export type EndowmentStatusText = Lowercase<keyof typeof EndowmentStatus>;
 export type EndowmentTierNum = 1 | 2 | 3;
-
-export type Categories = {
-  sdgs: UNSDG_NUMS[]; // u8 maps one of the 17 UN SDG
-  general: number[]; //??
-};

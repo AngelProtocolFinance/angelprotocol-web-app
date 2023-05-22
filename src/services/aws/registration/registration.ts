@@ -165,5 +165,4 @@ export const {
   useNewApplicationMutation,
   useRequestEmailMutation,
   useSubmitMutation,
-  util: { updateQueryData: updateRegQueryData },
 } = registration_api;

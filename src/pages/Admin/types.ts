@@ -1,7 +1,7 @@
 import { Coin } from "@cosmjs/proto-signing";
 import { TxTypes } from "contracts/createTx/types";
 import { EndowmentProposal } from "types/aws";
-import { Asset, EndowmentStatusText, FundDetails } from "types/contracts";
+import { Asset, FundDetails } from "types/contracts";
 
 export type AdminParams = { id: string; type: string /**AccountType */ };
 export type ProposalParams = { id: string };
@@ -52,23 +52,6 @@ export interface FormReviewCW3Config extends FormCW3Config {
 }
 export type CW3ConfigValues<T extends FormCW3Config> = ProposalBase &
   T & { initial: T; isTime: boolean };
-
-export type EndowmentUpdateValues = ProposalBase & {
-  id: number;
-  status: Exclude<EndowmentStatusText, "closed">;
-  //address to transfer funds when endowment will be closed
-
-  //beneficiary type
-  beneficiaryType: "wallet" | "endowment" | "index fund";
-
-  //beneficiary
-  wallet: string;
-  endowmentId: number;
-  indexFund: number;
-
-  //metadata
-  prevStatus?: EndowmentStatusText;
-};
 
 export type FundSendPayload = {
   amount: number;

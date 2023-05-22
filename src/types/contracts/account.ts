@@ -8,12 +8,7 @@ import { AccountMessages as AccountDepositWithdrawEndowmentsMessages } from "../
 import { AccountMessages as AccountsUpdateEndowmentSettingsControllerMessages } from "../typechain-types/contracts/core/accounts/facets/AccountsUpdateEndowmentSettingsController";
 import { EndowmentType, UNSDG_NUMS } from "../lists";
 import { Mapped, Plain } from "../utils";
-import {
-  Beneficiary,
-  DonationsReceived,
-  EndowmentStatusText,
-  SplitDetails,
-} from "./common";
+import { Beneficiary, DonationsReceived, SplitDetails } from "./common";
 
 export type ADDRESS_ZERO = "0x0000000000000000000000000000000000000000" & {
   __type: "address_zero";
@@ -112,12 +107,6 @@ export interface Source {
   liquid: string; //"0"
   vault: string; //"juno123addr.."
 }
-
-export type StatusChangePayload = {
-  endowment_id: number;
-  status: EndowmentStatusText;
-  beneficiary?: Beneficiary;
-};
 
 export type UpdateStategyPayload = {
   id: number;

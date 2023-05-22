@@ -1,13 +1,6 @@
 import type { BigNumber } from "@ethersproject/bignumber";
 import { OverrideProperties } from "type-fest";
-import {
-  Delegate,
-  EndowmentStatus,
-  EndowmentStatusText,
-  FundDetails,
-  GenericBalMap,
-  SplitDetails,
-} from "types/contracts";
+import { Delegate, GenericBalMap, SplitDetails } from "types/contracts";
 import { EndowmentType } from "types/lists";
 import { AngelCoreStruct } from "types/typechain-types/contracts/core/struct.sol/AngelCoreStruct";
 
@@ -25,25 +18,6 @@ export type DGenericBalance = {
   Cw20CoinVerified_addr: string[];
 };
 
-export type DFund = OverrideProperties<
-  FundDetails,
-  {
-    id: BigNumber;
-    members: BigNumber[];
-    splitToLiquid: BigNumber;
-    expiryTime: BigNumber;
-    expiryHeight: BigNumber;
-  }
->;
-
-export type DTransaction = {
-  title: string;
-  description: string;
-  destination: string;
-  value: BigNumber;
-  data: string;
-  executed: false;
-};
 // ////////// CONVERTERS ///////////////
 
 export function toDelegate(d: DDelegate): Delegate {
@@ -58,23 +32,6 @@ export function toEndowType(type: EndowmentTypeEnum): EndowmentType {
       return "normal";
     default:
       return "normal";
-  }
-}
-
-export function toEndowStatusText(
-  status: EndowmentStatus
-): EndowmentStatusText {
-  switch (status) {
-    case EndowmentStatus.Inactive:
-      return "inactive";
-    case EndowmentStatus.Approved:
-      return "approved";
-    case EndowmentStatus.Frozen:
-      return "frozen";
-    case EndowmentStatus.Closed:
-      return "closed";
-    default:
-      return "inactive";
   }
 }
 
