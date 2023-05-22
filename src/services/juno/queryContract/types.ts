@@ -18,6 +18,8 @@ type Query<Args, Result> = {
 
 export interface ContractQueries {
   "registrar.config": Query<null, RegistrarConfig>;
+  "registrar.owner": Query<null, string>;
+
   "index-fund.config": Query<null, IndexFundConfig>;
   "gift-card.balance": Query<Addr, GenericBalMap>;
 

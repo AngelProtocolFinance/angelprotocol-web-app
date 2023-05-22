@@ -3,8 +3,6 @@ import { ContractQueryTypes } from "./queryContract/types";
 export const tags: ContractQueryTypes[] = [
   "registrar.config",
 
-  "index-fund.funds",
-  "index-fund.alliance-members",
   "index-fund.config",
 
   "gift-card.balance",

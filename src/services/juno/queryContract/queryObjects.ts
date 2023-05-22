@@ -29,6 +29,10 @@ export const queryObjects: {
     : [(args: Q[K]["args"]) => string, Q[K]["transform"]];
 } = {
   /** registrar */
+  "registrar.owner": [
+    registrar.encodeFunctionData("owner", []),
+    (result) => registrar.decodeFunctionResult("owner", result)[0],
+  ],
   "registrar.config": [
     registrar.encodeFunctionData("queryConfig", []),
     (result) => {

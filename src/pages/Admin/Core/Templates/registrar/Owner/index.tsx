@@ -1,7 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { RegistrarOwnerValues } from "pages/Admin/types";
-import { RegistrarConfig } from "types/contracts";
+import { FormValues } from "./types";
 import { useContractQuery } from "services/juno";
 import QueryLoader from "components/QueryLoader";
 import { FormError, FormSkeleton } from "components/admin";
@@ -9,7 +8,7 @@ import Form from "./Form";
 import { schema } from "./schema";
 
 export default function Owner() {
-  const query = useContractQuery("registrar.config", {});
+  const query = useContractQuery("registrar.owner", {});
 
   return (
     <QueryLoader
@@ -19,17 +18,17 @@ export default function Owner() {
         error: <FormError errorMessage="failed to load registrar config" />,
       }}
     >
-      {(config) => <RegistrarOwnerContext {...config} />}
+      {(owner) => <RegistrarOwnerContext prevOwner={owner} />}
     </QueryLoader>
   );
 }
 
-function RegistrarOwnerContext(props: RegistrarConfig) {
-  const methods = useForm<RegistrarOwnerValues>({
+function RegistrarOwnerContext(props: { prevOwner: string }) {
+  const methods = useForm<FormValues>({
     resolver: yupResolver(schema),
     mode: "onChange",
     reValidateMode: "onChange",
-    defaultValues: { initialOwner: props.owner },
+    defaultValues: { initialOwner: props.prevOwner },
   });
 
   return (

@@ -5,7 +5,6 @@ import {
   Asset,
   EndowmentStatusText,
   FundDetails,
-  RegistrarConfigPayload,
   RegistrarOwnerPayload,
 } from "types/contracts";
 
@@ -92,11 +91,6 @@ export type MemberUpdatorValues = ProposalBase & {
   addr: string;
   weight: string;
 };
-
-export type RegistrarConfigExtensionValues = ProposalBase &
-  RegistrarConfigPayload & {
-    initialConfigPayload: RegistrarConfigPayload;
-  };
 
 export type RegistrarOwnerValues = ProposalBase &
   RegistrarOwnerPayload & { initialOwner: string };
