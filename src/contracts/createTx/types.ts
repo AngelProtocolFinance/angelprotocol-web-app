@@ -18,6 +18,7 @@ import { Tupleable } from "types/evm";
 import { Contract } from "types/lists";
 import { Diff } from "types/utils";
 import {
+  AccountStatusMeta,
   MultisigMemberMeta,
   OwnerMeta,
   ThresholdMeta,
@@ -49,7 +50,7 @@ type Txs = {
     },
     WithdrawMeta
   >;
-  "accounts.close": Tx<CloseEndowmentRequest, string>;
+  "accounts.close": Tx<CloseEndowmentRequest, AccountStatusMeta>;
   "accounts.invest": Tx<
     {
       id: number;

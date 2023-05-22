@@ -22,12 +22,6 @@ export default function Nav() {
       </NavLink>
 
       <Category title="Index fund" classes="mt-4" />
-      <NavLink
-        to={routes["index-fund.update-alliance-list"]}
-        className={styler}
-      >
-        Edit Alliance List
-      </NavLink>
       <NavLink to={routes["index-fund.create-fund"]} className={styler}>
         Create Fund
       </NavLink>

@@ -13,10 +13,10 @@ export default function Content(props: Transaction) {
 
   return (
     <>
-      {props.meta && (
+      {props.metadata && (
         <>
           <DetailLabel classes="mb-2">content</DetailLabel>
-          <Preview {...JSON.parse(window.atob(props.meta))} />
+          <Preview {...JSON.parse(window.atob(props.metadata))} />
         </>
       )}
 

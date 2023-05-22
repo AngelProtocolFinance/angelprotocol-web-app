@@ -63,7 +63,7 @@ export default function PollAction(props: ProposalDetails) {
         log: processLog,
       },
       isAuthorized: propMeta.isAuthorized,
-      tagPayloads: extractTagFromMeta(props.meta),
+      tagPayloads: extractTagFromMeta(props.metadata),
       onSuccess,
     });
   }
@@ -125,7 +125,7 @@ function Button(props: React.ButtonHTMLAttributes<HTMLButtonElement>) {
 }
 
 function extractTagFromMeta(
-  proposalMeta: ProposalDetails["meta"]
+  proposalMeta: ProposalDetails["metadata"]
 ): TagPayload[] {
   if (!proposalMeta) {
     return [invalidateJunoTags(defaultProposalTags)];

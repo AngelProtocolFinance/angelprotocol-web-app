@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues } from "./types";
-import { RegistrarConfig, RegistrarConfigPayload } from "types/contracts";
+import { RegistrarConfig, RegistrarConfigUpdate } from "types/contracts";
 import { useContractQuery } from "services/juno";
 import { FormError, FormSkeleton } from "components/admin";
 import Form from "./Form";
@@ -20,16 +20,13 @@ export default function ConfigExtension() {
 }
 
 function Context(p: RegistrarConfig) {
-  const initial: RegistrarConfigPayload = {
+  const initial: RegistrarConfigUpdate = {
     accountsContract: p.accountsContract,
-    taxRate: 1, // not present in config
-    rebalance: p.rebalance,
-    approved_charities: [], // not present in config
+    approved_charities: [],
     splitMax: p.splitToLiquid.max,
     splitMin: p.splitToLiquid.min,
     splitDefault: p.splitToLiquid.defaultSplit,
     collectorShare: p.collectorShare,
-    acceptedTokens: p.acceptedTokens,
     subdaoGovCode: p.subdaoGovCode,
     subdaoCw20TokenCode: p.subdaoCw20TokenCode,
     subdaoBondingTokenCode: p.subdaoBondingTokenCode,

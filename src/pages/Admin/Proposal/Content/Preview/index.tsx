@@ -35,7 +35,7 @@ export default function Preview(props: TxMeta) {
       return <MultisigMember {...props.data} />;
 
     /** _account */
-    case "accounts.update-status":
+    case "accounts.close":
       return <EndowmentStatusUpdate {...props.data} />;
     case "accounts.withdraw":
     case "locked-withdraw.propose":

@@ -30,10 +30,6 @@ export type RegistrarConfig = OverrideProperties<
   { splitToLiquid: SplitDetails; collectorShare: number }
 >;
 
-export type RegistrarOwnerPayload = {
-  new_owner: string;
-};
-
 export type RegistrarConfigUpdate = OverrideProperties<
   Plain<RegistrarMessages.UpdateConfigRequestStruct>,
   {

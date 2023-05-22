@@ -1,12 +1,7 @@
 import { Coin } from "@cosmjs/proto-signing";
 import { TxTypes } from "contracts/createTx/types";
 import { EndowmentProposal } from "types/aws";
-import {
-  Asset,
-  EndowmentStatusText,
-  FundDetails,
-  RegistrarOwnerPayload,
-} from "types/contracts";
+import { Asset, EndowmentStatusText, FundDetails } from "types/contracts";
 
 export type AdminParams = { id: string; type: string /**AccountType */ };
 export type ProposalParams = { id: string };
@@ -91,9 +86,6 @@ export type MemberUpdatorValues = ProposalBase & {
   addr: string;
   weight: string;
 };
-
-export type RegistrarOwnerValues = ProposalBase &
-  RegistrarOwnerPayload & { initialOwner: string };
 
 export type SortDirection = "asc" | "desc";
 export type SortKey = keyof Pick<

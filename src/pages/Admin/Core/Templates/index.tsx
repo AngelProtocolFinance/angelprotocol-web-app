@@ -7,7 +7,6 @@ import Config from "../../templates/cw3/Config";
 import FundSender from "../../templates/cw3/FundSender";
 import Members from "../../templates/cw4/Members";
 import Nav from "./Nav";
-import Alliance from "./index-fund/Alliance";
 import FundConfig from "./index-fund/Config";
 import CreateFund from "./index-fund/CreateFund";
 import IndexFundOwner from "./index-fund/IndexFundOwner";
@@ -26,10 +25,6 @@ export default function Templates() {
       <Nav />
       <Routes>
         {/** _index-fund */}
-        <Route
-          path={routes["index-fund.update-alliance-list"]}
-          element={<Alliance />}
-        />
         <Route
           path={routes["index-fund.create-fund"]}
           element={<CreateFund />}

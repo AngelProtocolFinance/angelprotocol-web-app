@@ -1,8 +1,8 @@
 import { ProposalBase } from "../../../../types";
-import { RegistrarConfigPayload } from "types/contracts";
+import { RegistrarConfigUpdate } from "types/contracts";
 
 export type Fields = Pick<
-  RegistrarConfigPayload,
+  RegistrarConfigUpdate,
   | "accountsContract"
   | "applicationsReview"
   | "charityProposal"
@@ -24,4 +24,4 @@ export type Fields = Pick<
 //future fields to edit
 
 export type FormValues = ProposalBase &
-  Fields & { initial: RegistrarConfigPayload };
+  Fields & { initial: RegistrarConfigUpdate };
