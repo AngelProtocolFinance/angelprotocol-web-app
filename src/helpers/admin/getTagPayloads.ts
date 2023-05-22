@@ -12,14 +12,8 @@ export function getTagPayloads(type?: TxMeta["id"]): TagPayload[] {
     case "accounts.update-controller":
       _tags.push("accounts.endowment");
       break;
-    case "index-fund.update-alliance-list":
-      _tags.push("index-fund.alliance-members");
-      break;
     case "index-fund.remove-fund":
     case "index-fund.create-fund":
-    case "index-fund.update-members": //fund members shown via selecFromResult (fund_list)
-      _tags.push("index-fund.funds");
-      break;
 
     case "index-fund.config":
     case "index-fund.update-owner":

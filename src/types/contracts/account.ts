@@ -76,6 +76,7 @@ type Categories = OverrideProperties<
 export type EndowmentDetails = OverrideProperties<
   Pick<
     Plain<AccountStorage.EndowmentStruct>,
+    | "owner"
     | "categories"
     | "endow_type"
     | "maturityTime"
@@ -133,6 +134,11 @@ export type EndowmentSettingsUpdate = OverrideProperties<
   Plain<AccountsUpdateEndowmentSettingsControllerMessages.UpdateEndowmentSettingsRequestStruct>,
   { id: number; splitToLiquid: SplitDetails }
 >;
+
+export type CloseEndowmentRequest = {
+  id: number;
+  beneficiary: Beneficiary;
+};
 
 type DepositRequest = Mapped<
   AccountDepositWithdrawEndowmentsMessages.DepositRequestStruct,

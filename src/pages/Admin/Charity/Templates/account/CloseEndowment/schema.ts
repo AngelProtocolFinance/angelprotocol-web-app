@@ -10,7 +10,6 @@ const key: keyof Beneficiary = "type";
 
 const shape: SS<FV> = {
   ...proposalShape,
-  id: requiredPositiveNumber,
   beneficiary: object().shape<SS<Beneficiary>>({
     id: string().required("beneficiary is required"),
     type: string().when(key, (type: BeneficiaryType) => {

@@ -9,22 +9,16 @@ import { schema } from "./schema";
 
 export default function EndowmentStatus() {
   const { wallet } = useGetWallet();
-  const { status } = useAdminResources<"charity">();
 
   const methods = useForm<FormValues>({
     mode: "onChange",
     reValidateMode: "onChange",
     resolver: yupResolver(schema),
     defaultValues: {
-      status: {
-        value: status,
-        label: status,
-      },
       beneficiary: {
         type: "wallet",
         id: wallet && isEthereumAddress(wallet.address) ? wallet.address : "",
       },
-      prevStatus: status,
     },
   });
 

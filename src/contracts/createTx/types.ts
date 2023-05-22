@@ -2,6 +2,7 @@ import { ValueOf } from "type-fest";
 import {
   AccountType,
   Beneficiary,
+  CloseEndowmentRequest,
   ERC20Deposit,
   EndowmentSettingsUpdate,
   FundMemberUpdate,
@@ -50,14 +51,7 @@ type Txs = {
     },
     WithdrawMeta
   >;
-  "accounts.update-status": Tx<
-    {
-      id: number;
-      status: number;
-      beneficiary: Beneficiary;
-    },
-    AccountStatusMeta
-  >;
+  "accounts.close": Tx<CloseEndowmentRequest, string>;
   "accounts.invest": Tx<
     {
       id: number;

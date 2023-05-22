@@ -1,4 +1,4 @@
-import { ADDRESS_ZERO as TADDR_0 } from "types/contracts/evm";
+import { ADDRESS_ZERO as TADDR_0 } from "types/contracts";
 
 export const EIPMethods = {
   eth_requestAccounts: "eth_requestAccounts", //EIP-1102
