@@ -12,7 +12,10 @@ import {
   AccountMessages,
   AccountStorage,
 } from "types/typechain-types/contracts/core/accounts/IAccounts";
-import { IndexFundStorage } from "types/typechain-types/contracts/core/index-fund/IndexFund";
+import {
+  IndexFundStorage,
+  AngelCoreStruct as IndexFundStructs,
+} from "types/typechain-types/contracts/core/index-fund/IndexFund";
 import { RegistrarStorage } from "types/typechain-types/contracts/core/registrar/interfaces/IRegistrar";
 import { MultiSigStorage } from "types/typechain-types/contracts/multisigs/MultiSigGeneric";
 import { accounts } from "contracts/evm/Account";
@@ -85,6 +88,22 @@ export const queryObjects: {
         fundRotation: d.fundRotation.toNumber(),
         fundMemberLimit: d.fundMemberLimit.toNumber(),
         fundingGoal: d.fundingGoal.toNumber(),
+      };
+    },
+  ],
+  "index-fund.fund": [
+    ({ id }) => indexFund.encodeFunctionData("queryFundDetails", [id]),
+    (result) => {
+      const d: IndexFundStructs.IndexFundStructOutput =
+        indexFund.decodeFunctionResult("queryConfig", result)[0];
+      return {
+        id: d.id.toNumber(),
+        name: d.name,
+        description: d.description,
+        members: d.members.map((m) => m),
+        splitToLiquid: d.splitToLiquid.toNumber(),
+        expiryTime: d.expiryTime.toNumber(),
+        expiryHeight: d.expiryHeight.toNumber(),
       };
     },
   ],

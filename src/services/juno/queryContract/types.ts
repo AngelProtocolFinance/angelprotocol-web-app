@@ -2,6 +2,7 @@ import {
   AccountType,
   EndowmentDetails,
   EndowmentState,
+  FundDetails,
   GenericBalMap,
   IndexFundConfig,
   RegistrarConfig,
@@ -10,6 +11,7 @@ import { PageOptions, Transaction } from "types/contracts/multisig";
 import { Contract } from "types/lists";
 
 type Addr = { addr: string };
+type ID = { id: number };
 
 type Query<Args, Result> = {
   args: Args;
@@ -21,6 +23,7 @@ export interface ContractQueries {
   "registrar.owner": Query<null, string>;
 
   "index-fund.config": Query<null, IndexFundConfig>;
+  "index-fund.fund": Query<ID, FundDetails>;
   "gift-card.balance": Query<Addr, GenericBalMap>;
 
   "erc20.balance": Query<Addr, string>;
@@ -30,12 +33,12 @@ export interface ContractQueries {
   "multisig.txs": Query<PageOptions, Pick<Transaction, "id" | "status">[]>;
   "multisig.threshold": Query<null, number>;
   "multisig.require-execution": Query<null, boolean>;
-  "multisig.transaction": Query<{ id: number }, Transaction>;
+  "multisig.transaction": Query<ID, Transaction>;
   "multisig.tx-count": Query<{ pending: boolean; executed: boolean }, number>;
-  "multisig.votes": Query<{ id: number }, string[]>;
+  "multisig.votes": Query<ID, string[]>;
 
-  "accounts.endowment": Query<{ id: number }, EndowmentDetails>;
-  "accounts.state": Query<{ id: number }, EndowmentState>;
+  "accounts.endowment": Query<ID, EndowmentDetails>;
+  "accounts.state": Query<ID, EndowmentState>;
   "accounts.token-balance": Query<
     { id: number; accounType: AccountType; token: string },
     string

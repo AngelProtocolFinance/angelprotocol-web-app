@@ -1,7 +1,6 @@
 import { FormValues as FV } from "./types";
 import { FormContainer, Submitter } from "components/admin";
-import { Field, Label } from "components/form";
-import FundSelection from "../FundSelection";
+import { Field } from "components/form";
 import useDestroyFund from "./useDestroyFund";
 
 export default function Form() {
@@ -21,10 +20,7 @@ export default function Form() {
         name="description"
         required
       />
-      <Label required className="-mb-4">
-        Fund to remove
-      </Label>
-      <FundSelection<FV> fieldName="fundId" />
+      <Field<FV> classes="field-admin" label="Fund ID" name="fundId" required />
       <Submitter type="submit" _classes="mt-4" disabled={isSubmitDisabled}>
         Submit
       </Submitter>
