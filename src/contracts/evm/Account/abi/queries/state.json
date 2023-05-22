@@ -2,9 +2,9 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "curId",
-        "type": "uint256"
+        "internalType": "uint32",
+        "name": "id",
+        "type": "uint32"
       }
     ],
     "name": "queryState",
@@ -38,8 +38,13 @@
               {
                 "components": [
                   {
+                    "internalType": "uint32",
+                    "name": "endowId",
+                    "type": "uint32"
+                  },
+                  {
                     "internalType": "uint256",
-                    "name": "id",
+                    "name": "fundId",
                     "type": "uint256"
                   },
                   {
@@ -64,7 +69,7 @@
           }
         ],
         "internalType": "struct AccountMessages.StateResponse",
-        "name": "",
+        "name": "stateResponse",
         "type": "tuple"
       }
     ],
