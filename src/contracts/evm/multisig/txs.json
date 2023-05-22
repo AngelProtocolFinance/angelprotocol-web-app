@@ -1,5 +1,4 @@
 [
-  "event ExecutionFailure(uint256 indexed)",
   "function submitTransaction(string,string,address,uint256,bytes) returns (uint256)",
   "function addOwner(address)",
   "function removeOwner(address)",
