@@ -1,9 +1,10 @@
 import { useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
 import { FormValues } from "./types";
-import { useContractQuery } from "services/juno";
+import { useContractQuery, useLatestBlockQuery } from "services/juno";
 import { useGetter, useSetter } from "store/accessors";
 import { setMembers } from "slices/admin/fundMembers";
+import { hasElapsed } from "helpers/admin";
 
 export default function useInitFundMembers() {
   const { watch } = useFormContext<FormValues>();
@@ -11,12 +12,17 @@ export default function useInitFundMembers() {
   const fundIdRef = useRef<string | undefined>();
   const dispatch = useSetter();
 
-  const { data: funds = [], isLoading } = useContractQuery("index-fund.funds", {
-    startAfter: 0,
-    limit: 10,
+  const {
+    data: fund,
+    isLoading,
+    isError,
+  } = useContractQuery("index-fund.fund", {
+    id: +fundId,
   });
 
-  const fundMembers = funds.find((fund) => fund.id === +fundId)?.members || [];
+  const { data: height = "0" } = useLatestBlockQuery({});
+
+  const fundMembers = fund?.members || [];
   const fundMembersCopy = useGetter((state) => state.admin.fundMembers);
 
   useEffect(() => {
@@ -41,9 +47,16 @@ export default function useInitFundMembers() {
     //eslint-disable-next-line
   }, [fundMembers, fundId]);
 
+  const members = isLoading
+    ? "Loading fund..."
+    : isError || !fund
+    ? "Fund not found"
+    : (fund.expiryTime !== 0 && hasElapsed(fund.expiryTime)) ||
+      (fund.expiryHeight !== 0 && +fund.expiryHeight >= +height)
+    ? "Fund has expired"
+    : fundMembersCopy;
+
   return {
-    fundMembersCopy,
-    isFundMembersLoading: isLoading,
-    isFundSelected: fundId !== "",
+    membersCopy: members,
   };
 }

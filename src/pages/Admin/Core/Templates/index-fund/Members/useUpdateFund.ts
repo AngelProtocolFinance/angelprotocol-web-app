@@ -49,10 +49,15 @@ export default function useUpdateFund() {
       const wallet = getWallet();
       if (typeof wallet === "function") return wallet();
 
+      const modified = new Set([
+        ...fundMembers.map((f) => f.id),
+        ...toAdd,
+        ...toRemove,
+      ]);
+
       const update: FundMemberUpdate = {
         fundId: +fundId,
-        add: toAdd.map((a) => +a),
-        remove: toRemove.map((r) => +r),
+        members: Array.from(modified).map((m) => +m),
       };
 
       const [data, dest, meta] = encodeTx(
