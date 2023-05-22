@@ -31,7 +31,7 @@ type Tx<T extends Tupleable, M> = {
   args: T;
 };
 
-export type Addr = { address: string };
+type Addr = { address: string };
 export type ID = { id: number };
 
 type Txs = {

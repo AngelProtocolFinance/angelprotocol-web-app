@@ -1,5 +1,4 @@
 import { FormValues as FV } from "../types";
-import { FundSendValues as FS } from "pages/Admin/types";
 import { Chain } from "types/tx";
 import TokenField from "components/TokenField";
 import { FormContainer, Submitter } from "components/admin";
@@ -10,13 +9,13 @@ export default function Form(props: Chain) {
   const { transferFunds, isSubmitDisabled } = useTransferFunds();
   return (
     <FormContainer onSubmit={transferFunds}>
-      <Field<FS>
+      <Field<FV>
         classes="field-admin"
         label="Proposal title"
         name="title"
         required
       />
-      <Field<FS, "textarea">
+      <Field<FV, "textarea">
         type="textarea"
         classes="field-admin"
         label="Proposal description"
@@ -33,7 +32,7 @@ export default function Form(props: Chain) {
         withBalance
       />
 
-      <Field<FS>
+      <Field<FV>
         classes="field-admin"
         label="Recipient"
         name="recipient"

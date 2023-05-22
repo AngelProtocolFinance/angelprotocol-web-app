@@ -85,8 +85,6 @@ type Step2Data = Optional<
 
 type Step3Data = Optional<CompleteRegistration, "wallet">;
 
-export type RegistrationData = Step1Data | Step2Data | Step3Data;
-
 type RegStep1 = {
   step: 1;
   data: Step1Data;

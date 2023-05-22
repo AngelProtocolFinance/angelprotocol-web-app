@@ -6,19 +6,6 @@ import {
 import { Plain } from "../utils";
 import { SplitDetails } from "./common";
 
-export type RebalanceDetails = {
-  // should invested portions of the liquid account be rebalanced?
-  rebalanceLiquidInvestedProfits: boolean;
-  // should Locked acct interest earned be distributed to the Liquid Acct?
-  lockedInterestsToLiquid: boolean;
-  // % of Locked acct interest earned to be distributed to the Liquid Acct
-  interest_distribution: number;
-  // should Locked acct principle be distributed to the Liquid Acct?
-  lockedPrincipleToLiquid: boolean;
-  // % of Locked acct principle to be distributed to the Liquid Acct
-  principle_distribution: number;
-};
-
 export type AcceptedTokens = {
   //this may not be final
   //?? erc20

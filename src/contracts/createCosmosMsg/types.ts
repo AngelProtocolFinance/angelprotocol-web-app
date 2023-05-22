@@ -1,24 +1,5 @@
 import { Coin } from "@cosmjs/proto-signing";
 
-export type EmbeddedWasmMsg = {
-  wasm: {
-    execute: {
-      contract_addr: string;
-      funds: Coin[];
-      msg: string; //base64 endocoded msg object
-    };
-  };
-};
-
-export type EmbeddedBankMsg = {
-  bank: {
-    send: {
-      amount: Coin[];
-      to_address: string;
-    };
-  };
-};
-
 type NativeTransfer = {
   amount: string;
   denom: string;
@@ -38,7 +19,7 @@ type Msg<T> = {
 const _msg_send = "recipient.send" as const;
 export type MsgSendType = typeof _msg_send;
 
-export type Msgs = {
+type Msgs = {
   [_msg_send]: Msg<NativeTransfer>;
   "cw20.transfer": Msg<{ amount: string; recipient: string }>;
   "cw20.send": Msg<CW20Send>;

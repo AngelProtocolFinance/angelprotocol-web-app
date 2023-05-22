@@ -35,12 +35,6 @@ export type SelectorProps = {
   onChange(token: TokenWithAmount): void;
 };
 
-export type BalanceProps = {
-  token: TokenWithAmount;
-  onSetAmount: OnSetAmount;
-  isGiftEnabled: boolean;
-};
-
 export type AmountOptionsProps = {
   token: TokenWithAmount;
   scale: Scale;

@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 import { Completed, Steps } from "slices/launchpad/types";
 import { useGetter } from "store/accessors";
 
-export type Props = {
+type Props = {
   step: Steps;
   classes?: string;
 };
