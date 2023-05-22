@@ -1,4 +1,3 @@
-import Test from "App/Test";
 import { StrictMode, Suspense, lazy } from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
@@ -28,8 +27,7 @@ root.render(
       <Provider store={store}>
         <BrowserRouter>
           <Suspense fallback={<LoaderComponent />}>
-            <Test />
-            {/* <App /> */}
+            <App />
           </Suspense>
         </BrowserRouter>
       </Provider>
