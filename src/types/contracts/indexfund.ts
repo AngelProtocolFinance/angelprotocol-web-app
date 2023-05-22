@@ -1,6 +1,7 @@
 import { OverrideProperties } from "type-fest";
 import { IndexFundStorage } from "../typechain-types/contracts/core/index-fund/IndexFund";
-import { Plain } from "types/utils";
+import { IndexFundMessage } from "../typechain-types/contracts/core/index-fund/IndexFund";
+import { Mapped, Plain } from "types/utils";
 
 export type IndexFundConfig = OverrideProperties<
   Plain<IndexFundStorage.ConfigStruct>,
@@ -28,12 +29,10 @@ export type NewFund = {
   expiryHeight: string; // uint256
 };
 
-export type IndexFundConfigUpdate = {
-  fundRotation: number;
-  fundMemberLimit: number;
-  fundingGoal: number;
-};
-
+export type IndexFundConfigUpdate = Mapped<
+  IndexFundMessage.UpdateConfigMessageStruct,
+  string
+>;
 export type AllianceListUpdate = {
   address: string;
   action: "add" | "remove";
