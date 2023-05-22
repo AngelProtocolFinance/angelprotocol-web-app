@@ -29,11 +29,6 @@
             "internalType": "uint256",
             "name": "fundingGoal",
             "type": "uint256"
-          },
-          {
-            "internalType": "address[]",
-            "name": "alliance_members",
-            "type": "address[]"
           }
         ],
         "internalType": "struct IndexFundStorage.Config",

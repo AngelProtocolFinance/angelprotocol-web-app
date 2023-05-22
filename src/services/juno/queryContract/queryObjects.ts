@@ -95,7 +95,8 @@ export const queryObjects: {
     ({ id }) => indexFund.encodeFunctionData("queryFundDetails", [id]),
     (result) => {
       const d: IndexFundStructs.IndexFundStructOutput =
-        indexFund.decodeFunctionResult("queryConfig", result)[0];
+        indexFund.decodeFunctionResult("queryFundDetails", result)[0];
+
       return {
         id: d.id.toNumber(),
         name: d.name,

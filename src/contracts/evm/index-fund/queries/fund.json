@@ -3,16 +3,11 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "startAfter",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "limit",
+        "name": "fundId",
         "type": "uint256"
       }
     ],
-    "name": "queryFundsList",
+    "name": "queryFundDetails",
     "outputs": [
       {
         "components": [
@@ -32,14 +27,9 @@
             "type": "string"
           },
           {
-            "internalType": "uint256[]",
+            "internalType": "uint32[]",
             "name": "members",
-            "type": "uint256[]"
-          },
-          {
-            "internalType": "bool",
-            "name": "rotatingFund",
-            "type": "bool"
+            "type": "uint32[]"
           },
           {
             "internalType": "uint256",
@@ -57,9 +47,9 @@
             "type": "uint256"
           }
         ],
-        "internalType": "struct AngelCoreStruct.IndexFund[]",
+        "internalType": "struct AngelCoreStruct.IndexFund",
         "name": "",
-        "type": "tuple[]"
+        "type": "tuple"
       }
     ],
     "stateMutability": "view",
