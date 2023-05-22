@@ -57,7 +57,7 @@ export default function useUpdateFund() {
 
       const update: FundMemberUpdate = {
         fundId: +fundId,
-        members: Array.from(modified).map((m) => +m),
+        members: Array.from(modified),
       };
 
       const [data, dest, meta] = encodeTx(

@@ -39,5 +39,5 @@ export type IndexFundConfigUpdate = Mapped<
 
 export type FundMemberUpdate = {
   fundId: number;
-  members: number[];
+  members: string[]; //uint256[]
 };
