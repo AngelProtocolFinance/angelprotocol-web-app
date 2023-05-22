@@ -40,6 +40,5 @@ export type AllianceListUpdate = {
 
 export type FundMemberUpdate = {
   fundId: number;
-  add: number[];
-  remove: number[];
+  members: number[];
 };

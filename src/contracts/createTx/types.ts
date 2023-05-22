@@ -1,14 +1,13 @@
 import { ValueOf } from "type-fest";
 import {
   AccountType,
-  AllianceListUpdate,
   Beneficiary,
   ERC20Deposit,
   EndowmentSettingsUpdate,
   FundMemberUpdate,
   IndexFundConfigUpdate,
   NewFund,
-  RegistrarConfigPayload,
+  RegistrarConfigUpdate,
   SettingsControllerUpdate,
 } from "types/contracts";
 import { NewAST } from "types/contracts";
@@ -28,14 +27,7 @@ import {
 } from "./meta";
 
 type Tx<T extends Tupleable, M> = {
-  tags: string[]; //tags to invalidate.
   meta: M;
-  /**
-   * or create static map
-   * [event_topic]: query_tag[]
-   *
-   * after tx, for each log, if log.topic in map, invalidate query_tag[]
-   */
   args: T;
 };
 
@@ -104,14 +96,12 @@ type Txs = {
   "index-fund.remove-fund": Tx<ID, ID>;
   "index-fund.remove-member": Tx<ID, ID>;
   "index-fund.update-members": Tx<FundMemberUpdate, FundMemberUpdate>;
-  "index-fund.update-alliance-list": Tx<AllianceListUpdate, AllianceListUpdate>;
 
   "locked-withdraw.propose": Tx<
     {
       id: number;
-      beneficiary: string;
-      addresses: string[];
-      amounts: string[];
+      token: string;
+      amount: string;
     },
     WithdrawMeta
   >;
@@ -135,7 +125,7 @@ type Txs = {
   >;
 
   "registrar.update-owner": Tx<{ newOwner: string }, OwnerMeta>;
-  "registrar.update-config": Tx<RegistrarConfigPayload, Diff[]>;
+  "registrar.update-config": Tx<RegistrarConfigUpdate, Diff[]>;
 };
 
 export type TxTypes = keyof Txs;

@@ -1,5 +1,8 @@
 import { OverrideProperties } from "type-fest";
-import { RegistrarStorage } from "../typechain-types/contracts/core/registrar/interfaces/IRegistrar";
+import {
+  RegistrarMessages,
+  RegistrarStorage,
+} from "../typechain-types/contracts/core/registrar/interfaces/IRegistrar";
 import { Plain } from "../utils";
 import { SplitDetails } from "./common";
 
@@ -31,40 +34,12 @@ export type RegistrarOwnerPayload = {
   new_owner: string;
 };
 
-export type RegistrarConfigPayload = {
-  accountsContract: string;
-  taxRate: number;
-  rebalance: RebalanceDetails;
-  approved_charities: string[];
-  splitMax: number;
-  splitMin: number;
-  splitDefault: number;
-  collectorShare: number;
-  acceptedTokens: AcceptedTokens;
-  subdaoGovCode: string;
-  subdaoCw20TokenCode: string;
-  subdaoBondingTokenCode: string;
-  subdaoCw900Code: string;
-  subdaoDistributorCode: string;
-  subdaoEmitter: string;
-  donationMatchCode: string;
-  indexFundContract: string;
-  govContract: string;
-  treasury: string;
-  donationMatchCharitesContract: string;
-  donationMatchEmitter: string;
-  haloToken: string;
-  haloTokenLpContract: string;
-  charitySharesContract: string;
-  fundraisingContract: string;
-  applicationsReview: string;
-  swapsRouter: string;
-  multisigFactory: string;
-  multisigEmitter: string;
-  charityProposal: string;
-  lockedWithdrawal: string;
-  proxyAdmin: string;
-  usdcAddress: string;
-  wethAddress: string;
-  cw900lvAddress: string;
-};
+export type RegistrarConfigUpdate = OverrideProperties<
+  Plain<RegistrarMessages.UpdateConfigRequestStruct>,
+  {
+    splitMax: number;
+    splitMin: number;
+    splitDefault: number;
+    collectorShare: number;
+  }
+>;
