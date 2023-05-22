@@ -49,7 +49,7 @@ export default function useCloseEndowment() {
         id: endowId,
         beneficiary,
       },
-      beneficiaryMeta
+      { beneficiary: beneficiaryMeta }
     );
 
     const tx = createTx(wallet.address, "multisig.submit-transaction", {

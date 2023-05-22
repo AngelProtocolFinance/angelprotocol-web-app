@@ -38,7 +38,7 @@ export function getTagPayloads(type?: TxMeta["id"]): TagPayload[] {
       _tags.push("accounts.state");
       break;
 
-    case "accounts.update-status":
+    case "accounts.close":
       _tags.push("accounts.endowment");
       break;
 

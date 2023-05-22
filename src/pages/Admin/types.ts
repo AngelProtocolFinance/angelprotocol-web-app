@@ -11,7 +11,7 @@ export type Templates =
       TxTypes,
       | "accounts.update-controller"
       | "accounts.withdraw"
-      | "accounts.update-status"
+      | "accounts.close"
       | "index-fund.config"
       | "index-fund.update-owner"
       | "index-fund.create-fund"

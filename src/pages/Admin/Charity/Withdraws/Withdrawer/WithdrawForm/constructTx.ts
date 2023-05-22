@@ -1,6 +1,5 @@
 import { WithdrawValues } from "./types";
-import { EndowmentDetails } from "types/contracts";
-import { AccountType } from "types/contracts/evm/account";
+import { AccountType, EndowmentDetails } from "types/contracts";
 import { SimulContractTx } from "types/evm";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import { WithdrawMeta } from "contracts/createTx/meta";
@@ -65,9 +64,8 @@ export function constructTx(
         "locked-withdraw.propose",
         {
           id,
-          beneficiary,
-          addresses,
-          amounts,
+          token: addresses[0],
+          amount: amounts[0],
         },
         metadata
       )

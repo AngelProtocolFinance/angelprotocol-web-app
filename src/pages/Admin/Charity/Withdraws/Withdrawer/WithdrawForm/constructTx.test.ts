@@ -133,7 +133,6 @@ function endowDetails<T extends keyof ED>(overrides?: Override<T>[]): ED {
     owner: "multisig",
     categories: { sdgs: [], general: [] },
     endow_type: "charity",
-    status: "approved",
     maturityTime: 1000,
     allowlistedBeneficiaries: [],
     allowlistedContributors: [],

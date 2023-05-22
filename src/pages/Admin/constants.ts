@@ -11,7 +11,6 @@ export const templates: {
     ? `${Contract}_${Method}`
     : string;
 } = {
-  "index-fund.update-alliance-list": "index-fund_update-alliance-list",
   "index-fund.create-fund": "index-fund_create-fund",
   "index-fund.remove-fund": "index-fund_remove-fund",
   "index-fund.update-members": "index-fund_update-members",
@@ -23,7 +22,7 @@ export const templates: {
   "multisig.fund-transfer": "multisig_fund-transfer",
 
   "accounts.withdraw": "accounts_withdraw", //includes locked-withdraw
-  "accounts.update-status": "accounts_update-status",
+  "accounts.close": "accounts_close",
   "accounts.update-controller": "accounts_update-controller",
 
   "registrar.update-config": "registrar_update-config",
