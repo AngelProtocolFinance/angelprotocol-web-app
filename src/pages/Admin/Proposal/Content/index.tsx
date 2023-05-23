@@ -1,3 +1,4 @@
+import { AbiCoder } from "@ethersproject/abi";
 import { useState } from "react";
 import { Transaction } from "types/contracts/multisig";
 import Icon from "components/Icon";
@@ -16,7 +17,11 @@ export default function Content(props: Transaction) {
       {props.metadata && (
         <>
           <DetailLabel classes="mb-2">content</DetailLabel>
-          <Preview {...JSON.parse(window.atob(props.metadata))} />
+          <Preview
+            {...JSON.parse(
+              new AbiCoder().decode(["string"], props.metadata)[0]
+            )}
+          />
         </>
       )}
 
