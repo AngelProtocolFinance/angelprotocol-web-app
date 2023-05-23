@@ -247,7 +247,7 @@ export const queryObjects: {
         allowlistedBeneficiaries: d.allowlistedBeneficiaries.map((w) =>
           w.toLowerCase()
         ),
-        allowlistedContributors: d.allowlistedBeneficiaries.map((w) =>
+        allowlistedContributors: d.allowlistedContributors.map((w) =>
           w.toLowerCase()
         ),
         maturityAllowlist: d.maturityAllowlist.map((w) => w.toLowerCase()),
