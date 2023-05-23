@@ -1,5 +1,5 @@
 [
-  "function submitTransaction(string,string,address,uint256,bytes) returns (uint256)",
+  "function submitTransaction(string,string,address,uint256,bytes,bytes) returns (uint256)",
   "function addOwner(address)",
   "function removeOwner(address)",
   "function confirmTransaction(uint256)",
