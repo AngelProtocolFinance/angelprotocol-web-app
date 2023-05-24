@@ -7,12 +7,12 @@ import WithdrawButton from "./WithdrawButton";
 
 type Props = {
   isSubmitDisabled: boolean;
-  endowment: Pick<EndowmentDetails, "endow_type">;
+  endowment: Pick<EndowmentDetails, "endowType">;
 };
 
 export default function SubmitLocked({ isSubmitDisabled, endowment }: Props) {
   const warning =
-    endowment.endow_type === "charity"
+    endowment.endowType === "charity"
       ? `Withdrawing from endowment funds requires ${APP_NAME} team approval.`
       : //matured normal endowments can withdraw without warnings
         null;

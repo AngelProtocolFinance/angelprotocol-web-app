@@ -2,8 +2,8 @@ import { BigNumber } from "@ethersproject/bignumber";
 import {
   DGenericBalance,
   toBalMap,
-  toDelegate,
   toEndowType,
+  toPermission,
   toSplit,
 } from "./decoded-types";
 import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
@@ -46,13 +46,13 @@ export const queryObjects: {
         indexFundContract: d.indexFundContract.toLowerCase(),
         accountsContract: d.accountsContract.toLowerCase(),
         treasury: d.treasury.toLowerCase(),
-        subdaoGovCode: d.subdaoGovCode.toLowerCase(),
-        subdaoCw20TokenCode: d.subdaoCw20TokenCode.toLowerCase(),
-        subdaoBondingTokenCode: d.subdaoBondingTokenCode.toLowerCase(),
-        subdaoCw900Code: d.subdaoCw900Code.toLowerCase(),
-        subdaoDistributorCode: d.subdaoDistributorCode.toLowerCase(),
+        subdaoGovContract: d.subdaoGovContract.toLowerCase(),
+        subdaoTokenContract: d.subdaoTokenContract.toLowerCase(),
+        subdaoBondingTokenContract: d.subdaoBondingTokenContract.toLowerCase(),
+        subdaoCw900Contract: d.subdaoCw900Contract.toLowerCase(),
+        subdaoDistributorContract: d.subdaoDistributorContract.toLowerCase(),
         subdaoEmitter: d.subdaoEmitter.toLowerCase(),
-        donationMatchCode: d.donationMatchCode.toLowerCase(),
+        donationMatchContract: d.donationMatchContract.toLowerCase(),
         donationMatchCharitesContract:
           d.donationMatchCharitesContract.toLowerCase(),
         donationMatchEmitter: d.donationMatchEmitter.toLowerCase(),
@@ -242,7 +242,7 @@ export const queryObjects: {
           sdgs: d.categories.sdgs.map((s) => s.toNumber()) as UNSDG_NUMS[],
           general: d.categories.general.map((s) => s.toNumber()),
         },
-        endow_type: toEndowType(d.endow_type),
+        endowType: toEndowType(d.endowType),
         maturityTime: d.maturityTime.toNumber(),
         allowlistedBeneficiaries: d.allowlistedBeneficiaries.map((w) =>
           w.toLowerCase()
@@ -254,24 +254,33 @@ export const queryObjects: {
         kycDonorsOnly: d.kycDonorsOnly,
         donationMatchActive: d.donationMatchActive,
         settingsController: {
-          strategies: toDelegate(controller.strategies),
-          allowlistedBeneficiaries: toDelegate(
+          strategies: toPermission(controller.strategies),
+          lockedInvestmentManagement: toPermission(
+            controller.lockedInvestmentManagement
+          ),
+          liquidInvestmentManagement: toPermission(
+            controller.liquidInvestmentManagement
+          ),
+          allowlistedBeneficiaries: toPermission(
             controller.allowlistedBeneficiaries
           ),
-          allowlistedContributors: toDelegate(
+          allowlistedContributors: toPermission(
             controller.allowlistedContributors
           ),
-          maturityAllowlist: toDelegate(controller.maturityAllowlist),
-          maturityTime: toDelegate(controller.maturityTime),
-          withdrawFee: toDelegate(controller.withdrawFee),
-          depositFee: toDelegate(controller.depositFee),
-          balanceFee: toDelegate(controller.balanceFee),
-          name: toDelegate(controller.name),
-          image: toDelegate(controller.image),
-          logo: toDelegate(controller.logo),
-          categories: toDelegate(controller.categories),
-          splitToLiquid: toDelegate(controller.splitToLiquid),
-          ignoreUserSplits: toDelegate(controller.ignoreUserSplits),
+          maturityAllowlist: toPermission(controller.maturityAllowlist),
+          maturityTime: toPermission(controller.maturityTime),
+          earlyLockedWithdrawFee: toPermission(
+            controller.earlyLockedWithdrawFee
+          ),
+          withdrawFee: toPermission(controller.withdrawFee),
+          depositFee: toPermission(controller.depositFee),
+          balanceFee: toPermission(controller.balanceFee),
+          name: toPermission(controller.name),
+          image: toPermission(controller.image),
+          logo: toPermission(controller.logo),
+          categories: toPermission(controller.categories),
+          splitToLiquid: toPermission(controller.splitToLiquid),
+          ignoreUserSplits: toPermission(controller.ignoreUserSplits),
         },
         ignoreUserSplits: d.ignoreUserSplits,
         splitToLiquid: toSplit(d.splitToLiquid),

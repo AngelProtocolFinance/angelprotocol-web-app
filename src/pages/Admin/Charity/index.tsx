@@ -56,11 +56,11 @@ const LINK_GROUPS: { [key in EndowmentType]: LinkGroup[] } = {
 };
 
 export default function Charity() {
-  const { endow_type } = useAdminResources<"charity">();
+  const { endowType } = useAdminResources<"charity">();
 
   return (
     <Routes>
-      <Route element={<Layout linkGroups={LINK_GROUPS[endow_type]} />}>
+      <Route element={<Layout linkGroups={LINK_GROUPS[endowType]} />}>
         <Route path={`${adminRoutes.proposal}/:id`} element={<Proposal />} />
         <Route path={adminRoutes.proposals} element={<Proposals />} />
         <Route path={`${adminRoutes.templates}/*`} element={<Templates />} />

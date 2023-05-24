@@ -53,7 +53,7 @@ describe("Charity withdraw transactions", () => {
 
 describe("AST withdraw transactions", () => {
   test("withdraw locked to polygon wallet", () => {
-    const endow = endowDetails([["endow_type", "normal"]]);
+    const endow = endowDetails([["endowType", "normal"]]);
     const fv = formValues();
 
     const { tx, isPolygon, isDirect } = constructTx("sender", 0, endow, fv);
@@ -64,7 +64,7 @@ describe("AST withdraw transactions", () => {
     expect(isDirect).toBe(false);
   });
   test("withdraw liquid to polygon wallet", () => {
-    const endow = endowDetails([["endow_type", "normal"]]);
+    const endow = endowDetails([["endowType", "normal"]]);
     const fv = formValues([["type", "liquid"]]);
 
     const { tx, isPolygon, isDirect } = constructTx("sender", 0, endow, fv);
@@ -75,7 +75,7 @@ describe("AST withdraw transactions", () => {
     expect(isDirect).toBe(false);
   });
   test("withdraw locked/liquid to other network ( not polygon )", () => {
-    const endow = endowDetails([["endow_type", "normal"]]);
+    const endow = endowDetails([["endowType", "normal"]]);
     const fv = formValues([["network", chainIds.ethereum]]);
 
     const { isPolygon, isDirect } = constructTx("sender", 0, endow, fv);
@@ -86,7 +86,7 @@ describe("AST withdraw transactions", () => {
   test("withdraw locked: sender in maturity whitelist", () => {
     const endow = endowDetails([
       ["maturityAllowlist", ["sender"]],
-      ["endow_type", "normal"],
+      ["endowType", "normal"],
     ]);
     const fv = formValues();
     const { tx, isDirect } = constructTx("sender", 0, endow, fv);
@@ -98,7 +98,7 @@ describe("AST withdraw transactions", () => {
   test("withdraw liquid: sender in beneficiary whitelist", () => {
     const endow = endowDetails([
       ["allowlistedBeneficiaries", ["sender"]],
-      ["endow_type", "normal"],
+      ["endowType", "normal"],
     ]);
 
     const fv = formValues([["type", "liquid"]]);
@@ -132,7 +132,7 @@ function endowDetails<T extends keyof ED>(overrides?: Override<T>[]): ED {
   return {
     owner: "multisig",
     categories: { sdgs: [], general: [] },
-    endow_type: "charity",
+    endowType: "charity",
     maturityTime: 1000,
     allowlistedBeneficiaries: [],
     allowlistedContributors: [],

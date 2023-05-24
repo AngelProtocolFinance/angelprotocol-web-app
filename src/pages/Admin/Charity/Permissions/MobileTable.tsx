@@ -18,7 +18,7 @@ const formValues: UpdateableFormValues = {
 const FORM_KEYS = getTypedKeys(formValues);
 
 export default function MobileTable({ className = "" }) {
-  const { endow_type } = useAdminResources<"charity">();
+  const { endowType } = useAdminResources<"charity">();
   const {
     register,
     formState: { errors },
@@ -79,7 +79,7 @@ export default function MobileTable({ className = "" }) {
                     >
                       Admin wallet
                     </CheckField>
-                    {endow_type === "normal" && (
+                    {endowType === "normal" && (
                       <CheckField<FormValues>
                         name={`${fieldName}.govControlled`}
                         classes={{

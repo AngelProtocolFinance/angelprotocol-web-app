@@ -56,8 +56,7 @@ export function constructTx(
     })),
   };
 
-  const isLockedCharity =
-    endow.endow_type === "charity" && wv.type === "locked";
+  const isLockedCharity = endow.endowType === "charity" && wv.type === "locked";
 
   const [data, dest, meta] = isLockedCharity
     ? encodeTx(

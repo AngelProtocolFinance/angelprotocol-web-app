@@ -141,7 +141,7 @@ function successMeta(
   }
 
   if (willExecute) {
-    if (endow.endow_type === "charity" && wv.type === "locked") {
+    if (endow.endowType === "charity" && wv.type === "locked") {
       return {
         message: "Withdraw proposal submitted for AP Team approval",
         link: {

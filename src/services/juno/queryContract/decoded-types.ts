@@ -1,16 +1,19 @@
 import type { BigNumber } from "@ethersproject/bignumber";
 import { OverrideProperties } from "type-fest";
-import { Delegate, GenericBalMap, SplitDetails } from "types/contracts";
+import {
+  Delegate,
+  GenericBalMap,
+  SettingsPermission,
+  SplitDetails,
+} from "types/contracts";
 import { EndowmentType } from "types/lists";
-import { AngelCoreStruct } from "types/typechain-types/contracts/core/struct.sol/AngelCoreStruct";
+import { AngelCoreStruct } from "types/typechain-types/contracts/core/accounts/IAccounts";
 
 enum EndowmentTypeEnum {
   Charity,
   Normal,
   None,
 }
-
-type DDelegate = OverrideProperties<Delegate, { expires: BigNumber }>;
 
 export type DGenericBalance = {
   coinNativeAmount: BigNumber;
@@ -20,8 +23,16 @@ export type DGenericBalance = {
 
 // ////////// CONVERTERS ///////////////
 
-export function toDelegate(d: DDelegate): Delegate {
-  return { addr: d.addr.toLowerCase(), expires: d.expires.toNumber() };
+export function toPermission(
+  d: AngelCoreStruct.SettingsPermissionStructOutput
+): SettingsPermission {
+  return {
+    locked: d.locked,
+    delegate: {
+      addr: d.delegate.addr.toLowerCase(),
+      expires: d.delegate.expires.toNumber(),
+    },
+  };
 }
 
 export function toEndowType(type: EndowmentTypeEnum): EndowmentType {

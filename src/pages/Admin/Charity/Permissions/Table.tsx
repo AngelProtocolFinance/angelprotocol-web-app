@@ -17,7 +17,7 @@ const formValues: UpdateableFormValues = {
 const FORM_KEYS = getTypedKeys(formValues);
 
 export default function Table({ className = "" }) {
-  const { endow_type } = useAdminResources<"charity">();
+  const { endowType } = useAdminResources<"charity">();
 
   const {
     register,
@@ -26,7 +26,7 @@ export default function Table({ className = "" }) {
 
   const getData = useTableData();
 
-  const isNormal = endow_type === "normal";
+  const isNormal = endowType === "normal";
 
   return (
     <table
