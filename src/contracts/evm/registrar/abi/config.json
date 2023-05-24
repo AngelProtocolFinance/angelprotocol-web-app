@@ -27,27 +27,27 @@
           },
           {
             "internalType": "address",
-            "name": "subdaoGovCode",
+            "name": "subdaoGovContract",
             "type": "address"
           },
           {
             "internalType": "address",
-            "name": "subdaoCw20TokenCode",
+            "name": "subdaoTokenContract",
             "type": "address"
           },
           {
             "internalType": "address",
-            "name": "subdaoBondingTokenCode",
+            "name": "subdaoBondingTokenContract",
             "type": "address"
           },
           {
             "internalType": "address",
-            "name": "subdaoCw900Code",
+            "name": "subdaoCw900Contract",
             "type": "address"
           },
           {
             "internalType": "address",
-            "name": "subdaoDistributorCode",
+            "name": "subdaoDistributorContract",
             "type": "address"
           },
           {
@@ -57,7 +57,7 @@
           },
           {
             "internalType": "address",
-            "name": "donationMatchCode",
+            "name": "donationMatchContract",
             "type": "address"
           },
           {
