@@ -1,5 +1,5 @@
 import { Completed, TFee } from "slices/launchpad/types";
-import { Delegate, Fee, NewAST } from "types/contracts";
+import { Fee, NewAST, SettingsPermission } from "types/contracts";
 import angelProtocolRoundedLogo from "assets/images/angelprotocol-rounded-logo.png";
 import { isEmpty, roundDownToNum } from "helpers";
 import { blockTime } from "helpers/admin";
@@ -25,13 +25,13 @@ export default function toEVMAST(
     name: about.name,
     categories: { sdgs: [], general: [] }, //not specified in launchpad design
     tier: 0, //not specified in launchpad design
-    endow_type: 1,
+    endowType: 1,
     logo: angelProtocolRoundedLogo,
     image: "",
-    cw4_members: isEmpty(management.members) ? [creator] : management.members, //in launchpad design, weight is specified for each member
+    members: isEmpty(management.members) ? [creator] : management.members, //in launchpad design, weight is specified for each member
     kycDonorsOnly: false, //not specified in launchpad design
     threshold: +management.proposal.threshold,
-    cw3MaxVotingPeriod: {
+    maxVotingPeriod: {
       enumData: 1,
       data: {
         height: 0,
@@ -47,7 +47,7 @@ export default function toEVMAST(
     splitDefault: 100 - +splits.default,
 
     // //fees
-    earningsFee: toEndowFee(fees.earnings),
+    earlyLockedWithdrawFee: toEndowFee(fees.earnings),
     withdrawFee: toEndowFee(fees.withdrawal),
     depositFee: toEndowFee(fees.deposit),
     balanceFee: toEndowFee({ isActive: false, receiver: "", rate: "0" }), //not included in launchpad, for edit later
@@ -64,11 +64,11 @@ export default function toEVMAST(
       token: {
         token: 0,
         data: {
-          existingCw20Data: ADDRESS_ZERO,
-          newCw20InitialSupply: "0",
-          newCw20Name: "",
-          newCw20Symbol: "",
-          bondingveveType: {
+          existingData: ADDRESS_ZERO,
+          newInitialSupply: "0",
+          newName: "",
+          newSymbol: "",
+          veBondingType: {
             ve_type: 0,
             data: {
               value: 0,
@@ -77,12 +77,12 @@ export default function toEVMAST(
               power: 0,
             },
           },
-          bondingveName: "",
-          bondingveSymbol: "",
-          bondingveDecimals: 0,
-          bondingveReserveDenom: ADDRESS_ZERO,
-          bondingveReserveDecimals: 0,
-          bondingveUnbondingPeriod: 0,
+          veBondingName: "",
+          veBondingSymbol: "",
+          veBondingDecimals: 0,
+          veBondingReserveDenom: ADDRESS_ZERO,
+          veBondingReserveDecimals: 0,
+          veBondingPeriod: 0,
         },
       },
     },
@@ -91,20 +91,23 @@ export default function toEVMAST(
     proposalLink: 0, //not specified in launchpad design
 
     settingsController: {
-      strategies: defaultDelegate,
-      allowlistedBeneficiaries: defaultDelegate,
-      allowlistedContributors: defaultDelegate,
-      maturityAllowlist: defaultDelegate,
-      maturityTime: defaultDelegate,
-      withdrawFee: defaultDelegate,
-      depositFee: defaultDelegate,
-      balanceFee: defaultDelegate,
-      name: defaultDelegate,
-      image: defaultDelegate,
-      logo: defaultDelegate,
-      categories: defaultDelegate,
-      splitToLiquid: defaultDelegate,
-      ignoreUserSplits: defaultDelegate,
+      strategies: defaultSetting,
+      lockedInvestmentManagement: defaultSetting,
+      liquidInvestmentManagement: defaultSetting,
+      allowlistedBeneficiaries: defaultSetting,
+      allowlistedContributors: defaultSetting,
+      maturityAllowlist: defaultSetting,
+      maturityTime: defaultSetting,
+      earlyLockedWithdrawFee: defaultSetting,
+      withdrawFee: defaultSetting,
+      depositFee: defaultSetting,
+      balanceFee: defaultSetting,
+      name: defaultSetting,
+      image: defaultSetting,
+      logo: defaultSetting,
+      categories: defaultSetting,
+      splitToLiquid: defaultSetting,
+      ignoreUserSplits: defaultSetting,
     },
     // settingsController: SettingsController; //not included in launchpad, for edit later
     parent: 0,
@@ -124,12 +127,11 @@ function toEndowFee(fee: TFee): Fee {
   const addr = fee.isActive ? fee.receiver : ADDRESS_ZERO;
   return {
     payoutAddress: addr,
-    feePercentage: +fee.rate,
-    active: fee.isActive,
+    percentage: +fee.rate,
   };
 }
 
-const defaultDelegate: Delegate = {
-  addr: ADDRESS_ZERO,
-  expires: 0,
+const defaultSetting: SettingsPermission = {
+  locked: false,
+  delegate: { addr: ADDRESS_ZERO, expires: 0 },
 };
