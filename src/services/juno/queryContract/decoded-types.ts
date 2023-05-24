@@ -1,7 +1,5 @@
 import type { BigNumber } from "@ethersproject/bignumber";
-import { OverrideProperties } from "type-fest";
 import {
-  Delegate,
   GenericBalMap,
   SettingsPermission,
   SplitDetails,

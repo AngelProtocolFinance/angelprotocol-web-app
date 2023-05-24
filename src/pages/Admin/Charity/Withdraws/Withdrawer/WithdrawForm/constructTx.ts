@@ -82,7 +82,7 @@ export function constructTx(
 
   //prettier-ignore
   const isDirect =
-      endow.endow_type === "normal" &&
+      endow.endowType === "normal" &&
       (
         (wv.type === "liquid" && endow.allowlistedBeneficiaries.includes(sender)) ||
         (wv.type === "locked" && endow.maturityAllowlist.includes(sender))

@@ -58,9 +58,17 @@ export type Delegate = OverrideProperties<
   }
 >;
 
+export type SettingsPermission = OverrideProperties<
+  AngelCoreStruct.SettingsPermissionStruct,
+  {
+    locked: boolean;
+    delegate: Delegate;
+  }
+>;
+
 export type SettingsController = Mapped<
   AngelCoreStruct.SettingsControllerStruct,
-  Delegate
+  SettingsPermission
 >;
 
 type Categories = OverrideProperties<
@@ -73,7 +81,7 @@ export type EndowmentDetails = OverrideProperties<
     Plain<AccountStorage.EndowmentStruct>,
     | "owner"
     | "categories"
-    | "endow_type"
+    | "endowType"
     | "maturityTime"
     | "allowlistedBeneficiaries"
     | "allowlistedContributors"
@@ -86,7 +94,7 @@ export type EndowmentDetails = OverrideProperties<
   >,
   {
     categories: Categories;
-    endow_type: EndowmentType;
+    endowType: EndowmentType;
     maturityTime: number;
     settingsController: SettingsController;
     splitToLiquid: SplitDetails;
@@ -152,7 +160,7 @@ type Duration = OverrideProperties<
 
 export type Fee = OverrideProperties<
   Plain<AngelCoreStruct.EndowmentFeeStruct>,
-  { feePercentage: number }
+  { percentage: number }
 >;
 
 type VETypeData = Mapped<AngelCoreStruct.VeTypeDataStruct, number>;
@@ -170,11 +178,11 @@ type VEType = OverrideProperties<
 type DaoTokenData = OverrideProperties<
   Plain<AngelCoreStruct.DaoTokenDataStruct>,
   {
-    newCw20InitialSupply: string;
-    bondingveveType: VEType;
-    bondingveDecimals: number;
-    bondingveReserveDecimals: number;
-    bondingveUnbondingPeriod: number;
+    newInitialSupply: string;
+    veBondingType: VEType;
+    veBondingDecimals: number;
+    veBondingReserveDecimals: number;
+    veBondingPeriod: number;
   }
 >;
 
@@ -214,13 +222,13 @@ export type NewAST = OverrideProperties<
      * 1 - normal
      * 2 - none
      */
-    endow_type: 0 | 1 | 2;
+    endowType: 0 | 1 | 2;
     threshold: number;
-    cw3MaxVotingPeriod: Duration;
+    maxVotingPeriod: Duration;
     splitMax: number;
     splitMin: number;
     splitDefault: number;
-    earningsFee: Fee;
+    earlyLockedWithdrawFee: Fee;
     withdrawFee: Fee;
     depositFee: Fee;
     balanceFee: Fee;
