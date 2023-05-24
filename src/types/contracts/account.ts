@@ -121,7 +121,7 @@ export type SettingsControllerUpdate = OverrideProperties<
 
 export type EndowmentSettingsUpdate = OverrideProperties<
   Plain<AccountsUpdateEndowmentSettingsControllerMessages.UpdateEndowmentSettingsRequestStruct>,
-  { id: number; splitToLiquid: SplitDetails }
+  { id: number; splitToLiquid: SplitDetails; maturityTime: number }
 >;
 
 export type CloseEndowmentRequest = {

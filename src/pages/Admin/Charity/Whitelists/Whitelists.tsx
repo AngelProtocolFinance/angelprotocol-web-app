@@ -12,11 +12,13 @@ export default function Whitelists() {
     donationMatchActive,
     splitToLiquid,
     ignoreUserSplits,
+    maturityTime,
   } = useAdminResources<"charity">();
 
   const initial: EndowmentSettingsUpdate = {
     id,
     donationMatchActive,
+    maturityTime,
     allowlistedBeneficiaries,
     allowlistedContributors,
     maturity_allowlist_add: [], //not included in form
