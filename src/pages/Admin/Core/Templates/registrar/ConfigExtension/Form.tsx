@@ -31,27 +31,27 @@ export default function Form() {
         <Field<FV>
           classes="field-admin-sec"
           label="Subdao Bonding Token"
-          name="subdaoBondingTokenCode"
+          name="subdaoBondingTokenContract"
         />
         <Field<FV>
           classes="field-admin-sec"
           label="Subdao CW20 Token"
-          name="subdaoCw20TokenCode"
+          name="subdaoTokenContract"
         />
         <Field<FV>
           classes="field-admin-sec"
           label="Subdao CW900"
-          name="subdaoCw900Code"
+          name="subdaoCw900Contract"
         />
         <Field<FV>
           classes="field-admin-sec"
           label="Subdao Distributor"
-          name="subdaoDistributorCode"
+          name="subdaoDistributorContract"
         />
         <Field<FV>
           classes="field-admin-sec"
           label="Subdao Gov"
-          name="subdaoGovCode"
+          name="subdaoGovContract"
         />
       </GroupContainer>
 

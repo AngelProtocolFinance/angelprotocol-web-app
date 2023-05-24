@@ -23,11 +23,11 @@ const shape: SchemaShape<FormValues> = {
 
   //wasm codes
   multisigFactory: contract,
-  subdaoBondingTokenCode: contract,
-  subdaoCw20TokenCode: contract,
-  subdaoCw900Code: contract,
-  subdaoDistributorCode: contract,
-  subdaoGovCode: contract,
+  subdaoBondingTokenContract: contract,
+  subdaoTokenContract: contract,
+  subdaoCw900Contract: contract,
+  subdaoDistributorContract: contract,
+  subdaoGovContract: contract,
 };
 
 export const schema = Yup.object(shape);

@@ -15,11 +15,11 @@ export type Fields = Pick<
   | "indexFundContract"
   | "swapsRouter"
   | "multisigFactory"
-  | "subdaoBondingTokenCode"
-  | "subdaoCw20TokenCode"
-  | "subdaoCw900Code"
-  | "subdaoDistributorCode"
-  | "subdaoGovCode"
+  | "subdaoBondingTokenContract"
+  | "subdaoTokenContract"
+  | "subdaoCw900Contract"
+  | "subdaoDistributorContract"
+  | "subdaoGovContract"
 >;
 //future fields to edit
 
