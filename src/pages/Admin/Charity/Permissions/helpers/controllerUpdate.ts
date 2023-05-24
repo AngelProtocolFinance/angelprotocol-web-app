@@ -1,7 +1,7 @@
 import {
-  Delegate,
   SettingsController,
   SettingsControllerUpdate,
+  SettingsPermission,
 } from "types/contracts";
 import { ADDRESS_ZERO } from "constants/evm";
 import { UpdateableFormValues } from "../schema";
@@ -22,10 +22,13 @@ export function controllerUpdate(
     id: endowId,
     settingsController: {
       strategies: controller.strategies,
+      lockedInvestmentManagement: controller.lockedInvestmentManagement,
+      liquidInvestmentManagement: controller.liquidInvestmentManagement,
       allowlistedBeneficiaries: beneficiaries_allowlist,
       allowlistedContributors: contributors_allowlist,
       maturityAllowlist: controller.maturityAllowlist,
       maturityTime: controller.maturityTime,
+      earlyLockedWithdrawFee: accountFees,
       withdrawFee: accountFees,
       depositFee: accountFees,
       balanceFee: accountFees,
@@ -43,10 +46,13 @@ export function controllerUpdate(
 
 const converter =
   (fv: UpdateableFormValues) =>
-  (permission: keyof UpdateableFormValues): Delegate => {
+  (permission: keyof UpdateableFormValues): SettingsPermission => {
     const val = fv[permission];
     return {
-      addr: val.isActive ? val.addr : ADDRESS_ZERO,
-      expires: 0, //in design: no expiry for delegation,
+      locked: val.modifiableAfterInit,
+      delegate: {
+        addr: val.isActive ? val.addr : ADDRESS_ZERO,
+        expires: 0, //in design: no expiry for delegation,
+      },
     };
   };

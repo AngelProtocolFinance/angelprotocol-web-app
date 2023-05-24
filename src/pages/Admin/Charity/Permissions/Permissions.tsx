@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { Delegate } from "types/contracts";
+import { SettingsPermission } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { ADDRESS_ZERO } from "constants/evm";
 import { adminRoutes } from "constants/routes";
@@ -50,7 +50,8 @@ export default function Permissions() {
   );
 }
 
-function createField(delegate: Delegate, name = ""): FormField {
+function createField(setting: SettingsPermission, name = ""): FormField {
+  const delegate = setting.delegate;
   const isDelegated = delegate.addr !== ADDRESS_ZERO;
   return {
     name,
@@ -58,6 +59,6 @@ function createField(delegate: Delegate, name = ""): FormField {
     addr: isDelegated ? delegate.addr : "",
     ownerControlled: true,
     govControlled: false,
-    modifiableAfterInit: true,
+    modifiableAfterInit: !setting.locked,
   };
 }
