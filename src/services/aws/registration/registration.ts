@@ -55,7 +55,7 @@ const registration_api = aws.injectEndpoints({
       transformErrorResponse(res, meta, { type }) {
         return {
           status: res.status,
-          data: `Failed to update ${type}. Please try again later.`,
+          message: `${res.status}: Failed to update ${type}. Please try again later.`,
         };
       },
       /** pessimistic manual cache update so not to GET fresh data */
