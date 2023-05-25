@@ -52,8 +52,8 @@ export default function SplitsForm(props: FormProps) {
         >
           {(min, max, disabled) => (
             <div className="flex justify-between text-sm">
-              <Percent disabled={disabled}>{max}%</Percent>
               <Percent disabled={disabled}>{100 - max}%</Percent>
+              <Percent disabled={disabled}>{max}%</Percent>
             </div>
           )}
         </MinmaxSlider>
