@@ -26,7 +26,7 @@ function Dashboard() {
       }),
       handleError,
       () => {
-        if ((window as any).lintrk) {
+        if (window.hasOwnProperty("lintrk")) {
           (window as any).lintrk("track", { conversion_id: 12807754 });
         }
         showModal(Prompt, {
