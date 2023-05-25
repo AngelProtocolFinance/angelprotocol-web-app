@@ -53,7 +53,7 @@ export default function toEVMAST(
     //not used in contract
     splitMax: 100 - +splits.max,
     splitMin: 100 - +splits.min,
-    splitDefault: 100 - +splits.default,
+    splitDefault: +splits.default,
 
     // //fees
     earningsFee: toEndowFee(fees.earnings),
