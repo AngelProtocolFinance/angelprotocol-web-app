@@ -126,7 +126,7 @@ export default function toEVMAST(
     splitToLiquid: {
       min: 100 - +splits.max,
       max: 100 - +splits.min,
-      defaultSplit: 100 - +splits.default,
+      defaultSplit: +splits.default,
     },
 
     // referral_id: fees.referral_id || 0, //TODO: add on later ver of contracts

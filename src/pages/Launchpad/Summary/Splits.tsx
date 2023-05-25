@@ -14,10 +14,10 @@ export default function Splits({
       <p className="font-semibold mb-2">Default values</p>
       <ul className="list-disc list-inside mb-6">
         <Item classes="mb-2" title="To locked">
-          {def} %
+          {100 - +def} %
         </Item>
         <Item classes="mb-2" title="To liquid">
-          {100 - +def} %
+          {def} %
         </Item>
       </ul>
 
