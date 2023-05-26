@@ -3,6 +3,7 @@ import { Metadata, TxMeta, TxOptions, TxTypes } from "./types";
 import { SimulContractTx } from "types/evm";
 import { Contract } from "types/lists";
 import { contracts } from "constants/contracts";
+import { EMPTY_DATA } from "constants/evm";
 import { txs } from "./txs";
 
 export function createTx<T extends TxTypes>(
@@ -39,7 +40,7 @@ export function encodeTx<T extends TxTypes>(
       id: type as any,
       encoded: toEncode
         ? new AbiCoder().encode(["string"], [JSON.stringify(toEncode)])
-        : "",
+        : EMPTY_DATA,
     },
   ];
 }

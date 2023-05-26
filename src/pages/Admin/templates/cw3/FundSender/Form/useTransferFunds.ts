@@ -7,6 +7,7 @@ import { TransferMeta } from "contracts/createTx/meta";
 import useTxSender from "hooks/useTxSender";
 import { scale, toBase64 } from "helpers";
 import { getTagPayloads } from "helpers/admin";
+import { EMPTY_DATA } from "constants/evm";
 
 export default function useTransferFunds() {
   const {
@@ -30,7 +31,7 @@ export default function useTransferFunds() {
     const toEncode: TxMeta = { id: "erc20.transfer", data: metadata };
 
     const native: ReturnType<typeof encodeTx> = [
-      "0x" /** empty data */,
+      EMPTY_DATA,
       recipient,
       { id: "erc20.transfer", encoded: toBase64(toEncode) },
     ];

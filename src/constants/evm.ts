@@ -20,3 +20,4 @@ export const EIPMethods = {
 
 export const ADDRESS_ZERO =
   "0x0000000000000000000000000000000000000000" as TADDR_0;
+export const EMPTY_DATA = "0x";

@@ -43,10 +43,14 @@ export default function usePropose() {
     const wallet = getWallet();
     if (typeof wallet === "function") return wallet();
 
-    const [data, dest, meta] = encodeTx("multisig.change-threshold", {
-      multisig,
-      threshold: +threshold,
-    });
+    const [data, dest, meta] = encodeTx(
+      "multisig.change-threshold",
+      {
+        multisig,
+        threshold: +threshold,
+      },
+      { new: +threshold, curr: +initial.threshold }
+    );
 
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig,
