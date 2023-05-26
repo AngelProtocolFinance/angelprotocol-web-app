@@ -44,7 +44,7 @@ export default function toEVMAST(
     //not used in contract
     splitMax: 100 - +splits.max,
     splitMin: 100 - +splits.min,
-    splitDefault: 100 - +splits.default,
+    splitDefault: +splits.default,
 
     // //fees
     earlyLockedWithdrawFee: toEndowFee(fees.earnings),
@@ -116,7 +116,7 @@ export default function toEVMAST(
     splitToLiquid: {
       min: 100 - +splits.max,
       max: 100 - +splits.min,
-      defaultSplit: 100 - +splits.default,
+      defaultSplit: +splits.default,
     },
 
     referralId: fees.referral_id || 0,
