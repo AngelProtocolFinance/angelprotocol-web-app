@@ -38,7 +38,6 @@ export default function Preview(props: TxMeta) {
     case "accounts.close":
       return <EndowmentStatusUpdate {...props.data} />;
     case "accounts.withdraw":
-    case "locked-withdraw.propose":
       return <Withdraw {...props.data} />;
 
     case "erc20.transfer":
