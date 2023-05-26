@@ -24,10 +24,10 @@ export default function DiffTable(props: { diffs: Diff[] }) {
           {props.diffs.map(([key, prev, next]) => (
             <Cells
               type="td"
-              cellClass="text-right p-2 border-r border-prim truncate max-w-2xl"
+              cellClass="text-right p-2 border-r border-prim break-all max-w-2xl"
               dual
               key={key as string} //T is a normal object with string keys
-              verticalHeaderClass="uppercase text-xs text-left p-2 pl-0 font-heading border-r border-prim"
+              verticalHeaderClass="text-xs text-left p-2 pl-0 font-normal border-r border-prim max-w-2xl break-all"
             >
               <>{(key as string).replace(/_/g, " ")}</>
               {createColumn(prev)}

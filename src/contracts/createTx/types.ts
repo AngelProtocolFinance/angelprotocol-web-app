@@ -37,7 +37,7 @@ export type ID = { id: number };
 type Txs = {
   // //// ACCOUNTS ////
   "accounts.create-endowment": Tx<NewAST, never>; //not multisig tx
-  "accounts.update-controller": Tx<SettingsControllerUpdate, never>; //future
+  "accounts.update-controller": Tx<SettingsControllerUpdate, Diff[]>; //future
   "accounts.update-settings": Tx<EndowmentSettingsUpdate, never>; //future
   "accounts.deposit-erc20": Tx<ERC20Deposit, never>; //not multisig tx
   "accounts.withdraw": Tx<

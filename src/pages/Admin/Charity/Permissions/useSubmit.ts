@@ -46,7 +46,11 @@ export default function useSubmit() {
       const wallet = getWallet();
       if (typeof wallet === "function") return wallet();
 
-      const [data, dest, meta] = encodeTx("accounts.update-controller", update);
+      const [data, dest, meta] = encodeTx(
+        "accounts.update-controller",
+        update,
+        diff
+      );
       const tx = createTx(wallet.address, "multisig.submit-transaction", {
         multisig,
         title: `Update permission settings`,

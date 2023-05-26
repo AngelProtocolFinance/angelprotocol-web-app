@@ -22,6 +22,7 @@ export default function Preview(props: TxMeta) {
       return <FundMemberUpdate {...props.data} />;
     case "index-fund.config":
     case "registrar.update-config":
+    case "accounts.update-controller":
       return <DiffTable diffs={props.data} />;
     case "index-fund.update-owner":
     case "registrar.update-owner":
