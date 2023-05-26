@@ -6,10 +6,13 @@ import { FormField, FormValues } from "../schema";
 const formFieldSample: FormField = {
   addr: "",
   isActive: false,
-  govControlled: false,
-  modifiableAfterInit: false,
+  locked: false,
+
+  //meta
   name: "",
+  govControlled: false,
   ownerControlled: false,
+  modifiable: false,
 };
 
 export function getFieldErrorName(

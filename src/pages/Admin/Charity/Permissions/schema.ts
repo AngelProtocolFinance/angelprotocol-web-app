@@ -5,13 +5,14 @@ import { requiredWalletAddr } from "schemas/string";
 import { chainIds } from "constants/chainIds";
 
 export type FormField = Pick<Delegate, "addr"> & {
-  name: string;
   isActive: boolean;
+  locked: boolean;
 
   //meta
+  name: string;
+  modifiable: boolean;
   ownerControlled: boolean;
   govControlled: boolean;
-  modifiableAfterInit: boolean;
 };
 
 export type UpdateableFormValues = {

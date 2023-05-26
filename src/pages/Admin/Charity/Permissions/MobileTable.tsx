@@ -40,12 +40,7 @@ export default function MobileTable({ className = "" }) {
           className="text-sm odd:bg-orange-l6 dark:even:bg-blue-d6 dark:odd:bg-blue-d7 w-full border-b last:border-0 border-prim"
         >
           {({ open }) => {
-            const {
-              name,
-              checkboxDisabled,
-              delegateAddressDisabled,
-              lockBtnDisabled,
-            } = getData(fieldName);
+            const { name, formDisabled, delegated } = getData(fieldName);
 
             return (
               <>
@@ -100,7 +95,7 @@ export default function MobileTable({ className = "" }) {
                         input: "checkbox-orange",
                         error: "hidden",
                       }}
-                      disabled={checkboxDisabled}
+                      disabled={formDisabled}
                     >
                       Delegate
                     </CheckField>
@@ -115,7 +110,7 @@ export default function MobileTable({ className = "" }) {
 
                     <input
                       id={`del-addr-input-${fieldName}`}
-                      disabled={delegateAddressDisabled}
+                      disabled={formDisabled || !delegated}
                       className={`field-input truncate h-8 ${
                         !errors[fieldName]?.addr
                           ? ""
@@ -129,7 +124,7 @@ export default function MobileTable({ className = "" }) {
                   </div>
                   <div className="flex justify-between items-center p-4">
                     <span className="font-bold uppercase">Actions</span>
-                    <LockButton disabled={lockBtnDisabled} name={fieldName} />
+                    <LockButton disabled={formDisabled} name={fieldName} />
                   </div>
                 </Disclosure.Panel>
               </>

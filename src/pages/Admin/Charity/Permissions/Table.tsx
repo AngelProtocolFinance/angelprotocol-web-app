@@ -54,12 +54,7 @@ export default function Table({ className = "" }) {
         selectedClass="bg-orange-l5 dark:bg-blue-d4"
       >
         {FORM_KEYS.map((fieldName) => {
-          const {
-            name,
-            checkboxDisabled,
-            delegateAddressDisabled,
-            lockBtnDisabled,
-          } = getData(fieldName);
+          const { name, formDisabled, delegated } = getData(fieldName);
 
           return (
             <Cells
@@ -98,7 +93,7 @@ export default function Table({ className = "" }) {
                   input: "checkbox-orange",
                   error: "hidden",
                 }}
-                disabled={checkboxDisabled}
+                disabled={formDisabled}
               />
 
               <input
@@ -110,12 +105,12 @@ export default function Table({ className = "" }) {
                 }`}
                 placeholder="Wallet address..."
                 {...register(`${fieldName}.addr`)}
-                disabled={delegateAddressDisabled}
+                disabled={formDisabled || !delegated}
                 autoComplete="off"
                 spellCheck={false}
               />
 
-              <LockButton disabled={lockBtnDisabled} name={fieldName} />
+              <LockButton disabled={formDisabled} name={fieldName} />
             </Cells>
           );
         })}

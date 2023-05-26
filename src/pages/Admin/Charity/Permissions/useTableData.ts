@@ -5,22 +5,21 @@ import { FormValues, UpdateableFormValues } from "./schema";
 export default function useTableData() {
   const {
     formState: { isSubmitting },
+    getValues,
     watch,
   } = useFormContext<FormValues>();
   const { propMeta } = useAdminResources();
 
   function getData(fieldName: keyof UpdateableFormValues) {
     const name = watch(`${fieldName}.name`);
+    const modifiable = getValues(`${fieldName}.modifiable`);
     const delegated = watch(`${fieldName}.isActive`);
-    const modifiable = watch(`${fieldName}.modifiableAfterInit`);
 
-    const formDisabled = isSubmitting || !propMeta.isAuthorized;
-    const inputDisabled = formDisabled || !modifiable;
+    const formDisabled = isSubmitting || !propMeta.isAuthorized || !modifiable;
 
     return {
-      delegateAddressDisabled: !delegated || inputDisabled,
-      checkboxDisabled: inputDisabled,
-      lockBtnDisabled: formDisabled,
+      delegated,
+      formDisabled,
       name,
     };
   }

@@ -12,6 +12,8 @@ import { FormField, FormValues, UpdateableFormValues, schema } from "./schema";
 export default function Permissions() {
   const { settingsController: controller, id } = useAdminResources<"charity">();
 
+  console.log(controller);
+
   const fv: UpdateableFormValues = {
     accountFees: createField(controller.depositFee, "Changes to account fees"),
     beneficiaries_allowlist: createField(
@@ -54,11 +56,14 @@ function createField(setting: SettingsPermission, name = ""): FormField {
   const delegate = setting.delegate;
   const isDelegated = delegate.addr !== ADDRESS_ZERO;
   return {
-    name,
     isActive: isDelegated,
     addr: isDelegated ? delegate.addr : "",
+    locked: setting.locked,
+
+    //meta
+    name,
+    modifiable: !setting.locked,
     ownerControlled: true,
     govControlled: false,
-    modifiableAfterInit: !setting.locked,
   };
 }

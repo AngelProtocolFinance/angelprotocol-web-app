@@ -49,7 +49,7 @@ const converter =
   (permission: keyof UpdateableFormValues): SettingsPermission => {
     const val = fv[permission];
     return {
-      locked: val.modifiableAfterInit,
+      locked: val.locked,
       delegate: {
         addr: val.isActive ? val.addr : ADDRESS_ZERO,
         expires: 0, //in design: no expiry for delegation,
