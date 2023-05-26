@@ -1,3 +1,4 @@
+import { AbiCoder } from "@ethersproject/abi";
 import React, { ReactNode } from "react";
 import { TxMeta } from "contracts/createTx/types";
 import { ProposalDetails } from "services/types";
@@ -16,6 +17,7 @@ import {
 } from "contracts/evm/multisig";
 import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
+import { EMPTY_DATA } from "constants/evm";
 import { useAdminResources } from "../Guard";
 
 const ERROR = "error";
@@ -82,8 +84,9 @@ export default function PollAction(props: ProposalDetails) {
         log: willExecute ? processLog : undefined,
       },
       isAuthorized: propMeta.isAuthorized,
-      tagPayloads: [invalidateJunoTags(["multisig.votes"])],
-      onSuccess: willExecute ? onSuccess : undefined,
+      tagPayloads: willExecute
+        ? extractTagFromMeta(props.metadata)
+        : [invalidateJunoTags(["multisig.votes"])],
     });
   }
 
@@ -127,9 +130,11 @@ function Button(props: React.ButtonHTMLAttributes<HTMLButtonElement>) {
 function extractTagFromMeta(
   proposalMeta: ProposalDetails["metadata"]
 ): TagPayload[] {
-  if (!proposalMeta) {
+  if (proposalMeta === EMPTY_DATA) {
     return [invalidateJunoTags(defaultProposalTags)];
   }
-  const parsedProposalMeta: TxMeta = JSON.parse(window.atob(proposalMeta));
-  return getTagPayloads(parsedProposalMeta.id);
+  const parsed: TxMeta = JSON.parse(
+    new AbiCoder().decode(["string"], proposalMeta)[0]
+  );
+  return getTagPayloads(parsed.id);
 }

@@ -23,6 +23,7 @@ export function getTagPayloads(type?: TxMeta["id"]): TagPayload[] {
     case "multisig.add-owner":
     case "multisig.remove-owner":
       _tags.push("multisig.members");
+      _tags.push("multisig.threshold"); //cases where threshold > members.length
       break;
 
     case "multisig.change-threshold":
