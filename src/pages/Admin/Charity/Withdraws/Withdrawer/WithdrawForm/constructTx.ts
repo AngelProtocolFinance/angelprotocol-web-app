@@ -58,27 +58,17 @@ export function constructTx(
 
   const isLockedCharity = endow.endowType === "charity" && wv.type === "locked";
 
-  const [data, dest, meta] = isLockedCharity
-    ? encodeTx(
-        "locked-withdraw.propose",
-        {
-          id,
-          token: addresses[0],
-          amount: amounts[0],
-        },
-        metadata
-      )
-    : encodeTx(
-        "accounts.withdraw",
-        {
-          id,
-          type: accType,
-          beneficiary,
-          addresses,
-          amounts,
-        },
-        metadata
-      );
+  const [data, dest, meta] = encodeTx(
+    "accounts.withdraw",
+    {
+      id,
+      type: accType,
+      beneficiary,
+      addresses,
+      amounts,
+    },
+    metadata
+  );
 
   //prettier-ignore
   const isDirect =

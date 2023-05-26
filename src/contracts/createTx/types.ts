@@ -90,15 +90,6 @@ type Txs = {
   "index-fund.remove-member": Tx<ID, ID>;
   "index-fund.update-members": Tx<FundMemberUpdate, FundMemberUpdate>;
 
-  "locked-withdraw.propose": Tx<
-    {
-      id: number;
-      token: string;
-      amount: string;
-    },
-    WithdrawMeta
-  >;
-
   "charity-application.approve": Tx<ID, never>; //info already in /application page
   "charity-application.reject": Tx<ID, never>; //info already in /application page
 

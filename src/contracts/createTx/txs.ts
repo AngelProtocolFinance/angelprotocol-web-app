@@ -5,7 +5,6 @@ import { erc20 } from "../evm/ERC20";
 import { charityApplication } from "../evm/charity-application";
 import { giftCard } from "../evm/gift-card";
 import { indexFund } from "../evm/index-fund";
-import { lockedWithdraw } from "../evm/locked-withdraw";
 import { multisig } from "../evm/multisig";
 import { registrar } from "../evm/registrar";
 
@@ -60,9 +59,6 @@ export const txs: { [T in TxTypes]: (args: TxArgs<T>) => string } = {
     indexFund.encodeFunctionData("removeMember", [id]),
   "index-fund.update-members": (update) =>
     indexFund.encodeFunctionData("updateFundMembers", toTuple(update)),
-
-  "locked-withdraw.propose": (args) =>
-    lockedWithdraw.encodeFunctionData("propose", toTuple(args)),
 
   "charity-application.approve": ({ id }) =>
     charityApplication.encodeFunctionData("approveCharity", [id]),
