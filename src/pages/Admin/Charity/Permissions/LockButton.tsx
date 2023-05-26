@@ -8,7 +8,7 @@ type Props = {
 
 export default function LockButton(props: Props) {
   const { watch, setValue, getValues } = useFormContext<FormValues>();
-  const currModifiable = watch(`${props.name}.locked`);
+  const locked = watch(`${props.name}.locked`);
   const modifiable = getValues(`${props.name}.modifiable`);
 
   if (!modifiable) {
@@ -18,12 +18,13 @@ export default function LockButton(props: Props) {
   return (
     <button
       type="button"
-      /** Color #54595F is hardcoded because this is the only place where it's necessary */
-      className={`btn-red py-2 lg:py-1 px-2 font-semibold text-xs uppercase tracking-wider`}
+      className={`${
+        locked ? "btn-orange" : "btn-red"
+      } py-2 lg:py-1 px-2 font-semibold text-xs uppercase tracking-wider`}
       disabled={props.disabled}
-      onClick={() => setValue(`${props.name}.locked`, !currModifiable)}
+      onClick={() => setValue(`${props.name}.locked`, !locked)}
     >
-      {currModifiable ? "Lock" : "Unlock"}
+      {locked ? "Unlock" : "Lock"}
     </button>
   );
 }

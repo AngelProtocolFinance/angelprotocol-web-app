@@ -31,10 +31,10 @@ export default function useEditWhitelists() {
 
       const update: EndowmentSettingsUpdate = {
         ...initial,
-        allowlistedBeneficiaries: contributors,
-        allowlistedContributors: isEmpty(beneficiaries)
+        allowlistedBeneficiaries: isEmpty(beneficiaries)
           ? [multisig]
           : beneficiaries,
+        allowlistedContributors: contributors,
       };
 
       const diff = getPayloadDiff(initial, update);
