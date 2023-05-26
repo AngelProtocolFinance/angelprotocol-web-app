@@ -4,6 +4,7 @@ export const tags: ContractQueryTypes[] = [
   "registrar.config",
 
   "index-fund.config",
+  "index-fund.fund",
 
   "gift-card.balance",
 

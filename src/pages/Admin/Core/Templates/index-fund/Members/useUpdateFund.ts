@@ -49,11 +49,8 @@ export default function useUpdateFund() {
       const wallet = getWallet();
       if (typeof wallet === "function") return wallet();
 
-      const modified = new Set([
-        ...fundMembers.map((f) => f.id),
-        ...toAdd,
-        ...toRemove,
-      ]);
+      const modified = new Set([...fundMembers.map((f) => f.id), ...toAdd]);
+      toRemove.forEach((id) => modified.delete(id));
 
       const update: FundMemberUpdate = {
         fundId: +fundId,
