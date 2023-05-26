@@ -21,7 +21,7 @@ export const walletAddr = (network: string = chainIds.juno) =>
 export const requiredWalletAddr = (network: string = chainIds.juno) => {
   return requiredString.matches(
     getWalletAddrPattern(network),
-    `wallet address not valid`
+    `invalid address`
   );
 };
 

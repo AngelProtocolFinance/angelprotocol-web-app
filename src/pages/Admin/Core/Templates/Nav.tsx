@@ -45,6 +45,9 @@ export default function Nav() {
       <NavLink to={routes["registrar.update-owner"]} className={styler}>
         Update Owner
       </NavLink>
+      <NavLink to={routes["registrar.add-token"]} className={styler}>
+        Add token
+      </NavLink>
     </div>
   );
 }

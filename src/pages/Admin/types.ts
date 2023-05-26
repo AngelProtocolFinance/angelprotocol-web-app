@@ -1,7 +1,5 @@
-import { Coin } from "@cosmjs/proto-signing";
 import { TxTypes } from "contracts/createTx/types";
 import { EndowmentProposal } from "types/aws";
-import { Asset, FundDetails } from "types/contracts";
 
 export type AdminParams = { id: string; type: string /**AccountType */ };
 export type ProposalParams = { id: string };
@@ -20,6 +18,7 @@ export type Templates =
       | "index-fund.update-alliance-list"
       | "registrar.update-owner"
       | "registrar.update-config"
+      | "registrar.add-token"
     >
   | "multisig.owners" //combined add | remove in one template
   | "multisig.config" //combined threshold | execution required in one template

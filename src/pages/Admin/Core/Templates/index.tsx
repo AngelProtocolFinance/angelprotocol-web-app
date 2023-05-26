@@ -14,6 +14,7 @@ import FundMembers from "./index-fund/Members";
 import RemoveFund from "./index-fund/RemoveFund";
 import RegistrarConfigExtension from "./registrar/ConfigExtension";
 import RegistrarOwner from "./registrar/Owner";
+import Token from "./registrar/Token";
 
 export default function Templates() {
   return (
@@ -52,8 +53,9 @@ export default function Templates() {
           path={routes["registrar.update-owner"]}
           element={<RegistrarOwner />}
         />
+        <Route path={routes["registrar.add-token"]} element={<Token />} />
 
-        {/**_cw3 */}
+        {/**_multisig */}
         <Route path={routes["multisig.config"]} element={<Config />} />
         <Route
           path={routes["multisig.fund-transfer"]}

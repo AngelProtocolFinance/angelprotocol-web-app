@@ -69,6 +69,8 @@ export const txs: { [T in TxTypes]: (args: TxArgs<T>) => string } = {
     registrar.encodeFunctionData("updateOwner", [newOwner]),
   "registrar.update-config": (config) =>
     registrar.encodeFunctionData("updateConfig", [toTuple(config)]),
+  "registrar.add-token": ({ token }) =>
+    registrar.encodeFunctionData("setTokenAccepted", [token, true]),
 
   "gift-card.spend": (gift) =>
     giftCard.encodeFunctionData("executeSpend", toTuple(gift)),
