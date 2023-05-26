@@ -12,6 +12,7 @@ export const tags: ContractQueryTypes[] = [
 
   "multisig.members",
   "multisig.txs",
+  "multisig.tx-count",
   "multisig.threshold",
   "multisig.require-execution",
   "multisig.transaction",
