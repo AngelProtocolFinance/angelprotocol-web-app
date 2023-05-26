@@ -12,8 +12,6 @@ import { FormField, FormValues, UpdateableFormValues, schema } from "./schema";
 export default function Permissions() {
   const { settingsController: controller, id } = useAdminResources<"charity">();
 
-  console.log(controller);
-
   const fv: UpdateableFormValues = {
     accountFees: createField(controller.depositFee, "Changes to account fees"),
     beneficiaries_allowlist: createField(
