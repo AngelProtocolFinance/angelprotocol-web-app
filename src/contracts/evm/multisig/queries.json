@@ -44,6 +44,11 @@
         "internalType": "bool",
         "name": "executed",
         "type": "bool"
+      },
+      {
+        "internalType": "bytes",
+        "name": "metadata",
+        "type": "bytes"
       }
     ],
     "stateMutability": "view",
