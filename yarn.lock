@@ -5382,7 +5382,7 @@ __metadata:
     react-dom: ^18.2.0
     react-dropzone: ^14.2.2
     react-helmet: ^6.1.0
-    react-hook-form: ^7.43.1
+    react-hook-form: ^7.44.2
     react-icons: ^4.8.0
     react-redux: ^8.0.2
     react-router-dom: ^6.2.0
@@ -15226,12 +15226,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-hook-form@npm:^7.43.1":
-  version: 7.43.1
-  resolution: "react-hook-form@npm:7.43.1"
+"react-hook-form@npm:^7.44.2":
+  version: 7.44.2
+  resolution: "react-hook-form@npm:7.44.2"
   peerDependencies:
     react: ^16.8.0 || ^17 || ^18
-  checksum: a15b672885cf9bb43c6691bf544b3ead59860bb8c6298c7607b8b82952707ec8dd9fd9d1346310abb8696e99319b1f78f6023941d129154815811ee64d750461
+  checksum: 0c17f8fc33b52ff3caa9de433e1ff3e79f9b797bddd2e80f1156d8a6324710cc360b700e560562ee822e129b440f730f2990caa1e79a3eb66094d9e235410b46
   languageName: node
   linkType: hard
 
