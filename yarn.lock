@@ -3223,20 +3223,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@keplr-wallet/common@npm:0.11.32":
-  version: 0.11.32
-  resolution: "@keplr-wallet/common@npm:0.11.32"
+"@keplr-wallet/common@npm:0.12.0":
+  version: 0.12.0
+  resolution: "@keplr-wallet/common@npm:0.12.0"
   dependencies:
-    "@keplr-wallet/crypto": 0.11.32
+    "@keplr-wallet/crypto": 0.12.0
+    "@keplr-wallet/types": 0.12.0
     buffer: ^6.0.3
     delay: ^4.4.0
-  checksum: 9aabd45e20d543c0f2ff99d13d0f794501d7d0e06971e4cf301de0a9d430cc87bb450be147aaff0d8a90c83a840549558f0acf9ecbb29e7902a51adea11ebec8
+    mobx: ^6.1.7
+  checksum: 923e04dafe3c2f653485baba0d8d7f32b9ab5d1f1ccf4b8defc8aaad1b0b3c3c128ffbf9af8d087469ce7796dbb634f5413f04ca78910cef7097a0f4d010637d
   languageName: node
   linkType: hard
 
-"@keplr-wallet/crypto@npm:0.11.32":
-  version: 0.11.32
-  resolution: "@keplr-wallet/crypto@npm:0.11.32"
+"@keplr-wallet/crypto@npm:0.12.0":
+  version: 0.12.0
+  resolution: "@keplr-wallet/crypto@npm:0.12.0"
   dependencies:
     "@ethersproject/keccak256": ^5.5.0
     bip32: ^2.0.6
@@ -3246,37 +3248,39 @@ __metadata:
     crypto-js: ^4.0.0
     elliptic: ^6.5.3
     sha.js: ^2.4.11
-  checksum: 9a27433520d8f541b90740e2a2e74532a23d7927b2dd0435a3158347dab4fea8c5d00f8d629a72b19f03ea1a595acff0c9858eeee2e2b6f086bbcad1b4ae7fd7
+  checksum: d24d53bcdff662c88c3f4da6830eab2a2c86ce7812e8e271da77a23bc01ab2d7b0ba793ea6a2787d5e10893ca660bab1e128f06feb5e65d48999ed681c64e272
   languageName: node
   linkType: hard
 
-"@keplr-wallet/provider@npm:0.11.32":
-  version: 0.11.32
-  resolution: "@keplr-wallet/provider@npm:0.11.32"
+"@keplr-wallet/provider@npm:0.12.0":
+  version: 0.12.0
+  resolution: "@keplr-wallet/provider@npm:0.12.0"
   dependencies:
-    "@keplr-wallet/router": 0.11.32
-    "@keplr-wallet/types": 0.11.32
+    "@keplr-wallet/common": 0.12.0
+    "@keplr-wallet/router": 0.12.0
+    "@keplr-wallet/types": 0.12.0
     buffer: ^6.0.3
     deepmerge: ^4.2.2
     long: ^4.0.0
-  checksum: 29276f77da2ad7c647062d05843d18447360279e57df2fea1835429ce5dbed58edff4ba51cce4e01435c83ce75d9511bd926c4f6e540ec90747893a3dd82fcb0
+  checksum: beed4bea405a0c13313a315ef9ba8decb1fc3e25ef9c4ee7997bddd0c72722ee3b5e2a7d69e31d42e8aac1129a8b4478c5815b3016636739b046c30ab4b9e081
   languageName: node
   linkType: hard
 
-"@keplr-wallet/router@npm:0.11.32":
-  version: 0.11.32
-  resolution: "@keplr-wallet/router@npm:0.11.32"
-  checksum: 06d703744bc3752846fab049d346031b3851fbe22773cdf32919d41782db5888914c3f69d4efc48c58388e758f46b9daea227ca043686d3e8660b9e5e45fefb3
-  languageName: node
-  linkType: hard
-
-"@keplr-wallet/types@npm:0.11.32":
-  version: 0.11.32
-  resolution: "@keplr-wallet/types@npm:0.11.32"
+"@keplr-wallet/router@npm:0.12.0":
+  version: 0.12.0
+  resolution: "@keplr-wallet/router@npm:0.12.0"
   dependencies:
-    axios: ^0.27.2
+    "@keplr-wallet/common": 0.12.0
+  checksum: 317476c9d02bc9241e5da1e151fdbe159be9768732b2010f9aab996935519168ed4928529a1f36737645248781382bddf9c89873b3a8ab304ba89ae328bd8969
+  languageName: node
+  linkType: hard
+
+"@keplr-wallet/types@npm:0.12.0":
+  version: 0.12.0
+  resolution: "@keplr-wallet/types@npm:0.12.0"
+  dependencies:
     long: ^4.0.0
-  checksum: eb36cb27a4ee9f617d57ecd826ac8f738fcc727b21f9b78b9753f5855c103d688fa92e485eb5602fed1972cd3ab55cf628e5abb012179ee0bb2d225462446bea
+  checksum: e55f930f007b667d715e8a9522591df36dba34c8e124b6e97be2bdbfa2d4a80cbe02b5e12608622f62eadc21e3e3e01fe60b9b83110eed2ac9cb3bba8feed73c
   languageName: node
   linkType: hard
 
@@ -3293,18 +3297,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@keplr-wallet/wc-client@npm:^0.11.31":
-  version: 0.11.32
-  resolution: "@keplr-wallet/wc-client@npm:0.11.32"
+"@keplr-wallet/wc-client@npm:^0.12.0":
+  version: 0.12.0
+  resolution: "@keplr-wallet/wc-client@npm:0.12.0"
   dependencies:
-    "@keplr-wallet/common": 0.11.32
-    "@keplr-wallet/provider": 0.11.32
-    "@keplr-wallet/types": 0.11.32
+    "@keplr-wallet/common": 0.12.0
+    "@keplr-wallet/provider": 0.12.0
+    "@keplr-wallet/types": 0.12.0
     "@walletconnect/types": ^1.6.4
     "@walletconnect/utils": ^1.6.4
     buffer: ^6.0.3
     deepmerge: ^4.2.2
-  checksum: 948c332aee55e0b1a647538df8d41e8547586ee9d5124f6d93e82e543397472a7175a5f3be642b17a3591df1ceb620739c8dd1eb51a3fb930638eb1b357a1af9
+  checksum: 1672e03b6d565e73900e7d13cf4fe214e729e96fc83ee8c77fa0def6ec4103c7ef916d2e1f07e36df8af548ad0937543ff08d846dc5cd27c6f0b1f018e775034
   languageName: node
   linkType: hard
 
@@ -5330,7 +5334,7 @@ __metadata:
     "@hookform/error-message": ^2.0.0
     "@hookform/resolvers": ^3.0.0
     "@keplr-wallet/types": ^0.11.3
-    "@keplr-wallet/wc-client": ^0.11.31
+    "@keplr-wallet/wc-client": ^0.12.0
     "@keplr-wallet/wc-qrcode-modal": ^0.11.31
     "@peculiar/webcrypto": ^1.4.0
     "@reduxjs/toolkit": ^1.9.0
@@ -12916,6 +12920,13 @@ __metadata:
   version: 1.4.5
   resolution: "mobile-detect@npm:1.4.5"
   checksum: 317d170f3bc27c3e36c3f4ab7809c33d20e81914147cdc74a8551f0ecad2c5ec067bd59dd1a240caf66c1df7fd793021a36677c3a6ed8bdf027d4715dc3f0973
+  languageName: node
+  linkType: hard
+
+"mobx@npm:^6.1.7":
+  version: 6.9.0
+  resolution: "mobx@npm:6.9.0"
+  checksum: ae03e95334887305c49d3e63e54f5e5e571b21f6a649fc0b7f6f1afd83470db63d8ab3e7c4b9e6ace2aaf6eded5255878c5f69d293efa9fd35af3d640b4a4756
   languageName: node
   linkType: hard
 
