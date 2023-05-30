@@ -13,6 +13,7 @@ import {
 import { adminTags } from "services/aws/tags";
 import { logger } from "helpers";
 import { EMAIL_SUPPORT } from "constants/common";
+import { version as v } from "../../helpers";
 import { aws } from "../aws";
 
 const registration_api = aws.injectEndpoints({
@@ -116,7 +117,6 @@ const registration_api = aws.injectEndpoints({
           url: `v2/registration/list${
             status !== "all" ? `?regStatus=${status}` : ""
           }`,
-          method: "Get",
         };
       },
       transformResponse: (response: AWSQueryRes<EndowmentProposal[]>) =>
@@ -141,7 +141,7 @@ const registration_api = aws.injectEndpoints({
     submit: builder.mutation<SubmitResult, { ref: string; chain_id: string }>({
       invalidatesTags: [{ type: "admin", id: adminTags.registration }],
       query: ({ ref, chain_id }) => ({
-        url: `v3/registration/${ref}/submit`,
+        url: `${v(3)}/registration/${ref}/submit`,
         method: "POST",
         body: { chain_id },
       }),

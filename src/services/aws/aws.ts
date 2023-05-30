@@ -16,11 +16,12 @@ import { createAuthToken } from "helpers";
 import { chainIds } from "constants/chainIds";
 import { IS_AST, IS_TEST } from "constants/env";
 import { APIs } from "constants/urls";
+import { version as v } from "../helpers";
 
 const network: NetworkType = IS_TEST ? "testnet" : "mainnet";
 
 const getWalletProfileQuery = (walletAddr: string) =>
-  `/v2/profile/${network}/user/${walletAddr}`;
+  `/${v(2)}/profile/${network}/user/${walletAddr}`;
 
 const awsBaseQuery = retry(
   fetchBaseQuery({
@@ -107,8 +108,8 @@ export const aws = createApi({
       providesTags: ["profile"],
       query: (endowId) =>
         IS_AST
-          ? `/v1/ast/${chainIds.polygon}/${endowId}`
-          : `/v2/profile/${network}/endowment/${endowId}`,
+          ? `/${v(1)}/ast/${chainIds.polygon}/${endowId}`
+          : `/${v(2)}/profile/${network}/endowment/${endowId}`,
       transformResponse(r: EndowmentProfile) {
         //transform cloudsearch placeholders
         const tagline = r.tagline === " " ? "" : r.tagline;
@@ -130,7 +131,7 @@ export const aws = createApi({
         error ? [] : ["endowments", "profile", "walletProfile"],
       query: (payload) => {
         return {
-          url: `/v2/profile/${network}/endowment`,
+          url: `/${v(2)}/profile/${network}/endowment`,
           method: "PUT",
           body: payload,
         };
@@ -142,7 +143,7 @@ export const aws = createApi({
       query: (payload) => {
         const token = createAuthToken("app-user");
         return {
-          url: `/v1/ast`,
+          url: `/${v(1)}/ast`,
           method: "POST",
           body: payload,
           headers: { authorization: token },
