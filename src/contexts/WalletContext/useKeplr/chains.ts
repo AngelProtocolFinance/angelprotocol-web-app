@@ -44,6 +44,5 @@ export const juno_test_chain_info: ChainInfo = {
       },
     },
   ],
-  coinType: 118,
   features: ["cosmwasm", "ibc-transfer"],
 };
