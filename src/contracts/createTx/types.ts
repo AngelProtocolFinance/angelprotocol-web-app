@@ -41,12 +41,13 @@ type Txs = {
   "accounts.update-settings": Tx<EndowmentSettingsUpdate, never>; //future
   "accounts.deposit-erc20": Tx<ERC20Deposit, never>; //not multisig tx
   "accounts.withdraw": Tx<
+    /** TODO: use type-chain type once avaialble */
     {
       id: number;
       type: AccountType;
-      beneficiary: string;
-      addresses: string[];
-      amounts: string[];
+      beneficiaryAddress: string;
+      beneficiaryEndowId: number;
+      tokens: { addr: string; amount: string }[];
     },
     WithdrawMeta
   >;
