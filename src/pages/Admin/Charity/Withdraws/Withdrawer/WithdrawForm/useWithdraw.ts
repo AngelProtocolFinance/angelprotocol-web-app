@@ -6,7 +6,6 @@ import { EndowmentDetails } from "types/contracts";
 import { LogProcessor } from "types/evm";
 import { TxOnSuccess, TxSuccessMeta } from "types/tx";
 import { useAdminResources } from "pages/Admin/Guard";
-import { AP_ID } from "services/juno/custom";
 import { useModalContext } from "contexts/ModalContext";
 import { TxPrompt } from "components/Prompt";
 import { multisig as Multisig, SubmissionEvent } from "contracts/evm/multisig";
@@ -94,7 +93,7 @@ export default function useWithdraw() {
         }
 
         showModal(TxPrompt, {
-          success: successMeta(proposalID, wv, propMeta, endow),
+          success: successMeta(proposalID, propMeta, endow),
           tx,
         });
       } catch (err) {
@@ -127,30 +126,13 @@ export default function useWithdraw() {
 
 function successMeta(
   id: string | undefined,
-  wv: WithdrawValues,
   { willExecute }: PropMeta,
   endow: EndowmentDetails
 ): TxSuccessMeta {
   const DIRECT_MSG =
     "Withdraw details submitted! Funds will be sent to specified beneficiary";
 
-  if (id === undefined /** direct */) {
-    return {
-      message: DIRECT_MSG,
-    };
-  }
-
-  if (willExecute) {
-    if (endow.endowType === "charity" && wv.type === "locked") {
-      return {
-        message: "Withdraw proposal submitted for AP Team approval",
-        link: {
-          description: "View proposal",
-          url: `${appRoutes.admin}/${AP_ID}/${adminRoutes.proposal}/${id}`,
-        },
-      };
-    }
-    /** rest is directed to accounts contract*/
+  if (id === undefined /** direct */ || willExecute) {
     return {
       message: DIRECT_MSG,
     };
