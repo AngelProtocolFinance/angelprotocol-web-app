@@ -13,6 +13,7 @@ import { UnsupportedChainError } from "errors/errors";
 import { chainIds } from "constants/chainIds";
 import { IS_TEST, JUNO_LCD_OVERRIDE, JUNO_RPC_OVERRIDE } from "constants/env";
 import { APIs } from "constants/urls";
+import { version as v } from "../helpers";
 import { fetchBalances } from "./helpers/fetchBalances";
 import { tags } from "./tags";
 
@@ -32,7 +33,10 @@ export const apes = createApi({
       WithdrawLogQueryParams
     >({
       providesTags: ["withdraw_logs"],
-      query: ({ cw3, ...params }) => ({ url: `/v2/withdraw/${cw3}`, params }),
+      query: ({ cw3, ...params }) => ({
+        url: `/${v(2)}/withdraw/${cw3}`,
+        params,
+      }),
     }),
     chain: builder.query<Chain, ChainQueryArgs>({
       providesTags: ["chain"],

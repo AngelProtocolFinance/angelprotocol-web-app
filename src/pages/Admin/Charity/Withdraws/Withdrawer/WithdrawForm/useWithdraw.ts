@@ -6,6 +6,7 @@ import { EndowmentDetails } from "types/contracts";
 import { LogProcessor } from "types/evm";
 import { TxOnSuccess, TxSuccessMeta } from "types/tx";
 import { useAdminResources } from "pages/Admin/Guard";
+import { version as v } from "services/helpers";
 import { useModalContext } from "contexts/ModalContext";
 import { TxPrompt } from "components/Prompt";
 import { multisig as Multisig, SubmissionEvent } from "contracts/evm/multisig";
@@ -72,7 +73,7 @@ export default function useWithdraw() {
         );
 
         const generatedToken = createAuthToken("angelprotocol-web-app");
-        const response = await fetch(APIs.apes + "/v1/withdraw", {
+        const response = await fetch(APIs.apes + `/${v(1)}/withdraw`, {
           method: "POST",
           headers: { authorization: generatedToken },
           body: JSON.stringify({
