@@ -23,21 +23,9 @@ jest.mock("contracts/createTx/createTx", () => ({
 afterAll(() => jest.clearAllMocks());
 
 describe("Charity withdraw transactions", () => {
-  test("withdraw locked to polygon wallet", () => {
+  test("withdraw liquid/locked to polygon wallet", () => {
     const endow = endowDetails();
-    const fv = formValues();
-
-    const { tx, isPolygon } = constructTx("sender", 0, endow, fv);
-
-    expect(tx.data).toBe("locked-withdraw.propose");
-    expect(tx.to).toBe("multisig");
-    expect(isPolygon).toBe(true);
-  });
-  test("withdraw liquid to polygon wallet", () => {
-    const endow = endowDetails();
-    const fv = formValues([["type", "liquid"]]);
-
-    const { tx, isPolygon } = constructTx("sender", 0, endow, fv);
+    const { tx, isPolygon } = constructTx("sender", 0, endow, formValues());
 
     expect(tx.data).toBe("accounts.withdraw");
     expect(tx.to).toBe("multisig");
@@ -52,7 +40,7 @@ describe("Charity withdraw transactions", () => {
 });
 
 describe("AST withdraw transactions", () => {
-  test("withdraw locked to polygon wallet", () => {
+  test("withdraw locked/liquid to polygon wallet", () => {
     const endow = endowDetails([["endowType", "normal"]]);
     const fv = formValues();
 
@@ -63,17 +51,7 @@ describe("AST withdraw transactions", () => {
     expect(isPolygon).toBe(true);
     expect(isDirect).toBe(false);
   });
-  test("withdraw liquid to polygon wallet", () => {
-    const endow = endowDetails([["endowType", "normal"]]);
-    const fv = formValues([["type", "liquid"]]);
 
-    const { tx, isPolygon, isDirect } = constructTx("sender", 0, endow, fv);
-
-    expect(tx.data).toBe("accounts.withdraw");
-    expect(tx.to).toBe("multisig");
-    expect(isPolygon).toBe(true);
-    expect(isDirect).toBe(false);
-  });
   test("withdraw locked/liquid to other network ( not polygon )", () => {
     const endow = endowDetails([["endowType", "normal"]]);
     const fv = formValues([["network", chainIds.ethereum]]);
