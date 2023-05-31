@@ -1,6 +1,5 @@
 import { OverrideProperties } from "type-fest";
 import { AngelCoreStruct } from "../typechain-types/contracts/core/struct.sol/AngelCoreStruct";
-import { UNSDG_NUMS } from "../lists";
 import { Mapped, Plain } from "../utils";
 
 export type SplitDetails = Mapped<
