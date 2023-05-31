@@ -1,12 +1,12 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import { Profile } from "../types";
 import {
+  EndowListPaginatedAWSQueryRes,
   EndowmentCard,
   EndowmentProfile,
   EndowmentProfileUpdate,
   EndowmentsQueryParams,
   NewAST,
-  PaginatedAWSQueryRes,
   TStrategy,
   WalletProfile,
 } from "types/aws";
@@ -53,13 +53,13 @@ export const aws = createApi({
   baseQuery: awsBaseQuery,
   endpoints: (builder) => ({
     endowmentCards: builder.query<
-      PaginatedAWSQueryRes<EndowmentCard[]>,
+      EndowListPaginatedAWSQueryRes<EndowmentCard[]>,
       EndowmentsQueryParams
     >({
       providesTags: ["endowments"],
       query: (params) => {
         return {
-          url: `/v4/endowments/${network}`,
+          url: `/${v(5)}/endowments/${network}`,
           params: { ...params, return: endowCardFields },
         };
       },
@@ -74,13 +74,13 @@ export const aws = createApi({
       },
     }),
     endowmentIdNames: builder.query<
-      PaginatedAWSQueryRes<Pick<EndowmentCard, "id" | "name">[]>,
+      EndowListPaginatedAWSQueryRes<Pick<EndowmentCard, "id" | "name">[]>,
       EndowmentsQueryParams
     >({
       providesTags: ["endowments"],
       query: (params) => {
         return {
-          url: `/v4/endowments/${network}`,
+          url: `/${v(5)}/endowments/${network}`,
           params: { ...params, return: ENDOW_ID_NAME_FIELDS },
         };
       },
@@ -174,9 +174,9 @@ export const {
   },
 } = aws;
 
-type EndowCardFields = keyof (Omit<EndowmentCard, "hq" | "categories"> &
+type EndowCardFields = keyof (Omit<EndowmentCard, "hq"> &
   /** replace with cloudsearch specific field format */
-  Pick<EndowmentProfileUpdate, "hq_country" | "categories_sdgs">);
+  Pick<EndowmentProfileUpdate, "hq_country">);
 
 //object format first to avoid duplicates
 const endowCardObj: {
@@ -185,7 +185,7 @@ const endowCardObj: {
   hq_country: "",
   endow_designation: "",
   active_in_countries: "",
-  categories_sdgs: "",
+  categories: "",
   id: "",
   image: "",
   kyc_donors_only: "",

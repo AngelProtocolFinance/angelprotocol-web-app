@@ -56,8 +56,8 @@ export default function useCards() {
     ...(designations ? { endow_designation: designations } : {}),
     ...(hqCountries ? { hq_country: hqCountries } : {}),
     ...(activityCountries ? { active_in_countries: activityCountries } : {}),
-    start: 0,
-    limit: 15,
+    page: 1, // always starts at page 1
+    hits: 15,
     published: "true",
   });
 
@@ -67,12 +67,12 @@ export default function useCards() {
   async function loadNextPage() {
     //button is hidden when there's no more
     if (
-      data?.ItemCutoff &&
+      data?.Page &&
       originalArgs /** cards won't even show if no initial query is made */
     ) {
       const { data: newEndowRes } = await loadMore({
         ...originalArgs,
-        start: data.ItemCutoff + 1,
+        page: data.Page + 1,
       });
 
       if (newEndowRes) {
@@ -80,14 +80,18 @@ export default function useCards() {
         dispatch(
           updateAWSQueryData("endowmentCards", originalArgs, (prevResult) => {
             prevResult.Items.push(...newEndowRes.Items);
-            prevResult.ItemCutoff = newEndowRes.ItemCutoff;
+            prevResult.Page = newEndowRes.Page;
           })
         );
       }
     }
   }
 
-  const hasMore = !!data?.ItemCutoff;
+  // initial assumption is that there's no more to load until we get first res from query
+  let hasMore = false;
+  if (data?.Page !== undefined && data?.NumOfPages !== undefined) {
+    hasMore = data.Page < data.NumOfPages;
+  }
 
   return { hasMore, isLoading, isLoadingNextPage, loadNextPage, data, isError };
 }
