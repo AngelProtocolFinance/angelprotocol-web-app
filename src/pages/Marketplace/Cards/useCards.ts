@@ -90,7 +90,7 @@ export default function useCards() {
   // initial assumption is that there's no more to load until we get first res from query
   let hasMore = false;
   if (data?.Page !== undefined && data?.NumOfPages !== undefined) {
-    const hasMore = (data?.Page || 0) < (data?.NumOfPages || 0);
+    hasMore = (data?.Page || 0) < (data?.NumOfPages || 0);
   }
 
   return { hasMore, isLoading, isLoadingNextPage, loadNextPage, data, isError };
