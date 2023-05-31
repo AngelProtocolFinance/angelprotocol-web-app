@@ -2,36 +2,12 @@
 
 [![codecov](https://codecov.io/gh/AngelProtocolFinance/angelprotocol-web-app/branch/master/graph/badge.svg?token=9KS3RZZHJF)](https://codecov.io/gh/AngelProtocolFinance/angelprotocol-web-app)
 
-### Requirements
+## Requirements
 
-- `Node v16.18.0`
+- `Node v16.X`
 
 ## Setup
-
-1. create `.env` file at the root of the project and add the following entries
-
-```yaml
-# discard to generate source-maps to use in "yarn analyze"
- GENERATE_SOURCEMAP=<TRUE | FALSE>
-
-# port used by development server
-PORT=<port number>
-
-REACT_APP_NETWORK=<LOCAL | TESTNET | MAINNET>
-REACT_APP_JUNO_LCD_NODE=<juno lcd>
-
-# discard if doesn't want to enable AST features
-REACT_APP_APP_TYPE=AST
-
-# set these to override all JUNO LCDs and RPCs including
-# REACT_APP_JUNO_LCD_NODE
-# This is specially helpful when using localjuno
-REACT_APP_JUNO_LCD_OVERRIDE=http://localhost:1317
-REACT_APP_JUNO_RPC_OVERRIDE=http://localhost:26657
-
-# others ( ask team members )
- REACT_APP_APES_AUTH_SECRET_KEY
- REACT_APP_ANGEL_AUTH_SECRET_KEY
- REACT_APP_KADO_API_KEY
-
-```
+1. create a `.env` file from the `.env.example` file, and place in the root of the project. Replace the example entries with values for your project's needs.
+```shell
+cp .env.exmaple .env
+``` 
