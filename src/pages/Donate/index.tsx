@@ -4,8 +4,8 @@ import { useProfileQuery } from "services/aws/aws";
 import QueryLoader from "components/QueryLoader";
 import Seo from "components/Seo";
 import { idParamToNum } from "helpers";
-import { APP_NAME, DAPP_DOMAIN } from "constants/common";
-import { PAYMENT_WORDS, titleCase } from "constants/env";
+import { PAYMENT_WORDS, titleCase } from "constants/common";
+import { APP_NAME, DAPP_URL } from "constants/env";
 import Content from "./Content";
 
 export default function Donate() {
@@ -38,7 +38,7 @@ export default function Donate() {
               description={`${(profile?.overview ?? "").slice(0, 140)}`}
               name={`${profile.name}`}
               image={`${profile.logo}`}
-              url={`${DAPP_DOMAIN}/donate/${profile.id}`}
+              url={`${DAPP_URL}/donate/${profile.id}`}
             />
             <Content
               name={profile.name}

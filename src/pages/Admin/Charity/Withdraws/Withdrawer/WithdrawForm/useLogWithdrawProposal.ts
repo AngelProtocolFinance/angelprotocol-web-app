@@ -5,7 +5,7 @@ import { useModalContext } from "contexts/ModalContext";
 import { TxPrompt } from "components/Prompt";
 import { useSetter } from "store/accessors";
 import { createAuthToken, idParamToNum, logger } from "helpers";
-import { EMAIL_SUPPORT } from "constants/common";
+import { EMAIL_SUPPORT } from "constants/env";
 import { APIs } from "constants/urls";
 
 type ProposalInfo = {

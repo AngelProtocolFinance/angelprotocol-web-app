@@ -2,7 +2,7 @@ import { useAdminResources } from "pages/Admin/Guard";
 import { useDonationsQuery } from "services/apes";
 import QueryLoader from "components/QueryLoader";
 import { chainIds } from "constants/chainIds";
-import { PAYMENT_WORDS } from "constants/env";
+import { PAYMENT_WORDS } from "constants/common";
 import Table from "./Table";
 
 export default function DonationsTable({ classes = "" }) {

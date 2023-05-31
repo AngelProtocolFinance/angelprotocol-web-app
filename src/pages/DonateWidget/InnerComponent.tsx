@@ -5,8 +5,7 @@ import { Steps } from "components/donation";
 import { useSetter } from "store/accessors";
 import { setRecipient } from "slices/donation";
 import { getPossessiveForm } from "helpers";
-import { AP_LOGO } from "constants/common";
-import { PAYMENT_WORDS, titleCase } from "constants/env";
+import { AP_LOGO, PAYMENT_WORDS, titleCase } from "constants/common";
 import useWidgetParams from "./useWidgetParams";
 
 export default function InnerComponent(props: {

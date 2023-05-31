@@ -12,7 +12,7 @@ import {
 } from "types/aws";
 import { adminTags } from "services/aws/tags";
 import { logger } from "helpers";
-import { EMAIL_SUPPORT } from "constants/common";
+import { EMAIL_SUPPORT } from "constants/env";
 import { aws } from "../aws";
 
 const registration_api = aws.injectEndpoints({

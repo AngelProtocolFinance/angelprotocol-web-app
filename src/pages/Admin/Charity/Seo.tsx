@@ -1,6 +1,6 @@
 import { useProfileQuery } from "services/aws/aws";
 import CommonSEO from "components/Seo";
-import { APP_NAME, DAPP_DOMAIN } from "constants/common";
+import { APP_NAME, DAPP_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { useAdminResources } from "../Guard";
 
@@ -20,7 +20,7 @@ export default function Seo({
       description={(profile?.overview ?? "").slice(0, 140)}
       name={profile?.name}
       image={profile?.logo}
-      url={`${DAPP_DOMAIN}/${appRoutes.admin}/${id}/${url}`}
+      url={`${DAPP_URL}/${appRoutes.admin}/${id}/${url}`}
     />
   );
 }

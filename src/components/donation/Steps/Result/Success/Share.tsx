@@ -4,8 +4,8 @@ import ExtLink from "components/ExtLink";
 import Icon, { IconType } from "components/Icon";
 import Modal from "components/Modal";
 import { DonationRecipient } from "slices/donation";
-import { DAPP_DOMAIN } from "constants/common";
-import { PAYMENT_WORDS } from "constants/env";
+import { PAYMENT_WORDS } from "constants/common";
+import { DAPP_URL } from "constants/env";
 
 export type SocialMedia = Extract<
   IconType,
@@ -65,7 +65,7 @@ function Prompt({ type, iconSize, recipient: { name } }: Props) {
         <span className="font-bold">"@angelgiving_</span>!{" "}
         {`Every gift is
         invested to provide sustainable funding for non-profits: Give once, give
-        forever. Help join the cause: ${DAPP_DOMAIN}`}
+        forever. Help join the cause: ${DAPP_URL}`}
       </p>
       <ExtLink
         href={generateShareLink(shareText, type)}
@@ -82,7 +82,7 @@ function Prompt({ type, iconSize, recipient: { name } }: Props) {
 
 function generateShareLink(rawText: string, type: SocialMedia) {
   const encodedText = encodeURIComponent(rawText);
-  const encodedURL = encodeURIComponent(DAPP_DOMAIN);
+  const encodedURL = encodeURIComponent(DAPP_URL);
   switch (type) {
     case "Twitter":
       //https://developer.twitter.com/en/docs/twitter-for-websites/tweet-button/guides/web-intent
@@ -94,7 +94,7 @@ function generateShareLink(rawText: string, type: SocialMedia) {
      */
     case "Facebook":
       return `https://www.facebook.com/dialog/share?app_id=1286913222079194&display=popup&href=${encodeURIComponent(
-        DAPP_DOMAIN
+        DAPP_URL
       )}&quote=${encodedText}`;
 
     //https://core.telegram.org/widgets/share#custom-buttons

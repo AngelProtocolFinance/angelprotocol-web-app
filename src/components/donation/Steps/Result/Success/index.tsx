@@ -3,7 +3,8 @@ import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import { TxStep } from "slices/donation";
 import { getTxUrl, humanize } from "helpers";
-import { IS_AST, PAYMENT_WORDS } from "constants/env";
+import { PAYMENT_WORDS } from "constants/common";
+import { IS_AST } from "constants/env";
 import { appRoutes } from "constants/routes";
 import Share, { SocialMedia } from "./Share";
 

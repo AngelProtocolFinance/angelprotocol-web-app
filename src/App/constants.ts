@@ -1,10 +1,5 @@
 import { Link, LinkGroup, SocialMediaLink } from "./types";
-import {
-  BASE_DOMAIN,
-  DAPP_DOMAIN,
-  DOMAIN,
-  SUBDOMAIN_BUILDER,
-} from "constants/common";
+import { BASE_URL, DAPP_URL, SUBDOMAIN_BUILDER } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { LITEPAPER } from "constants/urls";
 
@@ -16,19 +11,19 @@ type LINKS = {
 
 export const CHARITY_LINKS: LINKS = {
   HEADER_LINKS: [
-    { title: "For Non-Profits", href: BASE_DOMAIN, external: true },
+    { title: "For Non-Profits", href: BASE_URL, external: true },
     {
       title: "Marketplace",
       href: appRoutes.marketplace,
     },
     {
       title: "Giving Partners",
-      href: `${BASE_DOMAIN}/giving-partners-csr/`,
+      href: `${BASE_URL}/giving-partners-csr/`,
       external: true,
     },
     {
       title: "About",
-      href: `${BASE_DOMAIN}/about-angel-giving/`,
+      href: `${BASE_URL}/about-angel-giving/`,
       external: true,
     },
     { title: "Register", href: appRoutes.register },
@@ -41,13 +36,13 @@ export const CHARITY_LINKS: LINKS = {
       links: [
         {
           text: "Non-profits",
-          href: `${BASE_DOMAIN}`,
+          href: `${BASE_URL}`,
         },
         {
           text: "Giving Partners (CSR)",
-          href: `${BASE_DOMAIN}/giving-partners-csr/`,
+          href: `${BASE_URL}/giving-partners-csr/`,
         },
-        { text: "Impact Board", href: `${DAPP_DOMAIN}/leaderboard/` },
+        { text: "Impact Board", href: `${DAPP_URL}/leaderboard/` },
         // {
         //   text: "For Giftcards",
         //   href: "https://app.angel.giving/gift",
@@ -57,13 +52,13 @@ export const CHARITY_LINKS: LINKS = {
     {
       title: "About",
       links: [
-        { text: "About us", href: `${BASE_DOMAIN}/about-angel-giving/` },
+        { text: "About us", href: `${BASE_URL}/about-angel-giving/` },
         {
           text: "Meet the team",
-          href: `${BASE_DOMAIN}/about/#:~:text=MEET%20THE%20TEAM-`,
+          href: `${BASE_URL}/about/#:~:text=MEET%20THE%20TEAM-`,
         },
-        { text: "News", href: `${BASE_DOMAIN}/news/` },
-        { text: "Careers", href: `${BASE_DOMAIN}/careers/` },
+        { text: "News", href: `${BASE_URL}/news/` },
+        { text: "Careers", href: `${BASE_URL}/careers/` },
       ],
     },
     {
@@ -79,13 +74,13 @@ export const CHARITY_LINKS: LINKS = {
       links: [
         {
           text: "Privacy policy",
-          href: `${BASE_DOMAIN}/privacy-policy/`,
+          href: `${BASE_URL}/privacy-policy/`,
         },
         {
           text: "Terms of Use",
-          href: `${BASE_DOMAIN}/terms-of-use/`,
+          href: `${BASE_URL}/terms-of-use/`,
         },
-        { text: "Terms for NPO", href: `${BASE_DOMAIN}/terms-of-use-npo/` },
+        { text: "Terms for NPO", href: `${BASE_URL}/terms-of-use-npo/` },
       ],
     },
   ],
@@ -166,12 +161,12 @@ export const AST_LINKS: LINKS = {
     },
     {
       title: "Read the Docs",
-      href: SUBDOMAIN_BUILDER("docs", DOMAIN),
+      href: SUBDOMAIN_BUILDER("docs"),
       external: true,
     },
     {
       title: "Talk to Us",
-      href: `${BASE_DOMAIN}/talk-to-us/`,
+      href: `${BASE_URL}/talk-to-us/`,
       external: true,
     },
   ],

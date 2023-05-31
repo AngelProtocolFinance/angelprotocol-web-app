@@ -4,7 +4,8 @@ import { invalidateApesTags } from "services/apes";
 import { WalletState } from "contexts/WalletContext";
 import { createAuthToken, logger } from "helpers";
 import { sendTx } from "helpers/tx";
-import { EMAIL_SUPPORT, GENERIC_ERROR_MESSAGE } from "constants/common";
+import { GENERIC_ERROR_MESSAGE } from "constants/common";
+import { EMAIL_SUPPORT } from "constants/env";
 import { APIs } from "constants/urls";
 import gift, { GiftDetails, TxStatus, setTxStatus } from "./index";
 

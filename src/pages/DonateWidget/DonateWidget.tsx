@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import Seo from "components/Seo";
 import { isPrevDark, setToDarkMode, setToLightMode } from "helpers";
-import { APP_NAME, DAPP_DOMAIN } from "constants/common";
-import { PAYMENT_WORDS, titleCase } from "constants/env";
+import { PAYMENT_WORDS, titleCase } from "constants/common";
+import { APP_NAME, DAPP_URL } from "constants/env";
 import ApiKeyChecker from "./ApiKeyChecker";
 import EndowmentLoader from "./EndowmentLoader";
 import InnerComponent from "./InnerComponent";
@@ -45,7 +45,7 @@ export default function DonateWidget() {
               description={(profile.overview ?? "").slice(0, 140)}
               name={profile.name}
               image={`${profile.logo}`}
-              url={`${DAPP_DOMAIN}/donate_widget/${profile.id}`}
+              url={`${DAPP_URL}/donate_widget/${profile.id}`}
             />
             <InnerComponent
               id={profile.id}

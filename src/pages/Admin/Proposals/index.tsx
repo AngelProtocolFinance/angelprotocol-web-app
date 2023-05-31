@@ -3,7 +3,7 @@ import { useProposalsQuery } from "services/juno/custom";
 import Icon from "components/Icon";
 import Seo from "components/Seo";
 import { useGetter } from "store/accessors";
-import { APP_NAME, DAPP_DOMAIN } from "constants/common";
+import { APP_NAME, DAPP_URL } from "constants/env";
 import { adminRoutes } from "constants/routes";
 import { useAdminResources } from "../Guard";
 import ProposalCard from "./ProposalCard";
@@ -32,7 +32,7 @@ export default function Proposals() {
     <div className="grid content-start rounded font-work">
       <Seo
         title={`Decision Center - ${APP_NAME}`}
-        url={`${DAPP_DOMAIN}/${adminRoutes.proposals}`}
+        url={`${DAPP_URL}/${adminRoutes.proposals}`}
       />
 
       <Toolbar classes="mb-6" />

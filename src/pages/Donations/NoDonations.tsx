@@ -1,6 +1,6 @@
 import not_found from "assets/images/not-found.png";
 import Image from "components/Image";
-import { PAYMENT_WORDS } from "constants/env";
+import { PAYMENT_WORDS } from "constants/common";
 
 export default function NoDonations({ classes = "" }) {
   return (
