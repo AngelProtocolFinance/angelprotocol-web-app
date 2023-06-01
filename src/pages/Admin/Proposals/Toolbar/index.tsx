@@ -5,14 +5,13 @@ import StatusSelector from "./StatusSelector";
 
 export default function Toolbar({ classes = "" }: { classes?: string }) {
   return (
-    <div
-      className={`flex items-center gap-3 ${classes} border-b-2 pb-3 border-prim`}
-    >
-      <StatusSelector />
+    <div className={`flex items-center gap-3 ${classes} pb-3`}>
+      <h1 className="text-2xl">Decision Center</h1>
+      <StatusSelector classes="ml-auto" />
 
       <Link
         to={`../${adminRoutes.templates}/${templates["multisig.owners"]}`}
-        className="px-3 py-2 text-white bg-blue hover:bg-blue-l1 text-sm uppercase text-center rounded"
+        className="text-xs uppercase text-center rounded text-blue dark:text-blue-l2"
       >
         + Create a proposal
       </Link>

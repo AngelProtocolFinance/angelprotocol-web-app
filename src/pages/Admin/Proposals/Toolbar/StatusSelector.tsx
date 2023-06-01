@@ -3,7 +3,7 @@ import { ProposalStatusOptions } from "slices/admin/types";
 import { useGetter, useSetter } from "store/accessors";
 import { changeSelectedStatus } from "slices/admin/proposals";
 
-export default function StatusSelector() {
+export default function StatusSelector({ classes = "" }) {
   const dispatch = useSetter();
   const { activeStatus } = useGetter((state) => state.admin.proposals);
 
@@ -11,15 +11,15 @@ export default function StatusSelector() {
     <RadioGroup
       value={activeStatus}
       onChange={(s) => dispatch(changeSelectedStatus(s))}
-      className="flex"
+      className={`${classes} flex gap-2 items-center`}
     >
-      <RadioGroup.Label>Status:</RadioGroup.Label>
+      <RadioGroup.Label className="text-sm mr-3">Status:</RadioGroup.Label>
       {Object.entries(pollStatusOptions).map(
         ([optionValue, optionDescription]) => (
           <RadioGroup.Option
             key={optionValue}
             value={optionValue}
-            className="px-4 py-[0.0625rem] border border-prim rounded capitalize"
+            className="px-4 py-2 border border-prim rounded capitalize font-bold text-sm aria-checked:bg-orange/25 aria-checked:border-orange"
           >
             {optionDescription}
           </RadioGroup.Option>
@@ -30,6 +30,6 @@ export default function StatusSelector() {
 }
 
 const pollStatusOptions: { [key in ProposalStatusOptions]: string } = {
-  approved: "approved",
   open: "open",
+  approved: "approved",
 };
