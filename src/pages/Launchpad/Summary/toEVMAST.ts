@@ -91,7 +91,7 @@ export default function toEVMAST(
     proposalLink: 0, //not specified in launchpad design
 
     settingsController: {
-      strategies: defaultSetting,
+      acceptedTokens: defaultSetting,
       lockedInvestmentManagement: defaultSetting,
       liquidInvestmentManagement: defaultSetting,
       allowlistedBeneficiaries: defaultSetting,
@@ -127,7 +127,7 @@ function toEndowFee(fee: TFee): Fee {
   const addr = fee.isActive ? fee.receiver : ADDRESS_ZERO;
   return {
     payoutAddress: addr,
-    percentage: +fee.rate,
+    bps: +fee.rate * 100,
   };
 }
 

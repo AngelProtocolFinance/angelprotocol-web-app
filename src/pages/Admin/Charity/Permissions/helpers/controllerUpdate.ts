@@ -21,7 +21,7 @@ export function controllerUpdate(
   return {
     id: endowId,
     settingsController: {
-      strategies: controller.strategies,
+      acceptedTokens: controller.acceptedTokens,
       lockedInvestmentManagement: controller.lockedInvestmentManagement,
       liquidInvestmentManagement: controller.liquidInvestmentManagement,
       allowlistedBeneficiaries: beneficiaries_allowlist,

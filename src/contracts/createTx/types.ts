@@ -9,6 +9,7 @@ import {
   NewFund,
   RegistrarConfigUpdate,
   SettingsControllerUpdate,
+  Token,
 } from "types/contracts";
 import { NewAST } from "types/contracts";
 import { Allowance, Transfer } from "types/contracts/erc20";
@@ -41,13 +42,12 @@ type Txs = {
   "accounts.update-settings": Tx<EndowmentSettingsUpdate, never>; //future
   "accounts.deposit-erc20": Tx<ERC20Deposit, never>; //not multisig tx
   "accounts.withdraw": Tx<
-    /** TODO: use type-chain type once avaialble */
     {
       id: number;
       type: AccountType;
       beneficiaryAddress: string;
       beneficiaryEndowId: number;
-      tokens: { addr: string; amount: string }[];
+      tokens: Token[];
     },
     WithdrawMeta
   >;

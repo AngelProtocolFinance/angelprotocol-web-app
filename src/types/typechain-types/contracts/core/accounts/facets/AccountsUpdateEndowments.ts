@@ -155,14 +155,14 @@ export declare namespace AngelCoreStruct {
     liquidAmount: BigNumber[];
   };
 
-  export type EndowmentFeeStruct = {
+  export type FeeSettingStruct = {
     payoutAddress: PromiseOrValue<string>;
-    percentage: PromiseOrValue<BigNumberish>;
+    bps: PromiseOrValue<BigNumberish>;
   };
 
-  export type EndowmentFeeStructOutput = [string, BigNumber] & {
+  export type FeeSettingStructOutput = [string, BigNumber] & {
     payoutAddress: string;
-    percentage: BigNumber;
+    bps: BigNumber;
   };
 
   export type DelegateStruct = {
@@ -186,7 +186,7 @@ export declare namespace AngelCoreStruct {
   ] & { locked: boolean; delegate: AngelCoreStruct.DelegateStructOutput };
 
   export type SettingsControllerStruct = {
-    strategies: AngelCoreStruct.SettingsPermissionStruct;
+    acceptedTokens: AngelCoreStruct.SettingsPermissionStruct;
     lockedInvestmentManagement: AngelCoreStruct.SettingsPermissionStruct;
     liquidInvestmentManagement: AngelCoreStruct.SettingsPermissionStruct;
     allowlistedBeneficiaries: AngelCoreStruct.SettingsPermissionStruct;
@@ -224,7 +224,7 @@ export declare namespace AngelCoreStruct {
     AngelCoreStruct.SettingsPermissionStructOutput,
     AngelCoreStruct.SettingsPermissionStructOutput
   ] & {
-    strategies: AngelCoreStruct.SettingsPermissionStructOutput;
+    acceptedTokens: AngelCoreStruct.SettingsPermissionStructOutput;
     lockedInvestmentManagement: AngelCoreStruct.SettingsPermissionStructOutput;
     liquidInvestmentManagement: AngelCoreStruct.SettingsPermissionStructOutput;
     allowlistedBeneficiaries: AngelCoreStruct.SettingsPermissionStructOutput;
@@ -355,10 +355,10 @@ export declare namespace AccountStorage {
     allowlistedBeneficiaries: PromiseOrValue<string>[];
     allowlistedContributors: PromiseOrValue<string>[];
     maturityAllowlist: PromiseOrValue<string>[];
-    earlyLockedWithdrawFee: AngelCoreStruct.EndowmentFeeStruct;
-    withdrawFee: AngelCoreStruct.EndowmentFeeStruct;
-    depositFee: AngelCoreStruct.EndowmentFeeStruct;
-    balanceFee: AngelCoreStruct.EndowmentFeeStruct;
+    earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStruct;
+    withdrawFee: AngelCoreStruct.FeeSettingStruct;
+    depositFee: AngelCoreStruct.FeeSettingStruct;
+    balanceFee: AngelCoreStruct.FeeSettingStruct;
     settingsController: AngelCoreStruct.SettingsControllerStruct;
     parent: PromiseOrValue<BigNumberish>;
     ignoreUserSplits: PromiseOrValue<boolean>;
@@ -389,10 +389,10 @@ export declare namespace AccountStorage {
     string[],
     string[],
     string[],
-    AngelCoreStruct.EndowmentFeeStructOutput,
-    AngelCoreStruct.EndowmentFeeStructOutput,
-    AngelCoreStruct.EndowmentFeeStructOutput,
-    AngelCoreStruct.EndowmentFeeStructOutput,
+    AngelCoreStruct.FeeSettingStructOutput,
+    AngelCoreStruct.FeeSettingStructOutput,
+    AngelCoreStruct.FeeSettingStructOutput,
+    AngelCoreStruct.FeeSettingStructOutput,
     AngelCoreStruct.SettingsControllerStructOutput,
     number,
     boolean,
@@ -421,10 +421,10 @@ export declare namespace AccountStorage {
     allowlistedBeneficiaries: string[];
     allowlistedContributors: string[];
     maturityAllowlist: string[];
-    earlyLockedWithdrawFee: AngelCoreStruct.EndowmentFeeStructOutput;
-    withdrawFee: AngelCoreStruct.EndowmentFeeStructOutput;
-    depositFee: AngelCoreStruct.EndowmentFeeStructOutput;
-    balanceFee: AngelCoreStruct.EndowmentFeeStructOutput;
+    earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStructOutput;
+    withdrawFee: AngelCoreStruct.FeeSettingStructOutput;
+    depositFee: AngelCoreStruct.FeeSettingStructOutput;
+    balanceFee: AngelCoreStruct.FeeSettingStructOutput;
     settingsController: AngelCoreStruct.SettingsControllerStructOutput;
     parent: number;
     ignoreUserSplits: boolean;
@@ -442,7 +442,7 @@ export declare namespace AccountStorage {
     gateway: PromiseOrValue<string>;
     gasReceiver: PromiseOrValue<string>;
     reentrancyGuardLocked: PromiseOrValue<boolean>;
-    earlyLockedWithdrawFee: AngelCoreStruct.EndowmentFeeStruct;
+    earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStruct;
   };
 
   export type ConfigStructOutput = [
@@ -455,7 +455,7 @@ export declare namespace AccountStorage {
     string,
     string,
     boolean,
-    AngelCoreStruct.EndowmentFeeStructOutput
+    AngelCoreStruct.FeeSettingStructOutput
   ] & {
     owner: string;
     version: string;
@@ -466,7 +466,7 @@ export declare namespace AccountStorage {
     gateway: string;
     gasReceiver: string;
     reentrancyGuardLocked: boolean;
-    earlyLockedWithdrawFee: AngelCoreStruct.EndowmentFeeStructOutput;
+    earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStructOutput;
   };
 }
 
@@ -502,14 +502,26 @@ export declare namespace AccountMessages {
 
 export interface AccountsUpdateEndowmentsInterface extends utils.Interface {
   functions: {
+    "updateAcceptedToken(uint32,address,bool)": FunctionFragment;
     "updateDelegate(uint32,uint8,uint8,address,uint256)": FunctionFragment;
     "updateEndowmentDetails((uint32,address,string,(uint256[],uint256[]),string,string,(bool,uint32,uint32,bool,uint32,uint32)))": FunctionFragment;
   };
 
   getFunction(
-    nameOrSignatureOrTopic: "updateDelegate" | "updateEndowmentDetails"
+    nameOrSignatureOrTopic:
+      | "updateAcceptedToken"
+      | "updateDelegate"
+      | "updateEndowmentDetails"
   ): FunctionFragment;
 
+  encodeFunctionData(
+    functionFragment: "updateAcceptedToken",
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<boolean>
+    ]
+  ): string;
   encodeFunctionData(
     functionFragment: "updateDelegate",
     values: [
@@ -525,6 +537,10 @@ export interface AccountsUpdateEndowmentsInterface extends utils.Interface {
     values: [AccountMessages.UpdateEndowmentDetailsRequestStruct]
   ): string;
 
+  decodeFunctionResult(
+    functionFragment: "updateAcceptedToken",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "updateDelegate",
     data: BytesLike
@@ -723,6 +739,13 @@ export interface AccountsUpdateEndowments extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    updateAcceptedToken(
+      endowId: PromiseOrValue<BigNumberish>,
+      tokenAddr: PromiseOrValue<string>,
+      tokenStatus: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     updateDelegate(
       id: PromiseOrValue<BigNumberish>,
       setting: PromiseOrValue<BigNumberish>,
@@ -737,6 +760,13 @@ export interface AccountsUpdateEndowments extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
+
+  updateAcceptedToken(
+    endowId: PromiseOrValue<BigNumberish>,
+    tokenAddr: PromiseOrValue<string>,
+    tokenStatus: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
 
   updateDelegate(
     id: PromiseOrValue<BigNumberish>,
@@ -753,6 +783,13 @@ export interface AccountsUpdateEndowments extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
+    updateAcceptedToken(
+      endowId: PromiseOrValue<BigNumberish>,
+      tokenAddr: PromiseOrValue<string>,
+      tokenStatus: PromiseOrValue<boolean>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     updateDelegate(
       id: PromiseOrValue<BigNumberish>,
       setting: PromiseOrValue<BigNumberish>,
@@ -871,6 +908,13 @@ export interface AccountsUpdateEndowments extends BaseContract {
   };
 
   estimateGas: {
+    updateAcceptedToken(
+      endowId: PromiseOrValue<BigNumberish>,
+      tokenAddr: PromiseOrValue<string>,
+      tokenStatus: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     updateDelegate(
       id: PromiseOrValue<BigNumberish>,
       setting: PromiseOrValue<BigNumberish>,
@@ -887,6 +931,13 @@ export interface AccountsUpdateEndowments extends BaseContract {
   };
 
   populateTransaction: {
+    updateAcceptedToken(
+      endowId: PromiseOrValue<BigNumberish>,
+      tokenAddr: PromiseOrValue<string>,
+      tokenStatus: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     updateDelegate(
       id: PromiseOrValue<BigNumberish>,
       setting: PromiseOrValue<BigNumberish>,

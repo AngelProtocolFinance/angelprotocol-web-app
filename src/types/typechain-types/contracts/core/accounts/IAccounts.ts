@@ -76,14 +76,14 @@ export declare namespace AngelCoreStruct {
     AngelCoreStruct.DurationDataStructOutput
   ] & { enumData: number; data: AngelCoreStruct.DurationDataStructOutput };
 
-  export type EndowmentFeeStruct = {
+  export type FeeSettingStruct = {
     payoutAddress: PromiseOrValue<string>;
-    percentage: PromiseOrValue<BigNumberish>;
+    bps: PromiseOrValue<BigNumberish>;
   };
 
-  export type EndowmentFeeStructOutput = [string, BigNumber] & {
+  export type FeeSettingStructOutput = [string, BigNumber] & {
     payoutAddress: string;
-    percentage: BigNumber;
+    bps: BigNumber;
   };
 
   export type VeTypeDataStruct = {
@@ -217,7 +217,7 @@ export declare namespace AngelCoreStruct {
   ] & { locked: boolean; delegate: AngelCoreStruct.DelegateStructOutput };
 
   export type SettingsControllerStruct = {
-    strategies: AngelCoreStruct.SettingsPermissionStruct;
+    acceptedTokens: AngelCoreStruct.SettingsPermissionStruct;
     lockedInvestmentManagement: AngelCoreStruct.SettingsPermissionStruct;
     liquidInvestmentManagement: AngelCoreStruct.SettingsPermissionStruct;
     allowlistedBeneficiaries: AngelCoreStruct.SettingsPermissionStruct;
@@ -255,7 +255,7 @@ export declare namespace AngelCoreStruct {
     AngelCoreStruct.SettingsPermissionStructOutput,
     AngelCoreStruct.SettingsPermissionStructOutput
   ] & {
-    strategies: AngelCoreStruct.SettingsPermissionStructOutput;
+    acceptedTokens: AngelCoreStruct.SettingsPermissionStructOutput;
     lockedInvestmentManagement: AngelCoreStruct.SettingsPermissionStructOutput;
     liquidInvestmentManagement: AngelCoreStruct.SettingsPermissionStructOutput;
     allowlistedBeneficiaries: AngelCoreStruct.SettingsPermissionStructOutput;
@@ -323,16 +323,6 @@ export declare namespace AngelCoreStruct {
     liquid: string[];
     liquidAmount: BigNumber[];
   };
-
-  export type DonationsReceivedStruct = {
-    locked: PromiseOrValue<BigNumberish>;
-    liquid: PromiseOrValue<BigNumberish>;
-  };
-
-  export type DonationsReceivedStructOutput = [BigNumber, BigNumber] & {
-    locked: BigNumber;
-    liquid: BigNumber;
-  };
 }
 
 export declare namespace AccountMessages {
@@ -356,10 +346,10 @@ export declare namespace AccountMessages {
     splitMax: PromiseOrValue<BigNumberish>;
     splitMin: PromiseOrValue<BigNumberish>;
     splitDefault: PromiseOrValue<BigNumberish>;
-    earlyLockedWithdrawFee: AngelCoreStruct.EndowmentFeeStruct;
-    withdrawFee: AngelCoreStruct.EndowmentFeeStruct;
-    depositFee: AngelCoreStruct.EndowmentFeeStruct;
-    balanceFee: AngelCoreStruct.EndowmentFeeStruct;
+    earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStruct;
+    withdrawFee: AngelCoreStruct.FeeSettingStruct;
+    depositFee: AngelCoreStruct.FeeSettingStruct;
+    balanceFee: AngelCoreStruct.FeeSettingStruct;
     dao: AngelCoreStruct.DaoSetupStruct;
     createDao: PromiseOrValue<boolean>;
     proposalLink: PromiseOrValue<BigNumberish>;
@@ -391,10 +381,10 @@ export declare namespace AccountMessages {
     BigNumber,
     BigNumber,
     BigNumber,
-    AngelCoreStruct.EndowmentFeeStructOutput,
-    AngelCoreStruct.EndowmentFeeStructOutput,
-    AngelCoreStruct.EndowmentFeeStructOutput,
-    AngelCoreStruct.EndowmentFeeStructOutput,
+    AngelCoreStruct.FeeSettingStructOutput,
+    AngelCoreStruct.FeeSettingStructOutput,
+    AngelCoreStruct.FeeSettingStructOutput,
+    AngelCoreStruct.FeeSettingStructOutput,
     AngelCoreStruct.DaoSetupStructOutput,
     boolean,
     BigNumber,
@@ -424,10 +414,10 @@ export declare namespace AccountMessages {
     splitMax: BigNumber;
     splitMin: BigNumber;
     splitDefault: BigNumber;
-    earlyLockedWithdrawFee: AngelCoreStruct.EndowmentFeeStructOutput;
-    withdrawFee: AngelCoreStruct.EndowmentFeeStructOutput;
-    depositFee: AngelCoreStruct.EndowmentFeeStructOutput;
-    balanceFee: AngelCoreStruct.EndowmentFeeStructOutput;
+    earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStructOutput;
+    withdrawFee: AngelCoreStruct.FeeSettingStructOutput;
+    depositFee: AngelCoreStruct.FeeSettingStructOutput;
+    balanceFee: AngelCoreStruct.FeeSettingStructOutput;
     dao: AngelCoreStruct.DaoSetupStructOutput;
     createDao: boolean;
     proposalLink: BigNumber;
@@ -460,7 +450,7 @@ export declare namespace AccountMessages {
     subDao: PromiseOrValue<string>;
     gateway: PromiseOrValue<string>;
     gasReceiver: PromiseOrValue<string>;
-    earlyLockedWithdrawFee: AngelCoreStruct.EndowmentFeeStruct;
+    earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStruct;
   };
 
   export type ConfigResponseStructOutput = [
@@ -472,7 +462,7 @@ export declare namespace AccountMessages {
     string,
     string,
     string,
-    AngelCoreStruct.EndowmentFeeStructOutput
+    AngelCoreStruct.FeeSettingStructOutput
   ] & {
     owner: string;
     version: string;
@@ -482,21 +472,18 @@ export declare namespace AccountMessages {
     subDao: string;
     gateway: string;
     gasReceiver: string;
-    earlyLockedWithdrawFee: AngelCoreStruct.EndowmentFeeStructOutput;
+    earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStructOutput;
   };
 
   export type StateResponseStruct = {
-    donationsReceived: AngelCoreStruct.DonationsReceivedStruct;
     closingEndowment: PromiseOrValue<boolean>;
     closingBeneficiary: AngelCoreStruct.BeneficiaryStruct;
   };
 
   export type StateResponseStructOutput = [
-    AngelCoreStruct.DonationsReceivedStructOutput,
     boolean,
     AngelCoreStruct.BeneficiaryStructOutput
   ] & {
-    donationsReceived: AngelCoreStruct.DonationsReceivedStructOutput;
     closingEndowment: boolean;
     closingBeneficiary: AngelCoreStruct.BeneficiaryStructOutput;
   };
@@ -527,16 +514,6 @@ export declare namespace AccountMessages {
     logo: string;
     image: string;
     rebalance: LocalRegistrarLib.RebalanceParamsStructOutput;
-  };
-
-  export type StrategyStruct = {
-    vault: PromiseOrValue<string>;
-    percentage: PromiseOrValue<BigNumberish>;
-  };
-
-  export type StrategyStructOutput = [string, BigNumber] & {
-    vault: string;
-    percentage: BigNumber;
   };
 }
 
@@ -591,10 +568,10 @@ export declare namespace AccountStorage {
     allowlistedBeneficiaries: PromiseOrValue<string>[];
     allowlistedContributors: PromiseOrValue<string>[];
     maturityAllowlist: PromiseOrValue<string>[];
-    earlyLockedWithdrawFee: AngelCoreStruct.EndowmentFeeStruct;
-    withdrawFee: AngelCoreStruct.EndowmentFeeStruct;
-    depositFee: AngelCoreStruct.EndowmentFeeStruct;
-    balanceFee: AngelCoreStruct.EndowmentFeeStruct;
+    earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStruct;
+    withdrawFee: AngelCoreStruct.FeeSettingStruct;
+    depositFee: AngelCoreStruct.FeeSettingStruct;
+    balanceFee: AngelCoreStruct.FeeSettingStruct;
     settingsController: AngelCoreStruct.SettingsControllerStruct;
     parent: PromiseOrValue<BigNumberish>;
     ignoreUserSplits: PromiseOrValue<boolean>;
@@ -625,10 +602,10 @@ export declare namespace AccountStorage {
     string[],
     string[],
     string[],
-    AngelCoreStruct.EndowmentFeeStructOutput,
-    AngelCoreStruct.EndowmentFeeStructOutput,
-    AngelCoreStruct.EndowmentFeeStructOutput,
-    AngelCoreStruct.EndowmentFeeStructOutput,
+    AngelCoreStruct.FeeSettingStructOutput,
+    AngelCoreStruct.FeeSettingStructOutput,
+    AngelCoreStruct.FeeSettingStructOutput,
+    AngelCoreStruct.FeeSettingStructOutput,
     AngelCoreStruct.SettingsControllerStructOutput,
     number,
     boolean,
@@ -657,10 +634,10 @@ export declare namespace AccountStorage {
     allowlistedBeneficiaries: string[];
     allowlistedContributors: string[];
     maturityAllowlist: string[];
-    earlyLockedWithdrawFee: AngelCoreStruct.EndowmentFeeStructOutput;
-    withdrawFee: AngelCoreStruct.EndowmentFeeStructOutput;
-    depositFee: AngelCoreStruct.EndowmentFeeStructOutput;
-    balanceFee: AngelCoreStruct.EndowmentFeeStructOutput;
+    earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStructOutput;
+    withdrawFee: AngelCoreStruct.FeeSettingStructOutput;
+    depositFee: AngelCoreStruct.FeeSettingStructOutput;
+    balanceFee: AngelCoreStruct.FeeSettingStructOutput;
     settingsController: AngelCoreStruct.SettingsControllerStructOutput;
     parent: number;
     ignoreUserSplits: boolean;
@@ -672,50 +649,40 @@ export declare namespace AccountStorage {
 export interface IAccountsInterface extends utils.Interface {
   functions: {
     "closeEndowment(uint32,((uint32,uint256,address),uint8))": FunctionFragment;
-    "copycatStrategies(uint32,uint8,uint256)": FunctionFragment;
     "createEndowment((address,bool,uint256,uint256,string,(uint256[],uint256[]),uint256,uint8,string,string,address[],bool,uint256,(uint8,(uint256,uint256)),address[],address[],uint256,uint256,uint256,(address,uint256),(address,uint256),(address,uint256),(address,uint256),(uint256,uint256,uint256,uint256,uint256,uint128,uint256,(uint8,(address,uint256,string,string,(uint8,(uint128,uint256,uint128,uint128)),string,string,uint256,address,uint256,uint256))),bool,uint256,((bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256))),uint32,address[],bool,(uint256,uint256,uint256),uint256))": FunctionFragment;
     "depositERC20(address,(uint32,uint256,uint256),address,uint256)": FunctionFragment;
     "queryConfig()": FunctionFragment;
     "queryEndowmentDetails(uint32)": FunctionFragment;
     "queryState(uint32)": FunctionFragment;
     "swapToken(uint32,uint8,uint128,address,address)": FunctionFragment;
+    "updateAcceptedToken(uint32,address,bool)": FunctionFragment;
     "updateConfig(address,uint256)": FunctionFragment;
     "updateDelegate(uint32,string,string,address,uint256)": FunctionFragment;
     "updateEndowmentDetails((uint32,address,string,(uint256[],uint256[]),string,string,(bool,uint32,uint32,bool,uint32,uint32)))": FunctionFragment;
     "updateOwner(address)": FunctionFragment;
-    "updateStrategies(uint32,uint8,(string,uint256)[])": FunctionFragment;
     "vaultsInvest(uint32,uint8,address[],uint256[])": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
       | "closeEndowment"
-      | "copycatStrategies"
       | "createEndowment"
       | "depositERC20"
       | "queryConfig"
       | "queryEndowmentDetails"
       | "queryState"
       | "swapToken"
+      | "updateAcceptedToken"
       | "updateConfig"
       | "updateDelegate"
       | "updateEndowmentDetails"
       | "updateOwner"
-      | "updateStrategies"
       | "vaultsInvest"
   ): FunctionFragment;
 
   encodeFunctionData(
     functionFragment: "closeEndowment",
     values: [PromiseOrValue<BigNumberish>, AngelCoreStruct.BeneficiaryStruct]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "copycatStrategies",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
   ): string;
   encodeFunctionData(
     functionFragment: "createEndowment",
@@ -753,6 +720,14 @@ export interface IAccountsInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
+    functionFragment: "updateAcceptedToken",
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<boolean>
+    ]
+  ): string;
+  encodeFunctionData(
     functionFragment: "updateConfig",
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
@@ -775,14 +750,6 @@ export interface IAccountsInterface extends utils.Interface {
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "updateStrategies",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      AccountMessages.StrategyStruct[]
-    ]
-  ): string;
-  encodeFunctionData(
     functionFragment: "vaultsInvest",
     values: [
       PromiseOrValue<BigNumberish>,
@@ -794,10 +761,6 @@ export interface IAccountsInterface extends utils.Interface {
 
   decodeFunctionResult(
     functionFragment: "closeEndowment",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "copycatStrategies",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -819,6 +782,10 @@ export interface IAccountsInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "queryState", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "swapToken", data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: "updateAcceptedToken",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "updateConfig",
     data: BytesLike
   ): Result;
@@ -832,10 +799,6 @@ export interface IAccountsInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "updateOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "updateStrategies",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -879,13 +842,6 @@ export interface IAccounts extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    copycatStrategies(
-      id: PromiseOrValue<BigNumberish>,
-      acctType: PromiseOrValue<BigNumberish>,
-      idToCopy: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
     createEndowment(
       details: AccountMessages.CreateEndowmentRequestStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -922,6 +878,13 @@ export interface IAccounts extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    updateAcceptedToken(
+      endowId: PromiseOrValue<BigNumberish>,
+      tokenAddr: PromiseOrValue<string>,
+      tokenStatus: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     updateConfig(
       newRegistrar: PromiseOrValue<string>,
       maxGeneralCategoryId: PromiseOrValue<BigNumberish>,
@@ -947,13 +910,6 @@ export interface IAccounts extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    updateStrategies(
-      id: PromiseOrValue<BigNumberish>,
-      acctType: PromiseOrValue<BigNumberish>,
-      strategies: AccountMessages.StrategyStruct[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
     vaultsInvest(
       id: PromiseOrValue<BigNumberish>,
       accountType: PromiseOrValue<BigNumberish>,
@@ -966,13 +922,6 @@ export interface IAccounts extends BaseContract {
   closeEndowment(
     id: PromiseOrValue<BigNumberish>,
     beneficiary: AngelCoreStruct.BeneficiaryStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  copycatStrategies(
-    id: PromiseOrValue<BigNumberish>,
-    acctType: PromiseOrValue<BigNumberish>,
-    idToCopy: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -1012,6 +961,13 @@ export interface IAccounts extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  updateAcceptedToken(
+    endowId: PromiseOrValue<BigNumberish>,
+    tokenAddr: PromiseOrValue<string>,
+    tokenStatus: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   updateConfig(
     newRegistrar: PromiseOrValue<string>,
     maxGeneralCategoryId: PromiseOrValue<BigNumberish>,
@@ -1037,13 +993,6 @@ export interface IAccounts extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  updateStrategies(
-    id: PromiseOrValue<BigNumberish>,
-    acctType: PromiseOrValue<BigNumberish>,
-    strategies: AccountMessages.StrategyStruct[],
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
   vaultsInvest(
     id: PromiseOrValue<BigNumberish>,
     accountType: PromiseOrValue<BigNumberish>,
@@ -1056,13 +1005,6 @@ export interface IAccounts extends BaseContract {
     closeEndowment(
       id: PromiseOrValue<BigNumberish>,
       beneficiary: AngelCoreStruct.BeneficiaryStruct,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
-
-    copycatStrategies(
-      id: PromiseOrValue<BigNumberish>,
-      acctType: PromiseOrValue<BigNumberish>,
-      idToCopy: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
@@ -1102,6 +1044,13 @@ export interface IAccounts extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
+    updateAcceptedToken(
+      endowId: PromiseOrValue<BigNumberish>,
+      tokenAddr: PromiseOrValue<string>,
+      tokenStatus: PromiseOrValue<boolean>,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
     updateConfig(
       newRegistrar: PromiseOrValue<string>,
       maxGeneralCategoryId: PromiseOrValue<BigNumberish>,
@@ -1127,13 +1076,6 @@ export interface IAccounts extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    updateStrategies(
-      id: PromiseOrValue<BigNumberish>,
-      acctType: PromiseOrValue<BigNumberish>,
-      strategies: AccountMessages.StrategyStruct[],
-      overrides?: CallOverrides
-    ): Promise<boolean>;
-
     vaultsInvest(
       id: PromiseOrValue<BigNumberish>,
       accountType: PromiseOrValue<BigNumberish>,
@@ -1149,13 +1091,6 @@ export interface IAccounts extends BaseContract {
     closeEndowment(
       id: PromiseOrValue<BigNumberish>,
       beneficiary: AngelCoreStruct.BeneficiaryStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    copycatStrategies(
-      id: PromiseOrValue<BigNumberish>,
-      acctType: PromiseOrValue<BigNumberish>,
-      idToCopy: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1193,6 +1128,13 @@ export interface IAccounts extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    updateAcceptedToken(
+      endowId: PromiseOrValue<BigNumberish>,
+      tokenAddr: PromiseOrValue<string>,
+      tokenStatus: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     updateConfig(
       newRegistrar: PromiseOrValue<string>,
       maxGeneralCategoryId: PromiseOrValue<BigNumberish>,
@@ -1218,13 +1160,6 @@ export interface IAccounts extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    updateStrategies(
-      id: PromiseOrValue<BigNumberish>,
-      acctType: PromiseOrValue<BigNumberish>,
-      strategies: AccountMessages.StrategyStruct[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
     vaultsInvest(
       id: PromiseOrValue<BigNumberish>,
       accountType: PromiseOrValue<BigNumberish>,
@@ -1238,13 +1173,6 @@ export interface IAccounts extends BaseContract {
     closeEndowment(
       id: PromiseOrValue<BigNumberish>,
       beneficiary: AngelCoreStruct.BeneficiaryStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    copycatStrategies(
-      id: PromiseOrValue<BigNumberish>,
-      acctType: PromiseOrValue<BigNumberish>,
-      idToCopy: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -1282,6 +1210,13 @@ export interface IAccounts extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
+    updateAcceptedToken(
+      endowId: PromiseOrValue<BigNumberish>,
+      tokenAddr: PromiseOrValue<string>,
+      tokenStatus: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     updateConfig(
       newRegistrar: PromiseOrValue<string>,
       maxGeneralCategoryId: PromiseOrValue<BigNumberish>,
@@ -1304,13 +1239,6 @@ export interface IAccounts extends BaseContract {
 
     updateOwner(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    updateStrategies(
-      id: PromiseOrValue<BigNumberish>,
-      acctType: PromiseOrValue<BigNumberish>,
-      strategies: AccountMessages.StrategyStruct[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

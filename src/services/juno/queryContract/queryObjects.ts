@@ -254,7 +254,7 @@ export const queryObjects: {
         kycDonorsOnly: d.kycDonorsOnly,
         donationMatchActive: d.donationMatchActive,
         settingsController: {
-          strategies: toPermission(controller.strategies),
+          acceptedTokens: toPermission(controller.acceptedTokens),
           lockedInvestmentManagement: toPermission(
             controller.lockedInvestmentManagement
           ),
@@ -295,11 +295,6 @@ export const queryObjects: {
       const bene = d.closingBeneficiary;
 
       return {
-        //TODO: populate once needed
-        donationsReceived: {
-          locked: d.donationsReceived.locked.toString(),
-          liquid: d.donationsReceived.liquid.toString(),
-        },
         closingEndowment: d.closingEndowment,
         //FUTURE: index-fund can also be beneficiary
         closingBeneficiary: {

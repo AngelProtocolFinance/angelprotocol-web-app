@@ -12,23 +12,6 @@
       {
         "components": [
           {
-            "components": [
-              {
-                "internalType": "uint256",
-                "name": "locked",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "liquid",
-                "type": "uint256"
-              }
-            ],
-            "internalType": "struct AngelCoreStruct.DonationsReceived",
-            "name": "donationsReceived",
-            "type": "tuple"
-          },
-          {
             "internalType": "bool",
             "name": "closingEndowment",
             "type": "bool"
