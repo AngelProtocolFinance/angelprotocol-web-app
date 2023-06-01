@@ -3,12 +3,14 @@ import { NetworkType } from "types/lists";
 
 export const IS_MOBILE = isMobile();
 
-// THE CONSTANTS BELOW ARE ALL CONFIGURE BY ENVIRONMENT VARIABLES
+// THE CONSTANTS BELOW ARE ALL CONFIGURED BY ENVIRONMENT VARIABLES
 // AND DISPLAY THE DESIRED TEXT/IMAGES/URLS/ETC THROUGHOUT THE APP
 export const APP_TYPE = process.env.REACT_APP_APP_TYPE;
 export const IS_AST = APP_TYPE === "AST";
 export const SEO_IMAGE = process.env.REACT_APP_SEO_IMAGE;
-export const EMAIL_SUPPORT = process.env.REACT_APP_EMAIL_SUPPORT; // support@angelgiving.io
+export const LOGO_IMG_LIGHT = process.env.REACT_APP_LOGO_IMG_LIGHT;
+export const LOGO_IMG_DARK = process.env.REACT_APP_LOGO_IMG_DARK;
+export const EMAIL_SUPPORT = process.env.REACT_APP_EMAIL_SUPPORT;
 export const APP_NAME = process.env.REACT_APP_APP_NAME;
 export const BASE_URL = `https://${process.env.REACT_APP_BASE_DOMAIN}`;
 export const DAPP_URL = `https://${process.env.REACT_APP_DAPP_DOMAIN}`;

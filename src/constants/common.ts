@@ -1,23 +1,25 @@
 import { EndowDesignation } from "types/aws";
-import angelGivingLogoBlu from "assets/images/angelgiving-H-logo-beta-blu.svg";
-import angelGivingLogoWht from "assets/images/angelgiving-H-logo-beta-wht.svg";
-import angelProtocolLogoWht from "assets/images/angelprotocol-H-logo-beta-wht.svg";
-import angelProtocolLogoBlu from "assets/images/angelprotocol-beta-horiz-blu.svg";
 import { IconType } from "components/Icon";
 import { ImageProps } from "components/Image";
-import { BASE_URL, EMAIL_SUPPORT, IS_AST } from "./env";
+import {
+  BASE_URL,
+  EMAIL_SUPPORT,
+  IS_AST,
+  LOGO_IMG_DARK,
+  LOGO_IMG_LIGHT,
+} from "./env";
 
 export const GENERIC_ERROR_MESSAGE = `An error occurred. Please get in touch with ${EMAIL_SUPPORT} if the problem persists.`;
 
 // SETTING LOGO IMAGES & URLS
-export const AP_LOGO: ImageProps = {
+export const LOGO_DARK: ImageProps = {
   href: BASE_URL,
-  src: IS_AST ? angelProtocolLogoWht : angelGivingLogoWht,
+  src: LOGO_IMG_DARK,
   title: "Go to Marketing page",
 };
-export const AP_LOGO_LIGHT: ImageProps = {
+export const LOGO_LIGHT: ImageProps = {
   href: BASE_URL,
-  src: IS_AST ? angelProtocolLogoBlu : angelGivingLogoBlu,
+  src: LOGO_IMG_LIGHT,
   title: "Go to Marketing page",
 };
 

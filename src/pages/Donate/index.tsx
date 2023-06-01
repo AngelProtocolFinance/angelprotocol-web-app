@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import banner from "assets/images/hero.png";
 import { useProfileQuery } from "services/aws/aws";
 import QueryLoader from "components/QueryLoader";
 import Seo from "components/Seo";
@@ -17,7 +16,9 @@ export default function Donate() {
     <section className="grid content-start w-full font-work min-h-screen sm:min-h-[900px] pb-20">
       <div
         style={{
-          backgroundImage: `url('${queryState.data?.image || banner}')`,
+          backgroundImage: `url('${
+            queryState.data?.image || "/images/hero.png"
+          }')`,
         }}
         className="relative overlay w-full object-cover h-72 bg-center bg-cover"
       />

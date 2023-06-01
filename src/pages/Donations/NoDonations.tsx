@@ -1,4 +1,3 @@
-import not_found from "assets/images/not-found.png";
 import Image from "components/Image";
 import { PAYMENT_WORDS } from "constants/common";
 
@@ -9,7 +8,7 @@ export default function NoDonations({ classes = "" }) {
     >
       <Image
         alt="someone looking for an object"
-        src={not_found}
+        src="/images/not-found.png"
         className="max-sm:place-self-center sm:col-start-2 sm:row-start-1 sm:row-span-2 rounded-full w-48 object-cover object-center"
       />
       <h3 className="text-lg self-end">

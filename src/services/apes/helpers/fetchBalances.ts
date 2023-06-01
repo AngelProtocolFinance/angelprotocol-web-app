@@ -3,7 +3,6 @@ import { FetchedChain, Token } from "types/aws";
 import { CW20Balance } from "types/contracts";
 import { ProviderId } from "types/lists";
 import { TokenWithBalance } from "types/tx";
-import giftIcon from "assets/icons/currencies/gift.svg";
 import { queryContract } from "services/juno/queryContract";
 import { condenseToNum, getProvider, toBase64 } from "helpers";
 
@@ -117,7 +116,7 @@ function toGift(token: Token, bal: string): TokenWithBalance {
     balance: condenseToNum(bal, token.decimals),
     type:
       t === "erc20" ? "erc20-gift" : t === "evm-native" ? "evm-native-gift" : t,
-    logo: giftIcon,
+    logo: "/icons/currencies/gift.svg",
     min_donation_amnt: 0,
   };
 }
