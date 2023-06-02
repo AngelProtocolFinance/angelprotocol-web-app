@@ -117,7 +117,7 @@ export type EndowDesignation =
 export type EndowmentsQueryParams = {
   query: string; //set to "matchAll" if no search query
   sort: "default" | `${EndowmentsSortKey}+${SortDirection}`;
-  start?: number; //to load next page, set start to ItemCutOff + 1
+  page?: number; //to load next page, set to Page + 1
   endow_types: string | null; // comma separated EndowmentType values
   endow_designation?: string; // comma separated EndowDesignation values
   sdgs: string | 0; // comma separated sdg values. The backend recognizes "0" as "no SDG was selected"
@@ -125,7 +125,7 @@ export type EndowmentsQueryParams = {
   kyc_only: string | null; // comma separated boolean values
   hq_country?: string; //comma separated values
   active_in_countries?: string; //comma separated values
-  limit?: number; // Number of items to be returned per request. If not provided, API defaults to return all
+  hits?: number; // Number of items to be returned per request. If not provided, API defaults to return all
   published: string;
 };
 
