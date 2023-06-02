@@ -35,7 +35,7 @@ export default function Proposals() {
         url={`${DAPP_DOMAIN}/${adminRoutes.proposals}`}
       />
 
-      <Toolbar classes="mb-6" />
+      <Toolbar classes="@xl:mb-6" />
 
       {(proposals.length > 0 && (
         <Table

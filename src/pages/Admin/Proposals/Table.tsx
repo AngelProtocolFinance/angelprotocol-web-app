@@ -37,7 +37,7 @@ export default function Table({ proposals, classes = "", more }: Props) {
               <td className="uppercase text-xs font-semibold text-center">
                 <span
                   className={`px-2 py-1 text-white ${
-                    status == "approved"
+                    status === "approved"
                       ? "bg-green"
                       : "bg-gray-d1 dark:bg-gray"
                   } rounded`}
@@ -46,8 +46,8 @@ export default function Table({ proposals, classes = "", more }: Props) {
                 </span>
               </td>
               <Link
-                to={`${adminRoutes.proposal}/${id}`}
-                className="text-sm hover:text-blue dark:text-blue-l2"
+                to={`../${adminRoutes.proposal}/${id}`}
+                className="text-sm hover:text-blue dark:text-blue-l2 block max-w-[11.5rem] @xl:max-w-lg overflow-hidden text-ellipsis"
               >
                 {title}
               </Link>
