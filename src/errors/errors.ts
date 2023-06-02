@@ -2,8 +2,7 @@ import { WithoutInstallers } from "contexts/WalletContext/types";
 import { Chain } from "types/tx";
 import { WALLET_METADATA } from "contexts/WalletContext/constants";
 import { chainIds } from "constants/chainIds";
-import { EMAIL_SUPPORT } from "constants/common";
-import { EXPECTED_NETWORK_TYPE } from "constants/env";
+import { EMAIL_SUPPORT, EXPECTED_NETWORK_TYPE } from "constants/env";
 
 export const AP_ERROR_DISCRIMINATOR = "AP_ERROR_DISCRIMINATOR";
 

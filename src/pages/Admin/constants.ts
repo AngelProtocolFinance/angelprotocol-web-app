@@ -3,7 +3,7 @@ import { Templates } from "pages/Admin/types";
 import { ProposalBase } from "pages/Admin/types";
 import { SchemaShape } from "schemas/types";
 import { stringByteSchema } from "schemas/string";
-import { PAYMENT_WORDS, titleCase } from "constants/env";
+import { PAYMENT_WORDS, titleCase } from "constants/common";
 import { adminRoutes } from "constants/routes";
 
 export const templates: {

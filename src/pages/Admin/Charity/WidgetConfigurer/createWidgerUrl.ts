@@ -1,11 +1,10 @@
 import { URL_PARAMS, UrlParamValues } from "pages/DonateWidget";
 import { isEmpty } from "helpers";
-import { DAPP_DOMAIN } from "constants/common";
-import { IS_TEST } from "constants/env";
+import { DAPP_URL, IS_TEST } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { FormValues } from "./schema";
 
-const APP_URL = IS_TEST ? "http://localhost:4200" : `${DAPP_DOMAIN}`;
+const APP_URL = IS_TEST ? "http://localhost:4200" : `${DAPP_URL}`;
 
 export default function createWidgetUrl(formValues: FormValues) {
   const rootUrl = `${APP_URL}${appRoutes.donate_widget}/${formValues.endowIdName.id}?apiKey=API_KEY`;

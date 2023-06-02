@@ -1,5 +1,5 @@
 import { useGetter } from "store/accessors";
-import { PAYMENT_WORDS, titleCase } from "constants/env";
+import { PAYMENT_WORDS, titleCase } from "constants/common";
 
 export default function Progress({ classes = "" }: { classes?: string }) {
   const donationState = useGetter((state) => state.donation);

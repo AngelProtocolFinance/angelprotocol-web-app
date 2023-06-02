@@ -5,9 +5,13 @@ import { createNavLinkStyler } from "helpers";
 
 type Props = { classes: string; links: Link[] };
 
+const styles = "px-4 transition ease-in-out duration-300 hover:text-orange-l1";
+
 export default function DesktopNav({ classes, links }: Props) {
   return (
-    <nav className={`${classes} items-center justify-end font-body text-base`}>
+    <nav
+      className={`${classes} items-center justify-end font-body text-base text-white text-sm`}
+    >
       {links.map((link) =>
         link.external ? (
           <ExtLink
@@ -20,8 +24,11 @@ export default function DesktopNav({ classes, links }: Props) {
         ) : (
           <NavLink
             key={`header-link-${link.title}`}
-            className={styler}
             to={link.href}
+            className={createNavLinkStyler(
+              styles,
+              "pointer-events-none text-orange-l1"
+            )}
           >
             {link.title}
           </NavLink>
@@ -30,7 +37,3 @@ export default function DesktopNav({ classes, links }: Props) {
     </nav>
   );
 }
-
-const styles =
-  "px-4 text-sm text-white hover:text-orange-l1 active:text-orange transition ease-in-out duration-300 uppercase font-heading font-bold";
-const styler = createNavLinkStyler(styles, "pointer-events-none text-orange");

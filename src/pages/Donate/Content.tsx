@@ -7,7 +7,8 @@ import {
   DonationState,
   setRecipient,
 } from "slices/donation";
-import { IS_AST, PAYMENT_WORDS } from "constants/env";
+import { PAYMENT_WORDS } from "constants/common";
+import { IS_AST } from "constants/env";
 import { appRoutes } from "constants/routes";
 
 function Content(props: DonationRecipient) {

@@ -8,7 +8,7 @@ import Icon from "components/Icon";
 import Prompt from "components/Prompt";
 import { createAuthToken } from "helpers";
 import { chainIds } from "constants/chainIds";
-import { APP_NAME } from "constants/common";
+import { APP_NAME } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { APIs } from "constants/urls";
 

@@ -1,5 +1,5 @@
 import { AccountType } from "types/lists";
-import { titleCase } from "constants/env";
+import { titleCase } from "constants/common";
 import { adminRoutes } from "constants/routes";
 import Seo from "../Seo";
 import Balances from "./Balances";

@@ -1,7 +1,6 @@
 import { memo } from "react";
 import { LinkGroup, SocialMediaLink } from "../types";
-import { APP_NAME } from "constants/common";
-import { IS_AST } from "constants/env";
+import { APP_NAME, IS_AST } from "constants/env";
 import Links from "./Links";
 import Newsletter from "./Newsletter";
 import Socials from "./Socials";

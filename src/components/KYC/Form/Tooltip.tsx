@@ -1,6 +1,6 @@
 import { Props } from "../types";
 import { maskAddress } from "helpers";
-import { PAYMENT_WORDS } from "constants/env";
+import { PAYMENT_WORDS } from "constants/common";
 
 export default function Tooltip(props: Props) {
   if (props.type === "post-donation") {
