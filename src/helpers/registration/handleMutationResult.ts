@@ -1,6 +1,6 @@
 import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
-import { EMAIL_SUPPORT } from "constants/common";
+import { EMAIL_SUPPORT } from "constants/env";
 
 export function handleMutationResult<T extends any>(
   result:

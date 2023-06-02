@@ -1,13 +1,14 @@
 import { WithoutInstallers } from "./types";
 import { BaseChain } from "types/aws";
 import { Chain } from "types/tx";
-import tokenLogo from "assets/icons/currencies/token.svg";
-import binanceWalletIcon from "assets/icons/wallets/binance.png";
-import keplrIcon from "assets/icons/wallets/keplr.png";
-import metamaskIcon from "assets/icons/wallets/metamask.png";
-import xdefiIcon from "assets/icons/wallets/xdefi.jpg";
 import { chainIDs } from "constants/chains";
 import { EXPECTED_NETWORK_TYPE, IS_TEST } from "constants/env";
+
+const tokenLogo = "/icons/currencies/token.svg";
+const binanceWalletIcon = "/icons/wallets/binance.png";
+const keplrIcon = "/icons/wallets/keplr.png";
+const metamaskIcon = "/icons/wallets/metamask.png";
+const xdefiIcon = "/icons/wallets/xdefi.jpg";
 
 export const WALLET_METADATA: {
   [key in WithoutInstallers]: {

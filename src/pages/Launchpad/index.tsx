@@ -1,6 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import Seo from "components/Seo";
-import { APP_NAME, DAPP_DOMAIN } from "constants/common";
+import { APP_NAME, DAPP_URL } from "constants/env";
 import About from "./About";
 import ConnectWallet from "./ConnectWallet";
 import Fees from "./Fees";
@@ -20,7 +20,7 @@ export default function Launchpad() {
     <>
       <Seo
         title={`Create your Angel Smart Treasury - ${APP_NAME}`}
-        url={`${DAPP_DOMAIN}/register`}
+        url={`${DAPP_URL}/register`}
       />
       <Routes>
         <Route

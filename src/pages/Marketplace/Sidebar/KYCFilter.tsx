@@ -1,6 +1,6 @@
 import { useGetter, useSetter } from "store/accessors";
 import { setKYCOnly } from "slices/components/marketFilter";
-import { PAYMENT_WORDS, titleCase } from "constants/env";
+import { PAYMENT_WORDS, titleCase } from "constants/common";
 import { FilterOption, FlatFilter } from "./common";
 
 const options: FilterOption<boolean>[] = [

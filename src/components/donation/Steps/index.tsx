@@ -1,6 +1,6 @@
 import { useGetter } from "store/accessors";
 import { DonationState } from "slices/donation";
-import { PAYMENT_WORDS } from "constants/env";
+import { PAYMENT_WORDS } from "constants/common";
 import CurrentStep from "./CurrentStep";
 import Progress from "./Progress";
 

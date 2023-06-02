@@ -4,7 +4,7 @@ import Icon from "components/Icon";
 import { GiftCard, TxResult } from "slices/gift";
 import { getTxUrl } from "helpers";
 import { chainIds } from "constants/chainIds";
-import { APP_NAME } from "constants/common";
+import { APP_NAME } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { routes } from "../../routes";
 import { hashKey } from "../constants";

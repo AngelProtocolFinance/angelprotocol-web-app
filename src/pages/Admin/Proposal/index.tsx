@@ -4,7 +4,7 @@ import { useProposalDetailsQuery } from "services/juno/custom";
 import QueryLoader from "components/QueryLoader";
 import Seo from "components/Seo";
 import { DetailLabel, Status } from "components/admin";
-import { APP_NAME, DAPP_DOMAIN } from "constants/common";
+import { APP_NAME, DAPP_URL } from "constants/env";
 import { adminRoutes } from "constants/routes";
 import { useAdminResources } from "../Guard";
 import Content from "./Content";
@@ -35,7 +35,7 @@ export default function Proposal() {
               title={`Proposal ${proposal.id} - ${APP_NAME}`}
               description={proposal.description.slice(0, 140)}
               name={proposal.title}
-              url={`${DAPP_DOMAIN}/${adminRoutes.proposal}/${proposal.id}`}
+              url={`${DAPP_URL}/${adminRoutes.proposal}/${proposal.id}`}
             />
             <div className="flex justify-between flex-wrap">
               <p>ID : {proposal.id}</p>

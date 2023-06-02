@@ -41,7 +41,10 @@ export default function Header({ classes, links, logo }: Props) {
     >
       <div className="grid items-center gap-4 px-5 grid-cols-[auto_1fr_auto] h-full">
         <Image className="w-32" {...logo} />
-        <DesktopNav classes="hidden lg:flex" links={links} />
+        <DesktopNav
+          classes="hidden lg:flex font-heading font-bold uppercase"
+          links={links}
+        />
         <div className="flex gap-4 justify-self-end">
           <ThemeToggle classes="hidden lg:flex" />
           <WalletSuite />

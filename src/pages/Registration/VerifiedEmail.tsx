@@ -10,7 +10,7 @@ import Icon from "components/Icon";
 import Prompt from "components/Prompt";
 import { handleMutationResult, logger } from "helpers";
 import { hasElapsed } from "helpers/admin";
-import { APP_NAME } from "constants/common";
+import { APP_NAME } from "constants/env";
 import { appRoutes } from "constants/routes";
 import routes, { steps } from "./routes";
 

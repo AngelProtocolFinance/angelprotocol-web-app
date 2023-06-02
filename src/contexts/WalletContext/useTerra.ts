@@ -8,7 +8,6 @@ import {
 import { Connection, ProviderInfo } from "./types";
 import { BaseChain } from "types/aws";
 import { ProviderId } from "types/lists";
-import station_icon from "assets/icons/wallets/terra-extension.jpg";
 import {
   ManualChainSwitchRequiredError,
   UnsupportedChainError,
@@ -68,7 +67,7 @@ export default function useTerra() {
 
   const wcConnection: Connection = {
     name: "Terra Station Mobile",
-    logo: station_icon,
+    logo: "/icons/wallets/terra-extension.jpg",
     async connect() {
       connect(ConnectType.WALLETCONNECT);
     },

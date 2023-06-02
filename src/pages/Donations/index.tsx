@@ -3,7 +3,7 @@ import CsvExporter from "components/CsvExporter";
 import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
 import { isEmpty } from "helpers";
-import { PAYMENT_WORDS } from "constants/env";
+import { PAYMENT_WORDS } from "constants/common";
 import Filter from "./Filter";
 import MobileTable from "./MobileTable";
 import NoDonations from "./NoDonations";
