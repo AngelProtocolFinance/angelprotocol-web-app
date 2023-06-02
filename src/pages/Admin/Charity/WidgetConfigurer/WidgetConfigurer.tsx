@@ -1,6 +1,6 @@
 import { FormProvider } from "react-hook-form";
 import Copier from "components/Copier";
-import { PAYMENT_WORDS } from "constants/env";
+import { PAYMENT_WORDS } from "constants/common";
 import { adminRoutes } from "constants/routes";
 import Seo from "../Seo";
 import WidgetExample from "./WidgetExample";

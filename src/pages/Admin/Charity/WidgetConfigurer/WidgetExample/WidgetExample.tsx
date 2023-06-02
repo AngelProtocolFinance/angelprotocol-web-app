@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import Image from "components/Image";
 import { getPossessiveForm } from "helpers";
-import { AP_LOGO } from "constants/common";
-import { PAYMENT_WORDS, titleCase } from "constants/env";
+import { LOGO_DARK, PAYMENT_WORDS, titleCase } from "constants/common";
 import { FormValues } from "../schema";
 import Donater from "./Donater";
 
@@ -62,7 +61,7 @@ export default function WidgetExample({ trigger }: { trigger: boolean }) {
           </section>
         </div>
         <footer className="flex justify-center items-center h-20 w-full bg-blue">
-          <Image className="w-20" {...AP_LOGO} />
+          <Image className="w-20" {...LOGO_DARK} />
         </footer>
       </div>
     </div>

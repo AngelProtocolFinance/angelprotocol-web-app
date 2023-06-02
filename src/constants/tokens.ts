@@ -1,7 +1,7 @@
-import haloIcon from "assets/icons/currencies/halo_outline.png";
-import junoIcon from "assets/icons/currencies/juno.svg";
-import unknownTokenIcon from "assets/icons/currencies/token.svg";
-import usdcIcon from "assets/icons/currencies/usdc.svg";
+const haloIcon = "/icons/currencies/halo_outline.png";
+const junoIcon = "/icons/currencies/juno.svg";
+const unknownTokenIcon = "/icons/currencies/token.svg";
+const usdcIcon = "/icons/currencies/usdc.svg";
 
 export enum denoms {
   uusdx = "uusdx",

@@ -8,7 +8,7 @@ import TokenField from "components/TokenField";
 import { Label } from "components/form";
 import { useGetter } from "store/accessors";
 import { setDetails } from "slices/donation";
-import { PAYMENT_WORDS } from "constants/env";
+import { PAYMENT_WORDS } from "constants/common";
 import { appRoutes } from "constants/routes";
 import AdvancedOptions from "./AdvancedOptions";
 

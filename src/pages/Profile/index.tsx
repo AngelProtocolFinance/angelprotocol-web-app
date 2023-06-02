@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import placeholderBanner from "assets/images/placeholder-banner.png";
 import { useProfileQuery } from "services/aws/aws";
 import Image from "components/Image";
 import { idParamToNum } from "helpers";
@@ -40,7 +39,7 @@ export default function Profile() {
 }
 
 function Banner() {
-  const { image = placeholderBanner } = useProfileContext();
+  const { image = "/images/placeholder-banner.png" } = useProfileContext();
   return (
     <div
       className="relative overlay w-full h-52 sm:h-72 bg-cover bg-center"

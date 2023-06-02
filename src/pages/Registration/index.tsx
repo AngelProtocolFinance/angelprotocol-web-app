@@ -1,7 +1,7 @@
 import { Suspense, lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Seo from "components/Seo";
-import { APP_NAME, DAPP_DOMAIN } from "constants/common";
+import { APP_NAME, DAPP_URL } from "constants/env";
 import Signup from "./Signup";
 import routes from "./routes";
 
@@ -18,7 +18,7 @@ export default function Registration() {
     >
       <Seo
         title={`Registration Portal - ${APP_NAME}`}
-        url={`${DAPP_DOMAIN}/register`}
+        url={`${DAPP_URL}/register`}
       />
       <Routes>
         <Route

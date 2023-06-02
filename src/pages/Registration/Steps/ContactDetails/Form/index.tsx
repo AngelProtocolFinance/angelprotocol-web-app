@@ -3,7 +3,7 @@ import { ContactRoles, ReferralMethods } from "types/aws";
 import { Selector } from "components/Selector";
 import { Field, Label } from "components/form";
 import { LoadText } from "components/registration";
-import { APP_NAME } from "constants/common";
+import { APP_NAME } from "constants/env";
 import { referralOptions, roleOptions } from "../constants";
 import useSubmit from "./useSubmit";
 

@@ -1,4 +1,4 @@
-import { DAPP_DOMAIN } from "constants/common";
+import { DAPP_URL } from "constants/env";
 
 export enum chainIDs {
   junoMain = "juno-1",
@@ -82,8 +82,8 @@ export const chains: { [index: string]: Info } = new Proxy(_chains, {
   get(target, key: chainIDs) {
     return (
       target[key] ?? {
-        txExplorer: DAPP_DOMAIN,
-        addressExplorer: DAPP_DOMAIN,
+        txExplorer: DAPP_URL,
+        addressExplorer: DAPP_URL,
       }
     ); //TODO: what's good fallback link
   },

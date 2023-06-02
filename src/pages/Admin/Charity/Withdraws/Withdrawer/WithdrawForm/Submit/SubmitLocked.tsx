@@ -1,7 +1,7 @@
 import { WithdrawValues as WV } from "../types";
 import { EndowmentDetails } from "types/contracts";
 import { Field } from "components/form";
-import { APP_NAME } from "constants/common";
+import { APP_NAME } from "constants/env";
 import Warning from "../Warning";
 import WithdrawButton from "./WithdrawButton";
 

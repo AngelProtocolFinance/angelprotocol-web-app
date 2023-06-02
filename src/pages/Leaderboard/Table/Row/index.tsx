@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 import { LeaderboardEntry } from "types/aws";
-import defaultIcon from "assets/images/angelprotocol-horiz-blu.png";
 import Image from "components/Image";
 import { Cells } from "components/TableSection";
 import { appRoutes } from "constants/routes";
 import Amount from "./Amount";
 import projectFunds from "./projectFunds";
 
+const defaultIcon = "/images/angelprotocol-horiz-blu.png";
 export default function Row({
   total_liq,
   total_lock,

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Icon from "components/Icon";
-import { IS_AST, PAYMENT_WORDS } from "constants/env";
+import { PAYMENT_WORDS } from "constants/common";
+import { IS_AST } from "constants/env";
 import { appRoutes } from "constants/routes";
 
 export default function DonateFiatThanks() {
