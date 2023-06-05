@@ -30,7 +30,7 @@ const processLog: LogProcessor = (logs) => {
 export default function PollAction(props: ProposalDetails) {
   const { wallet } = useGetWallet();
   const sendTx = useTxSender();
-  const { multisig, propMeta, config, getWallet } = useAdminResources();
+  const { multisig, config, getWallet } = useAdminResources();
   const { showModal } = useModalContext();
 
   const numSigned = props.signed.length;
