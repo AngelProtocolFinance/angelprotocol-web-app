@@ -53,14 +53,16 @@ export function Guard(props: {
     const isDelegated =
       operation &&
       _d.type === "charity" &&
-      operation.every((op) =>
-        op === "withdraw-liquid"
-          ? _d.allowlistedBeneficiaries.includes(sender)
-          : op === "withdraw-locked"
-          ? _d.maturityAllowlist.includes(sender)
-          : //check if user is delegated for all operations intended
-            _d.settingsController[op].delegate.addr === sender
-      );
+      operation.every((op) => {
+        switch (op) {
+          case "withdraw-liquid":
+            return _d.allowlistedBeneficiaries.includes(sender);
+          case "withdraw-locked":
+            return _d.maturityAllowlist.includes(sender);
+          default:
+            return _d.settingsController[op].delegate.addr === sender;
+        }
+      });
 
     /**
      * check if user is admin,
