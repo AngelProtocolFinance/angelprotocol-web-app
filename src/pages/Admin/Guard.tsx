@@ -1,18 +1,24 @@
 import { ReactNode, createContext, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { AdminParams } from "./types";
-import { AdminResources } from "services/types";
+import { AdminResources, PropMeta } from "services/types";
 import { SettingsController } from "types/contracts";
-import { useAdminResourcesQuery } from "services/juno/custom";
+import { customApi, useAdminResourcesQuery } from "services/juno/custom";
+import { defaultProposalTags } from "services/juno/tags";
 import { useModalContext } from "contexts/ModalContext";
 import { WalletState, useGetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import Loader from "components/Loader";
 import { TxPrompt } from "components/Prompt";
 import { chainIds } from "constants/chainIds";
+import { adminRoutes, appRoutes } from "constants/routes";
 
 type Prompt = () => void;
-export type AdminWallet = WalletState & { isDelegated?: boolean };
+export type AdminWallet = WalletState & {
+  isDelegated?: boolean;
+  meta: PropMeta;
+};
+
 type Operation =
   | keyof SettingsController
   | "withdraw-liquid"
@@ -76,7 +82,28 @@ export function Guard(props: {
         });
     }
 
-    return { ...wallet, isDelegated };
+    /** in the context of tx submission */
+    const willExecute: true | undefined =
+      (_d.config.threshold === 1 && !_d.config.requireExecution) || isDelegated
+        ? true
+        : undefined;
+
+    const message = willExecute
+      ? "Successful transaction"
+      : "Proposal successfully created";
+
+    const url = willExecute
+      ? `${appRoutes.admin}/${_d.id}`
+      : `${appRoutes.admin}/${_d.id}/${adminRoutes.proposals}`;
+
+    const description = willExecute ? "Go to admin home" : "Go to proposals";
+
+    const meta: PropMeta = {
+      successMeta: { message, link: { url, description } },
+      tagPayloads: [customApi.util.invalidateTags(defaultProposalTags)],
+    };
+
+    return { ...wallet, isDelegated, meta };
   };
 
   if (isLoading)

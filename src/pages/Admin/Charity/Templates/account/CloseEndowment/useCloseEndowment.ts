@@ -9,7 +9,7 @@ import { ADDRESS_ZERO } from "constants/evm";
 
 export default function useCloseEndowment() {
   const { handleSubmit } = useFormContext<FV>();
-  const { multisig, propMeta, getWallet, id: endowId } = useAdminResources();
+  const { multisig, getWallet, id: endowId } = useAdminResources();
   const sendTx = useTxSender();
 
   async function closeEndowment(fv: FV) {
@@ -64,8 +64,8 @@ export default function useCloseEndowment() {
 
     await sendTx({
       content: { type: "evm", val: tx },
-      ...propMeta,
-      tagPayloads: getTagPayloads(propMeta.willExecute && meta.id),
+      ...wallet.meta,
+      tagPayloads: getTagPayloads(wallet.meta.willExecute && meta.id),
     });
   }
 

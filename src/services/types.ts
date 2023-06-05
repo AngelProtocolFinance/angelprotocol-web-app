@@ -17,7 +17,6 @@ type Base = {
   members: string[];
   id: number;
   config: MultisigConfig;
-  propMeta: PropMeta;
 };
 
 type APResources = Base & {

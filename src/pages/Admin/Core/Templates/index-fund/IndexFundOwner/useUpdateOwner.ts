@@ -7,7 +7,7 @@ import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 
 export default function useUpdateOwner() {
-  const { multisig, propMeta, getWallet } = useAdminResources();
+  const { multisig, getWallet } = useAdminResources();
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },
@@ -51,7 +51,7 @@ export default function useUpdateOwner() {
           meta: meta.encoded,
         }),
       },
-      ...propMeta,
+      ...wallet.meta,
     });
   }
 

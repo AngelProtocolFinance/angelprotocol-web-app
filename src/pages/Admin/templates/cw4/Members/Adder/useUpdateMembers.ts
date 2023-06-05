@@ -5,7 +5,7 @@ import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
 
 export default function useUpdateMembers(action: FormProps["action"]) {
-  const { multisig, propMeta, getWallet } = useAdminResources();
+  const { multisig, getWallet } = useAdminResources();
   const { sendTx, isSending } = useTxSender(true);
 
   async function updateMembers(fv: FormValues) {
@@ -33,8 +33,8 @@ export default function useUpdateMembers(action: FormProps["action"]) {
 
     await sendTx({
       content: { type: "evm", val: tx },
-      ...propMeta,
-      tagPayloads: getTagPayloads(propMeta.willExecute && meta.id),
+      ...wallet.meta,
+      tagPayloads: getTagPayloads(wallet.meta.willExecute && meta.id),
     });
   }
 

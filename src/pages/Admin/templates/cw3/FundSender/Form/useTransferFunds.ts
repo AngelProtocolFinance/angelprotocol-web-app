@@ -14,7 +14,7 @@ export default function useTransferFunds() {
     handleSubmit,
     formState: { isSubmitting, isValid, isDirty },
   } = useFormContext<FV>();
-  const { multisig, propMeta, getWallet } = useAdminResources();
+  const { multisig, getWallet } = useAdminResources();
   const sendTx = useTxSender();
 
   async function transferFunds(fv: FV) {
@@ -63,8 +63,8 @@ export default function useTransferFunds() {
 
     await sendTx({
       content: { type: "evm", val: tx },
-      ...propMeta,
-      tagPayloads: getTagPayloads(propMeta.willExecute && meta.id),
+      ...wallet.meta,
+      tagPayloads: getTagPayloads(wallet.meta.willExecute && meta.id),
     });
   }
 

@@ -12,7 +12,7 @@ import { blockTime } from "helpers/admin";
 import { INIT_SPLIT } from "./index";
 
 export default function useCreateFund() {
-  const { multisig, propMeta, getWallet } = useAdminResources();
+  const { multisig, getWallet } = useAdminResources();
   const sendTx = useTxSender();
   const { showModal } = useModalContext();
   const { trigger, getValues } = useFormContext<FormValues>();
@@ -76,7 +76,7 @@ export default function useCreateFund() {
 
     await sendTx({
       content: { type: "evm", val: tx },
-      ...propMeta,
+      ...wallet.meta,
     });
 
     setSubmitting(false);

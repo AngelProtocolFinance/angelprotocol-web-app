@@ -10,7 +10,7 @@ import useTxSender from "hooks/useTxSender";
 
 export default function useUpdateFund() {
   const { trigger, reset, getValues } = useFormContext<FormValues>();
-  const { multisig, propMeta, getWallet } = useAdminResources();
+  const { multisig, getWallet } = useAdminResources();
   const [isLoading, setIsLoading] = useState(false);
   const fundMembers = useGetter((state) => state.admin.fundMembers);
   const { handleError } = useErrorContext();
@@ -75,7 +75,7 @@ export default function useUpdateFund() {
 
       await sendTx({
         content: { type: "evm", val: tx },
-        ...propMeta,
+        ...wallet.meta,
       });
       reset();
     } catch (err) {

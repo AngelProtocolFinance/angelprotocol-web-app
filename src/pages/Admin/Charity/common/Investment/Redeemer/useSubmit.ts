@@ -5,7 +5,7 @@ import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
 
 export default function useSubmit(vault: string, type: AccountType) {
-  const { multisig, id, propMeta, getWallet } = useAdminResources();
+  const { multisig, id, getWallet } = useAdminResources();
   const { sendTx, isSending } = useTxSender(true);
 
   async function submit() {
@@ -30,8 +30,8 @@ export default function useSubmit(vault: string, type: AccountType) {
 
     await sendTx({
       content: { type: "evm", val: tx },
-      ...propMeta,
-      tagPayloads: getTagPayloads(propMeta.willExecute && meta.id),
+      ...wallet.meta,
+      tagPayloads: getTagPayloads(wallet.meta.willExecute && meta.id),
     });
   }
 

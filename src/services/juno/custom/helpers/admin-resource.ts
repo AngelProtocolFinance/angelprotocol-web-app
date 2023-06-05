@@ -1,9 +1,6 @@
-import { AdminResources, MultisigConfig, PropMeta } from "../../../types";
+import { AdminResources, MultisigConfig } from "../../../types";
 import { queryContract } from "services/juno/queryContract";
 import { contracts } from "constants/contracts";
-import { adminRoutes, appRoutes } from "constants/routes";
-import { defaultProposalTags } from "../../tags";
-import { customApi } from "../custom";
 
 export const AP_ID = 0;
 export const REVIEWER_ID = 0.5;
@@ -30,38 +27,14 @@ export const apCWs: CWs = {
   },
 };
 
-export async function getMeta(
-  endowId: number,
+export async function multisigInfo(
   multisig: string
-): Promise<[PropMeta, MultisigConfig, string[] /** members */]> {
+): Promise<[MultisigConfig, string[] /** members */]> {
   const [members, threshold, requireExecution] = await Promise.all([
     queryContract("multisig.members", { multisig }),
     queryContract("multisig.threshold", { multisig }),
     queryContract("multisig.require-execution", { multisig }),
-    /** just set credential to none, if disconnected or non-juno wallet */
   ]);
 
-  const tagPayloads = [customApi.util.invalidateTags(defaultProposalTags)];
-
-  /** in the context of tx submission */
-  const willExecute: true | undefined =
-    threshold === 1 && !requireExecution ? true : undefined;
-
-  const url = willExecute
-    ? `${appRoutes.admin}/${endowId}`
-    : `${appRoutes.admin}/${endowId}/${adminRoutes.proposals}`;
-  const description = willExecute ? "Go to admin home" : "Go to proposals";
-  const message = willExecute
-    ? "Successful transaction"
-    : "Proposal successfully created";
-
-  return [
-    {
-      willExecute,
-      successMeta: { message, link: { url, description } },
-      tagPayloads,
-    },
-    { threshold, requireExecution },
-    members,
-  ];
+  return [{ threshold, requireExecution }, members];
 }

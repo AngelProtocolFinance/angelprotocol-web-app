@@ -23,8 +23,7 @@ import { useAdminResources } from "../../../../Guard";
 export default function useWithdraw() {
   const { handleSubmit } = useFormContext<WithdrawValues>();
 
-  const { multisig, id, propMeta, getWallet, ...endow } =
-    useAdminResources<"charity">();
+  const { multisig, id, getWallet, ...endow } = useAdminResources<"charity">();
   const { showModal } = useModalContext();
 
   const sendTx = useTxSender();
@@ -142,7 +141,7 @@ export default function useWithdraw() {
         }
 
         showModal(TxPrompt, {
-          success: successMeta(proposalID, propMeta, endow),
+          success: successMeta(proposalID, wallet.meta, endow),
           tx,
         });
       } catch (err) {
@@ -160,7 +159,7 @@ export default function useWithdraw() {
         val: tx,
         log: wallet.isDelegated || isPolygon ? undefined : processLog,
       },
-      ...propMeta,
+      ...wallet.meta,
       onSuccess: isPolygon
         ? undefined //no need to POST to AWS if destination is polygon
         : onSuccess,

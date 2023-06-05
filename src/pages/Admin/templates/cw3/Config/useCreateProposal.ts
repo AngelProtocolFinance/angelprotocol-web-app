@@ -10,7 +10,7 @@ import { isEmpty } from "helpers";
 import { getPayloadDiff, getTagPayloads } from "helpers/admin";
 
 export default function usePropose() {
-  const { multisig, propMeta, getWallet } = useAdminResources();
+  const { multisig, getWallet } = useAdminResources();
   const {
     handleSubmit,
     formState: { isSubmitting, isDirty, isValid },
@@ -64,8 +64,8 @@ export default function usePropose() {
 
     await sendTx({
       content: { type: "evm", val: tx },
-      ...propMeta,
-      tagPayloads: getTagPayloads(propMeta.willExecute && meta.id),
+      ...wallet.meta,
+      tagPayloads: getTagPayloads(wallet.meta.willExecute && meta.id),
     });
   }
 

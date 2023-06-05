@@ -5,7 +5,7 @@ import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 
 export default function useSubmit() {
-  const { multisig, propMeta, getWallet } = useAdminResources();
+  const { multisig, getWallet } = useAdminResources();
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },
@@ -35,7 +35,7 @@ export default function useSubmit() {
           meta: meta.encoded,
         }),
       },
-      ...propMeta,
+      ...wallet.meta,
     });
   }
 
