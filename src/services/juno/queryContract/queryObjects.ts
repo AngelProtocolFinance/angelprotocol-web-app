@@ -70,7 +70,7 @@ export const queryObjects: {
         lockedWithdrawal: d.lockedWithdrawal.toLowerCase(),
         proxyAdmin: d.proxyAdmin.toLowerCase(),
         usdcAddress: d.usdcAddress.toLowerCase(),
-        wethAddress: d.wethAddress.toLowerCase(),
+        wMaticAddress: d.wMaticAddress.toLowerCase(),
         cw900lvAddress: d.cw900lvAddress.toLowerCase(),
       };
     },

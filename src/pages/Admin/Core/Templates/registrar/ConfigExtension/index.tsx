@@ -51,7 +51,7 @@ function Context(p: RegistrarConfig) {
     lockedWithdrawal: p.lockedWithdrawal,
     proxyAdmin: p.proxyAdmin,
     usdcAddress: p.usdcAddress,
-    wethAddress: p.wethAddress,
+    wMaticAddress: p.wMaticAddress,
     cw900lvAddress: p.cw900lvAddress,
   };
 
