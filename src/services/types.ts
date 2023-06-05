@@ -7,7 +7,7 @@ import { SenderArgs } from "types/tx";
 export type MultisigConfig = { threshold: number; requireExecution: boolean };
 
 export type PropMeta = Required<
-  Pick<SenderArgs, "successMeta" | "tagPayloads" | "isAuthorized">
+  Pick<SenderArgs, "successMeta" | "tagPayloads">
 > & {
   willExecute?: true;
 };

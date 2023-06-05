@@ -26,7 +26,10 @@ export default function useEditWhitelists() {
     beneficiaries,
   }) => {
     try {
-      const wallet = getWallet();
+      const wallet = getWallet([
+        "allowlistedBeneficiaries",
+        "allowlistedContributors",
+      ]);
       if (typeof wallet === "function") return wallet();
 
       const update: EndowmentSettingsUpdate = {
@@ -57,7 +60,6 @@ export default function useEditWhitelists() {
       await sendTx({
         content: { type: "evm", val: tx },
         ...propMeta,
-        isAuthorized: true,
         tagPayloads: getTagPayloads(propMeta.willExecute && meta.id),
       });
     } catch (err) {

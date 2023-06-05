@@ -2,6 +2,7 @@ import { ReactNode, createContext, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { AdminParams } from "./types";
 import { AdminResources } from "services/types";
+import { SettingsController } from "types/contracts";
 import { useAdminResourcesQuery } from "services/juno/custom";
 import { useModalContext } from "contexts/ModalContext";
 import { WalletState, useGetWallet } from "contexts/WalletContext";
@@ -10,7 +11,13 @@ import Loader from "components/Loader";
 import { TxPrompt } from "components/Prompt";
 import { chainIds } from "constants/chainIds";
 
-type WalletOrPrompt = { getWallet: () => WalletState | (() => void) };
+type Prompt = () => void;
+type AdminWallet = WalletState & { isDelegated?: boolean };
+type Operation = keyof SettingsController;
+
+type WalletObj = {
+  getWallet(operation?: Operation[]): AdminWallet | Prompt;
+};
 
 export function Guard(props: {
   children(resources: AdminResources): ReactNode;
@@ -21,13 +28,12 @@ export function Guard(props: {
 
   const { data, isLoading, isError } = useAdminResourcesQuery(
     {
-      user: wallet?.address,
       endowmentId: id,
     },
     { skip: !id }
   );
 
-  function getWallet() {
+  const getWallet: WalletObj["getWallet"] = (operation) => {
     if (!wallet) {
       return () => showModal(TxPrompt, { error: "Wallet is not connected" });
     }
@@ -35,8 +41,33 @@ export function Guard(props: {
       return () =>
         showModal(TxPrompt, { error: "Kindly switch to polygon network" });
     }
-    return wallet;
-  }
+
+    /** getWallet() can't be ran without Admin context being initalized first */
+    const _d = data!;
+
+    const isAdmin = _d.members.includes(wallet.address);
+    const isDelegated =
+      operation &&
+      _d.type === "charity" &&
+      //check if user is delegated for all operations intended
+      operation.every(
+        (op) => _d.settingsController[op].delegate.addr === wallet.address
+      );
+
+    /**
+     * check if user is admin,
+     * if not, check if user is delegated for the operation
+     */
+    if (!isAdmin && !isDelegated) {
+      return () =>
+        showModal(TxPrompt, {
+          error:
+            "Unauthorized: Connected wallet is neither an admin nor delegated for this operation",
+        });
+    }
+
+    return { ...wallet, isDelegated };
+  };
 
   if (isLoading)
     return <GuardPrompt message="Getting admin resources" showLoader />;
@@ -51,10 +82,10 @@ export function Guard(props: {
   );
 }
 
-const context = createContext({} as AdminResources & WalletOrPrompt);
+const context = createContext({} as AdminResources & WalletObj);
 export const useAdminResources = <
   T extends AdminResources["type"] = any
->(): Extract<AdminResources, { type: T }> & WalletOrPrompt => {
+>(): Extract<AdminResources, { type: T }> & WalletObj => {
   const val = useContext(context);
 
   if (Object.entries(val).length <= 0) {

@@ -1,6 +1,5 @@
 import { AdminResources, MultisigConfig, PropMeta } from "../../../types";
 import { queryContract } from "services/juno/queryContract";
-import { isEthereumAddress } from "schemas/tests";
 import { contracts } from "constants/contracts";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { defaultProposalTags } from "../../tags";
@@ -33,8 +32,7 @@ export const apCWs: CWs = {
 
 export async function getMeta(
   endowId: number,
-  multisig: string,
-  user?: string
+  multisig: string
 ): Promise<[PropMeta, MultisigConfig, string[] /** members */]> {
   const [members, threshold, requireExecution] = await Promise.all([
     queryContract("multisig.members", { multisig }),
@@ -62,8 +60,6 @@ export async function getMeta(
       willExecute,
       successMeta: { message, link: { url, description } },
       tagPayloads,
-      isAuthorized:
-        (user && isEthereumAddress(user) && members.includes(user)) || false,
     },
     { threshold, requireExecution },
     members,

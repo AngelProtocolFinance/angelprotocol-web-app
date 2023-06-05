@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { VerificationRequired } from "./types";
 import { Profile } from "services/types";
-import { useAdminResources } from "pages/Admin/Guard";
 import { useProfileQuery } from "services/aws/aws";
 import { useModalContext } from "contexts/ModalContext";
 import QueryLoader from "components/QueryLoader";
-import useUpdateEndowmentProfile from "hooks/useUpdateEndowmentProfile";
 import { adminRoutes } from "constants/routes";
+import { useAdminResources } from "../../Guard";
 import Seo from "../Seo";
+import useUpdateEndowmentProfile from "../common/useUpdateEndowmentProfile";
 import ChangeSettingsPrompt from "./ChangeSettingsPrompt";
 import Message from "./Message";
 

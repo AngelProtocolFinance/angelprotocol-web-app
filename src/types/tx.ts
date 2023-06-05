@@ -63,7 +63,6 @@ export type TxOnSuccess = (result: TxSuccess, chain: Chain) => void;
 export type SenderArgs = {
   tagPayloads?: TagPayload[];
   successMeta?: TxSuccessMeta;
-  isAuthorized?: boolean;
   content: TxContent;
   onSuccess?: TxOnSuccess;
 };
