@@ -12,7 +12,7 @@ import { TxPrompt } from "components/Prompt";
 import { chainIds } from "constants/chainIds";
 
 type Prompt = () => void;
-type AdminWallet = WalletState & { isDelegated?: boolean };
+export type AdminWallet = WalletState & { isDelegated?: boolean };
 type Operation =
   | keyof SettingsController
   | "withdraw-liquid"
