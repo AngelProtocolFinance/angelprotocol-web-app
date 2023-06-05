@@ -123,10 +123,13 @@ export default function toEVMAST(
 }
 
 function toEndowFee(fee: TFee): Fee {
-  const addr = fee.isActive ? fee.receiver : ADDRESS_ZERO;
+  const [addr, bps] = fee.isActive
+    ? [fee.receiver, +fee.rate * 100]
+    : [ADDRESS_ZERO, 0];
+
   return {
     payoutAddress: addr,
-    bps: +fee.rate * 100,
+    bps,
   };
 }
 
