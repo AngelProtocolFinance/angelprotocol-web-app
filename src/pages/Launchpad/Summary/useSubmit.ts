@@ -97,7 +97,6 @@ export default function useSubmit() {
             return (id as BigNumber).toString();
           },
         },
-        isAuthorized: true,
         onSuccess,
       });
     } catch (err) {

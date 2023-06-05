@@ -64,7 +64,6 @@ export default function PollAction(props: ProposalDetails) {
         }),
         log: processLog,
       },
-      isAuthorized: propMeta.isAuthorized,
       tagPayloads: extractTagFromMeta(props.metadata),
       onSuccess,
     });
@@ -83,7 +82,6 @@ export default function PollAction(props: ProposalDetails) {
         }),
         log: willExecute ? processLog : undefined,
       },
-      isAuthorized: propMeta.isAuthorized,
       tagPayloads: willExecute
         ? extractTagFromMeta(props.metadata)
         : [invalidateJunoTags(["multisig.votes"])],

@@ -13,7 +13,10 @@ import { chainIds } from "constants/chainIds";
 
 type Prompt = () => void;
 type AdminWallet = WalletState & { isDelegated?: boolean };
-type Operation = keyof SettingsController;
+type Operation =
+  | keyof SettingsController
+  | "withdraw-liquid"
+  | "withdraw-locked";
 
 type WalletObj = {
   getWallet(operation?: Operation[]): AdminWallet | Prompt;
@@ -44,14 +47,19 @@ export function Guard(props: {
 
     /** getWallet() can't be ran without Admin context being initalized first */
     const _d = data!;
+    const sender = wallet.address;
 
-    const isAdmin = _d.members.includes(wallet.address);
+    const isAdmin = _d.members.includes(sender);
     const isDelegated =
       operation &&
       _d.type === "charity" &&
-      //check if user is delegated for all operations intended
-      operation.every(
-        (op) => _d.settingsController[op].delegate.addr === wallet.address
+      operation.every((op) =>
+        op === "withdraw-liquid"
+          ? _d.allowlistedBeneficiaries.includes(sender)
+          : op === "withdraw-locked"
+          ? _d.maturityAllowlist.includes(sender)
+          : //check if user is delegated for all operations intended
+            _d.settingsController[op].delegate.addr === sender
       );
 
     /**

@@ -13,7 +13,7 @@ export default function Votes({
   status,
   classes = "",
 }: ProposalDetails & { classes?: string }) {
-  const { multisig, propMeta } = useAdminResources();
+  const { multisig } = useAdminResources();
   const { wallet } = useGetWallet();
   const send = useTxSender();
   const userSigned = signed.some((s) => s === wallet?.address);
@@ -27,7 +27,6 @@ export default function Votes({
           id,
         }),
       },
-      isAuthorized: propMeta.isAuthorized,
       tagPayloads: [invalidateJunoTags(["multisig.txs"])],
     });
   }

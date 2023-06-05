@@ -32,7 +32,6 @@ export default function CompleteBtn({ estimate, ...props }: Props) {
     });
     await sendTx({
       content: { type: "evm", val: tx },
-      isAuthorized: true,
     });
     //re-set details to render summary
     dispatch(setDetails(details));

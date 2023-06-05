@@ -28,7 +28,9 @@ export default function useWithdraw() {
   const sendTx = useTxSender();
 
   async function withdraw(wv: WithdrawValues) {
-    const wallet = getWallet();
+    const wallet = getWallet([
+      wv.type === "liquid" ? "withdraw-liquid" : "withdraw-locked",
+    ]);
     if (typeof wallet === "function") return wallet();
 
     const { tx, isDirect, isPolygon } = constructTx(
@@ -113,9 +115,6 @@ export default function useWithdraw() {
         log: isDirect || isPolygon ? undefined : processLog,
       },
       ...propMeta,
-      isAuthorized:
-        propMeta.isAuthorized ||
-        isDirect /** if whitelisted, could send this tx */,
       onSuccess: isPolygon
         ? undefined //no need to POST to AWS if destination is polygon
         : onSuccess,
