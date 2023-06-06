@@ -2,16 +2,24 @@ import { SubmitHandler, useFormContext } from "react-hook-form";
 import { FormValues } from "./types";
 import { EndowmentSettingsUpdate } from "types/contracts";
 import { SimulContractTx } from "types/evm";
-import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { TxPrompt } from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { isEmpty } from "helpers";
 import { getPayloadDiff, getTagPayloads } from "helpers/admin";
+import { useAdminContext } from "../../Context";
 
 export default function useEditWhitelists() {
-  const { id, multisig, getWallet } = useAdminResources<"charity">();
+  const { id, multisig, wallet, _tx } = useAdminContext<"charity">();
+  //TODO: use in button
+  /**
+   * [
+        "allowlistedBeneficiaries",
+        "allowlistedContributors",
+      ]
+   */
+
   const {
     reset,
     handleSubmit,
@@ -27,12 +35,6 @@ export default function useEditWhitelists() {
     beneficiaries,
   }) => {
     try {
-      const wallet = getWallet([
-        "allowlistedBeneficiaries",
-        "allowlistedContributors",
-      ]);
-      if (typeof wallet === "function") return wallet();
-
       const update: EndowmentSettingsUpdate = {
         ...initial,
         allowlistedBeneficiaries: isEmpty(beneficiaries)
@@ -48,7 +50,7 @@ export default function useEditWhitelists() {
       }
 
       const [data, dest, meta] = encodeTx("accounts.update-settings", update);
-      const tx: SimulContractTx = wallet.isDelegated
+      const tx: SimulContractTx = _tx.isDirect
         ? { from: wallet.address, to: dest, data }
         : createTx(wallet.address, "multisig.submit-transaction", {
             multisig,
@@ -62,8 +64,8 @@ export default function useEditWhitelists() {
 
       await sendTx({
         content: { type: "evm", val: tx },
-        ...wallet.meta,
-        tagPayloads: getTagPayloads(wallet.meta.willExecute && meta.id),
+        ..._tx,
+        tagPayloads: getTagPayloads(_tx.willExecute && meta.id),
       });
     } catch (err) {
       showModal(TxPrompt, {

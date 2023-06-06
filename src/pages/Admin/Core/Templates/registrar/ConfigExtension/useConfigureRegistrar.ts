@@ -1,15 +1,15 @@
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
-import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import Prompt from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { isEmpty } from "helpers";
 import { getPayloadDiff } from "helpers/admin";
+import { useAdminContext } from "../../../../Context";
 
 export default function useConfigureRegistrar() {
-  const { multisig, getWallet } = useAdminResources();
+  const { multisig, wallet, _tx } = useAdminContext();
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },
@@ -34,9 +34,6 @@ export default function useConfigureRegistrar() {
       });
     }
 
-    const wallet = getWallet();
-    if (typeof wallet === "function") return wallet();
-
     const [data, dest, meta] = encodeTx(
       "registrar.update-config",
       {
@@ -59,7 +56,7 @@ export default function useConfigureRegistrar() {
           meta: meta.encoded,
         }),
       },
-      ...wallet.meta,
+      ..._tx,
     });
   }
 

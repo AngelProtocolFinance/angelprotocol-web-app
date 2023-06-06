@@ -7,7 +7,6 @@ import { ProposalBase } from "../../../types";
 import { TxType } from "../types";
 import { SchemaShape } from "schemas/types";
 import { TxOnSuccess } from "types/tx";
-import { useAdminResources } from "pages/Admin/Guard";
 import { useUpdateRegMutation } from "services/aws/registration";
 import { useModalContext } from "contexts/ModalContext";
 import { TxPrompt } from "components/Prompt";
@@ -15,6 +14,7 @@ import { Field } from "components/form";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import { multisig as Multisig, SubmissionEvent } from "contracts/evm/multisig";
 import useTxSender from "hooks/useTxSender";
+import { useAdminContext } from "../../../Context";
 import { proposalShape } from "../../../constants";
 
 type Props = {
@@ -35,7 +35,7 @@ export default function Proposer({ type, appId, reference }: Props) {
     },
   });
 
-  const { multisig, getWallet } = useAdminResources();
+  const { multisig, wallet, _tx } = useAdminContext();
   const { showModal } = useModalContext();
   const { sendTx, isSending } = useTxSender(true);
   const [updateReg] = useUpdateRegMutation();
@@ -43,9 +43,6 @@ export default function Proposer({ type, appId, reference }: Props) {
   const { handleSubmit } = methods;
 
   async function submit({ type, ...fv }: FV) {
-    const wallet = getWallet();
-    if (typeof wallet === "function") return wallet();
-
     const [data, dest] = encodeTx(
       type === "approve"
         ? "charity-application.approve"
@@ -88,7 +85,7 @@ export default function Proposer({ type, appId, reference }: Props) {
       showModal(TxPrompt, {
         success: {
           message: `Proposal has been created${
-            wallet.meta.willExecute ? " and auto-executed" : "."
+            _tx.willExecute ? " and auto-executed" : "."
           }`,
         },
         tx: okTx,
@@ -119,7 +116,7 @@ export default function Proposer({ type, appId, reference }: Props) {
           return (id as BigNumber).toString();
         },
       },
-      ...wallet.meta,
+      ..._tx,
       onSuccess,
     });
   }

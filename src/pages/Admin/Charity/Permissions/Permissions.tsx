@@ -1,16 +1,16 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { SettingsPermission } from "types/contracts";
-import { useAdminResources } from "pages/Admin/Guard";
 import { ADDRESS_ZERO } from "constants/evm";
 import { adminRoutes } from "constants/routes";
+import { useAdminContext } from "../../Context";
 import Seo from "../Seo";
 import Form from "./Form";
 import { controllerUpdate } from "./helpers";
 import { FormField, FormValues, UpdateableFormValues, schema } from "./schema";
 
 export default function Permissions() {
-  const { settingsController: controller, id } = useAdminResources<"charity">();
+  const { settingsController: controller, id } = useAdminContext<"charity">();
 
   const fv: UpdateableFormValues = {
     accountFees: createField(controller.depositFee, "Changes to account fees"),

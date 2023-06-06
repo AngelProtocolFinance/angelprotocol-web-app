@@ -18,22 +18,18 @@ import { chainIds } from "constants/chainIds";
 import { EMAIL_SUPPORT } from "constants/env";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { APIs } from "constants/urls";
-import { useAdminResources } from "../../../../Guard";
+import { useAdminContext } from "../../../../Context";
 
 export default function useWithdraw() {
   const { handleSubmit } = useFormContext<WithdrawValues>();
 
-  const { multisig, id, getWallet, ...endow } = useAdminResources<"charity">();
+  const { multisig, id, wallet, _tx, ...endow } = useAdminContext<"charity">();
   const { showModal } = useModalContext();
 
   const sendTx = useTxSender();
 
   async function withdraw(wv: WithdrawValues) {
-    const wallet = getWallet([
-      wv.type === "liquid" ? "withdraw-liquid" : "withdraw-locked",
-    ]);
-    if (typeof wallet === "function") return wallet();
-
+    //TODO: add ops type on UI instead
     const accType: AccountType = wv.type === "locked" ? 0 : 1;
     const isPolygon = wv.network === chainIds.polygon;
     const beneficiary = isPolygon
@@ -66,7 +62,7 @@ export default function useWithdraw() {
 
     const sender = wallet.address;
 
-    const tx: SimulContractTx = wallet.isDelegated //pertains to whitelists in this context
+    const tx: SimulContractTx = _tx.isDirect //pertains to whitelists in this context
       ? {
           from: sender,
           to: dest,
@@ -141,7 +137,7 @@ export default function useWithdraw() {
         }
 
         showModal(TxPrompt, {
-          success: successMeta(proposalID, wallet.meta, endow),
+          success: successMeta(proposalID, _tx, endow),
           tx,
         });
       } catch (err) {
@@ -157,9 +153,9 @@ export default function useWithdraw() {
       content: {
         type: "evm",
         val: tx,
-        log: wallet.isDelegated || isPolygon ? undefined : processLog,
+        log: _tx.isDirect || isPolygon ? undefined : processLog,
       },
-      ...wallet.meta,
+      ..._tx,
       onSuccess: isPolygon
         ? undefined //no need to POST to AWS if destination is polygon
         : onSuccess,

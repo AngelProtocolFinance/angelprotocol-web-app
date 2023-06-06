@@ -1,16 +1,16 @@
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
 import { MultisigConfig } from "services/types";
-import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import Prompt from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { isEmpty } from "helpers";
 import { getPayloadDiff, getTagPayloads } from "helpers/admin";
+import { useAdminContext } from "../../../Context";
 
 export default function usePropose() {
-  const { multisig, getWallet } = useAdminResources();
+  const { multisig, wallet, _tx } = useAdminContext();
   const {
     handleSubmit,
     formState: { isSubmitting, isDirty, isValid },
@@ -40,9 +40,6 @@ export default function usePropose() {
       });
     }
 
-    const wallet = getWallet();
-    if (typeof wallet === "function") return wallet();
-
     const [data, dest, meta] = encodeTx(
       "multisig.change-threshold",
       {
@@ -64,8 +61,8 @@ export default function usePropose() {
 
     await sendTx({
       content: { type: "evm", val: tx },
-      ...wallet.meta,
-      tagPayloads: getTagPayloads(wallet.meta.willExecute && meta.id),
+      ..._tx,
+      tagPayloads: getTagPayloads(_tx.willExecute && meta.id),
     });
   }
 

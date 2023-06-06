@@ -12,7 +12,7 @@ jest.mock("services/aws/registration", () => ({
 }));
 jest.mock("pages/Admin/Guard", () => ({
   __esModule: true,
-  useAdminResources: () => mockAdminContext(),
+  useAdminContext: () => mockAdminContext(),
 }));
 
 describe("Applications", () => {

@@ -8,12 +8,17 @@ import { TxPrompt } from "components/Prompt";
 import { getProvider } from "helpers";
 import { cleanObject } from "helpers/cleanObject";
 import { appRoutes } from "constants/routes";
-import { useAdminResources } from "../../Guard";
+import { useAdminContext } from "../../Context";
 
 // import optimizeImage from "./optimizeImage";
 
 export default function useUpdateEndowmentProfile() {
-  const { getWallet } = useAdminResources<"charity">();
+  const { wallet } = useAdminContext<"charity">([
+    "name",
+    "image",
+    "logo",
+    "categories",
+  ]);
 
   const { showModal } = useModalContext();
   const [submit] = useEditProfileMutation();
@@ -22,9 +27,6 @@ export default function useUpdateEndowmentProfile() {
     endowProfileUpdate: SemiPartial<EndowmentProfileUpdate, "id" | "owner">
   ) => {
     try {
-      const wallet = getWallet(["name", "image", "logo", "categories"]);
-      if (typeof wallet === "function") return wallet();
-
       const cleanUpdates = cleanObject(endowProfileUpdate);
 
       showModal(

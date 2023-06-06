@@ -5,14 +5,14 @@ import { useProfileQuery } from "services/aws/aws";
 import { useModalContext } from "contexts/ModalContext";
 import QueryLoader from "components/QueryLoader";
 import { adminRoutes } from "constants/routes";
-import { useAdminResources } from "../../Guard";
+import { useAdminContext } from "../../Context";
 import Seo from "../Seo";
 import useUpdateEndowmentProfile from "../common/useUpdateEndowmentProfile";
 import ChangeSettingsPrompt from "./ChangeSettingsPrompt";
 import Message from "./Message";
 
 export default function ContributorVerification() {
-  const { id } = useAdminResources<"charity">();
+  const { id } = useAdminContext<"charity">();
   const queryState = useProfileQuery(id, { skip: id === 0 });
 
   return (
@@ -40,7 +40,7 @@ function Content({ profile }: { profile: Profile }) {
   const originalValue: VerificationRequired =
     profile.contributor_verification_required ? "yes" : "no";
 
-  const { id, owner } = useAdminResources<"charity">();
+  const { id, owner } = useAdminContext<"charity">();
 
   const [verificationRequired, setVerificationRequired] =
     useState(originalValue);

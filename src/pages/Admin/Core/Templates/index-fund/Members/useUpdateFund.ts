@@ -2,15 +2,15 @@ import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { FormValues } from "./types";
 import { FundMemberUpdate } from "types/contracts";
-import { useAdminResources } from "pages/Admin/Guard";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useGetter } from "store/accessors";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
+import { useAdminContext } from "../../../../Context";
 
 export default function useUpdateFund() {
   const { trigger, reset, getValues } = useFormContext<FormValues>();
-  const { multisig, getWallet } = useAdminResources();
+  const { multisig, wallet, _tx } = useAdminContext();
   const [isLoading, setIsLoading] = useState(false);
   const fundMembers = useGetter((state) => state.admin.fundMembers);
   const { handleError } = useErrorContext();
@@ -46,8 +46,6 @@ export default function useUpdateFund() {
       if (toRemove.length <= 0 && toAdd.length <= 0) {
         throw new Error("No fund member changes");
       }
-      const wallet = getWallet();
-      if (typeof wallet === "function") return wallet();
 
       const modified = new Set([...fundMembers.map((f) => f.id), ...toAdd]);
       toRemove.forEach((id) => modified.delete(id));
@@ -75,7 +73,7 @@ export default function useUpdateFund() {
 
       await sendTx({
         content: { type: "evm", val: tx },
-        ...wallet.meta,
+        ..._tx,
       });
       reset();
     } catch (err) {

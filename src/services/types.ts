@@ -4,13 +4,13 @@ import { Transaction } from "types/contracts/multisig";
 import { AccountType, ProviderId } from "types/lists";
 import { SenderArgs } from "types/tx";
 
-export type MultisigConfig = { threshold: number; requireExecution: boolean };
-
 export type PropMeta = Required<
   Pick<SenderArgs, "successMeta" | "tagPayloads">
 > & {
   willExecute?: true;
 };
+
+export type MultisigConfig = { threshold: number; requireExecution: boolean };
 
 type Base = {
   multisig: string;

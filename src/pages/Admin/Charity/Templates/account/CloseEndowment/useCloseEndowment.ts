@@ -1,21 +1,18 @@
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
 import { Beneficiary } from "types/contracts";
-import { useAdminResources } from "pages/Admin/Guard";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
 import { ADDRESS_ZERO } from "constants/evm";
+import { useAdminContext } from "../../../../Context";
 
 export default function useCloseEndowment() {
   const { handleSubmit } = useFormContext<FV>();
-  const { multisig, getWallet, id: endowId } = useAdminResources();
+  const { multisig, wallet, id: endowId, _tx } = useAdminContext();
   const sendTx = useTxSender();
 
   async function closeEndowment(fv: FV) {
-    const wallet = getWallet();
-    if (typeof wallet === "function") return wallet();
-
     const [beneficiary, beneficiaryMeta] = (function (): [Beneficiary, string] {
       const { id, type } = fv.beneficiary;
       switch (type) {
@@ -64,8 +61,8 @@ export default function useCloseEndowment() {
 
     await sendTx({
       content: { type: "evm", val: tx },
-      ...wallet.meta,
-      tagPayloads: getTagPayloads(wallet.meta.willExecute && meta.id),
+      ..._tx,
+      tagPayloads: getTagPayloads(_tx.willExecute && meta.id),
     });
   }
 

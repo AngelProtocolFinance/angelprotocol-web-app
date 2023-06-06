@@ -1,13 +1,13 @@
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
-import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import Prompt from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
+import { useAdminContext } from "../../../../Context";
 
 export default function useUpdateOwner() {
-  const { multisig, getWallet } = useAdminResources();
+  const { multisig, wallet, _tx } = useAdminContext();
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },
@@ -26,9 +26,6 @@ export default function useUpdateOwner() {
         children: "Nothing to submit, no changes detected",
       });
     }
-
-    const wallet = getWallet();
-    if (typeof wallet === "function") return wallet();
 
     const [data, dest, meta] = encodeTx(
       "registrar.update-owner",
@@ -51,7 +48,7 @@ export default function useUpdateOwner() {
           meta: meta.encoded,
         }),
       },
-      ...wallet.meta,
+      ..._tx,
     });
   }
 

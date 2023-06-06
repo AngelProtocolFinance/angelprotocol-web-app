@@ -1,26 +1,23 @@
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "../types";
 import { TxMeta } from "contracts/createTx/types";
-import { useAdminResources } from "pages/Admin/Guard";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import { TransferMeta } from "contracts/createTx/meta";
 import useTxSender from "hooks/useTxSender";
 import { scale, toBase64 } from "helpers";
 import { getTagPayloads } from "helpers/admin";
 import { EMPTY_DATA } from "constants/evm";
+import { useAdminContext } from "../../../../Context";
 
 export default function useTransferFunds() {
   const {
     handleSubmit,
     formState: { isSubmitting, isValid, isDirty },
   } = useFormContext<FV>();
-  const { multisig, getWallet } = useAdminResources();
+  const { multisig, wallet, _tx } = useAdminContext();
   const sendTx = useTxSender();
 
   async function transferFunds(fv: FV) {
-    const wallet = getWallet();
-    if (typeof wallet === "function") return wallet();
-
     const { token, recipient } = fv;
     const scaledAmount = scale(token.amount, token.decimals).toHex();
 
@@ -63,8 +60,8 @@ export default function useTransferFunds() {
 
     await sendTx({
       content: { type: "evm", val: tx },
-      ...wallet.meta,
-      tagPayloads: getTagPayloads(wallet.meta.willExecute && meta.id),
+      ..._tx,
+      tagPayloads: getTagPayloads(_tx.willExecute && meta.id),
     });
   }
 

@@ -1,8 +1,8 @@
 import { useFormContext } from "react-hook-form";
-import { useAdminResources } from "pages/Admin/Guard";
 import TableSection, { Cells } from "components/TableSection";
 import { CheckField } from "components/form";
 import { getTypedKeys } from "helpers";
+import { useAdminContext } from "../../Context";
 import LockButton from "./LockButton";
 import { FormField, FormValues, UpdateableFormValues } from "./schema";
 import useTableData from "./useTableData";
@@ -17,7 +17,7 @@ const formValues: UpdateableFormValues = {
 const FORM_KEYS = getTypedKeys(formValues);
 
 export default function Table({ className = "" }) {
-  const { endowType } = useAdminResources<"charity">();
+  const { endowType } = useAdminContext<"charity">();
 
   const {
     register,

@@ -1,17 +1,14 @@
 import { FormProps, FormValues } from "./types";
-import { useAdminResources } from "pages/Admin/Guard";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
+import { useAdminContext } from "../../../../Context";
 
 export default function useUpdateMembers(action: FormProps["action"]) {
-  const { multisig, getWallet } = useAdminResources();
+  const { multisig, wallet, _tx } = useAdminContext();
   const { sendTx, isSending } = useTxSender(true);
 
   async function updateMembers(fv: FormValues) {
-    const wallet = getWallet();
-    if (typeof wallet === "function") return wallet();
-
     const [data, dest, meta] = encodeTx(
       action === "add" ? "multisig.add-owner" : "multisig.remove-owner",
       {
@@ -33,8 +30,8 @@ export default function useUpdateMembers(action: FormProps["action"]) {
 
     await sendTx({
       content: { type: "evm", val: tx },
-      ...wallet.meta,
-      tagPayloads: getTagPayloads(wallet.meta.willExecute && meta.id),
+      ..._tx,
+      tagPayloads: getTagPayloads(_tx.willExecute && meta.id),
     });
   }
 

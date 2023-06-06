@@ -8,7 +8,6 @@ import { TxOnSuccess } from "types/tx";
 import { invalidateJunoTags } from "services/juno";
 import { defaultProposalTags } from "services/juno/tags";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
 import { TxPrompt } from "components/Prompt";
 import { createTx } from "contracts/createTx/createTx";
 import {
@@ -18,7 +17,7 @@ import {
 import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
 import { EMPTY_DATA } from "constants/evm";
-import { useAdminResources } from "../Guard";
+import { useAdminContext } from "../Context";
 
 const ERROR = "error";
 const processLog: LogProcessor = (logs) => {
@@ -28,9 +27,8 @@ const processLog: LogProcessor = (logs) => {
 };
 
 export default function PollAction(props: ProposalDetails) {
-  const { wallet } = useGetWallet();
   const sendTx = useTxSender();
-  const { multisig, config, getWallet } = useAdminResources();
+  const { multisig, config, wallet } = useAdminContext();
   const { showModal } = useModalContext();
 
   const numSigned = props.signed.length;
@@ -52,9 +50,6 @@ export default function PollAction(props: ProposalDetails) {
   };
 
   async function executeProposal() {
-    const wallet = getWallet();
-    if (typeof wallet === "function") return wallet();
-
     await sendTx({
       content: {
         type: "evm",
@@ -70,9 +65,6 @@ export default function PollAction(props: ProposalDetails) {
   }
 
   async function sign() {
-    const wallet = getWallet();
-    if (typeof wallet === "function") return wallet();
-
     await sendTx({
       content: {
         type: "evm",

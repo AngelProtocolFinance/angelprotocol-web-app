@@ -1,12 +1,12 @@
 import ModalContext from "contexts/ModalContext";
 import Charity from "./Charity";
+import { Context } from "./Context";
 import Core from "./Core";
-import { Guard } from "./Guard";
 import Review from "./Review";
 
 export default function Admin() {
   return (
-    <Guard>
+    <Context>
       {(resources) => (
         /**modals in this scope can access AdminGuard context value */
         <ModalContext>
@@ -22,6 +22,6 @@ export default function Admin() {
           })()}
         </ModalContext>
       )}
-    </Guard>
+    </Context>
   );
 }

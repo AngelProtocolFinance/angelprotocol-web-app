@@ -2,11 +2,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FlatFormValues, FormValues } from "./types";
 import { Profile, endow } from "services/types";
-import { useAdminResources } from "pages/Admin/Guard";
 import { useProfileQuery } from "services/aws/aws";
 import { FormError, FormSkeleton } from "components/admin";
 import { adminRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
+import { useAdminContext } from "../../Context";
 import Seo from "../Seo";
 import Form from "./Form";
 import { getEndowDesignationLabelValuePair } from "./getEndowDesignationLabelValuePair";
@@ -14,7 +14,7 @@ import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import { schema } from "./schema";
 
 export default function EditProfile() {
-  const { id } = useAdminResources();
+  const { id } = useAdminContext();
   const { data: profile, isLoading, isFetching, isError } = useProfileQuery(id);
 
   const content =

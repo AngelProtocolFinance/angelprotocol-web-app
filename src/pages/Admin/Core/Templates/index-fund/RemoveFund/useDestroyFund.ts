@@ -1,7 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
 import { ID } from "contracts/createTx/types";
-import { useAdminResources } from "pages/Admin/Guard";
 import { useLazyLatestBlockQuery } from "services/juno";
 import { queryContract } from "services/juno/queryContract";
 import { useModalContext } from "contexts/ModalContext";
@@ -9,6 +8,7 @@ import { TxPrompt } from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { hasElapsed } from "helpers/admin";
+import { useAdminContext } from "../../../../Context";
 
 export default function useDestroyFund() {
   const {
@@ -18,7 +18,7 @@ export default function useDestroyFund() {
   const sendTx = useTxSender();
   const { showModal } = useModalContext();
   const [latestBlock] = useLazyLatestBlockQuery();
-  const { multisig, getWallet } = useAdminResources();
+  const { multisig, wallet, _tx } = useAdminContext();
 
   async function destroyFund(fv: FV) {
     try {
@@ -33,9 +33,6 @@ export default function useDestroyFund() {
     } catch (err) {
       return showModal(TxPrompt, { error: "Fund not found" });
     }
-
-    const wallet = getWallet();
-    if (typeof wallet === "function") return wallet();
 
     const id: ID = { id: +fv.fundId };
     const [data, dest, meta] = encodeTx("index-fund.remove-fund", id, id);
@@ -53,7 +50,7 @@ export default function useDestroyFund() {
           meta: meta.encoded,
         }),
       },
-      ...wallet.meta,
+      ..._tx,
     });
   }
 

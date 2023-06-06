@@ -1,16 +1,16 @@
 import { PropsWithChildren } from "react";
 import { Link } from "react-router-dom";
 import { AccountType } from "types/lists";
-import { useAdminResources } from "pages/Admin/Guard";
 import { useEndowBalanceQuery } from "services/juno/custom";
 import QueryLoader from "components/QueryLoader";
 import { condense, humanize } from "helpers";
 import { PAYMENT_WORDS } from "constants/common";
 import { adminRoutes, appRoutes } from "constants/routes";
+import { useAdminContext } from "../../../Context";
 
 type Props = { type: AccountType };
 export default function Balance({ type }: Props) {
-  const { id } = useAdminResources();
+  const { id } = useAdminContext();
 
   const query = useEndowBalanceQuery({
     id,

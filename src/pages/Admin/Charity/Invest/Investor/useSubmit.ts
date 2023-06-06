@@ -1,19 +1,16 @@
 import { FormValues } from "./types";
 import { AccountType } from "types/lists";
-import { useAdminResources } from "pages/Admin/Guard";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { scaleToStr } from "helpers";
 import { getTagPayloads } from "helpers/admin";
+import { useAdminContext } from "../../../Context";
 
 export default function useSubmit(vault: string, type: AccountType) {
-  const { multisig, id, getWallet } = useAdminResources();
+  const { multisig, id, wallet, _tx } = useAdminContext();
   const { sendTx, isSending } = useTxSender(true);
 
   async function submit({ token }: FormValues) {
-    const wallet = getWallet();
-    if (typeof wallet === "function") return wallet();
-
     const [data, dest, meta] = encodeTx("accounts.invest", {
       id,
       account: type === "locked" ? 0 : 1,
@@ -34,8 +31,8 @@ export default function useSubmit(vault: string, type: AccountType) {
 
     await sendTx({
       content: { type: "evm", val: tx },
-      ...wallet.meta,
-      tagPayloads: getTagPayloads(wallet.meta.willExecute && meta.id),
+      ..._tx,
+      tagPayloads: getTagPayloads(_tx.willExecute && meta.id),
     });
   }
 

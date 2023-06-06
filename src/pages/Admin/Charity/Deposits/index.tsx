@@ -1,10 +1,10 @@
 import { adminRoutes } from "constants/routes";
 import Content from "../../../Donate/Content";
-import { useAdminResources } from "../../Guard";
+import { useAdminContext } from "../../Context";
 import Seo from "../Seo";
 
 export default function Deposits() {
-  const { id } = useAdminResources<"charity">();
+  const { id } = useAdminContext<"charity">();
   const container = "dark:bg-blue-d6 border border-prim rounded max-w-lg  p-8";
 
   return (

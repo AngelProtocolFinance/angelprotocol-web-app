@@ -5,12 +5,12 @@ import Seo from "components/Seo";
 import { useGetter } from "store/accessors";
 import { APP_NAME, DAPP_URL } from "constants/env";
 import { adminRoutes } from "constants/routes";
-import { useAdminResources } from "../Guard";
+import { useAdminContext } from "../Context";
 import ProposalCard from "./ProposalCard";
 import Toolbar from "./Toolbar";
 
 export default function Proposals() {
-  const { multisig } = useAdminResources();
+  const { multisig } = useAdminContext();
   const [pageNum, setPageNum] = useState(1);
   const { activeStatus } = useGetter((state) => state.admin.proposals);
 

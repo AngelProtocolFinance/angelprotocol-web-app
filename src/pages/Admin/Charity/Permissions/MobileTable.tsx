@@ -1,9 +1,9 @@
 import { Disclosure } from "@headlessui/react";
 import { useFormContext } from "react-hook-form";
-import { useAdminResources } from "pages/Admin/Guard";
 import { DrawerIcon } from "components/Icon";
 import { CheckField, Label } from "components/form";
 import { getTypedKeys } from "helpers";
+import { useAdminContext } from "../../Context";
 import LockButton from "./LockButton";
 import { FormField, FormValues, UpdateableFormValues } from "./schema";
 import useTableData from "./useTableData";
@@ -18,7 +18,7 @@ const formValues: UpdateableFormValues = {
 const FORM_KEYS = getTypedKeys(formValues);
 
 export default function MobileTable({ className = "" }) {
-  const { endowType } = useAdminResources<"charity">();
+  const { endowType } = useAdminContext<"charity">();
   const {
     register,
     formState: { errors },

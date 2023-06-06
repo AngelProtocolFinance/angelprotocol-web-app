@@ -6,14 +6,14 @@ import Seo from "components/Seo";
 import { DetailLabel, Status } from "components/admin";
 import { APP_NAME, DAPP_URL } from "constants/env";
 import { adminRoutes } from "constants/routes";
-import { useAdminResources } from "../Guard";
+import { useAdminContext } from "../Context";
 import Content from "./Content";
 import PollAction from "./PollAction";
 import Stats from "./Stats";
 import Votes from "./Votes";
 
 export default function Proposal() {
-  const { multisig } = useAdminResources();
+  const { multisig } = useAdminContext();
   const params = useParams<ProposalParams>();
   const queryState = useProposalDetailsQuery({
     id: params.id,

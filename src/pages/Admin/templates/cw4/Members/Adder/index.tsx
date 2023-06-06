@@ -1,14 +1,14 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues as FV, FormProps } from "./types";
-import { useAdminResources } from "pages/Admin/Guard";
 import Modal from "components/Modal";
 import { Field } from "components/form";
+import { useAdminContext } from "../../../../Context";
 import { schema } from "./schema";
 import useUpdateMembers from "./useUpdateMembers";
 
 export default function AddForm({ address, action }: FormProps) {
-  const { members } = useAdminResources();
+  const { members } = useAdminContext();
 
   const methods = useForm<FV>({
     resolver: yupResolver(schema),

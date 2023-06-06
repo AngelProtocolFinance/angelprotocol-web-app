@@ -1,13 +1,13 @@
-import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { ErrorStatus } from "components/Status";
 import { DivContainer } from "components/admin";
 import { isEmpty } from "helpers";
+import { useAdminContext } from "../../../Context";
 import AddForm from "./Adder";
 import Member from "./Member";
 
 export default function Form() {
-  const { members } = useAdminResources();
+  const { members } = useAdminContext();
   const { showModal } = useModalContext();
   return (
     <DivContainer>

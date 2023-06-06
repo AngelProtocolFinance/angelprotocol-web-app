@@ -1,11 +1,11 @@
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
-import { useAdminResources } from "pages/Admin/Guard";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
+import { useAdminContext } from "../../../../Context";
 
 export default function useSubmit() {
-  const { multisig, getWallet } = useAdminResources();
+  const { multisig, wallet, _tx } = useAdminContext();
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },
@@ -15,8 +15,6 @@ export default function useSubmit() {
 
   async function submit(fv: FV) {
     //check for changes
-    const wallet = getWallet();
-    if (typeof wallet === "function") return wallet();
 
     const [data, dest, meta] = encodeTx("registrar.add-token", {
       token: fv.token,
@@ -35,7 +33,7 @@ export default function useSubmit() {
           meta: meta.encoded,
         }),
       },
-      ...wallet.meta,
+      ..._tx,
     });
   }
 

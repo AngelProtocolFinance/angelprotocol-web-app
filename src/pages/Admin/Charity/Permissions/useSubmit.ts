@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
-import { useAdminResources } from "pages/Admin/Guard";
 import { useErrorContext } from "contexts/ErrorContext";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { isEmpty } from "helpers";
 import { getPayloadDiff, getTagPayloads } from "helpers/admin";
+import { useAdminContext } from "../../Context";
 import { controllerUpdate } from "./helpers";
 import { FormValues } from "./schema";
 
@@ -14,8 +14,9 @@ export default function useSubmit() {
     id,
     multisig,
     settingsController: settings,
-    getWallet,
-  } = useAdminResources<"charity">();
+    wallet,
+    _tx,
+  } = useAdminContext<"charity">();
   const { handleError } = useErrorContext();
   const {
     formState: { isSubmitting, errors, isValid },
@@ -42,9 +43,6 @@ export default function useSubmit() {
         return handleError("No changes detected");
       }
 
-      const wallet = getWallet();
-      if (typeof wallet === "function") return wallet();
-
       const [data, dest, meta] = encodeTx(
         "accounts.update-controller",
         update,
@@ -62,8 +60,8 @@ export default function useSubmit() {
 
       await sendTx({
         content: { type: "evm", val: tx },
-        ...wallet.meta,
-        tagPayloads: getTagPayloads(wallet.meta.willExecute && meta.id),
+        ..._tx,
+        tagPayloads: getTagPayloads(_tx.willExecute && meta.id),
       });
     } catch (error) {
       handleError(error);
