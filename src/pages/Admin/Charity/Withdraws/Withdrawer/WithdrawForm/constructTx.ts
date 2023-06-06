@@ -39,7 +39,7 @@ export function constructTx(
       beneficiaryEndowId: 0, //TODO: ap-justin UI to set endow id
       tokens: wv.amounts.map((a) => ({
         addr: a.tokenId,
-        amount: scaleToStr(a.value),
+        amnt: scaleToStr(a.value),
       })),
     },
     metadata

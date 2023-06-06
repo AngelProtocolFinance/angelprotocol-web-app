@@ -7,11 +7,6 @@ export type SplitDetails = Mapped<
   number
 >;
 
-export type DonationsReceived = Mapped<
-  AngelCoreStruct.DonationsReceivedStruct,
-  string
->;
-
 type BeneficiaryData = OverrideProperties<
   AngelCoreStruct.BeneficiaryDataStruct,
   { endowId: number; fundId: number; addr: string }

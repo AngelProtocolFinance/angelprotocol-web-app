@@ -4,11 +4,14 @@ import {
   AccountStorage,
   AngelCoreStruct,
 } from "../typechain-types/contracts/core/accounts/IAccounts";
-import { AccountMessages as AccountDepositWithdrawEndowmentsMessages } from "../typechain-types/contracts/core/accounts/facets/AccountDepositWithdrawEndowments";
+import {
+  AngelCoreStruct as AccountDepositWithdrawEndowmentsCoreStruct,
+  AccountMessages as AccountDepositWithdrawEndowmentsMessages,
+} from "../typechain-types/contracts/core/accounts/facets/AccountDepositWithdrawEndowments";
 import { AccountMessages as AccountsUpdateEndowmentSettingsControllerMessages } from "../typechain-types/contracts/core/accounts/facets/AccountsUpdateEndowmentSettingsController";
 import { EndowmentType, UNSDG_NUMS } from "../lists";
 import { Mapped, Plain } from "../utils";
-import { Beneficiary, DonationsReceived, SplitDetails } from "./common";
+import { Beneficiary, SplitDetails } from "./common";
 
 export type ADDRESS_ZERO = "0x0000000000000000000000000000000000000000" & {
   __type: "address_zero";
@@ -32,7 +35,6 @@ export type AccountType = 0 | 1 | 2;
 export type EndowmentState = OverrideProperties<
   AccountMessages.StateResponseStruct,
   {
-    donationsReceived: DonationsReceived;
     closingEndowment: boolean;
     closingBeneficiary: Beneficiary;
   }
@@ -159,8 +161,8 @@ type Duration = OverrideProperties<
 >;
 
 export type Fee = OverrideProperties<
-  Plain<AngelCoreStruct.EndowmentFeeStruct>,
-  { percentage: number }
+  Plain<AngelCoreStruct.FeeSettingStruct>,
+  { bps: number }
 >;
 
 type VETypeData = Mapped<AngelCoreStruct.VeTypeDataStruct, number>;
@@ -238,5 +240,13 @@ export type NewAST = OverrideProperties<
     parent: number;
     splitToLiquid: SplitDetails;
     referralId: number;
+  }
+>;
+
+export type Token = OverrideProperties<
+  AccountDepositWithdrawEndowmentsCoreStruct.TokenInfoStruct,
+  {
+    addr: string;
+    amnt: string;
   }
 >;
