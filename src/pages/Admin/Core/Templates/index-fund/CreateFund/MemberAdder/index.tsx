@@ -1,6 +1,6 @@
 import { FormValues } from "../types";
-import { GroupContainer } from "components/admin";
 import { Field } from "components/form";
+import { GroupContainer } from "../../../../../components";
 import Member from "./Member";
 import useAddMember from "./useAddMember";
 

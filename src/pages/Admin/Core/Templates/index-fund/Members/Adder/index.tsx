@@ -1,6 +1,6 @@
 import { FormValues as FV } from "../types";
-import { GroupContainer } from "components/admin";
 import { Field } from "components/form";
+import { GroupContainer } from "../../../../../components";
 import useAddMember from "./useAddMember";
 
 export default function Adder() {

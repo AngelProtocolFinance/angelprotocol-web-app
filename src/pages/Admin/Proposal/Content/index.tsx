@@ -2,8 +2,8 @@ import { AbiCoder } from "@ethersproject/abi";
 import { useState } from "react";
 import { Transaction } from "types/contracts/multisig";
 import Icon from "components/Icon";
-import { DetailLabel } from "components/admin";
 import { EMPTY_DATA } from "constants/evm";
+import { DetailLabel } from "../../components";
 import Preview from "./Preview";
 
 export default function Content(props: Transaction) {

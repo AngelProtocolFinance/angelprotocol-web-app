@@ -1,8 +1,8 @@
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
-import { DivContainer, Submitter } from "components/admin";
 import { CheckField, Field, Label } from "components/form";
 import { INIT_SPLIT } from ".";
+import { DivContainer, Submitter } from "../../../../components";
 import MemberAdder from "./MemberAdder";
 import useCreateFund from "./useCreateFund";
 

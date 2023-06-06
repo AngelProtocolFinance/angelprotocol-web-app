@@ -1,6 +1,6 @@
 import { FormValues as FV } from "./types";
-import { FormContainer, Submitter } from "components/admin";
 import { Field } from "components/form";
+import { FormContainer, Submitter } from "../../../../components";
 import useSubmit from "./useSubmit";
 
 export default function Form() {

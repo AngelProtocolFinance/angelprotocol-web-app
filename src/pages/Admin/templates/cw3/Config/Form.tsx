@@ -1,6 +1,6 @@
 import { FormValues as FV } from "./types";
-import { FormContainer, Submitter } from "components/admin";
 import { CheckField, Field } from "components/form";
+import { FormContainer, Submitter } from "../../../components";
 import useCreateProposal from "./useCreateProposal";
 
 export default function Form() {

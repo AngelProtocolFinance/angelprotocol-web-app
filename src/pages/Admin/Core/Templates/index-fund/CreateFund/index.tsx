@@ -3,7 +3,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { FormValues } from "./types";
 import { useLatestBlockQuery } from "services/juno";
 import QueryLoader from "components/QueryLoader";
-import { FormError, FormSkeleton } from "components/admin";
+import { FormError, FormSkeleton } from "../../../../components";
 import Form from "./Form";
 import { schema } from "./schema";
 

@@ -1,6 +1,6 @@
 import { FormValues as FV } from "./types";
-import { FormContainer, Submitter } from "components/admin";
 import { Field } from "components/form";
+import { FormContainer, Submitter } from "../../../../components";
 import useDestroyFund from "./useDestroyFund";
 
 export default function Form() {

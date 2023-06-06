@@ -1,7 +1,11 @@
 import { FormValues as FV } from "./types";
 import { ErrorStatus } from "components/Status";
-import { FormContainer, GroupContainer, Submitter } from "components/admin";
 import { Field, Label } from "components/form";
+import {
+  FormContainer,
+  GroupContainer,
+  Submitter,
+} from "../../../../components";
 import Adder from "./Adder";
 import Member from "./Member";
 import useInitFundMembers from "./useInitFundMembers";

@@ -1,8 +1,8 @@
 import { FormValues as FV } from "../types";
 import { Chain } from "types/tx";
 import TokenField from "components/TokenField";
-import { FormContainer, Submitter } from "components/admin";
 import { Field } from "components/form";
+import { FormContainer, Submitter } from "../../../../components";
 import useTransferFunds from "./useTransferFunds";
 
 export default function Form(props: Chain) {

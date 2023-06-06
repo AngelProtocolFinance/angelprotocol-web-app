@@ -1,8 +1,8 @@
 import { useModalContext } from "contexts/ModalContext";
 import { ErrorStatus } from "components/Status";
-import { DivContainer } from "components/admin";
 import { isEmpty } from "helpers";
 import { useAdminContext } from "../../../Context";
+import { DivContainer } from "../../../components";
 import AddForm from "./Adder";
 import Member from "./Member";
 

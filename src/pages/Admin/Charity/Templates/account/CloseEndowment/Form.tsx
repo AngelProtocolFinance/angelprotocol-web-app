@@ -1,6 +1,6 @@
 import { FormValues as FV } from "./types";
-import { FormContainer, Submitter } from "components/admin";
 import { Field } from "components/form";
+import { FormContainer, Submitter } from "../../../../components";
 import Beneficiary from "./Beneficiary";
 import useCloseEndowment from "./useCloseEndowment";
 

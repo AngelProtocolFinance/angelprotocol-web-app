@@ -4,7 +4,7 @@ import { FormValues } from "./types";
 import { IndexFundConfig } from "types/contracts";
 import { useContractQuery } from "services/juno";
 import QueryLoader from "components/QueryLoader";
-import { FormError, FormSkeleton } from "components/admin";
+import { FormError, FormSkeleton } from "../../../../components";
 import Form from "./Form";
 import { schema } from "./schema";
 
