@@ -17,7 +17,6 @@ export const templates: {
   "index-fund.config": "index-fund_config",
   "index-fund.update-owner": "index-fund_update-owner",
 
-  "multisig.config": "multisig_config",
   "multisig.fund-transfer": "multisig_fund-transfer",
 
   "accounts.withdraw": "accounts_withdraw", //includes locked-withdraw

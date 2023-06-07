@@ -1,7 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { adminRoutes } from "constants/routes";
 import { templateRoutes as routes } from "../../constants";
-import Config from "../../templates/cw3/Config";
 import FundSender from "../../templates/cw3/FundSender";
 import Seo from "../Seo";
 import Nav from "./Nav";
@@ -12,8 +11,6 @@ export default function Templates() {
       <Seo title="Templates" url={adminRoutes.templates} />
       <Nav />
       <Routes>
-        {/**_cw3 */}
-        <Route path={routes["multisig.config"]} element={<Config />} />
         <Route
           path={routes["multisig.fund-transfer"]}
           element={<FundSender />}

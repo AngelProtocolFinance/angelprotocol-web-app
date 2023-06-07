@@ -3,7 +3,6 @@ import Seo from "components/Seo";
 import { APP_NAME, DAPP_URL } from "constants/env";
 import { adminRoutes } from "constants/routes";
 import { templateRoutes as routes } from "../../constants";
-import Config from "../../templates/cw3/Config";
 import FundSender from "../../templates/cw3/FundSender";
 import Nav from "./Nav";
 
@@ -22,8 +21,6 @@ export default function Templates() {
           path={routes["multisig.fund-transfer"]}
           element={<FundSender />}
         />
-        <Route path={routes["multisig.config"]} element={<Config />} />
-        {/**_cw4 */}
       </Routes>
     </div>
   );
