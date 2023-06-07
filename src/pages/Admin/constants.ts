@@ -66,7 +66,15 @@ export const LINKS: {
     to: sidebarRoutes.contributor_verification,
     icon: {
       type: "SecurityScan",
-      size: 24,
+      size: 25,
+    },
+  },
+  admin_wallet: {
+    title: "Admin Wallet",
+    to: sidebarRoutes.admin_wallet,
+    icon: {
+      type: "Wallet",
+      size: 21.7,
     },
   },
   liquidAccount: {
@@ -82,7 +90,7 @@ export const LINKS: {
     to: sidebarRoutes.lockedAccount,
     icon: {
       type: "Lock",
-      size: 24,
+      size: 25.5,
     },
   },
   index_review: {
@@ -116,7 +124,7 @@ export const LINKS: {
     to: sidebarRoutes.withdraws,
     icon: {
       type: "MoneyBill",
-      size: 24,
+      size: 22,
     },
   },
   contributions: {
@@ -148,7 +156,7 @@ export const LINKS: {
     to: sidebarRoutes.edit_profile,
     icon: {
       type: "User",
-      size: 24,
+      size: 20.5,
     },
   },
   permissions: {
@@ -164,7 +172,7 @@ export const LINKS: {
     to: sidebarRoutes.proposals,
     icon: {
       type: "ClipboardCheck",
-      size: 24,
+      size: 20,
     },
   },
   whitelists: {
@@ -172,7 +180,7 @@ export const LINKS: {
     to: sidebarRoutes.whitelists,
     icon: {
       type: "FactCheck",
-      size: 24,
+      size: 22,
     },
   },
   widget_config: {
