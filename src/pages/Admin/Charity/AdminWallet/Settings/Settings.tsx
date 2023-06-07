@@ -27,6 +27,11 @@ export default function Settings() {
         </Container>
         <Container>
           <p>
+            Proposals duration is <Bold>not set</Bold>
+          </p>
+        </Container>
+        <Container>
+          <p>
             Proposals auto-execution is turned{" "}
             <Bold>{config.requireExecution ? "OFF" : "ON"}</Bold>.
           </p>
