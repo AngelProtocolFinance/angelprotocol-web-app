@@ -7,10 +7,8 @@ export default function Settings() {
   const { members, config } = useAdminResources();
   const { showModal } = useModalContext();
   return (
-    <div className="content-start border border-prim p-4 md:p-8 rounded">
-      <h2 className="font-bold text-center sm:text-left text-2xl mb-8">
-        Settings
-      </h2>
+    <div className="grid content-start border border-prim p-4 @lg:p-8 rounded">
+      <h2 className="font-bold text-2xl mb-8">Settings</h2>
       <div className="@container border border-prim rounded divide-y divide-prim">
         <Container
           onBtnClick={() =>

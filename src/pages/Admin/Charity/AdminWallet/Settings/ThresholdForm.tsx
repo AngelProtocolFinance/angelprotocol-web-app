@@ -62,7 +62,7 @@ export default function ThresholdForm({ added, initial }: Props) {
           step={1}
           name="threshold"
           label="Number of signatures to pass"
-          classes={{ container: "mt-8 mb-4" }}
+          classes="field-admin"
           required
         />
       </FormProvider>
