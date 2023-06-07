@@ -44,13 +44,20 @@ const COMMON: LinkGroup[] = [
 const LINK_GROUPS: { [key in EndowmentType]: LinkGroup[] } = {
   charity: [
     ...COMMON,
-    { title: "Settings", links: [LINKS[adminRoutes.permissions]] },
+    {
+      title: "Settings",
+      links: [LINKS.admin_wallet, LINKS.permissions],
+    },
   ],
   normal: [
     ...COMMON,
     {
       title: "Settings",
-      links: [LINKS.contributor_verification, LINKS[adminRoutes.permissions]],
+      links: [
+        LINKS.admin_wallet,
+        LINKS.contributor_verification,
+        LINKS.permissions,
+      ],
     },
   ],
 };
