@@ -7,7 +7,7 @@ import { useModalContext } from "contexts/ModalContext";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import Seo from "components/Seo";
-import { APP_NAME, DAPP_DOMAIN } from "constants/common";
+import { APP_NAME, DAPP_URL } from "constants/env";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { SEPARATOR } from "../../constants";
 import Proposer from "./Proposer";
@@ -27,7 +27,7 @@ export default function Summary({
       <Seo
         title={`Summary - ${APP_NAME}`}
         description={`Application Summary for ${r.OrganizationName}`}
-        url={`${DAPP_DOMAIN}/${appRoutes.admin}/${id}/${adminRoutes.application}/${appId}${SEPARATOR}${r.PK}`}
+        url={`${DAPP_URL}/${appRoutes.admin}/${id}/${adminRoutes.application}/${appId}${SEPARATOR}${r.PK}`}
       />
       <h3 className="text-xl font-semibold">{r.OrganizationName}</h3>
       <p className="text-sm mb-6 flex items-center gap-1">

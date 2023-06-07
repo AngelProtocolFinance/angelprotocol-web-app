@@ -13,7 +13,7 @@ import { multisig as Multisig, SubmissionEvent } from "contracts/evm/multisig";
 import useTxSender from "hooks/useTxSender";
 import { createAuthToken, logger } from "helpers";
 import { chainIds } from "constants/chainIds";
-import { EMAIL_SUPPORT } from "constants/common";
+import { EMAIL_SUPPORT } from "constants/env";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { APIs } from "constants/urls";
 import { constructTx } from "./constructTx";

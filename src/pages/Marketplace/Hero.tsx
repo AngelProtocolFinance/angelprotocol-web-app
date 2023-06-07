@@ -1,4 +1,3 @@
-import heroImage from "assets/images/hero.png";
 import Image from "components/Image";
 
 export default function Hero({ classes = "" }: { classes?: string }) {
@@ -12,7 +11,7 @@ export default function Hero({ classes = "" }: { classes?: string }) {
           GLOBAL NONPROFIT FINANCING.
         </div>
       </h1>
-      <Image src={heroImage} className="order-3 row-span-2 rounded-lg" />
+      <Image src="/images/hero.png" className="order-3 row-span-2 rounded-lg" />
       <p className="order-2 lg:order-3 text-[1.13rem] lg:text-2xl w-full leading-relaxed text-center lg:text-left">
         Nonprofit fundraising hasn’t changed much for the last hundred years.
         But the world has. We provide nonprofits with new tools to raise,

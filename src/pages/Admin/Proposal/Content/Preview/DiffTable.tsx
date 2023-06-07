@@ -1,5 +1,4 @@
 import { Diff, PrimitiveValue } from "types/utils";
-import placeHolderImage from "assets/images/home-banner.jpg";
 import Image from "components/Image";
 import TableSection, { Cells } from "components/TableSection";
 import { bucketURL } from "helpers/uploadFiles";
@@ -48,7 +47,9 @@ function createColumn(value: PrimitiveValue): JSX.Element {
       <Image
         src={value}
         className="w-40 lg:w-[40rem] lg:min-h-[5rem] max-w-2xl"
-        onError={(e) => e.currentTarget.setAttribute("src", placeHolderImage)}
+        onError={(e) =>
+          e.currentTarget.setAttribute("src", "/images/home-banner.jpg")
+        }
       />
     );
   }

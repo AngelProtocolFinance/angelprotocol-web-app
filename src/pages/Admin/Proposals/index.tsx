@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useProposalsQuery } from "services/juno/custom";
 import Seo from "components/Seo";
 import { useGetter } from "store/accessors";
-import { APP_NAME, DAPP_DOMAIN } from "constants/common";
+import { APP_NAME, DAPP_URL } from "constants/env";
 import { adminRoutes } from "constants/routes";
 import { useAdminResources } from "../Guard";
 import Table from "./Table";
@@ -32,7 +32,7 @@ export default function Proposals() {
     <div className="grid content-start rounded">
       <Seo
         title={`Decision Center - ${APP_NAME}`}
-        url={`${DAPP_DOMAIN}/${adminRoutes.proposals}`}
+        url={`${DAPP_URL}/${adminRoutes.proposals}`}
       />
 
       <Toolbar classes="@xl:mb-6" />

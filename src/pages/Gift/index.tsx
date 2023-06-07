@@ -1,5 +1,4 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import banner from "assets/images/hero.png";
 import Claim from "./Claim";
 import Mailer from "./Mailer";
 import Purchase from "./Purchase";
@@ -10,7 +9,7 @@ export default function Gift() {
     <div className="grid">
       <div
         style={{
-          backgroundImage: `url('${banner}')`,
+          backgroundImage: `url("/images/hero.png")`,
         }}
         className="relative overlay w-full h-72 bg-center bg-cover"
       />

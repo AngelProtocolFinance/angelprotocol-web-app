@@ -1,37 +1,29 @@
 # angelprotocol-web-app
 
-[![codecov](https://codecov.io/gh/AngelProtocolFinance/angelprotocol-web-app/branch/master/graph/badge.svg?token=9KS3RZZHJF)](https://codecov.io/gh/AngelProtocolFinance/angelprotocol-web-app)
+## GETTING STARTED
 
 ### Requirements
+- `Node.js` (v16.x) - https://github.com/nvm-sh/nvm#installing-and-updating
+- `yarn` (v1.22.x) - https://yarnpkg.com/getting-started/install/
 
-- `Node v16.18.0`
+We recommend using a version manager like `nvm`. Assuming you are using nvm, you can install and use Node v18 with the following two commands:
+```shell
+nvm install v16
+nvm use v16
+```
 
-## Setup
+We use `yarn` as a package manager. After installing yarn, simply run the package installer:
+```shell
+yarn install
+```
 
-1. create `.env` file at the root of the project and add the following entries
+Lastly, we have provided an example `.env` file as `.env.template`.
+You'll need to copy this file to `.env` and then modify/add your relevant app's settings, API Keys and the like:
+```shell
+cp .env.template .env
+```
 
-```yaml
-# discard to generate source-maps to use in "yarn analyze"
- GENERATE_SOURCEMAP=<TRUE | FALSE>
-
-# port used by development server
-PORT=<port number>
-
-REACT_APP_NETWORK=<LOCAL | TESTNET | MAINNET>
-REACT_APP_JUNO_LCD_NODE=<juno lcd>
-
-# discard if doesn't want to enable AST features
-REACT_APP_APP_TYPE=AST
-
-# set these to override all JUNO LCDs and RPCs including
-# REACT_APP_JUNO_LCD_NODE
-# This is specially helpful when using localjuno
-REACT_APP_JUNO_LCD_OVERRIDE=http://localhost:1317
-REACT_APP_JUNO_RPC_OVERRIDE=http://localhost:26657
-
-# others ( ask team members )
- REACT_APP_APES_AUTH_SECRET_KEY
- REACT_APP_ANGEL_AUTH_SECRET_KEY
- REACT_APP_KADO_API_KEY
-
+To run the web app server locally, simply execute: 
+```shell
+yarn start
 ```

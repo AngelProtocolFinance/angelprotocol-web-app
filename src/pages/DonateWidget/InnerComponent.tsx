@@ -5,8 +5,7 @@ import { Steps } from "components/donation";
 import { useSetter } from "store/accessors";
 import { setRecipient } from "slices/donation";
 import { getPossessiveForm } from "helpers";
-import { AP_LOGO } from "constants/common";
-import { PAYMENT_WORDS, titleCase } from "constants/env";
+import { LOGO_DARK, PAYMENT_WORDS, titleCase } from "constants/common";
 import useWidgetParams from "./useWidgetParams";
 
 export default function InnerComponent(props: {
@@ -53,7 +52,7 @@ export default function InnerComponent(props: {
         </section>
       </div>
       <footer className="flex justify-center items-center h-20 w-full bg-blue dark:bg-blue-d3">
-        <Image className="w-20" {...AP_LOGO} />
+        <Image className="w-20" {...LOGO_DARK} />
       </footer>
     </div>
   );
