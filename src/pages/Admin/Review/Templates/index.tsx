@@ -5,7 +5,6 @@ import { adminRoutes } from "constants/routes";
 import { templateRoutes as routes } from "../../constants";
 import Config from "../../templates/cw3/Config";
 import FundSender from "../../templates/cw3/FundSender";
-import Members from "../../templates/cw4/Members";
 import Nav from "./Nav";
 
 export default function Templates() {
@@ -25,7 +24,6 @@ export default function Templates() {
         />
         <Route path={routes["multisig.config"]} element={<Config />} />
         {/**_cw4 */}
-        <Route path={routes["multisig.owners"]} element={<Members />} />
       </Routes>
     </div>
   );

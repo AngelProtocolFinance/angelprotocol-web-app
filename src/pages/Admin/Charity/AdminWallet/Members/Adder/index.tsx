@@ -1,9 +1,9 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues as FV, FormProps } from "./types";
-import { useAdminResources } from "pages/Admin/Guard";
 import Modal from "components/Modal";
 import { Field } from "components/form";
+import { useAdminResources } from "../../../../Guard";
 import { schema } from "./schema";
 import useUpdateMembers from "./useUpdateMembers";
 

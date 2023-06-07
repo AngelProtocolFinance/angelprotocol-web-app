@@ -1,8 +1,8 @@
-import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { ErrorStatus } from "components/Status";
 import { DivContainer } from "components/admin";
 import { isEmpty } from "helpers";
+import { useAdminResources } from "../../../Guard";
 import AddForm from "./Adder";
 import Member from "./Member";
 
