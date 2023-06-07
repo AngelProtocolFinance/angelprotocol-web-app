@@ -17,8 +17,7 @@ export type FormField = Pick<Delegate, "addr"> & {
 
 export type UpdateableFormValues = {
   accountFees: FormField;
-  beneficiaries_allowlist: FormField;
-  contributors_allowlist: FormField;
+  allowList: FormField;
   donationSplitParams: FormField;
   profile: FormField;
 };
@@ -39,8 +38,7 @@ const fieldShape: SchemaShape<FormField> = {
 
 const shape: SchemaShape<FormValues> = {
   accountFees: Yup.object().shape(fieldShape),
-  beneficiaries_allowlist: Yup.object().shape(fieldShape),
-  contributors_allowlist: Yup.object().shape(fieldShape),
+  allowList: Yup.object().shape(fieldShape),
   donationSplitParams: Yup.object().shape(fieldShape),
   profile: Yup.object().shape(fieldShape),
 };

@@ -13,8 +13,7 @@ export function controllerUpdate(
 ): SettingsControllerUpdate {
   const toPermission = converter(fv);
   const accountFees = toPermission("accountFees");
-  const beneficiaries_allowlist = toPermission("beneficiaries_allowlist");
-  const contributors_allowlist = toPermission("contributors_allowlist");
+  const allowList = toPermission("allowList");
   const donationSplitParams = toPermission("donationSplitParams");
   const profile = toPermission("profile");
 
@@ -24,8 +23,8 @@ export function controllerUpdate(
       acceptedTokens: controller.acceptedTokens,
       lockedInvestmentManagement: controller.lockedInvestmentManagement,
       liquidInvestmentManagement: controller.liquidInvestmentManagement,
-      allowlistedBeneficiaries: beneficiaries_allowlist,
-      allowlistedContributors: contributors_allowlist,
+      allowlistedBeneficiaries: allowList,
+      allowlistedContributors: allowList,
       maturityAllowlist: controller.maturityAllowlist,
       maturityTime: controller.maturityTime,
       earlyLockedWithdrawFee: accountFees,

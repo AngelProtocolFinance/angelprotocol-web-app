@@ -14,13 +14,9 @@ export default function Permissions() {
 
   const fv: UpdateableFormValues = {
     accountFees: createField(controller.depositFee, "Changes to account fees"),
-    beneficiaries_allowlist: createField(
+    allowList: createField(
       controller.allowlistedBeneficiaries,
-      "Changes to beneficiaries whitelist"
-    ),
-    contributors_allowlist: createField(
-      controller.allowlistedContributors,
-      "Changes to contributors whitelist"
+      "Changes to beneficiaries and contributors"
     ),
     donationSplitParams: createField(
       controller.splitToLiquid,
