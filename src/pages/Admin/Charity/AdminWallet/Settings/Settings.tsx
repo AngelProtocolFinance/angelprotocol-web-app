@@ -8,7 +8,7 @@ export default function Settings() {
   const { showModal } = useModalContext();
   return (
     <div className="content-start border border-prim p-4 md:p-8 rounded">
-      <h2 className="font-bold text-center sm:text-left text-xl mb-8">
+      <h2 className="font-bold text-center sm:text-left text-2xl mb-8">
         Settings
       </h2>
       <div className="@container border border-prim rounded divide-y divide-prim">

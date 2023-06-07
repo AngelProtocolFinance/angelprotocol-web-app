@@ -13,7 +13,7 @@ export default function Members() {
     <div className="grid content-start border border-prim rounded p-8">
       <h4 className="text-2xl font-body mb-8">Members</h4>
       <button
-        className="btn-outline-filled justify-self-end mb-4 text-sm flex gap-x-3"
+        className="btn-outline-filled justify-self-end mb-5 text-sm flex gap-x-3"
         onClick={() => showModal(AddForm, { address: "", action: "add" })}
       >
         <Icon type="Plus" />
