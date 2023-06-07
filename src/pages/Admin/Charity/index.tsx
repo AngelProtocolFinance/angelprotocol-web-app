@@ -17,6 +17,7 @@ import Invest from "./Invest";
 import Permissions from "./Permissions";
 // import Settings from "./Settings";
 import Templates from "./Templates";
+import Whitelists from "./Whitelists";
 import WidgetConfigurer from "./WidgetConfigurer";
 import Withdraws from "./Withdraws";
 
@@ -36,7 +37,7 @@ const COMMON: LinkGroup[] = [
   { title: "Profile", links: [LINKS.edit_profile] },
   {
     title: "Manage",
-    links: [LINKS[adminRoutes.proposals]],
+    links: [LINKS[adminRoutes.proposals], LINKS[adminRoutes.whitelists]],
   },
 ];
 
@@ -55,11 +56,11 @@ const LINK_GROUPS: { [key in EndowmentType]: LinkGroup[] } = {
 };
 
 export default function Charity() {
-  const { endow_type } = useAdminResources<"charity">();
+  const { endowType } = useAdminResources<"charity">();
 
   return (
     <Routes>
-      <Route element={<Layout linkGroups={LINK_GROUPS[endow_type]} />}>
+      <Route element={<Layout linkGroups={LINK_GROUPS[endowType]} />}>
         <Route path={`${adminRoutes.proposal}/:id`} element={<Proposal />} />
         <Route path={adminRoutes.proposals} element={<Proposals />} />
         <Route path={`${adminRoutes.templates}/*`} element={<Templates />} />
@@ -71,6 +72,7 @@ export default function Charity() {
         </Route>
         <Route path={adminRoutes.invest} element={<Invest />} />
         <Route path={adminRoutes.contributions} element={<Contributions />} />
+        <Route path={adminRoutes.whitelists} element={<Whitelists />} />
         {/*<Route path={adminRoutes.settings} element={<Settings />} />*/}
         <Route path={adminRoutes.edit_profile} element={<EditProfile />} />
         <Route path={adminRoutes.permissions} element={<Permissions />} />

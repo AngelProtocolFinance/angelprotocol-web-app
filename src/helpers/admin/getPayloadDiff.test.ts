@@ -8,15 +8,20 @@ describe("getPayloadDiff", () => {
         { a: 1, b: 2, c: 3, d:NaN },
         { a: 1, b: 2, c: 3, d: NaN }
       )
-    ).toStrictEqual({});
-
+    ).toStrictEqual([]);
     expect(
       getPayloadDiff(
         //prettier-ignore
         { a: 1, b: 2, c: 3, d:[1], e: [1, 2], f: [1, 2] },
         { a: 4, b: 5, c: 6, d: [1, 2], e: [1], f: [1, 3] }
       )
-    ).toStrictEqual({ a: 4, b: 5, c: 6, d: [1, 2], e: [1], f: [1, 3] });
+    ).toStrictEqual([
+      ["a", 1, 4],
+      ["b", 2, 5],
+      ["c", 3, 6],
+      ["f.1", 2, 3],
+      ["d.1", "not-set", 2],
+    ]);
   });
 
   test("if prev !== next, include next if it's truthy (including 0, '', [] and false)", () => {
@@ -27,7 +32,12 @@ describe("getPayloadDiff", () => {
         //prettier-ignore
         { a: 0, b: "b", c: "", d: null, e: undefined, f: false, g: [], h: NaN, i:NaN }
       )
-    ).toStrictEqual({ a: 0, b: "b", c: "", f: false, g: [] });
+    ).toStrictEqual([
+      ["a", 1, 0],
+      ["b", "a", "b"],
+      ["c", 3, ""],
+      ["f", 4, false],
+    ]);
   });
 
   test("include attributes not in prev but in next, given that next is truthy (including 0, [] and false)", () => {
@@ -47,7 +57,13 @@ describe("getPayloadDiff", () => {
           i: [1],
         }
       )
-    ).toStrictEqual({ b: "b", d: 0, f: 0, g: false, h: [], i: [1] });
+    ).toStrictEqual([
+      ["b", "not-set", "b"],
+      ["d", "not-set", 0],
+      ["f", "not-set", 0],
+      ["g", "not-set", false],
+      ["i.0", "not-set", 1],
+    ]);
   });
 
   test("both zero in prev and next", () => {
@@ -57,7 +73,7 @@ describe("getPayloadDiff", () => {
         { a: 0 },
         { a: 0 }
       )
-    ).toStrictEqual({});
+    ).toStrictEqual([]);
   });
   test("prev is false", () => {
     expect(
@@ -66,7 +82,7 @@ describe("getPayloadDiff", () => {
         { a: false },
         { a: false }
       )
-    ).toStrictEqual({});
+    ).toStrictEqual([]);
   });
   test("prev is empty array []", () => {
     expect(
@@ -75,7 +91,7 @@ describe("getPayloadDiff", () => {
         { a: [] },
         { a: [] }
       )
-    ).toStrictEqual({});
+    ).toStrictEqual([]);
   });
   test("both the same string in prev and next", () => {
     expect(
@@ -84,13 +100,13 @@ describe("getPayloadDiff", () => {
         { a: "a" },
         { a: "a" }
       )
-    ).toStrictEqual({});
+    ).toStrictEqual([]);
   });
   test("include diff subobjects", () => {
     expect(
       getPayloadDiff(
         {
-          diffObjField: {
+          first: {
             a: true,
             b: "abc",
             c: 1,
@@ -100,7 +116,7 @@ describe("getPayloadDiff", () => {
             g: "a",
             h: "same",
           },
-          sameObjField: {
+          second: {
             a: true,
             b: "abc",
             c: 1,
@@ -112,7 +128,7 @@ describe("getPayloadDiff", () => {
           },
         },
         {
-          diffObjField: {
+          first: {
             a: false,
             b: "abc",
             c: 2,
@@ -121,7 +137,7 @@ describe("getPayloadDiff", () => {
             f: { a: "a" },
             h: "same",
           },
-          sameObjField: {
+          second: {
             a: true,
             b: "abc",
             c: 1,
@@ -133,16 +149,12 @@ describe("getPayloadDiff", () => {
           },
         }
       )
-    ).toStrictEqual({
-      diffObjField: {
-        a: false,
-        b: "abc",
-        c: 2,
-        d: "a",
-        e: "a",
-        f: { a: "a" },
-        h: "same",
-      },
-    });
+    ).toStrictEqual([
+      ["first.a", true, false],
+      ["first.c", 1, 2],
+      ["first.d", "not-set", "a"],
+      ["first.e", "not-set", "a"],
+      ["first.f.a", "not-set", "a"],
+    ]);
   });
 });

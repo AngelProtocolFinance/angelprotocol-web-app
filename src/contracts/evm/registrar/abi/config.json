@@ -7,11 +7,6 @@
         "components": [
           {
             "internalType": "address",
-            "name": "owner",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
             "name": "applicationsReview",
             "type": "address"
           },
@@ -32,27 +27,27 @@
           },
           {
             "internalType": "address",
-            "name": "subdaoGovCode",
+            "name": "subdaoGovContract",
             "type": "address"
           },
           {
             "internalType": "address",
-            "name": "subdaoCw20TokenCode",
+            "name": "subdaoTokenContract",
             "type": "address"
           },
           {
             "internalType": "address",
-            "name": "subdaoBondingTokenCode",
+            "name": "subdaoBondingTokenContract",
             "type": "address"
           },
           {
             "internalType": "address",
-            "name": "subdaoCw900Code",
+            "name": "subdaoCw900Contract",
             "type": "address"
           },
           {
             "internalType": "address",
-            "name": "subdaoDistributorCode",
+            "name": "subdaoDistributorContract",
             "type": "address"
           },
           {
@@ -62,7 +57,7 @@
           },
           {
             "internalType": "address",
-            "name": "donationMatchCode",
+            "name": "donationMatchContract",
             "type": "address"
           },
           {
@@ -113,11 +108,6 @@
             "type": "address"
           },
           {
-            "internalType": "address",
-            "name": "collectorAddr",
-            "type": "address"
-          },
-          {
             "internalType": "uint256",
             "name": "collectorShare",
             "type": "uint256"
@@ -128,53 +118,9 @@
             "type": "address"
           },
           {
-            "components": [
-              {
-                "internalType": "address[]",
-                "name": "cw20",
-                "type": "address[]"
-              }
-            ],
-            "internalType": "struct AngelCoreStruct.AcceptedTokens",
-            "name": "acceptedTokens",
-            "type": "tuple"
-          },
-          {
             "internalType": "address",
             "name": "fundraisingContract",
             "type": "address"
-          },
-          {
-            "components": [
-              {
-                "internalType": "bool",
-                "name": "rebalanceLiquidInvestedProfits",
-                "type": "bool"
-              },
-              {
-                "internalType": "bool",
-                "name": "lockedInterestsToLiquid",
-                "type": "bool"
-              },
-              {
-                "internalType": "uint256",
-                "name": "interest_distribution",
-                "type": "uint256"
-              },
-              {
-                "internalType": "bool",
-                "name": "lockedPrincipleToLiquid",
-                "type": "bool"
-              },
-              {
-                "internalType": "uint256",
-                "name": "principle_distribution",
-                "type": "uint256"
-              }
-            ],
-            "internalType": "struct AngelCoreStruct.RebalanceDetails",
-            "name": "rebalance",
-            "type": "tuple"
           },
           {
             "internalType": "address",

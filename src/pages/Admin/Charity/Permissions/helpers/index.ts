@@ -1,2 +1,2 @@
-export * from "./createUpdateEndowmentControllerMsg";
+export * from "./controllerUpdate";
 export * from "./getFieldErrorName";

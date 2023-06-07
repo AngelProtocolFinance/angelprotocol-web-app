@@ -5,7 +5,7 @@ import SubmitLocked from "./SubmitLocked";
 import WithdrawButton from "./WithdrawButton";
 
 export default function Submit() {
-  const { endow_type } = useAdminResources<"charity">();
+  const { endowType } = useAdminResources<"charity">();
   const {
     getValues,
     formState: { isDirty, isValid, isSubmitting },
@@ -19,7 +19,7 @@ export default function Submit() {
   //locked withdraw form not visible to normal endowments when not matured
   return (
     <SubmitLocked
-      endowment={{ endow_type }}
+      endowment={{ endowType }}
       isSubmitDisabled={isSubmitDisabled}
     />
   );

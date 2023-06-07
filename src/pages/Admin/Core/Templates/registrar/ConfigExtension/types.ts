@@ -1,8 +1,8 @@
 import { ProposalBase } from "../../../../types";
-import { RegistrarConfigPayload } from "types/contracts";
+import { RegistrarConfigUpdate } from "types/contracts";
 
 export type Fields = Pick<
-  RegistrarConfigPayload,
+  RegistrarConfigUpdate,
   | "accountsContract"
   | "applicationsReview"
   | "charityProposal"
@@ -15,13 +15,13 @@ export type Fields = Pick<
   | "indexFundContract"
   | "swapsRouter"
   | "multisigFactory"
-  | "subdaoBondingTokenCode"
-  | "subdaoCw20TokenCode"
-  | "subdaoCw900Code"
-  | "subdaoDistributorCode"
-  | "subdaoGovCode"
+  | "subdaoBondingTokenContract"
+  | "subdaoTokenContract"
+  | "subdaoCw900Contract"
+  | "subdaoDistributorContract"
+  | "subdaoGovContract"
 >;
 //future fields to edit
 
 export type FormValues = ProposalBase &
-  Fields & { initial: RegistrarConfigPayload };
+  Fields & { initial: RegistrarConfigUpdate };

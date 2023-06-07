@@ -4,8 +4,7 @@ import {
   IERC20,
   ProposalDetails,
 } from "services/types";
-import { AcceptedTokens } from "types/contracts";
-import { AccountType } from "types/contracts/evm";
+import { AcceptedTokens, AccountType } from "types/contracts";
 import { Transaction } from "types/contracts/multisig";
 import { TransactionStatus } from "types/lists";
 import { idParamToNum } from "helpers";
@@ -27,7 +26,7 @@ export const customApi = junoApi.injectEndpoints({
           const members = await queryContract("multisig.members", { multisig });
 
           return {
-            data: args.user in members,
+            data: members.includes(args.user),
           };
         }
 
@@ -40,7 +39,7 @@ export const customApi = junoApi.injectEndpoints({
         });
 
         return {
-          data: args.user in members,
+          data: members.includes(args.user),
         };
       },
     }),
@@ -50,7 +49,6 @@ export const customApi = junoApi.injectEndpoints({
     >({
       providesTags: [
         "multisig.members",
-        "multisig.threshold",
         "multisig.threshold",
         "accounts.endowment",
       ],
@@ -107,7 +105,11 @@ export const customApi = junoApi.injectEndpoints({
       ProposalDetails,
       { id?: string; multisig: string }
     >({
-      providesTags: ["multisig.votes", "multisig.members", "multisig.txs"],
+      providesTags: [
+        "multisig.votes",
+        "multisig.members",
+        "multisig.transaction",
+      ],
       async queryFn({ id: idParam, multisig }) {
         const id = idParamToNum(idParam);
 
@@ -134,7 +136,7 @@ export const customApi = junoApi.injectEndpoints({
       async queryFn(args) {
         //TODO: get this from registrar
         const tokens: AcceptedTokens = {
-          cw20: ["0xaBCe32FBA4C591E8Ea5A5f711F7112dC08BCee74"],
+          cw20: ["0xe6b8a5CF854791412c1f6EFC7CAf629f5Df1c747"],
         };
 
         const balances = (type: AccountType) =>

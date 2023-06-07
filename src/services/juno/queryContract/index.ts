@@ -23,6 +23,7 @@ export async function queryContract<T extends QT>(
     contract_key in contracts ? contracts[contract_key as Contract] : c;
 
   const [query, transform] = queryObjects[type];
+
   const data = typeof query === "function" ? query(args) : query;
 
   const result = await fetch(POLYGON_RPC, {

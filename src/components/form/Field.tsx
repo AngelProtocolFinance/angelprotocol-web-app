@@ -9,7 +9,7 @@ const textarea = "textarea" as const;
 type TextArea = typeof textarea;
 type InputType = HTMLInputElement["type"] | TextArea;
 
-export type FieldProps<T extends FieldValues, K extends InputType> = Omit<
+type FieldProps<T extends FieldValues, K extends InputType> = Omit<
   K extends TextArea
     ? React.TextareaHTMLAttributes<HTMLTextAreaElement>
     : React.InputHTMLAttributes<HTMLInputElement>,

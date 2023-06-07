@@ -10,20 +10,18 @@ const mainnet:Contracts = {
   "multisig/ap":         "",
   "multisig/review":     "",
   accounts:              "juno1e0w8892n60v0juuugvwptj8f6v3ad56ydr3cgxstmpkggjrqzfhsaqh38c",
-  "locked-withdraw":     "",
   "charity-application": "",
   "gift-card":           "juno17pghl3qreyqnjlq6hun5ymshl0dkfeelcy738dkgk602lzmgcvaq2e4xav",
 }
 
 //prettier-ignore
 const testnet:Contracts = {
-  registrar:             "0xf9ae9FEb01B382C87d391F04a021fae312264CA7",
-  "index-fund":          "0xba4A7987e34BFDCb1D10e1318934dBce1024bDC8",
-  "multisig/ap":         "0xC26Ac43b14ebCbff5029792052aF3e4DF3233902",
-  "multisig/review":     "0x1edC050B5d84cbB0cA0b56356f3F7307efcd50Fb",
-  accounts:              "0xf725Ff6235D53dA06Acb4a70AA33206a1447D550",
-  "locked-withdraw":     "0x2d618cDa8cbd2FFc742DD9E8BBEa774B30d06665",
-  "charity-application": "0x14A7bb3A01D9011D39FC0ECb5d09C84f7F596e4B",
+  registrar:             "0x74f62eE5330EE95B72c6CDFA301Be106bDe5D454",
+  "index-fund":          "0xE036D1034640fa16280682fd8CC00Ccf3D42e8E4",
+  "multisig/ap":         "0xD812901336D4f1c910a2Ac51921E0105BD980887",
+  "multisig/review":     "0xaDC97799AAC1430e297edb86136579710B081e0A",
+  accounts:              "0xFCbE277d74027455A92fA67253FA16385F0579F4",
+  "charity-application": "0xbF6b148a440acAb936796ad40947C0C33C78639A",
   "gift-card":           "0x47e49a7700c9D79412bb47385eD349106d4941F9",
 }
 

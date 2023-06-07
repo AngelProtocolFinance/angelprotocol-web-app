@@ -34,7 +34,7 @@ export default function Fee({ name, title, isOpen, onToggle }: Props) {
   useEffect(() => {
     if (!isActive) {
       clearErrors([rateName, receiverName]);
-      setValue(rateName, "1", { shouldValidate: false });
+      setValue(rateName, "", { shouldValidate: false });
       setValue(receiverName, "", { shouldValidate: false });
     } else {
       setFocus(receiverName);

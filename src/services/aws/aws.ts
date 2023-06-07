@@ -1,12 +1,12 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import { Profile } from "../types";
 import {
+  EndowListPaginatedAWSQueryRes,
   EndowmentCard,
   EndowmentProfile,
   EndowmentProfileUpdate,
   EndowmentsQueryParams,
   NewAST,
-  PaginatedAWSQueryRes,
   TStrategy,
   WalletProfile,
 } from "types/aws";
@@ -16,11 +16,12 @@ import { createAuthToken } from "helpers";
 import { chainIds } from "constants/chainIds";
 import { IS_AST, IS_TEST } from "constants/env";
 import { APIs } from "constants/urls";
+import { version as v } from "../helpers";
 
 const network: NetworkType = IS_TEST ? "testnet" : "mainnet";
 
 const getWalletProfileQuery = (walletAddr: string) =>
-  `/v2/profile/${network}/user/${walletAddr}`;
+  `/${v(2)}/profile/${network}/user/${walletAddr}`;
 
 const awsBaseQuery = retry(
   fetchBaseQuery({
@@ -52,13 +53,13 @@ export const aws = createApi({
   baseQuery: awsBaseQuery,
   endpoints: (builder) => ({
     endowmentCards: builder.query<
-      PaginatedAWSQueryRes<EndowmentCard[]>,
+      EndowListPaginatedAWSQueryRes<EndowmentCard[]>,
       EndowmentsQueryParams
     >({
       providesTags: ["endowments"],
       query: (params) => {
         return {
-          url: `/v4/endowments/${network}`,
+          url: `/${v(5)}/endowments/${network}`,
           params: { ...params, return: endowCardFields },
         };
       },
@@ -73,13 +74,13 @@ export const aws = createApi({
       },
     }),
     endowmentIdNames: builder.query<
-      PaginatedAWSQueryRes<Pick<EndowmentCard, "id" | "name">[]>,
+      EndowListPaginatedAWSQueryRes<Pick<EndowmentCard, "id" | "name">[]>,
       EndowmentsQueryParams
     >({
       providesTags: ["endowments"],
       query: (params) => {
         return {
-          url: `/v4/endowments/${network}`,
+          url: `/${v(5)}/endowments/${network}`,
           params: { ...params, return: ENDOW_ID_NAME_FIELDS },
         };
       },
@@ -107,8 +108,8 @@ export const aws = createApi({
       providesTags: ["profile"],
       query: (endowId) =>
         IS_AST
-          ? `/v1/ast/${chainIds.polygon}/${endowId}`
-          : `/v2/profile/${network}/endowment/${endowId}`,
+          ? `/${v(1)}/ast/${chainIds.polygon}/${endowId}`
+          : `/${v(2)}/profile/${network}/endowment/${endowId}`,
       transformResponse(r: EndowmentProfile) {
         //transform cloudsearch placeholders
         const tagline = r.tagline === " " ? "" : r.tagline;
@@ -130,7 +131,7 @@ export const aws = createApi({
         error ? [] : ["endowments", "profile", "walletProfile"],
       query: (payload) => {
         return {
-          url: `/v2/profile/${network}/endowment`,
+          url: `/${v(2)}/profile/${network}/endowment`,
           method: "PUT",
           body: payload,
         };
@@ -142,7 +143,7 @@ export const aws = createApi({
       query: (payload) => {
         const token = createAuthToken("app-user");
         return {
-          url: `/v1/ast`,
+          url: `/${v(1)}/ast`,
           method: "POST",
           body: payload,
           headers: { authorization: token },
@@ -173,9 +174,9 @@ export const {
   },
 } = aws;
 
-type EndowCardFields = keyof (Omit<EndowmentCard, "hq" | "categories"> &
+type EndowCardFields = keyof (Omit<EndowmentCard, "hq"> &
   /** replace with cloudsearch specific field format */
-  Pick<EndowmentProfileUpdate, "hq_country" | "categories_sdgs">);
+  Pick<EndowmentProfileUpdate, "hq_country">);
 
 //object format first to avoid duplicates
 const endowCardObj: {
@@ -184,7 +185,7 @@ const endowCardObj: {
   hq_country: "",
   endow_designation: "",
   active_in_countries: "",
-  categories_sdgs: "",
+  categories: "",
   id: "",
   image: "",
   kyc_donors_only: "",

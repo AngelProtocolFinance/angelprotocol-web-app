@@ -12,3 +12,6 @@ export const hasElapsed = (timestamp: number) =>
  */
 export const blockTime = (date: "now" | string) =>
   Math.floor((date === "now" ? new Date() : new Date(date)).getTime() / 1000);
+
+export const fromBlockTime = (blockTime: number | string) =>
+  new Date(+blockTime * 1000);

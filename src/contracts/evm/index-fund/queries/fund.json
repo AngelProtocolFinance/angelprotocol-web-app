@@ -1,0 +1,58 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "fundId",
+        "type": "uint256"
+      }
+    ],
+    "name": "queryFundDetails",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "internalType": "uint32[]",
+            "name": "members",
+            "type": "uint32[]"
+          },
+          {
+            "internalType": "uint256",
+            "name": "splitToLiquid",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "expiryTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "expiryHeight",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct AngelCoreStruct.IndexFund",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

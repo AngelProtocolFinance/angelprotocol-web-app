@@ -1,7 +1,7 @@
 import { FV } from "./types";
+import Addresses from "components/Addresses";
 import Form, { Desc, FormProps, Title } from "../common/Form";
 import NavButtons from "../common/NavButtons";
-import Addresses from "./Addresses";
 
 export default function WhitelistsForm(props: FormProps) {
   return (

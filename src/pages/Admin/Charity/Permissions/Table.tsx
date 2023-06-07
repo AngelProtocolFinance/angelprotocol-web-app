@@ -17,7 +17,7 @@ const formValues: UpdateableFormValues = {
 const FORM_KEYS = getTypedKeys(formValues);
 
 export default function Table({ className = "" }) {
-  const { endow_type } = useAdminResources<"charity">();
+  const { endowType } = useAdminResources<"charity">();
 
   const {
     register,
@@ -26,7 +26,7 @@ export default function Table({ className = "" }) {
 
   const getData = useTableData();
 
-  const isNormal = endow_type === "normal";
+  const isNormal = endowType === "normal";
 
   return (
     <table
@@ -54,12 +54,7 @@ export default function Table({ className = "" }) {
         selectedClass="bg-orange-l5 dark:bg-blue-d4"
       >
         {FORM_KEYS.map((fieldName) => {
-          const {
-            name,
-            checkboxDisabled,
-            delegateAddressDisabled,
-            lockBtnDisabled,
-          } = getData(fieldName);
+          const { name, formDisabled, delegated } = getData(fieldName);
 
           return (
             <Cells
@@ -92,30 +87,30 @@ export default function Table({ className = "" }) {
                 />
               ) : null}
               <CheckField<FormValues>
-                name={`${fieldName}.delegated`}
+                name={`${fieldName}.isActive`}
                 classes={{
                   label: "uppercase text-xs font-bold",
                   input: "checkbox-orange",
                   error: "hidden",
                 }}
-                disabled={checkboxDisabled}
+                disabled={formDisabled}
               />
 
               <input
                 type="text"
                 className={`field-input min-w-[9rem] w-full truncate py-1.5 ${
-                  !errors[fieldName]?.delegate_address
+                  !errors[fieldName]?.addr
                     ? ""
                     : "border-red dark:border-red-l2 focus:border-red focus:dark:border-red-l2"
                 }`}
                 placeholder="Wallet address..."
-                {...register(`${fieldName}.delegate_address`)}
-                disabled={delegateAddressDisabled}
+                {...register(`${fieldName}.addr`)}
+                disabled={formDisabled || !delegated}
                 autoComplete="off"
                 spellCheck={false}
               />
 
-              <LockButton disabled={lockBtnDisabled} name={fieldName} />
+              <LockButton disabled={formDisabled} name={fieldName} />
             </Cells>
           );
         })}

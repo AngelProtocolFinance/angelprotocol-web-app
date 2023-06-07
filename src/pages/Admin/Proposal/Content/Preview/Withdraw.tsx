@@ -1,15 +1,11 @@
-import { WithdrawMeta } from "pages/Admin/types";
 import Image from "components/Image";
 import TableSection, { Cells } from "components/TableSection";
-import { condense, humanize } from "helpers";
-import { tokens } from "constants/tokens";
+import { WithdrawMeta } from "contracts/createTx/meta";
+import { humanize } from "helpers";
 import KeyValue from "./common/KeyValue";
 import PreviewContainer from "./common/PreviewContainer";
 
-export default function Withdraw({
-  beneficiary,
-  assets,
-}: WithdrawMeta["data"]) {
+export default function Withdraw({ beneficiary, tokens }: WithdrawMeta) {
   return (
     <PreviewContainer>
       <KeyValue _key="beneficiary" _classes="flex-col gap-2 mt-1">
@@ -18,18 +14,12 @@ export default function Withdraw({
 
       <KeyValue _key="assets" _classes="flex-col mt-4 gap-2">
         <TableSection type="tbody" rowClass="">
-          {assets.map((asset) => {
-            const denom = ""; /** future */
+          {tokens.map((t) => {
             return (
-              <Cells key={denom} cellClass="" type="td">
-                <Image
-                  src={tokens[denom].icon}
-                  className="w-5 h-5 rounded-full mr-2"
-                />
-                <>{humanize(condense(asset.amount), 4)}</>
-                <span className="text-xs uppercase pl-2">
-                  {tokens[denom].symbol}
-                </span>
+              <Cells key={t.symbol} cellClass="" type="td">
+                <Image src={t.logo} className="w-5 h-5 rounded-full mr-2" />
+                <>{humanize(t.amount, 4)}</>
+                <span className="text-xs uppercase pl-2">{t.symbol}</span>
               </Cells>
             );
           })}

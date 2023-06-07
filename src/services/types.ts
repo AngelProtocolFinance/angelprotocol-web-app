@@ -6,16 +6,18 @@ import { SenderArgs } from "types/tx";
 
 export type MultisigConfig = { threshold: number; requireExecution: boolean };
 
+export type PropMeta = Required<
+  Pick<SenderArgs, "successMeta" | "tagPayloads" | "isAuthorized">
+> & {
+  willExecute?: true;
+};
+
 type Base = {
   multisig: string;
   members: string[];
   id: number;
   config: MultisigConfig;
-  propMeta: Required<
-    Pick<SenderArgs, "successMeta" | "tagPayloads" | "isAuthorized">
-  > & {
-    willExecute?: true;
-  };
+  propMeta: PropMeta;
 };
 
 type APResources = Base & {

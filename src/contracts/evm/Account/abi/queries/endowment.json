@@ -2,9 +2,9 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "curId",
-        "type": "uint256"
+        "internalType": "uint32",
+        "name": "id",
+        "type": "uint32"
       }
     ],
     "name": "queryEndowmentDetails",
@@ -45,7 +45,7 @@
           },
           {
             "internalType": "enum AngelCoreStruct.EndowmentType",
-            "name": "endow_type",
+            "name": "endowType",
             "type": "uint8"
           },
           {
@@ -57,21 +57,6 @@
             "internalType": "string",
             "name": "image",
             "type": "string"
-          },
-          {
-            "internalType": "enum AngelCoreStruct.EndowmentStatus",
-            "name": "status",
-            "type": "uint8"
-          },
-          {
-            "internalType": "bool",
-            "name": "depositApproved",
-            "type": "bool"
-          },
-          {
-            "internalType": "bool",
-            "name": "withdrawApproved",
-            "type": "bool"
           },
           {
             "internalType": "uint256",
@@ -136,18 +121,18 @@
             "components": [
               {
                 "internalType": "bool",
-                "name": "rebalanceLiquidInvestedProfits",
+                "name": "rebalanceLiquidProfits",
                 "type": "bool"
               },
               {
-                "internalType": "bool",
-                "name": "lockedInterestsToLiquid",
-                "type": "bool"
+                "internalType": "uint32",
+                "name": "lockedRebalanceToLiquid",
+                "type": "uint32"
               },
               {
-                "internalType": "uint256",
-                "name": "interest_distribution",
-                "type": "uint256"
+                "internalType": "uint32",
+                "name": "interestDistribution",
+                "type": "uint32"
               },
               {
                 "internalType": "bool",
@@ -155,12 +140,17 @@
                 "type": "bool"
               },
               {
-                "internalType": "uint256",
-                "name": "principle_distribution",
-                "type": "uint256"
+                "internalType": "uint32",
+                "name": "principleDistribution",
+                "type": "uint32"
+              },
+              {
+                "internalType": "uint32",
+                "name": "basis",
+                "type": "uint32"
               }
             ],
-            "internalType": "struct AngelCoreStruct.RebalanceDetails",
+            "internalType": "struct LocalRegistrarLib.RebalanceParams",
             "name": "rebalance",
             "type": "tuple"
           },
@@ -176,13 +166,13 @@
           },
           {
             "internalType": "uint256",
-            "name": "copycatStrategy",
+            "name": "proposalLink",
             "type": "uint256"
           },
           {
-            "internalType": "uint256",
-            "name": "proposalLink",
-            "type": "uint256"
+            "internalType": "address",
+            "name": "multisig",
+            "type": "address"
           },
           {
             "internalType": "address",
@@ -206,17 +196,17 @@
           },
           {
             "internalType": "address[]",
-            "name": "whitelistedBeneficiaries",
+            "name": "allowlistedBeneficiaries",
             "type": "address[]"
           },
           {
             "internalType": "address[]",
-            "name": "whitelistedContributors",
+            "name": "allowlistedContributors",
             "type": "address[]"
           },
           {
             "internalType": "address[]",
-            "name": "maturityWhitelist",
+            "name": "maturityAllowlist",
             "type": "address[]"
           },
           {
@@ -228,17 +218,12 @@
               },
               {
                 "internalType": "uint256",
-                "name": "feePercentage",
+                "name": "bps",
                 "type": "uint256"
-              },
-              {
-                "internalType": "bool",
-                "name": "active",
-                "type": "bool"
               }
             ],
-            "internalType": "struct AngelCoreStruct.EndowmentFee",
-            "name": "earningsFee",
+            "internalType": "struct AngelCoreStruct.FeeSetting",
+            "name": "earlyLockedWithdrawFee",
             "type": "tuple"
           },
           {
@@ -250,16 +235,11 @@
               },
               {
                 "internalType": "uint256",
-                "name": "feePercentage",
+                "name": "bps",
                 "type": "uint256"
-              },
-              {
-                "internalType": "bool",
-                "name": "active",
-                "type": "bool"
               }
             ],
-            "internalType": "struct AngelCoreStruct.EndowmentFee",
+            "internalType": "struct AngelCoreStruct.FeeSetting",
             "name": "withdrawFee",
             "type": "tuple"
           },
@@ -272,16 +252,11 @@
               },
               {
                 "internalType": "uint256",
-                "name": "feePercentage",
+                "name": "bps",
                 "type": "uint256"
-              },
-              {
-                "internalType": "bool",
-                "name": "active",
-                "type": "bool"
               }
             ],
-            "internalType": "struct AngelCoreStruct.EndowmentFee",
+            "internalType": "struct AngelCoreStruct.FeeSetting",
             "name": "depositFee",
             "type": "tuple"
           },
@@ -294,17 +269,12 @@
               },
               {
                 "internalType": "uint256",
-                "name": "feePercentage",
+                "name": "bps",
                 "type": "uint256"
-              },
-              {
-                "internalType": "bool",
-                "name": "active",
-                "type": "bool"
               }
             ],
-            "internalType": "struct AngelCoreStruct.EndowmentFee",
-            "name": "aumFee",
+            "internalType": "struct AngelCoreStruct.FeeSetting",
+            "name": "balanceFee",
             "type": "tuple"
           },
           {
@@ -313,24 +283,14 @@
                 "components": [
                   {
                     "internalType": "bool",
-                    "name": "ownerControlled",
-                    "type": "bool"
-                  },
-                  {
-                    "internalType": "bool",
-                    "name": "govControlled",
-                    "type": "bool"
-                  },
-                  {
-                    "internalType": "bool",
-                    "name": "modifiableAfterInit",
+                    "name": "locked",
                     "type": "bool"
                   },
                   {
                     "components": [
                       {
                         "internalType": "address",
-                        "name": "Addr",
+                        "name": "addr",
                         "type": "address"
                       },
                       {
@@ -345,31 +305,21 @@
                   }
                 ],
                 "internalType": "struct AngelCoreStruct.SettingsPermission",
-                "name": "endowmentController",
+                "name": "acceptedTokens",
                 "type": "tuple"
               },
               {
                 "components": [
                   {
                     "internalType": "bool",
-                    "name": "ownerControlled",
-                    "type": "bool"
-                  },
-                  {
-                    "internalType": "bool",
-                    "name": "govControlled",
-                    "type": "bool"
-                  },
-                  {
-                    "internalType": "bool",
-                    "name": "modifiableAfterInit",
+                    "name": "locked",
                     "type": "bool"
                   },
                   {
                     "components": [
                       {
                         "internalType": "address",
-                        "name": "Addr",
+                        "name": "addr",
                         "type": "address"
                       },
                       {
@@ -384,31 +334,21 @@
                   }
                 ],
                 "internalType": "struct AngelCoreStruct.SettingsPermission",
-                "name": "strategies",
+                "name": "lockedInvestmentManagement",
                 "type": "tuple"
               },
               {
                 "components": [
                   {
                     "internalType": "bool",
-                    "name": "ownerControlled",
-                    "type": "bool"
-                  },
-                  {
-                    "internalType": "bool",
-                    "name": "govControlled",
-                    "type": "bool"
-                  },
-                  {
-                    "internalType": "bool",
-                    "name": "modifiableAfterInit",
+                    "name": "locked",
                     "type": "bool"
                   },
                   {
                     "components": [
                       {
                         "internalType": "address",
-                        "name": "Addr",
+                        "name": "addr",
                         "type": "address"
                       },
                       {
@@ -423,31 +363,21 @@
                   }
                 ],
                 "internalType": "struct AngelCoreStruct.SettingsPermission",
-                "name": "whitelistedBeneficiaries",
+                "name": "liquidInvestmentManagement",
                 "type": "tuple"
               },
               {
                 "components": [
                   {
                     "internalType": "bool",
-                    "name": "ownerControlled",
-                    "type": "bool"
-                  },
-                  {
-                    "internalType": "bool",
-                    "name": "govControlled",
-                    "type": "bool"
-                  },
-                  {
-                    "internalType": "bool",
-                    "name": "modifiableAfterInit",
+                    "name": "locked",
                     "type": "bool"
                   },
                   {
                     "components": [
                       {
                         "internalType": "address",
-                        "name": "Addr",
+                        "name": "addr",
                         "type": "address"
                       },
                       {
@@ -462,31 +392,21 @@
                   }
                 ],
                 "internalType": "struct AngelCoreStruct.SettingsPermission",
-                "name": "whitelistedContributors",
+                "name": "allowlistedBeneficiaries",
                 "type": "tuple"
               },
               {
                 "components": [
                   {
                     "internalType": "bool",
-                    "name": "ownerControlled",
-                    "type": "bool"
-                  },
-                  {
-                    "internalType": "bool",
-                    "name": "govControlled",
-                    "type": "bool"
-                  },
-                  {
-                    "internalType": "bool",
-                    "name": "modifiableAfterInit",
+                    "name": "locked",
                     "type": "bool"
                   },
                   {
                     "components": [
                       {
                         "internalType": "address",
-                        "name": "Addr",
+                        "name": "addr",
                         "type": "address"
                       },
                       {
@@ -501,31 +421,50 @@
                   }
                 ],
                 "internalType": "struct AngelCoreStruct.SettingsPermission",
-                "name": "maturityWhitelist",
+                "name": "allowlistedContributors",
                 "type": "tuple"
               },
               {
                 "components": [
                   {
                     "internalType": "bool",
-                    "name": "ownerControlled",
-                    "type": "bool"
-                  },
-                  {
-                    "internalType": "bool",
-                    "name": "govControlled",
-                    "type": "bool"
-                  },
-                  {
-                    "internalType": "bool",
-                    "name": "modifiableAfterInit",
+                    "name": "locked",
                     "type": "bool"
                   },
                   {
                     "components": [
                       {
                         "internalType": "address",
-                        "name": "Addr",
+                        "name": "addr",
+                        "type": "address"
+                      },
+                      {
+                        "internalType": "uint256",
+                        "name": "expires",
+                        "type": "uint256"
+                      }
+                    ],
+                    "internalType": "struct AngelCoreStruct.Delegate",
+                    "name": "delegate",
+                    "type": "tuple"
+                  }
+                ],
+                "internalType": "struct AngelCoreStruct.SettingsPermission",
+                "name": "maturityAllowlist",
+                "type": "tuple"
+              },
+              {
+                "components": [
+                  {
+                    "internalType": "bool",
+                    "name": "locked",
+                    "type": "bool"
+                  },
+                  {
+                    "components": [
+                      {
+                        "internalType": "address",
+                        "name": "addr",
                         "type": "address"
                       },
                       {
@@ -547,24 +486,14 @@
                 "components": [
                   {
                     "internalType": "bool",
-                    "name": "ownerControlled",
-                    "type": "bool"
-                  },
-                  {
-                    "internalType": "bool",
-                    "name": "govControlled",
-                    "type": "bool"
-                  },
-                  {
-                    "internalType": "bool",
-                    "name": "modifiableAfterInit",
+                    "name": "locked",
                     "type": "bool"
                   },
                   {
                     "components": [
                       {
                         "internalType": "address",
-                        "name": "Addr",
+                        "name": "addr",
                         "type": "address"
                       },
                       {
@@ -579,70 +508,21 @@
                   }
                 ],
                 "internalType": "struct AngelCoreStruct.SettingsPermission",
-                "name": "profile",
+                "name": "earlyLockedWithdrawFee",
                 "type": "tuple"
               },
               {
                 "components": [
                   {
                     "internalType": "bool",
-                    "name": "ownerControlled",
-                    "type": "bool"
-                  },
-                  {
-                    "internalType": "bool",
-                    "name": "govControlled",
-                    "type": "bool"
-                  },
-                  {
-                    "internalType": "bool",
-                    "name": "modifiableAfterInit",
+                    "name": "locked",
                     "type": "bool"
                   },
                   {
                     "components": [
                       {
                         "internalType": "address",
-                        "name": "Addr",
-                        "type": "address"
-                      },
-                      {
-                        "internalType": "uint256",
-                        "name": "expires",
-                        "type": "uint256"
-                      }
-                    ],
-                    "internalType": "struct AngelCoreStruct.Delegate",
-                    "name": "delegate",
-                    "type": "tuple"
-                  }
-                ],
-                "internalType": "struct AngelCoreStruct.SettingsPermission",
-                "name": "earningsFee",
-                "type": "tuple"
-              },
-              {
-                "components": [
-                  {
-                    "internalType": "bool",
-                    "name": "ownerControlled",
-                    "type": "bool"
-                  },
-                  {
-                    "internalType": "bool",
-                    "name": "govControlled",
-                    "type": "bool"
-                  },
-                  {
-                    "internalType": "bool",
-                    "name": "modifiableAfterInit",
-                    "type": "bool"
-                  },
-                  {
-                    "components": [
-                      {
-                        "internalType": "address",
-                        "name": "Addr",
+                        "name": "addr",
                         "type": "address"
                       },
                       {
@@ -664,24 +544,14 @@
                 "components": [
                   {
                     "internalType": "bool",
-                    "name": "ownerControlled",
-                    "type": "bool"
-                  },
-                  {
-                    "internalType": "bool",
-                    "name": "govControlled",
-                    "type": "bool"
-                  },
-                  {
-                    "internalType": "bool",
-                    "name": "modifiableAfterInit",
+                    "name": "locked",
                     "type": "bool"
                   },
                   {
                     "components": [
                       {
                         "internalType": "address",
-                        "name": "Addr",
+                        "name": "addr",
                         "type": "address"
                       },
                       {
@@ -703,24 +573,14 @@
                 "components": [
                   {
                     "internalType": "bool",
-                    "name": "ownerControlled",
-                    "type": "bool"
-                  },
-                  {
-                    "internalType": "bool",
-                    "name": "govControlled",
-                    "type": "bool"
-                  },
-                  {
-                    "internalType": "bool",
-                    "name": "modifiableAfterInit",
+                    "name": "locked",
                     "type": "bool"
                   },
                   {
                     "components": [
                       {
                         "internalType": "address",
-                        "name": "Addr",
+                        "name": "addr",
                         "type": "address"
                       },
                       {
@@ -735,70 +595,21 @@
                   }
                 ],
                 "internalType": "struct AngelCoreStruct.SettingsPermission",
-                "name": "aumFee",
+                "name": "balanceFee",
                 "type": "tuple"
               },
               {
                 "components": [
                   {
                     "internalType": "bool",
-                    "name": "ownerControlled",
-                    "type": "bool"
-                  },
-                  {
-                    "internalType": "bool",
-                    "name": "govControlled",
-                    "type": "bool"
-                  },
-                  {
-                    "internalType": "bool",
-                    "name": "modifiableAfterInit",
+                    "name": "locked",
                     "type": "bool"
                   },
                   {
                     "components": [
                       {
                         "internalType": "address",
-                        "name": "Addr",
-                        "type": "address"
-                      },
-                      {
-                        "internalType": "uint256",
-                        "name": "expires",
-                        "type": "uint256"
-                      }
-                    ],
-                    "internalType": "struct AngelCoreStruct.Delegate",
-                    "name": "delegate",
-                    "type": "tuple"
-                  }
-                ],
-                "internalType": "struct AngelCoreStruct.SettingsPermission",
-                "name": "kycDonorsOnly",
-                "type": "tuple"
-              },
-              {
-                "components": [
-                  {
-                    "internalType": "bool",
-                    "name": "ownerControlled",
-                    "type": "bool"
-                  },
-                  {
-                    "internalType": "bool",
-                    "name": "govControlled",
-                    "type": "bool"
-                  },
-                  {
-                    "internalType": "bool",
-                    "name": "modifiableAfterInit",
-                    "type": "bool"
-                  },
-                  {
-                    "components": [
-                      {
-                        "internalType": "address",
-                        "name": "Addr",
+                        "name": "addr",
                         "type": "address"
                       },
                       {
@@ -820,24 +631,14 @@
                 "components": [
                   {
                     "internalType": "bool",
-                    "name": "ownerControlled",
-                    "type": "bool"
-                  },
-                  {
-                    "internalType": "bool",
-                    "name": "govControlled",
-                    "type": "bool"
-                  },
-                  {
-                    "internalType": "bool",
-                    "name": "modifiableAfterInit",
+                    "name": "locked",
                     "type": "bool"
                   },
                   {
                     "components": [
                       {
                         "internalType": "address",
-                        "name": "Addr",
+                        "name": "addr",
                         "type": "address"
                       },
                       {
@@ -859,24 +660,14 @@
                 "components": [
                   {
                     "internalType": "bool",
-                    "name": "ownerControlled",
-                    "type": "bool"
-                  },
-                  {
-                    "internalType": "bool",
-                    "name": "govControlled",
-                    "type": "bool"
-                  },
-                  {
-                    "internalType": "bool",
-                    "name": "modifiableAfterInit",
+                    "name": "locked",
                     "type": "bool"
                   },
                   {
                     "components": [
                       {
                         "internalType": "address",
-                        "name": "Addr",
+                        "name": "addr",
                         "type": "address"
                       },
                       {
@@ -898,24 +689,14 @@
                 "components": [
                   {
                     "internalType": "bool",
-                    "name": "ownerControlled",
-                    "type": "bool"
-                  },
-                  {
-                    "internalType": "bool",
-                    "name": "govControlled",
-                    "type": "bool"
-                  },
-                  {
-                    "internalType": "bool",
-                    "name": "modifiableAfterInit",
+                    "name": "locked",
                     "type": "bool"
                   },
                   {
                     "components": [
                       {
                         "internalType": "address",
-                        "name": "Addr",
+                        "name": "addr",
                         "type": "address"
                       },
                       {
@@ -937,24 +718,14 @@
                 "components": [
                   {
                     "internalType": "bool",
-                    "name": "ownerControlled",
-                    "type": "bool"
-                  },
-                  {
-                    "internalType": "bool",
-                    "name": "govControlled",
-                    "type": "bool"
-                  },
-                  {
-                    "internalType": "bool",
-                    "name": "modifiableAfterInit",
+                    "name": "locked",
                     "type": "bool"
                   },
                   {
                     "components": [
                       {
                         "internalType": "address",
-                        "name": "Addr",
+                        "name": "addr",
                         "type": "address"
                       },
                       {
@@ -976,24 +747,14 @@
                 "components": [
                   {
                     "internalType": "bool",
-                    "name": "ownerControlled",
-                    "type": "bool"
-                  },
-                  {
-                    "internalType": "bool",
-                    "name": "govControlled",
-                    "type": "bool"
-                  },
-                  {
-                    "internalType": "bool",
-                    "name": "modifiableAfterInit",
+                    "name": "locked",
                     "type": "bool"
                   },
                   {
                     "components": [
                       {
                         "internalType": "address",
-                        "name": "Addr",
+                        "name": "addr",
                         "type": "address"
                       },
                       {
@@ -1017,9 +778,9 @@
             "type": "tuple"
           },
           {
-            "internalType": "uint256",
+            "internalType": "uint32",
             "name": "parent",
-            "type": "uint256"
+            "type": "uint32"
           },
           {
             "internalType": "bool",
@@ -1047,6 +808,11 @@
             "internalType": "struct AngelCoreStruct.SplitDetails",
             "name": "splitToLiquid",
             "type": "tuple"
+          },
+          {
+            "internalType": "uint256",
+            "name": "referralId",
+            "type": "uint256"
           }
         ],
         "internalType": "struct AccountStorage.Endowment",

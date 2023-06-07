@@ -29,7 +29,7 @@ export const adminRoutes = {
   contributions: "contributions",
   contributor_verification: "contributor-verification",
   permissions: "permissions",
-
+  whitelists: "whitelists",
   //charity
   edit_profile: "edit-profile",
   withdraws: "withdraws",

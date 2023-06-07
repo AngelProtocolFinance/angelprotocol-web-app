@@ -1,16 +1,13 @@
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
-import { SimulContractTx } from "types/evm";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useErrorContext } from "contexts/ErrorContext";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { isEmpty } from "helpers";
 import { getPayloadDiff, getTagPayloads } from "helpers/admin";
-import { UnexpectedStateError } from "errors/errors";
-import { createUpdateEndowmentControllerMsg } from "./helpers";
+import { controllerUpdate } from "./helpers";
 import { FormValues } from "./schema";
-import useUserAuthorization from "./useUserAuthorization";
 
 export default function useSubmit() {
   const {
@@ -28,7 +25,6 @@ export default function useSubmit() {
     trigger,
   } = useFormContext<FormValues>();
   const sendTx = useTxSender();
-  const { isUserOwner, userDelegated } = useUserAuthorization();
 
   // if this effect is omitted and there are any errors,
   // once form is changed to a valid state the error messages do not disappear
@@ -38,19 +34,10 @@ export default function useSubmit() {
     }
   }, [isValid, trigger]);
 
-  async function onSubmit({
-    initialValues,
-    endowment_controller,
-    ...newValues
-  }: FormValues) {
+  async function onSubmit({ initial, ...fv }: FormValues) {
     try {
-      if (!endowment_controller.modifiableAfterInit) {
-        throw new UnexpectedStateError(
-          "Submitting unmodifiable controller changes"
-        );
-      }
-
-      const diff = getPayloadDiff(initialValues, newValues);
+      const update = controllerUpdate(id, fv, settings);
+      const diff = getPayloadDiff(initial, update);
 
       if (isEmpty(Object.entries(diff))) {
         return handleError("No changes detected");
@@ -59,34 +46,25 @@ export default function useSubmit() {
       const wallet = getWallet();
       if (typeof wallet === "function") return wallet();
 
-      const args = createUpdateEndowmentControllerMsg(id, diff, settings);
-
-      let tx: SimulContractTx;
-
-      // Unauthorized & non-delegated users wouldn't even be able to submit,
-      // making it safe to assume they are either of those
-      //
-      // Users who are delegates for the whole controller can send direct update msg,
-      // thus bypassing the need to create a proposal (even if they are a member of CW3 owners)
-      if (userDelegated) {
-        tx = createTx(wallet.address, "accounts.update-controller", args);
-      } else {
-        const [data, dest] = encodeTx("accounts.update-controller", args);
-        tx = createTx(wallet.address, "multisig.submit-transaction", {
-          multisig,
-          title: `Update permission settings`,
-          description: `Update permission settings for endowment id:${id} by member:${wallet?.address}`,
-          destination: dest,
-          value: "0",
-          data,
-        });
-      }
+      const [data, dest, meta] = encodeTx(
+        "accounts.update-controller",
+        update,
+        diff
+      );
+      const tx = createTx(wallet.address, "multisig.submit-transaction", {
+        multisig,
+        title: `Update permission settings`,
+        description: `Update permission settings for endowment id:${id} by member:${wallet?.address}`,
+        destination: dest,
+        value: "0",
+        data,
+        meta: meta.encoded,
+      });
 
       await sendTx({
         content: { type: "evm", val: tx },
         ...propMeta,
-        isAuthorized: userDelegated || isUserOwner,
-        tagPayloads: getTagPayloads(propMeta.willExecute && "endow_controller"),
+        tagPayloads: getTagPayloads(propMeta.willExecute && meta.id),
       });
     } catch (error) {
       handleError(error);

@@ -8,7 +8,11 @@ import { constructTx } from "./constructTx";
 //mock so not to deal with encoded strings
 jest.mock("contracts/createTx/createTx", () => ({
   __esModule: true,
-  encodeTx: (type: TxTypes) => [type, type.split(".")[0]],
+  encodeTx: (type: TxTypes) => [
+    type,
+    type.split(".")[0],
+    { id: "", encoded: "" },
+  ],
   createTx: (sender: string, type: TxTypes, options: any): SimulContractTx => ({
     from: sender,
     to: type.split(".")[0],
@@ -19,21 +23,9 @@ jest.mock("contracts/createTx/createTx", () => ({
 afterAll(() => jest.clearAllMocks());
 
 describe("Charity withdraw transactions", () => {
-  test("withdraw locked to polygon wallet", () => {
+  test("withdraw liquid/locked to polygon wallet", () => {
     const endow = endowDetails();
-    const fv = formValues();
-
-    const { tx, isPolygon } = constructTx("sender", 0, endow, fv);
-
-    expect(tx.data).toBe("locked-withdraw.propose");
-    expect(tx.to).toBe("multisig");
-    expect(isPolygon).toBe(true);
-  });
-  test("withdraw liquid to polygon wallet", () => {
-    const endow = endowDetails();
-    const fv = formValues([["type", "liquid"]]);
-
-    const { tx, isPolygon } = constructTx("sender", 0, endow, fv);
+    const { tx, isPolygon } = constructTx("sender", 0, endow, formValues());
 
     expect(tx.data).toBe("accounts.withdraw");
     expect(tx.to).toBe("multisig");
@@ -48,8 +40,8 @@ describe("Charity withdraw transactions", () => {
 });
 
 describe("AST withdraw transactions", () => {
-  test("withdraw locked to polygon wallet", () => {
-    const endow = endowDetails([["endow_type", "normal"]]);
+  test("withdraw locked/liquid to polygon wallet", () => {
+    const endow = endowDetails([["endowType", "normal"]]);
     const fv = formValues();
 
     const { tx, isPolygon, isDirect } = constructTx("sender", 0, endow, fv);
@@ -59,19 +51,9 @@ describe("AST withdraw transactions", () => {
     expect(isPolygon).toBe(true);
     expect(isDirect).toBe(false);
   });
-  test("withdraw liquid to polygon wallet", () => {
-    const endow = endowDetails([["endow_type", "normal"]]);
-    const fv = formValues([["type", "liquid"]]);
 
-    const { tx, isPolygon, isDirect } = constructTx("sender", 0, endow, fv);
-
-    expect(tx.data).toBe("accounts.withdraw");
-    expect(tx.to).toBe("multisig");
-    expect(isPolygon).toBe(true);
-    expect(isDirect).toBe(false);
-  });
   test("withdraw locked/liquid to other network ( not polygon )", () => {
-    const endow = endowDetails([["endow_type", "normal"]]);
+    const endow = endowDetails([["endowType", "normal"]]);
     const fv = formValues([["network", chainIds.ethereum]]);
 
     const { isPolygon, isDirect } = constructTx("sender", 0, endow, fv);
@@ -81,8 +63,8 @@ describe("AST withdraw transactions", () => {
   });
   test("withdraw locked: sender in maturity whitelist", () => {
     const endow = endowDetails([
-      ["maturityWhitelist", ["sender"]],
-      ["endow_type", "normal"],
+      ["maturityAllowlist", ["sender"]],
+      ["endowType", "normal"],
     ]);
     const fv = formValues();
     const { tx, isDirect } = constructTx("sender", 0, endow, fv);
@@ -93,8 +75,8 @@ describe("AST withdraw transactions", () => {
   });
   test("withdraw liquid: sender in beneficiary whitelist", () => {
     const endow = endowDetails([
-      ["whitelistedBeneficiaries", ["sender"]],
-      ["endow_type", "normal"],
+      ["allowlistedBeneficiaries", ["sender"]],
+      ["endowType", "normal"],
     ]);
 
     const fv = formValues([["type", "liquid"]]);
@@ -128,16 +110,19 @@ function endowDetails<T extends keyof ED>(overrides?: Override<T>[]): ED {
   return {
     owner: "multisig",
     categories: { sdgs: [], general: [] },
-    endow_type: "charity",
-    status: "approved",
+    endowType: "charity",
     maturityTime: 1000,
-    whitelistedBeneficiaries: [],
-    maturityWhitelist: [],
+    allowlistedBeneficiaries: [],
+    allowlistedContributors: [],
+    maturityAllowlist: [],
     kycDonorsOnly: false,
+    donationMatchActive: false,
     settingsController: {} as any, //not relevant to this test
     ...(overrides || []).reduce(
       (prev, curr) => ({ ...prev, [curr[0]]: curr[1] }),
       {}
     ),
+    ignoreUserSplits: false,
+    splitToLiquid: { min: 0, max: 100, defaultSplit: 50 },
   };
 }

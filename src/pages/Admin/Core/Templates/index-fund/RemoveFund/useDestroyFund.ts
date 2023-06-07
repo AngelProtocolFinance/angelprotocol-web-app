@@ -1,33 +1,44 @@
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
+import { ID } from "contracts/createTx/types";
 import { useAdminResources } from "pages/Admin/Guard";
+import { useLazyLatestBlockQuery } from "services/juno";
+import { queryContract } from "services/juno/queryContract";
 import { useModalContext } from "contexts/ModalContext";
-import Prompt from "components/Prompt";
+import { TxPrompt } from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
+import { hasElapsed } from "helpers/admin";
 
 export default function useDestroyFund() {
   const {
     handleSubmit,
     formState: { isSubmitting },
   } = useFormContext<FV>();
-  const { showModal } = useModalContext();
   const sendTx = useTxSender();
+  const { showModal } = useModalContext();
+  const [latestBlock] = useLazyLatestBlockQuery();
   const { multisig, propMeta, getWallet } = useAdminResources();
 
   async function destroyFund(fv: FV) {
-    if (fv.fundId === "") {
-      return showModal(Prompt, {
-        type: "error",
-        title: "Destroy Fund",
-        headline: "No Fund Selected",
-        children: "Please select a fund to remove",
-      });
+    try {
+      const height = await latestBlock({}).unwrap();
+      const fund = await queryContract("index-fund.fund", { id: +fv.fundId });
+      if (
+        (fund.expiryTime !== 0 && hasElapsed(fund.expiryTime)) ||
+        (fund.expiryHeight !== 0 && +height >= fund.expiryHeight)
+      ) {
+        return showModal(TxPrompt, { error: "Fund is already closed" });
+      }
+    } catch (err) {
+      return showModal(TxPrompt, { error: "Fund not found" });
     }
 
     const wallet = getWallet();
     if (typeof wallet === "function") return wallet();
-    const [data, dest] = encodeTx("index-fund.remove-fund", { id: +fv.fundId });
+
+    const id: ID = { id: +fv.fundId };
+    const [data, dest, meta] = encodeTx("index-fund.remove-fund", id, id);
 
     await sendTx({
       content: {
@@ -39,6 +50,7 @@ export default function useDestroyFund() {
           destination: dest,
           value: "0",
           data,
+          meta: meta.encoded,
         }),
       },
       ...propMeta,

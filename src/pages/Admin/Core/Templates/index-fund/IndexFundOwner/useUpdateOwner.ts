@@ -30,9 +30,13 @@ export default function useUpdateOwner() {
     const wallet = getWallet();
     if (typeof wallet === "function") return wallet();
 
-    const [data, dest] = encodeTx("index-fund.update-owner", {
-      newOwner: fv.newOwner,
-    });
+    const [data, dest, meta] = encodeTx(
+      "index-fund.update-owner",
+      {
+        newOwner: fv.newOwner,
+      },
+      { curr: fv.owner, new: fv.newOwner }
+    );
 
     await sendTx({
       content: {
@@ -44,6 +48,7 @@ export default function useUpdateOwner() {
           destination: dest,
           value: "0",
           data,
+          meta: meta.encoded,
         }),
       },
       ...propMeta,

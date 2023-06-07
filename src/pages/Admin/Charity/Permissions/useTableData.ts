@@ -1,27 +1,25 @@
 import { useFormContext } from "react-hook-form";
+import { useAdminResources } from "pages/Admin/Guard";
 import { FormValues, UpdateableFormValues } from "./schema";
-import useUserAuthorization from "./useUserAuthorization";
 
 export default function useTableData() {
-  const { userDelegated, isUserOwner } = useUserAuthorization();
   const {
     formState: { isSubmitting },
+    getValues,
     watch,
   } = useFormContext<FormValues>();
+  const { propMeta } = useAdminResources();
 
   function getData(fieldName: keyof UpdateableFormValues) {
     const name = watch(`${fieldName}.name`);
-    const delegated = watch(`${fieldName}.delegated`);
-    const modifiable = watch(`${fieldName}.modifiableAfterInit`);
+    const modifiable = getValues(`${fieldName}.modifiable`);
+    const delegated = watch(`${fieldName}.isActive`);
 
-    const formDisabled = isSubmitting || !(userDelegated || isUserOwner);
-
-    const inputDisabled = formDisabled || !modifiable;
+    const formDisabled = isSubmitting || !propMeta.isAuthorized || !modifiable;
 
     return {
-      delegateAddressDisabled: !delegated || inputDisabled,
-      checkboxDisabled: inputDisabled,
-      lockBtnDisabled: formDisabled,
+      delegated,
+      formDisabled,
       name,
     };
   }

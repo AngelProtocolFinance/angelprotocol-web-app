@@ -1,13 +1,12 @@
 import { TxArgs, TxTypes } from "./types";
-import { erc20 } from "contracts/evm/ERC20";
-import { charityApplication } from "contracts/evm/charity-application";
-import { giftCard } from "contracts/evm/gift-card";
-import { indexFund } from "contracts/evm/index-fund";
-import { lockedWithdraw } from "contracts/evm/locked-withdraw";
-import { multisig } from "contracts/evm/multisig";
-import { registrar } from "contracts/evm/registrar";
 import { toTuple } from "helpers";
 import { accounts } from "../evm/Account";
+import { erc20 } from "../evm/ERC20";
+import { charityApplication } from "../evm/charity-application";
+import { giftCard } from "../evm/gift-card";
+import { indexFund } from "../evm/index-fund";
+import { multisig } from "../evm/multisig";
+import { registrar } from "../evm/registrar";
 
 export const txs: { [T in TxTypes]: (args: TxArgs<T>) => string } = {
   // //// ACCOUNTS ////
@@ -15,11 +14,13 @@ export const txs: { [T in TxTypes]: (args: TxArgs<T>) => string } = {
     accounts.encodeFunctionData("createEndowment", [toTuple(aif)]),
   "accounts.update-controller": (update) =>
     accounts.encodeFunctionData("updateEndowmentController", [toTuple(update)]),
+  "accounts.update-settings": (update) =>
+    accounts.encodeFunctionData("updateEndowmentSettings", [toTuple(update)]),
   "accounts.deposit-erc20": (args) =>
     accounts.encodeFunctionData("depositERC20", toTuple(args)),
   "accounts.withdraw": (args) =>
     accounts.encodeFunctionData("withdraw", toTuple(args)),
-  "accounts.update-status": (args) => "",
+  "accounts.close": () => "",
   "accounts.invest": () => "", //future
   "accounts.redeem": () => "", //future
 
@@ -58,11 +59,6 @@ export const txs: { [T in TxTypes]: (args: TxArgs<T>) => string } = {
     indexFund.encodeFunctionData("removeMember", [id]),
   "index-fund.update-members": (update) =>
     indexFund.encodeFunctionData("updateFundMembers", toTuple(update)),
-  "index-fund.update-alliance-list": (update) =>
-    indexFund.encodeFunctionData("updateAllianceMemberList", toTuple(update)),
-
-  "locked-withdraw.propose": (args) =>
-    lockedWithdraw.encodeFunctionData("propose", toTuple(args)),
 
   "charity-application.approve": ({ id }) =>
     charityApplication.encodeFunctionData("approveCharity", [id]),
@@ -73,6 +69,8 @@ export const txs: { [T in TxTypes]: (args: TxArgs<T>) => string } = {
     registrar.encodeFunctionData("updateOwner", [newOwner]),
   "registrar.update-config": (config) =>
     registrar.encodeFunctionData("updateConfig", [toTuple(config)]),
+  "registrar.add-token": ({ token }) =>
+    registrar.encodeFunctionData("setTokenAccepted", [token, true]),
 
   "gift-card.spend": (gift) =>
     giftCard.encodeFunctionData("executeSpend", toTuple(gift)),

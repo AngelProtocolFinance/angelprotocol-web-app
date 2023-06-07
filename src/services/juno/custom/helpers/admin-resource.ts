@@ -1,4 +1,4 @@
-import { AdminResources, MultisigConfig } from "services/types";
+import { AdminResources, MultisigConfig, PropMeta } from "../../../types";
 import { queryContract } from "services/juno/queryContract";
 import { isEthereumAddress } from "schemas/tests";
 import { contracts } from "constants/contracts";
@@ -35,9 +35,7 @@ export async function getMeta(
   endowId: number,
   multisig: string,
   user?: string
-): Promise<
-  [AdminResources["propMeta"], MultisigConfig, string[] /** members */]
-> {
+): Promise<[PropMeta, MultisigConfig, string[] /** members */]> {
   const [members, threshold, requireExecution] = await Promise.all([
     queryContract("multisig.members", { multisig }),
     queryContract("multisig.threshold", { multisig }),

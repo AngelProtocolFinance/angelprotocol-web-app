@@ -6,10 +6,8 @@ import { useModalContext } from "contexts/ModalContext";
 import Prompt from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
+import { isEmpty } from "helpers";
 import { getPayloadDiff, getTagPayloads } from "helpers/admin";
-
-type Key = keyof FV;
-type Value = FV[Key];
 
 export default function usePropose() {
   const { multisig, propMeta, getWallet } = useAdminResources();
@@ -32,9 +30,8 @@ export default function usePropose() {
       requireExecution,
     };
     const diff = getPayloadDiff(initial, config);
-    const diffEntries = Object.entries(diff) as [Key, Value][];
 
-    if (diffEntries.length <= 0) {
+    if (isEmpty(diff)) {
       return showModal(Prompt, {
         type: "error",
         title: "Create Proposal",
@@ -46,10 +43,14 @@ export default function usePropose() {
     const wallet = getWallet();
     if (typeof wallet === "function") return wallet();
 
-    const [data, dest] = encodeTx("multisig.change-threshold", {
-      multisig,
-      threshold: +threshold,
-    });
+    const [data, dest, meta] = encodeTx(
+      "multisig.change-threshold",
+      {
+        multisig,
+        threshold: +threshold,
+      },
+      { new: +threshold, curr: +initial.threshold }
+    );
 
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig,
@@ -58,12 +59,13 @@ export default function usePropose() {
       destination: dest,
       value: "0",
       data,
+      meta: meta.encoded,
     });
 
     await sendTx({
       content: { type: "evm", val: tx },
       ...propMeta,
-      tagPayloads: getTagPayloads(propMeta.willExecute && "cw3_config"),
+      tagPayloads: getTagPayloads(propMeta.willExecute && meta.id),
     });
   }
 

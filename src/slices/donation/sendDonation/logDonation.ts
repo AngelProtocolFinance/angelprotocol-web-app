@@ -1,4 +1,5 @@
 import { TxLogPayload } from "types/aws";
+import { version as v } from "services/helpers";
 import { createAuthToken } from "helpers";
 import { LogDonationFail } from "errors/errors";
 import { IS_TEST } from "constants/env";
@@ -7,7 +8,7 @@ import { APIs } from "constants/urls";
 //log donation, with optional receipt
 const logDonation = async (payload: TxLogPayload) => {
   const generatedToken = createAuthToken("angelprotocol-web-app");
-  const response = await fetch(APIs.apes + "/v3/donation", {
+  const response = await fetch(APIs.apes + `/${v(3)}/donation`, {
     method: "POST",
     headers: { authorization: generatedToken },
     body: JSON.stringify({

@@ -1,19 +1,23 @@
 import { BigNumber } from "@ethersproject/bignumber";
 import {
-  DEndowment,
-  DEndowmentState,
-  DFund,
   DGenericBalance,
-  DIndexFundConfig,
-  DRegistrarConfig,
-  DTransaction,
   toBalMap,
-  toEndowStatusText,
   toEndowType,
-  toSettingsPermission,
+  toPermission,
+  toSplit,
 } from "./decoded-types";
 import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
 import { UNSDG_NUMS } from "types/lists";
+import {
+  AccountMessages,
+  AccountStorage,
+} from "types/typechain-types/contracts/core/accounts/IAccounts";
+import {
+  IndexFundStorage,
+  AngelCoreStruct as IndexFundStructs,
+} from "types/typechain-types/contracts/core/index-fund/IndexFund";
+import { RegistrarStorage } from "types/typechain-types/contracts/core/registrar/interfaces/IRegistrar";
+import { MultiSigStorage } from "types/typechain-types/contracts/multisigs/MultiSigGeneric";
 import { accounts } from "contracts/evm/Account";
 import { erc20 } from "contracts/evm/ERC20";
 import { giftCard } from "contracts/evm/gift-card";
@@ -28,51 +32,37 @@ export const queryObjects: {
     : [(args: Q[K]["args"]) => string, Q[K]["transform"]];
 } = {
   /** registrar */
+  "registrar.owner": [
+    registrar.encodeFunctionData("owner", []),
+    (result) => registrar.decodeFunctionResult("owner", result)[0],
+  ],
   "registrar.config": [
     registrar.encodeFunctionData("queryConfig", []),
     (result) => {
-      const d: DRegistrarConfig = registrar.decodeFunctionResult(
-        "queryConfig",
-        result
-      )[0];
+      const d: RegistrarStorage.ConfigStructOutput =
+        registrar.decodeFunctionResult("queryConfig", result)[0];
       return {
-        owner: d.owner.toLowerCase(),
-        acceptedTokens: {
-          cw20: d.acceptedTokens.cw20.map((t) => t.toLowerCase()),
-        },
         applicationsReview: d.applicationsReview.toLowerCase(),
         indexFundContract: d.indexFundContract.toLowerCase(),
         accountsContract: d.accountsContract.toLowerCase(),
         treasury: d.treasury.toLowerCase(),
-        subdaoGovCode: d.subdaoGovCode.toLowerCase(),
-        subdaoCw20TokenCode: d.subdaoCw20TokenCode.toLowerCase(),
-        subdaoBondingTokenCode: d.subdaoBondingTokenCode.toLowerCase(),
-        subdaoCw900Code: d.subdaoCw900Code.toLowerCase(),
-        subdaoDistributorCode: d.subdaoDistributorCode.toLowerCase(),
+        subdaoGovContract: d.subdaoGovContract.toLowerCase(),
+        subdaoTokenContract: d.subdaoTokenContract.toLowerCase(),
+        subdaoBondingTokenContract: d.subdaoBondingTokenContract.toLowerCase(),
+        subdaoCw900Contract: d.subdaoCw900Contract.toLowerCase(),
+        subdaoDistributorContract: d.subdaoDistributorContract.toLowerCase(),
         subdaoEmitter: d.subdaoEmitter.toLowerCase(),
-        donationMatchCode: d.donationMatchCode.toLowerCase(),
+        donationMatchContract: d.donationMatchContract.toLowerCase(),
         donationMatchCharitesContract:
           d.donationMatchCharitesContract.toLowerCase(),
         donationMatchEmitter: d.donationMatchEmitter.toLowerCase(),
-        splitToLiquid: {
-          min: d.splitToLiquid.min.toNumber(),
-          max: d.splitToLiquid.max.toNumber(),
-          defaultSplit: d.splitToLiquid.defaultSplit.toNumber(),
-        },
+        splitToLiquid: toSplit(d.splitToLiquid),
         haloToken: d.haloToken.toLowerCase(),
         haloTokenLpContract: d.haloTokenLpContract.toLowerCase(),
         govContract: d.govContract.toLowerCase(),
-        collectorAddr: d.collectorAddr.toLowerCase(),
         collectorShare: d.collectorShare.toNumber(),
         charitySharesContract: d.charitySharesContract.toLowerCase(),
         fundraisingContract: d.fundraisingContract.toLowerCase(),
-        rebalance: {
-          rebalanceLiquidInvestedProfits: d.rebalance.lockedInterestsToLiquid,
-          lockedInterestsToLiquid: d.rebalance.lockedInterestsToLiquid,
-          interest_distribution: d.rebalance.interest_distribution.toNumber(),
-          lockedPrincipleToLiquid: d.rebalance.lockedPrincipleToLiquid,
-          principle_distribution: d.rebalance.principle_distribution.toNumber(),
-        },
         swapsRouter: d.swapsRouter.toLowerCase(),
         multisigFactory: d.multisigFactory.toLowerCase(),
         multisigEmitter: d.multisigEmitter.toLowerCase(),
@@ -86,51 +76,35 @@ export const queryObjects: {
     },
   ],
 
-  /** index fund */
-  "index-fund.funds": [
-    (args) => indexFund.encodeFunctionData("queryFundsList", toTuple(args)),
-    (result) => {
-      const decoded: DFund[] = indexFund.decodeFunctionResult(
-        "queryFundsList",
-        result
-      )[0];
-      return decoded.map((f) => ({
-        id: f.id.toNumber(),
-        name: f.name,
-        description: f.description,
-        members: f.members.map((m) => m.toNumber()),
-        rotatingFund: f.rotatingFund,
-        splitToLiquid: f.splitToLiquid.toNumber(),
-        expiryTime: f.expiryTime.toNumber(),
-        expiryHeight: f.expiryHeight.toNumber(),
-      }));
-    },
-  ],
-  "index-fund.alliance-members": [
-    (args) =>
-      indexFund.encodeFunctionData("queryAllianceMembers", toTuple(args)),
-    (result) => {
-      const decoded: string[] = indexFund.decodeFunctionResult(
-        "queryAllianceMembers",
-        result
-      )[0];
-      return decoded.map((a) => a.toLowerCase());
-    },
-  ],
   "index-fund.config": [
     indexFund.encodeFunctionData("queryConfig", []),
     (result) => {
-      const d: DIndexFundConfig = indexFund.decodeFunctionResult(
-        "queryConfig",
-        result
-      )[0];
+      const d: IndexFundStorage.ConfigStructOutput =
+        indexFund.decodeFunctionResult("queryConfig", result)[0];
+
       return {
         owner: d.owner.toLowerCase(),
-        registrarContract: d.registrarContract,
+        registrarContract: d.registrarContract.toLowerCase(),
         fundRotation: d.fundRotation.toNumber(),
         fundMemberLimit: d.fundMemberLimit.toNumber(),
         fundingGoal: d.fundingGoal.toNumber(),
-        alliance_members: d.alliance_members,
+      };
+    },
+  ],
+  "index-fund.fund": [
+    ({ id }) => indexFund.encodeFunctionData("queryFundDetails", [id]),
+    (result) => {
+      const d: IndexFundStructs.IndexFundStructOutput =
+        indexFund.decodeFunctionResult("queryFundDetails", result)[0];
+
+      return {
+        id: d.id.toNumber(),
+        name: d.name,
+        description: d.description,
+        members: d.members.map((m) => m),
+        splitToLiquid: d.splitToLiquid.toNumber(),
+        expiryTime: d.expiryTime.toNumber(),
+        expiryHeight: d.expiryHeight.toNumber(),
       };
     },
   ],
@@ -227,10 +201,8 @@ export const queryObjects: {
   "multisig.transaction": [
     ({ id }) => multisig.encodeFunctionData("transactions", [id]),
     (result, args) => {
-      const d = multisig.decodeFunctionResult(
-        "transactions",
-        result
-      ) as unknown as DTransaction;
+      const d: MultiSigStorage.TransactionStructOutput =
+        multisig.decodeFunctionResult("transactions", result) as any;
 
       return {
         id: args?.id ?? 0,
@@ -240,6 +212,7 @@ export const queryObjects: {
         value: d.value.toString(),
         data: d.data,
         status: d.executed ? "executed" : "pending",
+        metadata: d.metadata,
       };
     },
   ],
@@ -259,83 +232,78 @@ export const queryObjects: {
   "accounts.endowment": [
     ({ id }) => accounts.encodeFunctionData("queryEndowmentDetails", [id]),
     (result) => {
-      const d: DEndowment = accounts.decodeFunctionResult(
-        "queryEndowmentDetails",
-        result
-      )[0];
+      const d: AccountStorage.EndowmentStructOutput =
+        accounts.decodeFunctionResult("queryEndowmentDetails", result)[0];
 
       const controller = d.settingsController;
       return {
         owner: d.owner.toLowerCase(),
         categories: {
           sdgs: d.categories.sdgs.map((s) => s.toNumber()) as UNSDG_NUMS[],
-          general: d.categories.general.map((s) =>
-            s.toNumber()
-          ) as UNSDG_NUMS[],
+          general: d.categories.general.map((s) => s.toNumber()),
         },
-        endow_type: toEndowType(d.endow_type),
-        status: toEndowStatusText(d.status),
+        endowType: toEndowType(d.endowType),
         maturityTime: d.maturityTime.toNumber(),
-        whitelistedBeneficiaries: d.whitelistedBeneficiaries.map((w) =>
+        allowlistedBeneficiaries: d.allowlistedBeneficiaries.map((w) =>
           w.toLowerCase()
         ),
-        maturityWhitelist: d.maturityWhitelist.map((w) => w.toLowerCase()),
+        allowlistedContributors: d.allowlistedContributors.map((w) =>
+          w.toLowerCase()
+        ),
+        maturityAllowlist: d.maturityAllowlist.map((w) => w.toLowerCase()),
         kycDonorsOnly: d.kycDonorsOnly,
+        donationMatchActive: d.donationMatchActive,
         settingsController: {
-          endowmentController: toSettingsPermission(
-            controller.endowmentController
+          acceptedTokens: toPermission(controller.acceptedTokens),
+          lockedInvestmentManagement: toPermission(
+            controller.lockedInvestmentManagement
           ),
-          strategies: toSettingsPermission(controller.endowmentController),
-          whitelistedBeneficiaries: toSettingsPermission(
-            controller.whitelistedBeneficiaries
+          liquidInvestmentManagement: toPermission(
+            controller.liquidInvestmentManagement
           ),
-          whitelistedContributors: toSettingsPermission(
-            controller.whitelistedContributors
+          allowlistedBeneficiaries: toPermission(
+            controller.allowlistedBeneficiaries
           ),
-          maturityWhitelist: toSettingsPermission(controller.maturityWhitelist),
-          maturityTime: toSettingsPermission(controller.maturityTime),
-          profile: toSettingsPermission(controller.profile),
-          earningsFee: toSettingsPermission(controller.earningsFee),
-          withdrawFee: toSettingsPermission(controller.withdrawFee),
-          depositFee: toSettingsPermission(controller.depositFee),
-          aumFee: toSettingsPermission(controller.aumFee),
-          kycDonorsOnly: toSettingsPermission(controller.kycDonorsOnly),
-          name: toSettingsPermission(controller.name),
-          image: toSettingsPermission(controller.image),
-          logo: toSettingsPermission(controller.logo),
-          categories: toSettingsPermission(controller.categories),
-          splitToLiquid: toSettingsPermission(controller.splitToLiquid),
-          ignoreUserSplits: toSettingsPermission(controller.ignoreUserSplits),
+          allowlistedContributors: toPermission(
+            controller.allowlistedContributors
+          ),
+          maturityAllowlist: toPermission(controller.maturityAllowlist),
+          maturityTime: toPermission(controller.maturityTime),
+          earlyLockedWithdrawFee: toPermission(
+            controller.earlyLockedWithdrawFee
+          ),
+          withdrawFee: toPermission(controller.withdrawFee),
+          depositFee: toPermission(controller.depositFee),
+          balanceFee: toPermission(controller.balanceFee),
+          name: toPermission(controller.name),
+          image: toPermission(controller.image),
+          logo: toPermission(controller.logo),
+          categories: toPermission(controller.categories),
+          splitToLiquid: toPermission(controller.splitToLiquid),
+          ignoreUserSplits: toPermission(controller.ignoreUserSplits),
         },
+        ignoreUserSplits: d.ignoreUserSplits,
+        splitToLiquid: toSplit(d.splitToLiquid),
       };
     },
   ],
   "accounts.state": [
     ({ id }) => accounts.encodeFunctionData("queryState", [id]),
     (result) => {
-      const d: DEndowmentState = accounts.decodeFunctionResult(
-        "queryState",
-        result
-      )[0];
+      const d: AccountMessages.StateResponseStructOutput =
+        accounts.decodeFunctionResult("queryState", result)[0];
+      const bene = d.closingBeneficiary;
 
       return {
-        //TODO: populate once needed
-        donationsReceived: {
-          locked: d.donationsReceived.locked.toString(),
-          liquid: d.donationsReceived.liquid.toString(),
-        },
-        balances: {
-          liquid: toBalMap(d.balances.liquid),
-          locked: toBalMap(d.balances.locked),
-        },
         closingEndowment: d.closingEndowment,
         //FUTURE: index-fund can also be beneficiary
         closingBeneficiary: {
           data: {
-            id: d.closingBeneficiary.data.id.toNumber(),
-            addr: d.closingBeneficiary.data.addr.toLowerCase(),
+            endowId: bene.data.endowId,
+            fundId: bene.data.fundId.toNumber(),
+            addr: bene.data.addr.toLowerCase(),
           },
-          enumData: d.closingBeneficiary.enumData.toNumber() as any,
+          enumData: bene.enumData as any /** 0 | 1 | 2 | 3 */,
         },
       };
     },

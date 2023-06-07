@@ -9,7 +9,7 @@ export enum denoms {
   halo = "halo_contract_addr", //replace with halo contract addr
   ujuno = "ujuno",
   ujunox = "ujunox",
-  dusd = "0xaBCe32FBA4C591E8Ea5A5f711F7112dC08BCee74",
+  dusd = "0xe6b8a5CF854791412c1f6EFC7CAf629f5Df1c747",
 }
 
 const _symbols: { [key in denoms]: string } = {

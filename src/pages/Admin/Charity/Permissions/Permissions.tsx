@@ -6,18 +6,20 @@ import { ADDRESS_ZERO } from "constants/evm";
 import { adminRoutes } from "constants/routes";
 import Seo from "../Seo";
 import Form from "./Form";
+import { controllerUpdate } from "./helpers";
 import { FormField, FormValues, UpdateableFormValues, schema } from "./schema";
 
 export default function Permissions() {
-  const { settingsController: controller } = useAdminResources<"charity">();
-  const initialValues: UpdateableFormValues = {
-    accountFees: createField(controller.aumFee, "Changes to account fees"),
+  const { settingsController: controller, id } = useAdminResources<"charity">();
+
+  const fv: UpdateableFormValues = {
+    accountFees: createField(controller.depositFee, "Changes to account fees"),
     beneficiaries_allowlist: createField(
-      controller.whitelistedBeneficiaries,
+      controller.allowlistedBeneficiaries,
       "Changes to beneficiaries whitelist"
     ),
     contributors_allowlist: createField(
-      controller.whitelistedContributors,
+      controller.allowlistedContributors,
       "Changes to contributors whitelist"
     ),
     donationSplitParams: createField(
@@ -26,11 +28,11 @@ export default function Permissions() {
     ),
     profile: createField(controller.name, "Changes to profile"),
   };
+
   const methods = useForm<FormValues>({
     defaultValues: {
-      initialValues,
-      endowment_controller: createField(controller.endowmentController),
-      ...initialValues,
+      initial: controllerUpdate(id, fv, controller),
+      ...fv,
     },
     resolver: yupResolver(schema),
   });
@@ -48,14 +50,18 @@ export default function Permissions() {
   );
 }
 
-function createField(settings: SettingsPermission, name = ""): FormField {
-  const isDelegated = settings.delegate.Addr !== ADDRESS_ZERO;
+function createField(setting: SettingsPermission, name = ""): FormField {
+  const delegate = setting.delegate;
+  const isDelegated = delegate.addr !== ADDRESS_ZERO;
   return {
+    isActive: isDelegated,
+    addr: isDelegated ? delegate.addr : "",
+    locked: setting.locked,
+
+    //meta
     name,
-    govControlled: settings.govControlled,
-    modifiableAfterInit: settings.modifiableAfterInit,
-    ownerControlled: settings.ownerControlled,
-    delegated: isDelegated,
-    delegate_address: isDelegated ? settings.delegate.Addr : "",
+    modifiable: !setting.locked,
+    ownerControlled: true,
+    govControlled: false,
   };
 }

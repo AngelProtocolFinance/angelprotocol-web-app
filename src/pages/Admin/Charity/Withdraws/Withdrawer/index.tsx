@@ -8,12 +8,12 @@ import WithdrawForm from "./WithdrawForm";
 const container = "dark:bg-blue-d6 border border-prim rounded max-w-lg  p-8";
 
 export default function Withdrawer() {
-  const { id, endow_type, maturityTime } = useAdminResources<"charity">();
+  const { id, endowType, maturityTime } = useAdminResources<"charity">();
   const queryState = useEndowBalanceQuery({ id });
 
   const isLockAvailable =
-    endow_type === "charity" ||
-    (endow_type === "normal" && hasElapsed(maturityTime));
+    endowType === "charity" ||
+    (endowType === "normal" && hasElapsed(maturityTime));
 
   return (
     <QueryLoader

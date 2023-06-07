@@ -1,58 +1,50 @@
-import { ProposalMeta } from "pages/Admin/types";
+import { TxMeta } from "contracts/createTx/types";
 import { TagPayload } from "types/third-party/redux";
 import { ApesTag, invalidateApesTags } from "services/apes";
 import { invalidateJunoTags } from "services/juno";
 import { defaultProposalTags } from "services/juno/tags";
 
-export function getTagPayloads(type?: ProposalMeta["type"]): TagPayload[] {
+export function getTagPayloads(type?: TxMeta["id"]): TagPayload[] {
   const _tags = [...defaultProposalTags];
   const _apes: ApesTag[] = [];
 
   switch (type) {
-    case "endow_controller":
+    case "accounts.update-controller":
       _tags.push("accounts.endowment");
       break;
-    case "if_alliance":
-      _tags.push("index-fund.alliance-members");
-      break;
-    case "if_remove":
-    case "if_create":
-    case "if_members": //fund members shown via selecFromResult (fund_list)
-      _tags.push("index-fund.funds");
-      break;
 
-    case "if_config":
-    case "if_owner":
+    case "index-fund.remove-fund":
+    case "index-fund.create-fund":
+    case "index-fund.config":
+    case "index-fund.update-owner":
       _tags.push("index-fund.config");
       break;
 
-    case "cw4_members":
+    case "multisig.add-owner":
+    case "multisig.remove-owner":
       _tags.push("multisig.members");
+      _tags.push("multisig.threshold"); //cases where threshold > members.length
       break;
 
-    case "review_cw3_config":
-    case "cw3_config":
-      _tags.push("multisig.require-execution");
+    case "multisig.change-threshold":
       _tags.push("multisig.threshold");
       break;
-    case "cw3_transfer":
-      _apes.push("chain");
+
+    case "erc20.transfer":
+      _apes.push("chain"); //assuming user wallet is beneficiary
       break;
 
-    case "acc_invest":
-    case "acc_withdraw":
+    case "accounts.invest":
+    case "accounts.redeem":
       _tags.push("accounts.state");
       break;
 
-    case "acc_strategy":
+    case "accounts.close":
       _tags.push("accounts.endowment");
       break;
 
-    case "acc_endow_status":
-      _tags.push("accounts.endowment");
-      break;
-
-    case "reg_owner":
+    case "registrar.update-config":
+    case "registrar.update-owner":
       _tags.push("registrar.config");
       break;
   }

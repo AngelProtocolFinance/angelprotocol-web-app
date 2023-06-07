@@ -1,6 +1,6 @@
 import { TManagement } from "slices/launchpad/types";
+import { Info } from "components/Status";
 import { isEmpty } from "helpers";
-import Info from "../common/Info";
 import Section, { SectionProps } from "./Section";
 
 export default function Management({

@@ -5,10 +5,8 @@ import { useModalContext } from "contexts/ModalContext";
 import Prompt from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
+import { isEmpty } from "helpers";
 import { getPayloadDiff } from "helpers/admin";
-
-type Key = keyof FV;
-type Value = FV[Key];
 
 export default function useConfigureRegistrar() {
   const { multisig, propMeta, getWallet } = useAdminResources();
@@ -27,8 +25,7 @@ export default function useConfigureRegistrar() {
   }: FV) {
     //check for changes
     const diff = getPayloadDiff(initial, fv);
-    const diffEntries = Object.entries(diff) as [Key, Value][];
-    if (diffEntries.length === 0) {
+    if (isEmpty(diff)) {
       return showModal(Prompt, {
         type: "error",
         title: "Update Registrar",
@@ -40,10 +37,14 @@ export default function useConfigureRegistrar() {
     const wallet = getWallet();
     if (typeof wallet === "function") return wallet();
 
-    const [data, dest] = encodeTx("registrar.update-config", {
-      ...initial,
-      ...fv,
-    });
+    const [data, dest, meta] = encodeTx(
+      "registrar.update-config",
+      {
+        ...initial,
+        ...fv,
+      },
+      diff
+    );
 
     await sendTx({
       content: {
@@ -55,6 +56,7 @@ export default function useConfigureRegistrar() {
           destination: dest,
           value: "0",
           data,
+          meta: meta.encoded,
         }),
       },
       ...propMeta,

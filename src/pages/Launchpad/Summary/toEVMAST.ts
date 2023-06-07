@@ -1,6 +1,5 @@
 import { Completed, TFee } from "slices/launchpad/types";
-import { SettingsPermission } from "types/contracts";
-import { Fee, NewAST } from "types/contracts/evm";
+import { Fee, NewAST, SettingsPermission } from "types/contracts";
 import { isEmpty, roundDownToNum } from "helpers";
 import { blockTime } from "helpers/admin";
 import { ADDRESS_ZERO } from "constants/evm";
@@ -25,29 +24,21 @@ export default function toEVMAST(
     name: about.name,
     categories: { sdgs: [], general: [] }, //not specified in launchpad design
     tier: 0, //not specified in launchpad design
-    endow_type: 1,
+    endowType: 1,
     logo: "/images/angelprotocol-rounded-logo.png",
     image: "",
-    cw4_members: isEmpty(management.members) ? [creator] : management.members, //in launchpad design, weight is specified for each member
+    members: isEmpty(management.members) ? [creator] : management.members, //in launchpad design, weight is specified for each member
     kycDonorsOnly: false, //not specified in launchpad design
-    cw3Threshold: {
-      enumData: 1,
-      data: {
-        weight: 0,
-        percentage: +management.proposal.threshold,
-        threshold: 0,
-        quorum: 0,
-      },
-    },
-    cw3MaxVotingPeriod: {
+    threshold: +management.proposal.threshold,
+    maxVotingPeriod: {
       enumData: 1,
       data: {
         height: 0,
         time: roundDownToNum(+management.proposal.duration * 60 * 60, 0),
       },
     },
-    whitelistedBeneficiaries: whitelists.beneficiaries,
-    whitelistedContributors: whitelists.contributors,
+    allowlistedBeneficiaries: whitelists.beneficiaries,
+    allowlistedContributors: whitelists.contributors,
 
     //not used in contract
     splitMax: 100 - +splits.max,
@@ -55,10 +46,10 @@ export default function toEVMAST(
     splitDefault: +splits.default,
 
     // //fees
-    earningsFee: toEndowFee(fees.earnings),
+    earlyLockedWithdrawFee: toEndowFee(fees.earnings),
     withdrawFee: toEndowFee(fees.withdrawal),
     depositFee: toEndowFee(fees.deposit),
-    aumFee: toEndowFee({ isActive: false, receiver: "", rate: "0" }), //not included in launchpad, for edit later
+    balanceFee: toEndowFee({ isActive: false, receiver: "", rate: "0" }), //not included in launchpad, for edit later
 
     //dao (overriden by bool createDao ):not included in launchpad, for edit later
     dao: {
@@ -72,12 +63,12 @@ export default function toEVMAST(
       token: {
         token: 0,
         data: {
-          existingCw20Data: ADDRESS_ZERO,
-          newCw20InitialSupply: 0,
-          newCw20Name: "",
-          newCw20Symbol: "",
-          bondingCurveCurveType: {
-            curve_type: 0,
+          existingData: ADDRESS_ZERO,
+          newInitialSupply: "0",
+          newName: "",
+          newSymbol: "",
+          veBondingType: {
+            ve_type: 0,
             data: {
               value: 0,
               scale: 0,
@@ -85,12 +76,12 @@ export default function toEVMAST(
               power: 0,
             },
           },
-          bondingCurveName: "",
-          bondingCurveSymbol: "",
-          bondingCurveDecimals: 0,
-          bondingCurveReserveDenom: ADDRESS_ZERO,
-          bondingCurveReserveDecimals: 0,
-          bondingCurveUnbondingPeriod: 0,
+          veBondingName: "",
+          veBondingSymbol: "",
+          veBondingDecimals: 0,
+          veBondingReserveDenom: ADDRESS_ZERO,
+          veBondingReserveDecimals: 0,
+          veBondingPeriod: 0,
         },
       },
     },
@@ -99,28 +90,27 @@ export default function toEVMAST(
     proposalLink: 0, //not specified in launchpad design
 
     settingsController: {
-      endowmentController: defaultPermission,
-      strategies: defaultPermission,
-      whitelistedBeneficiaries: defaultPermission,
-      whitelistedContributors: defaultPermission,
-      maturityWhitelist: defaultPermission,
-      maturityTime: defaultPermission,
-      profile: defaultPermission,
-      earningsFee: defaultPermission,
-      withdrawFee: defaultPermission,
-      depositFee: defaultPermission,
-      aumFee: defaultPermission,
-      kycDonorsOnly: defaultPermission,
-      name: defaultPermission,
-      image: defaultPermission,
-      logo: defaultPermission,
-      categories: defaultPermission,
-      splitToLiquid: defaultPermission,
-      ignoreUserSplits: defaultPermission,
+      acceptedTokens: defaultSetting,
+      lockedInvestmentManagement: defaultSetting,
+      liquidInvestmentManagement: defaultSetting,
+      allowlistedBeneficiaries: defaultSetting,
+      allowlistedContributors: defaultSetting,
+      maturityAllowlist: defaultSetting,
+      maturityTime: defaultSetting,
+      earlyLockedWithdrawFee: defaultSetting,
+      withdrawFee: defaultSetting,
+      depositFee: defaultSetting,
+      balanceFee: defaultSetting,
+      name: defaultSetting,
+      image: defaultSetting,
+      logo: defaultSetting,
+      categories: defaultSetting,
+      splitToLiquid: defaultSetting,
+      ignoreUserSplits: defaultSetting,
     },
     // settingsController: SettingsController; //not included in launchpad, for edit later
     parent: 0,
-    maturityWhitelist: maturity.beneficiaries.map((b) => b.addr),
+    maturityAllowlist: maturity.beneficiaries.map((b) => b.addr),
     ignoreUserSplits: !splits.isCustom,
     splitToLiquid: {
       min: 100 - +splits.max,
@@ -128,25 +118,22 @@ export default function toEVMAST(
       defaultSplit: +splits.default,
     },
 
-    // referral_id: fees.referral_id || 0, //TODO: add on later ver of contracts
+    referralId: fees.referral_id || 0,
   };
 }
 
 function toEndowFee(fee: TFee): Fee {
-  const addr = fee.isActive ? fee.receiver : ADDRESS_ZERO;
+  const [addr, bps] = fee.isActive
+    ? [fee.receiver, +fee.rate * 100]
+    : [ADDRESS_ZERO, 0];
+
   return {
     payoutAddress: addr,
-    feePercentage: +fee.rate,
-    active: fee.isActive,
+    bps,
   };
 }
 
-const defaultPermission: SettingsPermission = {
-  ownerControlled: true,
-  govControlled: false,
-  modifiableAfterInit: true,
-  delegate: {
-    Addr: ADDRESS_ZERO,
-    expires: 0,
-  },
+const defaultSetting: SettingsPermission = {
+  locked: false,
+  delegate: { addr: ADDRESS_ZERO, expires: 0 },
 };
