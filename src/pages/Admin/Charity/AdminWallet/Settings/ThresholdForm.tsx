@@ -3,9 +3,12 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { number, object } from "yup";
 import { ProposalBase } from "../../../types";
 import { SchemaShape } from "schemas/types";
-import { useModalContext } from "contexts/ModalContext";
+import { useAdminResources } from "pages/Admin/Guard";
 import Modal from "components/Modal";
 import { Field } from "components/form";
+import { createTx, encodeTx } from "contracts/createTx/createTx";
+import useTxSender from "hooks/useTxSender";
+import { getTagPayloads } from "helpers/admin";
 import { proposalShape } from "../../../constants";
 
 export type Props = {
@@ -16,7 +19,9 @@ export type Props = {
 type FV = ProposalBase & { threshold: number };
 
 export default function ThresholdForm({ added, initial }: Props) {
-  const { closeModal } = useModalContext();
+  const { sendTx, isSending } = useTxSender(true);
+  const { getWallet, multisig, propMeta } = useAdminResources();
+
   const methods = useForm<FV>({
     defaultValues: { threshold: initial },
     resolver: yupResolver(
@@ -33,8 +38,34 @@ export default function ThresholdForm({ added, initial }: Props) {
   });
   const { handleSubmit } = methods;
 
-  const submit: SubmitHandler<FV> = ({ threshold, title, description }) => {
-    closeModal();
+  const submit: SubmitHandler<FV> = async (fv) => {
+    const wallet = getWallet();
+    if (typeof wallet === "function") return wallet();
+
+    const [data, dest, meta] = encodeTx(
+      "multisig.change-threshold",
+      {
+        multisig,
+        threshold: fv.threshold,
+      },
+      { curr: initial, new: fv.threshold }
+    );
+
+    const tx = createTx(wallet.address, "multisig.submit-transaction", {
+      multisig: dest,
+      title: fv.title,
+      description: fv.description,
+      destination: dest,
+      value: "0",
+      data,
+      meta: meta.encoded,
+    });
+
+    await sendTx({
+      content: { type: "evm", val: tx },
+      ...propMeta,
+      tagPayloads: getTagPayloads(propMeta.willExecute && meta.id),
+    });
   };
 
   return (
@@ -66,8 +97,12 @@ export default function ThresholdForm({ added, initial }: Props) {
           required
         />
       </FormProvider>
-      <button type="submit" className="btn btn-orange mt-6">
-        Submit
+      <button
+        type="submit"
+        className="btn btn-orange mt-6"
+        disabled={isSending}
+      >
+        {isSending ? "Submitting.." : "Submit"}
       </button>
     </Modal>
   );
