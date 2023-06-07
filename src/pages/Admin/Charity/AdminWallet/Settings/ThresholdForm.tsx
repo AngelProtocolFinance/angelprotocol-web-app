@@ -32,7 +32,8 @@ export default function ThresholdForm({ added, initial }: Props) {
           .integer("no decimals")
           .min(1, "at least 1")
           //if no members set, default to 1
-          .max(added.length || 1, "can't be more than number of members"),
+          .max(added.length || 1, "can't be more than number of members")
+          .test("new value", `should be new`, (val) => val !== initial),
       })
     ),
   });
