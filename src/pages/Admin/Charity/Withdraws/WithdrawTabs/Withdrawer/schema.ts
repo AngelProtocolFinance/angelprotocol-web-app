@@ -8,13 +8,18 @@ import { chainIds } from "constants/chainIds";
 type TVal = Amount["value"];
 type TBal = Amount["balance"];
 type TNetwork = WV["network"];
+type TFees = WV["fees"];
 
 const balKey: keyof Amount = "balance";
 const netKey: keyof WV = "network";
 const amountsKey: keyof WV = "amounts";
 const heightKey: keyof WV = "height";
+const feesKey: keyof WV = "fees";
 
-const amount: (arg: TNetwork) => SchemaShape<Amount> = (network) => ({
+const amount: (network: TNetwork, fees: TFees) => SchemaShape<Amount> = (
+  network,
+  fees
+) => ({
   value: Yup.lazy((val: TVal) =>
     val === ""
       ? Yup.string() //required collected on _amount
@@ -24,14 +29,12 @@ const amount: (arg: TNetwork) => SchemaShape<Amount> = (network) => ({
               return +balance >= +val;
             })
             .test(
-              "min $20 when destination is not JUNO",
+              "must be greater than fee",
               /**
                * NOTE: this is on the assumption that endow TOH would just be USDC
                * for other tokens, must first get dollar amount
                */
-              network === chainIds.ethereum
-                ? "minimum 40 USDC"
-                : "minimum 20 USDC",
+              `minimum ${fees[network as "ethereum" | "binance"]} USDC`,
               () =>
                 network === chainIds.juno
                   ? true
@@ -44,9 +47,10 @@ const amount: (arg: TNetwork) => SchemaShape<Amount> = (network) => ({
 });
 
 const shape: SchemaShape<WV> = {
-  amounts: Yup.array().when(netKey, (network: TNetwork, schema) =>
-    schema.of(Yup.object().shape(amount(network)))
-  ),
+  amounts: Yup.array().when([netKey, feesKey], (...args: any[]) => {
+    const [network, fees, schema] = args as [TNetwork, TFees, any];
+    return schema.of(Yup.object().shape(amount(network, fees)));
+  }),
   //test if at least one amount is filled
   _amounts: Yup.string().when(amountsKey, (amounts: Amount[], schema) =>
     schema.test("at least one is filled", "", () =>
