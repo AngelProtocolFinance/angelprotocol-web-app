@@ -35,7 +35,7 @@ const amount: (network: TNetwork, fees: TFees) => SchemaShape<Amount> = (
                * for other tokens, must first get dollar amount
                */
               `minimum ${fee(network, fees)} USDC`,
-              () => +val > fee(network, fees)
+              () => +val >= fee(network, fees)
             )
         )
   ),

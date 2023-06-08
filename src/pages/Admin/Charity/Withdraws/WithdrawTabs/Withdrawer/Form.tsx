@@ -17,9 +17,11 @@ export default function Form() {
       noValidate
     >
       <Amounts />
-      <Breakdown />
+
       <Network />
-      <Beneficiary classes="mt-6 mb-2" />
+      <Beneficiary classes="my-6" />
+      <Breakdown />
+
       {network !== "Juno" && (
         <>
           <Warning classes="mt-4 mb-2">
