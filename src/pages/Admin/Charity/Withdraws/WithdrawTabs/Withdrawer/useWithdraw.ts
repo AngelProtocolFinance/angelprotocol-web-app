@@ -11,15 +11,18 @@ import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
 import { scaleToStr } from "helpers";
 import { ap_wallets } from "constants/ap_wallets";
 import { chainIds } from "constants/chainIds";
+import { fee, names } from "./helpers";
 import useLogWithdrawProposal from "./useLogWithdrawProposal";
 
 export default function useWithdraw() {
   const {
+    watch,
     handleSubmit,
     getValues,
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<WithdrawValues>();
 
+  const network = watch("network");
   const { cw3, endowmentId, endowment, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
 
@@ -100,5 +103,7 @@ export default function useWithdraw() {
     withdraw: handleSubmit(withdraw),
     isSubmitDisabled: !isValid || !isDirty || isSubmitting,
     type,
+    fee: fee(network, getValues("fees")),
+    network: names(network),
   };
 }

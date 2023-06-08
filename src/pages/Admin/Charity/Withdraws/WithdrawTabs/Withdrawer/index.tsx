@@ -10,6 +10,7 @@ import { schema } from "./schema";
 export default function Withdrawer({
   balance: { cw20, native },
   type,
+  fees,
 }: WithdrawerProps) {
   const { wallet } = useGetWallet();
 
@@ -37,6 +38,7 @@ export default function Withdrawer({
       amounts: [...natives, ...cw20s],
       height: 0,
       type,
+      fees,
     },
     resolver: yupResolver(schema),
   });

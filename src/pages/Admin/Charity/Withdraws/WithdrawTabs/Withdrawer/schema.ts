@@ -3,7 +3,7 @@ import { Amount, WithdrawValues as WV } from "./types";
 import { SchemaShape } from "schemas/types";
 import { tokenConstraint } from "schemas/number";
 import { requiredWalletAddr } from "schemas/string";
-import { chainIds } from "constants/chainIds";
+import { fee } from "./helpers";
 
 type TVal = Amount["value"];
 type TBal = Amount["balance"];
@@ -34,13 +34,8 @@ const amount: (network: TNetwork, fees: TFees) => SchemaShape<Amount> = (
                * NOTE: this is on the assumption that endow TOH would just be USDC
                * for other tokens, must first get dollar amount
                */
-              `minimum ${fees[network as "ethereum" | "binance"]} USDC`,
-              () =>
-                network === chainIds.juno
-                  ? true
-                  : network === chainIds.ethereum
-                  ? +val >= 40
-                  : +val >= 20
+              `minimum ${fee(network, fees)} USDC`,
+              () => +val >= fee(network, fees)
             )
         )
   ),

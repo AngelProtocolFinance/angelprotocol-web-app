@@ -221,7 +221,7 @@ export const customApi = junoApi.injectEndpoints({
           queryContract("accState", contracts.accounts, {
             id,
           }),
-          fetch(APIs.aws + "/v1/axelar-bridge-fees").then<AxelarBridgeFees>(
+          fetch(APIs.apes + "/v1/axelar-bridge-fees").then<AxelarBridgeFees>(
             (res) => {
               if (!res.ok) throw new Error("Failed to get fees");
               return res.json();
