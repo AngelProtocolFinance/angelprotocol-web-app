@@ -1,3 +1,5 @@
+import { WithdrawInfo } from "services/types";
+import { AxelarBridgeFees } from "types/aws";
 import { AccountType, GenericBalance } from "types/contracts";
 
 export type Amount = {
@@ -17,10 +19,12 @@ export type WithdrawValues = {
   _amounts: string; //collective amounts error
   height: number;
   type: AccountType;
+  fees: WithdrawInfo["withdraw"];
 };
 
 export type WithdrawerProps = {
   balance: GenericBalance;
   type: AccountType;
+  fees: AxelarBridgeFees["withdraw"];
 };
 //form meta

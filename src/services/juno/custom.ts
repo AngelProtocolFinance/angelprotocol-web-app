@@ -211,18 +211,12 @@ export const customApi = junoApi.injectEndpoints({
         };
       },
     }),
-    withdrawInfo: builder.query<WithdrawInfo, { id?: string }>({
+    withdrawInfo: builder.query<WithdrawInfo, { id: number }>({
       providesTags: [
         { type: "admin", id: adminTags.proposal },
         { type: "admin", id: adminTags.votes },
       ],
-      async queryFn(args) {
-        const id = Number(args.id);
-
-        if (isNaN(id)) {
-          return { error: undefined };
-        }
-
+      async queryFn({ id }) {
         const [state, fees] = await Promise.all([
           queryContract("accState", contracts.accounts, {
             id,
@@ -247,6 +241,7 @@ export const customApi = junoApi.injectEndpoints({
 });
 
 export const {
+  useWithdrawInfoQuery,
   useIsMemberQuery,
   useAdminResourcesQuery,
   useProposalDetailsQuery,
