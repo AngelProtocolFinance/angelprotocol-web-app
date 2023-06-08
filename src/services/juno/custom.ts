@@ -1,8 +1,15 @@
-import { AdminResources, AdminRoles, ProposalDetails } from "services/types";
+import {
+  AdminResources,
+  AdminRoles,
+  ProposalDetails,
+  WithdrawInfo,
+} from "../types";
+import { AxelarBridgeFees } from "types/aws";
 import { CW3Config, EndowmentDetails } from "types/contracts";
 import { idParamToNum } from "helpers";
 import { contracts } from "constants/contracts";
 import { adminRoutes, appRoutes } from "constants/routes";
+import { APIs } from "constants/urls";
 import { junoApi } from ".";
 import { queryContract } from "./queryContract";
 import { accountTags, adminTags, defaultProposalTags } from "./tags";
@@ -181,10 +188,7 @@ export const customApi = junoApi.injectEndpoints({
       ProposalDetails,
       { id?: string; cw3: string; voter: string }
     >({
-      providesTags: [
-        { type: "admin", id: adminTags.proposal },
-        { type: "admin", id: adminTags.votes },
-      ],
+      providesTags: [{ type: "admin", id: accountTags.state }],
       async queryFn(args) {
         const id = Number(args.id);
 
@@ -203,6 +207,38 @@ export const customApi = junoApi.injectEndpoints({
           data: {
             ...proposal,
             votes: votesRes.votes,
+          },
+        };
+      },
+    }),
+    withdrawInfo: builder.query<WithdrawInfo, { id?: string }>({
+      providesTags: [
+        { type: "admin", id: adminTags.proposal },
+        { type: "admin", id: adminTags.votes },
+      ],
+      async queryFn(args) {
+        const id = Number(args.id);
+
+        if (isNaN(id)) {
+          return { error: undefined };
+        }
+
+        const [state, fees] = await Promise.all([
+          queryContract("accState", contracts.accounts, {
+            id,
+          }),
+          fetch(APIs.aws + "/v1/axelar-bridge-fees").then<AxelarBridgeFees>(
+            (res) => {
+              if (!res.ok) throw new Error("Failed to get fees");
+              return res.json();
+            }
+          ),
+        ]);
+
+        return {
+          data: {
+            ...state,
+            ...fees,
           },
         };
       },

@@ -1,9 +1,11 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
+import { AxelarBridgeFees } from "types/aws";
 import {
   AdminVoteInfo,
   CW3Config,
   EndowmentDetails,
+  EndowmentState,
   Proposal,
 } from "types/contracts";
 import { TxArgs } from "hooks/useCosmosTxSender";
@@ -49,3 +51,5 @@ export type JunoTags =
   | "account"
   | "registrar"
   | "custom";
+
+export type WithdrawInfo = EndowmentState & AxelarBridgeFees;

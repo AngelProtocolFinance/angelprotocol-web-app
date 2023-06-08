@@ -75,3 +75,17 @@ export type WithdrawLog = {
   num_routes?: number;
   routes?: WithdrawRoute[];
 };
+
+export type AxelarBridgeFees = {
+  deposit: {
+    binance: number;
+    ethereum: number;
+    polygon: number;
+    "terra-2": number;
+  };
+  withdraw: {
+    binance: number;
+    ethereum: number;
+    polygon: number;
+  };
+};
