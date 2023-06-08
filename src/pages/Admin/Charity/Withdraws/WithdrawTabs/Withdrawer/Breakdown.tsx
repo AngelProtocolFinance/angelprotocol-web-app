@@ -26,7 +26,7 @@ export default function Breakdown() {
   return (
     <div className="divide-y divide-gray-l2 dark:divide-bluegray-d1">
       <p className="uppercase font-bold font-heading mb-2 text-sm">Summary</p>
-      <Item title="amount" value={prettyFee.toFixed(2) + " USDC"} />
+      <Item title="amount" value={usdc.toFixed(2) + " USDC"} />
       <Item title="bridge fee" value={prettyFee.toFixed(2) + " USDC"} />
       <Item title="to receive" value={toReceive.toFixed(2) + " USDC"} />
     </div>
