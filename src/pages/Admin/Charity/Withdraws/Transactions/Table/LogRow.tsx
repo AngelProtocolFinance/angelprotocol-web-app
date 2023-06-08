@@ -11,7 +11,7 @@ export default function LogRow(props: WithdrawLog) {
   const { amount, symbol, target_wallet } = props;
   const finalRoute = getFinalRoute(props);
   return (
-    <Cells type="td" cellClass="p-2 text-white/80">
+    <Cells type="td" cellClass="p-2">
       <Amount val={amount} symbol={symbol} />
 
       <span className="font-mono text-sm">{maskAddress(target_wallet)}</span>
