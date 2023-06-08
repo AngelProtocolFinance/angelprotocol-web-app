@@ -1,5 +1,6 @@
 import Amounts from "./Amounts";
 import Beneficiary from "./Beneficiary";
+import Breakdown from "./Breakdown";
 import Network from "./Network";
 import Submit from "./Submit";
 import Warning from "./Warning";
@@ -16,6 +17,7 @@ export default function Form() {
       noValidate
     >
       <Amounts />
+      <Breakdown />
       <Network />
       <Beneficiary classes="mt-6 mb-2" />
       {network !== "Juno" && (
