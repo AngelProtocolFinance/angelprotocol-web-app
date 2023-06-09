@@ -79,3 +79,17 @@ export type WithdrawLogQueryParams = {
   limit?: number; // Number of items to be returned per request. If not provided, API defaults to return all
   proposal_status?: string | null; // comma separated ProposalStatus values
 };
+
+export type AxelarBridgeFees = {
+  deposit: {
+    binance: number;
+    ethereum: number;
+    polygon: number;
+    "terra-2": number;
+  };
+  withdraw: {
+    binance: number;
+    ethereum: number;
+    polygon: number;
+  };
+};

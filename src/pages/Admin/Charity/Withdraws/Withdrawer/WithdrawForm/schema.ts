@@ -3,18 +3,23 @@ import { Amount, WithdrawValues as WV } from "./types";
 import { SchemaShape } from "schemas/types";
 import { tokenConstraint } from "schemas/number";
 import { requiredWalletAddr } from "schemas/string";
-import { chainIds } from "constants/chainIds";
+import { fee } from "./helpers";
 
 type TVal = Amount["value"];
 type TBal = Amount["balance"];
 type TNetwork = WV["network"];
+type TFees = WV["fees"];
 
 const balKey: keyof Amount = "balance";
 const netKey: keyof WV = "network";
 const endowKey: keyof WV = "endowType";
 const amountsKey: keyof WV = "amounts";
+const feesKey: keyof WV = "fees";
 
-const amount: (arg: TNetwork) => SchemaShape<Amount> = (network) => ({
+const amount: (network: TNetwork, fees: TFees) => SchemaShape<Amount> = (
+  network,
+  fees
+) => ({
   value: Yup.lazy((val: TVal) =>
     val === ""
       ? Yup.string() //required collected on _amount
@@ -24,26 +29,23 @@ const amount: (arg: TNetwork) => SchemaShape<Amount> = (network) => ({
               return +balance >= +val;
             })
             .test(
-              "min $20 when destination is not JUNO",
+              "must be greater than fee",
               /**
                * NOTE: this is on the assumption that endow TOH would just be USDC
                * for other tokens, must first get dollar amount
                */
-              network === chainIds.ethereum
-                ? "minimum 40 USDC"
-                : "minimum 20 USDC",
-              () =>
-                network === chainIds.polygon ||
-                (network === chainIds.ethereum ? +val >= 40 : +val >= 20)
+              `minimum ${fee(network, fees)} USDC`,
+              () => +val >= fee(network, fees)
             )
         )
   ),
 });
 
 const shape: SchemaShape<WV> = {
-  amounts: Yup.array().when(netKey, (network: TNetwork, schema) =>
-    schema.of(Yup.object().shape(amount(network)))
-  ),
+  amounts: Yup.array().when([netKey, feesKey], (...args: any[]) => {
+    const [network, fees, schema] = args as [TNetwork, TFees, any];
+    return schema.of(Yup.object().shape(amount(network, fees)));
+  }),
   //test if at least one amount is filled
   _amounts: Yup.string().when(amountsKey, (amounts: Amount[], schema) =>
     schema.test("at least one is filled", "", () =>

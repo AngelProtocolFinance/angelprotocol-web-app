@@ -19,15 +19,16 @@ import { EMAIL_SUPPORT } from "constants/env";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { APIs } from "constants/urls";
 import { useAdminResources } from "../../../../Guard";
+import { fee, names } from "./helpers";
 
 export default function useWithdraw() {
-  const { handleSubmit } = useFormContext<WithdrawValues>();
+  const { handleSubmit, watch, getValues } = useFormContext<WithdrawValues>();
 
   const { multisig, id, getWallet, ...endow } = useAdminResources<"charity">();
   const { showModal } = useModalContext();
-
   const sendTx = useTxSender();
 
+  const network = watch("network");
   async function withdraw(wv: WithdrawValues) {
     const wallet = getWallet([
       wv.type === "liquid" ? "withdraw-liquid" : "withdraw-locked",
@@ -166,7 +167,11 @@ export default function useWithdraw() {
     });
   }
 
-  return handleSubmit(withdraw);
+  return {
+    withdraw: handleSubmit(withdraw),
+    fee: fee(network, getValues("fees")),
+    network: names(network),
+  };
 }
 
 function successMeta(

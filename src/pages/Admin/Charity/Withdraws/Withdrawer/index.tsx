@@ -1,4 +1,4 @@
-import { useEndowBalanceQuery } from "services/juno/custom";
+import { useWithdrawInfoQuery } from "services/juno/custom";
 import QueryLoader from "components/QueryLoader";
 import { hasElapsed } from "helpers/admin";
 import { useAdminResources } from "../../../Guard";
@@ -9,7 +9,7 @@ const container = "dark:bg-blue-d6 border border-prim rounded max-w-lg  p-8";
 
 export default function Withdrawer() {
   const { id, endowType, maturityTime } = useAdminResources<"charity">();
-  const queryState = useEndowBalanceQuery({ id });
+  const queryState = useWithdrawInfoQuery({ id });
 
   const isLockAvailable =
     endowType === "charity" ||
@@ -23,14 +23,15 @@ export default function Withdrawer() {
         error: "Failed to load withdraw form",
       }}
     >
-      {(balances) =>
+      {({ fees, balances }) =>
         isLockAvailable ? (
-          <Tabs balances={balances} classes={container} />
+          <Tabs balances={balances} classes={container} fees={fees} />
         ) : (
           <WithdrawForm
             type="liquid"
             balances={balances["liquid"]}
             classes={container}
+            fees={fees}
           />
         )
       }

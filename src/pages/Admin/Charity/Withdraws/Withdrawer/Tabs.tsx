@@ -1,5 +1,5 @@
 import { Tab } from "@headlessui/react";
-import { EndowBalance } from "services/types";
+import { EndowBalance, WithdrawFees } from "services/types";
 import { AccountType } from "types/lists";
 import WithdrawForm from "./WithdrawForm";
 
@@ -8,9 +8,10 @@ const _tabs: AccountType[] = ["liquid", "locked"];
 type Props = {
   classes?: string;
   balances: EndowBalance;
+  fees: WithdrawFees;
 };
 
-export default function Tabs({ classes = "", balances }: Props) {
+export default function Tabs({ classes = "", balances, fees }: Props) {
   return (
     <Tab.Group
       as="div"
@@ -30,7 +31,7 @@ export default function Tabs({ classes = "", balances }: Props) {
       <Tab.Panels>
         {_tabs.map((type) => (
           <Tab.Panel key={`tab-panel-${type}`}>
-            <WithdrawForm type={type} balances={balances[type]} />
+            <WithdrawForm type={type} balances={balances[type]} fees={fees} />
           </Tab.Panel>
         ))}
       </Tab.Panels>

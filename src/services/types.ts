@@ -1,5 +1,6 @@
 import { ASTProfile, EndowmentProfile } from "types/aws";
-import { EndowmentDetails } from "types/contracts";
+import { AxelarBridgeFees } from "types/aws";
+import { EndowmentDetails, EndowmentState } from "types/contracts";
 import { Transaction } from "types/contracts/multisig";
 import { AccountType, ProviderId } from "types/lists";
 import { SenderArgs } from "types/tx";
@@ -48,6 +49,13 @@ export interface IERC20 {
 }
 
 export type EndowBalance = { [key in AccountType]: IERC20[] };
+
+export type WithdrawFees = AxelarBridgeFees["withdraw"];
+
+export type WithdrawInfo = {
+  balances: EndowBalance;
+  fees: WithdrawFees;
+};
 
 export type Profile =
   | ({

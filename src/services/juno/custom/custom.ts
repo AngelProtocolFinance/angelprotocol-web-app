@@ -3,11 +3,14 @@ import {
   EndowBalance,
   IERC20,
   ProposalDetails,
-} from "services/types";
+  WithdrawInfo,
+} from "../../types";
+import { AxelarBridgeFees } from "types/aws";
 import { AcceptedTokens, AccountType } from "types/contracts";
 import { Transaction } from "types/contracts/multisig";
 import { TransactionStatus } from "types/lists";
 import { idParamToNum } from "helpers";
+import { APIs } from "constants/urls";
 import { junoApi } from "..";
 import { queryContract } from "../queryContract";
 import { apCWs, multisigInfo } from "./helpers/admin-resource";
@@ -120,33 +123,25 @@ export const customApi = junoApi.injectEndpoints({
     }),
     endowBalance: builder.query<EndowBalance, { id: number }>({
       providesTags: ["accounts.token-balance"],
-      async queryFn(args) {
-        //TODO: get this from registrar
-        const tokens: AcceptedTokens = {
-          cw20: ["0xe6b8a5CF854791412c1f6EFC7CAf629f5Df1c747"],
-        };
+      queryFn: async ({ id }) => ({ data: await endowBalance(id) }),
+    }),
 
-        const balances = (type: AccountType) =>
-          Promise.all(
-            tokens.cw20.map((t) =>
-              queryContract("accounts.token-balance", {
-                id: args.id,
-                accounType: type,
-                token: t,
-              }).then<IERC20>((b) => ({
-                address: t,
-                amount: b,
-              }))
-            )
-          );
-
-        const [locked, liquid] = await Promise.all([balances(0), balances(1)]);
-
+    withdrawInfo: builder.query<WithdrawInfo, { id: number }>({
+      providesTags: ["accounts.token-balance"],
+      queryFn: async ({ id }) => {
+        const _fees = fetch(
+          APIs.apes + "/v1/axelar-bridge-fees"
+        ).then<AxelarBridgeFees>((res) => {
+          if (!res.ok) throw new Error("Failed to get fees");
+          return res.json();
+        });
+        const [balances, fees] = await Promise.all([endowBalance(id), _fees]);
         return {
-          data: { liquid, locked },
+          data: { balances, fees: fees["withdraw"] },
         };
       },
     }),
+
     proposals: builder.query<
       { proposals: Transaction[]; next?: number },
       { multisig: string; status: TransactionStatus; page: number }
@@ -195,10 +190,34 @@ export const customApi = junoApi.injectEndpoints({
   }),
 });
 
+async function endowBalance(id: number): Promise<EndowBalance> {
+  //TODO: query registrar
+  const tokens: AcceptedTokens = {
+    cw20: ["0xe6b8a5CF854791412c1f6EFC7CAf629f5Df1c747"],
+  };
+
+  const balances = (type: AccountType) =>
+    Promise.all(
+      tokens.cw20.map((t) =>
+        queryContract("accounts.token-balance", {
+          id,
+          accounType: type,
+          token: t,
+        }).then<IERC20>((b) => ({
+          address: t,
+          amount: b,
+        }))
+      )
+    );
+  const [locked, liquid] = await Promise.all([balances(0), balances(1)]);
+  return { locked, liquid };
+}
+
 export const {
   useIsMemberQuery,
   useProposalsQuery,
   useAdminResourcesQuery,
   useProposalDetailsQuery,
   useEndowBalanceQuery,
+  useWithdrawInfoQuery,
 } = customApi;
