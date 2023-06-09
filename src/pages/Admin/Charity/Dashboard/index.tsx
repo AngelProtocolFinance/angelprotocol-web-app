@@ -10,7 +10,7 @@ export default function Dashboard() {
   const { multisig } = useAdminResources<"charity">();
   const { data, ...rest } = useProposalsQuery({
     multisig,
-    status: "pending",
+    status: "open",
     page: 1,
   });
 

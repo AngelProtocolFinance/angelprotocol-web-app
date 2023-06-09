@@ -34,7 +34,7 @@ export interface ContractQueries {
   "multisig.threshold": Query<null, number>;
   "multisig.require-execution": Query<null, boolean>;
   "multisig.transaction": Query<ID, Transaction>;
-  "multisig.tx-count": Query<{ pending: boolean; executed: boolean }, number>;
+  "multisig.tx-count": Query<{ open: boolean; approved: boolean }, number>;
   "multisig.votes": Query<ID, string[]>;
 
   "accounts.endowment": Query<ID, EndowmentDetails>;

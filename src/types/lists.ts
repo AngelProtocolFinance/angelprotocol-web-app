@@ -43,5 +43,5 @@ export type Contract =
   | "gift-card";
 
 export type AccountType = "liquid" | "locked";
-export type TransactionStatus = "pending" | "executed";
+export type TransactionStatus = "open" | "approved";
 export type EndowmentType = "charity" | "normal";

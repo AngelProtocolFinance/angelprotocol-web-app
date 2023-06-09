@@ -12,6 +12,6 @@ export function Status(props: { status: TransactionStatus }) {
   );
 }
 const statusClasses: { [key in TransactionStatus]: string } = {
-  executed: "bg-blue",
-  pending: "bg-orange",
+  approved: "bg-blue",
+  open: "bg-orange",
 };
