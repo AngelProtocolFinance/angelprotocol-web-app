@@ -11,11 +11,8 @@ export default function Nav() {
   return (
     <div className="bg-white dark:bg-blue-d6 border border-prim flex flex-col py-4 rounded">
       <Category title="Admin" />
-      <NavLink end to={routes["multisig.owners"]} className={styler}>
-        Update group members
-      </NavLink>
-      <NavLink to={routes["multisig.config"]} className={styler}>
-        Update voting params
+      <NavLink to={routes["multisig.fund-transfer"]} className={styler}>
+        Fund transfer
       </NavLink>
     </div>
   );

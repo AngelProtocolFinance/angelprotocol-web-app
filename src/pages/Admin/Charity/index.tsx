@@ -8,6 +8,7 @@ import Proposal from "../Proposal";
 import Proposals from "../Proposals";
 import { LINKS } from "../constants";
 import Account from "./Account";
+import AdminWallet from "./AdminWallet";
 import Contributions from "./Contributions";
 import ContributorVerification from "./ContributorVerification";
 import Dashboard from "./Dashboard";
@@ -44,13 +45,20 @@ const COMMON: LinkGroup[] = [
 const LINK_GROUPS: { [key in EndowmentType]: LinkGroup[] } = {
   charity: [
     ...COMMON,
-    { title: "Settings", links: [LINKS[adminRoutes.permissions]] },
+    {
+      title: "Settings",
+      links: [LINKS.admin_wallet, LINKS.permissions],
+    },
   ],
   normal: [
     ...COMMON,
     {
       title: "Settings",
-      links: [LINKS.contributor_verification, LINKS[adminRoutes.permissions]],
+      links: [
+        LINKS.admin_wallet,
+        LINKS.contributor_verification,
+        LINKS.permissions,
+      ],
     },
   ],
 };
@@ -80,6 +88,7 @@ export default function Charity() {
           path={adminRoutes.contributor_verification}
           element={<ContributorVerification />}
         />
+        <Route path={adminRoutes.admin_wallet} element={<AdminWallet />} />
         <Route path={adminRoutes.widget_config}>
           <Route index element={<WidgetConfigurer />} />
           <Route path=":endowId" element={<WidgetConfigurer />} />
