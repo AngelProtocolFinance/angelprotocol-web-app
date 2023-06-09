@@ -1,6 +1,7 @@
 import { SubmitHandler, useFormContext } from "react-hook-form";
 import { FormValues } from "./types";
 import { EndowmentSettingsUpdate } from "types/contracts";
+import { SimulContractTx } from "types/evm";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { TxPrompt } from "components/Prompt";
@@ -10,7 +11,7 @@ import { isEmpty } from "helpers";
 import { getPayloadDiff, getTagPayloads } from "helpers/admin";
 
 export default function useEditWhitelists() {
-  const { id, propMeta, multisig, getWallet } = useAdminResources<"charity">();
+  const { id, multisig, getWallet } = useAdminResources<"charity">();
   const {
     reset,
     handleSubmit,
@@ -26,7 +27,10 @@ export default function useEditWhitelists() {
     beneficiaries,
   }) => {
     try {
-      const wallet = getWallet();
+      const wallet = getWallet([
+        "allowlistedBeneficiaries",
+        "allowlistedContributors",
+      ]);
       if (typeof wallet === "function") return wallet();
 
       const update: EndowmentSettingsUpdate = {
@@ -44,21 +48,22 @@ export default function useEditWhitelists() {
       }
 
       const [data, dest, meta] = encodeTx("accounts.update-settings", update);
-      let tx = createTx(wallet.address, "multisig.submit-transaction", {
-        multisig,
-        title: `Update whitelists settings`,
-        description: `Update whitelists settings for endowment id:${id} by member:${wallet?.address}`,
-        destination: dest,
-        value: "0",
-        data,
-        meta: meta.encoded,
-      });
+      const tx: SimulContractTx = wallet.isDelegated
+        ? { from: wallet.address, to: dest, data }
+        : createTx(wallet.address, "multisig.submit-transaction", {
+            multisig,
+            title: `Update whitelists settings`,
+            description: `Update whitelists settings for endowment id:${id} by member:${wallet?.address}`,
+            destination: dest,
+            value: "0",
+            data,
+            meta: meta.encoded,
+          });
 
       await sendTx({
         content: { type: "evm", val: tx },
-        ...propMeta,
-        isAuthorized: true,
-        tagPayloads: getTagPayloads(propMeta.willExecute && meta.id),
+        ...wallet.meta,
+        tagPayloads: getTagPayloads(wallet.meta.willExecute && meta.id),
       });
     } catch (err) {
       showModal(TxPrompt, {

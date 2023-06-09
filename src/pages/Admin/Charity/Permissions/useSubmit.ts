@@ -13,7 +13,6 @@ export default function useSubmit() {
   const {
     id,
     multisig,
-    propMeta,
     settingsController: settings,
     getWallet,
   } = useAdminResources<"charity">();
@@ -63,8 +62,8 @@ export default function useSubmit() {
 
       await sendTx({
         content: { type: "evm", val: tx },
-        ...propMeta,
-        tagPayloads: getTagPayloads(propMeta.willExecute && meta.id),
+        ...wallet.meta,
+        tagPayloads: getTagPayloads(wallet.meta.willExecute && meta.id),
       });
     } catch (error) {
       handleError(error);

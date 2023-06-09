@@ -9,7 +9,7 @@ import { isEmpty } from "helpers";
 import { getPayloadDiff } from "helpers/admin";
 
 export default function useConfigureRegistrar() {
-  const { multisig, propMeta, getWallet } = useAdminResources();
+  const { multisig, getWallet } = useAdminResources();
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },
@@ -59,7 +59,7 @@ export default function useConfigureRegistrar() {
           meta: meta.encoded,
         }),
       },
-      ...propMeta,
+      ...wallet.meta,
     });
   }
 

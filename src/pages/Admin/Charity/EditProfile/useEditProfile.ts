@@ -4,18 +4,17 @@ import { EndowmentProfileUpdate } from "types/aws";
 import { SemiPartial } from "types/utils";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
 import { ImgLink } from "components/ImgEditor";
 import { TxPrompt } from "components/Prompt";
-import useUpdateEndowmentProfile from "hooks/useUpdateEndowmentProfile";
-import { isEVM, isEmpty } from "helpers";
+import { isEmpty } from "helpers";
 import { getPayloadDiff } from "helpers/admin";
 import { getFullURL, uploadFiles } from "helpers/uploadFiles";
+import useUpdateEndowmentProfile from "../common/useUpdateEndowmentProfile";
 
 // import optimizeImage from "./optimizeImage";
 
 export default function useEditProfile() {
-  const { id, owner, propMeta } = useAdminResources<"charity">();
+  const { id, owner } = useAdminResources<"charity">();
   const {
     reset,
     handleSubmit,
@@ -24,7 +23,6 @@ export default function useEditProfile() {
   } = useFormContext<FV>();
 
   const { showModal } = useModalContext();
-  const { wallet } = useGetWallet();
   const updateProfile = useUpdateEndowmentProfile();
 
   const editProfile: SubmitHandler<FV> = async ({
@@ -42,23 +40,6 @@ export default function useEditProfile() {
       /** special case for edit profile: since upload happens prior
        * to tx submission. Other users of useTxSender
        */
-      if (!wallet) {
-        return showModal(TxPrompt, {
-          error: "You need to connect your wallet to make this transaction.",
-        });
-      }
-
-      if (!isEVM(wallet.providerId)) {
-        return showModal(TxPrompt, {
-          error: "Please connect an EVM compatible wallet",
-        });
-      }
-
-      if (!propMeta.isAuthorized) {
-        return showModal(TxPrompt, {
-          error: "You are not authorized to make this transaction.",
-        });
-      }
 
       const [bannerUrl, logoUrl] = await uploadImgs([image, logo], () => {
         showModal(

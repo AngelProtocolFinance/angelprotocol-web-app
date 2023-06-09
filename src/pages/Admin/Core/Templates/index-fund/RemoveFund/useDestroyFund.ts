@@ -18,7 +18,7 @@ export default function useDestroyFund() {
   const sendTx = useTxSender();
   const { showModal } = useModalContext();
   const [latestBlock] = useLazyLatestBlockQuery();
-  const { multisig, propMeta, getWallet } = useAdminResources();
+  const { multisig, getWallet } = useAdminResources();
 
   async function destroyFund(fv: FV) {
     try {
@@ -53,7 +53,7 @@ export default function useDestroyFund() {
           meta: meta.encoded,
         }),
       },
-      ...propMeta,
+      ...wallet.meta,
     });
   }
 

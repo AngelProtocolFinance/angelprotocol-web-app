@@ -2,41 +2,88 @@ import type { BigNumber } from "@ethersproject/bignumber";
 import { useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";
 import { PropMeta } from "services/types";
-import { EndowmentDetails } from "types/contracts";
-import { LogProcessor } from "types/evm";
+import { AccountType, EndowmentDetails } from "types/contracts";
+import { LogProcessor, SimulContractTx } from "types/evm";
 import { TxOnSuccess, TxSuccessMeta } from "types/tx";
-import { useAdminResources } from "pages/Admin/Guard";
 import { version as v } from "services/helpers";
 import { useModalContext } from "contexts/ModalContext";
 import { TxPrompt } from "components/Prompt";
+import { createTx, encodeTx } from "contracts/createTx/createTx";
+import { WithdrawMeta } from "contracts/createTx/meta";
 import { multisig as Multisig, SubmissionEvent } from "contracts/evm/multisig";
 import useTxSender from "hooks/useTxSender";
-import { createAuthToken, logger } from "helpers";
+import { createAuthToken, logger, scaleToStr } from "helpers";
+import { ap_wallets } from "constants/ap_wallets";
 import { chainIds } from "constants/chainIds";
 import { EMAIL_SUPPORT } from "constants/env";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { APIs } from "constants/urls";
-import { constructTx } from "./constructTx";
+import { useAdminResources } from "../../../../Guard";
 
 export default function useWithdraw() {
   const { handleSubmit } = useFormContext<WithdrawValues>();
 
-  const { multisig, id, propMeta, getWallet, ...endow } =
-    useAdminResources<"charity">();
+  const { multisig, id, getWallet, ...endow } = useAdminResources<"charity">();
   const { showModal } = useModalContext();
 
   const sendTx = useTxSender();
 
   async function withdraw(wv: WithdrawValues) {
-    const wallet = getWallet();
+    const wallet = getWallet([
+      wv.type === "liquid" ? "withdraw-liquid" : "withdraw-locked",
+    ]);
     if (typeof wallet === "function") return wallet();
 
-    const { tx, isDirect, isPolygon } = constructTx(
-      wallet.address,
-      id,
-      endow,
-      wv
+    const accType: AccountType = wv.type === "locked" ? 0 : 1;
+    const isPolygon = wv.network === chainIds.polygon;
+    const beneficiary = isPolygon
+      ? wv.beneficiary
+      : ap_wallets.polygon_withdraw;
+
+    const metadata: WithdrawMeta = {
+      beneficiary,
+      tokens: wv.amounts.map((a) => ({
+        logo: "" /** TODO: ap-justin */,
+        symbol: "" /** TODO: ap-justin */,
+        amount: +a.value,
+      })),
+    };
+
+    const [data, dest, meta] = encodeTx(
+      "accounts.withdraw",
+      {
+        id,
+        type: accType,
+        beneficiaryAddress: beneficiary,
+        beneficiaryEndowId: 0, //TODO: ap-justin UI to set endow id
+        tokens: wv.amounts.map((a) => ({
+          addr: a.tokenId,
+          amnt: scaleToStr(a.value),
+        })),
+      },
+      metadata
     );
+
+    const sender = wallet.address;
+
+    const tx: SimulContractTx = wallet.isDelegated //pertains to whitelists in this context
+      ? {
+          from: sender,
+          to: dest,
+          data,
+        }
+      : createTx(sender, "multisig.submit-transaction", {
+          multisig: endow.owner,
+          title: `${wv.type} withdraw `,
+          description:
+            endow.endowType === "charity" && wv.type === "locked"
+              ? wv.reason
+              : `${wv.type} withdraw from endowment id: ${id}`,
+          destination: dest,
+          value: "0",
+          data,
+          meta: meta.encoded,
+        });
 
     //only used when !isPolygon && !isDirect
     const processLog: LogProcessor = (logs) => {
@@ -94,7 +141,7 @@ export default function useWithdraw() {
         }
 
         showModal(TxPrompt, {
-          success: successMeta(proposalID, propMeta, endow),
+          success: successMeta(proposalID, wallet.meta, endow),
           tx,
         });
       } catch (err) {
@@ -110,12 +157,9 @@ export default function useWithdraw() {
       content: {
         type: "evm",
         val: tx,
-        log: isDirect || isPolygon ? undefined : processLog,
+        log: wallet.isDelegated || isPolygon ? undefined : processLog,
       },
-      ...propMeta,
-      isAuthorized:
-        propMeta.isAuthorized ||
-        isDirect /** if whitelisted, could send this tx */,
+      ...wallet.meta,
       onSuccess: isPolygon
         ? undefined //no need to POST to AWS if destination is polygon
         : onSuccess,

@@ -35,7 +35,7 @@ export default function Proposer({ type, appId, reference }: Props) {
     },
   });
 
-  const { multisig, propMeta, getWallet } = useAdminResources();
+  const { multisig, getWallet } = useAdminResources();
   const { showModal } = useModalContext();
   const { sendTx, isSending } = useTxSender(true);
   const [updateReg] = useUpdateRegMutation();
@@ -88,7 +88,7 @@ export default function Proposer({ type, appId, reference }: Props) {
       showModal(TxPrompt, {
         success: {
           message: `Proposal has been created${
-            propMeta.willExecute ? " and auto-executed" : "."
+            wallet.meta.willExecute ? " and auto-executed" : "."
           }`,
         },
         tx: okTx,
@@ -119,7 +119,7 @@ export default function Proposer({ type, appId, reference }: Props) {
           return (id as BigNumber).toString();
         },
       },
-      ...propMeta,
+      ...wallet.meta,
       onSuccess,
     });
   }

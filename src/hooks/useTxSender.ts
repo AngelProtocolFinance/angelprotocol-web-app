@@ -23,18 +23,11 @@ export default function useTxSender<T extends boolean = false>(
     content,
     tagPayloads,
     onSuccess,
-    isAuthorized,
     successMeta,
   }) => {
     try {
       if (!wallet) {
         return showModal(TxPrompt, { error: "Wallet is not connected" });
-      }
-
-      if (!isAuthorized /** should be explicitly set to true to pass */) {
-        return showModal(TxPrompt, {
-          error: "You are not authorized to make this transaction",
-        });
       }
 
       /**

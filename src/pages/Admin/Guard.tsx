@@ -1,16 +1,32 @@
 import { ReactNode, createContext, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { AdminParams } from "./types";
-import { AdminResources } from "services/types";
-import { useAdminResourcesQuery } from "services/juno/custom";
+import { AdminResources, PropMeta } from "services/types";
+import { SettingsController } from "types/contracts";
+import { customApi, useAdminResourcesQuery } from "services/juno/custom";
+import { defaultProposalTags } from "services/juno/tags";
 import { useModalContext } from "contexts/ModalContext";
 import { WalletState, useGetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import Loader from "components/Loader";
 import { TxPrompt } from "components/Prompt";
 import { chainIds } from "constants/chainIds";
+import { adminRoutes, appRoutes } from "constants/routes";
 
-type WalletOrPrompt = { getWallet: () => WalletState | (() => void) };
+type Prompt = () => void;
+export type AdminWallet = WalletState & {
+  isDelegated?: boolean;
+  meta: PropMeta;
+};
+
+type Operation =
+  | keyof SettingsController
+  | "withdraw-liquid"
+  | "withdraw-locked";
+
+type WalletObj = {
+  getWallet(operation?: Operation[]): AdminWallet | Prompt;
+};
 
 export function Guard(props: {
   children(resources: AdminResources): ReactNode;
@@ -21,13 +37,12 @@ export function Guard(props: {
 
   const { data, isLoading, isError } = useAdminResourcesQuery(
     {
-      user: wallet?.address,
       endowmentId: id,
     },
     { skip: !id }
   );
 
-  function getWallet() {
+  const getWallet: WalletObj["getWallet"] = (operation) => {
     if (!wallet) {
       return () => showModal(TxPrompt, { error: "Wallet is not connected" });
     }
@@ -35,8 +50,61 @@ export function Guard(props: {
       return () =>
         showModal(TxPrompt, { error: "Kindly switch to polygon network" });
     }
-    return wallet;
-  }
+
+    /** getWallet() can't be ran without Admin context being initalized first */
+    const _d = data!;
+    const sender = wallet.address;
+
+    const isAdmin = _d.members.includes(sender);
+    const isDelegated =
+      operation &&
+      _d.type === "charity" &&
+      operation.every((op) => {
+        switch (op) {
+          case "withdraw-liquid":
+            return _d.allowlistedBeneficiaries.includes(sender);
+          case "withdraw-locked":
+            return _d.maturityAllowlist.includes(sender);
+          default:
+            return _d.settingsController[op].delegate.addr === sender;
+        }
+      });
+
+    /**
+     * check if user is admin,
+     * if not, check if user is delegated for the operation
+     */
+    if (!isAdmin && !isDelegated) {
+      return () =>
+        showModal(TxPrompt, {
+          error:
+            "Unauthorized: Connected wallet is neither an admin nor delegated for this operation",
+        });
+    }
+
+    /** in the context of tx submission */
+    const willExecute: true | undefined =
+      (_d.config.threshold === 1 && !_d.config.requireExecution) || isDelegated
+        ? true
+        : undefined;
+
+    const message = willExecute
+      ? "Successful transaction"
+      : "Proposal successfully created";
+
+    const url = willExecute
+      ? `${appRoutes.admin}/${_d.id}`
+      : `${appRoutes.admin}/${_d.id}/${adminRoutes.proposals}`;
+
+    const description = willExecute ? "Go to admin home" : "Go to proposals";
+
+    const meta: PropMeta = {
+      successMeta: { message, link: { url, description } },
+      tagPayloads: [customApi.util.invalidateTags(defaultProposalTags)],
+    };
+
+    return { ...wallet, isDelegated, meta };
+  };
 
   if (isLoading)
     return <GuardPrompt message="Getting admin resources" showLoader />;
@@ -51,10 +119,10 @@ export function Guard(props: {
   );
 }
 
-const context = createContext({} as AdminResources & WalletOrPrompt);
+const context = createContext({} as AdminResources & WalletObj);
 export const useAdminResources = <
   T extends AdminResources["type"] = any
->(): Extract<AdminResources, { type: T }> & WalletOrPrompt => {
+>(): Extract<AdminResources, { type: T }> & WalletObj => {
   const val = useContext(context);
 
   if (Object.entries(val).length <= 0) {

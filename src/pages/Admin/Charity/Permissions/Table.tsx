@@ -9,8 +9,7 @@ import useTableData from "./useTableData";
 
 const formValues: UpdateableFormValues = {
   accountFees: {} as FormField,
-  beneficiaries_allowlist: {} as FormField,
-  contributors_allowlist: {} as FormField,
+  allowList: {} as FormField,
   donationSplitParams: {} as FormField,
   profile: {} as FormField,
 };

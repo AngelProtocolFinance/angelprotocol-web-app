@@ -10,7 +10,7 @@ import { TransactionStatus } from "types/lists";
 import { idParamToNum } from "helpers";
 import { junoApi } from "..";
 import { queryContract } from "../queryContract";
-import { apCWs, getMeta } from "./helpers/admin-resource";
+import { apCWs, multisigInfo } from "./helpers/admin-resource";
 
 export const customApi = junoApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -43,10 +43,7 @@ export const customApi = junoApi.injectEndpoints({
         };
       },
     }),
-    adminResources: builder.query<
-      AdminResources,
-      { user?: string; endowmentId?: string }
-    >({
+    adminResources: builder.query<AdminResources, { endowmentId?: string }>({
       providesTags: [
         "multisig.members",
         "multisig.threshold",
@@ -60,11 +57,7 @@ export const customApi = junoApi.injectEndpoints({
           const { multisig, type } = AP;
           //skip endowment query, query hardcoded cw3 straight
 
-          const [meta, config, members] = await getMeta(
-            numId,
-            multisig,
-            args.user
-          );
+          const [config, members] = await multisigInfo(multisig);
 
           return {
             data: {
@@ -72,7 +65,6 @@ export const customApi = junoApi.injectEndpoints({
               id: numId,
               members,
               multisig,
-              propMeta: meta,
               config,
             },
           };
@@ -82,11 +74,7 @@ export const customApi = junoApi.injectEndpoints({
           id: numId,
         });
 
-        const [meta, config, members] = await getMeta(
-          numId,
-          endowment.owner,
-          args.user
-        );
+        const [config, members] = await multisigInfo(endowment.owner);
 
         return {
           data: {
@@ -95,7 +83,6 @@ export const customApi = junoApi.injectEndpoints({
             members,
             multisig: endowment.owner,
             config,
-            propMeta: meta,
             ...endowment,
           },
         };

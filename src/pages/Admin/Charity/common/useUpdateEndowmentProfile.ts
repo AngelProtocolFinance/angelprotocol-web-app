@@ -2,48 +2,28 @@ import { toUtf8 } from "@cosmjs/encoding";
 import { hexlify } from "@ethersproject/bytes";
 import { EndowmentProfileUpdate } from "types/aws";
 import { SemiPartial } from "types/utils";
-import { useAdminResources } from "pages/Admin/Guard";
 import { useEditProfileMutation } from "services/aws/aws";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
 import { TxPrompt } from "components/Prompt";
-import { getProvider, isEVM } from "helpers";
+import { getProvider } from "helpers";
 import { cleanObject } from "helpers/cleanObject";
 import { appRoutes } from "constants/routes";
+import { useAdminResources } from "../../Guard";
 
 // import optimizeImage from "./optimizeImage";
 
 export default function useUpdateEndowmentProfile() {
-  const { propMeta } = useAdminResources<"charity">();
+  const { getWallet } = useAdminResources<"charity">();
 
   const { showModal } = useModalContext();
-  const { wallet } = useGetWallet();
   const [submit] = useEditProfileMutation();
 
   const updateProfile = async (
     endowProfileUpdate: SemiPartial<EndowmentProfileUpdate, "id" | "owner">
   ) => {
     try {
-      /** special case for edit profile: since upload happens prior
-       * to tx submission. Other users of useTxSender
-       */
-      if (!wallet) {
-        return showModal(TxPrompt, {
-          error: "You need to connect your wallet to make this transaction.",
-        });
-      }
-
-      if (!isEVM(wallet.providerId)) {
-        return showModal(TxPrompt, {
-          error: "Please connect an EVM compatible wallet",
-        });
-      }
-
-      if (!propMeta.isAuthorized) {
-        return showModal(TxPrompt, {
-          error: "You are not authorized to make this transaction.",
-        });
-      }
+      const wallet = getWallet(["name", "image", "logo", "categories"]);
+      if (typeof wallet === "function") return wallet();
 
       const cleanUpdates = cleanObject(endowProfileUpdate);
 
