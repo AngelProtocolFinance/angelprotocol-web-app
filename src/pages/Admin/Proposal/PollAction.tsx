@@ -88,9 +88,9 @@ export default function PollAction(props: ProposalDetails) {
     });
   }
 
-  const EXED = props.status === "executed";
+  const EXED = props.status === "approved";
   //for execution
-  const EX = props.status === "pending" && numSigned >= config.threshold;
+  const EX = props.status === "open" && numSigned >= config.threshold;
   //user signed
   const S = props.signed.some((s) => s === wallet?.address);
 

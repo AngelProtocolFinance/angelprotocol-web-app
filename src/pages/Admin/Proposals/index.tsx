@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { useProposalsQuery } from "services/juno/custom";
-import Icon from "components/Icon";
 import Seo from "components/Seo";
 import { useGetter } from "store/accessors";
 import { APP_NAME, DAPP_URL } from "constants/env";
 import { adminRoutes } from "constants/routes";
 import { useAdminResources } from "../Guard";
-import ProposalCard from "./ProposalCard";
+import Table from "./Table";
 import Toolbar from "./Toolbar";
 
 export default function Proposals() {
@@ -17,49 +16,36 @@ export default function Proposals() {
   const {
     data: { proposals, next } = { proposals: [], next: undefined },
     isLoading,
+    isFetching,
   } = useProposalsQuery({
     multisig,
     page: pageNum,
     status: activeStatus,
   });
 
-  function loadMoreProposals() {
+  function more() {
     //loadMore button will be hidden if next page is undefined
     setPageNum((prev) => prev + 1);
   }
 
   return (
-    <div className="grid content-start rounded font-work">
+    <div className="grid content-start rounded">
       <Seo
         title={`Decision Center - ${APP_NAME}`}
         url={`${DAPP_URL}/${adminRoutes.proposals}`}
       />
 
-      <Toolbar classes="mb-6" />
+      <Toolbar classes="@xl:mb-6" />
 
       {(proposals.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 content-start">
-          {proposals.map((proposal) => (
-            <ProposalCard key={proposal.id} {...proposal} />
-          ))}
-        </div>
+        <Table
+          proposals={proposals}
+          more={isFetching ? "loading" : next ? more : undefined}
+        />
       )) || (
         <p className="place-self-start">
-          {isLoading ? "loading proposals.." : "no proposals found"}
+          {isLoading ? "loading decisions.." : "no decisions found"}
         </p>
-      )}
-      {next && (
-        <button
-          disabled={isLoading}
-          className="mt-3 px-3 py-1 justify-self-center text-xs bg-blue disabled:bg-gray uppecase font-heading uppercase rounded-sm"
-          onClick={loadMoreProposals}
-        >
-          {isLoading ? (
-            <Icon type="Loading" className="animate-spin" size={18} />
-          ) : (
-            "more"
-          )}
-        </button>
       )}
     </div>
   );

@@ -181,8 +181,8 @@ export const queryObjects: {
         toTuple({
           from,
           to,
-          pending: status === "pending",
-          executed: status === "executed",
+          pending: status === "open",
+          executed: status === "approved",
         })
       );
     },
@@ -194,7 +194,7 @@ export const queryObjects: {
 
       return ids.map((id) => ({
         id: id.toNumber(),
-        status: args?.status ?? "pending",
+        status: args?.status ?? "open",
       }));
     },
   ],
@@ -211,7 +211,7 @@ export const queryObjects: {
         destination: d.destination,
         value: d.value.toString(),
         data: d.data,
-        status: d.executed ? "executed" : "pending",
+        status: d.executed ? "approved" : "open",
         metadata: d.metadata,
       };
     },

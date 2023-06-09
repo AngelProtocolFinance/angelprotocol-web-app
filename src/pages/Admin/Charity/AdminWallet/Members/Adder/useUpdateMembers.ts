@@ -1,8 +1,8 @@
 import { FormProps, FormValues } from "./types";
-import { useAdminResources } from "pages/Admin/Guard";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
+import { useAdminResources } from "../../../../Guard";
 
 export default function useUpdateMembers(action: FormProps["action"]) {
   const { multisig, getWallet } = useAdminResources();

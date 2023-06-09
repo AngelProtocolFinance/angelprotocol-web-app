@@ -1,8 +1,8 @@
 import { TransactionStatus } from "types/lists";
 
 const bgColors: { [key in TransactionStatus]: string } = {
-  pending: "bg-orange",
-  executed: "bg-blue",
+  open: "bg-orange",
+  approved: "bg-blue",
 };
 
 export default function Status({ status }: { status: TransactionStatus }) {

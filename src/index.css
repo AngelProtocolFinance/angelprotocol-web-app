@@ -116,16 +116,16 @@
 /** Layer 2 components */
 @layer components {
   .btn-orange {
-    @apply btn bg-orange disabled:bg-gray aria-disabled:bg-gray text-white hover:bg-orange-l1 active:bg-orange-d1 focus-visible:ring-orange-l4;
+    @apply btn bg-orange disabled:bg-gray aria-disabled:bg-gray text-white enabled:hover:bg-orange-l1 active:bg-orange-d1 focus-visible:ring-orange-l4;
   }
   .btn-outline {
-    @apply btn disabled:bg-gray-l3 aria-disabled:bg-gray-l3 aria-disabled:dark:bg-bluegray disabled:dark:bg-bluegray border border-gray-l3 dark:border-bluegray  hover:border-gray-l2 hover:dark:border-blue-d2;
+    @apply btn disabled:bg-gray-l3 aria-disabled:bg-gray-l3 aria-disabled:dark:bg-bluegray disabled:dark:bg-bluegray border border-gray-l3 dark:border-bluegray  enabled:hover:border-gray-l2 enabled:hover:dark:border-blue-d2;
   }
   .btn-blue {
-    @apply btn bg-blue disabled:bg-gray hover:bg-blue-l1 active:bg-blue-d1 focus-visible:ring-blue-l4;
+    @apply btn bg-blue disabled:bg-gray enabled:hover:bg-blue-l1 active:bg-blue-d1 focus-visible:ring-blue-l4;
   }
   .btn-red {
-    @apply btn bg-red disabled:bg-gray aria-disabled:bg-gray text-white hover:bg-red-l1 active:bg-red-d1 focus-visible:ring-red-l4;
+    @apply btn bg-red disabled:bg-gray aria-disabled:bg-gray text-white enabled:hover:bg-red-l1 active:bg-red-d1 focus-visible:ring-red-l4;
   }
   .overlay {
     @apply before:content-[''] before:absolute before:inset-0 before:bg-blue/90 before:dark:bg-blue-d3/90;
@@ -190,10 +190,10 @@
 /** page components */
 @layer components {
   .btn-outline-filled {
-    @apply btn-outline bg-orange-l5 dark:bg-blue-d4 hover:bg-orange-l4 dark:hover:bg-blue-d3;
+    @apply btn-outline bg-orange-l5 dark:bg-blue-d4 enabled:hover:bg-orange-l4 dark:enabled:hover:bg-blue-d3;
   }
   .btn-outline-gray {
-    @apply btn-outline bg-gray-l5 hover:bg-gray-l6 active:bg-gray-l4 dark:bg-bluegray-d1 dark:hover:bg-bluegray dark:active:bg-bluegray-d2;
+    @apply btn-outline bg-gray-l5 enabled:hover:bg-gray-l6 active:bg-gray-l4 dark:bg-bluegray-d1 dark:enabled:hover:bg-bluegray dark:active:bg-bluegray-d2;
   }
   .btn-gift {
     @apply text-base sm:text-sm;

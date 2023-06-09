@@ -7,7 +7,7 @@ interface State {
 }
 
 const initialState: State = {
-  activeStatus: "pending",
+  activeStatus: "open",
   activeGroup: "all",
 };
 
