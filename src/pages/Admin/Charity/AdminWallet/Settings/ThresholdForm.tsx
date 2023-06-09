@@ -20,7 +20,7 @@ type FV = ProposalBase & { threshold: number };
 
 export default function ThresholdForm({ added, initial }: Props) {
   const { sendTx, isSending } = useTxSender(true);
-  const { getWallet, multisig, propMeta } = useAdminResources();
+  const { getWallet, multisig } = useAdminResources();
 
   const methods = useForm<FV>({
     defaultValues: { threshold: initial },
@@ -64,8 +64,8 @@ export default function ThresholdForm({ added, initial }: Props) {
 
     await sendTx({
       content: { type: "evm", val: tx },
-      ...propMeta,
-      tagPayloads: getTagPayloads(propMeta.willExecute && meta.id),
+      ...wallet,
+      tagPayloads: getTagPayloads(wallet.meta.willExecute && meta.id),
     });
   };
 
