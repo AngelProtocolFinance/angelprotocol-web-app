@@ -171,8 +171,8 @@ export const customApi = junoApi.injectEndpoints({
 
         const count = await queryContract("multisig.tx-count", {
           multisig,
-          pending: status === "pending",
-          executed: status === "executed",
+          open: status === "open",
+          approved: status === "approved",
         });
 
         //get last 5 proposals

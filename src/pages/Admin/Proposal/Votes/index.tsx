@@ -32,7 +32,7 @@ export default function Votes({
     });
   }
 
-  const disabled = status === "executed";
+  const disabled = status === "approved";
   return (
     <ul
       className={
@@ -45,7 +45,7 @@ export default function Votes({
           <li key={s} className="p-3 flex items-center  text-sm">
             <span className="mr-auto">{s}</span>
             {userSigned &&
-            status !== "executed" &&
+            status !== "approved" &&
             wallet &&
             wallet.address === s ? (
               <button

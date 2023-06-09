@@ -20,6 +20,7 @@ export const tags: ContractQueryTypes[] = [
 
   "accounts.endowment",
   "accounts.state",
+  "accounts.token-balance",
 ];
 
 export const defaultProposalTags: ContractQueryTypes[] = [

@@ -1,31 +1,23 @@
 import { Link } from "react-router-dom";
 import { templates } from "pages/Admin/constants";
-import { useLatestBlockQuery } from "services/juno";
-import Icon from "components/Icon";
-import { humanize } from "helpers";
 import { adminRoutes } from "constants/routes";
 import StatusSelector from "./StatusSelector";
 
 export default function Toolbar({ classes = "" }: { classes?: string }) {
-  const { data: block_height = "0" } = useLatestBlockQuery(10_000);
   return (
     <div
-      className={`flex items-center gap-3 ${classes} border-b-2 pb-3 border-prim`}
+      className={`grid justify-center @xl:flex items-center gap-3 ${classes}`}
     >
-      <StatusSelector />
-      <p className="ml-auto text-sm flex items-center mr-2 text-gray-d1 dark:text-gray">
-        <span className="font-heading uppercase text-3xs mr-2">
-          current block{" "}
-        </span>
-        <Icon type="Blockchain" className="mr-1" />
-        <span>{humanize(+block_height, 0)}</span>
-      </p>
+      <h1 className="text-2xl mb-3 @xl:mb-0 text-center @xl:text-left">
+        Decision Center
+      </h1>
+      <StatusSelector classes="@xl:ml-auto" />
 
       <Link
         to={`../${adminRoutes.templates}/${templates["multisig.owners"]}`}
-        className="px-3 py-2 text-white bg-blue hover:bg-blue-l1 text-sm uppercase text-center rounded"
+        className="mb-4 @xl:mb-0 text-xs uppercase text-center rounded text-blue dark:text-blue-l2"
       >
-        + Create a proposal
+        + New decision
       </Link>
     </div>
   );
