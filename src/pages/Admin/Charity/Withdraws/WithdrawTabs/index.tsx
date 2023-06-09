@@ -1,11 +1,15 @@
 import { Tab } from "@headlessui/react";
 import { useLocation } from "react-router-dom";
-import { AccountType, EndowmentState } from "types/contracts";
+import { WithdrawInfo } from "services/types";
+import { AccountType } from "types/contracts";
 import { accountTypeDisplayValue } from "../../constants";
 import Withdrawer from "./Withdrawer";
 
 const tabs: AccountType[] = ["liquid", "locked"];
-export default function WithdrawTabs({ tokens_on_hand }: EndowmentState) {
+export default function WithdrawTabs({
+  tokens_on_hand,
+  withdraw: withdrawFees,
+}: WithdrawInfo) {
   const { state } = useLocation(); //state is set from dashboard withdraw link
   const type = state as AccountType;
   return (
@@ -33,7 +37,11 @@ export default function WithdrawTabs({ tokens_on_hand }: EndowmentState) {
       <Tab.Panels className="w-full max-w-md border rounded border-prim">
         {tabs.map((t) => (
           <Tab.Panel key={t}>
-            <Withdrawer balance={tokens_on_hand[t]} type={t} />
+            <Withdrawer
+              balance={tokens_on_hand[t]}
+              type={t}
+              fees={withdrawFees}
+            />
           </Tab.Panel>
         ))}
       </Tab.Panels>

@@ -10,11 +10,8 @@ type Props = {
 export default function Table({ withdraws, classes = "" }: Props) {
   return (
     <table className={`w-full mt-6 ${classes}`}>
-      <TableSection type="thead" rowClass="border-b-2 border-white/20">
-        <Cells
-          type="th"
-          cellClass="text-left font-heading text-white/80 uppercase p-2"
-        >
+      <TableSection type="thead" rowClass="border-b-2 border-prim">
+        <Cells type="th" cellClass="text-left font-heading uppercase p-2">
           <>Amount</>
           <>Receiver</>
           <>Status</>
@@ -22,7 +19,7 @@ export default function Table({ withdraws, classes = "" }: Props) {
           <>Transaction hash</>
         </Cells>
       </TableSection>
-      <TableSection type="tbody" rowClass="border-b border-white/10">
+      <TableSection type="tbody" rowClass="border-b border-prim">
         {withdraws.map((log, i) => (
           <LogRow {...log} key={i} />
         ))}

@@ -1,12 +1,13 @@
 import Amounts from "./Amounts";
 import Beneficiary from "./Beneficiary";
+import Breakdown from "./Breakdown";
 import Network from "./Network";
 import Submit from "./Submit";
 import Warning from "./Warning";
 import useWithdraw from "./useWithdraw";
 
 export default function Form() {
-  const { withdraw } = useWithdraw();
+  const { withdraw, fee, network } = useWithdraw();
 
   return (
     <form
@@ -16,16 +17,22 @@ export default function Form() {
       noValidate
     >
       <Amounts />
+
       <Network />
-      <Beneficiary classes="mt-6 mb-2" />
-      <Warning classes="mt-4 mb-2">
-        All withdraws to Ethereum & Binance are processed on a hourly basis by
-        our cross-chain pipelines.
-      </Warning>
-      <Warning classes="mb-2">
-        The minimum withdrawal for Ethereum & Binance is $40 & $20 USDC,
-        respectively.
-      </Warning>
+      <Beneficiary classes="my-6" />
+      <Breakdown />
+
+      {network !== "Juno" && (
+        <>
+          <Warning classes="mt-4 mb-2">
+            Withraws to {network} are processed on a hourly basis by our
+            cross-chain pipelines.
+          </Warning>
+          <Warning classes="mb-2">
+            The minimum withdrawal amount is {fee} USDC.
+          </Warning>
+        </>
+      )}
       <Warning classes="mb-2">
         We recommend not using crypto exchange addresses for withdrawals. We are
         not responsible for the loss of funds.
