@@ -64,7 +64,7 @@ export const LINKS: {
     to: sidebarRoutes.other_settings,
     icon: {
       type: "Settings",
-      size: 25,
+      size: 23,
     },
   },
   admin_wallet: {
