@@ -46,19 +46,15 @@ const LINK_GROUPS: { [key in EndowmentType]: LinkGroup[] } = {
   charity: [
     ...COMMON,
     {
-      title: "Settings",
+      title: "Manage",
       links: [LINKS.admin_wallet, LINKS.permissions],
     },
   ],
   normal: [
     ...COMMON,
     {
-      title: "Settings",
-      links: [
-        LINKS.admin_wallet,
-        LINKS.contributor_verification,
-        LINKS.permissions,
-      ],
+      title: "Manage",
+      links: [LINKS.admin_wallet, LINKS.permissions, LINKS.other_settings],
     },
   ],
 };
@@ -85,7 +81,7 @@ export default function Charity() {
         <Route path={adminRoutes.edit_profile} element={<EditProfile />} />
         <Route path={adminRoutes.permissions} element={<Permissions />} />
         <Route
-          path={adminRoutes.contributor_verification}
+          path={adminRoutes.other_settings}
           element={<ContributorVerification />}
         />
         <Route path={adminRoutes.admin_wallet} element={<AdminWallet />} />

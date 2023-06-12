@@ -17,10 +17,7 @@ export default function ContributorVerification() {
 
   return (
     <>
-      <Seo
-        title="Contributor Verification"
-        url={adminRoutes.contributor_verification}
-      />
+      <Seo title="Other settings" url={adminRoutes.other_settings} />
 
       <QueryLoader
         queryState={queryState}
