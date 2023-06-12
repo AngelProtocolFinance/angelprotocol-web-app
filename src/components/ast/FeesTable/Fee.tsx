@@ -1,21 +1,25 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useEffect } from "react";
-import { Path, useFormContext } from "react-hook-form";
-import { FV } from "./types";
-import { TFees } from "slices/launchpad/types";
+import { useFormContext } from "react-hook-form";
+import { Fees } from "types/ast";
 import { DrawerIcon } from "components/Icon";
 import { Cells } from "components/TableSection";
-import Toggle from "../common/Toggle";
-import { keys } from "./constants";
+import { keys } from "../../../pages/Launchpad/Fees/constants";
+import Toggle from "../../../pages/Launchpad/common/Toggle";
 
-type Props = {
-  name: keyof Omit<TFees, "referral_id">;
+type Props<T extends Fees> = {
+  name: keyof T;
   title: string;
   isOpen: boolean;
-  onToggle(name: keyof TFees): void;
+  onToggle(name: keyof T): void;
 };
 
-export default function Fee({ name, title, isOpen, onToggle }: Props) {
+export default function Fee<T extends Fees>({
+  name,
+  title,
+  isOpen,
+  onToggle,
+}: Props<T>) {
   const {
     register,
     watch,
@@ -23,19 +27,20 @@ export default function Fee({ name, title, isOpen, onToggle }: Props) {
     clearErrors,
     setFocus,
     formState: { errors },
-  } = useFormContext<FV>();
+  } = useFormContext<T>();
 
-  const isActiveName: Path<FV> = `${name}.${keys.isActive}`;
-  const rateName: Path<FV> = `${name}.${keys.rate}`;
-  const receiverName: Path<FV> = `${name}.${keys.receiver}`;
+  const _name = name as string;
+  const isActiveName: any = `${_name}.${keys.isActive}`;
+  const rateName: any = `${_name}.${keys.rate}`;
+  const receiverName: any = `${_name}.${keys.receiver}`;
 
   const isActive = watch(isActiveName);
 
   useEffect(() => {
     if (!isActive) {
       clearErrors([rateName, receiverName]);
-      setValue(rateName, "", { shouldValidate: false });
-      setValue(receiverName, "", { shouldValidate: false });
+      setValue(rateName, "" as any, { shouldValidate: false });
+      setValue(receiverName, "" as any, { shouldValidate: false });
     } else {
       setFocus(receiverName);
     }
@@ -62,7 +67,7 @@ export default function Fee({ name, title, isOpen, onToggle }: Props) {
         <div className="h-full flex items-center sm:contents">{title}</div>
       </td>
       <td className="w-full sm:w-20 relative max-sm:border-r-0">
-        <Toggle<FV> name={isActiveName} />
+        <Toggle<T> name={isActiveName} />
       </td>
 
       <td
