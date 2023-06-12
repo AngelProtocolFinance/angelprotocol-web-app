@@ -10,11 +10,11 @@ import { LINKS } from "../constants";
 import Account from "./Account";
 import AdminWallet from "./AdminWallet";
 import Contributions from "./Contributions";
-import ContributorVerification from "./ContributorVerification";
 import Dashboard from "./Dashboard";
 import Deposits from "./Deposits";
 import EditProfile from "./EditProfile";
 import Invest from "./Invest";
+import OtherSettings from "./OtherSettings";
 import Permissions from "./Permissions";
 // import Settings from "./Settings";
 import Templates from "./Templates";
@@ -80,10 +80,7 @@ export default function Charity() {
         {/*<Route path={adminRoutes.settings} element={<Settings />} />*/}
         <Route path={adminRoutes.edit_profile} element={<EditProfile />} />
         <Route path={adminRoutes.permissions} element={<Permissions />} />
-        <Route
-          path={adminRoutes.other_settings}
-          element={<ContributorVerification />}
-        />
+        <Route path={adminRoutes.other_settings} element={<OtherSettings />} />
         <Route path={adminRoutes.admin_wallet} element={<AdminWallet />} />
         <Route path={adminRoutes.widget_config}>
           <Route index element={<WidgetConfigurer />} />
