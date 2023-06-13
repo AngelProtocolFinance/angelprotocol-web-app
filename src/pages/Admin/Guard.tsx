@@ -99,6 +99,7 @@ export function Guard(props: {
     const description = willExecute ? "Go to admin home" : "Go to proposals";
 
     const meta: PropMeta = {
+      willExecute,
       successMeta: { message, link: { url, description } },
       tagPayloads: [customApi.util.invalidateTags(defaultProposalTags)],
     };
