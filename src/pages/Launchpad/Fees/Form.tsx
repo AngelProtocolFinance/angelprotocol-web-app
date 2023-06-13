@@ -1,5 +1,5 @@
 import { FV } from "./types";
-import FeesTable from "components/ast/FeesTable/FeesTable";
+import FeesTable from "components/ast";
 import { Field } from "components/form";
 import Form, { Desc, FormProps, Title } from "../common/Form";
 import NavButtons from "../common/NavButtons";
