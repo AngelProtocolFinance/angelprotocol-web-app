@@ -1,25 +1,20 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useEffect } from "react";
-import { useFormContext } from "react-hook-form";
+import { Path, useFormContext } from "react-hook-form";
 import { Fees } from "types/ast";
 import { DrawerIcon } from "components/Icon";
 import { Cells } from "components/TableSection";
 import Toggle from "../Toggle";
 import { feeKeys } from "./constants";
 
-type Props<T extends Fees> = {
-  name: keyof T;
+type Props = {
+  name: keyof Fees;
   title: string;
   isOpen: boolean;
-  onToggle(name: keyof T): void;
+  onToggle(name: keyof Fees): void;
 };
 
-export default function Fee<T extends Fees>({
-  name,
-  title,
-  isOpen,
-  onToggle,
-}: Props<T>) {
+export default function Fee({ name, title, isOpen, onToggle }: Props) {
   const {
     register,
     watch,
@@ -27,20 +22,19 @@ export default function Fee<T extends Fees>({
     clearErrors,
     setFocus,
     formState: { errors },
-  } = useFormContext<T>();
+  } = useFormContext<Fees>();
 
-  const _name = name as string;
-  const isActiveName: any = `${_name}.${feeKeys.isActive}`;
-  const rateName: any = `${_name}.${feeKeys.rate}`;
-  const receiverName: any = `${_name}.${feeKeys.receiver}`;
+  const isActiveName: Path<Fees> = `${name}.${feeKeys.isActive}`;
+  const rateName: Path<Fees> = `${name}.${feeKeys.rate}`;
+  const receiverName: Path<Fees> = `${name}.${feeKeys.receiver}`;
 
   const isActive = watch(isActiveName);
 
   useEffect(() => {
     if (!isActive) {
       clearErrors([rateName, receiverName]);
-      setValue(rateName, "" as any, { shouldValidate: false });
-      setValue(receiverName, "" as any, { shouldValidate: false });
+      setValue(rateName, "", { shouldValidate: false });
+      setValue(receiverName, "", { shouldValidate: false });
     } else {
       setFocus(receiverName);
     }
@@ -67,7 +61,7 @@ export default function Fee<T extends Fees>({
         <div className="h-full flex items-center sm:contents">{title}</div>
       </td>
       <td className="w-full sm:w-20 relative max-sm:border-r-0">
-        <Toggle<T> name={isActiveName} />
+        <Toggle<Fees> name={isActiveName} />
       </td>
 
       <td
