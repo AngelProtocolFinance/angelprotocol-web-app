@@ -9,6 +9,7 @@ import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { isEmpty } from "helpers";
 import { getPayloadDiff, getTagPayloads } from "helpers/admin";
+import { toContractSplit, toFormSplit } from "helpers/ast";
 import Form from "./Form";
 
 export default function Splits() {
@@ -41,13 +42,7 @@ export default function Splits() {
 
   const methods = useForm<FV>({
     defaultValues: {
-      isCustom: !ignoreUserSplits,
-      //set max diff so user see how UI is used
-      min: splitToLiquid.min.toString(),
-      max: splitToLiquid.max.toString(),
-
-      default: splitToLiquid.defaultSplit.toString(),
-
+      ...toFormSplit(splitToLiquid, !ignoreUserSplits),
       //meta
       defaultMin: "0",
       initial,
@@ -63,11 +58,7 @@ export default function Splits() {
 
       const update: EndowmentSettingsUpdate = {
         ...initial,
-        splitToLiquid: {
-          min: 100 - +splits.max,
-          max: 100 - +splits.min,
-          defaultSplit: +splits.default,
-        },
+        splitToLiquid: toContractSplit(splits),
         ignoreUserSplits: !splits.isCustom,
       };
 
