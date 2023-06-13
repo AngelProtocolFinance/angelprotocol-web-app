@@ -51,6 +51,14 @@ export default function Fees() {
     balanceFee,
   };
 
+  const defaultValues: FV = {
+    earlyWithdraw: formFee(earlyLockedWithdrawFee),
+    deposit: formFee(depositFee),
+    withdrawal: formFee(withdrawFee),
+    balance: formFee(balanceFee),
+    initial,
+  };
+
   const methods = useForm<FV>({
     mode: "onChange",
     resolver: yupResolver(
@@ -62,13 +70,7 @@ export default function Fees() {
         referral_id: positiveNumber,
       })
     ),
-    defaultValues: {
-      earlyWithdraw: formFee(earlyLockedWithdrawFee),
-      deposit: formFee(depositFee),
-      withdrawal: formFee(withdrawFee),
-      balance: formFee(balanceFee),
-      initial,
-    },
+    defaultValues,
   });
 
   const onSubmit: SubmitHandler<FV> = async (fees) => {
@@ -126,10 +128,16 @@ export default function Fees() {
     }
   };
 
-  const { handleSubmit } = methods;
+  const { handleSubmit, reset } = methods;
   return (
     <FormProvider {...methods}>
-      <Form onSubmit={handleSubmit(onSubmit)} />
+      <Form
+        onSubmit={handleSubmit(onSubmit)}
+        onReset={(ev) => {
+          ev.preventDefault();
+          reset(defaultValues);
+        }}
+      />
     </FormProvider>
   );
 }
