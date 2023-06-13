@@ -20,7 +20,7 @@ type FV = ProposalBase & { threshold: number };
 
 export default function ThresholdForm({ added, initial }: Props) {
   const { sendTx, isSending } = useTxSender(true);
-  const { getWallet, multisig } = useAdminResources();
+  const { checkSubmit, multisig } = useAdminResources();
 
   const methods = useForm<FV>({
     defaultValues: { threshold: initial },
@@ -40,8 +40,8 @@ export default function ThresholdForm({ added, initial }: Props) {
   const { handleSubmit } = methods;
 
   const submit: SubmitHandler<FV> = async (fv) => {
-    const wallet = getWallet();
-    if (typeof wallet === "function") return wallet();
+    const checkResult = checkSubmit();
+    if (typeof checkResult === "function") return checkResult();
 
     const [data, dest, meta] = encodeTx(
       "multisig.change-threshold",
@@ -52,6 +52,7 @@ export default function ThresholdForm({ added, initial }: Props) {
       { curr: initial, new: fv.threshold }
     );
 
+    const { wallet, txMeta } = checkResult;
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig: dest,
       title: fv.title,
@@ -64,8 +65,8 @@ export default function ThresholdForm({ added, initial }: Props) {
 
     await sendTx({
       content: { type: "evm", val: tx },
-      ...wallet,
-      tagPayloads: getTagPayloads(wallet.meta.willExecute && meta.id),
+      ...txMeta,
+      tagPayloads: getTagPayloads(txMeta.willExecute && meta.id),
     });
   };
 

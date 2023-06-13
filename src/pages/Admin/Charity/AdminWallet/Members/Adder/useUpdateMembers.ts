@@ -5,12 +5,12 @@ import { getTagPayloads } from "helpers/admin";
 import { useAdminResources } from "../../../../Guard";
 
 export default function useUpdateMembers(action: FormProps["action"]) {
-  const { multisig, getWallet } = useAdminResources();
+  const { multisig, checkSubmit } = useAdminResources();
   const { sendTx, isSending } = useTxSender(true);
 
   async function updateMembers(fv: FormValues) {
-    const wallet = getWallet();
-    if (typeof wallet === "function") return wallet();
+    const checkResult = checkSubmit();
+    if (typeof checkResult === "function") return checkResult();
 
     const [data, dest, meta] = encodeTx(
       action === "add" ? "multisig.add-owner" : "multisig.remove-owner",
@@ -21,6 +21,7 @@ export default function useUpdateMembers(action: FormProps["action"]) {
       { action, address: fv.address }
     );
 
+    const { wallet, txMeta } = checkResult;
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig: dest,
       title: fv.title,
@@ -33,8 +34,8 @@ export default function useUpdateMembers(action: FormProps["action"]) {
 
     await sendTx({
       content: { type: "evm", val: tx },
-      ...wallet.meta,
-      tagPayloads: getTagPayloads(wallet.meta.willExecute && meta.id),
+      ...txMeta,
+      tagPayloads: getTagPayloads(txMeta.willExecute && meta.id),
     });
   }
 

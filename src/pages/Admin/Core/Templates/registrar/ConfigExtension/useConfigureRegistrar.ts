@@ -9,7 +9,7 @@ import { isEmpty } from "helpers";
 import { getPayloadDiff } from "helpers/admin";
 
 export default function useConfigureRegistrar() {
-  const { multisig, getWallet } = useAdminResources();
+  const { multisig, checkSubmit } = useAdminResources();
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },
@@ -34,8 +34,8 @@ export default function useConfigureRegistrar() {
       });
     }
 
-    const wallet = getWallet();
-    if (typeof wallet === "function") return wallet();
+    const result = checkSubmit();
+    if (typeof result === "function") return result();
 
     const [data, dest, meta] = encodeTx(
       "registrar.update-config",
@@ -46,6 +46,7 @@ export default function useConfigureRegistrar() {
       diff
     );
 
+    const { wallet, txMeta } = result;
     await sendTx({
       content: {
         type: "evm",
@@ -59,7 +60,7 @@ export default function useConfigureRegistrar() {
           meta: meta.encoded,
         }),
       },
-      ...wallet.meta,
+      ...txMeta,
     });
   }
 

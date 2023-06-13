@@ -12,7 +12,7 @@ import { blockTime } from "helpers/admin";
 import { INIT_SPLIT } from "./index";
 
 export default function useCreateFund() {
-  const { multisig, getWallet } = useAdminResources();
+  const { multisig, checkSubmit } = useAdminResources();
   const sendTx = useTxSender();
   const { showModal } = useModalContext();
   const { trigger, getValues } = useFormContext<FormValues>();
@@ -33,8 +33,8 @@ export default function useCreateFund() {
     ]);
 
     if (!isValid) return;
-    const wallet = getWallet();
-    if (typeof wallet === "function") return wallet();
+    const result = checkSubmit();
+    if (typeof result === "function") return result();
 
     const currHeight = getValues("height");
     let expiryHeight = getValues("expiryHeight");
@@ -64,6 +64,7 @@ export default function useCreateFund() {
       newFund
     );
 
+    const { wallet, txMeta } = result;
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig,
       title: getValues("title"),
@@ -76,7 +77,7 @@ export default function useCreateFund() {
 
     await sendTx({
       content: { type: "evm", val: tx },
-      ...wallet.meta,
+      ...txMeta,
     });
 
     setSubmitting(false);

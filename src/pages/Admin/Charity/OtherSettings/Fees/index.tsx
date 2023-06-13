@@ -37,7 +37,7 @@ export default function Fees() {
     withdrawFee,
     depositFee,
     balanceFee,
-    getWallet,
+    checkSubmit,
   } = useAdminResources<"charity">();
 
   const { showModal } = useModalContext();
@@ -73,13 +73,13 @@ export default function Fees() {
 
   const onSubmit: SubmitHandler<FV> = async (fees) => {
     try {
-      const wallet = getWallet([
+      const result = checkSubmit([
         "earlyLockedWithdrawFee",
         "withdrawFee",
         "depositFee",
         "balanceFee",
       ]);
-      if (typeof wallet === "function") return wallet();
+      if (typeof result === "function") return result();
 
       const update: FeeSettingsUpdate = {
         ...initial,
@@ -101,7 +101,8 @@ export default function Fees() {
         diff
       );
 
-      const tx: SimulContractTx = wallet.isDelegated
+      const { wallet, txMeta, isDelegated } = result;
+      const tx: SimulContractTx = isDelegated
         ? { from: wallet.address, to: dest, data }
         : createTx(wallet.address, "multisig.submit-transaction", {
             multisig,
@@ -115,8 +116,8 @@ export default function Fees() {
 
       await sendTx({
         content: { type: "evm", val: tx },
-        ...wallet.meta,
-        tagPayloads: getTagPayloads(wallet.meta.willExecute && meta.id),
+        ...txMeta,
+        tagPayloads: getTagPayloads(txMeta.willExecute && meta.id),
       });
     } catch (err) {
       showModal(TxPrompt, {

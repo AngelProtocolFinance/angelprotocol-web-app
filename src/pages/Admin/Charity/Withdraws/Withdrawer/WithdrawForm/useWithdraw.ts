@@ -23,16 +23,17 @@ import { useAdminResources } from "../../../../Guard";
 export default function useWithdraw() {
   const { handleSubmit } = useFormContext<WithdrawValues>();
 
-  const { multisig, id, getWallet, ...endow } = useAdminResources<"charity">();
+  const { multisig, id, checkSubmit, ...endow } =
+    useAdminResources<"charity">();
   const { showModal } = useModalContext();
 
   const sendTx = useTxSender();
 
   async function withdraw(wv: WithdrawValues) {
-    const wallet = getWallet([
+    const result = checkSubmit([
       wv.type === "liquid" ? "withdraw-liquid" : "withdraw-locked",
     ]);
-    if (typeof wallet === "function") return wallet();
+    if (typeof result === "function") return result();
 
     const accType: AccountType = wv.type === "locked" ? 0 : 1;
     const isPolygon = wv.network === chainIds.polygon;
@@ -64,9 +65,10 @@ export default function useWithdraw() {
       metadata
     );
 
+    const { wallet, txMeta, isDelegated } = result;
     const sender = wallet.address;
 
-    const tx: SimulContractTx = wallet.isDelegated //pertains to whitelists in this context
+    const tx: SimulContractTx = isDelegated //pertains to whitelists in this context
       ? {
           from: sender,
           to: dest,
@@ -141,7 +143,7 @@ export default function useWithdraw() {
         }
 
         showModal(TxPrompt, {
-          success: successMeta(proposalID, wallet.meta, endow),
+          success: successMeta(proposalID, txMeta, endow),
           tx,
         });
       } catch (err) {
@@ -157,9 +159,9 @@ export default function useWithdraw() {
       content: {
         type: "evm",
         val: tx,
-        log: wallet.isDelegated || isPolygon ? undefined : processLog,
+        log: isDelegated || isPolygon ? undefined : processLog,
       },
-      ...wallet.meta,
+      ...txMeta,
       onSuccess: isPolygon
         ? undefined //no need to POST to AWS if destination is polygon
         : onSuccess,

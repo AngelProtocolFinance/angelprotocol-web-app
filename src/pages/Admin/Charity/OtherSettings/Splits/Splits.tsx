@@ -15,7 +15,7 @@ import Form from "./Form";
 export default function Splits() {
   const {
     multisig,
-    getWallet,
+    checkSubmit,
     splitToLiquid,
     ignoreUserSplits,
     allowlistedBeneficiaries,
@@ -53,8 +53,8 @@ export default function Splits() {
 
   const update: SubmitHandler<FV> = async (splits) => {
     try {
-      const wallet = getWallet(["ignoreUserSplits", "splitToLiquid"]);
-      if (typeof wallet === "function") return wallet();
+      const result = checkSubmit(["ignoreUserSplits", "splitToLiquid"]);
+      if (typeof result === "function") return result();
 
       const update: EndowmentSettingsUpdate = {
         ...initial,
@@ -73,7 +73,9 @@ export default function Splits() {
         update,
         diff
       );
-      const tx: SimulContractTx = wallet.isDelegated
+
+      const { wallet, txMeta, isDelegated } = result;
+      const tx: SimulContractTx = isDelegated
         ? { from: wallet.address, to: dest, data }
         : createTx(wallet.address, "multisig.submit-transaction", {
             multisig,
@@ -87,8 +89,8 @@ export default function Splits() {
 
       await sendTx({
         content: { type: "evm", val: tx },
-        ...wallet.meta,
-        tagPayloads: getTagPayloads(wallet.meta.willExecute && meta.id),
+        ...txMeta,
+        tagPayloads: getTagPayloads(txMeta.willExecute && meta.id),
       });
     } catch (err) {
       showModal(TxPrompt, {

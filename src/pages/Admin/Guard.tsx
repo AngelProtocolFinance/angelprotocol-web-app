@@ -14,9 +14,11 @@ import { chainIds } from "constants/chainIds";
 import { adminRoutes, appRoutes } from "constants/routes";
 
 type Prompt = () => void;
-export type AdminWallet = WalletState & {
+
+export type TxResource = {
   isDelegated?: boolean;
-  meta: PropMeta;
+  txMeta: PropMeta;
+  wallet: WalletState;
 };
 
 type Operation =
@@ -24,8 +26,8 @@ type Operation =
   | "withdraw-liquid"
   | "withdraw-locked";
 
-type WalletObj = {
-  getWallet(operation?: Operation[]): AdminWallet | Prompt;
+type Assertions = {
+  checkSubmit(operation?: Operation[]): TxResource | Prompt;
 };
 
 export function Guard(props: {
@@ -42,7 +44,7 @@ export function Guard(props: {
     { skip: !id }
   );
 
-  const getWallet: WalletObj["getWallet"] = (operation) => {
+  const checkSubmit: Assertions["checkSubmit"] = (operation) => {
     if (!wallet) {
       return () => showModal(TxPrompt, { error: "Wallet is not connected" });
     }
@@ -53,6 +55,25 @@ export function Guard(props: {
 
     /** getWallet() can't be ran without Admin context being initalized first */
     const _d = data!;
+
+    const isLocked =
+      operation &&
+      _d.type === "charity" &&
+      operation.some((op) => {
+        switch (op) {
+          case "withdraw-liquid":
+          case "withdraw-locked":
+            return false;
+          default:
+            return _d.settingsController[op].locked;
+        }
+      });
+
+    if (isLocked) {
+      return () =>
+        showModal(TxPrompt, { error: "This setting has been locked forever." });
+    }
+
     const sender = wallet.address;
 
     const isAdmin = _d.members.includes(sender);
@@ -98,13 +119,13 @@ export function Guard(props: {
 
     const description = willExecute ? "Go to admin home" : "Go to proposals";
 
-    const meta: PropMeta = {
+    const txMeta: PropMeta = {
       willExecute,
       successMeta: { message, link: { url, description } },
       tagPayloads: [customApi.util.invalidateTags(defaultProposalTags)],
     };
 
-    return { ...wallet, isDelegated, meta };
+    return { wallet, isDelegated, txMeta };
   };
 
   if (isLoading)
@@ -114,16 +135,16 @@ export function Guard(props: {
     return <GuardPrompt message="Error getting admin resources" />;
 
   return (
-    <context.Provider value={{ ...data, getWallet }}>
+    <context.Provider value={{ ...data, checkSubmit }}>
       {props.children(data)}
     </context.Provider>
   );
 }
 
-const context = createContext({} as AdminResources & WalletObj);
+const context = createContext({} as AdminResources & Assertions);
 export const useAdminResources = <
   T extends AdminResources["type"] = any
->(): Extract<AdminResources, { type: T }> & WalletObj => {
+>(): Extract<AdminResources, { type: T }> & Assertions => {
   const val = useContext(context);
 
   if (Object.entries(val).length <= 0) {

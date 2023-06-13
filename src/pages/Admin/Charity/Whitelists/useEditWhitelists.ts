@@ -11,7 +11,7 @@ import { isEmpty } from "helpers";
 import { getPayloadDiff, getTagPayloads } from "helpers/admin";
 
 export default function useEditWhitelists() {
-  const { id, multisig, getWallet } = useAdminResources<"charity">();
+  const { id, multisig, checkSubmit } = useAdminResources<"charity">();
   const {
     reset,
     handleSubmit,
@@ -27,11 +27,11 @@ export default function useEditWhitelists() {
     beneficiaries,
   }) => {
     try {
-      const wallet = getWallet([
+      const result = checkSubmit([
         "allowlistedBeneficiaries",
         "allowlistedContributors",
       ]);
-      if (typeof wallet === "function") return wallet();
+      if (typeof result === "function") return result();
 
       const update: EndowmentSettingsUpdate = {
         ...initial,
@@ -52,7 +52,9 @@ export default function useEditWhitelists() {
         update,
         diff
       );
-      const tx: SimulContractTx = wallet.isDelegated
+
+      const { wallet, txMeta, isDelegated } = result;
+      const tx: SimulContractTx = isDelegated
         ? { from: wallet.address, to: dest, data }
         : createTx(wallet.address, "multisig.submit-transaction", {
             multisig,
@@ -66,8 +68,8 @@ export default function useEditWhitelists() {
 
       await sendTx({
         content: { type: "evm", val: tx },
-        ...wallet.meta,
-        tagPayloads: getTagPayloads(wallet.meta.willExecute && meta.id),
+        ...txMeta,
+        tagPayloads: getTagPayloads(txMeta.willExecute && meta.id),
       });
     } catch (err) {
       showModal(TxPrompt, {

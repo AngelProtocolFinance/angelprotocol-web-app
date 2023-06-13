@@ -18,7 +18,7 @@ export default function useDestroyFund() {
   const sendTx = useTxSender();
   const { showModal } = useModalContext();
   const [latestBlock] = useLazyLatestBlockQuery();
-  const { multisig, getWallet } = useAdminResources();
+  const { multisig, checkSubmit } = useAdminResources();
 
   async function destroyFund(fv: FV) {
     try {
@@ -34,12 +34,13 @@ export default function useDestroyFund() {
       return showModal(TxPrompt, { error: "Fund not found" });
     }
 
-    const wallet = getWallet();
-    if (typeof wallet === "function") return wallet();
+    const result = checkSubmit();
+    if (typeof result === "function") return result();
 
     const id: ID = { id: +fv.fundId };
     const [data, dest, meta] = encodeTx("index-fund.remove-fund", id, id);
 
+    const { wallet, txMeta } = result;
     await sendTx({
       content: {
         type: "evm",
@@ -53,7 +54,7 @@ export default function useDestroyFund() {
           meta: meta.encoded,
         }),
       },
-      ...wallet.meta,
+      ...txMeta,
     });
   }
 
