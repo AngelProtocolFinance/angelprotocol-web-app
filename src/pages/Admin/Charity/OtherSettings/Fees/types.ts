@@ -1,4 +1,3 @@
-import { TFees } from "slices/launchpad/types";
+import { Fees } from "types/ast";
 
-export type FV = TFees;
-``;
+export type FV = Fees;
