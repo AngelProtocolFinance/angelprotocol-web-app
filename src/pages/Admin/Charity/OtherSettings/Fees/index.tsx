@@ -144,6 +144,6 @@ function formFee({ bps, payoutAddress }: ContractFee): Fee {
 function contractFee({ rate, receiver, isActive }: Fee): ContractFee {
   return {
     payoutAddress: isActive ? receiver : ADDRESS_ZERO,
-    bps: isActive ? +rate * 100 : 0,
+    bps: isActive ? Math.floor(+rate * 100) : 0,
   };
 }
