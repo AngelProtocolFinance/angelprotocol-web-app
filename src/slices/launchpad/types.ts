@@ -1,6 +1,7 @@
-import { Fee, Fees } from "types/ast";
+import { Fee, Fees, Splits as TSplits } from "types/ast";
 
-export type { Fee as TFee };
+export type { Fee as TFee, TSplits };
+
 /** Types primed to be for form usage */
 export type TAbout = { name: string; tagline: string };
 export type TManagement = {
@@ -26,14 +27,6 @@ export type TMaturity = {
   willMature: boolean;
   date: string;
   beneficiaries: Beneficiary[];
-};
-
-export type UserSplit = { default: string; min: string; max: string };
-export type TSplits /** locked */ = {
-  isCustom: boolean; //modifiable by contributors
-  default: string;
-  min: string;
-  max: string;
 };
 
 export type TFees = Fees & { referral_id?: number };

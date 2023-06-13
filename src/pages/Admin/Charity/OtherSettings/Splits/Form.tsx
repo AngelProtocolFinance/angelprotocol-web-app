@@ -1,32 +1,36 @@
-import { PropsWithChildren } from "react";
+import React, { FC, PropsWithChildren } from "react";
 import { useFormContext } from "react-hook-form";
-import { FV } from "../types";
+import { FV } from "./types";
 import { MinmaxSlider, Toggle } from "components/ast";
-import Form, {
-  Desc,
-  FormProps,
-  Group,
-  GroupTitle,
-  Title,
-} from "../../common/Form";
-import NavButtons from "../../common/NavButtons";
+import { Reset, Submit } from "../common/Btn";
+import { SubHeading } from "../common/SubHeading";
 
-export default function SplitsForm(props: FormProps) {
-  const { watch, resetField } = useFormContext<FV>();
+export default function Form({
+  children,
+  ...props
+}: PropsWithChildren<React.FormHTMLAttributes<HTMLFormElement>>) {
+  const {
+    watch,
+    resetField,
+    formState: { isDirty },
+  } = useFormContext<FV>();
   const isCustom = watch("isCustom");
 
   return (
-    <Form {...props}>
-      <Title className="mb-2">Split of Contributions</Title>
-      <Desc>
+    <form
+      {...props}
+      className="grid content-start gap-8 p-8 border border-prim rounded dark:bg-blue-d6"
+    >
+      <SubHeading>Split of Contributions</SubHeading>
+      <p>
         You can set the distribution of the contributions to your AST. By
         default, contributors are able to set how their contribution is split
         between your Locked account and your Liquid account. You can deactivate
         that to default to a value that you set or set minimum & maximum values.
-      </Desc>
+      </p>
       <Toggle<FV>
         name="isCustom"
-        classes={{ container: "my-9 text-sm" }}
+        classes={{ container: "text-sm" }}
         onChange={(isCustom) => {
           if (!isCustom) {
             //reset to these defaults - since persisted value is used as default value
@@ -38,7 +42,7 @@ export default function SplitsForm(props: FormProps) {
         Allow contributors to define a Locked/Liquid Split
       </Toggle>
 
-      <Group className="mb-8">
+      <Group>
         <GroupTitle className="mb-8">Default Values</GroupTitle>
         <div className="flex justify-between text-sm">
           <span>To locked</span>
@@ -58,7 +62,7 @@ export default function SplitsForm(props: FormProps) {
         </MinmaxSlider>
       </Group>
       {isCustom && (
-        <Group className="mb-8">
+        <Group>
           <GroupTitle className="mb-8">Minimums and Maximums</GroupTitle>
           <MinmaxSlider<FV> names={{ min: "min", max: "max" }}>
             {(min, max) => (
@@ -71,9 +75,11 @@ export default function SplitsForm(props: FormProps) {
           </MinmaxSlider>
         </Group>
       )}
-
-      <NavButtons classes="mt-6" curr={5} />
-    </Form>
+      <div className="flex justify-start gap-3 w-full">
+        <Reset disabled={!isDirty}>Reset changes</Reset>
+        <Submit>Submit changes</Submit>
+      </div>
+    </form>
   );
 }
 
@@ -91,3 +97,18 @@ function Percent({
     </span>
   );
 }
+
+type Props = PropsWithChildren<{ className?: string }>;
+const Group: FC<Props> = ({ className = "", children }) => {
+  return (
+    <div
+      className={`${className} grid content-start border border-prim p-4 md:p-8 rounded`}
+    >
+      {children}
+    </div>
+  );
+};
+
+const GroupTitle: FC<Props> = ({ className = "", children }) => {
+  return <div className={`${className} text-xl font-bold`}>{children}</div>;
+};
