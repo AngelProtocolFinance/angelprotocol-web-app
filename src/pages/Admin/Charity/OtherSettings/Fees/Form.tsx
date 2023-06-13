@@ -1,8 +1,12 @@
+import { useFormContext } from "react-hook-form";
 import FeesTable from "components/ast";
 import { Reset, Submit } from "../common/Btn";
 import { SubHeading } from "../common/SubHeading";
 
 export default function FeesForm(props: React.HTMLAttributes<HTMLFormElement>) {
+  const {
+    formState: { isDirty },
+  } = useFormContext();
   return (
     <form
       {...props}
@@ -16,7 +20,7 @@ export default function FeesForm(props: React.HTMLAttributes<HTMLFormElement>) {
       </p>
       <FeesTable />
       <div className="flex justify-start gap-3 w-full">
-        <Reset>Reset changes</Reset>
+        <Reset disabled={!isDirty}>Reset changes</Reset>
         <Submit>Submit changes</Submit>
       </div>
     </form>

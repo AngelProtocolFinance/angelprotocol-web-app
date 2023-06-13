@@ -80,7 +80,9 @@ function Content({ profile }: { profile: Profile }) {
         </button>
       </div>
       <div className="flex justify-start gap-3 w-full">
-        <Reset>Reset changes</Reset>
+        <Reset disabled={originalValue === verificationRequired}>
+          Reset changes
+        </Reset>
         <Submit>Submit changes</Submit>
       </div>
     </form>
