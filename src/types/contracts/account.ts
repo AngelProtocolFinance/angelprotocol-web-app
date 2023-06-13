@@ -1,4 +1,4 @@
-import { OverrideProperties } from "type-fest";
+import { Except, OverrideProperties } from "type-fest";
 import {
   AccountMessages,
   AccountStorage,
@@ -78,8 +78,6 @@ type Categories = OverrideProperties<
   { sdgs: UNSDG_NUMS[]; general: number[] }
 >;
 
-export type FeeSetting = Mapped<AngelCoreStruct.FeeSettingStruct, string>;
-
 export type EndowmentDetails = OverrideProperties<
   Pick<
     Plain<AccountStorage.EndowmentStruct>,
@@ -106,10 +104,10 @@ export type EndowmentDetails = OverrideProperties<
     maturityTime: number;
     settingsController: SettingsController;
     splitToLiquid: SplitDetails;
-    earlyLockedWithdrawFee: FeeSetting;
-    withdrawFee: FeeSetting;
-    depositFee: FeeSetting;
-    balanceFee: FeeSetting;
+    earlyLockedWithdrawFee: Fee;
+    withdrawFee: Fee;
+    depositFee: Fee;
+    balanceFee: Fee;
   }
 >;
 
@@ -173,6 +171,17 @@ type Duration = OverrideProperties<
 export type Fee = OverrideProperties<
   Plain<AngelCoreStruct.FeeSettingStruct>,
   { bps: number }
+>;
+
+export type FeeSettingsUpdate = OverrideProperties<
+  AccountsUpdateEndowmentSettingsControllerMessages.UpdateFeeSettingRequestStruct,
+  {
+    id: number;
+    earlyLockedWithdrawFee: Fee;
+    depositFee: Fee;
+    withdrawFee: Fee;
+    balanceFee: Fee;
+  }
 >;
 
 type VETypeData = Mapped<AngelCoreStruct.VeTypeDataStruct, number>;

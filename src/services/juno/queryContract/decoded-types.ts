@@ -1,6 +1,6 @@
 import type { BigNumber } from "@ethersproject/bignumber";
 import {
-  FeeSetting,
+  Fee,
   GenericBalMap,
   SettingsPermission,
   SplitDetails,
@@ -66,9 +66,9 @@ export function toSplit(
   };
 }
 
-export function toFee(d: AngelCoreStruct.FeeSettingStructOutput): FeeSetting {
+export function toFee(d: AngelCoreStruct.FeeSettingStructOutput): Fee {
   return {
     payoutAddress: d.payoutAddress.toLowerCase(),
-    bps: d.bps.toString(),
+    bps: d.bps.toNumber(),
   };
 }

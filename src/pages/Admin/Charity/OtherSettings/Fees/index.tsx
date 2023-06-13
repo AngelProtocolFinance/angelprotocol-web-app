@@ -5,9 +5,15 @@ import { FV } from "./types";
 import { SchemaShape } from "schemas/types";
 import { TFee, TFees } from "slices/launchpad/types";
 import { Fee } from "types/ast";
-import { FeeSetting } from "types/contracts";
+import { Fee as ContractFee, FeeSettingsUpdate } from "types/contracts";
+import { SimulContractTx } from "types/evm";
 import { useAdminResources } from "pages/Admin/Guard";
+import { useModalContext } from "contexts/ModalContext";
+import { TxPrompt } from "components/Prompt";
 import { feeKeys } from "components/ast";
+import { createTx, encodeTx } from "contracts/createTx/createTx";
+import useTxSender from "hooks/useTxSender";
+import { getPayloadDiff, getTagPayloads } from "helpers/admin";
 import { positiveNumber, requiredPercent } from "schemas/number";
 import { requiredWalletAddr } from "schemas/string";
 import { chainIds } from "constants/chainIds";
@@ -24,8 +30,26 @@ const fee: SchemaShape<TFee> = {
 };
 
 export default function Fees() {
-  const { withdrawFee, depositFee, earlyLockedWithdrawFee, balanceFee } =
-    useAdminResources<"charity">();
+  const {
+    id,
+    multisig,
+    earlyLockedWithdrawFee,
+    withdrawFee,
+    depositFee,
+    balanceFee,
+    getWallet,
+  } = useAdminResources<"charity">();
+
+  const { showModal } = useModalContext();
+  const sendTx = useTxSender();
+
+  const initial: FeeSettingsUpdate = {
+    id,
+    earlyLockedWithdrawFee,
+    withdrawFee,
+    depositFee,
+    balanceFee,
+  };
 
   const methods = useForm<FV>({
     mode: "onChange",
@@ -39,14 +63,66 @@ export default function Fees() {
       })
     ),
     defaultValues: {
-      earlyWithdraw: toFee(earlyLockedWithdrawFee),
-      deposit: toFee(depositFee),
-      withdrawal: toFee(withdrawFee),
-      balance: toFee(balanceFee),
+      earlyWithdraw: formFee(earlyLockedWithdrawFee),
+      deposit: formFee(depositFee),
+      withdrawal: formFee(withdrawFee),
+      balance: formFee(balanceFee),
+      initial,
     },
   });
 
-  const onSubmit: SubmitHandler<FV> = (data) => {};
+  const onSubmit: SubmitHandler<FV> = async (fees) => {
+    try {
+      const wallet = getWallet([
+        "earlyLockedWithdrawFee",
+        "withdrawFee",
+        "depositFee",
+        "balanceFee",
+      ]);
+      if (typeof wallet === "function") return wallet();
+
+      const update: FeeSettingsUpdate = {
+        ...initial,
+        earlyLockedWithdrawFee: contractFee(fees.earlyWithdraw),
+        withdrawFee: contractFee(fees.withdrawal),
+        depositFee: contractFee(fees.deposit),
+        balanceFee: contractFee(fees.balance),
+      };
+
+      const diff = getPayloadDiff(initial, update);
+
+      if (Object.entries(diff).length <= 0) {
+        return showModal(TxPrompt, { error: "No changes detected" });
+      }
+
+      const [data, dest, meta] = encodeTx(
+        "accounts.update-fee-settings",
+        update
+      );
+
+      const tx: SimulContractTx = wallet.isDelegated
+        ? { from: wallet.address, to: dest, data }
+        : createTx(wallet.address, "multisig.submit-transaction", {
+            multisig,
+            title: `Update fee settings`,
+            description: `Update fee settings for endowment id:${id} by member:${wallet?.address}`,
+            destination: dest,
+            value: "0",
+            data,
+            meta: meta.encoded,
+          });
+
+      await sendTx({
+        content: { type: "evm", val: tx },
+        ...wallet.meta,
+        tagPayloads: getTagPayloads(wallet.meta.willExecute && meta.id),
+      });
+    } catch (err) {
+      showModal(TxPrompt, {
+        error: err instanceof Error ? err.message : "Unknown error occured",
+      });
+    }
+  };
 
   const { handleSubmit } = methods;
   return (
@@ -56,10 +132,17 @@ export default function Fees() {
   );
 }
 
-function toFee({ bps, payoutAddress }: FeeSetting): Fee {
+function formFee({ bps, payoutAddress }: ContractFee): Fee {
   return {
-    rate: bps === "0" ? "" : (+bps / 100).toString(),
+    rate: bps === 0 ? "" : (bps / 100).toString(),
     receiver: payoutAddress === ADDRESS_ZERO ? "" : payoutAddress,
-    isActive: !(bps === "0" && payoutAddress === ADDRESS_ZERO),
+    isActive: !(bps === 0 && payoutAddress === ADDRESS_ZERO),
+  };
+}
+
+function contractFee({ rate, receiver, isActive }: Fee): ContractFee {
+  return {
+    bps: isActive ? parseInt(rate) * 100 : 0,
+    payoutAddress: isActive ? receiver : ADDRESS_ZERO,
   };
 }
