@@ -10,6 +10,7 @@ import { useAdminResources } from "../../../Guard";
 import Seo from "../../Seo";
 import useUpdateEndowmentProfile from "../../common/useUpdateEndowmentProfile";
 import { Reset, Submit } from "../common/Btn";
+import { Form as Frm } from "../common/Form";
 import { SubHeading } from "../common/SubHeading";
 import Message from "./Message";
 import ChangeSettingsPrompt from "./Prompt";
@@ -56,8 +57,7 @@ function Content({ profile }: { profile: Profile }) {
     });
 
   return (
-    <form
-      className="grid content-start gap-8 p-8 border border-prim rounded dark:bg-blue-d6"
+    <Frm
       onReset={() => setVerificationRequired(originalValue)}
       onSubmit={(e) => {
         e.preventDefault();
@@ -85,6 +85,6 @@ function Content({ profile }: { profile: Profile }) {
         </Reset>
         <Submit>Submit changes</Submit>
       </div>
-    </form>
+    </Frm>
   );
 }

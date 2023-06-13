@@ -1,6 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import FeesTable from "components/ast";
 import { Reset, Submit } from "../common/Btn";
+import { Form as Frm } from "../common/Form";
 import { SubHeading } from "../common/SubHeading";
 
 export default function FeesForm(props: React.HTMLAttributes<HTMLFormElement>) {
@@ -8,10 +9,7 @@ export default function FeesForm(props: React.HTMLAttributes<HTMLFormElement>) {
     formState: { isDirty },
   } = useFormContext();
   return (
-    <form
-      {...props}
-      className="grid content-start gap-8 p-8 border border-prim rounded dark:bg-blue-d6"
-    >
+    <Frm {...props}>
       <SubHeading>Fees</SubHeading>
       <p>
         Fees of 2% on balances and 1.5% on withdrawals are automatically sent to
@@ -23,6 +21,6 @@ export default function FeesForm(props: React.HTMLAttributes<HTMLFormElement>) {
         <Reset disabled={!isDirty}>Reset changes</Reset>
         <Submit>Submit changes</Submit>
       </div>
-    </form>
+    </Frm>
   );
 }

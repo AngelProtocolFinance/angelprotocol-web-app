@@ -3,6 +3,7 @@ import { useFormContext } from "react-hook-form";
 import { FV } from "./types";
 import { MinmaxSlider, Toggle } from "components/ast";
 import { Reset, Submit } from "../common/Btn";
+import { Form as Frm } from "../common/Form";
 import { SubHeading } from "../common/SubHeading";
 
 export default function Form({
@@ -17,10 +18,7 @@ export default function Form({
   const isCustom = watch("isCustom");
 
   return (
-    <form
-      {...props}
-      className="grid content-start gap-8 p-8 border border-prim rounded dark:bg-blue-d6"
-    >
+    <Frm {...props}>
       <SubHeading>Split of Contributions</SubHeading>
       <p>
         You can set the distribution of the contributions to your AST. By
@@ -79,7 +77,7 @@ export default function Form({
         <Reset disabled={!isDirty}>Reset changes</Reset>
         <Submit>Submit changes</Submit>
       </div>
-    </form>
+    </Frm>
   );
 }
 
