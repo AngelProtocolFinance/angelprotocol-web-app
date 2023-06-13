@@ -78,6 +78,8 @@ type Categories = OverrideProperties<
   { sdgs: UNSDG_NUMS[]; general: number[] }
 >;
 
+export type FeeSetting = Mapped<AngelCoreStruct.FeeSettingStruct, string>;
+
 export type EndowmentDetails = OverrideProperties<
   Pick<
     Plain<AccountStorage.EndowmentStruct>,
@@ -93,6 +95,10 @@ export type EndowmentDetails = OverrideProperties<
     | "settingsController"
     | "ignoreUserSplits"
     | "splitToLiquid"
+    | "earlyLockedWithdrawFee"
+    | "withdrawFee"
+    | "depositFee"
+    | "balanceFee"
   >,
   {
     categories: Categories;
@@ -100,6 +106,10 @@ export type EndowmentDetails = OverrideProperties<
     maturityTime: number;
     settingsController: SettingsController;
     splitToLiquid: SplitDetails;
+    earlyLockedWithdrawFee: FeeSetting;
+    withdrawFee: FeeSetting;
+    depositFee: FeeSetting;
+    balanceFee: FeeSetting;
   }
 >;
 

@@ -13,9 +13,10 @@ export default function FeesTable({ classes = "" }) {
     (screen) =>
       screen >= SCREEN_SM
         ? setOpen({
-            earnings: true,
+            earlyWithdraw: true,
             deposit: true,
             withdrawal: true,
+            balance: true,
           })
         : setOpen({}),
     {
@@ -55,6 +56,12 @@ export default function FeesTable({ classes = "" }) {
         rowClass="max-sm:grid max-sm:grid-cols-[3rem_1fr_5.5rem] border-b border-prim last:border-0 even:bg-orange-l6 even:dark:bg-blue-d7"
       >
         <Fee
+          title="early widthdraw fee"
+          name="earlyWithdraw"
+          onToggle={handleToggle}
+          isOpen={!!open.balance}
+        />
+        <Fee
           title="withdrawal fee"
           name="withdrawal"
           onToggle={handleToggle}
@@ -67,10 +74,10 @@ export default function FeesTable({ classes = "" }) {
           isOpen={!!open.deposit}
         />
         <Fee
-          title="earnigs fee"
-          name="earnings"
+          title="balance fee"
+          name="balance"
           onToggle={handleToggle}
-          isOpen={!!open.earnings}
+          isOpen={!!open.balance}
         />
       </TableSection>
     </table>

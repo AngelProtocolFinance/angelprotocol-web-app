@@ -1,6 +1,7 @@
 import { PropsWithChildren } from "react";
 import { useFormContext } from "react-hook-form";
 import { FV } from "../types";
+import Toggle from "../../../../components/ast/Toggle";
 import Form, {
   Desc,
   FormProps,
@@ -9,7 +10,6 @@ import Form, {
   Title,
 } from "../../common/Form";
 import NavButtons from "../../common/NavButtons";
-import Toggle from "../../common/Toggle";
 import { MinmaxSlider } from "./MinmaxSlider";
 
 export default function SplitsForm(props: FormProps) {

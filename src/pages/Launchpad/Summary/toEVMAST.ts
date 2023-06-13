@@ -46,10 +46,10 @@ export default function toEVMAST(
     splitDefault: +splits.default,
 
     // //fees
-    earlyLockedWithdrawFee: toEndowFee(fees.earnings),
+    earlyLockedWithdrawFee: toEndowFee(fees.earlyWithdraw),
     withdrawFee: toEndowFee(fees.withdrawal),
     depositFee: toEndowFee(fees.deposit),
-    balanceFee: toEndowFee({ isActive: false, receiver: "", rate: "0" }), //not included in launchpad, for edit later
+    balanceFee: toEndowFee(fees.balance), //not included in launchpad, for edit later
 
     //dao (overriden by bool createDao ):not included in launchpad, for edit later
     dao: {

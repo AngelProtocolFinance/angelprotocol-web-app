@@ -1,15 +1,17 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { object, string } from "yup";
 import { FV } from "./types";
 import { SchemaShape } from "schemas/types";
 import { TFee, TFees } from "slices/launchpad/types";
+import { Fee } from "types/ast";
+import { FeeSetting } from "types/contracts";
+import { useAdminResources } from "pages/Admin/Guard";
 import { feeKeys } from "components/ast";
-import { useLaunchpad } from "slices/launchpad";
 import { positiveNumber, requiredPercent } from "schemas/number";
 import { requiredWalletAddr } from "schemas/string";
 import { chainIds } from "constants/chainIds";
-import { withStepGuard } from "../withStepGuard";
+import { ADDRESS_ZERO } from "constants/evm";
 import Form from "./Form";
 
 const fee: SchemaShape<TFee> = {
@@ -21,8 +23,10 @@ const fee: SchemaShape<TFee> = {
   ),
 };
 
-export default withStepGuard<6>(function Fees({ data }) {
-  const { update } = useLaunchpad(6);
+export default function Fees() {
+  const { withdrawFee, depositFee, earlyLockedWithdrawFee, balanceFee } =
+    useAdminResources<"charity">();
+
   const methods = useForm<FV>({
     mode: "onChange",
     resolver: yupResolver(
@@ -34,18 +38,28 @@ export default withStepGuard<6>(function Fees({ data }) {
         referral_id: positiveNumber,
       })
     ),
-    defaultValues: data || {
-      earlyWithdraw: { isActive: false, rate: "", receiver: "" },
-      deposit: { isActive: false, rate: "", receiver: "" },
-      withdrawal: { isActive: false, rate: "", receiver: "" },
-      balance: { isActive: false, rate: "", receiver: "" },
+    defaultValues: {
+      earlyWithdraw: toFee(earlyLockedWithdrawFee),
+      deposit: toFee(depositFee),
+      withdrawal: toFee(withdrawFee),
+      balance: toFee(balanceFee),
     },
   });
+
+  const onSubmit: SubmitHandler<FV> = (data) => {};
 
   const { handleSubmit } = methods;
   return (
     <FormProvider {...methods}>
-      <Form onSubmit={handleSubmit((data) => update(data))} />
+      <Form onSubmit={handleSubmit(onSubmit)} />
     </FormProvider>
   );
-});
+}
+
+function toFee({ bps, payoutAddress }: FeeSetting): Fee {
+  return {
+    rate: bps === "0" ? "" : (+bps / 100).toString(),
+    receiver: payoutAddress === ADDRESS_ZERO ? "" : payoutAddress,
+    isActive: !(bps === "0" && payoutAddress === ADDRESS_ZERO),
+  };
+}

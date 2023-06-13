@@ -1,7 +1,8 @@
 export type Fees = {
+  earlyWithdraw: Fee;
   withdrawal: Fee;
   deposit: Fee;
-  earnings: Fee;
+  balance: Fee;
 };
 
 export type Fee = {

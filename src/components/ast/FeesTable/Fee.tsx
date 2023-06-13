@@ -4,8 +4,8 @@ import { useFormContext } from "react-hook-form";
 import { Fees } from "types/ast";
 import { DrawerIcon } from "components/Icon";
 import { Cells } from "components/TableSection";
-import { keys } from "../../../pages/Launchpad/Fees/constants";
-import Toggle from "../../../pages/Launchpad/common/Toggle";
+import Toggle from "../Toggle";
+import { feeKeys } from "./constants";
 
 type Props<T extends Fees> = {
   name: keyof T;
@@ -30,9 +30,9 @@ export default function Fee<T extends Fees>({
   } = useFormContext<T>();
 
   const _name = name as string;
-  const isActiveName: any = `${_name}.${keys.isActive}`;
-  const rateName: any = `${_name}.${keys.rate}`;
-  const receiverName: any = `${_name}.${keys.receiver}`;
+  const isActiveName: any = `${_name}.${feeKeys.isActive}`;
+  const rateName: any = `${_name}.${feeKeys.rate}`;
+  const receiverName: any = `${_name}.${feeKeys.receiver}`;
 
   const isActive = watch(isActiveName);
 
