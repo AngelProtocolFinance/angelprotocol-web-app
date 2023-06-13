@@ -36,10 +36,6 @@ const COMMON: LinkGroup[] = [
     ],
   },
   { title: "Profile", links: [LINKS.edit_profile] },
-  {
-    title: "Manage",
-    links: [LINKS[adminRoutes.proposals], LINKS[adminRoutes.whitelists]],
-  },
 ];
 
 const LINK_GROUPS: { [key in EndowmentType]: LinkGroup[] } = {
@@ -47,14 +43,25 @@ const LINK_GROUPS: { [key in EndowmentType]: LinkGroup[] } = {
     ...COMMON,
     {
       title: "Manage",
-      links: [LINKS.admin_wallet, LINKS.permissions],
+      links: [
+        LINKS[adminRoutes.whitelists],
+        LINKS.permissions,
+        LINKS.admin_wallet,
+        LINKS[adminRoutes.proposals],
+      ],
     },
   ],
   normal: [
     ...COMMON,
     {
       title: "Manage",
-      links: [LINKS.admin_wallet, LINKS.permissions, LINKS.other_settings],
+      links: [
+        LINKS[adminRoutes.whitelists],
+        LINKS.permissions,
+        LINKS.admin_wallet,
+        LINKS.other_settings,
+        LINKS[adminRoutes.proposals],
+      ],
     },
   ],
 };

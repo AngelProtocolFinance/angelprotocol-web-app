@@ -97,7 +97,8 @@ export default function Fees() {
 
       const [data, dest, meta] = encodeTx(
         "accounts.update-fee-settings",
-        update
+        update,
+        diff
       );
 
       const tx: SimulContractTx = wallet.isDelegated
@@ -134,7 +135,7 @@ export default function Fees() {
 
 function formFee({ bps, payoutAddress }: ContractFee): Fee {
   return {
-    rate: bps === 0 ? "" : (bps / 100).toString(),
+    rate: bps === 0 ? "" : (bps / 100).toFixed(2),
     receiver: payoutAddress === ADDRESS_ZERO ? "" : payoutAddress,
     isActive: !(bps === 0 && payoutAddress === ADDRESS_ZERO),
   };
@@ -142,7 +143,7 @@ function formFee({ bps, payoutAddress }: ContractFee): Fee {
 
 function contractFee({ rate, receiver, isActive }: Fee): ContractFee {
   return {
-    bps: isActive ? parseInt(rate) * 100 : 0,
     payoutAddress: isActive ? receiver : ADDRESS_ZERO,
+    bps: isActive ? +rate * 100 : 0,
   };
 }
