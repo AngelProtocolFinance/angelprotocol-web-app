@@ -1,1 +1,1 @@
-export { default } from "./OtherSettings";
+export { default } from "./DonorVerification";
