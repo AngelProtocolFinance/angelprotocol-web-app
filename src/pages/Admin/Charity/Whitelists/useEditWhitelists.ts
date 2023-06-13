@@ -43,11 +43,15 @@ export default function useEditWhitelists() {
 
       const diff = getPayloadDiff(initial, update);
 
-      if (Object.entries(diff).length <= 0) {
+      if (isEmpty(diff)) {
         return showModal(TxPrompt, { error: "No changes detected" });
       }
 
-      const [data, dest, meta] = encodeTx("accounts.update-settings", update);
+      const [data, dest, meta] = encodeTx(
+        "accounts.update-settings",
+        update,
+        diff
+      );
       const tx: SimulContractTx = wallet.isDelegated
         ? { from: wallet.address, to: dest, data }
         : createTx(wallet.address, "multisig.submit-transaction", {
