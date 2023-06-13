@@ -9,6 +9,7 @@ import { adminRoutes } from "constants/routes";
 import { useAdminResources } from "../../../Guard";
 import Seo from "../../Seo";
 import useUpdateEndowmentProfile from "../../common/useUpdateEndowmentProfile";
+import { Reset, Submit } from "../common/Btn";
 import { SubHeading } from "../common/SubHeading";
 import Message from "./Message";
 import ChangeSettingsPrompt from "./Prompt";
@@ -79,15 +80,8 @@ function Content({ profile }: { profile: Profile }) {
         </button>
       </div>
       <div className="flex justify-start gap-3 w-full">
-        <button
-          type="reset"
-          className="btn-outline-filled grow max-w-[11rem] h-12 text-sm"
-        >
-          Reset
-        </button>
-        <button type="submit" className="btn-orange w-44 h-12 text-sm">
-          Submit changes
-        </button>
+        <Reset>Reset changes</Reset>
+        <Submit>Submit changes</Submit>
       </div>
     </form>
   );

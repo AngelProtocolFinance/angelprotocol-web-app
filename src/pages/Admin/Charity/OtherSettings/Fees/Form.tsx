@@ -1,4 +1,5 @@
 import FeesTable from "components/ast";
+import { Reset, Submit } from "../common/Btn";
 import { SubHeading } from "../common/SubHeading";
 
 export default function FeesForm(props: React.HTMLAttributes<HTMLFormElement>) {
@@ -14,6 +15,10 @@ export default function FeesForm(props: React.HTMLAttributes<HTMLFormElement>) {
         distributed to the address of your choice
       </p>
       <FeesTable />
+      <div className="flex justify-start gap-3 w-full">
+        <Reset>Reset changes</Reset>
+        <Submit>Submit changes</Submit>
+      </div>
     </form>
   );
 }
