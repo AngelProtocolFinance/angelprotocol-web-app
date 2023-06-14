@@ -32,7 +32,7 @@ export default function PermissionsTable({ classes = "" }) {
 
   return (
     <table
-      className={`${classes} max-sm:grid outline outline-1 outline-prim rounded w-full`}
+      className={`${classes} table-fixed max-sm:grid outline outline-1 outline-prim rounded w-full`}
     >
       <TableSection
         type="thead"
@@ -44,13 +44,13 @@ export default function PermissionsTable({ classes = "" }) {
           cellClass="px-4 py-4 border-r border-prim last:border-r-0"
         >
           <th className="sm:hidden" />
-          <th className="max-sm:col-start-2 max-sm:border-r-0 sm:w-96">
+          <th className="max-sm:col-start-2 max-sm:border-r-0 sm:w-80">
             action
           </th>
-          <th className="max-sm:hidden">admin wallet</th>
-          <th className="max-sm:hidden">delegate</th>
+          <th className="max-sm:hidden sm:w-28">admin wallet</th>
+          <th className="max-sm:hidden sm:w-28">delegate</th>
           <th className="max-sm:hidden">delegate address</th>
-          <th className="max-sm:hidden">actions</th>
+          <th className="max-sm:hidden sm:w-28">actions</th>
         </Cells>
       </TableSection>
       <TableSection

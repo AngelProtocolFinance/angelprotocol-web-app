@@ -55,15 +55,17 @@ export default function Permission({ name, title, isOpen, onToggle }: Props) {
           />
         </button>
       </td>
-      <td className="text-sm uppercase font-work w-full max-sm:col-start-2 max-sm:col-span-11">
+      <td className="text-sm uppercase font-work w-full max-sm:col-start-2 max-sm:col-span-11 max-sm:border-r-0">
         <div className="h-full flex items-center sm:contents">{title}</div>
       </td>
       <td
         className={`${
-          isOpen ? "" : "hidden"
-        } relative max-sm:col-span-6 max-sm:col-start-1 max-sm:border-r-0 max-sm:border-y`}
+          isOpen
+            ? "max-sm:flex max-sm:items-center gap-3 max-sm:justify-center"
+            : "hidden"
+        } relative max-sm:col-span-6 max-sm:col-start-1 max-sm:border-r-0 max-sm:border-t`}
       >
-        <p className="sm:hidden font-work font-bold text-xs mb-3 uppercase">
+        <p className="sm:hidden font-work font-bold text-xs uppercase">
           Admin wallet
         </p>
         <CheckField<FV>
@@ -78,10 +80,12 @@ export default function Permission({ name, title, isOpen, onToggle }: Props) {
       </td>
       <td
         className={`${
-          isOpen ? "" : "hidden"
-        } relative max-sm:col-span-6 max-sm:col-start-7 max-sm:border-r-0 max-sm:border-y`}
+          isOpen
+            ? "max-sm:flex max-sm:items-center gap-3 max-sm:justify-center"
+            : "hidden"
+        } relative max-sm:col-span-6 max-sm:col-start-7 max-sm:border-r-0 max-sm:border-t`}
       >
-        <p className="sm:hidden font-work font-bold text-xs mb-3 uppercase">
+        <p className="order-2 sm:hidden font-work font-bold text-xs uppercase">
           Delegate
         </p>
         <CheckField<FV>
@@ -97,7 +101,7 @@ export default function Permission({ name, title, isOpen, onToggle }: Props) {
       <td
         className={`${
           isOpen ? "" : "hidden"
-        } relative max-sm:col-span-full max-sm:w-full max-sm:border-r-0 max-sm:border-y`}
+        } relative max-sm:col-span-full max-sm:w-full max-sm:border-r-0 max-sm:border-t`}
       >
         <p className="sm:hidden font-work font-bold text-xs mb-3 uppercase">
           Delegate address
@@ -105,24 +109,25 @@ export default function Permission({ name, title, isOpen, onToggle }: Props) {
         <div className="relative">
           <input
             disabled={!isActive}
-            className="field-input min-w-[9rem] w-full truncate py-1.5"
+            className="field-input truncate py-1.5"
             {...register(addrName)}
-            // ref={receiverRef}
           />
           <ErrorMessage
             name={addrName}
-            as="span"
-            className="field-error text-left -bottom-3.5 w-max left-0"
+            as="p"
+            className="text-xs text-red dark:text-red-l2 text-right w-full mt-0.5"
             errors={errors}
           />
         </div>
       </td>
       <td
         className={`${
-          isOpen ? "" : "hidden"
-        } relative max-sm:col-span-full max-sm:w-full max-sm:border-r-0 max-sm:border-y`}
+          isOpen
+            ? "max-sm:flex max-sm:justify-between max-sm:items-center"
+            : "hidden"
+        } relative max-sm:col-span-full max-sm:w-full max-sm:border-r-0 max-sm:border-t`}
       >
-        <p className="sm:hidden font-work font-bold text-xs mb-3 uppercase">
+        <p className="sm:hidden font-work font-bold text-xs uppercase">
           Actions
         </p>
         <LockButton disabled={true} name={name} />
