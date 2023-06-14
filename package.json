@@ -41,7 +41,7 @@
   },
   "packageManager": "yarn@3.3.0",
   "engines": {
-    "node": "16.18.0"
+    "node": "18.16.0"
   },
   "dependencies": {
     "@cosmjs/cosmwasm-stargate": "^0.30.0",
