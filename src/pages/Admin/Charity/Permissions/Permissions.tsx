@@ -19,7 +19,7 @@ export default function Permissions() {
   };
 
   const methods = useForm<FV>({
-    defaultValues: {
+    values: {
       ...permissions,
       initial: controllerUpdate(id, permissions, controller),
     },
