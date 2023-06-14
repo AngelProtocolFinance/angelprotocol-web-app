@@ -3,8 +3,12 @@ import { FC, PropsWithChildren } from "react";
 type Btn = FC<PropsWithChildren<{ classes?: string; disabled?: boolean }>>;
 
 export const Submit: Btn = ({ children, classes = "" }) => (
-  <button type="submit" className={`${classes} btn-orange w-44 h-12 text-sm`}>
-    {children}
+  <button
+    disabled={true}
+    type="submit"
+    className={`${classes} btn-orange w-44 h-12 text-sm`}
+  >
+    Locked forever
   </button>
 );
 

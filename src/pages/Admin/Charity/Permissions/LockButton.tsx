@@ -1,13 +1,13 @@
 import { useFormContext } from "react-hook-form";
-import { FormValues, UpdateableFormValues } from "./schema";
+import { FV, TPermissions } from "./types";
 
 type Props = {
   disabled: boolean;
-  name: keyof UpdateableFormValues;
+  name: keyof TPermissions;
 };
 
 export default function LockButton(props: Props) {
-  const { watch, setValue, getValues } = useFormContext<FormValues>();
+  const { watch, setValue, getValues } = useFormContext<FV>();
   const locked = watch(`${props.name}.locked`);
   const modifiable = getValues(`${props.name}.modifiable`);
 

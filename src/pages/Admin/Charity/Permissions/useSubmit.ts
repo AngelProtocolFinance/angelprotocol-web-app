@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
+import { FV } from "./types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useErrorContext } from "contexts/ErrorContext";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
@@ -7,7 +8,6 @@ import useTxSender from "hooks/useTxSender";
 import { isEmpty } from "helpers";
 import { getPayloadDiff, getTagPayloads } from "helpers/admin";
 import { controllerUpdate } from "./helpers";
-import { FormValues } from "./schema";
 
 export default function useSubmit() {
   const {
@@ -22,7 +22,7 @@ export default function useSubmit() {
     handleSubmit,
     reset,
     trigger,
-  } = useFormContext<FormValues>();
+  } = useFormContext<FV>();
   const sendTx = useTxSender();
 
   // if this effect is omitted and there are any errors,
@@ -33,7 +33,7 @@ export default function useSubmit() {
     }
   }, [isValid, trigger]);
 
-  async function onSubmit({ initial, ...fv }: FormValues) {
+  async function onSubmit({ initial, ...fv }: FV) {
     try {
       const update = controllerUpdate(id, fv, settings);
       const diff = getPayloadDiff(initial, update);

@@ -1,34 +1,12 @@
 import * as Yup from "yup";
+import { FV, TPermission } from "./types";
 import { SchemaShape } from "schemas/types";
-import { Delegate, SettingsControllerUpdate } from "types/contracts";
 import { requiredWalletAddr } from "schemas/string";
 import { chainIds } from "constants/chainIds";
 
-export type FormField = Pick<Delegate, "addr"> & {
-  isActive: boolean;
-  locked: boolean;
+const _active: keyof TPermission = "isActive";
 
-  //meta
-  name: string;
-  modifiable: boolean;
-  ownerControlled: boolean;
-  govControlled: boolean;
-};
-
-export type UpdateableFormValues = {
-  accountFees: FormField;
-  allowList: FormField;
-  donationSplitParams: FormField;
-  profile: FormField;
-};
-
-export type FormValues = UpdateableFormValues & {
-  initial: SettingsControllerUpdate;
-};
-
-const _active: keyof FormField = "isActive";
-
-const fieldShape: SchemaShape<FormField> = {
+const fieldShape: SchemaShape<TPermission> = {
   addr: Yup.string().when(_active, {
     is: true,
     then: requiredWalletAddr(chainIds.polygon),
@@ -36,7 +14,7 @@ const fieldShape: SchemaShape<FormField> = {
   }),
 };
 
-const shape: SchemaShape<FormValues> = {
+const shape: SchemaShape<FV> = {
   accountFees: Yup.object().shape(fieldShape),
   allowList: Yup.object().shape(fieldShape),
   donationSplitParams: Yup.object().shape(fieldShape),
