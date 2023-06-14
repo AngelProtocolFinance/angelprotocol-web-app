@@ -50,13 +50,13 @@ export default function PermissionsTable({ classes = "" }) {
           <th className="max-sm:hidden sm:w-28">admin wallet</th>
           <th className="max-sm:hidden sm:w-28">delegate</th>
           <th className="max-sm:hidden">delegate address</th>
-          <th className="max-sm:hidden sm:w-28">actions</th>
+          <th className="max-sm:hidden sm:w-36">actions</th>
         </Cells>
       </TableSection>
       <TableSection
         classes="max-sm:contents"
         type="tbody"
-        rowClass="max-sm:grid max-sm:grid-cols-12 border-b border-prim last:border-0 even:bg-orange-l6 even:dark:bg-blue-d7"
+        rowClass="max-sm:grid max-sm:grid-cols-12 border-b border-prim last:border-0"
       >
         <Permission
           title="Changes to account fees"

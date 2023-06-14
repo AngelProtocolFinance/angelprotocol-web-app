@@ -7,7 +7,6 @@ export default function Form() {
   return (
     <form className="grid gap-6 w-full" onSubmit={submit}>
       <PermissionsTable />
-
       <div className="flex flex-wrap items-center gap-3">
         <button
           type="button"

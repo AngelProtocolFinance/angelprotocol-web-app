@@ -28,6 +28,7 @@ export default function Permission({ name, title, isOpen, onToggle }: Props) {
   const isActiveName: Path<TPs> = `${name}.${keys.isActive}`;
   const addrName: Path<TPs> = `${name}.${keys.addr}`;
   const isActive = watch(isActiveName);
+  const isLocked = watch(`${name}.${keys.locked}`);
 
   useEffect(() => {
     if (!isActive) {
@@ -95,7 +96,7 @@ export default function Permission({ name, title, isOpen, onToggle }: Props) {
             input: "checkbox-orange",
             error: "hidden",
           }}
-          disabled={true}
+          disabled={isLocked}
         />
       </td>
       <td
@@ -108,7 +109,7 @@ export default function Permission({ name, title, isOpen, onToggle }: Props) {
         </p>
         <div className="relative">
           <input
-            disabled={!isActive}
+            disabled={isLocked || !isActive}
             className="field-input truncate py-1.5"
             {...register(addrName)}
           />
@@ -130,7 +131,7 @@ export default function Permission({ name, title, isOpen, onToggle }: Props) {
         <p className="sm:hidden font-work font-bold text-xs uppercase">
           Actions
         </p>
-        <LockButton disabled={true} name={name} />
+        <LockButton name={name} />
       </td>
     </Cells>
   );

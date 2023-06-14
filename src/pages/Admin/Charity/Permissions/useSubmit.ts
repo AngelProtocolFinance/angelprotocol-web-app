@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { FV } from "./types";
 import { useAdminResources } from "pages/Admin/Guard";
@@ -18,27 +17,18 @@ export default function useSubmit() {
   } = useAdminResources<"charity">();
   const { handleError } = useErrorContext();
   const {
-    formState: { isSubmitting, errors, isValid },
+    formState: { isSubmitting, errors },
     handleSubmit,
     reset,
-    trigger,
   } = useFormContext<FV>();
   const sendTx = useTxSender();
-
-  // if this effect is omitted and there are any errors,
-  // once form is changed to a valid state the error messages do not disappear
-  useEffect(() => {
-    if (isValid) {
-      trigger();
-    }
-  }, [isValid, trigger]);
 
   async function onSubmit({ initial, ...fv }: FV) {
     try {
       const update = controllerUpdate(id, fv, settings);
       const diff = getPayloadDiff(initial, update);
 
-      if (isEmpty(Object.entries(diff))) {
+      if (isEmpty(diff)) {
         return handleError("No changes detected");
       }
 
