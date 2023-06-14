@@ -36,7 +36,9 @@ export default function LockButton({ name }: Props) {
       disabled={isSubmitting}
       onClick={async () => {
         const prevLocked = getValues(`${name}.locked`);
-        const isValid = prevLocked ? true : await trigger(`${name}.addr`);
+        const isValid = prevLocked
+          ? true
+          : await trigger(`${name}.addr`, { shouldFocus: true });
         if (!isValid) return;
         setValue(`${name}.locked`, !locked);
       }}
