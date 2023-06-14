@@ -74,13 +74,13 @@ export default function PermissionsTable({ classes = "" }) {
           title="Changes to donation split parameters"
           name="donationSplitParams"
           onToggle={handleToggle}
-          isOpen={!!open.allowList}
+          isOpen={!!open.donationSplitParams}
         />
         <Permission
           title="Changes to profile"
           name="profile"
           onToggle={handleToggle}
-          isOpen={!!open.allowList}
+          isOpen={!!open.profile}
         />
       </TableSection>
     </table>
