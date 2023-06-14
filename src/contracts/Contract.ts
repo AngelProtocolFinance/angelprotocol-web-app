@@ -22,8 +22,8 @@ import { IS_TEST } from "constants/env";
 // actual rate during submission is set by wallet - can be overridden with custom but keplr is buggy when customizing
 // NOTE: use "High" fee setting on JUNO testnet, otherwise transactions will fail
 const GAS_PRICE = IS_TEST
-  ? GasPrice.fromString("0.025ujunox")
-  : GasPrice.fromString("0.0025ujuno");
+  ? GasPrice.fromString("0.075ujunox")
+  : GasPrice.fromString("0.075ujuno");
 
 // This is the multiplier used when auto-calculating the fees
 // https://github.com/cosmos/cosmjs/blob/5bd6c3922633070dbb0d68dd653dc037efdf3280/packages/stargate/src/signingstargateclient.ts#L290
