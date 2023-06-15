@@ -111,7 +111,7 @@ export default function toEVMAST(
     },
     // settingsController: SettingsController; //not included in launchpad, for edit later
     parent: 0,
-    maturityAllowlist: maturity.beneficiaries.map((b) => b.addr),
+    maturityAllowlist: maturity.beneficiaries,
     ignoreUserSplits: !splits.isCustom,
     splitToLiquid: toContractSplit(splits),
 
