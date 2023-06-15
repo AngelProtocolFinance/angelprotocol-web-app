@@ -40,16 +40,14 @@ export default function Splits() {
     ignoreUserSplits,
   };
 
-  const methods = useForm<FV>({
-    defaultValues: {
-      ...toFormSplit(splitToLiquid, !ignoreUserSplits),
-      //meta
-      defaultMin: "0",
-      initial,
-    },
-  });
+  const defaultValues: FV = {
+    ...toFormSplit(splitToLiquid, !ignoreUserSplits),
+    //meta
+    defaultMin: "0",
+    initial,
+  };
 
-  const { handleSubmit } = methods;
+  const methods = useForm<FV>({ defaultValues });
 
   const update: SubmitHandler<FV> = async (splits) => {
     try {
@@ -99,9 +97,17 @@ export default function Splits() {
     }
   };
 
+  const { handleSubmit, reset } = methods;
+
   return (
     <FormProvider {...methods}>
-      <Form onSubmit={handleSubmit((data) => update(data))} />
+      <Form
+        onSubmit={handleSubmit((data) => update(data))}
+        onReset={(e) => {
+          e.preventDefault();
+          reset(defaultValues);
+        }}
+      />
     </FormProvider>
   );
 }
