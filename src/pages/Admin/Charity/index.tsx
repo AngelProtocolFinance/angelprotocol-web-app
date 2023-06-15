@@ -14,6 +14,7 @@ import Dashboard from "./Dashboard";
 import Deposits from "./Deposits";
 import EditProfile from "./EditProfile";
 import Invest from "./Invest";
+import Maturity from "./Maturity";
 import OtherSettings from "./OtherSettings";
 import Permissions from "./Permissions";
 // import Settings from "./Settings";
@@ -44,10 +45,10 @@ const LINK_GROUPS: { [key in EndowmentType]: LinkGroup[] } = {
     {
       title: "Manage",
       links: [
-        LINKS[adminRoutes.whitelists],
+        LINKS.whitelists,
         LINKS.permissions,
         LINKS.admin_wallet,
-        LINKS[adminRoutes.proposals],
+        LINKS.proposals,
       ],
     },
   ],
@@ -56,11 +57,12 @@ const LINK_GROUPS: { [key in EndowmentType]: LinkGroup[] } = {
     {
       title: "Manage",
       links: [
-        LINKS[adminRoutes.whitelists],
+        LINKS.whitelists,
+        LINKS.maturity,
         LINKS.permissions,
         LINKS.admin_wallet,
         LINKS.other_settings,
-        LINKS[adminRoutes.proposals],
+        LINKS.proposals,
       ],
     },
   ],
@@ -84,7 +86,7 @@ export default function Charity() {
         <Route path={adminRoutes.invest} element={<Invest />} />
         <Route path={adminRoutes.contributions} element={<Contributions />} />
         <Route path={adminRoutes.whitelists} element={<Whitelists />} />
-        {/*<Route path={adminRoutes.settings} element={<Settings />} />*/}
+        <Route path={adminRoutes.maturity} element={<Maturity />} />
         <Route path={adminRoutes.edit_profile} element={<EditProfile />} />
         <Route path={adminRoutes.permissions} element={<Permissions />} />
         <Route path={adminRoutes.other_settings} element={<OtherSettings />} />

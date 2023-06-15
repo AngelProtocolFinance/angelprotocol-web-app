@@ -30,6 +30,7 @@ export const adminRoutes = {
   other_settings: "other-settings",
   permissions: "permissions",
   whitelists: "whitelists",
+  maturity: "maturity",
   admin_wallet: "admin-wallet",
   //charity
   edit_profile: "edit-profile",

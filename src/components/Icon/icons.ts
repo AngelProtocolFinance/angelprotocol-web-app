@@ -68,6 +68,7 @@ import { GoDash, GoLinkExternal, GoSync } from "react-icons/go";
 import { GrFacebookOption } from "react-icons/gr";
 import { ImDroplet, ImFilePicture } from "react-icons/im";
 import {
+  IoMdCalendar,
   IoMdClipboard,
   IoMdDownload,
   IoMdListBox,
@@ -122,6 +123,7 @@ export const icons = {
   Back: MdOutlineArrowBackIosNew,
   Blockchain: SiHiveBlockchain,
   Bold: BiBold,
+  Calendar: IoMdCalendar,
   CaretLeft: AiFillCaretLeft,
   Check: BiCheck,
   CheckCircle: AiFillCheckCircle,

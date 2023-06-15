@@ -181,9 +181,17 @@ export const LINKS: {
       size: 22,
     },
   },
+  maturity: {
+    title: "Maturity",
+    to: "maturity",
+    icon: {
+      type: "Calendar",
+      size: 24,
+    },
+  },
   widget_config: {
     title: "Widget Configuration",
-    to: sidebarRoutes.widget_config,
+    to: "widget-config",
     icon: {
       type: "Widget",
       size: 24,
