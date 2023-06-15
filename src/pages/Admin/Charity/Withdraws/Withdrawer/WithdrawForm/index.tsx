@@ -17,7 +17,7 @@ export default function WithdrawForm({
 
   const amounts: Amount[] = balances.map((c) => ({
     tokenId: c.address,
-    balance: roundDown(condense(c.amount), 4) + 100,
+    balance: roundDown(condense(c.amount)),
     value: "",
   }));
 
