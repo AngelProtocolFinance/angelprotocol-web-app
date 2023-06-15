@@ -24,16 +24,16 @@ export default function Form({ classes = "" }) {
 
       {network !== "Polygon" && (
         <>
-          <Warning classes="mt-4 mb-2">
+          <Warning>
             Withraws to {network} are processed on a hourly basis by our
             cross-chain pipelines.
           </Warning>
-          <Warning classes="mb-2">
+          <Warning classes="-mt-1 mb-2">
             The minimum withdrawal amount is {fee} USDC.
           </Warning>
         </>
       )}
-      <Warning classes="mb-2">
+      <Warning classes="-mt-3">
         We recommend not using crypto exchange addresses for withdrawals. We are
         not responsible for the loss of funds.
       </Warning>
