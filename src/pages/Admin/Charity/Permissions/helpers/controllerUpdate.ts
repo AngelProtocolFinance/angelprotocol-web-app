@@ -1,17 +1,17 @@
+import { TPermissions } from "../types";
 import {
   SettingsController,
   SettingsControllerUpdate,
   SettingsPermission,
 } from "types/contracts";
 import { ADDRESS_ZERO } from "constants/evm";
-import { UpdateableFormValues } from "../schema";
 
 export function controllerUpdate(
   endowId: number,
-  fv: UpdateableFormValues,
+  permissions: TPermissions,
   controller: SettingsController
 ): SettingsControllerUpdate {
-  const toPermission = converter(fv);
+  const toPermission = converter(permissions);
   const accountFees = toPermission("accountFees");
   const allowList = toPermission("allowList");
   const donationSplitParams = toPermission("donationSplitParams");
@@ -44,9 +44,9 @@ export function controllerUpdate(
 //no need to check against initial values as `fv` is initialized with SettingsConroller
 
 const converter =
-  (fv: UpdateableFormValues) =>
-  (permission: keyof UpdateableFormValues): SettingsPermission => {
-    const val = fv[permission];
+  (permissions: TPermissions) =>
+  (permission: keyof TPermissions): SettingsPermission => {
+    const val = permissions[permission];
     return {
       locked: val.locked,
       delegate: {

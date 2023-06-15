@@ -9,12 +9,12 @@ import { ADDRESS_ZERO } from "constants/evm";
 
 export default function useCloseEndowment() {
   const { handleSubmit } = useFormContext<FV>();
-  const { multisig, getWallet, id: endowId } = useAdminResources();
+  const { multisig, checkSubmit, id: endowId } = useAdminResources();
   const sendTx = useTxSender();
 
   async function closeEndowment(fv: FV) {
-    const wallet = getWallet();
-    if (typeof wallet === "function") return wallet();
+    const result = checkSubmit();
+    if (typeof result === "function") return result();
 
     const [beneficiary, beneficiaryMeta] = (function (): [Beneficiary, string] {
       const { id, type } = fv.beneficiary;
@@ -52,6 +52,7 @@ export default function useCloseEndowment() {
       { beneficiary: beneficiaryMeta }
     );
 
+    const { wallet, txMeta } = result;
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig,
       title: fv.title,
@@ -64,8 +65,8 @@ export default function useCloseEndowment() {
 
     await sendTx({
       content: { type: "evm", val: tx },
-      ...wallet.meta,
-      tagPayloads: getTagPayloads(wallet.meta.willExecute && meta.id),
+      ...txMeta,
+      tagPayloads: getTagPayloads(txMeta.willExecute && meta.id),
     });
   }
 

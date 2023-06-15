@@ -2,6 +2,7 @@ import { Completed, TFee } from "slices/launchpad/types";
 import { Fee, NewAST, SettingsPermission } from "types/contracts";
 import { isEmpty, roundDownToNum } from "helpers";
 import { blockTime } from "helpers/admin";
+import { toContractSplit } from "helpers/ast";
 import { ADDRESS_ZERO } from "constants/evm";
 
 export default function toEVMAST(
@@ -46,10 +47,10 @@ export default function toEVMAST(
     splitDefault: +splits.default,
 
     // //fees
-    earlyLockedWithdrawFee: toEndowFee(fees.earnings),
+    earlyLockedWithdrawFee: toEndowFee(fees.earlyWithdraw),
     withdrawFee: toEndowFee(fees.withdrawal),
     depositFee: toEndowFee(fees.deposit),
-    balanceFee: toEndowFee({ isActive: false, receiver: "", rate: "0" }), //not included in launchpad, for edit later
+    balanceFee: toEndowFee(fees.balance), //not included in launchpad, for edit later
 
     //dao (overriden by bool createDao ):not included in launchpad, for edit later
     dao: {
@@ -112,11 +113,7 @@ export default function toEVMAST(
     parent: 0,
     maturityAllowlist: maturity.beneficiaries.map((b) => b.addr),
     ignoreUserSplits: !splits.isCustom,
-    splitToLiquid: {
-      min: 100 - +splits.max,
-      max: 100 - +splits.min,
-      defaultSplit: +splits.default,
-    },
+    splitToLiquid: toContractSplit(splits),
 
     referralId: fees.referral_id || 0,
   };

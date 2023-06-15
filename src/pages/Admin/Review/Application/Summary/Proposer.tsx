@@ -35,7 +35,7 @@ export default function Proposer({ type, appId, reference }: Props) {
     },
   });
 
-  const { multisig, getWallet } = useAdminResources();
+  const { multisig, checkSubmit } = useAdminResources();
   const { showModal } = useModalContext();
   const { sendTx, isSending } = useTxSender(true);
   const [updateReg] = useUpdateRegMutation();
@@ -43,8 +43,8 @@ export default function Proposer({ type, appId, reference }: Props) {
   const { handleSubmit } = methods;
 
   async function submit({ type, ...fv }: FV) {
-    const wallet = getWallet();
-    if (typeof wallet === "function") return wallet();
+    const result = checkSubmit();
+    if (typeof result === "function") return result();
 
     const [data, dest] = encodeTx(
       type === "approve"
@@ -55,6 +55,7 @@ export default function Proposer({ type, appId, reference }: Props) {
       }
     );
 
+    const { wallet, txMeta } = result;
     const onSuccess: TxOnSuccess = async (result) => {
       const { data, ...okTx } = result;
       const txId = data as string | null;
@@ -88,7 +89,7 @@ export default function Proposer({ type, appId, reference }: Props) {
       showModal(TxPrompt, {
         success: {
           message: `Proposal has been created${
-            wallet.meta.willExecute ? " and auto-executed" : "."
+            txMeta.willExecute ? " and auto-executed" : "."
           }`,
         },
         tx: okTx,
@@ -119,7 +120,7 @@ export default function Proposer({ type, appId, reference }: Props) {
           return (id as BigNumber).toString();
         },
       },
-      ...wallet.meta,
+      ...txMeta,
       onSuccess,
     });
   }

@@ -10,7 +10,7 @@ import { isEmpty } from "helpers";
 import { getPayloadDiff, getTagPayloads } from "helpers/admin";
 
 export default function usePropose() {
-  const { multisig, getWallet } = useAdminResources();
+  const { multisig, checkSubmit } = useAdminResources();
   const {
     handleSubmit,
     formState: { isSubmitting, isDirty, isValid },
@@ -40,8 +40,8 @@ export default function usePropose() {
       });
     }
 
-    const wallet = getWallet();
-    if (typeof wallet === "function") return wallet();
+    const result = checkSubmit();
+    if (typeof result === "function") return result();
 
     const [data, dest, meta] = encodeTx(
       "multisig.change-threshold",
@@ -52,6 +52,7 @@ export default function usePropose() {
       { new: +threshold, curr: +initial.threshold }
     );
 
+    const { wallet, txMeta } = result;
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig,
       title,
@@ -64,8 +65,8 @@ export default function usePropose() {
 
     await sendTx({
       content: { type: "evm", val: tx },
-      ...wallet.meta,
-      tagPayloads: getTagPayloads(wallet.meta.willExecute && meta.id),
+      ...txMeta,
+      tagPayloads: getTagPayloads(txMeta.willExecute && meta.id),
     });
   }
 

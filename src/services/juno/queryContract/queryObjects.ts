@@ -3,6 +3,7 @@ import {
   DGenericBalance,
   toBalMap,
   toEndowType,
+  toFee,
   toPermission,
   toSplit,
 } from "./decoded-types";
@@ -253,6 +254,12 @@ export const queryObjects: {
         maturityAllowlist: d.maturityAllowlist.map((w) => w.toLowerCase()),
         kycDonorsOnly: d.kycDonorsOnly,
         donationMatchActive: d.donationMatchActive,
+
+        earlyLockedWithdrawFee: toFee(d.earlyLockedWithdrawFee),
+        depositFee: toFee(d.depositFee),
+        withdrawFee: toFee(d.withdrawFee),
+        balanceFee: toFee(d.balanceFee),
+
         settingsController: {
           acceptedTokens: toPermission(controller.acceptedTokens),
           lockedInvestmentManagement: toPermission(

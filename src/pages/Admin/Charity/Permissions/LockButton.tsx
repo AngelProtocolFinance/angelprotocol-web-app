@@ -1,18 +1,30 @@
 import { useFormContext } from "react-hook-form";
-import { FormValues, UpdateableFormValues } from "./schema";
+import { FV, TPermissions } from "./types";
 
 type Props = {
-  disabled: boolean;
-  name: keyof UpdateableFormValues;
+  name: keyof TPermissions;
 };
 
-export default function LockButton(props: Props) {
-  const { watch, setValue, getValues } = useFormContext<FormValues>();
-  const locked = watch(`${props.name}.locked`);
-  const modifiable = getValues(`${props.name}.modifiable`);
+export default function LockButton({ name }: Props) {
+  const {
+    watch,
+    setValue,
+    trigger,
+    getValues,
+    formState: { isSubmitting },
+  } = useFormContext<FV>();
+  const locked = watch(`${name}.locked`);
+  const modifiable = getValues(`${name}.modifiable`);
 
   if (!modifiable) {
-    return <p className="text-gray-d1 dark:text-gray">Locked</p>;
+    return (
+      <button
+        disabled={true}
+        className="text-gray-d1 dark:text-gray uppercase text-xs bg-gray-l2 dark:bg-blue-gray-d2 rounded-sm px-2 py-1"
+      >
+        Locked
+      </button>
+    );
   }
 
   return (
@@ -21,8 +33,15 @@ export default function LockButton(props: Props) {
       className={`${
         locked ? "btn-orange" : "btn-red"
       } py-2 lg:py-1 px-2 font-semibold text-xs uppercase tracking-wider`}
-      disabled={props.disabled}
-      onClick={() => setValue(`${props.name}.locked`, !locked)}
+      disabled={isSubmitting}
+      onClick={async () => {
+        const prevLocked = getValues(`${name}.locked`);
+        const isValid = prevLocked
+          ? true
+          : await trigger(`${name}.addr`, { shouldFocus: true });
+        if (!isValid) return;
+        setValue(`${name}.locked`, !locked);
+      }}
     >
       {locked ? "Unlock" : "Lock"}
     </button>

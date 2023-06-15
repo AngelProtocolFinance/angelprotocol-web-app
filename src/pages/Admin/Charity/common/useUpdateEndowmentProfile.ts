@@ -13,7 +13,7 @@ import { useAdminResources } from "../../Guard";
 // import optimizeImage from "./optimizeImage";
 
 export default function useUpdateEndowmentProfile() {
-  const { getWallet } = useAdminResources<"charity">();
+  const { checkSubmit } = useAdminResources<"charity">();
 
   const { showModal } = useModalContext();
   const [submit] = useEditProfileMutation();
@@ -22,8 +22,8 @@ export default function useUpdateEndowmentProfile() {
     endowProfileUpdate: SemiPartial<EndowmentProfileUpdate, "id" | "owner">
   ) => {
     try {
-      const wallet = getWallet(["name", "image", "logo", "categories"]);
-      if (typeof wallet === "function") return wallet();
+      const checkResult = checkSubmit(["name", "image", "logo", "categories"]);
+      if (typeof checkResult === "function") return checkResult();
 
       const cleanUpdates = cleanObject(endowProfileUpdate);
 
@@ -33,6 +33,7 @@ export default function useUpdateEndowmentProfile() {
         { isDismissible: false }
       );
 
+      const { wallet } = checkResult;
       const provider = getProvider(wallet.providerId)!;
 
       const rawSignature = await provider.request<string>({

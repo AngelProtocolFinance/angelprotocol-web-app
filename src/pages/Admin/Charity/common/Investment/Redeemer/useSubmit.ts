@@ -5,12 +5,12 @@ import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
 
 export default function useSubmit(vault: string, type: AccountType) {
-  const { multisig, id, getWallet } = useAdminResources();
+  const { multisig, id, checkSubmit } = useAdminResources();
   const { sendTx, isSending } = useTxSender(true);
 
   async function submit() {
-    const wallet = getWallet();
-    if (typeof wallet === "function") return wallet();
+    const result = checkSubmit();
+    if (typeof result === "function") return result();
 
     const [data, dest, meta] = encodeTx("accounts.redeem", {
       id,
@@ -18,6 +18,7 @@ export default function useSubmit(vault: string, type: AccountType) {
       vaults: [vault],
     });
 
+    const { wallet, txMeta } = result;
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig,
       title: "Redeem",
@@ -30,8 +31,8 @@ export default function useSubmit(vault: string, type: AccountType) {
 
     await sendTx({
       content: { type: "evm", val: tx },
-      ...wallet.meta,
-      tagPayloads: getTagPayloads(wallet.meta.willExecute && meta.id),
+      ...txMeta,
+      tagPayloads: getTagPayloads(txMeta.willExecute && meta.id),
     });
   }
 

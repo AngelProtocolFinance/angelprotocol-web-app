@@ -30,7 +30,7 @@ const processLog: LogProcessor = (logs) => {
 export default function PollAction(props: ProposalDetails) {
   const { wallet } = useGetWallet();
   const sendTx = useTxSender();
-  const { multisig, config, getWallet } = useAdminResources();
+  const { multisig, config, checkSubmit } = useAdminResources();
   const { showModal } = useModalContext();
 
   const numSigned = props.signed.length;
@@ -52,9 +52,10 @@ export default function PollAction(props: ProposalDetails) {
   };
 
   async function executeProposal() {
-    const wallet = getWallet();
-    if (typeof wallet === "function") return wallet();
+    const result = checkSubmit();
+    if (typeof result === "function") return result();
 
+    const { wallet } = result;
     await sendTx({
       content: {
         type: "evm",
@@ -70,9 +71,10 @@ export default function PollAction(props: ProposalDetails) {
   }
 
   async function sign() {
-    const wallet = getWallet();
-    if (typeof wallet === "function") return wallet();
+    const result = checkSubmit();
+    if (typeof result === "function") return result();
 
+    const { wallet } = result;
     await sendTx({
       content: {
         type: "evm",

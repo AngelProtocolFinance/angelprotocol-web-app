@@ -54,5 +54,10 @@ function createColumn(value: PrimitiveValue): JSX.Element {
     );
   }
 
+  //convert bool to string to be rendered
+  if (typeof value === "boolean") {
+    return <>{value ? "true" : "false"}</>;
+  }
+
   return <>{value}</>;
 }

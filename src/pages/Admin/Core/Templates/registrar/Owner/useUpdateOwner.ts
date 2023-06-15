@@ -7,7 +7,7 @@ import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 
 export default function useUpdateOwner() {
-  const { multisig, getWallet } = useAdminResources();
+  const { multisig, checkSubmit } = useAdminResources();
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },
@@ -27,8 +27,8 @@ export default function useUpdateOwner() {
       });
     }
 
-    const wallet = getWallet();
-    if (typeof wallet === "function") return wallet();
+    const result = checkSubmit();
+    if (typeof result === "function") return result();
 
     const [data, dest, meta] = encodeTx(
       "registrar.update-owner",
@@ -38,6 +38,7 @@ export default function useUpdateOwner() {
       { curr: fv.initialOwner, new: fv.newOwner }
     );
 
+    const { wallet, txMeta } = result;
     await sendTx({
       content: {
         type: "evm",
@@ -51,7 +52,7 @@ export default function useUpdateOwner() {
           meta: meta.encoded,
         }),
       },
-      ...wallet.meta,
+      ...txMeta,
     });
   }
 

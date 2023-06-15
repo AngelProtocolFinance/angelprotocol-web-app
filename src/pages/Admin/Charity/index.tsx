@@ -10,11 +10,11 @@ import { LINKS } from "../constants";
 import Account from "./Account";
 import AdminWallet from "./AdminWallet";
 import Contributions from "./Contributions";
-import ContributorVerification from "./ContributorVerification";
 import Dashboard from "./Dashboard";
 import Deposits from "./Deposits";
 import EditProfile from "./EditProfile";
 import Invest from "./Invest";
+import OtherSettings from "./OtherSettings";
 import Permissions from "./Permissions";
 // import Settings from "./Settings";
 import Templates from "./Templates";
@@ -36,28 +36,31 @@ const COMMON: LinkGroup[] = [
     ],
   },
   { title: "Profile", links: [LINKS.edit_profile] },
-  {
-    title: "Manage",
-    links: [LINKS[adminRoutes.proposals], LINKS[adminRoutes.whitelists]],
-  },
 ];
 
 const LINK_GROUPS: { [key in EndowmentType]: LinkGroup[] } = {
   charity: [
     ...COMMON,
     {
-      title: "Settings",
-      links: [LINKS.admin_wallet, LINKS.permissions],
+      title: "Manage",
+      links: [
+        LINKS[adminRoutes.whitelists],
+        LINKS.permissions,
+        LINKS.admin_wallet,
+        LINKS[adminRoutes.proposals],
+      ],
     },
   ],
   normal: [
     ...COMMON,
     {
-      title: "Settings",
+      title: "Manage",
       links: [
-        LINKS.admin_wallet,
-        LINKS.contributor_verification,
+        LINKS[adminRoutes.whitelists],
         LINKS.permissions,
+        LINKS.admin_wallet,
+        LINKS.other_settings,
+        LINKS[adminRoutes.proposals],
       ],
     },
   ],
@@ -84,10 +87,7 @@ export default function Charity() {
         {/*<Route path={adminRoutes.settings} element={<Settings />} />*/}
         <Route path={adminRoutes.edit_profile} element={<EditProfile />} />
         <Route path={adminRoutes.permissions} element={<Permissions />} />
-        <Route
-          path={adminRoutes.contributor_verification}
-          element={<ContributorVerification />}
-        />
+        <Route path={adminRoutes.other_settings} element={<OtherSettings />} />
         <Route path={adminRoutes.admin_wallet} element={<AdminWallet />} />
         <Route path={adminRoutes.widget_config}>
           <Route index element={<WidgetConfigurer />} />

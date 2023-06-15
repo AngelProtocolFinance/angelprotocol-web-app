@@ -93,6 +93,10 @@ export type EndowmentDetails = OverrideProperties<
     | "settingsController"
     | "ignoreUserSplits"
     | "splitToLiquid"
+    | "earlyLockedWithdrawFee"
+    | "withdrawFee"
+    | "depositFee"
+    | "balanceFee"
   >,
   {
     categories: Categories;
@@ -100,6 +104,10 @@ export type EndowmentDetails = OverrideProperties<
     maturityTime: number;
     settingsController: SettingsController;
     splitToLiquid: SplitDetails;
+    earlyLockedWithdrawFee: Fee;
+    withdrawFee: Fee;
+    depositFee: Fee;
+    balanceFee: Fee;
   }
 >;
 
@@ -163,6 +171,17 @@ type Duration = OverrideProperties<
 export type Fee = OverrideProperties<
   Plain<AngelCoreStruct.FeeSettingStruct>,
   { bps: number }
+>;
+
+export type FeeSettingsUpdate = OverrideProperties<
+  AccountsUpdateEndowmentSettingsControllerMessages.UpdateFeeSettingRequestStruct,
+  {
+    id: number;
+    earlyLockedWithdrawFee: Fee;
+    depositFee: Fee;
+    withdrawFee: Fee;
+    balanceFee: Fee;
+  }
 >;
 
 type VETypeData = Mapped<AngelCoreStruct.VeTypeDataStruct, number>;

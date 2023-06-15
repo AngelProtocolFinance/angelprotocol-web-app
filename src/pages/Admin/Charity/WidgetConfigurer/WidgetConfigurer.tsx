@@ -24,12 +24,12 @@ export default function WidgetConfigurer() {
         title={`Widget Configuration${
           endowId === 0 ? "" : ` for Endowment ${endowId}`
         }`}
-        url={`${adminRoutes.contributor_verification}${
+        url={`${adminRoutes.other_settings}${
           endowId === 0 ? "" : `/${endowId}`
         }`}
       />
 
-      <div className="padded-container py-10 grid grid-rows-[auto_1fr] gap-10 w-full h-full py-5">
+      <div className="padded-container grid grid-rows-[auto_1fr] gap-10 w-full h-full py-5">
         <section className="flex flex-col gap-3 items-center text-center xl:items-start xl:text-left w-full">
           <h1 className={TITLE_STYLE}>
             Accept {PAYMENT_WORDS.noun.plural} from your website today!

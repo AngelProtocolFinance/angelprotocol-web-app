@@ -4,6 +4,7 @@ import {
   CloseEndowmentRequest,
   ERC20Deposit,
   EndowmentSettingsUpdate,
+  FeeSettingsUpdate,
   FundMemberUpdate,
   IndexFundConfigUpdate,
   NewFund,
@@ -38,8 +39,9 @@ export type ID = { id: number };
 type Txs = {
   // //// ACCOUNTS ////
   "accounts.create-endowment": Tx<NewAST, never>; //not multisig tx
-  "accounts.update-controller": Tx<SettingsControllerUpdate, Diff[]>; //future
-  "accounts.update-settings": Tx<EndowmentSettingsUpdate, never>; //future
+  "accounts.update-controller": Tx<SettingsControllerUpdate, Diff[]>;
+  "accounts.update-settings": Tx<EndowmentSettingsUpdate, Diff[]>;
+  "accounts.update-fee-settings": Tx<FeeSettingsUpdate, Diff[]>;
   "accounts.deposit-erc20": Tx<ERC20Deposit, never>; //not multisig tx
   "accounts.withdraw": Tx<
     {
