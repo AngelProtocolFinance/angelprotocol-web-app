@@ -1,18 +1,17 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useEffect } from "react";
 import { Path, useFormContext } from "react-hook-form";
-import { FV } from "./types";
-import { TFees } from "slices/launchpad/types";
+import { Fees } from "types/ast";
 import { DrawerIcon } from "components/Icon";
 import { Cells } from "components/TableSection";
-import Toggle from "../common/Toggle";
-import { keys } from "./constants";
+import Toggle from "../Toggle";
+import { feeKeys } from "./constants";
 
 type Props = {
-  name: keyof Omit<TFees, "referral_id">;
+  name: keyof Fees;
   title: string;
   isOpen: boolean;
-  onToggle(name: keyof TFees): void;
+  onToggle(name: keyof Fees): void;
 };
 
 export default function Fee({ name, title, isOpen, onToggle }: Props) {
@@ -23,11 +22,11 @@ export default function Fee({ name, title, isOpen, onToggle }: Props) {
     clearErrors,
     setFocus,
     formState: { errors },
-  } = useFormContext<FV>();
+  } = useFormContext<Fees>();
 
-  const isActiveName: Path<FV> = `${name}.${keys.isActive}`;
-  const rateName: Path<FV> = `${name}.${keys.rate}`;
-  const receiverName: Path<FV> = `${name}.${keys.receiver}`;
+  const isActiveName: Path<Fees> = `${name}.${feeKeys.isActive}`;
+  const rateName: Path<Fees> = `${name}.${feeKeys.rate}`;
+  const receiverName: Path<Fees> = `${name}.${feeKeys.receiver}`;
 
   const isActive = watch(isActiveName);
 
@@ -62,7 +61,7 @@ export default function Fee({ name, title, isOpen, onToggle }: Props) {
         <div className="h-full flex items-center sm:contents">{title}</div>
       </td>
       <td className="w-full sm:w-20 relative max-sm:border-r-0">
-        <Toggle<FV> name={isActiveName} />
+        <Toggle<Fees> name={isActiveName} />
       </td>
 
       <td

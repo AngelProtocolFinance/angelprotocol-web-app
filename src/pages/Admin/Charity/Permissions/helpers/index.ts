@@ -1,2 +1,2 @@
 export * from "./controllerUpdate";
-export * from "./getFieldErrorName";
+export * from "./permission";

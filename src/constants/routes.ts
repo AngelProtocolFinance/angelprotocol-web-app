@@ -27,7 +27,7 @@ export const adminRoutes = {
   templates: "templates",
   widget_config: "widget-config",
   contributions: "contributions",
-  contributor_verification: "contributor-verification",
+  other_settings: "other-settings",
   permissions: "permissions",
   whitelists: "whitelists",
   admin_wallet: "admin-wallet",

@@ -11,10 +11,7 @@ type Props = {
   onChange: (value: VerificationRequired) => void;
 };
 
-export default function ChangeSettingsPrompt({
-  currentValue,
-  onChange,
-}: Props) {
+export default function Prompt({ currentValue, onChange }: Props) {
   const [value, setValue] = useState<VerificationRequired>(currentValue);
   const { closeModal } = useModalContext();
 

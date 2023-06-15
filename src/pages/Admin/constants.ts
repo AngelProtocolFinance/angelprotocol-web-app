@@ -59,12 +59,12 @@ const _to: keyof Link = "to";
 export const LINKS: {
   [key in keyof SidebarRoutes]: Link & { [_to]: SidebarRoutes[key] };
 } = {
-  contributor_verification: {
-    title: "Contributor Verification",
-    to: sidebarRoutes.contributor_verification,
+  other_settings: {
+    title: "Other settings",
+    to: sidebarRoutes.other_settings,
     icon: {
-      type: "SecurityScan",
-      size: 25,
+      type: "Settings",
+      size: 23,
     },
   },
   admin_wallet: {

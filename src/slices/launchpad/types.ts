@@ -1,3 +1,7 @@
+import { Fee, Fees, Splits as TSplits } from "types/ast";
+
+export type { Fee as TFee, TSplits };
+
 /** Types primed to be for form usage */
 export type TAbout = { name: string; tagline: string };
 export type TManagement = {
@@ -25,26 +29,7 @@ export type TMaturity = {
   beneficiaries: Beneficiary[];
 };
 
-export type UserSplit = { default: string; min: string; max: string };
-export type TSplits /** locked */ = {
-  isCustom: boolean; //modifiable by contributors
-  default: string;
-  min: string;
-  max: string;
-};
-
-export type TFees = {
-  withdrawal: TFee;
-  deposit: TFee;
-  earnings: TFee;
-  referral_id?: number;
-};
-
-export type TFee = {
-  isActive: boolean;
-  receiver: string;
-  rate: string /* "1" - "100" */;
-};
+export type TFees = Fees & { referral_id?: number };
 
 export type Completed = {
   1: TAbout;

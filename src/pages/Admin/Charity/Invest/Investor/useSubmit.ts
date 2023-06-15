@@ -7,12 +7,12 @@ import { scaleToStr } from "helpers";
 import { getTagPayloads } from "helpers/admin";
 
 export default function useSubmit(vault: string, type: AccountType) {
-  const { multisig, id, getWallet } = useAdminResources();
+  const { multisig, id, checkSubmit } = useAdminResources();
   const { sendTx, isSending } = useTxSender(true);
 
   async function submit({ token }: FormValues) {
-    const wallet = getWallet();
-    if (typeof wallet === "function") return wallet();
+    const result = checkSubmit();
+    if (typeof result === "function") return result();
 
     const [data, dest, meta] = encodeTx("accounts.invest", {
       id,
@@ -22,6 +22,7 @@ export default function useSubmit(vault: string, type: AccountType) {
       amounts: [scaleToStr(token.amount)],
     });
 
+    const { wallet, txMeta } = result;
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig,
       title: "Invest",
@@ -34,8 +35,8 @@ export default function useSubmit(vault: string, type: AccountType) {
 
     await sendTx({
       content: { type: "evm", val: tx },
-      ...wallet.meta,
-      tagPayloads: getTagPayloads(wallet.meta.willExecute && meta.id),
+      ...txMeta,
+      tagPayloads: getTagPayloads(txMeta.willExecute && meta.id),
     });
   }
 

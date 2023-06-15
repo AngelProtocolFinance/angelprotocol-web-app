@@ -10,7 +10,7 @@ import useTxSender from "hooks/useTxSender";
 
 export default function useUpdateFund() {
   const { trigger, reset, getValues } = useFormContext<FormValues>();
-  const { multisig, getWallet } = useAdminResources();
+  const { multisig, checkSubmit } = useAdminResources();
   const [isLoading, setIsLoading] = useState(false);
   const fundMembers = useGetter((state) => state.admin.fundMembers);
   const { handleError } = useErrorContext();
@@ -46,8 +46,8 @@ export default function useUpdateFund() {
       if (toRemove.length <= 0 && toAdd.length <= 0) {
         throw new Error("No fund member changes");
       }
-      const wallet = getWallet();
-      if (typeof wallet === "function") return wallet();
+      const result = checkSubmit();
+      if (typeof result === "function") return result();
 
       const modified = new Set([...fundMembers.map((f) => f.id), ...toAdd]);
       toRemove.forEach((id) => modified.delete(id));
@@ -63,6 +63,7 @@ export default function useUpdateFund() {
         update
       );
 
+      const { wallet, txMeta } = result;
       const tx = createTx(wallet.address, "multisig.submit-transaction", {
         multisig,
         title: getValues("title"),
@@ -75,7 +76,7 @@ export default function useUpdateFund() {
 
       await sendTx({
         content: { type: "evm", val: tx },
-        ...wallet.meta,
+        ...txMeta,
       });
       reset();
     } catch (err) {

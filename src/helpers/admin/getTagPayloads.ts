@@ -11,6 +11,7 @@ export function getTagPayloads(type?: TxMeta["id"]): TagPayload[] {
   switch (type) {
     case "accounts.update-controller":
     case "accounts.update-settings":
+    case "accounts.update-fee-settings":
       _tags.push("accounts.endowment");
       break;
 
