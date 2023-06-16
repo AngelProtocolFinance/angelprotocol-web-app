@@ -131,11 +131,8 @@ export default function Maturity() {
   const { handleSubmit } = methods;
 
   return (
-    <div className="grid content-start gap-y-6 @lg:gap-y-8 @container">
-      <h2 className="text-[2rem]">Maturity</h2>
-      <FormProvider {...methods}>
-        <Form onSubmit={handleSubmit(onSubmit)} />
-      </FormProvider>
-    </div>
+    <FormProvider {...methods}>
+      <Form onSubmit={handleSubmit(onSubmit)} />
+    </FormProvider>
   );
 }
