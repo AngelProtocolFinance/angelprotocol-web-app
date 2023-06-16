@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
 import { FormValues } from "./types";
 import { AddressWithFlags } from "slices/admin/types";
-import { useContractQuery, useLatestBlockQuery } from "services/juno";
+import { useContractQuery } from "services/juno";
 import { useGetter, useSetter } from "store/accessors";
 import { setMembers } from "slices/admin/fundMembers";
 import { hasElapsed } from "helpers/admin";
@@ -25,8 +25,6 @@ export default function useInitFundMembers() {
     },
     !fundId
   );
-
-  const { data: height = "0" } = useLatestBlockQuery({});
 
   const fundMembers = fund?.members || [];
   const fundMembersCopy = useGetter((state) => state.admin.fundMembers);
@@ -58,8 +56,7 @@ export default function useInitFundMembers() {
     ? "Loading fund..."
     : isError || !fund
     ? "Fund not found"
-    : (fund.expiryTime !== 0 && hasElapsed(fund.expiryTime)) ||
-      (fund.expiryHeight !== 0 && +height >= +fund.expiryHeight)
+    : fund.expiryTime !== 0 && hasElapsed(fund.expiryTime)
     ? "Fund has expired"
     : fundMembersCopy;
 

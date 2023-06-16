@@ -8,7 +8,6 @@ import {
   toSplit,
 } from "./decoded-types";
 import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
-import { UNSDG_NUMS } from "types/lists";
 import {
   AccountMessages,
   AccountStorage,
@@ -64,7 +63,7 @@ export const queryObjects: {
         collectorShare: d.collectorShare.toNumber(),
         charitySharesContract: d.charitySharesContract.toLowerCase(),
         fundraisingContract: d.fundraisingContract.toLowerCase(),
-        swapsRouter: d.swapsRouter.toLowerCase(),
+        uniswapSwapRouter: d.uniswapSwapRouter.toLowerCase(),
         multisigFactory: d.multisigFactory.toLowerCase(),
         multisigEmitter: d.multisigEmitter.toLowerCase(),
         charityProposal: d.charityProposal.toLowerCase(),
@@ -105,7 +104,6 @@ export const queryObjects: {
         members: d.members.map((m) => m),
         splitToLiquid: d.splitToLiquid.toNumber(),
         expiryTime: d.expiryTime.toNumber(),
-        expiryHeight: d.expiryHeight.toNumber(),
       };
     },
   ],
@@ -239,10 +237,7 @@ export const queryObjects: {
       const controller = d.settingsController;
       return {
         owner: d.owner.toLowerCase(),
-        categories: {
-          sdgs: d.categories.sdgs.map((s) => s.toNumber()) as UNSDG_NUMS[],
-          general: d.categories.general.map((s) => s.toNumber()),
-        },
+        sdgs: d.sdgs.map((s) => s.toNumber()),
         endowType: toEndowType(d.endowType),
         maturityTime: d.maturityTime.toNumber(),
         allowlistedBeneficiaries: d.allowlistedBeneficiaries.map((w) =>
@@ -285,7 +280,7 @@ export const queryObjects: {
           name: toPermission(controller.name),
           image: toPermission(controller.image),
           logo: toPermission(controller.logo),
-          categories: toPermission(controller.categories),
+          sdgs: toPermission(controller.sdgs),
           splitToLiquid: toPermission(controller.splitToLiquid),
           ignoreUserSplits: toPermission(controller.ignoreUserSplits),
         },
