@@ -11,12 +11,13 @@ export default function WithdrawForm({
   classes = "",
   balances,
   type,
+  fees,
 }: WithdrawerProps & { classes?: string }) {
   const { wallet } = useGetWallet();
 
   const amounts: Amount[] = balances.map((c) => ({
     tokenId: c.address,
-    balance: roundDown(condense(c.amount), 4),
+    balance: roundDown(condense(c.amount)),
     value: "",
   }));
 
@@ -29,6 +30,7 @@ export default function WithdrawForm({
       //transform to form format
       amounts,
       type,
+      fees,
     },
     resolver: yupResolver(schema),
   });
