@@ -40,7 +40,7 @@ export default function Form(props: FormHTMLAttributes<HTMLFormElement>) {
             memberName="beneficiary"
             name="beneficiaries"
             title="Beneficiaries"
-            emptyMsg="Only the multisig wallet is allowed to withdraw funds"
+            emptyMsg="Multisig wallet is the only beneficiary"
             classes="bg-white dark:bg-blue-d6 p-4 @lg:p-8"
           />
         </>
