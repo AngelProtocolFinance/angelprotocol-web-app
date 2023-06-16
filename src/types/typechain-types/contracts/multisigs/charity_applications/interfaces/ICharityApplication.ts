@@ -13,8 +13,12 @@ import type {
   Signer,
   utils,
 } from "ethers";
-import type {FunctionFragment, Result, EventFragment} from "@ethersproject/abi";
-import type {Listener, Provider} from "@ethersproject/providers";
+import type {
+  FunctionFragment,
+  Result,
+  EventFragment,
+} from "@ethersproject/abi";
+import type { Listener, Provider } from "@ethersproject/providers";
 import type {
   TypedEventFilter,
   TypedEvent,
@@ -24,36 +28,6 @@ import type {
 } from "../../../../common";
 
 export declare namespace AngelCoreStruct {
-  export type CategoriesStruct = {
-    sdgs: PromiseOrValue<BigNumberish>[];
-    general: PromiseOrValue<BigNumberish>[];
-  };
-
-  export type CategoriesStructOutput = [BigNumber[], BigNumber[]] & {
-    sdgs: BigNumber[];
-    general: BigNumber[];
-  };
-
-  export type DurationDataStruct = {
-    height: PromiseOrValue<BigNumberish>;
-    time: PromiseOrValue<BigNumberish>;
-  };
-
-  export type DurationDataStructOutput = [BigNumber, BigNumber] & {
-    height: BigNumber;
-    time: BigNumber;
-  };
-
-  export type DurationStruct = {
-    enumData: PromiseOrValue<BigNumberish>;
-    data: AngelCoreStruct.DurationDataStruct;
-  };
-
-  export type DurationStructOutput = [number, AngelCoreStruct.DurationDataStructOutput] & {
-    enumData: number;
-    data: AngelCoreStruct.DurationDataStructOutput;
-  };
-
   export type FeeSettingStruct = {
     payoutAddress: PromiseOrValue<string>;
     bps: PromiseOrValue<BigNumberish>;
@@ -71,7 +45,12 @@ export declare namespace AngelCoreStruct {
     power: PromiseOrValue<BigNumberish>;
   };
 
-  export type VeTypeDataStructOutput = [BigNumber, BigNumber, BigNumber, BigNumber] & {
+  export type VeTypeDataStructOutput = [
+    BigNumber,
+    BigNumber,
+    BigNumber,
+    BigNumber
+  ] & {
     value: BigNumber;
     scale: BigNumber;
     slope: BigNumber;
@@ -83,10 +62,10 @@ export declare namespace AngelCoreStruct {
     data: AngelCoreStruct.VeTypeDataStruct;
   };
 
-  export type VeTypeStructOutput = [number, AngelCoreStruct.VeTypeDataStructOutput] & {
-    ve_type: number;
-    data: AngelCoreStruct.VeTypeDataStructOutput;
-  };
+  export type VeTypeStructOutput = [
+    number,
+    AngelCoreStruct.VeTypeDataStructOutput
+  ] & { ve_type: number; data: AngelCoreStruct.VeTypeDataStructOutput };
 
   export type DaoTokenDataStruct = {
     existingData: PromiseOrValue<string>;
@@ -133,10 +112,10 @@ export declare namespace AngelCoreStruct {
     data: AngelCoreStruct.DaoTokenDataStruct;
   };
 
-  export type DaoTokenStructOutput = [number, AngelCoreStruct.DaoTokenDataStructOutput] & {
-    token: number;
-    data: AngelCoreStruct.DaoTokenDataStructOutput;
-  };
+  export type DaoTokenStructOutput = [
+    number,
+    AngelCoreStruct.DaoTokenDataStructOutput
+  ] & { token: number; data: AngelCoreStruct.DaoTokenDataStructOutput };
 
   export type DaoSetupStruct = {
     quorum: PromiseOrValue<BigNumberish>;
@@ -184,10 +163,10 @@ export declare namespace AngelCoreStruct {
     delegate: AngelCoreStruct.DelegateStruct;
   };
 
-  export type SettingsPermissionStructOutput = [boolean, AngelCoreStruct.DelegateStructOutput] & {
-    locked: boolean;
-    delegate: AngelCoreStruct.DelegateStructOutput;
-  };
+  export type SettingsPermissionStructOutput = [
+    boolean,
+    AngelCoreStruct.DelegateStructOutput
+  ] & { locked: boolean; delegate: AngelCoreStruct.DelegateStructOutput };
 
   export type SettingsControllerStruct = {
     acceptedTokens: AngelCoreStruct.SettingsPermissionStruct;
@@ -204,7 +183,7 @@ export declare namespace AngelCoreStruct {
     name: AngelCoreStruct.SettingsPermissionStruct;
     image: AngelCoreStruct.SettingsPermissionStruct;
     logo: AngelCoreStruct.SettingsPermissionStruct;
-    categories: AngelCoreStruct.SettingsPermissionStruct;
+    sdgs: AngelCoreStruct.SettingsPermissionStruct;
     splitToLiquid: AngelCoreStruct.SettingsPermissionStruct;
     ignoreUserSplits: AngelCoreStruct.SettingsPermissionStruct;
   };
@@ -242,7 +221,7 @@ export declare namespace AngelCoreStruct {
     name: AngelCoreStruct.SettingsPermissionStructOutput;
     image: AngelCoreStruct.SettingsPermissionStructOutput;
     logo: AngelCoreStruct.SettingsPermissionStructOutput;
-    categories: AngelCoreStruct.SettingsPermissionStructOutput;
+    sdgs: AngelCoreStruct.SettingsPermissionStructOutput;
     splitToLiquid: AngelCoreStruct.SettingsPermissionStructOutput;
     ignoreUserSplits: AngelCoreStruct.SettingsPermissionStructOutput;
   };
@@ -265,9 +244,8 @@ export declare namespace AccountMessages {
     owner: PromiseOrValue<string>;
     withdrawBeforeMaturity: PromiseOrValue<boolean>;
     maturityTime: PromiseOrValue<BigNumberish>;
-    maturityHeight: PromiseOrValue<BigNumberish>;
     name: PromiseOrValue<string>;
-    categories: AngelCoreStruct.CategoriesStruct;
+    sdgs: PromiseOrValue<BigNumberish>[];
     tier: PromiseOrValue<BigNumberish>;
     endowType: PromiseOrValue<BigNumberish>;
     logo: PromiseOrValue<string>;
@@ -275,7 +253,6 @@ export declare namespace AccountMessages {
     members: PromiseOrValue<string>[];
     kycDonorsOnly: PromiseOrValue<boolean>;
     threshold: PromiseOrValue<BigNumberish>;
-    maxVotingPeriod: AngelCoreStruct.DurationStruct;
     allowlistedBeneficiaries: PromiseOrValue<string>[];
     allowlistedContributors: PromiseOrValue<string>[];
     splitMax: PromiseOrValue<BigNumberish>;
@@ -300,17 +277,15 @@ export declare namespace AccountMessages {
     string,
     boolean,
     BigNumber,
-    BigNumber,
     string,
-    AngelCoreStruct.CategoriesStructOutput,
-    BigNumber,
+    BigNumber[],
+    number,
     number,
     string,
     string,
     string[],
     boolean,
     BigNumber,
-    AngelCoreStruct.DurationStructOutput,
     string[],
     string[],
     BigNumber,
@@ -333,17 +308,15 @@ export declare namespace AccountMessages {
     owner: string;
     withdrawBeforeMaturity: boolean;
     maturityTime: BigNumber;
-    maturityHeight: BigNumber;
     name: string;
-    categories: AngelCoreStruct.CategoriesStructOutput;
-    tier: BigNumber;
+    sdgs: BigNumber[];
+    tier: number;
     endowType: number;
     logo: string;
     image: string;
     members: string[];
     kycDonorsOnly: boolean;
     threshold: BigNumber;
-    maxVotingPeriod: AngelCoreStruct.DurationStructOutput;
     allowlistedBeneficiaries: string[];
     allowlistedContributors: string[];
     splitMax: BigNumber;
@@ -404,7 +377,7 @@ export declare namespace CharityApplicationsStorage {
 export interface ICharityApplicationInterface extends utils.Interface {
   functions: {
     "approveCharity(uint256)": FunctionFragment;
-    "proposeCharity((address,bool,uint256,uint256,string,(uint256[],uint256[]),uint256,uint8,string,string,address[],bool,uint256,(uint8,(uint256,uint256)),address[],address[],uint256,uint256,uint256,(address,uint256),(address,uint256),(address,uint256),(address,uint256),(uint256,uint256,uint256,uint256,uint256,uint128,uint256,(uint8,(address,uint256,string,string,(uint8,(uint128,uint256,uint128,uint128)),string,string,uint256,address,uint256,uint256))),bool,uint256,((bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256))),uint32,address[],bool,(uint256,uint256,uint256),uint256),string)": FunctionFragment;
+    "proposeCharity((address,bool,uint256,string,uint256[],uint8,uint8,string,string,address[],bool,uint256,address[],address[],uint256,uint256,uint256,(address,uint256),(address,uint256),(address,uint256),(address,uint256),(uint256,uint256,uint256,uint256,uint256,uint128,uint256,(uint8,(address,uint256,string,string,(uint8,(uint128,uint256,uint128,uint128)),string,string,uint256,address,uint256,uint256))),bool,uint256,((bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256))),uint32,address[],bool,(uint256,uint256,uint256),uint256),string)": FunctionFragment;
     "rejectCharity(uint256)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
     "updateConfig(uint256,address,address,uint256,bool,uint256,bool,address,uint256)": FunctionFragment;
@@ -425,7 +398,10 @@ export interface ICharityApplicationInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "proposeCharity",
-    values: [AccountMessages.CreateEndowmentRequestStruct, PromiseOrValue<string>]
+    values: [
+      AccountMessages.CreateEndowmentRequestStruct,
+      PromiseOrValue<string>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "rejectCharity",
@@ -450,11 +426,26 @@ export interface ICharityApplicationInterface extends utils.Interface {
     ]
   ): string;
 
-  decodeFunctionResult(functionFragment: "approveCharity", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "proposeCharity", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "rejectCharity", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "supportsInterface", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "updateConfig", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "approveCharity",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "proposeCharity",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "rejectCharity",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "supportsInterface",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "updateConfig",
+    data: BytesLike
+  ): Result;
 
   events: {
     "CharityApproved(uint256,uint256)": EventFragment;
@@ -471,7 +462,9 @@ export interface ICharityApplicationInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: "CharityRejected"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Deposit"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "GasSent"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "InitilizedCharityApplication"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "InitilizedCharityApplication"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "SeedAssetSent"): EventFragment;
 }
 
@@ -479,7 +472,10 @@ export interface CharityApprovedEventObject {
   proposalId: BigNumber;
   endowmentId: BigNumber;
 }
-export type CharityApprovedEvent = TypedEvent<[BigNumber, BigNumber], CharityApprovedEventObject>;
+export type CharityApprovedEvent = TypedEvent<
+  [BigNumber, BigNumber],
+  CharityApprovedEventObject
+>;
 
 export type CharityApprovedEventFilter = TypedEventFilter<CharityApprovedEvent>;
 
@@ -490,7 +486,12 @@ export interface CharityProposedEventObject {
   meta: string;
 }
 export type CharityProposedEvent = TypedEvent<
-  [string, BigNumber, AccountMessages.CreateEndowmentRequestStructOutput, string],
+  [
+    string,
+    BigNumber,
+    AccountMessages.CreateEndowmentRequestStructOutput,
+    string
+  ],
   CharityProposedEventObject
 >;
 
@@ -499,7 +500,10 @@ export type CharityProposedEventFilter = TypedEventFilter<CharityProposedEvent>;
 export interface CharityRejectedEventObject {
   proposalId: BigNumber;
 }
-export type CharityRejectedEvent = TypedEvent<[BigNumber], CharityRejectedEventObject>;
+export type CharityRejectedEvent = TypedEvent<
+  [BigNumber],
+  CharityRejectedEventObject
+>;
 
 export type CharityRejectedEventFilter = TypedEventFilter<CharityRejectedEvent>;
 
@@ -516,7 +520,10 @@ export interface GasSentEventObject {
   member: string;
   amount: BigNumber;
 }
-export type GasSentEvent = TypedEvent<[BigNumber, string, BigNumber], GasSentEventObject>;
+export type GasSentEvent = TypedEvent<
+  [BigNumber, string, BigNumber],
+  GasSentEventObject
+>;
 
 export type GasSentEventFilter = TypedEventFilter<GasSentEvent>;
 
@@ -560,7 +567,9 @@ export interface ICharityApplication extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+  removeAllListeners<TEvent extends TypedEvent>(
+    eventFilter: TypedEventFilter<TEvent>
+  ): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -570,18 +579,18 @@ export interface ICharityApplication extends BaseContract {
   functions: {
     approveCharity(
       proposalId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & {from?: PromiseOrValue<string>}
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     proposeCharity(
       charityApplication: AccountMessages.CreateEndowmentRequestStruct,
       meta: PromiseOrValue<string>,
-      overrides?: Overrides & {from?: PromiseOrValue<string>}
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     rejectCharity(
       proposalId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & {from?: PromiseOrValue<string>}
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     supportsInterface(
@@ -599,24 +608,24 @@ export interface ICharityApplication extends BaseContract {
       fundseedasset: PromiseOrValue<boolean>,
       seedasset: PromiseOrValue<string>,
       seedassetamount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & {from?: PromiseOrValue<string>}
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
 
   approveCharity(
     proposalId: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & {from?: PromiseOrValue<string>}
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   proposeCharity(
     charityApplication: AccountMessages.CreateEndowmentRequestStruct,
     meta: PromiseOrValue<string>,
-    overrides?: Overrides & {from?: PromiseOrValue<string>}
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   rejectCharity(
     proposalId: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & {from?: PromiseOrValue<string>}
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   supportsInterface(
@@ -634,7 +643,7 @@ export interface ICharityApplication extends BaseContract {
     fundseedasset: PromiseOrValue<boolean>,
     seedasset: PromiseOrValue<string>,
     seedassetamount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & {from?: PromiseOrValue<string>}
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -699,13 +708,18 @@ export interface ICharityApplication extends BaseContract {
     "CharityRejected(uint256)"(
       proposalId?: PromiseOrValue<BigNumberish> | null
     ): CharityRejectedEventFilter;
-    CharityRejected(proposalId?: PromiseOrValue<BigNumberish> | null): CharityRejectedEventFilter;
+    CharityRejected(
+      proposalId?: PromiseOrValue<BigNumberish> | null
+    ): CharityRejectedEventFilter;
 
     "Deposit(address,uint256)"(
       sender?: PromiseOrValue<string> | null,
       value?: null
     ): DepositEventFilter;
-    Deposit(sender?: PromiseOrValue<string> | null, value?: null): DepositEventFilter;
+    Deposit(
+      sender?: PromiseOrValue<string> | null,
+      value?: null
+    ): DepositEventFilter;
 
     "GasSent(uint256,address,uint256)"(
       endowmentId?: PromiseOrValue<BigNumberish> | null,
@@ -721,7 +735,9 @@ export interface ICharityApplication extends BaseContract {
     "InitilizedCharityApplication(tuple)"(
       updatedConfig?: null
     ): InitilizedCharityApplicationEventFilter;
-    InitilizedCharityApplication(updatedConfig?: null): InitilizedCharityApplicationEventFilter;
+    InitilizedCharityApplication(
+      updatedConfig?: null
+    ): InitilizedCharityApplicationEventFilter;
 
     "SeedAssetSent(uint256,address,uint256)"(
       endowmentId?: PromiseOrValue<BigNumberish> | null,
@@ -738,18 +754,18 @@ export interface ICharityApplication extends BaseContract {
   estimateGas: {
     approveCharity(
       proposalId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & {from?: PromiseOrValue<string>}
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     proposeCharity(
       charityApplication: AccountMessages.CreateEndowmentRequestStruct,
       meta: PromiseOrValue<string>,
-      overrides?: Overrides & {from?: PromiseOrValue<string>}
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     rejectCharity(
       proposalId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & {from?: PromiseOrValue<string>}
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     supportsInterface(
@@ -767,25 +783,25 @@ export interface ICharityApplication extends BaseContract {
       fundseedasset: PromiseOrValue<boolean>,
       seedasset: PromiseOrValue<string>,
       seedassetamount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & {from?: PromiseOrValue<string>}
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     approveCharity(
       proposalId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & {from?: PromiseOrValue<string>}
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     proposeCharity(
       charityApplication: AccountMessages.CreateEndowmentRequestStruct,
       meta: PromiseOrValue<string>,
-      overrides?: Overrides & {from?: PromiseOrValue<string>}
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     rejectCharity(
       proposalId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & {from?: PromiseOrValue<string>}
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     supportsInterface(
@@ -803,7 +819,7 @@ export interface ICharityApplication extends BaseContract {
       fundseedasset: PromiseOrValue<boolean>,
       seedasset: PromiseOrValue<string>,
       seedassetamount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & {from?: PromiseOrValue<string>}
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };
 }

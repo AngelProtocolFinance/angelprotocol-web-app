@@ -22,7 +22,7 @@ export default function useUpdateEndowmentProfile() {
     endowProfileUpdate: SemiPartial<EndowmentProfileUpdate, "id" | "owner">
   ) => {
     try {
-      const checkResult = checkSubmit(["name", "image", "logo", "categories"]);
+      const checkResult = checkSubmit(["name", "image", "logo", "sdgs"]);
       if (typeof checkResult === "function") return checkResult();
 
       const cleanUpdates = cleanObject(endowProfileUpdate);

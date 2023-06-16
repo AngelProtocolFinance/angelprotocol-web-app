@@ -34,7 +34,7 @@ export function controllerUpdate(
       name: profile,
       image: profile,
       logo: profile,
-      categories: profile,
+      sdgs: profile,
       splitToLiquid: donationSplitParams,
       ignoreUserSplits: donationSplitParams,
     },

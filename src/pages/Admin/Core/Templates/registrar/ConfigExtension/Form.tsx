@@ -105,7 +105,7 @@ export default function Form() {
         <Field<FV>
           classes="field-admin-sec"
           label="Swaps Router"
-          name="swapsRouter"
+          name="uniswapSwapRouter"
         />
       </GroupContainer>
 

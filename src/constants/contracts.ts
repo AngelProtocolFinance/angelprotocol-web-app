@@ -20,7 +20,7 @@ const testnet:Contracts = {
   "index-fund":          "0xE036D1034640fa16280682fd8CC00Ccf3D42e8E4",
   "multisig/ap":         "0xD812901336D4f1c910a2Ac51921E0105BD980887",
   "multisig/review":     "0xaDC97799AAC1430e297edb86136579710B081e0A",
-  accounts:              "0xFCbE277d74027455A92fA67253FA16385F0579F4",
+  accounts:              "0x8657f7a1512905FCabF6053c187881Fd4264117b",
   "charity-application": "0xbF6b148a440acAb936796ad40947C0C33C78639A",
   "gift-card":           "0x47e49a7700c9D79412bb47385eD349106d4941F9",
 }

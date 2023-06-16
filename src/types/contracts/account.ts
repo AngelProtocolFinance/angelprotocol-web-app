@@ -7,11 +7,27 @@ import {
 import {
   AngelCoreStruct as AccountDepositWithdrawEndowmentsCoreStruct,
   AccountMessages as AccountDepositWithdrawEndowmentsMessages,
-} from "../typechain-types/contracts/core/accounts/facets/AccountDepositWithdrawEndowments";
+} from "../typechain-types/contracts/core/accounts/facets/AccountsDepositWithdrawEndowments";
 import { AccountMessages as AccountsUpdateEndowmentSettingsControllerMessages } from "../typechain-types/contracts/core/accounts/facets/AccountsUpdateEndowmentSettingsController";
-import { EndowmentType, UNSDG_NUMS } from "../lists";
+import { EndowmentType } from "../lists";
 import { Mapped, Plain } from "../utils";
-import { Beneficiary, SplitDetails } from "./common";
+import { SplitDetails } from "./common";
+
+type BeneficiaryData = OverrideProperties<
+  AngelCoreStruct.BeneficiaryDataStruct,
+  { endowId: number; fundId: number; addr: string }
+>;
+
+/**
+ * 0 Endowment
+ * 1 IndexFund
+ * 2 Wallet
+ * 3 None
+ */
+export type Beneficiary = OverrideProperties<
+  AngelCoreStruct.BeneficiaryStruct,
+  { data: BeneficiaryData; enumData: 0 | 1 | 2 | 3 }
+>;
 
 export type ADDRESS_ZERO = "0x0000000000000000000000000000000000000000" & {
   __type: "address_zero";
@@ -73,16 +89,10 @@ export type SettingsController = Mapped<
   SettingsPermission
 >;
 
-type Categories = OverrideProperties<
-  AngelCoreStruct.CategoriesStruct,
-  { sdgs: UNSDG_NUMS[]; general: number[] }
->;
-
 export type EndowmentDetails = OverrideProperties<
   Pick<
     Plain<AccountStorage.EndowmentStruct>,
     | "owner"
-    | "categories"
     | "endowType"
     | "maturityTime"
     | "allowlistedBeneficiaries"
@@ -99,7 +109,6 @@ export type EndowmentDetails = OverrideProperties<
     | "balanceFee"
   >,
   {
-    categories: Categories;
     endowType: EndowmentType;
     maturityTime: number;
     settingsController: SettingsController;
@@ -157,16 +166,6 @@ export type ERC20Deposit = {
   tokenAddress: string;
   amount: string;
 };
-
-type DurationData = Mapped<AngelCoreStruct.DurationDataStruct, number>;
-/**
- * 0 - height
- * 1 - time
- */
-type Duration = OverrideProperties<
-  AngelCoreStruct.DurationStruct,
-  { data: DurationData; enumData: 0 | 1 }
->;
 
 export type Fee = OverrideProperties<
   Plain<AngelCoreStruct.FeeSettingStruct>,
@@ -229,8 +228,7 @@ export type NewAST = OverrideProperties<
   Plain<AccountMessages.CreateEndowmentRequestStruct>,
   {
     maturityTime: number;
-    maturityHeight: number;
-    categories: Categories;
+    sdgs: number[];
     /**
      * 0 - none
      * 1 - Level 1
@@ -245,7 +243,6 @@ export type NewAST = OverrideProperties<
      */
     endowType: 0 | 1 | 2;
     threshold: number;
-    maxVotingPeriod: Duration;
     splitMax: number;
     splitMin: number;
     splitDefault: number;
