@@ -3,7 +3,6 @@
 /* eslint-disable */
 export type { AccountsAllowance } from "./AccountsAllowance";
 export type { AccountsCreateEndowment } from "./AccountsCreateEndowment";
-export type { AccountsDaoEndowments } from "./AccountsDaoEndowments";
 export type { AccountsDeployContract } from "./AccountsDeployContract";
 export type { AccountsDepositWithdrawEndowments } from "./AccountsDepositWithdrawEndowments";
 export type { AccountsDonationMatch } from "./AccountsDonationMatch";
