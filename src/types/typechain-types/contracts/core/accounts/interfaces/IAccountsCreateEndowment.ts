@@ -13,8 +13,8 @@ import type {
   Signer,
   utils,
 } from "ethers";
-import type {FunctionFragment, Result} from "@ethersproject/abi";
-import type {Listener, Provider} from "@ethersproject/providers";
+import type { FunctionFragment, Result } from "@ethersproject/abi";
+import type { Listener, Provider } from "@ethersproject/providers";
 import type {
   TypedEventFilter,
   TypedEvent,
@@ -24,36 +24,6 @@ import type {
 } from "../../../../common";
 
 export declare namespace AngelCoreStruct {
-  export type CategoriesStruct = {
-    sdgs: PromiseOrValue<BigNumberish>[];
-    general: PromiseOrValue<BigNumberish>[];
-  };
-
-  export type CategoriesStructOutput = [BigNumber[], BigNumber[]] & {
-    sdgs: BigNumber[];
-    general: BigNumber[];
-  };
-
-  export type DurationDataStruct = {
-    height: PromiseOrValue<BigNumberish>;
-    time: PromiseOrValue<BigNumberish>;
-  };
-
-  export type DurationDataStructOutput = [BigNumber, BigNumber] & {
-    height: BigNumber;
-    time: BigNumber;
-  };
-
-  export type DurationStruct = {
-    enumData: PromiseOrValue<BigNumberish>;
-    data: AngelCoreStruct.DurationDataStruct;
-  };
-
-  export type DurationStructOutput = [number, AngelCoreStruct.DurationDataStructOutput] & {
-    enumData: number;
-    data: AngelCoreStruct.DurationDataStructOutput;
-  };
-
   export type FeeSettingStruct = {
     payoutAddress: PromiseOrValue<string>;
     bps: PromiseOrValue<BigNumberish>;
@@ -71,7 +41,12 @@ export declare namespace AngelCoreStruct {
     power: PromiseOrValue<BigNumberish>;
   };
 
-  export type VeTypeDataStructOutput = [BigNumber, BigNumber, BigNumber, BigNumber] & {
+  export type VeTypeDataStructOutput = [
+    BigNumber,
+    BigNumber,
+    BigNumber,
+    BigNumber
+  ] & {
     value: BigNumber;
     scale: BigNumber;
     slope: BigNumber;
@@ -83,10 +58,10 @@ export declare namespace AngelCoreStruct {
     data: AngelCoreStruct.VeTypeDataStruct;
   };
 
-  export type VeTypeStructOutput = [number, AngelCoreStruct.VeTypeDataStructOutput] & {
-    ve_type: number;
-    data: AngelCoreStruct.VeTypeDataStructOutput;
-  };
+  export type VeTypeStructOutput = [
+    number,
+    AngelCoreStruct.VeTypeDataStructOutput
+  ] & { ve_type: number; data: AngelCoreStruct.VeTypeDataStructOutput };
 
   export type DaoTokenDataStruct = {
     existingData: PromiseOrValue<string>;
@@ -133,10 +108,10 @@ export declare namespace AngelCoreStruct {
     data: AngelCoreStruct.DaoTokenDataStruct;
   };
 
-  export type DaoTokenStructOutput = [number, AngelCoreStruct.DaoTokenDataStructOutput] & {
-    token: number;
-    data: AngelCoreStruct.DaoTokenDataStructOutput;
-  };
+  export type DaoTokenStructOutput = [
+    number,
+    AngelCoreStruct.DaoTokenDataStructOutput
+  ] & { token: number; data: AngelCoreStruct.DaoTokenDataStructOutput };
 
   export type DaoSetupStruct = {
     quorum: PromiseOrValue<BigNumberish>;
@@ -184,10 +159,10 @@ export declare namespace AngelCoreStruct {
     delegate: AngelCoreStruct.DelegateStruct;
   };
 
-  export type SettingsPermissionStructOutput = [boolean, AngelCoreStruct.DelegateStructOutput] & {
-    locked: boolean;
-    delegate: AngelCoreStruct.DelegateStructOutput;
-  };
+  export type SettingsPermissionStructOutput = [
+    boolean,
+    AngelCoreStruct.DelegateStructOutput
+  ] & { locked: boolean; delegate: AngelCoreStruct.DelegateStructOutput };
 
   export type SettingsControllerStruct = {
     acceptedTokens: AngelCoreStruct.SettingsPermissionStruct;
@@ -204,7 +179,7 @@ export declare namespace AngelCoreStruct {
     name: AngelCoreStruct.SettingsPermissionStruct;
     image: AngelCoreStruct.SettingsPermissionStruct;
     logo: AngelCoreStruct.SettingsPermissionStruct;
-    categories: AngelCoreStruct.SettingsPermissionStruct;
+    sdgs: AngelCoreStruct.SettingsPermissionStruct;
     splitToLiquid: AngelCoreStruct.SettingsPermissionStruct;
     ignoreUserSplits: AngelCoreStruct.SettingsPermissionStruct;
   };
@@ -242,7 +217,7 @@ export declare namespace AngelCoreStruct {
     name: AngelCoreStruct.SettingsPermissionStructOutput;
     image: AngelCoreStruct.SettingsPermissionStructOutput;
     logo: AngelCoreStruct.SettingsPermissionStructOutput;
-    categories: AngelCoreStruct.SettingsPermissionStructOutput;
+    sdgs: AngelCoreStruct.SettingsPermissionStructOutput;
     splitToLiquid: AngelCoreStruct.SettingsPermissionStructOutput;
     ignoreUserSplits: AngelCoreStruct.SettingsPermissionStructOutput;
   };
@@ -265,9 +240,8 @@ export declare namespace AccountMessages {
     owner: PromiseOrValue<string>;
     withdrawBeforeMaturity: PromiseOrValue<boolean>;
     maturityTime: PromiseOrValue<BigNumberish>;
-    maturityHeight: PromiseOrValue<BigNumberish>;
     name: PromiseOrValue<string>;
-    categories: AngelCoreStruct.CategoriesStruct;
+    sdgs: PromiseOrValue<BigNumberish>[];
     tier: PromiseOrValue<BigNumberish>;
     endowType: PromiseOrValue<BigNumberish>;
     logo: PromiseOrValue<string>;
@@ -275,7 +249,6 @@ export declare namespace AccountMessages {
     members: PromiseOrValue<string>[];
     kycDonorsOnly: PromiseOrValue<boolean>;
     threshold: PromiseOrValue<BigNumberish>;
-    maxVotingPeriod: AngelCoreStruct.DurationStruct;
     allowlistedBeneficiaries: PromiseOrValue<string>[];
     allowlistedContributors: PromiseOrValue<string>[];
     splitMax: PromiseOrValue<BigNumberish>;
@@ -300,17 +273,15 @@ export declare namespace AccountMessages {
     string,
     boolean,
     BigNumber,
-    BigNumber,
     string,
-    AngelCoreStruct.CategoriesStructOutput,
-    BigNumber,
+    BigNumber[],
+    number,
     number,
     string,
     string,
     string[],
     boolean,
     BigNumber,
-    AngelCoreStruct.DurationStructOutput,
     string[],
     string[],
     BigNumber,
@@ -333,17 +304,15 @@ export declare namespace AccountMessages {
     owner: string;
     withdrawBeforeMaturity: boolean;
     maturityTime: BigNumber;
-    maturityHeight: BigNumber;
     name: string;
-    categories: AngelCoreStruct.CategoriesStructOutput;
-    tier: BigNumber;
+    sdgs: BigNumber[];
+    tier: number;
     endowType: number;
     logo: string;
     image: string;
     members: string[];
     kycDonorsOnly: boolean;
     threshold: BigNumber;
-    maxVotingPeriod: AngelCoreStruct.DurationStructOutput;
     allowlistedBeneficiaries: string[];
     allowlistedContributors: string[];
     splitMax: BigNumber;
@@ -367,7 +336,7 @@ export declare namespace AccountMessages {
 
 export interface IAccountsCreateEndowmentInterface extends utils.Interface {
   functions: {
-    "createEndowment((address,bool,uint256,uint256,string,(uint256[],uint256[]),uint256,uint8,string,string,address[],bool,uint256,(uint8,(uint256,uint256)),address[],address[],uint256,uint256,uint256,(address,uint256),(address,uint256),(address,uint256),(address,uint256),(uint256,uint256,uint256,uint256,uint256,uint128,uint256,(uint8,(address,uint256,string,string,(uint8,(uint128,uint256,uint128,uint128)),string,string,uint256,address,uint256,uint256))),bool,uint256,((bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256))),uint32,address[],bool,(uint256,uint256,uint256),uint256))": FunctionFragment;
+    "createEndowment((address,bool,uint256,string,uint256[],uint8,uint8,string,string,address[],bool,uint256,address[],address[],uint256,uint256,uint256,(address,uint256),(address,uint256),(address,uint256),(address,uint256),(uint256,uint256,uint256,uint256,uint256,uint128,uint256,(uint8,(address,uint256,string,string,(uint8,(uint128,uint256,uint128,uint128)),string,string,uint256,address,uint256,uint256))),bool,uint256,((bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256))),uint32,address[],bool,(uint256,uint256,uint256),uint256))": FunctionFragment;
   };
 
   getFunction(nameOrSignatureOrTopic: "createEndowment"): FunctionFragment;
@@ -377,7 +346,10 @@ export interface IAccountsCreateEndowmentInterface extends utils.Interface {
     values: [AccountMessages.CreateEndowmentRequestStruct]
   ): string;
 
-  decodeFunctionResult(functionFragment: "createEndowment", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "createEndowment",
+    data: BytesLike
+  ): Result;
 
   events: {};
 }
@@ -399,7 +371,9 @@ export interface IAccountsCreateEndowment extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+  removeAllListeners<TEvent extends TypedEvent>(
+    eventFilter: TypedEventFilter<TEvent>
+  ): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -409,13 +383,13 @@ export interface IAccountsCreateEndowment extends BaseContract {
   functions: {
     createEndowment(
       details: AccountMessages.CreateEndowmentRequestStruct,
-      overrides?: Overrides & {from?: PromiseOrValue<string>}
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
 
   createEndowment(
     details: AccountMessages.CreateEndowmentRequestStruct,
-    overrides?: Overrides & {from?: PromiseOrValue<string>}
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -430,14 +404,14 @@ export interface IAccountsCreateEndowment extends BaseContract {
   estimateGas: {
     createEndowment(
       details: AccountMessages.CreateEndowmentRequestStruct,
-      overrides?: Overrides & {from?: PromiseOrValue<string>}
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     createEndowment(
       details: AccountMessages.CreateEndowmentRequestStruct,
-      overrides?: Overrides & {from?: PromiseOrValue<string>}
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };
 }

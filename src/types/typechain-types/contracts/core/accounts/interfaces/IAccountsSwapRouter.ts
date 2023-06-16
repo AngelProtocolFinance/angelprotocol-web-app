@@ -13,8 +13,8 @@ import type {
   Signer,
   utils,
 } from "ethers";
-import type {FunctionFragment, Result} from "@ethersproject/abi";
-import type {Listener, Provider} from "@ethersproject/providers";
+import type { FunctionFragment, Result } from "@ethersproject/abi";
+import type { Listener, Provider } from "@ethersproject/providers";
 import type {
   TypedEventFilter,
   TypedEvent,
@@ -23,16 +23,18 @@ import type {
   PromiseOrValue,
 } from "../../../../common";
 
-export interface ISwappingV3Interface extends utils.Interface {
+export interface IAccountsSwapRouterInterface extends utils.Interface {
   functions: {
-    "executeSwaps(address,uint256,address,uint256)": FunctionFragment;
+    "swapToken(uint32,uint8,address,uint256,address,uint256)": FunctionFragment;
   };
 
-  getFunction(nameOrSignatureOrTopic: "executeSwaps"): FunctionFragment;
+  getFunction(nameOrSignatureOrTopic: "swapToken"): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "executeSwaps",
+    functionFragment: "swapToken",
     values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
@@ -40,17 +42,17 @@ export interface ISwappingV3Interface extends utils.Interface {
     ]
   ): string;
 
-  decodeFunctionResult(functionFragment: "executeSwaps", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "swapToken", data: BytesLike): Result;
 
   events: {};
 }
 
-export interface ISwappingV3 extends BaseContract {
+export interface IAccountsSwapRouter extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: ISwappingV3Interface;
+  interface: IAccountsSwapRouterInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -62,7 +64,9 @@ export interface ISwappingV3 extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+  removeAllListeners<TEvent extends TypedEvent>(
+    eventFilter: TypedEventFilter<TEvent>
+  ): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -70,52 +74,62 @@ export interface ISwappingV3 extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    executeSwaps(
+    swapToken(
+      id: PromiseOrValue<BigNumberish>,
+      accountType: PromiseOrValue<BigNumberish>,
       tokenIn: PromiseOrValue<string>,
       amountIn: PromiseOrValue<BigNumberish>,
       tokenOut: PromiseOrValue<string>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & {from?: PromiseOrValue<string>}
+      slippage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
 
-  executeSwaps(
+  swapToken(
+    id: PromiseOrValue<BigNumberish>,
+    accountType: PromiseOrValue<BigNumberish>,
     tokenIn: PromiseOrValue<string>,
     amountIn: PromiseOrValue<BigNumberish>,
     tokenOut: PromiseOrValue<string>,
-    minAmountOut: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & {from?: PromiseOrValue<string>}
+    slippage: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    executeSwaps(
+    swapToken(
+      id: PromiseOrValue<BigNumberish>,
+      accountType: PromiseOrValue<BigNumberish>,
       tokenIn: PromiseOrValue<string>,
       amountIn: PromiseOrValue<BigNumberish>,
       tokenOut: PromiseOrValue<string>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
+      slippage: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    ): Promise<void>;
   };
 
   filters: {};
 
   estimateGas: {
-    executeSwaps(
+    swapToken(
+      id: PromiseOrValue<BigNumberish>,
+      accountType: PromiseOrValue<BigNumberish>,
       tokenIn: PromiseOrValue<string>,
       amountIn: PromiseOrValue<BigNumberish>,
       tokenOut: PromiseOrValue<string>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & {from?: PromiseOrValue<string>}
+      slippage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    executeSwaps(
+    swapToken(
+      id: PromiseOrValue<BigNumberish>,
+      accountType: PromiseOrValue<BigNumberish>,
       tokenIn: PromiseOrValue<string>,
       amountIn: PromiseOrValue<BigNumberish>,
       tokenOut: PromiseOrValue<string>,
-      minAmountOut: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & {from?: PromiseOrValue<string>}
+      slippage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };
 }

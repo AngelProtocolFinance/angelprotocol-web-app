@@ -13,8 +13,12 @@ import type {
   Signer,
   utils,
 } from "ethers";
-import type {FunctionFragment, Result, EventFragment} from "@ethersproject/abi";
-import type {Listener, Provider} from "@ethersproject/providers";
+import type {
+  FunctionFragment,
+  Result,
+  EventFragment,
+} from "@ethersproject/abi";
+import type { Listener, Provider } from "@ethersproject/providers";
 import type {
   TypedEventFilter,
   TypedEvent,
@@ -31,7 +35,12 @@ export declare namespace AngelCoreStruct {
     power: PromiseOrValue<BigNumberish>;
   };
 
-  export type VeTypeDataStructOutput = [BigNumber, BigNumber, BigNumber, BigNumber] & {
+  export type VeTypeDataStructOutput = [
+    BigNumber,
+    BigNumber,
+    BigNumber,
+    BigNumber
+  ] & {
     value: BigNumber;
     scale: BigNumber;
     slope: BigNumber;
@@ -43,10 +52,10 @@ export declare namespace AngelCoreStruct {
     data: AngelCoreStruct.VeTypeDataStruct;
   };
 
-  export type VeTypeStructOutput = [number, AngelCoreStruct.VeTypeDataStructOutput] & {
-    ve_type: number;
-    data: AngelCoreStruct.VeTypeDataStructOutput;
-  };
+  export type VeTypeStructOutput = [
+    number,
+    AngelCoreStruct.VeTypeDataStructOutput
+  ] & { ve_type: number; data: AngelCoreStruct.VeTypeDataStructOutput };
 
   export type DaoTokenDataStruct = {
     existingData: PromiseOrValue<string>;
@@ -93,48 +102,10 @@ export declare namespace AngelCoreStruct {
     data: AngelCoreStruct.DaoTokenDataStruct;
   };
 
-  export type DaoTokenStructOutput = [number, AngelCoreStruct.DaoTokenDataStructOutput] & {
-    token: number;
-    data: AngelCoreStruct.DaoTokenDataStructOutput;
-  };
-
-  export type CategoriesStruct = {
-    sdgs: PromiseOrValue<BigNumberish>[];
-    general: PromiseOrValue<BigNumberish>[];
-  };
-
-  export type CategoriesStructOutput = [BigNumber[], BigNumber[]] & {
-    sdgs: BigNumber[];
-    general: BigNumber[];
-  };
-
-  export type AccountStrategiesStruct = {
-    locked_vault: PromiseOrValue<string>[];
-    lockedPercentage: PromiseOrValue<BigNumberish>[];
-    liquid_vault: PromiseOrValue<string>[];
-    liquidPercentage: PromiseOrValue<BigNumberish>[];
-  };
-
-  export type AccountStrategiesStructOutput = [string[], BigNumber[], string[], BigNumber[]] & {
-    locked_vault: string[];
-    lockedPercentage: BigNumber[];
-    liquid_vault: string[];
-    liquidPercentage: BigNumber[];
-  };
-
-  export type OneOffVaultsStruct = {
-    locked: PromiseOrValue<string>[];
-    lockedAmount: PromiseOrValue<BigNumberish>[];
-    liquid: PromiseOrValue<string>[];
-    liquidAmount: PromiseOrValue<BigNumberish>[];
-  };
-
-  export type OneOffVaultsStructOutput = [string[], BigNumber[], string[], BigNumber[]] & {
-    locked: string[];
-    lockedAmount: BigNumber[];
-    liquid: string[];
-    liquidAmount: BigNumber[];
-  };
+  export type DaoTokenStructOutput = [
+    number,
+    AngelCoreStruct.DaoTokenDataStructOutput
+  ] & { token: number; data: AngelCoreStruct.DaoTokenDataStructOutput };
 
   export type FeeSettingStruct = {
     payoutAddress: PromiseOrValue<string>;
@@ -161,10 +132,10 @@ export declare namespace AngelCoreStruct {
     delegate: AngelCoreStruct.DelegateStruct;
   };
 
-  export type SettingsPermissionStructOutput = [boolean, AngelCoreStruct.DelegateStructOutput] & {
-    locked: boolean;
-    delegate: AngelCoreStruct.DelegateStructOutput;
-  };
+  export type SettingsPermissionStructOutput = [
+    boolean,
+    AngelCoreStruct.DelegateStructOutput
+  ] & { locked: boolean; delegate: AngelCoreStruct.DelegateStructOutput };
 
   export type SettingsControllerStruct = {
     acceptedTokens: AngelCoreStruct.SettingsPermissionStruct;
@@ -181,7 +152,7 @@ export declare namespace AngelCoreStruct {
     name: AngelCoreStruct.SettingsPermissionStruct;
     image: AngelCoreStruct.SettingsPermissionStruct;
     logo: AngelCoreStruct.SettingsPermissionStruct;
-    categories: AngelCoreStruct.SettingsPermissionStruct;
+    sdgs: AngelCoreStruct.SettingsPermissionStruct;
     splitToLiquid: AngelCoreStruct.SettingsPermissionStruct;
     ignoreUserSplits: AngelCoreStruct.SettingsPermissionStruct;
   };
@@ -219,7 +190,7 @@ export declare namespace AngelCoreStruct {
     name: AngelCoreStruct.SettingsPermissionStructOutput;
     image: AngelCoreStruct.SettingsPermissionStructOutput;
     logo: AngelCoreStruct.SettingsPermissionStructOutput;
-    categories: AngelCoreStruct.SettingsPermissionStructOutput;
+    sdgs: AngelCoreStruct.SettingsPermissionStructOutput;
     splitToLiquid: AngelCoreStruct.SettingsPermissionStructOutput;
     ignoreUserSplits: AngelCoreStruct.SettingsPermissionStructOutput;
   };
@@ -295,7 +266,14 @@ export declare namespace LocalRegistrarLib {
     basis: PromiseOrValue<BigNumberish>;
   };
 
-  export type RebalanceParamsStructOutput = [boolean, number, number, boolean, number, number] & {
+  export type RebalanceParamsStructOutput = [
+    boolean,
+    number,
+    number,
+    boolean,
+    number,
+    number
+  ] & {
     rebalanceLiquidProfits: boolean;
     lockedRebalanceToLiquid: number;
     interestDistribution: number;
@@ -309,14 +287,12 @@ export declare namespace AccountStorage {
   export type EndowmentStruct = {
     owner: PromiseOrValue<string>;
     name: PromiseOrValue<string>;
-    categories: AngelCoreStruct.CategoriesStruct;
+    sdgs: PromiseOrValue<BigNumberish>[];
     tier: PromiseOrValue<BigNumberish>;
     endowType: PromiseOrValue<BigNumberish>;
     logo: PromiseOrValue<string>;
     image: PromiseOrValue<string>;
     maturityTime: PromiseOrValue<BigNumberish>;
-    strategies: AngelCoreStruct.AccountStrategiesStruct;
-    oneoffVaults: AngelCoreStruct.OneOffVaultsStruct;
     rebalance: LocalRegistrarLib.RebalanceParamsStruct;
     kycDonorsOnly: PromiseOrValue<boolean>;
     pendingRedemptions: PromiseOrValue<BigNumberish>;
@@ -343,14 +319,12 @@ export declare namespace AccountStorage {
   export type EndowmentStructOutput = [
     string,
     string,
-    AngelCoreStruct.CategoriesStructOutput,
-    BigNumber,
+    BigNumber[],
+    number,
     number,
     string,
     string,
     BigNumber,
-    AngelCoreStruct.AccountStrategiesStructOutput,
-    AngelCoreStruct.OneOffVaultsStructOutput,
     LocalRegistrarLib.RebalanceParamsStructOutput,
     boolean,
     BigNumber,
@@ -375,14 +349,12 @@ export declare namespace AccountStorage {
   ] & {
     owner: string;
     name: string;
-    categories: AngelCoreStruct.CategoriesStructOutput;
-    tier: BigNumber;
+    sdgs: BigNumber[];
+    tier: number;
     endowType: number;
     logo: string;
     image: string;
     maturityTime: BigNumber;
-    strategies: AngelCoreStruct.AccountStrategiesStructOutput;
-    oneoffVaults: AngelCoreStruct.OneOffVaultsStructOutput;
     rebalance: LocalRegistrarLib.RebalanceParamsStructOutput;
     kycDonorsOnly: boolean;
     pendingRedemptions: BigNumber;
@@ -450,16 +422,31 @@ export interface AccountsUpdateInterface extends utils.Interface {
     "updateOwner(address)": FunctionFragment;
   };
 
-  getFunction(nameOrSignatureOrTopic: "updateConfig" | "updateOwner"): FunctionFragment;
+  getFunction(
+    nameOrSignatureOrTopic: "updateConfig" | "updateOwner"
+  ): FunctionFragment;
 
   encodeFunctionData(
     functionFragment: "updateConfig",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, AngelCoreStruct.FeeSettingStruct]
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      AngelCoreStruct.FeeSettingStruct
+    ]
   ): string;
-  encodeFunctionData(functionFragment: "updateOwner", values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: "updateOwner",
+    values: [PromiseOrValue<string>]
+  ): string;
 
-  decodeFunctionResult(functionFragment: "updateConfig", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "updateOwner", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "updateConfig",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "updateOwner",
+    data: BytesLike
+  ): Result;
 
   events: {
     "AllowanceStateUpdatedTo(address,address,address,uint256)": EventFragment;
@@ -499,7 +486,8 @@ export type AllowanceStateUpdatedToEvent = TypedEvent<
   AllowanceStateUpdatedToEventObject
 >;
 
-export type AllowanceStateUpdatedToEventFilter = TypedEventFilter<AllowanceStateUpdatedToEvent>;
+export type AllowanceStateUpdatedToEventFilter =
+  TypedEventFilter<AllowanceStateUpdatedToEvent>;
 
 export interface DaoContractCreatedEventObject {
   createdaomessage: SubDaoMessage.InstantiateMsgStructOutput;
@@ -510,7 +498,8 @@ export type DaoContractCreatedEvent = TypedEvent<
   DaoContractCreatedEventObject
 >;
 
-export type DaoContractCreatedEventFilter = TypedEventFilter<DaoContractCreatedEvent>;
+export type DaoContractCreatedEventFilter =
+  TypedEventFilter<DaoContractCreatedEvent>;
 
 export interface DonationDepositedEventObject {
   id: BigNumber;
@@ -521,7 +510,8 @@ export type DonationDepositedEvent = TypedEvent<
   DonationDepositedEventObject
 >;
 
-export type DonationDepositedEventFilter = TypedEventFilter<DonationDepositedEvent>;
+export type DonationDepositedEventFilter =
+  TypedEventFilter<DonationDepositedEvent>;
 
 export interface DonationMatchSetupEventObject {
   id: BigNumber;
@@ -532,7 +522,8 @@ export type DonationMatchSetupEvent = TypedEvent<
   DonationMatchSetupEventObject
 >;
 
-export type DonationMatchSetupEventFilter = TypedEventFilter<DonationMatchSetupEvent>;
+export type DonationMatchSetupEventFilter =
+  TypedEventFilter<DonationMatchSetupEvent>;
 
 export interface DonationWithdrawnEventObject {
   id: BigNumber;
@@ -544,7 +535,8 @@ export type DonationWithdrawnEvent = TypedEvent<
   DonationWithdrawnEventObject
 >;
 
-export type DonationWithdrawnEventFilter = TypedEventFilter<DonationWithdrawnEvent>;
+export type DonationWithdrawnEventFilter =
+  TypedEventFilter<DonationWithdrawnEvent>;
 
 export interface EndowmentCreatedEventObject {
   id: BigNumber;
@@ -555,7 +547,8 @@ export type EndowmentCreatedEvent = TypedEvent<
   EndowmentCreatedEventObject
 >;
 
-export type EndowmentCreatedEventFilter = TypedEventFilter<EndowmentCreatedEvent>;
+export type EndowmentCreatedEventFilter =
+  TypedEventFilter<EndowmentCreatedEvent>;
 
 export interface EndowmentSettingUpdatedEventObject {
   id: BigNumber;
@@ -566,14 +559,18 @@ export type EndowmentSettingUpdatedEvent = TypedEvent<
   EndowmentSettingUpdatedEventObject
 >;
 
-export type EndowmentSettingUpdatedEventFilter = TypedEventFilter<EndowmentSettingUpdatedEvent>;
+export type EndowmentSettingUpdatedEventFilter =
+  TypedEventFilter<EndowmentSettingUpdatedEvent>;
 
 export interface RemoveAllowanceEventObject {
   sender: string;
   spender: string;
   tokenAddress: string;
 }
-export type RemoveAllowanceEvent = TypedEvent<[string, string, string], RemoveAllowanceEventObject>;
+export type RemoveAllowanceEvent = TypedEvent<
+  [string, string, string],
+  RemoveAllowanceEventObject
+>;
 
 export type RemoveAllowanceEventFilter = TypedEventFilter<RemoveAllowanceEvent>;
 
@@ -630,7 +627,9 @@ export interface AccountsUpdate extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+  removeAllListeners<TEvent extends TypedEvent>(
+    eventFilter: TypedEventFilter<TEvent>
+  ): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -642,12 +641,12 @@ export interface AccountsUpdate extends BaseContract {
       newRegistrar: PromiseOrValue<string>,
       maxGeneralCategoryId: PromiseOrValue<BigNumberish>,
       earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStruct,
-      overrides?: Overrides & {from?: PromiseOrValue<string>}
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     updateOwner(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & {from?: PromiseOrValue<string>}
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
 
@@ -655,12 +654,12 @@ export interface AccountsUpdate extends BaseContract {
     newRegistrar: PromiseOrValue<string>,
     maxGeneralCategoryId: PromiseOrValue<BigNumberish>,
     earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStruct,
-    overrides?: Overrides & {from?: PromiseOrValue<string>}
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   updateOwner(
     newOwner: PromiseOrValue<string>,
-    overrides?: Overrides & {from?: PromiseOrValue<string>}
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -671,7 +670,10 @@ export interface AccountsUpdate extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    updateOwner(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+    updateOwner(
+      newOwner: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
   };
 
   filters: {
@@ -692,39 +694,62 @@ export interface AccountsUpdate extends BaseContract {
       createdaomessage?: null,
       daoAddress?: null
     ): DaoContractCreatedEventFilter;
-    DaoContractCreated(createdaomessage?: null, daoAddress?: null): DaoContractCreatedEventFilter;
+    DaoContractCreated(
+      createdaomessage?: null,
+      daoAddress?: null
+    ): DaoContractCreatedEventFilter;
 
-    "DonationDeposited(uint256,uint256)"(id?: null, amount?: null): DonationDepositedEventFilter;
+    "DonationDeposited(uint256,uint256)"(
+      id?: null,
+      amount?: null
+    ): DonationDepositedEventFilter;
     DonationDeposited(id?: null, amount?: null): DonationDepositedEventFilter;
 
     "DonationMatchSetup(uint256,address)"(
       id?: null,
       donationMatchContract?: null
     ): DonationMatchSetupEventFilter;
-    DonationMatchSetup(id?: null, donationMatchContract?: null): DonationMatchSetupEventFilter;
+    DonationMatchSetup(
+      id?: null,
+      donationMatchContract?: null
+    ): DonationMatchSetupEventFilter;
 
     "DonationWithdrawn(uint256,address,uint256)"(
       id?: null,
       recipient?: null,
       amount?: null
     ): DonationWithdrawnEventFilter;
-    DonationWithdrawn(id?: null, recipient?: null, amount?: null): DonationWithdrawnEventFilter;
+    DonationWithdrawn(
+      id?: null,
+      recipient?: null,
+      amount?: null
+    ): DonationWithdrawnEventFilter;
 
-    "EndowmentCreated(uint256,tuple)"(id?: null, endowment?: null): EndowmentCreatedEventFilter;
+    "EndowmentCreated(uint256,tuple)"(
+      id?: null,
+      endowment?: null
+    ): EndowmentCreatedEventFilter;
     EndowmentCreated(id?: null, endowment?: null): EndowmentCreatedEventFilter;
 
     "EndowmentSettingUpdated(uint256,string)"(
       id?: null,
       setting?: null
     ): EndowmentSettingUpdatedEventFilter;
-    EndowmentSettingUpdated(id?: null, setting?: null): EndowmentSettingUpdatedEventFilter;
+    EndowmentSettingUpdated(
+      id?: null,
+      setting?: null
+    ): EndowmentSettingUpdatedEventFilter;
 
     "RemoveAllowance(address,address,address)"(
       sender?: null,
       spender?: null,
       tokenAddress?: null
     ): RemoveAllowanceEventFilter;
-    RemoveAllowance(sender?: null, spender?: null, tokenAddress?: null): RemoveAllowanceEventFilter;
+    RemoveAllowance(
+      sender?: null,
+      spender?: null,
+      tokenAddress?: null
+    ): RemoveAllowanceEventFilter;
 
     "SwapToken(uint256,uint8,address,uint256,address,uint256)"(
       id?: null,
@@ -746,7 +771,10 @@ export interface AccountsUpdate extends BaseContract {
     "UpdateConfig(tuple)"(config?: null): UpdateConfigEventFilter;
     UpdateConfig(config?: null): UpdateConfigEventFilter;
 
-    "UpdateEndowment(uint256,tuple)"(id?: null, endowment?: null): UpdateEndowmentEventFilter;
+    "UpdateEndowment(uint256,tuple)"(
+      id?: null,
+      endowment?: null
+    ): UpdateEndowmentEventFilter;
     UpdateEndowment(id?: null, endowment?: null): UpdateEndowmentEventFilter;
   };
 
@@ -755,12 +783,12 @@ export interface AccountsUpdate extends BaseContract {
       newRegistrar: PromiseOrValue<string>,
       maxGeneralCategoryId: PromiseOrValue<BigNumberish>,
       earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStruct,
-      overrides?: Overrides & {from?: PromiseOrValue<string>}
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     updateOwner(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & {from?: PromiseOrValue<string>}
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
 
@@ -769,12 +797,12 @@ export interface AccountsUpdate extends BaseContract {
       newRegistrar: PromiseOrValue<string>,
       maxGeneralCategoryId: PromiseOrValue<BigNumberish>,
       earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStruct,
-      overrides?: Overrides & {from?: PromiseOrValue<string>}
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     updateOwner(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & {from?: PromiseOrValue<string>}
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };
 }

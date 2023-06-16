@@ -13,8 +13,8 @@ import type {
   Signer,
   utils,
 } from "ethers";
-import type {FunctionFragment, Result} from "@ethersproject/abi";
-import type {Listener, Provider} from "@ethersproject/providers";
+import type { FunctionFragment, Result } from "@ethersproject/abi";
+import type { Listener, Provider } from "@ethersproject/providers";
 import type {
   TypedEventFilter,
   TypedEvent,
@@ -23,29 +23,38 @@ import type {
   PromiseOrValue,
 } from "../../../../common";
 
-export interface IAccountDonationMatchInterface extends utils.Interface {
+export interface IAccountsDonationMatchInterface extends utils.Interface {
   functions: {
     "depositDonationMatchErC20(uint32,address,uint256)": FunctionFragment;
   };
 
-  getFunction(nameOrSignatureOrTopic: "depositDonationMatchErC20"): FunctionFragment;
+  getFunction(
+    nameOrSignatureOrTopic: "depositDonationMatchErC20"
+  ): FunctionFragment;
 
   encodeFunctionData(
     functionFragment: "depositDonationMatchErC20",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
 
-  decodeFunctionResult(functionFragment: "depositDonationMatchErC20", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "depositDonationMatchErC20",
+    data: BytesLike
+  ): Result;
 
   events: {};
 }
 
-export interface IAccountDonationMatch extends BaseContract {
+export interface IAccountsDonationMatch extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: IAccountDonationMatchInterface;
+  interface: IAccountsDonationMatchInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -57,7 +66,9 @@ export interface IAccountDonationMatch extends BaseContract {
     eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+  removeAllListeners<TEvent extends TypedEvent>(
+    eventFilter: TypedEventFilter<TEvent>
+  ): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -69,7 +80,7 @@ export interface IAccountDonationMatch extends BaseContract {
       id: PromiseOrValue<BigNumberish>,
       token: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & {from?: PromiseOrValue<string>}
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
 
@@ -77,7 +88,7 @@ export interface IAccountDonationMatch extends BaseContract {
     id: PromiseOrValue<BigNumberish>,
     token: PromiseOrValue<string>,
     amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & {from?: PromiseOrValue<string>}
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -96,7 +107,7 @@ export interface IAccountDonationMatch extends BaseContract {
       id: PromiseOrValue<BigNumberish>,
       token: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & {from?: PromiseOrValue<string>}
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
 
@@ -105,7 +116,7 @@ export interface IAccountDonationMatch extends BaseContract {
       id: PromiseOrValue<BigNumberish>,
       token: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & {from?: PromiseOrValue<string>}
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };
 }
