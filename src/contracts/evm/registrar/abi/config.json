@@ -124,7 +124,7 @@
           },
           {
             "internalType": "address",
-            "name": "swapsRouter",
+            "name": "uniswapSwapRouter",
             "type": "address"
           },
           {

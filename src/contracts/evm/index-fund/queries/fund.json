@@ -40,11 +40,6 @@
             "internalType": "uint256",
             "name": "expiryTime",
             "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "expiryHeight",
-            "type": "uint256"
           }
         ],
         "internalType": "struct AngelCoreStruct.IndexFund",
