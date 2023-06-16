@@ -17,14 +17,14 @@ export default function Withdrawer({
   const cw20s: Amount[] = cw20.map((c) => ({
     type: "cw20",
     tokenId: c.address,
-    balance: roundDown(condense(c.amount), 4) + 100,
+    balance: roundDown(condense(c.amount)),
     value: "",
   }));
 
   const natives: Amount[] = native.map((n) => ({
     type: "native",
     tokenId: n.denom,
-    balance: roundDown(condense(n.amount), 4) + 100,
+    balance: roundDown(condense(n.amount)),
     value: "",
   }));
 
