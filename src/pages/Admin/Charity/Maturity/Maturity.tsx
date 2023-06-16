@@ -49,6 +49,14 @@ export default function Maturity() {
   };
 
   const willMature = maturityTime !== 0;
+  const defaults: FV = {
+    willMature,
+    beneficiaries: maturityAllowlist,
+    //date is valid date-string, when data.willMature is true
+    date: willMature ? dateToFormFormat(fromBlockTime(maturityTime)) : "",
+    initial,
+  };
+
   const methods = useForm<FV>({
     resolver: yupResolver(
       object().shape<SchemaShape<FV>>({
@@ -61,13 +69,7 @@ export default function Maturity() {
         }),
       })
     ),
-    defaultValues: {
-      willMature,
-      beneficiaries: maturityAllowlist,
-      //date is valid date-string, when data.willMature is true
-      date: willMature ? dateToFormFormat(fromBlockTime(maturityTime)) : "",
-      initial,
-    },
+    defaultValues: defaults,
   });
 
   const onSubmit: SubmitHandler<FV> = async ({
@@ -88,8 +90,9 @@ export default function Maturity() {
       const update: EndowmentSettingsUpdate = {
         ...initial,
         maturityTime: willMature ? blockTime(date) : 0,
-        maturity_allowlist_add: add,
-        maturity_allowlist_remove: remove,
+        maturity_allowlist_add: willMature ? add : [],
+        //if maturity is disabled, remove all beneficiaries
+        maturity_allowlist_remove: willMature ? remove : maturityAllowlist,
       };
 
       const diff = getPayloadDiff(initial, update);
@@ -108,8 +111,8 @@ export default function Maturity() {
         ? { from: wallet.address, to: dest, data }
         : createTx(wallet.address, "multisig.submit-transaction", {
             multisig,
-            title: `Update whitelists settings`,
-            description: `Update whitelists settings for endowment id:${id} by member:${wallet?.address}`,
+            title: `Update maturity`,
+            description: `Update maturity for endowment id:${id} by member:${wallet?.address}`,
             destination: dest,
             value: "0",
             data,
@@ -128,11 +131,17 @@ export default function Maturity() {
     }
   };
 
-  const { handleSubmit } = methods;
+  const { handleSubmit, reset } = methods;
 
   return (
     <FormProvider {...methods}>
-      <Form onSubmit={handleSubmit(onSubmit)} />
+      <Form
+        onSubmit={handleSubmit(onSubmit)}
+        onReset={(e) => {
+          e.preventDefault();
+          reset();
+        }}
+      />
     </FormProvider>
   );
 }

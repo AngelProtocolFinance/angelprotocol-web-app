@@ -4,9 +4,13 @@ import { FV } from "./types";
 import Addresses from "components/Addresses";
 import { Toggle } from "components/ast";
 import { Field } from "components/form";
+import { Reset, Submit } from "../common/Btn";
 
 export default function Form(props: FormHTMLAttributes<HTMLFormElement>) {
-  const { watch } = useFormContext<FV>();
+  const {
+    watch,
+    formState: { isDirty },
+  } = useFormContext<FV>();
   const willMature = watch("willMature");
   return (
     <form
@@ -41,6 +45,10 @@ export default function Form(props: FormHTMLAttributes<HTMLFormElement>) {
           />
         </>
       ) : null}
+      <div className="flex justify-start gap-3 w-full">
+        <Reset disabled={!isDirty}>Reset changes</Reset>
+        <Submit>Submit changes</Submit>
+      </div>
     </form>
   );
 }
