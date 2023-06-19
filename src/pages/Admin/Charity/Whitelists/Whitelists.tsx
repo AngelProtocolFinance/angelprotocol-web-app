@@ -29,7 +29,8 @@ export default function Whitelists() {
 
   const methods = useForm<FV>({
     defaultValues: {
-      ...initial,
+      beneficiaries: allowlistedBeneficiaries,
+      contributors: allowlistedContributors,
       initial,
     },
   });
