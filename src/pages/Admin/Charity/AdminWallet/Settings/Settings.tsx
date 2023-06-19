@@ -1,11 +1,13 @@
 import { PropsWithChildren } from "react";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
+import AutoExecutePrompt from "./AutoExecutePrompt";
 import ThresholdForm from "./ThresholdForm";
 
 export default function Settings() {
   const { members, config } = useAdminResources();
   const { showModal } = useModalContext();
+
   return (
     <div className="grid content-start border border-prim p-4 @lg:p-8 rounded">
       <h2 className="font-bold text-2xl mb-8">Settings</h2>
@@ -23,12 +25,13 @@ export default function Settings() {
             <Bold>{members.length || 1}</Bold> members cast their vote.
           </p>
         </Container>
-        <Container>
-          <p>
-            Proposals duration is <Bold>not set</Bold>
-          </p>
-        </Container>
-        <Container>
+        <Container
+          onBtnClick={() =>
+            showModal(AutoExecutePrompt, {
+              newValue: !config.requireExecution,
+            })
+          }
+        >
           <p>
             Proposals auto-execution is turned{" "}
             <Bold>{config.requireExecution ? "OFF" : "ON"}</Bold>.
