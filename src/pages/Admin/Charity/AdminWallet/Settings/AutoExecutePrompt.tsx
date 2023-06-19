@@ -5,10 +5,10 @@ import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
 
 type Props = {
-  newValue: boolean;
+  autoExecute: boolean;
 };
 
-export default function AutoExecutePrompt({ newValue }: Props) {
+export default function AutoExecutePrompt({ autoExecute }: Props) {
   const { checkSubmit, multisig } = useAdminResources<"charity">();
   const { sendTx, isSending } = useTxSender(true);
 
@@ -18,13 +18,13 @@ export default function AutoExecutePrompt({ newValue }: Props) {
 
     const [data, dest, meta] = encodeTx("multisig.change-auto-execute", {
       multisig,
-      autoExecute: newValue,
+      autoExecute,
     });
 
     const { wallet, txMeta } = checkResult;
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig: dest,
-      title: `Turn auto-execute ${newValue ? "ON" : "OFF"}`,
+      title: `Turn auto-execute ${autoExecute ? "ON" : "OFF"}`,
       description: `proposer: ${wallet.address}`,
       destination: dest,
       value: "0",
@@ -43,7 +43,7 @@ export default function AutoExecutePrompt({ newValue }: Props) {
     <Modal className="p-6 fixed-center z-10 grid gap-4 text-gray-d2 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded overflow-hidden">
       <p>
         Turn auto-execute{" "}
-        <span className="font-bold">{newValue ? "ON" : "OFF"}</span>
+        <span className="font-bold">{autoExecute ? "ON" : "OFF"}</span> ?
       </p>
       <button
         type="button"

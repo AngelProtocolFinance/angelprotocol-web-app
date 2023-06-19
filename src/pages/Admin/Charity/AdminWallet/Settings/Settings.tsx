@@ -28,7 +28,7 @@ export default function Settings() {
         <Container
           onBtnClick={() =>
             showModal(AutoExecutePrompt, {
-              newValue: !config.requireExecution,
+              autoExecute: config.requireExecution,
             })
           }
         >
