@@ -84,10 +84,10 @@ export default function Fees() {
       if (typeof result === "function") return result();
 
       const update: FeeSettingsUpdate = {
-        ...initial,
+        id,
         earlyLockedWithdrawFee: contractFee(fees.earlyWithdraw),
-        withdrawFee: contractFee(fees.withdrawal),
         depositFee: contractFee(fees.deposit),
+        withdrawFee: contractFee(fees.withdrawal),
         balanceFee: contractFee(fees.balance),
       };
 
