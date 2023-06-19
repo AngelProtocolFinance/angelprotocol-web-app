@@ -17,7 +17,6 @@ export type FundDetails = OverrideProperties<
     id: number;
     members: number[];
     expiryTime: number;
-    expiryHeight: number;
     splitToLiquid: number;
   }
 >;

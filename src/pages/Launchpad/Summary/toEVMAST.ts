@@ -1,6 +1,6 @@
 import { Completed, TFee } from "slices/launchpad/types";
 import { Fee, NewAST, SettingsPermission } from "types/contracts";
-import { isEmpty, roundDownToNum } from "helpers";
+import { isEmpty } from "helpers";
 import { blockTime } from "helpers/admin";
 import { toContractSplit } from "helpers/ast";
 import { ADDRESS_ZERO } from "constants/evm";
@@ -20,10 +20,8 @@ export default function toEVMAST(
     owner: creator,
     withdrawBeforeMaturity: true, //not specified in launchpad design
     maturityTime: maturity.willMature ? blockTime(maturity.date) : 0,
-    // maturityHeight: 0; //not specified in launchpad design
-    maturityHeight: 0,
     name: about.name,
-    categories: { sdgs: [], general: [] }, //not specified in launchpad design
+    sdgs: [], //not specified in launchpad design
     tier: 0, //not specified in launchpad design
     endowType: 1,
     logo: "/images/angelprotocol-rounded-logo.png",
@@ -31,13 +29,6 @@ export default function toEVMAST(
     members: isEmpty(management.members) ? [creator] : management.members, //in launchpad design, weight is specified for each member
     kycDonorsOnly: false, //not specified in launchpad design
     threshold: +management.proposal.threshold,
-    maxVotingPeriod: {
-      enumData: 1,
-      data: {
-        height: 0,
-        time: roundDownToNum(+management.proposal.duration * 60 * 60, 0),
-      },
-    },
     allowlistedBeneficiaries: whitelists.beneficiaries,
     allowlistedContributors: whitelists.contributors,
 
@@ -105,13 +96,13 @@ export default function toEVMAST(
       name: defaultSetting,
       image: defaultSetting,
       logo: defaultSetting,
-      categories: defaultSetting,
+      sdgs: defaultSetting,
       splitToLiquid: defaultSetting,
       ignoreUserSplits: defaultSetting,
     },
     // settingsController: SettingsController; //not included in launchpad, for edit later
     parent: 0,
-    maturityAllowlist: maturity.beneficiaries.map((b) => b.addr),
+    maturityAllowlist: maturity.beneficiaries,
     ignoreUserSplits: !splits.isCustom,
     splitToLiquid: toContractSplit(splits),
 

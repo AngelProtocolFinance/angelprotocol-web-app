@@ -10,10 +10,9 @@ export default function Maturity({
   beneficiaries,
   ...props
 }: SectionProps<TMaturity>) {
-  const _beneficiaries = beneficiaries.map(({ addr, share }) => (
+  const _beneficiaries = beneficiaries.map((beneficiary) => (
     <Cells type="td" cellClass="">
-      <>{addr}</>
-      <>{share} %</>
+      <>{beneficiary}</>
     </Cells>
   ));
 
@@ -33,10 +32,9 @@ export default function Maturity({
             </Info>
           ) : (
             <ul className="grid gap-y-2 list-disc list-inside">
-              {beneficiaries.map(({ addr, share }) => (
-                <li key={addr} className="">
-                  <span className="mr-10">{addr}</span>
-                  <span className="font-semibold">{share} %</span>
+              {beneficiaries.map((beneficiary) => (
+                <li key={beneficiary} className="">
+                  <span className="mr-10">{beneficiary}</span>
                 </li>
               ))}
             </ul>

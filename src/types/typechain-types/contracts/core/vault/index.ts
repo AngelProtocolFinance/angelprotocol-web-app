@@ -2,6 +2,6 @@
 /* tslint:disable */
 /* eslint-disable */
 import type * as interfaces from "./interfaces";
-export type {interfaces};
-import type * as swappingSol from "./swapping.sol";
-export type {swappingSol};
+export type { interfaces };
+export type { APVault_V1 } from "./APVault_V1";
+export type { ERC4626AP } from "./ERC4626AP";

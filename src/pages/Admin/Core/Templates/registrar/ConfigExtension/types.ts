@@ -13,7 +13,7 @@ export type Fields = Pick<
   | "haloTokenLpContract"
   | "haloToken"
   | "indexFundContract"
-  | "swapsRouter"
+  | "uniswapSwapRouter"
   | "multisigFactory"
   | "subdaoBondingTokenContract"
   | "subdaoTokenContract"

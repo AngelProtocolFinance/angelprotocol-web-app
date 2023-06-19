@@ -2,7 +2,6 @@ import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
 import { ID } from "contracts/createTx/types";
 import { useAdminResources } from "pages/Admin/Guard";
-import { useLazyLatestBlockQuery } from "services/juno";
 import { queryContract } from "services/juno/queryContract";
 import { useModalContext } from "contexts/ModalContext";
 import { TxPrompt } from "components/Prompt";
@@ -17,17 +16,12 @@ export default function useDestroyFund() {
   } = useFormContext<FV>();
   const sendTx = useTxSender();
   const { showModal } = useModalContext();
-  const [latestBlock] = useLazyLatestBlockQuery();
   const { multisig, checkSubmit } = useAdminResources();
 
   async function destroyFund(fv: FV) {
     try {
-      const height = await latestBlock({}).unwrap();
       const fund = await queryContract("index-fund.fund", { id: +fv.fundId });
-      if (
-        (fund.expiryTime !== 0 && hasElapsed(fund.expiryTime)) ||
-        (fund.expiryHeight !== 0 && +height >= fund.expiryHeight)
-      ) {
+      if (fund.expiryTime !== 0 && hasElapsed(fund.expiryTime)) {
         return showModal(TxPrompt, { error: "Fund is already closed" });
       }
     } catch (err) {

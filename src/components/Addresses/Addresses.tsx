@@ -40,9 +40,7 @@ export default function Addresses<T extends FieldValues, K extends Path<T>>({
   }
 
   return (
-    <div
-      className={`${classes} grid content-start border border-prim p-4 md:p-8 rounded`}
-    >
+    <div className={`${classes} grid content-start border border-prim rounded`}>
       <h4 className="text-xl font-bold mb-8">{title}</h4>
       <button
         type="button"

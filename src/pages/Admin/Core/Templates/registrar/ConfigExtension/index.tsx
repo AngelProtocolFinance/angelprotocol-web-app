@@ -44,7 +44,7 @@ function Context(p: RegistrarConfig) {
     charitySharesContract: p.charitySharesContract,
     fundraisingContract: p.fundraisingContract,
     applicationsReview: p.applicationsReview,
-    swapsRouter: p.swapsRouter,
+    uniswapSwapRouter: p.uniswapSwapRouter,
     multisigFactory: p.multisigFactory,
     multisigEmitter: p.multisigEmitter,
     charityProposal: p.charityProposal,

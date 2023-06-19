@@ -19,14 +19,14 @@ export default function WhitelistsForm() {
         name="contributors"
         title="Contributors"
         emptyMsg="Anyone can contribute to your AST."
-        classes="mb-8 bg-white dark:bg-blue-d6"
+        classes="mb-8 bg-white dark:bg-blue-d6 p-4 md:p-8"
       />
       <Addresses<FV, "beneficiaries">
         memberName="beneficiary"
         name="beneficiaries"
         title="Beneficiaries"
         emptyMsg="Only the multisig wallet is allowed to withdraw funds"
-        classes="mb-8 bg-white dark:bg-blue-d6"
+        classes="mb-8 bg-white dark:bg-blue-d6 p-4 md:p-8"
       />
       <div className={`grid grid-cols-2 sm:flex gap-2 m-2`}>
         <button

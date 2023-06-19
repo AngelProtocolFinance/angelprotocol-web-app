@@ -19,14 +19,10 @@ export type TWhitelists = {
   beneficiaries: string[];
 };
 
-export type Beneficiary = {
-  addr: string;
-  share: string; // "1" - "100"
-};
 export type TMaturity = {
   willMature: boolean;
   date: string;
-  beneficiaries: Beneficiary[];
+  beneficiaries: string[];
 };
 
 export type TFees = Fees & { referral_id?: number };

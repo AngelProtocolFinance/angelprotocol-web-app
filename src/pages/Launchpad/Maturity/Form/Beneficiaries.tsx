@@ -1,7 +1,5 @@
-import { useMemo } from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { FV } from "../types";
-import { Beneficiary } from "slices/launchpad/types";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import { Info } from "components/Status";
@@ -19,7 +17,7 @@ export default function Beneficiaries({ classes = "" }) {
     name,
   });
 
-  function handleAdd(beneficiary: Beneficiary) {
+  function handleAdd(beneficiary: string) {
     append(beneficiary);
   }
   async function handleRemove(index: number) {
@@ -27,10 +25,6 @@ export default function Beneficiaries({ classes = "" }) {
   }
 
   const beneficiaries = watch("beneficiaries");
-  const totalShare = useMemo(
-    () => beneficiaries.reduce((acc, cur) => acc + +cur.share, 0),
-    [beneficiaries]
-  );
 
   return (
     <Group className={classes}>
@@ -42,8 +36,7 @@ export default function Beneficiaries({ classes = "" }) {
         onClick={() =>
           showModal(MemberForm, {
             onAdd: handleAdd,
-            share: totalShare,
-            added: beneficiaries.map((b) => b.addr),
+            added: beneficiaries,
           })
         }
         className="btn-outline-filled sm:justify-self-end text-sm py-3 px-8 gap-3 mb-5"
@@ -61,7 +54,6 @@ export default function Beneficiaries({ classes = "" }) {
           >
             <Cells type="th" cellClass="text-xs uppercase text-left py-3 px-4">
               <>Member</>
-              <>Allocation</>
               <></>
             </Cells>
           </TableSection>
@@ -75,11 +67,6 @@ export default function Beneficiaries({ classes = "" }) {
           </TableSection>
         </table>
       )}
-      {totalShare < 100 && totalShare !== 0 && (
-        <Info classes="mt-8">
-          {100 - totalShare}% share goes to Multisig wallet
-        </Info>
-      )}
     </Group>
   );
 }
@@ -91,12 +78,10 @@ type Props = {
 
 function Row({ idx, onRemove }: Props) {
   const { getValues } = useFormContext();
-  const { addr, share } = getValues(`${name}.${idx}`);
+  const addr = getValues(`${name}.${idx}`);
   return (
     <Cells type="td" cellClass="py-3 px-4 text-sm">
       <div className="w-[4.8rem] sm:w-28 md:w-full truncate">{addr}</div>
-      <td className="font-work">{share}%</td>
-
       <td className="w-12 h-full relative">
         <button
           className="text-center absolute-center"

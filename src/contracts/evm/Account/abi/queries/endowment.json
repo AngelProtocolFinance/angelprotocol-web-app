@@ -22,26 +22,14 @@
             "type": "string"
           },
           {
-            "components": [
-              {
-                "internalType": "uint256[]",
-                "name": "sdgs",
-                "type": "uint256[]"
-              },
-              {
-                "internalType": "uint256[]",
-                "name": "general",
-                "type": "uint256[]"
-              }
-            ],
-            "internalType": "struct AngelCoreStruct.Categories",
-            "name": "categories",
-            "type": "tuple"
+            "internalType": "uint256[]",
+            "name": "sdgs",
+            "type": "uint256[]"
           },
           {
-            "internalType": "uint256",
+            "internalType": "enum AngelCoreStruct.Tier",
             "name": "tier",
-            "type": "uint256"
+            "type": "uint8"
           },
           {
             "internalType": "enum AngelCoreStruct.EndowmentType",
@@ -62,60 +50,6 @@
             "internalType": "uint256",
             "name": "maturityTime",
             "type": "uint256"
-          },
-          {
-            "components": [
-              {
-                "internalType": "string[]",
-                "name": "locked_vault",
-                "type": "string[]"
-              },
-              {
-                "internalType": "uint256[]",
-                "name": "lockedPercentage",
-                "type": "uint256[]"
-              },
-              {
-                "internalType": "string[]",
-                "name": "liquid_vault",
-                "type": "string[]"
-              },
-              {
-                "internalType": "uint256[]",
-                "name": "liquidPercentage",
-                "type": "uint256[]"
-              }
-            ],
-            "internalType": "struct AngelCoreStruct.AccountStrategies",
-            "name": "strategies",
-            "type": "tuple"
-          },
-          {
-            "components": [
-              {
-                "internalType": "string[]",
-                "name": "locked",
-                "type": "string[]"
-              },
-              {
-                "internalType": "uint256[]",
-                "name": "lockedAmount",
-                "type": "uint256[]"
-              },
-              {
-                "internalType": "string[]",
-                "name": "liquid",
-                "type": "string[]"
-              },
-              {
-                "internalType": "uint256[]",
-                "name": "liquidAmount",
-                "type": "uint256[]"
-              }
-            ],
-            "internalType": "struct AngelCoreStruct.OneOffVaults",
-            "name": "oneoffVaults",
-            "type": "tuple"
           },
           {
             "components": [
@@ -711,7 +645,7 @@
                   }
                 ],
                 "internalType": "struct AngelCoreStruct.SettingsPermission",
-                "name": "categories",
+                "name": "sdgs",
                 "type": "tuple"
               },
               {

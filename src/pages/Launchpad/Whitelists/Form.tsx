@@ -17,14 +17,14 @@ export default function WhitelistsForm(props: FormProps) {
         name="contributors"
         title="Contributors"
         emptyMsg="Anyone can contribute to your AST."
-        classes="mb-8"
+        classes="mb-8 p-4 md:p-8"
       />
       <Addresses<FV, "beneficiaries">
         memberName="beneficiary"
         name="beneficiaries"
         title="Beneficiaries"
         emptyMsg="Only the multisig wallet is allowed to withdraw funds"
-        classes="mb-8"
+        classes="mb-8 p-4 md:p-8"
       />
 
       <NavButtons classes="mt-8" curr={3} />
