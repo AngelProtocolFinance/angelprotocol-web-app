@@ -10,6 +10,7 @@ import { WalletState, useGetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import Loader from "components/Loader";
 import { TxPrompt } from "components/Prompt";
+import { blockTime } from "helpers/admin";
 import { chainIds } from "constants/chainIds";
 import { adminRoutes, appRoutes } from "constants/routes";
 
@@ -55,10 +56,10 @@ export function Guard(props: {
 
     /** getWallet() can't be ran without Admin context being initalized first */
     const _d = data!;
+    const hasOps = _d.type === "charity" && operation && operation.length > 0;
 
     const isLocked =
-      operation &&
-      _d.type === "charity" &&
+      hasOps &&
       operation.some((op) => {
         switch (op) {
           case "withdraw-liquid":
@@ -74,12 +75,32 @@ export function Guard(props: {
         showModal(TxPrompt, { error: "This setting has been locked forever." });
     }
 
+    const isMaturityRestricted =
+      hasOps &&
+      operation.some((op) => {
+        switch (op) {
+          case "allowlistedBeneficiaries":
+          case "allowlistedContributors":
+          case "maturityTime":
+          case "maturityAllowlist":
+            return _d.maturityTime !== 0 && _d.maturityTime <= blockTime("now");
+          default:
+            return false;
+        }
+      });
+
+    if (isMaturityRestricted) {
+      return () =>
+        showModal(TxPrompt, {
+          error: "This operation is not allowed for matured accounts.",
+        });
+    }
+
     const sender = wallet.address;
 
     const isAdmin = _d.members.includes(sender);
     const isDelegated =
-      operation &&
-      _d.type === "charity" &&
+      hasOps &&
       operation.every((op) => {
         switch (op) {
           case "withdraw-liquid":
