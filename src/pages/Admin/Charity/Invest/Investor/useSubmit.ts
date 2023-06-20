@@ -4,10 +4,10 @@ import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { scaleToStr } from "helpers";
 import { getTagPayloads } from "helpers/admin";
-import { useAdminResources } from "../../../Context";
+import { useAdminContext } from "../../../Context";
 
 export default function useSubmit(vault: string, type: AccountType) {
-  const { multisig, id, checkSubmit } = useAdminResources();
+  const { multisig, id, checkSubmit } = useAdminContext();
   const { sendTx, isSending } = useTxSender(true);
 
   async function submit({ token }: FormValues) {

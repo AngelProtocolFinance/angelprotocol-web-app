@@ -8,7 +8,7 @@ import Icon from "components/Icon";
 import Seo from "components/Seo";
 import { APP_NAME, DAPP_URL } from "constants/env";
 import { adminRoutes, appRoutes } from "constants/routes";
-import { useAdminResources } from "../../../Context";
+import { useAdminContext } from "../../../Context";
 import { SEPARATOR } from "../../constants";
 import Proposer from "./Proposer";
 
@@ -17,7 +17,7 @@ export default function Summary({
   ContactPerson: c,
   appId,
 }: InReview & { appId: number }) {
-  const { id } = useAdminResources();
+  const { id } = useAdminContext();
 
   const txId = r.approve_tx_id || r.reject_tx_id;
   const txType: TxType = r.approve_tx_id ? "approve" : "reject";

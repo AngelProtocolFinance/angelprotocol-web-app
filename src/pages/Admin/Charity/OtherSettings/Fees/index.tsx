@@ -17,7 +17,7 @@ import { positiveNumber, requiredPercent } from "schemas/number";
 import { requiredWalletAddr } from "schemas/string";
 import { chainIds } from "constants/chainIds";
 import { ADDRESS_ZERO } from "constants/evm";
-import { useAdminResources } from "../../../Context";
+import { useAdminContext } from "../../../Context";
 import Form from "./Form";
 
 const fee: SchemaShape<TFee> = {
@@ -38,7 +38,7 @@ export default function Fees() {
     depositFee,
     balanceFee,
     checkSubmit,
-  } = useAdminResources<"charity">();
+  } = useAdminContext<"charity">();
 
   const { showModal } = useModalContext();
   const sendTx = useTxSender();

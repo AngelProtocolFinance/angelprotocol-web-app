@@ -4,10 +4,10 @@ import { useModalContext } from "contexts/ModalContext";
 import Prompt from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
-import { useAdminResources } from "../../../../Context";
+import { useAdminContext } from "../../../../Context";
 
 export default function useUpdateOwner() {
-  const { multisig, checkSubmit } = useAdminResources();
+  const { multisig, checkSubmit } = useAdminContext();
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },

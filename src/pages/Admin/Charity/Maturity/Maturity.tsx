@@ -17,7 +17,7 @@ import {
   getPayloadDiff,
   getTagPayloads,
 } from "helpers/admin";
-import { useAdminResources } from "../../Context";
+import { useAdminContext } from "../../Context";
 import Form from "./Form";
 
 export default function Maturity() {
@@ -32,7 +32,7 @@ export default function Maturity() {
     maturityAllowlist,
     checkSubmit,
     multisig,
-  } = useAdminResources<"charity">();
+  } = useAdminContext<"charity">();
   const { showModal } = useModalContext();
   const sendTx = useTxSender();
 

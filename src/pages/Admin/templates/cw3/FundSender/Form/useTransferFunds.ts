@@ -7,14 +7,14 @@ import useTxSender from "hooks/useTxSender";
 import { scale, toBase64 } from "helpers";
 import { getTagPayloads } from "helpers/admin";
 import { EMPTY_DATA } from "constants/evm";
-import { useAdminResources } from "../../../../Context";
+import { useAdminContext } from "../../../../Context";
 
 export default function useTransferFunds() {
   const {
     handleSubmit,
     formState: { isSubmitting, isValid, isDirty },
   } = useFormContext<FV>();
-  const { multisig, checkSubmit } = useAdminResources();
+  const { multisig, checkSubmit } = useAdminContext();
   const sendTx = useTxSender();
 
   async function transferFunds(fv: FV) {

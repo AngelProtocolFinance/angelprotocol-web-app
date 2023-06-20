@@ -6,7 +6,7 @@ import { useModalContext } from "contexts/ModalContext";
 import QueryLoader from "components/QueryLoader";
 import { PAYMENT_WORDS, titleCase } from "constants/common";
 import { adminRoutes } from "constants/routes";
-import { useAdminResources } from "../../../Context";
+import { useAdminContext } from "../../../Context";
 import Seo from "../../Seo";
 import { Reset, Submit } from "../../common/Btn";
 import useUpdateEndowmentProfile from "../../common/useUpdateEndowmentProfile";
@@ -16,7 +16,7 @@ import Message from "./Message";
 import ChangeSettingsPrompt from "./Prompt";
 
 export default function DonorVerification() {
-  const { id } = useAdminResources<"charity">();
+  const { id } = useAdminContext<"charity">();
   const queryState = useProfileQuery(id, { skip: id === 0 });
 
   return (
@@ -41,7 +41,7 @@ function Content({ profile }: { profile: Profile }) {
   const originalValue: VerificationRequired =
     profile.contributor_verification_required ? "yes" : "no";
 
-  const { id, owner } = useAdminResources<"charity">();
+  const { id, owner } = useAdminContext<"charity">();
 
   const [verificationRequired, setVerificationRequired] =
     useState(originalValue);

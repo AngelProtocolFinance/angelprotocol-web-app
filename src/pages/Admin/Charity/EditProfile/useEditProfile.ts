@@ -8,13 +8,13 @@ import { TxPrompt } from "components/Prompt";
 import { isEmpty } from "helpers";
 import { getPayloadDiff } from "helpers/admin";
 import { getFullURL, uploadFiles } from "helpers/uploadFiles";
-import { useAdminResources } from "../../Context";
+import { useAdminContext } from "../../Context";
 import useUpdateEndowmentProfile from "../common/useUpdateEndowmentProfile";
 
 // import optimizeImage from "./optimizeImage";
 
 export default function useEditProfile() {
-  const { id, owner } = useAdminResources<"charity">();
+  const { id, owner } = useAdminContext<"charity">();
   const {
     reset,
     handleSubmit,

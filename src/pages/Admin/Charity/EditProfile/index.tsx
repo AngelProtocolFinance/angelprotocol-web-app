@@ -6,7 +6,7 @@ import { useProfileQuery } from "services/aws/aws";
 import { FormError, FormSkeleton } from "components/admin";
 import { adminRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
-import { useAdminResources } from "../../Context";
+import { useAdminContext } from "../../Context";
 import Seo from "../Seo";
 import Form from "./Form";
 import { getEndowDesignationLabelValuePair } from "./getEndowDesignationLabelValuePair";
@@ -14,7 +14,7 @@ import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import { schema } from "./schema";
 
 export default function EditProfile() {
-  const { id } = useAdminResources();
+  const { id } = useAdminContext();
   const { data: profile, isLoading, isFetching, isError } = useProfileQuery(id);
 
   const content =

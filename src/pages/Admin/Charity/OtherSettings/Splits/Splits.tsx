@@ -9,7 +9,7 @@ import useTxSender from "hooks/useTxSender";
 import { isEmpty } from "helpers";
 import { getPayloadDiff, getTagPayloads } from "helpers/admin";
 import { toContractSplit, toFormSplit } from "helpers/ast";
-import { useAdminResources } from "../../../Context";
+import { useAdminContext } from "../../../Context";
 import Form from "./Form";
 
 export default function Splits() {
@@ -23,7 +23,7 @@ export default function Splits() {
     id,
     donationMatchActive,
     maturityTime,
-  } = useAdminResources<"charity">();
+  } = useAdminContext<"charity">();
 
   const sendTx = useTxSender();
   const { showModal } = useModalContext();

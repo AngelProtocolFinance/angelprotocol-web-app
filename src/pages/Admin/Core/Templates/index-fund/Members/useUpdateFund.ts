@@ -6,11 +6,11 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { useGetter } from "store/accessors";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
-import { useAdminResources } from "../../../../Context";
+import { useAdminContext } from "../../../../Context";
 
 export default function useUpdateFund() {
   const { trigger, reset, getValues } = useFormContext<FormValues>();
-  const { multisig, checkSubmit } = useAdminResources();
+  const { multisig, checkSubmit } = useAdminContext();
   const [isLoading, setIsLoading] = useState(false);
   const fundMembers = useGetter((state) => state.admin.fundMembers);
   const { handleError } = useErrorContext();

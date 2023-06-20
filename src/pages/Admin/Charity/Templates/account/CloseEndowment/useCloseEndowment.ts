@@ -5,11 +5,11 @@ import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
 import { ADDRESS_ZERO } from "constants/evm";
-import { useAdminResources } from "../../../../Context";
+import { useAdminContext } from "../../../../Context";
 
 export default function useCloseEndowment() {
   const { handleSubmit } = useFormContext<FV>();
-  const { multisig, checkSubmit, id: endowId } = useAdminResources();
+  const { multisig, checkSubmit, id: endowId } = useAdminContext();
   const sendTx = useTxSender();
 
   async function closeEndowment(fv: FV) {

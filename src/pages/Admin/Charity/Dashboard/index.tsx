@@ -1,13 +1,13 @@
 import { useProposalsQuery } from "services/juno/custom";
 import QueryLoader from "components/QueryLoader";
 import { IS_AST } from "constants/env";
-import { useAdminResources } from "../../Context";
+import { useAdminContext } from "../../Context";
 import Seo from "../Seo";
 import Balances from "../common/Balances";
 import Table from "./Table";
 
 export default function Dashboard() {
-  const { multisig } = useAdminResources<"charity">();
+  const { multisig } = useAdminContext<"charity">();
   const { data, ...rest } = useProposalsQuery({
     multisig,
     status: "open",

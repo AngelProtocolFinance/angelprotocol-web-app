@@ -2,10 +2,10 @@ import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
-import { useAdminResources } from "../../../../Context";
+import { useAdminContext } from "../../../../Context";
 
 export default function useSubmit() {
-  const { multisig, checkSubmit } = useAdminResources();
+  const { multisig, checkSubmit } = useAdminContext();
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },

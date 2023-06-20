@@ -2,14 +2,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FV, TPermissions } from "./types";
 import { adminRoutes } from "constants/routes";
-import { useAdminResources } from "../../Context";
+import { useAdminContext } from "../../Context";
 import Seo from "../Seo";
 import Form from "./Form";
 import { controllerUpdate, formPermission } from "./helpers";
 import { schema } from "./schema";
 
 export default function Permissions() {
-  const { settingsController: controller, id } = useAdminResources<"charity">();
+  const { settingsController: controller, id } = useAdminContext<"charity">();
 
   const permissions: TPermissions = {
     accountFees: formPermission(controller.earlyLockedWithdrawFee),

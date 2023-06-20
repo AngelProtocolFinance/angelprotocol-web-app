@@ -6,11 +6,11 @@ import QueryLoader from "components/QueryLoader";
 import { condense, humanize } from "helpers";
 import { PAYMENT_WORDS } from "constants/common";
 import { adminRoutes, appRoutes } from "constants/routes";
-import { useAdminResources } from "../../../Context";
+import { useAdminContext } from "../../../Context";
 
 type Props = { type: AccountType };
 export default function Balance({ type }: Props) {
-  const { id } = useAdminResources();
+  const { id } = useAdminContext();
 
   const query = useEndowBalanceQuery({
     id,

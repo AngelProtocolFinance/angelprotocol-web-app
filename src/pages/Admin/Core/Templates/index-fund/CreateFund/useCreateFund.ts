@@ -8,11 +8,11 @@ import { useGetter } from "store/accessors";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { blockTime } from "helpers/admin";
-import { useAdminResources } from "../../../../Context";
+import { useAdminContext } from "../../../../Context";
 import { INIT_SPLIT } from "./index";
 
 export default function useCreateFund() {
-  const { multisig, checkSubmit } = useAdminResources();
+  const { multisig, checkSubmit } = useAdminContext();
   const sendTx = useTxSender();
   const { showModal } = useModalContext();
   const { trigger, getValues } = useFormContext<FormValues>();

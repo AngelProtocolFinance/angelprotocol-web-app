@@ -2,12 +2,12 @@ import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import { ErrorStatus } from "components/Status";
 import { isEmpty } from "helpers";
-import { useAdminResources } from "../../../Context";
+import { useAdminContext } from "../../../Context";
 import AddForm from "./Adder";
 import Member from "./Member";
 
 export default function Members() {
-  const { members } = useAdminResources();
+  const { members } = useAdminContext();
   const { showModal } = useModalContext();
   return (
     <div className="grid content-start border border-prim rounded p-4 @lg:p-8">

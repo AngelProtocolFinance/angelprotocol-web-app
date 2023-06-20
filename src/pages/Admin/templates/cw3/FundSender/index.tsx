@@ -6,12 +6,12 @@ import { useChainQuery } from "services/apes";
 import QueryLoader from "components/QueryLoader";
 import { FormError, FormSkeleton } from "components/admin";
 import { chainIds } from "constants/chainIds";
-import { useAdminResources } from "../../../Context";
+import { useAdminContext } from "../../../Context";
 import Form from "./Form";
 import { schema } from "./schema";
 
 export default function FundSender() {
-  const { multisig } = useAdminResources();
+  const { multisig } = useAdminContext();
   const query = useChainQuery({
     address: multisig,
     chainId: chainIds.polygon,

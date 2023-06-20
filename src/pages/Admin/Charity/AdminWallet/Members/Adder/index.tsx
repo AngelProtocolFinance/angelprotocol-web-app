@@ -3,12 +3,12 @@ import { FormProvider, useForm } from "react-hook-form";
 import { FormValues as FV, FormProps } from "./types";
 import Modal from "components/Modal";
 import { Field } from "components/form";
-import { useAdminResources } from "../../../../Context";
+import { useAdminContext } from "../../../../Context";
 import { schema } from "./schema";
 import useUpdateMembers from "./useUpdateMembers";
 
 export default function AddForm({ address, action }: FormProps) {
-  const { members } = useAdminResources();
+  const { members } = useAdminContext();
 
   const methods = useForm<FV>({
     resolver: yupResolver(schema),

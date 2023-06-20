@@ -162,13 +162,13 @@ export function Context(props: {
 }
 
 const context = createContext({} as AdminResources & Assertions);
-export const useAdminResources = <
+export const useAdminContext = <
   T extends AdminResources["type"] = any
 >(): Extract<AdminResources, { type: T }> & Assertions => {
   const val = useContext(context);
 
   if (Object.entries(val).length <= 0) {
-    throw new Error("useAdminResources should only be used inside AdminGuard");
+    throw new Error("useAdminContext should only be used inside AdminGuard");
   }
   return val as any;
 };

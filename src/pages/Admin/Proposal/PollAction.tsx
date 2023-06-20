@@ -18,7 +18,7 @@ import {
 import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
 import { EMPTY_DATA } from "constants/evm";
-import { useAdminResources } from "../Context";
+import { useAdminContext } from "../Context";
 
 const ERROR = "error";
 const processLog: LogProcessor = (logs) => {
@@ -30,7 +30,7 @@ const processLog: LogProcessor = (logs) => {
 export default function PollAction(props: ProposalDetails) {
   const { wallet } = useGetWallet();
   const sendTx = useTxSender();
-  const { multisig, config, checkSubmit } = useAdminResources();
+  const { multisig, config, checkSubmit } = useAdminContext();
   const { showModal } = useModalContext();
 
   const numSigned = props.signed.length;

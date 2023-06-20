@@ -2,7 +2,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { LinkGroup } from "../Sidebar/types";
 import { EndowmentType } from "types/lists";
 import { adminRoutes } from "constants/routes";
-import { useAdminResources } from "../Context";
+import { useAdminContext } from "../Context";
 import Layout from "../Layout";
 import Proposal from "../Proposal";
 import Proposals from "../Proposals";
@@ -69,7 +69,7 @@ const LINK_GROUPS: { [key in EndowmentType]: LinkGroup[] } = {
 };
 
 export default function Charity() {
-  const { endowType } = useAdminResources<"charity">();
+  const { endowType } = useAdminContext<"charity">();
 
   return (
     <Routes>

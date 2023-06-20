@@ -1,14 +1,14 @@
 import { useWithdrawInfoQuery } from "services/juno/custom";
 import QueryLoader from "components/QueryLoader";
 import { hasElapsed } from "helpers/admin";
-import { useAdminResources } from "../../../Context";
+import { useAdminContext } from "../../../Context";
 import Tabs from "./Tabs";
 import WithdrawForm from "./WithdrawForm";
 
 const container = "dark:bg-blue-d6 border border-prim rounded max-w-lg  p-8";
 
 export default function Withdrawer() {
-  const { id, endowType, maturityTime } = useAdminResources<"charity">();
+  const { id, endowType, maturityTime } = useAdminContext<"charity">();
   const queryState = useWithdrawInfoQuery({ id });
 
   const isLockAvailable =

@@ -7,7 +7,7 @@ import { TxPrompt } from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { hasElapsed } from "helpers/admin";
-import { useAdminResources } from "../../../../Context";
+import { useAdminContext } from "../../../../Context";
 
 export default function useDestroyFund() {
   const {
@@ -16,7 +16,7 @@ export default function useDestroyFund() {
   } = useFormContext<FV>();
   const sendTx = useTxSender();
   const { showModal } = useModalContext();
-  const { multisig, checkSubmit } = useAdminResources();
+  const { multisig, checkSubmit } = useAdminContext();
 
   async function destroyFund(fv: FV) {
     try {

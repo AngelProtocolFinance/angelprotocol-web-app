@@ -1,11 +1,11 @@
 import { useFormContext } from "react-hook-form";
 import { WithdrawValues as WV } from "../types";
-import { useAdminResources } from "../../../../../Context";
+import { useAdminContext } from "../../../../../Context";
 import SubmitLocked from "./SubmitLocked";
 import WithdrawButton from "./WithdrawButton";
 
 export default function Submit() {
-  const { endowType } = useAdminResources<"charity">();
+  const { endowType } = useAdminContext<"charity">();
   const {
     getValues,
     formState: { isDirty, isValid, isSubmitting },

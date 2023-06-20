@@ -4,7 +4,7 @@ import { useGetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import { createTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
-import { useAdminResources } from "../../Context";
+import { useAdminContext } from "../../Context";
 
 export default function Votes({
   id,
@@ -13,7 +13,7 @@ export default function Votes({
   status,
   classes = "",
 }: ProposalDetails & { classes?: string }) {
-  const { multisig } = useAdminResources();
+  const { multisig } = useAdminContext();
   const { wallet } = useGetWallet();
   const send = useTxSender();
   const userSigned = signed.some((s) => s === wallet?.address);

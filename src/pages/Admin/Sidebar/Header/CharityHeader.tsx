@@ -4,11 +4,11 @@ import { useGetWallet } from "contexts/WalletContext";
 import ContentLoader from "components/ContentLoader";
 import Icon from "components/Icon";
 import Image from "components/Image";
-import { useAdminResources } from "../../Context";
+import { useAdminContext } from "../../Context";
 import MyEndowments from "./MyEndowments";
 
 export default function CharityHeader() {
-  const { id } = useAdminResources();
+  const { id } = useAdminContext();
   const { data: profile, isLoading, isError } = useProfileQuery(id);
   const { wallet } = useGetWallet();
   const { data } = useWalletProfileQuery(wallet?.address!, {

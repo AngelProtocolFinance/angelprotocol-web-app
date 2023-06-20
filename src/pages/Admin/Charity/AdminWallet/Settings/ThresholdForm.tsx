@@ -8,7 +8,7 @@ import { Field } from "components/form";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
-import { useAdminResources } from "../../../Context";
+import { useAdminContext } from "../../../Context";
 import { proposalShape } from "../../../constants";
 
 export type Props = {
@@ -20,7 +20,7 @@ type FV = ProposalBase & { threshold: number };
 
 export default function ThresholdForm({ added, initial }: Props) {
   const { sendTx, isSending } = useTxSender(true);
-  const { checkSubmit, multisig } = useAdminResources();
+  const { checkSubmit, multisig } = useAdminContext();
 
   const methods = useForm<FV>({
     defaultValues: { threshold: initial },

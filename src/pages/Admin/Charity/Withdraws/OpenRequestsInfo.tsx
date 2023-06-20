@@ -4,12 +4,12 @@ import { useWithdrawLogsQuery } from "services/apes";
 import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
 import { adminRoutes } from "constants/routes";
-import { useAdminResources } from "../../Context";
+import { useAdminContext } from "../../Context";
 
 const proposal_status: TransactionStatus = "open";
 
 export default function OpenRequestsInfo() {
-  const { multisig } = useAdminResources();
+  const { multisig } = useAdminContext();
   const queryState = useWithdrawLogsQuery({
     cw3: multisig,
     sort: "default",

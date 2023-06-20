@@ -18,14 +18,13 @@ import { chainIds } from "constants/chainIds";
 import { EMAIL_SUPPORT } from "constants/env";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { APIs } from "constants/urls";
-import { useAdminResources } from "../../../../Context";
+import { useAdminContext } from "../../../../Context";
 import { fee, names } from "./helpers";
 
 export default function useWithdraw() {
   const { handleSubmit, watch, getValues } = useFormContext<WithdrawValues>();
 
-  const { multisig, id, checkSubmit, ...endow } =
-    useAdminResources<"charity">();
+  const { multisig, id, checkSubmit, ...endow } = useAdminContext<"charity">();
   const { showModal } = useModalContext();
   const sendTx = useTxSender();
 

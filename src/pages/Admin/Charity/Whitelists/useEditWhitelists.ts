@@ -8,10 +8,10 @@ import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { isEmpty } from "helpers";
 import { getPayloadDiff, getTagPayloads } from "helpers/admin";
-import { useAdminResources } from "../../Context";
+import { useAdminContext } from "../../Context";
 
 export default function useEditWhitelists() {
-  const { id, multisig, checkSubmit } = useAdminResources<"charity">();
+  const { id, multisig, checkSubmit } = useAdminContext<"charity">();
   const {
     reset,
     handleSubmit,

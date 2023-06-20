@@ -5,7 +5,7 @@ import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { isEmpty } from "helpers";
 import { getPayloadDiff, getTagPayloads } from "helpers/admin";
-import { useAdminResources } from "../../Context";
+import { useAdminContext } from "../../Context";
 import { controllerUpdate } from "./helpers";
 
 export default function useSubmit() {
@@ -14,7 +14,7 @@ export default function useSubmit() {
     multisig,
     settingsController: settings,
     checkSubmit,
-  } = useAdminResources<"charity">();
+  } = useAdminContext<"charity">();
   const { handleError } = useErrorContext();
   const {
     formState: { isSubmitting, errors },

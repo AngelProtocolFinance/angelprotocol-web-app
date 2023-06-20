@@ -4,11 +4,11 @@ import {
   useWithdrawLogsQuery,
 } from "services/apes";
 import { useSetter } from "store/accessors";
-import { useAdminResources } from "../../Context";
+import { useAdminContext } from "../../Context";
 
 export default function useGetWithdrawLogs() {
   const dispatch = useSetter();
-  const { multisig } = useAdminResources();
+  const { multisig } = useAdminContext();
   const queryState = useWithdrawLogsQuery({ cw3: multisig, sort: "default" });
 
   const { isLoading, isError, data, originalArgs } = queryState;

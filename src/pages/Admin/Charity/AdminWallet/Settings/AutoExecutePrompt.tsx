@@ -2,14 +2,14 @@ import Modal from "components/Modal";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
-import { useAdminResources } from "../../../Context";
+import { useAdminContext } from "../../../Context";
 
 type Props = {
   autoExecute: boolean;
 };
 
 export default function AutoExecutePrompt({ autoExecute }: Props) {
-  const { checkSubmit, multisig } = useAdminResources<"charity">();
+  const { checkSubmit, multisig } = useAdminContext<"charity">();
   const { sendTx, isSending } = useTxSender(true);
 
   async function toggle() {
