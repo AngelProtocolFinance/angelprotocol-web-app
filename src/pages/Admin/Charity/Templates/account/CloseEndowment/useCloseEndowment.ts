@@ -1,11 +1,11 @@
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
 import { Beneficiary } from "types/contracts";
-import { useAdminResources } from "pages/Admin/Guard";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
 import { ADDRESS_ZERO } from "constants/evm";
+import { useAdminResources } from "../../../../Context";
 
 export default function useCloseEndowment() {
   const { handleSubmit } = useFormContext<FV>();

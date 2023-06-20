@@ -1,7 +1,7 @@
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues as FV } from "./types";
 import { EndowmentSettingsUpdate } from "types/contracts";
-import { useAdminResources } from "../../Guard";
+import { useAdminResources } from "../../Context";
 import Form from "./Form";
 
 export default function Whitelists() {

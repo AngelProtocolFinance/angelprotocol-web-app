@@ -2,13 +2,13 @@ import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { FormValues } from "./types";
 import { NewFund } from "types/contracts";
-import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { TxPrompt } from "components/Prompt";
 import { useGetter } from "store/accessors";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { blockTime } from "helpers/admin";
+import { useAdminResources } from "../../../../Context";
 import { INIT_SPLIT } from "./index";
 
 export default function useCreateFund() {

@@ -18,7 +18,7 @@ import {
 import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
 import { EMPTY_DATA } from "constants/evm";
-import { useAdminResources } from "../Guard";
+import { useAdminResources } from "../Context";
 
 const ERROR = "error";
 const processLog: LogProcessor = (logs) => {

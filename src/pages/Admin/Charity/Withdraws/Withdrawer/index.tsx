@@ -1,7 +1,7 @@
 import { useWithdrawInfoQuery } from "services/juno/custom";
 import QueryLoader from "components/QueryLoader";
 import { hasElapsed } from "helpers/admin";
-import { useAdminResources } from "../../../Guard";
+import { useAdminResources } from "../../../Context";
 import Tabs from "./Tabs";
 import WithdrawForm from "./WithdrawForm";
 

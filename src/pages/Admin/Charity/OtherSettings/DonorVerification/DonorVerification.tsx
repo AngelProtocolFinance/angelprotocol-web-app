@@ -6,7 +6,7 @@ import { useModalContext } from "contexts/ModalContext";
 import QueryLoader from "components/QueryLoader";
 import { PAYMENT_WORDS, titleCase } from "constants/common";
 import { adminRoutes } from "constants/routes";
-import { useAdminResources } from "../../../Guard";
+import { useAdminResources } from "../../../Context";
 import Seo from "../../Seo";
 import { Reset, Submit } from "../../common/Btn";
 import useUpdateEndowmentProfile from "../../common/useUpdateEndowmentProfile";

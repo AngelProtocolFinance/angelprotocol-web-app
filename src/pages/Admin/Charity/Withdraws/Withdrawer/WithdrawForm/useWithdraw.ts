@@ -18,7 +18,7 @@ import { chainIds } from "constants/chainIds";
 import { EMAIL_SUPPORT } from "constants/env";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { APIs } from "constants/urls";
-import { useAdminResources } from "../../../../Guard";
+import { useAdminResources } from "../../../../Context";
 import { fee, names } from "./helpers";
 
 export default function useWithdraw() {

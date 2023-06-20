@@ -1,12 +1,12 @@
 import { useParams } from "react-router-dom";
-import { ProposalParams } from "pages/Admin/types";
+import { ProposalParams } from "../types";
 import { useProposalDetailsQuery } from "services/juno/custom";
 import QueryLoader from "components/QueryLoader";
 import Seo from "components/Seo";
 import { DetailLabel, Status } from "components/admin";
 import { APP_NAME, DAPP_URL } from "constants/env";
 import { adminRoutes } from "constants/routes";
-import { useAdminResources } from "../Guard";
+import { useAdminResources } from "../Context";
 import Content from "./Content";
 import PollAction from "./PollAction";
 import Stats from "./Stats";

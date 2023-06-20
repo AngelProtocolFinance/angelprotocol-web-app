@@ -2,7 +2,7 @@ import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import { ErrorStatus } from "components/Status";
 import { isEmpty } from "helpers";
-import { useAdminResources } from "../../../Guard";
+import { useAdminResources } from "../../../Context";
 import AddForm from "./Adder";
 import Member from "./Member";
 

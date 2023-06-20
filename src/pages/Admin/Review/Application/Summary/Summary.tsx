@@ -2,13 +2,13 @@ import { PropsWithChildren } from "react";
 import { Link } from "react-router-dom";
 import { TxType } from "../types";
 import { FileObject, InReview } from "types/aws";
-import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import Seo from "components/Seo";
 import { APP_NAME, DAPP_URL } from "constants/env";
 import { adminRoutes, appRoutes } from "constants/routes";
+import { useAdminResources } from "../../../Context";
 import { SEPARATOR } from "../../constants";
 import Proposer from "./Proposer";
 

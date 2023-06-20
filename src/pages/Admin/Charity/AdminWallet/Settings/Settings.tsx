@@ -1,6 +1,6 @@
 import { PropsWithChildren } from "react";
-import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
+import { useAdminResources } from "../../../Context";
 import AutoExecutePrompt from "./AutoExecutePrompt";
 import ThresholdForm from "./ThresholdForm";
 

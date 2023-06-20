@@ -7,7 +7,6 @@ import { TFee, TFees } from "slices/launchpad/types";
 import { Fee } from "types/ast";
 import { Fee as ContractFee, FeeSettingsUpdate } from "types/contracts";
 import { SimulContractTx } from "types/evm";
-import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { TxPrompt } from "components/Prompt";
 import { feeKeys } from "components/ast";
@@ -18,6 +17,7 @@ import { positiveNumber, requiredPercent } from "schemas/number";
 import { requiredWalletAddr } from "schemas/string";
 import { chainIds } from "constants/chainIds";
 import { ADDRESS_ZERO } from "constants/evm";
+import { useAdminResources } from "../../../Context";
 import Form from "./Form";
 
 const fee: SchemaShape<TFee> = {

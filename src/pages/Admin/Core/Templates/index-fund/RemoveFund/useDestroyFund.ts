@@ -1,13 +1,13 @@
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
 import { ID } from "contracts/createTx/types";
-import { useAdminResources } from "pages/Admin/Guard";
 import { queryContract } from "services/juno/queryContract";
 import { useModalContext } from "contexts/ModalContext";
 import { TxPrompt } from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { hasElapsed } from "helpers/admin";
+import { useAdminResources } from "../../../../Context";
 
 export default function useDestroyFund() {
   const {

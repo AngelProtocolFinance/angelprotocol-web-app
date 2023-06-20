@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { WithdrawValues as WV } from "../types";
-import { useAdminResources } from "pages/Admin/Guard";
+import { useAdminResources } from "../../../../../Context";
 import SubmitLocked from "./SubmitLocked";
 import WithdrawButton from "./WithdrawButton";
 

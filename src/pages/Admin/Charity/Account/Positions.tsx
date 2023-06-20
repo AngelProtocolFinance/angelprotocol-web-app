@@ -1,6 +1,6 @@
 import { AccountType } from "types/lists";
-import { useAdminResources } from "pages/Admin/Guard";
 import QueryLoader from "components/QueryLoader";
+import { useAdminResources } from "../../Context";
 import Investment from "../common/Investment";
 
 type Props = {

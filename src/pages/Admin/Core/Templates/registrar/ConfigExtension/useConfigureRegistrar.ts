@@ -1,12 +1,12 @@
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
-import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import Prompt from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { isEmpty } from "helpers";
 import { getPayloadDiff } from "helpers/admin";
+import { useAdminResources } from "../../../../Context";
 
 export default function useConfigureRegistrar() {
   const { multisig, checkSubmit } = useAdminResources();

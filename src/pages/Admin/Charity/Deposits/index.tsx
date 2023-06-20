@@ -1,6 +1,6 @@
 import { adminRoutes } from "constants/routes";
 import Content from "../../../Donate/Content";
-import { useAdminResources } from "../../Guard";
+import { useAdminResources } from "../../Context";
 import Seo from "../Seo";
 
 export default function Deposits() {

@@ -1,12 +1,12 @@
 import { useFormContext } from "react-hook-form";
 import { FormValues } from "./types";
-import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import Prompt from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { isEmpty } from "helpers";
 import { getPayloadDiff, getTagPayloads } from "helpers/admin";
+import { useAdminResources } from "../../../../Context";
 
 export default function useConfigureFund() {
   const { multisig, checkSubmit } = useAdminResources();

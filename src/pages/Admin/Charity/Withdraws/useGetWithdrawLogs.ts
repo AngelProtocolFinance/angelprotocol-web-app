@@ -1,10 +1,10 @@
-import { useAdminResources } from "pages/Admin/Guard";
 import {
   updateApesQueryData,
   useLazyWithdrawLogsQuery,
   useWithdrawLogsQuery,
 } from "services/apes";
 import { useSetter } from "store/accessors";
+import { useAdminResources } from "../../Context";
 
 export default function useGetWithdrawLogs() {
   const dispatch = useSetter();

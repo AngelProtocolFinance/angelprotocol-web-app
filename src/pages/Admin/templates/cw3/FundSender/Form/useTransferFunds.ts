@@ -1,13 +1,13 @@
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "../types";
 import { TxMeta } from "contracts/createTx/types";
-import { useAdminResources } from "pages/Admin/Guard";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import { TransferMeta } from "contracts/createTx/meta";
 import useTxSender from "hooks/useTxSender";
 import { scale, toBase64 } from "helpers";
 import { getTagPayloads } from "helpers/admin";
 import { EMPTY_DATA } from "constants/evm";
+import { useAdminResources } from "../../../../Context";
 
 export default function useTransferFunds() {
   const {

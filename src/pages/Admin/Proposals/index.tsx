@@ -4,7 +4,7 @@ import Seo from "components/Seo";
 import { useGetter } from "store/accessors";
 import { APP_NAME, DAPP_URL } from "constants/env";
 import { adminRoutes } from "constants/routes";
-import { useAdminResources } from "../Guard";
+import { useAdminResources } from "../Context";
 import Table from "./Table";
 import Toolbar from "./Toolbar";
 

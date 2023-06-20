@@ -4,7 +4,7 @@ import { useGetWallet } from "contexts/WalletContext";
 import ContentLoader from "components/ContentLoader";
 import Icon from "components/Icon";
 import Image from "components/Image";
-import { useAdminResources } from "../../Guard";
+import { useAdminResources } from "../../Context";
 import MyEndowments from "./MyEndowments";
 
 export default function CharityHeader() {

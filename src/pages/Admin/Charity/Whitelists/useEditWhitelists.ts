@@ -2,13 +2,13 @@ import { SubmitHandler, useFormContext } from "react-hook-form";
 import { FormValues } from "./types";
 import { EndowmentSettingsUpdate } from "types/contracts";
 import { SimulContractTx } from "types/evm";
-import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { TxPrompt } from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { isEmpty } from "helpers";
 import { getPayloadDiff, getTagPayloads } from "helpers/admin";
+import { useAdminResources } from "../../Context";
 
 export default function useEditWhitelists() {
   const { id, multisig, checkSubmit } = useAdminResources<"charity">();

@@ -17,7 +17,7 @@ import {
   getPayloadDiff,
   getTagPayloads,
 } from "helpers/admin";
-import { useAdminResources } from "../../Guard";
+import { useAdminResources } from "../../Context";
 import Form from "./Form";
 
 export default function Maturity() {

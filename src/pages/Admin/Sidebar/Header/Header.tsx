@@ -1,6 +1,6 @@
 import Image from "components/Image";
 import { LOGO_DARK, LOGO_LIGHT } from "constants/common";
-import { useAdminResources } from "../../Guard";
+import { useAdminResources } from "../../Context";
 import CharityHeader from "./CharityHeader";
 
 export default function Header() {

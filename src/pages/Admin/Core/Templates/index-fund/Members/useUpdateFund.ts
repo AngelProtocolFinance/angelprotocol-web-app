@@ -2,11 +2,11 @@ import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { FormValues } from "./types";
 import { FundMemberUpdate } from "types/contracts";
-import { useAdminResources } from "pages/Admin/Guard";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useGetter } from "store/accessors";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
+import { useAdminResources } from "../../../../Context";
 
 export default function useUpdateFund() {
   const { trigger, reset, getValues } = useFormContext<FormValues>();

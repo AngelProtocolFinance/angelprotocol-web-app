@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues } from "./types";
-import { useAdminResources } from "pages/Admin/Guard";
+import { useAdminResources } from "../../../Context";
 import Form from "./Form";
 import { schema } from "./schema";
 

@@ -8,7 +8,7 @@ import { TxPrompt } from "components/Prompt";
 import { getProvider } from "helpers";
 import { cleanObject } from "helpers/cleanObject";
 import { appRoutes } from "constants/routes";
-import { useAdminResources } from "../../Guard";
+import { useAdminResources } from "../../Context";
 
 // import optimizeImage from "./optimizeImage";
 

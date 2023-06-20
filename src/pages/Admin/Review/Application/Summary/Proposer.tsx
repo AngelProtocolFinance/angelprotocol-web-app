@@ -7,7 +7,6 @@ import { ProposalBase } from "../../../types";
 import { TxType } from "../types";
 import { SchemaShape } from "schemas/types";
 import { TxOnSuccess } from "types/tx";
-import { useAdminResources } from "pages/Admin/Guard";
 import { useUpdateRegMutation } from "services/aws/registration";
 import { useModalContext } from "contexts/ModalContext";
 import { TxPrompt } from "components/Prompt";
@@ -15,6 +14,7 @@ import { Field } from "components/form";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import { multisig as Multisig, SubmissionEvent } from "contracts/evm/multisig";
 import useTxSender from "hooks/useTxSender";
+import { useAdminResources } from "../../../Context";
 import { proposalShape } from "../../../constants";
 
 type Props = {

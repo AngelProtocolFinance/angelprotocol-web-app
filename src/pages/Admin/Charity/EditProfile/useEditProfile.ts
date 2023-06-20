@@ -2,13 +2,13 @@ import { SubmitHandler, useFormContext } from "react-hook-form";
 import { FormValues as FV, FlatFormValues } from "./types";
 import { EndowmentProfileUpdate } from "types/aws";
 import { SemiPartial } from "types/utils";
-import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { ImgLink } from "components/ImgEditor";
 import { TxPrompt } from "components/Prompt";
 import { isEmpty } from "helpers";
 import { getPayloadDiff } from "helpers/admin";
 import { getFullURL, uploadFiles } from "helpers/uploadFiles";
+import { useAdminResources } from "../../Context";
 import useUpdateEndowmentProfile from "../common/useUpdateEndowmentProfile";
 
 // import optimizeImage from "./optimizeImage";

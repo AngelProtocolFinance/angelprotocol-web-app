@@ -31,7 +31,7 @@ type Assertions = {
   checkSubmit(operation?: Operation[]): TxResource | Prompt;
 };
 
-export function Guard(props: {
+export function Context(props: {
   children(resources: AdminResources): ReactNode;
 }) {
   const { id } = useParams<AdminParams>();
@@ -149,11 +149,10 @@ export function Guard(props: {
     return { wallet, isDelegated, txMeta };
   };
 
-  if (isLoading)
-    return <GuardPrompt message="Getting admin resources" showLoader />;
+  if (isLoading) return <Prompt message="Getting admin resources" showLoader />;
 
   if (isError || !data)
-    return <GuardPrompt message="Error getting admin resources" />;
+    return <Prompt message="Error getting admin resources" />;
 
   return (
     <context.Provider value={{ ...data, checkSubmit }}>
@@ -174,7 +173,7 @@ export const useAdminResources = <
   return val as any;
 };
 
-function GuardPrompt(props: { message: string; showLoader?: true }) {
+function Prompt(props: { message: string; showLoader?: true }) {
   return (
     <div className="place-self-center grid content-center justify-items-center min-h-[15rem] w-full bg-white dark:bg-blue-d6 border border-prim max-w-sm p-4 rounded">
       {props.showLoader ? (
