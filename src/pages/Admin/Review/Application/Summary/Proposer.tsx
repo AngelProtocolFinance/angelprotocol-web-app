@@ -35,7 +35,7 @@ export default function Proposer({ type, appId, reference }: Props) {
     },
   });
 
-  const { multisig, checkSubmit } = useAdminContext();
+  const { multisig, txResource } = useAdminContext();
   const { showModal } = useModalContext();
   const { sendTx, isSending } = useTxSender(true);
   const [updateReg] = useUpdateRegMutation();
@@ -43,8 +43,7 @@ export default function Proposer({ type, appId, reference }: Props) {
   const { handleSubmit } = methods;
 
   async function submit({ type, ...fv }: FV) {
-    const result = checkSubmit();
-    if (typeof result === "function") return result();
+    if (typeof txResource === "string") throw new Error(txResource);
 
     const [data, dest] = encodeTx(
       type === "approve"
@@ -55,7 +54,7 @@ export default function Proposer({ type, appId, reference }: Props) {
       }
     );
 
-    const { wallet, txMeta } = result;
+    const { wallet, txMeta } = txResource;
     const onSuccess: TxOnSuccess = async (result) => {
       const { data, ...okTx } = result;
       const txId = data as string | null;

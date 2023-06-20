@@ -1,42 +1,22 @@
 import { ReactNode, createContext, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { AdminParams } from "./types";
-import { AdminResources, PropMeta } from "services/types";
+import { AdminResources, MultisigConfig } from "services/types";
 import { SettingsController } from "types/contracts";
+import { SenderArgs } from "types/tx";
 import { customApi, useAdminResourcesQuery } from "services/juno/custom";
 import { defaultProposalTags } from "services/juno/tags";
-import { useModalContext } from "contexts/ModalContext";
 import { WalletState, useGetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import Loader from "components/Loader";
-import { TxPrompt } from "components/Prompt";
 import { blockTime } from "helpers/admin";
 import { chainIds } from "constants/chainIds";
 import { adminRoutes, appRoutes } from "constants/routes";
-
-type Prompt = () => void;
-
-export type TxResource = {
-  isDelegated?: boolean;
-  txMeta: PropMeta;
-  wallet: WalletState;
-};
-
-type Operation =
-  | keyof SettingsController
-  | "withdraw-liquid"
-  | "withdraw-locked";
-
-type Assertions = {
-  checkSubmit(operation?: Operation[]): TxResource | Prompt;
-};
 
 export function Context(props: {
   children(resources: AdminResources): ReactNode;
 }) {
   const { id } = useParams<AdminParams>();
-  const { wallet } = useGetWallet();
-  const { showModal } = useModalContext();
 
   const { data, isLoading, isError } = useAdminResourcesQuery(
     {
@@ -45,132 +25,163 @@ export function Context(props: {
     { skip: !id }
   );
 
-  const checkSubmit: Assertions["checkSubmit"] = (operation) => {
-    if (!wallet) {
-      return () => showModal(TxPrompt, { error: "Wallet is not connected" });
-    }
-    if (wallet.chain.chain_id !== chainIds.polygon) {
-      return () =>
-        showModal(TxPrompt, { error: "Kindly switch to polygon network" });
-    }
-
-    /** getWallet() can't be ran without Admin context being initalized first */
-    const _d = data!;
-    const hasOps = _d.type === "charity" && operation && operation.length > 0;
-
-    const isLocked =
-      hasOps &&
-      operation.some((op) => {
-        switch (op) {
-          case "withdraw-liquid":
-          case "withdraw-locked":
-            return false;
-          default:
-            return _d.settingsController[op].locked;
-        }
-      });
-
-    if (isLocked) {
-      return () =>
-        showModal(TxPrompt, { error: "This setting has been locked forever." });
-    }
-
-    const isMaturityRestricted =
-      hasOps &&
-      operation.some((op) => {
-        switch (op) {
-          case "allowlistedBeneficiaries":
-          case "allowlistedContributors":
-          case "maturityTime":
-          case "maturityAllowlist":
-            return _d.maturityTime !== 0 && _d.maturityTime <= blockTime("now");
-          default:
-            return false;
-        }
-      });
-
-    if (isMaturityRestricted) {
-      return () =>
-        showModal(TxPrompt, {
-          error: "This operation is not allowed for matured accounts.",
-        });
-    }
-
-    const sender = wallet.address;
-
-    const isAdmin = _d.members.includes(sender);
-    const isDelegated =
-      hasOps &&
-      operation.every((op) => {
-        switch (op) {
-          case "withdraw-liquid":
-            return _d.allowlistedBeneficiaries.includes(sender);
-          case "withdraw-locked":
-            return _d.maturityAllowlist.includes(sender);
-          default:
-            return _d.settingsController[op].delegate.addr === sender;
-        }
-      });
-
-    /**
-     * check if user is admin,
-     * if not, check if user is delegated for the operation
-     */
-    if (!isAdmin && !isDelegated) {
-      return () =>
-        showModal(TxPrompt, {
-          error:
-            "Unauthorized: Connected wallet is neither an admin nor delegated for this operation",
-        });
-    }
-
-    /** in the context of tx submission */
-    const willExecute: true | undefined =
-      (_d.config.threshold === 1 && !_d.config.requireExecution) || isDelegated
-        ? true
-        : undefined;
-
-    const message = willExecute
-      ? "Successful transaction"
-      : "Proposal successfully created";
-
-    const url = willExecute
-      ? `${appRoutes.admin}/${_d.id}`
-      : `${appRoutes.admin}/${_d.id}/${adminRoutes.proposals}`;
-
-    const description = willExecute ? "Go to admin home" : "Go to proposals";
-
-    const txMeta: PropMeta = {
-      willExecute,
-      successMeta: { message, link: { url, description } },
-      tagPayloads: [customApi.util.invalidateTags(defaultProposalTags)],
-    };
-
-    return { wallet, isDelegated, txMeta };
-  };
-
   if (isLoading) return <Prompt message="Getting admin resources" showLoader />;
 
   if (isError || !data)
     return <Prompt message="Error getting admin resources" />;
 
   return (
-    <context.Provider value={{ ...data, checkSubmit }}>
-      {props.children(data)}
-    </context.Provider>
+    <context.Provider value={data}>{props.children(data)}</context.Provider>
   );
 }
 
-const context = createContext({} as AdminResources & Assertions);
-export const useAdminContext = <
-  T extends AdminResources["type"] = any
->(): Extract<AdminResources, { type: T }> & Assertions => {
-  const val = useContext(context);
+type Operation =
+  | keyof SettingsController
+  | "withdraw-liquid"
+  | "withdraw-locked";
 
-  if (Object.entries(val).length <= 0) {
+export type TxMeta = Required<
+  Pick<SenderArgs, "successMeta" | "tagPayloads">
+> & {
+  willExecute?: true;
+};
+
+export type TxResource = {
+  isDelegated?: boolean;
+  txMeta: TxMeta;
+  wallet: WalletState;
+};
+type Tooltip = string;
+
+type AdminType = AdminResources["type"];
+type Resource<T extends AdminType> = Extract<AdminResources, { type: T }>;
+
+type AdminContext<T extends AdminType> = Extract<
+  AdminResources,
+  { type: T }
+> & {
+  txResource: TxResource | Tooltip;
+};
+
+const context = createContext({} as AdminResources);
+export const useAdminContext = <T extends AdminType = any>(
+  operations?: Operation[]
+): AdminContext<T> => {
+  const resource = useContext(context) as Resource<T>;
+  const { wallet, isLoading } = useGetWallet();
+
+  if (Object.entries(resource).length <= 0) {
     throw new Error("useAdminContext should only be used inside AdminGuard");
   }
-  return val as any;
+
+  if (!wallet) {
+    return { txResource: "Wallet is not connected", ...resource };
+  }
+
+  if (isLoading) {
+    return { txResource: "Wallet is still loading", ...resource };
+  }
+
+  if (wallet.chain.chain_id !== chainIds.polygon) {
+    return { txResource: "Kindly switch to polygon network", ...resource };
+  }
+
+  const sender = wallet.address;
+  const isAdmin = resource.members.includes(sender);
+
+  // handle non-endowment admins
+  if (resource.type !== "charity") {
+    if (!isAdmin)
+      return {
+        ...resource,
+        txResource: "Unauthorized: Not member of multisig",
+      };
+    return {
+      ...resource,
+      txResource: {
+        isDelegated: false,
+        txMeta: txMeta(resource.id, resource.config, false),
+        wallet,
+      },
+    };
+  }
+
+  const {
+    settingsController,
+    allowlistedBeneficiaries,
+    maturityAllowlist,
+    maturityTime,
+  } = resource as Resource<"charity">; //manual control flow
+  const hasOps = operations && operations.length > 0;
+
+  const isLocked =
+    hasOps &&
+    operations.some((op) => {
+      switch (op) {
+        case "withdraw-liquid":
+        case "withdraw-locked":
+          return false;
+        default:
+          return settingsController[op].locked;
+      }
+    });
+
+  if (isLocked) {
+    return {
+      ...resource,
+      txResource: "Unauthorized: Not member of multisig",
+    };
+  }
+
+  const isMaturityRestricted =
+    hasOps &&
+    operations.some((op) => {
+      switch (op) {
+        case "allowlistedBeneficiaries":
+        case "allowlistedContributors":
+        case "maturityTime":
+        case "maturityAllowlist":
+          return maturityTime !== 0 && maturityTime <= blockTime("now");
+        default:
+          return false;
+      }
+    });
+
+  if (isMaturityRestricted) {
+    return {
+      ...resource,
+      txResource: "Operation not allowed for matured accounts.",
+    };
+  }
+
+  const isDelegated =
+    hasOps &&
+    operations.every((op) => {
+      switch (op) {
+        case "withdraw-liquid":
+          return allowlistedBeneficiaries.includes(sender);
+        case "withdraw-locked":
+          return maturityAllowlist.includes(sender);
+        default:
+          return settingsController[op].delegate.addr === sender;
+      }
+    });
+
+  if (!isAdmin && !isDelegated) {
+    return {
+      ...resource,
+      txResource:
+        "Unauthorized: Connected wallet is neither an admin nor delegated for this operation",
+    };
+  }
+  return {
+    ...resource,
+    txResource: {
+      isDelegated,
+      txMeta: txMeta(resource.id, resource.config, !!isDelegated),
+      wallet,
+    },
+  };
 };
 
 function Prompt(props: { message: string; showLoader?: true }) {
@@ -188,4 +199,32 @@ function Prompt(props: { message: string; showLoader?: true }) {
       <p className="mt-2">{props.message}</p>
     </div>
   );
+}
+
+function txMeta(
+  id: number,
+  config: MultisigConfig,
+  isDelegated: boolean
+): TxMeta {
+  /** in the context of tx submission */
+  const willExecute: true | undefined =
+    (config.threshold === 1 && !config.requireExecution) || isDelegated
+      ? true
+      : undefined;
+
+  const message = willExecute
+    ? "Successful transaction"
+    : "Proposal successfully created";
+
+  const url = willExecute
+    ? `${appRoutes.admin}/${id}`
+    : `${appRoutes.admin}/${id}/${adminRoutes.proposals}`;
+
+  const description = willExecute ? "Go to admin home" : "Go to proposals";
+
+  return {
+    willExecute,
+    successMeta: { message, link: { url, description } },
+    tagPayloads: [customApi.util.invalidateTags(defaultProposalTags)],
+  };
 }

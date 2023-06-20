@@ -5,12 +5,11 @@ import { getTagPayloads } from "helpers/admin";
 import { useAdminContext } from "../../../../Context";
 
 export default function useUpdateMembers(action: FormProps["action"]) {
-  const { multisig, checkSubmit } = useAdminContext();
+  const { multisig, txResource } = useAdminContext();
   const { sendTx, isSending } = useTxSender(true);
 
   async function updateMembers(fv: FormValues) {
-    const checkResult = checkSubmit();
-    if (typeof checkResult === "function") return checkResult();
+    if (typeof txResource === "string") throw new Error(txResource);
 
     const [data, dest, meta] = encodeTx(
       action === "add" ? "multisig.add-owner" : "multisig.remove-owner",
@@ -21,7 +20,7 @@ export default function useUpdateMembers(action: FormProps["action"]) {
       { action, address: fv.address }
     );
 
-    const { wallet, txMeta } = checkResult;
+    const { wallet, txMeta } = txResource;
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig: dest,
       title: fv.title,

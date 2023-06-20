@@ -9,19 +9,18 @@ type Props = {
 };
 
 export default function AutoExecutePrompt({ autoExecute }: Props) {
-  const { checkSubmit, multisig } = useAdminContext<"charity">();
+  const { txResource, multisig } = useAdminContext<"charity">();
   const { sendTx, isSending } = useTxSender(true);
 
   async function toggle() {
-    const checkResult = checkSubmit();
-    if (typeof checkResult === "function") return checkResult();
+    if (typeof txResource === "string") throw new Error(txResource);
 
     const [data, dest, meta] = encodeTx("multisig.change-auto-execute", {
       multisig,
       autoExecute,
     });
 
-    const { wallet, txMeta } = checkResult;
+    const { wallet, txMeta } = txResource;
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig: dest,
       title: `Turn auto-execute ${autoExecute ? "ON" : "OFF"}`,

@@ -7,7 +7,7 @@ import useTxSender from "hooks/useTxSender";
 import { useAdminContext } from "../../../../Context";
 
 export default function useUpdateOwner() {
-  const { multisig, checkSubmit } = useAdminContext();
+  const { multisig, txResource } = useAdminContext();
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },
@@ -27,8 +27,7 @@ export default function useUpdateOwner() {
       });
     }
 
-    const result = checkSubmit();
-    if (typeof result === "function") return result();
+    if (typeof txResource === "string") throw new Error(txResource);
 
     const [data, dest, meta] = encodeTx(
       "registrar.update-owner",
@@ -38,7 +37,7 @@ export default function useUpdateOwner() {
       { curr: fv.initialOwner, new: fv.newOwner }
     );
 
-    const { wallet, txMeta } = result;
+    const { wallet, txMeta } = txResource;
     await sendTx({
       content: {
         type: "evm",

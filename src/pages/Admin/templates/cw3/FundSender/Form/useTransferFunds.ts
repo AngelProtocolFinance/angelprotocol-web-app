@@ -14,13 +14,11 @@ export default function useTransferFunds() {
     handleSubmit,
     formState: { isSubmitting, isValid, isDirty },
   } = useFormContext<FV>();
-  const { multisig, checkSubmit } = useAdminContext();
+  const { multisig, txResource } = useAdminContext();
   const sendTx = useTxSender();
 
   async function transferFunds(fv: FV) {
-    const result = checkSubmit();
-    if (typeof result === "function") return result();
-
+    if (typeof txResource === "string") throw new Error(txResource);
     const { token, recipient } = fv;
     const scaledAmount = scale(token.amount, token.decimals).toHex();
 
@@ -51,7 +49,7 @@ export default function useTransferFunds() {
           ]
         : [...native, scaledAmount];
 
-    const { wallet, txMeta } = result;
+    const { wallet, txMeta } = txResource;
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig,
       title: fv.title,

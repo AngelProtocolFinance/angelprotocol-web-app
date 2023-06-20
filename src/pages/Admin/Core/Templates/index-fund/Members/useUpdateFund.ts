@@ -10,7 +10,7 @@ import { useAdminContext } from "../../../../Context";
 
 export default function useUpdateFund() {
   const { trigger, reset, getValues } = useFormContext<FormValues>();
-  const { multisig, checkSubmit } = useAdminContext();
+  const { multisig, txResource } = useAdminContext();
   const [isLoading, setIsLoading] = useState(false);
   const fundMembers = useGetter((state) => state.admin.fundMembers);
   const { handleError } = useErrorContext();
@@ -46,8 +46,7 @@ export default function useUpdateFund() {
       if (toRemove.length <= 0 && toAdd.length <= 0) {
         throw new Error("No fund member changes");
       }
-      const result = checkSubmit();
-      if (typeof result === "function") return result();
+      if (typeof txResource === "string") throw new Error(txResource);
 
       const modified = new Set([...fundMembers.map((f) => f.id), ...toAdd]);
       toRemove.forEach((id) => modified.delete(id));
@@ -63,7 +62,7 @@ export default function useUpdateFund() {
         update
       );
 
-      const { wallet, txMeta } = result;
+      const { wallet, txMeta } = txResource;
       const tx = createTx(wallet.address, "multisig.submit-transaction", {
         multisig,
         title: getValues("title"),

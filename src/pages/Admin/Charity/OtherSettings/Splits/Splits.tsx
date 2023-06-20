@@ -15,7 +15,7 @@ import Form from "./Form";
 export default function Splits() {
   const {
     multisig,
-    checkSubmit,
+    txResource,
     splitToLiquid,
     ignoreUserSplits,
     allowlistedBeneficiaries,
@@ -23,7 +23,7 @@ export default function Splits() {
     id,
     donationMatchActive,
     maturityTime,
-  } = useAdminContext<"charity">();
+  } = useAdminContext<"charity">(["ignoreUserSplits", "splitToLiquid"]);
 
   const sendTx = useTxSender();
   const { showModal } = useModalContext();
@@ -51,8 +51,7 @@ export default function Splits() {
 
   const update: SubmitHandler<FV> = async (splits) => {
     try {
-      const result = checkSubmit(["ignoreUserSplits", "splitToLiquid"]);
-      if (typeof result === "function") return result();
+      if (typeof txResource === "string") throw new Error(txResource);
 
       const update: EndowmentSettingsUpdate = {
         ...initial,
@@ -72,7 +71,7 @@ export default function Splits() {
         diff
       );
 
-      const { wallet, txMeta, isDelegated } = result;
+      const { wallet, txMeta, isDelegated } = txResource;
       const tx: SimulContractTx = isDelegated
         ? { from: wallet.address, to: dest, data }
         : createTx(wallet.address, "multisig.submit-transaction", {

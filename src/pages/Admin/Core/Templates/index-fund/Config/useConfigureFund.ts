@@ -9,7 +9,7 @@ import { getPayloadDiff, getTagPayloads } from "helpers/admin";
 import { useAdminContext } from "../../../../Context";
 
 export default function useConfigureFund() {
-  const { multisig, checkSubmit } = useAdminContext();
+  const { multisig, txResource } = useAdminContext();
   const {
     handleSubmit,
     formState: { isSubmitting, isDirty, isValid },
@@ -35,12 +35,11 @@ export default function useConfigureFund() {
       });
     }
 
-    const result = checkSubmit();
-    if (typeof result === "function") return result();
+    if (typeof txResource === "string") throw new Error(txResource);
 
     const [configData, dest, meta] = encodeTx("index-fund.config", data, diffs);
 
-    const { wallet, txMeta } = result;
+    const { wallet, txMeta } = txResource;
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig,
       title,

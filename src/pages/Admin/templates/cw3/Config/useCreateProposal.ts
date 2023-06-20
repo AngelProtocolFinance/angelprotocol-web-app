@@ -10,7 +10,7 @@ import { getPayloadDiff, getTagPayloads } from "helpers/admin";
 import { useAdminContext } from "../../../Context";
 
 export default function usePropose() {
-  const { multisig, checkSubmit } = useAdminContext();
+  const { multisig, txResource } = useAdminContext();
   const {
     handleSubmit,
     formState: { isSubmitting, isDirty, isValid },
@@ -40,8 +40,7 @@ export default function usePropose() {
       });
     }
 
-    const result = checkSubmit();
-    if (typeof result === "function") return result();
+    if (typeof txResource === "string") throw new Error(txResource);
 
     const [data, dest, meta] = encodeTx(
       "multisig.change-threshold",
@@ -52,7 +51,7 @@ export default function usePropose() {
       { new: +threshold, curr: +initial.threshold }
     );
 
-    const { wallet, txMeta } = result;
+    const { wallet, txMeta } = txResource;
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig,
       title,

@@ -12,7 +12,7 @@ import { useAdminContext } from "../../../../Context";
 import { INIT_SPLIT } from "./index";
 
 export default function useCreateFund() {
-  const { multisig, checkSubmit } = useAdminContext();
+  const { multisig, txResource } = useAdminContext();
   const sendTx = useTxSender();
   const { showModal } = useModalContext();
   const { trigger, getValues } = useFormContext<FormValues>();
@@ -33,8 +33,7 @@ export default function useCreateFund() {
     ]);
 
     if (!isValid) return;
-    const result = checkSubmit();
-    if (typeof result === "function") return result();
+    if (typeof txResource === "string") throw new Error(txResource);
 
     const currHeight = getValues("height");
     let expiryHeight = getValues("expiryHeight");
@@ -64,7 +63,7 @@ export default function useCreateFund() {
       newFund
     );
 
-    const { wallet, txMeta } = result;
+    const { wallet, txMeta } = txResource;
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig,
       title: getValues("title"),

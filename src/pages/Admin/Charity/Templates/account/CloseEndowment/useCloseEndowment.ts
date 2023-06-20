@@ -9,12 +9,11 @@ import { useAdminContext } from "../../../../Context";
 
 export default function useCloseEndowment() {
   const { handleSubmit } = useFormContext<FV>();
-  const { multisig, checkSubmit, id: endowId } = useAdminContext();
+  const { multisig, txResource, id: endowId } = useAdminContext();
   const sendTx = useTxSender();
 
   async function closeEndowment(fv: FV) {
-    const result = checkSubmit();
-    if (typeof result === "function") return result();
+    if (typeof txResource === "string") throw new Error(txResource);
 
     const [beneficiary, beneficiaryMeta] = (function (): [Beneficiary, string] {
       const { id, type } = fv.beneficiary;
@@ -52,7 +51,7 @@ export default function useCloseEndowment() {
       { beneficiary: beneficiaryMeta }
     );
 
-    const { wallet, txMeta } = result;
+    const { wallet, txMeta } = txResource;
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig,
       title: fv.title,

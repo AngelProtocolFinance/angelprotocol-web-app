@@ -30,9 +30,9 @@ export default function Maturity() {
     ignoreUserSplits,
     maturityTime,
     maturityAllowlist,
-    checkSubmit,
+    txResource,
     multisig,
-  } = useAdminContext<"charity">();
+  } = useAdminContext<"charity">(["maturityAllowlist", "maturityTime"]);
   const { showModal } = useModalContext();
   const sendTx = useTxSender();
 
@@ -79,8 +79,7 @@ export default function Maturity() {
     date,
   }) => {
     try {
-      const result = checkSubmit(["maturityAllowlist", "maturityTime"]);
-      if (typeof result === "function") return result();
+      if (typeof txResource === "string") throw new Error(txResource);
 
       const prev = new Set(maturityAllowlist);
       const curr = new Set(beneficiaries);
@@ -106,7 +105,7 @@ export default function Maturity() {
         diff
       );
 
-      const { wallet, txMeta, isDelegated } = result;
+      const { wallet, txMeta, isDelegated } = txResource;
       const tx: SimulContractTx = isDelegated
         ? { from: wallet.address, to: dest, data }
         : createTx(wallet.address, "multisig.submit-transaction", {

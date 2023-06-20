@@ -5,7 +5,7 @@ import useTxSender from "hooks/useTxSender";
 import { useAdminContext } from "../../../../Context";
 
 export default function useSubmit() {
-  const { multisig, checkSubmit } = useAdminContext();
+  const { multisig, txResource } = useAdminContext();
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },
@@ -15,14 +15,13 @@ export default function useSubmit() {
 
   async function submit(fv: FV) {
     //check for changes
-    const result = checkSubmit();
-    if (typeof result === "function") return result();
+    if (typeof txResource === "string") throw new Error(txResource);
 
     const [data, dest, meta] = encodeTx("registrar.add-token", {
       token: fv.token,
     });
 
-    const { wallet, txMeta } = result;
+    const { wallet, txMeta } = txResource;
     await sendTx({
       content: {
         type: "evm",

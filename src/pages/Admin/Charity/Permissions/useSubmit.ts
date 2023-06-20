@@ -13,7 +13,7 @@ export default function useSubmit() {
     id,
     multisig,
     settingsController: settings,
-    checkSubmit,
+    txResource,
   } = useAdminContext<"charity">();
   const { handleError } = useErrorContext();
   const {
@@ -32,15 +32,14 @@ export default function useSubmit() {
         return handleError("No changes detected");
       }
 
-      const result = checkSubmit();
-      if (typeof result === "function") return result();
+      if (typeof txResource === "string") throw new Error(txResource);
 
       const [data, dest, meta] = encodeTx(
         "accounts.update-controller",
         update,
         diff
       );
-      const { wallet, txMeta } = result;
+      const { wallet, txMeta } = txResource;
       const tx = createTx(wallet.address, "multisig.submit-transaction", {
         multisig,
         title: `Update permission settings`,

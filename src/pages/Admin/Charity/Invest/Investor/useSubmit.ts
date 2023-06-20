@@ -7,12 +7,11 @@ import { getTagPayloads } from "helpers/admin";
 import { useAdminContext } from "../../../Context";
 
 export default function useSubmit(vault: string, type: AccountType) {
-  const { multisig, id, checkSubmit } = useAdminContext();
+  const { multisig, id, txResource } = useAdminContext();
   const { sendTx, isSending } = useTxSender(true);
 
   async function submit({ token }: FormValues) {
-    const result = checkSubmit();
-    if (typeof result === "function") return result();
+    if (typeof txResource === "string") throw new Error(txResource);
 
     const [data, dest, meta] = encodeTx("accounts.invest", {
       id,
@@ -22,7 +21,7 @@ export default function useSubmit(vault: string, type: AccountType) {
       amounts: [scaleToStr(token.amount)],
     });
 
-    const { wallet, txMeta } = result;
+    const { wallet, txMeta } = txResource;
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig,
       title: "Invest",

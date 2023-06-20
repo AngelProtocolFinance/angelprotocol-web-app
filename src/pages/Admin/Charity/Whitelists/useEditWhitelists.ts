@@ -11,7 +11,10 @@ import { getPayloadDiff, getTagPayloads } from "helpers/admin";
 import { useAdminContext } from "../../Context";
 
 export default function useEditWhitelists() {
-  const { id, multisig, checkSubmit } = useAdminContext<"charity">();
+  const { id, multisig, txResource } = useAdminContext<"charity">([
+    "allowlistedBeneficiaries",
+    "allowlistedContributors",
+  ]);
   const {
     reset,
     handleSubmit,
@@ -27,11 +30,7 @@ export default function useEditWhitelists() {
     beneficiaries,
   }) => {
     try {
-      const result = checkSubmit([
-        "allowlistedBeneficiaries",
-        "allowlistedContributors",
-      ]);
-      if (typeof result === "function") return result();
+      if (typeof txResource === "string") throw new Error(txResource);
 
       const update: EndowmentSettingsUpdate = {
         ...initial,
@@ -53,7 +52,7 @@ export default function useEditWhitelists() {
         diff
       );
 
-      const { wallet, txMeta, isDelegated } = result;
+      const { wallet, txMeta, isDelegated } = txResource;
       const tx: SimulContractTx = isDelegated
         ? { from: wallet.address, to: dest, data }
         : createTx(wallet.address, "multisig.submit-transaction", {
