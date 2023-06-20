@@ -9,7 +9,6 @@ export type TManagement = {
   //proposal config defaulted to percentage
   proposal: {
     threshold: number; // integer
-    duration: string; // in hours
     isAutoExecute: boolean;
   };
 };

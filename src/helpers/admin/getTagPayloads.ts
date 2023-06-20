@@ -32,6 +32,10 @@ export function getTagPayloads(type?: TxMeta["id"]): TagPayload[] {
       _tags.push("multisig.threshold");
       break;
 
+    case "multisig.change-auto-execute":
+      _tags.push("multisig.require-execution");
+      break;
+
     case "erc20.transfer":
       _apes.push("chain"); //assuming user wallet is beneficiary
       break;

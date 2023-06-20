@@ -4,7 +4,6 @@ import { FV } from "./types";
 import { useModalContext } from "contexts/ModalContext";
 import Form, { Desc, FormProps, Title } from "../common/Form";
 import NavButtons from "../common/NavButtons";
-import DurationForm from "./DurationForm";
 import Members from "./Members";
 import ThresholdForm from "./ThresholdForm";
 
@@ -13,7 +12,7 @@ export default function ManageForm(props: FormProps) {
   const { showModal } = useModalContext();
 
   const members = watch("members");
-  const { duration, threshold, isAutoExecute } = watch("proposal");
+  const { threshold, isAutoExecute } = watch("proposal");
 
   /** watch for members and adjust threshold accordingly */
   useEffect(() => {
@@ -51,19 +50,6 @@ export default function ManageForm(props: FormProps) {
             <p>
               Proposals can be executed when <Bold>{threshold}</Bold> out{" "}
               <Bold>{members.length || 1}</Bold> members cast their vote.
-            </p>
-          </Container>
-          <Container
-            onBtnClick={() =>
-              showModal(DurationForm, {
-                initial: duration,
-                onChange: (v) => setValue("proposal.duration", v),
-              })
-            }
-          >
-            <p>
-              Proposals duration is <Bold>{duration}</Bold> hour
-              {+duration > 1 ? "s" : ""}.
             </p>
           </Container>
           <Container
