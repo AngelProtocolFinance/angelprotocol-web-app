@@ -4,7 +4,7 @@ import { Profile as TProfile } from "services/types";
 import Icon from "components/Icon";
 import Image from "components/Image";
 import RichText from "components/RichText";
-import { Tooltip } from "components/admin";
+import { KeyValue as KV, Tooltip } from "components/admin";
 import { appRoutes } from "constants/routes";
 import { useAdminContext } from "../../Context";
 import Group from "./common/Group";
@@ -26,7 +26,7 @@ export default function ReadOnlyProfile({
       <Tooltip tooltip={tooltip} />
       <p>
         This profile is{" "}
-        <span className="text-sm font-bold uppercase text-orange">
+        <span className="text-sm font-bold uppercase t">
           {p.published ? "Published" : "Not published"}
         </span>{" "}
       </p>
@@ -101,17 +101,4 @@ function Label({
   children,
 }: PropsWithChildren<{ classes?: string }>) {
   return <span className={`text-sm font-bold ${classes}`}>{children}</span>;
-}
-
-type KeyValueProps = {
-  name: string;
-  value?: string;
-};
-function KV({ name, value }: KeyValueProps) {
-  return (
-    <div className="grid gap-y-2">
-      <p className="font-bold text-sm">{name}</p>
-      <p>{value ?? "not set"}</p>
-    </div>
-  );
 }

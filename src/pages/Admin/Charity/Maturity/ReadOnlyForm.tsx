@@ -1,7 +1,6 @@
 import { FV } from "./types";
 import { ReadOnlyAddresses } from "components/Addresses";
-import { Tooltip } from "components/admin";
-import { Field } from "components/form";
+import { KeyValue as KV, Tooltip } from "components/admin";
 
 export default function ReadOnlyForm(p: FV & { tooltip: string }) {
   return (
@@ -12,19 +11,7 @@ export default function ReadOnlyForm(p: FV & { tooltip: string }) {
 
       {p.willMature ? (
         <>
-          <Field<FV, "date">
-            type="date"
-            name="date"
-            label="Maturity date"
-            placeholder="DD/MM/YYYY"
-            classes={{
-              container:
-                "rounded border border-prim p-4 @lg:p-8 bg-white dark:bg-blue-d6",
-              input: "date-input uppercase mt-2 field-input-admin",
-              label: "text-xl font-bold",
-            }}
-          />
-
+          <KV name="Maturity date" value={p.date} />
           <ReadOnlyAddresses
             addresses={p.beneficiaries}
             memberName="beneficiary"

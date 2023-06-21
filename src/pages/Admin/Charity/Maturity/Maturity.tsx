@@ -19,6 +19,7 @@ import {
 } from "helpers/admin";
 import { useAdminContext } from "../../Context";
 import Form from "./Form";
+import ReadOnlyForm from "./ReadOnlyForm";
 
 export default function Maturity() {
   const {
@@ -132,7 +133,9 @@ export default function Maturity() {
 
   const { handleSubmit, reset } = methods;
 
-  return (
+  return typeof txResource === "string" ? (
+    <ReadOnlyForm {...defaults} tooltip={txResource} />
+  ) : (
     <FormProvider {...methods}>
       <Form
         onSubmit={handleSubmit(onSubmit)}
