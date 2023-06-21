@@ -35,7 +35,7 @@ export function Context(props: {
   );
 }
 
-type Operation =
+export type Operation =
   | keyof SettingsController
   | "withdraw-liquid"
   | "withdraw-locked";
