@@ -4,7 +4,7 @@ import { useModalContext } from "contexts/ModalContext";
 import Prompt from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
-import { useAdminContext } from "../../../../Context";
+import { isTooltip, useAdminContext } from "../../../../Context";
 
 export default function useUpdateOwner() {
   const { multisig, txResource } = useAdminContext();
@@ -27,7 +27,7 @@ export default function useUpdateOwner() {
       });
     }
 
-    if (typeof txResource === "string") throw new Error(txResource);
+    if (isTooltip(txResource)) throw new Error(txResource);
 
     const [data, dest, meta] = encodeTx(
       "registrar.update-owner",

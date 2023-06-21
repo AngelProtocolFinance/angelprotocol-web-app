@@ -2,14 +2,14 @@ import { AccountType } from "types/lists";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
-import { useAdminContext } from "../../../../Context";
+import { isTooltip, useAdminContext } from "../../../../Context";
 
 export default function useSubmit(vault: string, type: AccountType) {
   const { multisig, id, txResource } = useAdminContext();
   const { sendTx, isSending } = useTxSender(true);
 
   async function submit() {
-    if (typeof txResource === "string") throw new Error(txResource);
+    if (isTooltip(txResource)) throw Error(txResource);
 
     const [data, dest, meta] = encodeTx("accounts.redeem", {
       id,

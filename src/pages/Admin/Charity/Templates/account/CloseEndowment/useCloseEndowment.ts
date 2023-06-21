@@ -5,7 +5,7 @@ import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
 import { ADDRESS_ZERO } from "constants/evm";
-import { useAdminContext } from "../../../../Context";
+import { isTooltip, useAdminContext } from "../../../../Context";
 
 export default function useCloseEndowment() {
   const { handleSubmit } = useFormContext<FV>();
@@ -13,7 +13,7 @@ export default function useCloseEndowment() {
   const sendTx = useTxSender();
 
   async function closeEndowment(fv: FV) {
-    if (typeof txResource === "string") throw new Error(txResource);
+    if (isTooltip(txResource)) throw new Error(txResource);
 
     const [beneficiary, beneficiaryMeta] = (function (): [Beneficiary, string] {
       const { id, type } = fv.beneficiary;

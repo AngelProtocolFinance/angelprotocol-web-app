@@ -9,7 +9,7 @@ import useTxSender from "hooks/useTxSender";
 import { isEmpty } from "helpers";
 import { getPayloadDiff, getTagPayloads } from "helpers/admin";
 import { toContractSplit, toFormSplit } from "helpers/ast";
-import { useAdminContext } from "../../../Context";
+import { isTooltip, useAdminContext } from "../../../Context";
 import Form from "./Form";
 
 export default function Splits() {
@@ -51,7 +51,7 @@ export default function Splits() {
 
   const update: SubmitHandler<FV> = async (splits) => {
     try {
-      if (typeof txResource === "string") throw new Error(txResource);
+      if (isTooltip(txResource)) throw new Error(txResource);
 
       const update: EndowmentSettingsUpdate = {
         ...initial,

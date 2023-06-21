@@ -17,7 +17,7 @@ import {
   getPayloadDiff,
   getTagPayloads,
 } from "helpers/admin";
-import { useAdminContext } from "../../Context";
+import { isTooltip, useAdminContext } from "../../Context";
 import Form from "./Form";
 import ReadOnlyForm from "./ReadOnlyForm";
 
@@ -80,7 +80,7 @@ export default function Maturity() {
     date,
   }) => {
     try {
-      if (typeof txResource === "string") throw new Error(txResource);
+      if (isTooltip(txResource)) throw new Error(txResource);
 
       const prev = new Set(maturityAllowlist);
       const curr = new Set(beneficiaries);
@@ -133,7 +133,7 @@ export default function Maturity() {
 
   const { handleSubmit, reset } = methods;
 
-  return typeof txResource === "string" ? (
+  return isTooltip(txResource) ? (
     <ReadOnlyForm {...defaults} tooltip={txResource} />
   ) : (
     <FormProvider {...methods}>

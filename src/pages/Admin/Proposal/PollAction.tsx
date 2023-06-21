@@ -18,7 +18,7 @@ import {
 import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
 import { EMPTY_DATA } from "constants/evm";
-import { useAdminContext } from "../Context";
+import { isTooltip, useAdminContext } from "../Context";
 
 const ERROR = "error";
 const processLog: LogProcessor = (logs) => {
@@ -52,7 +52,7 @@ export default function PollAction(props: ProposalDetails) {
   };
 
   async function executeProposal() {
-    if (typeof txResource === "string") throw new Error(txResource);
+    if (isTooltip(txResource)) throw new Error(txResource);
 
     const { wallet } = txResource;
     await sendTx({
@@ -70,7 +70,7 @@ export default function PollAction(props: ProposalDetails) {
   }
 
   async function sign() {
-    if (typeof txResource === "string") throw new Error(txResource);
+    if (isTooltip(txResource)) throw new Error(txResource);
 
     const { wallet } = txResource;
     await sendTx({

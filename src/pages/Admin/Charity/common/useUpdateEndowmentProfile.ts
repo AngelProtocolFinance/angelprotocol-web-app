@@ -8,7 +8,7 @@ import { TxPrompt } from "components/Prompt";
 import { getProvider } from "helpers";
 import { cleanObject } from "helpers/cleanObject";
 import { appRoutes } from "constants/routes";
-import { useAdminContext } from "../../Context";
+import { isTooltip, useAdminContext } from "../../Context";
 
 // import optimizeImage from "./optimizeImage";
 
@@ -27,7 +27,7 @@ export default function useUpdateEndowmentProfile() {
     endowProfileUpdate: SemiPartial<EndowmentProfileUpdate, "id" | "owner">
   ) => {
     try {
-      if (typeof txResource === "string") throw new Error(txResource);
+      if (isTooltip(txResource)) throw new Error(txResource);
 
       const cleanUpdates = cleanObject(endowProfileUpdate);
 

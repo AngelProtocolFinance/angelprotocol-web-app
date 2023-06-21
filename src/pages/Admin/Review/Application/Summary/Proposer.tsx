@@ -14,7 +14,7 @@ import { Field } from "components/form";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import { multisig as Multisig, SubmissionEvent } from "contracts/evm/multisig";
 import useTxSender from "hooks/useTxSender";
-import { useAdminContext } from "../../../Context";
+import { isTooltip, useAdminContext } from "../../../Context";
 import { proposalShape } from "../../../constants";
 
 type Props = {
@@ -43,7 +43,7 @@ export default function Proposer({ type, appId, reference }: Props) {
   const { handleSubmit } = methods;
 
   async function submit({ type, ...fv }: FV) {
-    if (typeof txResource === "string") throw new Error(txResource);
+    if (isTooltip(txResource)) throw new Error(txResource);
 
     const [data, dest] = encodeTx(
       type === "approve"

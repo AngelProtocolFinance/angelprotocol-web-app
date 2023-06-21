@@ -2,7 +2,7 @@ import Modal from "components/Modal";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
-import { useAdminContext } from "../../../Context";
+import { isTooltip, useAdminContext } from "../../../Context";
 
 type Props = {
   autoExecute: boolean;
@@ -13,7 +13,7 @@ export default function AutoExecutePrompt({ autoExecute }: Props) {
   const { sendTx, isSending } = useTxSender(true);
 
   async function toggle() {
-    if (typeof txResource === "string") throw new Error(txResource);
+    if (isTooltip(txResource)) throw new Error(txResource);
 
     const [data, dest, meta] = encodeTx("multisig.change-auto-execute", {
       multisig,

@@ -7,7 +7,7 @@ import useTxSender from "hooks/useTxSender";
 import { scale, toBase64 } from "helpers";
 import { getTagPayloads } from "helpers/admin";
 import { EMPTY_DATA } from "constants/evm";
-import { useAdminContext } from "../../../../Context";
+import { isTooltip, useAdminContext } from "../../../../Context";
 
 export default function useTransferFunds() {
   const {
@@ -18,7 +18,7 @@ export default function useTransferFunds() {
   const sendTx = useTxSender();
 
   async function transferFunds(fv: FV) {
-    if (typeof txResource === "string") throw new Error(txResource);
+    if (isTooltip(txResource)) throw new Error(txResource);
     const { token, recipient } = fv;
     const scaledAmount = scale(token.amount, token.decimals).toHex();
 

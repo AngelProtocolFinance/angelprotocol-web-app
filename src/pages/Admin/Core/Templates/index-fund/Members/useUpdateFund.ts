@@ -6,7 +6,7 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { useGetter } from "store/accessors";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
-import { useAdminContext } from "../../../../Context";
+import { isTooltip, useAdminContext } from "../../../../Context";
 
 export default function useUpdateFund() {
   const { trigger, reset, getValues } = useFormContext<FormValues>();
@@ -46,7 +46,7 @@ export default function useUpdateFund() {
       if (toRemove.length <= 0 && toAdd.length <= 0) {
         throw new Error("No fund member changes");
       }
-      if (typeof txResource === "string") throw new Error(txResource);
+      if (isTooltip(txResource)) throw new Error(txResource);
 
       const modified = new Set([...fundMembers.map((f) => f.id), ...toAdd]);
       toRemove.forEach((id) => modified.delete(id));

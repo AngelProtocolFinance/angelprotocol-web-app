@@ -7,7 +7,7 @@ import { TxPrompt } from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { hasElapsed } from "helpers/admin";
-import { useAdminContext } from "../../../../Context";
+import { isTooltip, useAdminContext } from "../../../../Context";
 
 export default function useDestroyFund() {
   const {
@@ -28,7 +28,7 @@ export default function useDestroyFund() {
       return showModal(TxPrompt, { error: "Fund not found" });
     }
 
-    if (typeof txResource === "string") throw new Error(txResource);
+    if (isTooltip(txResource)) throw new Error(txResource);
 
     const id: ID = { id: +fv.fundId };
     const [data, dest, meta] = encodeTx("index-fund.remove-fund", id, id);

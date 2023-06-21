@@ -17,7 +17,7 @@ import { chainIds } from "constants/chainIds";
 import { EMAIL_SUPPORT } from "constants/env";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { APIs } from "constants/urls";
-import { TxMeta, useAdminContext } from "../../../../Context";
+import { TxMeta, isTooltip, useAdminContext } from "../../../../Context";
 import { fee, names } from "./helpers";
 
 export default function useWithdraw() {
@@ -33,7 +33,7 @@ export default function useWithdraw() {
 
   const network = watch("network");
   async function withdraw(wv: WithdrawValues) {
-    if (typeof txResource === "string") throw new Error(txResource);
+    if (isTooltip(txResource)) throw new Error(txResource);
 
     const accType: AccountType = wv.type === "locked" ? 0 : 1;
     const isPolygon = wv.network === chainIds.polygon;

@@ -2,7 +2,7 @@ import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
-import { useAdminContext } from "../../../../Context";
+import { isTooltip, useAdminContext } from "../../../../Context";
 
 export default function useSubmit() {
   const { multisig, txResource } = useAdminContext();
@@ -15,7 +15,7 @@ export default function useSubmit() {
 
   async function submit(fv: FV) {
     //check for changes
-    if (typeof txResource === "string") throw new Error(txResource);
+    if (isTooltip(txResource)) throw new Error(txResource);
 
     const [data, dest, meta] = encodeTx("registrar.add-token", {
       token: fv.token,

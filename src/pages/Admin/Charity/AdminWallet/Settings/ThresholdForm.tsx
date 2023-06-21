@@ -8,7 +8,7 @@ import { Field } from "components/form";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
-import { useAdminContext } from "../../../Context";
+import { isTooltip, useAdminContext } from "../../../Context";
 import { proposalShape } from "../../../constants";
 
 export type Props = {
@@ -40,7 +40,7 @@ export default function ThresholdForm({ added, initial }: Props) {
   const { handleSubmit } = methods;
 
   const submit: SubmitHandler<FV> = async (fv) => {
-    if (typeof txResource === "string") throw Error(txResource);
+    if (isTooltip(txResource)) throw Error(txResource);
 
     const [data, dest, meta] = encodeTx(
       "multisig.change-threshold",

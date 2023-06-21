@@ -6,7 +6,7 @@ import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { isEmpty } from "helpers";
 import { getPayloadDiff, getTagPayloads } from "helpers/admin";
-import { useAdminContext } from "../../../../Context";
+import { isTooltip, useAdminContext } from "../../../../Context";
 
 export default function useConfigureFund() {
   const { multisig, txResource } = useAdminContext();
@@ -35,7 +35,7 @@ export default function useConfigureFund() {
       });
     }
 
-    if (typeof txResource === "string") throw new Error(txResource);
+    if (isTooltip(txResource)) throw new Error(txResource);
 
     const [configData, dest, meta] = encodeTx("index-fund.config", data, diffs);
 

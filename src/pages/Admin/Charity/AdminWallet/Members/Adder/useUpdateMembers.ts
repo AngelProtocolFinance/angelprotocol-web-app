@@ -2,14 +2,14 @@ import { FormProps, FormValues } from "./types";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
-import { useAdminContext } from "../../../../Context";
+import { isTooltip, useAdminContext } from "../../../../Context";
 
 export default function useUpdateMembers(action: FormProps["action"]) {
   const { multisig, txResource } = useAdminContext();
   const { sendTx, isSending } = useTxSender(true);
 
   async function updateMembers(fv: FormValues) {
-    if (typeof txResource === "string") throw new Error(txResource);
+    if (isTooltip(txResource)) throw new Error(txResource);
 
     const [data, dest, meta] = encodeTx(
       action === "add" ? "multisig.add-owner" : "multisig.remove-owner",

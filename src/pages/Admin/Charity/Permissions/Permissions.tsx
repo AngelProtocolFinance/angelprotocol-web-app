@@ -3,7 +3,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { FV, TPermissions } from "./types";
 import { Tooltip } from "components/admin";
 import { adminRoutes } from "constants/routes";
-import { useAdminContext } from "../../Context";
+import { isTooltip, useAdminContext } from "../../Context";
 import Seo from "../Seo";
 import Form from "./Form";
 import ReadOnlyPermissionsTable from "./ReadOnlyPermissionsTable";
@@ -38,7 +38,7 @@ export default function Permissions() {
 
       <h2 className="font-bold text-[2rem]">Permissions</h2>
 
-      {typeof txResource === "string" ? (
+      {isTooltip(txResource) ? (
         <>
           <Tooltip tooltip={txResource} />
           <ReadOnlyPermissionsTable {...permissions} />

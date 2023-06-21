@@ -6,7 +6,7 @@ import { useProfileQuery } from "services/aws/aws";
 import { FormError, FormSkeleton } from "components/admin";
 import { adminRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
-import { useAdminContext } from "../../Context";
+import { isTooltip, useAdminContext } from "../../Context";
 import Seo from "../Seo";
 import Form from "./Form";
 import ReadOnlyProfile from "./ReadOnlyProfile";
@@ -24,7 +24,7 @@ export default function EditProfile() {
       <FormSkeleton classes="max-w-4xl justify-self-center mt-6" />
     ) : isError || !profile ? (
       <FormError errorMessage="Failed to load profile" />
-    ) : typeof txResource === "string" ? (
+    ) : isTooltip(txResource) ? (
       <ReadOnlyProfile {...profile} tooltip={txResource} />
     ) : (
       <FormWithContext {...profile} />

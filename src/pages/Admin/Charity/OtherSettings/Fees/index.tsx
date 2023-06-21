@@ -17,7 +17,7 @@ import { positiveNumber, requiredPercent } from "schemas/number";
 import { requiredWalletAddr } from "schemas/string";
 import { chainIds } from "constants/chainIds";
 import { ADDRESS_ZERO } from "constants/evm";
-import { useAdminContext } from "../../../Context";
+import { isTooltip, useAdminContext } from "../../../Context";
 import Form from "./Form";
 
 const fee: SchemaShape<TFee> = {
@@ -80,7 +80,7 @@ export default function Fees() {
 
   const onSubmit: SubmitHandler<FV> = async (fees) => {
     try {
-      if (typeof txResource === "string") throw new Error(txResource);
+      if (isTooltip(txResource)) throw new Error(txResource);
 
       const update: FeeSettingsUpdate = {
         id,

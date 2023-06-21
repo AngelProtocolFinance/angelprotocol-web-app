@@ -1,4 +1,4 @@
-import { useAdminContext } from "pages/Admin/Context";
+import { isTooltip, useAdminContext } from "pages/Admin/Context";
 import Members from "./Members";
 import ReadOnlyAdminWallet from "./ReadOnlyAdminWallet";
 import Settings from "./Settings";
@@ -6,7 +6,7 @@ import Settings from "./Settings";
 export default function AdminWallet() {
   const { txResource } = useAdminContext();
 
-  if (typeof txResource === "string") {
+  if (isTooltip(txResource)) {
     return <ReadOnlyAdminWallet tooltip={txResource} />;
   }
 

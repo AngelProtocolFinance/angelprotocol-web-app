@@ -8,7 +8,7 @@ import { useGetter } from "store/accessors";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { blockTime } from "helpers/admin";
-import { useAdminContext } from "../../../../Context";
+import { isTooltip, useAdminContext } from "../../../../Context";
 import { INIT_SPLIT } from "./index";
 
 export default function useCreateFund() {
@@ -33,7 +33,7 @@ export default function useCreateFund() {
     ]);
 
     if (!isValid) return;
-    if (typeof txResource === "string") throw new Error(txResource);
+    if (isTooltip(txResource)) throw new Error(txResource);
 
     const currHeight = getValues("height");
     let expiryHeight = getValues("expiryHeight");
