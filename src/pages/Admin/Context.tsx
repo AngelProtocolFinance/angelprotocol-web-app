@@ -75,15 +75,18 @@ export const useAdminContext = <T extends AdminType = any>(
   }
 
   if (!wallet) {
-    return { txResource: "Wallet is not connected", ...resource };
+    return { txResource: "Read-only: wallet not connected", ...resource };
   }
 
   if (isLoading) {
-    return { txResource: "Wallet is still loading", ...resource };
+    return { txResource: "Read-only: wallet is loading..", ...resource };
   }
 
   if (wallet.chain.chain_id !== chainIds.polygon) {
-    return { txResource: "Kindly switch to polygon network", ...resource };
+    return {
+      txResource: "Read-only: wallet not connecte to Polygon",
+      ...resource,
+    };
   }
 
   const sender = wallet.address;
@@ -94,7 +97,7 @@ export const useAdminContext = <T extends AdminType = any>(
     if (!isAdmin)
       return {
         ...resource,
-        txResource: "Unauthorized: Not member of multisig",
+        txResource: "Read-only: not member of multisig",
       };
     return {
       ...resource,
@@ -129,7 +132,7 @@ export const useAdminContext = <T extends AdminType = any>(
   if (isLocked) {
     return {
       ...resource,
-      txResource: "Unauthorized: Not member of multisig",
+      txResource: "Read-only: page is locked forever",
     };
   }
 
@@ -150,7 +153,7 @@ export const useAdminContext = <T extends AdminType = any>(
   if (isMaturityRestricted) {
     return {
       ...resource,
-      txResource: "Operation not allowed for matured accounts.",
+      txResource: "Read-only: account is already matured.",
     };
   }
 
@@ -170,8 +173,7 @@ export const useAdminContext = <T extends AdminType = any>(
   if (!isAdmin && !isDelegated) {
     return {
       ...resource,
-      txResource:
-        "Unauthorized: Connected wallet is neither an admin nor delegated for this operation",
+      txResource: "Read-only: not member of multisig nor a delegate",
     };
   }
   return {
