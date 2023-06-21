@@ -21,6 +21,7 @@ export default function useEditWhitelists() {
 
   const { showModal } = useModalContext();
   const sendTx = useTxSender();
+  const tooltip = isTooltip(txResource) ? txResource : undefined;
 
   const editWhitelists: SubmitHandler<FormValues> = async ({
     initial,
@@ -79,5 +80,6 @@ export default function useEditWhitelists() {
     reset,
     editWhitelists: handleSubmit(editWhitelists),
     isSubmitting,
+    tooltip,
   };
 }

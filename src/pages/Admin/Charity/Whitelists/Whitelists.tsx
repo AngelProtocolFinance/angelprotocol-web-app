@@ -1,8 +1,7 @@
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues as FV } from "./types";
 import { EndowmentSettingsUpdate } from "types/contracts";
-import { isTooltip, useAdminContext } from "../../Context";
-import Addresses from "./Addresses";
+import { useAdminContext } from "../../Context";
 import Form from "./Form";
 import { ops } from "./constants";
 
@@ -15,7 +14,6 @@ export default function Whitelists() {
     splitToLiquid,
     ignoreUserSplits,
     maturityTime,
-    txResource,
   } = useAdminContext<"charity">(ops);
 
   const initial: EndowmentSettingsUpdate = {
@@ -41,14 +39,9 @@ export default function Whitelists() {
   return (
     <>
       <h2 className="text-[2rem] font-bold mb-10">Whitelists</h2>
-
-      {isTooltip(txResource) ? (
-        <Addresses tooltip={txResource} />
-      ) : (
-        <FormProvider {...methods}>
-          <Form />
-        </FormProvider>
-      )}
+      <FormProvider {...methods}>
+        <Form />
+      </FormProvider>
     </>
   );
 }
