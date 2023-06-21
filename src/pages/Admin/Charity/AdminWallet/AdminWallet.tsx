@@ -1,13 +1,13 @@
 import { useAdminContext } from "pages/Admin/Context";
 import Members from "./Members";
-import ReadOnlyAdminWallet from "./ReadOnlyAdminWallet/ReadOnlyAdminWallet";
+import ReadOnlyAdminWallet from "./ReadOnlyAdminWallet";
 import Settings from "./Settings";
 
 export default function AdminWallet() {
   const { txResource } = useAdminContext();
 
   if (typeof txResource === "string") {
-    return <ReadOnlyAdminWallet />;
+    return <ReadOnlyAdminWallet tooltip={txResource} />;
   }
 
   return (

@@ -28,13 +28,6 @@ export default function Settings() {
 const Container = ({ children }: PropsWithChildren) => (
   <div className="grid @lg:flex @lg:items-center py-3 px-4 @lg:justify-between">
     {children}
-    <button
-      disabled={true}
-      type="button"
-      className="btn-outline-filled px-8 py-2 text-sm mt-4 @lg:mt-0"
-    >
-      change
-    </button>
   </div>
 );
 
