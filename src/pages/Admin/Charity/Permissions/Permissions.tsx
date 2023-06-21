@@ -6,7 +6,6 @@ import { adminRoutes } from "constants/routes";
 import { isTooltip, useAdminContext } from "../../Context";
 import Seo from "../Seo";
 import Form from "./Form";
-import ReadOnlyPermissionsTable from "./ReadOnlyPermissionsTable";
 import { controllerUpdate, formPermission } from "./helpers";
 import { schema } from "./schema";
 
@@ -32,22 +31,15 @@ export default function Permissions() {
     resolver: yupResolver(schema),
   });
 
+  const tooltip = isTooltip(txResource) ? txResource : undefined;
   return (
     <div className="grid gap-6">
       <Seo title="Permissions" url={adminRoutes.permissions} />
-
       <h2 className="font-bold text-[2rem]">Permissions</h2>
-
-      {isTooltip(txResource) ? (
-        <>
-          <Tooltip tooltip={txResource} />
-          <ReadOnlyPermissionsTable {...permissions} />
-        </>
-      ) : (
-        <FormProvider {...methods}>
-          <Form />
-        </FormProvider>
-      )}
+      {tooltip && <Tooltip tooltip={tooltip} />}
+      <FormProvider {...methods}>
+        <Form aria-disabled={tooltip !== undefined} />
+      </FormProvider>
     </div>
   );
 }

@@ -10,7 +10,7 @@ export const Form: FC<
       {...props}
     >
       <fieldset
-        disabled={props["aria-disabled"] === true ? true : false}
+        disabled={!!props["aria-disabled"]}
         className="contents" //to not affect layout
       >
         {children}
