@@ -1,3 +1,4 @@
+import { FormHTMLAttributes } from "react";
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "./types";
 import { UNSDG_NUMS } from "types/lists";
@@ -8,6 +9,7 @@ import ImgEditor from "components/ImgEditor";
 import { RichTextEditor } from "components/RichText";
 import { Selector } from "components/Selector";
 import Toggle from "components/Toggle";
+import { Tooltip } from "components/admin";
 import { Field, Label } from "components/form";
 import { ENDOW_DESIGNATIONS } from "constants/common";
 import { appRoutes } from "constants/routes";
@@ -21,10 +23,15 @@ const sdgOptions = Object.entries(unsdgs).map(([key, { title }]) =>
   getSDGLabelValuePair(key, title)
 );
 
-export default function Form() {
+export default function Form({
+  tooltip,
+}: FormHTMLAttributes<HTMLFormElement> & { tooltip?: string }) {
   const { isSubmitting, id, type } = useEditProfile();
   return (
-    <div className="w-full max-w-4xl justify-self-center grid content-start gap-6 mt-6 font-body">
+    <fieldset
+      disabled={tooltip !== undefined}
+      className="group w-full max-w-4xl justify-self-center grid content-start gap-6 mt-6 font-body"
+    >
       <Link
         to={`${appRoutes.profile}/${id}`}
         className="text-blue hover:text-orange text-sm flex items-center gap-1"
@@ -32,6 +39,7 @@ export default function Form() {
         <Icon type="Back" />
         <span>Back to profile</span>
       </Link>
+      {tooltip && <Tooltip tooltip={tooltip} />}
       <Toggle<FV> name="published" classes={{ container: "ml-auto text-sm" }}>
         Publish profile
       </Toggle>
@@ -190,7 +198,7 @@ export default function Form() {
         />
       </Group>
 
-      <div className="flex gap-3">
+      <div className="flex gap-3 group-disabled:hidden">
         <button
           disabled={isSubmitting}
           type="reset"
@@ -206,6 +214,6 @@ export default function Form() {
           Submit changes
         </button>
       </div>
-    </div>
+    </fieldset>
   );
 }

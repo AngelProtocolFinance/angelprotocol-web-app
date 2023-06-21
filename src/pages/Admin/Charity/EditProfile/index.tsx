@@ -9,14 +9,13 @@ import { unsdgs } from "constants/unsdgs";
 import { isTooltip, useAdminContext } from "../../Context";
 import Seo from "../Seo";
 import Form from "./Form";
-import ReadOnlyProfile from "./ReadOnlyProfile";
 import { getEndowDesignationLabelValuePair } from "./getEndowDesignationLabelValuePair";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import { ops } from "./ops";
 import { schema } from "./schema";
 
 export default function EditProfile() {
-  const { id, txResource } = useAdminContext(ops);
+  const { id } = useAdminContext(ops);
   const { data: profile, isLoading, isFetching, isError } = useProfileQuery(id);
 
   const content =
@@ -24,8 +23,6 @@ export default function EditProfile() {
       <FormSkeleton classes="max-w-4xl justify-self-center mt-6" />
     ) : isError || !profile ? (
       <FormError errorMessage="Failed to load profile" />
-    ) : isTooltip(txResource) ? (
-      <ReadOnlyProfile {...profile} tooltip={txResource} />
     ) : (
       <FormWithContext {...profile} />
     );
@@ -39,6 +36,8 @@ export default function EditProfile() {
 }
 
 function FormWithContext(props: TProfile) {
+  const { txResource } = useAdminContext(ops);
+
   const { active_in_countries = [] } = props;
   const designation = endow(props) ? props.endow_designation : "";
   const sdgs = endow(props) ? props.categories.sdgs : [];
@@ -95,9 +94,11 @@ function FormWithContext(props: TProfile) {
     resolver: yupResolver(schema),
     context: { isEndow: props.type === "endowment" },
   });
+  const tooltip = isTooltip(txResource) ? txResource : undefined;
+
   return (
     <FormProvider {...methods}>
-      <Form />
+      <Form tooltip={tooltip} />
     </FormProvider>
   );
 }
