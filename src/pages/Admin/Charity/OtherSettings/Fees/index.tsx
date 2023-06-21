@@ -128,6 +128,7 @@ export default function Fees() {
   };
 
   const { handleSubmit, reset } = methods;
+  const tooltip = isTooltip(txResource) ? txResource : undefined;
   return (
     <FormProvider {...methods}>
       <Form
@@ -136,6 +137,8 @@ export default function Fees() {
           ev.preventDefault();
           reset(defaultValues);
         }}
+        aria-disabled={tooltip !== undefined}
+        tooltip={tooltip}
       />
     </FormProvider>
   );

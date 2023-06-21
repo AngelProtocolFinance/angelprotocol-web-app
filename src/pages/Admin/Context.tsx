@@ -132,7 +132,7 @@ export const useAdminContext = <T extends AdminType = any>(
   if (isLocked) {
     return {
       ...resource,
-      txResource: "Read-only: page is locked forever",
+      txResource: "Read-only: locked forever",
     };
   }
 

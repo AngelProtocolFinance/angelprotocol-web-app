@@ -1,15 +1,19 @@
 import React, { FC, PropsWithChildren } from "react";
 import { useFormContext } from "react-hook-form";
 import { FV } from "./types";
+import { Tooltip } from "components/admin";
 import { MinmaxSlider, Toggle } from "components/ast";
 import { Reset, Submit } from "../../common/Btn";
 import { Form as Frm } from "../common/Form";
 import { SubHeading } from "../common/SubHeading";
 
 export default function Form({
+  tooltip,
   children,
   ...props
-}: PropsWithChildren<React.FormHTMLAttributes<HTMLFormElement>>) {
+}: PropsWithChildren<React.FormHTMLAttributes<HTMLFormElement>> & {
+  tooltip?: string;
+}) {
   const {
     watch,
     resetField,
@@ -20,6 +24,7 @@ export default function Form({
   return (
     <Frm {...props}>
       <SubHeading>Split of Contributions</SubHeading>
+      {tooltip && <Tooltip tooltip={tooltip} />}
       <p>
         You can set the distribution of the contributions to your AST. By
         default, contributors are able to set how their contribution is split
@@ -73,10 +78,12 @@ export default function Form({
           </MinmaxSlider>
         </Group>
       )}
-      <div className="flex justify-start gap-3 w-full">
-        <Reset disabled={!isDirty}>Reset changes</Reset>
-        <Submit>Submit changes</Submit>
-      </div>
+      {!tooltip && (
+        <div className="flex justify-start gap-3 w-full">
+          <Reset disabled={!isDirty}>Reset changes</Reset>
+          <Submit>Submit changes</Submit>
+        </div>
+      )}
     </Frm>
   );
 }

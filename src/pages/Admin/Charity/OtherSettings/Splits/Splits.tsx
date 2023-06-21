@@ -96,6 +96,7 @@ export default function Splits() {
     }
   };
 
+  const tooltip = isTooltip(txResource) ? txResource : undefined;
   const { handleSubmit, reset } = methods;
 
   return (
@@ -106,6 +107,8 @@ export default function Splits() {
           e.preventDefault();
           reset(defaultValues);
         }}
+        aria-disabled={tooltip !== undefined}
+        tooltip={tooltip}
       />
     </FormProvider>
   );
