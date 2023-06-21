@@ -96,7 +96,7 @@ function Label({
   classes = "",
   children,
 }: PropsWithChildren<{ classes?: string }>) {
-  return <span className={`text-sm bold ${classes}`}>{children}</span>;
+  return <span className={`text-sm font-bold ${classes}`}>{children}</span>;
 }
 
 type KeyValueProps = {
@@ -105,9 +105,9 @@ type KeyValueProps = {
 };
 function KV({ name, value }: KeyValueProps) {
   return (
-    <div>
-      <span>{name}</span>
-      <span>{value ?? "not set"}</span>
+    <div className="grid gap-y-2">
+      <p className="font-bold text-sm">{name}</p>
+      <p>{value ?? "not set"}</p>
     </div>
   );
 }
