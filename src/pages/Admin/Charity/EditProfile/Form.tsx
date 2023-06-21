@@ -1,4 +1,3 @@
-import { PropsWithChildren } from "react";
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "./types";
 import { UNSDG_NUMS } from "types/lists";
@@ -13,6 +12,7 @@ import { Field, Label } from "components/form";
 import { ENDOW_DESIGNATIONS } from "constants/common";
 import { appRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
+import Group from "./common/Group";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import { MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "./schema";
 import useEditProfile from "./useEditProfile";
@@ -22,16 +22,9 @@ const sdgOptions = Object.entries(unsdgs).map(([key, { title }]) =>
 );
 
 export default function Form() {
-  const { editProfile, isSubmitting, id, reset, type } = useEditProfile();
+  const { isSubmitting, id, type } = useEditProfile();
   return (
-    <form
-      onSubmit={editProfile}
-      onReset={(e) => {
-        e.preventDefault();
-        reset();
-      }}
-      className="w-full max-w-4xl justify-self-center grid content-start gap-6 mt-6 font-body"
-    >
+    <div className="w-full max-w-4xl justify-self-center grid content-start gap-6 mt-6 font-body">
       <Link
         to={`${appRoutes.profile}/${id}`}
         className="text-blue hover:text-orange text-sm flex items-center gap-1"
@@ -213,24 +206,6 @@ export default function Form() {
           Submit changes
         </button>
       </div>
-    </form>
-  );
-}
-
-function Group({
-  description,
-  ...props
-}: PropsWithChildren<{
-  title: string;
-  description?: string;
-}>) {
-  return (
-    <div className="grid gap-6 p-6 border border-prim rounded">
-      <h3 className="text-2xl font-body">{props.title}</h3>
-      {description && (
-        <p className="-mt-4 text-lg font-semibold">{description}</p>
-      )}
-      {props.children}
     </div>
   );
 }
