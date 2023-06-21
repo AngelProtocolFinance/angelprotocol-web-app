@@ -10,11 +10,10 @@ import { getPayloadDiff } from "helpers/admin";
 import { getFullURL, uploadFiles } from "helpers/uploadFiles";
 import { useAdminContext } from "../../Context";
 import useUpdateEndowmentProfile from "../common/useUpdateEndowmentProfile";
-
-// import optimizeImage from "./optimizeImage";
+import { ops } from "./ops";
 
 export default function useEditProfile() {
-  const { id, owner } = useAdminContext<"charity">();
+  const { id, owner } = useAdminContext<"charity">(ops);
   const {
     reset,
     handleSubmit,

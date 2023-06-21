@@ -9,12 +9,10 @@ import useTxSender from "hooks/useTxSender";
 import { isEmpty } from "helpers";
 import { getPayloadDiff, getTagPayloads } from "helpers/admin";
 import { useAdminContext } from "../../Context";
+import { ops } from "./constants";
 
 export default function useEditWhitelists() {
-  const { id, multisig, txResource } = useAdminContext<"charity">([
-    "allowlistedBeneficiaries",
-    "allowlistedContributors",
-  ]);
+  const { id, multisig, txResource } = useAdminContext<"charity">(ops);
   const {
     reset,
     handleSubmit,

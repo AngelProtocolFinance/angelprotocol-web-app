@@ -12,10 +12,11 @@ import Form from "./Form";
 import ReadOnlyProfile from "./ReadOnlyProfile";
 import { getEndowDesignationLabelValuePair } from "./getEndowDesignationLabelValuePair";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
+import { ops } from "./ops";
 import { schema } from "./schema";
 
 export default function EditProfile() {
-  const { id, txResource } = useAdminContext();
+  const { id, txResource } = useAdminContext(ops);
   const { data: profile, isLoading, isFetching, isError } = useProfileQuery(id);
 
   const content =
