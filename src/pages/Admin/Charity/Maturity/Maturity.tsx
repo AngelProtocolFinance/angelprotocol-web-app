@@ -19,7 +19,6 @@ import {
 } from "helpers/admin";
 import { isTooltip, useAdminContext } from "../../Context";
 import Form from "./Form";
-import ReadOnlyForm from "./ReadOnlyForm";
 
 export default function Maturity() {
   const {
@@ -132,10 +131,9 @@ export default function Maturity() {
   };
 
   const { handleSubmit, reset } = methods;
+  const tooltip = isTooltip(txResource) ? txResource : undefined;
 
-  return isTooltip(txResource) ? (
-    <ReadOnlyForm {...defaults} tooltip={txResource} />
-  ) : (
+  return (
     <FormProvider {...methods}>
       <Form
         onSubmit={handleSubmit(onSubmit)}
@@ -143,6 +141,7 @@ export default function Maturity() {
           e.preventDefault();
           reset();
         }}
+        tooltip={tooltip}
       />
     </FormProvider>
   );

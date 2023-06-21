@@ -55,7 +55,7 @@ export default function Toggle<T extends FV>({
           <span
             className={`${
               value
-                ? "translate-x-[1.625rem] bg-orange"
+                ? "translate-x-[1.625rem] bg-orange group-disabled:bg-gray"
                 : "translate-x-1 bg-gray"
             } inline-block h-6 w-6 transform rounded-full  transition-transform`}
           />
