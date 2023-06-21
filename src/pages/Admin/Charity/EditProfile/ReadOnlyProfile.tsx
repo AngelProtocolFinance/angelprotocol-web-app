@@ -4,6 +4,7 @@ import { Profile as TProfile } from "services/types";
 import Icon from "components/Icon";
 import Image from "components/Image";
 import RichText from "components/RichText";
+import { Tooltip } from "components/admin";
 import { appRoutes } from "constants/routes";
 import { useAdminContext } from "../../Context";
 import Group from "./common/Group";
@@ -22,9 +23,12 @@ export default function ReadOnlyProfile({
         <Icon type="Back" />
         <span>Back to profile</span>
       </Link>
+      <Tooltip tooltip={tooltip} />
       <p>
         This profile is{" "}
-        <span>{p.published ? "Published" : "Not published"}</span>{" "}
+        <span className="text-sm font-bold uppercase text-orange">
+          {p.published ? "Published" : "Not published"}
+        </span>{" "}
       </p>
       <Group title="Public profile information">
         <KV name="Name" value={p.name} />
