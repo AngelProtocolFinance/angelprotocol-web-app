@@ -1,12 +1,13 @@
 import { FormValues as FV } from "./types";
-import { FormContainer, Submitter } from "components/admin";
+import { FormContainer, Submitter, Tooltip } from "components/admin";
 import { Field } from "components/form";
 import useDestroyFund from "./useDestroyFund";
 
 export default function Form() {
-  const { destroyFund, isSubmitDisabled } = useDestroyFund();
+  const { destroyFund, isSubmitDisabled, tooltip } = useDestroyFund();
   return (
-    <FormContainer onSubmit={destroyFund}>
+    <FormContainer onSubmit={destroyFund} aria-disabled={!!tooltip}>
+      {tooltip && <Tooltip tooltip={tooltip} />}
       <Field<FV>
         classes="field-admin"
         label="Proposal title"

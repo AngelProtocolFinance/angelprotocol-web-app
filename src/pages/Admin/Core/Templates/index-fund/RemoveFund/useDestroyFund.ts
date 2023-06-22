@@ -54,5 +54,6 @@ export default function useDestroyFund() {
   return {
     destroyFund: handleSubmit(destroyFund),
     isSubmitDisabled: isSubmitting,
+    tooltip: isTooltip(txResource) ? txResource : undefined,
   };
 }

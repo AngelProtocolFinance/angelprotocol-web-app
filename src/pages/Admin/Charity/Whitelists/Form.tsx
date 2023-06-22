@@ -16,7 +16,7 @@ export default function Form() {
       className={`w-full mb-2`}
     >
       {tooltip && <Tooltip tooltip={tooltip} classes="mb-8" />}
-      <fieldset className="contents group" disabled={tooltip !== undefined}>
+      <fieldset className="contents group" disabled={!!tooltip}>
         <Addresses<FV, "contributors">
           memberName="contributor"
           name="contributors"

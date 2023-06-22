@@ -69,5 +69,8 @@ export default function useCloseEndowment() {
     });
   }
 
-  return { closeEndowment: handleSubmit(closeEndowment) };
+  return {
+    closeEndowment: handleSubmit(closeEndowment),
+    tooltip: isTooltip(txResource) ? txResource : undefined,
+  };
 }

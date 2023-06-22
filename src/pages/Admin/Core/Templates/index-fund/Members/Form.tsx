@@ -1,6 +1,11 @@
 import { FormValues as FV } from "./types";
 import { ErrorStatus } from "components/Status";
-import { FormContainer, GroupContainer, Submitter } from "components/admin";
+import {
+  FormContainer,
+  GroupContainer,
+  Submitter,
+  Tooltip,
+} from "components/admin";
 import { Field, Label } from "components/form";
 import Adder from "./Adder";
 import Member from "./Member";
@@ -9,9 +14,10 @@ import useUpdateFund from "./useUpdateFund";
 
 export default function Form() {
   const { membersCopy } = useInitFundMembers();
-  const { updateFund } = useUpdateFund();
+  const { updateFund, tooltip } = useUpdateFund();
   return (
-    <FormContainer onSubmit={updateFund}>
+    <FormContainer onSubmit={updateFund} aria-disabled={!!tooltip}>
+      {tooltip && <Tooltip tooltip={tooltip} />}
       <Field<FV>
         classes="field-admin"
         label="Proposal title"

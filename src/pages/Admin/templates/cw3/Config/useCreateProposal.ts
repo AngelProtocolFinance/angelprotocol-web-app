@@ -72,5 +72,6 @@ export default function usePropose() {
   return {
     createProposal: handleSubmit(createProposal),
     isSubmitDisabled: isSubmitting || !isValid || !isDirty,
+    tooltip: isTooltip(txResource) ? txResource : undefined,
   };
 }

@@ -38,7 +38,7 @@ export default function Permissions() {
       <h2 className="font-bold text-[2rem]">Permissions</h2>
       {tooltip && <Tooltip tooltip={tooltip} />}
       <FormProvider {...methods}>
-        <Form aria-disabled={tooltip !== undefined} />
+        <Form aria-disabled={!!tooltip} />
       </FormProvider>
     </div>
   );

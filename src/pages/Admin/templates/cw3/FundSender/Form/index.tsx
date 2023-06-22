@@ -1,14 +1,15 @@
 import { FormValues as FV } from "../types";
 import { Chain } from "types/tx";
 import TokenField from "components/TokenField";
-import { FormContainer, Submitter } from "components/admin";
+import { FormContainer, Submitter, Tooltip } from "components/admin";
 import { Field } from "components/form";
 import useTransferFunds from "./useTransferFunds";
 
 export default function Form(props: Chain) {
-  const { transferFunds, isSubmitDisabled } = useTransferFunds();
+  const { transferFunds, isSubmitDisabled, tooltip } = useTransferFunds();
   return (
-    <FormContainer onSubmit={transferFunds}>
+    <FormContainer onSubmit={transferFunds} aria-disabled={!!tooltip}>
+      {tooltip && <Tooltip tooltip={tooltip} />}
       <Field<FV>
         classes="field-admin"
         label="Proposal title"

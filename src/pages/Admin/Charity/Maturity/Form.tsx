@@ -21,7 +21,7 @@ export default function Form({
       {...props}
       className="grid content-start gap-y-6 @lg:gap-y-8 @container"
     >
-      <fieldset disabled={tooltip !== undefined} className="contents group">
+      <fieldset disabled={!!tooltip} className="contents group">
         <h2 className="text-[2rem]">Maturity</h2>
         {tooltip && <Tooltip tooltip={tooltip} />}
         <Toggle<FV> name="willMature" classes={{ label: "text-sm" }}>

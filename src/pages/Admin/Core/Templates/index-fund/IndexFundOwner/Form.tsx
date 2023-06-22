@@ -1,12 +1,13 @@
 import { FormValues as FV } from "./types";
-import { FormContainer, Submitter } from "components/admin";
+import { FormContainer, Submitter, Tooltip } from "components/admin";
 import { Field } from "components/form";
 import useUpdateOwner from "./useUpdateOwner";
 
 export default function Form() {
-  const { updateOwner, isSubmitDisabled } = useUpdateOwner();
+  const { updateOwner, isSubmitDisabled, tooltip } = useUpdateOwner();
   return (
-    <FormContainer onSubmit={updateOwner}>
+    <FormContainer onSubmit={updateOwner} aria-disabled={!!tooltip}>
+      {tooltip && <Tooltip tooltip={tooltip} />}
       <Field<FV>
         classes="field-admin"
         label="Proposal title"

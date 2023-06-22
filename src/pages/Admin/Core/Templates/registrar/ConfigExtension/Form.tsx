@@ -1,13 +1,20 @@
 import { FormValues as FV } from "./types";
-import { FormContainer, GroupContainer, Submitter } from "components/admin";
+import {
+  FormContainer,
+  GroupContainer,
+  Submitter,
+  Tooltip,
+} from "components/admin";
 import { Field, Label } from "components/form";
 import useConfigureRegistrar from "./useConfigureRegistrar";
 
 export default function Form() {
-  const { configureRegistrar, isSubmitDisabled } = useConfigureRegistrar();
+  const { configureRegistrar, isSubmitDisabled, tooltip } =
+    useConfigureRegistrar();
 
   return (
-    <FormContainer onSubmit={configureRegistrar}>
+    <FormContainer onSubmit={configureRegistrar} aria-disabled={!!tooltip}>
+      {tooltip && <Tooltip tooltip={tooltip} />}
       <Field<FV>
         classes="field-admin"
         label="Proposal title"

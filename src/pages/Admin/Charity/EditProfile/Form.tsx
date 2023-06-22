@@ -29,7 +29,7 @@ export default function Form({
   const { isSubmitting, id, type } = useEditProfile();
   return (
     <fieldset
-      disabled={tooltip !== undefined}
+      disabled={!!tooltip}
       className="group w-full max-w-4xl justify-self-center grid content-start gap-6 mt-6 font-body"
     >
       <Link

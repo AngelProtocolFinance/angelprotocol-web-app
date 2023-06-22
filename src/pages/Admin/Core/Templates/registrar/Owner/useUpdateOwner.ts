@@ -58,5 +58,6 @@ export default function useUpdateOwner() {
   return {
     updateOwner: handleSubmit(updateOwner),
     isSubmitDisabled: !isDirty || isSubmitting,
+    tooltip: isTooltip(txResource) ? txResource : undefined,
   };
 }

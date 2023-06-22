@@ -74,7 +74,7 @@ function Content({ profile }: { profile: Profile }) {
           contributor_verification_required: verificationRequired === "yes",
         });
       }}
-      aria-disabled={tooltip !== undefined}
+      aria-disabled={!!tooltip}
     >
       <SubHeading>{titleCase(PAYMENT_WORDS.payer)} Verification</SubHeading>
       {tooltip && <Tooltip tooltip={tooltip} />}

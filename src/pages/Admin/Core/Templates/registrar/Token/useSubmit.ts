@@ -42,5 +42,6 @@ export default function useSubmit() {
   return {
     submit: handleSubmit(submit),
     isSubmitDisabled: !isDirty || isSubmitting,
+    tooltip: isTooltip(txResource) ? txResource : undefined,
   };
 }

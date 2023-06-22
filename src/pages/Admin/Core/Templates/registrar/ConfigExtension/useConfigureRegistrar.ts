@@ -66,5 +66,6 @@ export default function useConfigureRegistrar() {
   return {
     configureRegistrar: handleSubmit(configureRegistrar),
     isSubmitDisabled: !isDirty || isSubmitting,
+    tooltip: isTooltip(txResource) ? txResource : undefined,
   };
 }

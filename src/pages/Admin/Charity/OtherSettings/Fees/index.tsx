@@ -137,7 +137,7 @@ export default function Fees() {
           ev.preventDefault();
           reset(defaultValues);
         }}
-        aria-disabled={tooltip !== undefined}
+        aria-disabled={!!tooltip}
         tooltip={tooltip}
       />
     </FormProvider>

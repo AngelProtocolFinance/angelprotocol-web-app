@@ -88,5 +88,6 @@ export default function useUpdateFund() {
   return {
     updateFund,
     isSubmitDisabled: isLoading,
+    tooltip: isTooltip(txResource) ? txResource : undefined,
   };
 }

@@ -70,5 +70,6 @@ export default function useTransferFunds() {
   return {
     transferFunds: handleSubmit(transferFunds),
     isSubmitDisabled: isSubmitting || !isValid || !isDirty,
+    tooltip: isTooltip(txResource) ? txResource : undefined,
   };
 }

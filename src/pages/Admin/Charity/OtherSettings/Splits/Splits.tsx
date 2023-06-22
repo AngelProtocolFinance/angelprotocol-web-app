@@ -107,7 +107,7 @@ export default function Splits() {
           e.preventDefault();
           reset(defaultValues);
         }}
-        aria-disabled={tooltip !== undefined}
+        aria-disabled={!!tooltip}
         tooltip={tooltip}
       />
     </FormProvider>
