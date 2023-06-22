@@ -172,6 +172,7 @@ export default function useWithdraw() {
     withdraw: handleSubmit(withdraw),
     fee: fee(network, getValues("fees")),
     network: names(network),
+    tooltip: isTooltip(txResource) ? txResource : undefined,
   };
 }
 
