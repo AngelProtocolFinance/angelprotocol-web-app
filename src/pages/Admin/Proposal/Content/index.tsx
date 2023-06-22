@@ -1,9 +1,7 @@
-import { AbiCoder } from "@ethersproject/abi";
 import { useState } from "react";
-import { Transaction } from "types/contracts/multisig";
+import { Transaction } from "types/tx";
 import Icon from "components/Icon";
 import { DetailLabel } from "components/admin";
-import { EMPTY_DATA } from "constants/evm";
 import Preview from "./Preview";
 
 export default function Content(props: Transaction) {
@@ -15,16 +13,8 @@ export default function Content(props: Transaction) {
 
   return (
     <>
-      {props.metadata !== EMPTY_DATA && (
-        <>
-          <DetailLabel classes="mb-2">content</DetailLabel>
-          <Preview
-            {...JSON.parse(
-              new AbiCoder().decode(["string"], props.metadata)[0]
-            )}
-          />
-        </>
-      )}
+      <DetailLabel classes="mb-2">content</DetailLabel>
+      <Preview {...props.metadata} />
 
       <DetailLabel classes="mt-4 mb-2">
         Transaction data

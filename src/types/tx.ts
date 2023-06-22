@@ -2,10 +2,32 @@ import { EncodeObject } from "@cosmjs/proto-signing";
 import { StdFee } from "@cosmjs/stargate";
 import { CreateTxOptions, Msg } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
-import { OverrideProperties } from "type-fest";
+import { Except, OverrideProperties } from "type-fest";
+import { ValueOf } from "type-fest";
+import { MultiSigStorage } from "./typechain-types/contracts/multisigs/MultiSigGeneric";
 import { FetchedChain, Token, TokenType } from "./aws";
+import {
+  Token as AccountToken,
+  AccountType,
+  CloseEndowmentRequest,
+  ERC20Deposit,
+  EndowmentSettingsUpdate,
+  FeeSettingsUpdate,
+  FundMemberUpdate,
+  IndexFundConfigUpdate,
+  NewAST,
+  NewFund,
+  RegistrarConfigUpdate,
+  SettingsControllerUpdate,
+} from "./contracts";
+import { Allowance, Transfer } from "./contracts/erc20";
+import { Asset } from "./contracts/gift-card";
+import { NewTransaction } from "./contracts/multisig";
+import { Tupleable } from "./evm";
 import { EVMTx, LogProcessor, SimulTx } from "./evm";
+import { Contract, TransactionStatus } from "./lists";
 import { TagPayload } from "./third-party/redux";
+import { Diff, Plain } from "./utils";
 
 export type TokenWithBalance = OverrideProperties<
   Token,
@@ -80,3 +102,147 @@ export function isTxSuccess(tx: TxState): tx is SuccessState {
 export function isTxLoading(tx: TxState): tx is TxLoading {
   return "loading" in tx;
 }
+
+// ///// TX META
+type Meta<T> = { title: string; description: string; content: T };
+
+type MetaToken = Pick<Token, "symbol" | "logo"> & { amount: number };
+
+export type WithdrawMeta = Meta<{
+  beneficiary: string;
+  tokens: MetaToken[];
+}>;
+
+export type AccountStatusMeta = Meta<{
+  beneficiary: string; //endow id: .. | index fund: .. |
+}>;
+
+export type ThresholdMeta = Meta<{
+  curr: number;
+  new: number;
+}>;
+
+export type OwnerMeta = Meta<{
+  curr: string;
+  new: string;
+}>;
+
+export type TransferMeta = Meta<{
+  to: string;
+  token: MetaToken;
+}>;
+
+export type MultisigMemberMeta = Meta<{
+  address: string;
+  action: "add" | "remove";
+}>;
+
+type Tx<T extends Tupleable, M> = {
+  meta: M;
+  args: T;
+};
+
+type Addr = { address: string };
+export type ID = { id: number };
+
+type Txs = {
+  // //// ACCOUNTS ////
+  "accounts.create-endowment": Tx<NewAST, never>; //not multisig tx
+  "accounts.update-controller": Tx<SettingsControllerUpdate, Meta<Diff[]>>;
+  "accounts.update-settings": Tx<EndowmentSettingsUpdate, Meta<Diff[]>>;
+  "accounts.update-fee-settings": Tx<FeeSettingsUpdate, Meta<Diff[]>>;
+  "accounts.deposit-erc20": Tx<ERC20Deposit, never>; //not multisig tx
+  "accounts.withdraw": Tx<
+    {
+      id: number;
+      type: AccountType;
+      beneficiaryAddress: string;
+      beneficiaryEndowId: number;
+      tokens: AccountToken[];
+    },
+    WithdrawMeta
+  >;
+  "accounts.close": Tx<CloseEndowmentRequest, AccountStatusMeta>;
+  "accounts.invest": Tx<
+    {
+      id: number;
+      account: AccountType;
+      vaults: string[];
+      tokens: string[];
+      amounts: string[]; //uint256
+    },
+    never //future
+  >;
+  "accounts.redeem": Tx<
+    {
+      id: number;
+      account: AccountType;
+      vaults: string[];
+    },
+    never //future
+  >;
+
+  // //// MULTISIG ////
+  "multisig.submit-transaction": Tx<NewTransaction, never>; //no meta
+  "multisig.add-owner": Tx<Addr, MultisigMemberMeta>;
+  "multisig.remove-owner": Tx<Addr, MultisigMemberMeta>;
+  "multisig.confirm-tx": Tx<ID, never>; //no meta
+  "multisig.revoke-tx": Tx<ID, never>; //no meta
+  "multisig.execute-tx": Tx<ID, never>; //no meta
+  "multisig.change-threshold": Tx<{ threshold: number }, ThresholdMeta>;
+  "multisig.change-auto-execute": Tx<{ autoExecute: boolean }, never>; //no need for meta
+
+  "erc20.transfer": Tx<Transfer, TransferMeta>;
+  "erc20.approve": Tx<Allowance, never>; //not multisig tx
+
+  // //// INDEX FUND ////
+  "index-fund.config": Tx<IndexFundConfigUpdate, Meta<Diff[]>>;
+  "index-fund.update-owner": Tx<{ newOwner: string }, OwnerMeta>;
+  "index-fund.create-fund": Tx<NewFund, Meta<NewFund>>;
+  "index-fund.remove-fund": Tx<ID, Meta<ID>>;
+  "index-fund.remove-member": Tx<ID, Meta<ID>>;
+  "index-fund.update-members": Tx<FundMemberUpdate, FundMemberUpdate>;
+
+  "charity-application.approve": Tx<ID, never>; //info already in /application page
+  "charity-application.reject": Tx<ID, never>; //info already in /application page
+
+  "gift-card.spend": Tx<
+    {
+      asset: Asset;
+      id: number;
+      lockedPCT: number;
+      liquidPCT: number;
+    },
+    never //not multisig tx
+  >;
+  "gift-card.deposit-native": Tx<{ from: string; to: string }, never>; //not multisig tx
+  "gift-card.deposit-erc20": Tx<
+    { from: string; to: string; asset: Asset },
+    never //not multisig tx
+  >;
+
+  "registrar.update-owner": Tx<{ newOwner: string }, OwnerMeta>;
+  "registrar.update-config": Tx<RegistrarConfigUpdate, Meta<Diff[]>>;
+  "registrar.add-token": Tx<{ token: string }, never>; //future
+};
+
+export type TxTypes = keyof Txs;
+export type TxArgs<T extends TxTypes> = Txs[T]["args"];
+
+type Empty = { [key: string]: never };
+export type TxOptions<T extends TxTypes> = T extends `${infer C}.${string}`
+  ? C extends Contract
+    ? Txs[T]["args"]
+    : { [key in C]: string } & Txs[T]["args"]
+  : Empty;
+
+export type Metadata<T extends TxTypes> = Txs[T]["meta"];
+export type TxMeta = ValueOf<{
+  [K in keyof Txs]: { id: K; data?: Txs[K]["meta"] };
+}>;
+
+export type Transaction = OverrideProperties<
+  Except<Plain<MultiSigStorage.TransactionStruct>, "executed">,
+  { value: string; metadata: TxMeta; data: string }
+  //add id and status
+> & { status: TransactionStatus; id: number };

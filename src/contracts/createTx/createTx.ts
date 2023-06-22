@@ -1,7 +1,7 @@
 import { AbiCoder } from "@ethersproject/abi";
-import { Metadata, TxMeta, TxOptions, TxTypes } from "./types";
 import { SimulContractTx } from "types/evm";
 import { Contract } from "types/lists";
+import { Metadata, TxMeta, TxOptions, TxTypes } from "types/tx";
 import { contracts } from "constants/contracts";
 import { EMPTY_DATA } from "constants/evm";
 import { txs } from "./txs";

@@ -25,8 +25,16 @@ export default function useTransferFunds() {
     const scaledAmount = scale(token.amount, token.decimals).toHex();
 
     const metadata: TransferMeta = {
-      to: recipient,
-      token: { symbol: token.symbol, amount: +token.amount, logo: token.logo },
+      title: fv.title,
+      description: fv.description,
+      content: {
+        to: recipient,
+        token: {
+          symbol: token.symbol,
+          amount: +token.amount,
+          logo: token.logo,
+        },
+      },
     };
     const toEncode: TxMeta = { id: "erc20.transfer", data: metadata };
 

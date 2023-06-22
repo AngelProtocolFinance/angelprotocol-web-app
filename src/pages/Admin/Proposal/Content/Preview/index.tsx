@@ -1,4 +1,4 @@
-import { TxMeta } from "contracts/createTx/types";
+import { TxMeta } from "types/tx";
 import DiffTable from "./DiffTable";
 import EndowmentStatusUpdate from "./EndowmentStatusUpdate";
 import Fund from "./Fund";
@@ -15,7 +15,7 @@ export default function Preview(props: TxMeta) {
   switch (props.id) {
     /**_indexfund */
     case "index-fund.create-fund":
-      return <Fund {...props.data} />;
+      return <Fund {...props.data.content} />;
     case "index-fund.remove-fund":
       return <FundToDelete {...props.data} />;
     case "index-fund.update-members":
@@ -25,7 +25,7 @@ export default function Preview(props: TxMeta) {
     case "accounts.update-controller":
     case "accounts.update-fee-settings":
     case "accounts.update-settings":
-      return <DiffTable diffs={props.data} />;
+      return <DiffTable diffs={props.data.content} />;
     case "index-fund.update-owner":
     case "registrar.update-owner":
       return <OwnerUpdate {...props.data} />;

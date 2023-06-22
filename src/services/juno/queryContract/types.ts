@@ -7,8 +7,9 @@ import {
   IndexFundConfig,
   RegistrarConfig,
 } from "types/contracts";
-import { PageOptions, Transaction } from "types/contracts/multisig";
+import { PageOptions } from "types/contracts/multisig";
 import { Contract } from "types/lists";
+import { Transaction } from "types/tx";
 
 type Addr = { addr: string };
 type ID = { id: number };

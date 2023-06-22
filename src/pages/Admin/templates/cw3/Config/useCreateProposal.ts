@@ -49,7 +49,11 @@ export default function usePropose() {
         multisig,
         threshold: +threshold,
       },
-      { new: +threshold, curr: +initial.threshold }
+      {
+        title,
+        description,
+        content: { new: +threshold, curr: +initial.threshold },
+      }
     );
 
     const { wallet, txMeta } = result;
