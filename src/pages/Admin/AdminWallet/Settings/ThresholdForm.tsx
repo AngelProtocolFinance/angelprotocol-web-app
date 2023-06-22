@@ -1,15 +1,15 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { number, object } from "yup";
-import { ProposalBase } from "../../../types";
+import { ProposalBase } from "../../types";
 import { SchemaShape } from "schemas/types";
 import Modal from "components/Modal";
 import { Field } from "components/form";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
-import { isTooltip, useAdminContext } from "../../../Context";
-import { proposalShape } from "../../../constants";
+import { isTooltip, useAdminContext } from "../../Context";
+import { proposalShape } from "../../constants";
 
 export type Props = {
   initial: number;

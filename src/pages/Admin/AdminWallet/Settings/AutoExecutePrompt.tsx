@@ -2,7 +2,7 @@ import Modal from "components/Modal";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
-import { isTooltip, useAdminContext } from "../../../Context";
+import { isTooltip, useAdminContext } from "../../Context";
 
 type Props = {
   autoExecute: boolean;

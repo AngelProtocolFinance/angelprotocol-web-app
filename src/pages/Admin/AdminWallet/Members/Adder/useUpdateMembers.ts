@@ -2,7 +2,7 @@ import { FormProps, FormValues } from "./types";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
-import { isTooltip, useAdminContext } from "../../../../Context";
+import { isTooltip, useAdminContext } from "../../../Context";
 
 export default function useUpdateMembers(action: FormProps["action"]) {
   const { multisig, txResource } = useAdminContext();

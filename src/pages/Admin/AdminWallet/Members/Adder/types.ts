@@ -1,4 +1,4 @@
-import { ProposalBase } from "../../../../types";
+import { ProposalBase } from "../../../types";
 
 export type FormProps = {
   address: string;

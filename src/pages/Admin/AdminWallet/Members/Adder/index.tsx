@@ -3,7 +3,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { FormValues as FV, FormProps } from "./types";
 import Modal from "components/Modal";
 import { Field } from "components/form";
-import { useAdminContext } from "../../../../Context";
+import { useAdminContext } from "../../../Context";
 import { schema } from "./schema";
 import useUpdateMembers from "./useUpdateMembers";
 

@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import { useAdminContext } from "../../../Context";
+import { useAdminContext } from "../../Context";
 
 export default function Settings() {
   const { members, config } = useAdminContext();
