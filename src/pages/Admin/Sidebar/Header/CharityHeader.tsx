@@ -26,12 +26,11 @@ export default function CharityHeader() {
 
         {isLoading ? (
           <ContentLoader className="h-10 w-24" />
-        ) : wallet ? (
+        ) : wallet && data && data.admin.length >= 2 ? (
           <button
             type="button"
             className="btn-outline gap-2 normal-case h-10 pr-4 pl-3"
             onClick={() => setDisplayOtherEndowments(!displayOtherEndowments)}
-            disabled={!data || data.admin.length === 1}
           >
             <Icon type="Sync" />
             Switch
