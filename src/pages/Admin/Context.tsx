@@ -84,7 +84,7 @@ export const useAdminContext = <T extends AdminType = any>(
 
   if (wallet.chain.chain_id !== chainIds.polygon) {
     return {
-      txResource: "Read-only: wallet not connecte to Polygon",
+      txResource: "Read-only: wallet not connected to Polygon",
       ...resource,
     };
   }

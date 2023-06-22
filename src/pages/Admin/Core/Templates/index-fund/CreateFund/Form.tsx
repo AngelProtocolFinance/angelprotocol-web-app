@@ -1,15 +1,16 @@
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
-import { DivContainer, Submitter } from "components/admin";
+import { DivContainer, Submitter, Tooltip } from "components/admin";
 import { CheckField, Field, Label } from "components/form";
 import { INIT_SPLIT } from ".";
 import MemberAdder from "./MemberAdder";
 import useCreateFund from "./useCreateFund";
 
 export default function Form() {
-  const { createFund } = useCreateFund();
+  const { createFund, tooltip } = useCreateFund();
   return (
-    <DivContainer>
+    <DivContainer disabled={!!tooltip}>
+      {tooltip && <Tooltip tooltip={tooltip} />}
       <Field<FV>
         classes="field-admin"
         label="Proposal title"

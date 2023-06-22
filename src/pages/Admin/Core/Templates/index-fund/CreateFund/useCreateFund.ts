@@ -82,5 +82,9 @@ export default function useCreateFund() {
     setSubmitting(false);
   }
 
-  return { createFund, isSubmitting };
+  return {
+    createFund,
+    isSubmitting,
+    tooltip: isTooltip(txResource) ? txResource : undefined,
+  };
 }
