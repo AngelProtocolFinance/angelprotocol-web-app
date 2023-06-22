@@ -4,14 +4,14 @@ import { WithdrawValues } from "./types";
 
 const id = "__beneficiary";
 
-export default function Beneficiary() {
+export default function Beneficiary({ classes = "" }) {
   const {
     register,
     formState: { errors },
   } = useFormContext<WithdrawValues>();
 
   return (
-    <div className="relative grid gap-3 w-full">
+    <div className={`${classes} relative grid gap-3 w-full`}>
       <label htmlFor={id} className="font-bold font-work">
         Destination wallet
       </label>
@@ -27,7 +27,7 @@ export default function Beneficiary() {
         errors={errors}
         name="beneficiary"
         as="span"
-        className="text-right text-red dark:text-red-l2 text-xs absolute -bottom-5 right-2"
+        className="text-right text-red dark:text-red-l2 text-xs -mt-2"
       />
     </div>
   );
