@@ -98,7 +98,6 @@ export type EndowmentDetails = OverrideProperties<
     | "allowlistedBeneficiaries"
     | "allowlistedContributors"
     | "maturityAllowlist"
-    | "kycDonorsOnly"
     | "donationMatchActive"
     | "settingsController"
     | "ignoreUserSplits"
@@ -183,47 +182,6 @@ export type FeeSettingsUpdate = OverrideProperties<
   }
 >;
 
-type VETypeData = Mapped<AngelCoreStruct.VeTypeDataStruct, number>;
-
-/**
- * 0 - constant
- * 1 - linear
- * 2 - sqrt
- */
-type VEType = OverrideProperties<
-  AngelCoreStruct.VeTypeStruct,
-  { ve_type: 0 | 1 | 2; data: VETypeData }
->;
-
-type DaoTokenData = OverrideProperties<
-  Plain<AngelCoreStruct.DaoTokenDataStruct>,
-  {
-    newInitialSupply: string;
-    veBondingType: VEType;
-    veBondingDecimals: number;
-    veBondingReserveDecimals: number;
-    veBondingPeriod: number;
-  }
->;
-
-/**
- * 0 - existing CW20
- * 1 - new CW20
- * 2 - bonding curve
- */
-type DaoToken = OverrideProperties<
-  AngelCoreStruct.DaoTokenStruct,
-  {
-    token: 0 | 1 | 2;
-    data: DaoTokenData;
-  }
->;
-
-type DaoSetup = OverrideProperties<
-  Mapped<AngelCoreStruct.DaoSetupStruct, number>,
-  { token: DaoToken }
->;
-
 export type NewAST = OverrideProperties<
   Plain<AccountMessages.CreateEndowmentRequestStruct>,
   {
@@ -243,14 +201,10 @@ export type NewAST = OverrideProperties<
      */
     endowType: 0 | 1 | 2;
     threshold: number;
-    splitMax: number;
-    splitMin: number;
-    splitDefault: number;
     earlyLockedWithdrawFee: Fee;
     withdrawFee: Fee;
     depositFee: Fee;
     balanceFee: Fee;
-    dao: DaoSetup;
     proposalLink: number;
     settingsController: SettingsController;
     parent: number;
