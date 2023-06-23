@@ -15,7 +15,6 @@ import {
 } from "contracts/evm/multisig";
 import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
-import { EMPTY_DATA } from "constants/evm";
 import { useAdminResources } from "../Guard";
 
 const ERROR = "error";
