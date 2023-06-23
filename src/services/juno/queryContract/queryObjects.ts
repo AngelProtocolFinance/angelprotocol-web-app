@@ -1,3 +1,4 @@
+import { AbiCoder } from "@ethersproject/abi";
 import { BigNumber } from "@ethersproject/bignumber";
 import {
   DGenericBalance,
@@ -8,6 +9,7 @@ import {
   toSplit,
 } from "./decoded-types";
 import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
+import { TxMeta } from "types/tx";
 import {
   AccountMessages,
   AccountStorage,
@@ -25,6 +27,7 @@ import { indexFund } from "contracts/evm/index-fund";
 import { multisig } from "contracts/evm/multisig";
 import { registrar } from "contracts/evm/registrar";
 import { toTuple } from "helpers";
+import { EMPTY_DATA } from "constants/evm";
 
 export const queryObjects: {
   [K in QT]: Q[K]["args"] extends null
@@ -63,7 +66,8 @@ export const queryObjects: {
         collectorShare: d.collectorShare.toNumber(),
         charitySharesContract: d.charitySharesContract.toLowerCase(),
         fundraisingContract: d.fundraisingContract.toLowerCase(),
-        uniswapSwapRouter: d.uniswapSwapRouter.toLowerCase(),
+        uniswapRouter: d.uniswapRouter.toLowerCase(),
+        uniswapFactory: d.uniswapFactory.toLocaleLowerCase(),
         multisigFactory: d.multisigFactory.toLowerCase(),
         multisigEmitter: d.multisigEmitter.toLowerCase(),
         charityProposal: d.charityProposal.toLowerCase(),
@@ -203,15 +207,18 @@ export const queryObjects: {
       const d: MultiSigStorage.TransactionStructOutput =
         multisig.decodeFunctionResult("transactions", result) as any;
 
+      const parsed: TxMeta | undefined =
+        d.metadata === EMPTY_DATA
+          ? undefined
+          : JSON.parse(new AbiCoder().decode(["string"], d.metadata)[0]);
+
       return {
         id: args?.id ?? 0,
-        title: d.title,
-        description: d.description,
         destination: d.destination,
         value: d.value.toString(),
         data: d.data,
         status: d.executed ? "approved" : "open",
-        metadata: d.metadata,
+        metadata: parsed,
       };
     },
   ],
@@ -247,7 +254,6 @@ export const queryObjects: {
           w.toLowerCase()
         ),
         maturityAllowlist: d.maturityAllowlist.map((w) => w.toLowerCase()),
-        kycDonorsOnly: d.kycDonorsOnly,
         donationMatchActive: d.donationMatchActive,
 
         earlyLockedWithdrawFee: toFee(d.earlyLockedWithdrawFee),
