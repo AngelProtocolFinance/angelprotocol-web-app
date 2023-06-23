@@ -1,4 +1,4 @@
-import { TransferMeta } from "contracts/createTx/meta";
+import { TransferMeta } from "types/tx";
 import { humanize } from "helpers";
 import KeyValue from "./common/KeyValue";
 import PreviewContainer from "./common/PreviewContainer";

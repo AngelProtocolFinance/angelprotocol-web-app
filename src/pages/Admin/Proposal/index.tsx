@@ -33,8 +33,8 @@ export default function Proposal() {
           <div className="rounded p-4 border border-prim dark:bg-blue-d6 bg-white">
             <Seo
               title={`Proposal ${proposal.id} - ${APP_NAME}`}
-              description={proposal.description.slice(0, 140)}
-              name={proposal.title}
+              description={proposal.metadata?.description?.slice(0, 140)}
+              name={proposal.metadata?.title}
               url={`${DAPP_URL}/${adminRoutes.proposal}/${proposal.id}`}
             />
             <div className="flex justify-between flex-wrap">
@@ -42,12 +42,14 @@ export default function Proposal() {
               <Status status={proposal.status} />
             </div>
             <div className="mt-8 mb-6 flex justify-between items-center border-b-2 border-prim pb-2">
-              <h4 className="text-lg">{proposal.title}</h4>
+              <h4 className="text-lg">
+                {proposal.metadata?.title ?? "Multisig transaction"}
+              </h4>
               <PollAction {...proposal} />
             </div>
             <DetailLabel>description</DetailLabel>
             <p className="mb-6 text-gray-d1 dark:text-gray">
-              {proposal.description}
+              {proposal.metadata?.description ?? "No description provided"}
             </p>
             <Content {...proposal} />
             <h4 className="mt-6 uppercase text-lg py-2 border-b-2 border-prim">

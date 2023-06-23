@@ -1,4 +1,4 @@
-import { OwnerMeta } from "contracts/createTx/meta";
+import { OwnerMeta } from "types/tx";
 import KeyValue from "./common/KeyValue";
 import PreviewContainer from "./common/PreviewContainer";
 

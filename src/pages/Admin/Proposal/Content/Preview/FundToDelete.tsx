@@ -1,4 +1,4 @@
-import { ID } from "contracts/createTx/types";
+import { ID } from "types/tx";
 import KeyValue from "./common/KeyValue";
 import PreviewContainer from "./common/PreviewContainer";
 

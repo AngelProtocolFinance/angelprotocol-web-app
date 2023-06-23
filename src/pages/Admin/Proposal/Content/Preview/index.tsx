@@ -15,7 +15,7 @@ export default function Preview(props: TxMeta) {
   switch (props.id) {
     /**_indexfund */
     case "index-fund.create-fund":
-      return <Fund {...props.data.content} />;
+      return <Fund {...props.data} />;
     case "index-fund.remove-fund":
       return <FundToDelete {...props.data} />;
     case "index-fund.update-members":
@@ -25,7 +25,7 @@ export default function Preview(props: TxMeta) {
     case "accounts.update-controller":
     case "accounts.update-fee-settings":
     case "accounts.update-settings":
-      return <DiffTable diffs={props.data.content} />;
+      return <DiffTable diffs={props.data} />;
     case "index-fund.update-owner":
     case "registrar.update-owner":
       return <OwnerUpdate {...props.data} />;
