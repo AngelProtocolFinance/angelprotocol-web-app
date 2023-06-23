@@ -16,16 +16,24 @@ export default function AutoExecutePrompt({ autoExecute }: Props) {
     const checkResult = checkSubmit();
     if (typeof checkResult === "function") return checkResult();
 
-    const [data, dest, meta] = encodeTx("multisig.change-auto-execute", {
-      multisig,
-      autoExecute,
-    });
-
     const { wallet, txMeta } = checkResult;
+
+    const [data, dest, meta] = encodeTx(
+      "multisig.change-auto-execute",
+      {
+        multisig,
+        autoExecute,
+      },
+      {
+        title: `Turn auto-execute ${autoExecute ? "ON" : "OFF"}`,
+        description: `proposer: ${wallet.address}`,
+        content: null as never,
+      }
+    );
+
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig: dest,
-      title: `Turn auto-execute ${autoExecute ? "ON" : "OFF"}`,
-      description: `proposer: ${wallet.address}`,
+
       destination: dest,
       value: "0",
       data,

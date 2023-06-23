@@ -1,5 +1,5 @@
-import { TxMeta } from "contracts/createTx/types";
 import { TagPayload } from "types/third-party/redux";
+import { TxMeta } from "types/tx";
 import { ApesTag, invalidateApesTags } from "services/apes";
 import { invalidateJunoTags } from "services/juno";
 import { defaultProposalTags } from "services/juno/tags";
