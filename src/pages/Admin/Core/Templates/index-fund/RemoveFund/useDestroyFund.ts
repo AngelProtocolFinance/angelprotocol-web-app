@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
-import { ID } from "contracts/createTx/types";
+import { ID } from "types/tx";
 import { useAdminResources } from "pages/Admin/Guard";
 import { queryContract } from "services/juno/queryContract";
 import { useModalContext } from "contexts/ModalContext";
@@ -32,7 +32,11 @@ export default function useDestroyFund() {
     if (typeof result === "function") return result();
 
     const id: ID = { id: +fv.fundId };
-    const [data, dest, meta] = encodeTx("index-fund.remove-fund", id, id);
+    const [data, dest, meta] = encodeTx("index-fund.remove-fund", id, {
+      title: fv.title,
+      description: fv.description,
+      content: id,
+    });
 
     const { wallet, txMeta } = result;
     await sendTx({
@@ -40,8 +44,7 @@ export default function useDestroyFund() {
         type: "evm",
         val: createTx(wallet.address, "multisig.submit-transaction", {
           multisig,
-          title: fv.title,
-          description: fv.description,
+
           destination: dest,
           value: "0",
           data,

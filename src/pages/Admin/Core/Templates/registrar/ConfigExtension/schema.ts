@@ -19,7 +19,7 @@ const shape: SchemaShape<FormValues> = {
   haloTokenLpContract: contract,
   haloToken: contract,
   indexFundContract: contract,
-  uniswapSwapRouter: contract,
+  uniswapRouter: contract,
 
   //wasm codes
   multisigFactory: contract,

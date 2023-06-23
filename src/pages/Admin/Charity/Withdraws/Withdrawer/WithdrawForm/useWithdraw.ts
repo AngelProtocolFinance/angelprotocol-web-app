@@ -5,11 +5,11 @@ import { PropMeta } from "services/types";
 import { AccountType, EndowmentDetails } from "types/contracts";
 import { LogProcessor, SimulContractTx } from "types/evm";
 import { TxOnSuccess, TxSuccessMeta } from "types/tx";
+import { WithdrawMeta } from "types/tx";
 import { version as v } from "services/helpers";
 import { useModalContext } from "contexts/ModalContext";
 import { TxPrompt } from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
-import { WithdrawMeta } from "contracts/createTx/meta";
 import { multisig as Multisig, SubmissionEvent } from "contracts/evm/multisig";
 import useTxSender from "hooks/useTxSender";
 import { createAuthToken, logger, scaleToStr } from "helpers";
@@ -63,7 +63,14 @@ export default function useWithdraw() {
           amnt: scaleToStr(a.value),
         })),
       },
-      metadata
+      {
+        content: metadata,
+        title: `${wv.type} withdraw `,
+        description:
+          endow.endowType === "charity" && wv.type === "locked"
+            ? wv.reason
+            : `${wv.type} withdraw from endowment id: ${id}`,
+      }
     );
 
     const { wallet, txMeta, isDelegated } = result;
@@ -77,11 +84,6 @@ export default function useWithdraw() {
         }
       : createTx(sender, "multisig.submit-transaction", {
           multisig: endow.owner,
-          title: `${wv.type} withdraw `,
-          description:
-            endow.endowType === "charity" && wv.type === "locked"
-              ? wv.reason
-              : `${wv.type} withdraw from endowment id: ${id}`,
           destination: dest,
           value: "0",
           data,

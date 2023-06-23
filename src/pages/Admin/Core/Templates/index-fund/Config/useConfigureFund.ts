@@ -38,13 +38,16 @@ export default function useConfigureFund() {
     const result = checkSubmit();
     if (typeof result === "function") return result();
 
-    const [configData, dest, meta] = encodeTx("index-fund.config", data, diffs);
+    const [configData, dest, meta] = encodeTx("index-fund.config", data, {
+      title,
+      description,
+      content: diffs,
+    });
 
     const { wallet, txMeta } = result;
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig,
-      title,
-      description,
+
       destination: dest,
       value: "0",
       data: configData,

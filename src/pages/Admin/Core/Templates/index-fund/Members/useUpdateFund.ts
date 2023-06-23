@@ -57,17 +57,16 @@ export default function useUpdateFund() {
         members: Array.from(modified),
       };
 
-      const [data, dest, meta] = encodeTx(
-        "index-fund.update-members",
-        update,
-        update
-      );
+      const [data, dest, meta] = encodeTx("index-fund.update-members", update, {
+        title: getValues("title"),
+        description: getValues("description"),
+        content: update,
+      });
 
       const { wallet, txMeta } = result;
       const tx = createTx(wallet.address, "multisig.submit-transaction", {
         multisig,
-        title: getValues("title"),
-        description: getValues("description"),
+
         destination: dest,
         value: "0",
         data,

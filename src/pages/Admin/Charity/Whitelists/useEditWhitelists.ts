@@ -47,19 +47,18 @@ export default function useEditWhitelists() {
         return showModal(TxPrompt, { error: "No changes detected" });
       }
 
-      const [data, dest, meta] = encodeTx(
-        "accounts.update-settings",
-        update,
-        diff
-      );
-
       const { wallet, txMeta, isDelegated } = result;
+      const [data, dest, meta] = encodeTx("accounts.update-settings", update, {
+        title: `Update whitelists settings`,
+        description: `Update whitelists settings for endowment id:${id} by member:${wallet.address}`,
+        content: diff,
+      });
+
       const tx: SimulContractTx = isDelegated
         ? { from: wallet.address, to: dest, data }
         : createTx(wallet.address, "multisig.submit-transaction", {
             multisig,
-            title: `Update whitelists settings`,
-            description: `Update whitelists settings for endowment id:${id} by member:${wallet?.address}`,
+
             destination: dest,
             value: "0",
             data,
