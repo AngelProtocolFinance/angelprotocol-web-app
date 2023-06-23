@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Transaction } from "types/contracts/multisig";
+import { Transaction } from "types/tx";
 import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
 import { adminRoutes } from "constants/routes";
@@ -19,9 +19,9 @@ export default function Table({ proposals }: Props) {
         rowClass="last:border-none border-b border-prim hover:bg-blue-l4 hover:dark:bg-blue-d4"
         type="tbody"
       >
-        {proposals.map(({ title, status, id }) => (
+        {proposals.map(({ metadata, status, id }) => (
           <Cells type="td" cellClass="p-1.5" key={id}>
-            <>{title}</>
+            <>{metadata?.title ?? `Multisig transaction: ${id}`}</>
             <span className="uppercase text-sm">{status}</span>
             <Link
               to={`${adminRoutes.proposal}/${id}`}

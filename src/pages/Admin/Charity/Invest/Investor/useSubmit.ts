@@ -14,19 +14,26 @@ export default function useSubmit(vault: string, type: AccountType) {
     const result = checkSubmit();
     if (typeof result === "function") return result();
 
-    const [data, dest, meta] = encodeTx("accounts.invest", {
-      id,
-      account: type === "locked" ? 0 : 1,
-      vaults: [vault],
-      tokens: [token.token_id],
-      amounts: [scaleToStr(token.amount)],
-    });
+    const [data, dest, meta] = encodeTx(
+      "accounts.invest",
+      {
+        id,
+        account: type === "locked" ? 0 : 1,
+        vaults: [vault],
+        tokens: [token.token_id],
+        amounts: [scaleToStr(token.amount)],
+      },
+      {
+        title: "Invest",
+        description: `Invest funds to: ${vault}`,
+        content: null as never,
+      }
+    );
 
     const { wallet, txMeta } = result;
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig,
-      title: "Invest",
-      description: `Invest funds to: ${vault}`,
+
       destination: dest,
       value: "0",
       data,

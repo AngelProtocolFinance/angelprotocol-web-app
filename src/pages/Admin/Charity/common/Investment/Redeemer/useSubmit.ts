@@ -12,17 +12,24 @@ export default function useSubmit(vault: string, type: AccountType) {
     const result = checkSubmit();
     if (typeof result === "function") return result();
 
-    const [data, dest, meta] = encodeTx("accounts.redeem", {
-      id,
-      account: type === "locked" ? 0 : 1,
-      vaults: [vault],
-    });
+    const [data, dest, meta] = encodeTx(
+      "accounts.redeem",
+      {
+        id,
+        account: type === "locked" ? 0 : 1,
+        vaults: [vault],
+      },
+      {
+        title: "Redeem",
+        description: `Redeem funds to: ${vault}`,
+        content: null as never,
+      }
+    );
 
     const { wallet, txMeta } = result;
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig,
-      title: "Redeem",
-      description: `Redeem funds to: ${vault}`,
+
       destination: dest,
       value: "0",
       data,
