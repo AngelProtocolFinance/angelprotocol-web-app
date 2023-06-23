@@ -24,13 +24,18 @@ export function createTx<T extends TxTypes>(
 export function encodeTx<T extends TxTypes>(
   type: T,
   options: TxOptions<T>,
-  metadata?: Metadata<T>
+  meta?: { content: Metadata<T>; title: string; description: string }
 ): [string, string, { id: T; encoded: string }] {
   const [contract_key] = type.split(".");
   const { [contract_key]: c, ...args } = options as any;
 
-  const toEncode: TxMeta | undefined = metadata
-    ? { id: type as any, data: metadata }
+  const toEncode: TxMeta | undefined = meta
+    ? {
+        id: type as any,
+        data: meta.content,
+        title: meta.title,
+        description: meta.description,
+      }
     : undefined;
 
   return [
