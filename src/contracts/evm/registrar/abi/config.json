@@ -124,7 +124,12 @@
           },
           {
             "internalType": "address",
-            "name": "uniswapSwapRouter",
+            "name": "uniswapRouter",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "uniswapFactory",
             "type": "address"
           },
           {
