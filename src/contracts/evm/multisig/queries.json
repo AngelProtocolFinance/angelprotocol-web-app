@@ -16,16 +16,6 @@
     "name": "transactions",
     "outputs": [
       {
-        "internalType": "string",
-        "name": "title",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "description",
-        "type": "string"
-      },
-      {
         "internalType": "address",
         "name": "destination",
         "type": "address"
