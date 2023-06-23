@@ -1,8 +1,8 @@
 import { ASTProfile, EndowmentProfile } from "types/aws";
 import { AxelarBridgeFees } from "types/aws";
 import { EndowmentDetails } from "types/contracts";
-import { Transaction } from "types/contracts/multisig";
 import { AccountType, ProviderId } from "types/lists";
+import { Transaction } from "types/tx";
 import { SenderArgs } from "types/tx";
 
 export type MultisigConfig = { threshold: number; requireExecution: boolean };

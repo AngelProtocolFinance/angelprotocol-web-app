@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Transaction } from "types/contracts/multisig";
+import { Transaction } from "types/tx";
 import TableSection, { Cells } from "components/TableSection";
 import { adminRoutes } from "constants/routes";
 
@@ -32,7 +32,7 @@ export default function Table({ proposals, classes = "", more }: Props) {
         type="tbody"
       >
         {proposals
-          .map(({ title, status, id }) => (
+          .map(({ metadata, status, id }) => (
             <Cells type="td" cellClass="py-3 px-4" key={id}>
               <td className="uppercase text-xs font-semibold text-center">
                 <span
@@ -49,7 +49,7 @@ export default function Table({ proposals, classes = "", more }: Props) {
                 to={`../${adminRoutes.proposal}/${id}`}
                 className="text-sm hover:text-blue dark:text-blue-l2 block max-w-[11.5rem] @xl:max-w-lg overflow-hidden text-ellipsis"
               >
-                {title}
+                {metadata?.title ?? `Proposal id: ${id}`}
               </Link>
             </Cells>
           ))

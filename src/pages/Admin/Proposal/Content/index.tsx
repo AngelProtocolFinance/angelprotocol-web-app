@@ -13,8 +13,12 @@ export default function Content(props: Transaction) {
 
   return (
     <>
-      <DetailLabel classes="mb-2">content</DetailLabel>
-      <Preview {...props.metadata} />
+      {props.metadata && (
+        <>
+          <DetailLabel classes="mb-2">content</DetailLabel>
+          <Preview {...props.metadata} />
+        </>
+      )}
 
       <DetailLabel classes="mt-4 mb-2">
         Transaction data

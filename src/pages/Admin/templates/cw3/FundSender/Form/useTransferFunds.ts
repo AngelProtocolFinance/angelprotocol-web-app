@@ -1,11 +1,12 @@
+import { AbiCoder } from "@ethersproject/abi";
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "../types";
-import { TxMeta } from "contracts/createTx/types";
+import "contracts/createTx/types";
+import { TransferMeta, TxMeta } from "types/tx";
 import { useAdminResources } from "pages/Admin/Guard";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
-import { TransferMeta } from "contracts/createTx/meta";
 import useTxSender from "hooks/useTxSender";
-import { scale, toBase64 } from "helpers";
+import { scale } from "helpers";
 import { getTagPayloads } from "helpers/admin";
 import { EMPTY_DATA } from "constants/evm";
 
@@ -25,23 +26,27 @@ export default function useTransferFunds() {
     const scaledAmount = scale(token.amount, token.decimals).toHex();
 
     const metadata: TransferMeta = {
-      title: fv.title,
-      description: fv.description,
-      content: {
-        to: recipient,
-        token: {
-          symbol: token.symbol,
-          amount: +token.amount,
-          logo: token.logo,
-        },
+      to: recipient,
+      token: {
+        symbol: token.symbol,
+        amount: +token.amount,
+        logo: token.logo,
       },
     };
-    const toEncode: TxMeta = { id: "erc20.transfer", data: metadata };
+    const toEncode: TxMeta = {
+      id: "erc20.transfer",
+      data: metadata,
+      title: fv.title,
+      description: fv.description,
+    };
 
     const native: ReturnType<typeof encodeTx> = [
       EMPTY_DATA,
       recipient,
-      { id: "erc20.transfer", encoded: toBase64(toEncode) },
+      {
+        id: "erc20.transfer",
+        encoded: new AbiCoder().encode(["string"], [JSON.stringify(toEncode)]),
+      },
     ];
     const [data, dest, meta, value] =
       token.type === "erc20"
@@ -53,7 +58,11 @@ export default function useTransferFunds() {
                 to: recipient,
                 amount: scaledAmount,
               },
-              metadata
+              {
+                content: metadata,
+                title: fv.title,
+                description: fv.description,
+              }
             ),
             "0" /** value for non payable */,
           ]
@@ -62,8 +71,6 @@ export default function useTransferFunds() {
     const { wallet, txMeta } = result;
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig,
-      title: fv.title,
-      description: fv.description,
       destination: dest,
       value,
       data,

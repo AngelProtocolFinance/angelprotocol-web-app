@@ -1,4 +1,4 @@
-import { TxArgs, TxTypes } from "./types";
+import { TxArgs, TxTypes } from "types/tx";
 import { toTuple } from "helpers";
 import { accounts } from "../evm/Account";
 import { erc20 } from "../evm/ERC20";

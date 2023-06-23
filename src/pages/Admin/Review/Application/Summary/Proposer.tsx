@@ -52,6 +52,11 @@ export default function Proposer({ type, appId, reference }: Props) {
         : "charity-application.reject",
       {
         id: fv.appId,
+      },
+      {
+        title: fv.title,
+        description: fv.description,
+        content: null as never,
       }
     );
 
@@ -101,8 +106,6 @@ export default function Proposer({ type, appId, reference }: Props) {
         type: "evm",
         val: createTx(wallet.address, "multisig.submit-transaction", {
           multisig,
-          title: fv.title,
-          description: fv.description,
           destination: dest,
           value: "0",
           data,

@@ -7,8 +7,8 @@ import {
 } from "../../types";
 import { AxelarBridgeFees } from "types/aws";
 import { AcceptedTokens, AccountType } from "types/contracts";
-import { Transaction } from "types/contracts/multisig";
 import { TransactionStatus } from "types/lists";
+import { Transaction } from "types/tx";
 import { idParamToNum } from "helpers";
 import { APIs } from "constants/urls";
 import { junoApi } from "..";

@@ -59,8 +59,6 @@ export default function usePropose() {
     const { wallet, txMeta } = result;
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig,
-      title,
-      description,
       destination: dest,
       value: "0",
       data,

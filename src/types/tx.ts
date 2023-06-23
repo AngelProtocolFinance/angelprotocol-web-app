@@ -104,38 +104,37 @@ export function isTxLoading(tx: TxState): tx is TxLoading {
 }
 
 // ///// TX META
-type Meta<T> = { title: string; description: string; content: T };
 
 type MetaToken = Pick<Token, "symbol" | "logo"> & { amount: number };
 
-export type WithdrawMeta = Meta<{
+export type WithdrawMeta = {
   beneficiary: string;
   tokens: MetaToken[];
-}>;
+};
 
-export type AccountStatusMeta = Meta<{
+export type AccountStatusMeta = {
   beneficiary: string; //endow id: .. | index fund: .. |
-}>;
+};
 
-export type ThresholdMeta = Meta<{
+export type ThresholdMeta = {
   curr: number;
   new: number;
-}>;
+};
 
-export type OwnerMeta = Meta<{
+export type OwnerMeta = {
   curr: string;
   new: string;
-}>;
+};
 
-export type TransferMeta = Meta<{
+export type TransferMeta = {
   to: string;
   token: MetaToken;
-}>;
+};
 
-export type MultisigMemberMeta = Meta<{
+export type MultisigMemberMeta = {
   address: string;
   action: "add" | "remove";
-}>;
+};
 
 type Tx<T extends Tupleable, M> = {
   meta: M;
@@ -148,9 +147,9 @@ export type ID = { id: number };
 type Txs = {
   // //// ACCOUNTS ////
   "accounts.create-endowment": Tx<NewAST, never>; //not multisig tx
-  "accounts.update-controller": Tx<SettingsControllerUpdate, Meta<Diff[]>>;
-  "accounts.update-settings": Tx<EndowmentSettingsUpdate, Meta<Diff[]>>;
-  "accounts.update-fee-settings": Tx<FeeSettingsUpdate, Meta<Diff[]>>;
+  "accounts.update-controller": Tx<SettingsControllerUpdate, Diff[]>;
+  "accounts.update-settings": Tx<EndowmentSettingsUpdate, Diff[]>;
+  "accounts.update-fee-settings": Tx<FeeSettingsUpdate, Diff[]>;
   "accounts.deposit-erc20": Tx<ERC20Deposit, never>; //not multisig tx
   "accounts.withdraw": Tx<
     {
@@ -196,11 +195,11 @@ type Txs = {
   "erc20.approve": Tx<Allowance, never>; //not multisig tx
 
   // //// INDEX FUND ////
-  "index-fund.config": Tx<IndexFundConfigUpdate, Meta<Diff[]>>;
+  "index-fund.config": Tx<IndexFundConfigUpdate, Diff[]>;
   "index-fund.update-owner": Tx<{ newOwner: string }, OwnerMeta>;
-  "index-fund.create-fund": Tx<NewFund, Meta<NewFund>>;
-  "index-fund.remove-fund": Tx<ID, Meta<ID>>;
-  "index-fund.remove-member": Tx<ID, Meta<ID>>;
+  "index-fund.create-fund": Tx<NewFund, NewFund>;
+  "index-fund.remove-fund": Tx<ID, ID>;
+  "index-fund.remove-member": Tx<ID, ID>;
   "index-fund.update-members": Tx<FundMemberUpdate, FundMemberUpdate>;
 
   "charity-application.approve": Tx<ID, never>; //info already in /application page
@@ -222,7 +221,7 @@ type Txs = {
   >;
 
   "registrar.update-owner": Tx<{ newOwner: string }, OwnerMeta>;
-  "registrar.update-config": Tx<RegistrarConfigUpdate, Meta<Diff[]>>;
+  "registrar.update-config": Tx<RegistrarConfigUpdate, Diff[]>;
   "registrar.add-token": Tx<{ token: string }, never>; //future
 };
 
@@ -239,10 +238,10 @@ export type TxOptions<T extends TxTypes> = T extends `${infer C}.${string}`
 export type Metadata<T extends TxTypes> = Txs[T]["meta"];
 export type TxMeta = ValueOf<{
   [K in keyof Txs]: { id: K; data?: Txs[K]["meta"] };
-}>;
+}> & { title: string; description: string };
 
 export type Transaction = OverrideProperties<
   Except<Plain<MultiSigStorage.TransactionStruct>, "executed">,
-  { value: string; metadata: TxMeta; data: string }
+  { value: string; metadata?: TxMeta; data: string }
   //add id and status
 > & { status: TransactionStatus; id: number };

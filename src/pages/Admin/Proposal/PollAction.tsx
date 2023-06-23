@@ -1,6 +1,4 @@
-import { AbiCoder } from "@ethersproject/abi";
 import React, { ReactNode } from "react";
-import { TxMeta } from "contracts/createTx/types";
 import { ProposalDetails } from "services/types";
 import { LogProcessor } from "types/evm";
 import { TagPayload } from "types/third-party/redux";
@@ -130,11 +128,9 @@ function Button(props: React.ButtonHTMLAttributes<HTMLButtonElement>) {
 function extractTagFromMeta(
   proposalMeta: ProposalDetails["metadata"]
 ): TagPayload[] {
-  if (proposalMeta === EMPTY_DATA) {
+  if (!proposalMeta) {
     return [invalidateJunoTags(defaultProposalTags)];
   }
-  const parsed: TxMeta = JSON.parse(
-    new AbiCoder().decode(["string"], proposalMeta)[0]
-  );
-  return getTagPayloads(parsed.id);
+
+  return getTagPayloads(proposalMeta.id);
 }

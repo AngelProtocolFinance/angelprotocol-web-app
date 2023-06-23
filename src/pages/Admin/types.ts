@@ -1,5 +1,5 @@
-import { TxTypes } from "contracts/createTx/types";
 import { EndowmentProposal } from "types/aws";
+import { TxTypes } from "types/tx";
 
 export type AdminParams = { id: string; type: string /**AccountType */ };
 export type ProposalParams = { id: string };
