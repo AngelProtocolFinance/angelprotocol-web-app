@@ -1,4 +1,4 @@
-import { PropsWithChildren } from "react";
+import { FormHTMLAttributes } from "react";
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "./types";
 import { UNSDG_NUMS } from "types/lists";
@@ -9,10 +9,12 @@ import ImgEditor from "components/ImgEditor";
 import { RichTextEditor } from "components/RichText";
 import { Selector } from "components/Selector";
 import Toggle from "components/Toggle";
+import { Tooltip } from "components/admin";
 import { Field, Label } from "components/form";
 import { ENDOW_DESIGNATIONS } from "constants/common";
 import { appRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
+import Group from "./common/Group";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import { MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "./schema";
 import useEditProfile from "./useEditProfile";
@@ -21,16 +23,14 @@ const sdgOptions = Object.entries(unsdgs).map(([key, { title }]) =>
   getSDGLabelValuePair(key, title)
 );
 
-export default function Form() {
-  const { editProfile, isSubmitting, id, reset, type } = useEditProfile();
+export default function Form({
+  tooltip,
+}: FormHTMLAttributes<HTMLFormElement> & { tooltip?: string }) {
+  const { isSubmitting, id, type } = useEditProfile();
   return (
-    <form
-      onSubmit={editProfile}
-      onReset={(e) => {
-        e.preventDefault();
-        reset();
-      }}
-      className="w-full max-w-4xl justify-self-center grid content-start gap-6 mt-6 font-body"
+    <fieldset
+      disabled={!!tooltip}
+      className="group w-full max-w-4xl justify-self-center grid content-start gap-6 mt-6 font-body"
     >
       <Link
         to={`${appRoutes.profile}/${id}`}
@@ -39,6 +39,7 @@ export default function Form() {
         <Icon type="Back" />
         <span>Back to profile</span>
       </Link>
+      {tooltip && <Tooltip tooltip={tooltip} />}
       <Toggle<FV> name="published" classes={{ container: "ml-auto text-sm" }}>
         Publish profile
       </Toggle>
@@ -197,7 +198,7 @@ export default function Form() {
         />
       </Group>
 
-      <div className="flex gap-3">
+      <div className="flex gap-3 group-disabled:hidden">
         <button
           disabled={isSubmitting}
           type="reset"
@@ -213,24 +214,6 @@ export default function Form() {
           Submit changes
         </button>
       </div>
-    </form>
-  );
-}
-
-function Group({
-  description,
-  ...props
-}: PropsWithChildren<{
-  title: string;
-  description?: string;
-}>) {
-  return (
-    <div className="grid gap-6 p-6 border border-prim rounded">
-      <h3 className="text-2xl font-body">{props.title}</h3>
-      {description && (
-        <p className="-mt-4 text-lg font-semibold">{description}</p>
-      )}
-      {props.children}
-    </div>
+    </fieldset>
   );
 }

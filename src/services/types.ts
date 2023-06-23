@@ -3,15 +3,8 @@ import { AxelarBridgeFees } from "types/aws";
 import { EndowmentDetails } from "types/contracts";
 import { Transaction } from "types/contracts/multisig";
 import { AccountType, ProviderId } from "types/lists";
-import { SenderArgs } from "types/tx";
 
 export type MultisigConfig = { threshold: number; requireExecution: boolean };
-
-export type PropMeta = Required<
-  Pick<SenderArgs, "successMeta" | "tagPayloads">
-> & {
-  willExecute?: true;
-};
 
 type Base = {
   multisig: string;

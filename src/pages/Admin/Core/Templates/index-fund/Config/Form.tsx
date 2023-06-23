@@ -1,12 +1,13 @@
 import { FormValues as FV } from "./types";
-import { FormContainer, Submitter } from "components/admin";
+import { FormContainer, Submitter, Tooltip } from "components/admin";
 import { Field } from "components/form";
 import useConfigureFund from "./useConfigureFund";
 
 export default function Form() {
-  const { configureFund, isSubmitDisabled } = useConfigureFund();
+  const { configureFund, isSubmitDisabled, tooltip } = useConfigureFund();
   return (
-    <FormContainer onSubmit={configureFund}>
+    <FormContainer onSubmit={configureFund} aria-disabled={!!tooltip}>
+      {tooltip && <Tooltip tooltip={tooltip} />}
       <Field<FV>
         classes="field-admin"
         label="Proposal title"

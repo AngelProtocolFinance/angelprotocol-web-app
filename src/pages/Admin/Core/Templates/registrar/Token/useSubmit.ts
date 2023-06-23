@@ -1,11 +1,11 @@
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
-import { useAdminResources } from "pages/Admin/Guard";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
+import { isTooltip, useAdminContext } from "../../../../Context";
 
 export default function useSubmit() {
-  const { multisig, checkSubmit } = useAdminResources();
+  const { multisig, txResource } = useAdminContext();
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },
@@ -15,14 +15,13 @@ export default function useSubmit() {
 
   async function submit(fv: FV) {
     //check for changes
-    const result = checkSubmit();
-    if (typeof result === "function") return result();
+    if (isTooltip(txResource)) throw new Error(txResource);
 
     const [data, dest, meta] = encodeTx("registrar.add-token", {
       token: fv.token,
     });
 
-    const { wallet, txMeta } = result;
+    const { wallet, txMeta } = txResource;
     await sendTx({
       content: {
         type: "evm",
@@ -43,5 +42,6 @@ export default function useSubmit() {
   return {
     submit: handleSubmit(submit),
     isSubmitDisabled: !isDirty || isSubmitting,
+    tooltip: isTooltip(txResource) ? txResource : undefined,
   };
 }

@@ -1,11 +1,11 @@
 import { AccountType } from "types/lists";
-import { useAdminResources } from "pages/Admin/Guard";
 import ContentLoader from "components/ContentLoader";
 import QueryLoader from "components/QueryLoader";
 import { humanize } from "helpers";
+import { useAdminContext } from "../../Context";
 
 export default function Balances({ type }: { type: AccountType }) {
-  const { id } = useAdminResources();
+  const { id } = useAdminContext();
   console.log({ id, type });
   return (
     <QueryLoader

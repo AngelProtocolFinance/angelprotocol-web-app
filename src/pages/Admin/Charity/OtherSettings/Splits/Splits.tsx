@@ -2,7 +2,6 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { FV } from "./types";
 import { EndowmentSettingsUpdate } from "types/contracts";
 import { SimulContractTx } from "types/evm";
-import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { TxPrompt } from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
@@ -10,12 +9,13 @@ import useTxSender from "hooks/useTxSender";
 import { isEmpty } from "helpers";
 import { getPayloadDiff, getTagPayloads } from "helpers/admin";
 import { toContractSplit, toFormSplit } from "helpers/ast";
+import { isTooltip, useAdminContext } from "../../../Context";
 import Form from "./Form";
 
 export default function Splits() {
   const {
     multisig,
-    checkSubmit,
+    txResource,
     splitToLiquid,
     ignoreUserSplits,
     allowlistedBeneficiaries,
@@ -23,7 +23,7 @@ export default function Splits() {
     id,
     donationMatchActive,
     maturityTime,
-  } = useAdminResources<"charity">();
+  } = useAdminContext<"charity">(["ignoreUserSplits", "splitToLiquid"]);
 
   const sendTx = useTxSender();
   const { showModal } = useModalContext();
@@ -51,8 +51,7 @@ export default function Splits() {
 
   const update: SubmitHandler<FV> = async (splits) => {
     try {
-      const result = checkSubmit(["ignoreUserSplits", "splitToLiquid"]);
-      if (typeof result === "function") return result();
+      if (isTooltip(txResource)) throw new Error(txResource);
 
       const update: EndowmentSettingsUpdate = {
         ...initial,
@@ -72,7 +71,7 @@ export default function Splits() {
         diff
       );
 
-      const { wallet, txMeta, isDelegated } = result;
+      const { wallet, txMeta, isDelegated } = txResource;
       const tx: SimulContractTx = isDelegated
         ? { from: wallet.address, to: dest, data }
         : createTx(wallet.address, "multisig.submit-transaction", {
@@ -97,6 +96,7 @@ export default function Splits() {
     }
   };
 
+  const tooltip = isTooltip(txResource) ? txResource : undefined;
   const { handleSubmit, reset } = methods;
 
   return (
@@ -107,6 +107,8 @@ export default function Splits() {
           e.preventDefault();
           reset(defaultValues);
         }}
+        aria-disabled={!!tooltip}
+        tooltip={tooltip}
       />
     </FormProvider>
   );

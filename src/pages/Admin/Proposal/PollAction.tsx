@@ -18,7 +18,7 @@ import {
 import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
 import { EMPTY_DATA } from "constants/evm";
-import { useAdminResources } from "../Guard";
+import { isTooltip, useAdminContext } from "../Context";
 
 const ERROR = "error";
 const processLog: LogProcessor = (logs) => {
@@ -30,7 +30,7 @@ const processLog: LogProcessor = (logs) => {
 export default function PollAction(props: ProposalDetails) {
   const { wallet } = useGetWallet();
   const sendTx = useTxSender();
-  const { multisig, config, checkSubmit } = useAdminResources();
+  const { multisig, config, txResource } = useAdminContext();
   const { showModal } = useModalContext();
 
   const numSigned = props.signed.length;
@@ -52,10 +52,9 @@ export default function PollAction(props: ProposalDetails) {
   };
 
   async function executeProposal() {
-    const result = checkSubmit();
-    if (typeof result === "function") return result();
+    if (isTooltip(txResource)) throw new Error(txResource);
 
-    const { wallet } = result;
+    const { wallet } = txResource;
     await sendTx({
       content: {
         type: "evm",
@@ -71,10 +70,9 @@ export default function PollAction(props: ProposalDetails) {
   }
 
   async function sign() {
-    const result = checkSubmit();
-    if (typeof result === "function") return result();
+    if (isTooltip(txResource)) throw new Error(txResource);
 
-    const { wallet } = result;
+    const { wallet } = txResource;
     await sendTx({
       content: {
         type: "evm",

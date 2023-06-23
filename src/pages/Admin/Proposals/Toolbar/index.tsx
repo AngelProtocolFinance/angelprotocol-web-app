@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { templates } from "pages/Admin/constants";
 import { adminRoutes } from "constants/routes";
+import { templates } from "../../constants";
 import StatusSelector from "./StatusSelector";
 
 export default function Toolbar({ classes = "" }: { classes?: string }) {

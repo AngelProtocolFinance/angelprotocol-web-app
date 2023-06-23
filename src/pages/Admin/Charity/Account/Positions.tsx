@@ -1,6 +1,6 @@
 import { AccountType } from "types/lists";
-import { useAdminResources } from "pages/Admin/Guard";
 import QueryLoader from "components/QueryLoader";
+import { useAdminContext } from "../../Context";
 import Investment from "../common/Investment";
 
 type Props = {
@@ -8,7 +8,7 @@ type Props = {
 };
 
 export default function Positions({ type }: Props) {
-  const { id } = useAdminResources();
+  const { id } = useAdminContext();
   console.log({ id, type });
   return (
     <div className="grid gap-3">

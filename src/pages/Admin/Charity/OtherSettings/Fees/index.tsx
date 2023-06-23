@@ -7,7 +7,6 @@ import { TFee, TFees } from "slices/launchpad/types";
 import { Fee } from "types/ast";
 import { Fee as ContractFee, FeeSettingsUpdate } from "types/contracts";
 import { SimulContractTx } from "types/evm";
-import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { TxPrompt } from "components/Prompt";
 import { feeKeys } from "components/ast";
@@ -18,6 +17,7 @@ import { positiveNumber, requiredPercent } from "schemas/number";
 import { requiredWalletAddr } from "schemas/string";
 import { chainIds } from "constants/chainIds";
 import { ADDRESS_ZERO } from "constants/evm";
+import { isTooltip, useAdminContext } from "../../../Context";
 import Form from "./Form";
 
 const fee: SchemaShape<TFee> = {
@@ -37,8 +37,13 @@ export default function Fees() {
     withdrawFee,
     depositFee,
     balanceFee,
-    checkSubmit,
-  } = useAdminResources<"charity">();
+    txResource,
+  } = useAdminContext<"charity">([
+    "earlyLockedWithdrawFee",
+    "withdrawFee",
+    "depositFee",
+    "balanceFee",
+  ]);
 
   const { showModal } = useModalContext();
   const sendTx = useTxSender();
@@ -75,13 +80,7 @@ export default function Fees() {
 
   const onSubmit: SubmitHandler<FV> = async (fees) => {
     try {
-      const result = checkSubmit([
-        "earlyLockedWithdrawFee",
-        "withdrawFee",
-        "depositFee",
-        "balanceFee",
-      ]);
-      if (typeof result === "function") return result();
+      if (isTooltip(txResource)) throw new Error(txResource);
 
       const update: FeeSettingsUpdate = {
         id,
@@ -103,7 +102,7 @@ export default function Fees() {
         diff
       );
 
-      const { wallet, txMeta, isDelegated } = result;
+      const { wallet, txMeta, isDelegated } = txResource;
       const tx: SimulContractTx = isDelegated
         ? { from: wallet.address, to: dest, data }
         : createTx(wallet.address, "multisig.submit-transaction", {
@@ -129,6 +128,7 @@ export default function Fees() {
   };
 
   const { handleSubmit, reset } = methods;
+  const tooltip = isTooltip(txResource) ? txResource : undefined;
   return (
     <FormProvider {...methods}>
       <Form
@@ -137,6 +137,8 @@ export default function Fees() {
           ev.preventDefault();
           reset(defaultValues);
         }}
+        aria-disabled={!!tooltip}
+        tooltip={tooltip}
       />
     </FormProvider>
   );

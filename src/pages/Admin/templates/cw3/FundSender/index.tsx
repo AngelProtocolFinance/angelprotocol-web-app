@@ -2,16 +2,16 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues } from "./types";
 import { Chain } from "types/tx";
-import { useAdminResources } from "pages/Admin/Guard";
 import { useChainQuery } from "services/apes";
 import QueryLoader from "components/QueryLoader";
 import { FormError, FormSkeleton } from "components/admin";
 import { chainIds } from "constants/chainIds";
+import { useAdminContext } from "../../../Context";
 import Form from "./Form";
 import { schema } from "./schema";
 
 export default function FundSender() {
-  const { multisig } = useAdminResources();
+  const { multisig } = useAdminContext();
   const query = useChainQuery({
     address: multisig,
     chainId: chainIds.polygon,

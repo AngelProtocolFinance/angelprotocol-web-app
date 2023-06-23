@@ -1,13 +1,13 @@
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
-import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import Prompt from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
+import { isTooltip, useAdminContext } from "../../../../Context";
 
 export default function useUpdateOwner() {
-  const { multisig, checkSubmit } = useAdminResources();
+  const { multisig, txResource } = useAdminContext();
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },
@@ -27,8 +27,7 @@ export default function useUpdateOwner() {
       });
     }
 
-    const result = checkSubmit();
-    if (typeof result === "function") return result();
+    if (isTooltip(txResource)) throw new Error(txResource);
 
     const [data, dest, meta] = encodeTx(
       "index-fund.update-owner",
@@ -38,7 +37,7 @@ export default function useUpdateOwner() {
       { curr: fv.owner, new: fv.newOwner }
     );
 
-    const { wallet, txMeta } = result;
+    const { wallet, txMeta } = txResource;
     await sendTx({
       content: {
         type: "evm",
@@ -59,5 +58,6 @@ export default function useUpdateOwner() {
   return {
     updateOwner: handleSubmit(updateOwner),
     isSubmitDisabled: !isDirty || isSubmitting,
+    tooltip: isTooltip(txResource) ? txResource : undefined,
   };
 }

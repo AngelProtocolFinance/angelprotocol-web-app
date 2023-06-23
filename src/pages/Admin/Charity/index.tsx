@@ -2,13 +2,13 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { LinkGroup } from "../Sidebar/types";
 import { EndowmentType } from "types/lists";
 import { adminRoutes } from "constants/routes";
-import { useAdminResources } from "../Guard";
+import AdminWallet from "../AdminWallet";
+import { useAdminContext } from "../Context";
 import Layout from "../Layout";
 import Proposal from "../Proposal";
 import Proposals from "../Proposals";
 import { LINKS } from "../constants";
 import Account from "./Account";
-import AdminWallet from "./AdminWallet";
 import Contributions from "./Contributions";
 import Dashboard from "./Dashboard";
 import Deposits from "./Deposits";
@@ -69,7 +69,7 @@ const LINK_GROUPS: { [key in EndowmentType]: LinkGroup[] } = {
 };
 
 export default function Charity() {
-  const { endowType } = useAdminResources<"charity">();
+  const { endowType } = useAdminContext<"charity">();
 
   return (
     <Routes>

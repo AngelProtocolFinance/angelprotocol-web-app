@@ -4,9 +4,10 @@ import { Profile } from "services/types";
 import { useProfileQuery } from "services/aws/aws";
 import { useModalContext } from "contexts/ModalContext";
 import QueryLoader from "components/QueryLoader";
+import { Tooltip } from "components/admin";
 import { PAYMENT_WORDS, titleCase } from "constants/common";
 import { adminRoutes } from "constants/routes";
-import { useAdminResources } from "../../../Guard";
+import { isTooltip, useAdminContext } from "../../../Context";
 import Seo from "../../Seo";
 import { Reset, Submit } from "../../common/Btn";
 import useUpdateEndowmentProfile from "../../common/useUpdateEndowmentProfile";
@@ -16,7 +17,7 @@ import Message from "./Message";
 import ChangeSettingsPrompt from "./Prompt";
 
 export default function DonorVerification() {
-  const { id } = useAdminResources<"charity">();
+  const { id } = useAdminContext<"charity">();
   const queryState = useProfileQuery(id, { skip: id === 0 });
 
   return (
@@ -41,7 +42,12 @@ function Content({ profile }: { profile: Profile }) {
   const originalValue: VerificationRequired =
     profile.contributor_verification_required ? "yes" : "no";
 
-  const { id, owner } = useAdminResources<"charity">();
+  const { id, owner, txResource } = useAdminContext<"charity">([
+    "name",
+    "image",
+    "logo",
+    "sdgs",
+  ]);
 
   const [verificationRequired, setVerificationRequired] =
     useState(originalValue);
@@ -56,6 +62,7 @@ function Content({ profile }: { profile: Profile }) {
       onChange: (value) => setVerificationRequired(value),
     });
 
+  const tooltip = isTooltip(txResource) ? txResource : undefined;
   return (
     <Frm
       onReset={() => setVerificationRequired(originalValue)}
@@ -67,8 +74,10 @@ function Content({ profile }: { profile: Profile }) {
           contributor_verification_required: verificationRequired === "yes",
         });
       }}
+      aria-disabled={!!tooltip}
     >
       <SubHeading>{titleCase(PAYMENT_WORDS.payer)} Verification</SubHeading>
+      {tooltip && <Tooltip tooltip={tooltip} />}
       <div className="flex flex-col md:flex-row md:justify-between items-center gap-4 w-full px-4 py-3 border border-prim rounded bg-gray-l6 dark:bg-blue-d5">
         <Message verificationRequired={verificationRequired} />
         <button
@@ -79,12 +88,14 @@ function Content({ profile }: { profile: Profile }) {
           Change
         </button>
       </div>
-      <div className="flex justify-start gap-3 w-full">
-        <Reset disabled={originalValue === verificationRequired}>
-          Reset changes
-        </Reset>
-        <Submit>Submit changes</Submit>
-      </div>
+      {!tooltip && (
+        <div className="flex justify-start gap-3 w-full">
+          <Reset disabled={originalValue === verificationRequired}>
+            Reset changes
+          </Reset>
+          <Submit>Submit changes</Submit>
+        </div>
+      )}
     </Frm>
   );
 }

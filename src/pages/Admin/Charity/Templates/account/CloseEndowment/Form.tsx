@@ -1,13 +1,14 @@
 import { FormValues as FV } from "./types";
-import { FormContainer, Submitter } from "components/admin";
+import { FormContainer, Submitter, Tooltip } from "components/admin";
 import { Field } from "components/form";
 import Beneficiary from "./Beneficiary";
 import useCloseEndowment from "./useCloseEndowment";
 
 export default function Form() {
-  const { closeEndowment } = useCloseEndowment();
+  const { closeEndowment, tooltip } = useCloseEndowment();
   return (
-    <FormContainer onSubmit={closeEndowment}>
+    <FormContainer onSubmit={closeEndowment} aria-disabled={!!tooltip}>
+      {tooltip && <Tooltip tooltip={tooltip} />}
       <Field<FV>
         classes="field-admin"
         label="Proposal title"

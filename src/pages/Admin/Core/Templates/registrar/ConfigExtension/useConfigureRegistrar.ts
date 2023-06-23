@@ -1,15 +1,15 @@
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
-import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import Prompt from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { isEmpty } from "helpers";
 import { getPayloadDiff } from "helpers/admin";
+import { isTooltip, useAdminContext } from "../../../../Context";
 
 export default function useConfigureRegistrar() {
-  const { multisig, checkSubmit } = useAdminResources();
+  const { multisig, txResource } = useAdminContext();
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },
@@ -34,8 +34,7 @@ export default function useConfigureRegistrar() {
       });
     }
 
-    const result = checkSubmit();
-    if (typeof result === "function") return result();
+    if (isTooltip(txResource)) throw new Error(txResource);
 
     const [data, dest, meta] = encodeTx(
       "registrar.update-config",
@@ -46,7 +45,7 @@ export default function useConfigureRegistrar() {
       diff
     );
 
-    const { wallet, txMeta } = result;
+    const { wallet, txMeta } = txResource;
     await sendTx({
       content: {
         type: "evm",
@@ -67,5 +66,6 @@ export default function useConfigureRegistrar() {
   return {
     configureRegistrar: handleSubmit(configureRegistrar),
     isSubmitDisabled: !isDirty || isSubmitting,
+    tooltip: isTooltip(txResource) ? txResource : undefined,
   };
 }

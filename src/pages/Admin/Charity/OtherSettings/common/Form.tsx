@@ -7,6 +7,11 @@ export const Form: FC<
     className={`${className} grid content-start gap-6 @lg:gap-8 p-4 @lg:p-8 border border-prim rounded dark:bg-blue-d6`}
     {...props}
   >
-    {children}
+    <fieldset
+      disabled={!!props["aria-disabled"]}
+      className="contents" //to not affect layout
+    >
+      {children}
+    </fieldset>
   </form>
 );

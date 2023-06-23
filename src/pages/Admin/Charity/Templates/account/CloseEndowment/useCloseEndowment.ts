@@ -1,20 +1,19 @@
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
 import { Beneficiary } from "types/contracts";
-import { useAdminResources } from "pages/Admin/Guard";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
 import { ADDRESS_ZERO } from "constants/evm";
+import { isTooltip, useAdminContext } from "../../../../Context";
 
 export default function useCloseEndowment() {
   const { handleSubmit } = useFormContext<FV>();
-  const { multisig, checkSubmit, id: endowId } = useAdminResources();
+  const { multisig, txResource, id: endowId } = useAdminContext();
   const sendTx = useTxSender();
 
   async function closeEndowment(fv: FV) {
-    const result = checkSubmit();
-    if (typeof result === "function") return result();
+    if (isTooltip(txResource)) throw new Error(txResource);
 
     const [beneficiary, beneficiaryMeta] = (function (): [Beneficiary, string] {
       const { id, type } = fv.beneficiary;
@@ -52,7 +51,7 @@ export default function useCloseEndowment() {
       { beneficiary: beneficiaryMeta }
     );
 
-    const { wallet, txMeta } = result;
+    const { wallet, txMeta } = txResource;
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig,
       title: fv.title,
@@ -70,5 +69,8 @@ export default function useCloseEndowment() {
     });
   }
 
-  return { closeEndowment: handleSubmit(closeEndowment) };
+  return {
+    closeEndowment: handleSubmit(closeEndowment),
+    tooltip: isTooltip(txResource) ? txResource : undefined,
+  };
 }

@@ -1,6 +1,5 @@
 import { Link } from "./Sidebar/types";
-import { Templates } from "pages/Admin/types";
-import { ProposalBase } from "pages/Admin/types";
+import { ProposalBase, Templates } from "./types";
 import { SchemaShape } from "schemas/types";
 import { stringByteSchema } from "schemas/string";
 import { PAYMENT_WORDS, titleCase } from "constants/common";

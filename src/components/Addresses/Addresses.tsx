@@ -51,7 +51,7 @@ export default function Addresses<T extends FieldValues, K extends Path<T>>({
             added: getValues(name),
           })
         }
-        className="btn-outline-filled min-w-[13.43rem] sm:justify-self-end text-sm py-3 gap-3 mb-5"
+        className="btn-outline-filled min-w-[13.43rem] sm:justify-self-end text-sm py-3 gap-3 mb-5 group-disabled:hidden"
       >
         <Icon type="Plus" />
         <span>Add {memberName}</span>

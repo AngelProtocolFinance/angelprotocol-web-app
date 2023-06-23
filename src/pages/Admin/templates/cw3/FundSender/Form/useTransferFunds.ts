@@ -1,26 +1,24 @@
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "../types";
 import { TxMeta } from "contracts/createTx/types";
-import { useAdminResources } from "pages/Admin/Guard";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import { TransferMeta } from "contracts/createTx/meta";
 import useTxSender from "hooks/useTxSender";
 import { scale, toBase64 } from "helpers";
 import { getTagPayloads } from "helpers/admin";
 import { EMPTY_DATA } from "constants/evm";
+import { isTooltip, useAdminContext } from "../../../../Context";
 
 export default function useTransferFunds() {
   const {
     handleSubmit,
     formState: { isSubmitting, isValid, isDirty },
   } = useFormContext<FV>();
-  const { multisig, checkSubmit } = useAdminResources();
+  const { multisig, txResource } = useAdminContext();
   const sendTx = useTxSender();
 
   async function transferFunds(fv: FV) {
-    const result = checkSubmit();
-    if (typeof result === "function") return result();
-
+    if (isTooltip(txResource)) throw new Error(txResource);
     const { token, recipient } = fv;
     const scaledAmount = scale(token.amount, token.decimals).toHex();
 
@@ -51,7 +49,7 @@ export default function useTransferFunds() {
           ]
         : [...native, scaledAmount];
 
-    const { wallet, txMeta } = result;
+    const { wallet, txMeta } = txResource;
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig,
       title: fv.title,
@@ -72,5 +70,6 @@ export default function useTransferFunds() {
   return {
     transferFunds: handleSubmit(transferFunds),
     isSubmitDisabled: isSubmitting || !isValid || !isDirty,
+    tooltip: isTooltip(txResource) ? txResource : undefined,
   };
 }
