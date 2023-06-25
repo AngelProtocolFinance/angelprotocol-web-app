@@ -167,7 +167,8 @@ export declare namespace RegistrarStorage {
     collectorShare: PromiseOrValue<BigNumberish>;
     charitySharesContract: PromiseOrValue<string>;
     fundraisingContract: PromiseOrValue<string>;
-    uniswapSwapRouter: PromiseOrValue<string>;
+    uniswapRouter: PromiseOrValue<string>;
+    uniswapFactory: PromiseOrValue<string>;
     multisigFactory: PromiseOrValue<string>;
     multisigEmitter: PromiseOrValue<string>;
     charityProposal: PromiseOrValue<string>;
@@ -207,6 +208,7 @@ export declare namespace RegistrarStorage {
     string,
     string,
     string,
+    string,
     string
   ] & {
     applicationsReview: string;
@@ -229,7 +231,8 @@ export declare namespace RegistrarStorage {
     collectorShare: BigNumber;
     charitySharesContract: string;
     fundraisingContract: string;
-    uniswapSwapRouter: string;
+    uniswapRouter: string;
+    uniswapFactory: string;
     multisigFactory: string;
     multisigEmitter: string;
     charityProposal: string;
@@ -299,7 +302,8 @@ export declare namespace RegistrarMessages {
     charitySharesContract: PromiseOrValue<string>;
     fundraisingContract: PromiseOrValue<string>;
     applicationsReview: PromiseOrValue<string>;
-    uniswapSwapRouter: PromiseOrValue<string>;
+    uniswapRouter: PromiseOrValue<string>;
+    uniswapFactory: PromiseOrValue<string>;
     multisigFactory: PromiseOrValue<string>;
     multisigEmitter: PromiseOrValue<string>;
     charityProposal: PromiseOrValue<string>;
@@ -349,6 +353,7 @@ export declare namespace RegistrarMessages {
     string,
     string,
     string,
+    string,
     string
   ] & {
     accountsContract: string;
@@ -367,7 +372,8 @@ export declare namespace RegistrarMessages {
     charitySharesContract: string;
     fundraisingContract: string;
     applicationsReview: string;
-    uniswapSwapRouter: string;
+    uniswapRouter: string;
+    uniswapFactory: string;
     multisigFactory: string;
     multisigEmitter: string;
     charityProposal: string;
@@ -396,6 +402,8 @@ export interface RegistrarInterface extends utils.Interface {
     "getRebalanceParams()": FunctionFragment;
     "getStrategyApprovalState(bytes4)": FunctionFragment;
     "getStrategyParamsById(bytes4)": FunctionFragment;
+    "getUniswapFactoryAddress()": FunctionFragment;
+    "getUniswapRouterAddress()": FunctionFragment;
     "getVaultOperatorApproved(address)": FunctionFragment;
     "initialize((address,(uint256,uint256,uint256),address,address,address))": FunctionFragment;
     "initialize()": FunctionFragment;
@@ -415,9 +423,10 @@ export interface RegistrarInterface extends utils.Interface {
     "setStrategyApprovalState(bytes4,uint8)": FunctionFragment;
     "setStrategyParams(bytes4,address,address,uint8)": FunctionFragment;
     "setTokenAccepted(address,bool)": FunctionFragment;
+    "setUniswapAddresses(address,address)": FunctionFragment;
     "setVaultOperatorApproved(address,bool)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
-    "updateConfig((address,string[],uint256,uint256,uint256,uint256,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address))": FunctionFragment;
+    "updateConfig((address,string[],uint256,uint256,uint256,uint256,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address))": FunctionFragment;
     "updateNetworkConnections((string,uint256,address,address,string,string,address,uint256),string)": FunctionFragment;
     "updateTokenPriceFeed(address,address)": FunctionFragment;
   };
@@ -432,6 +441,8 @@ export interface RegistrarInterface extends utils.Interface {
       | "getRebalanceParams"
       | "getStrategyApprovalState"
       | "getStrategyParamsById"
+      | "getUniswapFactoryAddress"
+      | "getUniswapRouterAddress"
       | "getVaultOperatorApproved"
       | "initialize((address,(uint256,uint256,uint256),address,address,address))"
       | "initialize()"
@@ -451,6 +462,7 @@ export interface RegistrarInterface extends utils.Interface {
       | "setStrategyApprovalState"
       | "setStrategyParams"
       | "setTokenAccepted"
+      | "setUniswapAddresses"
       | "setVaultOperatorApproved"
       | "transferOwnership"
       | "updateConfig"
@@ -489,6 +501,14 @@ export interface RegistrarInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "getStrategyParamsById",
     values: [PromiseOrValue<BytesLike>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getUniswapFactoryAddress",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getUniswapRouterAddress",
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "getVaultOperatorApproved",
@@ -573,6 +593,10 @@ export interface RegistrarInterface extends utils.Interface {
     values: [PromiseOrValue<string>, PromiseOrValue<boolean>]
   ): string;
   encodeFunctionData(
+    functionFragment: "setUniswapAddresses",
+    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "setVaultOperatorApproved",
     values: [PromiseOrValue<string>, PromiseOrValue<boolean>]
   ): string;
@@ -623,6 +647,14 @@ export interface RegistrarInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "getStrategyParamsById",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getUniswapFactoryAddress",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getUniswapRouterAddress",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -696,6 +728,10 @@ export interface RegistrarInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "setTokenAccepted",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setUniswapAddresses",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -964,6 +1000,10 @@ export interface Registrar extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[LocalRegistrarLib.StrategyParamsStructOutput]>;
 
+    getUniswapFactoryAddress(overrides?: CallOverrides): Promise<[string]>;
+
+    getUniswapRouterAddress(overrides?: CallOverrides): Promise<[string]>;
+
     getVaultOperatorApproved(
       _operator: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -1065,6 +1105,12 @@ export interface Registrar extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    setUniswapAddresses(
+      _uniswapRouter: PromiseOrValue<string>,
+      _uniswapFactory: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     setVaultOperatorApproved(
       _operator: PromiseOrValue<string>,
       _isApproved: PromiseOrValue<boolean>,
@@ -1130,6 +1176,10 @@ export interface Registrar extends BaseContract {
     _strategyId: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides
   ): Promise<LocalRegistrarLib.StrategyParamsStructOutput>;
+
+  getUniswapFactoryAddress(overrides?: CallOverrides): Promise<string>;
+
+  getUniswapRouterAddress(overrides?: CallOverrides): Promise<string>;
 
   getVaultOperatorApproved(
     _operator: PromiseOrValue<string>,
@@ -1226,6 +1276,12 @@ export interface Registrar extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  setUniswapAddresses(
+    _uniswapRouter: PromiseOrValue<string>,
+    _uniswapFactory: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   setVaultOperatorApproved(
     _operator: PromiseOrValue<string>,
     _isApproved: PromiseOrValue<boolean>,
@@ -1291,6 +1347,10 @@ export interface Registrar extends BaseContract {
       _strategyId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<LocalRegistrarLib.StrategyParamsStructOutput>;
+
+    getUniswapFactoryAddress(overrides?: CallOverrides): Promise<string>;
+
+    getUniswapRouterAddress(overrides?: CallOverrides): Promise<string>;
 
     getVaultOperatorApproved(
       _operator: PromiseOrValue<string>,
@@ -1380,6 +1440,12 @@ export interface Registrar extends BaseContract {
     setTokenAccepted(
       _tokenAddr: PromiseOrValue<string>,
       _isAccepted: PromiseOrValue<boolean>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setUniswapAddresses(
+      _uniswapRouter: PromiseOrValue<string>,
+      _uniswapFactory: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1551,6 +1617,10 @@ export interface Registrar extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    getUniswapFactoryAddress(overrides?: CallOverrides): Promise<BigNumber>;
+
+    getUniswapRouterAddress(overrides?: CallOverrides): Promise<BigNumber>;
+
     getVaultOperatorApproved(
       _operator: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -1644,6 +1714,12 @@ export interface Registrar extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    setUniswapAddresses(
+      _uniswapRouter: PromiseOrValue<string>,
+      _uniswapFactory: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     setVaultOperatorApproved(
       _operator: PromiseOrValue<string>,
       _isApproved: PromiseOrValue<boolean>,
@@ -1708,6 +1784,14 @@ export interface Registrar extends BaseContract {
 
     getStrategyParamsById(
       _strategyId: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getUniswapFactoryAddress(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getUniswapRouterAddress(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -1803,6 +1887,12 @@ export interface Registrar extends BaseContract {
     setTokenAccepted(
       _tokenAddr: PromiseOrValue<string>,
       _isAccepted: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setUniswapAddresses(
+      _uniswapRouter: PromiseOrValue<string>,
+      _uniswapFactory: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

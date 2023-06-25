@@ -167,7 +167,8 @@ export declare namespace RegistrarStorage {
     collectorShare: PromiseOrValue<BigNumberish>;
     charitySharesContract: PromiseOrValue<string>;
     fundraisingContract: PromiseOrValue<string>;
-    uniswapSwapRouter: PromiseOrValue<string>;
+    uniswapRouter: PromiseOrValue<string>;
+    uniswapFactory: PromiseOrValue<string>;
     multisigFactory: PromiseOrValue<string>;
     multisigEmitter: PromiseOrValue<string>;
     charityProposal: PromiseOrValue<string>;
@@ -207,6 +208,7 @@ export declare namespace RegistrarStorage {
     string,
     string,
     string,
+    string,
     string
   ] & {
     applicationsReview: string;
@@ -229,7 +231,8 @@ export declare namespace RegistrarStorage {
     collectorShare: BigNumber;
     charitySharesContract: string;
     fundraisingContract: string;
-    uniswapSwapRouter: string;
+    uniswapRouter: string;
+    uniswapFactory: string;
     multisigFactory: string;
     multisigEmitter: string;
     charityProposal: string;
@@ -259,7 +262,8 @@ export declare namespace RegistrarMessages {
     charitySharesContract: PromiseOrValue<string>;
     fundraisingContract: PromiseOrValue<string>;
     applicationsReview: PromiseOrValue<string>;
-    uniswapSwapRouter: PromiseOrValue<string>;
+    uniswapRouter: PromiseOrValue<string>;
+    uniswapFactory: PromiseOrValue<string>;
     multisigFactory: PromiseOrValue<string>;
     multisigEmitter: PromiseOrValue<string>;
     charityProposal: PromiseOrValue<string>;
@@ -309,6 +313,7 @@ export declare namespace RegistrarMessages {
     string,
     string,
     string,
+    string,
     string
   ] & {
     accountsContract: string;
@@ -327,7 +332,8 @@ export declare namespace RegistrarMessages {
     charitySharesContract: string;
     fundraisingContract: string;
     applicationsReview: string;
-    uniswapSwapRouter: string;
+    uniswapRouter: string;
+    uniswapFactory: string;
     multisigFactory: string;
     multisigEmitter: string;
     charityProposal: string;
@@ -399,7 +405,7 @@ export interface IRegistrarInterface extends utils.Interface {
     "setStrategyParams(bytes4,address,address,uint8)": FunctionFragment;
     "setTokenAccepted(address,bool)": FunctionFragment;
     "setVaultOperatorApproved(address,bool)": FunctionFragment;
-    "updateConfig((address,string[],uint256,uint256,uint256,uint256,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address))": FunctionFragment;
+    "updateConfig((address,string[],uint256,uint256,uint256,uint256,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address))": FunctionFragment;
     "updateNetworkConnections((string,uint256,address,address,string,string,address,uint256),string)": FunctionFragment;
     "updateOwner(address)": FunctionFragment;
     "updateTokenPriceFeed(address,address)": FunctionFragment;

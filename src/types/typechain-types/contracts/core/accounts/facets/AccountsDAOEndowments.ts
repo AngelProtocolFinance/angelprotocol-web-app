@@ -325,7 +325,6 @@ export declare namespace AccountStorage {
     image: PromiseOrValue<string>;
     maturityTime: PromiseOrValue<BigNumberish>;
     rebalance: LocalRegistrarLib.RebalanceParamsStruct;
-    kycDonorsOnly: PromiseOrValue<boolean>;
     pendingRedemptions: PromiseOrValue<BigNumberish>;
     proposalLink: PromiseOrValue<BigNumberish>;
     multisig: PromiseOrValue<string>;
@@ -357,7 +356,6 @@ export declare namespace AccountStorage {
     string,
     BigNumber,
     LocalRegistrarLib.RebalanceParamsStructOutput,
-    boolean,
     BigNumber,
     BigNumber,
     string,
@@ -387,7 +385,6 @@ export declare namespace AccountStorage {
     image: string;
     maturityTime: BigNumber;
     rebalance: LocalRegistrarLib.RebalanceParamsStructOutput;
-    kycDonorsOnly: boolean;
     pendingRedemptions: BigNumber;
     proposalLink: BigNumber;
     multisig: string;

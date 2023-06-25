@@ -294,7 +294,6 @@ export declare namespace AccountStorage {
     image: PromiseOrValue<string>;
     maturityTime: PromiseOrValue<BigNumberish>;
     rebalance: LocalRegistrarLib.RebalanceParamsStruct;
-    kycDonorsOnly: PromiseOrValue<boolean>;
     pendingRedemptions: PromiseOrValue<BigNumberish>;
     proposalLink: PromiseOrValue<BigNumberish>;
     multisig: PromiseOrValue<string>;
@@ -326,7 +325,6 @@ export declare namespace AccountStorage {
     string,
     BigNumber,
     LocalRegistrarLib.RebalanceParamsStructOutput,
-    boolean,
     BigNumber,
     BigNumber,
     string,
@@ -356,7 +354,6 @@ export declare namespace AccountStorage {
     image: string;
     maturityTime: BigNumber;
     rebalance: LocalRegistrarLib.RebalanceParamsStructOutput;
-    kycDonorsOnly: boolean;
     pendingRedemptions: BigNumber;
     proposalLink: BigNumber;
     multisig: string;
@@ -418,15 +415,11 @@ export declare namespace AccountStorage {
 
 export interface AccountsSwapRouterInterface extends utils.Interface {
   functions: {
-    "poolFee()": FunctionFragment;
     "swapToken(uint32,uint8,address,uint256,address,uint256)": FunctionFragment;
   };
 
-  getFunction(
-    nameOrSignatureOrTopic: "poolFee" | "swapToken"
-  ): FunctionFragment;
+  getFunction(nameOrSignatureOrTopic: "swapToken"): FunctionFragment;
 
-  encodeFunctionData(functionFragment: "poolFee", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "swapToken",
     values: [
@@ -439,7 +432,6 @@ export interface AccountsSwapRouterInterface extends utils.Interface {
     ]
   ): string;
 
-  decodeFunctionResult(functionFragment: "poolFee", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "swapToken", data: BytesLike): Result;
 
   events: {
@@ -631,8 +623,6 @@ export interface AccountsSwapRouter extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    poolFee(overrides?: CallOverrides): Promise<[number]>;
-
     swapToken(
       id: PromiseOrValue<BigNumberish>,
       accountType: PromiseOrValue<BigNumberish>,
@@ -643,8 +633,6 @@ export interface AccountsSwapRouter extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
-
-  poolFee(overrides?: CallOverrides): Promise<number>;
 
   swapToken(
     id: PromiseOrValue<BigNumberish>,
@@ -657,8 +645,6 @@ export interface AccountsSwapRouter extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    poolFee(overrides?: CallOverrides): Promise<number>;
-
     swapToken(
       id: PromiseOrValue<BigNumberish>,
       accountType: PromiseOrValue<BigNumberish>,
@@ -773,8 +759,6 @@ export interface AccountsSwapRouter extends BaseContract {
   };
 
   estimateGas: {
-    poolFee(overrides?: CallOverrides): Promise<BigNumber>;
-
     swapToken(
       id: PromiseOrValue<BigNumberish>,
       accountType: PromiseOrValue<BigNumberish>,
@@ -787,8 +771,6 @@ export interface AccountsSwapRouter extends BaseContract {
   };
 
   populateTransaction: {
-    poolFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     swapToken(
       id: PromiseOrValue<BigNumberish>,
       accountType: PromiseOrValue<BigNumberish>,

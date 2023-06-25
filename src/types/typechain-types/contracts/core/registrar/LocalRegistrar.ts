@@ -130,6 +130,8 @@ export interface LocalRegistrarInterface extends utils.Interface {
     "getRebalanceParams()": FunctionFragment;
     "getStrategyApprovalState(bytes4)": FunctionFragment;
     "getStrategyParamsById(bytes4)": FunctionFragment;
+    "getUniswapFactoryAddress()": FunctionFragment;
+    "getUniswapRouterAddress()": FunctionFragment;
     "getVaultOperatorApproved(address)": FunctionFragment;
     "initialize()": FunctionFragment;
     "isTokenAccepted(address)": FunctionFragment;
@@ -144,6 +146,7 @@ export interface LocalRegistrarInterface extends utils.Interface {
     "setStrategyApprovalState(bytes4,uint8)": FunctionFragment;
     "setStrategyParams(bytes4,address,address,uint8)": FunctionFragment;
     "setTokenAccepted(address,bool)": FunctionFragment;
+    "setUniswapAddresses(address,address)": FunctionFragment;
     "setVaultOperatorApproved(address,bool)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
   };
@@ -158,6 +161,8 @@ export interface LocalRegistrarInterface extends utils.Interface {
       | "getRebalanceParams"
       | "getStrategyApprovalState"
       | "getStrategyParamsById"
+      | "getUniswapFactoryAddress"
+      | "getUniswapRouterAddress"
       | "getVaultOperatorApproved"
       | "initialize"
       | "isTokenAccepted"
@@ -172,6 +177,7 @@ export interface LocalRegistrarInterface extends utils.Interface {
       | "setStrategyApprovalState"
       | "setStrategyParams"
       | "setTokenAccepted"
+      | "setUniswapAddresses"
       | "setVaultOperatorApproved"
       | "transferOwnership"
   ): FunctionFragment;
@@ -207,6 +213,14 @@ export interface LocalRegistrarInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "getStrategyParamsById",
     values: [PromiseOrValue<BytesLike>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getUniswapFactoryAddress",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getUniswapRouterAddress",
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "getVaultOperatorApproved",
@@ -271,6 +285,10 @@ export interface LocalRegistrarInterface extends utils.Interface {
     values: [PromiseOrValue<string>, PromiseOrValue<boolean>]
   ): string;
   encodeFunctionData(
+    functionFragment: "setUniswapAddresses",
+    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "setVaultOperatorApproved",
     values: [PromiseOrValue<string>, PromiseOrValue<boolean>]
   ): string;
@@ -309,6 +327,14 @@ export interface LocalRegistrarInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "getStrategyParamsById",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getUniswapFactoryAddress",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getUniswapRouterAddress",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -359,6 +385,10 @@ export interface LocalRegistrarInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "setTokenAccepted",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setUniswapAddresses",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -575,6 +605,10 @@ export interface LocalRegistrar extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[LocalRegistrarLib.StrategyParamsStructOutput]>;
 
+    getUniswapFactoryAddress(overrides?: CallOverrides): Promise<[string]>;
+
+    getUniswapRouterAddress(overrides?: CallOverrides): Promise<[string]>;
+
     getVaultOperatorApproved(
       _operator: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -649,6 +683,12 @@ export interface LocalRegistrar extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    setUniswapAddresses(
+      _uniswapRouter: PromiseOrValue<string>,
+      _uniswapFactory: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     setVaultOperatorApproved(
       _operator: PromiseOrValue<string>,
       _isApproved: PromiseOrValue<boolean>,
@@ -697,6 +737,10 @@ export interface LocalRegistrar extends BaseContract {
     _strategyId: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides
   ): Promise<LocalRegistrarLib.StrategyParamsStructOutput>;
+
+  getUniswapFactoryAddress(overrides?: CallOverrides): Promise<string>;
+
+  getUniswapRouterAddress(overrides?: CallOverrides): Promise<string>;
 
   getVaultOperatorApproved(
     _operator: PromiseOrValue<string>,
@@ -772,6 +816,12 @@ export interface LocalRegistrar extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  setUniswapAddresses(
+    _uniswapRouter: PromiseOrValue<string>,
+    _uniswapFactory: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   setVaultOperatorApproved(
     _operator: PromiseOrValue<string>,
     _isApproved: PromiseOrValue<boolean>,
@@ -820,6 +870,10 @@ export interface LocalRegistrar extends BaseContract {
       _strategyId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<LocalRegistrarLib.StrategyParamsStructOutput>;
+
+    getUniswapFactoryAddress(overrides?: CallOverrides): Promise<string>;
+
+    getUniswapRouterAddress(overrides?: CallOverrides): Promise<string>;
 
     getVaultOperatorApproved(
       _operator: PromiseOrValue<string>,
@@ -888,6 +942,12 @@ export interface LocalRegistrar extends BaseContract {
     setTokenAccepted(
       _tokenAddr: PromiseOrValue<string>,
       _isAccepted: PromiseOrValue<boolean>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setUniswapAddresses(
+      _uniswapRouter: PromiseOrValue<string>,
+      _uniswapFactory: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1023,6 +1083,10 @@ export interface LocalRegistrar extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    getUniswapFactoryAddress(overrides?: CallOverrides): Promise<BigNumber>;
+
+    getUniswapRouterAddress(overrides?: CallOverrides): Promise<BigNumber>;
+
     getVaultOperatorApproved(
       _operator: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -1097,6 +1161,12 @@ export interface LocalRegistrar extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    setUniswapAddresses(
+      _uniswapRouter: PromiseOrValue<string>,
+      _uniswapFactory: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     setVaultOperatorApproved(
       _operator: PromiseOrValue<string>,
       _isApproved: PromiseOrValue<boolean>,
@@ -1144,6 +1214,14 @@ export interface LocalRegistrar extends BaseContract {
 
     getStrategyParamsById(
       _strategyId: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getUniswapFactoryAddress(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getUniswapRouterAddress(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -1218,6 +1296,12 @@ export interface LocalRegistrar extends BaseContract {
     setTokenAccepted(
       _tokenAddr: PromiseOrValue<string>,
       _isAccepted: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setUniswapAddresses(
+      _uniswapRouter: PromiseOrValue<string>,
+      _uniswapFactory: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

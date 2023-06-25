@@ -29,8 +29,6 @@ import type {
 
 export declare namespace MultiSigStorage {
   export type TransactionStruct = {
-    title: PromiseOrValue<string>;
-    description: PromiseOrValue<string>;
     destination: PromiseOrValue<string>;
     value: PromiseOrValue<BigNumberish>;
     data: PromiseOrValue<BytesLike>;
@@ -40,15 +38,11 @@ export declare namespace MultiSigStorage {
 
   export type TransactionStructOutput = [
     string,
-    string,
-    string,
     BigNumber,
     string,
     boolean,
     string
   ] & {
-    title: string;
-    description: string;
     destination: string;
     value: BigNumber;
     data: string;
@@ -59,37 +53,43 @@ export declare namespace MultiSigStorage {
 
 export interface EndowmentMultiSigEmitterInterface extends utils.Interface {
   functions: {
-    "addOwnerEndowment(uint256,address)": FunctionFragment;
+    "addOwnersEndowment(uint256,address[])": FunctionFragment;
+    "approvalsRequirementChangeEndowment(uint256,uint256)": FunctionFragment;
     "confirmEndowment(uint256,address,uint256)": FunctionFragment;
     "createMultisig(address,uint256,address,address[],uint256,bool)": FunctionFragment;
     "depositEndowment(uint256,address,uint256)": FunctionFragment;
     "executeEndowment(uint256,uint256)": FunctionFragment;
     "executeFailureEndowment(uint256,uint256)": FunctionFragment;
     "initEndowmentMultiSigEmitter(address)": FunctionFragment;
-    "removeOwnerEndowment(uint256,address)": FunctionFragment;
-    "requirementChangeEndowment(uint256,uint256)": FunctionFragment;
+    "removeOwnersEndowment(uint256,address[])": FunctionFragment;
+    "replaceOwnerEndowment(uint256,address,address)": FunctionFragment;
     "revokeEndowment(uint256,address,uint256)": FunctionFragment;
-    "submitEndowment(uint256,uint256,(string,string,address,uint256,bytes,bool,bytes))": FunctionFragment;
+    "submitEndowment(uint256,uint256,(address,uint256,bytes,bool,bytes))": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "addOwnerEndowment"
+      | "addOwnersEndowment"
+      | "approvalsRequirementChangeEndowment"
       | "confirmEndowment"
       | "createMultisig"
       | "depositEndowment"
       | "executeEndowment"
       | "executeFailureEndowment"
       | "initEndowmentMultiSigEmitter"
-      | "removeOwnerEndowment"
-      | "requirementChangeEndowment"
+      | "removeOwnersEndowment"
+      | "replaceOwnerEndowment"
       | "revokeEndowment"
       | "submitEndowment"
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "addOwnerEndowment",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+    functionFragment: "addOwnersEndowment",
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>[]]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "approvalsRequirementChangeEndowment",
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "confirmEndowment",
@@ -131,12 +131,16 @@ export interface EndowmentMultiSigEmitterInterface extends utils.Interface {
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "removeOwnerEndowment",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+    functionFragment: "removeOwnersEndowment",
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "requirementChangeEndowment",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    functionFragment: "replaceOwnerEndowment",
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "revokeEndowment",
@@ -156,7 +160,11 @@ export interface EndowmentMultiSigEmitterInterface extends utils.Interface {
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "addOwnerEndowment",
+    functionFragment: "addOwnersEndowment",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "approvalsRequirementChangeEndowment",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -184,11 +192,11 @@ export interface EndowmentMultiSigEmitterInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "removeOwnerEndowment",
+    functionFragment: "removeOwnersEndowment",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "requirementChangeEndowment",
+    functionFragment: "replaceOwnerEndowment",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -201,29 +209,45 @@ export interface EndowmentMultiSigEmitterInterface extends utils.Interface {
   ): Result;
 
   events: {
+    "EndowmentApprovalsRequirementChange(uint256,uint256)": EventFragment;
     "EndowmentConfirmation(uint256,address,uint256)": EventFragment;
     "EndowmentDeposit(uint256,address,uint256)": EventFragment;
     "EndowmentExecution(uint256,uint256)": EventFragment;
     "EndowmentExecutionFailure(uint256,uint256)": EventFragment;
-    "EndowmentOwnerAddition(uint256,address)": EventFragment;
-    "EndowmentOwnerRemoval(uint256,address)": EventFragment;
-    "EndowmentRequirementChange(uint256,uint256)": EventFragment;
+    "EndowmentOwnerReplace(uint256,address,address)": EventFragment;
+    "EndowmentOwnersAddition(uint256,address[])": EventFragment;
+    "EndowmentOwnersRemoval(uint256,address[])": EventFragment;
     "EndowmentRevocation(uint256,address,uint256)": EventFragment;
     "EndowmentSubmission(uint256,uint256,tuple)": EventFragment;
     "MultisigCreated(address,uint256,address,address[],uint256,bool)": EventFragment;
   };
 
+  getEvent(
+    nameOrSignatureOrTopic: "EndowmentApprovalsRequirementChange"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "EndowmentConfirmation"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "EndowmentDeposit"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "EndowmentExecution"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "EndowmentExecutionFailure"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "EndowmentOwnerAddition"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "EndowmentOwnerRemoval"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "EndowmentRequirementChange"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "EndowmentOwnerReplace"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "EndowmentOwnersAddition"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "EndowmentOwnersRemoval"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "EndowmentRevocation"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "EndowmentSubmission"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "MultisigCreated"): EventFragment;
 }
+
+export interface EndowmentApprovalsRequirementChangeEventObject {
+  endowmentId: BigNumber;
+  approvalsRequired: BigNumber;
+}
+export type EndowmentApprovalsRequirementChangeEvent = TypedEvent<
+  [BigNumber, BigNumber],
+  EndowmentApprovalsRequirementChangeEventObject
+>;
+
+export type EndowmentApprovalsRequirementChangeEventFilter =
+  TypedEventFilter<EndowmentApprovalsRequirementChangeEvent>;
 
 export interface EndowmentConfirmationEventObject {
   endowmentId: BigNumber;
@@ -275,41 +299,42 @@ export type EndowmentExecutionFailureEvent = TypedEvent<
 export type EndowmentExecutionFailureEventFilter =
   TypedEventFilter<EndowmentExecutionFailureEvent>;
 
-export interface EndowmentOwnerAdditionEventObject {
+export interface EndowmentOwnerReplaceEventObject {
   endowmentId: BigNumber;
-  owner: string;
+  currOwner: string;
+  newOwner: string;
 }
-export type EndowmentOwnerAdditionEvent = TypedEvent<
-  [BigNumber, string],
-  EndowmentOwnerAdditionEventObject
+export type EndowmentOwnerReplaceEvent = TypedEvent<
+  [BigNumber, string, string],
+  EndowmentOwnerReplaceEventObject
 >;
 
-export type EndowmentOwnerAdditionEventFilter =
-  TypedEventFilter<EndowmentOwnerAdditionEvent>;
+export type EndowmentOwnerReplaceEventFilter =
+  TypedEventFilter<EndowmentOwnerReplaceEvent>;
 
-export interface EndowmentOwnerRemovalEventObject {
+export interface EndowmentOwnersAdditionEventObject {
   endowmentId: BigNumber;
-  owner: string;
+  owners: string[];
 }
-export type EndowmentOwnerRemovalEvent = TypedEvent<
-  [BigNumber, string],
-  EndowmentOwnerRemovalEventObject
+export type EndowmentOwnersAdditionEvent = TypedEvent<
+  [BigNumber, string[]],
+  EndowmentOwnersAdditionEventObject
 >;
 
-export type EndowmentOwnerRemovalEventFilter =
-  TypedEventFilter<EndowmentOwnerRemovalEvent>;
+export type EndowmentOwnersAdditionEventFilter =
+  TypedEventFilter<EndowmentOwnersAdditionEvent>;
 
-export interface EndowmentRequirementChangeEventObject {
+export interface EndowmentOwnersRemovalEventObject {
   endowmentId: BigNumber;
-  required: BigNumber;
+  owners: string[];
 }
-export type EndowmentRequirementChangeEvent = TypedEvent<
-  [BigNumber, BigNumber],
-  EndowmentRequirementChangeEventObject
+export type EndowmentOwnersRemovalEvent = TypedEvent<
+  [BigNumber, string[]],
+  EndowmentOwnersRemovalEventObject
 >;
 
-export type EndowmentRequirementChangeEventFilter =
-  TypedEventFilter<EndowmentRequirementChangeEvent>;
+export type EndowmentOwnersRemovalEventFilter =
+  TypedEventFilter<EndowmentOwnersRemovalEvent>;
 
 export interface EndowmentRevocationEventObject {
   endowmentId: BigNumber;
@@ -379,9 +404,15 @@ export interface EndowmentMultiSigEmitter extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    addOwnerEndowment(
+    addOwnersEndowment(
       endowmentId: PromiseOrValue<BigNumberish>,
-      owner: PromiseOrValue<string>,
+      owners: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    approvalsRequirementChangeEndowment(
+      endowmentId: PromiseOrValue<BigNumberish>,
+      approvalsRequired: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -426,15 +457,16 @@ export interface EndowmentMultiSigEmitter extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    removeOwnerEndowment(
+    removeOwnersEndowment(
       endowmentId: PromiseOrValue<BigNumberish>,
-      owner: PromiseOrValue<string>,
+      owners: PromiseOrValue<string>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    requirementChangeEndowment(
+    replaceOwnerEndowment(
       endowmentId: PromiseOrValue<BigNumberish>,
-      required: PromiseOrValue<BigNumberish>,
+      currOwner: PromiseOrValue<string>,
+      newOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -453,9 +485,15 @@ export interface EndowmentMultiSigEmitter extends BaseContract {
     ): Promise<ContractTransaction>;
   };
 
-  addOwnerEndowment(
+  addOwnersEndowment(
     endowmentId: PromiseOrValue<BigNumberish>,
-    owner: PromiseOrValue<string>,
+    owners: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  approvalsRequirementChangeEndowment(
+    endowmentId: PromiseOrValue<BigNumberish>,
+    approvalsRequired: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -500,15 +538,16 @@ export interface EndowmentMultiSigEmitter extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  removeOwnerEndowment(
+  removeOwnersEndowment(
     endowmentId: PromiseOrValue<BigNumberish>,
-    owner: PromiseOrValue<string>,
+    owners: PromiseOrValue<string>[],
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  requirementChangeEndowment(
+  replaceOwnerEndowment(
     endowmentId: PromiseOrValue<BigNumberish>,
-    required: PromiseOrValue<BigNumberish>,
+    currOwner: PromiseOrValue<string>,
+    newOwner: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -527,9 +566,15 @@ export interface EndowmentMultiSigEmitter extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    addOwnerEndowment(
+    addOwnersEndowment(
       endowmentId: PromiseOrValue<BigNumberish>,
-      owner: PromiseOrValue<string>,
+      owners: PromiseOrValue<string>[],
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    approvalsRequirementChangeEndowment(
+      endowmentId: PromiseOrValue<BigNumberish>,
+      approvalsRequired: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -574,15 +619,16 @@ export interface EndowmentMultiSigEmitter extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    removeOwnerEndowment(
+    removeOwnersEndowment(
       endowmentId: PromiseOrValue<BigNumberish>,
-      owner: PromiseOrValue<string>,
+      owners: PromiseOrValue<string>[],
       overrides?: CallOverrides
     ): Promise<void>;
 
-    requirementChangeEndowment(
+    replaceOwnerEndowment(
       endowmentId: PromiseOrValue<BigNumberish>,
-      required: PromiseOrValue<BigNumberish>,
+      currOwner: PromiseOrValue<string>,
+      newOwner: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -602,6 +648,15 @@ export interface EndowmentMultiSigEmitter extends BaseContract {
   };
 
   filters: {
+    "EndowmentApprovalsRequirementChange(uint256,uint256)"(
+      endowmentId?: null,
+      approvalsRequired?: null
+    ): EndowmentApprovalsRequirementChangeEventFilter;
+    EndowmentApprovalsRequirementChange(
+      endowmentId?: null,
+      approvalsRequired?: null
+    ): EndowmentApprovalsRequirementChangeEventFilter;
+
     "EndowmentConfirmation(uint256,address,uint256)"(
       endowmentId?: null,
       sender?: null,
@@ -642,32 +697,34 @@ export interface EndowmentMultiSigEmitter extends BaseContract {
       transactionId?: null
     ): EndowmentExecutionFailureEventFilter;
 
-    "EndowmentOwnerAddition(uint256,address)"(
+    "EndowmentOwnerReplace(uint256,address,address)"(
       endowmentId?: null,
-      owner?: null
-    ): EndowmentOwnerAdditionEventFilter;
-    EndowmentOwnerAddition(
+      currOwner?: null,
+      newOwner?: null
+    ): EndowmentOwnerReplaceEventFilter;
+    EndowmentOwnerReplace(
       endowmentId?: null,
-      owner?: null
-    ): EndowmentOwnerAdditionEventFilter;
+      currOwner?: null,
+      newOwner?: null
+    ): EndowmentOwnerReplaceEventFilter;
 
-    "EndowmentOwnerRemoval(uint256,address)"(
+    "EndowmentOwnersAddition(uint256,address[])"(
       endowmentId?: null,
-      owner?: null
-    ): EndowmentOwnerRemovalEventFilter;
-    EndowmentOwnerRemoval(
+      owners?: null
+    ): EndowmentOwnersAdditionEventFilter;
+    EndowmentOwnersAddition(
       endowmentId?: null,
-      owner?: null
-    ): EndowmentOwnerRemovalEventFilter;
+      owners?: null
+    ): EndowmentOwnersAdditionEventFilter;
 
-    "EndowmentRequirementChange(uint256,uint256)"(
+    "EndowmentOwnersRemoval(uint256,address[])"(
       endowmentId?: null,
-      required?: null
-    ): EndowmentRequirementChangeEventFilter;
-    EndowmentRequirementChange(
+      owners?: null
+    ): EndowmentOwnersRemovalEventFilter;
+    EndowmentOwnersRemoval(
       endowmentId?: null,
-      required?: null
-    ): EndowmentRequirementChangeEventFilter;
+      owners?: null
+    ): EndowmentOwnersRemovalEventFilter;
 
     "EndowmentRevocation(uint256,address,uint256)"(
       endowmentId?: null,
@@ -710,9 +767,15 @@ export interface EndowmentMultiSigEmitter extends BaseContract {
   };
 
   estimateGas: {
-    addOwnerEndowment(
+    addOwnersEndowment(
       endowmentId: PromiseOrValue<BigNumberish>,
-      owner: PromiseOrValue<string>,
+      owners: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    approvalsRequirementChangeEndowment(
+      endowmentId: PromiseOrValue<BigNumberish>,
+      approvalsRequired: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -757,15 +820,16 @@ export interface EndowmentMultiSigEmitter extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    removeOwnerEndowment(
+    removeOwnersEndowment(
       endowmentId: PromiseOrValue<BigNumberish>,
-      owner: PromiseOrValue<string>,
+      owners: PromiseOrValue<string>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    requirementChangeEndowment(
+    replaceOwnerEndowment(
       endowmentId: PromiseOrValue<BigNumberish>,
-      required: PromiseOrValue<BigNumberish>,
+      currOwner: PromiseOrValue<string>,
+      newOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -785,9 +849,15 @@ export interface EndowmentMultiSigEmitter extends BaseContract {
   };
 
   populateTransaction: {
-    addOwnerEndowment(
+    addOwnersEndowment(
       endowmentId: PromiseOrValue<BigNumberish>,
-      owner: PromiseOrValue<string>,
+      owners: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    approvalsRequirementChangeEndowment(
+      endowmentId: PromiseOrValue<BigNumberish>,
+      approvalsRequired: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -832,15 +902,16 @@ export interface EndowmentMultiSigEmitter extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    removeOwnerEndowment(
+    removeOwnersEndowment(
       endowmentId: PromiseOrValue<BigNumberish>,
-      owner: PromiseOrValue<string>,
+      owners: PromiseOrValue<string>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    requirementChangeEndowment(
+    replaceOwnerEndowment(
       endowmentId: PromiseOrValue<BigNumberish>,
-      required: PromiseOrValue<BigNumberish>,
+      currOwner: PromiseOrValue<string>,
+      newOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

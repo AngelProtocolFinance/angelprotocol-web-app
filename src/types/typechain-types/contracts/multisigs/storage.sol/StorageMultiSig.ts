@@ -23,43 +23,46 @@ import type {
 
 export interface StorageMultiSigInterface extends utils.Interface {
   functions: {
-    "confirmations(uint256,address)": FunctionFragment;
+    "activeOwnersCount()": FunctionFragment;
+    "approvalsRequired()": FunctionFragment;
+    "confirmations(uint256)": FunctionFragment;
     "isOwner(address)": FunctionFragment;
-    "owners(uint256)": FunctionFragment;
     "requireExecution()": FunctionFragment;
-    "required()": FunctionFragment;
     "transactionCount()": FunctionFragment;
     "transactions(uint256)": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
+      | "activeOwnersCount"
+      | "approvalsRequired"
       | "confirmations"
       | "isOwner"
-      | "owners"
       | "requireExecution"
-      | "required"
       | "transactionCount"
       | "transactions"
   ): FunctionFragment;
 
   encodeFunctionData(
+    functionFragment: "activeOwnersCount",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "approvalsRequired",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "confirmations",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "isOwner",
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "owners",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
     functionFragment: "requireExecution",
     values?: undefined
   ): string;
-  encodeFunctionData(functionFragment: "required", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "transactionCount",
     values?: undefined
@@ -70,16 +73,22 @@ export interface StorageMultiSigInterface extends utils.Interface {
   ): string;
 
   decodeFunctionResult(
+    functionFragment: "activeOwnersCount",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "approvalsRequired",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "confirmations",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "isOwner", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "owners", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "requireExecution",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "required", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "transactionCount",
     data: BytesLike
@@ -119,25 +128,21 @@ export interface StorageMultiSig extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    activeOwnersCount(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    approvalsRequired(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     confirmations(
       arg0: PromiseOrValue<BigNumberish>,
-      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    ): Promise<[BigNumber] & { count: BigNumber }>;
 
     isOwner(
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
-    owners(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
-
     requireExecution(overrides?: CallOverrides): Promise<[boolean]>;
-
-    required(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transactionCount(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -145,9 +150,7 @@ export interface StorageMultiSig extends BaseContract {
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [string, string, string, BigNumber, string, boolean, string] & {
-        title: string;
-        description: string;
+      [string, BigNumber, string, boolean, string] & {
         destination: string;
         value: BigNumber;
         data: string;
@@ -157,25 +160,21 @@ export interface StorageMultiSig extends BaseContract {
     >;
   };
 
+  activeOwnersCount(overrides?: CallOverrides): Promise<BigNumber>;
+
+  approvalsRequired(overrides?: CallOverrides): Promise<BigNumber>;
+
   confirmations(
     arg0: PromiseOrValue<BigNumberish>,
-    arg1: PromiseOrValue<string>,
     overrides?: CallOverrides
-  ): Promise<boolean>;
+  ): Promise<BigNumber>;
 
   isOwner(
     arg0: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
-  owners(
-    arg0: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<string>;
-
   requireExecution(overrides?: CallOverrides): Promise<boolean>;
-
-  required(overrides?: CallOverrides): Promise<BigNumber>;
 
   transactionCount(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -183,9 +182,7 @@ export interface StorageMultiSig extends BaseContract {
     arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<
-    [string, string, string, BigNumber, string, boolean, string] & {
-      title: string;
-      description: string;
+    [string, BigNumber, string, boolean, string] & {
       destination: string;
       value: BigNumber;
       data: string;
@@ -195,25 +192,21 @@ export interface StorageMultiSig extends BaseContract {
   >;
 
   callStatic: {
+    activeOwnersCount(overrides?: CallOverrides): Promise<BigNumber>;
+
+    approvalsRequired(overrides?: CallOverrides): Promise<BigNumber>;
+
     confirmations(
       arg0: PromiseOrValue<BigNumberish>,
-      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<boolean>;
+    ): Promise<BigNumber>;
 
     isOwner(
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    owners(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<string>;
-
     requireExecution(overrides?: CallOverrides): Promise<boolean>;
-
-    required(overrides?: CallOverrides): Promise<BigNumber>;
 
     transactionCount(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -221,9 +214,7 @@ export interface StorageMultiSig extends BaseContract {
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [string, string, string, BigNumber, string, boolean, string] & {
-        title: string;
-        description: string;
+      [string, BigNumber, string, boolean, string] & {
         destination: string;
         value: BigNumber;
         data: string;
@@ -236,9 +227,12 @@ export interface StorageMultiSig extends BaseContract {
   filters: {};
 
   estimateGas: {
+    activeOwnersCount(overrides?: CallOverrides): Promise<BigNumber>;
+
+    approvalsRequired(overrides?: CallOverrides): Promise<BigNumber>;
+
     confirmations(
       arg0: PromiseOrValue<BigNumberish>,
-      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -247,14 +241,7 @@ export interface StorageMultiSig extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    owners(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     requireExecution(overrides?: CallOverrides): Promise<BigNumber>;
-
-    required(overrides?: CallOverrides): Promise<BigNumber>;
 
     transactionCount(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -265,9 +252,12 @@ export interface StorageMultiSig extends BaseContract {
   };
 
   populateTransaction: {
+    activeOwnersCount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    approvalsRequired(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     confirmations(
       arg0: PromiseOrValue<BigNumberish>,
-      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -276,14 +266,7 @@ export interface StorageMultiSig extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    owners(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     requireExecution(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    required(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transactionCount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

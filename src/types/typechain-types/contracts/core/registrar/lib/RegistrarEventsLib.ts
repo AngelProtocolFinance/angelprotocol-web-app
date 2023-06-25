@@ -85,7 +85,8 @@ export declare namespace RegistrarStorage {
     collectorShare: PromiseOrValue<BigNumberish>;
     charitySharesContract: PromiseOrValue<string>;
     fundraisingContract: PromiseOrValue<string>;
-    uniswapSwapRouter: PromiseOrValue<string>;
+    uniswapRouter: PromiseOrValue<string>;
+    uniswapFactory: PromiseOrValue<string>;
     multisigFactory: PromiseOrValue<string>;
     multisigEmitter: PromiseOrValue<string>;
     charityProposal: PromiseOrValue<string>;
@@ -125,6 +126,7 @@ export declare namespace RegistrarStorage {
     string,
     string,
     string,
+    string,
     string
   ] & {
     applicationsReview: string;
@@ -147,7 +149,8 @@ export declare namespace RegistrarStorage {
     collectorShare: BigNumber;
     charitySharesContract: string;
     fundraisingContract: string;
-    uniswapSwapRouter: string;
+    uniswapRouter: string;
+    uniswapFactory: string;
     multisigFactory: string;
     multisigEmitter: string;
     charityProposal: string;

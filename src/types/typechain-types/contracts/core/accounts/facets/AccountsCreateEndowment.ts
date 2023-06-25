@@ -206,37 +206,6 @@ export declare namespace AngelCoreStruct {
     min: BigNumber;
     defaultSplit: BigNumber;
   };
-
-  export type DaoSetupStruct = {
-    quorum: PromiseOrValue<BigNumberish>;
-    threshold: PromiseOrValue<BigNumberish>;
-    votingPeriod: PromiseOrValue<BigNumberish>;
-    timelockPeriod: PromiseOrValue<BigNumberish>;
-    expirationPeriod: PromiseOrValue<BigNumberish>;
-    proposalDeposit: PromiseOrValue<BigNumberish>;
-    snapshotPeriod: PromiseOrValue<BigNumberish>;
-    token: AngelCoreStruct.DaoTokenStruct;
-  };
-
-  export type DaoSetupStructOutput = [
-    BigNumber,
-    BigNumber,
-    BigNumber,
-    BigNumber,
-    BigNumber,
-    BigNumber,
-    BigNumber,
-    AngelCoreStruct.DaoTokenStructOutput
-  ] & {
-    quorum: BigNumber;
-    threshold: BigNumber;
-    votingPeriod: BigNumber;
-    timelockPeriod: BigNumber;
-    expirationPeriod: BigNumber;
-    proposalDeposit: BigNumber;
-    snapshotPeriod: BigNumber;
-    token: AngelCoreStruct.DaoTokenStructOutput;
-  };
 }
 
 export declare namespace SubDaoMessage {
@@ -325,7 +294,6 @@ export declare namespace AccountStorage {
     image: PromiseOrValue<string>;
     maturityTime: PromiseOrValue<BigNumberish>;
     rebalance: LocalRegistrarLib.RebalanceParamsStruct;
-    kycDonorsOnly: PromiseOrValue<boolean>;
     pendingRedemptions: PromiseOrValue<BigNumberish>;
     proposalLink: PromiseOrValue<BigNumberish>;
     multisig: PromiseOrValue<string>;
@@ -357,7 +325,6 @@ export declare namespace AccountStorage {
     string,
     BigNumber,
     LocalRegistrarLib.RebalanceParamsStructOutput,
-    boolean,
     BigNumber,
     BigNumber,
     string,
@@ -387,7 +354,6 @@ export declare namespace AccountStorage {
     image: string;
     maturityTime: BigNumber;
     rebalance: LocalRegistrarLib.RebalanceParamsStructOutput;
-    kycDonorsOnly: boolean;
     pendingRedemptions: BigNumber;
     proposalLink: BigNumber;
     multisig: string;
@@ -449,7 +415,6 @@ export declare namespace AccountStorage {
 
 export declare namespace AccountMessages {
   export type CreateEndowmentRequestStruct = {
-    owner: PromiseOrValue<string>;
     withdrawBeforeMaturity: PromiseOrValue<boolean>;
     maturityTime: PromiseOrValue<BigNumberish>;
     name: PromiseOrValue<string>;
@@ -459,19 +424,13 @@ export declare namespace AccountMessages {
     logo: PromiseOrValue<string>;
     image: PromiseOrValue<string>;
     members: PromiseOrValue<string>[];
-    kycDonorsOnly: PromiseOrValue<boolean>;
     threshold: PromiseOrValue<BigNumberish>;
     allowlistedBeneficiaries: PromiseOrValue<string>[];
     allowlistedContributors: PromiseOrValue<string>[];
-    splitMax: PromiseOrValue<BigNumberish>;
-    splitMin: PromiseOrValue<BigNumberish>;
-    splitDefault: PromiseOrValue<BigNumberish>;
     earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStruct;
     withdrawFee: AngelCoreStruct.FeeSettingStruct;
     depositFee: AngelCoreStruct.FeeSettingStruct;
     balanceFee: AngelCoreStruct.FeeSettingStruct;
-    dao: AngelCoreStruct.DaoSetupStruct;
-    createDao: PromiseOrValue<boolean>;
     proposalLink: PromiseOrValue<BigNumberish>;
     settingsController: AngelCoreStruct.SettingsControllerStruct;
     parent: PromiseOrValue<BigNumberish>;
@@ -482,7 +441,6 @@ export declare namespace AccountMessages {
   };
 
   export type CreateEndowmentRequestStructOutput = [
-    string,
     boolean,
     BigNumber,
     string,
@@ -492,19 +450,13 @@ export declare namespace AccountMessages {
     string,
     string,
     string[],
-    boolean,
     BigNumber,
     string[],
     string[],
-    BigNumber,
-    BigNumber,
-    BigNumber,
     AngelCoreStruct.FeeSettingStructOutput,
     AngelCoreStruct.FeeSettingStructOutput,
     AngelCoreStruct.FeeSettingStructOutput,
     AngelCoreStruct.FeeSettingStructOutput,
-    AngelCoreStruct.DaoSetupStructOutput,
-    boolean,
     BigNumber,
     AngelCoreStruct.SettingsControllerStructOutput,
     number,
@@ -513,7 +465,6 @@ export declare namespace AccountMessages {
     AngelCoreStruct.SplitDetailsStructOutput,
     BigNumber
   ] & {
-    owner: string;
     withdrawBeforeMaturity: boolean;
     maturityTime: BigNumber;
     name: string;
@@ -523,19 +474,13 @@ export declare namespace AccountMessages {
     logo: string;
     image: string;
     members: string[];
-    kycDonorsOnly: boolean;
     threshold: BigNumber;
     allowlistedBeneficiaries: string[];
     allowlistedContributors: string[];
-    splitMax: BigNumber;
-    splitMin: BigNumber;
-    splitDefault: BigNumber;
     earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStructOutput;
     withdrawFee: AngelCoreStruct.FeeSettingStructOutput;
     depositFee: AngelCoreStruct.FeeSettingStructOutput;
     balanceFee: AngelCoreStruct.FeeSettingStructOutput;
-    dao: AngelCoreStruct.DaoSetupStructOutput;
-    createDao: boolean;
     proposalLink: BigNumber;
     settingsController: AngelCoreStruct.SettingsControllerStructOutput;
     parent: number;
@@ -548,7 +493,7 @@ export declare namespace AccountMessages {
 
 export interface AccountsCreateEndowmentInterface extends utils.Interface {
   functions: {
-    "createEndowment((address,bool,uint256,string,uint256[],uint8,uint8,string,string,address[],bool,uint256,address[],address[],uint256,uint256,uint256,(address,uint256),(address,uint256),(address,uint256),(address,uint256),(uint256,uint256,uint256,uint256,uint256,uint128,uint256,(uint8,(address,uint256,string,string,(uint8,(uint128,uint256,uint128,uint128)),string,string,uint256,address,uint256,uint256))),bool,uint256,((bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256))),uint32,address[],bool,(uint256,uint256,uint256),uint256))": FunctionFragment;
+    "createEndowment((bool,uint256,string,uint256[],uint8,uint8,string,string,address[],uint256,address[],address[],(address,uint256),(address,uint256),(address,uint256),(address,uint256),uint256,((bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256))),uint32,address[],bool,(uint256,uint256,uint256),uint256))": FunctionFragment;
   };
 
   getFunction(nameOrSignatureOrTopic: "createEndowment"): FunctionFragment;
