@@ -29,10 +29,10 @@ export const txs: { [T in TxTypes]: (args: TxArgs<T>) => string } = {
   // //// MULTISIG ////
   "multisig.submit-transaction": (tx) =>
     multisig.encodeFunctionData("submitTransaction", toTuple(tx)),
-  "multisig.add-owner": ({ address }) =>
-    multisig.encodeFunctionData("addOwner", [address]),
-  "multisig.remove-owner": ({ address }) =>
-    multisig.encodeFunctionData("removeOwner", [address]),
+  "multisig.add-owners": ({ addresses }) =>
+    multisig.encodeFunctionData("addOwner", [addresses]),
+  "multisig.remove-owners": ({ addresses }) =>
+    multisig.encodeFunctionData("removeOwner", [addresses]),
   "multisig.confirm-tx": ({ id }) =>
     multisig.encodeFunctionData("confirmTransaction", [id]),
   "multisig.revoke-tx": ({ id }) =>
@@ -40,7 +40,7 @@ export const txs: { [T in TxTypes]: (args: TxArgs<T>) => string } = {
   "multisig.execute-tx": ({ id }) =>
     multisig.encodeFunctionData("executeTransaction", [id]),
   "multisig.change-threshold": ({ threshold }) =>
-    multisig.encodeFunctionData("changeRequirement", [threshold]),
+    multisig.encodeFunctionData("changeApprovalsRequirement", [threshold]),
   "multisig.change-auto-execute": ({ autoExecute }) =>
     multisig.encodeFunctionData("changeRequireExecution", [!autoExecute]),
 

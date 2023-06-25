@@ -1,10 +1,10 @@
 [
   "function submitTransaction(address,uint256,bytes,bytes) returns (uint256)",
-  "function addOwner(address)",
-  "function removeOwner(address)",
+  "function addOwners(address[])",
+  "function removeOwners(address[])",
   "function confirmTransaction(uint256)",
   "function revokeConfirmation(uint256)",
   "function executeTransaction(uint256)",
-  "function changeRequirement(uint256)",
+  "function changeApprovalsRequirement(uint256)",
   "function changeRequireExecution(bool)"
 ]

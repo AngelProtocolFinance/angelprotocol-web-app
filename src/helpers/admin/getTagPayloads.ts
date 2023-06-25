@@ -22,8 +22,8 @@ export function getTagPayloads(type?: TxMeta["id"]): TagPayload[] {
       _tags.push("index-fund.config");
       break;
 
-    case "multisig.add-owner":
-    case "multisig.remove-owner":
+    case "multisig.add-owners":
+    case "multisig.remove-owners":
       _tags.push("multisig.members");
       _tags.push("multisig.threshold"); //cases where threshold > members.length
       break;

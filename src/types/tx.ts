@@ -141,7 +141,7 @@ type Tx<T extends Tupleable, M> = {
   args: T;
 };
 
-type Addr = { address: string };
+type Addresses = { addresses: string[] };
 export type ID = { id: number };
 
 type Txs = {
@@ -183,8 +183,8 @@ type Txs = {
 
   // //// MULTISIG ////
   "multisig.submit-transaction": Tx<NewTransaction, never>; //no meta
-  "multisig.add-owner": Tx<Addr, MultisigMemberMeta>;
-  "multisig.remove-owner": Tx<Addr, MultisigMemberMeta>;
+  "multisig.add-owners": Tx<Addresses, MultisigMemberMeta>;
+  "multisig.remove-owners": Tx<Addresses, MultisigMemberMeta>;
   "multisig.confirm-tx": Tx<ID, never>; //no meta
   "multisig.revoke-tx": Tx<ID, never>; //no meta
   "multisig.execute-tx": Tx<ID, never>; //no meta

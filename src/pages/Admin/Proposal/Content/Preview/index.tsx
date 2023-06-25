@@ -33,8 +33,8 @@ export default function Preview(props: TxMeta) {
     /** multisig */
     case "multisig.change-threshold":
       return <ThresholdUpdate {...props.data} />;
-    case "multisig.add-owner":
-    case "multisig.remove-owner":
+    case "multisig.add-owners":
+    case "multisig.remove-owners":
       return <MultisigMember {...props.data} />;
 
     /** _account */

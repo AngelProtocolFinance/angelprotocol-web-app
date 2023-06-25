@@ -156,9 +156,12 @@ export const queryObjects: {
     },
   ],
   "multisig.threshold": [
-    multisig.encodeFunctionData("required", []),
+    multisig.encodeFunctionData("approvalsRequired", []),
     (result) => {
-      const d: BigNumber = multisig.decodeFunctionResult("required", result)[0];
+      const d: BigNumber = multisig.decodeFunctionResult(
+        "approvalsRequired",
+        result
+      )[0];
       return d.toNumber();
     },
   ],

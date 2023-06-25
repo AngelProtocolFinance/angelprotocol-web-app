@@ -13,10 +13,10 @@ export default function useUpdateMembers(action: FormProps["action"]) {
     if (typeof checkResult === "function") return checkResult();
 
     const [data, dest, meta] = encodeTx(
-      action === "add" ? "multisig.add-owner" : "multisig.remove-owner",
+      action === "add" ? "multisig.add-owners" : "multisig.remove-owners",
       {
         multisig,
-        address: fv.address,
+        addresses: [fv.address],
       },
       {
         title: fv.title,
