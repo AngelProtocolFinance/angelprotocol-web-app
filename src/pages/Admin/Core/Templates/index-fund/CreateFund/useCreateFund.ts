@@ -2,17 +2,17 @@ import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { FormValues } from "./types";
 import { NewFund } from "types/contracts";
-import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { TxPrompt } from "components/Prompt";
 import { useGetter } from "store/accessors";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { blockTime } from "helpers/admin";
+import { isTooltip, useAdminContext } from "../../../../Context";
 import { INIT_SPLIT } from "./index";
 
 export default function useCreateFund() {
-  const { multisig, checkSubmit } = useAdminResources();
+  const { multisig, txResource } = useAdminContext();
   const sendTx = useTxSender();
   const { showModal } = useModalContext();
   const { trigger, getValues } = useFormContext<FormValues>();
@@ -33,8 +33,7 @@ export default function useCreateFund() {
     ]);
 
     if (!isValid) return;
-    const result = checkSubmit();
-    if (typeof result === "function") return result();
+    if (isTooltip(txResource)) throw new Error(txResource);
 
     const currHeight = getValues("height");
     let expiryHeight = getValues("expiryHeight");
@@ -64,7 +63,7 @@ export default function useCreateFund() {
       content: newFund,
     });
 
-    const { wallet, txMeta } = result;
+    const { wallet, txMeta } = txResource;
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig,
 
@@ -82,5 +81,9 @@ export default function useCreateFund() {
     setSubmitting(false);
   }
 
-  return { createFund, isSubmitting };
+  return {
+    createFund,
+    isSubmitting,
+    tooltip: isTooltip(txResource) ? txResource : undefined,
+  };
 }

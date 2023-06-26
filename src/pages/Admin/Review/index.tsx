@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import { LinkGroup } from "../Sidebar/types";
 import { adminRoutes } from "constants/routes";
+import AdminWallet from "../AdminWallet";
 import Layout from "../Layout";
 import Proposal from "../Proposal";
 import Proposals from "../Proposals";
@@ -11,7 +12,7 @@ import Templates from "./Templates";
 
 const LINK_GROUPS: LinkGroup[] = [
   { links: [LINKS.index_review] },
-  { title: "Manage", links: [LINKS.proposals] },
+  { title: "Manage", links: [LINKS.admin_wallet, LINKS.proposals] },
 ];
 
 export default function Review() {
@@ -21,6 +22,8 @@ export default function Review() {
         <Route path={`${adminRoutes.proposal}/:id`} element={<Proposal />} />
         <Route path={adminRoutes.proposals} element={<Proposals />} />
         <Route path={`${adminRoutes.templates}/*`} element={<Templates />} />
+        <Route path={adminRoutes.admin_wallet} element={<AdminWallet />} />
+
         <Route
           path={`${adminRoutes.application}/:id`}
           element={<Application />}

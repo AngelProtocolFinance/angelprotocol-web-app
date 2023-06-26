@@ -1,18 +1,17 @@
 import { FormValues } from "./types";
 import { AccountType } from "types/lists";
-import { useAdminResources } from "pages/Admin/Guard";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { scaleToStr } from "helpers";
 import { getTagPayloads } from "helpers/admin";
+import { isTooltip, useAdminContext } from "../../../Context";
 
 export default function useSubmit(vault: string, type: AccountType) {
-  const { multisig, id, checkSubmit } = useAdminResources();
+  const { multisig, id, txResource } = useAdminContext();
   const { sendTx, isSending } = useTxSender(true);
 
   async function submit({ token }: FormValues) {
-    const result = checkSubmit();
-    if (typeof result === "function") return result();
+    if (isTooltip(txResource)) throw new Error(txResource);
 
     const [data, dest, meta] = encodeTx(
       "accounts.invest",
@@ -30,7 +29,7 @@ export default function useSubmit(vault: string, type: AccountType) {
       }
     );
 
-    const { wallet, txMeta } = result;
+    const { wallet, txMeta } = txResource;
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig,
 

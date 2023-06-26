@@ -1,22 +1,21 @@
-import { useAdminResources } from "pages/Admin/Guard";
 import Modal from "components/Modal";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
+import { isTooltip, useAdminContext } from "../../Context";
 
 type Props = {
   autoExecute: boolean;
 };
 
 export default function AutoExecutePrompt({ autoExecute }: Props) {
-  const { checkSubmit, multisig } = useAdminResources<"charity">();
+  const { txResource, multisig } = useAdminContext<"charity">();
   const { sendTx, isSending } = useTxSender(true);
 
   async function toggle() {
-    const checkResult = checkSubmit();
-    if (typeof checkResult === "function") return checkResult();
+    if (isTooltip(txResource)) throw new Error(txResource);
 
-    const { wallet, txMeta } = checkResult;
+    const { wallet, txMeta } = txResource;
 
     const [data, dest, meta] = encodeTx(
       "multisig.change-auto-execute",
@@ -33,7 +32,6 @@ export default function AutoExecutePrompt({ autoExecute }: Props) {
 
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig: dest,
-
       destination: dest,
       value: "0",
       data,

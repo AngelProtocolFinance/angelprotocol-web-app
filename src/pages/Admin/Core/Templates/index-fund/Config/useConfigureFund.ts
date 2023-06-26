@@ -1,15 +1,15 @@
 import { useFormContext } from "react-hook-form";
 import { FormValues } from "./types";
-import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import Prompt from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { isEmpty } from "helpers";
 import { getPayloadDiff, getTagPayloads } from "helpers/admin";
+import { isTooltip, useAdminContext } from "../../../../Context";
 
 export default function useConfigureFund() {
-  const { multisig, checkSubmit } = useAdminResources();
+  const { multisig, txResource } = useAdminContext();
   const {
     handleSubmit,
     formState: { isSubmitting, isDirty, isValid },
@@ -35,8 +35,7 @@ export default function useConfigureFund() {
       });
     }
 
-    const result = checkSubmit();
-    if (typeof result === "function") return result();
+    if (isTooltip(txResource)) throw new Error(txResource);
 
     const [configData, dest, meta] = encodeTx("index-fund.config", data, {
       title,
@@ -44,7 +43,7 @@ export default function useConfigureFund() {
       content: diffs,
     });
 
-    const { wallet, txMeta } = result;
+    const { wallet, txMeta } = txResource;
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig,
 
@@ -64,5 +63,6 @@ export default function useConfigureFund() {
   return {
     configureFund: handleSubmit(configureFund),
     isSubmitDisabled: isSubmitting || !isValid || !isDirty,
+    tooltip: isTooltip(txResource) ? txResource : undefined,
   };
 }

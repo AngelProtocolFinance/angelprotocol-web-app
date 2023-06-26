@@ -2,25 +2,23 @@ import { AbiCoder } from "@ethersproject/abi";
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "../types";
 import { TransferMeta, TxMeta } from "types/tx";
-import { useAdminResources } from "pages/Admin/Guard";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { scale } from "helpers";
 import { getTagPayloads } from "helpers/admin";
 import { EMPTY_DATA } from "constants/evm";
+import { isTooltip, useAdminContext } from "../../../../Context";
 
 export default function useTransferFunds() {
   const {
     handleSubmit,
     formState: { isSubmitting, isValid, isDirty },
   } = useFormContext<FV>();
-  const { multisig, checkSubmit } = useAdminResources();
+  const { multisig, txResource } = useAdminContext();
   const sendTx = useTxSender();
 
   async function transferFunds(fv: FV) {
-    const result = checkSubmit();
-    if (typeof result === "function") return result();
-
+    if (isTooltip(txResource)) throw new Error(txResource);
     const { token, recipient } = fv;
     const scaledAmount = scale(token.amount, token.decimals).toHex();
 
@@ -67,7 +65,7 @@ export default function useTransferFunds() {
           ]
         : [...native, scaledAmount];
 
-    const { wallet, txMeta } = result;
+    const { wallet, txMeta } = txResource;
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig,
       destination: dest,
@@ -86,5 +84,6 @@ export default function useTransferFunds() {
   return {
     transferFunds: handleSubmit(transferFunds),
     isSubmitDisabled: isSubmitting || !isValid || !isDirty,
+    tooltip: isTooltip(txResource) ? txResource : undefined,
   };
 }

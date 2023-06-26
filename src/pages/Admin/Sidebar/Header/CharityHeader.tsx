@@ -4,11 +4,11 @@ import { useGetWallet } from "contexts/WalletContext";
 import ContentLoader from "components/ContentLoader";
 import Icon from "components/Icon";
 import Image from "components/Image";
-import { useAdminResources } from "../../Guard";
+import { useAdminContext } from "../../Context";
 import MyEndowments from "./MyEndowments";
 
 export default function CharityHeader() {
-  const { id } = useAdminResources();
+  const { id } = useAdminContext();
   const { data: profile, isLoading, isError } = useProfileQuery(id);
   const { wallet } = useGetWallet();
   const { data } = useWalletProfileQuery(wallet?.address!, {
@@ -26,12 +26,11 @@ export default function CharityHeader() {
 
         {isLoading ? (
           <ContentLoader className="h-10 w-24" />
-        ) : wallet ? (
+        ) : wallet && data && data.admin.length >= 2 ? (
           <button
             type="button"
             className="btn-outline gap-2 normal-case h-10 pr-4 pl-3"
             onClick={() => setDisplayOtherEndowments(!displayOtherEndowments)}
-            disabled={!data || data.admin.length === 1}
           >
             <Icon type="Sync" />
             Switch

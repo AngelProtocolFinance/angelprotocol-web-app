@@ -1,11 +1,11 @@
 import { useFormContext } from "react-hook-form";
 import { FV } from "./types";
-import { useAdminResources } from "pages/Admin/Guard";
 import { useErrorContext } from "contexts/ErrorContext";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { isEmpty } from "helpers";
 import { getPayloadDiff, getTagPayloads } from "helpers/admin";
+import { isTooltip, useAdminContext } from "../../Context";
 import { controllerUpdate } from "./helpers";
 
 export default function useSubmit() {
@@ -13,8 +13,8 @@ export default function useSubmit() {
     id,
     multisig,
     settingsController: settings,
-    checkSubmit,
-  } = useAdminResources<"charity">();
+    txResource,
+  } = useAdminContext<"charity">();
   const { handleError } = useErrorContext();
   const {
     formState: { isSubmitting, errors },
@@ -32,10 +32,9 @@ export default function useSubmit() {
         return handleError("No changes detected");
       }
 
-      const result = checkSubmit();
-      if (typeof result === "function") return result();
+      if (isTooltip(txResource)) throw new Error(txResource);
 
-      const { wallet, txMeta } = result;
+      const { wallet, txMeta } = txResource;
       const [data, dest, meta] = encodeTx(
         "accounts.update-controller",
         update,
@@ -45,7 +44,6 @@ export default function useSubmit() {
           content: diff,
         }
       );
-
       const tx = createTx(wallet.address, "multisig.submit-transaction", {
         multisig,
 

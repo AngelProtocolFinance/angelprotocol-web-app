@@ -1,12 +1,12 @@
-import { useAdminResources } from "pages/Admin/Guard";
 import { useDonationsQuery } from "services/apes";
 import QueryLoader from "components/QueryLoader";
 import { chainIds } from "constants/chainIds";
 import { PAYMENT_WORDS } from "constants/common";
+import { useAdminContext } from "../../Context";
 import Table from "./Table";
 
 export default function DonationsTable({ classes = "" }) {
-  const { id } = useAdminResources();
+  const { id } = useAdminContext();
   const { data, ...rest } = useDonationsQuery({
     id: id.toString(),
     chain_id: chainIds.polygon,

@@ -1,20 +1,21 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FlatFormValues, FormValues } from "./types";
-import { Profile, endow } from "services/types";
-import { useAdminResources } from "pages/Admin/Guard";
+import { Profile as TProfile, endow } from "services/types";
 import { useProfileQuery } from "services/aws/aws";
 import { FormError, FormSkeleton } from "components/admin";
 import { adminRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
+import { isTooltip, useAdminContext } from "../../Context";
 import Seo from "../Seo";
 import Form from "./Form";
 import { getEndowDesignationLabelValuePair } from "./getEndowDesignationLabelValuePair";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
+import { ops } from "./ops";
 import { schema } from "./schema";
 
 export default function EditProfile() {
-  const { id } = useAdminResources();
+  const { id } = useAdminContext(ops);
   const { data: profile, isLoading, isFetching, isError } = useProfileQuery(id);
 
   const content =
@@ -34,7 +35,9 @@ export default function EditProfile() {
   );
 }
 
-function FormWithContext(props: Profile) {
+function FormWithContext(props: TProfile) {
+  const { txResource } = useAdminContext(ops);
+
   const { active_in_countries = [] } = props;
   const designation = endow(props) ? props.endow_designation : "";
   const sdgs = endow(props) ? props.categories.sdgs : [];
@@ -91,9 +94,11 @@ function FormWithContext(props: Profile) {
     resolver: yupResolver(schema),
     context: { isEndow: props.type === "endowment" },
   });
+  const tooltip = isTooltip(txResource) ? txResource : undefined;
+
   return (
     <FormProvider {...methods}>
-      <Form />
+      <Form tooltip={tooltip} />
     </FormProvider>
   );
 }

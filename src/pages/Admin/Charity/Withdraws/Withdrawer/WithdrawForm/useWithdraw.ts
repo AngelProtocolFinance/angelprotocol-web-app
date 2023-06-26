@@ -1,7 +1,6 @@
 import type { BigNumber } from "@ethersproject/bignumber";
 import { useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";
-import { PropMeta } from "services/types";
 import { AccountType, EndowmentDetails } from "types/contracts";
 import { LogProcessor, SimulContractTx } from "types/evm";
 import { TxOnSuccess, TxSuccessMeta } from "types/tx";
@@ -18,23 +17,23 @@ import { chainIds } from "constants/chainIds";
 import { EMAIL_SUPPORT } from "constants/env";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { APIs } from "constants/urls";
-import { useAdminResources } from "../../../../Guard";
+import { TxMeta, isTooltip, useAdminContext } from "../../../../Context";
 import { fee, names } from "./helpers";
 
 export default function useWithdraw() {
   const { handleSubmit, watch, getValues } = useFormContext<WithdrawValues>();
+  const type = watch("type");
 
-  const { multisig, id, checkSubmit, ...endow } =
-    useAdminResources<"charity">();
+  const { multisig, id, txResource, ...endow } = useAdminContext<"charity">([
+    type === "liquid" ? "withdraw-liquid" : "withdraw-locked",
+  ]);
+
   const { showModal } = useModalContext();
   const sendTx = useTxSender();
 
   const network = watch("network");
   async function withdraw(wv: WithdrawValues) {
-    const result = checkSubmit([
-      wv.type === "liquid" ? "withdraw-liquid" : "withdraw-locked",
-    ]);
-    if (typeof result === "function") return result();
+    if (isTooltip(txResource)) throw new Error(txResource);
 
     const accType: AccountType = wv.type === "locked" ? 0 : 1;
     const isPolygon = wv.network === chainIds.polygon;
@@ -73,7 +72,7 @@ export default function useWithdraw() {
       }
     );
 
-    const { wallet, txMeta, isDelegated } = result;
+    const { wallet, txMeta, isDelegated } = txResource;
     const sender = wallet.address;
 
     const tx: SimulContractTx = isDelegated //pertains to whitelists in this context
@@ -175,12 +174,13 @@ export default function useWithdraw() {
     withdraw: handleSubmit(withdraw),
     fee: fee(network, getValues("fees")),
     network: names(network),
+    tooltip: isTooltip(txResource) ? txResource : undefined,
   };
 }
 
 function successMeta(
   id: string | undefined,
-  { willExecute }: PropMeta,
+  { willExecute }: TxMeta,
   endow: EndowmentDetails
 ): TxSuccessMeta {
   const DIRECT_MSG =

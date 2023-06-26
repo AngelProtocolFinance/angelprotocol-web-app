@@ -1,15 +1,15 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { number, object } from "yup";
-import { ProposalBase } from "../../../types";
+import { ProposalBase } from "../../types";
 import { SchemaShape } from "schemas/types";
-import { useAdminResources } from "pages/Admin/Guard";
 import Modal from "components/Modal";
 import { Field } from "components/form";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
-import { proposalShape } from "../../../constants";
+import { isTooltip, useAdminContext } from "../../Context";
+import { proposalShape } from "../../constants";
 
 export type Props = {
   initial: number;
@@ -20,7 +20,7 @@ type FV = ProposalBase & { threshold: number };
 
 export default function ThresholdForm({ added, initial }: Props) {
   const { sendTx, isSending } = useTxSender(true);
-  const { checkSubmit, multisig } = useAdminResources();
+  const { txResource, multisig } = useAdminContext();
 
   const methods = useForm<FV>({
     defaultValues: { threshold: initial },
@@ -40,8 +40,7 @@ export default function ThresholdForm({ added, initial }: Props) {
   const { handleSubmit } = methods;
 
   const submit: SubmitHandler<FV> = async (fv) => {
-    const checkResult = checkSubmit();
-    if (typeof checkResult === "function") return checkResult();
+    if (isTooltip(txResource)) throw Error(txResource);
 
     const [data, dest, meta] = encodeTx(
       "multisig.change-threshold",
@@ -56,7 +55,7 @@ export default function ThresholdForm({ added, initial }: Props) {
       }
     );
 
-    const { wallet, txMeta } = checkResult;
+    const { wallet, txMeta } = txResource;
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig: dest,
 

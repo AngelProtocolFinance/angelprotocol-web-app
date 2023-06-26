@@ -1,13 +1,13 @@
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
 import { ID } from "types/tx";
-import { useAdminResources } from "pages/Admin/Guard";
 import { queryContract } from "services/juno/queryContract";
 import { useModalContext } from "contexts/ModalContext";
 import { TxPrompt } from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { hasElapsed } from "helpers/admin";
+import { isTooltip, useAdminContext } from "../../../../Context";
 
 export default function useDestroyFund() {
   const {
@@ -16,7 +16,7 @@ export default function useDestroyFund() {
   } = useFormContext<FV>();
   const sendTx = useTxSender();
   const { showModal } = useModalContext();
-  const { multisig, checkSubmit } = useAdminResources();
+  const { multisig, txResource } = useAdminContext();
 
   async function destroyFund(fv: FV) {
     try {
@@ -28,8 +28,7 @@ export default function useDestroyFund() {
       return showModal(TxPrompt, { error: "Fund not found" });
     }
 
-    const result = checkSubmit();
-    if (typeof result === "function") return result();
+    if (isTooltip(txResource)) throw new Error(txResource);
 
     const id: ID = { id: +fv.fundId };
     const [data, dest, meta] = encodeTx("index-fund.remove-fund", id, {
@@ -38,7 +37,7 @@ export default function useDestroyFund() {
       content: id,
     });
 
-    const { wallet, txMeta } = result;
+    const { wallet, txMeta } = txResource;
     await sendTx({
       content: {
         type: "evm",
@@ -58,5 +57,6 @@ export default function useDestroyFund() {
   return {
     destroyFund: handleSubmit(destroyFund),
     isSubmitDisabled: isSubmitting,
+    tooltip: isTooltip(txResource) ? txResource : undefined,
   };
 }

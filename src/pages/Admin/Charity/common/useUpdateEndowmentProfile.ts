@@ -8,12 +8,17 @@ import { TxPrompt } from "components/Prompt";
 import { getProvider } from "helpers";
 import { cleanObject } from "helpers/cleanObject";
 import { appRoutes } from "constants/routes";
-import { useAdminResources } from "../../Guard";
+import { isTooltip, useAdminContext } from "../../Context";
 
 // import optimizeImage from "./optimizeImage";
 
 export default function useUpdateEndowmentProfile() {
-  const { checkSubmit } = useAdminResources<"charity">();
+  const { txResource } = useAdminContext<"charity">([
+    "name",
+    "image",
+    "logo",
+    "sdgs",
+  ]);
 
   const { showModal } = useModalContext();
   const [submit] = useEditProfileMutation();
@@ -22,8 +27,7 @@ export default function useUpdateEndowmentProfile() {
     endowProfileUpdate: SemiPartial<EndowmentProfileUpdate, "id" | "owner">
   ) => {
     try {
-      const checkResult = checkSubmit(["name", "image", "logo", "sdgs"]);
-      if (typeof checkResult === "function") return checkResult();
+      if (isTooltip(txResource)) throw new Error(txResource);
 
       const cleanUpdates = cleanObject(endowProfileUpdate);
 
@@ -33,7 +37,7 @@ export default function useUpdateEndowmentProfile() {
         { isDismissible: false }
       );
 
-      const { wallet } = checkResult;
+      const { wallet } = txResource;
       const provider = getProvider(wallet.providerId)!;
 
       const rawSignature = await provider.request<string>({

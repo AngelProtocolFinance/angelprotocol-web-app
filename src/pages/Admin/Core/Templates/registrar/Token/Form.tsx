@@ -1,12 +1,13 @@
 import { FormValues as FV } from "./types";
-import { FormContainer, Submitter } from "components/admin";
+import { FormContainer, Submitter, Tooltip } from "components/admin";
 import { Field } from "components/form";
 import useSubmit from "./useSubmit";
 
 export default function Form() {
-  const { submit, isSubmitDisabled } = useSubmit();
+  const { submit, isSubmitDisabled, tooltip } = useSubmit();
   return (
-    <FormContainer onSubmit={submit}>
+    <FormContainer onSubmit={submit} aria-disabled={!!tooltip}>
+      {tooltip && <Tooltip tooltip={tooltip} />}
       <Field<FV>
         classes="field-admin"
         label="Proposal title"

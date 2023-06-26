@@ -2,7 +2,7 @@ import { useProfileQuery } from "services/aws/aws";
 import CommonSEO from "components/Seo";
 import { APP_NAME, DAPP_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
-import { useAdminResources } from "../Guard";
+import { useAdminContext } from "../Context";
 
 export default function Seo({
   title,
@@ -11,7 +11,7 @@ export default function Seo({
   title: string;
   url?: string;
 }) {
-  const { id } = useAdminResources();
+  const { id } = useAdminContext();
   const { data: profile } = useProfileQuery(id);
 
   return (

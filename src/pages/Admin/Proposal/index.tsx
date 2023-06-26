@@ -1,19 +1,19 @@
 import { useParams } from "react-router-dom";
-import { ProposalParams } from "pages/Admin/types";
+import { ProposalParams } from "../types";
 import { useProposalDetailsQuery } from "services/juno/custom";
 import QueryLoader from "components/QueryLoader";
 import Seo from "components/Seo";
-import { DetailLabel, Status } from "components/admin";
+import { DetailLabel, Status, Tooltip } from "components/admin";
 import { APP_NAME, DAPP_URL } from "constants/env";
 import { adminRoutes } from "constants/routes";
-import { useAdminResources } from "../Guard";
+import { isTooltip, useAdminContext } from "../Context";
 import Content from "./Content";
 import PollAction from "./PollAction";
 import Stats from "./Stats";
 import Votes from "./Votes";
 
 export default function Proposal() {
-  const { multisig } = useAdminResources();
+  const { multisig, txResource } = useAdminContext();
   const params = useParams<ProposalParams>();
   const queryState = useProposalDetailsQuery({
     id: params.id,
@@ -37,6 +37,9 @@ export default function Proposal() {
               name={proposal.metadata?.title}
               url={`${DAPP_URL}/${adminRoutes.proposal}/${proposal.id}`}
             />
+            {isTooltip(txResource) && proposal.status !== "approved" ? (
+              <Tooltip tooltip={txResource} classes="mb-4" />
+            ) : null}
             <div className="flex justify-between flex-wrap">
               <p>ID : {proposal.id}</p>
               <Status status={proposal.status} />

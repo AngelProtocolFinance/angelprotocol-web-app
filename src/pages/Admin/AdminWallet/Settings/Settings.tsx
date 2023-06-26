@@ -1,11 +1,11 @@
 import { PropsWithChildren } from "react";
-import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
+import { useAdminContext } from "../../Context";
 import AutoExecutePrompt from "./AutoExecutePrompt";
 import ThresholdForm from "./ThresholdForm";
 
 export default function Settings() {
-  const { members, config } = useAdminResources();
+  const { members, config } = useAdminContext();
   const { showModal } = useModalContext();
 
   return (

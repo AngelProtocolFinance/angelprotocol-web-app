@@ -2,16 +2,17 @@ import { SubmitHandler, useFormContext } from "react-hook-form";
 import { FormValues } from "./types";
 import { EndowmentSettingsUpdate } from "types/contracts";
 import { SimulContractTx } from "types/evm";
-import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { TxPrompt } from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { isEmpty } from "helpers";
 import { getPayloadDiff, getTagPayloads } from "helpers/admin";
+import { isTooltip, useAdminContext } from "../../Context";
+import { ops } from "./constants";
 
 export default function useEditWhitelists() {
-  const { id, multisig, checkSubmit } = useAdminResources<"charity">();
+  const { id, multisig, txResource } = useAdminContext<"charity">(ops);
   const {
     reset,
     handleSubmit,
@@ -20,6 +21,7 @@ export default function useEditWhitelists() {
 
   const { showModal } = useModalContext();
   const sendTx = useTxSender();
+  const tooltip = isTooltip(txResource) ? txResource : undefined;
 
   const editWhitelists: SubmitHandler<FormValues> = async ({
     initial,
@@ -27,11 +29,7 @@ export default function useEditWhitelists() {
     beneficiaries,
   }) => {
     try {
-      const result = checkSubmit([
-        "allowlistedBeneficiaries",
-        "allowlistedContributors",
-      ]);
-      if (typeof result === "function") return result();
+      if (isTooltip(txResource)) throw new Error(txResource);
 
       const update: EndowmentSettingsUpdate = {
         ...initial,
@@ -47,7 +45,7 @@ export default function useEditWhitelists() {
         return showModal(TxPrompt, { error: "No changes detected" });
       }
 
-      const { wallet, txMeta, isDelegated } = result;
+      const { wallet, txMeta, isDelegated } = txResource;
       const [data, dest, meta] = encodeTx("accounts.update-settings", update, {
         title: `Update whitelists settings`,
         description: `Update whitelists settings for endowment id:${id} by member:${wallet.address}`,
@@ -81,5 +79,6 @@ export default function useEditWhitelists() {
     reset,
     editWhitelists: handleSubmit(editWhitelists),
     isSubmitting,
+    tooltip,
   };
 }

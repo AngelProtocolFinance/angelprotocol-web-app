@@ -7,7 +7,6 @@ import { ProposalBase } from "../../../types";
 import { TxType } from "../types";
 import { SchemaShape } from "schemas/types";
 import { TxOnSuccess } from "types/tx";
-import { useAdminResources } from "pages/Admin/Guard";
 import { useUpdateRegMutation } from "services/aws/registration";
 import { useModalContext } from "contexts/ModalContext";
 import { TxPrompt } from "components/Prompt";
@@ -15,6 +14,7 @@ import { Field } from "components/form";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import { multisig as Multisig, SubmissionEvent } from "contracts/evm/multisig";
 import useTxSender from "hooks/useTxSender";
+import { isTooltip, useAdminContext } from "../../../Context";
 import { proposalShape } from "../../../constants";
 
 type Props = {
@@ -35,7 +35,7 @@ export default function Proposer({ type, appId, reference }: Props) {
     },
   });
 
-  const { multisig, checkSubmit } = useAdminResources();
+  const { multisig, txResource } = useAdminContext();
   const { showModal } = useModalContext();
   const { sendTx, isSending } = useTxSender(true);
   const [updateReg] = useUpdateRegMutation();
@@ -43,8 +43,7 @@ export default function Proposer({ type, appId, reference }: Props) {
   const { handleSubmit } = methods;
 
   async function submit({ type, ...fv }: FV) {
-    const result = checkSubmit();
-    if (typeof result === "function") return result();
+    if (isTooltip(txResource)) throw new Error(txResource);
 
     const [data, dest] = encodeTx(
       type === "approve"
@@ -60,7 +59,7 @@ export default function Proposer({ type, appId, reference }: Props) {
       }
     );
 
-    const { wallet, txMeta } = result;
+    const { wallet, txMeta } = txResource;
     const onSuccess: TxOnSuccess = async (result) => {
       const { data, ...okTx } = result;
       const txId = data as string | null;

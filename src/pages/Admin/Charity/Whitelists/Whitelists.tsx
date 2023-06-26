@@ -1,8 +1,9 @@
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues as FV } from "./types";
 import { EndowmentSettingsUpdate } from "types/contracts";
-import { useAdminResources } from "../../Guard";
+import { useAdminContext } from "../../Context";
 import Form from "./Form";
+import { ops } from "./constants";
 
 export default function Whitelists() {
   const {
@@ -13,7 +14,7 @@ export default function Whitelists() {
     splitToLiquid,
     ignoreUserSplits,
     maturityTime,
-  } = useAdminResources<"charity">();
+  } = useAdminContext<"charity">(ops);
 
   const initial: EndowmentSettingsUpdate = {
     id,

@@ -17,7 +17,7 @@ import {
   getPayloadDiff,
   getTagPayloads,
 } from "helpers/admin";
-import { useAdminResources } from "../../Guard";
+import { isTooltip, useAdminContext } from "../../Context";
 import Form from "./Form";
 
 export default function Maturity() {
@@ -30,9 +30,9 @@ export default function Maturity() {
     ignoreUserSplits,
     maturityTime,
     maturityAllowlist,
-    checkSubmit,
+    txResource,
     multisig,
-  } = useAdminResources<"charity">();
+  } = useAdminContext<"charity">(["maturityAllowlist", "maturityTime"]);
   const { showModal } = useModalContext();
   const sendTx = useTxSender();
 
@@ -79,8 +79,7 @@ export default function Maturity() {
     date,
   }) => {
     try {
-      const result = checkSubmit(["maturityAllowlist", "maturityTime"]);
-      if (typeof result === "function") return result();
+      if (isTooltip(txResource)) throw new Error(txResource);
 
       const prev = new Set(maturityAllowlist);
       const curr = new Set(beneficiaries);
@@ -99,7 +98,7 @@ export default function Maturity() {
       if (isEmpty(diff)) {
         return showModal(TxPrompt, { error: "No changes detected" });
       }
-      const { wallet, txMeta, isDelegated } = result;
+      const { wallet, txMeta, isDelegated } = txResource;
 
       const [data, dest, meta] = encodeTx("accounts.update-settings", update, {
         title: `Update maturity`,
@@ -131,6 +130,7 @@ export default function Maturity() {
   };
 
   const { handleSubmit, reset } = methods;
+  const tooltip = isTooltip(txResource) ? txResource : undefined;
 
   return (
     <FormProvider {...methods}>
@@ -140,6 +140,7 @@ export default function Maturity() {
           e.preventDefault();
           reset();
         }}
+        tooltip={tooltip}
       />
     </FormProvider>
   );
