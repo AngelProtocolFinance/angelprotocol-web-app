@@ -201,6 +201,7 @@ export type NewAST = OverrideProperties<
      */
     endowType: 0 | 1 | 2;
     threshold: number;
+    duration: number;
     earlyLockedWithdrawFee: Fee;
     withdrawFee: Fee;
     depositFee: Fee;
