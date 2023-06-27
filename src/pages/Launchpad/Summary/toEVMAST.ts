@@ -1,7 +1,7 @@
 import { Completed, TFee } from "slices/launchpad/types";
 import { Fee, NewAST, SettingsPermission } from "types/contracts";
 import { isEmpty } from "helpers";
-import { blockTime } from "helpers/admin";
+import { blockTime, fromHours } from "helpers/admin";
 import { toContractSplit } from "helpers/ast";
 import { ADDRESS_ZERO } from "constants/evm";
 
@@ -27,7 +27,7 @@ export default function toEVMAST(
     image: "",
     members: isEmpty(management.members) ? [creator] : management.members, //in launchpad design, weight is specified for each member
     threshold: +management.proposal.threshold,
-    duration: Math.floor(+management.proposal.duration * 60 * 60), //TODO: re-enable duration in launchpad
+    duration: fromHours(+management.proposal.duration),
     allowlistedBeneficiaries: whitelists.beneficiaries,
     allowlistedContributors: whitelists.contributors,
 

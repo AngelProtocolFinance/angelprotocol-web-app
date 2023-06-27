@@ -15,3 +15,17 @@ export const blockTime = (date: "now" | string) =>
 
 export const fromBlockTime = (blockTime: number | string) =>
   new Date(+blockTime * 1000);
+
+/**
+ *
+ * @param seconds - block timestamp in seconds
+ * @returns duration in hours
+ */
+export const toHours = (seconds: number) => (seconds / 3600).toFixed(2);
+
+/**
+ *
+ * @param hours - duration in hours
+ * @returns seconds duration
+ */
+export const fromHours = (hours: number) => Math.floor(hours * 3600);
