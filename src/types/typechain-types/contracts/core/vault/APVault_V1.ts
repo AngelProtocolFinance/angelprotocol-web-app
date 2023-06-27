@@ -361,66 +361,76 @@ export interface APVault_V1Interface extends utils.Interface {
 
   events: {
     "Deposit(address,uint32,uint256,uint256)": EventFragment;
-    "DepositMade(uint32,uint8,address,uint256)": EventFragment;
-    "Harvest(uint32[])": EventFragment;
-    "Redemption(uint32,uint8,address,uint256)": EventFragment;
+    "Deposit(uint32,uint8,address,uint256)": EventFragment;
+    "Redeem(uint32,uint8,address,uint256)": EventFragment;
+    "RewardsHarvested(uint32[])": EventFragment;
     "Transfer(uint32,uint32,uint256)": EventFragment;
     "Withdraw(address,address,uint32,uint256,uint256)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "Deposit"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "DepositMade"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Harvest"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Redemption"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "Deposit(address,uint32,uint256,uint256)"
+  ): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "Deposit(uint32,uint8,address,uint256)"
+  ): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Redeem"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "RewardsHarvested"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Withdraw"): EventFragment;
 }
 
-export interface DepositEventObject {
+export interface Deposit_address_uint32_uint256_uint256_EventObject {
   caller: string;
   owner: number;
   assets: BigNumber;
   shares: BigNumber;
 }
-export type DepositEvent = TypedEvent<
+export type Deposit_address_uint32_uint256_uint256_Event = TypedEvent<
   [string, number, BigNumber, BigNumber],
-  DepositEventObject
+  Deposit_address_uint32_uint256_uint256_EventObject
 >;
 
-export type DepositEventFilter = TypedEventFilter<DepositEvent>;
+export type Deposit_address_uint32_uint256_uint256_EventFilter =
+  TypedEventFilter<Deposit_address_uint32_uint256_uint256_Event>;
 
-export interface DepositMadeEventObject {
+export interface Deposit_uint32_uint8_address_uint256_EventObject {
   accountId: number;
   vaultType: number;
   tokenDeposited: string;
   amtDeposited: BigNumber;
 }
-export type DepositMadeEvent = TypedEvent<
+export type Deposit_uint32_uint8_address_uint256_Event = TypedEvent<
   [number, number, string, BigNumber],
-  DepositMadeEventObject
+  Deposit_uint32_uint8_address_uint256_EventObject
 >;
 
-export type DepositMadeEventFilter = TypedEventFilter<DepositMadeEvent>;
+export type Deposit_uint32_uint8_address_uint256_EventFilter =
+  TypedEventFilter<Deposit_uint32_uint8_address_uint256_Event>;
 
-export interface HarvestEventObject {
-  accountIds: number[];
-}
-export type HarvestEvent = TypedEvent<[number[]], HarvestEventObject>;
-
-export type HarvestEventFilter = TypedEventFilter<HarvestEvent>;
-
-export interface RedemptionEventObject {
+export interface RedeemEventObject {
   accountId: number;
   vaultType: number;
   tokenRedeemed: string;
   amtRedeemed: BigNumber;
 }
-export type RedemptionEvent = TypedEvent<
+export type RedeemEvent = TypedEvent<
   [number, number, string, BigNumber],
-  RedemptionEventObject
+  RedeemEventObject
 >;
 
-export type RedemptionEventFilter = TypedEventFilter<RedemptionEvent>;
+export type RedeemEventFilter = TypedEventFilter<RedeemEvent>;
+
+export interface RewardsHarvestedEventObject {
+  accountIds: number[];
+}
+export type RewardsHarvestedEvent = TypedEvent<
+  [number[]],
+  RewardsHarvestedEventObject
+>;
+
+export type RewardsHarvestedEventFilter =
+  TypedEventFilter<RewardsHarvestedEvent>;
 
 export interface TransferEventObject {
   from: number;
@@ -968,73 +978,54 @@ export interface APVault_V1 extends BaseContract {
 
   filters: {
     "Deposit(address,uint32,uint256,uint256)"(
-      caller?: PromiseOrValue<string> | null,
-      owner?: PromiseOrValue<BigNumberish> | null,
+      caller?: null,
+      owner?: null,
       assets?: null,
       shares?: null
-    ): DepositEventFilter;
-    Deposit(
-      caller?: PromiseOrValue<string> | null,
-      owner?: PromiseOrValue<BigNumberish> | null,
-      assets?: null,
-      shares?: null
-    ): DepositEventFilter;
-
-    "DepositMade(uint32,uint8,address,uint256)"(
-      accountId?: PromiseOrValue<BigNumberish> | null,
+    ): Deposit_address_uint32_uint256_uint256_EventFilter;
+    "Deposit(uint32,uint8,address,uint256)"(
+      accountId?: null,
       vaultType?: null,
       tokenDeposited?: null,
       amtDeposited?: null
-    ): DepositMadeEventFilter;
-    DepositMade(
-      accountId?: PromiseOrValue<BigNumberish> | null,
-      vaultType?: null,
-      tokenDeposited?: null,
-      amtDeposited?: null
-    ): DepositMadeEventFilter;
+    ): Deposit_uint32_uint8_address_uint256_EventFilter;
 
-    "Harvest(uint32[])"(
-      accountIds?: PromiseOrValue<BigNumberish>[] | null
-    ): HarvestEventFilter;
-    Harvest(
-      accountIds?: PromiseOrValue<BigNumberish>[] | null
-    ): HarvestEventFilter;
-
-    "Redemption(uint32,uint8,address,uint256)"(
-      accountId?: PromiseOrValue<BigNumberish> | null,
+    "Redeem(uint32,uint8,address,uint256)"(
+      accountId?: null,
       vaultType?: null,
       tokenRedeemed?: null,
       amtRedeemed?: null
-    ): RedemptionEventFilter;
-    Redemption(
-      accountId?: PromiseOrValue<BigNumberish> | null,
+    ): RedeemEventFilter;
+    Redeem(
+      accountId?: null,
       vaultType?: null,
       tokenRedeemed?: null,
       amtRedeemed?: null
-    ): RedemptionEventFilter;
+    ): RedeemEventFilter;
+
+    "RewardsHarvested(uint32[])"(
+      accountIds?: null
+    ): RewardsHarvestedEventFilter;
+    RewardsHarvested(accountIds?: null): RewardsHarvestedEventFilter;
 
     "Transfer(uint32,uint32,uint256)"(
-      from?: PromiseOrValue<BigNumberish> | null,
-      to?: PromiseOrValue<BigNumberish> | null,
+      from?: null,
+      to?: null,
       value?: null
     ): TransferEventFilter;
-    Transfer(
-      from?: PromiseOrValue<BigNumberish> | null,
-      to?: PromiseOrValue<BigNumberish> | null,
-      value?: null
-    ): TransferEventFilter;
+    Transfer(from?: null, to?: null, value?: null): TransferEventFilter;
 
     "Withdraw(address,address,uint32,uint256,uint256)"(
-      caller?: PromiseOrValue<string> | null,
-      receiver?: PromiseOrValue<string> | null,
-      owner?: PromiseOrValue<BigNumberish> | null,
+      caller?: null,
+      receiver?: null,
+      owner?: null,
       assets?: null,
       shares?: null
     ): WithdrawEventFilter;
     Withdraw(
-      caller?: PromiseOrValue<string> | null,
-      receiver?: PromiseOrValue<string> | null,
-      owner?: PromiseOrValue<BigNumberish> | null,
+      caller?: null,
+      receiver?: null,
+      owner?: null,
       assets?: null,
       shares?: null
     ): WithdrawEventFilter;

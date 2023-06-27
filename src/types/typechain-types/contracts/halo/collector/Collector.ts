@@ -27,33 +27,6 @@ import type {
   PromiseOrValue,
 } from "../../../common";
 
-export declare namespace CollectorStorage {
-  export type ConfigStruct = {
-    owner: PromiseOrValue<string>;
-    registrarContract: PromiseOrValue<string>;
-    haloToken: PromiseOrValue<string>;
-    timelockContract: PromiseOrValue<string>;
-    distributorContract: PromiseOrValue<string>;
-    rewardFactor: PromiseOrValue<BigNumberish>;
-  };
-
-  export type ConfigStructOutput = [
-    string,
-    string,
-    string,
-    string,
-    string,
-    BigNumber
-  ] & {
-    owner: string;
-    registrarContract: string;
-    haloToken: string;
-    timelockContract: string;
-    distributorContract: string;
-    rewardFactor: BigNumber;
-  };
-}
-
 export declare namespace CollectorMessage {
   export type InstantiateMsgStruct = {
     registrarContract: PromiseOrValue<string>;
@@ -159,37 +132,24 @@ export interface CollectorInterface extends utils.Interface {
   ): Result;
 
   events: {
-    "CollectedConfigUpdated(tuple)": EventFragment;
-    "CollecterInitialized(tuple)": EventFragment;
+    "CollectorInitialized()": EventFragment;
     "CollectorSweeped(address,uint256,uint256)": EventFragment;
+    "ConfigUpdated()": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "CollectedConfigUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "CollecterInitialized"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "CollectorInitialized"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "CollectorSweeped"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ConfigUpdated"): EventFragment;
 }
 
-export interface CollectedConfigUpdatedEventObject {
-  config: CollectorStorage.ConfigStructOutput;
-}
-export type CollectedConfigUpdatedEvent = TypedEvent<
-  [CollectorStorage.ConfigStructOutput],
-  CollectedConfigUpdatedEventObject
+export interface CollectorInitializedEventObject {}
+export type CollectorInitializedEvent = TypedEvent<
+  [],
+  CollectorInitializedEventObject
 >;
 
-export type CollectedConfigUpdatedEventFilter =
-  TypedEventFilter<CollectedConfigUpdatedEvent>;
-
-export interface CollecterInitializedEventObject {
-  details: CollectorMessage.InstantiateMsgStructOutput;
-}
-export type CollecterInitializedEvent = TypedEvent<
-  [CollectorMessage.InstantiateMsgStructOutput],
-  CollecterInitializedEventObject
->;
-
-export type CollecterInitializedEventFilter =
-  TypedEventFilter<CollecterInitializedEvent>;
+export type CollectorInitializedEventFilter =
+  TypedEventFilter<CollectorInitializedEvent>;
 
 export interface CollectorSweepedEventObject {
   tokenSwept: string;
@@ -203,6 +163,11 @@ export type CollectorSweepedEvent = TypedEvent<
 
 export type CollectorSweepedEventFilter =
   TypedEventFilter<CollectorSweepedEvent>;
+
+export interface ConfigUpdatedEventObject {}
+export type ConfigUpdatedEvent = TypedEvent<[], ConfigUpdatedEventObject>;
+
+export type ConfigUpdatedEventFilter = TypedEventFilter<ConfigUpdatedEvent>;
 
 export interface Collector extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -304,15 +269,8 @@ export interface Collector extends BaseContract {
   };
 
   filters: {
-    "CollectedConfigUpdated(tuple)"(
-      config?: null
-    ): CollectedConfigUpdatedEventFilter;
-    CollectedConfigUpdated(config?: null): CollectedConfigUpdatedEventFilter;
-
-    "CollecterInitialized(tuple)"(
-      details?: null
-    ): CollecterInitializedEventFilter;
-    CollecterInitialized(details?: null): CollecterInitializedEventFilter;
+    "CollectorInitialized()"(): CollectorInitializedEventFilter;
+    CollectorInitialized(): CollectorInitializedEventFilter;
 
     "CollectorSweeped(address,uint256,uint256)"(
       tokenSwept?: null,
@@ -324,6 +282,9 @@ export interface Collector extends BaseContract {
       amountSwept?: null,
       haloOut?: null
     ): CollectorSweepedEventFilter;
+
+    "ConfigUpdated()"(): ConfigUpdatedEventFilter;
+    ConfigUpdated(): ConfigUpdatedEventFilter;
   };
 
   estimateGas: {

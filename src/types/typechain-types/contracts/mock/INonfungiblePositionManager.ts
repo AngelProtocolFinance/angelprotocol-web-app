@@ -530,39 +530,39 @@ export interface INonfungiblePositionManager extends BaseContract {
 
   filters: {
     "Collect(uint256,address,uint256,uint256)"(
-      tokenId?: PromiseOrValue<BigNumberish> | null,
+      tokenId?: null,
       recipient?: null,
       amount0?: null,
       amount1?: null
     ): CollectEventFilter;
     Collect(
-      tokenId?: PromiseOrValue<BigNumberish> | null,
+      tokenId?: null,
       recipient?: null,
       amount0?: null,
       amount1?: null
     ): CollectEventFilter;
 
     "DecreaseLiquidity(uint256,uint128,uint256,uint256)"(
-      tokenId?: PromiseOrValue<BigNumberish> | null,
+      tokenId?: null,
       liquidity?: null,
       amount0?: null,
       amount1?: null
     ): DecreaseLiquidityEventFilter;
     DecreaseLiquidity(
-      tokenId?: PromiseOrValue<BigNumberish> | null,
+      tokenId?: null,
       liquidity?: null,
       amount0?: null,
       amount1?: null
     ): DecreaseLiquidityEventFilter;
 
     "IncreaseLiquidity(uint256,uint128,uint256,uint256)"(
-      tokenId?: PromiseOrValue<BigNumberish> | null,
+      tokenId?: null,
       liquidity?: null,
       amount0?: null,
       amount1?: null
     ): IncreaseLiquidityEventFilter;
     IncreaseLiquidity(
-      tokenId?: PromiseOrValue<BigNumberish> | null,
+      tokenId?: null,
       liquidity?: null,
       amount0?: null,
       amount1?: null

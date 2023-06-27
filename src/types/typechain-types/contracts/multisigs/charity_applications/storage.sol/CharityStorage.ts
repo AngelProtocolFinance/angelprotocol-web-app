@@ -135,6 +135,7 @@ export declare namespace AccountMessages {
     image: PromiseOrValue<string>;
     members: PromiseOrValue<string>[];
     threshold: PromiseOrValue<BigNumberish>;
+    duration: PromiseOrValue<BigNumberish>;
     allowlistedBeneficiaries: PromiseOrValue<string>[];
     allowlistedContributors: PromiseOrValue<string>[];
     earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStruct;
@@ -161,6 +162,7 @@ export declare namespace AccountMessages {
     string,
     string[],
     BigNumber,
+    BigNumber,
     string[],
     string[],
     AngelCoreStruct.FeeSettingStructOutput,
@@ -185,6 +187,7 @@ export declare namespace AccountMessages {
     image: string;
     members: string[];
     threshold: BigNumber;
+    duration: BigNumber;
     allowlistedBeneficiaries: string[];
     allowlistedContributors: string[];
     earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStructOutput;

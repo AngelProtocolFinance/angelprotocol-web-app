@@ -76,23 +76,23 @@ export interface FactoryInterface extends utils.Interface {
   ): Result;
 
   events: {
-    "ContractInstantiation(address,address)": EventFragment;
+    "ContractInstantiated(address,address)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "ContractInstantiation"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ContractInstantiated"): EventFragment;
 }
 
-export interface ContractInstantiationEventObject {
+export interface ContractInstantiatedEventObject {
   sender: string;
   instantiation: string;
 }
-export type ContractInstantiationEvent = TypedEvent<
+export type ContractInstantiatedEvent = TypedEvent<
   [string, string],
-  ContractInstantiationEventObject
+  ContractInstantiatedEventObject
 >;
 
-export type ContractInstantiationEventFilter =
-  TypedEventFilter<ContractInstantiationEvent>;
+export type ContractInstantiatedEventFilter =
+  TypedEventFilter<ContractInstantiatedEvent>;
 
 export interface Factory extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -188,14 +188,14 @@ export interface Factory extends BaseContract {
   };
 
   filters: {
-    "ContractInstantiation(address,address)"(
+    "ContractInstantiated(address,address)"(
       sender?: null,
       instantiation?: null
-    ): ContractInstantiationEventFilter;
-    ContractInstantiation(
+    ): ContractInstantiatedEventFilter;
+    ContractInstantiated(
       sender?: null,
       instantiation?: null
-    ): ContractInstantiationEventFilter;
+    ): ContractInstantiatedEventFilter;
   };
 
   estimateGas: {

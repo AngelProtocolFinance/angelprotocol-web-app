@@ -6,7 +6,7 @@ import {
   SplitDetails,
 } from "types/contracts";
 import { EndowmentType } from "types/lists";
-import { AngelCoreStruct } from "types/typechain-types/contracts/core/accounts/IAccounts";
+import { AngelCoreStruct } from "types/typechain-types/contracts/core/accounts/interfaces/IAccounts";
 
 enum EndowmentTypeEnum {
   Charity,

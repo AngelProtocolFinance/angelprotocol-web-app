@@ -120,12 +120,12 @@ export interface OwnershipFacet extends BaseContract {
 
   filters: {
     "OwnershipTransferred(address,address)"(
-      previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      previousOwner?: null,
+      newOwner?: null
     ): OwnershipTransferredEventFilter;
     OwnershipTransferred(
-      previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      previousOwner?: null,
+      newOwner?: null
     ): OwnershipTransferredEventFilter;
   };
 

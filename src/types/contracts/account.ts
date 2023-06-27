@@ -1,14 +1,14 @@
 import { OverrideProperties } from "type-fest";
 import {
-  AccountMessages,
-  AccountStorage,
-  AngelCoreStruct,
-} from "../typechain-types/contracts/core/accounts/IAccounts";
-import {
   AngelCoreStruct as AccountDepositWithdrawEndowmentsCoreStruct,
   AccountMessages as AccountDepositWithdrawEndowmentsMessages,
 } from "../typechain-types/contracts/core/accounts/facets/AccountsDepositWithdrawEndowments";
 import { AccountMessages as AccountsUpdateEndowmentSettingsControllerMessages } from "../typechain-types/contracts/core/accounts/facets/AccountsUpdateEndowmentSettingsController";
+import {
+  AccountMessages,
+  AccountStorage,
+  AngelCoreStruct,
+} from "../typechain-types/contracts/core/accounts/interfaces/IAccounts";
 import { EndowmentType } from "../lists";
 import { Mapped, Plain } from "../utils";
 import { SplitDetails } from "./common";

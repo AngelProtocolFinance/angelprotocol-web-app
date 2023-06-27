@@ -27,24 +27,6 @@ import type {
   PromiseOrValue,
 } from "../../../../common";
 
-export declare namespace DonationMatchStorage {
-  export type ConfigStruct = {
-    reserveToken: PromiseOrValue<string>;
-    uniswapFactory: PromiseOrValue<string>;
-    usdcAddress: PromiseOrValue<string>;
-    registrarContract: PromiseOrValue<string>;
-    poolFee: PromiseOrValue<BigNumberish>;
-  };
-
-  export type ConfigStructOutput = [string, string, string, string, number] & {
-    reserveToken: string;
-    uniswapFactory: string;
-    usdcAddress: string;
-    registrarContract: string;
-    poolFee: number;
-  };
-}
-
 export declare namespace DonationMatchMessages {
   export type InstantiateMessageStruct = {
     reserveToken: PromiseOrValue<string>;
@@ -66,6 +48,24 @@ export declare namespace DonationMatchMessages {
     registrarContract: string;
     poolFee: number;
     usdcAddress: string;
+  };
+}
+
+export declare namespace DonationMatchStorage {
+  export type ConfigStruct = {
+    reserveToken: PromiseOrValue<string>;
+    uniswapFactory: PromiseOrValue<string>;
+    usdcAddress: PromiseOrValue<string>;
+    registrarContract: PromiseOrValue<string>;
+    poolFee: PromiseOrValue<BigNumberish>;
+  };
+
+  export type ConfigStructOutput = [string, string, string, string, number] & {
+    reserveToken: string;
+    uniswapFactory: string;
+    usdcAddress: string;
+    registrarContract: string;
+    poolFee: number;
   };
 }
 
@@ -109,74 +109,61 @@ export interface DonationMatchCharityInterface extends utils.Interface {
   ): Result;
 
   events: {
-    "DonationMatchCharityErc20ApprovalGiven(uint32,address,address,uint256)": EventFragment;
-    "DonationMatchCharityErc20Burned(uint32,address,uint256)": EventFragment;
-    "DonationMatchCharityErc20Transfer(uint32,address,address,uint256)": EventFragment;
-    "DonationMatchCharityExecuted(address,address,uint256,address,uint32,address)": EventFragment;
-    "DonationMatchCharityInitialized(address,tuple)": EventFragment;
+    "Approval(uint32,address,address,uint256)": EventFragment;
+    "Burn(uint32,address,uint256)": EventFragment;
+    "DonationMatchCharityInitialized(address)": EventFragment;
+    "DonationMatchExecuted(address,address,uint256,address,uint32,address)": EventFragment;
     "Initialized(uint8)": EventFragment;
+    "Transfer(uint32,address,address,uint256)": EventFragment;
   };
 
-  getEvent(
-    nameOrSignatureOrTopic: "DonationMatchCharityErc20ApprovalGiven"
-  ): EventFragment;
-  getEvent(
-    nameOrSignatureOrTopic: "DonationMatchCharityErc20Burned"
-  ): EventFragment;
-  getEvent(
-    nameOrSignatureOrTopic: "DonationMatchCharityErc20Transfer"
-  ): EventFragment;
-  getEvent(
-    nameOrSignatureOrTopic: "DonationMatchCharityExecuted"
-  ): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Burn"): EventFragment;
   getEvent(
     nameOrSignatureOrTopic: "DonationMatchCharityInitialized"
   ): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "DonationMatchExecuted"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
 }
 
-export interface DonationMatchCharityErc20ApprovalGivenEventObject {
+export interface ApprovalEventObject {
   endowmentId: number;
   tokenAddress: string;
   spender: string;
   amount: BigNumber;
 }
-export type DonationMatchCharityErc20ApprovalGivenEvent = TypedEvent<
+export type ApprovalEvent = TypedEvent<
   [number, string, string, BigNumber],
-  DonationMatchCharityErc20ApprovalGivenEventObject
+  ApprovalEventObject
 >;
 
-export type DonationMatchCharityErc20ApprovalGivenEventFilter =
-  TypedEventFilter<DonationMatchCharityErc20ApprovalGivenEvent>;
+export type ApprovalEventFilter = TypedEventFilter<ApprovalEvent>;
 
-export interface DonationMatchCharityErc20BurnedEventObject {
+export interface BurnEventObject {
   endowmentId: number;
   tokenAddress: string;
   amount: BigNumber;
 }
-export type DonationMatchCharityErc20BurnedEvent = TypedEvent<
+export type BurnEvent = TypedEvent<
   [number, string, BigNumber],
-  DonationMatchCharityErc20BurnedEventObject
+  BurnEventObject
 >;
 
-export type DonationMatchCharityErc20BurnedEventFilter =
-  TypedEventFilter<DonationMatchCharityErc20BurnedEvent>;
+export type BurnEventFilter = TypedEventFilter<BurnEvent>;
 
-export interface DonationMatchCharityErc20TransferEventObject {
-  endowmentId: number;
-  tokenAddress: string;
-  recipient: string;
-  amount: BigNumber;
+export interface DonationMatchCharityInitializedEventObject {
+  donationMatch: string;
 }
-export type DonationMatchCharityErc20TransferEvent = TypedEvent<
-  [number, string, string, BigNumber],
-  DonationMatchCharityErc20TransferEventObject
+export type DonationMatchCharityInitializedEvent = TypedEvent<
+  [string],
+  DonationMatchCharityInitializedEventObject
 >;
 
-export type DonationMatchCharityErc20TransferEventFilter =
-  TypedEventFilter<DonationMatchCharityErc20TransferEvent>;
+export type DonationMatchCharityInitializedEventFilter =
+  TypedEventFilter<DonationMatchCharityInitializedEvent>;
 
-export interface DonationMatchCharityExecutedEventObject {
+export interface DonationMatchExecutedEventObject {
   donationMatch: string;
   tokenAddress: string;
   amount: BigNumber;
@@ -184,25 +171,13 @@ export interface DonationMatchCharityExecutedEventObject {
   endowmentId: number;
   donor: string;
 }
-export type DonationMatchCharityExecutedEvent = TypedEvent<
+export type DonationMatchExecutedEvent = TypedEvent<
   [string, string, BigNumber, string, number, string],
-  DonationMatchCharityExecutedEventObject
+  DonationMatchExecutedEventObject
 >;
 
-export type DonationMatchCharityExecutedEventFilter =
-  TypedEventFilter<DonationMatchCharityExecutedEvent>;
-
-export interface DonationMatchCharityInitializedEventObject {
-  donationMatch: string;
-  config: DonationMatchStorage.ConfigStructOutput;
-}
-export type DonationMatchCharityInitializedEvent = TypedEvent<
-  [string, DonationMatchStorage.ConfigStructOutput],
-  DonationMatchCharityInitializedEventObject
->;
-
-export type DonationMatchCharityInitializedEventFilter =
-  TypedEventFilter<DonationMatchCharityInitializedEvent>;
+export type DonationMatchExecutedEventFilter =
+  TypedEventFilter<DonationMatchExecutedEvent>;
 
 export interface InitializedEventObject {
   version: number;
@@ -210,6 +185,19 @@ export interface InitializedEventObject {
 export type InitializedEvent = TypedEvent<[number], InitializedEventObject>;
 
 export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
+
+export interface TransferEventObject {
+  endowmentId: number;
+  tokenAddress: string;
+  recipient: string;
+  amount: BigNumber;
+}
+export type TransferEvent = TypedEvent<
+  [number, string, string, BigNumber],
+  TransferEventObject
+>;
+
+export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
 export interface DonationMatchCharity extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -293,71 +281,69 @@ export interface DonationMatchCharity extends BaseContract {
   };
 
   filters: {
-    "DonationMatchCharityErc20ApprovalGiven(uint32,address,address,uint256)"(
+    "Approval(uint32,address,address,uint256)"(
       endowmentId?: null,
       tokenAddress?: null,
       spender?: null,
       amount?: null
-    ): DonationMatchCharityErc20ApprovalGivenEventFilter;
-    DonationMatchCharityErc20ApprovalGiven(
+    ): ApprovalEventFilter;
+    Approval(
       endowmentId?: null,
       tokenAddress?: null,
       spender?: null,
       amount?: null
-    ): DonationMatchCharityErc20ApprovalGivenEventFilter;
+    ): ApprovalEventFilter;
 
-    "DonationMatchCharityErc20Burned(uint32,address,uint256)"(
+    "Burn(uint32,address,uint256)"(
       endowmentId?: null,
       tokenAddress?: null,
       amount?: null
-    ): DonationMatchCharityErc20BurnedEventFilter;
-    DonationMatchCharityErc20Burned(
+    ): BurnEventFilter;
+    Burn(
       endowmentId?: null,
       tokenAddress?: null,
       amount?: null
-    ): DonationMatchCharityErc20BurnedEventFilter;
+    ): BurnEventFilter;
 
-    "DonationMatchCharityErc20Transfer(uint32,address,address,uint256)"(
-      endowmentId?: null,
-      tokenAddress?: null,
-      recipient?: null,
-      amount?: null
-    ): DonationMatchCharityErc20TransferEventFilter;
-    DonationMatchCharityErc20Transfer(
-      endowmentId?: null,
-      tokenAddress?: null,
-      recipient?: null,
-      amount?: null
-    ): DonationMatchCharityErc20TransferEventFilter;
-
-    "DonationMatchCharityExecuted(address,address,uint256,address,uint32,address)"(
-      donationMatch?: null,
-      tokenAddress?: null,
-      amount?: null,
-      accountsContract?: null,
-      endowmentId?: null,
-      donor?: null
-    ): DonationMatchCharityExecutedEventFilter;
-    DonationMatchCharityExecuted(
-      donationMatch?: null,
-      tokenAddress?: null,
-      amount?: null,
-      accountsContract?: null,
-      endowmentId?: null,
-      donor?: null
-    ): DonationMatchCharityExecutedEventFilter;
-
-    "DonationMatchCharityInitialized(address,tuple)"(
-      donationMatch?: null,
-      config?: null
+    "DonationMatchCharityInitialized(address)"(
+      donationMatch?: null
     ): DonationMatchCharityInitializedEventFilter;
     DonationMatchCharityInitialized(
-      donationMatch?: null,
-      config?: null
+      donationMatch?: null
     ): DonationMatchCharityInitializedEventFilter;
+
+    "DonationMatchExecuted(address,address,uint256,address,uint32,address)"(
+      donationMatch?: null,
+      tokenAddress?: null,
+      amount?: null,
+      accountsContract?: null,
+      endowmentId?: null,
+      donor?: null
+    ): DonationMatchExecutedEventFilter;
+    DonationMatchExecuted(
+      donationMatch?: null,
+      tokenAddress?: null,
+      amount?: null,
+      accountsContract?: null,
+      endowmentId?: null,
+      donor?: null
+    ): DonationMatchExecutedEventFilter;
 
     "Initialized(uint8)"(version?: null): InitializedEventFilter;
     Initialized(version?: null): InitializedEventFilter;
+
+    "Transfer(uint32,address,address,uint256)"(
+      endowmentId?: null,
+      tokenAddress?: null,
+      recipient?: null,
+      amount?: null
+    ): TransferEventFilter;
+    Transfer(
+      endowmentId?: null,
+      tokenAddress?: null,
+      recipient?: null,
+      amount?: null
+    ): TransferEventFilter;
   };
 
   estimateGas: {

@@ -27,6 +27,24 @@ import type {
   PromiseOrValue,
 } from "../../../../common";
 
+export declare namespace APGoldfinchConfigLib {
+  export type CRVParamsStruct = {
+    allowedSlippage: PromiseOrValue<BigNumberish>;
+  };
+
+  export type CRVParamsStructOutput = [BigNumber] & {
+    allowedSlippage: BigNumber;
+  };
+
+  export type APGoldfinchConfigStruct = {
+    crvParams: APGoldfinchConfigLib.CRVParamsStruct;
+  };
+
+  export type APGoldfinchConfigStructOutput = [
+    APGoldfinchConfigLib.CRVParamsStructOutput
+  ] & { crvParams: APGoldfinchConfigLib.CRVParamsStructOutput };
+}
+
 export declare namespace LocalRegistrarLib {
   export type AngelProtocolParamsStruct = {
     routerAddr: PromiseOrValue<string>;
@@ -91,6 +109,28 @@ export declare namespace LocalRegistrarLib {
 }
 
 export declare namespace AngelCoreStruct {
+  export type FeeSettingStruct = {
+    payoutAddress: PromiseOrValue<string>;
+    bps: PromiseOrValue<BigNumberish>;
+  };
+
+  export type FeeSettingStructOutput = [string, BigNumber] & {
+    payoutAddress: string;
+    bps: BigNumber;
+  };
+
+  export type SplitDetailsStruct = {
+    max: PromiseOrValue<BigNumberish>;
+    min: PromiseOrValue<BigNumberish>;
+    defaultSplit: PromiseOrValue<BigNumberish>;
+  };
+
+  export type SplitDetailsStructOutput = [BigNumber, BigNumber, BigNumber] & {
+    max: BigNumber;
+    min: BigNumber;
+    defaultSplit: BigNumber;
+  };
+
   export type NetworkInfoStruct = {
     name: PromiseOrValue<string>;
     chainId: PromiseOrValue<BigNumberish>;
@@ -121,145 +161,6 @@ export declare namespace AngelCoreStruct {
     gasReceiver: string;
     gasLimit: BigNumber;
   };
-
-  export type SplitDetailsStruct = {
-    max: PromiseOrValue<BigNumberish>;
-    min: PromiseOrValue<BigNumberish>;
-    defaultSplit: PromiseOrValue<BigNumberish>;
-  };
-
-  export type SplitDetailsStructOutput = [BigNumber, BigNumber, BigNumber] & {
-    max: BigNumber;
-    min: BigNumber;
-    defaultSplit: BigNumber;
-  };
-
-  export type FeeSettingStruct = {
-    payoutAddress: PromiseOrValue<string>;
-    bps: PromiseOrValue<BigNumberish>;
-  };
-
-  export type FeeSettingStructOutput = [string, BigNumber] & {
-    payoutAddress: string;
-    bps: BigNumber;
-  };
-}
-
-export declare namespace RegistrarStorage {
-  export type ConfigStruct = {
-    applicationsReview: PromiseOrValue<string>;
-    indexFundContract: PromiseOrValue<string>;
-    accountsContract: PromiseOrValue<string>;
-    treasury: PromiseOrValue<string>;
-    subdaoGovContract: PromiseOrValue<string>;
-    subdaoTokenContract: PromiseOrValue<string>;
-    subdaoBondingTokenContract: PromiseOrValue<string>;
-    subdaoCw900Contract: PromiseOrValue<string>;
-    subdaoDistributorContract: PromiseOrValue<string>;
-    subdaoEmitter: PromiseOrValue<string>;
-    donationMatchContract: PromiseOrValue<string>;
-    donationMatchCharitesContract: PromiseOrValue<string>;
-    donationMatchEmitter: PromiseOrValue<string>;
-    splitToLiquid: AngelCoreStruct.SplitDetailsStruct;
-    haloToken: PromiseOrValue<string>;
-    haloTokenLpContract: PromiseOrValue<string>;
-    govContract: PromiseOrValue<string>;
-    collectorShare: PromiseOrValue<BigNumberish>;
-    charitySharesContract: PromiseOrValue<string>;
-    fundraisingContract: PromiseOrValue<string>;
-    uniswapRouter: PromiseOrValue<string>;
-    uniswapFactory: PromiseOrValue<string>;
-    multisigFactory: PromiseOrValue<string>;
-    multisigEmitter: PromiseOrValue<string>;
-    charityProposal: PromiseOrValue<string>;
-    lockedWithdrawal: PromiseOrValue<string>;
-    proxyAdmin: PromiseOrValue<string>;
-    usdcAddress: PromiseOrValue<string>;
-    wMaticAddress: PromiseOrValue<string>;
-    cw900lvAddress: PromiseOrValue<string>;
-  };
-
-  export type ConfigStructOutput = [
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    AngelCoreStruct.SplitDetailsStructOutput,
-    string,
-    string,
-    string,
-    BigNumber,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string
-  ] & {
-    applicationsReview: string;
-    indexFundContract: string;
-    accountsContract: string;
-    treasury: string;
-    subdaoGovContract: string;
-    subdaoTokenContract: string;
-    subdaoBondingTokenContract: string;
-    subdaoCw900Contract: string;
-    subdaoDistributorContract: string;
-    subdaoEmitter: string;
-    donationMatchContract: string;
-    donationMatchCharitesContract: string;
-    donationMatchEmitter: string;
-    splitToLiquid: AngelCoreStruct.SplitDetailsStructOutput;
-    haloToken: string;
-    haloTokenLpContract: string;
-    govContract: string;
-    collectorShare: BigNumber;
-    charitySharesContract: string;
-    fundraisingContract: string;
-    uniswapRouter: string;
-    uniswapFactory: string;
-    multisigFactory: string;
-    multisigEmitter: string;
-    charityProposal: string;
-    lockedWithdrawal: string;
-    proxyAdmin: string;
-    usdcAddress: string;
-    wMaticAddress: string;
-    cw900lvAddress: string;
-  };
-}
-
-export declare namespace APGoldfinchConfigLib {
-  export type CRVParamsStruct = {
-    allowedSlippage: PromiseOrValue<BigNumberish>;
-  };
-
-  export type CRVParamsStructOutput = [BigNumber] & {
-    allowedSlippage: BigNumber;
-  };
-
-  export type APGoldfinchConfigStruct = {
-    crvParams: APGoldfinchConfigLib.CRVParamsStruct;
-  };
-
-  export type APGoldfinchConfigStructOutput = [
-    APGoldfinchConfigLib.CRVParamsStructOutput
-  ] & { crvParams: APGoldfinchConfigLib.CRVParamsStructOutput };
 }
 
 export declare namespace RegistrarMessages {
@@ -388,6 +289,105 @@ export declare namespace RegistrarMessages {
     subdaoDistributorContract: string;
     subdaoEmitter: string;
     donationMatchContract: string;
+    cw900lvAddress: string;
+  };
+}
+
+export declare namespace RegistrarStorage {
+  export type ConfigStruct = {
+    applicationsReview: PromiseOrValue<string>;
+    indexFundContract: PromiseOrValue<string>;
+    accountsContract: PromiseOrValue<string>;
+    treasury: PromiseOrValue<string>;
+    subdaoGovContract: PromiseOrValue<string>;
+    subdaoTokenContract: PromiseOrValue<string>;
+    subdaoBondingTokenContract: PromiseOrValue<string>;
+    subdaoCw900Contract: PromiseOrValue<string>;
+    subdaoDistributorContract: PromiseOrValue<string>;
+    subdaoEmitter: PromiseOrValue<string>;
+    donationMatchContract: PromiseOrValue<string>;
+    donationMatchCharitesContract: PromiseOrValue<string>;
+    donationMatchEmitter: PromiseOrValue<string>;
+    splitToLiquid: AngelCoreStruct.SplitDetailsStruct;
+    haloToken: PromiseOrValue<string>;
+    haloTokenLpContract: PromiseOrValue<string>;
+    govContract: PromiseOrValue<string>;
+    collectorShare: PromiseOrValue<BigNumberish>;
+    charitySharesContract: PromiseOrValue<string>;
+    fundraisingContract: PromiseOrValue<string>;
+    uniswapRouter: PromiseOrValue<string>;
+    uniswapFactory: PromiseOrValue<string>;
+    multisigFactory: PromiseOrValue<string>;
+    multisigEmitter: PromiseOrValue<string>;
+    charityProposal: PromiseOrValue<string>;
+    lockedWithdrawal: PromiseOrValue<string>;
+    proxyAdmin: PromiseOrValue<string>;
+    usdcAddress: PromiseOrValue<string>;
+    wMaticAddress: PromiseOrValue<string>;
+    cw900lvAddress: PromiseOrValue<string>;
+  };
+
+  export type ConfigStructOutput = [
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    AngelCoreStruct.SplitDetailsStructOutput,
+    string,
+    string,
+    string,
+    BigNumber,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string
+  ] & {
+    applicationsReview: string;
+    indexFundContract: string;
+    accountsContract: string;
+    treasury: string;
+    subdaoGovContract: string;
+    subdaoTokenContract: string;
+    subdaoBondingTokenContract: string;
+    subdaoCw900Contract: string;
+    subdaoDistributorContract: string;
+    subdaoEmitter: string;
+    donationMatchContract: string;
+    donationMatchCharitesContract: string;
+    donationMatchEmitter: string;
+    splitToLiquid: AngelCoreStruct.SplitDetailsStructOutput;
+    haloToken: string;
+    haloTokenLpContract: string;
+    govContract: string;
+    collectorShare: BigNumber;
+    charitySharesContract: string;
+    fundraisingContract: string;
+    uniswapRouter: string;
+    uniswapFactory: string;
+    multisigFactory: string;
+    multisigEmitter: string;
+    charityProposal: string;
+    lockedWithdrawal: string;
+    proxyAdmin: string;
+    usdcAddress: string;
+    wMaticAddress: string;
     cw900lvAddress: string;
   };
 }
@@ -756,83 +756,76 @@ export interface RegistrarInterface extends utils.Interface {
   ): Result;
 
   events: {
-    "AccountsContractStorageChanged(string,string)": EventFragment;
-    "AngelProtocolParamsChanged(tuple)": EventFragment;
-    "DeleteNetworkConnection(uint256)": EventFragment;
-    "FeeUpdated(uint8,uint256,address)": EventFragment;
+    "AccountsContractStorageUpdated(string,string)": EventFragment;
+    "AngelProtocolParamsUpdated()": EventFragment;
+    "ConfigUpdated()": EventFragment;
+    "FeeSettingsUpdated(uint8,uint256,address)": EventFragment;
     "GasFeeUpdated(address,uint256)": EventFragment;
     "Initialized(uint8)": EventFragment;
+    "NetworkConnectionPosted(uint256)": EventFragment;
+    "NetworkConnectionRemoved(uint256)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
-    "PostNetworkConnection(uint256,tuple)": EventFragment;
-    "RebalanceParamsChanged(tuple)": EventFragment;
-    "StrategyApprovalChanged(bytes4,uint8)": EventFragment;
-    "StrategyParamsChanged(bytes4,address,address,uint8)": EventFragment;
-    "TokenAcceptanceChanged(address,bool)": EventFragment;
-    "UpdateRegistrarConfig(tuple)": EventFragment;
+    "RebalanceParamsUpdated()": EventFragment;
+    "StrategyApprovalUpdated(bytes4,uint8)": EventFragment;
+    "StrategyParamsUpdated(bytes4,address,address,uint8)": EventFragment;
+    "TokenAcceptanceUpdated(address,bool)": EventFragment;
   };
 
   getEvent(
-    nameOrSignatureOrTopic: "AccountsContractStorageChanged"
+    nameOrSignatureOrTopic: "AccountsContractStorageUpdated"
   ): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "AngelProtocolParamsChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "DeleteNetworkConnection"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "FeeUpdated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "AngelProtocolParamsUpdated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ConfigUpdated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "FeeSettingsUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "GasFeeUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "NetworkConnectionPosted"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "NetworkConnectionRemoved"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "PostNetworkConnection"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RebalanceParamsChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "StrategyApprovalChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "StrategyParamsChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "TokenAcceptanceChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "UpdateRegistrarConfig"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "RebalanceParamsUpdated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "StrategyApprovalUpdated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "StrategyParamsUpdated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "TokenAcceptanceUpdated"): EventFragment;
 }
 
-export interface AccountsContractStorageChangedEventObject {
+export interface AccountsContractStorageUpdatedEventObject {
   _chainName: string;
   _accountsContractAddress: string;
 }
-export type AccountsContractStorageChangedEvent = TypedEvent<
+export type AccountsContractStorageUpdatedEvent = TypedEvent<
   [string, string],
-  AccountsContractStorageChangedEventObject
+  AccountsContractStorageUpdatedEventObject
 >;
 
-export type AccountsContractStorageChangedEventFilter =
-  TypedEventFilter<AccountsContractStorageChangedEvent>;
+export type AccountsContractStorageUpdatedEventFilter =
+  TypedEventFilter<AccountsContractStorageUpdatedEvent>;
 
-export interface AngelProtocolParamsChangedEventObject {
-  _newAngelProtocolParams: LocalRegistrarLib.AngelProtocolParamsStructOutput;
-}
-export type AngelProtocolParamsChangedEvent = TypedEvent<
-  [LocalRegistrarLib.AngelProtocolParamsStructOutput],
-  AngelProtocolParamsChangedEventObject
+export interface AngelProtocolParamsUpdatedEventObject {}
+export type AngelProtocolParamsUpdatedEvent = TypedEvent<
+  [],
+  AngelProtocolParamsUpdatedEventObject
 >;
 
-export type AngelProtocolParamsChangedEventFilter =
-  TypedEventFilter<AngelProtocolParamsChangedEvent>;
+export type AngelProtocolParamsUpdatedEventFilter =
+  TypedEventFilter<AngelProtocolParamsUpdatedEvent>;
 
-export interface DeleteNetworkConnectionEventObject {
-  chainId: BigNumber;
+export interface ConfigUpdatedEventObject {}
+export type ConfigUpdatedEvent = TypedEvent<[], ConfigUpdatedEventObject>;
+
+export type ConfigUpdatedEventFilter = TypedEventFilter<ConfigUpdatedEvent>;
+
+export interface FeeSettingsUpdatedEventObject {
+  _feeType: number;
+  _bpsRate: BigNumber;
+  _payoutAddress: string;
 }
-export type DeleteNetworkConnectionEvent = TypedEvent<
-  [BigNumber],
-  DeleteNetworkConnectionEventObject
->;
-
-export type DeleteNetworkConnectionEventFilter =
-  TypedEventFilter<DeleteNetworkConnectionEvent>;
-
-export interface FeeUpdatedEventObject {
-  _fee: number;
-  _rate: BigNumber;
-  _payout: string;
-}
-export type FeeUpdatedEvent = TypedEvent<
+export type FeeSettingsUpdatedEvent = TypedEvent<
   [number, BigNumber, string],
-  FeeUpdatedEventObject
+  FeeSettingsUpdatedEventObject
 >;
 
-export type FeeUpdatedEventFilter = TypedEventFilter<FeeUpdatedEvent>;
+export type FeeSettingsUpdatedEventFilter =
+  TypedEventFilter<FeeSettingsUpdatedEvent>;
 
 export interface GasFeeUpdatedEventObject {
   _tokenAddr: string;
@@ -852,6 +845,28 @@ export type InitializedEvent = TypedEvent<[number], InitializedEventObject>;
 
 export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
 
+export interface NetworkConnectionPostedEventObject {
+  chainId: BigNumber;
+}
+export type NetworkConnectionPostedEvent = TypedEvent<
+  [BigNumber],
+  NetworkConnectionPostedEventObject
+>;
+
+export type NetworkConnectionPostedEventFilter =
+  TypedEventFilter<NetworkConnectionPostedEvent>;
+
+export interface NetworkConnectionRemovedEventObject {
+  chainId: BigNumber;
+}
+export type NetworkConnectionRemovedEvent = TypedEvent<
+  [BigNumber],
+  NetworkConnectionRemovedEventObject
+>;
+
+export type NetworkConnectionRemovedEventFilter =
+  TypedEventFilter<NetworkConnectionRemovedEvent>;
+
 export interface OwnershipTransferredEventObject {
   previousOwner: string;
   newOwner: string;
@@ -864,77 +879,52 @@ export type OwnershipTransferredEvent = TypedEvent<
 export type OwnershipTransferredEventFilter =
   TypedEventFilter<OwnershipTransferredEvent>;
 
-export interface PostNetworkConnectionEventObject {
-  chainId: BigNumber;
-  networkInfo: AngelCoreStruct.NetworkInfoStructOutput;
-}
-export type PostNetworkConnectionEvent = TypedEvent<
-  [BigNumber, AngelCoreStruct.NetworkInfoStructOutput],
-  PostNetworkConnectionEventObject
+export interface RebalanceParamsUpdatedEventObject {}
+export type RebalanceParamsUpdatedEvent = TypedEvent<
+  [],
+  RebalanceParamsUpdatedEventObject
 >;
 
-export type PostNetworkConnectionEventFilter =
-  TypedEventFilter<PostNetworkConnectionEvent>;
+export type RebalanceParamsUpdatedEventFilter =
+  TypedEventFilter<RebalanceParamsUpdatedEvent>;
 
-export interface RebalanceParamsChangedEventObject {
-  _newRebalanceParams: LocalRegistrarLib.RebalanceParamsStructOutput;
-}
-export type RebalanceParamsChangedEvent = TypedEvent<
-  [LocalRegistrarLib.RebalanceParamsStructOutput],
-  RebalanceParamsChangedEventObject
->;
-
-export type RebalanceParamsChangedEventFilter =
-  TypedEventFilter<RebalanceParamsChangedEvent>;
-
-export interface StrategyApprovalChangedEventObject {
+export interface StrategyApprovalUpdatedEventObject {
   _strategyId: string;
   _approvalState: number;
 }
-export type StrategyApprovalChangedEvent = TypedEvent<
+export type StrategyApprovalUpdatedEvent = TypedEvent<
   [string, number],
-  StrategyApprovalChangedEventObject
+  StrategyApprovalUpdatedEventObject
 >;
 
-export type StrategyApprovalChangedEventFilter =
-  TypedEventFilter<StrategyApprovalChangedEvent>;
+export type StrategyApprovalUpdatedEventFilter =
+  TypedEventFilter<StrategyApprovalUpdatedEvent>;
 
-export interface StrategyParamsChangedEventObject {
+export interface StrategyParamsUpdatedEventObject {
   _strategyId: string;
   _lockAddr: string;
   _liqAddr: string;
   _approvalState: number;
 }
-export type StrategyParamsChangedEvent = TypedEvent<
+export type StrategyParamsUpdatedEvent = TypedEvent<
   [string, string, string, number],
-  StrategyParamsChangedEventObject
+  StrategyParamsUpdatedEventObject
 >;
 
-export type StrategyParamsChangedEventFilter =
-  TypedEventFilter<StrategyParamsChangedEvent>;
+export type StrategyParamsUpdatedEventFilter =
+  TypedEventFilter<StrategyParamsUpdatedEvent>;
 
-export interface TokenAcceptanceChangedEventObject {
+export interface TokenAcceptanceUpdatedEventObject {
   _tokenAddr: string;
   _isAccepted: boolean;
 }
-export type TokenAcceptanceChangedEvent = TypedEvent<
+export type TokenAcceptanceUpdatedEvent = TypedEvent<
   [string, boolean],
-  TokenAcceptanceChangedEventObject
+  TokenAcceptanceUpdatedEventObject
 >;
 
-export type TokenAcceptanceChangedEventFilter =
-  TypedEventFilter<TokenAcceptanceChangedEvent>;
-
-export interface UpdateRegistrarConfigEventObject {
-  details: RegistrarStorage.ConfigStructOutput;
-}
-export type UpdateRegistrarConfigEvent = TypedEvent<
-  [RegistrarStorage.ConfigStructOutput],
-  UpdateRegistrarConfigEventObject
->;
-
-export type UpdateRegistrarConfigEventFilter =
-  TypedEventFilter<UpdateRegistrarConfigEvent>;
+export type TokenAcceptanceUpdatedEventFilter =
+  TypedEventFilter<TokenAcceptanceUpdatedEvent>;
 
 export interface Registrar extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -1479,49 +1469,52 @@ export interface Registrar extends BaseContract {
   };
 
   filters: {
-    "AccountsContractStorageChanged(string,string)"(
-      _chainName?: PromiseOrValue<string> | null,
-      _accountsContractAddress?: PromiseOrValue<string> | null
-    ): AccountsContractStorageChangedEventFilter;
-    AccountsContractStorageChanged(
-      _chainName?: PromiseOrValue<string> | null,
-      _accountsContractAddress?: PromiseOrValue<string> | null
-    ): AccountsContractStorageChangedEventFilter;
+    "AccountsContractStorageUpdated(string,string)"(
+      _chainName?: null,
+      _accountsContractAddress?: null
+    ): AccountsContractStorageUpdatedEventFilter;
+    AccountsContractStorageUpdated(
+      _chainName?: null,
+      _accountsContractAddress?: null
+    ): AccountsContractStorageUpdatedEventFilter;
 
-    "AngelProtocolParamsChanged(tuple)"(
-      _newAngelProtocolParams?: null
-    ): AngelProtocolParamsChangedEventFilter;
-    AngelProtocolParamsChanged(
-      _newAngelProtocolParams?: null
-    ): AngelProtocolParamsChangedEventFilter;
+    "AngelProtocolParamsUpdated()"(): AngelProtocolParamsUpdatedEventFilter;
+    AngelProtocolParamsUpdated(): AngelProtocolParamsUpdatedEventFilter;
 
-    "DeleteNetworkConnection(uint256)"(
-      chainId?: null
-    ): DeleteNetworkConnectionEventFilter;
-    DeleteNetworkConnection(chainId?: null): DeleteNetworkConnectionEventFilter;
+    "ConfigUpdated()"(): ConfigUpdatedEventFilter;
+    ConfigUpdated(): ConfigUpdatedEventFilter;
 
-    "FeeUpdated(uint8,uint256,address)"(
-      _fee?: null,
-      _rate?: null,
-      _payout?: null
-    ): FeeUpdatedEventFilter;
-    FeeUpdated(
-      _fee?: null,
-      _rate?: null,
-      _payout?: null
-    ): FeeUpdatedEventFilter;
+    "FeeSettingsUpdated(uint8,uint256,address)"(
+      _feeType?: null,
+      _bpsRate?: null,
+      _payoutAddress?: null
+    ): FeeSettingsUpdatedEventFilter;
+    FeeSettingsUpdated(
+      _feeType?: null,
+      _bpsRate?: null,
+      _payoutAddress?: null
+    ): FeeSettingsUpdatedEventFilter;
 
     "GasFeeUpdated(address,uint256)"(
-      _tokenAddr?: PromiseOrValue<string> | null,
+      _tokenAddr?: null,
       _gasFee?: null
     ): GasFeeUpdatedEventFilter;
-    GasFeeUpdated(
-      _tokenAddr?: PromiseOrValue<string> | null,
-      _gasFee?: null
-    ): GasFeeUpdatedEventFilter;
+    GasFeeUpdated(_tokenAddr?: null, _gasFee?: null): GasFeeUpdatedEventFilter;
 
     "Initialized(uint8)"(version?: null): InitializedEventFilter;
     Initialized(version?: null): InitializedEventFilter;
+
+    "NetworkConnectionPosted(uint256)"(
+      chainId?: null
+    ): NetworkConnectionPostedEventFilter;
+    NetworkConnectionPosted(chainId?: null): NetworkConnectionPostedEventFilter;
+
+    "NetworkConnectionRemoved(uint256)"(
+      chainId?: null
+    ): NetworkConnectionRemovedEventFilter;
+    NetworkConnectionRemoved(
+      chainId?: null
+    ): NetworkConnectionRemovedEventFilter;
 
     "OwnershipTransferred(address,address)"(
       previousOwner?: PromiseOrValue<string> | null,
@@ -1532,57 +1525,39 @@ export interface Registrar extends BaseContract {
       newOwner?: PromiseOrValue<string> | null
     ): OwnershipTransferredEventFilter;
 
-    "PostNetworkConnection(uint256,tuple)"(
-      chainId?: null,
-      networkInfo?: null
-    ): PostNetworkConnectionEventFilter;
-    PostNetworkConnection(
-      chainId?: null,
-      networkInfo?: null
-    ): PostNetworkConnectionEventFilter;
+    "RebalanceParamsUpdated()"(): RebalanceParamsUpdatedEventFilter;
+    RebalanceParamsUpdated(): RebalanceParamsUpdatedEventFilter;
 
-    "RebalanceParamsChanged(tuple)"(
-      _newRebalanceParams?: null
-    ): RebalanceParamsChangedEventFilter;
-    RebalanceParamsChanged(
-      _newRebalanceParams?: null
-    ): RebalanceParamsChangedEventFilter;
+    "StrategyApprovalUpdated(bytes4,uint8)"(
+      _strategyId?: null,
+      _approvalState?: null
+    ): StrategyApprovalUpdatedEventFilter;
+    StrategyApprovalUpdated(
+      _strategyId?: null,
+      _approvalState?: null
+    ): StrategyApprovalUpdatedEventFilter;
 
-    "StrategyApprovalChanged(bytes4,uint8)"(
-      _strategyId?: PromiseOrValue<BytesLike> | null,
+    "StrategyParamsUpdated(bytes4,address,address,uint8)"(
+      _strategyId?: null,
+      _lockAddr?: null,
+      _liqAddr?: null,
       _approvalState?: null
-    ): StrategyApprovalChangedEventFilter;
-    StrategyApprovalChanged(
-      _strategyId?: PromiseOrValue<BytesLike> | null,
+    ): StrategyParamsUpdatedEventFilter;
+    StrategyParamsUpdated(
+      _strategyId?: null,
+      _lockAddr?: null,
+      _liqAddr?: null,
       _approvalState?: null
-    ): StrategyApprovalChangedEventFilter;
+    ): StrategyParamsUpdatedEventFilter;
 
-    "StrategyParamsChanged(bytes4,address,address,uint8)"(
-      _strategyId?: PromiseOrValue<BytesLike> | null,
-      _lockAddr?: PromiseOrValue<string> | null,
-      _liqAddr?: PromiseOrValue<string> | null,
-      _approvalState?: null
-    ): StrategyParamsChangedEventFilter;
-    StrategyParamsChanged(
-      _strategyId?: PromiseOrValue<BytesLike> | null,
-      _lockAddr?: PromiseOrValue<string> | null,
-      _liqAddr?: PromiseOrValue<string> | null,
-      _approvalState?: null
-    ): StrategyParamsChangedEventFilter;
-
-    "TokenAcceptanceChanged(address,bool)"(
-      _tokenAddr?: PromiseOrValue<string> | null,
+    "TokenAcceptanceUpdated(address,bool)"(
+      _tokenAddr?: null,
       _isAccepted?: null
-    ): TokenAcceptanceChangedEventFilter;
-    TokenAcceptanceChanged(
-      _tokenAddr?: PromiseOrValue<string> | null,
+    ): TokenAcceptanceUpdatedEventFilter;
+    TokenAcceptanceUpdated(
+      _tokenAddr?: null,
       _isAccepted?: null
-    ): TokenAcceptanceChangedEventFilter;
-
-    "UpdateRegistrarConfig(tuple)"(
-      details?: null
-    ): UpdateRegistrarConfigEventFilter;
-    UpdateRegistrarConfig(details?: null): UpdateRegistrarConfigEventFilter;
+    ): TokenAcceptanceUpdatedEventFilter;
   };
 
   estimateGas: {

@@ -111,12 +111,12 @@ export interface LibDiamond extends BaseContract {
     ): DiamondCutEventFilter;
 
     "OwnershipTransferred(address,address)"(
-      previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      previousOwner?: null,
+      newOwner?: null
     ): OwnershipTransferredEventFilter;
     OwnershipTransferred(
-      previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      previousOwner?: null,
+      newOwner?: null
     ): OwnershipTransferredEventFilter;
   };
 

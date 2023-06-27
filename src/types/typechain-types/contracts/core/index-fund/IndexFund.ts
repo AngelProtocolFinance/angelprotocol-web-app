@@ -27,101 +27,6 @@ import type {
   PromiseOrValue,
 } from "../../../common";
 
-export declare namespace IndexFundStorage {
-  export type ConfigStruct = {
-    owner: PromiseOrValue<string>;
-    registrarContract: PromiseOrValue<string>;
-    fundRotation: PromiseOrValue<BigNumberish>;
-    fundMemberLimit: PromiseOrValue<BigNumberish>;
-    fundingGoal: PromiseOrValue<BigNumberish>;
-  };
-
-  export type ConfigStructOutput = [
-    string,
-    string,
-    BigNumber,
-    BigNumber,
-    BigNumber
-  ] & {
-    owner: string;
-    registrarContract: string;
-    fundRotation: BigNumber;
-    fundMemberLimit: BigNumber;
-    fundingGoal: BigNumber;
-  };
-
-  export type DonationMessagesStruct = {
-    member_ids: PromiseOrValue<BigNumberish>[];
-    locked_donation_amount: PromiseOrValue<BigNumberish>[];
-    liquid_donation_amount: PromiseOrValue<BigNumberish>[];
-    lockedSplit: PromiseOrValue<BigNumberish>[];
-    liquidSplit: PromiseOrValue<BigNumberish>[];
-  };
-
-  export type DonationMessagesStructOutput = [
-    number[],
-    BigNumber[],
-    BigNumber[],
-    BigNumber[],
-    BigNumber[]
-  ] & {
-    member_ids: number[];
-    locked_donation_amount: BigNumber[];
-    liquid_donation_amount: BigNumber[];
-    lockedSplit: BigNumber[];
-    liquidSplit: BigNumber[];
-  };
-
-  export type _StateStruct = {
-    totalFunds: PromiseOrValue<BigNumberish>;
-    activeFund: PromiseOrValue<BigNumberish>;
-    roundDonations: PromiseOrValue<BigNumberish>;
-    nextRotationBlock: PromiseOrValue<BigNumberish>;
-    nextFundId: PromiseOrValue<BigNumberish>;
-  };
-
-  export type _StateStructOutput = [
-    BigNumber,
-    BigNumber,
-    BigNumber,
-    BigNumber,
-    BigNumber
-  ] & {
-    totalFunds: BigNumber;
-    activeFund: BigNumber;
-    roundDonations: BigNumber;
-    nextRotationBlock: BigNumber;
-    nextFundId: BigNumber;
-  };
-}
-
-export declare namespace AngelCoreStruct {
-  export type IndexFundStruct = {
-    id: PromiseOrValue<BigNumberish>;
-    name: PromiseOrValue<string>;
-    description: PromiseOrValue<string>;
-    members: PromiseOrValue<BigNumberish>[];
-    splitToLiquid: PromiseOrValue<BigNumberish>;
-    expiryTime: PromiseOrValue<BigNumberish>;
-  };
-
-  export type IndexFundStructOutput = [
-    BigNumber,
-    string,
-    string,
-    number[],
-    BigNumber,
-    BigNumber
-  ] & {
-    id: BigNumber;
-    name: string;
-    description: string;
-    members: number[];
-    splitToLiquid: BigNumber;
-    expiryTime: BigNumber;
-  };
-}
-
 export declare namespace IndexFundMessage {
   export type InstantiateMessageStruct = {
     registrarContract: PromiseOrValue<string>;
@@ -172,6 +77,57 @@ export declare namespace IndexFundMessage {
     BigNumber,
     BigNumber
   ] & {
+    fundRotation: BigNumber;
+    fundMemberLimit: BigNumber;
+    fundingGoal: BigNumber;
+  };
+}
+
+export declare namespace AngelCoreStruct {
+  export type IndexFundStruct = {
+    id: PromiseOrValue<BigNumberish>;
+    name: PromiseOrValue<string>;
+    description: PromiseOrValue<string>;
+    members: PromiseOrValue<BigNumberish>[];
+    splitToLiquid: PromiseOrValue<BigNumberish>;
+    expiryTime: PromiseOrValue<BigNumberish>;
+  };
+
+  export type IndexFundStructOutput = [
+    BigNumber,
+    string,
+    string,
+    number[],
+    BigNumber,
+    BigNumber
+  ] & {
+    id: BigNumber;
+    name: string;
+    description: string;
+    members: number[];
+    splitToLiquid: BigNumber;
+    expiryTime: BigNumber;
+  };
+}
+
+export declare namespace IndexFundStorage {
+  export type ConfigStruct = {
+    owner: PromiseOrValue<string>;
+    registrarContract: PromiseOrValue<string>;
+    fundRotation: PromiseOrValue<BigNumberish>;
+    fundMemberLimit: PromiseOrValue<BigNumberish>;
+    fundingGoal: PromiseOrValue<BigNumberish>;
+  };
+
+  export type ConfigStructOutput = [
+    string,
+    string,
+    BigNumber,
+    BigNumber,
+    BigNumber
+  ] & {
+    owner: string;
+    registrarContract: string;
     fundRotation: BigNumber;
     fundMemberLimit: BigNumber;
     fundingGoal: BigNumber;
@@ -338,47 +294,53 @@ export interface IndexFundInterface extends utils.Interface {
   ): Result;
 
   events: {
-    "ConfigUpdated(tuple)": EventFragment;
-    "DonationMessagesUpdated(tuple)": EventFragment;
-    "IndexFundCreated(uint256,tuple)": EventFragment;
+    "ActiveFundUpdated(uint256)": EventFragment;
+    "ConfigUpdated()": EventFragment;
+    "DonationMessagesUpdated(uint256)": EventFragment;
+    "IndexFundCreated(uint256)": EventFragment;
     "IndexFundRemoved(uint256)": EventFragment;
     "Initialized(uint8)": EventFragment;
-    "MemberAdded(uint256,uint32)": EventFragment;
     "MemberRemoved(uint256,uint32)": EventFragment;
+    "MembersUpdated(uint256,uint32[])": EventFragment;
     "OwnerUpdated(address)": EventFragment;
     "RegistrarUpdated(address)": EventFragment;
-    "UpdateActiveFund(uint256)": EventFragment;
-    "UpdateIndexFundState(tuple)": EventFragment;
+    "StateUpdated()": EventFragment;
   };
 
+  getEvent(nameOrSignatureOrTopic: "ActiveFundUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ConfigUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "DonationMessagesUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "IndexFundCreated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "IndexFundRemoved"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "MemberAdded"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "MemberRemoved"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "MembersUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnerUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RegistrarUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "UpdateActiveFund"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "UpdateIndexFundState"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "StateUpdated"): EventFragment;
 }
 
-export interface ConfigUpdatedEventObject {
-  config: IndexFundStorage.ConfigStructOutput;
+export interface ActiveFundUpdatedEventObject {
+  fundId: BigNumber;
 }
-export type ConfigUpdatedEvent = TypedEvent<
-  [IndexFundStorage.ConfigStructOutput],
-  ConfigUpdatedEventObject
+export type ActiveFundUpdatedEvent = TypedEvent<
+  [BigNumber],
+  ActiveFundUpdatedEventObject
 >;
+
+export type ActiveFundUpdatedEventFilter =
+  TypedEventFilter<ActiveFundUpdatedEvent>;
+
+export interface ConfigUpdatedEventObject {}
+export type ConfigUpdatedEvent = TypedEvent<[], ConfigUpdatedEventObject>;
 
 export type ConfigUpdatedEventFilter = TypedEventFilter<ConfigUpdatedEvent>;
 
 export interface DonationMessagesUpdatedEventObject {
-  messages: IndexFundStorage.DonationMessagesStructOutput;
+  fundId: BigNumber;
 }
 export type DonationMessagesUpdatedEvent = TypedEvent<
-  [IndexFundStorage.DonationMessagesStructOutput],
+  [BigNumber],
   DonationMessagesUpdatedEventObject
 >;
 
@@ -387,10 +349,9 @@ export type DonationMessagesUpdatedEventFilter =
 
 export interface IndexFundCreatedEventObject {
   id: BigNumber;
-  fund: AngelCoreStruct.IndexFundStructOutput;
 }
 export type IndexFundCreatedEvent = TypedEvent<
-  [BigNumber, AngelCoreStruct.IndexFundStructOutput],
+  [BigNumber],
   IndexFundCreatedEventObject
 >;
 
@@ -415,17 +376,6 @@ export type InitializedEvent = TypedEvent<[number], InitializedEventObject>;
 
 export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
 
-export interface MemberAddedEventObject {
-  fundId: BigNumber;
-  memberId: number;
-}
-export type MemberAddedEvent = TypedEvent<
-  [BigNumber, number],
-  MemberAddedEventObject
->;
-
-export type MemberAddedEventFilter = TypedEventFilter<MemberAddedEvent>;
-
 export interface MemberRemovedEventObject {
   fundId: BigNumber;
   memberId: number;
@@ -436,6 +386,17 @@ export type MemberRemovedEvent = TypedEvent<
 >;
 
 export type MemberRemovedEventFilter = TypedEventFilter<MemberRemovedEvent>;
+
+export interface MembersUpdatedEventObject {
+  fundId: BigNumber;
+  members: number[];
+}
+export type MembersUpdatedEvent = TypedEvent<
+  [BigNumber, number[]],
+  MembersUpdatedEventObject
+>;
+
+export type MembersUpdatedEventFilter = TypedEventFilter<MembersUpdatedEvent>;
 
 export interface OwnerUpdatedEventObject {
   newOwner: string;
@@ -455,27 +416,10 @@ export type RegistrarUpdatedEvent = TypedEvent<
 export type RegistrarUpdatedEventFilter =
   TypedEventFilter<RegistrarUpdatedEvent>;
 
-export interface UpdateActiveFundEventObject {
-  fundId: BigNumber;
-}
-export type UpdateActiveFundEvent = TypedEvent<
-  [BigNumber],
-  UpdateActiveFundEventObject
->;
+export interface StateUpdatedEventObject {}
+export type StateUpdatedEvent = TypedEvent<[], StateUpdatedEventObject>;
 
-export type UpdateActiveFundEventFilter =
-  TypedEventFilter<UpdateActiveFundEvent>;
-
-export interface UpdateIndexFundStateEventObject {
-  state: IndexFundStorage._StateStructOutput;
-}
-export type UpdateIndexFundStateEvent = TypedEvent<
-  [IndexFundStorage._StateStructOutput],
-  UpdateIndexFundStateEventObject
->;
-
-export type UpdateIndexFundStateEventFilter =
-  TypedEventFilter<UpdateIndexFundStateEvent>;
+export type StateUpdatedEventFilter = TypedEventFilter<StateUpdatedEvent>;
 
 export interface IndexFund extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -736,21 +680,19 @@ export interface IndexFund extends BaseContract {
   };
 
   filters: {
-    "ConfigUpdated(tuple)"(config?: null): ConfigUpdatedEventFilter;
-    ConfigUpdated(config?: null): ConfigUpdatedEventFilter;
+    "ActiveFundUpdated(uint256)"(fundId?: null): ActiveFundUpdatedEventFilter;
+    ActiveFundUpdated(fundId?: null): ActiveFundUpdatedEventFilter;
 
-    "DonationMessagesUpdated(tuple)"(
-      messages?: null
-    ): DonationMessagesUpdatedEventFilter;
-    DonationMessagesUpdated(
-      messages?: null
-    ): DonationMessagesUpdatedEventFilter;
+    "ConfigUpdated()"(): ConfigUpdatedEventFilter;
+    ConfigUpdated(): ConfigUpdatedEventFilter;
 
-    "IndexFundCreated(uint256,tuple)"(
-      id?: null,
-      fund?: null
-    ): IndexFundCreatedEventFilter;
-    IndexFundCreated(id?: null, fund?: null): IndexFundCreatedEventFilter;
+    "DonationMessagesUpdated(uint256)"(
+      fundId?: null
+    ): DonationMessagesUpdatedEventFilter;
+    DonationMessagesUpdated(fundId?: null): DonationMessagesUpdatedEventFilter;
+
+    "IndexFundCreated(uint256)"(id?: null): IndexFundCreatedEventFilter;
+    IndexFundCreated(id?: null): IndexFundCreatedEventFilter;
 
     "IndexFundRemoved(uint256)"(id?: null): IndexFundRemovedEventFilter;
     IndexFundRemoved(id?: null): IndexFundRemovedEventFilter;
@@ -758,17 +700,17 @@ export interface IndexFund extends BaseContract {
     "Initialized(uint8)"(version?: null): InitializedEventFilter;
     Initialized(version?: null): InitializedEventFilter;
 
-    "MemberAdded(uint256,uint32)"(
-      fundId?: null,
-      memberId?: null
-    ): MemberAddedEventFilter;
-    MemberAdded(fundId?: null, memberId?: null): MemberAddedEventFilter;
-
     "MemberRemoved(uint256,uint32)"(
       fundId?: null,
       memberId?: null
     ): MemberRemovedEventFilter;
     MemberRemoved(fundId?: null, memberId?: null): MemberRemovedEventFilter;
+
+    "MembersUpdated(uint256,uint32[])"(
+      fundId?: null,
+      members?: null
+    ): MembersUpdatedEventFilter;
+    MembersUpdated(fundId?: null, members?: null): MembersUpdatedEventFilter;
 
     "OwnerUpdated(address)"(newOwner?: null): OwnerUpdatedEventFilter;
     OwnerUpdated(newOwner?: null): OwnerUpdatedEventFilter;
@@ -778,13 +720,8 @@ export interface IndexFund extends BaseContract {
     ): RegistrarUpdatedEventFilter;
     RegistrarUpdated(newRegistrar?: null): RegistrarUpdatedEventFilter;
 
-    "UpdateActiveFund(uint256)"(fundId?: null): UpdateActiveFundEventFilter;
-    UpdateActiveFund(fundId?: null): UpdateActiveFundEventFilter;
-
-    "UpdateIndexFundState(tuple)"(
-      state?: null
-    ): UpdateIndexFundStateEventFilter;
-    UpdateIndexFundState(state?: null): UpdateIndexFundStateEventFilter;
+    "StateUpdated()"(): StateUpdatedEventFilter;
+    StateUpdated(): StateUpdatedEventFilter;
   };
 
   estimateGas: {

@@ -141,6 +141,7 @@ export declare namespace AccountMessages {
     image: PromiseOrValue<string>;
     members: PromiseOrValue<string>[];
     threshold: PromiseOrValue<BigNumberish>;
+    duration: PromiseOrValue<BigNumberish>;
     allowlistedBeneficiaries: PromiseOrValue<string>[];
     allowlistedContributors: PromiseOrValue<string>[];
     earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStruct;
@@ -167,6 +168,7 @@ export declare namespace AccountMessages {
     string,
     string[],
     BigNumber,
+    BigNumber,
     string[],
     string[],
     AngelCoreStruct.FeeSettingStructOutput,
@@ -191,6 +193,7 @@ export declare namespace AccountMessages {
     image: string;
     members: string[];
     threshold: BigNumber;
+    duration: BigNumber;
     allowlistedBeneficiaries: string[];
     allowlistedContributors: string[];
     earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStructOutput;
@@ -207,46 +210,10 @@ export declare namespace AccountMessages {
   };
 }
 
-export declare namespace CharityApplicationsStorage {
-  export type ConfigStruct = {
-    proposalExpiry: PromiseOrValue<BigNumberish>;
-    applicationMultisig: PromiseOrValue<string>;
-    accountsContract: PromiseOrValue<string>;
-    seedSplitToLiquid: PromiseOrValue<BigNumberish>;
-    newEndowGasMoney: PromiseOrValue<boolean>;
-    gasAmount: PromiseOrValue<BigNumberish>;
-    fundSeedAsset: PromiseOrValue<boolean>;
-    seedAsset: PromiseOrValue<string>;
-    seedAssetAmount: PromiseOrValue<BigNumberish>;
-  };
-
-  export type ConfigStructOutput = [
-    BigNumber,
-    string,
-    string,
-    BigNumber,
-    boolean,
-    BigNumber,
-    boolean,
-    string,
-    BigNumber
-  ] & {
-    proposalExpiry: BigNumber;
-    applicationMultisig: string;
-    accountsContract: string;
-    seedSplitToLiquid: BigNumber;
-    newEndowGasMoney: boolean;
-    gasAmount: BigNumber;
-    fundSeedAsset: boolean;
-    seedAsset: string;
-    seedAssetAmount: BigNumber;
-  };
-}
-
 export interface ICharityApplicationInterface extends utils.Interface {
   functions: {
     "approveCharity(uint256)": FunctionFragment;
-    "proposeCharity((bool,uint256,string,uint256[],uint8,uint8,string,string,address[],uint256,address[],address[],(address,uint256),(address,uint256),(address,uint256),(address,uint256),uint256,((bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256))),uint32,address[],bool,(uint256,uint256,uint256),uint256),string)": FunctionFragment;
+    "proposeCharity((bool,uint256,string,uint256[],uint8,uint8,string,string,address[],uint256,uint256,address[],address[],(address,uint256),(address,uint256),(address,uint256),(address,uint256),uint256,((bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256))),uint32,address[],bool,(uint256,uint256,uint256),uint256),string)": FunctionFragment;
     "rejectCharity(uint256)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
     "updateConfig(uint256,address,address,uint256,bool,uint256,bool,address,uint256)": FunctionFragment;
@@ -318,23 +285,23 @@ export interface ICharityApplicationInterface extends utils.Interface {
 
   events: {
     "CharityApproved(uint256,uint256)": EventFragment;
-    "CharityProposed(address,uint256,tuple,string)": EventFragment;
+    "CharityProposed(address,uint256,string)": EventFragment;
     "CharityRejected(uint256)": EventFragment;
+    "ConfigUpdated()": EventFragment;
     "Deposit(address,uint256)": EventFragment;
     "GasSent(uint256,address,uint256)": EventFragment;
-    "InitilizedCharityApplication(tuple)": EventFragment;
-    "SeedAssetSent(uint256,address,uint256)": EventFragment;
+    "Initialized()": EventFragment;
+    "SeedAssetTransfer(uint256,address,uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "CharityApproved"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "CharityProposed"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "CharityRejected"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ConfigUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Deposit"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "GasSent"): EventFragment;
-  getEvent(
-    nameOrSignatureOrTopic: "InitilizedCharityApplication"
-  ): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "SeedAssetSent"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "SeedAssetTransfer"): EventFragment;
 }
 
 export interface CharityApprovedEventObject {
@@ -351,16 +318,10 @@ export type CharityApprovedEventFilter = TypedEventFilter<CharityApprovedEvent>;
 export interface CharityProposedEventObject {
   proposer: string;
   proposalId: BigNumber;
-  charityApplication: AccountMessages.CreateEndowmentRequestStructOutput;
   meta: string;
 }
 export type CharityProposedEvent = TypedEvent<
-  [
-    string,
-    BigNumber,
-    AccountMessages.CreateEndowmentRequestStructOutput,
-    string
-  ],
+  [string, BigNumber, string],
   CharityProposedEventObject
 >;
 
@@ -376,9 +337,14 @@ export type CharityRejectedEvent = TypedEvent<
 
 export type CharityRejectedEventFilter = TypedEventFilter<CharityRejectedEvent>;
 
+export interface ConfigUpdatedEventObject {}
+export type ConfigUpdatedEvent = TypedEvent<[], ConfigUpdatedEventObject>;
+
+export type ConfigUpdatedEventFilter = TypedEventFilter<ConfigUpdatedEvent>;
+
 export interface DepositEventObject {
   sender: string;
-  value: BigNumber;
+  amount: BigNumber;
 }
 export type DepositEvent = TypedEvent<[string, BigNumber], DepositEventObject>;
 
@@ -396,28 +362,23 @@ export type GasSentEvent = TypedEvent<
 
 export type GasSentEventFilter = TypedEventFilter<GasSentEvent>;
 
-export interface InitilizedCharityApplicationEventObject {
-  updatedConfig: CharityApplicationsStorage.ConfigStructOutput;
-}
-export type InitilizedCharityApplicationEvent = TypedEvent<
-  [CharityApplicationsStorage.ConfigStructOutput],
-  InitilizedCharityApplicationEventObject
->;
+export interface InitializedEventObject {}
+export type InitializedEvent = TypedEvent<[], InitializedEventObject>;
 
-export type InitilizedCharityApplicationEventFilter =
-  TypedEventFilter<InitilizedCharityApplicationEvent>;
+export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
 
-export interface SeedAssetSentEventObject {
+export interface SeedAssetTransferEventObject {
   endowmentId: BigNumber;
   asset: string;
   amount: BigNumber;
 }
-export type SeedAssetSentEvent = TypedEvent<
+export type SeedAssetTransferEvent = TypedEvent<
   [BigNumber, string, BigNumber],
-  SeedAssetSentEventObject
+  SeedAssetTransferEventObject
 >;
 
-export type SeedAssetSentEventFilter = TypedEventFilter<SeedAssetSentEvent>;
+export type SeedAssetTransferEventFilter =
+  TypedEventFilter<SeedAssetTransferEvent>;
 
 export interface ICharityApplication extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -553,71 +514,61 @@ export interface ICharityApplication extends BaseContract {
 
   filters: {
     "CharityApproved(uint256,uint256)"(
-      proposalId?: PromiseOrValue<BigNumberish> | null,
-      endowmentId?: PromiseOrValue<BigNumberish> | null
+      proposalId?: null,
+      endowmentId?: null
     ): CharityApprovedEventFilter;
     CharityApproved(
-      proposalId?: PromiseOrValue<BigNumberish> | null,
-      endowmentId?: PromiseOrValue<BigNumberish> | null
+      proposalId?: null,
+      endowmentId?: null
     ): CharityApprovedEventFilter;
 
-    "CharityProposed(address,uint256,tuple,string)"(
-      proposer?: PromiseOrValue<string> | null,
-      proposalId?: PromiseOrValue<BigNumberish> | null,
-      charityApplication?: null,
+    "CharityProposed(address,uint256,string)"(
+      proposer?: null,
+      proposalId?: null,
       meta?: null
     ): CharityProposedEventFilter;
     CharityProposed(
-      proposer?: PromiseOrValue<string> | null,
-      proposalId?: PromiseOrValue<BigNumberish> | null,
-      charityApplication?: null,
+      proposer?: null,
+      proposalId?: null,
       meta?: null
     ): CharityProposedEventFilter;
 
-    "CharityRejected(uint256)"(
-      proposalId?: PromiseOrValue<BigNumberish> | null
-    ): CharityRejectedEventFilter;
-    CharityRejected(
-      proposalId?: PromiseOrValue<BigNumberish> | null
-    ): CharityRejectedEventFilter;
+    "CharityRejected(uint256)"(proposalId?: null): CharityRejectedEventFilter;
+    CharityRejected(proposalId?: null): CharityRejectedEventFilter;
+
+    "ConfigUpdated()"(): ConfigUpdatedEventFilter;
+    ConfigUpdated(): ConfigUpdatedEventFilter;
 
     "Deposit(address,uint256)"(
-      sender?: PromiseOrValue<string> | null,
-      value?: null
+      sender?: null,
+      amount?: null
     ): DepositEventFilter;
-    Deposit(
-      sender?: PromiseOrValue<string> | null,
-      value?: null
-    ): DepositEventFilter;
+    Deposit(sender?: null, amount?: null): DepositEventFilter;
 
     "GasSent(uint256,address,uint256)"(
-      endowmentId?: PromiseOrValue<BigNumberish> | null,
-      member?: PromiseOrValue<string> | null,
+      endowmentId?: null,
+      member?: null,
       amount?: null
     ): GasSentEventFilter;
     GasSent(
-      endowmentId?: PromiseOrValue<BigNumberish> | null,
-      member?: PromiseOrValue<string> | null,
+      endowmentId?: null,
+      member?: null,
       amount?: null
     ): GasSentEventFilter;
 
-    "InitilizedCharityApplication(tuple)"(
-      updatedConfig?: null
-    ): InitilizedCharityApplicationEventFilter;
-    InitilizedCharityApplication(
-      updatedConfig?: null
-    ): InitilizedCharityApplicationEventFilter;
+    "Initialized()"(): InitializedEventFilter;
+    Initialized(): InitializedEventFilter;
 
-    "SeedAssetSent(uint256,address,uint256)"(
-      endowmentId?: PromiseOrValue<BigNumberish> | null,
-      asset?: PromiseOrValue<string> | null,
+    "SeedAssetTransfer(uint256,address,uint256)"(
+      endowmentId?: null,
+      asset?: null,
       amount?: null
-    ): SeedAssetSentEventFilter;
-    SeedAssetSent(
-      endowmentId?: PromiseOrValue<BigNumberish> | null,
-      asset?: PromiseOrValue<string> | null,
+    ): SeedAssetTransferEventFilter;
+    SeedAssetTransfer(
+      endowmentId?: null,
+      asset?: null,
       amount?: null
-    ): SeedAssetSentEventFilter;
+    ): SeedAssetTransferEventFilter;
   };
 
   estimateGas: {

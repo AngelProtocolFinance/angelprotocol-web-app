@@ -29,6 +29,7 @@ export interface StorageMultiSigInterface extends utils.Interface {
     "isOwner(address)": FunctionFragment;
     "requireExecution()": FunctionFragment;
     "transactionCount()": FunctionFragment;
+    "transactionExpiry()": FunctionFragment;
     "transactions(uint256)": FunctionFragment;
   };
 
@@ -40,6 +41,7 @@ export interface StorageMultiSigInterface extends utils.Interface {
       | "isOwner"
       | "requireExecution"
       | "transactionCount"
+      | "transactionExpiry"
       | "transactions"
   ): FunctionFragment;
 
@@ -68,6 +70,10 @@ export interface StorageMultiSigInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "transactionExpiry",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "transactions",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
@@ -91,6 +97,10 @@ export interface StorageMultiSigInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "transactionCount",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "transactionExpiry",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -146,15 +156,18 @@ export interface StorageMultiSig extends BaseContract {
 
     transactionCount(overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    transactionExpiry(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     transactions(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [string, BigNumber, string, boolean, string] & {
+      [string, BigNumber, string, boolean, BigNumber, string] & {
         destination: string;
         value: BigNumber;
         data: string;
         executed: boolean;
+        expiry: BigNumber;
         metadata: string;
       }
     >;
@@ -178,15 +191,18 @@ export interface StorageMultiSig extends BaseContract {
 
   transactionCount(overrides?: CallOverrides): Promise<BigNumber>;
 
+  transactionExpiry(overrides?: CallOverrides): Promise<BigNumber>;
+
   transactions(
     arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<
-    [string, BigNumber, string, boolean, string] & {
+    [string, BigNumber, string, boolean, BigNumber, string] & {
       destination: string;
       value: BigNumber;
       data: string;
       executed: boolean;
+      expiry: BigNumber;
       metadata: string;
     }
   >;
@@ -210,15 +226,18 @@ export interface StorageMultiSig extends BaseContract {
 
     transactionCount(overrides?: CallOverrides): Promise<BigNumber>;
 
+    transactionExpiry(overrides?: CallOverrides): Promise<BigNumber>;
+
     transactions(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [string, BigNumber, string, boolean, string] & {
+      [string, BigNumber, string, boolean, BigNumber, string] & {
         destination: string;
         value: BigNumber;
         data: string;
         executed: boolean;
+        expiry: BigNumber;
         metadata: string;
       }
     >;
@@ -245,6 +264,8 @@ export interface StorageMultiSig extends BaseContract {
 
     transactionCount(overrides?: CallOverrides): Promise<BigNumber>;
 
+    transactionExpiry(overrides?: CallOverrides): Promise<BigNumber>;
+
     transactions(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -269,6 +290,8 @@ export interface StorageMultiSig extends BaseContract {
     requireExecution(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transactionCount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    transactionExpiry(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transactions(
       arg0: PromiseOrValue<BigNumberish>,

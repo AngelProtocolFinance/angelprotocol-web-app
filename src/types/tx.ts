@@ -2,9 +2,8 @@ import { EncodeObject } from "@cosmjs/proto-signing";
 import { StdFee } from "@cosmjs/stargate";
 import { CreateTxOptions, Msg } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
-import { Except, OverrideProperties } from "type-fest";
+import { OverrideProperties } from "type-fest";
 import { ValueOf } from "type-fest";
-import { MultiSigStorage } from "./typechain-types/contracts/multisigs/MultiSigGeneric";
 import { FetchedChain, Token, TokenType } from "./aws";
 import {
   Token as AccountToken,
@@ -27,7 +26,7 @@ import { Tupleable } from "./evm";
 import { EVMTx, LogProcessor, SimulTx } from "./evm";
 import { Contract, TransactionStatus } from "./lists";
 import { TagPayload } from "./third-party/redux";
-import { Diff, Plain } from "./utils";
+import { Diff } from "./utils";
 
 export type TokenWithBalance = OverrideProperties<
   Token,
@@ -240,8 +239,19 @@ export type TxMeta = ValueOf<{
   [K in keyof Txs]: { id: K; data?: Txs[K]["meta"] };
 }> & { title: string; description: string };
 
-export type Transaction = OverrideProperties<
-  Except<Plain<MultiSigStorage.TransactionStruct>, "executed">,
-  { value: string; metadata?: TxMeta; data: string }
-  //add id and status
-> & { status: TransactionStatus; id: number };
+// export type Transaction = OverrideProperties<
+//   Except<Plain<MultiSigStorage.TransactionStruct>, "executed">,
+//   { value: string; metadata?: TxMeta; data: string }
+//   //add id and status
+// > & { status: TransactionStatus; id: number };
+
+//no corresponding struct in typechain
+export type Transaction = {
+  id: number;
+  destination: string;
+  value: string;
+  data: string;
+  status: TransactionStatus;
+  expiry: number;
+  metadata?: TxMeta;
+};

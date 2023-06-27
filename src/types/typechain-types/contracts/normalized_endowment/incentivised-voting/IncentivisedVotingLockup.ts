@@ -354,23 +354,27 @@ export interface IncentivisedVotingLockupInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
 
   events: {
+    "ContractExpired(address)": EventFragment;
     "Deposit(address,uint256,uint256,uint8,uint256)": EventFragment;
-    "Ejected(address,address,uint256)": EventFragment;
-    "Expired()": EventFragment;
-    "RewardAdded(uint256)": EventFragment;
-    "RewardPaid(address,uint256)": EventFragment;
+    "UserEjected(address,address,uint256)": EventFragment;
     "Withdraw(address,uint256,uint256)": EventFragment;
-    "WithdrawVested(address,uint256,uint256)": EventFragment;
   };
 
+  getEvent(nameOrSignatureOrTopic: "ContractExpired"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Deposit"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Ejected"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Expired"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RewardAdded"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RewardPaid"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "UserEjected"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Withdraw"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "WithdrawVested"): EventFragment;
 }
+
+export interface ContractExpiredEventObject {
+  contractAddress: string;
+}
+export type ContractExpiredEvent = TypedEvent<
+  [string],
+  ContractExpiredEventObject
+>;
+
+export type ContractExpiredEventFilter = TypedEventFilter<ContractExpiredEvent>;
 
 export interface DepositEventObject {
   provider: string;
@@ -386,40 +390,17 @@ export type DepositEvent = TypedEvent<
 
 export type DepositEventFilter = TypedEventFilter<DepositEvent>;
 
-export interface EjectedEventObject {
+export interface UserEjectedEventObject {
   ejected: string;
   ejector: string;
   ts: BigNumber;
 }
-export type EjectedEvent = TypedEvent<
+export type UserEjectedEvent = TypedEvent<
   [string, string, BigNumber],
-  EjectedEventObject
+  UserEjectedEventObject
 >;
 
-export type EjectedEventFilter = TypedEventFilter<EjectedEvent>;
-
-export interface ExpiredEventObject {}
-export type ExpiredEvent = TypedEvent<[], ExpiredEventObject>;
-
-export type ExpiredEventFilter = TypedEventFilter<ExpiredEvent>;
-
-export interface RewardAddedEventObject {
-  reward: BigNumber;
-}
-export type RewardAddedEvent = TypedEvent<[BigNumber], RewardAddedEventObject>;
-
-export type RewardAddedEventFilter = TypedEventFilter<RewardAddedEvent>;
-
-export interface RewardPaidEventObject {
-  user: string;
-  reward: BigNumber;
-}
-export type RewardPaidEvent = TypedEvent<
-  [string, BigNumber],
-  RewardPaidEventObject
->;
-
-export type RewardPaidEventFilter = TypedEventFilter<RewardPaidEvent>;
+export type UserEjectedEventFilter = TypedEventFilter<UserEjectedEvent>;
 
 export interface WithdrawEventObject {
   provider: string;
@@ -432,18 +413,6 @@ export type WithdrawEvent = TypedEvent<
 >;
 
 export type WithdrawEventFilter = TypedEventFilter<WithdrawEvent>;
-
-export interface WithdrawVestedEventObject {
-  provider: string;
-  value: BigNumber;
-  ts: BigNumber;
-}
-export type WithdrawVestedEvent = TypedEvent<
-  [string, BigNumber, BigNumber],
-  WithdrawVestedEventObject
->;
-
-export type WithdrawVestedEventFilter = TypedEventFilter<WithdrawVestedEvent>;
 
 export interface IncentivisedVotingLockup extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -999,68 +968,43 @@ export interface IncentivisedVotingLockup extends BaseContract {
   };
 
   filters: {
+    "ContractExpired(address)"(
+      contractAddress?: null
+    ): ContractExpiredEventFilter;
+    ContractExpired(contractAddress?: null): ContractExpiredEventFilter;
+
     "Deposit(address,uint256,uint256,uint8,uint256)"(
-      provider?: PromiseOrValue<string> | null,
+      provider?: null,
       value?: null,
       locktime?: null,
-      action?: PromiseOrValue<BigNumberish> | null,
+      action?: null,
       ts?: null
     ): DepositEventFilter;
     Deposit(
-      provider?: PromiseOrValue<string> | null,
+      provider?: null,
       value?: null,
       locktime?: null,
-      action?: PromiseOrValue<BigNumberish> | null,
+      action?: null,
       ts?: null
     ): DepositEventFilter;
 
-    "Ejected(address,address,uint256)"(
-      ejected?: PromiseOrValue<string> | null,
+    "UserEjected(address,address,uint256)"(
+      ejected?: null,
       ejector?: null,
       ts?: null
-    ): EjectedEventFilter;
-    Ejected(
-      ejected?: PromiseOrValue<string> | null,
+    ): UserEjectedEventFilter;
+    UserEjected(
+      ejected?: null,
       ejector?: null,
       ts?: null
-    ): EjectedEventFilter;
-
-    "Expired()"(): ExpiredEventFilter;
-    Expired(): ExpiredEventFilter;
-
-    "RewardAdded(uint256)"(reward?: null): RewardAddedEventFilter;
-    RewardAdded(reward?: null): RewardAddedEventFilter;
-
-    "RewardPaid(address,uint256)"(
-      user?: PromiseOrValue<string> | null,
-      reward?: null
-    ): RewardPaidEventFilter;
-    RewardPaid(
-      user?: PromiseOrValue<string> | null,
-      reward?: null
-    ): RewardPaidEventFilter;
+    ): UserEjectedEventFilter;
 
     "Withdraw(address,uint256,uint256)"(
-      provider?: PromiseOrValue<string> | null,
+      provider?: null,
       value?: null,
       ts?: null
     ): WithdrawEventFilter;
-    Withdraw(
-      provider?: PromiseOrValue<string> | null,
-      value?: null,
-      ts?: null
-    ): WithdrawEventFilter;
-
-    "WithdrawVested(address,uint256,uint256)"(
-      provider?: PromiseOrValue<string> | null,
-      value?: null,
-      ts?: null
-    ): WithdrawVestedEventFilter;
-    WithdrawVested(
-      provider?: PromiseOrValue<string> | null,
-      value?: null,
-      ts?: null
-    ): WithdrawVestedEventFilter;
+    Withdraw(provider?: null, value?: null, ts?: null): WithdrawEventFilter;
   };
 
   estimateGas: {

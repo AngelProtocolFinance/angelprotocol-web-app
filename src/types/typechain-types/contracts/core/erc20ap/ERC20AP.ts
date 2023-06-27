@@ -216,15 +216,11 @@ export interface ERC20AP extends BaseContract {
 
   filters: {
     "Transfer(uint32,uint32,uint256)"(
-      from?: PromiseOrValue<BigNumberish> | null,
-      to?: PromiseOrValue<BigNumberish> | null,
+      from?: null,
+      to?: null,
       value?: null
     ): TransferEventFilter;
-    Transfer(
-      from?: PromiseOrValue<BigNumberish> | null,
-      to?: PromiseOrValue<BigNumberish> | null,
-      value?: null
-    ): TransferEventFilter;
+    Transfer(from?: null, to?: null, value?: null): TransferEventFilter;
   };
 
   estimateGas: {

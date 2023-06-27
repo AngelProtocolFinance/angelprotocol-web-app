@@ -644,40 +644,36 @@ export interface ERC4626AP extends BaseContract {
 
   filters: {
     "Deposit(address,uint32,uint256,uint256)"(
-      caller?: PromiseOrValue<string> | null,
-      owner?: PromiseOrValue<BigNumberish> | null,
+      caller?: null,
+      owner?: null,
       assets?: null,
       shares?: null
     ): DepositEventFilter;
     Deposit(
-      caller?: PromiseOrValue<string> | null,
-      owner?: PromiseOrValue<BigNumberish> | null,
+      caller?: null,
+      owner?: null,
       assets?: null,
       shares?: null
     ): DepositEventFilter;
 
     "Transfer(uint32,uint32,uint256)"(
-      from?: PromiseOrValue<BigNumberish> | null,
-      to?: PromiseOrValue<BigNumberish> | null,
+      from?: null,
+      to?: null,
       value?: null
     ): TransferEventFilter;
-    Transfer(
-      from?: PromiseOrValue<BigNumberish> | null,
-      to?: PromiseOrValue<BigNumberish> | null,
-      value?: null
-    ): TransferEventFilter;
+    Transfer(from?: null, to?: null, value?: null): TransferEventFilter;
 
     "Withdraw(address,address,uint32,uint256,uint256)"(
-      caller?: PromiseOrValue<string> | null,
-      receiver?: PromiseOrValue<string> | null,
-      owner?: PromiseOrValue<BigNumberish> | null,
+      caller?: null,
+      receiver?: null,
+      owner?: null,
       assets?: null,
       shares?: null
     ): WithdrawEventFilter;
     Withdraw(
-      caller?: PromiseOrValue<string> | null,
-      receiver?: PromiseOrValue<string> | null,
-      owner?: PromiseOrValue<BigNumberish> | null,
+      caller?: null,
+      receiver?: null,
+      owner?: null,
       assets?: null,
       shares?: null
     ): WithdrawEventFilter;

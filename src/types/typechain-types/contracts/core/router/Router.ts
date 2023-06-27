@@ -215,25 +215,25 @@ export interface RouterInterface extends utils.Interface {
 
   events: {
     "Deposit(tuple)": EventFragment;
-    "FallbackRefund(tuple,uint256)": EventFragment;
-    "Harvest(tuple)": EventFragment;
+    "ErrorBytesLogged(tuple,bytes)": EventFragment;
+    "ErrorLogged(tuple,string)": EventFragment;
     "Initialized(uint8)": EventFragment;
-    "LogError(tuple,string)": EventFragment;
-    "LogErrorBytes(tuple,bytes)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
-    "Redemption(tuple,uint256)": EventFragment;
-    "TokensSent(tuple,uint256)": EventFragment;
+    "Redeem(tuple,uint256)": EventFragment;
+    "Refund(tuple,uint256)": EventFragment;
+    "RewardsHarvested(tuple)": EventFragment;
+    "Transfer(tuple,uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "Deposit"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "FallbackRefund"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Harvest"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ErrorBytesLogged"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ErrorLogged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "LogError"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "LogErrorBytes"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Redemption"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "TokensSent"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Redeem"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Refund"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "RewardsHarvested"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
 }
 
 export interface DepositEventObject {
@@ -246,26 +246,28 @@ export type DepositEvent = TypedEvent<
 
 export type DepositEventFilter = TypedEventFilter<DepositEvent>;
 
-export interface FallbackRefundEventObject {
+export interface ErrorBytesLoggedEventObject {
   action: IVault.VaultActionDataStructOutput;
-  amount: BigNumber;
+  data: string;
 }
-export type FallbackRefundEvent = TypedEvent<
-  [IVault.VaultActionDataStructOutput, BigNumber],
-  FallbackRefundEventObject
+export type ErrorBytesLoggedEvent = TypedEvent<
+  [IVault.VaultActionDataStructOutput, string],
+  ErrorBytesLoggedEventObject
 >;
 
-export type FallbackRefundEventFilter = TypedEventFilter<FallbackRefundEvent>;
+export type ErrorBytesLoggedEventFilter =
+  TypedEventFilter<ErrorBytesLoggedEvent>;
 
-export interface HarvestEventObject {
+export interface ErrorLoggedEventObject {
   action: IVault.VaultActionDataStructOutput;
+  message: string;
 }
-export type HarvestEvent = TypedEvent<
-  [IVault.VaultActionDataStructOutput],
-  HarvestEventObject
+export type ErrorLoggedEvent = TypedEvent<
+  [IVault.VaultActionDataStructOutput, string],
+  ErrorLoggedEventObject
 >;
 
-export type HarvestEventFilter = TypedEventFilter<HarvestEvent>;
+export type ErrorLoggedEventFilter = TypedEventFilter<ErrorLoggedEvent>;
 
 export interface InitializedEventObject {
   version: number;
@@ -273,28 +275,6 @@ export interface InitializedEventObject {
 export type InitializedEvent = TypedEvent<[number], InitializedEventObject>;
 
 export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
-
-export interface LogErrorEventObject {
-  action: IVault.VaultActionDataStructOutput;
-  message: string;
-}
-export type LogErrorEvent = TypedEvent<
-  [IVault.VaultActionDataStructOutput, string],
-  LogErrorEventObject
->;
-
-export type LogErrorEventFilter = TypedEventFilter<LogErrorEvent>;
-
-export interface LogErrorBytesEventObject {
-  action: IVault.VaultActionDataStructOutput;
-  data: string;
-}
-export type LogErrorBytesEvent = TypedEvent<
-  [IVault.VaultActionDataStructOutput, string],
-  LogErrorBytesEventObject
->;
-
-export type LogErrorBytesEventFilter = TypedEventFilter<LogErrorBytesEvent>;
 
 export interface OwnershipTransferredEventObject {
   previousOwner: string;
@@ -308,27 +288,49 @@ export type OwnershipTransferredEvent = TypedEvent<
 export type OwnershipTransferredEventFilter =
   TypedEventFilter<OwnershipTransferredEvent>;
 
-export interface RedemptionEventObject {
+export interface RedeemEventObject {
   action: IVault.VaultActionDataStructOutput;
   amount: BigNumber;
 }
-export type RedemptionEvent = TypedEvent<
+export type RedeemEvent = TypedEvent<
   [IVault.VaultActionDataStructOutput, BigNumber],
-  RedemptionEventObject
+  RedeemEventObject
 >;
 
-export type RedemptionEventFilter = TypedEventFilter<RedemptionEvent>;
+export type RedeemEventFilter = TypedEventFilter<RedeemEvent>;
 
-export interface TokensSentEventObject {
+export interface RefundEventObject {
   action: IVault.VaultActionDataStructOutput;
   amount: BigNumber;
 }
-export type TokensSentEvent = TypedEvent<
+export type RefundEvent = TypedEvent<
   [IVault.VaultActionDataStructOutput, BigNumber],
-  TokensSentEventObject
+  RefundEventObject
 >;
 
-export type TokensSentEventFilter = TypedEventFilter<TokensSentEvent>;
+export type RefundEventFilter = TypedEventFilter<RefundEvent>;
+
+export interface RewardsHarvestedEventObject {
+  action: IVault.VaultActionDataStructOutput;
+}
+export type RewardsHarvestedEvent = TypedEvent<
+  [IVault.VaultActionDataStructOutput],
+  RewardsHarvestedEventObject
+>;
+
+export type RewardsHarvestedEventFilter =
+  TypedEventFilter<RewardsHarvestedEvent>;
+
+export interface TransferEventObject {
+  action: IVault.VaultActionDataStructOutput;
+  amount: BigNumber;
+}
+export type TransferEvent = TypedEvent<
+  [IVault.VaultActionDataStructOutput, BigNumber],
+  TransferEventObject
+>;
+
+export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
 export interface Router extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -599,29 +601,20 @@ export interface Router extends BaseContract {
     "Deposit(tuple)"(action?: null): DepositEventFilter;
     Deposit(action?: null): DepositEventFilter;
 
-    "FallbackRefund(tuple,uint256)"(
+    "ErrorBytesLogged(tuple,bytes)"(
       action?: null,
-      amount?: null
-    ): FallbackRefundEventFilter;
-    FallbackRefund(action?: null, amount?: null): FallbackRefundEventFilter;
+      data?: null
+    ): ErrorBytesLoggedEventFilter;
+    ErrorBytesLogged(action?: null, data?: null): ErrorBytesLoggedEventFilter;
 
-    "Harvest(tuple)"(action?: null): HarvestEventFilter;
-    Harvest(action?: null): HarvestEventFilter;
+    "ErrorLogged(tuple,string)"(
+      action?: null,
+      message?: null
+    ): ErrorLoggedEventFilter;
+    ErrorLogged(action?: null, message?: null): ErrorLoggedEventFilter;
 
     "Initialized(uint8)"(version?: null): InitializedEventFilter;
     Initialized(version?: null): InitializedEventFilter;
-
-    "LogError(tuple,string)"(
-      action?: null,
-      message?: null
-    ): LogErrorEventFilter;
-    LogError(action?: null, message?: null): LogErrorEventFilter;
-
-    "LogErrorBytes(tuple,bytes)"(
-      action?: null,
-      data?: null
-    ): LogErrorBytesEventFilter;
-    LogErrorBytes(action?: null, data?: null): LogErrorBytesEventFilter;
 
     "OwnershipTransferred(address,address)"(
       previousOwner?: PromiseOrValue<string> | null,
@@ -632,17 +625,20 @@ export interface Router extends BaseContract {
       newOwner?: PromiseOrValue<string> | null
     ): OwnershipTransferredEventFilter;
 
-    "Redemption(tuple,uint256)"(
-      action?: null,
-      amount?: null
-    ): RedemptionEventFilter;
-    Redemption(action?: null, amount?: null): RedemptionEventFilter;
+    "Redeem(tuple,uint256)"(action?: null, amount?: null): RedeemEventFilter;
+    Redeem(action?: null, amount?: null): RedeemEventFilter;
 
-    "TokensSent(tuple,uint256)"(
+    "Refund(tuple,uint256)"(action?: null, amount?: null): RefundEventFilter;
+    Refund(action?: null, amount?: null): RefundEventFilter;
+
+    "RewardsHarvested(tuple)"(action?: null): RewardsHarvestedEventFilter;
+    RewardsHarvested(action?: null): RewardsHarvestedEventFilter;
+
+    "Transfer(tuple,uint256)"(
       action?: null,
       amount?: null
-    ): TokensSentEventFilter;
-    TokensSent(action?: null, amount?: null): TokensSentEventFilter;
+    ): TransferEventFilter;
+    Transfer(action?: null, amount?: null): TransferEventFilter;
   };
 
   estimateGas: {

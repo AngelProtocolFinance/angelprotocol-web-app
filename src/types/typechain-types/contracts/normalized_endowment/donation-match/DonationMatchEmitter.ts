@@ -147,19 +147,44 @@ export interface DonationMatchEmitterInterface extends utils.Interface {
   ): Result;
 
   events: {
+    "Approval(uint32,address,address,uint256)": EventFragment;
+    "Burn(uint32,address,uint256)": EventFragment;
     "DonationMatchExecuted(address,address,uint256,address,uint32,address)": EventFragment;
     "DonationMatchInitialized(uint32,address,tuple)": EventFragment;
-    "Erc20ApprovalGiven(uint32,address,address,uint256)": EventFragment;
-    "Erc20Burned(uint32,address,uint256)": EventFragment;
-    "Erc20Transfer(uint32,address,address,uint256)": EventFragment;
+    "Transfer(uint32,address,address,uint256)": EventFragment;
   };
 
+  getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Burn"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "DonationMatchExecuted"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "DonationMatchInitialized"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Erc20ApprovalGiven"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Erc20Burned"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Erc20Transfer"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
 }
+
+export interface ApprovalEventObject {
+  endowmentId: number;
+  tokenAddress: string;
+  spender: string;
+  amount: BigNumber;
+}
+export type ApprovalEvent = TypedEvent<
+  [number, string, string, BigNumber],
+  ApprovalEventObject
+>;
+
+export type ApprovalEventFilter = TypedEventFilter<ApprovalEvent>;
+
+export interface BurnEventObject {
+  endowmentId: number;
+  tokenAddress: string;
+  amount: BigNumber;
+}
+export type BurnEvent = TypedEvent<
+  [number, string, BigNumber],
+  BurnEventObject
+>;
+
+export type BurnEventFilter = TypedEventFilter<BurnEvent>;
 
 export interface DonationMatchExecutedEventObject {
   donationMatch: string;
@@ -190,44 +215,18 @@ export type DonationMatchInitializedEvent = TypedEvent<
 export type DonationMatchInitializedEventFilter =
   TypedEventFilter<DonationMatchInitializedEvent>;
 
-export interface Erc20ApprovalGivenEventObject {
-  endowmentId: number;
-  tokenAddress: string;
-  spender: string;
-  amount: BigNumber;
-}
-export type Erc20ApprovalGivenEvent = TypedEvent<
-  [number, string, string, BigNumber],
-  Erc20ApprovalGivenEventObject
->;
-
-export type Erc20ApprovalGivenEventFilter =
-  TypedEventFilter<Erc20ApprovalGivenEvent>;
-
-export interface Erc20BurnedEventObject {
-  endowmentId: number;
-  tokenAddress: string;
-  amount: BigNumber;
-}
-export type Erc20BurnedEvent = TypedEvent<
-  [number, string, BigNumber],
-  Erc20BurnedEventObject
->;
-
-export type Erc20BurnedEventFilter = TypedEventFilter<Erc20BurnedEvent>;
-
-export interface Erc20TransferEventObject {
+export interface TransferEventObject {
   endowmentId: number;
   tokenAddress: string;
   recipient: string;
   amount: BigNumber;
 }
-export type Erc20TransferEvent = TypedEvent<
+export type TransferEvent = TypedEvent<
   [number, string, string, BigNumber],
-  Erc20TransferEventObject
+  TransferEventObject
 >;
 
-export type Erc20TransferEventFilter = TypedEventFilter<Erc20TransferEvent>;
+export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
 export interface DonationMatchEmitter extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -407,6 +406,30 @@ export interface DonationMatchEmitter extends BaseContract {
   };
 
   filters: {
+    "Approval(uint32,address,address,uint256)"(
+      endowmentId?: null,
+      tokenAddress?: null,
+      spender?: null,
+      amount?: null
+    ): ApprovalEventFilter;
+    Approval(
+      endowmentId?: null,
+      tokenAddress?: null,
+      spender?: null,
+      amount?: null
+    ): ApprovalEventFilter;
+
+    "Burn(uint32,address,uint256)"(
+      endowmentId?: null,
+      tokenAddress?: null,
+      amount?: null
+    ): BurnEventFilter;
+    Burn(
+      endowmentId?: null,
+      tokenAddress?: null,
+      amount?: null
+    ): BurnEventFilter;
+
     "DonationMatchExecuted(address,address,uint256,address,uint32,address)"(
       donationMatch?: null,
       tokenAddress?: null,
@@ -435,42 +458,18 @@ export interface DonationMatchEmitter extends BaseContract {
       config?: null
     ): DonationMatchInitializedEventFilter;
 
-    "Erc20ApprovalGiven(uint32,address,address,uint256)"(
-      endowmentId?: null,
-      tokenAddress?: null,
-      spender?: null,
-      amount?: null
-    ): Erc20ApprovalGivenEventFilter;
-    Erc20ApprovalGiven(
-      endowmentId?: null,
-      tokenAddress?: null,
-      spender?: null,
-      amount?: null
-    ): Erc20ApprovalGivenEventFilter;
-
-    "Erc20Burned(uint32,address,uint256)"(
-      endowmentId?: null,
-      tokenAddress?: null,
-      amount?: null
-    ): Erc20BurnedEventFilter;
-    Erc20Burned(
-      endowmentId?: null,
-      tokenAddress?: null,
-      amount?: null
-    ): Erc20BurnedEventFilter;
-
-    "Erc20Transfer(uint32,address,address,uint256)"(
+    "Transfer(uint32,address,address,uint256)"(
       endowmentId?: null,
       tokenAddress?: null,
       recipient?: null,
       amount?: null
-    ): Erc20TransferEventFilter;
-    Erc20Transfer(
+    ): TransferEventFilter;
+    Transfer(
       endowmentId?: null,
       tokenAddress?: null,
       recipient?: null,
       amount?: null
-    ): Erc20TransferEventFilter;
+    ): TransferEventFilter;
   };
 
   estimateGas: {

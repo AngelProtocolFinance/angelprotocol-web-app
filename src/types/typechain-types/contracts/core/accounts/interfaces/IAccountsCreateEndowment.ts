@@ -137,6 +137,7 @@ export declare namespace AccountMessages {
     image: PromiseOrValue<string>;
     members: PromiseOrValue<string>[];
     threshold: PromiseOrValue<BigNumberish>;
+    duration: PromiseOrValue<BigNumberish>;
     allowlistedBeneficiaries: PromiseOrValue<string>[];
     allowlistedContributors: PromiseOrValue<string>[];
     earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStruct;
@@ -163,6 +164,7 @@ export declare namespace AccountMessages {
     string,
     string[],
     BigNumber,
+    BigNumber,
     string[],
     string[],
     AngelCoreStruct.FeeSettingStructOutput,
@@ -187,6 +189,7 @@ export declare namespace AccountMessages {
     image: string;
     members: string[];
     threshold: BigNumber;
+    duration: BigNumber;
     allowlistedBeneficiaries: string[];
     allowlistedContributors: string[];
     earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStructOutput;
@@ -205,7 +208,7 @@ export declare namespace AccountMessages {
 
 export interface IAccountsCreateEndowmentInterface extends utils.Interface {
   functions: {
-    "createEndowment((bool,uint256,string,uint256[],uint8,uint8,string,string,address[],uint256,address[],address[],(address,uint256),(address,uint256),(address,uint256),(address,uint256),uint256,((bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256))),uint32,address[],bool,(uint256,uint256,uint256),uint256))": FunctionFragment;
+    "createEndowment((bool,uint256,string,uint256[],uint8,uint8,string,string,address[],uint256,uint256,address[],address[],(address,uint256),(address,uint256),(address,uint256),(address,uint256),uint256,((bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256))),uint32,address[],bool,(uint256,uint256,uint256),uint256))": FunctionFragment;
   };
 
   getFunction(nameOrSignatureOrTopic: "createEndowment"): FunctionFragment;

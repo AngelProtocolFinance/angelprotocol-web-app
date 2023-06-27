@@ -29,7 +29,7 @@ import type {
 
 export interface MultiSigWalletFactoryInterface extends utils.Interface {
   functions: {
-    "create(uint256,address,address[],uint256)": FunctionFragment;
+    "create(uint256,address,address[],uint256,uint256)": FunctionFragment;
     "endowmentIdToMultisig(uint256)": FunctionFragment;
     "getInstantiationCount(address)": FunctionFragment;
     "instantiations(address,uint256)": FunctionFragment;
@@ -61,6 +61,7 @@ export interface MultiSigWalletFactoryInterface extends utils.Interface {
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
       PromiseOrValue<string>[],
+      PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>
     ]
   ): string;
@@ -134,25 +135,40 @@ export interface MultiSigWalletFactoryInterface extends utils.Interface {
   ): Result;
 
   events: {
-    "ContractInstantiation(address,address)": EventFragment;
+    "ContractInstantiated(address,address)": EventFragment;
+    "ImplementationUpdated(address)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
+    "ProxyAdminUpdated(address)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "ContractInstantiation"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ContractInstantiated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ImplementationUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ProxyAdminUpdated"): EventFragment;
 }
 
-export interface ContractInstantiationEventObject {
+export interface ContractInstantiatedEventObject {
   sender: string;
   instantiation: string;
 }
-export type ContractInstantiationEvent = TypedEvent<
+export type ContractInstantiatedEvent = TypedEvent<
   [string, string],
-  ContractInstantiationEventObject
+  ContractInstantiatedEventObject
 >;
 
-export type ContractInstantiationEventFilter =
-  TypedEventFilter<ContractInstantiationEvent>;
+export type ContractInstantiatedEventFilter =
+  TypedEventFilter<ContractInstantiatedEvent>;
+
+export interface ImplementationUpdatedEventObject {
+  implementationAddress: string;
+}
+export type ImplementationUpdatedEvent = TypedEvent<
+  [string],
+  ImplementationUpdatedEventObject
+>;
+
+export type ImplementationUpdatedEventFilter =
+  TypedEventFilter<ImplementationUpdatedEvent>;
 
 export interface OwnershipTransferredEventObject {
   previousOwner: string;
@@ -165,6 +181,17 @@ export type OwnershipTransferredEvent = TypedEvent<
 
 export type OwnershipTransferredEventFilter =
   TypedEventFilter<OwnershipTransferredEvent>;
+
+export interface ProxyAdminUpdatedEventObject {
+  admin: string;
+}
+export type ProxyAdminUpdatedEvent = TypedEvent<
+  [string],
+  ProxyAdminUpdatedEventObject
+>;
+
+export type ProxyAdminUpdatedEventFilter =
+  TypedEventFilter<ProxyAdminUpdatedEvent>;
 
 export interface MultiSigWalletFactory extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -198,6 +225,7 @@ export interface MultiSigWalletFactory extends BaseContract {
       emitterAddress: PromiseOrValue<string>,
       owners: PromiseOrValue<string>[],
       required: PromiseOrValue<BigNumberish>,
+      transactionExpiry: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -249,6 +277,7 @@ export interface MultiSigWalletFactory extends BaseContract {
     emitterAddress: PromiseOrValue<string>,
     owners: PromiseOrValue<string>[],
     required: PromiseOrValue<BigNumberish>,
+    transactionExpiry: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -300,6 +329,7 @@ export interface MultiSigWalletFactory extends BaseContract {
       emitterAddress: PromiseOrValue<string>,
       owners: PromiseOrValue<string>[],
       required: PromiseOrValue<BigNumberish>,
+      transactionExpiry: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<string>;
 
@@ -345,14 +375,21 @@ export interface MultiSigWalletFactory extends BaseContract {
   };
 
   filters: {
-    "ContractInstantiation(address,address)"(
+    "ContractInstantiated(address,address)"(
       sender?: null,
       instantiation?: null
-    ): ContractInstantiationEventFilter;
-    ContractInstantiation(
+    ): ContractInstantiatedEventFilter;
+    ContractInstantiated(
       sender?: null,
       instantiation?: null
-    ): ContractInstantiationEventFilter;
+    ): ContractInstantiatedEventFilter;
+
+    "ImplementationUpdated(address)"(
+      implementationAddress?: null
+    ): ImplementationUpdatedEventFilter;
+    ImplementationUpdated(
+      implementationAddress?: null
+    ): ImplementationUpdatedEventFilter;
 
     "OwnershipTransferred(address,address)"(
       previousOwner?: PromiseOrValue<string> | null,
@@ -362,6 +399,9 @@ export interface MultiSigWalletFactory extends BaseContract {
       previousOwner?: PromiseOrValue<string> | null,
       newOwner?: PromiseOrValue<string> | null
     ): OwnershipTransferredEventFilter;
+
+    "ProxyAdminUpdated(address)"(admin?: null): ProxyAdminUpdatedEventFilter;
+    ProxyAdminUpdated(admin?: null): ProxyAdminUpdatedEventFilter;
   };
 
   estimateGas: {
@@ -370,6 +410,7 @@ export interface MultiSigWalletFactory extends BaseContract {
       emitterAddress: PromiseOrValue<string>,
       owners: PromiseOrValue<string>[],
       required: PromiseOrValue<BigNumberish>,
+      transactionExpiry: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -422,6 +463,7 @@ export interface MultiSigWalletFactory extends BaseContract {
       emitterAddress: PromiseOrValue<string>,
       owners: PromiseOrValue<string>[],
       required: PromiseOrValue<BigNumberish>,
+      transactionExpiry: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

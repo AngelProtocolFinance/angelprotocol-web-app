@@ -13,13 +13,12 @@ import { TxMeta } from "types/tx";
 import {
   AccountMessages,
   AccountStorage,
-} from "types/typechain-types/contracts/core/accounts/IAccounts";
+} from "types/typechain-types/contracts/core/accounts/interfaces/IAccounts";
 import {
   IndexFundStorage,
   AngelCoreStruct as IndexFundStructs,
 } from "types/typechain-types/contracts/core/index-fund/IndexFund";
 import { RegistrarStorage } from "types/typechain-types/contracts/core/registrar/interfaces/IRegistrar";
-import { MultiSigStorage } from "types/typechain-types/contracts/multisigs/MultiSigGeneric";
 import { accounts } from "contracts/evm/Account";
 import { erc20 } from "contracts/evm/ERC20";
 import { giftCard } from "contracts/evm/gift-card";
@@ -207,8 +206,15 @@ export const queryObjects: {
   "multisig.transaction": [
     ({ id }) => multisig.encodeFunctionData("transactions", [id]),
     (result, args) => {
-      const d: MultiSigStorage.TransactionStructOutput =
-        multisig.decodeFunctionResult("transactions", result) as any;
+      // no separate TransactionOutputStruct from typechain
+      const d: [string, BigNumber, string, boolean, BigNumber, string] & {
+        destination: string;
+        value: BigNumber;
+        data: string;
+        executed: boolean;
+        expiry: BigNumber;
+        metadata: string;
+      } = multisig.decodeFunctionResult("transactions", result) as any;
 
       const parsed: TxMeta | undefined =
         d.metadata === EMPTY_DATA
@@ -221,6 +227,7 @@ export const queryObjects: {
         value: d.value.toString(),
         data: d.data,
         status: d.executed ? "approved" : "open",
+        expiry: d.expiry.toNumber(),
         metadata: parsed,
       };
     },

@@ -27,30 +27,6 @@ import type {
   PromiseOrValue,
 } from "../../../common";
 
-export declare namespace MultiSigStorage {
-  export type TransactionStruct = {
-    destination: PromiseOrValue<string>;
-    value: PromiseOrValue<BigNumberish>;
-    data: PromiseOrValue<BytesLike>;
-    executed: PromiseOrValue<boolean>;
-    metadata: PromiseOrValue<BytesLike>;
-  };
-
-  export type TransactionStructOutput = [
-    string,
-    BigNumber,
-    string,
-    boolean,
-    string
-  ] & {
-    destination: string;
-    value: BigNumber;
-    data: string;
-    executed: boolean;
-    metadata: string;
-  };
-}
-
 export interface EndowmentMultiSigInterface extends utils.Interface {
   functions: {
     "EMITTER_ADDRESS()": FunctionFragment;
@@ -60,14 +36,15 @@ export interface EndowmentMultiSigInterface extends utils.Interface {
     "approvalsRequired()": FunctionFragment;
     "changeApprovalsRequirement(uint256)": FunctionFragment;
     "changeRequireExecution(bool)": FunctionFragment;
+    "changeTransactionExpiry(uint256)": FunctionFragment;
     "confirmTransaction(uint256)": FunctionFragment;
     "confirmations(uint256)": FunctionFragment;
     "executeTransaction(uint256)": FunctionFragment;
     "getConfirmationCount(uint256)": FunctionFragment;
     "getConfirmationStatus(uint256,address)": FunctionFragment;
     "getOwnerStatus(address)": FunctionFragment;
-    "initialize(uint256,address,address[],uint256,bool)": FunctionFragment;
-    "initialize(address[],uint256,bool)": FunctionFragment;
+    "initialize(uint256,address,address[],uint256,bool,uint256)": FunctionFragment;
+    "initialize(address[],uint256,bool,uint256)": FunctionFragment;
     "isConfirmed(uint256)": FunctionFragment;
     "isOwner(address)": FunctionFragment;
     "removeOwners(address[])": FunctionFragment;
@@ -78,6 +55,7 @@ export interface EndowmentMultiSigInterface extends utils.Interface {
     "submitTransaction(address,uint256,bytes,bytes)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
     "transactionCount()": FunctionFragment;
+    "transactionExpiry()": FunctionFragment;
     "transactions(uint256)": FunctionFragment;
   };
 
@@ -90,14 +68,15 @@ export interface EndowmentMultiSigInterface extends utils.Interface {
       | "approvalsRequired"
       | "changeApprovalsRequirement"
       | "changeRequireExecution"
+      | "changeTransactionExpiry"
       | "confirmTransaction"
       | "confirmations"
       | "executeTransaction"
       | "getConfirmationCount"
       | "getConfirmationStatus"
       | "getOwnerStatus"
-      | "initialize(uint256,address,address[],uint256,bool)"
-      | "initialize(address[],uint256,bool)"
+      | "initialize(uint256,address,address[],uint256,bool,uint256)"
+      | "initialize(address[],uint256,bool,uint256)"
       | "isConfirmed"
       | "isOwner"
       | "removeOwners"
@@ -108,6 +87,7 @@ export interface EndowmentMultiSigInterface extends utils.Interface {
       | "submitTransaction"
       | "supportsInterface"
       | "transactionCount"
+      | "transactionExpiry"
       | "transactions"
   ): FunctionFragment;
 
@@ -140,6 +120,10 @@ export interface EndowmentMultiSigInterface extends utils.Interface {
     values: [PromiseOrValue<boolean>]
   ): string;
   encodeFunctionData(
+    functionFragment: "changeTransactionExpiry",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "confirmTransaction",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
@@ -164,21 +148,23 @@ export interface EndowmentMultiSigInterface extends utils.Interface {
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "initialize(uint256,address,address[],uint256,bool)",
+    functionFragment: "initialize(uint256,address,address[],uint256,bool,uint256)",
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
       PromiseOrValue<string>[],
       PromiseOrValue<BigNumberish>,
-      PromiseOrValue<boolean>
+      PromiseOrValue<boolean>,
+      PromiseOrValue<BigNumberish>
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "initialize(address[],uint256,bool)",
+    functionFragment: "initialize(address[],uint256,bool,uint256)",
     values: [
       PromiseOrValue<string>[],
       PromiseOrValue<BigNumberish>,
-      PromiseOrValue<boolean>
+      PromiseOrValue<boolean>,
+      PromiseOrValue<BigNumberish>
     ]
   ): string;
   encodeFunctionData(
@@ -227,6 +213,10 @@ export interface EndowmentMultiSigInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "transactionExpiry",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "transactions",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
@@ -257,6 +247,10 @@ export interface EndowmentMultiSigInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "changeTransactionExpiry",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "confirmTransaction",
     data: BytesLike
   ): Result;
@@ -281,11 +275,11 @@ export interface EndowmentMultiSigInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "initialize(uint256,address,address[],uint256,bool)",
+    functionFragment: "initialize(uint256,address,address[],uint256,bool,uint256)",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "initialize(address[],uint256,bool)",
+    functionFragment: "initialize(address[],uint256,bool,uint256)",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -326,95 +320,71 @@ export interface EndowmentMultiSigInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "transactionExpiry",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "transactions",
     data: BytesLike
   ): Result;
 
   events: {
-    "ApprovalsRequirementChange(uint256)": EventFragment;
-    "Confirmation(address,uint256)": EventFragment;
+    "ApprovalsRequiredChanged(uint256)": EventFragment;
+    "ConfirmationRevoked(address,uint256)": EventFragment;
     "Deposit(address,uint256)": EventFragment;
-    "Execution(uint256)": EventFragment;
-    "ExecutionFailure(uint256)": EventFragment;
-    "ExecutionRequiredChange(bool)": EventFragment;
     "Initialized(uint8)": EventFragment;
-    "OwnerAddition(address)": EventFragment;
-    "OwnerRemoval(address)": EventFragment;
-    "Revocation(address,uint256)": EventFragment;
-    "Submission(uint256,tuple)": EventFragment;
+    "OwnerAdded(address)": EventFragment;
+    "OwnerRemoved(address)": EventFragment;
+    "RequireExecutionChanged(bool)": EventFragment;
+    "TransactionConfirmed(address,uint256)": EventFragment;
+    "TransactionExecuted(uint256)": EventFragment;
+    "TransactionExpiryChanged(uint256)": EventFragment;
+    "TransactionSubmitted(address,uint256)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "ApprovalsRequirementChange"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Confirmation"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ApprovalsRequiredChanged"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ConfirmationRevoked"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Deposit"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Execution"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ExecutionFailure"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ExecutionRequiredChange"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerAddition"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerRemoval"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Revocation"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Submission"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "OwnerAdded"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "OwnerRemoved"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "RequireExecutionChanged"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "TransactionConfirmed"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "TransactionExecuted"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "TransactionExpiryChanged"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "TransactionSubmitted"): EventFragment;
 }
 
-export interface ApprovalsRequirementChangeEventObject {
+export interface ApprovalsRequiredChangedEventObject {
   approvalsRequired: BigNumber;
 }
-export type ApprovalsRequirementChangeEvent = TypedEvent<
+export type ApprovalsRequiredChangedEvent = TypedEvent<
   [BigNumber],
-  ApprovalsRequirementChangeEventObject
+  ApprovalsRequiredChangedEventObject
 >;
 
-export type ApprovalsRequirementChangeEventFilter =
-  TypedEventFilter<ApprovalsRequirementChangeEvent>;
+export type ApprovalsRequiredChangedEventFilter =
+  TypedEventFilter<ApprovalsRequiredChangedEvent>;
 
-export interface ConfirmationEventObject {
+export interface ConfirmationRevokedEventObject {
   sender: string;
   transactionId: BigNumber;
 }
-export type ConfirmationEvent = TypedEvent<
+export type ConfirmationRevokedEvent = TypedEvent<
   [string, BigNumber],
-  ConfirmationEventObject
+  ConfirmationRevokedEventObject
 >;
 
-export type ConfirmationEventFilter = TypedEventFilter<ConfirmationEvent>;
+export type ConfirmationRevokedEventFilter =
+  TypedEventFilter<ConfirmationRevokedEvent>;
 
 export interface DepositEventObject {
   sender: string;
-  value: BigNumber;
+  amount: BigNumber;
 }
 export type DepositEvent = TypedEvent<[string, BigNumber], DepositEventObject>;
 
 export type DepositEventFilter = TypedEventFilter<DepositEvent>;
-
-export interface ExecutionEventObject {
-  transactionId: BigNumber;
-}
-export type ExecutionEvent = TypedEvent<[BigNumber], ExecutionEventObject>;
-
-export type ExecutionEventFilter = TypedEventFilter<ExecutionEvent>;
-
-export interface ExecutionFailureEventObject {
-  transactionId: BigNumber;
-}
-export type ExecutionFailureEvent = TypedEvent<
-  [BigNumber],
-  ExecutionFailureEventObject
->;
-
-export type ExecutionFailureEventFilter =
-  TypedEventFilter<ExecutionFailureEvent>;
-
-export interface ExecutionRequiredChangeEventObject {
-  requireExecution: boolean;
-}
-export type ExecutionRequiredChangeEvent = TypedEvent<
-  [boolean],
-  ExecutionRequiredChangeEventObject
->;
-
-export type ExecutionRequiredChangeEventFilter =
-  TypedEventFilter<ExecutionRequiredChangeEvent>;
 
 export interface InitializedEventObject {
   version: number;
@@ -423,41 +393,76 @@ export type InitializedEvent = TypedEvent<[number], InitializedEventObject>;
 
 export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
 
-export interface OwnerAdditionEventObject {
+export interface OwnerAddedEventObject {
   owner: string;
 }
-export type OwnerAdditionEvent = TypedEvent<[string], OwnerAdditionEventObject>;
+export type OwnerAddedEvent = TypedEvent<[string], OwnerAddedEventObject>;
 
-export type OwnerAdditionEventFilter = TypedEventFilter<OwnerAdditionEvent>;
+export type OwnerAddedEventFilter = TypedEventFilter<OwnerAddedEvent>;
 
-export interface OwnerRemovalEventObject {
+export interface OwnerRemovedEventObject {
   owner: string;
 }
-export type OwnerRemovalEvent = TypedEvent<[string], OwnerRemovalEventObject>;
+export type OwnerRemovedEvent = TypedEvent<[string], OwnerRemovedEventObject>;
 
-export type OwnerRemovalEventFilter = TypedEventFilter<OwnerRemovalEvent>;
+export type OwnerRemovedEventFilter = TypedEventFilter<OwnerRemovedEvent>;
 
-export interface RevocationEventObject {
+export interface RequireExecutionChangedEventObject {
+  requireExecution: boolean;
+}
+export type RequireExecutionChangedEvent = TypedEvent<
+  [boolean],
+  RequireExecutionChangedEventObject
+>;
+
+export type RequireExecutionChangedEventFilter =
+  TypedEventFilter<RequireExecutionChangedEvent>;
+
+export interface TransactionConfirmedEventObject {
   sender: string;
   transactionId: BigNumber;
 }
-export type RevocationEvent = TypedEvent<
+export type TransactionConfirmedEvent = TypedEvent<
   [string, BigNumber],
-  RevocationEventObject
+  TransactionConfirmedEventObject
 >;
 
-export type RevocationEventFilter = TypedEventFilter<RevocationEvent>;
+export type TransactionConfirmedEventFilter =
+  TypedEventFilter<TransactionConfirmedEvent>;
 
-export interface SubmissionEventObject {
+export interface TransactionExecutedEventObject {
   transactionId: BigNumber;
-  transaction: MultiSigStorage.TransactionStructOutput;
 }
-export type SubmissionEvent = TypedEvent<
-  [BigNumber, MultiSigStorage.TransactionStructOutput],
-  SubmissionEventObject
+export type TransactionExecutedEvent = TypedEvent<
+  [BigNumber],
+  TransactionExecutedEventObject
 >;
 
-export type SubmissionEventFilter = TypedEventFilter<SubmissionEvent>;
+export type TransactionExecutedEventFilter =
+  TypedEventFilter<TransactionExecutedEvent>;
+
+export interface TransactionExpiryChangedEventObject {
+  transactionExpiry: BigNumber;
+}
+export type TransactionExpiryChangedEvent = TypedEvent<
+  [BigNumber],
+  TransactionExpiryChangedEventObject
+>;
+
+export type TransactionExpiryChangedEventFilter =
+  TypedEventFilter<TransactionExpiryChangedEvent>;
+
+export interface TransactionSubmittedEventObject {
+  sender: string;
+  transactionId: BigNumber;
+}
+export type TransactionSubmittedEvent = TypedEvent<
+  [string, BigNumber],
+  TransactionSubmittedEventObject
+>;
+
+export type TransactionSubmittedEventFilter =
+  TypedEventFilter<TransactionSubmittedEvent>;
 
 export interface EndowmentMultiSig extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -509,6 +514,11 @@ export interface EndowmentMultiSig extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    changeTransactionExpiry(
+      _transactionExpiry: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     confirmTransaction(
       transactionId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -540,19 +550,21 @@ export interface EndowmentMultiSig extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
-    "initialize(uint256,address,address[],uint256,bool)"(
+    "initialize(uint256,address,address[],uint256,bool,uint256)"(
       _endowmentId: PromiseOrValue<BigNumberish>,
       _emitter: PromiseOrValue<string>,
       _owners: PromiseOrValue<string>[],
       _required: PromiseOrValue<BigNumberish>,
       _requireExecution: PromiseOrValue<boolean>,
+      _transactionExpiry: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    "initialize(address[],uint256,bool)"(
+    "initialize(address[],uint256,bool,uint256)"(
       arg0: PromiseOrValue<string>[],
       arg1: PromiseOrValue<BigNumberish>,
       arg2: PromiseOrValue<boolean>,
+      arg3: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -605,15 +617,18 @@ export interface EndowmentMultiSig extends BaseContract {
 
     transactionCount(overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    transactionExpiry(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     transactions(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [string, BigNumber, string, boolean, string] & {
+      [string, BigNumber, string, boolean, BigNumber, string] & {
         destination: string;
         value: BigNumber;
         data: string;
         executed: boolean;
+        expiry: BigNumber;
         metadata: string;
       }
     >;
@@ -639,6 +654,11 @@ export interface EndowmentMultiSig extends BaseContract {
 
   changeRequireExecution(
     _requireExecution: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  changeTransactionExpiry(
+    _transactionExpiry: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -673,19 +693,21 @@ export interface EndowmentMultiSig extends BaseContract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
-  "initialize(uint256,address,address[],uint256,bool)"(
+  "initialize(uint256,address,address[],uint256,bool,uint256)"(
     _endowmentId: PromiseOrValue<BigNumberish>,
     _emitter: PromiseOrValue<string>,
     _owners: PromiseOrValue<string>[],
     _required: PromiseOrValue<BigNumberish>,
     _requireExecution: PromiseOrValue<boolean>,
+    _transactionExpiry: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  "initialize(address[],uint256,bool)"(
+  "initialize(address[],uint256,bool,uint256)"(
     arg0: PromiseOrValue<string>[],
     arg1: PromiseOrValue<BigNumberish>,
     arg2: PromiseOrValue<boolean>,
+    arg3: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -738,15 +760,18 @@ export interface EndowmentMultiSig extends BaseContract {
 
   transactionCount(overrides?: CallOverrides): Promise<BigNumber>;
 
+  transactionExpiry(overrides?: CallOverrides): Promise<BigNumber>;
+
   transactions(
     arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<
-    [string, BigNumber, string, boolean, string] & {
+    [string, BigNumber, string, boolean, BigNumber, string] & {
       destination: string;
       value: BigNumber;
       data: string;
       executed: boolean;
+      expiry: BigNumber;
       metadata: string;
     }
   >;
@@ -772,6 +797,11 @@ export interface EndowmentMultiSig extends BaseContract {
 
     changeRequireExecution(
       _requireExecution: PromiseOrValue<boolean>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    changeTransactionExpiry(
+      _transactionExpiry: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -806,19 +836,21 @@ export interface EndowmentMultiSig extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    "initialize(uint256,address,address[],uint256,bool)"(
+    "initialize(uint256,address,address[],uint256,bool,uint256)"(
       _endowmentId: PromiseOrValue<BigNumberish>,
       _emitter: PromiseOrValue<string>,
       _owners: PromiseOrValue<string>[],
       _required: PromiseOrValue<BigNumberish>,
       _requireExecution: PromiseOrValue<boolean>,
+      _transactionExpiry: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    "initialize(address[],uint256,bool)"(
+    "initialize(address[],uint256,bool,uint256)"(
       arg0: PromiseOrValue<string>[],
       arg1: PromiseOrValue<BigNumberish>,
       arg2: PromiseOrValue<boolean>,
+      arg3: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -871,101 +903,91 @@ export interface EndowmentMultiSig extends BaseContract {
 
     transactionCount(overrides?: CallOverrides): Promise<BigNumber>;
 
+    transactionExpiry(overrides?: CallOverrides): Promise<BigNumber>;
+
     transactions(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [string, BigNumber, string, boolean, string] & {
+      [string, BigNumber, string, boolean, BigNumber, string] & {
         destination: string;
         value: BigNumber;
         data: string;
         executed: boolean;
+        expiry: BigNumber;
         metadata: string;
       }
     >;
   };
 
   filters: {
-    "ApprovalsRequirementChange(uint256)"(
+    "ApprovalsRequiredChanged(uint256)"(
       approvalsRequired?: null
-    ): ApprovalsRequirementChangeEventFilter;
-    ApprovalsRequirementChange(
+    ): ApprovalsRequiredChangedEventFilter;
+    ApprovalsRequiredChanged(
       approvalsRequired?: null
-    ): ApprovalsRequirementChangeEventFilter;
+    ): ApprovalsRequiredChangedEventFilter;
 
-    "Confirmation(address,uint256)"(
-      sender?: PromiseOrValue<string> | null,
-      transactionId?: PromiseOrValue<BigNumberish> | null
-    ): ConfirmationEventFilter;
-    Confirmation(
-      sender?: PromiseOrValue<string> | null,
-      transactionId?: PromiseOrValue<BigNumberish> | null
-    ): ConfirmationEventFilter;
+    "ConfirmationRevoked(address,uint256)"(
+      sender?: null,
+      transactionId?: null
+    ): ConfirmationRevokedEventFilter;
+    ConfirmationRevoked(
+      sender?: null,
+      transactionId?: null
+    ): ConfirmationRevokedEventFilter;
 
     "Deposit(address,uint256)"(
-      sender?: PromiseOrValue<string> | null,
-      value?: null
+      sender?: null,
+      amount?: null
     ): DepositEventFilter;
-    Deposit(
-      sender?: PromiseOrValue<string> | null,
-      value?: null
-    ): DepositEventFilter;
-
-    "Execution(uint256)"(
-      transactionId?: PromiseOrValue<BigNumberish> | null
-    ): ExecutionEventFilter;
-    Execution(
-      transactionId?: PromiseOrValue<BigNumberish> | null
-    ): ExecutionEventFilter;
-
-    "ExecutionFailure(uint256)"(
-      transactionId?: PromiseOrValue<BigNumberish> | null
-    ): ExecutionFailureEventFilter;
-    ExecutionFailure(
-      transactionId?: PromiseOrValue<BigNumberish> | null
-    ): ExecutionFailureEventFilter;
-
-    "ExecutionRequiredChange(bool)"(
-      requireExecution?: null
-    ): ExecutionRequiredChangeEventFilter;
-    ExecutionRequiredChange(
-      requireExecution?: null
-    ): ExecutionRequiredChangeEventFilter;
+    Deposit(sender?: null, amount?: null): DepositEventFilter;
 
     "Initialized(uint8)"(version?: null): InitializedEventFilter;
     Initialized(version?: null): InitializedEventFilter;
 
-    "OwnerAddition(address)"(
-      owner?: PromiseOrValue<string> | null
-    ): OwnerAdditionEventFilter;
-    OwnerAddition(
-      owner?: PromiseOrValue<string> | null
-    ): OwnerAdditionEventFilter;
+    "OwnerAdded(address)"(owner?: null): OwnerAddedEventFilter;
+    OwnerAdded(owner?: null): OwnerAddedEventFilter;
 
-    "OwnerRemoval(address)"(
-      owner?: PromiseOrValue<string> | null
-    ): OwnerRemovalEventFilter;
-    OwnerRemoval(
-      owner?: PromiseOrValue<string> | null
-    ): OwnerRemovalEventFilter;
+    "OwnerRemoved(address)"(owner?: null): OwnerRemovedEventFilter;
+    OwnerRemoved(owner?: null): OwnerRemovedEventFilter;
 
-    "Revocation(address,uint256)"(
-      sender?: PromiseOrValue<string> | null,
-      transactionId?: PromiseOrValue<BigNumberish> | null
-    ): RevocationEventFilter;
-    Revocation(
-      sender?: PromiseOrValue<string> | null,
-      transactionId?: PromiseOrValue<BigNumberish> | null
-    ): RevocationEventFilter;
+    "RequireExecutionChanged(bool)"(
+      requireExecution?: null
+    ): RequireExecutionChangedEventFilter;
+    RequireExecutionChanged(
+      requireExecution?: null
+    ): RequireExecutionChangedEventFilter;
 
-    "Submission(uint256,tuple)"(
-      transactionId?: PromiseOrValue<BigNumberish> | null,
-      transaction?: null
-    ): SubmissionEventFilter;
-    Submission(
-      transactionId?: PromiseOrValue<BigNumberish> | null,
-      transaction?: null
-    ): SubmissionEventFilter;
+    "TransactionConfirmed(address,uint256)"(
+      sender?: null,
+      transactionId?: null
+    ): TransactionConfirmedEventFilter;
+    TransactionConfirmed(
+      sender?: null,
+      transactionId?: null
+    ): TransactionConfirmedEventFilter;
+
+    "TransactionExecuted(uint256)"(
+      transactionId?: null
+    ): TransactionExecutedEventFilter;
+    TransactionExecuted(transactionId?: null): TransactionExecutedEventFilter;
+
+    "TransactionExpiryChanged(uint256)"(
+      transactionExpiry?: null
+    ): TransactionExpiryChangedEventFilter;
+    TransactionExpiryChanged(
+      transactionExpiry?: null
+    ): TransactionExpiryChangedEventFilter;
+
+    "TransactionSubmitted(address,uint256)"(
+      sender?: null,
+      transactionId?: null
+    ): TransactionSubmittedEventFilter;
+    TransactionSubmitted(
+      sender?: null,
+      transactionId?: null
+    ): TransactionSubmittedEventFilter;
   };
 
   estimateGas: {
@@ -989,6 +1011,11 @@ export interface EndowmentMultiSig extends BaseContract {
 
     changeRequireExecution(
       _requireExecution: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    changeTransactionExpiry(
+      _transactionExpiry: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1023,19 +1050,21 @@ export interface EndowmentMultiSig extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    "initialize(uint256,address,address[],uint256,bool)"(
+    "initialize(uint256,address,address[],uint256,bool,uint256)"(
       _endowmentId: PromiseOrValue<BigNumberish>,
       _emitter: PromiseOrValue<string>,
       _owners: PromiseOrValue<string>[],
       _required: PromiseOrValue<BigNumberish>,
       _requireExecution: PromiseOrValue<boolean>,
+      _transactionExpiry: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    "initialize(address[],uint256,bool)"(
+    "initialize(address[],uint256,bool,uint256)"(
       arg0: PromiseOrValue<string>[],
       arg1: PromiseOrValue<BigNumberish>,
       arg2: PromiseOrValue<boolean>,
+      arg3: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1088,6 +1117,8 @@ export interface EndowmentMultiSig extends BaseContract {
 
     transactionCount(overrides?: CallOverrides): Promise<BigNumber>;
 
+    transactionExpiry(overrides?: CallOverrides): Promise<BigNumber>;
+
     transactions(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -1115,6 +1146,11 @@ export interface EndowmentMultiSig extends BaseContract {
 
     changeRequireExecution(
       _requireExecution: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    changeTransactionExpiry(
+      _transactionExpiry: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -1149,19 +1185,21 @@ export interface EndowmentMultiSig extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    "initialize(uint256,address,address[],uint256,bool)"(
+    "initialize(uint256,address,address[],uint256,bool,uint256)"(
       _endowmentId: PromiseOrValue<BigNumberish>,
       _emitter: PromiseOrValue<string>,
       _owners: PromiseOrValue<string>[],
       _required: PromiseOrValue<BigNumberish>,
       _requireExecution: PromiseOrValue<boolean>,
+      _transactionExpiry: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    "initialize(address[],uint256,bool)"(
+    "initialize(address[],uint256,bool,uint256)"(
       arg0: PromiseOrValue<string>[],
       arg1: PromiseOrValue<BigNumberish>,
       arg2: PromiseOrValue<boolean>,
+      arg3: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -1213,6 +1251,8 @@ export interface EndowmentMultiSig extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     transactionCount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    transactionExpiry(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transactions(
       arg0: PromiseOrValue<BigNumberish>,
