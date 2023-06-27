@@ -10,6 +10,7 @@ export type TManagement = {
   proposal: {
     threshold: number; // integer
     isAutoExecute: boolean;
+    duration: string;
   };
 };
 

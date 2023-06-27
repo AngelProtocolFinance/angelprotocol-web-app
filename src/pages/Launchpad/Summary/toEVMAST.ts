@@ -27,7 +27,7 @@ export default function toEVMAST(
     image: "",
     members: isEmpty(management.members) ? [creator] : management.members, //in launchpad design, weight is specified for each member
     threshold: +management.proposal.threshold,
-    duration: blockTime("10/10/2024"), //TODO: re-enable duration in launchpad
+    duration: Math.floor(+management.proposal.duration * 60 * 60), //TODO: re-enable duration in launchpad
     allowlistedBeneficiaries: whitelists.beneficiaries,
     allowlistedContributors: whitelists.contributors,
 
