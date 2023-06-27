@@ -99,6 +99,7 @@ export const customApi = junoApi.injectEndpoints({
       providesTags: [
         "multisig.votes",
         "multisig.members",
+        "multisig.is-owner", //TODO: temp:remove once members query is available
         "multisig.transaction",
       ],
       async queryFn({ id: idParam, multisig }) {

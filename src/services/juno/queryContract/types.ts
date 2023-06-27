@@ -35,6 +35,7 @@ export interface ContractQueries {
   "multisig.threshold": Query<null, number>;
   "multisig.require-execution": Query<null, boolean>;
   "multisig.transaction": Query<ID, Transaction>;
+  "multisig.is-owner": Query<Addr, boolean>;
   "multisig.tx-count": Query<{ open: boolean; approved: boolean }, number>;
   "multisig.votes": Query<ID, string[]>;
 
