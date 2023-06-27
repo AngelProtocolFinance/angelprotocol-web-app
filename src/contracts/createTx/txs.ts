@@ -43,6 +43,8 @@ export const txs: { [T in TxTypes]: (args: TxArgs<T>) => string } = {
     multisig.encodeFunctionData("changeApprovalsRequirement", [threshold]),
   "multisig.change-auto-execute": ({ autoExecute }) =>
     multisig.encodeFunctionData("changeRequireExecution", [!autoExecute]),
+  "multisig.change-duration": ({ duration }) =>
+    multisig.encodeFunctionData("changeTransactionExpiry", [duration]),
 
   // //// ERC20 ////
   "erc20.transfer": (transfer) =>

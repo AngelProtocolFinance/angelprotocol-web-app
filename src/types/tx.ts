@@ -120,6 +120,11 @@ export type ThresholdMeta = {
   new: number;
 };
 
+export type DurationMeta = {
+  curr: number;
+  new: number;
+};
+
 export type OwnerMeta = {
   curr: string;
   new: string;
@@ -189,6 +194,7 @@ type Txs = {
   "multisig.execute-tx": Tx<ID, never>; //no meta
   "multisig.change-threshold": Tx<{ threshold: number }, ThresholdMeta>;
   "multisig.change-auto-execute": Tx<{ autoExecute: boolean }, never>; //no need for meta
+  "multisig.change-duration": Tx<{ duration: number }, never>; //no need for meta
 
   "erc20.transfer": Tx<Transfer, TransferMeta>;
   "erc20.approve": Tx<Allowance, never>; //not multisig tx

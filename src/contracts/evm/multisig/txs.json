@@ -6,5 +6,6 @@
   "function revokeConfirmation(uint256)",
   "function executeTransaction(uint256)",
   "function changeApprovalsRequirement(uint256)",
-  "function changeRequireExecution(bool)"
+  "function changeRequireExecution(bool)",
+  "function changeTransactionExpiry(uint256)"
 ]
