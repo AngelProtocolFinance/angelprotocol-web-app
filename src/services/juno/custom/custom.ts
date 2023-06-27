@@ -46,7 +46,10 @@ export const customApi = junoApi.injectEndpoints({
         };
       },
     }),
-    adminResources: builder.query<AdminResources, { endowmentId?: string }>({
+    adminResources: builder.query<
+      AdminResources,
+      { endowmentId?: string; user?: string }
+    >({
       providesTags: [
         "multisig.members",
         "multisig.threshold",
@@ -61,7 +64,7 @@ export const customApi = junoApi.injectEndpoints({
           const { multisig, type } = AP;
           //skip endowment query, query hardcoded cw3 straight
 
-          const [config, members] = await multisigInfo(multisig);
+          const [config, members] = await multisigInfo(multisig, args.user);
 
           return {
             data: {
@@ -78,7 +81,10 @@ export const customApi = junoApi.injectEndpoints({
           id: numId,
         });
 
-        const [config, members] = await multisigInfo(endowment.owner);
+        const [config, members] = await multisigInfo(
+          endowment.owner,
+          args.user
+        );
 
         return {
           data: {

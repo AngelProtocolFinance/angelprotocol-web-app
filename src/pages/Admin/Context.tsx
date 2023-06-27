@@ -17,10 +17,12 @@ export function Context(props: {
   children(resources: AdminResources): ReactNode;
 }) {
   const { id } = useParams<AdminParams>();
+  const { wallet } = useGetWallet();
 
   const { data, isLoading, isError } = useAdminResourcesQuery(
     {
       endowmentId: id,
+      user: wallet?.address,
     },
     { skip: !id }
   );
@@ -116,6 +118,8 @@ export const useAdminContext = <T extends AdminType = any>(
     maturityTime,
   } = resource as Resource<"charity">; //manual control flow
   const hasOps = operations && operations.length > 0;
+
+  console.log(resource);
 
   const isLocked =
     hasOps &&
