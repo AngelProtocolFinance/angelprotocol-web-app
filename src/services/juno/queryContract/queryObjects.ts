@@ -251,6 +251,16 @@ export const queryObjects: {
       return d.map((s) => s.toLowerCase());
     },
   ],
+  "multisig.tx-duration": [
+    multisig.encodeFunctionData("transactionExpiry", []),
+    (result) => {
+      const d: BigNumber = multisig.decodeFunctionResult(
+        "transactionExpiry",
+        result
+      )[0];
+      return d.toNumber();
+    },
+  ],
 
   /** account */
   "accounts.endowment": [

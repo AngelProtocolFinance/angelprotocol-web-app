@@ -38,6 +38,7 @@ export interface ContractQueries {
   "multisig.is-owner": Query<Addr, boolean>;
   "multisig.tx-count": Query<{ open: boolean; approved: boolean }, number>;
   "multisig.votes": Query<ID, string[]>;
+  "multisig.tx-duration": Query<null, number>;
 
   "accounts.endowment": Query<ID, EndowmentDetails>;
   "accounts.state": Query<ID, EndowmentState>;

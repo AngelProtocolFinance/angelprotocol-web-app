@@ -31,11 +31,12 @@ export async function multisigInfo(
   multisig: string,
   user?: string
 ): Promise<[MultisigConfig, string[] /** members */]> {
-  const [isOwner, threshold, requireExecution] = await Promise.all([
+  const [isOwner, threshold, requireExecution, duration] = await Promise.all([
     user ? queryContract("multisig.is-owner", { multisig, addr: user }) : false,
     queryContract("multisig.threshold", { multisig }),
     queryContract("multisig.require-execution", { multisig }),
+    queryContract("multisig.tx-duration", { multisig }),
   ]);
 
-  return [{ threshold, requireExecution }, isOwner ? [user!] : []];
+  return [{ threshold, requireExecution, duration }, isOwner ? [user!] : []];
 }

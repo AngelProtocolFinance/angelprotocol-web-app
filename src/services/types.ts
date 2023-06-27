@@ -4,7 +4,11 @@ import { EndowmentDetails } from "types/contracts";
 import { AccountType, ProviderId } from "types/lists";
 import { Transaction } from "types/tx";
 
-export type MultisigConfig = { threshold: number; requireExecution: boolean };
+export type MultisigConfig = {
+  threshold: number;
+  requireExecution: boolean;
+  duration: number;
+};
 
 type Base = {
   multisig: string;
