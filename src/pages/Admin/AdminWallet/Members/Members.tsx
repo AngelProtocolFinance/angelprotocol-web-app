@@ -1,35 +1,76 @@
-import { useModalContext } from "contexts/ModalContext";
-import Icon from "components/Icon";
-import { ErrorStatus } from "components/Status";
-import { isEmpty } from "helpers";
-import { useAdminContext } from "../../Context";
-import AddForm from "./Adder";
-import Member from "./Member";
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { FV } from "./types";
+import { createTx, encodeTx } from "contracts/createTx/createTx";
+import useTxSender from "hooks/useTxSender";
+import { getTagPayloads } from "helpers/admin";
+import { isTooltip, useAdminContext } from "../../Context";
+import Form from "./Form";
 
 export default function Members() {
-  const { members } = useAdminContext();
-  const { showModal } = useModalContext();
+  const sendTx = useTxSender();
+  const { members, multisig, txResource } = useAdminContext();
+  const methods = useForm<FV>({
+    defaultValues: {
+      initial: members,
+      members,
+      action: "initial",
+    },
+  });
+
+  const { handleSubmit, reset } = methods;
+
+  const submit: SubmitHandler<FV> = async (fv) => {
+    if (isTooltip(txResource)) throw new Error(txResource);
+
+    const prev = new Set(members);
+    const curr = new Set(fv.members);
+
+    const [data, dest, meta] = (() => {
+      switch (fv.action) {
+        case "add": {
+          const toAdd = fv.members.filter((m) => !prev.has(m));
+          return encodeTx("multisig.add-owners", {
+            multisig,
+            addresses: toAdd,
+          });
+        }
+        case "remove": {
+          const toRemove = fv.initial.filter((m) => !curr.has(m));
+          return encodeTx("multisig.remove-owners", {
+            multisig,
+            addresses: toRemove,
+          });
+        }
+        default:
+          throw new Error("Invalid action");
+      }
+    })();
+
+    const { wallet, txMeta } = txResource;
+    const tx = createTx(wallet.address, "multisig.submit-transaction", {
+      multisig: dest,
+      destination: dest,
+      value: "0",
+      data,
+      meta: meta.encoded,
+    });
+
+    await sendTx({
+      content: { type: "evm", val: tx },
+      ...txMeta,
+      tagPayloads: getTagPayloads(txMeta.willExecute && meta.id),
+    });
+  };
+
   return (
-    <div className="grid content-start border border-prim rounded p-4 @lg:p-8">
-      <h4 className="text-2xl font-body mb-8">Members</h4>
-      <button
-        className="btn-outline-filled @lg:justify-self-end mb-5 text-sm flex gap-x-3"
-        onClick={() => showModal(AddForm, { address: "", action: "add" })}
-      >
-        <Icon type="Plus" />
-        <span>add member</span>
-      </button>
-      <div className="p-3 rounded border border-prim bg-orange-l6 dark:bg-blue-d7 @container">
-        {isEmpty(members) ? (
-          <ErrorStatus classes="text-sm">No members found</ErrorStatus>
-        ) : (
-          <div className="flex flex-col gap-2">
-            {members.map((m) => (
-              <Member key={m} address={m} />
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
+    <FormProvider {...methods}>
+      <Form
+        onSubmit={handleSubmit(submit)}
+        onReset={(e) => {
+          e.preventDefault();
+          reset();
+        }}
+      />
+    </FormProvider>
   );
 }

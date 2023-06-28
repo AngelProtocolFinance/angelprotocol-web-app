@@ -119,8 +119,6 @@ export const useAdminContext = <T extends AdminType = any>(
   } = resource as Resource<"charity">; //manual control flow
   const hasOps = operations && operations.length > 0;
 
-  console.log(resource);
-
   const isLocked =
     hasOps &&
     operations.some((op) => {
