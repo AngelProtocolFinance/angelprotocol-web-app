@@ -5,13 +5,19 @@ import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import { Info } from "components/Status";
 import TableSection, { Cells } from "components/TableSection";
+import { Reset, Submit } from "components/admin";
 import AddForm from "./AddForm";
 
 const name: keyof FV = "members";
 
 export default function Form(props: FormHTMLAttributes<HTMLFormElement>) {
   const { showModal } = useModalContext();
-  const { getValues, watch, setValue } = useFormContext<FV>();
+  const {
+    getValues,
+    watch,
+    setValue,
+    formState: { isDirty },
+  } = useFormContext<FV>();
   const { fields, append, remove } = useFieldArray({
     name,
   });
@@ -39,7 +45,7 @@ export default function Form(props: FormHTMLAttributes<HTMLFormElement>) {
     >
       <h4 className="text-2xl font-body mb-8">Members</h4>
       {action !== "initial" && (
-        <Info classes="-mt-4">
+        <Info classes="-mt-4 mb-4">
           {action === "add" ? "Adding members.." : "Removing members.."}
         </Info>
       )}
@@ -84,7 +90,10 @@ export default function Form(props: FormHTMLAttributes<HTMLFormElement>) {
           ))}
         </TableSection>
       </table>
-      <div>submit</div>
+      <div className="flex justify-start gap-3 w-full group-disabled:hidden mt-6">
+        <Reset disabled={!isDirty}>Reset changes</Reset>
+        <Submit>Submit changes</Submit>
+      </div>
     </form>
   );
 }

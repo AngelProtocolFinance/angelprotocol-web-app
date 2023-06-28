@@ -30,9 +30,9 @@ export const txs: { [T in TxTypes]: (args: TxArgs<T>) => string } = {
   "multisig.submit-transaction": (tx) =>
     multisig.encodeFunctionData("submitTransaction", toTuple(tx)),
   "multisig.add-owners": ({ addresses }) =>
-    multisig.encodeFunctionData("addOwner", [addresses]),
+    multisig.encodeFunctionData("addOwners", [addresses]),
   "multisig.remove-owners": ({ addresses }) =>
-    multisig.encodeFunctionData("removeOwner", [addresses]),
+    multisig.encodeFunctionData("removeOwners", [addresses]),
   "multisig.confirm-tx": ({ id }) =>
     multisig.encodeFunctionData("confirmTransaction", [id]),
   "multisig.revoke-tx": ({ id }) =>
@@ -44,7 +44,7 @@ export const txs: { [T in TxTypes]: (args: TxArgs<T>) => string } = {
   "multisig.change-auto-execute": ({ autoExecute }) =>
     multisig.encodeFunctionData("changeRequireExecution", [!autoExecute]),
   "multisig.change-duration": ({ duration }) =>
-    multisig.encodeFunctionData("changeTransactionExpiry", [duration]),
+    multisig.encodeFunctionData("changeRequireExecution", [duration]),
 
   // //// ERC20 ////
   "erc20.transfer": (transfer) =>
