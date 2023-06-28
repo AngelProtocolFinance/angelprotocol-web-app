@@ -1,9 +1,8 @@
 import React, { FC, PropsWithChildren } from "react";
 import { useFormContext } from "react-hook-form";
 import { FV } from "./types";
-import { Tooltip } from "components/admin";
+import { Reset, Submit, Tooltip } from "components/admin";
 import { MinmaxSlider, Toggle } from "components/ast";
-import { Reset, Submit } from "../../common/Btn";
 import { Form as Frm } from "../common/Form";
 import { SubHeading } from "../common/SubHeading";
 
