@@ -7,6 +7,8 @@ import type {
   BigNumberish,
   BytesLike,
   CallOverrides,
+  ContractTransaction,
+  Overrides,
   PopulatedTransaction,
   Signer,
   utils,
@@ -19,9 +21,9 @@ import type {
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "../../../../common";
+} from "../../../common";
 
-export declare namespace AngelCoreStruct {
+export declare namespace IIndexFund {
   export type IndexFundStruct = {
     id: PromiseOrValue<BigNumberish>;
     name: PromiseOrValue<string>;
@@ -51,8 +53,8 @@ export declare namespace AngelCoreStruct {
 export interface IIndexFundInterface extends utils.Interface {
   functions: {
     "queryFundDetails(uint256)": FunctionFragment;
-    "queryInvolvedFunds(uint256)": FunctionFragment;
-    "removeMember(uint256)": FunctionFragment;
+    "queryInvolvedFunds(uint32)": FunctionFragment;
+    "removeMember(uint32)": FunctionFragment;
   };
 
   getFunction(
@@ -121,44 +123,44 @@ export interface IIndexFund extends BaseContract {
     queryFundDetails(
       fundId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<[AngelCoreStruct.IndexFundStructOutput]>;
+    ): Promise<[IIndexFund.IndexFundStructOutput]>;
 
     queryInvolvedFunds(
       endowmentId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<[AngelCoreStruct.IndexFundStructOutput[]]>;
+    ): Promise<[IIndexFund.IndexFundStructOutput[]]>;
 
     removeMember(
       member: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
   };
 
   queryFundDetails(
     fundId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
-  ): Promise<AngelCoreStruct.IndexFundStructOutput>;
+  ): Promise<IIndexFund.IndexFundStructOutput>;
 
   queryInvolvedFunds(
     endowmentId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
-  ): Promise<AngelCoreStruct.IndexFundStructOutput[]>;
+  ): Promise<IIndexFund.IndexFundStructOutput[]>;
 
   removeMember(
     member: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
 
   callStatic: {
     queryFundDetails(
       fundId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<AngelCoreStruct.IndexFundStructOutput>;
+    ): Promise<IIndexFund.IndexFundStructOutput>;
 
     queryInvolvedFunds(
       endowmentId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<AngelCoreStruct.IndexFundStructOutput[]>;
+    ): Promise<IIndexFund.IndexFundStructOutput[]>;
 
     removeMember(
       member: PromiseOrValue<BigNumberish>,
@@ -181,7 +183,7 @@ export interface IIndexFund extends BaseContract {
 
     removeMember(
       member: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
 
@@ -198,7 +200,7 @@ export interface IIndexFund extends BaseContract {
 
     removeMember(
       member: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };
 }

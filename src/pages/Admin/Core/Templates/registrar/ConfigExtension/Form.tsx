@@ -71,13 +71,8 @@ export default function Form() {
         />
         <Field<FV>
           classes="field-admin-sec"
-          label="Applications Review"
-          name="applicationsReview"
-        />
-        <Field<FV>
-          classes="field-admin-sec"
           label="Charity Application"
-          name="charityProposal"
+          name="charityApplications"
         />
         <Field<FV>
           classes="field-admin-sec"

@@ -1,6 +1,6 @@
 import { OverrideProperties } from "type-fest";
 import {
-  AngelCoreStruct,
+  IIndexFund,
   IndexFundMessage,
   IndexFundStorage,
 } from "../typechain-types/contracts/core/index-fund/IndexFund";
@@ -12,7 +12,7 @@ export type IndexFundConfig = OverrideProperties<
 >;
 
 export type FundDetails = OverrideProperties<
-  Plain<AngelCoreStruct.IndexFundStruct>,
+  Plain<IIndexFund.IndexFundStruct>,
   {
     id: number;
     members: number[];

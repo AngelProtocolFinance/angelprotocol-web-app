@@ -28,7 +28,7 @@ import type {
   PromiseOrValue,
 } from "../../../../common";
 
-export declare namespace AngelCoreStruct {
+export declare namespace LibAccounts {
   export type BeneficiaryDataStruct = {
     endowId: PromiseOrValue<BigNumberish>;
     fundId: PromiseOrValue<BigNumberish>;
@@ -42,93 +42,14 @@ export declare namespace AngelCoreStruct {
   };
 
   export type BeneficiaryStruct = {
-    data: AngelCoreStruct.BeneficiaryDataStruct;
+    data: LibAccounts.BeneficiaryDataStruct;
     enumData: PromiseOrValue<BigNumberish>;
   };
 
   export type BeneficiaryStructOutput = [
-    AngelCoreStruct.BeneficiaryDataStructOutput,
+    LibAccounts.BeneficiaryDataStructOutput,
     number
-  ] & { data: AngelCoreStruct.BeneficiaryDataStructOutput; enumData: number };
-
-  export type VeTypeDataStruct = {
-    value: PromiseOrValue<BigNumberish>;
-    scale: PromiseOrValue<BigNumberish>;
-    slope: PromiseOrValue<BigNumberish>;
-    power: PromiseOrValue<BigNumberish>;
-  };
-
-  export type VeTypeDataStructOutput = [
-    BigNumber,
-    BigNumber,
-    BigNumber,
-    BigNumber
-  ] & {
-    value: BigNumber;
-    scale: BigNumber;
-    slope: BigNumber;
-    power: BigNumber;
-  };
-
-  export type VeTypeStruct = {
-    ve_type: PromiseOrValue<BigNumberish>;
-    data: AngelCoreStruct.VeTypeDataStruct;
-  };
-
-  export type VeTypeStructOutput = [
-    number,
-    AngelCoreStruct.VeTypeDataStructOutput
-  ] & { ve_type: number; data: AngelCoreStruct.VeTypeDataStructOutput };
-
-  export type DaoTokenDataStruct = {
-    existingData: PromiseOrValue<string>;
-    newInitialSupply: PromiseOrValue<BigNumberish>;
-    newName: PromiseOrValue<string>;
-    newSymbol: PromiseOrValue<string>;
-    veBondingType: AngelCoreStruct.VeTypeStruct;
-    veBondingName: PromiseOrValue<string>;
-    veBondingSymbol: PromiseOrValue<string>;
-    veBondingDecimals: PromiseOrValue<BigNumberish>;
-    veBondingReserveDenom: PromiseOrValue<string>;
-    veBondingReserveDecimals: PromiseOrValue<BigNumberish>;
-    veBondingPeriod: PromiseOrValue<BigNumberish>;
-  };
-
-  export type DaoTokenDataStructOutput = [
-    string,
-    BigNumber,
-    string,
-    string,
-    AngelCoreStruct.VeTypeStructOutput,
-    string,
-    string,
-    BigNumber,
-    string,
-    BigNumber,
-    BigNumber
-  ] & {
-    existingData: string;
-    newInitialSupply: BigNumber;
-    newName: string;
-    newSymbol: string;
-    veBondingType: AngelCoreStruct.VeTypeStructOutput;
-    veBondingName: string;
-    veBondingSymbol: string;
-    veBondingDecimals: BigNumber;
-    veBondingReserveDenom: string;
-    veBondingReserveDecimals: BigNumber;
-    veBondingPeriod: BigNumber;
-  };
-
-  export type DaoTokenStruct = {
-    token: PromiseOrValue<BigNumberish>;
-    data: AngelCoreStruct.DaoTokenDataStruct;
-  };
-
-  export type DaoTokenStructOutput = [
-    number,
-    AngelCoreStruct.DaoTokenDataStructOutput
-  ] & { token: number; data: AngelCoreStruct.DaoTokenDataStructOutput };
+  ] & { data: LibAccounts.BeneficiaryDataStructOutput; enumData: number };
 
   export type FeeSettingStruct = {
     payoutAddress: PromiseOrValue<string>;
@@ -152,70 +73,70 @@ export declare namespace AngelCoreStruct {
 
   export type SettingsPermissionStruct = {
     locked: PromiseOrValue<boolean>;
-    delegate: AngelCoreStruct.DelegateStruct;
+    delegate: LibAccounts.DelegateStruct;
   };
 
   export type SettingsPermissionStructOutput = [
     boolean,
-    AngelCoreStruct.DelegateStructOutput
-  ] & { locked: boolean; delegate: AngelCoreStruct.DelegateStructOutput };
+    LibAccounts.DelegateStructOutput
+  ] & { locked: boolean; delegate: LibAccounts.DelegateStructOutput };
 
   export type SettingsControllerStruct = {
-    acceptedTokens: AngelCoreStruct.SettingsPermissionStruct;
-    lockedInvestmentManagement: AngelCoreStruct.SettingsPermissionStruct;
-    liquidInvestmentManagement: AngelCoreStruct.SettingsPermissionStruct;
-    allowlistedBeneficiaries: AngelCoreStruct.SettingsPermissionStruct;
-    allowlistedContributors: AngelCoreStruct.SettingsPermissionStruct;
-    maturityAllowlist: AngelCoreStruct.SettingsPermissionStruct;
-    maturityTime: AngelCoreStruct.SettingsPermissionStruct;
-    earlyLockedWithdrawFee: AngelCoreStruct.SettingsPermissionStruct;
-    withdrawFee: AngelCoreStruct.SettingsPermissionStruct;
-    depositFee: AngelCoreStruct.SettingsPermissionStruct;
-    balanceFee: AngelCoreStruct.SettingsPermissionStruct;
-    name: AngelCoreStruct.SettingsPermissionStruct;
-    image: AngelCoreStruct.SettingsPermissionStruct;
-    logo: AngelCoreStruct.SettingsPermissionStruct;
-    sdgs: AngelCoreStruct.SettingsPermissionStruct;
-    splitToLiquid: AngelCoreStruct.SettingsPermissionStruct;
-    ignoreUserSplits: AngelCoreStruct.SettingsPermissionStruct;
+    acceptedTokens: LibAccounts.SettingsPermissionStruct;
+    lockedInvestmentManagement: LibAccounts.SettingsPermissionStruct;
+    liquidInvestmentManagement: LibAccounts.SettingsPermissionStruct;
+    allowlistedBeneficiaries: LibAccounts.SettingsPermissionStruct;
+    allowlistedContributors: LibAccounts.SettingsPermissionStruct;
+    maturityAllowlist: LibAccounts.SettingsPermissionStruct;
+    maturityTime: LibAccounts.SettingsPermissionStruct;
+    earlyLockedWithdrawFee: LibAccounts.SettingsPermissionStruct;
+    withdrawFee: LibAccounts.SettingsPermissionStruct;
+    depositFee: LibAccounts.SettingsPermissionStruct;
+    balanceFee: LibAccounts.SettingsPermissionStruct;
+    name: LibAccounts.SettingsPermissionStruct;
+    image: LibAccounts.SettingsPermissionStruct;
+    logo: LibAccounts.SettingsPermissionStruct;
+    sdgs: LibAccounts.SettingsPermissionStruct;
+    splitToLiquid: LibAccounts.SettingsPermissionStruct;
+    ignoreUserSplits: LibAccounts.SettingsPermissionStruct;
   };
 
   export type SettingsControllerStructOutput = [
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput
   ] & {
-    acceptedTokens: AngelCoreStruct.SettingsPermissionStructOutput;
-    lockedInvestmentManagement: AngelCoreStruct.SettingsPermissionStructOutput;
-    liquidInvestmentManagement: AngelCoreStruct.SettingsPermissionStructOutput;
-    allowlistedBeneficiaries: AngelCoreStruct.SettingsPermissionStructOutput;
-    allowlistedContributors: AngelCoreStruct.SettingsPermissionStructOutput;
-    maturityAllowlist: AngelCoreStruct.SettingsPermissionStructOutput;
-    maturityTime: AngelCoreStruct.SettingsPermissionStructOutput;
-    earlyLockedWithdrawFee: AngelCoreStruct.SettingsPermissionStructOutput;
-    withdrawFee: AngelCoreStruct.SettingsPermissionStructOutput;
-    depositFee: AngelCoreStruct.SettingsPermissionStructOutput;
-    balanceFee: AngelCoreStruct.SettingsPermissionStructOutput;
-    name: AngelCoreStruct.SettingsPermissionStructOutput;
-    image: AngelCoreStruct.SettingsPermissionStructOutput;
-    logo: AngelCoreStruct.SettingsPermissionStructOutput;
-    sdgs: AngelCoreStruct.SettingsPermissionStructOutput;
-    splitToLiquid: AngelCoreStruct.SettingsPermissionStructOutput;
-    ignoreUserSplits: AngelCoreStruct.SettingsPermissionStructOutput;
+    acceptedTokens: LibAccounts.SettingsPermissionStructOutput;
+    lockedInvestmentManagement: LibAccounts.SettingsPermissionStructOutput;
+    liquidInvestmentManagement: LibAccounts.SettingsPermissionStructOutput;
+    allowlistedBeneficiaries: LibAccounts.SettingsPermissionStructOutput;
+    allowlistedContributors: LibAccounts.SettingsPermissionStructOutput;
+    maturityAllowlist: LibAccounts.SettingsPermissionStructOutput;
+    maturityTime: LibAccounts.SettingsPermissionStructOutput;
+    earlyLockedWithdrawFee: LibAccounts.SettingsPermissionStructOutput;
+    withdrawFee: LibAccounts.SettingsPermissionStructOutput;
+    depositFee: LibAccounts.SettingsPermissionStructOutput;
+    balanceFee: LibAccounts.SettingsPermissionStructOutput;
+    name: LibAccounts.SettingsPermissionStructOutput;
+    image: LibAccounts.SettingsPermissionStructOutput;
+    logo: LibAccounts.SettingsPermissionStructOutput;
+    sdgs: LibAccounts.SettingsPermissionStructOutput;
+    splitToLiquid: LibAccounts.SettingsPermissionStructOutput;
+    ignoreUserSplits: LibAccounts.SettingsPermissionStructOutput;
   };
 
   export type SplitDetailsStruct = {
@@ -229,6 +150,87 @@ export declare namespace AngelCoreStruct {
     min: BigNumber;
     defaultSplit: BigNumber;
   };
+}
+
+export declare namespace SubDaoLib {
+  export type VeTypeDataStruct = {
+    value: PromiseOrValue<BigNumberish>;
+    scale: PromiseOrValue<BigNumberish>;
+    slope: PromiseOrValue<BigNumberish>;
+    power: PromiseOrValue<BigNumberish>;
+  };
+
+  export type VeTypeDataStructOutput = [
+    BigNumber,
+    BigNumber,
+    BigNumber,
+    BigNumber
+  ] & {
+    value: BigNumber;
+    scale: BigNumber;
+    slope: BigNumber;
+    power: BigNumber;
+  };
+
+  export type VeTypeStruct = {
+    ve_type: PromiseOrValue<BigNumberish>;
+    data: SubDaoLib.VeTypeDataStruct;
+  };
+
+  export type VeTypeStructOutput = [
+    number,
+    SubDaoLib.VeTypeDataStructOutput
+  ] & { ve_type: number; data: SubDaoLib.VeTypeDataStructOutput };
+
+  export type DaoTokenDataStruct = {
+    existingData: PromiseOrValue<string>;
+    newInitialSupply: PromiseOrValue<BigNumberish>;
+    newName: PromiseOrValue<string>;
+    newSymbol: PromiseOrValue<string>;
+    veBondingType: SubDaoLib.VeTypeStruct;
+    veBondingName: PromiseOrValue<string>;
+    veBondingSymbol: PromiseOrValue<string>;
+    veBondingDecimals: PromiseOrValue<BigNumberish>;
+    veBondingReserveDenom: PromiseOrValue<string>;
+    veBondingReserveDecimals: PromiseOrValue<BigNumberish>;
+    veBondingPeriod: PromiseOrValue<BigNumberish>;
+  };
+
+  export type DaoTokenDataStructOutput = [
+    string,
+    BigNumber,
+    string,
+    string,
+    SubDaoLib.VeTypeStructOutput,
+    string,
+    string,
+    BigNumber,
+    string,
+    BigNumber,
+    BigNumber
+  ] & {
+    existingData: string;
+    newInitialSupply: BigNumber;
+    newName: string;
+    newSymbol: string;
+    veBondingType: SubDaoLib.VeTypeStructOutput;
+    veBondingName: string;
+    veBondingSymbol: string;
+    veBondingDecimals: BigNumber;
+    veBondingReserveDenom: string;
+    veBondingReserveDecimals: BigNumber;
+    veBondingPeriod: BigNumber;
+  };
+
+  export type DaoTokenStruct = {
+    token: PromiseOrValue<BigNumberish>;
+    data: SubDaoLib.DaoTokenDataStruct;
+  };
+
+  export type DaoTokenStructOutput = [
+    number,
+    SubDaoLib.DaoTokenDataStructOutput
+  ] & { token: number; data: SubDaoLib.DaoTokenDataStructOutput };
 
   export type DaoSetupStruct = {
     quorum: PromiseOrValue<BigNumberish>;
@@ -238,7 +240,7 @@ export declare namespace AngelCoreStruct {
     expirationPeriod: PromiseOrValue<BigNumberish>;
     proposalDeposit: PromiseOrValue<BigNumberish>;
     snapshotPeriod: PromiseOrValue<BigNumberish>;
-    token: AngelCoreStruct.DaoTokenStruct;
+    token: SubDaoLib.DaoTokenStruct;
   };
 
   export type DaoSetupStructOutput = [
@@ -249,7 +251,7 @@ export declare namespace AngelCoreStruct {
     BigNumber,
     BigNumber,
     BigNumber,
-    AngelCoreStruct.DaoTokenStructOutput
+    SubDaoLib.DaoTokenStructOutput
   ] & {
     quorum: BigNumber;
     threshold: BigNumber;
@@ -258,17 +260,7 @@ export declare namespace AngelCoreStruct {
     expirationPeriod: BigNumber;
     proposalDeposit: BigNumber;
     snapshotPeriod: BigNumber;
-    token: AngelCoreStruct.DaoTokenStructOutput;
-  };
-
-  export type TokenInfoStruct = {
-    addr: PromiseOrValue<string>;
-    amnt: PromiseOrValue<BigNumberish>;
-  };
-
-  export type TokenInfoStructOutput = [string, BigNumber] & {
-    addr: string;
-    amnt: BigNumber;
+    token: SubDaoLib.DaoTokenStructOutput;
   };
 }
 
@@ -283,7 +275,7 @@ export declare namespace SubDaoMessage {
     expirationPeriod: PromiseOrValue<BigNumberish>;
     proposalDeposit: PromiseOrValue<BigNumberish>;
     snapshotPeriod: PromiseOrValue<BigNumberish>;
-    token: AngelCoreStruct.DaoTokenStruct;
+    token: SubDaoLib.DaoTokenStruct;
     endowType: PromiseOrValue<BigNumberish>;
     endowOwner: PromiseOrValue<string>;
     registrarContract: PromiseOrValue<string>;
@@ -299,7 +291,7 @@ export declare namespace SubDaoMessage {
     BigNumber,
     BigNumber,
     BigNumber,
-    AngelCoreStruct.DaoTokenStructOutput,
+    SubDaoLib.DaoTokenStructOutput,
     number,
     string,
     string
@@ -313,7 +305,7 @@ export declare namespace SubDaoMessage {
     expirationPeriod: BigNumber;
     proposalDeposit: BigNumber;
     snapshotPeriod: BigNumber;
-    token: AngelCoreStruct.DaoTokenStructOutput;
+    token: SubDaoLib.DaoTokenStructOutput;
     endowType: number;
     endowOwner: string;
     registrarContract: string;
@@ -335,16 +327,16 @@ export declare namespace AccountMessages {
     duration: PromiseOrValue<BigNumberish>;
     allowlistedBeneficiaries: PromiseOrValue<string>[];
     allowlistedContributors: PromiseOrValue<string>[];
-    earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStruct;
-    withdrawFee: AngelCoreStruct.FeeSettingStruct;
-    depositFee: AngelCoreStruct.FeeSettingStruct;
-    balanceFee: AngelCoreStruct.FeeSettingStruct;
+    earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct;
+    withdrawFee: LibAccounts.FeeSettingStruct;
+    depositFee: LibAccounts.FeeSettingStruct;
+    balanceFee: LibAccounts.FeeSettingStruct;
     proposalLink: PromiseOrValue<BigNumberish>;
-    settingsController: AngelCoreStruct.SettingsControllerStruct;
+    settingsController: LibAccounts.SettingsControllerStruct;
     parent: PromiseOrValue<BigNumberish>;
     maturityAllowlist: PromiseOrValue<string>[];
     ignoreUserSplits: PromiseOrValue<boolean>;
-    splitToLiquid: AngelCoreStruct.SplitDetailsStruct;
+    splitToLiquid: LibAccounts.SplitDetailsStruct;
     referralId: PromiseOrValue<BigNumberish>;
   };
 
@@ -362,16 +354,16 @@ export declare namespace AccountMessages {
     BigNumber,
     string[],
     string[],
-    AngelCoreStruct.FeeSettingStructOutput,
-    AngelCoreStruct.FeeSettingStructOutput,
-    AngelCoreStruct.FeeSettingStructOutput,
-    AngelCoreStruct.FeeSettingStructOutput,
+    LibAccounts.FeeSettingStructOutput,
+    LibAccounts.FeeSettingStructOutput,
+    LibAccounts.FeeSettingStructOutput,
+    LibAccounts.FeeSettingStructOutput,
     BigNumber,
-    AngelCoreStruct.SettingsControllerStructOutput,
+    LibAccounts.SettingsControllerStructOutput,
     number,
     string[],
     boolean,
-    AngelCoreStruct.SplitDetailsStructOutput,
+    LibAccounts.SplitDetailsStructOutput,
     BigNumber
   ] & {
     withdrawBeforeMaturity: boolean;
@@ -387,16 +379,16 @@ export declare namespace AccountMessages {
     duration: BigNumber;
     allowlistedBeneficiaries: string[];
     allowlistedContributors: string[];
-    earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStructOutput;
-    withdrawFee: AngelCoreStruct.FeeSettingStructOutput;
-    depositFee: AngelCoreStruct.FeeSettingStructOutput;
-    balanceFee: AngelCoreStruct.FeeSettingStructOutput;
+    earlyLockedWithdrawFee: LibAccounts.FeeSettingStructOutput;
+    withdrawFee: LibAccounts.FeeSettingStructOutput;
+    depositFee: LibAccounts.FeeSettingStructOutput;
+    balanceFee: LibAccounts.FeeSettingStructOutput;
     proposalLink: BigNumber;
-    settingsController: AngelCoreStruct.SettingsControllerStructOutput;
+    settingsController: LibAccounts.SettingsControllerStructOutput;
     parent: number;
     maturityAllowlist: string[];
     ignoreUserSplits: boolean;
-    splitToLiquid: AngelCoreStruct.SplitDetailsStructOutput;
+    splitToLiquid: LibAccounts.SplitDetailsStructOutput;
     referralId: BigNumber;
   };
 
@@ -421,7 +413,7 @@ export declare namespace AccountMessages {
     subDao: PromiseOrValue<string>;
     gateway: PromiseOrValue<string>;
     gasReceiver: PromiseOrValue<string>;
-    earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStruct;
+    earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct;
   };
 
   export type ConfigResponseStructOutput = [
@@ -433,7 +425,7 @@ export declare namespace AccountMessages {
     string,
     string,
     string,
-    AngelCoreStruct.FeeSettingStructOutput
+    LibAccounts.FeeSettingStructOutput
   ] & {
     owner: string;
     version: string;
@@ -443,33 +435,33 @@ export declare namespace AccountMessages {
     subDao: string;
     gateway: string;
     gasReceiver: string;
-    earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStructOutput;
+    earlyLockedWithdrawFee: LibAccounts.FeeSettingStructOutput;
   };
 
   export type StateResponseStruct = {
     closingEndowment: PromiseOrValue<boolean>;
-    closingBeneficiary: AngelCoreStruct.BeneficiaryStruct;
+    closingBeneficiary: LibAccounts.BeneficiaryStruct;
   };
 
   export type StateResponseStructOutput = [
     boolean,
-    AngelCoreStruct.BeneficiaryStructOutput
+    LibAccounts.BeneficiaryStructOutput
   ] & {
     closingEndowment: boolean;
-    closingBeneficiary: AngelCoreStruct.BeneficiaryStructOutput;
+    closingBeneficiary: LibAccounts.BeneficiaryStructOutput;
   };
 
   export type UpdateEndowmentControllerRequestStruct = {
     id: PromiseOrValue<BigNumberish>;
-    settingsController: AngelCoreStruct.SettingsControllerStruct;
+    settingsController: LibAccounts.SettingsControllerStruct;
   };
 
   export type UpdateEndowmentControllerRequestStructOutput = [
     number,
-    AngelCoreStruct.SettingsControllerStructOutput
+    LibAccounts.SettingsControllerStructOutput
   ] & {
     id: number;
-    settingsController: AngelCoreStruct.SettingsControllerStructOutput;
+    settingsController: LibAccounts.SettingsControllerStructOutput;
   };
 
   export type UpdateEndowmentDetailsRequestStruct = {
@@ -508,7 +500,7 @@ export declare namespace AccountMessages {
     allowlistedContributors: PromiseOrValue<string>[];
     maturity_allowlist_add: PromiseOrValue<string>[];
     maturity_allowlist_remove: PromiseOrValue<string>[];
-    splitToLiquid: AngelCoreStruct.SplitDetailsStruct;
+    splitToLiquid: LibAccounts.SplitDetailsStruct;
     ignoreUserSplits: PromiseOrValue<boolean>;
   };
 
@@ -520,7 +512,7 @@ export declare namespace AccountMessages {
     string[],
     string[],
     string[],
-    AngelCoreStruct.SplitDetailsStructOutput,
+    LibAccounts.SplitDetailsStructOutput,
     boolean
   ] & {
     id: number;
@@ -530,30 +522,30 @@ export declare namespace AccountMessages {
     allowlistedContributors: string[];
     maturity_allowlist_add: string[];
     maturity_allowlist_remove: string[];
-    splitToLiquid: AngelCoreStruct.SplitDetailsStructOutput;
+    splitToLiquid: LibAccounts.SplitDetailsStructOutput;
     ignoreUserSplits: boolean;
   };
 
   export type UpdateFeeSettingRequestStruct = {
     id: PromiseOrValue<BigNumberish>;
-    earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStruct;
-    depositFee: AngelCoreStruct.FeeSettingStruct;
-    withdrawFee: AngelCoreStruct.FeeSettingStruct;
-    balanceFee: AngelCoreStruct.FeeSettingStruct;
+    earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct;
+    depositFee: LibAccounts.FeeSettingStruct;
+    withdrawFee: LibAccounts.FeeSettingStruct;
+    balanceFee: LibAccounts.FeeSettingStruct;
   };
 
   export type UpdateFeeSettingRequestStructOutput = [
     number,
-    AngelCoreStruct.FeeSettingStructOutput,
-    AngelCoreStruct.FeeSettingStructOutput,
-    AngelCoreStruct.FeeSettingStructOutput,
-    AngelCoreStruct.FeeSettingStructOutput
+    LibAccounts.FeeSettingStructOutput,
+    LibAccounts.FeeSettingStructOutput,
+    LibAccounts.FeeSettingStructOutput,
+    LibAccounts.FeeSettingStructOutput
   ] & {
     id: number;
-    earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStructOutput;
-    depositFee: AngelCoreStruct.FeeSettingStructOutput;
-    withdrawFee: AngelCoreStruct.FeeSettingStructOutput;
-    balanceFee: AngelCoreStruct.FeeSettingStructOutput;
+    earlyLockedWithdrawFee: LibAccounts.FeeSettingStructOutput;
+    depositFee: LibAccounts.FeeSettingStructOutput;
+    withdrawFee: LibAccounts.FeeSettingStructOutput;
+    balanceFee: LibAccounts.FeeSettingStructOutput;
   };
 }
 
@@ -605,14 +597,14 @@ export declare namespace AccountStorage {
     allowlistedBeneficiaries: PromiseOrValue<string>[];
     allowlistedContributors: PromiseOrValue<string>[];
     maturityAllowlist: PromiseOrValue<string>[];
-    earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStruct;
-    withdrawFee: AngelCoreStruct.FeeSettingStruct;
-    depositFee: AngelCoreStruct.FeeSettingStruct;
-    balanceFee: AngelCoreStruct.FeeSettingStruct;
-    settingsController: AngelCoreStruct.SettingsControllerStruct;
+    earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct;
+    withdrawFee: LibAccounts.FeeSettingStruct;
+    depositFee: LibAccounts.FeeSettingStruct;
+    balanceFee: LibAccounts.FeeSettingStruct;
+    settingsController: LibAccounts.SettingsControllerStruct;
     parent: PromiseOrValue<BigNumberish>;
     ignoreUserSplits: PromiseOrValue<boolean>;
-    splitToLiquid: AngelCoreStruct.SplitDetailsStruct;
+    splitToLiquid: LibAccounts.SplitDetailsStruct;
     referralId: PromiseOrValue<BigNumberish>;
   };
 
@@ -636,14 +628,14 @@ export declare namespace AccountStorage {
     string[],
     string[],
     string[],
-    AngelCoreStruct.FeeSettingStructOutput,
-    AngelCoreStruct.FeeSettingStructOutput,
-    AngelCoreStruct.FeeSettingStructOutput,
-    AngelCoreStruct.FeeSettingStructOutput,
-    AngelCoreStruct.SettingsControllerStructOutput,
+    LibAccounts.FeeSettingStructOutput,
+    LibAccounts.FeeSettingStructOutput,
+    LibAccounts.FeeSettingStructOutput,
+    LibAccounts.FeeSettingStructOutput,
+    LibAccounts.SettingsControllerStructOutput,
     number,
     boolean,
-    AngelCoreStruct.SplitDetailsStructOutput,
+    LibAccounts.SplitDetailsStructOutput,
     BigNumber
   ] & {
     owner: string;
@@ -665,15 +657,27 @@ export declare namespace AccountStorage {
     allowlistedBeneficiaries: string[];
     allowlistedContributors: string[];
     maturityAllowlist: string[];
-    earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStructOutput;
-    withdrawFee: AngelCoreStruct.FeeSettingStructOutput;
-    depositFee: AngelCoreStruct.FeeSettingStructOutput;
-    balanceFee: AngelCoreStruct.FeeSettingStructOutput;
-    settingsController: AngelCoreStruct.SettingsControllerStructOutput;
+    earlyLockedWithdrawFee: LibAccounts.FeeSettingStructOutput;
+    withdrawFee: LibAccounts.FeeSettingStructOutput;
+    depositFee: LibAccounts.FeeSettingStructOutput;
+    balanceFee: LibAccounts.FeeSettingStructOutput;
+    settingsController: LibAccounts.SettingsControllerStructOutput;
     parent: number;
     ignoreUserSplits: boolean;
-    splitToLiquid: AngelCoreStruct.SplitDetailsStructOutput;
+    splitToLiquid: LibAccounts.SplitDetailsStructOutput;
     referralId: BigNumber;
+  };
+}
+
+export declare namespace IAccountsDepositWithdrawEndowments {
+  export type TokenInfoStruct = {
+    addr: PromiseOrValue<string>;
+    amnt: PromiseOrValue<BigNumberish>;
+  };
+
+  export type TokenInfoStructOutput = [string, BigNumber] & {
+    addr: string;
+    amnt: BigNumber;
   };
 }
 
@@ -739,7 +743,7 @@ export interface IAccountsInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "closeEndowment",
-    values: [PromiseOrValue<BigNumberish>, AngelCoreStruct.BeneficiaryStruct]
+    values: [PromiseOrValue<BigNumberish>, LibAccounts.BeneficiaryStruct]
   ): string;
   encodeFunctionData(
     functionFragment: "createDaoContract",
@@ -801,7 +805,7 @@ export interface IAccountsInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "setupDao",
-    values: [PromiseOrValue<BigNumberish>, AngelCoreStruct.DaoSetupStruct]
+    values: [PromiseOrValue<BigNumberish>, SubDaoLib.DaoSetupStruct]
   ): string;
   encodeFunctionData(
     functionFragment: "spendAllowance",
@@ -865,7 +869,7 @@ export interface IAccountsInterface extends utils.Interface {
     values: [
       PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>,
-      AngelCoreStruct.FeeSettingStruct
+      LibAccounts.FeeSettingStruct
     ]
   ): string;
   encodeFunctionData(
@@ -905,7 +909,7 @@ export interface IAccountsInterface extends utils.Interface {
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>,
-      AngelCoreStruct.TokenInfoStruct[]
+      IAccountsDepositWithdrawEndowments.TokenInfoStruct[]
     ]
   ): string;
 
@@ -1199,7 +1203,7 @@ export interface IAccounts extends BaseContract {
   functions: {
     closeEndowment(
       id: PromiseOrValue<BigNumberish>,
-      beneficiary: AngelCoreStruct.BeneficiaryStruct,
+      beneficiary: LibAccounts.BeneficiaryStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -1276,7 +1280,7 @@ export interface IAccounts extends BaseContract {
 
     setupDao(
       id: PromiseOrValue<BigNumberish>,
-      details: AngelCoreStruct.DaoSetupStruct,
+      details: SubDaoLib.DaoSetupStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -1334,7 +1338,7 @@ export interface IAccounts extends BaseContract {
     updateConfig(
       newRegistrar: PromiseOrValue<string>,
       maxGeneralCategoryId: PromiseOrValue<BigNumberish>,
-      earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStruct,
+      earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -1377,14 +1381,14 @@ export interface IAccounts extends BaseContract {
       acctType: PromiseOrValue<BigNumberish>,
       beneficiaryAddress: PromiseOrValue<string>,
       beneficiaryEndowId: PromiseOrValue<BigNumberish>,
-      tokens: AngelCoreStruct.TokenInfoStruct[],
+      tokens: IAccountsDepositWithdrawEndowments.TokenInfoStruct[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
 
   closeEndowment(
     id: PromiseOrValue<BigNumberish>,
-    beneficiary: AngelCoreStruct.BeneficiaryStruct,
+    beneficiary: LibAccounts.BeneficiaryStruct,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -1449,7 +1453,7 @@ export interface IAccounts extends BaseContract {
 
   setupDao(
     id: PromiseOrValue<BigNumberish>,
-    details: AngelCoreStruct.DaoSetupStruct,
+    details: SubDaoLib.DaoSetupStruct,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -1507,7 +1511,7 @@ export interface IAccounts extends BaseContract {
   updateConfig(
     newRegistrar: PromiseOrValue<string>,
     maxGeneralCategoryId: PromiseOrValue<BigNumberish>,
-    earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStruct,
+    earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -1550,14 +1554,14 @@ export interface IAccounts extends BaseContract {
     acctType: PromiseOrValue<BigNumberish>,
     beneficiaryAddress: PromiseOrValue<string>,
     beneficiaryEndowId: PromiseOrValue<BigNumberish>,
-    tokens: AngelCoreStruct.TokenInfoStruct[],
+    tokens: IAccountsDepositWithdrawEndowments.TokenInfoStruct[],
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     closeEndowment(
       id: PromiseOrValue<BigNumberish>,
-      beneficiary: AngelCoreStruct.BeneficiaryStruct,
+      beneficiary: LibAccounts.BeneficiaryStruct,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1622,7 +1626,7 @@ export interface IAccounts extends BaseContract {
 
     setupDao(
       id: PromiseOrValue<BigNumberish>,
-      details: AngelCoreStruct.DaoSetupStruct,
+      details: SubDaoLib.DaoSetupStruct,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1680,7 +1684,7 @@ export interface IAccounts extends BaseContract {
     updateConfig(
       newRegistrar: PromiseOrValue<string>,
       maxGeneralCategoryId: PromiseOrValue<BigNumberish>,
-      earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStruct,
+      earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1723,7 +1727,7 @@ export interface IAccounts extends BaseContract {
       acctType: PromiseOrValue<BigNumberish>,
       beneficiaryAddress: PromiseOrValue<string>,
       beneficiaryEndowId: PromiseOrValue<BigNumberish>,
-      tokens: AngelCoreStruct.TokenInfoStruct[],
+      tokens: IAccountsDepositWithdrawEndowments.TokenInfoStruct[],
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -1837,7 +1841,7 @@ export interface IAccounts extends BaseContract {
   estimateGas: {
     closeEndowment(
       id: PromiseOrValue<BigNumberish>,
-      beneficiary: AngelCoreStruct.BeneficiaryStruct,
+      beneficiary: LibAccounts.BeneficiaryStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1900,7 +1904,7 @@ export interface IAccounts extends BaseContract {
 
     setupDao(
       id: PromiseOrValue<BigNumberish>,
-      details: AngelCoreStruct.DaoSetupStruct,
+      details: SubDaoLib.DaoSetupStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1958,7 +1962,7 @@ export interface IAccounts extends BaseContract {
     updateConfig(
       newRegistrar: PromiseOrValue<string>,
       maxGeneralCategoryId: PromiseOrValue<BigNumberish>,
-      earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStruct,
+      earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -2001,7 +2005,7 @@ export interface IAccounts extends BaseContract {
       acctType: PromiseOrValue<BigNumberish>,
       beneficiaryAddress: PromiseOrValue<string>,
       beneficiaryEndowId: PromiseOrValue<BigNumberish>,
-      tokens: AngelCoreStruct.TokenInfoStruct[],
+      tokens: IAccountsDepositWithdrawEndowments.TokenInfoStruct[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
@@ -2009,7 +2013,7 @@ export interface IAccounts extends BaseContract {
   populateTransaction: {
     closeEndowment(
       id: PromiseOrValue<BigNumberish>,
-      beneficiary: AngelCoreStruct.BeneficiaryStruct,
+      beneficiary: LibAccounts.BeneficiaryStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -2072,7 +2076,7 @@ export interface IAccounts extends BaseContract {
 
     setupDao(
       id: PromiseOrValue<BigNumberish>,
-      details: AngelCoreStruct.DaoSetupStruct,
+      details: SubDaoLib.DaoSetupStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -2130,7 +2134,7 @@ export interface IAccounts extends BaseContract {
     updateConfig(
       newRegistrar: PromiseOrValue<string>,
       maxGeneralCategoryId: PromiseOrValue<BigNumberish>,
-      earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStruct,
+      earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -2173,7 +2177,7 @@ export interface IAccounts extends BaseContract {
       acctType: PromiseOrValue<BigNumberish>,
       beneficiaryAddress: PromiseOrValue<string>,
       beneficiaryEndowId: PromiseOrValue<BigNumberish>,
-      tokens: AngelCoreStruct.TokenInfoStruct[],
+      tokens: IAccountsDepositWithdrawEndowments.TokenInfoStruct[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };

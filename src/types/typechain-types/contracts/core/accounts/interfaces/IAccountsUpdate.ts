@@ -23,7 +23,7 @@ import type {
   PromiseOrValue,
 } from "../../../../common";
 
-export declare namespace AngelCoreStruct {
+export declare namespace LibAccounts {
   export type FeeSettingStruct = {
     payoutAddress: PromiseOrValue<string>;
     bps: PromiseOrValue<BigNumberish>;
@@ -50,7 +50,7 @@ export interface IAccountsUpdateInterface extends utils.Interface {
     values: [
       PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>,
-      AngelCoreStruct.FeeSettingStruct
+      LibAccounts.FeeSettingStruct
     ]
   ): string;
   encodeFunctionData(
@@ -100,7 +100,7 @@ export interface IAccountsUpdate extends BaseContract {
     updateConfig(
       newRegistrar: PromiseOrValue<string>,
       maxGeneralCategoryId: PromiseOrValue<BigNumberish>,
-      earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStruct,
+      earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -113,7 +113,7 @@ export interface IAccountsUpdate extends BaseContract {
   updateConfig(
     newRegistrar: PromiseOrValue<string>,
     maxGeneralCategoryId: PromiseOrValue<BigNumberish>,
-    earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStruct,
+    earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -126,7 +126,7 @@ export interface IAccountsUpdate extends BaseContract {
     updateConfig(
       newRegistrar: PromiseOrValue<string>,
       maxGeneralCategoryId: PromiseOrValue<BigNumberish>,
-      earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStruct,
+      earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -142,7 +142,7 @@ export interface IAccountsUpdate extends BaseContract {
     updateConfig(
       newRegistrar: PromiseOrValue<string>,
       maxGeneralCategoryId: PromiseOrValue<BigNumberish>,
-      earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStruct,
+      earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -156,7 +156,7 @@ export interface IAccountsUpdate extends BaseContract {
     updateConfig(
       newRegistrar: PromiseOrValue<string>,
       maxGeneralCategoryId: PromiseOrValue<BigNumberish>,
-      earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStruct,
+      earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

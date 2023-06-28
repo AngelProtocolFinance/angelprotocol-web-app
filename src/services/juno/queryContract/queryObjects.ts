@@ -15,8 +15,8 @@ import {
   AccountStorage,
 } from "types/typechain-types/contracts/core/accounts/interfaces/IAccounts";
 import {
+  IIndexFund,
   IndexFundStorage,
-  AngelCoreStruct as IndexFundStructs,
 } from "types/typechain-types/contracts/core/index-fund/IndexFund";
 import { RegistrarStorage } from "types/typechain-types/contracts/core/registrar/interfaces/IRegistrar";
 import { accounts } from "contracts/evm/Account";
@@ -44,7 +44,6 @@ export const queryObjects: {
       const d: RegistrarStorage.ConfigStructOutput =
         registrar.decodeFunctionResult("queryConfig", result)[0];
       return {
-        applicationsReview: d.applicationsReview.toLowerCase(),
         indexFundContract: d.indexFundContract.toLowerCase(),
         accountsContract: d.accountsContract.toLowerCase(),
         treasury: d.treasury.toLowerCase(),
@@ -69,7 +68,7 @@ export const queryObjects: {
         uniswapFactory: d.uniswapFactory.toLocaleLowerCase(),
         multisigFactory: d.multisigFactory.toLowerCase(),
         multisigEmitter: d.multisigEmitter.toLowerCase(),
-        charityProposal: d.charityProposal.toLowerCase(),
+        charityApplications: d.charityApplications.toLowerCase(),
         lockedWithdrawal: d.lockedWithdrawal.toLowerCase(),
         proxyAdmin: d.proxyAdmin.toLowerCase(),
         usdcAddress: d.usdcAddress.toLowerCase(),
@@ -97,7 +96,7 @@ export const queryObjects: {
   "index-fund.fund": [
     ({ id }) => indexFund.encodeFunctionData("queryFundDetails", [id]),
     (result) => {
-      const d: IndexFundStructs.IndexFundStructOutput =
+      const d: IIndexFund.IndexFundStructOutput =
         indexFund.decodeFunctionResult("queryFundDetails", result)[0];
 
       return {

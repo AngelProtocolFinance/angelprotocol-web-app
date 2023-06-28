@@ -83,7 +83,7 @@ export declare namespace IndexFundMessage {
   };
 }
 
-export declare namespace AngelCoreStruct {
+export declare namespace IIndexFund {
   export type IndexFundStruct = {
     id: PromiseOrValue<BigNumberish>;
     name: PromiseOrValue<string>;
@@ -473,7 +473,7 @@ export interface IndexFund extends BaseContract {
 
     queryActiveFundDetails(
       overrides?: CallOverrides
-    ): Promise<[AngelCoreStruct.IndexFundStructOutput]>;
+    ): Promise<[IIndexFund.IndexFundStructOutput]>;
 
     queryConfig(
       overrides?: CallOverrides
@@ -482,12 +482,12 @@ export interface IndexFund extends BaseContract {
     queryFundDetails(
       fundId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<[AngelCoreStruct.IndexFundStructOutput]>;
+    ): Promise<[IIndexFund.IndexFundStructOutput]>;
 
     queryInvolvedFunds(
       endowmentId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<[AngelCoreStruct.IndexFundStructOutput[]]>;
+    ): Promise<[IIndexFund.IndexFundStructOutput[]]>;
 
     queryState(
       overrides?: CallOverrides
@@ -550,7 +550,7 @@ export interface IndexFund extends BaseContract {
 
   queryActiveFundDetails(
     overrides?: CallOverrides
-  ): Promise<AngelCoreStruct.IndexFundStructOutput>;
+  ): Promise<IIndexFund.IndexFundStructOutput>;
 
   queryConfig(
     overrides?: CallOverrides
@@ -559,12 +559,12 @@ export interface IndexFund extends BaseContract {
   queryFundDetails(
     fundId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
-  ): Promise<AngelCoreStruct.IndexFundStructOutput>;
+  ): Promise<IIndexFund.IndexFundStructOutput>;
 
   queryInvolvedFunds(
     endowmentId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
-  ): Promise<AngelCoreStruct.IndexFundStructOutput[]>;
+  ): Promise<IIndexFund.IndexFundStructOutput[]>;
 
   queryState(
     overrides?: CallOverrides
@@ -627,7 +627,7 @@ export interface IndexFund extends BaseContract {
 
     queryActiveFundDetails(
       overrides?: CallOverrides
-    ): Promise<AngelCoreStruct.IndexFundStructOutput>;
+    ): Promise<IIndexFund.IndexFundStructOutput>;
 
     queryConfig(
       overrides?: CallOverrides
@@ -636,12 +636,12 @@ export interface IndexFund extends BaseContract {
     queryFundDetails(
       fundId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<AngelCoreStruct.IndexFundStructOutput>;
+    ): Promise<IIndexFund.IndexFundStructOutput>;
 
     queryInvolvedFunds(
       endowmentId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<AngelCoreStruct.IndexFundStructOutput[]>;
+    ): Promise<IIndexFund.IndexFundStructOutput[]>;
 
     queryState(
       overrides?: CallOverrides

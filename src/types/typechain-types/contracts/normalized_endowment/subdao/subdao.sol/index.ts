@@ -2,4 +2,3 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { SubDao } from "./SubDao";
-export type { SubDaoLib } from "./SubDaoLib";

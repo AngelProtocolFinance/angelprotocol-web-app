@@ -21,7 +21,7 @@ import type {
   PromiseOrValue,
 } from "../../../../common";
 
-export declare namespace AngelCoreStruct {
+export declare namespace LibAccounts {
   export type FeeSettingStruct = {
     payoutAddress: PromiseOrValue<string>;
     bps: PromiseOrValue<BigNumberish>;
@@ -44,70 +44,70 @@ export declare namespace AngelCoreStruct {
 
   export type SettingsPermissionStruct = {
     locked: PromiseOrValue<boolean>;
-    delegate: AngelCoreStruct.DelegateStruct;
+    delegate: LibAccounts.DelegateStruct;
   };
 
   export type SettingsPermissionStructOutput = [
     boolean,
-    AngelCoreStruct.DelegateStructOutput
-  ] & { locked: boolean; delegate: AngelCoreStruct.DelegateStructOutput };
+    LibAccounts.DelegateStructOutput
+  ] & { locked: boolean; delegate: LibAccounts.DelegateStructOutput };
 
   export type SettingsControllerStruct = {
-    acceptedTokens: AngelCoreStruct.SettingsPermissionStruct;
-    lockedInvestmentManagement: AngelCoreStruct.SettingsPermissionStruct;
-    liquidInvestmentManagement: AngelCoreStruct.SettingsPermissionStruct;
-    allowlistedBeneficiaries: AngelCoreStruct.SettingsPermissionStruct;
-    allowlistedContributors: AngelCoreStruct.SettingsPermissionStruct;
-    maturityAllowlist: AngelCoreStruct.SettingsPermissionStruct;
-    maturityTime: AngelCoreStruct.SettingsPermissionStruct;
-    earlyLockedWithdrawFee: AngelCoreStruct.SettingsPermissionStruct;
-    withdrawFee: AngelCoreStruct.SettingsPermissionStruct;
-    depositFee: AngelCoreStruct.SettingsPermissionStruct;
-    balanceFee: AngelCoreStruct.SettingsPermissionStruct;
-    name: AngelCoreStruct.SettingsPermissionStruct;
-    image: AngelCoreStruct.SettingsPermissionStruct;
-    logo: AngelCoreStruct.SettingsPermissionStruct;
-    sdgs: AngelCoreStruct.SettingsPermissionStruct;
-    splitToLiquid: AngelCoreStruct.SettingsPermissionStruct;
-    ignoreUserSplits: AngelCoreStruct.SettingsPermissionStruct;
+    acceptedTokens: LibAccounts.SettingsPermissionStruct;
+    lockedInvestmentManagement: LibAccounts.SettingsPermissionStruct;
+    liquidInvestmentManagement: LibAccounts.SettingsPermissionStruct;
+    allowlistedBeneficiaries: LibAccounts.SettingsPermissionStruct;
+    allowlistedContributors: LibAccounts.SettingsPermissionStruct;
+    maturityAllowlist: LibAccounts.SettingsPermissionStruct;
+    maturityTime: LibAccounts.SettingsPermissionStruct;
+    earlyLockedWithdrawFee: LibAccounts.SettingsPermissionStruct;
+    withdrawFee: LibAccounts.SettingsPermissionStruct;
+    depositFee: LibAccounts.SettingsPermissionStruct;
+    balanceFee: LibAccounts.SettingsPermissionStruct;
+    name: LibAccounts.SettingsPermissionStruct;
+    image: LibAccounts.SettingsPermissionStruct;
+    logo: LibAccounts.SettingsPermissionStruct;
+    sdgs: LibAccounts.SettingsPermissionStruct;
+    splitToLiquid: LibAccounts.SettingsPermissionStruct;
+    ignoreUserSplits: LibAccounts.SettingsPermissionStruct;
   };
 
   export type SettingsControllerStructOutput = [
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput
   ] & {
-    acceptedTokens: AngelCoreStruct.SettingsPermissionStructOutput;
-    lockedInvestmentManagement: AngelCoreStruct.SettingsPermissionStructOutput;
-    liquidInvestmentManagement: AngelCoreStruct.SettingsPermissionStructOutput;
-    allowlistedBeneficiaries: AngelCoreStruct.SettingsPermissionStructOutput;
-    allowlistedContributors: AngelCoreStruct.SettingsPermissionStructOutput;
-    maturityAllowlist: AngelCoreStruct.SettingsPermissionStructOutput;
-    maturityTime: AngelCoreStruct.SettingsPermissionStructOutput;
-    earlyLockedWithdrawFee: AngelCoreStruct.SettingsPermissionStructOutput;
-    withdrawFee: AngelCoreStruct.SettingsPermissionStructOutput;
-    depositFee: AngelCoreStruct.SettingsPermissionStructOutput;
-    balanceFee: AngelCoreStruct.SettingsPermissionStructOutput;
-    name: AngelCoreStruct.SettingsPermissionStructOutput;
-    image: AngelCoreStruct.SettingsPermissionStructOutput;
-    logo: AngelCoreStruct.SettingsPermissionStructOutput;
-    sdgs: AngelCoreStruct.SettingsPermissionStructOutput;
-    splitToLiquid: AngelCoreStruct.SettingsPermissionStructOutput;
-    ignoreUserSplits: AngelCoreStruct.SettingsPermissionStructOutput;
+    acceptedTokens: LibAccounts.SettingsPermissionStructOutput;
+    lockedInvestmentManagement: LibAccounts.SettingsPermissionStructOutput;
+    liquidInvestmentManagement: LibAccounts.SettingsPermissionStructOutput;
+    allowlistedBeneficiaries: LibAccounts.SettingsPermissionStructOutput;
+    allowlistedContributors: LibAccounts.SettingsPermissionStructOutput;
+    maturityAllowlist: LibAccounts.SettingsPermissionStructOutput;
+    maturityTime: LibAccounts.SettingsPermissionStructOutput;
+    earlyLockedWithdrawFee: LibAccounts.SettingsPermissionStructOutput;
+    withdrawFee: LibAccounts.SettingsPermissionStructOutput;
+    depositFee: LibAccounts.SettingsPermissionStructOutput;
+    balanceFee: LibAccounts.SettingsPermissionStructOutput;
+    name: LibAccounts.SettingsPermissionStructOutput;
+    image: LibAccounts.SettingsPermissionStructOutput;
+    logo: LibAccounts.SettingsPermissionStructOutput;
+    sdgs: LibAccounts.SettingsPermissionStructOutput;
+    splitToLiquid: LibAccounts.SettingsPermissionStructOutput;
+    ignoreUserSplits: LibAccounts.SettingsPermissionStructOutput;
   };
 
   export type SplitDetailsStruct = {
@@ -135,14 +135,14 @@ export declare namespace AngelCoreStruct {
   };
 
   export type BeneficiaryStruct = {
-    data: AngelCoreStruct.BeneficiaryDataStruct;
+    data: LibAccounts.BeneficiaryDataStruct;
     enumData: PromiseOrValue<BigNumberish>;
   };
 
   export type BeneficiaryStructOutput = [
-    AngelCoreStruct.BeneficiaryDataStructOutput,
+    LibAccounts.BeneficiaryDataStructOutput,
     number
-  ] & { data: AngelCoreStruct.BeneficiaryDataStructOutput; enumData: number };
+  ] & { data: LibAccounts.BeneficiaryDataStructOutput; enumData: number };
 }
 
 export declare namespace AccountMessages {
@@ -155,7 +155,7 @@ export declare namespace AccountMessages {
     subDao: PromiseOrValue<string>;
     gateway: PromiseOrValue<string>;
     gasReceiver: PromiseOrValue<string>;
-    earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStruct;
+    earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct;
   };
 
   export type ConfigResponseStructOutput = [
@@ -167,7 +167,7 @@ export declare namespace AccountMessages {
     string,
     string,
     string,
-    AngelCoreStruct.FeeSettingStructOutput
+    LibAccounts.FeeSettingStructOutput
   ] & {
     owner: string;
     version: string;
@@ -177,20 +177,20 @@ export declare namespace AccountMessages {
     subDao: string;
     gateway: string;
     gasReceiver: string;
-    earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStructOutput;
+    earlyLockedWithdrawFee: LibAccounts.FeeSettingStructOutput;
   };
 
   export type StateResponseStruct = {
     closingEndowment: PromiseOrValue<boolean>;
-    closingBeneficiary: AngelCoreStruct.BeneficiaryStruct;
+    closingBeneficiary: LibAccounts.BeneficiaryStruct;
   };
 
   export type StateResponseStructOutput = [
     boolean,
-    AngelCoreStruct.BeneficiaryStructOutput
+    LibAccounts.BeneficiaryStructOutput
   ] & {
     closingEndowment: boolean;
-    closingBeneficiary: AngelCoreStruct.BeneficiaryStructOutput;
+    closingBeneficiary: LibAccounts.BeneficiaryStructOutput;
   };
 }
 
@@ -242,14 +242,14 @@ export declare namespace AccountStorage {
     allowlistedBeneficiaries: PromiseOrValue<string>[];
     allowlistedContributors: PromiseOrValue<string>[];
     maturityAllowlist: PromiseOrValue<string>[];
-    earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStruct;
-    withdrawFee: AngelCoreStruct.FeeSettingStruct;
-    depositFee: AngelCoreStruct.FeeSettingStruct;
-    balanceFee: AngelCoreStruct.FeeSettingStruct;
-    settingsController: AngelCoreStruct.SettingsControllerStruct;
+    earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct;
+    withdrawFee: LibAccounts.FeeSettingStruct;
+    depositFee: LibAccounts.FeeSettingStruct;
+    balanceFee: LibAccounts.FeeSettingStruct;
+    settingsController: LibAccounts.SettingsControllerStruct;
     parent: PromiseOrValue<BigNumberish>;
     ignoreUserSplits: PromiseOrValue<boolean>;
-    splitToLiquid: AngelCoreStruct.SplitDetailsStruct;
+    splitToLiquid: LibAccounts.SplitDetailsStruct;
     referralId: PromiseOrValue<BigNumberish>;
   };
 
@@ -273,14 +273,14 @@ export declare namespace AccountStorage {
     string[],
     string[],
     string[],
-    AngelCoreStruct.FeeSettingStructOutput,
-    AngelCoreStruct.FeeSettingStructOutput,
-    AngelCoreStruct.FeeSettingStructOutput,
-    AngelCoreStruct.FeeSettingStructOutput,
-    AngelCoreStruct.SettingsControllerStructOutput,
+    LibAccounts.FeeSettingStructOutput,
+    LibAccounts.FeeSettingStructOutput,
+    LibAccounts.FeeSettingStructOutput,
+    LibAccounts.FeeSettingStructOutput,
+    LibAccounts.SettingsControllerStructOutput,
     number,
     boolean,
-    AngelCoreStruct.SplitDetailsStructOutput,
+    LibAccounts.SplitDetailsStructOutput,
     BigNumber
   ] & {
     owner: string;
@@ -302,14 +302,14 @@ export declare namespace AccountStorage {
     allowlistedBeneficiaries: string[];
     allowlistedContributors: string[];
     maturityAllowlist: string[];
-    earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStructOutput;
-    withdrawFee: AngelCoreStruct.FeeSettingStructOutput;
-    depositFee: AngelCoreStruct.FeeSettingStructOutput;
-    balanceFee: AngelCoreStruct.FeeSettingStructOutput;
-    settingsController: AngelCoreStruct.SettingsControllerStructOutput;
+    earlyLockedWithdrawFee: LibAccounts.FeeSettingStructOutput;
+    withdrawFee: LibAccounts.FeeSettingStructOutput;
+    depositFee: LibAccounts.FeeSettingStructOutput;
+    balanceFee: LibAccounts.FeeSettingStructOutput;
+    settingsController: LibAccounts.SettingsControllerStructOutput;
     parent: number;
     ignoreUserSplits: boolean;
-    splitToLiquid: AngelCoreStruct.SplitDetailsStructOutput;
+    splitToLiquid: LibAccounts.SplitDetailsStructOutput;
     referralId: BigNumber;
   };
 }

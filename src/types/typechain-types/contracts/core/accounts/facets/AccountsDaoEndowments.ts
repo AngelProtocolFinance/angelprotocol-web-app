@@ -27,7 +27,7 @@ import type {
   PromiseOrValue,
 } from "../../../../common";
 
-export declare namespace AngelCoreStruct {
+export declare namespace SubDaoLib {
   export type VeTypeDataStruct = {
     value: PromiseOrValue<BigNumberish>;
     scale: PromiseOrValue<BigNumberish>;
@@ -49,20 +49,20 @@ export declare namespace AngelCoreStruct {
 
   export type VeTypeStruct = {
     ve_type: PromiseOrValue<BigNumberish>;
-    data: AngelCoreStruct.VeTypeDataStruct;
+    data: SubDaoLib.VeTypeDataStruct;
   };
 
   export type VeTypeStructOutput = [
     number,
-    AngelCoreStruct.VeTypeDataStructOutput
-  ] & { ve_type: number; data: AngelCoreStruct.VeTypeDataStructOutput };
+    SubDaoLib.VeTypeDataStructOutput
+  ] & { ve_type: number; data: SubDaoLib.VeTypeDataStructOutput };
 
   export type DaoTokenDataStruct = {
     existingData: PromiseOrValue<string>;
     newInitialSupply: PromiseOrValue<BigNumberish>;
     newName: PromiseOrValue<string>;
     newSymbol: PromiseOrValue<string>;
-    veBondingType: AngelCoreStruct.VeTypeStruct;
+    veBondingType: SubDaoLib.VeTypeStruct;
     veBondingName: PromiseOrValue<string>;
     veBondingSymbol: PromiseOrValue<string>;
     veBondingDecimals: PromiseOrValue<BigNumberish>;
@@ -76,7 +76,7 @@ export declare namespace AngelCoreStruct {
     BigNumber,
     string,
     string,
-    AngelCoreStruct.VeTypeStructOutput,
+    SubDaoLib.VeTypeStructOutput,
     string,
     string,
     BigNumber,
@@ -88,7 +88,7 @@ export declare namespace AngelCoreStruct {
     newInitialSupply: BigNumber;
     newName: string;
     newSymbol: string;
-    veBondingType: AngelCoreStruct.VeTypeStructOutput;
+    veBondingType: SubDaoLib.VeTypeStructOutput;
     veBondingName: string;
     veBondingSymbol: string;
     veBondingDecimals: BigNumber;
@@ -99,13 +99,13 @@ export declare namespace AngelCoreStruct {
 
   export type DaoTokenStruct = {
     token: PromiseOrValue<BigNumberish>;
-    data: AngelCoreStruct.DaoTokenDataStruct;
+    data: SubDaoLib.DaoTokenDataStruct;
   };
 
   export type DaoTokenStructOutput = [
     number,
-    AngelCoreStruct.DaoTokenDataStructOutput
-  ] & { token: number; data: AngelCoreStruct.DaoTokenDataStructOutput };
+    SubDaoLib.DaoTokenDataStructOutput
+  ] & { token: number; data: SubDaoLib.DaoTokenDataStructOutput };
 
   export type DaoSetupStruct = {
     quorum: PromiseOrValue<BigNumberish>;
@@ -115,7 +115,7 @@ export declare namespace AngelCoreStruct {
     expirationPeriod: PromiseOrValue<BigNumberish>;
     proposalDeposit: PromiseOrValue<BigNumberish>;
     snapshotPeriod: PromiseOrValue<BigNumberish>;
-    token: AngelCoreStruct.DaoTokenStruct;
+    token: SubDaoLib.DaoTokenStruct;
   };
 
   export type DaoSetupStructOutput = [
@@ -126,7 +126,7 @@ export declare namespace AngelCoreStruct {
     BigNumber,
     BigNumber,
     BigNumber,
-    AngelCoreStruct.DaoTokenStructOutput
+    SubDaoLib.DaoTokenStructOutput
   ] & {
     quorum: BigNumber;
     threshold: BigNumber;
@@ -135,7 +135,7 @@ export declare namespace AngelCoreStruct {
     expirationPeriod: BigNumber;
     proposalDeposit: BigNumber;
     snapshotPeriod: BigNumber;
-    token: AngelCoreStruct.DaoTokenStructOutput;
+    token: SubDaoLib.DaoTokenStructOutput;
   };
 }
 
@@ -148,7 +148,7 @@ export interface AccountsDaoEndowmentsInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "setupDao",
-    values: [PromiseOrValue<BigNumberish>, AngelCoreStruct.DaoSetupStruct]
+    values: [PromiseOrValue<BigNumberish>, SubDaoLib.DaoSetupStruct]
   ): string;
 
   decodeFunctionResult(functionFragment: "setupDao", data: BytesLike): Result;
@@ -350,21 +350,21 @@ export interface AccountsDaoEndowments extends BaseContract {
   functions: {
     setupDao(
       id: PromiseOrValue<BigNumberish>,
-      details: AngelCoreStruct.DaoSetupStruct,
+      details: SubDaoLib.DaoSetupStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
 
   setupDao(
     id: PromiseOrValue<BigNumberish>,
-    details: AngelCoreStruct.DaoSetupStruct,
+    details: SubDaoLib.DaoSetupStruct,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     setupDao(
       id: PromiseOrValue<BigNumberish>,
-      details: AngelCoreStruct.DaoSetupStruct,
+      details: SubDaoLib.DaoSetupStruct,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -478,7 +478,7 @@ export interface AccountsDaoEndowments extends BaseContract {
   estimateGas: {
     setupDao(
       id: PromiseOrValue<BigNumberish>,
-      details: AngelCoreStruct.DaoSetupStruct,
+      details: SubDaoLib.DaoSetupStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
@@ -486,7 +486,7 @@ export interface AccountsDaoEndowments extends BaseContract {
   populateTransaction: {
     setupDao(
       id: PromiseOrValue<BigNumberish>,
-      details: AngelCoreStruct.DaoSetupStruct,
+      details: SubDaoLib.DaoSetupStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };

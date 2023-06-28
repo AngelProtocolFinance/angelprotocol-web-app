@@ -4,8 +4,7 @@ import { RegistrarConfigUpdate } from "types/contracts";
 export type Fields = Pick<
   RegistrarConfigUpdate,
   | "accountsContract"
-  | "applicationsReview"
-  | "charityProposal"
+  | "charityApplications"
   | "charitySharesContract"
   | "donationMatchCharitesContract"
   | "fundraisingContract"

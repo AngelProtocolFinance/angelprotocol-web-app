@@ -15,7 +15,5 @@ import type * as router from "./router";
 export type { router };
 import type * as strategy from "./strategy";
 export type { strategy };
-import type * as structSol from "./struct.sol";
-export type { structSol };
 import type * as vault from "./vault";
 export type { vault };

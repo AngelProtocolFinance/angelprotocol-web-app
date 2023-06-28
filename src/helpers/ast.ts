@@ -1,9 +1,9 @@
 import { Splits } from "types/ast";
-import { SplitDetails } from "types/contracts";
+import { AccountsSplitDetails } from "types/contracts";
 
 //// converter ////
 export const toFormSplit = (
-  split: SplitDetails,
+  split: AccountsSplitDetails,
   isCustom: boolean
 ): Splits => ({
   isCustom,
@@ -13,7 +13,7 @@ export const toFormSplit = (
   max: `${100 - split.min}`,
 });
 
-export const toContractSplit = (split: Splits): SplitDetails => ({
+export const toContractSplit = (split: Splits): AccountsSplitDetails => ({
   //locked to liquid
   max: 100 - +split.min,
   min: 100 - +split.max,

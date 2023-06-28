@@ -42,7 +42,7 @@ export declare namespace AccountMessages {
   };
 }
 
-export declare namespace AngelCoreStruct {
+export declare namespace IAccountsDepositWithdrawEndowments {
   export type TokenInfoStruct = {
     addr: PromiseOrValue<string>;
     amnt: PromiseOrValue<BigNumberish>;
@@ -85,7 +85,7 @@ export interface AccountsDepositWithdrawEndowmentsInterface
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>,
-      AngelCoreStruct.TokenInfoStruct[]
+      IAccountsDepositWithdrawEndowments.TokenInfoStruct[]
     ]
   ): string;
 
@@ -311,7 +311,7 @@ export interface AccountsDepositWithdrawEndowments extends BaseContract {
       acctType: PromiseOrValue<BigNumberish>,
       beneficiaryAddress: PromiseOrValue<string>,
       beneficiaryEndowId: PromiseOrValue<BigNumberish>,
-      tokens: AngelCoreStruct.TokenInfoStruct[],
+      tokens: IAccountsDepositWithdrawEndowments.TokenInfoStruct[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
@@ -333,7 +333,7 @@ export interface AccountsDepositWithdrawEndowments extends BaseContract {
     acctType: PromiseOrValue<BigNumberish>,
     beneficiaryAddress: PromiseOrValue<string>,
     beneficiaryEndowId: PromiseOrValue<BigNumberish>,
-    tokens: AngelCoreStruct.TokenInfoStruct[],
+    tokens: IAccountsDepositWithdrawEndowments.TokenInfoStruct[],
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -355,7 +355,7 @@ export interface AccountsDepositWithdrawEndowments extends BaseContract {
       acctType: PromiseOrValue<BigNumberish>,
       beneficiaryAddress: PromiseOrValue<string>,
       beneficiaryEndowId: PromiseOrValue<BigNumberish>,
-      tokens: AngelCoreStruct.TokenInfoStruct[],
+      tokens: IAccountsDepositWithdrawEndowments.TokenInfoStruct[],
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -484,7 +484,7 @@ export interface AccountsDepositWithdrawEndowments extends BaseContract {
       acctType: PromiseOrValue<BigNumberish>,
       beneficiaryAddress: PromiseOrValue<string>,
       beneficiaryEndowId: PromiseOrValue<BigNumberish>,
-      tokens: AngelCoreStruct.TokenInfoStruct[],
+      tokens: IAccountsDepositWithdrawEndowments.TokenInfoStruct[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
@@ -507,7 +507,7 @@ export interface AccountsDepositWithdrawEndowments extends BaseContract {
       acctType: PromiseOrValue<BigNumberish>,
       beneficiaryAddress: PromiseOrValue<string>,
       beneficiaryEndowId: PromiseOrValue<BigNumberish>,
-      tokens: AngelCoreStruct.TokenInfoStruct[],
+      tokens: IAccountsDepositWithdrawEndowments.TokenInfoStruct[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };

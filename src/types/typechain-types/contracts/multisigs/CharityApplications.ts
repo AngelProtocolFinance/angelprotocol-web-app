@@ -27,7 +27,214 @@ import type {
   PromiseOrValue,
 } from "../../common";
 
-export interface ApplicationsMultiSigInterface extends utils.Interface {
+export declare namespace LibAccounts {
+  export type FeeSettingStruct = {
+    payoutAddress: PromiseOrValue<string>;
+    bps: PromiseOrValue<BigNumberish>;
+  };
+
+  export type FeeSettingStructOutput = [string, BigNumber] & {
+    payoutAddress: string;
+    bps: BigNumber;
+  };
+
+  export type DelegateStruct = {
+    addr: PromiseOrValue<string>;
+    expires: PromiseOrValue<BigNumberish>;
+  };
+
+  export type DelegateStructOutput = [string, BigNumber] & {
+    addr: string;
+    expires: BigNumber;
+  };
+
+  export type SettingsPermissionStruct = {
+    locked: PromiseOrValue<boolean>;
+    delegate: LibAccounts.DelegateStruct;
+  };
+
+  export type SettingsPermissionStructOutput = [
+    boolean,
+    LibAccounts.DelegateStructOutput
+  ] & { locked: boolean; delegate: LibAccounts.DelegateStructOutput };
+
+  export type SettingsControllerStruct = {
+    acceptedTokens: LibAccounts.SettingsPermissionStruct;
+    lockedInvestmentManagement: LibAccounts.SettingsPermissionStruct;
+    liquidInvestmentManagement: LibAccounts.SettingsPermissionStruct;
+    allowlistedBeneficiaries: LibAccounts.SettingsPermissionStruct;
+    allowlistedContributors: LibAccounts.SettingsPermissionStruct;
+    maturityAllowlist: LibAccounts.SettingsPermissionStruct;
+    maturityTime: LibAccounts.SettingsPermissionStruct;
+    earlyLockedWithdrawFee: LibAccounts.SettingsPermissionStruct;
+    withdrawFee: LibAccounts.SettingsPermissionStruct;
+    depositFee: LibAccounts.SettingsPermissionStruct;
+    balanceFee: LibAccounts.SettingsPermissionStruct;
+    name: LibAccounts.SettingsPermissionStruct;
+    image: LibAccounts.SettingsPermissionStruct;
+    logo: LibAccounts.SettingsPermissionStruct;
+    sdgs: LibAccounts.SettingsPermissionStruct;
+    splitToLiquid: LibAccounts.SettingsPermissionStruct;
+    ignoreUserSplits: LibAccounts.SettingsPermissionStruct;
+  };
+
+  export type SettingsControllerStructOutput = [
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput,
+    LibAccounts.SettingsPermissionStructOutput
+  ] & {
+    acceptedTokens: LibAccounts.SettingsPermissionStructOutput;
+    lockedInvestmentManagement: LibAccounts.SettingsPermissionStructOutput;
+    liquidInvestmentManagement: LibAccounts.SettingsPermissionStructOutput;
+    allowlistedBeneficiaries: LibAccounts.SettingsPermissionStructOutput;
+    allowlistedContributors: LibAccounts.SettingsPermissionStructOutput;
+    maturityAllowlist: LibAccounts.SettingsPermissionStructOutput;
+    maturityTime: LibAccounts.SettingsPermissionStructOutput;
+    earlyLockedWithdrawFee: LibAccounts.SettingsPermissionStructOutput;
+    withdrawFee: LibAccounts.SettingsPermissionStructOutput;
+    depositFee: LibAccounts.SettingsPermissionStructOutput;
+    balanceFee: LibAccounts.SettingsPermissionStructOutput;
+    name: LibAccounts.SettingsPermissionStructOutput;
+    image: LibAccounts.SettingsPermissionStructOutput;
+    logo: LibAccounts.SettingsPermissionStructOutput;
+    sdgs: LibAccounts.SettingsPermissionStructOutput;
+    splitToLiquid: LibAccounts.SettingsPermissionStructOutput;
+    ignoreUserSplits: LibAccounts.SettingsPermissionStructOutput;
+  };
+
+  export type SplitDetailsStruct = {
+    max: PromiseOrValue<BigNumberish>;
+    min: PromiseOrValue<BigNumberish>;
+    defaultSplit: PromiseOrValue<BigNumberish>;
+  };
+
+  export type SplitDetailsStructOutput = [BigNumber, BigNumber, BigNumber] & {
+    max: BigNumber;
+    min: BigNumber;
+    defaultSplit: BigNumber;
+  };
+}
+
+export declare namespace AccountMessages {
+  export type CreateEndowmentRequestStruct = {
+    withdrawBeforeMaturity: PromiseOrValue<boolean>;
+    maturityTime: PromiseOrValue<BigNumberish>;
+    name: PromiseOrValue<string>;
+    sdgs: PromiseOrValue<BigNumberish>[];
+    tier: PromiseOrValue<BigNumberish>;
+    endowType: PromiseOrValue<BigNumberish>;
+    logo: PromiseOrValue<string>;
+    image: PromiseOrValue<string>;
+    members: PromiseOrValue<string>[];
+    threshold: PromiseOrValue<BigNumberish>;
+    duration: PromiseOrValue<BigNumberish>;
+    allowlistedBeneficiaries: PromiseOrValue<string>[];
+    allowlistedContributors: PromiseOrValue<string>[];
+    earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct;
+    withdrawFee: LibAccounts.FeeSettingStruct;
+    depositFee: LibAccounts.FeeSettingStruct;
+    balanceFee: LibAccounts.FeeSettingStruct;
+    proposalLink: PromiseOrValue<BigNumberish>;
+    settingsController: LibAccounts.SettingsControllerStruct;
+    parent: PromiseOrValue<BigNumberish>;
+    maturityAllowlist: PromiseOrValue<string>[];
+    ignoreUserSplits: PromiseOrValue<boolean>;
+    splitToLiquid: LibAccounts.SplitDetailsStruct;
+    referralId: PromiseOrValue<BigNumberish>;
+  };
+
+  export type CreateEndowmentRequestStructOutput = [
+    boolean,
+    BigNumber,
+    string,
+    BigNumber[],
+    number,
+    number,
+    string,
+    string,
+    string[],
+    BigNumber,
+    BigNumber,
+    string[],
+    string[],
+    LibAccounts.FeeSettingStructOutput,
+    LibAccounts.FeeSettingStructOutput,
+    LibAccounts.FeeSettingStructOutput,
+    LibAccounts.FeeSettingStructOutput,
+    BigNumber,
+    LibAccounts.SettingsControllerStructOutput,
+    number,
+    string[],
+    boolean,
+    LibAccounts.SplitDetailsStructOutput,
+    BigNumber
+  ] & {
+    withdrawBeforeMaturity: boolean;
+    maturityTime: BigNumber;
+    name: string;
+    sdgs: BigNumber[];
+    tier: number;
+    endowType: number;
+    logo: string;
+    image: string;
+    members: string[];
+    threshold: BigNumber;
+    duration: BigNumber;
+    allowlistedBeneficiaries: string[];
+    allowlistedContributors: string[];
+    earlyLockedWithdrawFee: LibAccounts.FeeSettingStructOutput;
+    withdrawFee: LibAccounts.FeeSettingStructOutput;
+    depositFee: LibAccounts.FeeSettingStructOutput;
+    balanceFee: LibAccounts.FeeSettingStructOutput;
+    proposalLink: BigNumber;
+    settingsController: LibAccounts.SettingsControllerStructOutput;
+    parent: number;
+    maturityAllowlist: string[];
+    ignoreUserSplits: boolean;
+    splitToLiquid: LibAccounts.SplitDetailsStructOutput;
+    referralId: BigNumber;
+  };
+}
+
+export declare namespace ApplicationsStorage {
+  export type ConfigStruct = {
+    accountsContract: PromiseOrValue<string>;
+    seedSplitToLiquid: PromiseOrValue<BigNumberish>;
+    gasAmount: PromiseOrValue<BigNumberish>;
+    seedAsset: PromiseOrValue<string>;
+    seedAmount: PromiseOrValue<BigNumberish>;
+  };
+
+  export type ConfigStructOutput = [
+    string,
+    BigNumber,
+    BigNumber,
+    string,
+    BigNumber
+  ] & {
+    accountsContract: string;
+    seedSplitToLiquid: BigNumber;
+    gasAmount: BigNumber;
+    seedAsset: string;
+    seedAmount: BigNumber;
+  };
+}
+
+export interface CharityApplicationsInterface extends utils.Interface {
   functions: {
     "activeOwnersCount()": FunctionFragment;
     "addOwners(address[])": FunctionFragment;
@@ -35,25 +242,34 @@ export interface ApplicationsMultiSigInterface extends utils.Interface {
     "changeApprovalsRequirement(uint256)": FunctionFragment;
     "changeRequireExecution(bool)": FunctionFragment;
     "changeTransactionExpiry(uint256)": FunctionFragment;
+    "config()": FunctionFragment;
+    "confirmProposal(uint256)": FunctionFragment;
     "confirmTransaction(uint256)": FunctionFragment;
     "confirmations(uint256)": FunctionFragment;
+    "executeProposal(uint256)": FunctionFragment;
     "executeTransaction(uint256)": FunctionFragment;
     "getConfirmationCount(uint256)": FunctionFragment;
     "getConfirmationStatus(uint256,address)": FunctionFragment;
     "getOwnerStatus(address)": FunctionFragment;
     "initialize(address[],uint256,bool,uint256)": FunctionFragment;
+    "initializeApplications(address[],uint256,bool,uint256,address,uint256,uint256,address,uint256)": FunctionFragment;
     "isConfirmed(uint256)": FunctionFragment;
     "isOwner(address)": FunctionFragment;
+    "proposals(uint256)": FunctionFragment;
+    "proposeApplication((bool,uint256,string,uint256[],uint8,uint8,string,string,address[],uint256,uint256,address[],address[],(address,uint256),(address,uint256),(address,uint256),(address,uint256),uint256,((bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256))),uint32,address[],bool,(uint256,uint256,uint256),uint256),string)": FunctionFragment;
+    "queryConfig()": FunctionFragment;
     "removeOwners(address[])": FunctionFragment;
     "replaceOwner(address,address)": FunctionFragment;
     "requireExecution()": FunctionFragment;
     "revokeConfirmation(uint256)": FunctionFragment;
     "revokeConfirmationOfFormerOwner(uint256,address)": FunctionFragment;
+    "revokeProposalConfirmation(uint256)": FunctionFragment;
     "submitTransaction(address,uint256,bytes,bytes)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
     "transactionCount()": FunctionFragment;
     "transactionExpiry()": FunctionFragment;
     "transactions(uint256)": FunctionFragment;
+    "updateConfig(uint256,address,uint256,uint256,address,uint256)": FunctionFragment;
   };
 
   getFunction(
@@ -64,25 +280,34 @@ export interface ApplicationsMultiSigInterface extends utils.Interface {
       | "changeApprovalsRequirement"
       | "changeRequireExecution"
       | "changeTransactionExpiry"
+      | "config"
+      | "confirmProposal"
       | "confirmTransaction"
       | "confirmations"
+      | "executeProposal"
       | "executeTransaction"
       | "getConfirmationCount"
       | "getConfirmationStatus"
       | "getOwnerStatus"
       | "initialize"
+      | "initializeApplications"
       | "isConfirmed"
       | "isOwner"
+      | "proposals"
+      | "proposeApplication"
+      | "queryConfig"
       | "removeOwners"
       | "replaceOwner"
       | "requireExecution"
       | "revokeConfirmation"
       | "revokeConfirmationOfFormerOwner"
+      | "revokeProposalConfirmation"
       | "submitTransaction"
       | "supportsInterface"
       | "transactionCount"
       | "transactionExpiry"
       | "transactions"
+      | "updateConfig"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -109,12 +334,21 @@ export interface ApplicationsMultiSigInterface extends utils.Interface {
     functionFragment: "changeTransactionExpiry",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: "config", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "confirmProposal",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
   encodeFunctionData(
     functionFragment: "confirmTransaction",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "confirmations",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "executeProposal",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
@@ -143,12 +377,41 @@ export interface ApplicationsMultiSigInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
+    functionFragment: "initializeApplications",
+    values: [
+      PromiseOrValue<string>[],
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<boolean>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>
+    ]
+  ): string;
+  encodeFunctionData(
     functionFragment: "isConfirmed",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "isOwner",
     values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "proposals",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "proposeApplication",
+    values: [
+      AccountMessages.CreateEndowmentRequestStruct,
+      PromiseOrValue<string>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "queryConfig",
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "removeOwners",
@@ -169,6 +432,10 @@ export interface ApplicationsMultiSigInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "revokeConfirmationOfFormerOwner",
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "revokeProposalConfirmation",
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "submitTransaction",
@@ -195,6 +462,17 @@ export interface ApplicationsMultiSigInterface extends utils.Interface {
     functionFragment: "transactions",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(
+    functionFragment: "updateConfig",
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>
+    ]
+  ): string;
 
   decodeFunctionResult(
     functionFragment: "activeOwnersCount",
@@ -217,12 +495,21 @@ export interface ApplicationsMultiSigInterface extends utils.Interface {
     functionFragment: "changeTransactionExpiry",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "config", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "confirmProposal",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "confirmTransaction",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "confirmations",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "executeProposal",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -243,10 +530,23 @@ export interface ApplicationsMultiSigInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: "initializeApplications",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "isConfirmed",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "isOwner", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "proposals", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "proposeApplication",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "queryConfig",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "removeOwners",
     data: BytesLike
@@ -265,6 +565,10 @@ export interface ApplicationsMultiSigInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "revokeConfirmationOfFormerOwner",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "revokeProposalConfirmation",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -287,33 +591,97 @@ export interface ApplicationsMultiSigInterface extends utils.Interface {
     functionFragment: "transactions",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "updateConfig",
+    data: BytesLike
+  ): Result;
 
   events: {
+    "ApplicationConfirmationRevoked(uint256,address)": EventFragment;
+    "ApplicationConfirmed(uint256,address)": EventFragment;
+    "ApplicationExecuted(uint256)": EventFragment;
+    "ApplicationProposed(uint256)": EventFragment;
     "ApprovalsRequiredChanged(uint256)": EventFragment;
     "ConfirmationRevoked(address,uint256)": EventFragment;
     "Deposit(address,uint256)": EventFragment;
+    "GasSent(uint256,address,uint256)": EventFragment;
     "Initialized(uint8)": EventFragment;
     "OwnerAdded(address)": EventFragment;
     "OwnerRemoved(address)": EventFragment;
     "RequireExecutionChanged(bool)": EventFragment;
+    "SeedAssetSent(uint256,address,uint256)": EventFragment;
     "TransactionConfirmed(address,uint256)": EventFragment;
     "TransactionExecuted(uint256)": EventFragment;
     "TransactionExpiryChanged(uint256)": EventFragment;
     "TransactionSubmitted(address,uint256)": EventFragment;
   };
 
+  getEvent(
+    nameOrSignatureOrTopic: "ApplicationConfirmationRevoked"
+  ): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ApplicationConfirmed"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ApplicationExecuted"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ApplicationProposed"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ApprovalsRequiredChanged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ConfirmationRevoked"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Deposit"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "GasSent"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnerAdded"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnerRemoved"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RequireExecutionChanged"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "SeedAssetSent"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "TransactionConfirmed"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "TransactionExecuted"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "TransactionExpiryChanged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "TransactionSubmitted"): EventFragment;
 }
+
+export interface ApplicationConfirmationRevokedEventObject {
+  proposalId: BigNumber;
+  owner: string;
+}
+export type ApplicationConfirmationRevokedEvent = TypedEvent<
+  [BigNumber, string],
+  ApplicationConfirmationRevokedEventObject
+>;
+
+export type ApplicationConfirmationRevokedEventFilter =
+  TypedEventFilter<ApplicationConfirmationRevokedEvent>;
+
+export interface ApplicationConfirmedEventObject {
+  proposalId: BigNumber;
+  owner: string;
+}
+export type ApplicationConfirmedEvent = TypedEvent<
+  [BigNumber, string],
+  ApplicationConfirmedEventObject
+>;
+
+export type ApplicationConfirmedEventFilter =
+  TypedEventFilter<ApplicationConfirmedEvent>;
+
+export interface ApplicationExecutedEventObject {
+  proposalId: BigNumber;
+}
+export type ApplicationExecutedEvent = TypedEvent<
+  [BigNumber],
+  ApplicationExecutedEventObject
+>;
+
+export type ApplicationExecutedEventFilter =
+  TypedEventFilter<ApplicationExecutedEvent>;
+
+export interface ApplicationProposedEventObject {
+  proposalId: BigNumber;
+}
+export type ApplicationProposedEvent = TypedEvent<
+  [BigNumber],
+  ApplicationProposedEventObject
+>;
+
+export type ApplicationProposedEventFilter =
+  TypedEventFilter<ApplicationProposedEvent>;
 
 export interface ApprovalsRequiredChangedEventObject {
   approvalsRequired: BigNumber;
@@ -346,6 +714,18 @@ export type DepositEvent = TypedEvent<[string, BigNumber], DepositEventObject>;
 
 export type DepositEventFilter = TypedEventFilter<DepositEvent>;
 
+export interface GasSentEventObject {
+  endowmentId: BigNumber;
+  member: string;
+  amount: BigNumber;
+}
+export type GasSentEvent = TypedEvent<
+  [BigNumber, string, BigNumber],
+  GasSentEventObject
+>;
+
+export type GasSentEventFilter = TypedEventFilter<GasSentEvent>;
+
 export interface InitializedEventObject {
   version: number;
 }
@@ -377,6 +757,18 @@ export type RequireExecutionChangedEvent = TypedEvent<
 
 export type RequireExecutionChangedEventFilter =
   TypedEventFilter<RequireExecutionChangedEvent>;
+
+export interface SeedAssetSentEventObject {
+  endowmentId: BigNumber;
+  asset: string;
+  amount: BigNumber;
+}
+export type SeedAssetSentEvent = TypedEvent<
+  [BigNumber, string, BigNumber],
+  SeedAssetSentEventObject
+>;
+
+export type SeedAssetSentEventFilter = TypedEventFilter<SeedAssetSentEvent>;
 
 export interface TransactionConfirmedEventObject {
   sender: string;
@@ -424,12 +816,12 @@ export type TransactionSubmittedEvent = TypedEvent<
 export type TransactionSubmittedEventFilter =
   TypedEventFilter<TransactionSubmittedEvent>;
 
-export interface ApplicationsMultiSig extends BaseContract {
+export interface CharityApplications extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: ApplicationsMultiSigInterface;
+  interface: CharityApplicationsInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -475,6 +867,23 @@ export interface ApplicationsMultiSig extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    config(
+      overrides?: CallOverrides
+    ): Promise<
+      [string, BigNumber, BigNumber, string, BigNumber] & {
+        accountsContract: string;
+        seedSplitToLiquid: BigNumber;
+        gasAmount: BigNumber;
+        seedAsset: string;
+        seedAmount: BigNumber;
+      }
+    >;
+
+    confirmProposal(
+      proposalId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     confirmTransaction(
       transactionId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -484,6 +893,11 @@ export interface ApplicationsMultiSig extends BaseContract {
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[BigNumber] & { count: BigNumber }>;
+
+    executeProposal(
+      proposalId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
 
     executeTransaction(
       transactionId: PromiseOrValue<BigNumberish>,
@@ -507,10 +921,23 @@ export interface ApplicationsMultiSig extends BaseContract {
     ): Promise<[boolean]>;
 
     initialize(
+      arg0: PromiseOrValue<string>[],
+      arg1: PromiseOrValue<BigNumberish>,
+      arg2: PromiseOrValue<boolean>,
+      arg3: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    initializeApplications(
       owners: PromiseOrValue<string>[],
       _approvalsRequired: PromiseOrValue<BigNumberish>,
       _requireExecution: PromiseOrValue<boolean>,
       _transactionExpiry: PromiseOrValue<BigNumberish>,
+      _accountsContract: PromiseOrValue<string>,
+      _gasAmount: PromiseOrValue<BigNumberish>,
+      _seedSplitToLiquid: PromiseOrValue<BigNumberish>,
+      _seedAsset: PromiseOrValue<string>,
+      _seedAmount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -523,6 +950,35 @@ export interface ApplicationsMultiSig extends BaseContract {
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
+
+    proposals(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<
+      [
+        string,
+        AccountMessages.CreateEndowmentRequestStructOutput,
+        string,
+        BigNumber,
+        boolean
+      ] & {
+        proposer: string;
+        application: AccountMessages.CreateEndowmentRequestStructOutput;
+        meta: string;
+        expiry: BigNumber;
+        executed: boolean;
+      }
+    >;
+
+    proposeApplication(
+      _application: AccountMessages.CreateEndowmentRequestStruct,
+      _meta: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    queryConfig(
+      overrides?: CallOverrides
+    ): Promise<[ApplicationsStorage.ConfigStructOutput]>;
 
     removeOwners(
       owners: PromiseOrValue<string>[],
@@ -545,6 +1001,11 @@ export interface ApplicationsMultiSig extends BaseContract {
     revokeConfirmationOfFormerOwner(
       transactionId: PromiseOrValue<BigNumberish>,
       formerOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    revokeProposalConfirmation(
+      proposalId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -578,6 +1039,16 @@ export interface ApplicationsMultiSig extends BaseContract {
         metadata: string;
       }
     >;
+
+    updateConfig(
+      _transactionExpiry: PromiseOrValue<BigNumberish>,
+      accountsContract: PromiseOrValue<string>,
+      seedSplitToLiquid: PromiseOrValue<BigNumberish>,
+      gasAmount: PromiseOrValue<BigNumberish>,
+      seedAsset: PromiseOrValue<string>,
+      seedAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
   };
 
   activeOwnersCount(overrides?: CallOverrides): Promise<BigNumber>;
@@ -604,6 +1075,23 @@ export interface ApplicationsMultiSig extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  config(
+    overrides?: CallOverrides
+  ): Promise<
+    [string, BigNumber, BigNumber, string, BigNumber] & {
+      accountsContract: string;
+      seedSplitToLiquid: BigNumber;
+      gasAmount: BigNumber;
+      seedAsset: string;
+      seedAmount: BigNumber;
+    }
+  >;
+
+  confirmProposal(
+    proposalId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   confirmTransaction(
     transactionId: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -613,6 +1101,11 @@ export interface ApplicationsMultiSig extends BaseContract {
     arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
+
+  executeProposal(
+    proposalId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
 
   executeTransaction(
     transactionId: PromiseOrValue<BigNumberish>,
@@ -636,10 +1129,23 @@ export interface ApplicationsMultiSig extends BaseContract {
   ): Promise<boolean>;
 
   initialize(
+    arg0: PromiseOrValue<string>[],
+    arg1: PromiseOrValue<BigNumberish>,
+    arg2: PromiseOrValue<boolean>,
+    arg3: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  initializeApplications(
     owners: PromiseOrValue<string>[],
     _approvalsRequired: PromiseOrValue<BigNumberish>,
     _requireExecution: PromiseOrValue<boolean>,
     _transactionExpiry: PromiseOrValue<BigNumberish>,
+    _accountsContract: PromiseOrValue<string>,
+    _gasAmount: PromiseOrValue<BigNumberish>,
+    _seedSplitToLiquid: PromiseOrValue<BigNumberish>,
+    _seedAsset: PromiseOrValue<string>,
+    _seedAmount: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -652,6 +1158,35 @@ export interface ApplicationsMultiSig extends BaseContract {
     arg0: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<boolean>;
+
+  proposals(
+    arg0: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<
+    [
+      string,
+      AccountMessages.CreateEndowmentRequestStructOutput,
+      string,
+      BigNumber,
+      boolean
+    ] & {
+      proposer: string;
+      application: AccountMessages.CreateEndowmentRequestStructOutput;
+      meta: string;
+      expiry: BigNumber;
+      executed: boolean;
+    }
+  >;
+
+  proposeApplication(
+    _application: AccountMessages.CreateEndowmentRequestStruct,
+    _meta: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  queryConfig(
+    overrides?: CallOverrides
+  ): Promise<ApplicationsStorage.ConfigStructOutput>;
 
   removeOwners(
     owners: PromiseOrValue<string>[],
@@ -674,6 +1209,11 @@ export interface ApplicationsMultiSig extends BaseContract {
   revokeConfirmationOfFormerOwner(
     transactionId: PromiseOrValue<BigNumberish>,
     formerOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  revokeProposalConfirmation(
+    proposalId: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -708,6 +1248,16 @@ export interface ApplicationsMultiSig extends BaseContract {
     }
   >;
 
+  updateConfig(
+    _transactionExpiry: PromiseOrValue<BigNumberish>,
+    accountsContract: PromiseOrValue<string>,
+    seedSplitToLiquid: PromiseOrValue<BigNumberish>,
+    gasAmount: PromiseOrValue<BigNumberish>,
+    seedAsset: PromiseOrValue<string>,
+    seedAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   callStatic: {
     activeOwnersCount(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -733,6 +1283,23 @@ export interface ApplicationsMultiSig extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    config(
+      overrides?: CallOverrides
+    ): Promise<
+      [string, BigNumber, BigNumber, string, BigNumber] & {
+        accountsContract: string;
+        seedSplitToLiquid: BigNumber;
+        gasAmount: BigNumber;
+        seedAsset: string;
+        seedAmount: BigNumber;
+      }
+    >;
+
+    confirmProposal(
+      proposalId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     confirmTransaction(
       transactionId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -742,6 +1309,11 @@ export interface ApplicationsMultiSig extends BaseContract {
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    executeProposal(
+      proposalId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<number>;
 
     executeTransaction(
       transactionId: PromiseOrValue<BigNumberish>,
@@ -765,10 +1337,23 @@ export interface ApplicationsMultiSig extends BaseContract {
     ): Promise<boolean>;
 
     initialize(
+      arg0: PromiseOrValue<string>[],
+      arg1: PromiseOrValue<BigNumberish>,
+      arg2: PromiseOrValue<boolean>,
+      arg3: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    initializeApplications(
       owners: PromiseOrValue<string>[],
       _approvalsRequired: PromiseOrValue<BigNumberish>,
       _requireExecution: PromiseOrValue<boolean>,
       _transactionExpiry: PromiseOrValue<BigNumberish>,
+      _accountsContract: PromiseOrValue<string>,
+      _gasAmount: PromiseOrValue<BigNumberish>,
+      _seedSplitToLiquid: PromiseOrValue<BigNumberish>,
+      _seedAsset: PromiseOrValue<string>,
+      _seedAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -781,6 +1366,35 @@ export interface ApplicationsMultiSig extends BaseContract {
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<boolean>;
+
+    proposals(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<
+      [
+        string,
+        AccountMessages.CreateEndowmentRequestStructOutput,
+        string,
+        BigNumber,
+        boolean
+      ] & {
+        proposer: string;
+        application: AccountMessages.CreateEndowmentRequestStructOutput;
+        meta: string;
+        expiry: BigNumber;
+        executed: boolean;
+      }
+    >;
+
+    proposeApplication(
+      _application: AccountMessages.CreateEndowmentRequestStruct,
+      _meta: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    queryConfig(
+      overrides?: CallOverrides
+    ): Promise<ApplicationsStorage.ConfigStructOutput>;
 
     removeOwners(
       owners: PromiseOrValue<string>[],
@@ -803,6 +1417,11 @@ export interface ApplicationsMultiSig extends BaseContract {
     revokeConfirmationOfFormerOwner(
       transactionId: PromiseOrValue<BigNumberish>,
       formerOwner: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    revokeProposalConfirmation(
+      proposalId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -836,9 +1455,47 @@ export interface ApplicationsMultiSig extends BaseContract {
         metadata: string;
       }
     >;
+
+    updateConfig(
+      _transactionExpiry: PromiseOrValue<BigNumberish>,
+      accountsContract: PromiseOrValue<string>,
+      seedSplitToLiquid: PromiseOrValue<BigNumberish>,
+      gasAmount: PromiseOrValue<BigNumberish>,
+      seedAsset: PromiseOrValue<string>,
+      seedAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
   };
 
   filters: {
+    "ApplicationConfirmationRevoked(uint256,address)"(
+      proposalId?: null,
+      owner?: null
+    ): ApplicationConfirmationRevokedEventFilter;
+    ApplicationConfirmationRevoked(
+      proposalId?: null,
+      owner?: null
+    ): ApplicationConfirmationRevokedEventFilter;
+
+    "ApplicationConfirmed(uint256,address)"(
+      proposalId?: null,
+      owner?: null
+    ): ApplicationConfirmedEventFilter;
+    ApplicationConfirmed(
+      proposalId?: null,
+      owner?: null
+    ): ApplicationConfirmedEventFilter;
+
+    "ApplicationExecuted(uint256)"(
+      proposalId?: null
+    ): ApplicationExecutedEventFilter;
+    ApplicationExecuted(proposalId?: null): ApplicationExecutedEventFilter;
+
+    "ApplicationProposed(uint256)"(
+      proposalId?: null
+    ): ApplicationProposedEventFilter;
+    ApplicationProposed(proposalId?: null): ApplicationProposedEventFilter;
+
     "ApprovalsRequiredChanged(uint256)"(
       approvalsRequired?: null
     ): ApprovalsRequiredChangedEventFilter;
@@ -861,6 +1518,17 @@ export interface ApplicationsMultiSig extends BaseContract {
     ): DepositEventFilter;
     Deposit(sender?: null, amount?: null): DepositEventFilter;
 
+    "GasSent(uint256,address,uint256)"(
+      endowmentId?: null,
+      member?: null,
+      amount?: null
+    ): GasSentEventFilter;
+    GasSent(
+      endowmentId?: null,
+      member?: null,
+      amount?: null
+    ): GasSentEventFilter;
+
     "Initialized(uint8)"(version?: null): InitializedEventFilter;
     Initialized(version?: null): InitializedEventFilter;
 
@@ -876,6 +1544,17 @@ export interface ApplicationsMultiSig extends BaseContract {
     RequireExecutionChanged(
       requireExecution?: null
     ): RequireExecutionChangedEventFilter;
+
+    "SeedAssetSent(uint256,address,uint256)"(
+      endowmentId?: null,
+      asset?: null,
+      amount?: null
+    ): SeedAssetSentEventFilter;
+    SeedAssetSent(
+      endowmentId?: null,
+      asset?: null,
+      amount?: null
+    ): SeedAssetSentEventFilter;
 
     "TransactionConfirmed(address,uint256)"(
       sender?: null,
@@ -933,6 +1612,13 @@ export interface ApplicationsMultiSig extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    config(overrides?: CallOverrides): Promise<BigNumber>;
+
+    confirmProposal(
+      proposalId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     confirmTransaction(
       transactionId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -941,6 +1627,11 @@ export interface ApplicationsMultiSig extends BaseContract {
     confirmations(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    executeProposal(
+      proposalId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     executeTransaction(
@@ -965,10 +1656,23 @@ export interface ApplicationsMultiSig extends BaseContract {
     ): Promise<BigNumber>;
 
     initialize(
+      arg0: PromiseOrValue<string>[],
+      arg1: PromiseOrValue<BigNumberish>,
+      arg2: PromiseOrValue<boolean>,
+      arg3: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    initializeApplications(
       owners: PromiseOrValue<string>[],
       _approvalsRequired: PromiseOrValue<BigNumberish>,
       _requireExecution: PromiseOrValue<boolean>,
       _transactionExpiry: PromiseOrValue<BigNumberish>,
+      _accountsContract: PromiseOrValue<string>,
+      _gasAmount: PromiseOrValue<BigNumberish>,
+      _seedSplitToLiquid: PromiseOrValue<BigNumberish>,
+      _seedAsset: PromiseOrValue<string>,
+      _seedAmount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -981,6 +1685,19 @@ export interface ApplicationsMultiSig extends BaseContract {
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    proposals(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    proposeApplication(
+      _application: AccountMessages.CreateEndowmentRequestStruct,
+      _meta: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    queryConfig(overrides?: CallOverrides): Promise<BigNumber>;
 
     removeOwners(
       owners: PromiseOrValue<string>[],
@@ -1006,6 +1723,11 @@ export interface ApplicationsMultiSig extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    revokeProposalConfirmation(
+      proposalId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     submitTransaction(
       destination: PromiseOrValue<string>,
       value: PromiseOrValue<BigNumberish>,
@@ -1026,6 +1748,16 @@ export interface ApplicationsMultiSig extends BaseContract {
     transactions(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    updateConfig(
+      _transactionExpiry: PromiseOrValue<BigNumberish>,
+      accountsContract: PromiseOrValue<string>,
+      seedSplitToLiquid: PromiseOrValue<BigNumberish>,
+      gasAmount: PromiseOrValue<BigNumberish>,
+      seedAsset: PromiseOrValue<string>,
+      seedAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
 
@@ -1054,6 +1786,13 @@ export interface ApplicationsMultiSig extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
+    config(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    confirmProposal(
+      proposalId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     confirmTransaction(
       transactionId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -1062,6 +1801,11 @@ export interface ApplicationsMultiSig extends BaseContract {
     confirmations(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    executeProposal(
+      proposalId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     executeTransaction(
@@ -1086,10 +1830,23 @@ export interface ApplicationsMultiSig extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     initialize(
+      arg0: PromiseOrValue<string>[],
+      arg1: PromiseOrValue<BigNumberish>,
+      arg2: PromiseOrValue<boolean>,
+      arg3: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    initializeApplications(
       owners: PromiseOrValue<string>[],
       _approvalsRequired: PromiseOrValue<BigNumberish>,
       _requireExecution: PromiseOrValue<boolean>,
       _transactionExpiry: PromiseOrValue<BigNumberish>,
+      _accountsContract: PromiseOrValue<string>,
+      _gasAmount: PromiseOrValue<BigNumberish>,
+      _seedSplitToLiquid: PromiseOrValue<BigNumberish>,
+      _seedAsset: PromiseOrValue<string>,
+      _seedAmount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -1102,6 +1859,19 @@ export interface ApplicationsMultiSig extends BaseContract {
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
+
+    proposals(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    proposeApplication(
+      _application: AccountMessages.CreateEndowmentRequestStruct,
+      _meta: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    queryConfig(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     removeOwners(
       owners: PromiseOrValue<string>[],
@@ -1127,6 +1897,11 @@ export interface ApplicationsMultiSig extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
+    revokeProposalConfirmation(
+      proposalId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     submitTransaction(
       destination: PromiseOrValue<string>,
       value: PromiseOrValue<BigNumberish>,
@@ -1147,6 +1922,16 @@ export interface ApplicationsMultiSig extends BaseContract {
     transactions(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    updateConfig(
+      _transactionExpiry: PromiseOrValue<BigNumberish>,
+      accountsContract: PromiseOrValue<string>,
+      seedSplitToLiquid: PromiseOrValue<BigNumberish>,
+      gasAmount: PromiseOrValue<BigNumberish>,
+      seedAsset: PromiseOrValue<string>,
+      seedAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };
 }

@@ -27,7 +27,7 @@ import type {
   PromiseOrValue,
 } from "../../../../common";
 
-export declare namespace AngelCoreStruct {
+export declare namespace LibAccounts {
   export type BeneficiaryDataStruct = {
     endowId: PromiseOrValue<BigNumberish>;
     fundId: PromiseOrValue<BigNumberish>;
@@ -41,14 +41,14 @@ export declare namespace AngelCoreStruct {
   };
 
   export type BeneficiaryStruct = {
-    data: AngelCoreStruct.BeneficiaryDataStruct;
+    data: LibAccounts.BeneficiaryDataStruct;
     enumData: PromiseOrValue<BigNumberish>;
   };
 
   export type BeneficiaryStructOutput = [
-    AngelCoreStruct.BeneficiaryDataStructOutput,
+    LibAccounts.BeneficiaryDataStructOutput,
     number
-  ] & { data: AngelCoreStruct.BeneficiaryDataStructOutput; enumData: number };
+  ] & { data: LibAccounts.BeneficiaryDataStructOutput; enumData: number };
 }
 
 export interface AccountsUpdateStatusEndowmentsInterface
@@ -61,7 +61,7 @@ export interface AccountsUpdateStatusEndowmentsInterface
 
   encodeFunctionData(
     functionFragment: "closeEndowment",
-    values: [PromiseOrValue<BigNumberish>, AngelCoreStruct.BeneficiaryStruct]
+    values: [PromiseOrValue<BigNumberish>, LibAccounts.BeneficiaryStruct]
   ): string;
 
   decodeFunctionResult(
@@ -266,21 +266,21 @@ export interface AccountsUpdateStatusEndowments extends BaseContract {
   functions: {
     closeEndowment(
       id: PromiseOrValue<BigNumberish>,
-      beneficiary: AngelCoreStruct.BeneficiaryStruct,
+      beneficiary: LibAccounts.BeneficiaryStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
 
   closeEndowment(
     id: PromiseOrValue<BigNumberish>,
-    beneficiary: AngelCoreStruct.BeneficiaryStruct,
+    beneficiary: LibAccounts.BeneficiaryStruct,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     closeEndowment(
       id: PromiseOrValue<BigNumberish>,
-      beneficiary: AngelCoreStruct.BeneficiaryStruct,
+      beneficiary: LibAccounts.BeneficiaryStruct,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -394,7 +394,7 @@ export interface AccountsUpdateStatusEndowments extends BaseContract {
   estimateGas: {
     closeEndowment(
       id: PromiseOrValue<BigNumberish>,
-      beneficiary: AngelCoreStruct.BeneficiaryStruct,
+      beneficiary: LibAccounts.BeneficiaryStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
@@ -402,7 +402,7 @@ export interface AccountsUpdateStatusEndowments extends BaseContract {
   populateTransaction: {
     closeEndowment(
       id: PromiseOrValue<BigNumberish>,
-      beneficiary: AngelCoreStruct.BeneficiaryStruct,
+      beneficiary: LibAccounts.BeneficiaryStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };

@@ -108,7 +108,7 @@ export declare namespace LocalRegistrarLib {
   };
 }
 
-export declare namespace AngelCoreStruct {
+export declare namespace LibAccounts {
   export type FeeSettingStruct = {
     payoutAddress: PromiseOrValue<string>;
     bps: PromiseOrValue<BigNumberish>;
@@ -487,7 +487,7 @@ export interface IRegistrarGoldfinch extends BaseContract {
     getFeeSettingsByFeeType(
       _feeType: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<[AngelCoreStruct.FeeSettingStructOutput]>;
+    ): Promise<[LibAccounts.FeeSettingStructOutput]>;
 
     getGasByToken(
       _tokenAddr: PromiseOrValue<string>,
@@ -590,7 +590,7 @@ export interface IRegistrarGoldfinch extends BaseContract {
   getFeeSettingsByFeeType(
     _feeType: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
-  ): Promise<AngelCoreStruct.FeeSettingStructOutput>;
+  ): Promise<LibAccounts.FeeSettingStructOutput>;
 
   getGasByToken(
     _tokenAddr: PromiseOrValue<string>,
@@ -693,7 +693,7 @@ export interface IRegistrarGoldfinch extends BaseContract {
     getFeeSettingsByFeeType(
       _feeType: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<AngelCoreStruct.FeeSettingStructOutput>;
+    ): Promise<LibAccounts.FeeSettingStructOutput>;
 
     getGasByToken(
       _tokenAddr: PromiseOrValue<string>,

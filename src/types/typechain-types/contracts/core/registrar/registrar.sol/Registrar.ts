@@ -108,7 +108,7 @@ export declare namespace LocalRegistrarLib {
   };
 }
 
-export declare namespace AngelCoreStruct {
+export declare namespace LibAccounts {
   export type FeeSettingStruct = {
     payoutAddress: PromiseOrValue<string>;
     bps: PromiseOrValue<BigNumberish>;
@@ -130,7 +130,229 @@ export declare namespace AngelCoreStruct {
     min: BigNumber;
     defaultSplit: BigNumber;
   };
+}
 
+export declare namespace RegistrarMessages {
+  export type InstantiateRequestStruct = {
+    treasury: PromiseOrValue<string>;
+    splitToLiquid: LibAccounts.SplitDetailsStruct;
+    router: PromiseOrValue<string>;
+    axelarGateway: PromiseOrValue<string>;
+    axelarGasRecv: PromiseOrValue<string>;
+  };
+
+  export type InstantiateRequestStructOutput = [
+    string,
+    LibAccounts.SplitDetailsStructOutput,
+    string,
+    string,
+    string
+  ] & {
+    treasury: string;
+    splitToLiquid: LibAccounts.SplitDetailsStructOutput;
+    router: string;
+    axelarGateway: string;
+    axelarGasRecv: string;
+  };
+
+  export type UpdateConfigRequestStruct = {
+    accountsContract: PromiseOrValue<string>;
+    splitMax: PromiseOrValue<BigNumberish>;
+    splitMin: PromiseOrValue<BigNumberish>;
+    splitDefault: PromiseOrValue<BigNumberish>;
+    collectorShare: PromiseOrValue<BigNumberish>;
+    indexFundContract: PromiseOrValue<string>;
+    govContract: PromiseOrValue<string>;
+    treasury: PromiseOrValue<string>;
+    donationMatchCharitesContract: PromiseOrValue<string>;
+    donationMatchEmitter: PromiseOrValue<string>;
+    haloToken: PromiseOrValue<string>;
+    haloTokenLpContract: PromiseOrValue<string>;
+    charitySharesContract: PromiseOrValue<string>;
+    fundraisingContract: PromiseOrValue<string>;
+    uniswapRouter: PromiseOrValue<string>;
+    uniswapFactory: PromiseOrValue<string>;
+    multisigFactory: PromiseOrValue<string>;
+    multisigEmitter: PromiseOrValue<string>;
+    charityApplications: PromiseOrValue<string>;
+    lockedWithdrawal: PromiseOrValue<string>;
+    proxyAdmin: PromiseOrValue<string>;
+    usdcAddress: PromiseOrValue<string>;
+    wMaticAddress: PromiseOrValue<string>;
+    subdaoGovContract: PromiseOrValue<string>;
+    subdaoTokenContract: PromiseOrValue<string>;
+    subdaoBondingTokenContract: PromiseOrValue<string>;
+    subdaoCw900Contract: PromiseOrValue<string>;
+    subdaoDistributorContract: PromiseOrValue<string>;
+    subdaoEmitter: PromiseOrValue<string>;
+    donationMatchContract: PromiseOrValue<string>;
+    cw900lvAddress: PromiseOrValue<string>;
+  };
+
+  export type UpdateConfigRequestStructOutput = [
+    string,
+    BigNumber,
+    BigNumber,
+    BigNumber,
+    BigNumber,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string
+  ] & {
+    accountsContract: string;
+    splitMax: BigNumber;
+    splitMin: BigNumber;
+    splitDefault: BigNumber;
+    collectorShare: BigNumber;
+    indexFundContract: string;
+    govContract: string;
+    treasury: string;
+    donationMatchCharitesContract: string;
+    donationMatchEmitter: string;
+    haloToken: string;
+    haloTokenLpContract: string;
+    charitySharesContract: string;
+    fundraisingContract: string;
+    uniswapRouter: string;
+    uniswapFactory: string;
+    multisigFactory: string;
+    multisigEmitter: string;
+    charityApplications: string;
+    lockedWithdrawal: string;
+    proxyAdmin: string;
+    usdcAddress: string;
+    wMaticAddress: string;
+    subdaoGovContract: string;
+    subdaoTokenContract: string;
+    subdaoBondingTokenContract: string;
+    subdaoCw900Contract: string;
+    subdaoDistributorContract: string;
+    subdaoEmitter: string;
+    donationMatchContract: string;
+    cw900lvAddress: string;
+  };
+}
+
+export declare namespace RegistrarStorage {
+  export type ConfigStruct = {
+    indexFundContract: PromiseOrValue<string>;
+    accountsContract: PromiseOrValue<string>;
+    treasury: PromiseOrValue<string>;
+    subdaoGovContract: PromiseOrValue<string>;
+    subdaoTokenContract: PromiseOrValue<string>;
+    subdaoBondingTokenContract: PromiseOrValue<string>;
+    subdaoCw900Contract: PromiseOrValue<string>;
+    subdaoDistributorContract: PromiseOrValue<string>;
+    subdaoEmitter: PromiseOrValue<string>;
+    donationMatchContract: PromiseOrValue<string>;
+    donationMatchCharitesContract: PromiseOrValue<string>;
+    donationMatchEmitter: PromiseOrValue<string>;
+    splitToLiquid: LibAccounts.SplitDetailsStruct;
+    haloToken: PromiseOrValue<string>;
+    haloTokenLpContract: PromiseOrValue<string>;
+    govContract: PromiseOrValue<string>;
+    collectorShare: PromiseOrValue<BigNumberish>;
+    charitySharesContract: PromiseOrValue<string>;
+    fundraisingContract: PromiseOrValue<string>;
+    uniswapRouter: PromiseOrValue<string>;
+    uniswapFactory: PromiseOrValue<string>;
+    multisigFactory: PromiseOrValue<string>;
+    multisigEmitter: PromiseOrValue<string>;
+    charityApplications: PromiseOrValue<string>;
+    lockedWithdrawal: PromiseOrValue<string>;
+    proxyAdmin: PromiseOrValue<string>;
+    usdcAddress: PromiseOrValue<string>;
+    wMaticAddress: PromiseOrValue<string>;
+    cw900lvAddress: PromiseOrValue<string>;
+  };
+
+  export type ConfigStructOutput = [
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    LibAccounts.SplitDetailsStructOutput,
+    string,
+    string,
+    string,
+    BigNumber,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string
+  ] & {
+    indexFundContract: string;
+    accountsContract: string;
+    treasury: string;
+    subdaoGovContract: string;
+    subdaoTokenContract: string;
+    subdaoBondingTokenContract: string;
+    subdaoCw900Contract: string;
+    subdaoDistributorContract: string;
+    subdaoEmitter: string;
+    donationMatchContract: string;
+    donationMatchCharitesContract: string;
+    donationMatchEmitter: string;
+    splitToLiquid: LibAccounts.SplitDetailsStructOutput;
+    haloToken: string;
+    haloTokenLpContract: string;
+    govContract: string;
+    collectorShare: BigNumber;
+    charitySharesContract: string;
+    fundraisingContract: string;
+    uniswapRouter: string;
+    uniswapFactory: string;
+    multisigFactory: string;
+    multisigEmitter: string;
+    charityApplications: string;
+    lockedWithdrawal: string;
+    proxyAdmin: string;
+    usdcAddress: string;
+    wMaticAddress: string;
+    cw900lvAddress: string;
+  };
+}
+
+export declare namespace IAccountsVaultFacet {
   export type NetworkInfoStruct = {
     name: PromiseOrValue<string>;
     chainId: PromiseOrValue<BigNumberish>;
@@ -160,235 +382,6 @@ export declare namespace AngelCoreStruct {
     transferChannel: string;
     gasReceiver: string;
     gasLimit: BigNumber;
-  };
-}
-
-export declare namespace RegistrarMessages {
-  export type InstantiateRequestStruct = {
-    treasury: PromiseOrValue<string>;
-    splitToLiquid: AngelCoreStruct.SplitDetailsStruct;
-    router: PromiseOrValue<string>;
-    axelarGateway: PromiseOrValue<string>;
-    axelarGasRecv: PromiseOrValue<string>;
-  };
-
-  export type InstantiateRequestStructOutput = [
-    string,
-    AngelCoreStruct.SplitDetailsStructOutput,
-    string,
-    string,
-    string
-  ] & {
-    treasury: string;
-    splitToLiquid: AngelCoreStruct.SplitDetailsStructOutput;
-    router: string;
-    axelarGateway: string;
-    axelarGasRecv: string;
-  };
-
-  export type UpdateConfigRequestStruct = {
-    accountsContract: PromiseOrValue<string>;
-    approved_charities: PromiseOrValue<string>[];
-    splitMax: PromiseOrValue<BigNumberish>;
-    splitMin: PromiseOrValue<BigNumberish>;
-    splitDefault: PromiseOrValue<BigNumberish>;
-    collectorShare: PromiseOrValue<BigNumberish>;
-    indexFundContract: PromiseOrValue<string>;
-    govContract: PromiseOrValue<string>;
-    treasury: PromiseOrValue<string>;
-    donationMatchCharitesContract: PromiseOrValue<string>;
-    donationMatchEmitter: PromiseOrValue<string>;
-    haloToken: PromiseOrValue<string>;
-    haloTokenLpContract: PromiseOrValue<string>;
-    charitySharesContract: PromiseOrValue<string>;
-    fundraisingContract: PromiseOrValue<string>;
-    applicationsReview: PromiseOrValue<string>;
-    uniswapRouter: PromiseOrValue<string>;
-    uniswapFactory: PromiseOrValue<string>;
-    multisigFactory: PromiseOrValue<string>;
-    multisigEmitter: PromiseOrValue<string>;
-    charityProposal: PromiseOrValue<string>;
-    lockedWithdrawal: PromiseOrValue<string>;
-    proxyAdmin: PromiseOrValue<string>;
-    usdcAddress: PromiseOrValue<string>;
-    wMaticAddress: PromiseOrValue<string>;
-    subdaoGovContract: PromiseOrValue<string>;
-    subdaoTokenContract: PromiseOrValue<string>;
-    subdaoBondingTokenContract: PromiseOrValue<string>;
-    subdaoCw900Contract: PromiseOrValue<string>;
-    subdaoDistributorContract: PromiseOrValue<string>;
-    subdaoEmitter: PromiseOrValue<string>;
-    donationMatchContract: PromiseOrValue<string>;
-    cw900lvAddress: PromiseOrValue<string>;
-  };
-
-  export type UpdateConfigRequestStructOutput = [
-    string,
-    string[],
-    BigNumber,
-    BigNumber,
-    BigNumber,
-    BigNumber,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string
-  ] & {
-    accountsContract: string;
-    approved_charities: string[];
-    splitMax: BigNumber;
-    splitMin: BigNumber;
-    splitDefault: BigNumber;
-    collectorShare: BigNumber;
-    indexFundContract: string;
-    govContract: string;
-    treasury: string;
-    donationMatchCharitesContract: string;
-    donationMatchEmitter: string;
-    haloToken: string;
-    haloTokenLpContract: string;
-    charitySharesContract: string;
-    fundraisingContract: string;
-    applicationsReview: string;
-    uniswapRouter: string;
-    uniswapFactory: string;
-    multisigFactory: string;
-    multisigEmitter: string;
-    charityProposal: string;
-    lockedWithdrawal: string;
-    proxyAdmin: string;
-    usdcAddress: string;
-    wMaticAddress: string;
-    subdaoGovContract: string;
-    subdaoTokenContract: string;
-    subdaoBondingTokenContract: string;
-    subdaoCw900Contract: string;
-    subdaoDistributorContract: string;
-    subdaoEmitter: string;
-    donationMatchContract: string;
-    cw900lvAddress: string;
-  };
-}
-
-export declare namespace RegistrarStorage {
-  export type ConfigStruct = {
-    applicationsReview: PromiseOrValue<string>;
-    indexFundContract: PromiseOrValue<string>;
-    accountsContract: PromiseOrValue<string>;
-    treasury: PromiseOrValue<string>;
-    subdaoGovContract: PromiseOrValue<string>;
-    subdaoTokenContract: PromiseOrValue<string>;
-    subdaoBondingTokenContract: PromiseOrValue<string>;
-    subdaoCw900Contract: PromiseOrValue<string>;
-    subdaoDistributorContract: PromiseOrValue<string>;
-    subdaoEmitter: PromiseOrValue<string>;
-    donationMatchContract: PromiseOrValue<string>;
-    donationMatchCharitesContract: PromiseOrValue<string>;
-    donationMatchEmitter: PromiseOrValue<string>;
-    splitToLiquid: AngelCoreStruct.SplitDetailsStruct;
-    haloToken: PromiseOrValue<string>;
-    haloTokenLpContract: PromiseOrValue<string>;
-    govContract: PromiseOrValue<string>;
-    collectorShare: PromiseOrValue<BigNumberish>;
-    charitySharesContract: PromiseOrValue<string>;
-    fundraisingContract: PromiseOrValue<string>;
-    uniswapRouter: PromiseOrValue<string>;
-    uniswapFactory: PromiseOrValue<string>;
-    multisigFactory: PromiseOrValue<string>;
-    multisigEmitter: PromiseOrValue<string>;
-    charityProposal: PromiseOrValue<string>;
-    lockedWithdrawal: PromiseOrValue<string>;
-    proxyAdmin: PromiseOrValue<string>;
-    usdcAddress: PromiseOrValue<string>;
-    wMaticAddress: PromiseOrValue<string>;
-    cw900lvAddress: PromiseOrValue<string>;
-  };
-
-  export type ConfigStructOutput = [
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    AngelCoreStruct.SplitDetailsStructOutput,
-    string,
-    string,
-    string,
-    BigNumber,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string
-  ] & {
-    applicationsReview: string;
-    indexFundContract: string;
-    accountsContract: string;
-    treasury: string;
-    subdaoGovContract: string;
-    subdaoTokenContract: string;
-    subdaoBondingTokenContract: string;
-    subdaoCw900Contract: string;
-    subdaoDistributorContract: string;
-    subdaoEmitter: string;
-    donationMatchContract: string;
-    donationMatchCharitesContract: string;
-    donationMatchEmitter: string;
-    splitToLiquid: AngelCoreStruct.SplitDetailsStructOutput;
-    haloToken: string;
-    haloTokenLpContract: string;
-    govContract: string;
-    collectorShare: BigNumber;
-    charitySharesContract: string;
-    fundraisingContract: string;
-    uniswapRouter: string;
-    uniswapFactory: string;
-    multisigFactory: string;
-    multisigEmitter: string;
-    charityProposal: string;
-    lockedWithdrawal: string;
-    proxyAdmin: string;
-    usdcAddress: string;
-    wMaticAddress: string;
-    cw900lvAddress: string;
   };
 }
 
@@ -426,7 +419,7 @@ export interface RegistrarInterface extends utils.Interface {
     "setUniswapAddresses(address,address)": FunctionFragment;
     "setVaultOperatorApproved(address,bool)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
-    "updateConfig((address,string[],uint256,uint256,uint256,uint256,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address))": FunctionFragment;
+    "updateConfig((address,uint256,uint256,uint256,uint256,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address))": FunctionFragment;
     "updateNetworkConnections((string,uint256,address,address,string,string,address,uint256),string)": FunctionFragment;
     "updateTokenPriceFeed(address,address)": FunctionFragment;
   };
@@ -610,7 +603,7 @@ export interface RegistrarInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "updateNetworkConnections",
-    values: [AngelCoreStruct.NetworkInfoStruct, PromiseOrValue<string>]
+    values: [IAccountsVaultFacet.NetworkInfoStruct, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "updateTokenPriceFeed",
@@ -969,7 +962,7 @@ export interface Registrar extends BaseContract {
     getFeeSettingsByFeeType(
       _feeType: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<[AngelCoreStruct.FeeSettingStructOutput]>;
+    ): Promise<[LibAccounts.FeeSettingStructOutput]>;
 
     getGasByToken(
       _tokenAddr: PromiseOrValue<string>,
@@ -1027,8 +1020,8 @@ export interface Registrar extends BaseContract {
       chainId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [AngelCoreStruct.NetworkInfoStructOutput] & {
-        response: AngelCoreStruct.NetworkInfoStructOutput;
+      [IAccountsVaultFacet.NetworkInfoStructOutput] & {
+        response: IAccountsVaultFacet.NetworkInfoStructOutput;
       }
     >;
 
@@ -1118,7 +1111,7 @@ export interface Registrar extends BaseContract {
     ): Promise<ContractTransaction>;
 
     updateNetworkConnections(
-      networkInfo: AngelCoreStruct.NetworkInfoStruct,
+      networkInfo: IAccountsVaultFacet.NetworkInfoStruct,
       action: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
@@ -1146,7 +1139,7 @@ export interface Registrar extends BaseContract {
   getFeeSettingsByFeeType(
     _feeType: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
-  ): Promise<AngelCoreStruct.FeeSettingStructOutput>;
+  ): Promise<LibAccounts.FeeSettingStructOutput>;
 
   getGasByToken(
     _tokenAddr: PromiseOrValue<string>,
@@ -1201,7 +1194,7 @@ export interface Registrar extends BaseContract {
   queryNetworkConnection(
     chainId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
-  ): Promise<AngelCoreStruct.NetworkInfoStructOutput>;
+  ): Promise<IAccountsVaultFacet.NetworkInfoStructOutput>;
 
   queryTokenPriceFeed(
     token: PromiseOrValue<string>,
@@ -1289,7 +1282,7 @@ export interface Registrar extends BaseContract {
   ): Promise<ContractTransaction>;
 
   updateNetworkConnections(
-    networkInfo: AngelCoreStruct.NetworkInfoStruct,
+    networkInfo: IAccountsVaultFacet.NetworkInfoStruct,
     action: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
@@ -1317,7 +1310,7 @@ export interface Registrar extends BaseContract {
     getFeeSettingsByFeeType(
       _feeType: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<AngelCoreStruct.FeeSettingStructOutput>;
+    ): Promise<LibAccounts.FeeSettingStructOutput>;
 
     getGasByToken(
       _tokenAddr: PromiseOrValue<string>,
@@ -1370,7 +1363,7 @@ export interface Registrar extends BaseContract {
     queryNetworkConnection(
       chainId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<AngelCoreStruct.NetworkInfoStructOutput>;
+    ): Promise<IAccountsVaultFacet.NetworkInfoStructOutput>;
 
     queryTokenPriceFeed(
       token: PromiseOrValue<string>,
@@ -1456,7 +1449,7 @@ export interface Registrar extends BaseContract {
     ): Promise<void>;
 
     updateNetworkConnections(
-      networkInfo: AngelCoreStruct.NetworkInfoStruct,
+      networkInfo: IAccountsVaultFacet.NetworkInfoStruct,
       action: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -1712,7 +1705,7 @@ export interface Registrar extends BaseContract {
     ): Promise<BigNumber>;
 
     updateNetworkConnections(
-      networkInfo: AngelCoreStruct.NetworkInfoStruct,
+      networkInfo: IAccountsVaultFacet.NetworkInfoStruct,
       action: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
@@ -1888,7 +1881,7 @@ export interface Registrar extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     updateNetworkConnections(
-      networkInfo: AngelCoreStruct.NetworkInfoStruct,
+      networkInfo: IAccountsVaultFacet.NetworkInfoStruct,
       action: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
