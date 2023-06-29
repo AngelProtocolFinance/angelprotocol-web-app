@@ -48,6 +48,11 @@ export interface ContractQueries {
     res: Q<{ funds: FundDetails[] }>;
     result: FundDetails[];
   };
+  ifFund: {
+    args: { id: number };
+    res: Q<{ fund: FundDetails }>;
+    result: FundDetails;
+  };
   ifAlliance: {
     args: null;
     res: Q<{ alliance_members: AllianceMember[] }>;

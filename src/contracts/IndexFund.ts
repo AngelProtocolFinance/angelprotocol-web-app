@@ -4,6 +4,7 @@ import {
   FundDetails,
   IndexFundOwnerPayload,
 } from "types/contracts";
+import { queryContract } from "services/juno/queryContract";
 import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 
@@ -23,13 +24,10 @@ export default class IndexFund extends Contract {
   }
 
   async getFundDetails(fundId: number) {
-    const fundDetailsRes = await this.query<{ fund: FundDetails }>(
-      IndexFund.address,
-      {
-        fund_details: { fund_id: fundId },
-      }
-    );
-    return fundDetailsRes.fund;
+    const { fund } = await queryContract("ifFund", IndexFund.address, {
+      id: fundId,
+    });
+    return fund;
   }
 
   createEmbeddedCreateFundMsg(fundDetails: Omit<FundDetails, "id">) {
