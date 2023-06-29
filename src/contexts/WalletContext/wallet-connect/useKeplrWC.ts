@@ -13,9 +13,6 @@ import { WALLET_METADATA } from "../constants";
 
 const QRModal = new KeplrQRCodeModalV1();
 
-//user peer name as ID
-const PEER_NAME = "Keplr";
-
 let client: SignClient;
 async function getClient(): Promise<SignClient> {
   if (client) return client;
@@ -40,9 +37,7 @@ export function useKeplrWC() {
     (async () => {
       setState({ status: "loading" });
       const client = await getClient();
-      const prevSession = client.session
-        .getAll()
-        .find((s) => s.peer.metadata.name === PEER_NAME);
+      const prevSession = _session("Keplr");
 
       if (prevSession) {
         setState(connected(prevSession.namespaces));
@@ -104,9 +99,7 @@ export function useKeplrWC() {
   async function disconnect() {
     setState({ status: "loading" });
     const client = await getClient();
-    const session = client.session
-      .getAll()
-      .find((s) => s.peer.metadata.name === PEER_NAME);
+    const session = _session("Keplr");
 
     if (session) {
       await client.disconnect({

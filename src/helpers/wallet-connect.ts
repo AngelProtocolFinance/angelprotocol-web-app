@@ -1,4 +1,3 @@
-import { WalletConnectModal } from "@walletconnect/modal";
 import { SignClient } from "@walletconnect/sign-client";
 import type { SignClient as TSignClient } from "@walletconnect/sign-client/dist/types/client";
 import { SessionTypes } from "@walletconnect/types";
@@ -14,18 +13,16 @@ export async function signClient(): Promise<TSignClient> {
   return client;
 }
 
-export const wcModal = new WalletConnectModal({
-  projectId: "039a7aeef39cb740398760f71a471957",
-});
-
 type Account = { chainId: string; address: string };
 export const account = (namespace: SessionTypes.Namespace): Account => {
   const [, chainId, address] = namespace.accounts[0].split(":");
   return { address, chainId };
 };
 
-export const session = (name: Name) =>
-  client.session.getAll().find((s) => s.peer.metadata.name === name);
+export const session = (name: Name) => {
+  console.log(client);
+  return client.session.getAll().find((s) => s.peer.metadata.name === name);
+};
 
 export const pairing = (name: Name) =>
   client.pairing

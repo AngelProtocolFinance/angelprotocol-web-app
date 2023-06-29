@@ -3,7 +3,7 @@ import { CreateTxOptions } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { SignDoc } from "types/cosmos";
 import { Country } from "types/countries";
-import { TokenWithAmount, TxOptions } from "types/slices";
+import { TokenWithAmount } from "types/slices";
 import { WalletState } from "contexts/WalletContext";
 import { OptionType } from "components/Selector";
 

@@ -1,5 +1,4 @@
 import { EncodeObject } from "@cosmjs/proto-signing";
-import { DeliverTxResponse } from "@cosmjs/stargate";
 import { TagPayload } from "services/types";
 import { Chain } from "types/aws";
 import { TxResponse } from "types/cosmos";

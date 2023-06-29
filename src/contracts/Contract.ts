@@ -1,4 +1,4 @@
-import { Coin, DeliverTxResponse, isDeliverTxFailure } from "@cosmjs/stargate";
+import { Coin } from "@cosmjs/stargate";
 import Long from "long";
 import { MsgSend } from "@keplr-wallet/proto-types/cosmos/bank/v1beta1/tx";
 import { PubKey } from "@keplr-wallet/proto-types/cosmos/crypto/secp256k1/keys";
@@ -149,10 +149,7 @@ export default class Contract {
 
   async signAndBroadcast(doc: SignDoc): Promise<TxResponse> {
     this.verifyWallet();
-    // const { chain_id, rpc_url } = this.wallet!.chain;
-    // const client = await keplr(this.wallet?.providerId!, chain_id, rpc_url);
-    // const result = await client.signAndBroadcast(this.walletAddress, msgs, fee);
-    // return validateTransactionSuccess(result, this.wallet!.chain);
+
     const { chain, address, providerId } = this.wallet!;
     const { lcd_url, chain_id } = chain;
     const client = await keplr(providerId);
@@ -262,22 +259,6 @@ export default class Contract {
       throw new WrongChainError("juno");
     }
   }
-}
-
-function validateTransactionSuccess(
-  result: DeliverTxResponse,
-  chain: Chain
-): DeliverTxResponse {
-  if (isDeliverTxFailure(result)) {
-    throw new TxResultFail(
-      //DeliverTxResponse already has a hash, link of tx should be available to user
-      //pass Chain so getTxUrl can get appropriate explorer link
-      chain,
-      result.transactionHash
-    );
-  }
-
-  return result;
 }
 
 const typeURLs = {

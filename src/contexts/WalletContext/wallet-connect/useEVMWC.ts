@@ -1,3 +1,4 @@
+import { WalletConnectModal } from "@walletconnect/modal";
 import { useEffect, useState } from "react";
 import { Connection, ProviderInfo } from "../types";
 import { Connected, WalletState } from "./types";
@@ -7,12 +8,13 @@ import {
   session as _session,
   account,
   signClient,
-  wcModal,
 } from "helpers/wallet-connect";
 import { WALLET_METADATA } from "../constants";
 
-//user peer name as ID
-const PEER_NAME = "Metamask";
+export const wcModal = new WalletConnectModal({
+  projectId: "039a7aeef39cb740398760f71a471957",
+  chains: ["eip155:80001", "eip155:137"],
+});
 
 /** NOTE: only use this wallet in mainnet */
 export function useEVMWC() {
@@ -57,17 +59,17 @@ export function useEVMWC() {
       const { uri, approval } = await client.connect({
         pairingTopic: prevPairing?.topic,
         requiredNamespaces: {
-          cosmos: {
-            methods: ["cosmos_signDirect", "cosmos_signAmino"],
-            chains: ["cosmos:juno-1"],
-            events: [],
+          eip155: {
+            methods: ["eth_sendTransaction", "personal_sign"],
+            chains: ["eip155:80001", "eip155:137"],
+            events: ["chainChanged", "accountsChanged"],
           },
         },
       });
 
       // uri is only returned for new pairings
       if (uri) {
-        wcModal.openModal({ uri, chains: ["eip115:80001", "eip115:137"] });
+        wcModal.openModal({ uri });
       } else {
         setState({ status: "loading" });
       }
@@ -87,9 +89,7 @@ export function useEVMWC() {
   async function disconnect() {
     setState({ status: "loading" });
     const client = await signClient();
-    const session = client.session
-      .getAll()
-      .find((s) => s.peer.metadata.name === PEER_NAME);
+    const session = _session("Metamask");
 
     if (session) {
       await client.disconnect({
@@ -113,9 +113,9 @@ export function useEVMWC() {
       : undefined;
 
   const connection: Connection = {
-    name: "Keplr mobile",
-    logo: WALLET_METADATA["keplr-wc"].logo,
-    installUrl: WALLET_METADATA["keplr-wc"].logo,
+    name: "Metamask mobile",
+    logo: WALLET_METADATA["evm-wc"].logo,
+    installUrl: WALLET_METADATA["evm-wc"].logo,
     connect,
   };
 
