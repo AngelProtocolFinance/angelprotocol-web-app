@@ -1,21 +1,21 @@
-import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
-import { toUtf8 } from "@cosmjs/encoding";
 import { EncodeObject } from "@cosmjs/proto-signing";
 import {
   Coin,
   DeliverTxResponse,
   GasPrice,
-  MsgSendEncodeObject,
   StdFee,
   calculateFee,
   isDeliverTxFailure,
 } from "@cosmjs/stargate";
+import { MsgSend } from "@keplr-wallet/proto-types/cosmos/bank/v1beta1/tx";
+import { MsgExecuteContract } from "@keplr-wallet/proto-types/cosmwasm/wasm/v1/tx";
+import type { Any } from "@keplr-wallet/proto-types/google/protobuf/any";
 import { Chain } from "types/aws";
 import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/contracts";
 import { TxOptions } from "types/slices";
 import { WalletState } from "contexts/WalletContext";
-import { logger, toBase64 } from "helpers";
-import { getKeplrClient } from "helpers/keplr";
+import { logger, objToBase64, toU8a } from "helpers";
+import { keplr } from "helpers/keplr";
 import {
   CosmosTxSimulationFail,
   TxResultFail,
@@ -48,11 +48,7 @@ export default class Contract {
     try {
       this.verifyWallet();
       const { chain_id, rpc_url } = this.wallet!.chain;
-      const client = await getKeplrClient(
-        this.wallet?.providerId!,
-        chain_id,
-        rpc_url
-      );
+      const client = await keplr(this.wallet?.providerId!, chain_id, rpc_url);
       const gasEstimation = await client.simulate(
         this.walletAddress,
         msgs,
@@ -71,28 +67,20 @@ export default class Contract {
   async signAndBroadcast({ msgs, fee }: TxOptions) {
     this.verifyWallet();
     const { chain_id, rpc_url } = this.wallet!.chain;
-    const client = await getKeplrClient(
-      this.wallet?.providerId!,
-      chain_id,
-      rpc_url
-    );
+    const client = await keplr(this.wallet?.providerId!, chain_id, rpc_url);
     const result = await client.signAndBroadcast(this.walletAddress, msgs, fee);
     return validateTransactionSuccess(result, this.wallet!.chain);
   }
 
-  createExecuteContractMsg(
-    to: string,
-    msg: object,
-    funds: Coin[] = []
-  ): MsgExecuteContractEncodeObject {
+  createExecuteContractMsg(to: string, msg: object, funds: Coin[] = []): Any {
     return {
-      typeUrl: "/cosmwasm.wasm.v1.MsgExecuteContract",
-      value: {
+      typeUrl: typeURLs.executeContract,
+      value: MsgExecuteContract.encode({
         contract: to,
         sender: this.walletAddress,
-        msg: toUtf8(JSON.stringify(msg)),
+        msg: toU8a(JSON.stringify(msg)),
         funds,
-      },
+      }).finish(),
     };
   }
 
@@ -100,10 +88,10 @@ export default class Contract {
     scaledAmount: string,
     recipient: string,
     denom = this.wallet!.chain.native_currency.token_id
-  ): MsgSendEncodeObject {
+  ): Any {
     return {
-      typeUrl: "/cosmos.bank.v1beta1.MsgSend",
-      value: {
+      typeUrl: typeURLs.sendNative,
+      value: MsgSend.encode({
         fromAddress: this.walletAddress,
         toAddress: recipient,
         amount: [
@@ -112,7 +100,7 @@ export default class Contract {
             amount: scaledAmount,
           },
         ],
-      },
+      }).finish(),
     };
   }
 
@@ -126,7 +114,7 @@ export default class Contract {
         execute: {
           contract_addr: to,
           funds,
-          msg: toBase64(msg),
+          msg: objToBase64(msg),
         },
       },
     };
@@ -168,3 +156,13 @@ function validateTransactionSuccess(
 
   return result;
 }
+
+const typeURLs = {
+  /**
+   * derived from proto-types path
+   * sample: import { MsgExecuteContract } from "@keplr-wallet/proto-types/cosmwasm/wasm/v1/tx
+   * /cosmwasm/wasm/v1/tx -> /cosmwasm.wasm.v1.MsgExecuteContract (from tx file)
+   */
+  executeContract: "/cosmwasm.wasm.v1.MsgExecuteContract",
+  sendNative: "/cosmos.bank.v1beta1.MsgSend",
+} as const;
