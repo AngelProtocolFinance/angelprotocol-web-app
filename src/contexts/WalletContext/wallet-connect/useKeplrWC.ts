@@ -37,7 +37,7 @@ export function useKeplrWC() {
     (async () => {
       setState({ status: "loading" });
       const client = await getClient();
-      const prevSession = _session("Keplr");
+      const prevSession = _session("Keplr", client);
 
       if (prevSession) {
         setState(connected(prevSession.namespaces));
@@ -55,7 +55,7 @@ export function useKeplrWC() {
       setState({ status: "loading" });
       const client = await getClient();
 
-      const prevPairing = _pairing("Keplr");
+      const prevPairing = _pairing("Keplr", client);
 
       const { uri, approval } = await client.connect({
         pairingTopic: prevPairing?.topic,
@@ -94,7 +94,7 @@ export function useKeplrWC() {
   async function disconnect() {
     setState({ status: "loading" });
     const client = await getClient();
-    const session = _session("Keplr");
+    const session = _session("Keplr", client);
 
     if (session) {
       await client.disconnect({

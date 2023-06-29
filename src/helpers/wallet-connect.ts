@@ -7,9 +7,9 @@ type Name = "Keplr" | "Metamask";
 let client: TSignClient;
 export async function signClient(): Promise<TSignClient> {
   if (client) return client;
-  client = (await SignClient.init({
+  client = await SignClient.init({
     projectId: "039a7aeef39cb740398760f71a471957",
-  })) as any;
+  });
   return client;
 }
 
@@ -19,10 +19,10 @@ export const account = (namespace: SessionTypes.Namespace): Account => {
   return { address, chainId };
 };
 
-export const session = (name: Name) =>
-  client.session.getAll().find((s) => s.peer.metadata.name === name);
+export const session = (name: Name, _client: TSignClient) =>
+  _client.session.getAll().find((s) => s.peer.metadata.name === name);
 
-export const pairing = (name: Name) =>
-  client.pairing
+export const pairing = (name: Name, _client: TSignClient) =>
+  _client.pairing
     .getAll({ active: true })
     .find((p) => p.peerMetadata?.name === name);

@@ -14,6 +14,7 @@ import { WALLET_METADATA } from "../constants";
 export const wcModal = new WalletConnectModal({
   projectId: "039a7aeef39cb740398760f71a471957",
   chains: ["eip155:80001", "eip155:137"],
+  enableExplorer: false,
 });
 
 /** NOTE: only use this wallet in mainnet */
@@ -31,7 +32,7 @@ export function useEVMWC() {
     (async () => {
       setState({ status: "loading" });
       const client = await signClient();
-      const prevSession = _session("Metamask");
+      const prevSession = _session("Metamask", client);
 
       if (prevSession) {
         setState(connected(prevSession.namespaces));
@@ -54,7 +55,7 @@ export function useEVMWC() {
       setState({ status: "loading" });
       const client = await signClient();
 
-      const prevPairing = _pairing("Metamask");
+      const prevPairing = _pairing("Metamask", client);
 
       const { uri, approval } = await client.connect({
         pairingTopic: prevPairing?.topic,
@@ -74,6 +75,7 @@ export function useEVMWC() {
         setState({ status: "loading" });
       }
       const session = await approval();
+
       setState(connected(session.namespaces));
       client.on("session_delete", onSessionDelete);
       if (uri) {
@@ -89,7 +91,7 @@ export function useEVMWC() {
   async function disconnect() {
     setState({ status: "loading" });
     const client = await signClient();
-    const session = _session("Metamask");
+    const session = _session("Metamask", client);
 
     if (session) {
       await client.disconnect({
@@ -129,5 +131,5 @@ export function useEVMWC() {
 
 const connected = (namespaces: SessionTypes.Namespaces): Connected => ({
   status: "connected",
-  ...account(namespaces.eip115),
+  ...account(namespaces.eip155),
 });

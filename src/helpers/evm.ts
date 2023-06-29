@@ -1,21 +1,19 @@
 import { ProviderId } from "contexts/WalletContext/types";
 import { Dwindow, InjectedProvider, RequestArguments } from "types/ethereum";
-import { session as _session, signClient } from "./wallet-connect";
+import { session as _session, account, signClient } from "./wallet-connect";
 
 export async function wcProvider(): Promise<Partial<InjectedProvider>> {
   const client = await signClient();
   //FUTURE: pass peer name in wcProvider call
-  const session = _session("Metamask")!;
+  const session = _session("Metamask", client)!;
 
-  const { namespaces, topic } = session;
-  const eip115 = namespaces.eip115;
-  const [, chainId] = eip115.accounts[0].split(":");
+  const { chainId } = account(session.namespaces.eip155);
 
   return {
     async request<T>({ method, params }: RequestArguments): Promise<T> {
       return client.request<T>({
-        topic,
-        chainId: `evm:${chainId}`,
+        topic: session.topic,
+        chainId: `eip155:${chainId}`,
         request: {
           method,
           params,

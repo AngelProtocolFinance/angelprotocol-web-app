@@ -16,7 +16,7 @@ export async function keplr(providerId: ProviderId): Promise<Keplr | KeplrWC> {
 
 export async function keplrWC(): Promise<KeplrWC> {
   const client = await signClient();
-  const session = _session("Keplr");
+  const session = _session("Keplr", client);
 
   if (!session) throw new Error("@dev: no keplr session");
 
