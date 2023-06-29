@@ -92,7 +92,7 @@ export default function useInjectedProvider(
 
   const requestAccess = async (isNewConnection = false) => {
     try {
-      const injectedProvider = getProvider(providerId);
+      const injectedProvider = await getProvider(providerId);
       if (
         injectedProvider &&
         (isNewConnection || shouldReconnect) &&
@@ -178,7 +178,7 @@ export default function useInjectedProvider(
   };
 
   const switchChain = async (chainId: chainIDs) => {
-    const injectedProvider = getProvider(providerId);
+    const injectedProvider = await getProvider(providerId);
 
     if (!injectedProvider) {
       throw new UnexpectedStateError(
@@ -247,8 +247,9 @@ export default function useInjectedProvider(
 }
 
 function removeAllListeners(providerId: ProviderId) {
-  const provider = getProvider(providerId);
-  provider?.removeAllListeners && provider.removeAllListeners();
+  getProvider(providerId).then((provider) => {
+    provider?.removeAllListeners && provider.removeAllListeners();
+  });
 }
 
 function prettifyId(providerId: ProviderId) {

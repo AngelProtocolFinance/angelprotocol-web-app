@@ -57,11 +57,10 @@ export async function estimateDonation({
           )
         );
       }
-      const fee = await contract.estimateFee(msgs);
-      const feeAmount = extractFeeAmount(fee, wallet.displayCoin.token_id);
+      const { feeAmount, doc } = await contract.estimateFee(msgs);
       return {
         fee: { amount: feeAmount, symbol: native_currency.symbol },
-        tx: { type: "cosmos", val: { fee, msgs } },
+        tx: { type: "cosmos", val: { doc } },
       };
     }
     // terra native transaction, send or contract interaction

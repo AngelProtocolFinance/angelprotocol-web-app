@@ -1,6 +1,7 @@
 import { TransactionRequest } from "@ethersproject/providers";
 import { CreateTxOptions } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
+import { SignDoc } from "types/cosmos";
 import { Country } from "types/countries";
 import { TokenWithAmount, TxOptions } from "types/slices";
 import { WalletState } from "contexts/WalletContext";
@@ -65,7 +66,7 @@ export type TxStep = {
 } & Omit<SubmitStep, "step">;
 
 export type EstimatedTx =
-  | { type: "cosmos"; val: TxOptions }
+  | { type: "cosmos"; val: { doc: SignDoc } }
   | { type: "terra"; val: CreateTxOptions; wallet: ConnectedWallet }
   | { type: "evm"; val: TransactionRequest };
 

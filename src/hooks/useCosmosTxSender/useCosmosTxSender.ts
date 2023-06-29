@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Tx, TxArgs } from "./types";
-import { TxOptions } from "types/slices";
 import { invalidateApesTags } from "services/apes";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
@@ -8,7 +7,6 @@ import Popup from "components/Popup";
 import { TxPrompt } from "components/Prompt";
 import { useSetter } from "store/accessors";
 import Contract from "contracts/Contract";
-import { extractFeeAmount } from "helpers";
 import handleTxError from "./handleTxError";
 
 type Sender = (args: TxArgs) => Promise<void>;
@@ -53,11 +51,7 @@ export default function useCosmosTxSender<T extends boolean = false>(
 
       const contract = new Contract(wallet);
 
-      const fee = await contract.estimateFee(msgs);
-      const feeAmount = extractFeeAmount(
-        fee,
-        wallet.chain.native_currency.token_id
-      );
+      const { feeAmount, doc } = await contract.estimateFee(msgs);
 
       if (feeAmount > wallet.displayCoin.balance) {
         return showModal(Popup, {
@@ -65,11 +59,10 @@ export default function useCosmosTxSender<T extends boolean = false>(
         });
       }
 
-      const tx: TxOptions = { msgs: msgs, fee };
-      const response = await contract.signAndBroadcast(tx);
+      const response = await contract.signAndBroadcast(doc);
 
       const txRes: Tx = {
-        hash: response.transactionHash,
+        hash: response.txhash,
         chainID: wallet.chain.chain_id,
       };
 
