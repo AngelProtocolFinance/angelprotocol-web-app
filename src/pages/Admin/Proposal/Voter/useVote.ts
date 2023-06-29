@@ -1,6 +1,6 @@
-import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
 import { useFormContext } from "react-hook-form";
 import { VoteValues as VV } from "./types";
+import type { Any } from "@keplr-wallet/proto-types/google/protobuf/any";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useGetWallet } from "contexts/WalletContext";
 import CW3 from "contracts/CW3";
@@ -17,7 +17,7 @@ export default function useVote() {
   const { sendTx, isSending } = useCosmosTxSender(true);
 
   async function vote({ type, proposalId, vote, reason }: VV) {
-    let voteMsg: MsgExecuteContractEncodeObject;
+    let voteMsg: Any;
     if (type === "application") {
       const contract = new CW3Review(wallet);
       voteMsg = contract.createVoteApplicationMsg({
