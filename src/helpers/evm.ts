@@ -1,17 +1,35 @@
-import WalletConnectProvider from "@walletconnect/web3-provider";
 import { ProviderId } from "contexts/WalletContext/types";
-import { Dwindow, InjectedProvider } from "types/ethereum";
-import { INFURA_ID } from "constants/env";
+import { Dwindow, InjectedProvider, RequestArguments } from "types/ethereum";
+import { signClient } from "./wallet-connect";
 
-export const WCProvider = new WalletConnectProvider({
-  infuraId: INFURA_ID,
-  qrcodeModalOptions: { mobileLinks: ["metamask"], desktopLinks: [] },
-  storageId: "wc_evm",
-});
+export async function wcProvider(): Promise<Partial<InjectedProvider>> {
+  const client = await signClient();
+  const session = client.session
+    .getAll()
+    .find((s) => s.peer.metadata.name === "Metamask");
+  if (!session) throw new Error("@dev: no metamask session");
 
-export function getProvider(
+  const { namespaces, topic } = session;
+  const eip115 = namespaces.eip115;
+  const [, chainId] = eip115.accounts[0].split(":");
+
+  return {
+    async request<T>({ method, params }: RequestArguments): Promise<T> {
+      return client.request<T>({
+        topic,
+        chainId: `evm:${chainId}`,
+        request: {
+          method,
+          params,
+        },
+      });
+    },
+  };
+}
+
+export async function getProvider(
   providerId: ProviderId
-): InjectedProvider | undefined {
+): Promise<InjectedProvider | undefined> {
   const dwindow = window as Dwindow;
   switch (providerId) {
     case "binance-wallet":
@@ -20,7 +38,7 @@ export function getProvider(
       return dwindow.ethereum;
     /** only used in sendTx */
     case "evm-wc":
-      return WCProvider as unknown as InjectedProvider;
+      return wcProvider() as Promise<InjectedProvider>;
     case "xdefi-evm":
       return dwindow.xfi?.ethereum;
     default:
