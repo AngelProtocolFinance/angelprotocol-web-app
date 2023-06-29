@@ -1,11 +1,33 @@
+import { WalletConnectModal } from "@walletconnect/modal";
 import { SignClient } from "@walletconnect/sign-client";
-import { ISignClient } from "@walletconnect/types";
+import type { SignClient as TSignClient } from "@walletconnect/sign-client/dist/types/client";
+import { SessionTypes } from "@walletconnect/types";
 
-let client: ISignClient;
-export async function signClient(): Promise<ISignClient> {
+type Name = "Keplr" | "Metamask";
+
+let client: TSignClient;
+export async function signClient(): Promise<TSignClient> {
   if (client) return client;
-  client = await SignClient.init({
+  client = (await SignClient.init({
     projectId: "039a7aeef39cb740398760f71a471957",
-  });
+  })) as any;
   return client;
 }
+
+export const wcModal = new WalletConnectModal({
+  projectId: "039a7aeef39cb740398760f71a471957",
+});
+
+type Account = { chainId: string; address: string };
+export const account = (namespace: SessionTypes.Namespace): Account => {
+  const [, chainId, address] = namespace.accounts[0].split(":");
+  return { address, chainId };
+};
+
+export const session = (name: Name) =>
+  client.session.getAll().find((s) => s.peer.metadata.name === name);
+
+export const pairing = (name: Name) =>
+  client.pairing
+    .getAll({ active: true })
+    .find((p) => p.peerMetadata?.name === name);

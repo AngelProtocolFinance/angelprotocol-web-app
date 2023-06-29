@@ -1,83 +1,131 @@
 import { KeplrQRCodeModalV1 } from "@keplr-wallet/wc-qrcode-modal";
+import SignClient from "@walletconnect/sign-client";
 import { useEffect, useState } from "react";
 import { Connection, ProviderInfo } from "../types";
 import { Connected, WalletState } from "./types";
-import { useErrorContext } from "contexts/ErrorContext";
-import { connector as ctor, getKeplrWCClient } from "helpers/keplr";
-import { chainIds } from "constants/chainIds";
+import { SessionTypes } from "@walletconnect/types";
+import {
+  pairing as _pairing,
+  session as _session,
+  account,
+} from "helpers/wallet-connect";
 import { WALLET_METADATA } from "../constants";
-import { WC_EVENT } from "./constants";
 
 const QRModal = new KeplrQRCodeModalV1();
 
+//user peer name as ID
+const PEER_NAME = "Keplr";
+
+let client: SignClient;
+async function getClient(): Promise<SignClient> {
+  if (client) return client;
+  client = await SignClient.init({
+    projectId: "039a7aeef39cb740398760f71a471957",
+  });
+  return client;
+}
+
 /** NOTE: only use this wallet in mainnet */
 export function useKeplrWC() {
-  const { handleError } = useErrorContext();
-
-  const [walletState, setWalletState] = useState<WalletState>({
+  const [state, setState] = useState<WalletState>({
     status: "disconnected",
-    connect,
   });
+
+  function onSessionDelete() {
+    setState({ status: "disconnected" });
+  }
 
   /** persistent connection */
   useEffect(() => {
-    if (ctor.connected) connect(false);
+    (async () => {
+      setState({ status: "loading" });
+      const client = await getClient();
+      const prevSession = client.session
+        .getAll()
+        .find((s) => s.peer.metadata.name === PEER_NAME);
+
+      if (prevSession) {
+        setState(connected(prevSession.namespaces));
+        client.on("session_delete", onSessionDelete);
+      } else {
+        setState({ status: "disconnected" });
+      }
+    })();
     //eslint-disable-next-line
   }, []);
 
   /** new connection */
-  async function connect(isNew = true) {
-    if (isNew) {
-      setWalletState({ status: "loading" });
-      await ctor.createSession();
-      QRModal.open(ctor.uri, () => {
-        /** modal is closed without connecting */
-        if (!ctor.connected) {
-          setWalletState({ status: "disconnected", connect });
-        }
+  async function connect() {
+    try {
+      setState({ status: "loading" });
+      const client = await getClient();
+
+      const prevSession = _session("Keplr");
+      if (prevSession) {
+        return console.log(prevSession);
+      }
+
+      const prevPairing = _pairing("Keplr");
+
+      const { uri, approval } = await client.connect({
+        pairingTopic: prevPairing?.topic,
+        requiredNamespaces: {
+          cosmos: {
+            methods: ["cosmos_signDirect", "cosmos_signAmino"],
+            chains: ["cosmos:juno-1"],
+            events: [],
+          },
+        },
       });
-      ctor.on(WC_EVENT.connect, async (error) => {
-        try {
-          if (error) {
-            throw Error(error.message);
-          }
-          setWalletState({
-            status: "connected",
-            disconnect,
-            ...(await getWalletInfo()),
-          });
-        } catch (err) {
-          disconnect();
-          handleError(err);
-        } finally {
-          QRModal.close();
-        }
-      });
-    } else {
-      setWalletState({
-        status: "connected",
-        disconnect,
-        ...(await getWalletInfo()),
-      });
+
+      // uri is only returned for new pairings
+      if (uri) {
+        QRModal.open(uri, (/** close callback */) => {
+          setState({ status: "disconnected" });
+        });
+      } else {
+        setState({ status: "loading" });
+      }
+      const session = await approval();
+
+      setState(connected(session.namespaces));
+
+      client.on("session_delete", onSessionDelete);
+      if (uri) {
+        QRModal.close();
+      }
+    } catch (err) {
+      setState({ status: "disconnected" });
+    } finally {
+      QRModal.close();
     }
-    ctor.on(WC_EVENT.disconnect, disconnect);
   }
 
-  function disconnect() {
-    ctor.killSession();
-    ctor.off(WC_EVENT.connect);
-    ctor.off(WC_EVENT.disconnect);
-    setWalletState({ status: "disconnected", connect });
+  async function disconnect() {
+    setState({ status: "loading" });
+    const client = await getClient();
+    const session = client.session
+      .getAll()
+      .find((s) => s.peer.metadata.name === PEER_NAME);
+
+    if (session) {
+      await client.disconnect({
+        topic: session.topic,
+        reason: { code: 1, message: "user disconnected" },
+      });
+    }
+    client.off("session_delete", onSessionDelete);
+    setState({ status: "disconnected" });
   }
 
   /** TODO: refactor to just return Meta & WalletState */
   const providerInfo: ProviderInfo | undefined =
-    walletState.status === "connected"
+    state.status === "connected"
       ? {
           logo: WALLET_METADATA["keplr-wc"].logo,
           providerId: "keplr-wc",
-          chainId: walletState.chainId,
-          address: walletState.address,
+          chainId: state.chainId,
+          address: state.address,
         }
       : undefined;
 
@@ -91,16 +139,12 @@ export function useKeplrWC() {
   return {
     connection,
     disconnect,
-    isLoading: walletState.status === "loading",
+    isLoading: state.status === "loading",
     providerInfo,
   };
 }
 
-async function getWalletInfo(): Promise<
-  Pick<Connected, "address" | "chainId">
-> {
-  const keplr = getKeplrWCClient();
-  await keplr.enable(chainIds.juno);
-  const key = await keplr.getKey(chainIds.juno);
-  return { chainId: chainIds.juno, address: key.bech32Address };
-}
+const connected = (namespaces: SessionTypes.Namespaces): Connected => ({
+  status: "connected",
+  ...account(namespaces.cosmos),
+});

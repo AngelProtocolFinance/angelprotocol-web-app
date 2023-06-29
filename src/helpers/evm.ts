@@ -1,13 +1,11 @@
 import { ProviderId } from "contexts/WalletContext/types";
 import { Dwindow, InjectedProvider, RequestArguments } from "types/ethereum";
-import { signClient } from "./wallet-connect";
+import { session as _session, signClient } from "./wallet-connect";
 
 export async function wcProvider(): Promise<Partial<InjectedProvider>> {
   const client = await signClient();
-  const session = client.session
-    .getAll()
-    .find((s) => s.peer.metadata.name === "Metamask");
-  if (!session) throw new Error("@dev: no metamask session");
+  //FUTURE: pass peer name in wcProvider call
+  const session = _session("Metamask")!;
 
   const { namespaces, topic } = session;
   const eip115 = namespaces.eip115;

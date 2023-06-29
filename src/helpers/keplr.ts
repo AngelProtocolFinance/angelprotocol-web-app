@@ -8,7 +8,7 @@ import {
   WCSignDirectRes,
 } from "types/cosmos";
 import { Dwindow } from "types/ethereum";
-import { signClient } from "./wallet-connect";
+import { session as _session, signClient } from "./wallet-connect";
 
 export async function keplr(providerId: ProviderId): Promise<Keplr | KeplrWC> {
   return providerId === "keplr-wc" ? keplrWC() : (window as Dwindow).keplr!;
@@ -16,9 +16,7 @@ export async function keplr(providerId: ProviderId): Promise<Keplr | KeplrWC> {
 
 export async function keplrWC(): Promise<KeplrWC> {
   const client = await signClient();
-  const session = client.session
-    .getAll()
-    .find((s) => s.peer.metadata.name === "Keplr");
+  const session = _session("Keplr");
 
   if (!session) throw new Error("@dev: no keplr session");
 

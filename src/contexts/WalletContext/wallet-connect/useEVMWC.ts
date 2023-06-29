@@ -1,97 +1,133 @@
-import QRCodeModal from "@walletconnect/qrcode-modal";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Connection, ProviderInfo } from "../types";
-import { WalletState } from "./types";
-import { WCProvider as WCP } from "helpers/evm";
+import { Connected, WalletState } from "./types";
+import { SessionTypes } from "@walletconnect/types";
+import {
+  pairing as _pairing,
+  session as _session,
+  account,
+  signClient,
+  wcModal,
+} from "helpers/wallet-connect";
 import { WALLET_METADATA } from "../constants";
-import { WC_EVENT } from "./constants";
 
+//user peer name as ID
+const PEER_NAME = "Metamask";
+
+/** NOTE: only use this wallet in mainnet */
 export function useEVMWC() {
-  const uriRef = useRef<string>("");
-  const [walletState, setWalletState] = useState<WalletState>({
+  const [state, setState] = useState<WalletState>({
     status: "disconnected",
-    connect,
   });
+
+  function onSessionDelete() {
+    setState({ status: "disconnected" });
+  }
 
   /** persistent connection */
   useEffect(() => {
-    if (WCP.wc.connected) connect(false /** re-enable connection again */);
+    (async () => {
+      setState({ status: "loading" });
+      const client = await signClient();
+      const prevSession = _session("Metamask");
+
+      if (prevSession) {
+        setState(connected(prevSession.namespaces));
+
+        client.on("session_update", ({ params }) => {
+          setState(connected(params.namespaces));
+        });
+
+        client.on("session_delete", onSessionDelete);
+      } else {
+        setState({ status: "disconnected" });
+      }
+    })();
     //eslint-disable-next-line
   }, []);
 
   /** new connection */
-  async function connect(isNew = true) {
+  async function connect() {
     try {
-      setWalletState({ status: "loading" });
+      setState({ status: "loading" });
+      const client = await signClient();
 
-      if (uriRef.current || isNew) {
-        QRCodeModal.open(
-          uriRef.current,
-          () => {
-            setWalletState({ status: "disconnected", connect });
+      const prevPairing = _pairing("Metamask");
+
+      const { uri, approval } = await client.connect({
+        pairingTopic: prevPairing?.topic,
+        requiredNamespaces: {
+          cosmos: {
+            methods: ["cosmos_signDirect", "cosmos_signAmino"],
+            chains: ["cosmos:juno-1"],
+            events: [],
           },
-          { mobileLinks: ["metamask"], desktopLinks: [] }
-        );
+        },
+      });
+
+      // uri is only returned for new pairings
+      if (uri) {
+        wcModal.openModal({ uri, chains: ["eip115:80001", "eip115:137"] });
+      } else {
+        setState({ status: "loading" });
       }
-      const accounts = await WCP.enable();
-
-      setWalletState({
-        status: "connected",
-        disconnect,
-        address: accounts[0],
-        chainId: `${WCP.chainId}`,
-      });
-
-      WCP.wc.on(
-        WC_EVENT.update,
-        (error, { params: [{ accounts, chainId }] }) => {
-          setWalletState({
-            status: "connected",
-            disconnect,
-            address: accounts[0],
-            chainId: `${chainId}`,
-          });
-        }
-      );
-      WCP.wc.on(WC_EVENT.disconnect, (error) => {
-        setWalletState({ status: "disconnected", connect });
-      });
+      const session = await approval();
+      setState(connected(session.namespaces));
+      client.on("session_delete", onSessionDelete);
+      if (uri) {
+        wcModal.closeModal();
+      }
     } catch (err) {
-      setWalletState({ status: "disconnected", connect });
+      setState({ status: "disconnected" });
     } finally {
-      uriRef.current = WCP.wc.uri;
-      QRCodeModal.close();
+      wcModal.closeModal();
     }
   }
 
-  function disconnect() {
-    WCP.disconnect();
-    setWalletState({ status: "disconnected", connect });
+  async function disconnect() {
+    setState({ status: "loading" });
+    const client = await signClient();
+    const session = client.session
+      .getAll()
+      .find((s) => s.peer.metadata.name === PEER_NAME);
+
+    if (session) {
+      await client.disconnect({
+        topic: session.topic,
+        reason: { code: 1, message: "user disconnected" },
+      });
+    }
+    client.off("session_delete", onSessionDelete);
+    setState({ status: "disconnected" });
   }
 
   /** TODO: refactor to just return Meta & WalletState */
   const providerInfo: ProviderInfo | undefined =
-    walletState.status === "connected"
+    state.status === "connected"
       ? {
           logo: WALLET_METADATA["evm-wc"].logo,
-          providerId: "evm-wc",
-          chainId: walletState.chainId,
-          address: walletState.address,
+          providerId: "keplr-wc",
+          chainId: state.chainId,
+          address: state.address,
         }
       : undefined;
 
   const connection: Connection = {
-    /** metamask for now, but any EVM compatible wallets that supports WC can use this */
-    name: "Metamask mobile",
-    logo: WALLET_METADATA["evm-wc"].logo,
-    installUrl: WALLET_METADATA["evm-wc"].logo,
+    name: "Keplr mobile",
+    logo: WALLET_METADATA["keplr-wc"].logo,
+    installUrl: WALLET_METADATA["keplr-wc"].logo,
     connect,
   };
 
   return {
     connection,
     disconnect,
-    isLoading: walletState.status === "loading",
+    isLoading: state.status === "loading",
     providerInfo,
   };
 }
+
+const connected = (namespaces: SessionTypes.Namespaces): Connected => ({
+  status: "connected",
+  ...account(namespaces.eip115),
+});
