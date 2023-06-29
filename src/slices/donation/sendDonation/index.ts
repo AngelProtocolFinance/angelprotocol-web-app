@@ -88,8 +88,8 @@ async function sendTransaction(
   switch (tx.type) {
     case "cosmos": {
       const contract = new Contract(wallet);
-      const response = await contract.signAndBroadcast(tx.val);
-      return { hash: response.transactionHash, isSuccess: !response.code };
+      const response = await contract.signAndBroadcast(tx.val.doc);
+      return { hash: response.txhash, isSuccess: !response.code };
     }
     case "terra": {
       const response = await tx.wallet.post(tx.val);
