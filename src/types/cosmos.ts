@@ -5,6 +5,11 @@ export type SignDoc = {
   [K in keyof RequiredDoc]: Exclude<RequiredDoc[K], null>;
 };
 
+export interface Coin {
+  readonly denom: string;
+  readonly amount: string;
+}
+
 export type WCSignature = StdSignature;
 
 export type WCSignAminoRes = {

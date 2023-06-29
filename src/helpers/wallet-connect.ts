@@ -19,10 +19,8 @@ export const account = (namespace: SessionTypes.Namespace): Account => {
   return { address, chainId };
 };
 
-export const session = (name: Name) => {
-  console.log(client);
-  return client.session.getAll().find((s) => s.peer.metadata.name === name);
-};
+export const session = (name: Name) =>
+  client.session.getAll().find((s) => s.peer.metadata.name === name);
 
 export const pairing = (name: Name) =>
   client.pairing

@@ -1,4 +1,3 @@
-import { Coin } from "@cosmjs/stargate";
 import Long from "long";
 import { MsgSend } from "@keplr-wallet/proto-types/cosmos/bank/v1beta1/tx";
 import { PubKey } from "@keplr-wallet/proto-types/cosmos/crypto/secp256k1/keys";
@@ -16,6 +15,7 @@ import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/contracts";
 import {
   BroadcastRes,
   BroadcastSuccess,
+  Coin,
   JSONAccount,
   SignDoc,
   SimulateRes,

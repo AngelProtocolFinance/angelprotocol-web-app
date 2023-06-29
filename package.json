@@ -44,10 +44,7 @@
     "node": "16.18.0"
   },
   "dependencies": {
-    "@cosmjs/cosmwasm-stargate": "^0.30.0",
     "@cosmjs/encoding": "^0.30.0",
-    "@cosmjs/proto-signing": "^0.30.0",
-    "@cosmjs/stargate": "^0.30.0",
     "@ethersproject/contracts": "^5.7.0",
     "@ethersproject/logger": "^5.7.0",
     "@ethersproject/providers": "^5.7.2",

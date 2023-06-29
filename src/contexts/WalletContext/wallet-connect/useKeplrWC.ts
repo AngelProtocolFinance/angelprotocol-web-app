@@ -55,11 +55,6 @@ export function useKeplrWC() {
       setState({ status: "loading" });
       const client = await getClient();
 
-      const prevSession = _session("Keplr");
-      if (prevSession) {
-        return console.log(prevSession);
-      }
-
       const prevPairing = _pairing("Keplr");
 
       const { uri, approval } = await client.connect({

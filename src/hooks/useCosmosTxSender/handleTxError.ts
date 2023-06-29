@@ -1,11 +1,3 @@
-import { TimeoutError } from "@cosmjs/stargate";
-import {
-  CreateTxFailed,
-  Timeout,
-  TxFailed,
-  TxUnspecifiedError,
-  UserDenied,
-} from "@terra-money/wallet-provider";
 import { TxError } from "./types";
 import { logger } from "helpers";
 import {
@@ -28,12 +20,6 @@ export default function handleTxError(
 
   if (error instanceof WalletDisconnectedError) {
     prompt({ error: error.message });
-  } else if (error instanceof UserDenied) {
-    prompt({ error: "Transaction aborted" });
-  } else if (error instanceof CreateTxFailed) {
-    prompt({ error: "Failed to create transaction" });
-  } else if (error instanceof TxFailed) {
-    prompt({ error: "Transaction failed" });
   } else if (error instanceof TxResultFail) {
     prompt({
       error: error.message,
@@ -53,10 +39,6 @@ export default function handleTxError(
     prompt({
       error: error.message,
     });
-  } else if (error instanceof Timeout || error instanceof TimeoutError) {
-    prompt({ error: error.message });
-  } else if (error instanceof TxUnspecifiedError) {
-    prompt({ error: GENERIC_ERROR_MESSAGE });
   } else if (error instanceof UnexpectedStateError) {
     prompt({ error: error.message });
   } else if (error instanceof BroadcastError) {

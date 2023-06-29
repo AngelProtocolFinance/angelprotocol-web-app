@@ -1,4 +1,4 @@
-import { EncodeObject } from "@cosmjs/proto-signing";
+import type { Any } from "@keplr-wallet/proto-types/google/protobuf/any";
 import { TagPayload } from "services/types";
 import { Chain } from "types/aws";
 import { TxResponse } from "types/cosmos";
@@ -24,6 +24,6 @@ export type TxOnSuccess = (res: TxResponse, chain: Chain) => void;
 export type TxArgs = {
   tagPayloads?: TagPayload[];
   successMeta?: TxSuccessMeta;
-  msgs: EncodeObject[];
+  msgs: Any[];
   onSuccess?: TxOnSuccess;
 };

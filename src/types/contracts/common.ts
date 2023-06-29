@@ -1,4 +1,4 @@
-import { Coin } from "@cosmjs/proto-signing";
+import { Coin } from "types/cosmos";
 import { UNSDG_NUMS } from "types/lists";
 
 export interface ERC20Token {
