@@ -18,3 +18,53 @@ export type WCSignDirectRes = {
 };
 
 export type KeplrWC = Pick<Keplr, "signAmino" | "signDirect">;
+
+interface Attribute {
+  readonly key: string;
+  readonly value: string;
+}
+interface Event {
+  readonly type: string;
+  readonly attributes: readonly Attribute[];
+}
+export interface Log {
+  readonly msg_index: number;
+  readonly log: string;
+  readonly events: readonly Event[];
+}
+export type TxResponse = {
+  txhash: string;
+  code: number;
+  logs: Log[];
+  raw_log: string;
+};
+type BroadcastError = {
+  code: number;
+  message: string;
+  details: unknown[];
+};
+export type BroadcastSuccess = { tx_response: TxResponse };
+
+export type BroadcastRes = BroadcastSuccess | BroadcastError;
+
+export type SimulateRes = {
+  gas_info: {
+    gas_wanted: string;
+    gas_used: string;
+  };
+};
+
+export type JSONAny<T> = {
+  "@type": string;
+} & T;
+
+export type JSONAccount = JSONAny<{
+  account_number: string;
+  //address:string
+  pub_key: JSONAny<{ key: string }>;
+  sequence: string;
+}>;
+
+export function isBroadcastError(res: BroadcastRes): res is BroadcastError {
+  return !(res as BroadcastSuccess).tx_response;
+}

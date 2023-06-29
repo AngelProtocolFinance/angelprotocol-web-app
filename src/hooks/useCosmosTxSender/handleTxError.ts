@@ -9,10 +9,12 @@ import {
 import { TxError } from "./types";
 import { logger } from "helpers";
 import {
+  BroadcastError,
   CosmosTxSimulationFail,
   LogApplicationUpdateError,
   LogDonationFail,
   TxResultFail,
+  TxTimeout,
   UnexpectedStateError,
   WalletDisconnectedError,
 } from "errors/errors";
@@ -37,6 +39,11 @@ export default function handleTxError(
       error: error.message,
       tx: { hash: error.txHash, chainID: error.chain.chain_id },
     });
+  } else if (error instanceof TxTimeout) {
+    prompt({
+      error: error.message,
+      tx: { hash: error.txHash, chainID: error.chain.chain_id },
+    });
   } else if (error instanceof LogDonationFail) {
     prompt({
       error: error.message,
@@ -51,6 +58,8 @@ export default function handleTxError(
   } else if (error instanceof TxUnspecifiedError) {
     prompt({ error: GENERIC_ERROR_MESSAGE });
   } else if (error instanceof UnexpectedStateError) {
+    prompt({ error: error.message });
+  } else if (error instanceof BroadcastError) {
     prompt({ error: error.message });
   } else if (error instanceof CosmosTxSimulationFail) {
     prompt({ error: error.message });
