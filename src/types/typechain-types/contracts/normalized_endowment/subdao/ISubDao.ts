@@ -104,7 +104,7 @@ export declare namespace SubDaoLib {
   ] & { token: number; data: SubDaoLib.DaoTokenDataStructOutput };
 }
 
-export declare namespace SubDaoMessage {
+export declare namespace SubDaoMessages {
   export type InstantiateMsgStruct = {
     id: PromiseOrValue<BigNumberish>;
     owner: PromiseOrValue<string>;
@@ -248,7 +248,7 @@ export interface ISubDaoInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "buildDaoTokenMesage",
-    values: [SubDaoMessage.InstantiateMsgStruct]
+    values: [SubDaoMessages.InstantiateMsgStruct]
   ): string;
   encodeFunctionData(
     functionFragment: "castVote",
@@ -360,7 +360,7 @@ export interface ISubDao extends BaseContract {
 
   functions: {
     buildDaoTokenMesage(
-      msg: SubDaoMessage.InstantiateMsgStruct,
+      msg: SubDaoMessages.InstantiateMsgStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -397,7 +397,7 @@ export interface ISubDao extends BaseContract {
 
     queryConfig(
       overrides?: CallOverrides
-    ): Promise<[SubDaoMessage.QueryConfigResponseStructOutput]>;
+    ): Promise<[SubDaoMessages.QueryConfigResponseStructOutput]>;
 
     queryState(
       overrides?: CallOverrides
@@ -423,7 +423,7 @@ export interface ISubDao extends BaseContract {
   };
 
   buildDaoTokenMesage(
-    msg: SubDaoMessage.InstantiateMsgStruct,
+    msg: SubDaoMessages.InstantiateMsgStruct,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -460,7 +460,7 @@ export interface ISubDao extends BaseContract {
 
   queryConfig(
     overrides?: CallOverrides
-  ): Promise<SubDaoMessage.QueryConfigResponseStructOutput>;
+  ): Promise<SubDaoMessages.QueryConfigResponseStructOutput>;
 
   queryState(
     overrides?: CallOverrides
@@ -486,7 +486,7 @@ export interface ISubDao extends BaseContract {
 
   callStatic: {
     buildDaoTokenMesage(
-      msg: SubDaoMessage.InstantiateMsgStruct,
+      msg: SubDaoMessages.InstantiateMsgStruct,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -523,7 +523,7 @@ export interface ISubDao extends BaseContract {
 
     queryConfig(
       overrides?: CallOverrides
-    ): Promise<SubDaoMessage.QueryConfigResponseStructOutput>;
+    ): Promise<SubDaoMessages.QueryConfigResponseStructOutput>;
 
     queryState(
       overrides?: CallOverrides
@@ -552,7 +552,7 @@ export interface ISubDao extends BaseContract {
 
   estimateGas: {
     buildDaoTokenMesage(
-      msg: SubDaoMessage.InstantiateMsgStruct,
+      msg: SubDaoMessages.InstantiateMsgStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -612,7 +612,7 @@ export interface ISubDao extends BaseContract {
 
   populateTransaction: {
     buildDaoTokenMesage(
-      msg: SubDaoMessage.InstantiateMsgStruct,
+      msg: SubDaoMessages.InstantiateMsgStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

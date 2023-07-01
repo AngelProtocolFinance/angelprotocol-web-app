@@ -21,9 +21,9 @@ import type {
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "../../../../common";
+} from "../../../common";
 
-export interface SubdaoTokenInterface extends utils.Interface {
+export interface ISubDaoTokenInterface extends utils.Interface {
   functions: {
     "executeDonorMatch(uint256,address,uint32,address)": FunctionFragment;
   };
@@ -48,12 +48,12 @@ export interface SubdaoTokenInterface extends utils.Interface {
   events: {};
 }
 
-export interface SubdaoToken extends BaseContract {
+export interface ISubDaoToken extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: SubdaoTokenInterface;
+  interface: ISubDaoTokenInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

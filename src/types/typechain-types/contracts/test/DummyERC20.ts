@@ -39,7 +39,9 @@ export interface DummyERC20Interface extends utils.Interface {
     "increaseAllowance(address,uint256)": FunctionFragment;
     "mint(address,uint256)": FunctionFragment;
     "name()": FunctionFragment;
+    "setApproveAllowed(bool)": FunctionFragment;
     "setDecimals(uint8)": FunctionFragment;
+    "setTransferAllowed(bool)": FunctionFragment;
     "symbol()": FunctionFragment;
     "totalSupply()": FunctionFragment;
     "transfer(address,uint256)": FunctionFragment;
@@ -58,7 +60,9 @@ export interface DummyERC20Interface extends utils.Interface {
       | "increaseAllowance"
       | "mint"
       | "name"
+      | "setApproveAllowed"
       | "setDecimals"
+      | "setTransferAllowed"
       | "symbol"
       | "totalSupply"
       | "transfer"
@@ -104,8 +108,16 @@ export interface DummyERC20Interface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(
+    functionFragment: "setApproveAllowed",
+    values: [PromiseOrValue<boolean>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "setDecimals",
     values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setTransferAllowed",
+    values: [PromiseOrValue<boolean>]
   ): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
   encodeFunctionData(
@@ -142,7 +154,15 @@ export interface DummyERC20Interface extends utils.Interface {
   decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: "setApproveAllowed",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "setDecimals",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setTransferAllowed",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
@@ -268,8 +288,18 @@ export interface DummyERC20 extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
+    setApproveAllowed(
+      _approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     setDecimals(
       _newDecimals: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    setTransferAllowed(
+      allowed: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -343,8 +373,18 @@ export interface DummyERC20 extends BaseContract {
 
   name(overrides?: CallOverrides): Promise<string>;
 
+  setApproveAllowed(
+    _approved: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   setDecimals(
     _newDecimals: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  setTransferAllowed(
+    allowed: PromiseOrValue<boolean>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -418,8 +458,18 @@ export interface DummyERC20 extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<string>;
 
+    setApproveAllowed(
+      _approved: PromiseOrValue<boolean>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     setDecimals(
       _newDecimals: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setTransferAllowed(
+      allowed: PromiseOrValue<boolean>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -518,8 +568,18 @@ export interface DummyERC20 extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
+    setApproveAllowed(
+      _approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     setDecimals(
       _newDecimals: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    setTransferAllowed(
+      allowed: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -594,8 +654,18 @@ export interface DummyERC20 extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    setApproveAllowed(
+      _approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     setDecimals(
       _newDecimals: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setTransferAllowed(
+      allowed: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

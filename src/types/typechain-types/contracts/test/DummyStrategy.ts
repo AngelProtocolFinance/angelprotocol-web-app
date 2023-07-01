@@ -26,7 +26,7 @@ import type {
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "../../../common";
+} from "../../common";
 
 export declare namespace IStrategy {
   export type StrategyConfigStruct = {
@@ -44,14 +44,18 @@ export declare namespace IStrategy {
   };
 }
 
-export interface IStrategyInterface extends utils.Interface {
+export interface DummyStrategyInterface extends utils.Interface {
   functions: {
     "deposit(uint256)": FunctionFragment;
     "getStrategyConfig()": FunctionFragment;
+    "pause()": FunctionFragment;
     "paused()": FunctionFragment;
     "previewDeposit(uint256)": FunctionFragment;
     "previewWithdraw(uint256)": FunctionFragment;
+    "setDummyAmt(uint256)": FunctionFragment;
+    "setDummyPreviewAmt(uint256)": FunctionFragment;
     "setStrategyConfig((bytes4,address,address,address))": FunctionFragment;
+    "unpause()": FunctionFragment;
     "withdraw(uint256)": FunctionFragment;
   };
 
@@ -59,10 +63,14 @@ export interface IStrategyInterface extends utils.Interface {
     nameOrSignatureOrTopic:
       | "deposit"
       | "getStrategyConfig"
+      | "pause"
       | "paused"
       | "previewDeposit"
       | "previewWithdraw"
+      | "setDummyAmt"
+      | "setDummyPreviewAmt"
       | "setStrategyConfig"
+      | "unpause"
       | "withdraw"
   ): FunctionFragment;
 
@@ -74,6 +82,7 @@ export interface IStrategyInterface extends utils.Interface {
     functionFragment: "getStrategyConfig",
     values?: undefined
   ): string;
+  encodeFunctionData(functionFragment: "pause", values?: undefined): string;
   encodeFunctionData(functionFragment: "paused", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "previewDeposit",
@@ -84,9 +93,18 @@ export interface IStrategyInterface extends utils.Interface {
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
+    functionFragment: "setDummyAmt",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setDummyPreviewAmt",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "setStrategyConfig",
     values: [IStrategy.StrategyConfigStruct]
   ): string;
+  encodeFunctionData(functionFragment: "unpause", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "withdraw",
     values: [PromiseOrValue<BigNumberish>]
@@ -97,6 +115,7 @@ export interface IStrategyInterface extends utils.Interface {
     functionFragment: "getStrategyConfig",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "pause", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "paused", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "previewDeposit",
@@ -107,9 +126,18 @@ export interface IStrategyInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "setDummyAmt",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setDummyPreviewAmt",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "setStrategyConfig",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "unpause", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
 
   events: {
@@ -117,6 +145,8 @@ export interface IStrategyInterface extends utils.Interface {
     "EnteredPosition(uint256,uint256)": EventFragment;
     "LogError(string)": EventFragment;
     "LogErrorBytes(bytes)": EventFragment;
+    "Paused(address)": EventFragment;
+    "Unpaused(address)": EventFragment;
     "WithdrewPosition(uint256,uint256)": EventFragment;
   };
 
@@ -124,6 +154,8 @@ export interface IStrategyInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: "EnteredPosition"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "LogError"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "LogErrorBytes"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Paused"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Unpaused"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "WithdrewPosition"): EventFragment;
 }
 
@@ -162,6 +194,20 @@ export type LogErrorBytesEvent = TypedEvent<[string], LogErrorBytesEventObject>;
 
 export type LogErrorBytesEventFilter = TypedEventFilter<LogErrorBytesEvent>;
 
+export interface PausedEventObject {
+  account: string;
+}
+export type PausedEvent = TypedEvent<[string], PausedEventObject>;
+
+export type PausedEventFilter = TypedEventFilter<PausedEvent>;
+
+export interface UnpausedEventObject {
+  account: string;
+}
+export type UnpausedEvent = TypedEvent<[string], UnpausedEventObject>;
+
+export type UnpausedEventFilter = TypedEventFilter<UnpausedEvent>;
+
 export interface WithdrewPositionEventObject {
   yieldTokenAmt: BigNumber;
   baseTokenAmt: BigNumber;
@@ -174,12 +220,12 @@ export type WithdrewPositionEvent = TypedEvent<
 export type WithdrewPositionEventFilter =
   TypedEventFilter<WithdrewPositionEvent>;
 
-export interface IStrategy extends BaseContract {
+export interface DummyStrategy extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: IStrategyInterface;
+  interface: DummyStrategyInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -210,20 +256,38 @@ export interface IStrategy extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[IStrategy.StrategyConfigStructOutput]>;
 
+    pause(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     paused(overrides?: CallOverrides): Promise<[boolean]>;
 
     previewDeposit(
-      amt: PromiseOrValue<BigNumberish>,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     previewWithdraw(
-      amt: PromiseOrValue<BigNumberish>,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
+    setDummyAmt(
+      amt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    setDummyPreviewAmt(
+      amt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     setStrategyConfig(
       _newConfig: IStrategy.StrategyConfigStruct,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    unpause(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -242,20 +306,38 @@ export interface IStrategy extends BaseContract {
     overrides?: CallOverrides
   ): Promise<IStrategy.StrategyConfigStructOutput>;
 
+  pause(
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   paused(overrides?: CallOverrides): Promise<boolean>;
 
   previewDeposit(
-    amt: PromiseOrValue<BigNumberish>,
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   previewWithdraw(
-    amt: PromiseOrValue<BigNumberish>,
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
+  setDummyAmt(
+    amt: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  setDummyPreviewAmt(
+    amt: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   setStrategyConfig(
     _newConfig: IStrategy.StrategyConfigStruct,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  unpause(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -274,22 +356,36 @@ export interface IStrategy extends BaseContract {
       overrides?: CallOverrides
     ): Promise<IStrategy.StrategyConfigStructOutput>;
 
+    pause(overrides?: CallOverrides): Promise<void>;
+
     paused(overrides?: CallOverrides): Promise<boolean>;
 
     previewDeposit(
-      amt: PromiseOrValue<BigNumberish>,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     previewWithdraw(
-      amt: PromiseOrValue<BigNumberish>,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    setDummyAmt(
+      amt: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setDummyPreviewAmt(
+      amt: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     setStrategyConfig(
       _newConfig: IStrategy.StrategyConfigStruct,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    unpause(overrides?: CallOverrides): Promise<void>;
 
     withdraw(
       amt: PromiseOrValue<BigNumberish>,
@@ -316,6 +412,12 @@ export interface IStrategy extends BaseContract {
     "LogErrorBytes(bytes)"(data?: null): LogErrorBytesEventFilter;
     LogErrorBytes(data?: null): LogErrorBytesEventFilter;
 
+    "Paused(address)"(account?: null): PausedEventFilter;
+    Paused(account?: null): PausedEventFilter;
+
+    "Unpaused(address)"(account?: null): UnpausedEventFilter;
+    Unpaused(account?: null): UnpausedEventFilter;
+
     "WithdrewPosition(uint256,uint256)"(
       yieldTokenAmt?: null,
       baseTokenAmt?: null
@@ -334,20 +436,38 @@ export interface IStrategy extends BaseContract {
 
     getStrategyConfig(overrides?: CallOverrides): Promise<BigNumber>;
 
+    pause(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
     previewDeposit(
-      amt: PromiseOrValue<BigNumberish>,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     previewWithdraw(
-      amt: PromiseOrValue<BigNumberish>,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    setDummyAmt(
+      amt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    setDummyPreviewAmt(
+      amt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     setStrategyConfig(
       _newConfig: IStrategy.StrategyConfigStruct,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    unpause(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -365,20 +485,38 @@ export interface IStrategy extends BaseContract {
 
     getStrategyConfig(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    pause(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     previewDeposit(
-      amt: PromiseOrValue<BigNumberish>,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     previewWithdraw(
-      amt: PromiseOrValue<BigNumberish>,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    setDummyAmt(
+      amt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setDummyPreviewAmt(
+      amt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     setStrategyConfig(
       _newConfig: IStrategy.StrategyConfigStruct,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    unpause(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

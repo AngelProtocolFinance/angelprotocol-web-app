@@ -356,12 +356,14 @@ export interface IncentivisedVotingLockupInterface extends utils.Interface {
   events: {
     "ContractExpired(address)": EventFragment;
     "Deposit(address,uint256,uint256,uint8,uint256)": EventFragment;
+    "Initialized(uint8)": EventFragment;
     "UserEjected(address,address,uint256)": EventFragment;
     "Withdraw(address,uint256,uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "ContractExpired"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Deposit"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "UserEjected"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Withdraw"): EventFragment;
 }
@@ -389,6 +391,13 @@ export type DepositEvent = TypedEvent<
 >;
 
 export type DepositEventFilter = TypedEventFilter<DepositEvent>;
+
+export interface InitializedEventObject {
+  version: number;
+}
+export type InitializedEvent = TypedEvent<[number], InitializedEventObject>;
+
+export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
 
 export interface UserEjectedEventObject {
   ejected: string;
@@ -515,8 +524,8 @@ export interface IncentivisedVotingLockup extends BaseContract {
 
     initialize(
       stakingtoken: PromiseOrValue<string>,
-      name: PromiseOrValue<string>,
-      symbol: PromiseOrValue<string>,
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -693,8 +702,8 @@ export interface IncentivisedVotingLockup extends BaseContract {
 
   initialize(
     stakingtoken: PromiseOrValue<string>,
-    name: PromiseOrValue<string>,
-    symbol: PromiseOrValue<string>,
+    _name: PromiseOrValue<string>,
+    _symbol: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -865,8 +874,8 @@ export interface IncentivisedVotingLockup extends BaseContract {
 
     initialize(
       stakingtoken: PromiseOrValue<string>,
-      name: PromiseOrValue<string>,
-      symbol: PromiseOrValue<string>,
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -988,6 +997,9 @@ export interface IncentivisedVotingLockup extends BaseContract {
       ts?: null
     ): DepositEventFilter;
 
+    "Initialized(uint8)"(version?: null): InitializedEventFilter;
+    Initialized(version?: null): InitializedEventFilter;
+
     "UserEjected(address,address,uint256)"(
       ejected?: null,
       ejector?: null,
@@ -1076,8 +1088,8 @@ export interface IncentivisedVotingLockup extends BaseContract {
 
     initialize(
       stakingtoken: PromiseOrValue<string>,
-      name: PromiseOrValue<string>,
-      symbol: PromiseOrValue<string>,
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1229,8 +1241,8 @@ export interface IncentivisedVotingLockup extends BaseContract {
 
     initialize(
       stakingtoken: PromiseOrValue<string>,
-      name: PromiseOrValue<string>,
-      symbol: PromiseOrValue<string>,
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

@@ -25,9 +25,9 @@ import type {
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "../../../../common";
+} from "../../../common";
 
-export interface MultiSigWalletFactoryInterface extends utils.Interface {
+export interface EndowmentMultiSigFactoryInterface extends utils.Interface {
   functions: {
     "create(uint256,address,address[],uint256,uint256)": FunctionFragment;
     "endowmentIdToMultisig(uint256)": FunctionFragment;
@@ -193,12 +193,12 @@ export type ProxyAdminUpdatedEvent = TypedEvent<
 export type ProxyAdminUpdatedEventFilter =
   TypedEventFilter<ProxyAdminUpdatedEvent>;
 
-export interface MultiSigWalletFactory extends BaseContract {
+export interface EndowmentMultiSigFactory extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: MultiSigWalletFactoryInterface;
+  interface: EndowmentMultiSigFactoryInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

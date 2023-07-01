@@ -132,24 +132,15 @@ export interface CollectorInterface extends utils.Interface {
   ): Result;
 
   events: {
-    "CollectorInitialized()": EventFragment;
     "CollectorSweeped(address,uint256,uint256)": EventFragment;
     "ConfigUpdated()": EventFragment;
+    "Initialized(uint8)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "CollectorInitialized"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "CollectorSweeped"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ConfigUpdated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
 }
-
-export interface CollectorInitializedEventObject {}
-export type CollectorInitializedEvent = TypedEvent<
-  [],
-  CollectorInitializedEventObject
->;
-
-export type CollectorInitializedEventFilter =
-  TypedEventFilter<CollectorInitializedEvent>;
 
 export interface CollectorSweepedEventObject {
   tokenSwept: string;
@@ -168,6 +159,13 @@ export interface ConfigUpdatedEventObject {}
 export type ConfigUpdatedEvent = TypedEvent<[], ConfigUpdatedEventObject>;
 
 export type ConfigUpdatedEventFilter = TypedEventFilter<ConfigUpdatedEvent>;
+
+export interface InitializedEventObject {
+  version: number;
+}
+export type InitializedEvent = TypedEvent<[number], InitializedEventObject>;
+
+export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
 
 export interface Collector extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -269,9 +267,6 @@ export interface Collector extends BaseContract {
   };
 
   filters: {
-    "CollectorInitialized()"(): CollectorInitializedEventFilter;
-    CollectorInitialized(): CollectorInitializedEventFilter;
-
     "CollectorSweeped(address,uint256,uint256)"(
       tokenSwept?: null,
       amountSwept?: null,
@@ -285,6 +280,9 @@ export interface Collector extends BaseContract {
 
     "ConfigUpdated()"(): ConfigUpdatedEventFilter;
     ConfigUpdated(): ConfigUpdatedEventFilter;
+
+    "Initialized(uint8)"(version?: null): InitializedEventFilter;
+    Initialized(version?: null): InitializedEventFilter;
   };
 
   estimateGas: {

@@ -13,7 +13,11 @@ import type {
   Signer,
   utils,
 } from "ethers";
-import type { FunctionFragment, Result } from "@ethersproject/abi";
+import type {
+  FunctionFragment,
+  Result,
+  EventFragment,
+} from "@ethersproject/abi";
 import type { Listener, Provider } from "@ethersproject/providers";
 import type {
   TypedEventFilter,
@@ -21,7 +25,7 @@ import type {
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "../../../../common";
+} from "../../../common";
 
 export declare namespace SubDaoLib {
   export type VeTypeDataStruct = {
@@ -104,7 +108,7 @@ export declare namespace SubDaoLib {
   ] & { token: number; data: SubDaoLib.DaoTokenDataStructOutput };
 }
 
-export declare namespace SubDaoMessage {
+export declare namespace SubDaoMessages {
   export type InstantiateMsgStruct = {
     id: PromiseOrValue<BigNumberish>;
     owner: PromiseOrValue<string>;
@@ -250,7 +254,7 @@ export interface SubDaoInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "buildDaoTokenMesage",
-    values: [SubDaoMessage.InstantiateMsgStruct]
+    values: [SubDaoMessages.InstantiateMsgStruct]
   ): string;
   encodeFunctionData(
     functionFragment: "castVote",
@@ -280,7 +284,7 @@ export interface SubDaoInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "initializeSubDao",
-    values: [SubDaoMessage.InstantiateMsgStruct, PromiseOrValue<string>]
+    values: [SubDaoMessages.InstantiateMsgStruct, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "queryConfig",
@@ -338,8 +342,19 @@ export interface SubDaoInterface extends utils.Interface {
     data: BytesLike
   ): Result;
 
-  events: {};
+  events: {
+    "Initialized(uint8)": EventFragment;
+  };
+
+  getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
 }
+
+export interface InitializedEventObject {
+  version: number;
+}
+export type InitializedEvent = TypedEvent<[number], InitializedEventObject>;
+
+export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
 
 export interface SubDao extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -369,7 +384,7 @@ export interface SubDao extends BaseContract {
 
   functions: {
     buildDaoTokenMesage(
-      details: SubDaoMessage.InstantiateMsgStruct,
+      details: SubDaoMessages.InstantiateMsgStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -404,14 +419,14 @@ export interface SubDao extends BaseContract {
     ): Promise<ContractTransaction>;
 
     initializeSubDao(
-      details: SubDaoMessage.InstantiateMsgStruct,
-      emitteraddress: PromiseOrValue<string>,
+      details: SubDaoMessages.InstantiateMsgStruct,
+      _emitterAddress: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     queryConfig(
       overrides?: CallOverrides
-    ): Promise<[SubDaoMessage.QueryConfigResponseStructOutput]>;
+    ): Promise<[SubDaoMessages.QueryConfigResponseStructOutput]>;
 
     queryState(
       overrides?: CallOverrides
@@ -437,7 +452,7 @@ export interface SubDao extends BaseContract {
   };
 
   buildDaoTokenMesage(
-    details: SubDaoMessage.InstantiateMsgStruct,
+    details: SubDaoMessages.InstantiateMsgStruct,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -472,14 +487,14 @@ export interface SubDao extends BaseContract {
   ): Promise<ContractTransaction>;
 
   initializeSubDao(
-    details: SubDaoMessage.InstantiateMsgStruct,
-    emitteraddress: PromiseOrValue<string>,
+    details: SubDaoMessages.InstantiateMsgStruct,
+    _emitterAddress: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   queryConfig(
     overrides?: CallOverrides
-  ): Promise<SubDaoMessage.QueryConfigResponseStructOutput>;
+  ): Promise<SubDaoMessages.QueryConfigResponseStructOutput>;
 
   queryState(
     overrides?: CallOverrides
@@ -505,7 +520,7 @@ export interface SubDao extends BaseContract {
 
   callStatic: {
     buildDaoTokenMesage(
-      details: SubDaoMessage.InstantiateMsgStruct,
+      details: SubDaoMessages.InstantiateMsgStruct,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -540,14 +555,14 @@ export interface SubDao extends BaseContract {
     ): Promise<void>;
 
     initializeSubDao(
-      details: SubDaoMessage.InstantiateMsgStruct,
-      emitteraddress: PromiseOrValue<string>,
+      details: SubDaoMessages.InstantiateMsgStruct,
+      _emitterAddress: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     queryConfig(
       overrides?: CallOverrides
-    ): Promise<SubDaoMessage.QueryConfigResponseStructOutput>;
+    ): Promise<SubDaoMessages.QueryConfigResponseStructOutput>;
 
     queryState(
       overrides?: CallOverrides
@@ -572,11 +587,14 @@ export interface SubDao extends BaseContract {
     ): Promise<void>;
   };
 
-  filters: {};
+  filters: {
+    "Initialized(uint8)"(version?: null): InitializedEventFilter;
+    Initialized(version?: null): InitializedEventFilter;
+  };
 
   estimateGas: {
     buildDaoTokenMesage(
-      details: SubDaoMessage.InstantiateMsgStruct,
+      details: SubDaoMessages.InstantiateMsgStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -611,8 +629,8 @@ export interface SubDao extends BaseContract {
     ): Promise<BigNumber>;
 
     initializeSubDao(
-      details: SubDaoMessage.InstantiateMsgStruct,
-      emitteraddress: PromiseOrValue<string>,
+      details: SubDaoMessages.InstantiateMsgStruct,
+      _emitterAddress: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -641,7 +659,7 @@ export interface SubDao extends BaseContract {
 
   populateTransaction: {
     buildDaoTokenMesage(
-      details: SubDaoMessage.InstantiateMsgStruct,
+      details: SubDaoMessages.InstantiateMsgStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -676,8 +694,8 @@ export interface SubDao extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     initializeSubDao(
-      details: SubDaoMessage.InstantiateMsgStruct,
-      emitteraddress: PromiseOrValue<string>,
+      details: SubDaoMessages.InstantiateMsgStruct,
+      _emitterAddress: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

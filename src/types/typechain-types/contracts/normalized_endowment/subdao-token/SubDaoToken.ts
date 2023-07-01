@@ -25,7 +25,7 @@ import type {
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "../../../../common";
+} from "../../../common";
 
 export declare namespace SubDaoTokenMessage {
   export type InstantiateMsgStruct = {

@@ -264,7 +264,7 @@ export declare namespace SubDaoLib {
   };
 }
 
-export declare namespace SubDaoMessage {
+export declare namespace SubDaoMessages {
   export type InstantiateMsgStruct = {
     id: PromiseOrValue<BigNumberish>;
     owner: PromiseOrValue<string>;
@@ -747,7 +747,7 @@ export interface IAccountsInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "createDaoContract",
-    values: [SubDaoMessage.InstantiateMsgStruct]
+    values: [SubDaoMessages.InstantiateMsgStruct]
   ): string;
   encodeFunctionData(
     functionFragment: "createEndowment",
@@ -1208,7 +1208,7 @@ export interface IAccounts extends BaseContract {
     ): Promise<ContractTransaction>;
 
     createDaoContract(
-      createdaomessage: SubDaoMessage.InstantiateMsgStruct,
+      createdaomessage: SubDaoMessages.InstantiateMsgStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -1393,7 +1393,7 @@ export interface IAccounts extends BaseContract {
   ): Promise<ContractTransaction>;
 
   createDaoContract(
-    createdaomessage: SubDaoMessage.InstantiateMsgStruct,
+    createdaomessage: SubDaoMessages.InstantiateMsgStruct,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -1566,7 +1566,7 @@ export interface IAccounts extends BaseContract {
     ): Promise<void>;
 
     createDaoContract(
-      createdaomessage: SubDaoMessage.InstantiateMsgStruct,
+      createdaomessage: SubDaoMessages.InstantiateMsgStruct,
       overrides?: CallOverrides
     ): Promise<string>;
 
@@ -1846,7 +1846,7 @@ export interface IAccounts extends BaseContract {
     ): Promise<BigNumber>;
 
     createDaoContract(
-      createdaomessage: SubDaoMessage.InstantiateMsgStruct,
+      createdaomessage: SubDaoMessages.InstantiateMsgStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -2018,7 +2018,7 @@ export interface IAccounts extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     createDaoContract(
-      createdaomessage: SubDaoMessage.InstantiateMsgStruct,
+      createdaomessage: SubDaoMessages.InstantiateMsgStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

@@ -43,7 +43,7 @@ export declare namespace DonationMatchStorage {
 
 export interface IDonationMatchingInterface extends utils.Interface {
   functions: {
-    "executeDonorMatch(uint256,uint256,address,address)": FunctionFragment;
+    "executeDonorMatch(uint32,uint256,address,address)": FunctionFragment;
     "queryConfig()": FunctionFragment;
   };
 

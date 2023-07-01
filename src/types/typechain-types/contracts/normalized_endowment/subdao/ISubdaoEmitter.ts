@@ -23,34 +23,34 @@ import type {
   PromiseOrValue,
 } from "../../../common";
 
-export interface ISubdaoEmitterInterface extends utils.Interface {
+export interface ISubDaoEmitterInterface extends utils.Interface {
   functions: {
-    "initializeSubdao(address)": FunctionFragment;
-    "transferSubdao(address,address,address,uint256)": FunctionFragment;
-    "updateSubdaoConfig()": FunctionFragment;
-    "updateSubdaoPoll(uint256,address)": FunctionFragment;
-    "updateSubdaoPollAndStatus(uint256,address,uint8)": FunctionFragment;
-    "updateSubdaoState()": FunctionFragment;
+    "initializeSubDao(address)": FunctionFragment;
+    "transferSubDao(address,address,address,uint256)": FunctionFragment;
+    "updateSubDaoConfig()": FunctionFragment;
+    "updateSubDaoPoll(uint256,address)": FunctionFragment;
+    "updateSubDaoPollAndStatus(uint256,address,uint8)": FunctionFragment;
+    "updateSubDaoState()": FunctionFragment;
     "updateVotingStatus(uint256,address)": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "initializeSubdao"
-      | "transferSubdao"
-      | "updateSubdaoConfig"
-      | "updateSubdaoPoll"
-      | "updateSubdaoPollAndStatus"
-      | "updateSubdaoState"
+      | "initializeSubDao"
+      | "transferSubDao"
+      | "updateSubDaoConfig"
+      | "updateSubDaoPoll"
+      | "updateSubDaoPollAndStatus"
+      | "updateSubDaoState"
       | "updateVotingStatus"
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "initializeSubdao",
+    functionFragment: "initializeSubDao",
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "transferSubdao",
+    functionFragment: "transferSubDao",
     values: [
       PromiseOrValue<string>,
       PromiseOrValue<string>,
@@ -59,15 +59,15 @@ export interface ISubdaoEmitterInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "updateSubdaoConfig",
+    functionFragment: "updateSubDaoConfig",
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "updateSubdaoPoll",
+    functionFragment: "updateSubDaoPoll",
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "updateSubdaoPollAndStatus",
+    functionFragment: "updateSubDaoPollAndStatus",
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
@@ -75,7 +75,7 @@ export interface ISubdaoEmitterInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "updateSubdaoState",
+    functionFragment: "updateSubDaoState",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -84,27 +84,27 @@ export interface ISubdaoEmitterInterface extends utils.Interface {
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "initializeSubdao",
+    functionFragment: "initializeSubDao",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "transferSubdao",
+    functionFragment: "transferSubDao",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "updateSubdaoConfig",
+    functionFragment: "updateSubDaoConfig",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "updateSubdaoPoll",
+    functionFragment: "updateSubDaoPoll",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "updateSubdaoPollAndStatus",
+    functionFragment: "updateSubDaoPollAndStatus",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "updateSubdaoState",
+    functionFragment: "updateSubDaoState",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -115,12 +115,12 @@ export interface ISubdaoEmitterInterface extends utils.Interface {
   events: {};
 }
 
-export interface ISubdaoEmitter extends BaseContract {
+export interface ISubDaoEmitter extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: ISubdaoEmitterInterface;
+  interface: ISubDaoEmitterInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -142,12 +142,12 @@ export interface ISubdaoEmitter extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    initializeSubdao(
+    initializeSubDao(
       subdao: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    transferSubdao(
+    transferSubDao(
       tokenAddress: PromiseOrValue<string>,
       from: PromiseOrValue<string>,
       to: PromiseOrValue<string>,
@@ -155,24 +155,24 @@ export interface ISubdaoEmitter extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    updateSubdaoConfig(
+    updateSubDaoConfig(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    updateSubdaoPoll(
+    updateSubDaoPoll(
       pollId: PromiseOrValue<BigNumberish>,
       voter: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    updateSubdaoPollAndStatus(
+    updateSubDaoPollAndStatus(
       pollId: PromiseOrValue<BigNumberish>,
       voter: PromiseOrValue<string>,
       pollStatus: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    updateSubdaoState(
+    updateSubDaoState(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -183,12 +183,12 @@ export interface ISubdaoEmitter extends BaseContract {
     ): Promise<ContractTransaction>;
   };
 
-  initializeSubdao(
+  initializeSubDao(
     subdao: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  transferSubdao(
+  transferSubDao(
     tokenAddress: PromiseOrValue<string>,
     from: PromiseOrValue<string>,
     to: PromiseOrValue<string>,
@@ -196,24 +196,24 @@ export interface ISubdaoEmitter extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  updateSubdaoConfig(
+  updateSubDaoConfig(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  updateSubdaoPoll(
+  updateSubDaoPoll(
     pollId: PromiseOrValue<BigNumberish>,
     voter: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  updateSubdaoPollAndStatus(
+  updateSubDaoPollAndStatus(
     pollId: PromiseOrValue<BigNumberish>,
     voter: PromiseOrValue<string>,
     pollStatus: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  updateSubdaoState(
+  updateSubDaoState(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -224,12 +224,12 @@ export interface ISubdaoEmitter extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    initializeSubdao(
+    initializeSubDao(
       subdao: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    transferSubdao(
+    transferSubDao(
       tokenAddress: PromiseOrValue<string>,
       from: PromiseOrValue<string>,
       to: PromiseOrValue<string>,
@@ -237,22 +237,22 @@ export interface ISubdaoEmitter extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    updateSubdaoConfig(overrides?: CallOverrides): Promise<void>;
+    updateSubDaoConfig(overrides?: CallOverrides): Promise<void>;
 
-    updateSubdaoPoll(
+    updateSubDaoPoll(
       pollId: PromiseOrValue<BigNumberish>,
       voter: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    updateSubdaoPollAndStatus(
+    updateSubDaoPollAndStatus(
       pollId: PromiseOrValue<BigNumberish>,
       voter: PromiseOrValue<string>,
       pollStatus: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    updateSubdaoState(overrides?: CallOverrides): Promise<void>;
+    updateSubDaoState(overrides?: CallOverrides): Promise<void>;
 
     updateVotingStatus(
       pollId: PromiseOrValue<BigNumberish>,
@@ -264,12 +264,12 @@ export interface ISubdaoEmitter extends BaseContract {
   filters: {};
 
   estimateGas: {
-    initializeSubdao(
+    initializeSubDao(
       subdao: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    transferSubdao(
+    transferSubDao(
       tokenAddress: PromiseOrValue<string>,
       from: PromiseOrValue<string>,
       to: PromiseOrValue<string>,
@@ -277,24 +277,24 @@ export interface ISubdaoEmitter extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    updateSubdaoConfig(
+    updateSubDaoConfig(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    updateSubdaoPoll(
+    updateSubDaoPoll(
       pollId: PromiseOrValue<BigNumberish>,
       voter: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    updateSubdaoPollAndStatus(
+    updateSubDaoPollAndStatus(
       pollId: PromiseOrValue<BigNumberish>,
       voter: PromiseOrValue<string>,
       pollStatus: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    updateSubdaoState(
+    updateSubDaoState(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -306,12 +306,12 @@ export interface ISubdaoEmitter extends BaseContract {
   };
 
   populateTransaction: {
-    initializeSubdao(
+    initializeSubDao(
       subdao: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    transferSubdao(
+    transferSubDao(
       tokenAddress: PromiseOrValue<string>,
       from: PromiseOrValue<string>,
       to: PromiseOrValue<string>,
@@ -319,24 +319,24 @@ export interface ISubdaoEmitter extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    updateSubdaoConfig(
+    updateSubDaoConfig(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    updateSubdaoPoll(
+    updateSubDaoPoll(
       pollId: PromiseOrValue<BigNumberish>,
       voter: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    updateSubdaoPollAndStatus(
+    updateSubDaoPollAndStatus(
       pollId: PromiseOrValue<BigNumberish>,
       voter: PromiseOrValue<string>,
       pollStatus: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    updateSubdaoState(
+    updateSubDaoState(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

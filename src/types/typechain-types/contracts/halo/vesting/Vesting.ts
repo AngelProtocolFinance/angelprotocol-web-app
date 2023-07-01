@@ -142,7 +142,7 @@ export interface VestingInterface extends utils.Interface {
   events: {
     "HaloDeposited(address,uint256)": EventFragment;
     "HaloWithdrawn(address,uint256,uint256)": EventFragment;
-    "Initialized()": EventFragment;
+    "Initialized(uint8)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
     "VestingDurationModified(uint256)": EventFragment;
   };
@@ -177,8 +177,10 @@ export type HaloWithdrawnEvent = TypedEvent<
 
 export type HaloWithdrawnEventFilter = TypedEventFilter<HaloWithdrawnEvent>;
 
-export interface InitializedEventObject {}
-export type InitializedEvent = TypedEvent<[], InitializedEventObject>;
+export interface InitializedEventObject {
+  version: number;
+}
+export type InitializedEvent = TypedEvent<[number], InitializedEventObject>;
 
 export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
 
@@ -416,8 +418,8 @@ export interface Vesting extends BaseContract {
       amount?: null
     ): HaloWithdrawnEventFilter;
 
-    "Initialized()"(): InitializedEventFilter;
-    Initialized(): InitializedEventFilter;
+    "Initialized(uint8)"(version?: null): InitializedEventFilter;
+    Initialized(version?: null): InitializedEventFilter;
 
     "OwnershipTransferred(address,address)"(
       previousOwner?: PromiseOrValue<string> | null,

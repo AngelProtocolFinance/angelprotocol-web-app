@@ -108,7 +108,7 @@ export declare namespace SubDaoLib {
   ] & { token: number; data: SubDaoLib.DaoTokenDataStructOutput };
 }
 
-export declare namespace SubDaoMessage {
+export declare namespace SubDaoMessages {
   export type InstantiateMsgStruct = {
     id: PromiseOrValue<BigNumberish>;
     owner: PromiseOrValue<string>;
@@ -165,7 +165,7 @@ export interface AccountsDeployContractInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "createDaoContract",
-    values: [SubDaoMessage.InstantiateMsgStruct]
+    values: [SubDaoMessages.InstantiateMsgStruct]
   ): string;
 
   decodeFunctionResult(
@@ -369,19 +369,19 @@ export interface AccountsDeployContract extends BaseContract {
 
   functions: {
     createDaoContract(
-      createDaoMessage: SubDaoMessage.InstantiateMsgStruct,
+      createDaoMessage: SubDaoMessages.InstantiateMsgStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
 
   createDaoContract(
-    createDaoMessage: SubDaoMessage.InstantiateMsgStruct,
+    createDaoMessage: SubDaoMessages.InstantiateMsgStruct,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     createDaoContract(
-      createDaoMessage: SubDaoMessage.InstantiateMsgStruct,
+      createDaoMessage: SubDaoMessages.InstantiateMsgStruct,
       overrides?: CallOverrides
     ): Promise<string>;
   };
@@ -494,14 +494,14 @@ export interface AccountsDeployContract extends BaseContract {
 
   estimateGas: {
     createDaoContract(
-      createDaoMessage: SubDaoMessage.InstantiateMsgStruct,
+      createDaoMessage: SubDaoMessages.InstantiateMsgStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     createDaoContract(
-      createDaoMessage: SubDaoMessage.InstantiateMsgStruct,
+      createDaoMessage: SubDaoMessages.InstantiateMsgStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };
