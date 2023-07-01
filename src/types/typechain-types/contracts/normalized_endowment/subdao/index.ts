@@ -5,5 +5,4 @@ import type * as token from "./Token";
 export type { token };
 export type { ISubDao } from "./ISubDao";
 export type { SubDao } from "./SubDao";
-export type { SubDaoEmitter } from "./SubDaoEmitter";
 export type { SubDaoLib } from "./SubDaoLib";
