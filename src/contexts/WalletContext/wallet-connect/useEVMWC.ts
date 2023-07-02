@@ -3,12 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { Connection, ProviderInfo } from "../types";
 import { Connected, WalletState } from "./types";
 import { SessionTypes, SignClientTypes } from "@walletconnect/types";
-import {
-  _pairing,
-  _session,
-  account,
-  signClient,
-} from "helpers/wallet-connect";
+import { _pairing, _session, account } from "helpers/wallet-connect";
 import { EIPMethods } from "constants/evm";
 import { WALLET_METADATA } from "../constants";
 
@@ -41,11 +36,10 @@ export function useEVMWC() {
   useEffect(() => {
     (async () => {
       setState({ status: "loading" });
-      const client = await signClient;
-      const prevSession = _session("MetaMask Wallet", client);
+      const { session, client } = await _session("MetaMask Wallet");
 
-      if (prevSession) {
-        setState(connected(prevSession.namespaces));
+      if (session) {
+        setState(connected(session.namespaces));
         client.on("session_update", onSessionUpdate);
         client.on("session_delete", onSessionDelete);
       } else {
@@ -59,13 +53,12 @@ export function useEVMWC() {
   async function connect() {
     try {
       setState({ status: "loading" });
-      const client = await signClient;
 
-      const prevPairing = _pairing("MetaMask Wallet", client);
+      const { pairing, client } = await _pairing("MetaMask Wallet");
 
       setState({ status: "loading" });
       const { uri, approval } = await client.connect({
-        pairingTopic: prevPairing?.topic,
+        pairingTopic: pairing?.topic,
         requiredNamespaces: {
           eip155: {
             methods: Object.values(EIPMethods),
@@ -110,8 +103,7 @@ export function useEVMWC() {
 
   async function disconnect() {
     setState({ status: "loading" });
-    const client = await signClient;
-    const session = _session("MetaMask Wallet", client);
+    const { session, client } = await _session("MetaMask Wallet");
 
     if (session) {
       await client.disconnect({

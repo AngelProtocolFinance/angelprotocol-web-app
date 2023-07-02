@@ -1,5 +1,4 @@
 import { SignClient } from "@walletconnect/sign-client";
-import type { SignClient as TSignClient } from "@walletconnect/sign-client/dist/types/client";
 import { SessionTypes } from "@walletconnect/types";
 
 type Name = "Keplr" | "MetaMask Wallet";
@@ -14,10 +13,19 @@ export const account = (namespace: SessionTypes.Namespace): Account => {
   return { address, chainId };
 };
 
-export const _session = (name: Name, _client: TSignClient) =>
-  _client.session.getAll().find((s) => s.peer.metadata.name === name);
+export const _session = async (name: Name) => {
+  const client = await signClient;
+  const session = client.session
+    .getAll()
+    .find((s) => s.peer.metadata.name === name);
+  return { session, client };
+};
 
-export const _pairing = (name: Name, _client: TSignClient) =>
-  _client.pairing
+export const _pairing = async (name: Name) => {
+  const client = await signClient;
+  const pairing = client.pairing
     .getAll({ active: true })
     .find((p) => p.peerMetadata?.name === name);
+
+  return { pairing, client };
+};

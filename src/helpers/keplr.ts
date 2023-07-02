@@ -8,15 +8,14 @@ import {
   WCSignDirectRes,
 } from "types/cosmos";
 import { Dwindow } from "types/window";
-import { _session, signClient } from "./wallet-connect";
+import { _session } from "./wallet-connect";
 
 export async function keplr(providerId: ProviderId): Promise<Keplr | KeplrWC> {
   return providerId === "keplr-wc" ? keplrWC() : (window as Dwindow).keplr!;
 }
 
 export async function keplrWC(): Promise<KeplrWC> {
-  const client = await signClient;
-  const session = _session("Keplr", client);
+  const { session, client } = await _session("Keplr");
 
   if (!session) throw new Error("@dev: no keplr session");
 

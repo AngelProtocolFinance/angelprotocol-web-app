@@ -1,5 +1,4 @@
 import { KeplrQRCodeModalV1 } from "@keplr-wallet/wc-qrcode-modal";
-import SignClient from "@walletconnect/sign-client";
 import { useEffect, useState } from "react";
 import { Connection, ProviderInfo } from "../types";
 import { Connected, WalletState } from "./types";
@@ -8,15 +7,6 @@ import { _pairing, _session, account } from "helpers/wallet-connect";
 import { WALLET_METADATA } from "../constants";
 
 const QRModal = new KeplrQRCodeModalV1();
-
-let client: SignClient;
-async function getClient(): Promise<SignClient> {
-  if (client) return client;
-  client = await SignClient.init({
-    projectId: "039a7aeef39cb740398760f71a471957",
-  });
-  return client;
-}
 
 /** NOTE: only use this wallet in mainnet */
 export function useKeplrWC() {
@@ -32,11 +22,10 @@ export function useKeplrWC() {
   useEffect(() => {
     (async () => {
       setState({ status: "loading" });
-      const client = await getClient();
-      const prevSession = _session("Keplr", client);
+      const { client, session } = await _session("Keplr");
 
-      if (prevSession) {
-        setState(connected(prevSession.namespaces));
+      if (session) {
+        setState(connected(session.namespaces));
         client.on("session_delete", onSessionDelete);
       } else {
         setState({ status: "disconnected" });
@@ -49,12 +38,11 @@ export function useKeplrWC() {
   async function connect() {
     try {
       setState({ status: "loading" });
-      const client = await getClient();
 
-      const prevPairing = _pairing("Keplr", client);
+      const { client, pairing } = await _pairing("Keplr");
 
       const { uri, approval } = await client.connect({
-        pairingTopic: prevPairing?.topic,
+        pairingTopic: pairing?.topic,
         requiredNamespaces: {
           cosmos: {
             methods: ["cosmos_signDirect", "cosmos_signAmino"],
@@ -89,8 +77,7 @@ export function useKeplrWC() {
 
   async function disconnect() {
     setState({ status: "loading" });
-    const client = await getClient();
-    const session = _session("Keplr", client);
+    const { session, client } = await _session("Keplr");
 
     if (session) {
       await client.disconnect({
