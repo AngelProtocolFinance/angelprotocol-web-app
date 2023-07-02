@@ -1,12 +1,12 @@
 import { ProviderId } from "contexts/WalletContext/types";
-import { Dwindow, InjectedProvider, RequestArguments } from "types/ethereum";
+import { InjectedProvider, RequestArguments } from "types/evm";
+import { Dwindow } from "types/window";
 import { _session, account, signClient } from "../wallet-connect";
 
 export async function wcProvider(): Promise<Partial<InjectedProvider>> {
   const client = await signClient;
   //FUTURE: pass peer name in wcProvider call
-  const session = _session("Metamask", client)!;
-
+  const session = _session("MetaMask Wallet", client)!;
   const { chainId } = account(session.namespaces.eip155);
 
   return {
@@ -36,7 +36,7 @@ export async function getProvider(
     case "evm-wc":
       return wcProvider() as Promise<InjectedProvider>;
     case "xdefi-evm":
-      return dwindow.xfi?.ethereum;
+      return dwindow.xfi?.ethereum as Promise<InjectedProvider>;
     default:
       return undefined;
   }

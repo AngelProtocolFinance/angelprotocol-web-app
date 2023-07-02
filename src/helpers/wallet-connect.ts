@@ -2,7 +2,7 @@ import { SignClient } from "@walletconnect/sign-client";
 import type { SignClient as TSignClient } from "@walletconnect/sign-client/dist/types/client";
 import { SessionTypes } from "@walletconnect/types";
 
-type Name = "Keplr" | "Metamask";
+type Name = "Keplr" | "MetaMask Wallet";
 
 export const signClient = SignClient.init({
   projectId: "039a7aeef39cb740398760f71a471957",

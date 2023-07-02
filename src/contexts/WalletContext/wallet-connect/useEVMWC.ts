@@ -9,6 +9,7 @@ import {
   account,
   signClient,
 } from "helpers/wallet-connect";
+import { EIPMethods } from "constants/evm";
 import { WALLET_METADATA } from "../constants";
 
 const wcModal = new WalletConnectModal({
@@ -41,7 +42,7 @@ export function useEVMWC() {
     (async () => {
       setState({ status: "loading" });
       const client = await signClient;
-      const prevSession = _session("Metamask", client);
+      const prevSession = _session("MetaMask Wallet", client);
 
       if (prevSession) {
         setState(connected(prevSession.namespaces));
@@ -60,14 +61,14 @@ export function useEVMWC() {
       setState({ status: "loading" });
       const client = await signClient;
 
-      const prevPairing = _pairing("Metamask", client);
+      const prevPairing = _pairing("MetaMask Wallet", client);
 
       setState({ status: "loading" });
       const { uri, approval } = await client.connect({
         pairingTopic: prevPairing?.topic,
         requiredNamespaces: {
           eip155: {
-            methods: ["eth_sendTransaction", "personal_sign"],
+            methods: Object.values(EIPMethods),
             chains: ["eip155:137"],
             events: ["chainChanged", "accountsChanged"],
           },
@@ -110,7 +111,7 @@ export function useEVMWC() {
   async function disconnect() {
     setState({ status: "loading" });
     const client = await signClient;
-    const session = _session("Metamask", client);
+    const session = _session("MetaMask Wallet", client);
 
     if (session) {
       await client.disconnect({

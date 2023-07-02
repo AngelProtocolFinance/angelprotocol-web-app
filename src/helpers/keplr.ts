@@ -7,7 +7,7 @@ import {
   WCSignAminoRes,
   WCSignDirectRes,
 } from "types/cosmos";
-import { Dwindow } from "types/ethereum";
+import { Dwindow } from "types/window";
 import { _session, signClient } from "./wallet-connect";
 
 export async function keplr(providerId: ProviderId): Promise<Keplr | KeplrWC> {

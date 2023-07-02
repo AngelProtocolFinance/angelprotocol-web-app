@@ -1,16 +1,16 @@
-import { Contract } from "@ethersproject/contracts";
-import { TransactionRequest, Web3Provider } from "@ethersproject/providers";
-import { formatUnits, parseUnits } from "@ethersproject/units";
+import { Interface } from "@ethersproject/abi";
 import { Coin, MsgExecuteContract, MsgSend } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import ERC20Abi from "abi/ERC20.json";
 import { Estimate } from "./types";
+import { SimulContractTx, SimulSendNativeTx } from "types/evm";
 import { WalletState } from "contexts/WalletContext";
 import { SubmitStep } from "slices/donation";
 import Account from "contracts/Account";
 import CW20 from "contracts/CW20";
 import GiftCard from "contracts/GiftCard";
-import { extractFeeAmount, getProvider, logger, scaleToStr } from "helpers";
+import { extractFeeAmount, logger, scale, scaleToStr } from "helpers";
+import { estimateEVMFee } from "helpers/evm/estimateEVMfee";
 import { ap_wallets } from "constants/ap_wallets";
 import estimateTerraFee from "./estimateTerraFee";
 import getBreakdown from "./getBreakdown";
@@ -92,41 +92,36 @@ export async function estimateDonation({
     }
     // evm transactions
     else {
-      const provider = new Web3Provider(getProvider(wallet.providerId) as any);
-      //no network request
-      const signer = provider.getSigner();
-      const sender = await signer.getAddress();
-      const gasPrice = await signer.getGasPrice();
-      const scaledAmount = parseUnits(`${token.amount}`, token.decimals);
+      const tx: SimulSendNativeTx | SimulContractTx = (() => {
+        const scaledAmount = scale(token.amount, token.decimals).toHex();
+        switch (token.type) {
+          case "evm-native":
+            return {
+              from: wallet.address,
+              value: scaledAmount,
+              to: ap_wallets.eth,
+            };
+          //erc20
+          default: {
+            const erc20 = new Interface(ERC20Abi);
+            const data = erc20.encodeFunctionData("transfer", [
+              ap_wallets.eth,
+              scaledAmount,
+            ]);
+            return {
+              from: wallet.address,
+              to: token.token_id,
+              data,
+            };
+          }
+        }
+      })();
 
-      const tx: TransactionRequest = {
-        from: sender,
-        to: ap_wallets.eth,
-        value: scaledAmount,
-      };
-
-      let feeAmount = 0;
-      if (token.type === "evm-native") {
-        const gasLimit = await signer.estimateGas(tx);
-        const minFee = gasLimit.mul(gasPrice);
-        feeAmount = parseFloat(formatUnits(minFee, token.decimals));
-      } else {
-        const ER20Contract: any = new Contract(
-          token.token_id,
-          ERC20Abi,
-          signer
-        );
-        const gasLimit = await ER20Contract.estimateGas.transfer(
-          tx.to,
-          scaledAmount
-        );
-        const minFee = gasLimit.mul(gasPrice);
-        feeAmount = parseFloat(formatUnits(minFee, native_currency.decimals));
-      }
+      const { fee, tx: estimated } = await estimateEVMFee(wallet, tx);
 
       return {
-        fee: { amount: feeAmount, symbol: native_currency.symbol },
-        tx: { type: "evm", val: tx },
+        fee: { amount: fee, symbol: native_currency.symbol },
+        tx: { type: "evm", val: estimated },
       };
     }
   } catch (err) {
