@@ -8,14 +8,14 @@ import {
   WCSignDirectRes,
 } from "types/cosmos";
 import { Dwindow } from "types/ethereum";
-import { session as _session, signClient } from "./wallet-connect";
+import { _session, signClient } from "./wallet-connect";
 
 export async function keplr(providerId: ProviderId): Promise<Keplr | KeplrWC> {
   return providerId === "keplr-wc" ? keplrWC() : (window as Dwindow).keplr!;
 }
 
 export async function keplrWC(): Promise<KeplrWC> {
-  const client = await signClient();
+  const client = await signClient;
   const session = _session("Keplr", client);
 
   if (!session) throw new Error("@dev: no keplr session");
@@ -46,7 +46,6 @@ export async function keplrWC(): Promise<KeplrWC> {
           },
         })
         .catch((err) => {
-          console.log(err);
           throw err;
         });
       return { signature, signed: doc };
@@ -54,7 +53,7 @@ export async function keplrWC(): Promise<KeplrWC> {
     async signAmino(signer, chainId, doc) {
       const { signature } = await client.request<WCSignAminoRes>({
         topic: session.topic,
-        chainId,
+        chainId: `cosmos:${chainId}`,
         request: {
           method: "cosmos_signAmino",
           params: { signerAddress: signer, signDoc: doc },

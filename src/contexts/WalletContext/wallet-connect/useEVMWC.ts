@@ -1,24 +1,27 @@
 import { WalletConnectModal } from "@walletconnect/modal";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Connection, ProviderInfo } from "../types";
 import { Connected, WalletState } from "./types";
-import { SessionTypes } from "@walletconnect/types";
+import { SessionTypes, SignClientTypes } from "@walletconnect/types";
 import {
-  pairing as _pairing,
-  session as _session,
+  _pairing,
+  _session,
   account,
   signClient,
 } from "helpers/wallet-connect";
 import { WALLET_METADATA } from "../constants";
 
-export const wcModal = new WalletConnectModal({
+const wcModal = new WalletConnectModal({
   projectId: "039a7aeef39cb740398760f71a471957",
-  chains: ["eip155:80001", "eip155:137"],
   enableExplorer: false,
+  chains: ["eip155:137"],
 });
 
 /** NOTE: only use this wallet in mainnet */
 export function useEVMWC() {
+  const unsubscribeRef = useRef<() => void>();
+  const uriRef = useRef<string>();
+
   const [state, setState] = useState<WalletState>({
     status: "disconnected",
   });
@@ -27,20 +30,22 @@ export function useEVMWC() {
     setState({ status: "disconnected" });
   }
 
+  function onSessionUpdate({
+    params: { namespaces },
+  }: SignClientTypes.EventArguments["session_update"]) {
+    setState(connected(namespaces));
+  }
+
   /** persistent connection */
   useEffect(() => {
     (async () => {
       setState({ status: "loading" });
-      const client = await signClient();
+      const client = await signClient;
       const prevSession = _session("Metamask", client);
 
       if (prevSession) {
         setState(connected(prevSession.namespaces));
-
-        client.on("session_update", ({ params }) => {
-          setState(connected(params.namespaces));
-        });
-
+        client.on("session_update", onSessionUpdate);
         client.on("session_delete", onSessionDelete);
       } else {
         setState({ status: "disconnected" });
@@ -53,16 +58,17 @@ export function useEVMWC() {
   async function connect() {
     try {
       setState({ status: "loading" });
-      const client = await signClient();
+      const client = await signClient;
 
       const prevPairing = _pairing("Metamask", client);
 
+      setState({ status: "loading" });
       const { uri, approval } = await client.connect({
         pairingTopic: prevPairing?.topic,
         requiredNamespaces: {
           eip155: {
             methods: ["eth_sendTransaction", "personal_sign"],
-            chains: ["eip155:80001", "eip155:137"],
+            chains: ["eip155:137"],
             events: ["chainChanged", "accountsChanged"],
           },
         },
@@ -70,27 +76,40 @@ export function useEVMWC() {
 
       // uri is only returned for new pairings
       if (uri) {
-        wcModal.openModal({ uri });
-      } else {
-        setState({ status: "loading" });
-      }
-      const session = await approval();
+        uriRef.current = uri;
 
+        //disconnect if modal is closed without scanning
+        unsubscribeRef.current = wcModal.subscribeModal(({ open }) => {
+          if (!open) {
+            setState((p) => {
+              if (p.status === "connected") return p;
+              return { status: "disconnected" };
+            });
+            unsubscribeRef.current?.();
+          }
+        });
+
+        wcModal.openModal({ uri });
+      }
+
+      const session = await approval();
       setState(connected(session.namespaces));
       client.on("session_delete", onSessionDelete);
-      if (uri) {
-        wcModal.closeModal();
-      }
+      client.on("session_update", onSessionUpdate);
     } catch (err) {
+      console.log(err);
       setState({ status: "disconnected" });
     } finally {
-      wcModal.closeModal();
+      unsubscribeRef.current?.();
+      if (uriRef.current) {
+        wcModal.closeModal();
+      }
     }
   }
 
   async function disconnect() {
     setState({ status: "loading" });
-    const client = await signClient();
+    const client = await signClient;
     const session = _session("Metamask", client);
 
     if (session) {
@@ -99,6 +118,7 @@ export function useEVMWC() {
         reason: { code: 1, message: "user disconnected" },
       });
     }
+    client.off("session_update", onSessionUpdate);
     client.off("session_delete", onSessionDelete);
     setState({ status: "disconnected" });
   }
@@ -108,7 +128,7 @@ export function useEVMWC() {
     state.status === "connected"
       ? {
           logo: WALLET_METADATA["evm-wc"].logo,
-          providerId: "keplr-wc",
+          providerId: "evm-wc",
           chainId: state.chainId,
           address: state.address,
         }

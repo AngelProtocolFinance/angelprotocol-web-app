@@ -4,11 +4,7 @@ import { useEffect, useState } from "react";
 import { Connection, ProviderInfo } from "../types";
 import { Connected, WalletState } from "./types";
 import { SessionTypes } from "@walletconnect/types";
-import {
-  pairing as _pairing,
-  session as _session,
-  account,
-} from "helpers/wallet-connect";
+import { _pairing, _session, account } from "helpers/wallet-connect";
 import { WALLET_METADATA } from "../constants";
 
 const QRModal = new KeplrQRCodeModalV1();

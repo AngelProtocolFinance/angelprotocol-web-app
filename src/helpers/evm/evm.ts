@@ -1,9 +1,9 @@
 import { ProviderId } from "contexts/WalletContext/types";
 import { Dwindow, InjectedProvider, RequestArguments } from "types/ethereum";
-import { session as _session, account, signClient } from "./wallet-connect";
+import { _session, account, signClient } from "../wallet-connect";
 
 export async function wcProvider(): Promise<Partial<InjectedProvider>> {
-  const client = await signClient();
+  const client = await signClient;
   //FUTURE: pass peer name in wcProvider call
   const session = _session("Metamask", client)!;
 

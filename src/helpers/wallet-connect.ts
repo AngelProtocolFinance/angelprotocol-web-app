@@ -4,14 +4,9 @@ import { SessionTypes } from "@walletconnect/types";
 
 type Name = "Keplr" | "Metamask";
 
-let client: TSignClient;
-export async function signClient(): Promise<TSignClient> {
-  if (client) return client;
-  client = await SignClient.init({
-    projectId: "039a7aeef39cb740398760f71a471957",
-  });
-  return client;
-}
+export const signClient = SignClient.init({
+  projectId: "039a7aeef39cb740398760f71a471957",
+});
 
 type Account = { chainId: string; address: string };
 export const account = (namespace: SessionTypes.Namespace): Account => {
@@ -19,10 +14,10 @@ export const account = (namespace: SessionTypes.Namespace): Account => {
   return { address, chainId };
 };
 
-export const session = (name: Name, _client: TSignClient) =>
+export const _session = (name: Name, _client: TSignClient) =>
   _client.session.getAll().find((s) => s.peer.metadata.name === name);
 
-export const pairing = (name: Name, _client: TSignClient) =>
+export const _pairing = (name: Name, _client: TSignClient) =>
   _client.pairing
     .getAll({ active: true })
     .find((p) => p.peerMetadata?.name === name);
