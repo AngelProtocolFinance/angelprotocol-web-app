@@ -112,7 +112,7 @@ Inactive | Rejected | {id: number}
 export type DoneWallet = Append<DoneDocs, {}, {}, WalletData & NewEndow>;
 
 type Proposal = {
-  poll_id: number;
+  application_id: number;
 };
 export type InReview = Append<DoneWallet, Proposal, {}, {}>;
 
@@ -164,5 +164,6 @@ export type EndowmentProposal = Pick<
 export type SubmitResult = {
   RegistrationStatus: RegistrationStatus;
   chain_id: string;
-  poll_id: number;
+  application_id: number;
+  Email: string;
 };
