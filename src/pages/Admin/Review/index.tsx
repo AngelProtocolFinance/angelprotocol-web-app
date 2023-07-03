@@ -25,7 +25,7 @@ export default function Review() {
         <Route path={adminRoutes.admin_wallet} element={<AdminWallet />} />
 
         <Route
-          path={`${adminRoutes.application}/:id`}
+          path={`${adminRoutes.application}/:ref`}
           element={<Application />}
         />
         <Route index element={<Applications />} />

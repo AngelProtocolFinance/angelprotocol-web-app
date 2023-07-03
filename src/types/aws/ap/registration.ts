@@ -111,11 +111,10 @@ Inactive | Rejected | {id: number}
 };
 export type DoneWallet = Append<DoneDocs, {}, {}, WalletData & NewEndow>;
 
-type ApplicationIDs = {
-  approve_tx_id?: number;
-  reject_tx_id?: number;
+type Proposal = {
+  poll_id: number;
 };
-export type InReview = Append<DoneWallet, ApplicationIDs, {}, {}>;
+export type InReview = Append<DoneWallet, Proposal, {}, {}>;
 
 export type SavedRegistration =
   | InitApplication
@@ -139,16 +138,7 @@ type WalletUpdate = {
   type: "wallet";
 } & WalletData;
 
-type ApplicationUpdate = { type: "application" } & (
-  | Pick<Required<ApplicationIDs>, "approve_tx_id">
-  | Pick<Required<ApplicationIDs>, "reject_tx_id">
-);
-
-export type RegistrationUpdate =
-  | ContactUpdate
-  | DocsUpdate
-  | WalletUpdate
-  | ApplicationUpdate;
+export type RegistrationUpdate = ContactUpdate | DocsUpdate | WalletUpdate;
 
 export type ContactUpdateResult = {
   ContactPerson: ContactDetails;
@@ -162,16 +152,14 @@ export type WalletUpdateResult = WalletData;
 export type Application = DoneWallet;
 
 /** shape used in Review proposals table */
-
 export type EndowmentProposal = Pick<
-  InitReg & ApplicationIDs,
+  InitReg & Proposal,
   "PK" | "RegistrationDate" | "RegistrationStatus"
 > &
   OrgData &
   TDocumentation &
-  Pick<InitContact, "Email"> & {
-    application_id: number;
-  };
+  Pick<InitContact, "Email"> &
+  Proposal;
 
 export type SubmitResult = {
   RegistrationStatus: RegistrationStatus;
