@@ -51,6 +51,7 @@ export default function Form(props: FormHTMLAttributes<HTMLFormElement>) {
       )}
       {action !== "remove" && (
         <button
+          type="button"
           className="btn-outline-filled @lg:justify-self-end mb-5 text-sm flex gap-x-3"
           onClick={() =>
             showModal(AddForm, {
