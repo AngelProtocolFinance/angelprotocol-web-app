@@ -19,6 +19,7 @@ import {
   IndexFundStorage,
 } from "types/typechain-types/contracts/core/index-fund/IndexFund";
 import { RegistrarStorage } from "types/typechain-types/contracts/core/registrar/interfaces/IRegistrar";
+import { DecodedApplicationProposal } from "types/typechain-types/custom";
 import { accounts } from "contracts/evm/Account";
 import { erc20 } from "contracts/evm/ERC20";
 import { giftCard } from "contracts/evm/gift-card";
@@ -258,6 +259,19 @@ export const queryObjects: {
         result
       )[0];
       return d.toNumber();
+    },
+  ],
+  "multisig/review-proposal": [
+    ({ id }) => multisig.encodeFunctionData("proposals", [id]),
+    (result) => {
+      const d: DecodedApplicationProposal = multisig.decodeFunctionResult(
+        "proposals",
+        result
+      )[0];
+      return {
+        executed: d.executed,
+        expiry: d.expiry.toNumber(),
+      };
     },
   ],
 

@@ -7,7 +7,7 @@ import {
   IndexFundConfig,
   RegistrarConfig,
 } from "types/contracts";
-import { PageOptions } from "types/contracts/multisig";
+import { ApplicationProposal, PageOptions } from "types/contracts/multisig";
 import { Contract } from "types/lists";
 import { Transaction } from "types/tx";
 
@@ -39,6 +39,8 @@ export interface ContractQueries {
   "multisig.tx-count": Query<{ open: boolean; approved: boolean }, number>;
   "multisig.votes": Query<ID, string[]>;
   "multisig.tx-duration": Query<null, number>;
+
+  "multisig/review-proposal": Query<ID, ApplicationProposal>;
 
   "accounts.endowment": Query<ID, EndowmentDetails>;
   "accounts.state": Query<ID, EndowmentState>;
