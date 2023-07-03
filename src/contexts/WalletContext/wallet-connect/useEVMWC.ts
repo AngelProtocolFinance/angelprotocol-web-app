@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { Connection, ProviderInfo } from "../types";
 import { Connected, WalletState } from "./types";
 import { SessionTypes, SignClientTypes } from "@walletconnect/types";
+import metamaskIcon from "assets/icons/wallets/metamask.png";
 import { _pairing, _session, account } from "helpers/wallet-connect";
 import { EIPMethods } from "constants/evm";
 import { WALLET_METADATA } from "../constants";
@@ -11,6 +12,19 @@ const wcModal = new WalletConnectModal({
   projectId: "039a7aeef39cb740398760f71a471957",
   enableExplorer: false,
   chains: ["eip155:137"],
+  mobileWallets: [
+    {
+      id: "metamaskid",
+      name: "MetaMask",
+      links: {
+        native: "metamask://",
+        universal: "https://metamask.app.link",
+      },
+    },
+  ],
+  walletImages: {
+    metamaskid: metamaskIcon,
+  },
 });
 
 /** NOTE: only use this wallet in mainnet */
