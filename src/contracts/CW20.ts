@@ -1,5 +1,5 @@
 import { WalletState } from "contexts/WalletContext";
-import { scaleToStr, toBase64 } from "helpers";
+import { objToBase64, scaleToStr } from "helpers";
 import Contract from "./Contract";
 
 export default class CW20 extends Contract {
@@ -38,7 +38,7 @@ export default class CW20 extends Contract {
         //convert to uamount
         amount: scaleToStr(amount),
         contract: msgReceiverAddr,
-        msg: toBase64(msg),
+        msg: objToBase64(msg),
       },
     });
   }

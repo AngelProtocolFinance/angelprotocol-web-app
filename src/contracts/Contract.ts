@@ -1,35 +1,50 @@
-import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
-import { toUtf8 } from "@cosmjs/encoding";
-import { EncodeObject } from "@cosmjs/proto-signing";
+import Long from "long";
+import { MsgSend } from "@keplr-wallet/proto-types/cosmos/bank/v1beta1/tx";
+import { PubKey } from "@keplr-wallet/proto-types/cosmos/crypto/secp256k1/keys";
+import { SignMode } from "@keplr-wallet/proto-types/cosmos/tx/signing/v1beta1/signing";
 import {
-  Coin,
-  DeliverTxResponse,
-  GasPrice,
-  MsgSendEncodeObject,
-  StdFee,
-  calculateFee,
-  isDeliverTxFailure,
-} from "@cosmjs/stargate";
+  AuthInfo,
+  TxBody,
+  TxRaw,
+} from "@keplr-wallet/proto-types/cosmos/tx/v1beta1/tx";
+import type { SignerInfo } from "@keplr-wallet/proto-types/cosmos/tx/v1beta1/tx";
+import { MsgExecuteContract } from "@keplr-wallet/proto-types/cosmwasm/wasm/v1/tx";
+import type { Any } from "@keplr-wallet/proto-types/google/protobuf/any";
 import { Chain } from "types/aws";
 import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/contracts";
-import { TxOptions } from "types/slices";
-import { WalletState } from "contexts/WalletContext";
-import { logger, toBase64 } from "helpers";
-import { getKeplrClient } from "helpers/keplr";
 import {
+  BroadcastRes,
+  BroadcastSuccess,
+  Coin,
+  JSONAccount,
+  SignDoc,
+  SimulateRes,
+  TxResponse,
+  isBroadcastError,
+} from "types/cosmos";
+import { WalletState } from "contexts/WalletContext";
+import {
+  base64FromU8a,
+  condenseToNum,
+  logger,
+  objToBase64,
+  toU8a,
+  u8aFromBase64,
+} from "helpers";
+import { keplr } from "helpers/keplr";
+import {
+  BroadcastError,
   CosmosTxSimulationFail,
   TxResultFail,
+  TxTimeout,
   WalletDisconnectedError,
   WrongChainError,
 } from "errors/errors";
-import { IS_TEST } from "constants/env";
 
 // TODO: uni-6 and juno-1 have diff gas prices for fee display only,
 // actual rate during submission is set by wallet - can be overridden with custom but keplr is buggy when customizing
 // NOTE: use "High" fee setting on JUNO testnet, otherwise transactions will fail
-const GAS_PRICE = IS_TEST
-  ? GasPrice.fromString("0.075ujunox")
-  : GasPrice.fromString("0.075ujuno");
+const GAS_PRICE = "0.075";
 
 // This is the multiplier used when auto-calculating the fees
 // https://github.com/cosmos/cosmjs/blob/5bd6c3922633070dbb0d68dd653dc037efdf3280/packages/stargate/src/signingstargateclient.ts#L290
@@ -44,68 +59,148 @@ export default class Contract {
     this.walletAddress = wallet?.address || "";
   }
 
-  //for on-demand query, use RTK where possible
-  async query<T>(to: string, message: Record<string, unknown>) {
-    this.verifyWallet();
-    const { chain_id, rpc_url } = this.wallet!.chain;
-    const client = await getKeplrClient(
-      this.wallet?.providerId!,
-      chain_id,
-      rpc_url
-    );
-    const jsonObject = await client.queryContractSmart(to, message);
-    return JSON.parse(jsonObject) as T;
-  }
-
-  async estimateFee(msgs: readonly EncodeObject[]): Promise<StdFee> {
+  async estimateFee(msgs: Any[]): Promise<{ feeAmount: number; doc: SignDoc }> {
     try {
       this.verifyWallet();
-      const { chain_id, rpc_url } = this.wallet!.chain;
-      const client = await getKeplrClient(
-        this.wallet?.providerId!,
-        chain_id,
-        rpc_url
-      );
-      const gasEstimation = await client.simulate(
-        this.walletAddress,
-        msgs,
-        undefined
-      );
-      return calculateFee(
-        Math.round(gasEstimation * GAS_ADJUSTMENT),
-        GAS_PRICE
-      );
+      const { chain_id, lcd_url, native_currency } = this.wallet!.chain;
+      const { account } = await fetch(
+        lcd_url + `/cosmos/auth/v1beta1/accounts/${this.walletAddress}`
+      ).then<{ account: JSONAccount }>((res) => res.json());
+
+      const pub = PubKey.fromJSON({ key: account.pub_key.key });
+      const signer: SignerInfo = {
+        publicKey: {
+          typeUrl: account.pub_key["@type"],
+          value: PubKey.encode(pub).finish(),
+        },
+        modeInfo: {
+          single: { mode: SignMode.SIGN_MODE_DIRECT },
+          multi: undefined,
+        },
+        sequence: account.sequence,
+      };
+
+      const authInfo: AuthInfo = {
+        signerInfos: [signer],
+        fee: {
+          amount: [],
+          gasLimit: "0",
+          granter: "",
+          payer: this.walletAddress,
+        },
+      };
+
+      const txBody: TxBody = {
+        messages: msgs,
+        memo: "",
+        extensionOptions: [],
+        nonCriticalExtensionOptions: [],
+        timeoutHeight: "0",
+      };
+
+      const bodyBytes = TxBody.encode(txBody).finish();
+      const simTx: TxRaw = {
+        bodyBytes,
+        authInfoBytes: AuthInfo.encode(authInfo).finish(),
+        //num of signature must match num of signers
+        signatures: [new Uint8Array(0)],
+      };
+
+      const res = await fetch(lcd_url + "/cosmos/tx/v1beta1/simulate", {
+        method: "POST",
+        body: JSON.stringify({
+          tx_bytes: base64FromU8a(TxRaw.encode(simTx).finish()),
+        }),
+      }).then<SimulateRes>((res) => {
+        //TODO: create fetch wrapper than handle response error by default
+        if (!res.ok) throw new Error();
+        return res.json();
+      });
+
+      const gas = res.gas_info.gas_used;
+      const adjusted = Math.ceil(+gas * GAS_ADJUSTMENT);
+      const feeAmount = condenseToNum(adjusted * +GAS_PRICE);
+
+      const authInfoWithFee: AuthInfo = {
+        ...authInfo,
+        fee: {
+          amount: [{ amount: GAS_PRICE, denom: native_currency.token_id }],
+          gasLimit: `${adjusted}`,
+          granter: "",
+          payer: this.walletAddress,
+        },
+      };
+
+      //add fee to estimated Tx
+      return {
+        feeAmount,
+        doc: {
+          authInfoBytes: AuthInfo.encode(authInfoWithFee).finish(),
+          bodyBytes,
+          accountNumber: Long.fromString(account.account_number),
+          chainId: chain_id,
+        },
+      };
     } catch (err) {
       logger.error(err);
       throw new CosmosTxSimulationFail();
     }
   }
 
-  async signAndBroadcast({ msgs, fee }: TxOptions) {
+  async signAndBroadcast(doc: SignDoc): Promise<TxResponse> {
     this.verifyWallet();
-    const { chain_id, rpc_url } = this.wallet!.chain;
-    const client = await getKeplrClient(
-      this.wallet?.providerId!,
+
+    const { chain, address, providerId } = this.wallet!;
+    const { lcd_url, chain_id } = chain;
+    const client = await keplr(providerId);
+
+    const { signature, signed } = await client.signDirect(
       chain_id,
-      rpc_url
+      address,
+      doc
     );
-    const result = await client.signAndBroadcast(this.walletAddress, msgs, fee);
-    return validateTransactionSuccess(result, this.wallet!.chain);
+
+    const tx: TxRaw = {
+      authInfoBytes: signed.authInfoBytes,
+      bodyBytes: signed.bodyBytes,
+      signatures: [u8aFromBase64(signature.signature)],
+    };
+
+    const result = await fetch(lcd_url + "/cosmos/tx/v1beta1/txs", {
+      method: "POST",
+      body: JSON.stringify({
+        tx_bytes: base64FromU8a(TxRaw.encode(tx).finish()),
+        mode: "BROADCAST_MODE_SYNC",
+      }),
+    }).then<BroadcastRes>((res) => res.json());
+
+    if (isBroadcastError(result)) {
+      throw new BroadcastError(result.message);
+    }
+
+    const { code, txhash } = result.tx_response;
+
+    if (code) {
+      throw new TxResultFail(chain, txhash);
+    }
+
+    return pollTX(
+      lcd_url + `/cosmos/tx/v1beta1/txs/${txhash}`,
+      10,
+      txhash,
+      chain
+    );
   }
 
-  createExecuteContractMsg(
-    to: string,
-    msg: object,
-    funds: Coin[] = []
-  ): MsgExecuteContractEncodeObject {
+  createExecuteContractMsg(to: string, msg: object, funds: Coin[] = []): Any {
     return {
-      typeUrl: "/cosmwasm.wasm.v1.MsgExecuteContract",
-      value: {
+      typeUrl: typeURLs.executeContract,
+      value: MsgExecuteContract.encode({
         contract: to,
         sender: this.walletAddress,
-        msg: toUtf8(JSON.stringify(msg)),
+        msg: toU8a(JSON.stringify(msg)),
         funds,
-      },
+      }).finish(),
     };
   }
 
@@ -113,10 +208,10 @@ export default class Contract {
     scaledAmount: string,
     recipient: string,
     denom = this.wallet!.chain.native_currency.token_id
-  ): MsgSendEncodeObject {
+  ): Any {
     return {
-      typeUrl: "/cosmos.bank.v1beta1.MsgSend",
-      value: {
+      typeUrl: typeURLs.sendNative,
+      value: MsgSend.encode({
         fromAddress: this.walletAddress,
         toAddress: recipient,
         amount: [
@@ -125,7 +220,7 @@ export default class Contract {
             amount: scaledAmount,
           },
         ],
-      },
+      }).finish(),
     };
   }
 
@@ -139,7 +234,7 @@ export default class Contract {
         execute: {
           contract_addr: to,
           funds,
-          msg: toBase64(msg),
+          msg: objToBase64(msg),
         },
       },
     };
@@ -166,18 +261,31 @@ export default class Contract {
   }
 }
 
-function validateTransactionSuccess(
-  result: DeliverTxResponse,
+const typeURLs = {
+  /**
+   * derived from proto-types path
+   * sample: import { MsgExecuteContract } from "@keplr-wallet/proto-types/cosmwasm/wasm/v1/tx
+   * /cosmwasm/wasm/v1/tx -> /cosmwasm.wasm.v1.MsgExecuteContract (from tx file)
+   */
+  executeContract: "/cosmwasm.wasm.v1.MsgExecuteContract",
+  sendNative: "/cosmos.bank.v1beta1.MsgSend",
+} as const;
+
+async function pollTX(
+  url: string,
+  retries: number,
+  hash: string,
   chain: Chain
-): DeliverTxResponse {
-  if (isDeliverTxFailure(result)) {
-    throw new TxResultFail(
-      //DeliverTxResponse already has a hash, link of tx should be available to user
-      //pass Chain so getTxUrl can get appropriate explorer link
-      chain,
-      result.transactionHash
-    );
+): Promise<TxResponse> {
+  if (retries === 0) throw new TxTimeout(chain, hash);
+
+  await new Promise((r) => setTimeout(r, 1000 * (10 - retries)));
+
+  const res = await fetch(url);
+
+  if (res.status === 200) {
+    return res.json().then((res: BroadcastSuccess) => res.tx_response);
   }
 
-  return result;
+  return pollTX(url, retries - 1, hash, chain);
 }

@@ -114,6 +114,12 @@ export class CosmosTxSimulationFail extends APError {
   }
 }
 
+export class BroadcastError extends APError {
+  constructor(message = "Failed to broadcast transaction") {
+    super("BroadcastError", message);
+  }
+}
+
 export class TxResultFail extends Error {
   chain: Chain;
   txHash: string;
@@ -123,6 +129,18 @@ export class TxResultFail extends Error {
     this.chain = chain;
     this.txHash = txHash;
     this.name = "TxResultFail";
+  }
+}
+
+export class TxTimeout extends Error {
+  chain: Chain;
+  txHash: string;
+  constructor(chain: Chain, txHash: string) {
+    //No need to dump to user technical details of why result failed, a link to failed tx is sufficient
+    super("Timeout: kindly check transaction status manually");
+    this.chain = chain;
+    this.txHash = txHash;
+    this.name = "TxTimeout";
   }
 }
 

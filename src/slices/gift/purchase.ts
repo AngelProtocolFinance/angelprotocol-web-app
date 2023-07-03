@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { TxOptions } from "types/slices";
+import { SignDoc } from "types/cosmos";
 import { invalidateApesTags } from "services/apes";
 import { WalletState } from "contexts/WalletContext";
 import Contract from "contracts/Contract";
@@ -10,13 +10,13 @@ import gift, { GiftDetails, TxStatus, setTxStatus } from "./index";
 
 type Args = {
   wallet: WalletState;
-  tx: TxOptions;
+  doc: SignDoc;
   details: GiftDetails;
 };
 
 export const purchase = createAsyncThunk<void, Args>(
   `${gift.name}/purchase`,
-  async ({ wallet, tx, details }, { dispatch }) => {
+  async ({ wallet, doc, details }, { dispatch }) => {
     const updateTx = (status: TxStatus) => {
       dispatch(setTxStatus(status));
     };
@@ -24,16 +24,17 @@ export const purchase = createAsyncThunk<void, Args>(
     try {
       updateTx({ msg: "Payment is being processed..." });
       const contract = new Contract(wallet);
-      const response = await contract.signAndBroadcast(tx);
-      if (!response.code) {
+      const result = await contract.signAndBroadcast(doc);
+
+      if (!result.code) {
         /** recipient is specified, show tx link to purchaser */
         if (details.recipient) {
-          return updateTx({ hash: response.transactionHash });
+          return updateTx({ hash: result.txhash });
         }
 
         /**if no recipient is provided */
         /** extract deposit id */
-        const id = getWasmAttribute("deposit_id", response.rawLog);
+        const id = getWasmAttribute("deposit_id", result.logs);
         /** generate secret */
         let randNums = window.crypto.getRandomValues(new BigUint64Array(62));
         let preImage = `${randNums[0]}${randNums[1]}`;
@@ -55,7 +56,7 @@ export const purchase = createAsyncThunk<void, Args>(
         if (!res.ok) {
           return updateTx({
             error: `Failed to save gift card code. Kindly contact ${EMAIL_SUPPORT}.`,
-            hash: response.transactionHash,
+            hash: result.txhash,
           });
         }
         /** no problems, save giftcard code on user's computer */

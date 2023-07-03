@@ -1,5 +1,5 @@
 import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
-import { toBase64 } from "helpers";
+import { objToBase64 } from "helpers";
 import { queryObject } from "./queryObjects";
 
 export function genQueryPath<T extends QT>(
@@ -9,5 +9,5 @@ export function genQueryPath<T extends QT>(
 ) {
   const query = queryObject[type];
   const msg = typeof query === "function" ? query(args) : query;
-  return `cosmwasm/wasm/v1/contract/${contract}/smart/${toBase64(msg)}`;
+  return `cosmwasm/wasm/v1/contract/${contract}/smart/${objToBase64(msg)}`;
 }

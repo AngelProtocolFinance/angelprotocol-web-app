@@ -1,13 +1,13 @@
 import { ADR36Payload } from "types/aws";
 import { WalletState } from "contexts/WalletContext";
-import { toBase64 } from "helpers";
-import { getKeplr } from "helpers/keplr";
+import { objToBase64 } from "helpers";
+import { keplr as _keplr } from "helpers/keplr";
 
 export async function createADR36Payload(
   data: object,
   wallet: WalletState
 ): Promise<ADR36Payload> {
-  const keplr = getKeplr(wallet.providerId);
+  const keplr = await _keplr(wallet.providerId);
 
   const { signed, signature } = await keplr.signAmino(
     wallet.chain.chain_id,
@@ -25,7 +25,7 @@ export async function createADR36Payload(
           type: "sign/MsgSignData",
           value: {
             signer: wallet.address,
-            data: toBase64(data),
+            data: objToBase64(data),
           },
         },
       ],

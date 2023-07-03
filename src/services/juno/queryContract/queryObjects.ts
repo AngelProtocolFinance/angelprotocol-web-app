@@ -14,6 +14,11 @@ export const queryObject: {
 
   /** index fund */
   ifFunds: { funds_list: {} },
+  ifFund({ id }) {
+    return {
+      fund_details: { fund_id: id },
+    };
+  },
   ifAlliance: { alliance_members: {} },
   ifConfig: { config: {} },
 

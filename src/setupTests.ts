@@ -8,6 +8,21 @@ import { Crypto } from "@peculiar/webcrypto";
 import "@testing-library/jest-dom";
 import { TextDecoder, TextEncoder } from "util";
 
+jest.mock("@walletconnect/modal", () => ({
+  __esModule: true,
+  WalletConnectModal: jest.fn(),
+}));
+jest.mock("@walletconnect/sign-client", () => ({
+  __esModule: true,
+  SignClient: {
+    init: jest.fn(async () => ({
+      session: {
+        getAll: jest.fn(),
+      },
+    })),
+  },
+}));
+
 class IntersectionObserver {
   observe = jest.fn();
   disconnect = jest.fn();

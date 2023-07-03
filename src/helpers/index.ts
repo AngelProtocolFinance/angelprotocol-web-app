@@ -12,5 +12,5 @@ export * from "./isEmpty";
 export * from "./logger";
 export * from "./maskAddress";
 export * from "./theme";
-export * from "./toBase64";
+export * from "./encoding";
 export * from "./registration";

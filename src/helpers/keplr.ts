@@ -1,92 +1,65 @@
-import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
-import { fromHex, toBase64 } from "@cosmjs/encoding";
-import { KeplrWalletConnectV1 } from "@keplr-wallet/wc-client";
-import WalletConnect from "@walletconnect/client/";
+import { TxRaw } from "@keplr-wallet/proto-types/cosmos/tx/v1beta1/tx";
+import { Keplr } from "@keplr-wallet/types";
 import { ProviderId } from "contexts/WalletContext/types";
-import { Dwindow } from "types/ethereum";
-import { JUNO_LCD } from "constants/env";
-import { WC_BRIDGE } from "constants/urls";
+import {
+  KeplrWC,
+  SignDoc,
+  WCSignAminoRes,
+  WCSignDirectRes,
+} from "types/cosmos";
+import { Dwindow } from "types/window";
+import { _session } from "./wallet-connect";
 
-export const connector = new WalletConnect({
-  bridge: WC_BRIDGE,
-  signingMethods: [
-    /**https://github.com/chainapsis/keplr-wallet/blob/master/packages/wc-client/src/index.ts
-     * see sendCustomRequest methods
-     */
-    "keplr_enable_wallet_connect_v1",
-    "keplr_sign_amino_wallet_connect_v1",
-  ],
-  storageId: "wc_keplr",
-});
-
-export function getKeplrWCClient() {
-  return new KeplrWalletConnectV1(connector, { sendTx });
+export async function keplr(providerId: ProviderId): Promise<Keplr | KeplrWC> {
+  return providerId === "keplr-wc" ? keplrWC() : (window as Dwindow).keplr!;
 }
 
-export function getKeplr(providerId: ProviderId) {
-  return providerId === "keplr-wc"
-    ? getKeplrWCClient()
-    : (window as Dwindow).keplr!;
-}
+export async function keplrWC(): Promise<KeplrWC> {
+  const { session, client } = await _session("Keplr");
 
-export async function getKeplrClient(
-  providerId: ProviderId,
-  chain_id: string,
-  rpcUrl: string
-): Promise<SigningCosmWasmClient> {
-  const keplr = getKeplr(providerId);
-  return await SigningCosmWasmClient.connectWithSigner(
-    rpcUrl,
-    keplr[
-      keplr instanceof KeplrWalletConnectV1
-        ? "getOfflineSignerOnlyAmino" // TODO: change sendTx to signDirect
-        : "getOfflineSigner"
-    ](chain_id)
-  );
-}
+  if (!session) throw new Error("@dev: no keplr session");
 
-type CustomSendTx = KeplrWalletConnectV1["sendTx"];
+  return {
+    async signDirect(chain_id, signer, doc: SignDoc) {
+      //doc is from cosmos/types SignDoc
+      const tx = TxRaw.fromPartial({
+        bodyBytes: doc.bodyBytes,
+        authInfoBytes: doc.authInfoBytes,
+      });
+      const { authInfoBytes, bodyBytes } = TxRaw.toJSON(tx) as any;
+      const { signature } = await client
+        .request<WCSignDirectRes>({
+          topic: session.topic,
+          chainId: `cosmos:${chain_id}`,
+          request: {
+            method: "cosmos_signDirect",
+            params: {
+              signerAddress: signer,
+              signDoc: {
+                authInfoBytes,
+                bodyBytes,
+                chainId: doc.chainId,
+                accountNumber: doc.accountNumber?.toString(),
+              },
+            },
+          },
+        })
+        .catch((err) => {
+          throw err;
+        });
+      return { signature, signed: doc };
+    },
+    async signAmino(signer, chainId, doc) {
+      const { signature } = await client.request<WCSignAminoRes>({
+        topic: session.topic,
+        chainId: `cosmos:${chainId}`,
+        request: {
+          method: "cosmos_signAmino",
+          params: { signerAddress: signer, signDoc: doc },
+        },
+      });
 
-/**
- * reason why need to pass sendTx on keplr-wc
- * https://github.com/chainapsis/keplr-wallet/blob/master/packages/wc-client/src/index.ts#L441
- */
-
-const sendTx: CustomSendTx = async (chainId, tx, mode) => {
-  /**TODO: if keplr needs to be used on other cosmos chains as well, LCD_url should be
-   * determined via chainId
-   */
-
-  const { tx_response: res } = await fetch(
-    /** see swagger definition by visiting lcd endpoint */
-    JUNO_LCD + "/cosmos/tx/v1beta1/txs",
-    {
-      method: "POST",
-      body: JSON.stringify({
-        tx_bytes: toBase64(tx),
-        mode: getModePayload(mode),
-      }),
-    }
-  ).then((res) => res.json());
-
-  if (!!res.code) {
-    throw new Error(res["raw_log"]);
-  }
-
-  return fromHex(res.txhash);
-};
-
-type Mode = Parameters<CustomSendTx>[2];
-
-function getModePayload(mode: Mode): string {
-  switch (mode) {
-    case "async":
-      return "BROADCAST_MODE_ASYNC";
-    case "block":
-      return "BROADCAST_MODE_BLOCK";
-    case "sync":
-      return "BROADCAST_MODE_SYNC";
-    default:
-      return "BROADCAST_MODE_UNSPECIFIED";
-  }
+      return { signature, signed: doc };
+    },
+  };
 }
