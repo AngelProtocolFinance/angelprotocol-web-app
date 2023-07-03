@@ -17,7 +17,7 @@ export const _session = async (name: Name) => {
   const client = await signClient;
   const session = client.session
     .getAll()
-    .find((s) => s.peer.metadata.name === name);
+    ?.find((s) => s.peer.metadata.name === name);
   return { session, client };
 };
 
@@ -25,7 +25,7 @@ export const _pairing = async (name: Name) => {
   const client = await signClient;
   const pairing = client.pairing
     .getAll({ active: true })
-    .find((p) => p.peerMetadata?.name === name);
+    ?.find((p) => p.peerMetadata?.name === name);
 
   return { pairing, client };
 };
