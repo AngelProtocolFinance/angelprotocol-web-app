@@ -40,7 +40,7 @@ function FormWithContext(props: TProfile) {
 
   const { active_in_countries = [] } = props;
   const designation = endow(props) ? props.endow_designation : "";
-  const sdgs = endow(props) ? props.categories.sdgs : [];
+  const sdgs = endow(props) ? props.sdgs : [];
   // could just add to useForm.defaultValue - but not Partial here
   const flatInitial: FlatFormValues = {
     name: props.name,

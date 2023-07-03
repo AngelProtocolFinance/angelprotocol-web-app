@@ -17,7 +17,7 @@ type EndowmentBase = {
   hq_country?: string;
   endow_designation: EndowDesignation;
   active_in_countries?: string[];
-  categories: { sdgs: UNSDG_NUMS[] };
+  sdgs: UNSDG_NUMS[];
   id: number;
   image: string;
   kyc_donors_only: boolean;
@@ -48,7 +48,6 @@ export type EndowmentProfile = EndowmentBase & {
 } & EndowmentBalances;
 
 const _npo_type: keyof EndowmentBase = "endow_designation";
-const _categories: keyof EndowmentBase = "categories";
 //prettier-ignore
 export type ASTProfile = Pick<EndowmentProfile, 
     "id" 
@@ -60,7 +59,6 @@ export type ASTProfile = Pick<EndowmentProfile,
   |"name"
   |"tagline"
   | typeof _npo_type 
-  | typeof _categories
   >>
   & Partial<EndowmentBalances>
 

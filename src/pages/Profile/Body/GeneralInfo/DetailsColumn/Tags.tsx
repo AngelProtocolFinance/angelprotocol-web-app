@@ -13,7 +13,7 @@ export default function Tags(props: EndowmentProfile) {
           Verification required <Icon type="Info" size={24} />
         </Tag>
       )}
-      {props.categories.sdgs.map((unsdg_num) => (
+      {props.sdgs.map((unsdg_num) => (
         <Tag key={unsdg_num}>
           SDG #{unsdg_num} : {unsdgs[unsdg_num].title}
         </Tag>
