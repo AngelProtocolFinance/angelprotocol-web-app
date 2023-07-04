@@ -18,7 +18,7 @@ export default function Card({
   image,
   id,
   endow_designation,
-  categories: { sdgs },
+  sdgs,
   tagline,
   hq_country,
   kyc_donors_only,
