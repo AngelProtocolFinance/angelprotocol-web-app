@@ -1,5 +1,6 @@
 import {
   AdminResources,
+  CharityApplication,
   EndowBalance,
   IERC20,
   ProposalDetails,
@@ -195,6 +196,21 @@ export const customApi = junoApi.injectEndpoints({
         };
       },
     }),
+
+    application: builder.query<CharityApplication, { id: number }>({
+      providesTags: [
+        "multisig/review.prop-confirms",
+        "multisig/review.proposal",
+      ],
+      async queryFn({ id }) {
+        const [confirmations, proposal] = await Promise.all([
+          queryContract("multisig/review.prop-confirms", { id }),
+          queryContract("multisig/review.proposal", { id }),
+        ]);
+
+        return { data: { ...proposal, confirmations } };
+      },
+    }),
   }),
 });
 
@@ -228,4 +244,5 @@ export const {
   useProposalDetailsQuery,
   useEndowBalanceQuery,
   useWithdrawInfoQuery,
+  useApplicationQuery,
 } = customApi;
