@@ -38,7 +38,7 @@ export default function useUpdateEndowmentProfile() {
       );
 
       const { wallet } = txResource;
-      const provider = getProvider(wallet.providerId)!;
+      const provider = (await getProvider(wallet.providerId))!;
 
       const rawSignature = await provider.request<string>({
         method: "personal_sign",

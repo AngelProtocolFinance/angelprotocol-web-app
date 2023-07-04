@@ -1,5 +1,5 @@
 import { MsgSendType, MsgTypes, TxArgs } from "./types";
-import { toBase64 } from "helpers";
+import { objToBase64 } from "helpers";
 
 export const msgs: {
   [T in Exclude<MsgTypes, MsgSendType>]: (args: TxArgs<T>) => object;
@@ -10,6 +10,6 @@ export const msgs: {
   "cw20.send": ({ amount, contract, msg }) => ({
     amount,
     contract,
-    msg: toBase64(msg),
+    msg: objToBase64(msg),
   }),
 };

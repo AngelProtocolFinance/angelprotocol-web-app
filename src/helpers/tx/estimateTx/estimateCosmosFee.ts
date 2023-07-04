@@ -14,9 +14,6 @@ import { WalletState } from "contexts/WalletContext";
 import { condenseToNum } from "helpers/decimal";
 import { base64FromU8a } from "helpers/encoding";
 
-// TODO: uni-6 and juno-1 have diff gas prices for fee display only,
-// actual rate during submission is set by wallet - can be overridden with custom but keplr is buggy when customizing
-// NOTE: use "High" fee setting on JUNO testnet, otherwise transactions will fail
 const GAS_PRICE = "0.075";
 
 // This is the multiplier used when auto-calculating the fees

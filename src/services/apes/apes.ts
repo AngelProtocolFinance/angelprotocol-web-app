@@ -40,7 +40,7 @@ export const apes = createApi({
     }),
     chain: builder.query<Chain, ChainQueryArgs>({
       providesTags: ["chain"],
-      async queryFn({ address, chainId, providerId }, api, options, baseQuery) {
+      async queryFn({ address, chainId }, api, options, baseQuery) {
         try {
           const { data } = await baseQuery(`v1/chain/${chainId}`);
           const chain = overrides(data as FetchedChain);
@@ -53,8 +53,7 @@ export const apes = createApi({
                 token_id: t.token_id.toLowerCase(),
               })),
             },
-            address,
-            providerId
+            address
           );
 
           return { data: { ...chain, native_currency: native, tokens } };
