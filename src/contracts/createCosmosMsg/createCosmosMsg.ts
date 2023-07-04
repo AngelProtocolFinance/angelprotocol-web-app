@@ -1,19 +1,20 @@
-import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
 import { toUtf8 } from "@cosmjs/encoding";
-import { MsgSendEncodeObject } from "@cosmjs/stargate";
 import { MsgOptions, MsgSendType, MsgTypes } from "./types";
+import { MsgSend } from "@keplr-wallet/proto-types/cosmos/bank/v1beta1/tx";
+import { MsgExecuteContract } from "@keplr-wallet/proto-types/cosmwasm/wasm/v1/tx";
+import type { Any } from "@keplr-wallet/proto-types/google/protobuf/any";
 import { msgs } from "./msgs";
 
 export default function createCosmosMsg<T extends MsgTypes>(
   sender: string,
   type: T,
   options: MsgOptions<T>
-): MsgSendEncodeObject | MsgExecuteContractEncodeObject {
+): Any {
   if (type === "recipient.send") {
     const opts = options as MsgOptions<MsgSendType>;
     return {
-      typeUrl: "/cosmos.bank.v1beta1.MsgSend",
-      value: {
+      typeUrl: typeURLs.sendNative,
+      value: MsgSend.encode({
         fromAddress: sender,
         toAddress: opts.recipient,
         amount: [
@@ -22,7 +23,7 @@ export default function createCosmosMsg<T extends MsgTypes>(
             amount: opts.amount,
           },
         ],
-      },
+      }).finish(),
     };
   }
 
@@ -31,12 +32,22 @@ export default function createCosmosMsg<T extends MsgTypes>(
   const content = msgs[type as Exclude<MsgTypes, MsgSendType>](args);
 
   return {
-    typeUrl: "/cosmwasm.wasm.v1.MsgExecuteContract",
-    value: {
+    typeUrl: typeURLs.executeContract,
+    value: MsgExecuteContract.encode({
       contract: contract,
-      sender: sender,
+      sender,
       msg: toUtf8(JSON.stringify(content)),
       funds,
-    },
+    }).finish(),
   };
 }
+
+const typeURLs = {
+  /**
+   * derived from proto-types path
+   * sample: import { MsgExecuteContract } from "@keplr-wallet/proto-types/cosmwasm/wasm/v1/tx
+   * /cosmwasm/wasm/v1/tx -> /cosmwasm.wasm.v1.MsgExecuteContract (from tx file)
+   */
+  executeContract: "/cosmwasm.wasm.v1.MsgExecuteContract",
+  sendNative: "/cosmos.bank.v1beta1.MsgSend",
+} as const;
