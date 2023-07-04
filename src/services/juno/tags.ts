@@ -19,6 +19,9 @@ export const tags: ContractQueryTypes[] = [
   "multisig.transaction",
   "multisig.votes",
 
+  "multisig/review.prop-confirms",
+  "multisig/review.proposal",
+
   "accounts.endowment",
   "accounts.state",
   "accounts.token-balance",
