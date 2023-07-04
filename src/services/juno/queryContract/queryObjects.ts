@@ -261,7 +261,7 @@ export const queryObjects: {
       return d.toNumber();
     },
   ],
-  "multisig/review-proposal": [
+  "multisig/review.proposal": [
     ({ id }) => multisig.encodeFunctionData("proposals", [id]),
     (result) => {
       const d: DecodedApplicationProposal = multisig.decodeFunctionResult(
@@ -269,9 +269,20 @@ export const queryObjects: {
         result
       )[0];
       return {
-        executed: d.executed,
-        expiry: d.expiry.toNumber(),
+        //abi is tuple only
+        executed: d[4],
+        expiry: d[3].toNumber(),
       };
+    },
+  ],
+  "multisig/review.prop-confirms": [
+    ({ id }) => multisig.encodeFunctionData("proposalConfirmations", [id]),
+    (result) => {
+      const d: BigNumber = multisig.decodeFunctionResult(
+        "proposalConfirmations",
+        result
+      )[0];
+      return d.toNumber();
     },
   ],
 

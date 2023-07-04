@@ -40,7 +40,8 @@ export interface ContractQueries {
   "multisig.votes": Query<ID, string[]>;
   "multisig.tx-duration": Query<null, number>;
 
-  "multisig/review-proposal": Query<ID, ApplicationProposal>;
+  "multisig/review.proposal": Query<ID, ApplicationProposal>;
+  "multisig/review.prop-confirms": Query<ID, number>;
 
   "accounts.endowment": Query<ID, EndowmentDetails>;
   "accounts.state": Query<ID, EndowmentState>;
