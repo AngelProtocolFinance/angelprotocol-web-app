@@ -64,14 +64,12 @@ export default function Proposal({ txId }: { txId: number }) {
   };
 
   return (
-    <div>
-      <button
-        type="button"
-        className="min-w-[8rem] btn-orange px-2 py-1 text-sm"
-        onClick={approve}
-      >
-        {passed ? "Execute" : willExecute ? "Approve and execute" : "Approve"}
-      </button>
-    </div>
+    <button
+      type="button"
+      className="min-w-[8rem] btn-orange px-2 py-1 text-sm"
+      onClick={approve}
+    >
+      {passed ? "Execute" : willExecute ? "Approve and execute" : "Approve"}
+    </button>
   );
 }

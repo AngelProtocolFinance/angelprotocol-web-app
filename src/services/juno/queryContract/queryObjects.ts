@@ -270,10 +270,11 @@ export const queryObjects: {
   "multisig/review.proposal": [
     ({ id }) => multisig.encodeFunctionData("proposals", [id]),
     (result) => {
-      const d: DecodedApplicationProposal = multisig.decodeFunctionResult(
+      const d = multisig.decodeFunctionResult(
         "proposals",
         result
-      )[0];
+      ) as DecodedApplicationProposal;
+
       return {
         //abi is tuple only
         executed: d[4],
