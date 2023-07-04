@@ -1,9 +1,8 @@
-import { EncodeObject } from "@cosmjs/proto-signing";
-import { StdFee } from "@cosmjs/stargate";
 import { CreateTxOptions, Msg } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { OverrideProperties } from "type-fest";
 import { FetchedChain, Token, TokenType } from "./aws";
+import { SignDoc } from "./cosmos";
 import { EVMTx, LogProcessor, SimulTx } from "./evm";
 import { TagPayload } from "./third-party/redux";
 
@@ -18,13 +17,9 @@ export type Chain = Omit<FetchedChain, "native_currency" | "tokens"> & {
 };
 
 // //////////// SEND TX ////////////
-export type CosmosTx = {
-  msgs: EncodeObject[];
-  fee: StdFee;
-};
 
 export type EstimatedTx =
-  | { type: "cosmos"; val: CosmosTx; attribute?: string }
+  | { type: "cosmos"; val: SignDoc; attribute?: string }
   | {
       type: "terra";
       val: CreateTxOptions;
@@ -42,7 +37,7 @@ export type TxResult = TxError | TxSuccess;
 
 // //////////// ESTIMATE TX ////////////
 export type TxContent =
-  | { type: "cosmos"; val: EncodeObject[]; attribute?: string }
+  | { type: "cosmos"; val: SignDoc; attribute?: string }
   | { type: "terra"; val: Msg[]; wallet: ConnectedWallet }
   | { type: "evm"; val: SimulTx; log?: LogProcessor };
 

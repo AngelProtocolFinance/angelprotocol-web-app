@@ -2926,6 +2926,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@keplr-wallet/proto-types@npm:^0.12.12":
+  version: 0.12.13
+  resolution: "@keplr-wallet/proto-types@npm:0.12.13"
+  dependencies:
+    long: ^4.0.0
+    protobufjs: ^6.11.2
+  checksum: 86baaa70a6bed2bfc1847b8b2cdf96d715efbd8bd9400810985f5f406e8fdb5b5a8bbdd9850cebe8da411f39e9b25d655f64b936b081522360429120e679ba0e
+  languageName: node
+  linkType: hard
+
 "@keplr-wallet/types@npm:^0.12.0":
   version: 0.12.0
   resolution: "@keplr-wallet/types@npm:0.12.0"
@@ -2935,9 +2945,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@keplr-wallet/wc-qrcode-modal@npm:^0.12.0":
-  version: 0.12.0
-  resolution: "@keplr-wallet/wc-qrcode-modal@npm:0.12.0"
+"@keplr-wallet/wc-qrcode-modal@npm:^0.12.12":
+  version: 0.12.13
+  resolution: "@keplr-wallet/wc-qrcode-modal@npm:0.12.13"
   dependencies:
     "@walletconnect/browser-utils": ^1.6.5
     "@walletconnect/types": ^1.6.5
@@ -2945,7 +2955,7 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17 || ^18
     react-dom: ^16.8.0 || ^17 || ^18
-  checksum: f86db7e23347309dd3b14287d89743603b9a59594c7e9e9b1078f6b4537520c725adfe8a73053def46613f2b3f074a7555d7ac49c0064f72ed5c018e4587b4d0
+  checksum: c3d61e3c7063404c34bae30a17eb7886673665c6494dd268c235bb9fbcf9b852d7204eaef9693353c267546ba662f9f25d8ee4f289e7aff81586d4425793177e
   languageName: node
   linkType: hard
 
@@ -5565,8 +5575,9 @@ __metadata:
     "@headlessui/react": ^1.7.4
     "@hookform/error-message": ^2.0.0
     "@hookform/resolvers": ^3.0.0
+    "@keplr-wallet/proto-types": ^0.12.12
     "@keplr-wallet/types": ^0.12.0
-    "@keplr-wallet/wc-qrcode-modal": ^0.12.0
+    "@keplr-wallet/wc-qrcode-modal": ^0.12.12
     "@peculiar/webcrypto": ^1.4.0
     "@reduxjs/toolkit": ^1.9.0
     "@tailwindcss/container-queries": ^0.1.0
@@ -14111,7 +14122,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"protobufjs@npm:~6.11.2":
+"protobufjs@npm:^6.11.2, protobufjs@npm:~6.11.2":
   version: 6.11.3
   resolution: "protobufjs@npm:6.11.3"
   dependencies:
