@@ -11,6 +11,7 @@ import { AcceptedTokens, AccountType } from "types/contracts";
 import { TransactionStatus } from "types/lists";
 import { Transaction } from "types/tx";
 import { idParamToNum } from "helpers";
+import { contracts } from "constants/contracts";
 import { APIs } from "constants/urls";
 import { junoApi } from "..";
 import { queryContract } from "../queryContract";
@@ -197,18 +198,29 @@ export const customApi = junoApi.injectEndpoints({
       },
     }),
 
-    application: builder.query<CharityApplication, { id: number }>({
+    application: builder.query<
+      CharityApplication,
+      { id: number; user?: string }
+    >({
       providesTags: [
         "multisig/review.prop-confirms",
         "multisig/review.proposal",
+        "multisig.is-confirmed",
       ],
-      async queryFn({ id }) {
-        const [confirmations, proposal] = await Promise.all([
+      async queryFn({ id, user }) {
+        const [confirmations, proposal, userConfirmed] = await Promise.all([
           queryContract("multisig/review.prop-confirms", { id }),
           queryContract("multisig/review.proposal", { id }),
+          user
+            ? queryContract("multisig.is-confirmed", {
+                multisig: contracts["multisig/review"],
+                id,
+                addr: user,
+              })
+            : false,
         ]);
 
-        return { data: { ...proposal, confirmations } };
+        return { data: { ...proposal, confirmations, userConfirmed } };
       },
     }),
   }),

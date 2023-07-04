@@ -6,14 +6,13 @@ import Seo from "components/Seo";
 import { APP_NAME, DAPP_URL } from "constants/env";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { useAdminContext } from "../../../Context";
+import Proposal from "./Proposal";
 
 export default function Summary({
   Registration: r,
   ContactPerson: c,
 }: InReview) {
   const { id } = useAdminContext();
-
-  function approve() {}
 
   return (
     <div className="w-full p-6 grid content-start gap-2 rounded bg-white dark:bg-blue-d6 border border-prim">
@@ -47,13 +46,7 @@ export default function Summary({
         docs={r.AuditedFinancialReports || []}
       />
 
-      <button
-        type="button"
-        className="min-w-[8rem] btn-orange px-2 py-1 text-sm"
-        onClick={approve}
-      >
-        approve
-      </button>
+      <Proposal txId={r.application_id} />
     </div>
   );
 }

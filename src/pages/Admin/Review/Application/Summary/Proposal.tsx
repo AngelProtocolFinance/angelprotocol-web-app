@@ -5,11 +5,11 @@ import { createTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { getTagPayloads, hasElapsed } from "helpers/admin";
 
-export default function Proposal() {
-  const { txResource, id, config } = useAdminContext();
+export default function Proposal({ txId }: { txId: number }) {
+  const { txResource, config } = useAdminContext();
   const sendTx = useTxSender();
 
-  const { data, isLoading, isError } = useApplicationQuery({ id });
+  const { data, isLoading, isError } = useApplicationQuery({ id: txId });
 
   if (isLoading) {
     return <LoadingStatus>Loading proposal...</LoadingStatus>;
@@ -23,9 +23,13 @@ export default function Proposal() {
     return <Info>{txResource}</Info>;
   }
 
-  const { expiry, executed, confirmations } = data;
+  const { expiry, executed, confirmations, userConfirmed } = data;
   if (hasElapsed(expiry) && !executed) {
     return <ErrorStatus>Proposal expired</ErrorStatus>;
+  }
+
+  if (userConfirmed) {
+    return <Info>You approved this transaction.</Info>;
   }
 
   if (executed) {

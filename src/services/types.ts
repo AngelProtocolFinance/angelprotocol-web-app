@@ -70,4 +70,5 @@ export function endow(
 
 export type CharityApplication = ApplicationProposal & {
   confirmations: number;
+  userConfirmed: boolean;
 };

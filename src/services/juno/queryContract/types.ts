@@ -39,6 +39,7 @@ export interface ContractQueries {
   "multisig.tx-count": Query<{ open: boolean; approved: boolean }, number>;
   "multisig.votes": Query<ID, string[]>;
   "multisig.tx-duration": Query<null, number>;
+  "multisig.is-confirmed": Query<ID & Addr, boolean>;
 
   "multisig/review.proposal": Query<ID, ApplicationProposal>;
   "multisig/review.prop-confirms": Query<ID, number>;
