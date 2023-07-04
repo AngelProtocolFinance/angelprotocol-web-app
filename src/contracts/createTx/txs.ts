@@ -46,6 +46,11 @@ export const txs: { [T in TxTypes]: (args: TxArgs<T>) => string } = {
   "multisig.change-duration": ({ duration }) =>
     multisig.encodeFunctionData("changeRequireExecution", [duration]),
 
+  "multisig/review.confirm-prop": ({ id }) =>
+    multisig.encodeFunctionData("confirmProposal", [id]),
+  "multisig/review.execute-prop": ({ id }) =>
+    multisig.encodeFunctionData("executeProposal", [id]),
+
   // //// ERC20 ////
   "erc20.transfer": (transfer) =>
     erc20.encodeFunctionData("transfer", toTuple(transfer)),

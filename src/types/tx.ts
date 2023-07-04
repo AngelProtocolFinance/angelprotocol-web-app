@@ -196,6 +196,9 @@ type Txs = {
   "multisig.change-auto-execute": Tx<{ autoExecute: boolean }, never>; //no need for meta
   "multisig.change-duration": Tx<{ duration: number }, DurationMeta>; //no need for meta
 
+  "multisig/review.confirm-prop": Tx<ID, never>; //no meta
+  "multisig/review.execute-prop": Tx<ID, never>; //no meta
+
   "erc20.transfer": Tx<Transfer, TransferMeta>;
   "erc20.approve": Tx<Allowance, never>; //not multisig tx
 
