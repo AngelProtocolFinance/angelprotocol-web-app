@@ -1,7 +1,7 @@
-import { AbiCoder } from "@ethersproject/abi";
 import { Metadata, TxMeta, TxOptions, TxTypes } from "./types";
 import { SimulContractTx } from "types/evm";
 import { Contract } from "types/lists";
+import { toAbiStr } from "helpers";
 import { contracts } from "constants/contracts";
 import { EMPTY_DATA } from "constants/evm";
 import { txs } from "./txs";
@@ -38,9 +38,7 @@ export function encodeTx<T extends TxTypes>(
     contract_key in contracts ? contracts[contract_key as Contract] : c,
     {
       id: type as any,
-      encoded: toEncode
-        ? new AbiCoder().encode(["string"], [JSON.stringify(toEncode)])
-        : EMPTY_DATA,
+      encoded: toEncode ? toAbiStr(toEncode) : EMPTY_DATA,
     },
   ];
 }

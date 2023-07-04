@@ -1,4 +1,3 @@
-import { AbiCoder } from "@ethersproject/abi";
 import React, { ReactNode } from "react";
 import { TxMeta } from "contracts/createTx/types";
 import { ProposalDetails } from "services/types";
@@ -16,6 +15,7 @@ import {
   multisig as Multisig,
 } from "contracts/evm/multisig";
 import useTxSender from "hooks/useTxSender";
+import { fromAbiStr } from "helpers";
 import { getTagPayloads } from "helpers/admin";
 import { EMPTY_DATA } from "constants/evm";
 import { isTooltip, useAdminContext } from "../Context";
@@ -131,8 +131,6 @@ function extractTagFromMeta(
   if (proposalMeta === EMPTY_DATA) {
     return [invalidateJunoTags(defaultProposalTags)];
   }
-  const parsed: TxMeta = JSON.parse(
-    new AbiCoder().decode(["string"], proposalMeta)[0]
-  );
-  return getTagPayloads(parsed.id);
+
+  return getTagPayloads(fromAbiStr<TxMeta>(proposalMeta).id);
 }
