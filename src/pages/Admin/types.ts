@@ -1,12 +1,12 @@
 import { EndowmentProposal } from "types/aws";
-import { TxTypes } from "types/tx";
+import { TxType } from "types/tx";
 
 export type AdminParams = { id: string; type: string /**AccountType */ };
 export type ProposalParams = { id: string };
 
 export type Templates =
   | Extract<
-      TxTypes,
+      TxType,
       | "accounts.update-controller"
       | "accounts.withdraw"
       | "accounts.close"

@@ -233,17 +233,17 @@ type Txs = {
   "registrar.add-token": Tx<{ token: string }, never>; //future
 };
 
-export type TxTypes = keyof Txs;
-export type TxArgs<T extends TxTypes> = Txs[T]["args"];
+export type TxType = keyof Txs;
+export type TxArgs<T extends TxType> = Txs[T]["args"];
 
 type Empty = { [key: string]: never };
-export type TxOptions<T extends TxTypes> = T extends `${infer C}.${string}`
+export type TxOptions<T extends TxType> = T extends `${infer C}.${string}`
   ? C extends Contract
     ? Txs[T]["args"]
     : { [key in C]: string } & Txs[T]["args"]
   : Empty;
 
-export type Metadata<T extends TxTypes> = Txs[T]["meta"];
+export type Metadata<T extends TxType> = Txs[T]["meta"];
 export type TxMeta = ValueOf<{
   [K in keyof Txs]: { id: K; data?: Txs[K]["meta"] };
 }> & { title: string; description: string };
