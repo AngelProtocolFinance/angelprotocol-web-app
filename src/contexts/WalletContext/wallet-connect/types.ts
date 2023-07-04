@@ -7,7 +7,6 @@ export type Connected = {
   status: "connected";
   address: string;
   chainId: string;
-  disconnect(): void;
 };
-type Disconnected = { status: "disconnected"; connect(): void };
+type Disconnected = { status: "disconnected" };
 export type WalletState = Loading | Connected | Disconnected;
