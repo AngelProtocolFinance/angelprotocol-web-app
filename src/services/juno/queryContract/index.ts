@@ -4,12 +4,10 @@ import {
   QueryOptions,
 } from "./types";
 import { Contract } from "types/lists";
+import { request } from "helpers";
 import { contracts } from "constants/contracts";
 import { EIPMethods } from "constants/evm";
-import { POLYGON_RPC } from "constants/urls";
 import { queryObjects } from "./queryObjects";
-
-type Result = { result: string } | { error: { code: number; message: string } };
 
 export async function queryContract<T extends QT>(
   type: T,
@@ -26,28 +24,16 @@ export async function queryContract<T extends QT>(
 
   const data = typeof query === "function" ? query(args) : query;
 
-  const result = await fetch(POLYGON_RPC, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      jsonrpc: "2.0",
-      id: 1,
-      method: EIPMethods.eth_call,
-      params: [
-        {
-          to: contract,
-          data,
-        },
-        "latest",
-      ],
-    }),
-  }).then<Result>((res) => {
-    if (!res.ok) throw new Error(`failed query ${type}`);
-    return res.json();
+  const result = await request({
+    method: EIPMethods.eth_call,
+    params: [
+      {
+        to: contract,
+        data,
+      },
+      "latest",
+    ],
   });
 
-  if ("error" in result)
-    throw new Error(`error ${type}:` + result.error.message);
-
-  return transform(result.result, args) as any;
+  return transform(result, args) as any;
 }
