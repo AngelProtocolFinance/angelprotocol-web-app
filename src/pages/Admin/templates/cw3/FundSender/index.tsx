@@ -15,7 +15,6 @@ export default function FundSender() {
   const query = useChainQuery({
     address: multisig,
     chainId: chainIds.polygon,
-    providerId: "metamask",
   });
 
   return (

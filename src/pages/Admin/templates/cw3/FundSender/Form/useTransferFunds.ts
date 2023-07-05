@@ -4,7 +4,7 @@ import { TxMeta } from "contracts/createTx/types";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import { TransferMeta } from "contracts/createTx/meta";
 import useTxSender from "hooks/useTxSender";
-import { scale, toBase64 } from "helpers";
+import { scale, toAbiStr } from "helpers";
 import { getTagPayloads } from "helpers/admin";
 import { EMPTY_DATA } from "constants/evm";
 import { isTooltip, useAdminContext } from "../../../../Context";
@@ -31,7 +31,7 @@ export default function useTransferFunds() {
     const native: ReturnType<typeof encodeTx> = [
       EMPTY_DATA,
       recipient,
-      { id: "erc20.transfer", encoded: toBase64(toEncode) },
+      { id: "erc20.transfer", encoded: toAbiStr(toEncode) },
     ];
     const [data, dest, meta, value] =
       token.type === "erc20"

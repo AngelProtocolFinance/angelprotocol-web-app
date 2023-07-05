@@ -1,10 +1,9 @@
-import { Coin } from "@cosmjs/proto-signing";
 import { FetchedChain, Token } from "types/aws";
 import { CW20Balance } from "types/contracts";
-import { ProviderId } from "types/lists";
+import { Coin } from "types/cosmos";
 import { TokenWithBalance } from "types/tx";
 import { queryContract } from "services/juno/queryContract";
-import { condenseToNum, getProvider, toBase64 } from "helpers";
+import { condenseToNum, objToBase64, request } from "helpers";
 
 type BalMap = { [index: string]: string | undefined | number };
 type CosmosBalances = { balances: Coin[] };
@@ -12,8 +11,7 @@ type TokenType = "natives" | "alts";
 
 export async function fetchBalances(
   chain: FetchedChain,
-  address: string,
-  providerId: ProviderId
+  address: string
 ): Promise<TokenWithBalance[]> {
   const tokens = segragate([chain.native_currency, ...chain.tokens]); //n,s
   if (chain.type === "juno-native" || chain.type === "terra-native") {
@@ -54,10 +52,9 @@ export async function fetchBalances(
   } else {
     /**fetch balances for ethereum */
     const native = tokens.natives[0]; //evm chains have only one gas token
-    const provider = getProvider(providerId)!;
 
     const [nativeBal, gift, ...erc20s] = await Promise.allSettled([
-      provider.request<string>({
+      request({
         method: "eth_getBalance",
         params: [address, "latest"],
       }),
@@ -169,7 +166,7 @@ async function cw20Balance(
   lcd: string
 ): Promise<string> {
   return fetch(
-    `${lcd}/cosmwasm/wasm/v1/contract/${contract}/smart/${toBase64({
+    `${lcd}/cosmwasm/wasm/v1/contract/${contract}/smart/${objToBase64({
       balance: { address },
     })}`
   )

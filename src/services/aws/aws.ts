@@ -185,7 +185,7 @@ const endowCardObj: {
   hq_country: "",
   endow_designation: "",
   active_in_countries: "",
-  categories: "",
+  sdgs: "",
   id: "",
   image: "",
   kyc_donors_only: "",

@@ -2,7 +2,7 @@ import { ASTProfile, EndowmentProfile } from "types/aws";
 import { AxelarBridgeFees } from "types/aws";
 import { EndowmentDetails } from "types/contracts";
 import { Transaction } from "types/contracts/multisig";
-import { AccountType, ProviderId } from "types/lists";
+import { AccountType } from "types/lists";
 
 export type MultisigConfig = { threshold: number; requireExecution: boolean };
 
@@ -33,7 +33,6 @@ export type ProposalDetails = Transaction & {
 export type ChainQueryArgs = {
   address: string;
   chainId: string;
-  providerId: ProviderId;
 };
 
 export interface IERC20 {
