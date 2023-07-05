@@ -1,10 +1,9 @@
-import { AbiCoder } from "@ethersproject/abi";
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "../types";
 import { TransferMeta, TxMeta } from "types/tx";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
-import { scale } from "helpers";
+import { scale, toAbiStr } from "helpers";
 import { getTagPayloads } from "helpers/admin";
 import { EMPTY_DATA } from "constants/evm";
 import { isTooltip, useAdminContext } from "../../../../Context";
@@ -40,10 +39,7 @@ export default function useTransferFunds() {
     const native: ReturnType<typeof encodeTx> = [
       EMPTY_DATA,
       recipient,
-      {
-        id: "erc20.transfer",
-        encoded: new AbiCoder().encode(["string"], [JSON.stringify(toEncode)]),
-      },
+      { id: "erc20.transfer", encoded: toAbiStr(toEncode) },
     ];
     const [data, dest, meta, value] =
       token.type === "erc20"

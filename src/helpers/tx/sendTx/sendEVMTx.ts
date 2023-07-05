@@ -11,7 +11,7 @@ export async function sendEVMTx(
   log?: LogProcessor
 ): Promise<TxResult> {
   try {
-    const provider = getProvider(wallet.providerId)!;
+    const provider = (await getProvider(wallet.providerId))!;
 
     const hash = await provider.request<string>({
       method: EIPMethods.eth_sendTransaction,
