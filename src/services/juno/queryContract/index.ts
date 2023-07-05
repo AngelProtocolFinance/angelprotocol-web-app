@@ -26,8 +26,6 @@ export async function queryContract<T extends QT>(
 
   const data = typeof query === "function" ? query(args) : query;
 
-  console.log({ data, type });
-
   const result = await fetch(POLYGON_RPC, {
     method: "POST",
     headers: { "Content-Type": "application/json" },

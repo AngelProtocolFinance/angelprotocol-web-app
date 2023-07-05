@@ -283,10 +283,11 @@ export const queryObjects: {
     },
   ],
   "multisig/review.prop-confirms": [
-    ({ id }) => multisig.encodeFunctionData("proposalConfirmations", [id]),
+    ({ id }) =>
+      multisig.encodeFunctionData("getProposalConfirmationCount", [id]),
     (result) => {
       const d: BigNumber = multisig.decodeFunctionResult(
-        "proposalConfirmations",
+        "getProposalConfirmationCount",
         result
       )[0];
 
