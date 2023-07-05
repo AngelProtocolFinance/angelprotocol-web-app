@@ -251,10 +251,12 @@ export interface CharityApplicationsInterface extends utils.Interface {
     "getConfirmationCount(uint256)": FunctionFragment;
     "getConfirmationStatus(uint256,address)": FunctionFragment;
     "getOwnerStatus(address)": FunctionFragment;
+    "getProposalConfirmationCount(uint256)": FunctionFragment;
     "initialize(address[],uint256,bool,uint256)": FunctionFragment;
     "initializeApplications(address[],uint256,bool,uint256,address,uint256,uint256,address,uint256)": FunctionFragment;
     "isConfirmed(uint256)": FunctionFragment;
     "isOwner(address)": FunctionFragment;
+    "proposalConfirmations(uint256)": FunctionFragment;
     "proposals(uint256)": FunctionFragment;
     "proposeApplication((bool,uint256,string,uint256[],uint8,uint8,string,string,address[],uint256,uint256,address[],address[],(address,uint256),(address,uint256),(address,uint256),(address,uint256),uint256,((bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256))),uint32,address[],bool,(uint256,uint256,uint256),uint256),string)": FunctionFragment;
     "queryConfig()": FunctionFragment;
@@ -289,10 +291,12 @@ export interface CharityApplicationsInterface extends utils.Interface {
       | "getConfirmationCount"
       | "getConfirmationStatus"
       | "getOwnerStatus"
+      | "getProposalConfirmationCount"
       | "initialize"
       | "initializeApplications"
       | "isConfirmed"
       | "isOwner"
+      | "proposalConfirmations"
       | "proposals"
       | "proposeApplication"
       | "queryConfig"
@@ -368,6 +372,10 @@ export interface CharityApplicationsInterface extends utils.Interface {
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
+    functionFragment: "getProposalConfirmationCount",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "initialize",
     values: [
       PromiseOrValue<string>[],
@@ -397,6 +405,10 @@ export interface CharityApplicationsInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "isOwner",
     values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "proposalConfirmations",
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "proposals",
@@ -528,6 +540,10 @@ export interface CharityApplicationsInterface extends utils.Interface {
     functionFragment: "getOwnerStatus",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "getProposalConfirmationCount",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "initializeApplications",
@@ -538,6 +554,10 @@ export interface CharityApplicationsInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "isOwner", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "proposalConfirmations",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "proposals", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "proposeApplication",
@@ -907,7 +927,7 @@ export interface CharityApplications extends BaseContract {
     getConfirmationCount(
       transactionId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<[BigNumber] & { count: BigNumber }>;
+    ): Promise<[BigNumber]>;
 
     getConfirmationStatus(
       transactionId: PromiseOrValue<BigNumberish>,
@@ -919,6 +939,11 @@ export interface CharityApplications extends BaseContract {
       ownerAddr: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
+
+    getProposalConfirmationCount(
+      proposalId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
     initialize(
       arg0: PromiseOrValue<string>[],
@@ -950,6 +975,11 @@ export interface CharityApplications extends BaseContract {
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
+
+    proposalConfirmations(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber] & { count: BigNumber }>;
 
     proposals(
       arg0: PromiseOrValue<BigNumberish>,
@@ -1128,6 +1158,11 @@ export interface CharityApplications extends BaseContract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
+  getProposalConfirmationCount(
+    proposalId: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
   initialize(
     arg0: PromiseOrValue<string>[],
     arg1: PromiseOrValue<BigNumberish>,
@@ -1158,6 +1193,11 @@ export interface CharityApplications extends BaseContract {
     arg0: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<boolean>;
+
+  proposalConfirmations(
+    arg0: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   proposals(
     arg0: PromiseOrValue<BigNumberish>,
@@ -1336,6 +1376,11 @@ export interface CharityApplications extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
+    getProposalConfirmationCount(
+      proposalId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     initialize(
       arg0: PromiseOrValue<string>[],
       arg1: PromiseOrValue<BigNumberish>,
@@ -1366,6 +1411,11 @@ export interface CharityApplications extends BaseContract {
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<boolean>;
+
+    proposalConfirmations(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     proposals(
       arg0: PromiseOrValue<BigNumberish>,
@@ -1655,6 +1705,11 @@ export interface CharityApplications extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    getProposalConfirmationCount(
+      proposalId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     initialize(
       arg0: PromiseOrValue<string>[],
       arg1: PromiseOrValue<BigNumberish>,
@@ -1683,6 +1738,11 @@ export interface CharityApplications extends BaseContract {
 
     isOwner(
       arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    proposalConfirmations(
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -1829,6 +1889,11 @@ export interface CharityApplications extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    getProposalConfirmationCount(
+      proposalId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     initialize(
       arg0: PromiseOrValue<string>[],
       arg1: PromiseOrValue<BigNumberish>,
@@ -1857,6 +1922,11 @@ export interface CharityApplications extends BaseContract {
 
     isOwner(
       arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    proposalConfirmations(
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

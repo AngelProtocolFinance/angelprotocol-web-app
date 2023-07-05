@@ -1,6 +1,7 @@
 import { ASTProfile, EndowmentProfile } from "types/aws";
 import { AxelarBridgeFees } from "types/aws";
 import { EndowmentDetails } from "types/contracts";
+import { ApplicationProposal } from "types/contracts/multisig";
 import { AccountType, ProviderId } from "types/lists";
 import { Transaction } from "types/tx";
 
@@ -66,3 +67,8 @@ export function endow(
 ): profile is EndowmentProfile & { type: "endowment" } {
   return profile.type === "endowment";
 }
+
+export type CharityApplication = ApplicationProposal & {
+  confirmations: number;
+  userConfirmed: boolean;
+};

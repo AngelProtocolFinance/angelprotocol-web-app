@@ -7,5 +7,8 @@
   "function executeTransaction(uint256)",
   "function changeApprovalsRequirement(uint256)",
   "function changeRequireExecution(bool)",
-  "function changeTransactionExpiry(uint256)"
+  "function changeTransactionExpiry(uint256)",
+
+  "function executeProposal(uint256) returns (uint32)",
+  "function confirmProposal(uint256)"
 ]

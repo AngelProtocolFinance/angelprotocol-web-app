@@ -36,6 +36,14 @@ export function getTagPayloads(type?: TxMeta["id"]): TagPayload[] {
       _tags.push("multisig.require-execution");
       break;
 
+    case "multisig/review.confirm-prop":
+      _tags.push("multisig/review.prop-confirms");
+      break;
+
+    case "multisig/review.execute-prop":
+      _tags.push("multisig/review.proposal");
+      break;
+
     case "erc20.transfer":
       _apes.push("chain"); //assuming user wallet is beneficiary
       break;

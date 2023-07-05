@@ -1,33 +1,25 @@
 import { PropsWithChildren } from "react";
-import { Link } from "react-router-dom";
-import { TxType } from "../types";
 import { FileObject, InReview } from "types/aws";
-import { useModalContext } from "contexts/ModalContext";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import Seo from "components/Seo";
 import { APP_NAME, DAPP_URL } from "constants/env";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { useAdminContext } from "../../../Context";
-import { SEPARATOR } from "../../constants";
-import Proposer from "./Proposer";
+import Proposal from "./Proposal";
 
 export default function Summary({
   Registration: r,
   ContactPerson: c,
-  appId,
-}: InReview & { appId: number }) {
+}: InReview) {
   const { id } = useAdminContext();
-
-  const txId = r.approve_tx_id || r.reject_tx_id;
-  const txType: TxType = r.approve_tx_id ? "approve" : "reject";
 
   return (
     <div className="w-full p-6 grid content-start gap-2 rounded bg-white dark:bg-blue-d6 border border-prim">
       <Seo
         title={`Summary - ${APP_NAME}`}
         description={`Application Summary for ${r.OrganizationName}`}
-        url={`${DAPP_URL}/${appRoutes.admin}/${id}/${adminRoutes.application}/${appId}${SEPARATOR}${r.PK}`}
+        url={`${DAPP_URL}/${appRoutes.admin}/${id}/${adminRoutes.application}/${r.PK}`}
       />
       <h3 className="text-xl font-semibold">{r.OrganizationName}</h3>
       <p className="text-sm mb-6 flex items-center gap-1">
@@ -53,50 +45,8 @@ export default function Summary({
         label="Audited Financial Report"
         docs={r.AuditedFinancialReports || []}
       />
-      {txId ? (
-        <Link
-          to={`../${adminRoutes.proposal}/${txId}`}
-          className="text-sm text-blue hover:text-orange"
-        >
-          <span> Sign {txType} transaction</span>
-          <Icon
-            type="ArrowRight"
-            className="text-lg relative inline bottom-px"
-          />
-        </Link>
-      ) : (
-        <ReviewOptions appId={+appId} reference={r.PK} />
-      )}
-    </div>
-  );
-}
 
-type Props = {
-  appId: number;
-  reference: string;
-};
-function ReviewOptions({ appId, reference }: Props) {
-  const { showModal } = useModalContext();
-
-  const review = (type: TxType) => () =>
-    showModal(Proposer, { appId, type, reference });
-
-  return (
-    <div className="flex items-center gap-2 justify-start mt-6">
-      <button
-        type="button"
-        className="min-w-[8rem] btn-orange px-2 py-1 text-sm"
-        onClick={review("approve")}
-      >
-        approve
-      </button>
-      <button
-        type="button"
-        className="min-w-[8rem] btn-red  px-2 py-1 text-sm"
-        onClick={review("reject")}
-      >
-        reject
-      </button>
+      <Proposal txId={r.application_id} />
     </div>
   );
 }

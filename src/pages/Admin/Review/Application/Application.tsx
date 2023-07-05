@@ -2,14 +2,12 @@ import { useParams } from "react-router-dom";
 import { InReview } from "types/aws";
 import { useRegQuery } from "services/aws/registration";
 import QueryLoader from "components/QueryLoader";
-import { SEPARATOR } from "../constants";
 import Summary from "./Summary";
 
 export default function Application() {
-  const { id = "" } = useParams();
-  const [appId = "", ref = ""] = id.split(SEPARATOR);
+  const { ref = "" } = useParams();
   const query = useRegQuery(ref, {
-    skip: !ref || !appId,
+    skip: !ref,
   });
 
   return (
@@ -20,7 +18,7 @@ export default function Application() {
         error: "Failed to get registration details",
       }}
     >
-      {(reg) => <Summary {...(reg as InReview)} appId={+appId} />}
+      {(reg) => <Summary {...(reg as InReview)} />}
     </QueryLoader>
   );
 }

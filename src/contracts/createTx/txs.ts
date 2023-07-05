@@ -1,4 +1,4 @@
-import { TxArgs, TxTypes } from "types/tx";
+import { TxArgs, TxType } from "types/tx";
 import { toTuple } from "helpers";
 import { accounts } from "../evm/Account";
 import { erc20 } from "../evm/ERC20";
@@ -8,7 +8,7 @@ import { indexFund } from "../evm/index-fund";
 import { multisig } from "../evm/multisig";
 import { registrar } from "../evm/registrar";
 
-export const txs: { [T in TxTypes]: (args: TxArgs<T>) => string } = {
+export const txs: { [T in TxType]: (args: TxArgs<T>) => string } = {
   // //// ACCOUNTS ////
   "accounts.create-endowment": (aif) =>
     accounts.encodeFunctionData("createEndowment", [toTuple(aif)]),
@@ -45,6 +45,11 @@ export const txs: { [T in TxTypes]: (args: TxArgs<T>) => string } = {
     multisig.encodeFunctionData("changeRequireExecution", [!autoExecute]),
   "multisig.change-duration": ({ duration }) =>
     multisig.encodeFunctionData("changeRequireExecution", [duration]),
+
+  "multisig/review.confirm-prop": ({ id }) =>
+    multisig.encodeFunctionData("confirmProposal", [id]),
+  "multisig/review.execute-prop": ({ id }) =>
+    multisig.encodeFunctionData("executeProposal", [id]),
 
   // //// ERC20 ////
   "erc20.transfer": (transfer) =>

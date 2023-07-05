@@ -1,12 +1,12 @@
 import { AbiCoder } from "@ethersproject/abi";
 import { SimulContractTx } from "types/evm";
 import { Contract } from "types/lists";
-import { Metadata, TxMeta, TxOptions, TxTypes } from "types/tx";
+import { Metadata, TxMeta, TxOptions, TxType } from "types/tx";
 import { contracts } from "constants/contracts";
 import { EMPTY_DATA } from "constants/evm";
 import { txs } from "./txs";
 
-export function createTx<T extends TxTypes>(
+export function createTx<T extends TxType>(
   sender: string,
   type: T,
   options: TxOptions<T>,
@@ -21,7 +21,7 @@ export function createTx<T extends TxTypes>(
   };
 }
 
-export function encodeTx<T extends TxTypes>(
+export function encodeTx<T extends TxType>(
   type: T,
   options: TxOptions<T>,
   meta?: { content: Metadata<T>; title: string; description: string }

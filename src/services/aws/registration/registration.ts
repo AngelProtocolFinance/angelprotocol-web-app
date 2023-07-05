@@ -94,9 +94,6 @@ const registration_api = aws.injectEndpoints({
                   );
                   break;
                 }
-                case "application": {
-                  draft.Registration = Object.assign(draft.Registration, data);
-                }
               }
               draft.reqId = draft.reqId + 1;
             })
