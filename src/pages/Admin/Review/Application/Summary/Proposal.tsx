@@ -9,7 +9,10 @@ export default function Proposal({ txId }: { txId: number }) {
   const { txResource, config } = useAdminContext();
   const sendTx = useTxSender();
 
-  const { data, isLoading, isError } = useApplicationQuery({ id: txId });
+  const { data, isLoading, isError } = useApplicationQuery({
+    id: txId,
+    user: !isTooltip(txResource) ? txResource.wallet.address : undefined,
+  });
 
   if (isLoading) {
     return <LoadingStatus>Loading proposal...</LoadingStatus>;

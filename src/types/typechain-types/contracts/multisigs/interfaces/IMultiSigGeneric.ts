@@ -386,7 +386,7 @@ export interface IMultiSigGeneric extends BaseContract {
     getConfirmationCount(
       transactionId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<[BigNumber] & { count: BigNumber }>;
+    ): Promise<[BigNumber]>;
 
     getConfirmationStatus(
       transactionId: PromiseOrValue<BigNumberish>,

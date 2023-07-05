@@ -207,18 +207,29 @@ export declare namespace AccountMessages {
 export interface StorageApplicationsInterface extends utils.Interface {
   functions: {
     "config()": FunctionFragment;
+    "proposalConfirmations(uint256)": FunctionFragment;
     "proposals(uint256)": FunctionFragment;
   };
 
-  getFunction(nameOrSignatureOrTopic: "config" | "proposals"): FunctionFragment;
+  getFunction(
+    nameOrSignatureOrTopic: "config" | "proposalConfirmations" | "proposals"
+  ): FunctionFragment;
 
   encodeFunctionData(functionFragment: "config", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "proposalConfirmations",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
   encodeFunctionData(
     functionFragment: "proposals",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
 
   decodeFunctionResult(functionFragment: "config", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "proposalConfirmations",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "proposals", data: BytesLike): Result;
 
   events: {};
@@ -263,6 +274,11 @@ export interface StorageApplications extends BaseContract {
       }
     >;
 
+    proposalConfirmations(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber] & { count: BigNumber }>;
+
     proposals(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -294,6 +310,11 @@ export interface StorageApplications extends BaseContract {
       seedAmount: BigNumber;
     }
   >;
+
+  proposalConfirmations(
+    arg0: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   proposals(
     arg0: PromiseOrValue<BigNumberish>,
@@ -327,6 +348,11 @@ export interface StorageApplications extends BaseContract {
       }
     >;
 
+    proposalConfirmations(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     proposals(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -352,6 +378,11 @@ export interface StorageApplications extends BaseContract {
   estimateGas: {
     config(overrides?: CallOverrides): Promise<BigNumber>;
 
+    proposalConfirmations(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     proposals(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -360,6 +391,11 @@ export interface StorageApplications extends BaseContract {
 
   populateTransaction: {
     config(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    proposalConfirmations(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     proposals(
       arg0: PromiseOrValue<BigNumberish>,

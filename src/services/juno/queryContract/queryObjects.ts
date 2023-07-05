@@ -289,6 +289,7 @@ export const queryObjects: {
         "proposalConfirmations",
         result
       )[0];
+
       return d.toNumber();
     },
   ],
