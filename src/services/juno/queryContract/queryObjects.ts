@@ -261,11 +261,11 @@ export const queryObjects: {
       return d.toNumber();
     },
   ],
-  "multisig.is-confirmed": [
+  "multisig/review.is-confirmed": [
     ({ id, addr }) =>
-      multisig.encodeFunctionData("getConfirmationStatus", [id, addr]),
+      multisig.encodeFunctionData("getProposalConfirmationStatus", [id, addr]),
     (result) =>
-      multisig.decodeFunctionResult("getConfirmationStatus", result)[0],
+      multisig.decodeFunctionResult("getProposalConfirmationStatus", result)[0],
   ],
   "multisig/review.proposal": [
     ({ id }) => multisig.encodeFunctionData("proposals", [id]),

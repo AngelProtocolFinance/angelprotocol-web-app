@@ -5,6 +5,8 @@ import type * as accounts from "./accounts";
 export type { accounts };
 import type * as erc20Ap from "./erc20ap";
 export type { erc20Ap };
+import type * as gasFwd from "./gasFwd";
+export type { gasFwd };
 import type * as indexFund from "./index-fund";
 export type { indexFund };
 import type * as proxySol from "./proxy.sol";
