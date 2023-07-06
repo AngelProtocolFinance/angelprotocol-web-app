@@ -46,7 +46,7 @@ export default function Summary({
         docs={r.AuditedFinancialReports || []}
       />
 
-      <Proposal txId={r.application_id} />
+      <Proposal txId={r.application_id} classes="mt-4" />
     </div>
   );
 }

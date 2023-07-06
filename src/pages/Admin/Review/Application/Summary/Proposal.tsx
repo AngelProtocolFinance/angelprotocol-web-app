@@ -5,7 +5,9 @@ import { createTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { getTagPayloads, hasElapsed } from "helpers/admin";
 
-export default function Proposal({ txId }: { txId: number }) {
+type Props = { classes?: string; txId: number };
+
+export default function Proposal({ txId, classes = "" }: Props) {
   const { txResource, config } = useAdminContext();
   const sendTx = useTxSender();
 
@@ -69,7 +71,7 @@ export default function Proposal({ txId }: { txId: number }) {
   return (
     <button
       type="button"
-      className="min-w-[8rem] btn-orange px-2 py-1 text-sm"
+      className={`${classes} min-w-[8rem] btn-orange p-2 text-sm justify-self-start`}
       onClick={approve}
     >
       {passed ? "Execute" : willExecute ? "Approve and execute" : "Approve"}
