@@ -17,28 +17,30 @@ export default function Proposal({ txId, classes = "" }: Props) {
   });
 
   if (isLoading) {
-    return <LoadingStatus>Loading proposal...</LoadingStatus>;
+    return <LoadingStatus classes={classes}>Loading proposal...</LoadingStatus>;
   }
 
   if (!data || isError) {
-    return <ErrorStatus>Failed to get proposal info</ErrorStatus>;
+    return (
+      <ErrorStatus classes={classes}>Failed to get proposal info</ErrorStatus>
+    );
   }
 
   if (isTooltip(txResource)) {
-    return <Info>{txResource}</Info>;
+    return <Info classes={classes}>{txResource}</Info>;
   }
 
   const { expiry, executed, confirmations, userConfirmed } = data;
   if (hasElapsed(expiry) && !executed) {
-    return <ErrorStatus>Proposal expired</ErrorStatus>;
+    return <ErrorStatus classes={classes}>Proposal expired</ErrorStatus>;
   }
 
-  if (userConfirmed) {
-    return <Info>You approved this transaction.</Info>;
+  if (userConfirmed && !executed) {
+    return <Info classes={classes}>You approved this proposal.</Info>;
   }
 
   if (executed) {
-    return <Info>Proposal is executed</Info>;
+    return <Info classes={classes}>Endowment is created</Info>;
   }
 
   // /////////////// NOT EXECUTED & NOT EXPIRED /////////////////////////////
@@ -58,7 +60,7 @@ export default function Proposal({ txId, classes = "" }: Props) {
             ? "multisig/review.execute-prop"
             : "multisig/review.confirm-prop",
           {
-            id: 0,
+            id: txId,
           }
         ),
       },
