@@ -156,11 +156,7 @@ export const queryObjects: {
   ],
   "multisig.is-owner": [
     ({ addr }) => multisig.encodeFunctionData("isOwner", [addr]),
-    (result) => {
-      const d: boolean = multisig.decodeFunctionResult("isOwner", result)[0];
-      //wallets outputs lowercase addresses, but addresses from contracts are not
-      return d;
-    },
+    (result) => multisig.decodeFunctionResult("isOwner", result)[0],
   ],
   "multisig.threshold": [
     multisig.encodeFunctionData("approvalsRequired", []),
