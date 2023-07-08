@@ -15,7 +15,7 @@ export default function Tabs({ classes = "", balances, fees }: Props) {
   return (
     <Tab.Group
       as="div"
-      className={`flex flex-col items-center ${classes} gap-6`}
+      className={`flex flex-col items-center ${classes} gap-6 dark:bg-blue-d6 border border-prim rounded max-w-lg p-8`}
     >
       <Tab.List className="grid grid-cols-2 place-items-center gap-1 w-full h-10 p-1 border border-prim rounded-3xl">
         {_tabs.map((type) => (
