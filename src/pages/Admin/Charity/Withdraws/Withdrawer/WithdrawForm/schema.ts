@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { Amount, WithdrawValues as WV } from "./types";
+import { Amount, FV } from "./types";
 import { SchemaShape } from "schemas/types";
 import { tokenConstraint } from "schemas/number";
 import { requiredWalletAddr } from "schemas/string";
@@ -7,14 +7,14 @@ import { fee } from "./helpers";
 
 type TVal = Amount["value"];
 type TBal = Amount["balance"];
-type TNetwork = WV["network"];
-type TFees = WV["fees"];
+type TNetwork = FV["network"];
+type TFees = FV["fees"];
 
 const balKey: keyof Amount = "balance";
-const netKey: keyof WV = "network";
-const endowKey: keyof WV = "endowType";
-const amountsKey: keyof WV = "amounts";
-const feesKey: keyof WV = "fees";
+const netKey: keyof FV = "network";
+const endowKey: keyof FV = "endowType";
+const amountsKey: keyof FV = "amounts";
+const feesKey: keyof FV = "fees";
 
 const amount: (network: TNetwork, fees: TFees) => SchemaShape<Amount> = (
   network,
@@ -41,7 +41,7 @@ const amount: (network: TNetwork, fees: TFees) => SchemaShape<Amount> = (
   ),
 });
 
-const shape: SchemaShape<WV> = {
+const shape: SchemaShape<FV> = {
   amounts: Yup.array().when([netKey, feesKey], (...args: any[]) => {
     const [network, fees, schema] = args as [TNetwork, TFees, any];
     return schema.of(Yup.object().shape(amount(network, fees)));

@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { WithdrawValues as WV } from "../types";
+import { FV } from "../types";
 import { useAdminContext } from "../../../../../Context";
 import SubmitLocked from "./SubmitLocked";
 import WithdrawButton from "./WithdrawButton";
@@ -9,7 +9,7 @@ export default function Submit() {
   const {
     getValues,
     formState: { isDirty, isValid, isSubmitting },
-  } = useFormContext<WV>();
+  } = useFormContext<FV>();
   const isSubmitDisabled = !isDirty || !isValid || isSubmitting;
 
   const type = getValues("type");

@@ -1,6 +1,6 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
-import { WithdrawValues } from "./types";
+import { FV } from "./types";
 
 const id = "__beneficiary";
 
@@ -8,7 +8,7 @@ export default function Beneficiary({ classes = "" }) {
   const {
     register,
     formState: { errors },
-  } = useFormContext<WithdrawValues>();
+  } = useFormContext<FV>();
 
   return (
     <div className={`${classes} relative grid gap-3 w-full`}>

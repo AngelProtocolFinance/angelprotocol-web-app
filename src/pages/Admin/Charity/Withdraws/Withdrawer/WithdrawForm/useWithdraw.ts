@@ -1,6 +1,6 @@
 import type { BigNumber } from "@ethersproject/bignumber";
 import { useFormContext } from "react-hook-form";
-import { WithdrawValues } from "./types";
+import { FV } from "./types";
 import { AccountType, EndowmentDetails } from "types/contracts";
 import { LogProcessor, SimulContractTx } from "types/evm";
 import { TxOnSuccess, TxSuccessMeta } from "types/tx";
@@ -21,7 +21,7 @@ import { TxMeta, isTooltip, useAdminContext } from "../../../../Context";
 import { fee, names } from "./helpers";
 
 export default function useWithdraw() {
-  const { handleSubmit, watch, getValues } = useFormContext<WithdrawValues>();
+  const { handleSubmit, watch, getValues } = useFormContext<FV>();
   const type = watch("type");
 
   const { multisig, id, txResource, ...endow } = useAdminContext<"charity">([
@@ -32,18 +32,18 @@ export default function useWithdraw() {
   const sendTx = useTxSender();
 
   const network = watch("network");
-  async function withdraw(wv: WithdrawValues) {
+  async function withdraw(fv: FV) {
     if (isTooltip(txResource)) throw new Error(txResource);
 
-    const accType: AccountType = wv.type === "locked" ? 0 : 1;
-    const isPolygon = wv.network === chainIds.polygon;
+    const accType: AccountType = fv.type === "locked" ? 0 : 1;
+    const isPolygon = fv.network === chainIds.polygon;
     const beneficiary = isPolygon
-      ? wv.beneficiary
+      ? fv.beneficiary
       : ap_wallets.polygon_withdraw;
 
     const metadata: WithdrawMeta = {
       beneficiary,
-      tokens: wv.amounts.map((a) => ({
+      tokens: fv.amounts.map((a) => ({
         logo: "" /** TODO: ap-justin */,
         symbol: "" /** TODO: ap-justin */,
         amount: +a.value,
@@ -57,18 +57,15 @@ export default function useWithdraw() {
         type: accType,
         beneficiaryAddress: beneficiary,
         beneficiaryEndowId: 0, //TODO: ap-justin UI to set endow id
-        tokens: wv.amounts.map((a) => ({
+        tokens: fv.amounts.map((a) => ({
           addr: a.tokenId,
           amnt: scaleToStr(a.value),
         })),
       },
       {
         content: metadata,
-        title: `${wv.type} withdraw `,
-        description:
-          endow.endowType === "charity" && wv.type === "locked"
-            ? wv.reason
-            : `${wv.type} withdraw from endowment id: ${id}`,
+        title: `${fv.type} withdraw `,
+        description: `${fv.type} withdraw from endowment id: ${id}`,
       }
     );
 
@@ -130,9 +127,9 @@ export default function useWithdraw() {
           body: JSON.stringify({
             endowment_multisig: multisig,
             proposal_chain_id: chainIds.polygon,
-            target_chain: wv.network,
-            target_wallet: wv.beneficiary,
-            type: wv.type,
+            target_chain: fv.network,
+            target_wallet: fv.beneficiary,
+            type: fv.type,
             /** undefined proposalID means withdraw is direct */
             ...(proposalID ? { proposal_id: proposalID } : {}),
           }),

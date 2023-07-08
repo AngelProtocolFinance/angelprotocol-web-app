@@ -1,7 +1,7 @@
 import { Listbox } from "@headlessui/react";
 import { useEffect } from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { WithdrawValues } from "./types";
+import { FV } from "./types";
 import Icon, { DrawerIcon } from "components/Icon";
 import { chainIds } from "constants/chainIds";
 
@@ -13,7 +13,7 @@ const AVAILABLE_CHAINS: { chainId: string; name: string }[] = [
 ];
 
 export default function Network() {
-  const { control, watch, trigger } = useFormContext<WithdrawValues>();
+  const { control, watch, trigger } = useFormContext<FV>();
   const network = watch("network");
 
   useEffect(() => {

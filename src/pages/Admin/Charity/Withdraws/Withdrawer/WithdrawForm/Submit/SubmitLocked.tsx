@@ -1,4 +1,4 @@
-import { WithdrawValues as WV } from "../types";
+import { FV } from "../types";
 import { EndowmentDetails } from "types/contracts";
 import { Field } from "components/form";
 import { APP_NAME } from "constants/env";
@@ -21,7 +21,7 @@ export default function SubmitLocked({ isSubmitDisabled, endowment }: Props) {
     <>
       {warning && <Warning classes="-mt-3">{warning}</Warning>}
       {warning && (
-        <Field<WV>
+        <Field<FV>
           name="reason"
           label="Reason"
           classes={{

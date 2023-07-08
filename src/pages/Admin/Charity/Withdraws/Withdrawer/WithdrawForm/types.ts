@@ -8,7 +8,7 @@ export type Amount = {
   balance: string;
 };
 
-export type WithdrawValues = {
+export type FV = {
   amounts: Amount[];
   network: string;
   beneficiary: string;
