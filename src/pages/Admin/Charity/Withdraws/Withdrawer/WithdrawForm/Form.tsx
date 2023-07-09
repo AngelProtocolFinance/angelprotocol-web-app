@@ -20,9 +20,14 @@ export default function Form({ classes = "" }) {
       <fieldset disabled={!!tooltip} className="contents">
         <Amounts />
 
-        <Network />
-        {type === "liquid" && <Beneficiary />}
-        <Breakdown />
+        {/** locked just goes to liquid */}
+        {type === "liquid" && (
+          <>
+            <Network />
+            <Beneficiary />
+            <Breakdown />
+          </>
+        )}
 
         {network !== "Polygon" && (
           <>
