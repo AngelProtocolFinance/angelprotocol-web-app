@@ -13,6 +13,7 @@ import { createTx, encodeTx } from "contracts/createTx/createTx";
 import { multisig as Multisig } from "contracts/evm/multisig";
 import useTxSender from "hooks/useTxSender";
 import { createAuthToken, logger, scaleToStr } from "helpers";
+import { getTagPayloads } from "helpers/admin";
 import { ap_wallets } from "constants/ap_wallets";
 import { chainIds } from "constants/chainIds";
 import { EMAIL_SUPPORT } from "constants/env";
@@ -200,6 +201,7 @@ export default function useWithdraw() {
         isLocked || isPolygon
           ? undefined //no need to POST to AWS if destination is polygon
           : onSuccess,
+      tagPayloads: getTagPayloads(txMeta.willExecute && meta.id),
     });
   }
 

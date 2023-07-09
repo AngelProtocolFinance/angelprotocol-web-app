@@ -15,6 +15,10 @@ export function getTagPayloads(type?: TxMeta["id"]): TagPayload[] {
       _tags.push("accounts.endowment");
       break;
 
+    case "accounts.withdraw":
+      _tags.push("accounts.token-balance");
+      break;
+
     case "index-fund.remove-fund":
     case "index-fund.create-fund":
     case "index-fund.config":
