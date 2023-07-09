@@ -9,9 +9,11 @@ type TVal = Amount["value"];
 type TBal = Amount["balance"];
 type TNetwork = FV["network"];
 type TFees = FV["fees"];
+type TAccountType = FV["type"];
 
 const balKey: keyof Amount = "balance";
 const netKey: keyof FV = "network";
+const accountKey: keyof FV = "type";
 const amountsKey: keyof FV = "amounts";
 const feesKey: keyof FV = "fees";
 
@@ -51,9 +53,14 @@ const shape: SchemaShape<FV> = {
       amounts.some((amount) => amount.value !== "")
     )
   ),
-  beneficiary: Yup.string().when(netKey, (network: TNetwork) =>
-    requiredWalletAddr(network)
-  ),
+  beneficiary: Yup.string().when([netKey, accountKey], (...args: any[]) => {
+    const [network, accountType, schema] = args as [
+      TNetwork,
+      TAccountType,
+      any
+    ];
+    return accountType === "liquid" ? requiredWalletAddr(network) : schema;
+  }),
 };
 
 export const schema = Yup.object(shape);

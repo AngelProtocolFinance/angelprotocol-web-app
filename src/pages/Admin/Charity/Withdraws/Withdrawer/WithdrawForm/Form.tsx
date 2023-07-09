@@ -8,7 +8,7 @@ import Warning from "./Warning";
 import useWithdraw from "./useWithdraw";
 
 export default function Form({ classes = "" }) {
-  const { withdraw, fee, network, tooltip } = useWithdraw();
+  const { withdraw, fee, network, tooltip, type } = useWithdraw();
 
   return (
     <form
@@ -21,7 +21,7 @@ export default function Form({ classes = "" }) {
         <Amounts />
 
         <Network />
-        <Beneficiary />
+        {type === "liquid" && <Beneficiary />}
         <Breakdown />
 
         {network !== "Polygon" && (

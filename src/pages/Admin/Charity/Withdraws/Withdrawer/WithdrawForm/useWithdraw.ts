@@ -16,6 +16,7 @@ import { createAuthToken, logger, scaleToStr } from "helpers";
 import { ap_wallets } from "constants/ap_wallets";
 import { chainIds } from "constants/chainIds";
 import { EMAIL_SUPPORT } from "constants/env";
+import { ADDRESS_ZERO } from "constants/evm";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { tokens } from "constants/tokens";
 import { APIs } from "constants/urls";
@@ -58,6 +59,8 @@ export default function useWithdraw() {
 
     const accType: AccountType = fv.type === "locked" ? 0 : 1;
     const isPolygon = fv.network === chainIds.polygon;
+    const isLocked = fv.type === "locked";
+
     const beneficiary = isPolygon
       ? fv.beneficiary
       : ap_wallets.polygon_withdraw;
@@ -76,7 +79,7 @@ export default function useWithdraw() {
       {
         id: endowmentId,
         type: accType,
-        beneficiaryAddress: beneficiary,
+        beneficiaryAddress: isLocked ? ADDRESS_ZERO : beneficiary,
         beneficiaryEndowId: 0, //TODO: ap-justin UI to set endow id
         tokens: fv.amounts.map((a) => ({
           addr: a.tokenId,
@@ -107,7 +110,7 @@ export default function useWithdraw() {
           meta: meta.encoded,
         });
 
-    //only used when !isPolygon && !isDirect
+    //only used when liquid && !isPolygon && !isDirect
     const processLog: LogProcessor = (logs) => {
       const submissionTopic = Multisig.getEventTopic("TransactionSubmitted");
       const log = logs.find((l) => l.topics.includes(submissionTopic));
@@ -118,12 +121,11 @@ export default function useWithdraw() {
         log.data,
         log.topics
       );
-      console.log({ log, proposalId });
 
       return (proposalId as BigNumber).toNumber();
     };
 
-    //only ran when !isPolygon
+    //only ran when liquid &&  !isPolygon
     const onSuccess: TxOnSuccess = async ({ data, ...tx }) => {
       try {
         const proposalID = data as
@@ -191,12 +193,13 @@ export default function useWithdraw() {
       content: {
         type: "evm",
         val: tx,
-        log: isDelegated || isPolygon ? undefined : processLog,
+        log: isLocked || isDelegated || isPolygon ? undefined : processLog,
       },
       ...txMeta,
-      onSuccess: isPolygon
-        ? undefined //no need to POST to AWS if destination is polygon
-        : onSuccess,
+      onSuccess:
+        isLocked || isPolygon
+          ? undefined //no need to POST to AWS if destination is polygon
+          : onSuccess,
     });
   }
 
@@ -205,6 +208,7 @@ export default function useWithdraw() {
     fee: fee(network, getValues("fees")),
     network: names(network),
     tooltip: isTooltip(txResource) ? txResource : undefined,
+    type,
   };
 }
 
