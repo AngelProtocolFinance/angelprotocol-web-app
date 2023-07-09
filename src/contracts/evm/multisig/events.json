@@ -1,4 +1,1 @@
-[
-  "event TransactionSubmitted(address,uint256)",
-  "event ExecutionFailure(uint256 indexed)"
-]
+["event TransactionSubmitted(address,uint256)"]
