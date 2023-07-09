@@ -13,8 +13,6 @@ export type FV = {
   network: string;
   beneficiary: string;
 
-  reason: string;
-
   //meta
   _amounts: string; //collective amounts error
   endowType: EndowmentType;

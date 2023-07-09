@@ -12,7 +12,6 @@ type TFees = FV["fees"];
 
 const balKey: keyof Amount = "balance";
 const netKey: keyof FV = "network";
-const endowKey: keyof FV = "endowType";
 const amountsKey: keyof FV = "amounts";
 const feesKey: keyof FV = "fees";
 
@@ -54,12 +53,6 @@ const shape: SchemaShape<FV> = {
   ),
   beneficiary: Yup.string().when(netKey, (network: TNetwork) =>
     requiredWalletAddr(network)
-  ),
-  reason: Yup.string().when(endowKey, (endowType, schema) =>
-    endowType === "charity"
-      ? //normal endowments should not be required to provide reason when withdrawing matured funds
-        schema.required("reason required")
-      : schema.optional()
   ),
 };
 
