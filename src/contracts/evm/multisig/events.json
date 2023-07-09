@@ -1,4 +1,4 @@
 [
-  "event Submission(uint256 indexed,tuple(address,uint256,bytes,bool,bytes))",
+  "event TransactionSubmitted(address,uint256)",
   "event ExecutionFailure(uint256 indexed)"
 ]

@@ -1,52 +1,22 @@
 import React, { ReactNode } from "react";
 import { ProposalDetails } from "services/types";
-import { LogProcessor } from "types/evm";
 import { TagPayload } from "types/third-party/redux";
-import { TxOnSuccess } from "types/tx";
 import { invalidateJunoTags } from "services/juno";
 import { defaultProposalTags } from "services/juno/tags";
-import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
-import { TxPrompt } from "components/Prompt";
 import { createTx } from "contracts/createTx/createTx";
-import {
-  ExecutionFailureEvent,
-  multisig as Multisig,
-} from "contracts/evm/multisig";
 import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
 import { isTooltip, useAdminContext } from "../Context";
-
-const ERROR = "error";
-const processLog: LogProcessor = (logs) => {
-  const topic = Multisig.getEventTopic(ExecutionFailureEvent);
-  const log = logs.find((l) => l.topics.includes(topic));
-  if (log) return ERROR;
-};
 
 export default function PollAction(props: ProposalDetails) {
   const { wallet } = useGetWallet();
   const sendTx = useTxSender();
   const { multisig, config, txResource } = useAdminContext();
-  const { showModal } = useModalContext();
 
   const numSigned = props.signed.length;
   const willExecute =
     numSigned + 1 >= config.threshold && !config.requireExecution;
-
-  const onSuccess: TxOnSuccess = (result) => {
-    const { data, ...okTx } = result;
-    if (data === ERROR) {
-      return showModal(TxPrompt, {
-        error: "Some of transaction content failed to execute",
-        tx: okTx,
-      });
-    }
-    showModal(TxPrompt, {
-      success: { message: "Transaction executed" },
-      tx: okTx,
-    });
-  };
 
   async function executeProposal() {
     if (isTooltip(txResource)) throw new Error(txResource);
@@ -59,10 +29,8 @@ export default function PollAction(props: ProposalDetails) {
           multisig,
           id: props.id,
         }),
-        log: processLog,
       },
       tagPayloads: extractTagFromMeta(props.metadata),
-      onSuccess,
     });
   }
 
@@ -77,7 +45,6 @@ export default function PollAction(props: ProposalDetails) {
           multisig,
           id: props.id,
         }),
-        log: willExecute ? processLog : undefined,
       },
       tagPayloads: willExecute
         ? extractTagFromMeta(props.metadata)
