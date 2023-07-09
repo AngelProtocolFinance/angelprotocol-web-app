@@ -3,28 +3,49 @@ import { useFormContext } from "react-hook-form";
 import { FV } from "./types";
 import { AccountType, EndowmentDetails } from "types/contracts";
 import { LogProcessor, SimulContractTx } from "types/evm";
+import { AccountType as CustomAccountType } from "types/lists";
 import { TxOnSuccess, TxSuccessMeta } from "types/tx";
 import { WithdrawMeta } from "types/tx";
 import { version as v } from "services/helpers";
 import { useModalContext } from "contexts/ModalContext";
 import { TxPrompt } from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
-import { multisig as Multisig, SubmissionEvent } from "contracts/evm/multisig";
+import { multisig as Multisig } from "contracts/evm/multisig";
 import useTxSender from "hooks/useTxSender";
 import { createAuthToken, logger, scaleToStr } from "helpers";
 import { ap_wallets } from "constants/ap_wallets";
 import { chainIds } from "constants/chainIds";
 import { EMAIL_SUPPORT } from "constants/env";
 import { adminRoutes, appRoutes } from "constants/routes";
+import { tokens } from "constants/tokens";
 import { APIs } from "constants/urls";
 import { TxMeta, isTooltip, useAdminContext } from "../../../../Context";
 import { fee, names } from "./helpers";
+
+const LOG_ERROR = "error";
+
+type WithdrawLogPayload = {
+  amount: number;
+  chain_id: string;
+  denomination: string;
+  endowment_id: number;
+  endowment_multisig: string;
+  proposal_id?: number; //for withdraw thru multisig
+  target_chain: string;
+  target_wallet: string;
+  type: CustomAccountType;
+};
 
 export default function useWithdraw() {
   const { handleSubmit, watch, getValues } = useFormContext<FV>();
   const type = watch("type");
 
-  const { multisig, id, txResource, ...endow } = useAdminContext<"charity">([
+  const {
+    multisig,
+    id: endowmentId,
+    txResource,
+    ...endow
+  } = useAdminContext<"charity">([
     type === "liquid" ? "withdraw-liquid" : "withdraw-locked",
   ]);
 
@@ -53,7 +74,7 @@ export default function useWithdraw() {
     const [data, dest, meta] = encodeTx(
       "accounts.withdraw",
       {
-        id,
+        id: endowmentId,
         type: accType,
         beneficiaryAddress: beneficiary,
         beneficiaryEndowId: 0, //TODO: ap-justin UI to set endow id
@@ -65,7 +86,7 @@ export default function useWithdraw() {
       {
         content: metadata,
         title: `${fv.type} withdraw `,
-        description: `${fv.type} withdraw from endowment id: ${id}`,
+        description: `${fv.type} withdraw from endowment id: ${endowmentId}`,
       }
     );
 
@@ -88,26 +109,29 @@ export default function useWithdraw() {
 
     //only used when !isPolygon && !isDirect
     const processLog: LogProcessor = (logs) => {
-      const submissionTopic = Multisig.getEventTopic(SubmissionEvent);
+      const submissionTopic = Multisig.getEventTopic("TransactionSubmitted");
       const log = logs.find((l) => l.topics.includes(submissionTopic));
-      if (!log) return null;
+      if (!log) return LOG_ERROR;
 
-      const [id] = Multisig.decodeEventLog(
-        SubmissionEvent,
+      const [, proposalId] = Multisig.decodeEventLog(
+        "TransactionSubmitted",
         log.data,
         log.topics
       );
-      return (id as BigNumber).toString();
+      console.log({ log, proposalId });
+
+      return (proposalId as BigNumber).toNumber();
     };
 
     //only ran when !isPolygon
     const onSuccess: TxOnSuccess = async ({ data, ...tx }) => {
       try {
         const proposalID = data as
+          | number
           | undefined /** no log processor is passed (DIRECT withdraw )*/
-          | null; /** log processor is passed but failed get log */
+          | typeof LOG_ERROR; /** log processor is passed but failed get log */
 
-        if (proposalID === null) {
+        if (proposalID === LOG_ERROR) {
           return showModal(TxPrompt, {
             error: "Error: failed to save withdraw proposal id",
             tx,
@@ -120,19 +144,28 @@ export default function useWithdraw() {
           { isDismissible: false }
         );
 
+        const payload: WithdrawLogPayload = {
+          /**
+           * NOTE: endpoint only accepts single value, but contract allows multiple.
+           * how to handle multiple coins, and corresponding bridge fees
+           */
+          amount: +fv.amounts[0].value,
+          chain_id: wallet.chain.chain_id,
+          denomination: tokens[fv.amounts[0].tokenId].symbol,
+          endowment_id: endowmentId,
+          endowment_multisig: multisig,
+          target_chain: fv.network,
+          target_wallet: fv.beneficiary,
+          type: fv.type,
+          /** undefined proposalID means withdraw is direct */
+          ...(proposalID ? { proposal_id: proposalID } : {}),
+        };
+
         const generatedToken = createAuthToken("angelprotocol-web-app");
         const response = await fetch(APIs.apes + `/${v(1)}/withdraw`, {
           method: "POST",
           headers: { authorization: generatedToken },
-          body: JSON.stringify({
-            endowment_multisig: multisig,
-            proposal_chain_id: chainIds.polygon,
-            target_chain: fv.network,
-            target_wallet: fv.beneficiary,
-            type: fv.type,
-            /** undefined proposalID means withdraw is direct */
-            ...(proposalID ? { proposal_id: proposalID } : {}),
-          }),
+          body: JSON.stringify(payload),
         });
 
         if (!response.ok) {
@@ -176,7 +209,7 @@ export default function useWithdraw() {
 }
 
 function successMeta(
-  id: string | undefined,
+  id: number | undefined,
   { willExecute }: TxMeta,
   endow: EndowmentDetails
 ): TxSuccessMeta {
@@ -184,9 +217,7 @@ function successMeta(
     "Withdraw details submitted! Funds will be sent to specified beneficiary";
 
   if (id === undefined /** direct */ || willExecute) {
-    return {
-      message: DIRECT_MSG,
-    };
+    return { message: DIRECT_MSG };
   }
 
   return {
