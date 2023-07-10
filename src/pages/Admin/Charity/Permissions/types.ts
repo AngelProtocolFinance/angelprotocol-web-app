@@ -1,7 +1,7 @@
 import { Delegate, SettingsControllerUpdate } from "types/contracts";
 
 export type TPermission = Pick<Delegate, "addr"> & {
-  isActive: boolean;
+  delegated: boolean;
   locked: boolean;
 
   //meta

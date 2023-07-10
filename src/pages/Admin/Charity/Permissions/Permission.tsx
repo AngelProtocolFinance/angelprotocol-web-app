@@ -25,13 +25,13 @@ export default function Permission({ name, title, isOpen, onToggle }: Props) {
     formState: { errors },
   } = useFormContext<TPs>();
 
-  const isActiveName: Path<TPs> = `${name}.${keys.isActive}`;
+  const delegatedName: Path<TPs> = `${name}.${keys.delegated}`;
   const addrName: Path<TPs> = `${name}.${keys.addr}`;
-  const isActive = watch(isActiveName);
+  const delegated = watch(delegatedName);
   const isLocked = watch(`${name}.${keys.locked}`);
 
   useEffect(() => {
-    if (!isActive) {
+    if (!delegated) {
       clearErrors([addrName]);
       setValue(addrName, "", { shouldValidate: false });
     } else {
@@ -39,7 +39,7 @@ export default function Permission({ name, title, isOpen, onToggle }: Props) {
     }
 
     //eslint-disable-next-line
-  }, [isActive, name, setValue]);
+  }, [delegated, name, setValue]);
 
   return (
     <Cells type="td" cellClass="py-4 px-4 border-r border-prim last:border-r-0">
@@ -90,7 +90,7 @@ export default function Permission({ name, title, isOpen, onToggle }: Props) {
           Delegate
         </p>
         <CheckField<FV>
-          name={`${name}.${keys.isActive}`}
+          name={`${name}.${keys.delegated}`}
           classes={{
             label: "uppercase text-xs font-bold",
             input: "checkbox-orange",
@@ -109,7 +109,7 @@ export default function Permission({ name, title, isOpen, onToggle }: Props) {
         </p>
         <div className="relative">
           <input
-            disabled={isLocked || !isActive}
+            disabled={isLocked || !delegated}
             className="field-input truncate py-1.5"
             {...register(addrName)}
           />

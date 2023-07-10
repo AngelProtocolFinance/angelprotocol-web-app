@@ -50,7 +50,7 @@ const converter =
     return {
       locked: val.locked,
       delegate: {
-        addr: val.isActive ? val.addr : ADDRESS_ZERO,
+        addr: val.delegated ? val.addr : ADDRESS_ZERO,
         expires: 0, //in design: no expiry for delegation,
       },
     };

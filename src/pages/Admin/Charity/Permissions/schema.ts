@@ -4,10 +4,10 @@ import { SchemaShape } from "schemas/types";
 import { requiredWalletAddr } from "schemas/string";
 import { chainIds } from "constants/chainIds";
 
-const _active: keyof TPermission = "isActive";
+const _delegated: keyof TPermission = "delegated";
 
 const fieldShape: SchemaShape<TPermission> = {
-  addr: Yup.string().when(_active, {
+  addr: Yup.string().when(_delegated, {
     is: true,
     then: requiredWalletAddr(chainIds.polygon),
     otherwise: (schema) => schema.optional(),

@@ -2,7 +2,7 @@ import { TPermission } from "./types";
 
 export const keys: { [K in keyof TPermission]: K } = {
   addr: "addr",
-  isActive: "isActive",
+  delegated: "delegated",
   locked: "locked",
   modifiable: "modifiable",
   ownerControlled: "ownerControlled",

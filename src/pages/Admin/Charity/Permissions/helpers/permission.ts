@@ -6,7 +6,7 @@ export const formPermission = (setting: SettingsPermission): TPermission => {
   const delegate = setting.delegate;
   const isDelegated = delegate.addr !== ADDRESS_ZERO;
   return {
-    isActive: isDelegated,
+    delegated: isDelegated,
     addr: isDelegated ? delegate.addr : "",
     locked: setting.locked,
 
