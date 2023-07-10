@@ -36,9 +36,15 @@ export default function LockButton({ name }: Props) {
       disabled={isSubmitting}
       onClick={async () => {
         const prevLocked = getValues(`${name}.locked`);
+        const expires = getValues(`${name}.expires`);
         const isValid = prevLocked
           ? true
-          : await trigger(`${name}.addr`, { shouldFocus: true });
+          : (await trigger(`${name}.addr`, { shouldFocus: true })) &&
+            //only validate expiry if user sets delegate and opted for delegated expiry
+            (expires
+              ? await trigger(`${name}.expiry`, { shouldFocus: true })
+              : true);
+
         if (!isValid) return;
         setValue(`${name}.locked`, !locked);
       }}

@@ -27,13 +27,29 @@ export default function Permission({ name, title, isOpen, onToggle }: Props) {
 
   const delegatedName: Path<TPs> = `${name}.${keys.delegated}`;
   const addrName: Path<TPs> = `${name}.${keys.addr}`;
+  const expiryName: Path<TPs> = `${name}.${keys.expiry}`;
+  const expiresName: Path<TPs> = `${name}.${keys.expires}`;
+
   const delegated = watch(delegatedName);
   const isLocked = watch(`${name}.${keys.locked}`);
+  const expires = watch(expiresName);
+
+  useEffect(() => {
+    if (!expires) {
+      clearErrors([expiryName]);
+      setValue(expiryName, "", { shouldValidate: false });
+    } else {
+      setFocus(expiryName);
+    }
+    //eslint-disable-next-line
+  }, [expires, name, setValue]);
 
   useEffect(() => {
     if (!delegated) {
       clearErrors([addrName]);
       setValue(addrName, "", { shouldValidate: false });
+      setValue(expiryName, "", { shouldValidate: false });
+      setValue(expiresName, false, { shouldValidate: false });
     } else {
       setFocus(addrName);
     }
@@ -117,6 +133,38 @@ export default function Permission({ name, title, isOpen, onToggle }: Props) {
             name={addrName}
             as="p"
             className="text-xs text-red dark:text-red-l2 text-right w-full mt-0.5"
+            errors={errors}
+          />
+        </div>
+      </td>
+      <td
+        className={`${
+          isOpen ? "" : "hidden"
+        } relative max-sm:col-span-full max-sm:w-full max-sm:border-r-0 max-sm:border-t`}
+      >
+        <p className="sm:hidden font-work font-bold text-xs mb-3 uppercase">
+          Expiry
+        </p>
+        <div className="relative flex items-center gap-1">
+          <CheckField<FV>
+            name={expiresName}
+            classes={{
+              label: "uppercase text-xs font-bold",
+              input: "checkbox-orange",
+              error: "hidden",
+            }}
+            disabled={isLocked || !delegated}
+          />
+          <input
+            type="date"
+            disabled={isLocked || !delegated || !expires}
+            className="field-input truncate py-1.5 date-input uppercase"
+            {...register(expiryName)}
+          />
+          <ErrorMessage
+            name={expiryName}
+            as="p"
+            className="field-error"
             errors={errors}
           />
         </div>
