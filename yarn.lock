@@ -4723,7 +4723,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@walletconnect/types@npm:2.8.5, @walletconnect/types@npm:^2.8.5":
+"@walletconnect/types@npm:2.8.5":
   version: 2.8.5
   resolution: "@walletconnect/types@npm:2.8.5"
   dependencies:
@@ -4741,6 +4741,20 @@ __metadata:
   version: 1.8.0
   resolution: "@walletconnect/types@npm:1.8.0"
   checksum: 194d615888068030183489222641332987846aa5c6bcf0a62fa60ca7a282b9f94932c49fcd2b293a859e98624fe3e7a2d3c5fb66545fe30d3391e7ac91a99e34
+  languageName: node
+  linkType: hard
+
+"@walletconnect/types@npm:^2.9.0":
+  version: 2.9.0
+  resolution: "@walletconnect/types@npm:2.9.0"
+  dependencies:
+    "@walletconnect/events": ^1.0.1
+    "@walletconnect/heartbeat": 1.2.1
+    "@walletconnect/jsonrpc-types": 1.0.3
+    "@walletconnect/keyvaluestorage": ^1.0.2
+    "@walletconnect/logger": ^2.0.1
+    events: ^3.3.0
+  checksum: 147bec3c89cd7194e6df7e3a59560c46bf5b0b8ef58e81f387b3bfeecaa3aecb04b4ac2dbffe11fe671ffdf2f1222178b2fac256ced39e9b3b56c21411362872
   languageName: node
   linkType: hard
 
@@ -5219,7 +5233,7 @@ __metadata:
     "@types/react-test-renderer": 18.0.0
     "@walletconnect/modal": ^2.5.8
     "@walletconnect/sign-client": ^2.8.5
-    "@walletconnect/types": ^2.8.5
+    "@walletconnect/types": ^2.9.0
     compress.js: ^1.2.2
     cropperjs: ^1.5.12
     decimal.js: ^10.3.1
