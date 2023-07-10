@@ -3,6 +3,8 @@ import { Delegate, SettingsControllerUpdate } from "types/contracts";
 export type TPermission = Pick<Delegate, "addr"> & {
   delegated: boolean;
   locked: boolean;
+  expires: boolean;
+  expiry: string; //date string
 
   //meta
   modifiable: boolean;
