@@ -4,6 +4,7 @@ import {
   SettingsControllerUpdate,
   SettingsPermission,
 } from "types/contracts";
+import { blockTime } from "helpers/admin";
 import { ADDRESS_ZERO } from "constants/evm";
 
 export function controllerUpdate(
@@ -51,7 +52,7 @@ const converter =
       locked: val.locked,
       delegate: {
         addr: val.delegated ? val.addr : ADDRESS_ZERO,
-        expires: 0, //in design: no expiry for delegation,
+        expires: val.expires ? blockTime(val.expiry) : 0,
       },
     };
   };
