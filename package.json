@@ -57,7 +57,7 @@
     "@terra-money/wallet-provider": "^3.11.1",
     "@types/react-helmet": "^6.1.6",
     "@walletconnect/modal": "^2.5.8",
-    "@walletconnect/sign-client": "^2.8.5",
+    "@walletconnect/sign-client": "^2.9.0",
     "compress.js": "^1.2.2",
     "cropperjs": "^1.5.12",
     "decimal.js": "^10.3.1",
