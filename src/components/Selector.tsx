@@ -100,9 +100,7 @@ export function Selector<
           {({ open }) => (
             <>
               <span className="flex flex-wrap gap-2 h-full">
-                {getSelectedValues(selected, (opts: OptionType<ValueType>[]) =>
-                  onChange(opts)
-                )}
+                {getSelectedValues(selected, (opts) => onChange(opts as any))}
               </span>
               <DrawerIcon
                 isOpen={open}
@@ -116,10 +114,14 @@ export function Selector<
           {multiple && (
             <div className="flex p-4">
               {isAllSelected ? (
-                <Action onClick={() => onChange([])}>Deselect All</Action>
+                <Action onClick={() => onChange([] as any)}>
+                  Deselect All
+                </Action>
               ) : (
                 allSelectable && (
-                  <Action onClick={() => onChange(options)}>Select All</Action>
+                  <Action onClick={() => onChange(options as any)}>
+                    Select All
+                  </Action>
                 )
               )}
 

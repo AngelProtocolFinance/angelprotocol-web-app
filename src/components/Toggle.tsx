@@ -29,7 +29,7 @@ export default function Toggle<T extends FV>({
   } = useFormContext<T>();
   const {
     field: { onChange, value },
-  } = useController({ name });
+  } = useController<Record<string, boolean>>({ name });
 
   const id = `__${name}`;
   const { container = "", label = "", error = "" } = classes || {};

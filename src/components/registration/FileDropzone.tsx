@@ -19,6 +19,8 @@ type Key = keyof Asset;
 const filesKey: Key = "files";
 const previewsKey: Key = "previews";
 
+type FilesPath = `${string}.${typeof filesKey}`;
+
 export function FileDropzone<T extends FieldValues, K extends Path<T>>(props: {
   name: T[K] extends Asset ? K : never;
   multiple?: true;
@@ -26,7 +28,7 @@ export function FileDropzone<T extends FieldValues, K extends Path<T>>(props: {
   className?: string;
   tooltip: string;
 }) {
-  const filesId = `${props.name}.${filesKey}` as Path<T>;
+  const filesId: any = `${props.name}.${filesKey}`;
   const previewsId = `${props.name}.${previewsKey}` as Path<T>;
 
   const {
@@ -36,7 +38,7 @@ export function FileDropzone<T extends FieldValues, K extends Path<T>>(props: {
 
   const {
     field: { value: files, onChange: onFilesChange, ref },
-  } = useController<T>({ name: filesId });
+  } = useController<Record<string, Asset>, FilesPath>({ name: filesId });
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: (files: File[]) => {
