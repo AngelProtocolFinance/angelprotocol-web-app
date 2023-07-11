@@ -4022,10 +4022,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^16.18.3":
-  version: 16.18.3
-  resolution: "@types/node@npm:16.18.3"
-  checksum: 6b8ba2ea5d842f7986e366cb9184c54d273d492784dc62e08fd5afeae938d9b61aec6e4222d2541cd18f9b1412ba361bbcb3f4204fb003608af80a2a6af959f9
+"@types/node@npm:^18.16.1":
+  version: 18.16.19
+  resolution: "@types/node@npm:18.16.19"
+  checksum: 63c31f09616508aa7135380a4c79470a897b75f9ff3a70eb069e534dfabdec3f32fb0f9df5939127f1086614d980ddea0fa5e8cc29a49103c4f74cd687618aaf
   languageName: node
   linkType: hard
 
@@ -5209,7 +5209,7 @@ __metadata:
     "@types/compress.js": ^1.1.1
     "@types/jest": ^29.5.0
     "@types/jsonwebtoken": ^8.5.5
-    "@types/node": ^16.18.3
+    "@types/node": ^18.16.1
     "@types/quill": ^2.0.9
     "@types/react": ^18.0.0
     "@types/react-csv": ^1.1.2
