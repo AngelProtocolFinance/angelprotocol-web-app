@@ -34,8 +34,8 @@ export default function Form() {
         </>
       )}
       <Warning classes="mb-2">
-        We recommend not using crypto exchange addresses for withdrawals. We are
-        not responsible for the loss of funds.
+        If withdrawing to an exchange, please ensure you’re using the correct
+        blockchain network and currency. More information.
       </Warning>
       <Submit />
     </form>
