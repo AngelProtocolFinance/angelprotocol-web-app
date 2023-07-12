@@ -18,7 +18,11 @@ export default function OpenRequestsInfo() {
   return (
     <QueryLoader
       queryState={{ ...queryState, data: queryState.data?.Items }}
-      messages={{ empty: <></>, error: <></> }}
+      messages={{
+        empty: <></>,
+        error: <></>,
+        loading: <></>,
+      }}
     >
       {() => (
         <div className="flex justify-center items-center gap-3 py-2 px-4 w-full dark:bg-blue-d6 border border-prim rounded">

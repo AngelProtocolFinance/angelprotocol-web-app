@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { Amount, WithdrawValues as WV } from "./types";
+import { Amount, FV } from "./types";
 import { SchemaShape } from "schemas/types";
 import { tokenConstraint } from "schemas/number";
 import { requiredWalletAddr } from "schemas/string";
@@ -7,14 +7,15 @@ import { fee } from "./helpers";
 
 type TVal = Amount["value"];
 type TBal = Amount["balance"];
-type TNetwork = WV["network"];
-type TFees = WV["fees"];
+type TNetwork = FV["network"];
+type TFees = FV["fees"];
+type TAccountType = FV["type"];
 
 const balKey: keyof Amount = "balance";
-const netKey: keyof WV = "network";
-const endowKey: keyof WV = "endowType";
-const amountsKey: keyof WV = "amounts";
-const feesKey: keyof WV = "fees";
+const netKey: keyof FV = "network";
+const accountKey: keyof FV = "type";
+const amountsKey: keyof FV = "amounts";
+const feesKey: keyof FV = "fees";
 
 const amount: (network: TNetwork, fees: TFees) => SchemaShape<Amount> = (
   network,
@@ -41,7 +42,7 @@ const amount: (network: TNetwork, fees: TFees) => SchemaShape<Amount> = (
   ),
 });
 
-const shape: SchemaShape<WV> = {
+const shape: SchemaShape<FV> = {
   amounts: Yup.array().when([netKey, feesKey], (...args: any[]) => {
     const [network, fees, schema] = args as [TNetwork, TFees, any];
     return schema.of(Yup.object().shape(amount(network, fees)));
@@ -52,15 +53,14 @@ const shape: SchemaShape<WV> = {
       amounts.some((amount) => amount.value !== "")
     )
   ),
-  beneficiary: Yup.string().when(netKey, (network: TNetwork) =>
-    requiredWalletAddr(network)
-  ),
-  reason: Yup.string().when(endowKey, (endowType, schema) =>
-    endowType === "charity"
-      ? //normal endowments should not be required to provide reason when withdrawing matured funds
-        schema.required("reason required")
-      : schema.optional()
-  ),
+  beneficiary: Yup.string().when([netKey, accountKey], (...args: any[]) => {
+    const [network, accountType, schema] = args as [
+      TNetwork,
+      TAccountType,
+      any
+    ];
+    return accountType === "liquid" ? requiredWalletAddr(network) : schema;
+  }),
 };
 
 export const schema = Yup.object(shape);

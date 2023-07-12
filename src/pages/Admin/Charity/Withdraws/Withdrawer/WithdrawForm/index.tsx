@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { Amount, WithdrawValues, WithdrawerProps } from "./types";
+import { Amount, FV, WithdrawerProps } from "./types";
 import { useGetWallet } from "contexts/WalletContext";
 import { condense, roundDown } from "helpers";
 import { chainIds } from "constants/chainIds";
@@ -21,7 +21,7 @@ export default function WithdrawForm({
     value: "",
   }));
 
-  const methods = useForm<WithdrawValues>({
+  const methods = useForm<FV>({
     mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: {

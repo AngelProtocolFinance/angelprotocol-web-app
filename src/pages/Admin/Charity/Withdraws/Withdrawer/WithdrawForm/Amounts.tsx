@@ -1,6 +1,6 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useFieldArray, useFormContext } from "react-hook-form";
-import { WithdrawValues } from "./types";
+import { FV } from "./types";
 import Icon from "components/Icon";
 import Image from "components/Image";
 import { humanize } from "helpers";
@@ -11,8 +11,8 @@ export default function Amounts() {
     register,
     setValue,
     formState: { errors },
-  } = useFormContext<WithdrawValues>();
-  const { fields } = useFieldArray<WithdrawValues>({ name: "amounts" });
+  } = useFormContext<FV>();
+  const { fields } = useFieldArray<FV>({ name: "amounts" });
 
   if (fields.length <= 0) {
     return (

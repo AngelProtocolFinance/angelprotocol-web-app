@@ -1,11 +1,11 @@
 import { useFormContext } from "react-hook-form";
-import { WithdrawValues } from "./types";
+import { FV } from "./types";
 import { chainIds } from "constants/chainIds";
 import { denoms } from "constants/tokens";
 import { fee } from "./helpers";
 
 export default function Breakdown() {
-  const { watch, getValues } = useFormContext<WithdrawValues>();
+  const { watch, getValues } = useFormContext<FV>();
   const fees = getValues("fees");
   const network = watch("network");
   const amounts = watch("amounts");

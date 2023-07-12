@@ -8,7 +8,7 @@ import Warning from "./Warning";
 import useWithdraw from "./useWithdraw";
 
 export default function Form({ classes = "" }) {
-  const { withdraw, fee, network, tooltip } = useWithdraw();
+  const { withdraw, fee, network, tooltip, type } = useWithdraw();
 
   return (
     <form
@@ -20,9 +20,14 @@ export default function Form({ classes = "" }) {
       <fieldset disabled={!!tooltip} className="contents">
         <Amounts />
 
-        <Network />
-        <Beneficiary />
-        <Breakdown />
+        {/** locked just goes to liquid */}
+        {type === "liquid" && (
+          <>
+            <Network />
+            <Beneficiary />
+            <Breakdown />
+          </>
+        )}
 
         {network !== "Polygon" && (
           <>
