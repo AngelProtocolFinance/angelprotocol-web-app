@@ -1,3 +1,4 @@
+import ExtLink from "components/ExtLink";
 import Amounts from "./Amounts";
 import Beneficiary from "./Beneficiary";
 import Breakdown from "./Breakdown";
@@ -35,7 +36,13 @@ export default function Form() {
       )}
       <Warning classes="mb-2">
         If withdrawing to an exchange, please ensure you’re using the correct
-        blockchain network and currency. More information.
+        blockchain network and currency.{" "}
+        <ExtLink
+          href="https://intercom.help/angel-giving/en/articles/6628134-how-do-i-remove-usdc-funds-from-my-current-account"
+          className="text-blue hover:text-blue-l2"
+        >
+          More information.
+        </ExtLink>
       </Warning>
       <Submit />
     </form>
