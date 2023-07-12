@@ -3,10 +3,10 @@
 /* eslint-disable */
 export type { AccountsAllowance } from "./AccountsAllowance";
 export type { AccountsCreateEndowment } from "./AccountsCreateEndowment";
+export type { AccountsDaoEndowments } from "./AccountsDaoEndowments";
 export type { AccountsDeployContract } from "./AccountsDeployContract";
 export type { AccountsDepositWithdrawEndowments } from "./AccountsDepositWithdrawEndowments";
 export type { AccountsDonationMatch } from "./AccountsDonationMatch";
-export type { AccountsEvents } from "./AccountsEvents";
 export type { AccountsQueryEndowments } from "./AccountsQueryEndowments";
 export type { AccountsSwapRouter } from "./AccountsSwapRouter";
 export type { AccountsUpdate } from "./AccountsUpdate";

@@ -14,7 +14,11 @@ import type {
   Signer,
   utils,
 } from "ethers";
-import type { FunctionFragment, Result } from "@ethersproject/abi";
+import type {
+  FunctionFragment,
+  Result,
+  EventFragment,
+} from "@ethersproject/abi";
 import type { Listener, Provider } from "@ethersproject/providers";
 import type {
   TypedEventFilter,
@@ -27,26 +31,15 @@ import type {
 export declare namespace IStrategy {
   export type StrategyConfigStruct = {
     strategySelector: PromiseOrValue<BytesLike>;
-    fromToken: PromiseOrValue<string>;
-    toToken: PromiseOrValue<string>;
-    lockedVault: PromiseOrValue<string>;
-    liquidVault: PromiseOrValue<string>;
+    baseToken: PromiseOrValue<string>;
+    yieldToken: PromiseOrValue<string>;
     admin: PromiseOrValue<string>;
   };
 
-  export type StrategyConfigStructOutput = [
-    string,
-    string,
-    string,
-    string,
-    string,
-    string
-  ] & {
+  export type StrategyConfigStructOutput = [string, string, string, string] & {
     strategySelector: string;
-    fromToken: string;
-    toToken: string;
-    lockedVault: string;
-    liquidVault: string;
+    baseToken: string;
+    yieldToken: string;
     admin: string;
   };
 }
@@ -58,7 +51,7 @@ export interface IStrategyInterface extends utils.Interface {
     "paused()": FunctionFragment;
     "previewDeposit(uint256)": FunctionFragment;
     "previewWithdraw(uint256)": FunctionFragment;
-    "setStrategyConfig((bytes4,address,address,address,address,address))": FunctionFragment;
+    "setStrategyConfig((bytes4,address,address,address))": FunctionFragment;
     "withdraw(uint256)": FunctionFragment;
   };
 
@@ -119,8 +112,67 @@ export interface IStrategyInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
 
-  events: {};
+  events: {
+    "ConfigChanged(tuple)": EventFragment;
+    "EnteredPosition(uint256,uint256)": EventFragment;
+    "LogError(string)": EventFragment;
+    "LogErrorBytes(bytes)": EventFragment;
+    "WithdrewPosition(uint256,uint256)": EventFragment;
+  };
+
+  getEvent(nameOrSignatureOrTopic: "ConfigChanged"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "EnteredPosition"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "LogError"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "LogErrorBytes"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "WithdrewPosition"): EventFragment;
 }
+
+export interface ConfigChangedEventObject {
+  stratConfig: IStrategy.StrategyConfigStructOutput;
+}
+export type ConfigChangedEvent = TypedEvent<
+  [IStrategy.StrategyConfigStructOutput],
+  ConfigChangedEventObject
+>;
+
+export type ConfigChangedEventFilter = TypedEventFilter<ConfigChangedEvent>;
+
+export interface EnteredPositionEventObject {
+  baseTokenAmt: BigNumber;
+  yieldTokenAmt: BigNumber;
+}
+export type EnteredPositionEvent = TypedEvent<
+  [BigNumber, BigNumber],
+  EnteredPositionEventObject
+>;
+
+export type EnteredPositionEventFilter = TypedEventFilter<EnteredPositionEvent>;
+
+export interface LogErrorEventObject {
+  message: string;
+}
+export type LogErrorEvent = TypedEvent<[string], LogErrorEventObject>;
+
+export type LogErrorEventFilter = TypedEventFilter<LogErrorEvent>;
+
+export interface LogErrorBytesEventObject {
+  data: string;
+}
+export type LogErrorBytesEvent = TypedEvent<[string], LogErrorBytesEventObject>;
+
+export type LogErrorBytesEventFilter = TypedEventFilter<LogErrorBytesEvent>;
+
+export interface WithdrewPositionEventObject {
+  yieldTokenAmt: BigNumber;
+  baseTokenAmt: BigNumber;
+}
+export type WithdrewPositionEvent = TypedEvent<
+  [BigNumber, BigNumber],
+  WithdrewPositionEventObject
+>;
+
+export type WithdrewPositionEventFilter =
+  TypedEventFilter<WithdrewPositionEvent>;
 
 export interface IStrategy extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -245,7 +297,34 @@ export interface IStrategy extends BaseContract {
     ): Promise<BigNumber>;
   };
 
-  filters: {};
+  filters: {
+    "ConfigChanged(tuple)"(stratConfig?: null): ConfigChangedEventFilter;
+    ConfigChanged(stratConfig?: null): ConfigChangedEventFilter;
+
+    "EnteredPosition(uint256,uint256)"(
+      baseTokenAmt?: null,
+      yieldTokenAmt?: null
+    ): EnteredPositionEventFilter;
+    EnteredPosition(
+      baseTokenAmt?: null,
+      yieldTokenAmt?: null
+    ): EnteredPositionEventFilter;
+
+    "LogError(string)"(message?: null): LogErrorEventFilter;
+    LogError(message?: null): LogErrorEventFilter;
+
+    "LogErrorBytes(bytes)"(data?: null): LogErrorBytesEventFilter;
+    LogErrorBytes(data?: null): LogErrorBytesEventFilter;
+
+    "WithdrewPosition(uint256,uint256)"(
+      yieldTokenAmt?: null,
+      baseTokenAmt?: null
+    ): WithdrewPositionEventFilter;
+    WithdrewPosition(
+      yieldTokenAmt?: null,
+      baseTokenAmt?: null
+    ): WithdrewPositionEventFilter;
+  };
 
   estimateGas: {
     deposit(

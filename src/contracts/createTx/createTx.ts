@@ -1,12 +1,12 @@
-import { Metadata, TxMeta, TxOptions, TxTypes } from "./types";
 import { SimulContractTx } from "types/evm";
 import { Contract } from "types/lists";
+import { Metadata, TxMeta, TxOptions, TxType } from "types/tx";
 import { toAbiStr } from "helpers";
 import { contracts } from "constants/contracts";
 import { EMPTY_DATA } from "constants/evm";
 import { txs } from "./txs";
 
-export function createTx<T extends TxTypes>(
+export function createTx<T extends TxType>(
   sender: string,
   type: T,
   options: TxOptions<T>,
@@ -21,16 +21,21 @@ export function createTx<T extends TxTypes>(
   };
 }
 
-export function encodeTx<T extends TxTypes>(
+export function encodeTx<T extends TxType>(
   type: T,
   options: TxOptions<T>,
-  metadata?: Metadata<T>
+  meta?: { content: Metadata<T>; title: string; description: string }
 ): [string, string, { id: T; encoded: string }] {
   const [contract_key] = type.split(".");
   const { [contract_key]: c, ...args } = options as any;
 
-  const toEncode: TxMeta | undefined = metadata
-    ? { id: type as any, data: metadata }
+  const toEncode: TxMeta | undefined = meta
+    ? {
+        id: type as any,
+        data: meta.content,
+        title: meta.title,
+        description: meta.description,
+      }
     : undefined;
 
   return [

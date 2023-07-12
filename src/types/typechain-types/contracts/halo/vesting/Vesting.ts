@@ -140,19 +140,49 @@ export interface VestingInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
 
   events: {
+    "HaloDeposited(address,uint256)": EventFragment;
+    "HaloWithdrawn(address,uint256,uint256)": EventFragment;
+    "Initialized(uint8)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
-    "VestingDeposit(address,uint256)": EventFragment;
     "VestingDurationModified(uint256)": EventFragment;
-    "VestingInitialized(address)": EventFragment;
-    "VestingWithdraw(address,uint256,uint256)": EventFragment;
   };
 
+  getEvent(nameOrSignatureOrTopic: "HaloDeposited"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "HaloWithdrawn"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "VestingDeposit"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "VestingDurationModified"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "VestingInitialized"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "VestingWithdraw"): EventFragment;
 }
+
+export interface HaloDepositedEventObject {
+  user: string;
+  amount: BigNumber;
+}
+export type HaloDepositedEvent = TypedEvent<
+  [string, BigNumber],
+  HaloDepositedEventObject
+>;
+
+export type HaloDepositedEventFilter = TypedEventFilter<HaloDepositedEvent>;
+
+export interface HaloWithdrawnEventObject {
+  user: string;
+  vestingId: BigNumber;
+  amount: BigNumber;
+}
+export type HaloWithdrawnEvent = TypedEvent<
+  [string, BigNumber, BigNumber],
+  HaloWithdrawnEventObject
+>;
+
+export type HaloWithdrawnEventFilter = TypedEventFilter<HaloWithdrawnEvent>;
+
+export interface InitializedEventObject {
+  version: number;
+}
+export type InitializedEvent = TypedEvent<[number], InitializedEventObject>;
+
+export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
 
 export interface OwnershipTransferredEventObject {
   previousOwner: string;
@@ -166,17 +196,6 @@ export type OwnershipTransferredEvent = TypedEvent<
 export type OwnershipTransferredEventFilter =
   TypedEventFilter<OwnershipTransferredEvent>;
 
-export interface VestingDepositEventObject {
-  user: string;
-  amount: BigNumber;
-}
-export type VestingDepositEvent = TypedEvent<
-  [string, BigNumber],
-  VestingDepositEventObject
->;
-
-export type VestingDepositEventFilter = TypedEventFilter<VestingDepositEvent>;
-
 export interface VestingDurationModifiedEventObject {
   vestingDuration: BigNumber;
 }
@@ -187,29 +206,6 @@ export type VestingDurationModifiedEvent = TypedEvent<
 
 export type VestingDurationModifiedEventFilter =
   TypedEventFilter<VestingDurationModifiedEvent>;
-
-export interface VestingInitializedEventObject {
-  haloToken: string;
-}
-export type VestingInitializedEvent = TypedEvent<
-  [string],
-  VestingInitializedEventObject
->;
-
-export type VestingInitializedEventFilter =
-  TypedEventFilter<VestingInitializedEvent>;
-
-export interface VestingWithdrawEventObject {
-  user: string;
-  amount: BigNumber;
-  vestingId: BigNumber;
-}
-export type VestingWithdrawEvent = TypedEvent<
-  [string, BigNumber, BigNumber],
-  VestingWithdrawEventObject
->;
-
-export type VestingWithdrawEventFilter = TypedEventFilter<VestingWithdrawEvent>;
 
 export interface Vesting extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -405,6 +401,26 @@ export interface Vesting extends BaseContract {
   };
 
   filters: {
+    "HaloDeposited(address,uint256)"(
+      user?: null,
+      amount?: null
+    ): HaloDepositedEventFilter;
+    HaloDeposited(user?: null, amount?: null): HaloDepositedEventFilter;
+
+    "HaloWithdrawn(address,uint256,uint256)"(
+      user?: null,
+      vestingId?: null,
+      amount?: null
+    ): HaloWithdrawnEventFilter;
+    HaloWithdrawn(
+      user?: null,
+      vestingId?: null,
+      amount?: null
+    ): HaloWithdrawnEventFilter;
+
+    "Initialized(uint8)"(version?: null): InitializedEventFilter;
+    Initialized(version?: null): InitializedEventFilter;
+
     "OwnershipTransferred(address,address)"(
       previousOwner?: PromiseOrValue<string> | null,
       newOwner?: PromiseOrValue<string> | null
@@ -414,34 +430,12 @@ export interface Vesting extends BaseContract {
       newOwner?: PromiseOrValue<string> | null
     ): OwnershipTransferredEventFilter;
 
-    "VestingDeposit(address,uint256)"(
-      user?: null,
-      amount?: null
-    ): VestingDepositEventFilter;
-    VestingDeposit(user?: null, amount?: null): VestingDepositEventFilter;
-
     "VestingDurationModified(uint256)"(
       vestingDuration?: null
     ): VestingDurationModifiedEventFilter;
     VestingDurationModified(
       vestingDuration?: null
     ): VestingDurationModifiedEventFilter;
-
-    "VestingInitialized(address)"(
-      haloToken?: null
-    ): VestingInitializedEventFilter;
-    VestingInitialized(haloToken?: null): VestingInitializedEventFilter;
-
-    "VestingWithdraw(address,uint256,uint256)"(
-      user?: null,
-      amount?: null,
-      vestingId?: null
-    ): VestingWithdrawEventFilter;
-    VestingWithdraw(
-      user?: null,
-      amount?: null,
-      vestingId?: null
-    ): VestingWithdrawEventFilter;
   };
 
   estimateGas: {

@@ -5,3 +5,4 @@ export * from "./Status";
 export * from "./Submitter";
 export * from "./TemplateContainer";
 export * from "./Tooltip";
+export * from "./Btn";

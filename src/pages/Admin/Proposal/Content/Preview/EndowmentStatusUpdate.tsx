@@ -1,4 +1,4 @@
-import { AccountStatusMeta } from "contracts/createTx/meta";
+import { AccountStatusMeta } from "types/tx";
 import KeyValue from "./common/KeyValue";
 import PreviewContainer from "./common/PreviewContainer";
 

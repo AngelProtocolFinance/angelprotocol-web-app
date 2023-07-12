@@ -3,5 +3,5 @@
 /* eslint-disable */
 import type * as token from "./Token";
 export type { token };
-import type * as subdaoTokenSol from "./subdao-token.sol";
-export type { subdaoTokenSol };
+export type { ISubDaoToken } from "./ISubDaoToken";
+export type { SubDaoToken } from "./SubDaoToken";

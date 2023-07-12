@@ -27,65 +27,35 @@ import type {
   PromiseOrValue,
 } from "../../../common";
 
-export declare namespace MultiSigStorage {
-  export type TransactionStruct = {
-    title: PromiseOrValue<string>;
-    description: PromiseOrValue<string>;
-    destination: PromiseOrValue<string>;
-    value: PromiseOrValue<BigNumberish>;
-    data: PromiseOrValue<BytesLike>;
-    executed: PromiseOrValue<boolean>;
-    metadata: PromiseOrValue<BytesLike>;
-  };
-
-  export type TransactionStructOutput = [
-    string,
-    string,
-    string,
-    BigNumber,
-    string,
-    boolean,
-    string
-  ] & {
-    title: string;
-    description: string;
-    destination: string;
-    value: BigNumber;
-    data: string;
-    executed: boolean;
-    metadata: string;
-  };
-}
-
 export interface EndowmentMultiSigInterface extends utils.Interface {
   functions: {
     "EMITTER_ADDRESS()": FunctionFragment;
     "ENDOWMENT_ID()": FunctionFragment;
-    "MAX_OWNER_COUNT()": FunctionFragment;
-    "addOwner(address)": FunctionFragment;
+    "activeOwnersCount()": FunctionFragment;
+    "addOwners(address[])": FunctionFragment;
+    "approvalsRequired()": FunctionFragment;
+    "changeApprovalsRequirement(uint256)": FunctionFragment;
     "changeRequireExecution(bool)": FunctionFragment;
-    "changeRequirement(uint256)": FunctionFragment;
+    "changeTransactionExpiry(uint256)": FunctionFragment;
     "confirmTransaction(uint256)": FunctionFragment;
-    "confirmations(uint256,address)": FunctionFragment;
+    "confirmations(uint256)": FunctionFragment;
     "executeTransaction(uint256)": FunctionFragment;
     "getConfirmationCount(uint256)": FunctionFragment;
-    "getConfirmations(uint256)": FunctionFragment;
-    "getOwners()": FunctionFragment;
-    "getTransactionCount(bool,bool)": FunctionFragment;
-    "getTransactionIds(uint256,uint256,bool,bool)": FunctionFragment;
-    "initialize(uint256,address,address[],uint256,bool)": FunctionFragment;
-    "initialize(address[],uint256,bool)": FunctionFragment;
+    "getConfirmationStatus(uint256,address)": FunctionFragment;
+    "getOwnerStatus(address)": FunctionFragment;
+    "initialize(uint256,address,address[],uint256,bool,uint256)": FunctionFragment;
+    "initialize(address[],uint256,bool,uint256)": FunctionFragment;
     "isConfirmed(uint256)": FunctionFragment;
     "isOwner(address)": FunctionFragment;
-    "owners(uint256)": FunctionFragment;
-    "removeOwner(address)": FunctionFragment;
+    "removeOwners(address[])": FunctionFragment;
     "replaceOwner(address,address)": FunctionFragment;
     "requireExecution()": FunctionFragment;
-    "required()": FunctionFragment;
     "revokeConfirmation(uint256)": FunctionFragment;
-    "submitTransaction(string,string,address,uint256,bytes,bytes)": FunctionFragment;
+    "revokeConfirmationOfFormerOwner(uint256,address)": FunctionFragment;
+    "submitTransaction(address,uint256,bytes,bytes)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
     "transactionCount()": FunctionFragment;
+    "transactionExpiry()": FunctionFragment;
     "transactions(uint256)": FunctionFragment;
   };
 
@@ -93,31 +63,31 @@ export interface EndowmentMultiSigInterface extends utils.Interface {
     nameOrSignatureOrTopic:
       | "EMITTER_ADDRESS"
       | "ENDOWMENT_ID"
-      | "MAX_OWNER_COUNT"
-      | "addOwner"
+      | "activeOwnersCount"
+      | "addOwners"
+      | "approvalsRequired"
+      | "changeApprovalsRequirement"
       | "changeRequireExecution"
-      | "changeRequirement"
+      | "changeTransactionExpiry"
       | "confirmTransaction"
       | "confirmations"
       | "executeTransaction"
       | "getConfirmationCount"
-      | "getConfirmations"
-      | "getOwners"
-      | "getTransactionCount"
-      | "getTransactionIds"
-      | "initialize(uint256,address,address[],uint256,bool)"
-      | "initialize(address[],uint256,bool)"
+      | "getConfirmationStatus"
+      | "getOwnerStatus"
+      | "initialize(uint256,address,address[],uint256,bool,uint256)"
+      | "initialize(address[],uint256,bool,uint256)"
       | "isConfirmed"
       | "isOwner"
-      | "owners"
-      | "removeOwner"
+      | "removeOwners"
       | "replaceOwner"
       | "requireExecution"
-      | "required"
       | "revokeConfirmation"
+      | "revokeConfirmationOfFormerOwner"
       | "submitTransaction"
       | "supportsInterface"
       | "transactionCount"
+      | "transactionExpiry"
       | "transactions"
   ): FunctionFragment;
 
@@ -130,19 +100,27 @@ export interface EndowmentMultiSigInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "MAX_OWNER_COUNT",
+    functionFragment: "activeOwnersCount",
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "addOwner",
-    values: [PromiseOrValue<string>]
+    functionFragment: "addOwners",
+    values: [PromiseOrValue<string>[]]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "approvalsRequired",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "changeApprovalsRequirement",
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "changeRequireExecution",
     values: [PromiseOrValue<boolean>]
   ): string;
   encodeFunctionData(
-    functionFragment: "changeRequirement",
+    functionFragment: "changeTransactionExpiry",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
@@ -151,7 +129,7 @@ export interface EndowmentMultiSigInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "confirmations",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "executeTransaction",
@@ -162,39 +140,31 @@ export interface EndowmentMultiSigInterface extends utils.Interface {
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getConfirmations",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(functionFragment: "getOwners", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "getTransactionCount",
-    values: [PromiseOrValue<boolean>, PromiseOrValue<boolean>]
+    functionFragment: "getConfirmationStatus",
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getTransactionIds",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<boolean>,
-      PromiseOrValue<boolean>
-    ]
+    functionFragment: "getOwnerStatus",
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "initialize(uint256,address,address[],uint256,bool)",
+    functionFragment: "initialize(uint256,address,address[],uint256,bool,uint256)",
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
       PromiseOrValue<string>[],
       PromiseOrValue<BigNumberish>,
-      PromiseOrValue<boolean>
+      PromiseOrValue<boolean>,
+      PromiseOrValue<BigNumberish>
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "initialize(address[],uint256,bool)",
+    functionFragment: "initialize(address[],uint256,bool,uint256)",
     values: [
       PromiseOrValue<string>[],
       PromiseOrValue<BigNumberish>,
-      PromiseOrValue<boolean>
+      PromiseOrValue<boolean>,
+      PromiseOrValue<BigNumberish>
     ]
   ): string;
   encodeFunctionData(
@@ -206,12 +176,8 @@ export interface EndowmentMultiSigInterface extends utils.Interface {
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "owners",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "removeOwner",
-    values: [PromiseOrValue<string>]
+    functionFragment: "removeOwners",
+    values: [PromiseOrValue<string>[]]
   ): string;
   encodeFunctionData(
     functionFragment: "replaceOwner",
@@ -221,16 +187,17 @@ export interface EndowmentMultiSigInterface extends utils.Interface {
     functionFragment: "requireExecution",
     values?: undefined
   ): string;
-  encodeFunctionData(functionFragment: "required", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "revokeConfirmation",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
+    functionFragment: "revokeConfirmationOfFormerOwner",
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "submitTransaction",
     values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
       PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BytesLike>,
@@ -246,6 +213,10 @@ export interface EndowmentMultiSigInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "transactionExpiry",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "transactions",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
@@ -259,16 +230,24 @@ export interface EndowmentMultiSigInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "MAX_OWNER_COUNT",
+    functionFragment: "activeOwnersCount",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "addOwner", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "addOwners", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "approvalsRequired",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "changeApprovalsRequirement",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "changeRequireExecution",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "changeRequirement",
+    functionFragment: "changeTransactionExpiry",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -288,24 +267,19 @@ export interface EndowmentMultiSigInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getConfirmations",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "getOwners", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "getTransactionCount",
+    functionFragment: "getConfirmationStatus",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getTransactionIds",
+    functionFragment: "getOwnerStatus",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "initialize(uint256,address,address[],uint256,bool)",
+    functionFragment: "initialize(uint256,address,address[],uint256,bool,uint256)",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "initialize(address[],uint256,bool)",
+    functionFragment: "initialize(address[],uint256,bool,uint256)",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -313,9 +287,8 @@ export interface EndowmentMultiSigInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "isOwner", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "owners", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "removeOwner",
+    functionFragment: "removeOwners",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -326,9 +299,12 @@ export interface EndowmentMultiSigInterface extends utils.Interface {
     functionFragment: "requireExecution",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "required", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "revokeConfirmation",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "revokeConfirmationOfFormerOwner",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -344,84 +320,71 @@ export interface EndowmentMultiSigInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "transactionExpiry",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "transactions",
     data: BytesLike
   ): Result;
 
   events: {
-    "Confirmation(address,uint256)": EventFragment;
+    "ApprovalsRequiredChanged(uint256)": EventFragment;
+    "ConfirmationRevoked(address,uint256)": EventFragment;
     "Deposit(address,uint256)": EventFragment;
-    "Execution(uint256)": EventFragment;
-    "ExecutionFailure(uint256)": EventFragment;
-    "ExecutionRequiredChange(bool)": EventFragment;
     "Initialized(uint8)": EventFragment;
-    "OwnerAddition(address)": EventFragment;
-    "OwnerRemoval(address)": EventFragment;
-    "RequirementChange(uint256)": EventFragment;
-    "Revocation(address,uint256)": EventFragment;
-    "Submission(uint256,tuple)": EventFragment;
+    "OwnerAdded(address)": EventFragment;
+    "OwnerRemoved(address)": EventFragment;
+    "RequireExecutionChanged(bool)": EventFragment;
+    "TransactionConfirmed(address,uint256)": EventFragment;
+    "TransactionExecuted(uint256)": EventFragment;
+    "TransactionExpiryChanged(uint256)": EventFragment;
+    "TransactionSubmitted(address,uint256)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "Confirmation"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ApprovalsRequiredChanged"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ConfirmationRevoked"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Deposit"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Execution"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ExecutionFailure"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ExecutionRequiredChange"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerAddition"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerRemoval"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RequirementChange"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Revocation"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Submission"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "OwnerAdded"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "OwnerRemoved"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "RequireExecutionChanged"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "TransactionConfirmed"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "TransactionExecuted"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "TransactionExpiryChanged"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "TransactionSubmitted"): EventFragment;
 }
 
-export interface ConfirmationEventObject {
+export interface ApprovalsRequiredChangedEventObject {
+  approvalsRequired: BigNumber;
+}
+export type ApprovalsRequiredChangedEvent = TypedEvent<
+  [BigNumber],
+  ApprovalsRequiredChangedEventObject
+>;
+
+export type ApprovalsRequiredChangedEventFilter =
+  TypedEventFilter<ApprovalsRequiredChangedEvent>;
+
+export interface ConfirmationRevokedEventObject {
   sender: string;
   transactionId: BigNumber;
 }
-export type ConfirmationEvent = TypedEvent<
+export type ConfirmationRevokedEvent = TypedEvent<
   [string, BigNumber],
-  ConfirmationEventObject
+  ConfirmationRevokedEventObject
 >;
 
-export type ConfirmationEventFilter = TypedEventFilter<ConfirmationEvent>;
+export type ConfirmationRevokedEventFilter =
+  TypedEventFilter<ConfirmationRevokedEvent>;
 
 export interface DepositEventObject {
   sender: string;
-  value: BigNumber;
+  amount: BigNumber;
 }
 export type DepositEvent = TypedEvent<[string, BigNumber], DepositEventObject>;
 
 export type DepositEventFilter = TypedEventFilter<DepositEvent>;
-
-export interface ExecutionEventObject {
-  transactionId: BigNumber;
-}
-export type ExecutionEvent = TypedEvent<[BigNumber], ExecutionEventObject>;
-
-export type ExecutionEventFilter = TypedEventFilter<ExecutionEvent>;
-
-export interface ExecutionFailureEventObject {
-  transactionId: BigNumber;
-}
-export type ExecutionFailureEvent = TypedEvent<
-  [BigNumber],
-  ExecutionFailureEventObject
->;
-
-export type ExecutionFailureEventFilter =
-  TypedEventFilter<ExecutionFailureEvent>;
-
-export interface ExecutionRequiredChangeEventObject {
-  requireExecution: boolean;
-}
-export type ExecutionRequiredChangeEvent = TypedEvent<
-  [boolean],
-  ExecutionRequiredChangeEventObject
->;
-
-export type ExecutionRequiredChangeEventFilter =
-  TypedEventFilter<ExecutionRequiredChangeEvent>;
 
 export interface InitializedEventObject {
   version: number;
@@ -430,52 +393,76 @@ export type InitializedEvent = TypedEvent<[number], InitializedEventObject>;
 
 export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
 
-export interface OwnerAdditionEventObject {
+export interface OwnerAddedEventObject {
   owner: string;
 }
-export type OwnerAdditionEvent = TypedEvent<[string], OwnerAdditionEventObject>;
+export type OwnerAddedEvent = TypedEvent<[string], OwnerAddedEventObject>;
 
-export type OwnerAdditionEventFilter = TypedEventFilter<OwnerAdditionEvent>;
+export type OwnerAddedEventFilter = TypedEventFilter<OwnerAddedEvent>;
 
-export interface OwnerRemovalEventObject {
+export interface OwnerRemovedEventObject {
   owner: string;
 }
-export type OwnerRemovalEvent = TypedEvent<[string], OwnerRemovalEventObject>;
+export type OwnerRemovedEvent = TypedEvent<[string], OwnerRemovedEventObject>;
 
-export type OwnerRemovalEventFilter = TypedEventFilter<OwnerRemovalEvent>;
+export type OwnerRemovedEventFilter = TypedEventFilter<OwnerRemovedEvent>;
 
-export interface RequirementChangeEventObject {
-  required: BigNumber;
+export interface RequireExecutionChangedEventObject {
+  requireExecution: boolean;
 }
-export type RequirementChangeEvent = TypedEvent<
-  [BigNumber],
-  RequirementChangeEventObject
+export type RequireExecutionChangedEvent = TypedEvent<
+  [boolean],
+  RequireExecutionChangedEventObject
 >;
 
-export type RequirementChangeEventFilter =
-  TypedEventFilter<RequirementChangeEvent>;
+export type RequireExecutionChangedEventFilter =
+  TypedEventFilter<RequireExecutionChangedEvent>;
 
-export interface RevocationEventObject {
+export interface TransactionConfirmedEventObject {
   sender: string;
   transactionId: BigNumber;
 }
-export type RevocationEvent = TypedEvent<
+export type TransactionConfirmedEvent = TypedEvent<
   [string, BigNumber],
-  RevocationEventObject
+  TransactionConfirmedEventObject
 >;
 
-export type RevocationEventFilter = TypedEventFilter<RevocationEvent>;
+export type TransactionConfirmedEventFilter =
+  TypedEventFilter<TransactionConfirmedEvent>;
 
-export interface SubmissionEventObject {
+export interface TransactionExecutedEventObject {
   transactionId: BigNumber;
-  transaction: MultiSigStorage.TransactionStructOutput;
 }
-export type SubmissionEvent = TypedEvent<
-  [BigNumber, MultiSigStorage.TransactionStructOutput],
-  SubmissionEventObject
+export type TransactionExecutedEvent = TypedEvent<
+  [BigNumber],
+  TransactionExecutedEventObject
 >;
 
-export type SubmissionEventFilter = TypedEventFilter<SubmissionEvent>;
+export type TransactionExecutedEventFilter =
+  TypedEventFilter<TransactionExecutedEvent>;
+
+export interface TransactionExpiryChangedEventObject {
+  transactionExpiry: BigNumber;
+}
+export type TransactionExpiryChangedEvent = TypedEvent<
+  [BigNumber],
+  TransactionExpiryChangedEventObject
+>;
+
+export type TransactionExpiryChangedEventFilter =
+  TypedEventFilter<TransactionExpiryChangedEvent>;
+
+export interface TransactionSubmittedEventObject {
+  sender: string;
+  transactionId: BigNumber;
+}
+export type TransactionSubmittedEvent = TypedEvent<
+  [string, BigNumber],
+  TransactionSubmittedEventObject
+>;
+
+export type TransactionSubmittedEventFilter =
+  TypedEventFilter<TransactionSubmittedEvent>;
 
 export interface EndowmentMultiSig extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -508,10 +495,17 @@ export interface EndowmentMultiSig extends BaseContract {
 
     ENDOWMENT_ID(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    MAX_OWNER_COUNT(overrides?: CallOverrides): Promise<[BigNumber]>;
+    activeOwnersCount(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    addOwner(
-      _owner: PromiseOrValue<string>,
+    addOwners(
+      owners: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    approvalsRequired(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    changeApprovalsRequirement(
+      _approvalsRequired: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -520,8 +514,8 @@ export interface EndowmentMultiSig extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    changeRequirement(
-      _required: PromiseOrValue<BigNumberish>,
+    changeTransactionExpiry(
+      _transactionExpiry: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -532,9 +526,8 @@ export interface EndowmentMultiSig extends BaseContract {
 
     confirmations(
       arg0: PromiseOrValue<BigNumberish>,
-      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    ): Promise<[BigNumber] & { count: BigNumber }>;
 
     executeTransaction(
       transactionId: PromiseOrValue<BigNumberish>,
@@ -544,42 +537,34 @@ export interface EndowmentMultiSig extends BaseContract {
     getConfirmationCount(
       transactionId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<[BigNumber] & { count: BigNumber }>;
+    ): Promise<[BigNumber]>;
 
-    getConfirmations(
+    getConfirmationStatus(
       transactionId: PromiseOrValue<BigNumberish>,
+      ownerAddr: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<[string[]] & { ownerConfirmations: string[] }>;
+    ): Promise<[boolean]>;
 
-    getOwners(overrides?: CallOverrides): Promise<[string[]]>;
-
-    getTransactionCount(
-      pending: PromiseOrValue<boolean>,
-      executed: PromiseOrValue<boolean>,
+    getOwnerStatus(
+      ownerAddr: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<[BigNumber] & { count: BigNumber }>;
+    ): Promise<[boolean]>;
 
-    getTransactionIds(
-      from: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<BigNumberish>,
-      pending: PromiseOrValue<boolean>,
-      executed: PromiseOrValue<boolean>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber[]] & { transactionIds: BigNumber[] }>;
-
-    "initialize(uint256,address,address[],uint256,bool)"(
+    "initialize(uint256,address,address[],uint256,bool,uint256)"(
       _endowmentId: PromiseOrValue<BigNumberish>,
       _emitter: PromiseOrValue<string>,
       _owners: PromiseOrValue<string>[],
       _required: PromiseOrValue<BigNumberish>,
       _requireExecution: PromiseOrValue<boolean>,
+      _transactionExpiry: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    "initialize(address[],uint256,bool)"(
+    "initialize(address[],uint256,bool,uint256)"(
       arg0: PromiseOrValue<string>[],
       arg1: PromiseOrValue<BigNumberish>,
       arg2: PromiseOrValue<boolean>,
+      arg3: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -593,34 +578,31 @@ export interface EndowmentMultiSig extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
-    owners(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
-
-    removeOwner(
-      _owner: PromiseOrValue<string>,
+    removeOwners(
+      owners: PromiseOrValue<string>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     replaceOwner(
-      _owner: PromiseOrValue<string>,
-      _newOwner: PromiseOrValue<string>,
+      currOwner: PromiseOrValue<string>,
+      newOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     requireExecution(overrides?: CallOverrides): Promise<[boolean]>;
-
-    required(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     revokeConfirmation(
       transactionId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    revokeConfirmationOfFormerOwner(
+      transactionId: PromiseOrValue<BigNumberish>,
+      formerOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     submitTransaction(
-      title: PromiseOrValue<string>,
-      description: PromiseOrValue<string>,
       destination: PromiseOrValue<string>,
       value: PromiseOrValue<BigNumberish>,
       data: PromiseOrValue<BytesLike>,
@@ -635,17 +617,18 @@ export interface EndowmentMultiSig extends BaseContract {
 
     transactionCount(overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    transactionExpiry(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     transactions(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [string, string, string, BigNumber, string, boolean, string] & {
-        title: string;
-        description: string;
+      [string, BigNumber, string, boolean, BigNumber, string] & {
         destination: string;
         value: BigNumber;
         data: string;
         executed: boolean;
+        expiry: BigNumber;
         metadata: string;
       }
     >;
@@ -655,10 +638,17 @@ export interface EndowmentMultiSig extends BaseContract {
 
   ENDOWMENT_ID(overrides?: CallOverrides): Promise<BigNumber>;
 
-  MAX_OWNER_COUNT(overrides?: CallOverrides): Promise<BigNumber>;
+  activeOwnersCount(overrides?: CallOverrides): Promise<BigNumber>;
 
-  addOwner(
-    _owner: PromiseOrValue<string>,
+  addOwners(
+    owners: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  approvalsRequired(overrides?: CallOverrides): Promise<BigNumber>;
+
+  changeApprovalsRequirement(
+    _approvalsRequired: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -667,8 +657,8 @@ export interface EndowmentMultiSig extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  changeRequirement(
-    _required: PromiseOrValue<BigNumberish>,
+  changeTransactionExpiry(
+    _transactionExpiry: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -679,9 +669,8 @@ export interface EndowmentMultiSig extends BaseContract {
 
   confirmations(
     arg0: PromiseOrValue<BigNumberish>,
-    arg1: PromiseOrValue<string>,
     overrides?: CallOverrides
-  ): Promise<boolean>;
+  ): Promise<BigNumber>;
 
   executeTransaction(
     transactionId: PromiseOrValue<BigNumberish>,
@@ -693,40 +682,32 @@ export interface EndowmentMultiSig extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  getConfirmations(
+  getConfirmationStatus(
     transactionId: PromiseOrValue<BigNumberish>,
+    ownerAddr: PromiseOrValue<string>,
     overrides?: CallOverrides
-  ): Promise<string[]>;
+  ): Promise<boolean>;
 
-  getOwners(overrides?: CallOverrides): Promise<string[]>;
-
-  getTransactionCount(
-    pending: PromiseOrValue<boolean>,
-    executed: PromiseOrValue<boolean>,
+  getOwnerStatus(
+    ownerAddr: PromiseOrValue<string>,
     overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  ): Promise<boolean>;
 
-  getTransactionIds(
-    from: PromiseOrValue<BigNumberish>,
-    to: PromiseOrValue<BigNumberish>,
-    pending: PromiseOrValue<boolean>,
-    executed: PromiseOrValue<boolean>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber[]>;
-
-  "initialize(uint256,address,address[],uint256,bool)"(
+  "initialize(uint256,address,address[],uint256,bool,uint256)"(
     _endowmentId: PromiseOrValue<BigNumberish>,
     _emitter: PromiseOrValue<string>,
     _owners: PromiseOrValue<string>[],
     _required: PromiseOrValue<BigNumberish>,
     _requireExecution: PromiseOrValue<boolean>,
+    _transactionExpiry: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  "initialize(address[],uint256,bool)"(
+  "initialize(address[],uint256,bool,uint256)"(
     arg0: PromiseOrValue<string>[],
     arg1: PromiseOrValue<BigNumberish>,
     arg2: PromiseOrValue<boolean>,
+    arg3: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -740,34 +721,31 @@ export interface EndowmentMultiSig extends BaseContract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
-  owners(
-    arg0: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<string>;
-
-  removeOwner(
-    _owner: PromiseOrValue<string>,
+  removeOwners(
+    owners: PromiseOrValue<string>[],
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   replaceOwner(
-    _owner: PromiseOrValue<string>,
-    _newOwner: PromiseOrValue<string>,
+    currOwner: PromiseOrValue<string>,
+    newOwner: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   requireExecution(overrides?: CallOverrides): Promise<boolean>;
-
-  required(overrides?: CallOverrides): Promise<BigNumber>;
 
   revokeConfirmation(
     transactionId: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  revokeConfirmationOfFormerOwner(
+    transactionId: PromiseOrValue<BigNumberish>,
+    formerOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   submitTransaction(
-    title: PromiseOrValue<string>,
-    description: PromiseOrValue<string>,
     destination: PromiseOrValue<string>,
     value: PromiseOrValue<BigNumberish>,
     data: PromiseOrValue<BytesLike>,
@@ -782,17 +760,18 @@ export interface EndowmentMultiSig extends BaseContract {
 
   transactionCount(overrides?: CallOverrides): Promise<BigNumber>;
 
+  transactionExpiry(overrides?: CallOverrides): Promise<BigNumber>;
+
   transactions(
     arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<
-    [string, string, string, BigNumber, string, boolean, string] & {
-      title: string;
-      description: string;
+    [string, BigNumber, string, boolean, BigNumber, string] & {
       destination: string;
       value: BigNumber;
       data: string;
       executed: boolean;
+      expiry: BigNumber;
       metadata: string;
     }
   >;
@@ -802,10 +781,17 @@ export interface EndowmentMultiSig extends BaseContract {
 
     ENDOWMENT_ID(overrides?: CallOverrides): Promise<BigNumber>;
 
-    MAX_OWNER_COUNT(overrides?: CallOverrides): Promise<BigNumber>;
+    activeOwnersCount(overrides?: CallOverrides): Promise<BigNumber>;
 
-    addOwner(
-      _owner: PromiseOrValue<string>,
+    addOwners(
+      owners: PromiseOrValue<string>[],
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    approvalsRequired(overrides?: CallOverrides): Promise<BigNumber>;
+
+    changeApprovalsRequirement(
+      _approvalsRequired: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -814,8 +800,8 @@ export interface EndowmentMultiSig extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    changeRequirement(
-      _required: PromiseOrValue<BigNumberish>,
+    changeTransactionExpiry(
+      _transactionExpiry: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -826,9 +812,8 @@ export interface EndowmentMultiSig extends BaseContract {
 
     confirmations(
       arg0: PromiseOrValue<BigNumberish>,
-      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<boolean>;
+    ): Promise<BigNumber>;
 
     executeTransaction(
       transactionId: PromiseOrValue<BigNumberish>,
@@ -840,40 +825,32 @@ export interface EndowmentMultiSig extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getConfirmations(
+    getConfirmationStatus(
       transactionId: PromiseOrValue<BigNumberish>,
+      ownerAddr: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<string[]>;
+    ): Promise<boolean>;
 
-    getOwners(overrides?: CallOverrides): Promise<string[]>;
-
-    getTransactionCount(
-      pending: PromiseOrValue<boolean>,
-      executed: PromiseOrValue<boolean>,
+    getOwnerStatus(
+      ownerAddr: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    ): Promise<boolean>;
 
-    getTransactionIds(
-      from: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<BigNumberish>,
-      pending: PromiseOrValue<boolean>,
-      executed: PromiseOrValue<boolean>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber[]>;
-
-    "initialize(uint256,address,address[],uint256,bool)"(
+    "initialize(uint256,address,address[],uint256,bool,uint256)"(
       _endowmentId: PromiseOrValue<BigNumberish>,
       _emitter: PromiseOrValue<string>,
       _owners: PromiseOrValue<string>[],
       _required: PromiseOrValue<BigNumberish>,
       _requireExecution: PromiseOrValue<boolean>,
+      _transactionExpiry: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    "initialize(address[],uint256,bool)"(
+    "initialize(address[],uint256,bool,uint256)"(
       arg0: PromiseOrValue<string>[],
       arg1: PromiseOrValue<BigNumberish>,
       arg2: PromiseOrValue<boolean>,
+      arg3: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -887,34 +864,31 @@ export interface EndowmentMultiSig extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    owners(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<string>;
-
-    removeOwner(
-      _owner: PromiseOrValue<string>,
+    removeOwners(
+      owners: PromiseOrValue<string>[],
       overrides?: CallOverrides
     ): Promise<void>;
 
     replaceOwner(
-      _owner: PromiseOrValue<string>,
-      _newOwner: PromiseOrValue<string>,
+      currOwner: PromiseOrValue<string>,
+      newOwner: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     requireExecution(overrides?: CallOverrides): Promise<boolean>;
-
-    required(overrides?: CallOverrides): Promise<BigNumber>;
 
     revokeConfirmation(
       transactionId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
+    revokeConfirmationOfFormerOwner(
+      transactionId: PromiseOrValue<BigNumberish>,
+      formerOwner: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     submitTransaction(
-      title: PromiseOrValue<string>,
-      description: PromiseOrValue<string>,
       destination: PromiseOrValue<string>,
       value: PromiseOrValue<BigNumberish>,
       data: PromiseOrValue<BytesLike>,
@@ -929,99 +903,91 @@ export interface EndowmentMultiSig extends BaseContract {
 
     transactionCount(overrides?: CallOverrides): Promise<BigNumber>;
 
+    transactionExpiry(overrides?: CallOverrides): Promise<BigNumber>;
+
     transactions(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [string, string, string, BigNumber, string, boolean, string] & {
-        title: string;
-        description: string;
+      [string, BigNumber, string, boolean, BigNumber, string] & {
         destination: string;
         value: BigNumber;
         data: string;
         executed: boolean;
+        expiry: BigNumber;
         metadata: string;
       }
     >;
   };
 
   filters: {
-    "Confirmation(address,uint256)"(
-      sender?: PromiseOrValue<string> | null,
-      transactionId?: PromiseOrValue<BigNumberish> | null
-    ): ConfirmationEventFilter;
-    Confirmation(
-      sender?: PromiseOrValue<string> | null,
-      transactionId?: PromiseOrValue<BigNumberish> | null
-    ): ConfirmationEventFilter;
+    "ApprovalsRequiredChanged(uint256)"(
+      approvalsRequired?: null
+    ): ApprovalsRequiredChangedEventFilter;
+    ApprovalsRequiredChanged(
+      approvalsRequired?: null
+    ): ApprovalsRequiredChangedEventFilter;
+
+    "ConfirmationRevoked(address,uint256)"(
+      sender?: null,
+      transactionId?: null
+    ): ConfirmationRevokedEventFilter;
+    ConfirmationRevoked(
+      sender?: null,
+      transactionId?: null
+    ): ConfirmationRevokedEventFilter;
 
     "Deposit(address,uint256)"(
-      sender?: PromiseOrValue<string> | null,
-      value?: null
+      sender?: null,
+      amount?: null
     ): DepositEventFilter;
-    Deposit(
-      sender?: PromiseOrValue<string> | null,
-      value?: null
-    ): DepositEventFilter;
-
-    "Execution(uint256)"(
-      transactionId?: PromiseOrValue<BigNumberish> | null
-    ): ExecutionEventFilter;
-    Execution(
-      transactionId?: PromiseOrValue<BigNumberish> | null
-    ): ExecutionEventFilter;
-
-    "ExecutionFailure(uint256)"(
-      transactionId?: PromiseOrValue<BigNumberish> | null
-    ): ExecutionFailureEventFilter;
-    ExecutionFailure(
-      transactionId?: PromiseOrValue<BigNumberish> | null
-    ): ExecutionFailureEventFilter;
-
-    "ExecutionRequiredChange(bool)"(
-      requireExecution?: null
-    ): ExecutionRequiredChangeEventFilter;
-    ExecutionRequiredChange(
-      requireExecution?: null
-    ): ExecutionRequiredChangeEventFilter;
+    Deposit(sender?: null, amount?: null): DepositEventFilter;
 
     "Initialized(uint8)"(version?: null): InitializedEventFilter;
     Initialized(version?: null): InitializedEventFilter;
 
-    "OwnerAddition(address)"(
-      owner?: PromiseOrValue<string> | null
-    ): OwnerAdditionEventFilter;
-    OwnerAddition(
-      owner?: PromiseOrValue<string> | null
-    ): OwnerAdditionEventFilter;
+    "OwnerAdded(address)"(owner?: null): OwnerAddedEventFilter;
+    OwnerAdded(owner?: null): OwnerAddedEventFilter;
 
-    "OwnerRemoval(address)"(
-      owner?: PromiseOrValue<string> | null
-    ): OwnerRemovalEventFilter;
-    OwnerRemoval(
-      owner?: PromiseOrValue<string> | null
-    ): OwnerRemovalEventFilter;
+    "OwnerRemoved(address)"(owner?: null): OwnerRemovedEventFilter;
+    OwnerRemoved(owner?: null): OwnerRemovedEventFilter;
 
-    "RequirementChange(uint256)"(required?: null): RequirementChangeEventFilter;
-    RequirementChange(required?: null): RequirementChangeEventFilter;
+    "RequireExecutionChanged(bool)"(
+      requireExecution?: null
+    ): RequireExecutionChangedEventFilter;
+    RequireExecutionChanged(
+      requireExecution?: null
+    ): RequireExecutionChangedEventFilter;
 
-    "Revocation(address,uint256)"(
-      sender?: PromiseOrValue<string> | null,
-      transactionId?: PromiseOrValue<BigNumberish> | null
-    ): RevocationEventFilter;
-    Revocation(
-      sender?: PromiseOrValue<string> | null,
-      transactionId?: PromiseOrValue<BigNumberish> | null
-    ): RevocationEventFilter;
+    "TransactionConfirmed(address,uint256)"(
+      sender?: null,
+      transactionId?: null
+    ): TransactionConfirmedEventFilter;
+    TransactionConfirmed(
+      sender?: null,
+      transactionId?: null
+    ): TransactionConfirmedEventFilter;
 
-    "Submission(uint256,tuple)"(
-      transactionId?: PromiseOrValue<BigNumberish> | null,
-      transaction?: null
-    ): SubmissionEventFilter;
-    Submission(
-      transactionId?: PromiseOrValue<BigNumberish> | null,
-      transaction?: null
-    ): SubmissionEventFilter;
+    "TransactionExecuted(uint256)"(
+      transactionId?: null
+    ): TransactionExecutedEventFilter;
+    TransactionExecuted(transactionId?: null): TransactionExecutedEventFilter;
+
+    "TransactionExpiryChanged(uint256)"(
+      transactionExpiry?: null
+    ): TransactionExpiryChangedEventFilter;
+    TransactionExpiryChanged(
+      transactionExpiry?: null
+    ): TransactionExpiryChangedEventFilter;
+
+    "TransactionSubmitted(address,uint256)"(
+      sender?: null,
+      transactionId?: null
+    ): TransactionSubmittedEventFilter;
+    TransactionSubmitted(
+      sender?: null,
+      transactionId?: null
+    ): TransactionSubmittedEventFilter;
   };
 
   estimateGas: {
@@ -1029,10 +995,17 @@ export interface EndowmentMultiSig extends BaseContract {
 
     ENDOWMENT_ID(overrides?: CallOverrides): Promise<BigNumber>;
 
-    MAX_OWNER_COUNT(overrides?: CallOverrides): Promise<BigNumber>;
+    activeOwnersCount(overrides?: CallOverrides): Promise<BigNumber>;
 
-    addOwner(
-      _owner: PromiseOrValue<string>,
+    addOwners(
+      owners: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    approvalsRequired(overrides?: CallOverrides): Promise<BigNumber>;
+
+    changeApprovalsRequirement(
+      _approvalsRequired: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1041,8 +1014,8 @@ export interface EndowmentMultiSig extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    changeRequirement(
-      _required: PromiseOrValue<BigNumberish>,
+    changeTransactionExpiry(
+      _transactionExpiry: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1053,7 +1026,6 @@ export interface EndowmentMultiSig extends BaseContract {
 
     confirmations(
       arg0: PromiseOrValue<BigNumberish>,
-      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -1067,40 +1039,32 @@ export interface EndowmentMultiSig extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getConfirmations(
+    getConfirmationStatus(
       transactionId: PromiseOrValue<BigNumberish>,
+      ownerAddr: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getOwners(overrides?: CallOverrides): Promise<BigNumber>;
-
-    getTransactionCount(
-      pending: PromiseOrValue<boolean>,
-      executed: PromiseOrValue<boolean>,
+    getOwnerStatus(
+      ownerAddr: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getTransactionIds(
-      from: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<BigNumberish>,
-      pending: PromiseOrValue<boolean>,
-      executed: PromiseOrValue<boolean>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    "initialize(uint256,address,address[],uint256,bool)"(
+    "initialize(uint256,address,address[],uint256,bool,uint256)"(
       _endowmentId: PromiseOrValue<BigNumberish>,
       _emitter: PromiseOrValue<string>,
       _owners: PromiseOrValue<string>[],
       _required: PromiseOrValue<BigNumberish>,
       _requireExecution: PromiseOrValue<boolean>,
+      _transactionExpiry: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    "initialize(address[],uint256,bool)"(
+    "initialize(address[],uint256,bool,uint256)"(
       arg0: PromiseOrValue<string>[],
       arg1: PromiseOrValue<BigNumberish>,
       arg2: PromiseOrValue<boolean>,
+      arg3: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1114,34 +1078,31 @@ export interface EndowmentMultiSig extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    owners(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    removeOwner(
-      _owner: PromiseOrValue<string>,
+    removeOwners(
+      owners: PromiseOrValue<string>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     replaceOwner(
-      _owner: PromiseOrValue<string>,
-      _newOwner: PromiseOrValue<string>,
+      currOwner: PromiseOrValue<string>,
+      newOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     requireExecution(overrides?: CallOverrides): Promise<BigNumber>;
-
-    required(overrides?: CallOverrides): Promise<BigNumber>;
 
     revokeConfirmation(
       transactionId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    revokeConfirmationOfFormerOwner(
+      transactionId: PromiseOrValue<BigNumberish>,
+      formerOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     submitTransaction(
-      title: PromiseOrValue<string>,
-      description: PromiseOrValue<string>,
       destination: PromiseOrValue<string>,
       value: PromiseOrValue<BigNumberish>,
       data: PromiseOrValue<BytesLike>,
@@ -1155,6 +1116,8 @@ export interface EndowmentMultiSig extends BaseContract {
     ): Promise<BigNumber>;
 
     transactionCount(overrides?: CallOverrides): Promise<BigNumber>;
+
+    transactionExpiry(overrides?: CallOverrides): Promise<BigNumber>;
 
     transactions(
       arg0: PromiseOrValue<BigNumberish>,
@@ -1167,10 +1130,17 @@ export interface EndowmentMultiSig extends BaseContract {
 
     ENDOWMENT_ID(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    MAX_OWNER_COUNT(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    activeOwnersCount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    addOwner(
-      _owner: PromiseOrValue<string>,
+    addOwners(
+      owners: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    approvalsRequired(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    changeApprovalsRequirement(
+      _approvalsRequired: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -1179,8 +1149,8 @@ export interface EndowmentMultiSig extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    changeRequirement(
-      _required: PromiseOrValue<BigNumberish>,
+    changeTransactionExpiry(
+      _transactionExpiry: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -1191,7 +1161,6 @@ export interface EndowmentMultiSig extends BaseContract {
 
     confirmations(
       arg0: PromiseOrValue<BigNumberish>,
-      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -1205,40 +1174,32 @@ export interface EndowmentMultiSig extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    getConfirmations(
+    getConfirmationStatus(
       transactionId: PromiseOrValue<BigNumberish>,
+      ownerAddr: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    getOwners(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    getTransactionCount(
-      pending: PromiseOrValue<boolean>,
-      executed: PromiseOrValue<boolean>,
+    getOwnerStatus(
+      ownerAddr: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    getTransactionIds(
-      from: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<BigNumberish>,
-      pending: PromiseOrValue<boolean>,
-      executed: PromiseOrValue<boolean>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    "initialize(uint256,address,address[],uint256,bool)"(
+    "initialize(uint256,address,address[],uint256,bool,uint256)"(
       _endowmentId: PromiseOrValue<BigNumberish>,
       _emitter: PromiseOrValue<string>,
       _owners: PromiseOrValue<string>[],
       _required: PromiseOrValue<BigNumberish>,
       _requireExecution: PromiseOrValue<boolean>,
+      _transactionExpiry: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    "initialize(address[],uint256,bool)"(
+    "initialize(address[],uint256,bool,uint256)"(
       arg0: PromiseOrValue<string>[],
       arg1: PromiseOrValue<BigNumberish>,
       arg2: PromiseOrValue<boolean>,
+      arg3: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -1252,34 +1213,31 @@ export interface EndowmentMultiSig extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    owners(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    removeOwner(
-      _owner: PromiseOrValue<string>,
+    removeOwners(
+      owners: PromiseOrValue<string>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     replaceOwner(
-      _owner: PromiseOrValue<string>,
-      _newOwner: PromiseOrValue<string>,
+      currOwner: PromiseOrValue<string>,
+      newOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     requireExecution(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    required(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     revokeConfirmation(
       transactionId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
+    revokeConfirmationOfFormerOwner(
+      transactionId: PromiseOrValue<BigNumberish>,
+      formerOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     submitTransaction(
-      title: PromiseOrValue<string>,
-      description: PromiseOrValue<string>,
       destination: PromiseOrValue<string>,
       value: PromiseOrValue<BigNumberish>,
       data: PromiseOrValue<BytesLike>,
@@ -1293,6 +1251,8 @@ export interface EndowmentMultiSig extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     transactionCount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    transactionExpiry(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transactions(
       arg0: PromiseOrValue<BigNumberish>,

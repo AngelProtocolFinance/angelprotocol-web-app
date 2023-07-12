@@ -28,13 +28,15 @@ export const apCWs: CWs = {
 };
 
 export async function multisigInfo(
-  multisig: string
+  multisig: string,
+  user?: string
 ): Promise<[MultisigConfig, string[] /** members */]> {
-  const [members, threshold, requireExecution] = await Promise.all([
-    queryContract("multisig.members", { multisig }),
+  const [isOwner, threshold, requireExecution, duration] = await Promise.all([
+    user ? queryContract("multisig.is-owner", { multisig, addr: user }) : false,
     queryContract("multisig.threshold", { multisig }),
     queryContract("multisig.require-execution", { multisig }),
+    queryContract("multisig.tx-duration", { multisig }),
   ]);
 
-  return [{ threshold, requireExecution }, members];
+  return [{ threshold, requireExecution, duration }, isOwner ? [user!] : []];
 }

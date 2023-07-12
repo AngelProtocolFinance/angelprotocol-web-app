@@ -1,8 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "../types";
-import { TxMeta } from "contracts/createTx/types";
+import { TransferMeta, TxMeta } from "types/tx";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
-import { TransferMeta } from "contracts/createTx/meta";
 import useTxSender from "hooks/useTxSender";
 import { scale, toAbiStr } from "helpers";
 import { getTagPayloads } from "helpers/admin";
@@ -24,9 +23,18 @@ export default function useTransferFunds() {
 
     const metadata: TransferMeta = {
       to: recipient,
-      token: { symbol: token.symbol, amount: +token.amount, logo: token.logo },
+      token: {
+        symbol: token.symbol,
+        amount: +token.amount,
+        logo: token.logo,
+      },
     };
-    const toEncode: TxMeta = { id: "erc20.transfer", data: metadata };
+    const toEncode: TxMeta = {
+      id: "erc20.transfer",
+      data: metadata,
+      title: fv.title,
+      description: fv.description,
+    };
 
     const native: ReturnType<typeof encodeTx> = [
       EMPTY_DATA,
@@ -43,7 +51,11 @@ export default function useTransferFunds() {
                 to: recipient,
                 amount: scaledAmount,
               },
-              metadata
+              {
+                content: metadata,
+                title: fv.title,
+                description: fv.description,
+              }
             ),
             "0" /** value for non payable */,
           ]
@@ -52,8 +64,6 @@ export default function useTransferFunds() {
     const { wallet, txMeta } = txResource;
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig,
-      title: fv.title,
-      description: fv.description,
       destination: dest,
       value,
       data,

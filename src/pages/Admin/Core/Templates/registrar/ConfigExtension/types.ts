@@ -4,8 +4,7 @@ import { RegistrarConfigUpdate } from "types/contracts";
 export type Fields = Pick<
   RegistrarConfigUpdate,
   | "accountsContract"
-  | "applicationsReview"
-  | "charityProposal"
+  | "charityApplications"
   | "charitySharesContract"
   | "donationMatchCharitesContract"
   | "fundraisingContract"
@@ -13,7 +12,7 @@ export type Fields = Pick<
   | "haloTokenLpContract"
   | "haloToken"
   | "indexFundContract"
-  | "uniswapSwapRouter"
+  | "uniswapRouter"
   | "multisigFactory"
   | "subdaoBondingTokenContract"
   | "subdaoTokenContract"

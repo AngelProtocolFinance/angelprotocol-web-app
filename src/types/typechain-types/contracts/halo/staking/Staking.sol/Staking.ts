@@ -282,23 +282,25 @@ export interface StakingInterface extends utils.Interface {
 
   events: {
     "Approval(address,address,uint256)": EventFragment;
+    "HaloStaked(address,address,uint256,uint256,bytes)": EventFragment;
+    "HaloUnstaked(address,uint256,uint256,bytes)": EventFragment;
     "Initialized(uint8)": EventFragment;
+    "InterestRateUpdated(uint256)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
     "Paused(address)": EventFragment;
-    "Staked(address,uint256,uint256,bytes)": EventFragment;
     "Transfer(address,address,uint256)": EventFragment;
     "Unpaused(address)": EventFragment;
-    "Unstaked(address,uint256,uint256,bytes)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "HaloStaked"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "HaloUnstaked"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "InterestRateUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Paused"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Staked"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Unpaused"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Unstaked"): EventFragment;
 }
 
 export interface ApprovalEventObject {
@@ -313,12 +315,50 @@ export type ApprovalEvent = TypedEvent<
 
 export type ApprovalEventFilter = TypedEventFilter<ApprovalEvent>;
 
+export interface HaloStakedEventObject {
+  caller: string;
+  targetUser: string;
+  amount: BigNumber;
+  total: BigNumber;
+  data: string;
+}
+export type HaloStakedEvent = TypedEvent<
+  [string, string, BigNumber, BigNumber, string],
+  HaloStakedEventObject
+>;
+
+export type HaloStakedEventFilter = TypedEventFilter<HaloStakedEvent>;
+
+export interface HaloUnstakedEventObject {
+  user: string;
+  amount: BigNumber;
+  total: BigNumber;
+  data: string;
+}
+export type HaloUnstakedEvent = TypedEvent<
+  [string, BigNumber, BigNumber, string],
+  HaloUnstakedEventObject
+>;
+
+export type HaloUnstakedEventFilter = TypedEventFilter<HaloUnstakedEvent>;
+
 export interface InitializedEventObject {
   version: number;
 }
 export type InitializedEvent = TypedEvent<[number], InitializedEventObject>;
 
 export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
+
+export interface InterestRateUpdatedEventObject {
+  interestRate: BigNumber;
+}
+export type InterestRateUpdatedEvent = TypedEvent<
+  [BigNumber],
+  InterestRateUpdatedEventObject
+>;
+
+export type InterestRateUpdatedEventFilter =
+  TypedEventFilter<InterestRateUpdatedEvent>;
 
 export interface OwnershipTransferredEventObject {
   previousOwner: string;
@@ -339,19 +379,6 @@ export type PausedEvent = TypedEvent<[string], PausedEventObject>;
 
 export type PausedEventFilter = TypedEventFilter<PausedEvent>;
 
-export interface StakedEventObject {
-  user: string;
-  amount: BigNumber;
-  total: BigNumber;
-  data: string;
-}
-export type StakedEvent = TypedEvent<
-  [string, BigNumber, BigNumber, string],
-  StakedEventObject
->;
-
-export type StakedEventFilter = TypedEventFilter<StakedEvent>;
-
 export interface TransferEventObject {
   from: string;
   to: string;
@@ -370,19 +397,6 @@ export interface UnpausedEventObject {
 export type UnpausedEvent = TypedEvent<[string], UnpausedEventObject>;
 
 export type UnpausedEventFilter = TypedEventFilter<UnpausedEvent>;
-
-export interface UnstakedEventObject {
-  user: string;
-  amount: BigNumber;
-  total: BigNumber;
-  data: string;
-}
-export type UnstakedEvent = TypedEvent<
-  [string, BigNumber, BigNumber, string],
-  UnstakedEventObject
->;
-
-export type UnstakedEventFilter = TypedEventFilter<UnstakedEvent>;
 
 export interface Staking extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -542,7 +556,7 @@ export interface Staking extends BaseContract {
     ): Promise<ContractTransaction>;
 
     updateInterestRate(
-      interestRate: PromiseOrValue<BigNumberish>,
+      _interestRate: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
@@ -678,7 +692,7 @@ export interface Staking extends BaseContract {
   ): Promise<ContractTransaction>;
 
   updateInterestRate(
-    interestRate: PromiseOrValue<BigNumberish>,
+    _interestRate: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -808,7 +822,7 @@ export interface Staking extends BaseContract {
     ): Promise<void>;
 
     updateInterestRate(
-      interestRate: PromiseOrValue<BigNumberish>,
+      _interestRate: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -825,8 +839,41 @@ export interface Staking extends BaseContract {
       value?: null
     ): ApprovalEventFilter;
 
+    "HaloStaked(address,address,uint256,uint256,bytes)"(
+      caller?: null,
+      targetUser?: null,
+      amount?: null,
+      total?: null,
+      data?: null
+    ): HaloStakedEventFilter;
+    HaloStaked(
+      caller?: null,
+      targetUser?: null,
+      amount?: null,
+      total?: null,
+      data?: null
+    ): HaloStakedEventFilter;
+
+    "HaloUnstaked(address,uint256,uint256,bytes)"(
+      user?: null,
+      amount?: null,
+      total?: null,
+      data?: null
+    ): HaloUnstakedEventFilter;
+    HaloUnstaked(
+      user?: null,
+      amount?: null,
+      total?: null,
+      data?: null
+    ): HaloUnstakedEventFilter;
+
     "Initialized(uint8)"(version?: null): InitializedEventFilter;
     Initialized(version?: null): InitializedEventFilter;
+
+    "InterestRateUpdated(uint256)"(
+      interestRate?: null
+    ): InterestRateUpdatedEventFilter;
+    InterestRateUpdated(interestRate?: null): InterestRateUpdatedEventFilter;
 
     "OwnershipTransferred(address,address)"(
       previousOwner?: PromiseOrValue<string> | null,
@@ -839,19 +886,6 @@ export interface Staking extends BaseContract {
 
     "Paused(address)"(account?: null): PausedEventFilter;
     Paused(account?: null): PausedEventFilter;
-
-    "Staked(address,uint256,uint256,bytes)"(
-      user?: PromiseOrValue<string> | null,
-      amount?: null,
-      total?: null,
-      data?: null
-    ): StakedEventFilter;
-    Staked(
-      user?: PromiseOrValue<string> | null,
-      amount?: null,
-      total?: null,
-      data?: null
-    ): StakedEventFilter;
 
     "Transfer(address,address,uint256)"(
       from?: PromiseOrValue<string> | null,
@@ -866,19 +900,6 @@ export interface Staking extends BaseContract {
 
     "Unpaused(address)"(account?: null): UnpausedEventFilter;
     Unpaused(account?: null): UnpausedEventFilter;
-
-    "Unstaked(address,uint256,uint256,bytes)"(
-      user?: PromiseOrValue<string> | null,
-      amount?: null,
-      total?: null,
-      data?: null
-    ): UnstakedEventFilter;
-    Unstaked(
-      user?: PromiseOrValue<string> | null,
-      amount?: null,
-      total?: null,
-      data?: null
-    ): UnstakedEventFilter;
   };
 
   estimateGas: {
@@ -1005,7 +1026,7 @@ export interface Staking extends BaseContract {
     ): Promise<BigNumber>;
 
     updateInterestRate(
-      interestRate: PromiseOrValue<BigNumberish>,
+      _interestRate: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
@@ -1134,7 +1155,7 @@ export interface Staking extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     updateInterestRate(
-      interestRate: PromiseOrValue<BigNumberish>,
+      _interestRate: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };

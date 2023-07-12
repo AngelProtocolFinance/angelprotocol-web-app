@@ -37,13 +37,16 @@ export default function useConfigureFund() {
 
     if (isTooltip(txResource)) throw new Error(txResource);
 
-    const [configData, dest, meta] = encodeTx("index-fund.config", data, diffs);
+    const [configData, dest, meta] = encodeTx("index-fund.config", data, {
+      title,
+      description,
+      content: diffs,
+    });
 
     const { wallet, txMeta } = txResource;
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig,
-      title,
-      description,
+
       destination: dest,
       value: "0",
       data: configData,

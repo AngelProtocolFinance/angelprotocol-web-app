@@ -17,9 +17,13 @@ export default function useSubmit() {
     //check for changes
     if (isTooltip(txResource)) throw new Error(txResource);
 
-    const [data, dest, meta] = encodeTx("registrar.add-token", {
-      token: fv.token,
-    });
+    const [data, dest, meta] = encodeTx(
+      "registrar.add-token",
+      {
+        token: fv.token,
+      },
+      { title: fv.title, description: fv.description, content: null as never }
+    );
 
     const { wallet, txMeta } = txResource;
     await sendTx({
@@ -27,8 +31,6 @@ export default function useSubmit() {
         type: "evm",
         val: createTx(wallet.address, "multisig.submit-transaction", {
           multisig,
-          title: fv.title,
-          description: fv.description,
           destination: dest,
           value: "0",
           data,

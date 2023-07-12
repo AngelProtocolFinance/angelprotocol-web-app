@@ -57,17 +57,16 @@ export default function useCreateFund() {
       expiryHeight: expiryHeight === "" ? "0" : expiryHeight,
     };
 
-    const [data, dest, meta] = encodeTx(
-      "index-fund.create-fund",
-      newFund,
-      newFund
-    );
+    const [data, dest, meta] = encodeTx("index-fund.create-fund", newFund, {
+      title: getValues("title"),
+      description: getValues("description"),
+      content: newFund,
+    });
 
     const { wallet, txMeta } = txResource;
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig,
-      title: getValues("title"),
-      description: getValues("description"),
+
       destination: dest,
       value: "0",
       data,

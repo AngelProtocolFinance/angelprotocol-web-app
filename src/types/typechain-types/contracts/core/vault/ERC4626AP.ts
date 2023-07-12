@@ -34,7 +34,7 @@ export interface ERC4626APInterface extends utils.Interface {
     "convertToAssets(uint256)": FunctionFragment;
     "convertToShares(uint256)": FunctionFragment;
     "decimals()": FunctionFragment;
-    "deposit(uint256,uint32)": FunctionFragment;
+    "depositERC4626(address,uint256,uint32)": FunctionFragment;
     "getPricePerFullShare()": FunctionFragment;
     "maxDeposit(uint32)": FunctionFragment;
     "maxMint(uint32)": FunctionFragment;
@@ -46,7 +46,7 @@ export interface ERC4626APInterface extends utils.Interface {
     "previewMint(uint256)": FunctionFragment;
     "previewRedeem(uint256)": FunctionFragment;
     "previewWithdraw(uint256)": FunctionFragment;
-    "redeem(uint256,address,uint32)": FunctionFragment;
+    "redeemERC4626(uint256,address,uint32)": FunctionFragment;
     "symbol()": FunctionFragment;
     "totalAssets()": FunctionFragment;
     "totalSupply()": FunctionFragment;
@@ -62,7 +62,7 @@ export interface ERC4626APInterface extends utils.Interface {
       | "convertToAssets"
       | "convertToShares"
       | "decimals"
-      | "deposit"
+      | "depositERC4626"
       | "getPricePerFullShare"
       | "maxDeposit"
       | "maxMint"
@@ -74,7 +74,7 @@ export interface ERC4626APInterface extends utils.Interface {
       | "previewMint"
       | "previewRedeem"
       | "previewWithdraw"
-      | "redeem"
+      | "redeemERC4626"
       | "symbol"
       | "totalAssets"
       | "totalSupply"
@@ -98,8 +98,12 @@ export interface ERC4626APInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "deposit",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    functionFragment: "depositERC4626",
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "getPricePerFullShare",
@@ -143,7 +147,7 @@ export interface ERC4626APInterface extends utils.Interface {
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "redeem",
+    functionFragment: "redeemERC4626",
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
@@ -191,7 +195,10 @@ export interface ERC4626APInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "deposit", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "depositERC4626",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "getPricePerFullShare",
     data: BytesLike
@@ -221,7 +228,10 @@ export interface ERC4626APInterface extends utils.Interface {
     functionFragment: "previewWithdraw",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "redeem", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "redeemERC4626",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "totalAssets",
@@ -239,28 +249,28 @@ export interface ERC4626APInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
 
   events: {
-    "Deposit(address,uint32,uint256,uint256)": EventFragment;
+    "DepositERC4626(address,uint32,uint256,uint256)": EventFragment;
     "Transfer(uint32,uint32,uint256)": EventFragment;
-    "Withdraw(address,address,uint32,uint256,uint256)": EventFragment;
+    "WithdrawERC4626(address,address,uint32,uint256,uint256)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "Deposit"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "DepositERC4626"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Withdraw"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "WithdrawERC4626"): EventFragment;
 }
 
-export interface DepositEventObject {
+export interface DepositERC4626EventObject {
   caller: string;
   owner: number;
   assets: BigNumber;
   shares: BigNumber;
 }
-export type DepositEvent = TypedEvent<
+export type DepositERC4626Event = TypedEvent<
   [string, number, BigNumber, BigNumber],
-  DepositEventObject
+  DepositERC4626EventObject
 >;
 
-export type DepositEventFilter = TypedEventFilter<DepositEvent>;
+export type DepositERC4626EventFilter = TypedEventFilter<DepositERC4626Event>;
 
 export interface TransferEventObject {
   from: number;
@@ -274,19 +284,19 @@ export type TransferEvent = TypedEvent<
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
-export interface WithdrawEventObject {
+export interface WithdrawERC4626EventObject {
   caller: string;
   receiver: string;
   owner: number;
   assets: BigNumber;
   shares: BigNumber;
 }
-export type WithdrawEvent = TypedEvent<
+export type WithdrawERC4626Event = TypedEvent<
   [string, string, number, BigNumber, BigNumber],
-  WithdrawEventObject
+  WithdrawERC4626EventObject
 >;
 
-export type WithdrawEventFilter = TypedEventFilter<WithdrawEvent>;
+export type WithdrawERC4626EventFilter = TypedEventFilter<WithdrawERC4626Event>;
 
 export interface ERC4626AP extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -334,7 +344,8 @@ export interface ERC4626AP extends BaseContract {
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
-    deposit(
+    depositERC4626(
+      strategy: PromiseOrValue<string>,
       assets: PromiseOrValue<BigNumberish>,
       receiver: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -390,7 +401,7 @@ export interface ERC4626AP extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
-    redeem(
+    redeemERC4626(
       shares: PromiseOrValue<BigNumberish>,
       receiver: PromiseOrValue<string>,
       owner: PromiseOrValue<BigNumberish>,
@@ -404,8 +415,8 @@ export interface ERC4626AP extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
-      to: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -443,7 +454,8 @@ export interface ERC4626AP extends BaseContract {
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
-  deposit(
+  depositERC4626(
+    strategy: PromiseOrValue<string>,
     assets: PromiseOrValue<BigNumberish>,
     receiver: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -499,7 +511,7 @@ export interface ERC4626AP extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  redeem(
+  redeemERC4626(
     shares: PromiseOrValue<BigNumberish>,
     receiver: PromiseOrValue<string>,
     owner: PromiseOrValue<BigNumberish>,
@@ -513,8 +525,8 @@ export interface ERC4626AP extends BaseContract {
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    to: PromiseOrValue<BigNumberish>,
-    amount: PromiseOrValue<BigNumberish>,
+    arg0: PromiseOrValue<BigNumberish>,
+    arg1: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -552,7 +564,8 @@ export interface ERC4626AP extends BaseContract {
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
-    deposit(
+    depositERC4626(
+      strategy: PromiseOrValue<string>,
       assets: PromiseOrValue<BigNumberish>,
       receiver: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -608,7 +621,7 @@ export interface ERC4626AP extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    redeem(
+    redeemERC4626(
       shares: PromiseOrValue<BigNumberish>,
       receiver: PromiseOrValue<string>,
       owner: PromiseOrValue<BigNumberish>,
@@ -622,8 +635,8 @@ export interface ERC4626AP extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      to: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
@@ -643,44 +656,40 @@ export interface ERC4626AP extends BaseContract {
   };
 
   filters: {
-    "Deposit(address,uint32,uint256,uint256)"(
-      caller?: PromiseOrValue<string> | null,
-      owner?: PromiseOrValue<BigNumberish> | null,
+    "DepositERC4626(address,uint32,uint256,uint256)"(
+      caller?: null,
+      owner?: null,
       assets?: null,
       shares?: null
-    ): DepositEventFilter;
-    Deposit(
-      caller?: PromiseOrValue<string> | null,
-      owner?: PromiseOrValue<BigNumberish> | null,
+    ): DepositERC4626EventFilter;
+    DepositERC4626(
+      caller?: null,
+      owner?: null,
       assets?: null,
       shares?: null
-    ): DepositEventFilter;
+    ): DepositERC4626EventFilter;
 
     "Transfer(uint32,uint32,uint256)"(
-      from?: PromiseOrValue<BigNumberish> | null,
-      to?: PromiseOrValue<BigNumberish> | null,
+      from?: null,
+      to?: null,
       value?: null
     ): TransferEventFilter;
-    Transfer(
-      from?: PromiseOrValue<BigNumberish> | null,
-      to?: PromiseOrValue<BigNumberish> | null,
-      value?: null
-    ): TransferEventFilter;
+    Transfer(from?: null, to?: null, value?: null): TransferEventFilter;
 
-    "Withdraw(address,address,uint32,uint256,uint256)"(
-      caller?: PromiseOrValue<string> | null,
-      receiver?: PromiseOrValue<string> | null,
-      owner?: PromiseOrValue<BigNumberish> | null,
+    "WithdrawERC4626(address,address,uint32,uint256,uint256)"(
+      caller?: null,
+      receiver?: null,
+      owner?: null,
       assets?: null,
       shares?: null
-    ): WithdrawEventFilter;
-    Withdraw(
-      caller?: PromiseOrValue<string> | null,
-      receiver?: PromiseOrValue<string> | null,
-      owner?: PromiseOrValue<BigNumberish> | null,
+    ): WithdrawERC4626EventFilter;
+    WithdrawERC4626(
+      caller?: null,
+      receiver?: null,
+      owner?: null,
       assets?: null,
       shares?: null
-    ): WithdrawEventFilter;
+    ): WithdrawERC4626EventFilter;
   };
 
   estimateGas: {
@@ -703,7 +712,8 @@ export interface ERC4626AP extends BaseContract {
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
-    deposit(
+    depositERC4626(
+      strategy: PromiseOrValue<string>,
       assets: PromiseOrValue<BigNumberish>,
       receiver: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -759,7 +769,7 @@ export interface ERC4626AP extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    redeem(
+    redeemERC4626(
       shares: PromiseOrValue<BigNumberish>,
       receiver: PromiseOrValue<string>,
       owner: PromiseOrValue<BigNumberish>,
@@ -773,8 +783,8 @@ export interface ERC4626AP extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      to: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -813,7 +823,8 @@ export interface ERC4626AP extends BaseContract {
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    deposit(
+    depositERC4626(
+      strategy: PromiseOrValue<string>,
       assets: PromiseOrValue<BigNumberish>,
       receiver: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -871,7 +882,7 @@ export interface ERC4626AP extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    redeem(
+    redeemERC4626(
       shares: PromiseOrValue<BigNumberish>,
       receiver: PromiseOrValue<string>,
       owner: PromiseOrValue<BigNumberish>,
@@ -885,8 +896,8 @@ export interface ERC4626AP extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      to: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

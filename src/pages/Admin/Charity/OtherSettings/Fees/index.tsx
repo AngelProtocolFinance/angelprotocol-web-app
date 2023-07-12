@@ -96,19 +96,22 @@ export default function Fees() {
         return showModal(TxPrompt, { error: "No changes detected" });
       }
 
+      const { wallet, txMeta, isDelegated } = txResource;
       const [data, dest, meta] = encodeTx(
         "accounts.update-fee-settings",
         update,
-        diff
+        {
+          title: `Update fee settings`,
+          description: `Update fee settings for endowment id:${id} by member:${wallet?.address}`,
+          content: diff,
+        }
       );
 
-      const { wallet, txMeta, isDelegated } = txResource;
       const tx: SimulContractTx = isDelegated
         ? { from: wallet.address, to: dest, data }
         : createTx(wallet.address, "multisig.submit-transaction", {
             multisig,
-            title: `Update fee settings`,
-            description: `Update fee settings for endowment id:${id} by member:${wallet?.address}`,
+
             destination: dest,
             value: "0",
             data,

@@ -1,5 +1,5 @@
-import { TxMeta } from "contracts/createTx/types";
 import { TagPayload } from "types/third-party/redux";
+import { TxMeta } from "types/tx";
 import { ApesTag, invalidateApesTags } from "services/apes";
 import { invalidateJunoTags } from "services/juno";
 import { defaultProposalTags } from "services/juno/tags";
@@ -22,8 +22,8 @@ export function getTagPayloads(type?: TxMeta["id"]): TagPayload[] {
       _tags.push("index-fund.config");
       break;
 
-    case "multisig.add-owner":
-    case "multisig.remove-owner":
+    case "multisig.add-owners":
+    case "multisig.remove-owners":
       _tags.push("multisig.members");
       _tags.push("multisig.threshold"); //cases where threshold > members.length
       break;
@@ -34,6 +34,14 @@ export function getTagPayloads(type?: TxMeta["id"]): TagPayload[] {
 
     case "multisig.change-auto-execute":
       _tags.push("multisig.require-execution");
+      break;
+
+    case "multisig/review.confirm-prop":
+      _tags.push("multisig/review.prop-confirms");
+      break;
+
+    case "multisig/review.execute-prop":
+      _tags.push("multisig/review.proposal");
       break;
 
     case "erc20.transfer":

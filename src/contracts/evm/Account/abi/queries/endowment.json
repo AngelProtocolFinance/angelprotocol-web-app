@@ -89,11 +89,6 @@
             "type": "tuple"
           },
           {
-            "internalType": "bool",
-            "name": "kycDonorsOnly",
-            "type": "bool"
-          },
-          {
             "internalType": "uint256",
             "name": "pendingRedemptions",
             "type": "uint256"

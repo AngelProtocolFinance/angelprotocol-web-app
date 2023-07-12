@@ -1,4 +1,4 @@
-import { MultisigMemberMeta } from "contracts/createTx/meta";
+import { MultisigMemberMeta } from "types/tx";
 import KeyValue from "./common/KeyValue";
 import PreviewContainer from "./common/PreviewContainer";
 

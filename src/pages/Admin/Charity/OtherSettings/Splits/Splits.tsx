@@ -65,19 +65,18 @@ export default function Splits() {
         return showModal(TxPrompt, { error: "No changes detected" });
       }
 
-      const [data, dest, meta] = encodeTx(
-        "accounts.update-settings",
-        update,
-        diff
-      );
-
       const { wallet, txMeta, isDelegated } = txResource;
+      const [data, dest, meta] = encodeTx("accounts.update-settings", update, {
+        title: `Update splits`,
+        description: `Update splits for endowment id:${id} by member:${wallet?.address}`,
+        content: diff,
+      });
+
       const tx: SimulContractTx = isDelegated
         ? { from: wallet.address, to: dest, data }
         : createTx(wallet.address, "multisig.submit-transaction", {
             multisig,
-            title: `Update splits`,
-            description: `Update splits for endowment id:${id} by member:${wallet?.address}`,
+
             destination: dest,
             value: "0",
             data,

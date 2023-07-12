@@ -82,7 +82,7 @@ export interface APVault_V1Interface extends utils.Interface {
     "convertToShares(uint256)": FunctionFragment;
     "decimals()": FunctionFragment;
     "deposit(uint32,address,uint256)": FunctionFragment;
-    "deposit(uint256,uint32)": FunctionFragment;
+    "depositERC4626(address,uint256,uint32)": FunctionFragment;
     "getPricePerFullShare()": FunctionFragment;
     "getVaultConfig()": FunctionFragment;
     "harvest(uint32[])": FunctionFragment;
@@ -96,9 +96,10 @@ export interface APVault_V1Interface extends utils.Interface {
     "previewMint(uint256)": FunctionFragment;
     "previewRedeem(uint256)": FunctionFragment;
     "previewWithdraw(uint256)": FunctionFragment;
+    "principleByAccountId(uint32)": FunctionFragment;
     "redeem(uint32,uint256)": FunctionFragment;
-    "redeem(uint256,address,uint32)": FunctionFragment;
     "redeemAll(uint32)": FunctionFragment;
+    "redeemERC4626(uint256,address,uint32)": FunctionFragment;
     "setVaultConfig((uint8,bytes4,address,address,address,address,string,string,address))": FunctionFragment;
     "symbol()": FunctionFragment;
     "totalAssets()": FunctionFragment;
@@ -116,8 +117,8 @@ export interface APVault_V1Interface extends utils.Interface {
       | "convertToAssets"
       | "convertToShares"
       | "decimals"
-      | "deposit(uint32,address,uint256)"
-      | "deposit(uint256,uint32)"
+      | "deposit"
+      | "depositERC4626"
       | "getPricePerFullShare"
       | "getVaultConfig"
       | "harvest"
@@ -131,9 +132,10 @@ export interface APVault_V1Interface extends utils.Interface {
       | "previewMint"
       | "previewRedeem"
       | "previewWithdraw"
-      | "redeem(uint32,uint256)"
-      | "redeem(uint256,address,uint32)"
+      | "principleByAccountId"
+      | "redeem"
       | "redeemAll"
+      | "redeemERC4626"
       | "setVaultConfig"
       | "symbol"
       | "totalAssets"
@@ -159,7 +161,7 @@ export interface APVault_V1Interface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "deposit(uint32,address,uint256)",
+    functionFragment: "deposit",
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
@@ -167,8 +169,12 @@ export interface APVault_V1Interface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "deposit(uint256,uint32)",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    functionFragment: "depositERC4626",
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "getPricePerFullShare",
@@ -220,20 +226,24 @@ export interface APVault_V1Interface extends utils.Interface {
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "redeem(uint32,uint256)",
+    functionFragment: "principleByAccountId",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "redeem",
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "redeem(uint256,address,uint32)",
+    functionFragment: "redeemAll",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "redeemERC4626",
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>
     ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "redeemAll",
-    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "setVaultConfig",
@@ -284,12 +294,9 @@ export interface APVault_V1Interface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "deposit", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "deposit(uint32,address,uint256)",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "deposit(uint256,uint32)",
+    functionFragment: "depositERC4626",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -327,14 +334,15 @@ export interface APVault_V1Interface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "redeem(uint32,uint256)",
+    functionFragment: "principleByAccountId",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "redeem(uint256,address,uint32)",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: "redeem", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "redeemAll", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "redeemERC4626",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "setVaultConfig",
     data: BytesLike
@@ -360,67 +368,71 @@ export interface APVault_V1Interface extends utils.Interface {
   decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
 
   events: {
-    "Deposit(address,uint32,uint256,uint256)": EventFragment;
-    "DepositMade(uint32,uint8,address,uint256)": EventFragment;
-    "Harvest(uint32[])": EventFragment;
-    "Redemption(uint32,uint8,address,uint256)": EventFragment;
+    "Deposit(uint32,uint8,address,uint256)": EventFragment;
+    "DepositERC4626(address,uint32,uint256,uint256)": EventFragment;
+    "Redeem(uint32,uint8,address,uint256)": EventFragment;
+    "RewardsHarvested(uint32[])": EventFragment;
     "Transfer(uint32,uint32,uint256)": EventFragment;
-    "Withdraw(address,address,uint32,uint256,uint256)": EventFragment;
+    "WithdrawERC4626(address,address,uint32,uint256,uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "Deposit"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "DepositMade"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Harvest"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Redemption"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "DepositERC4626"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Redeem"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "RewardsHarvested"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Withdraw"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "WithdrawERC4626"): EventFragment;
 }
 
 export interface DepositEventObject {
-  caller: string;
-  owner: number;
-  assets: BigNumber;
-  shares: BigNumber;
-}
-export type DepositEvent = TypedEvent<
-  [string, number, BigNumber, BigNumber],
-  DepositEventObject
->;
-
-export type DepositEventFilter = TypedEventFilter<DepositEvent>;
-
-export interface DepositMadeEventObject {
   accountId: number;
   vaultType: number;
   tokenDeposited: string;
   amtDeposited: BigNumber;
 }
-export type DepositMadeEvent = TypedEvent<
+export type DepositEvent = TypedEvent<
   [number, number, string, BigNumber],
-  DepositMadeEventObject
+  DepositEventObject
 >;
 
-export type DepositMadeEventFilter = TypedEventFilter<DepositMadeEvent>;
+export type DepositEventFilter = TypedEventFilter<DepositEvent>;
 
-export interface HarvestEventObject {
-  accountIds: number[];
+export interface DepositERC4626EventObject {
+  caller: string;
+  owner: number;
+  assets: BigNumber;
+  shares: BigNumber;
 }
-export type HarvestEvent = TypedEvent<[number[]], HarvestEventObject>;
+export type DepositERC4626Event = TypedEvent<
+  [string, number, BigNumber, BigNumber],
+  DepositERC4626EventObject
+>;
 
-export type HarvestEventFilter = TypedEventFilter<HarvestEvent>;
+export type DepositERC4626EventFilter = TypedEventFilter<DepositERC4626Event>;
 
-export interface RedemptionEventObject {
+export interface RedeemEventObject {
   accountId: number;
   vaultType: number;
   tokenRedeemed: string;
   amtRedeemed: BigNumber;
 }
-export type RedemptionEvent = TypedEvent<
+export type RedeemEvent = TypedEvent<
   [number, number, string, BigNumber],
-  RedemptionEventObject
+  RedeemEventObject
 >;
 
-export type RedemptionEventFilter = TypedEventFilter<RedemptionEvent>;
+export type RedeemEventFilter = TypedEventFilter<RedeemEvent>;
+
+export interface RewardsHarvestedEventObject {
+  accountIds: number[];
+}
+export type RewardsHarvestedEvent = TypedEvent<
+  [number[]],
+  RewardsHarvestedEventObject
+>;
+
+export type RewardsHarvestedEventFilter =
+  TypedEventFilter<RewardsHarvestedEvent>;
 
 export interface TransferEventObject {
   from: number;
@@ -434,19 +446,19 @@ export type TransferEvent = TypedEvent<
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
-export interface WithdrawEventObject {
+export interface WithdrawERC4626EventObject {
   caller: string;
   receiver: string;
   owner: number;
   assets: BigNumber;
   shares: BigNumber;
 }
-export type WithdrawEvent = TypedEvent<
+export type WithdrawERC4626Event = TypedEvent<
   [string, string, number, BigNumber, BigNumber],
-  WithdrawEventObject
+  WithdrawERC4626EventObject
 >;
 
-export type WithdrawEventFilter = TypedEventFilter<WithdrawEvent>;
+export type WithdrawERC4626EventFilter = TypedEventFilter<WithdrawERC4626Event>;
 
 export interface APVault_V1 extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -494,14 +506,15 @@ export interface APVault_V1 extends BaseContract {
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
-    "deposit(uint32,address,uint256)"(
+    deposit(
       accountId: PromiseOrValue<BigNumberish>,
       token: PromiseOrValue<string>,
       amt: PromiseOrValue<BigNumberish>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    "deposit(uint256,uint32)"(
+    depositERC4626(
+      strategy: PromiseOrValue<string>,
       assets: PromiseOrValue<BigNumberish>,
       receiver: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -566,22 +579,32 @@ export interface APVault_V1 extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
-    "redeem(uint32,uint256)"(
+    principleByAccountId(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<
+      [BigNumber, BigNumber] & {
+        baseToken: BigNumber;
+        costBasis_withPrecision: BigNumber;
+      }
+    >;
+
+    redeem(
       accountId: PromiseOrValue<BigNumberish>,
       amt: PromiseOrValue<BigNumberish>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    "redeem(uint256,address,uint32)"(
+    redeemAll(
+      accountId: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    redeemERC4626(
       shares: PromiseOrValue<BigNumberish>,
       receiver: PromiseOrValue<string>,
       owner: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    redeemAll(
-      accountId: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     setVaultConfig(
@@ -596,8 +619,8 @@ export interface APVault_V1 extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
-      to: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -661,14 +684,15 @@ export interface APVault_V1 extends BaseContract {
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
-  "deposit(uint32,address,uint256)"(
+  deposit(
     accountId: PromiseOrValue<BigNumberish>,
     token: PromiseOrValue<string>,
     amt: PromiseOrValue<BigNumberish>,
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  "deposit(uint256,uint32)"(
+  depositERC4626(
+    strategy: PromiseOrValue<string>,
     assets: PromiseOrValue<BigNumberish>,
     receiver: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -733,22 +757,32 @@ export interface APVault_V1 extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  "redeem(uint32,uint256)"(
+  principleByAccountId(
+    arg0: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<
+    [BigNumber, BigNumber] & {
+      baseToken: BigNumber;
+      costBasis_withPrecision: BigNumber;
+    }
+  >;
+
+  redeem(
     accountId: PromiseOrValue<BigNumberish>,
     amt: PromiseOrValue<BigNumberish>,
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  "redeem(uint256,address,uint32)"(
+  redeemAll(
+    accountId: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  redeemERC4626(
     shares: PromiseOrValue<BigNumberish>,
     receiver: PromiseOrValue<string>,
     owner: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  redeemAll(
-    accountId: PromiseOrValue<BigNumberish>,
-    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   setVaultConfig(
@@ -763,8 +797,8 @@ export interface APVault_V1 extends BaseContract {
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    to: PromiseOrValue<BigNumberish>,
-    amount: PromiseOrValue<BigNumberish>,
+    arg0: PromiseOrValue<BigNumberish>,
+    arg1: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -818,14 +852,15 @@ export interface APVault_V1 extends BaseContract {
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
-    "deposit(uint32,address,uint256)"(
+    deposit(
       accountId: PromiseOrValue<BigNumberish>,
       token: PromiseOrValue<string>,
       amt: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    "deposit(uint256,uint32)"(
+    depositERC4626(
+      strategy: PromiseOrValue<string>,
       assets: PromiseOrValue<BigNumberish>,
       receiver: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -890,23 +925,33 @@ export interface APVault_V1 extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    "redeem(uint32,uint256)"(
+    principleByAccountId(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<
+      [BigNumber, BigNumber] & {
+        baseToken: BigNumber;
+        costBasis_withPrecision: BigNumber;
+      }
+    >;
+
+    redeem(
       accountId: PromiseOrValue<BigNumberish>,
       amt: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<IVault.RedemptionResponseStructOutput>;
 
-    "redeem(uint256,address,uint32)"(
+    redeemAll(
+      accountId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<IVault.RedemptionResponseStructOutput>;
+
+    redeemERC4626(
       shares: PromiseOrValue<BigNumberish>,
       receiver: PromiseOrValue<string>,
       owner: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
-
-    redeemAll(
-      accountId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<IVault.RedemptionResponseStructOutput>;
 
     setVaultConfig(
       _newConfig: IVault.VaultConfigStruct,
@@ -920,8 +965,8 @@ export interface APVault_V1 extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      to: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
@@ -967,77 +1012,71 @@ export interface APVault_V1 extends BaseContract {
   };
 
   filters: {
-    "Deposit(address,uint32,uint256,uint256)"(
-      caller?: PromiseOrValue<string> | null,
-      owner?: PromiseOrValue<BigNumberish> | null,
-      assets?: null,
-      shares?: null
+    "Deposit(uint32,uint8,address,uint256)"(
+      accountId?: null,
+      vaultType?: null,
+      tokenDeposited?: null,
+      amtDeposited?: null
     ): DepositEventFilter;
     Deposit(
-      caller?: PromiseOrValue<string> | null,
-      owner?: PromiseOrValue<BigNumberish> | null,
-      assets?: null,
-      shares?: null
+      accountId?: null,
+      vaultType?: null,
+      tokenDeposited?: null,
+      amtDeposited?: null
     ): DepositEventFilter;
 
-    "DepositMade(uint32,uint8,address,uint256)"(
-      accountId?: PromiseOrValue<BigNumberish> | null,
-      vaultType?: null,
-      tokenDeposited?: null,
-      amtDeposited?: null
-    ): DepositMadeEventFilter;
-    DepositMade(
-      accountId?: PromiseOrValue<BigNumberish> | null,
-      vaultType?: null,
-      tokenDeposited?: null,
-      amtDeposited?: null
-    ): DepositMadeEventFilter;
+    "DepositERC4626(address,uint32,uint256,uint256)"(
+      caller?: null,
+      owner?: null,
+      assets?: null,
+      shares?: null
+    ): DepositERC4626EventFilter;
+    DepositERC4626(
+      caller?: null,
+      owner?: null,
+      assets?: null,
+      shares?: null
+    ): DepositERC4626EventFilter;
 
-    "Harvest(uint32[])"(
-      accountIds?: PromiseOrValue<BigNumberish>[] | null
-    ): HarvestEventFilter;
-    Harvest(
-      accountIds?: PromiseOrValue<BigNumberish>[] | null
-    ): HarvestEventFilter;
-
-    "Redemption(uint32,uint8,address,uint256)"(
-      accountId?: PromiseOrValue<BigNumberish> | null,
+    "Redeem(uint32,uint8,address,uint256)"(
+      accountId?: null,
       vaultType?: null,
       tokenRedeemed?: null,
       amtRedeemed?: null
-    ): RedemptionEventFilter;
-    Redemption(
-      accountId?: PromiseOrValue<BigNumberish> | null,
+    ): RedeemEventFilter;
+    Redeem(
+      accountId?: null,
       vaultType?: null,
       tokenRedeemed?: null,
       amtRedeemed?: null
-    ): RedemptionEventFilter;
+    ): RedeemEventFilter;
+
+    "RewardsHarvested(uint32[])"(
+      accountIds?: null
+    ): RewardsHarvestedEventFilter;
+    RewardsHarvested(accountIds?: null): RewardsHarvestedEventFilter;
 
     "Transfer(uint32,uint32,uint256)"(
-      from?: PromiseOrValue<BigNumberish> | null,
-      to?: PromiseOrValue<BigNumberish> | null,
+      from?: null,
+      to?: null,
       value?: null
     ): TransferEventFilter;
-    Transfer(
-      from?: PromiseOrValue<BigNumberish> | null,
-      to?: PromiseOrValue<BigNumberish> | null,
-      value?: null
-    ): TransferEventFilter;
+    Transfer(from?: null, to?: null, value?: null): TransferEventFilter;
 
-    "Withdraw(address,address,uint32,uint256,uint256)"(
-      caller?: PromiseOrValue<string> | null,
-      receiver?: PromiseOrValue<string> | null,
-      owner?: PromiseOrValue<BigNumberish> | null,
+    "WithdrawERC4626(address,address,uint32,uint256,uint256)"(
+      caller?: null,
+      receiver?: null,
+      owner?: null,
       assets?: null,
       shares?: null
-    ): WithdrawEventFilter;
-    Withdraw(
-      caller?: PromiseOrValue<string> | null,
-      receiver?: PromiseOrValue<string> | null,
-      owner?: PromiseOrValue<BigNumberish> | null,
+    ): WithdrawERC4626EventFilter;
+    WithdrawERC4626(
+      caller?: null,
+      receiver?: null,
+      owner?: null,
       assets?: null,
       shares?: null
-    ): WithdrawEventFilter;
+    ): WithdrawERC4626EventFilter;
   };
 
   estimateGas: {
@@ -1060,14 +1099,15 @@ export interface APVault_V1 extends BaseContract {
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
-    "deposit(uint32,address,uint256)"(
+    deposit(
       accountId: PromiseOrValue<BigNumberish>,
       token: PromiseOrValue<string>,
       amt: PromiseOrValue<BigNumberish>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    "deposit(uint256,uint32)"(
+    depositERC4626(
+      strategy: PromiseOrValue<string>,
       assets: PromiseOrValue<BigNumberish>,
       receiver: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -1130,22 +1170,27 @@ export interface APVault_V1 extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    "redeem(uint32,uint256)"(
+    principleByAccountId(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    redeem(
       accountId: PromiseOrValue<BigNumberish>,
       amt: PromiseOrValue<BigNumberish>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    "redeem(uint256,address,uint32)"(
+    redeemAll(
+      accountId: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    redeemERC4626(
       shares: PromiseOrValue<BigNumberish>,
       receiver: PromiseOrValue<string>,
       owner: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    redeemAll(
-      accountId: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     setVaultConfig(
@@ -1160,8 +1205,8 @@ export interface APVault_V1 extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      to: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1202,14 +1247,15 @@ export interface APVault_V1 extends BaseContract {
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    "deposit(uint32,address,uint256)"(
+    deposit(
       accountId: PromiseOrValue<BigNumberish>,
       token: PromiseOrValue<string>,
       amt: PromiseOrValue<BigNumberish>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    "deposit(uint256,uint32)"(
+    depositERC4626(
+      strategy: PromiseOrValue<string>,
       assets: PromiseOrValue<BigNumberish>,
       receiver: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -1274,22 +1320,27 @@ export interface APVault_V1 extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    "redeem(uint32,uint256)"(
+    principleByAccountId(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    redeem(
       accountId: PromiseOrValue<BigNumberish>,
       amt: PromiseOrValue<BigNumberish>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    "redeem(uint256,address,uint32)"(
+    redeemAll(
+      accountId: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    redeemERC4626(
       shares: PromiseOrValue<BigNumberish>,
       receiver: PromiseOrValue<string>,
       owner: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    redeemAll(
-      accountId: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     setVaultConfig(
@@ -1304,8 +1355,8 @@ export interface APVault_V1 extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      to: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

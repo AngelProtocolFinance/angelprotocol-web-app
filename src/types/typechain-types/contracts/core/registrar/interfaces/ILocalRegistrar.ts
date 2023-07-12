@@ -90,7 +90,7 @@ export declare namespace LocalRegistrarLib {
   };
 }
 
-export declare namespace AngelCoreStruct {
+export declare namespace LibAccounts {
   export type FeeSettingStruct = {
     payoutAddress: PromiseOrValue<string>;
     bps: PromiseOrValue<BigNumberish>;
@@ -302,62 +302,61 @@ export interface ILocalRegistrarInterface extends utils.Interface {
   ): Result;
 
   events: {
-    "AccountsContractStorageChanged(string,string)": EventFragment;
-    "AngelProtocolParamsChanged(tuple)": EventFragment;
-    "FeeUpdated(uint8,uint256,address)": EventFragment;
+    "AccountsContractStorageUpdated(string,string)": EventFragment;
+    "AngelProtocolParamsUpdated()": EventFragment;
+    "FeeSettingsUpdated(uint8,uint256,address)": EventFragment;
     "GasFeeUpdated(address,uint256)": EventFragment;
-    "RebalanceParamsChanged(tuple)": EventFragment;
-    "StrategyApprovalChanged(bytes4,uint8)": EventFragment;
-    "StrategyParamsChanged(bytes4,address,address,uint8)": EventFragment;
-    "TokenAcceptanceChanged(address,bool)": EventFragment;
+    "RebalanceParamsUpdated()": EventFragment;
+    "StrategyApprovalUpdated(bytes4,uint8)": EventFragment;
+    "StrategyParamsUpdated(bytes4,address,address,uint8)": EventFragment;
+    "TokenAcceptanceUpdated(address,bool)": EventFragment;
   };
 
   getEvent(
-    nameOrSignatureOrTopic: "AccountsContractStorageChanged"
+    nameOrSignatureOrTopic: "AccountsContractStorageUpdated"
   ): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "AngelProtocolParamsChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "FeeUpdated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "AngelProtocolParamsUpdated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "FeeSettingsUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "GasFeeUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RebalanceParamsChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "StrategyApprovalChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "StrategyParamsChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "TokenAcceptanceChanged"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "RebalanceParamsUpdated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "StrategyApprovalUpdated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "StrategyParamsUpdated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "TokenAcceptanceUpdated"): EventFragment;
 }
 
-export interface AccountsContractStorageChangedEventObject {
+export interface AccountsContractStorageUpdatedEventObject {
   _chainName: string;
   _accountsContractAddress: string;
 }
-export type AccountsContractStorageChangedEvent = TypedEvent<
+export type AccountsContractStorageUpdatedEvent = TypedEvent<
   [string, string],
-  AccountsContractStorageChangedEventObject
+  AccountsContractStorageUpdatedEventObject
 >;
 
-export type AccountsContractStorageChangedEventFilter =
-  TypedEventFilter<AccountsContractStorageChangedEvent>;
+export type AccountsContractStorageUpdatedEventFilter =
+  TypedEventFilter<AccountsContractStorageUpdatedEvent>;
 
-export interface AngelProtocolParamsChangedEventObject {
-  _newAngelProtocolParams: LocalRegistrarLib.AngelProtocolParamsStructOutput;
-}
-export type AngelProtocolParamsChangedEvent = TypedEvent<
-  [LocalRegistrarLib.AngelProtocolParamsStructOutput],
-  AngelProtocolParamsChangedEventObject
+export interface AngelProtocolParamsUpdatedEventObject {}
+export type AngelProtocolParamsUpdatedEvent = TypedEvent<
+  [],
+  AngelProtocolParamsUpdatedEventObject
 >;
 
-export type AngelProtocolParamsChangedEventFilter =
-  TypedEventFilter<AngelProtocolParamsChangedEvent>;
+export type AngelProtocolParamsUpdatedEventFilter =
+  TypedEventFilter<AngelProtocolParamsUpdatedEvent>;
 
-export interface FeeUpdatedEventObject {
-  _fee: number;
-  _rate: BigNumber;
-  _payout: string;
+export interface FeeSettingsUpdatedEventObject {
+  _feeType: number;
+  _bpsRate: BigNumber;
+  _payoutAddress: string;
 }
-export type FeeUpdatedEvent = TypedEvent<
+export type FeeSettingsUpdatedEvent = TypedEvent<
   [number, BigNumber, string],
-  FeeUpdatedEventObject
+  FeeSettingsUpdatedEventObject
 >;
 
-export type FeeUpdatedEventFilter = TypedEventFilter<FeeUpdatedEvent>;
+export type FeeSettingsUpdatedEventFilter =
+  TypedEventFilter<FeeSettingsUpdatedEvent>;
 
 export interface GasFeeUpdatedEventObject {
   _tokenAddr: string;
@@ -370,54 +369,52 @@ export type GasFeeUpdatedEvent = TypedEvent<
 
 export type GasFeeUpdatedEventFilter = TypedEventFilter<GasFeeUpdatedEvent>;
 
-export interface RebalanceParamsChangedEventObject {
-  _newRebalanceParams: LocalRegistrarLib.RebalanceParamsStructOutput;
-}
-export type RebalanceParamsChangedEvent = TypedEvent<
-  [LocalRegistrarLib.RebalanceParamsStructOutput],
-  RebalanceParamsChangedEventObject
+export interface RebalanceParamsUpdatedEventObject {}
+export type RebalanceParamsUpdatedEvent = TypedEvent<
+  [],
+  RebalanceParamsUpdatedEventObject
 >;
 
-export type RebalanceParamsChangedEventFilter =
-  TypedEventFilter<RebalanceParamsChangedEvent>;
+export type RebalanceParamsUpdatedEventFilter =
+  TypedEventFilter<RebalanceParamsUpdatedEvent>;
 
-export interface StrategyApprovalChangedEventObject {
+export interface StrategyApprovalUpdatedEventObject {
   _strategyId: string;
   _approvalState: number;
 }
-export type StrategyApprovalChangedEvent = TypedEvent<
+export type StrategyApprovalUpdatedEvent = TypedEvent<
   [string, number],
-  StrategyApprovalChangedEventObject
+  StrategyApprovalUpdatedEventObject
 >;
 
-export type StrategyApprovalChangedEventFilter =
-  TypedEventFilter<StrategyApprovalChangedEvent>;
+export type StrategyApprovalUpdatedEventFilter =
+  TypedEventFilter<StrategyApprovalUpdatedEvent>;
 
-export interface StrategyParamsChangedEventObject {
+export interface StrategyParamsUpdatedEventObject {
   _strategyId: string;
   _lockAddr: string;
   _liqAddr: string;
   _approvalState: number;
 }
-export type StrategyParamsChangedEvent = TypedEvent<
+export type StrategyParamsUpdatedEvent = TypedEvent<
   [string, string, string, number],
-  StrategyParamsChangedEventObject
+  StrategyParamsUpdatedEventObject
 >;
 
-export type StrategyParamsChangedEventFilter =
-  TypedEventFilter<StrategyParamsChangedEvent>;
+export type StrategyParamsUpdatedEventFilter =
+  TypedEventFilter<StrategyParamsUpdatedEvent>;
 
-export interface TokenAcceptanceChangedEventObject {
+export interface TokenAcceptanceUpdatedEventObject {
   _tokenAddr: string;
   _isAccepted: boolean;
 }
-export type TokenAcceptanceChangedEvent = TypedEvent<
+export type TokenAcceptanceUpdatedEvent = TypedEvent<
   [string, boolean],
-  TokenAcceptanceChangedEventObject
+  TokenAcceptanceUpdatedEventObject
 >;
 
-export type TokenAcceptanceChangedEventFilter =
-  TypedEventFilter<TokenAcceptanceChangedEvent>;
+export type TokenAcceptanceUpdatedEventFilter =
+  TypedEventFilter<TokenAcceptanceUpdatedEvent>;
 
 export interface ILocalRegistrar extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -458,7 +455,7 @@ export interface ILocalRegistrar extends BaseContract {
     getFeeSettingsByFeeType(
       _feeType: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<[AngelCoreStruct.FeeSettingStructOutput]>;
+    ): Promise<[LibAccounts.FeeSettingStructOutput]>;
 
     getGasByToken(
       _tokenAddr: PromiseOrValue<string>,
@@ -557,7 +554,7 @@ export interface ILocalRegistrar extends BaseContract {
   getFeeSettingsByFeeType(
     _feeType: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
-  ): Promise<AngelCoreStruct.FeeSettingStructOutput>;
+  ): Promise<LibAccounts.FeeSettingStructOutput>;
 
   getGasByToken(
     _tokenAddr: PromiseOrValue<string>,
@@ -656,7 +653,7 @@ export interface ILocalRegistrar extends BaseContract {
     getFeeSettingsByFeeType(
       _feeType: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<AngelCoreStruct.FeeSettingStructOutput>;
+    ): Promise<LibAccounts.FeeSettingStructOutput>;
 
     getGasByToken(
       _tokenAddr: PromiseOrValue<string>,
@@ -744,79 +741,68 @@ export interface ILocalRegistrar extends BaseContract {
   };
 
   filters: {
-    "AccountsContractStorageChanged(string,string)"(
-      _chainName?: PromiseOrValue<string> | null,
-      _accountsContractAddress?: PromiseOrValue<string> | null
-    ): AccountsContractStorageChangedEventFilter;
-    AccountsContractStorageChanged(
-      _chainName?: PromiseOrValue<string> | null,
-      _accountsContractAddress?: PromiseOrValue<string> | null
-    ): AccountsContractStorageChangedEventFilter;
+    "AccountsContractStorageUpdated(string,string)"(
+      _chainName?: null,
+      _accountsContractAddress?: null
+    ): AccountsContractStorageUpdatedEventFilter;
+    AccountsContractStorageUpdated(
+      _chainName?: null,
+      _accountsContractAddress?: null
+    ): AccountsContractStorageUpdatedEventFilter;
 
-    "AngelProtocolParamsChanged(tuple)"(
-      _newAngelProtocolParams?: null
-    ): AngelProtocolParamsChangedEventFilter;
-    AngelProtocolParamsChanged(
-      _newAngelProtocolParams?: null
-    ): AngelProtocolParamsChangedEventFilter;
+    "AngelProtocolParamsUpdated()"(): AngelProtocolParamsUpdatedEventFilter;
+    AngelProtocolParamsUpdated(): AngelProtocolParamsUpdatedEventFilter;
 
-    "FeeUpdated(uint8,uint256,address)"(
-      _fee?: null,
-      _rate?: null,
-      _payout?: null
-    ): FeeUpdatedEventFilter;
-    FeeUpdated(
-      _fee?: null,
-      _rate?: null,
-      _payout?: null
-    ): FeeUpdatedEventFilter;
+    "FeeSettingsUpdated(uint8,uint256,address)"(
+      _feeType?: null,
+      _bpsRate?: null,
+      _payoutAddress?: null
+    ): FeeSettingsUpdatedEventFilter;
+    FeeSettingsUpdated(
+      _feeType?: null,
+      _bpsRate?: null,
+      _payoutAddress?: null
+    ): FeeSettingsUpdatedEventFilter;
 
     "GasFeeUpdated(address,uint256)"(
-      _tokenAddr?: PromiseOrValue<string> | null,
+      _tokenAddr?: null,
       _gasFee?: null
     ): GasFeeUpdatedEventFilter;
-    GasFeeUpdated(
-      _tokenAddr?: PromiseOrValue<string> | null,
-      _gasFee?: null
-    ): GasFeeUpdatedEventFilter;
+    GasFeeUpdated(_tokenAddr?: null, _gasFee?: null): GasFeeUpdatedEventFilter;
 
-    "RebalanceParamsChanged(tuple)"(
-      _newRebalanceParams?: null
-    ): RebalanceParamsChangedEventFilter;
-    RebalanceParamsChanged(
-      _newRebalanceParams?: null
-    ): RebalanceParamsChangedEventFilter;
+    "RebalanceParamsUpdated()"(): RebalanceParamsUpdatedEventFilter;
+    RebalanceParamsUpdated(): RebalanceParamsUpdatedEventFilter;
 
-    "StrategyApprovalChanged(bytes4,uint8)"(
-      _strategyId?: PromiseOrValue<BytesLike> | null,
+    "StrategyApprovalUpdated(bytes4,uint8)"(
+      _strategyId?: null,
       _approvalState?: null
-    ): StrategyApprovalChangedEventFilter;
-    StrategyApprovalChanged(
-      _strategyId?: PromiseOrValue<BytesLike> | null,
+    ): StrategyApprovalUpdatedEventFilter;
+    StrategyApprovalUpdated(
+      _strategyId?: null,
       _approvalState?: null
-    ): StrategyApprovalChangedEventFilter;
+    ): StrategyApprovalUpdatedEventFilter;
 
-    "StrategyParamsChanged(bytes4,address,address,uint8)"(
-      _strategyId?: PromiseOrValue<BytesLike> | null,
-      _lockAddr?: PromiseOrValue<string> | null,
-      _liqAddr?: PromiseOrValue<string> | null,
+    "StrategyParamsUpdated(bytes4,address,address,uint8)"(
+      _strategyId?: null,
+      _lockAddr?: null,
+      _liqAddr?: null,
       _approvalState?: null
-    ): StrategyParamsChangedEventFilter;
-    StrategyParamsChanged(
-      _strategyId?: PromiseOrValue<BytesLike> | null,
-      _lockAddr?: PromiseOrValue<string> | null,
-      _liqAddr?: PromiseOrValue<string> | null,
+    ): StrategyParamsUpdatedEventFilter;
+    StrategyParamsUpdated(
+      _strategyId?: null,
+      _lockAddr?: null,
+      _liqAddr?: null,
       _approvalState?: null
-    ): StrategyParamsChangedEventFilter;
+    ): StrategyParamsUpdatedEventFilter;
 
-    "TokenAcceptanceChanged(address,bool)"(
-      _tokenAddr?: PromiseOrValue<string> | null,
+    "TokenAcceptanceUpdated(address,bool)"(
+      _tokenAddr?: null,
       _isAccepted?: null
-    ): TokenAcceptanceChangedEventFilter;
-    TokenAcceptanceChanged(
-      _tokenAddr?: PromiseOrValue<string> | null,
+    ): TokenAcceptanceUpdatedEventFilter;
+    TokenAcceptanceUpdated(
+      _tokenAddr?: null,
       _isAccepted?: null
-    ): TokenAcceptanceChangedEventFilter;
+    ): TokenAcceptanceUpdatedEventFilter;
   };
 
   estimateGas: {

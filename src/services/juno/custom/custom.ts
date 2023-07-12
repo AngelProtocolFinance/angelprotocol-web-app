@@ -1,5 +1,6 @@
 import {
   AdminResources,
+  CharityApplication,
   EndowBalance,
   IERC20,
   ProposalDetails,
@@ -7,8 +8,8 @@ import {
 } from "../../types";
 import { AxelarBridgeFees } from "types/aws";
 import { AcceptedTokens, AccountType } from "types/contracts";
-import { Transaction } from "types/contracts/multisig";
 import { TransactionStatus } from "types/lists";
+import { Transaction } from "types/tx";
 import { idParamToNum } from "helpers";
 import { APIs } from "constants/urls";
 import { junoApi } from "..";
@@ -46,7 +47,10 @@ export const customApi = junoApi.injectEndpoints({
         };
       },
     }),
-    adminResources: builder.query<AdminResources, { endowmentId?: string }>({
+    adminResources: builder.query<
+      AdminResources,
+      { endowmentId?: string; user?: string }
+    >({
       providesTags: [
         "multisig.members",
         "multisig.threshold",
@@ -61,7 +65,7 @@ export const customApi = junoApi.injectEndpoints({
           const { multisig, type } = AP;
           //skip endowment query, query hardcoded cw3 straight
 
-          const [config, members] = await multisigInfo(multisig);
+          const [config, members] = await multisigInfo(multisig, args.user);
 
           return {
             data: {
@@ -78,7 +82,10 @@ export const customApi = junoApi.injectEndpoints({
           id: numId,
         });
 
-        const [config, members] = await multisigInfo(endowment.owner);
+        const [config, members] = await multisigInfo(
+          endowment.owner,
+          args.user
+        );
 
         return {
           data: {
@@ -99,6 +106,7 @@ export const customApi = junoApi.injectEndpoints({
       providesTags: [
         "multisig.votes",
         "multisig.members",
+        "multisig.is-owner", //TODO: temp:remove once members query is available
         "multisig.transaction",
       ],
       async queryFn({ id: idParam, multisig }) {
@@ -188,6 +196,31 @@ export const customApi = junoApi.injectEndpoints({
         };
       },
     }),
+
+    application: builder.query<
+      CharityApplication,
+      { id: number; user?: string }
+    >({
+      providesTags: [
+        "multisig/review.prop-confirms",
+        "multisig/review.proposal",
+        "multisig/review.is-confirmed",
+      ],
+      async queryFn({ id, user }) {
+        const [confirmations, proposal, userConfirmed] = await Promise.all([
+          queryContract("multisig/review.prop-confirms", { id }),
+          queryContract("multisig/review.proposal", { id }),
+          user
+            ? queryContract("multisig/review.is-confirmed", {
+                id,
+                addr: user,
+              })
+            : false,
+        ]);
+
+        return { data: { ...proposal, confirmations, userConfirmed } };
+      },
+    }),
   }),
 });
 
@@ -221,4 +254,5 @@ export const {
   useProposalDetailsQuery,
   useEndowBalanceQuery,
   useWithdrawInfoQuery,
+  useApplicationQuery,
 } = customApi;

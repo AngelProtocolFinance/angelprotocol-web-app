@@ -25,7 +25,7 @@ import type {
 
 export interface IEndowmentMultiSigFactoryInterface extends utils.Interface {
   functions: {
-    "create(uint256,address,address[],uint256)": FunctionFragment;
+    "create(uint256,address,address[],uint256,uint256)": FunctionFragment;
     "endowmentIdToMultisig(uint256)": FunctionFragment;
     "updateImplementation(address)": FunctionFragment;
     "updateProxyAdmin(address)": FunctionFragment;
@@ -45,6 +45,7 @@ export interface IEndowmentMultiSigFactoryInterface extends utils.Interface {
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
       PromiseOrValue<string>[],
+      PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>
     ]
   ): string;
@@ -110,6 +111,7 @@ export interface IEndowmentMultiSigFactory extends BaseContract {
       emitterAddress: PromiseOrValue<string>,
       owners: PromiseOrValue<string>[],
       required: PromiseOrValue<BigNumberish>,
+      transactionExpiry: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -134,6 +136,7 @@ export interface IEndowmentMultiSigFactory extends BaseContract {
     emitterAddress: PromiseOrValue<string>,
     owners: PromiseOrValue<string>[],
     required: PromiseOrValue<BigNumberish>,
+    transactionExpiry: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -158,6 +161,7 @@ export interface IEndowmentMultiSigFactory extends BaseContract {
       emitterAddress: PromiseOrValue<string>,
       owners: PromiseOrValue<string>[],
       required: PromiseOrValue<BigNumberish>,
+      transactionExpiry: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<string>;
 
@@ -185,6 +189,7 @@ export interface IEndowmentMultiSigFactory extends BaseContract {
       emitterAddress: PromiseOrValue<string>,
       owners: PromiseOrValue<string>[],
       required: PromiseOrValue<BigNumberish>,
+      transactionExpiry: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -210,6 +215,7 @@ export interface IEndowmentMultiSigFactory extends BaseContract {
       emitterAddress: PromiseOrValue<string>,
       owners: PromiseOrValue<string>[],
       required: PromiseOrValue<BigNumberish>,
+      transactionExpiry: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

@@ -11,17 +11,24 @@ export default function useSubmit(vault: string, type: AccountType) {
   async function submit() {
     if (isTooltip(txResource)) throw Error(txResource);
 
-    const [data, dest, meta] = encodeTx("accounts.redeem", {
-      id,
-      account: type === "locked" ? 0 : 1,
-      vaults: [vault],
-    });
+    const [data, dest, meta] = encodeTx(
+      "accounts.redeem",
+      {
+        id,
+        account: type === "locked" ? 0 : 1,
+        vaults: [vault],
+      },
+      {
+        title: "Redeem",
+        description: `Redeem funds to: ${vault}`,
+        content: null as never,
+      }
+    );
 
     const { wallet, txMeta } = txResource;
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig,
-      title: "Redeem",
-      description: `Redeem funds to: ${vault}`,
+
       destination: dest,
       value: "0",
       data,

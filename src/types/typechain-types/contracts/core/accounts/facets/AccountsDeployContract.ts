@@ -27,7 +27,7 @@ import type {
   PromiseOrValue,
 } from "../../../../common";
 
-export declare namespace AngelCoreStruct {
+export declare namespace SubDaoLib {
   export type VeTypeDataStruct = {
     value: PromiseOrValue<BigNumberish>;
     scale: PromiseOrValue<BigNumberish>;
@@ -49,20 +49,20 @@ export declare namespace AngelCoreStruct {
 
   export type VeTypeStruct = {
     ve_type: PromiseOrValue<BigNumberish>;
-    data: AngelCoreStruct.VeTypeDataStruct;
+    data: SubDaoLib.VeTypeDataStruct;
   };
 
   export type VeTypeStructOutput = [
     number,
-    AngelCoreStruct.VeTypeDataStructOutput
-  ] & { ve_type: number; data: AngelCoreStruct.VeTypeDataStructOutput };
+    SubDaoLib.VeTypeDataStructOutput
+  ] & { ve_type: number; data: SubDaoLib.VeTypeDataStructOutput };
 
   export type DaoTokenDataStruct = {
     existingData: PromiseOrValue<string>;
     newInitialSupply: PromiseOrValue<BigNumberish>;
     newName: PromiseOrValue<string>;
     newSymbol: PromiseOrValue<string>;
-    veBondingType: AngelCoreStruct.VeTypeStruct;
+    veBondingType: SubDaoLib.VeTypeStruct;
     veBondingName: PromiseOrValue<string>;
     veBondingSymbol: PromiseOrValue<string>;
     veBondingDecimals: PromiseOrValue<BigNumberish>;
@@ -76,7 +76,7 @@ export declare namespace AngelCoreStruct {
     BigNumber,
     string,
     string,
-    AngelCoreStruct.VeTypeStructOutput,
+    SubDaoLib.VeTypeStructOutput,
     string,
     string,
     BigNumber,
@@ -88,7 +88,7 @@ export declare namespace AngelCoreStruct {
     newInitialSupply: BigNumber;
     newName: string;
     newSymbol: string;
-    veBondingType: AngelCoreStruct.VeTypeStructOutput;
+    veBondingType: SubDaoLib.VeTypeStructOutput;
     veBondingName: string;
     veBondingSymbol: string;
     veBondingDecimals: BigNumber;
@@ -99,116 +99,16 @@ export declare namespace AngelCoreStruct {
 
   export type DaoTokenStruct = {
     token: PromiseOrValue<BigNumberish>;
-    data: AngelCoreStruct.DaoTokenDataStruct;
+    data: SubDaoLib.DaoTokenDataStruct;
   };
 
   export type DaoTokenStructOutput = [
     number,
-    AngelCoreStruct.DaoTokenDataStructOutput
-  ] & { token: number; data: AngelCoreStruct.DaoTokenDataStructOutput };
-
-  export type FeeSettingStruct = {
-    payoutAddress: PromiseOrValue<string>;
-    bps: PromiseOrValue<BigNumberish>;
-  };
-
-  export type FeeSettingStructOutput = [string, BigNumber] & {
-    payoutAddress: string;
-    bps: BigNumber;
-  };
-
-  export type DelegateStruct = {
-    addr: PromiseOrValue<string>;
-    expires: PromiseOrValue<BigNumberish>;
-  };
-
-  export type DelegateStructOutput = [string, BigNumber] & {
-    addr: string;
-    expires: BigNumber;
-  };
-
-  export type SettingsPermissionStruct = {
-    locked: PromiseOrValue<boolean>;
-    delegate: AngelCoreStruct.DelegateStruct;
-  };
-
-  export type SettingsPermissionStructOutput = [
-    boolean,
-    AngelCoreStruct.DelegateStructOutput
-  ] & { locked: boolean; delegate: AngelCoreStruct.DelegateStructOutput };
-
-  export type SettingsControllerStruct = {
-    acceptedTokens: AngelCoreStruct.SettingsPermissionStruct;
-    lockedInvestmentManagement: AngelCoreStruct.SettingsPermissionStruct;
-    liquidInvestmentManagement: AngelCoreStruct.SettingsPermissionStruct;
-    allowlistedBeneficiaries: AngelCoreStruct.SettingsPermissionStruct;
-    allowlistedContributors: AngelCoreStruct.SettingsPermissionStruct;
-    maturityAllowlist: AngelCoreStruct.SettingsPermissionStruct;
-    maturityTime: AngelCoreStruct.SettingsPermissionStruct;
-    earlyLockedWithdrawFee: AngelCoreStruct.SettingsPermissionStruct;
-    withdrawFee: AngelCoreStruct.SettingsPermissionStruct;
-    depositFee: AngelCoreStruct.SettingsPermissionStruct;
-    balanceFee: AngelCoreStruct.SettingsPermissionStruct;
-    name: AngelCoreStruct.SettingsPermissionStruct;
-    image: AngelCoreStruct.SettingsPermissionStruct;
-    logo: AngelCoreStruct.SettingsPermissionStruct;
-    sdgs: AngelCoreStruct.SettingsPermissionStruct;
-    splitToLiquid: AngelCoreStruct.SettingsPermissionStruct;
-    ignoreUserSplits: AngelCoreStruct.SettingsPermissionStruct;
-  };
-
-  export type SettingsControllerStructOutput = [
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput,
-    AngelCoreStruct.SettingsPermissionStructOutput
-  ] & {
-    acceptedTokens: AngelCoreStruct.SettingsPermissionStructOutput;
-    lockedInvestmentManagement: AngelCoreStruct.SettingsPermissionStructOutput;
-    liquidInvestmentManagement: AngelCoreStruct.SettingsPermissionStructOutput;
-    allowlistedBeneficiaries: AngelCoreStruct.SettingsPermissionStructOutput;
-    allowlistedContributors: AngelCoreStruct.SettingsPermissionStructOutput;
-    maturityAllowlist: AngelCoreStruct.SettingsPermissionStructOutput;
-    maturityTime: AngelCoreStruct.SettingsPermissionStructOutput;
-    earlyLockedWithdrawFee: AngelCoreStruct.SettingsPermissionStructOutput;
-    withdrawFee: AngelCoreStruct.SettingsPermissionStructOutput;
-    depositFee: AngelCoreStruct.SettingsPermissionStructOutput;
-    balanceFee: AngelCoreStruct.SettingsPermissionStructOutput;
-    name: AngelCoreStruct.SettingsPermissionStructOutput;
-    image: AngelCoreStruct.SettingsPermissionStructOutput;
-    logo: AngelCoreStruct.SettingsPermissionStructOutput;
-    sdgs: AngelCoreStruct.SettingsPermissionStructOutput;
-    splitToLiquid: AngelCoreStruct.SettingsPermissionStructOutput;
-    ignoreUserSplits: AngelCoreStruct.SettingsPermissionStructOutput;
-  };
-
-  export type SplitDetailsStruct = {
-    max: PromiseOrValue<BigNumberish>;
-    min: PromiseOrValue<BigNumberish>;
-    defaultSplit: PromiseOrValue<BigNumberish>;
-  };
-
-  export type SplitDetailsStructOutput = [BigNumber, BigNumber, BigNumber] & {
-    max: BigNumber;
-    min: BigNumber;
-    defaultSplit: BigNumber;
-  };
+    SubDaoLib.DaoTokenDataStructOutput
+  ] & { token: number; data: SubDaoLib.DaoTokenDataStructOutput };
 }
 
-export declare namespace SubDaoMessage {
+export declare namespace SubDaoMessages {
   export type InstantiateMsgStruct = {
     id: PromiseOrValue<BigNumberish>;
     owner: PromiseOrValue<string>;
@@ -219,7 +119,7 @@ export declare namespace SubDaoMessage {
     expirationPeriod: PromiseOrValue<BigNumberish>;
     proposalDeposit: PromiseOrValue<BigNumberish>;
     snapshotPeriod: PromiseOrValue<BigNumberish>;
-    token: AngelCoreStruct.DaoTokenStruct;
+    token: SubDaoLib.DaoTokenStruct;
     endowType: PromiseOrValue<BigNumberish>;
     endowOwner: PromiseOrValue<string>;
     registrarContract: PromiseOrValue<string>;
@@ -235,7 +135,7 @@ export declare namespace SubDaoMessage {
     BigNumber,
     BigNumber,
     BigNumber,
-    AngelCoreStruct.DaoTokenStructOutput,
+    SubDaoLib.DaoTokenStructOutput,
     number,
     string,
     string
@@ -249,170 +149,10 @@ export declare namespace SubDaoMessage {
     expirationPeriod: BigNumber;
     proposalDeposit: BigNumber;
     snapshotPeriod: BigNumber;
-    token: AngelCoreStruct.DaoTokenStructOutput;
+    token: SubDaoLib.DaoTokenStructOutput;
     endowType: number;
     endowOwner: string;
     registrarContract: string;
-  };
-}
-
-export declare namespace LocalRegistrarLib {
-  export type RebalanceParamsStruct = {
-    rebalanceLiquidProfits: PromiseOrValue<boolean>;
-    lockedRebalanceToLiquid: PromiseOrValue<BigNumberish>;
-    interestDistribution: PromiseOrValue<BigNumberish>;
-    lockedPrincipleToLiquid: PromiseOrValue<boolean>;
-    principleDistribution: PromiseOrValue<BigNumberish>;
-    basis: PromiseOrValue<BigNumberish>;
-  };
-
-  export type RebalanceParamsStructOutput = [
-    boolean,
-    number,
-    number,
-    boolean,
-    number,
-    number
-  ] & {
-    rebalanceLiquidProfits: boolean;
-    lockedRebalanceToLiquid: number;
-    interestDistribution: number;
-    lockedPrincipleToLiquid: boolean;
-    principleDistribution: number;
-    basis: number;
-  };
-}
-
-export declare namespace AccountStorage {
-  export type EndowmentStruct = {
-    owner: PromiseOrValue<string>;
-    name: PromiseOrValue<string>;
-    sdgs: PromiseOrValue<BigNumberish>[];
-    tier: PromiseOrValue<BigNumberish>;
-    endowType: PromiseOrValue<BigNumberish>;
-    logo: PromiseOrValue<string>;
-    image: PromiseOrValue<string>;
-    maturityTime: PromiseOrValue<BigNumberish>;
-    rebalance: LocalRegistrarLib.RebalanceParamsStruct;
-    kycDonorsOnly: PromiseOrValue<boolean>;
-    pendingRedemptions: PromiseOrValue<BigNumberish>;
-    proposalLink: PromiseOrValue<BigNumberish>;
-    multisig: PromiseOrValue<string>;
-    dao: PromiseOrValue<string>;
-    daoToken: PromiseOrValue<string>;
-    donationMatchActive: PromiseOrValue<boolean>;
-    donationMatchContract: PromiseOrValue<string>;
-    allowlistedBeneficiaries: PromiseOrValue<string>[];
-    allowlistedContributors: PromiseOrValue<string>[];
-    maturityAllowlist: PromiseOrValue<string>[];
-    earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStruct;
-    withdrawFee: AngelCoreStruct.FeeSettingStruct;
-    depositFee: AngelCoreStruct.FeeSettingStruct;
-    balanceFee: AngelCoreStruct.FeeSettingStruct;
-    settingsController: AngelCoreStruct.SettingsControllerStruct;
-    parent: PromiseOrValue<BigNumberish>;
-    ignoreUserSplits: PromiseOrValue<boolean>;
-    splitToLiquid: AngelCoreStruct.SplitDetailsStruct;
-    referralId: PromiseOrValue<BigNumberish>;
-  };
-
-  export type EndowmentStructOutput = [
-    string,
-    string,
-    BigNumber[],
-    number,
-    number,
-    string,
-    string,
-    BigNumber,
-    LocalRegistrarLib.RebalanceParamsStructOutput,
-    boolean,
-    BigNumber,
-    BigNumber,
-    string,
-    string,
-    string,
-    boolean,
-    string,
-    string[],
-    string[],
-    string[],
-    AngelCoreStruct.FeeSettingStructOutput,
-    AngelCoreStruct.FeeSettingStructOutput,
-    AngelCoreStruct.FeeSettingStructOutput,
-    AngelCoreStruct.FeeSettingStructOutput,
-    AngelCoreStruct.SettingsControllerStructOutput,
-    number,
-    boolean,
-    AngelCoreStruct.SplitDetailsStructOutput,
-    BigNumber
-  ] & {
-    owner: string;
-    name: string;
-    sdgs: BigNumber[];
-    tier: number;
-    endowType: number;
-    logo: string;
-    image: string;
-    maturityTime: BigNumber;
-    rebalance: LocalRegistrarLib.RebalanceParamsStructOutput;
-    kycDonorsOnly: boolean;
-    pendingRedemptions: BigNumber;
-    proposalLink: BigNumber;
-    multisig: string;
-    dao: string;
-    daoToken: string;
-    donationMatchActive: boolean;
-    donationMatchContract: string;
-    allowlistedBeneficiaries: string[];
-    allowlistedContributors: string[];
-    maturityAllowlist: string[];
-    earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStructOutput;
-    withdrawFee: AngelCoreStruct.FeeSettingStructOutput;
-    depositFee: AngelCoreStruct.FeeSettingStructOutput;
-    balanceFee: AngelCoreStruct.FeeSettingStructOutput;
-    settingsController: AngelCoreStruct.SettingsControllerStructOutput;
-    parent: number;
-    ignoreUserSplits: boolean;
-    splitToLiquid: AngelCoreStruct.SplitDetailsStructOutput;
-    referralId: BigNumber;
-  };
-
-  export type ConfigStruct = {
-    owner: PromiseOrValue<string>;
-    version: PromiseOrValue<string>;
-    registrarContract: PromiseOrValue<string>;
-    nextAccountId: PromiseOrValue<BigNumberish>;
-    maxGeneralCategoryId: PromiseOrValue<BigNumberish>;
-    subDao: PromiseOrValue<string>;
-    gateway: PromiseOrValue<string>;
-    gasReceiver: PromiseOrValue<string>;
-    reentrancyGuardLocked: PromiseOrValue<boolean>;
-    earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStruct;
-  };
-
-  export type ConfigStructOutput = [
-    string,
-    string,
-    string,
-    number,
-    BigNumber,
-    string,
-    string,
-    string,
-    boolean,
-    AngelCoreStruct.FeeSettingStructOutput
-  ] & {
-    owner: string;
-    version: string;
-    registrarContract: string;
-    nextAccountId: number;
-    maxGeneralCategoryId: BigNumber;
-    subDao: string;
-    gateway: string;
-    gasReceiver: string;
-    reentrancyGuardLocked: boolean;
-    earlyLockedWithdrawFee: AngelCoreStruct.FeeSettingStructOutput;
   };
 }
 
@@ -425,7 +165,7 @@ export interface AccountsDeployContractInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "createDaoContract",
-    values: [SubDaoMessage.InstantiateMsgStruct]
+    values: [SubDaoMessages.InstantiateMsgStruct]
   ): string;
 
   decodeFunctionResult(
@@ -434,52 +174,72 @@ export interface AccountsDeployContractInterface extends utils.Interface {
   ): Result;
 
   events: {
-    "AllowanceStateUpdatedTo(address,address,address,uint256)": EventFragment;
-    "DaoContractCreated(tuple,address)": EventFragment;
-    "DonationDeposited(uint256,uint256)": EventFragment;
-    "DonationMatchSetup(uint256,address)": EventFragment;
-    "DonationWithdrawn(uint256,address,uint256)": EventFragment;
-    "EndowmentCreated(uint256,tuple)": EventFragment;
+    "AllowanceRemoved(address,address,address)": EventFragment;
+    "AllowanceUpdated(address,address,address,uint256)": EventFragment;
+    "ConfigUpdated()": EventFragment;
+    "DaoContractCreated(uint32,address)": EventFragment;
+    "DonationDeposited(uint256,address,uint256)": EventFragment;
+    "DonationMatchCreated(uint256,address)": EventFragment;
+    "DonationWithdrawn(uint256,address,address,uint256)": EventFragment;
+    "EndowmentCreated(uint256)": EventFragment;
     "EndowmentSettingUpdated(uint256,string)": EventFragment;
-    "RemoveAllowance(address,address,address)": EventFragment;
-    "SwapToken(uint256,uint8,address,uint256,address,uint256)": EventFragment;
-    "UpdateConfig(tuple)": EventFragment;
-    "UpdateEndowment(uint256,tuple)": EventFragment;
+    "EndowmentUpdated(uint256)": EventFragment;
+    "OwnerUpdated(address)": EventFragment;
+    "TokenSwapped(uint256,uint8,address,uint256,address,uint256)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "AllowanceStateUpdatedTo"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "AllowanceRemoved"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "AllowanceUpdated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ConfigUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "DaoContractCreated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "DonationDeposited"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "DonationMatchSetup"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "DonationMatchCreated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "DonationWithdrawn"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "EndowmentCreated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "EndowmentSettingUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RemoveAllowance"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "SwapToken"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "UpdateConfig"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "UpdateEndowment"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "EndowmentUpdated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "OwnerUpdated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "TokenSwapped"): EventFragment;
 }
 
-export interface AllowanceStateUpdatedToEventObject {
+export interface AllowanceRemovedEventObject {
+  sender: string;
+  spender: string;
+  tokenAddress: string;
+}
+export type AllowanceRemovedEvent = TypedEvent<
+  [string, string, string],
+  AllowanceRemovedEventObject
+>;
+
+export type AllowanceRemovedEventFilter =
+  TypedEventFilter<AllowanceRemovedEvent>;
+
+export interface AllowanceUpdatedEventObject {
   sender: string;
   spender: string;
   tokenAddress: string;
   allowance: BigNumber;
 }
-export type AllowanceStateUpdatedToEvent = TypedEvent<
+export type AllowanceUpdatedEvent = TypedEvent<
   [string, string, string, BigNumber],
-  AllowanceStateUpdatedToEventObject
+  AllowanceUpdatedEventObject
 >;
 
-export type AllowanceStateUpdatedToEventFilter =
-  TypedEventFilter<AllowanceStateUpdatedToEvent>;
+export type AllowanceUpdatedEventFilter =
+  TypedEventFilter<AllowanceUpdatedEvent>;
+
+export interface ConfigUpdatedEventObject {}
+export type ConfigUpdatedEvent = TypedEvent<[], ConfigUpdatedEventObject>;
+
+export type ConfigUpdatedEventFilter = TypedEventFilter<ConfigUpdatedEvent>;
 
 export interface DaoContractCreatedEventObject {
-  createdaomessage: SubDaoMessage.InstantiateMsgStructOutput;
+  endowId: number;
   daoAddress: string;
 }
 export type DaoContractCreatedEvent = TypedEvent<
-  [SubDaoMessage.InstantiateMsgStructOutput, string],
+  [number, string],
   DaoContractCreatedEventObject
 >;
 
@@ -487,36 +247,38 @@ export type DaoContractCreatedEventFilter =
   TypedEventFilter<DaoContractCreatedEvent>;
 
 export interface DonationDepositedEventObject {
-  id: BigNumber;
+  endowId: BigNumber;
+  tokenAddress: string;
   amount: BigNumber;
 }
 export type DonationDepositedEvent = TypedEvent<
-  [BigNumber, BigNumber],
+  [BigNumber, string, BigNumber],
   DonationDepositedEventObject
 >;
 
 export type DonationDepositedEventFilter =
   TypedEventFilter<DonationDepositedEvent>;
 
-export interface DonationMatchSetupEventObject {
-  id: BigNumber;
+export interface DonationMatchCreatedEventObject {
+  endowId: BigNumber;
   donationMatchContract: string;
 }
-export type DonationMatchSetupEvent = TypedEvent<
+export type DonationMatchCreatedEvent = TypedEvent<
   [BigNumber, string],
-  DonationMatchSetupEventObject
+  DonationMatchCreatedEventObject
 >;
 
-export type DonationMatchSetupEventFilter =
-  TypedEventFilter<DonationMatchSetupEvent>;
+export type DonationMatchCreatedEventFilter =
+  TypedEventFilter<DonationMatchCreatedEvent>;
 
 export interface DonationWithdrawnEventObject {
-  id: BigNumber;
+  endowId: BigNumber;
   recipient: string;
+  tokenAddress: string;
   amount: BigNumber;
 }
 export type DonationWithdrawnEvent = TypedEvent<
-  [BigNumber, string, BigNumber],
+  [BigNumber, string, string, BigNumber],
   DonationWithdrawnEventObject
 >;
 
@@ -524,11 +286,10 @@ export type DonationWithdrawnEventFilter =
   TypedEventFilter<DonationWithdrawnEvent>;
 
 export interface EndowmentCreatedEventObject {
-  id: BigNumber;
-  endowment: AccountStorage.EndowmentStructOutput;
+  endowId: BigNumber;
 }
 export type EndowmentCreatedEvent = TypedEvent<
-  [BigNumber, AccountStorage.EndowmentStructOutput],
+  [BigNumber],
   EndowmentCreatedEventObject
 >;
 
@@ -536,7 +297,7 @@ export type EndowmentCreatedEventFilter =
   TypedEventFilter<EndowmentCreatedEvent>;
 
 export interface EndowmentSettingUpdatedEventObject {
-  id: BigNumber;
+  endowId: BigNumber;
   setting: string;
 }
 export type EndowmentSettingUpdatedEvent = TypedEvent<
@@ -547,53 +308,38 @@ export type EndowmentSettingUpdatedEvent = TypedEvent<
 export type EndowmentSettingUpdatedEventFilter =
   TypedEventFilter<EndowmentSettingUpdatedEvent>;
 
-export interface RemoveAllowanceEventObject {
-  sender: string;
-  spender: string;
-  tokenAddress: string;
+export interface EndowmentUpdatedEventObject {
+  endowId: BigNumber;
 }
-export type RemoveAllowanceEvent = TypedEvent<
-  [string, string, string],
-  RemoveAllowanceEventObject
+export type EndowmentUpdatedEvent = TypedEvent<
+  [BigNumber],
+  EndowmentUpdatedEventObject
 >;
 
-export type RemoveAllowanceEventFilter = TypedEventFilter<RemoveAllowanceEvent>;
+export type EndowmentUpdatedEventFilter =
+  TypedEventFilter<EndowmentUpdatedEvent>;
 
-export interface SwapTokenEventObject {
-  id: BigNumber;
+export interface OwnerUpdatedEventObject {
+  owner: string;
+}
+export type OwnerUpdatedEvent = TypedEvent<[string], OwnerUpdatedEventObject>;
+
+export type OwnerUpdatedEventFilter = TypedEventFilter<OwnerUpdatedEvent>;
+
+export interface TokenSwappedEventObject {
+  endowId: BigNumber;
   accountType: number;
   tokenIn: string;
   amountIn: BigNumber;
   tokenOut: string;
   amountOut: BigNumber;
 }
-export type SwapTokenEvent = TypedEvent<
+export type TokenSwappedEvent = TypedEvent<
   [BigNumber, number, string, BigNumber, string, BigNumber],
-  SwapTokenEventObject
+  TokenSwappedEventObject
 >;
 
-export type SwapTokenEventFilter = TypedEventFilter<SwapTokenEvent>;
-
-export interface UpdateConfigEventObject {
-  config: AccountStorage.ConfigStructOutput;
-}
-export type UpdateConfigEvent = TypedEvent<
-  [AccountStorage.ConfigStructOutput],
-  UpdateConfigEventObject
->;
-
-export type UpdateConfigEventFilter = TypedEventFilter<UpdateConfigEvent>;
-
-export interface UpdateEndowmentEventObject {
-  id: BigNumber;
-  endowment: AccountStorage.EndowmentStructOutput;
-}
-export type UpdateEndowmentEvent = TypedEvent<
-  [BigNumber, AccountStorage.EndowmentStructOutput],
-  UpdateEndowmentEventObject
->;
-
-export type UpdateEndowmentEventFilter = TypedEventFilter<UpdateEndowmentEvent>;
+export type TokenSwappedEventFilter = TypedEventFilter<TokenSwappedEvent>;
 
 export interface AccountsDeployContract extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -623,135 +369,139 @@ export interface AccountsDeployContract extends BaseContract {
 
   functions: {
     createDaoContract(
-      createDaoMessage: SubDaoMessage.InstantiateMsgStruct,
+      createDaoMessage: SubDaoMessages.InstantiateMsgStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
 
   createDaoContract(
-    createDaoMessage: SubDaoMessage.InstantiateMsgStruct,
+    createDaoMessage: SubDaoMessages.InstantiateMsgStruct,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     createDaoContract(
-      createDaoMessage: SubDaoMessage.InstantiateMsgStruct,
+      createDaoMessage: SubDaoMessages.InstantiateMsgStruct,
       overrides?: CallOverrides
     ): Promise<string>;
   };
 
   filters: {
-    "AllowanceStateUpdatedTo(address,address,address,uint256)"(
+    "AllowanceRemoved(address,address,address)"(
       sender?: null,
       spender?: null,
-      tokenAddress?: null,
-      allowance?: null
-    ): AllowanceStateUpdatedToEventFilter;
-    AllowanceStateUpdatedTo(
+      tokenAddress?: null
+    ): AllowanceRemovedEventFilter;
+    AllowanceRemoved(
       sender?: null,
       spender?: null,
-      tokenAddress?: null,
-      allowance?: null
-    ): AllowanceStateUpdatedToEventFilter;
+      tokenAddress?: null
+    ): AllowanceRemovedEventFilter;
 
-    "DaoContractCreated(tuple,address)"(
-      createdaomessage?: null,
+    "AllowanceUpdated(address,address,address,uint256)"(
+      sender?: null,
+      spender?: null,
+      tokenAddress?: null,
+      allowance?: null
+    ): AllowanceUpdatedEventFilter;
+    AllowanceUpdated(
+      sender?: null,
+      spender?: null,
+      tokenAddress?: null,
+      allowance?: null
+    ): AllowanceUpdatedEventFilter;
+
+    "ConfigUpdated()"(): ConfigUpdatedEventFilter;
+    ConfigUpdated(): ConfigUpdatedEventFilter;
+
+    "DaoContractCreated(uint32,address)"(
+      endowId?: null,
       daoAddress?: null
     ): DaoContractCreatedEventFilter;
     DaoContractCreated(
-      createdaomessage?: null,
+      endowId?: null,
       daoAddress?: null
     ): DaoContractCreatedEventFilter;
 
-    "DonationDeposited(uint256,uint256)"(
-      id?: null,
+    "DonationDeposited(uint256,address,uint256)"(
+      endowId?: null,
+      tokenAddress?: null,
       amount?: null
     ): DonationDepositedEventFilter;
-    DonationDeposited(id?: null, amount?: null): DonationDepositedEventFilter;
+    DonationDeposited(
+      endowId?: null,
+      tokenAddress?: null,
+      amount?: null
+    ): DonationDepositedEventFilter;
 
-    "DonationMatchSetup(uint256,address)"(
-      id?: null,
+    "DonationMatchCreated(uint256,address)"(
+      endowId?: null,
       donationMatchContract?: null
-    ): DonationMatchSetupEventFilter;
-    DonationMatchSetup(
-      id?: null,
+    ): DonationMatchCreatedEventFilter;
+    DonationMatchCreated(
+      endowId?: null,
       donationMatchContract?: null
-    ): DonationMatchSetupEventFilter;
+    ): DonationMatchCreatedEventFilter;
 
-    "DonationWithdrawn(uint256,address,uint256)"(
-      id?: null,
+    "DonationWithdrawn(uint256,address,address,uint256)"(
+      endowId?: null,
       recipient?: null,
+      tokenAddress?: null,
       amount?: null
     ): DonationWithdrawnEventFilter;
     DonationWithdrawn(
-      id?: null,
+      endowId?: null,
       recipient?: null,
+      tokenAddress?: null,
       amount?: null
     ): DonationWithdrawnEventFilter;
 
-    "EndowmentCreated(uint256,tuple)"(
-      id?: null,
-      endowment?: null
-    ): EndowmentCreatedEventFilter;
-    EndowmentCreated(id?: null, endowment?: null): EndowmentCreatedEventFilter;
+    "EndowmentCreated(uint256)"(endowId?: null): EndowmentCreatedEventFilter;
+    EndowmentCreated(endowId?: null): EndowmentCreatedEventFilter;
 
     "EndowmentSettingUpdated(uint256,string)"(
-      id?: null,
+      endowId?: null,
       setting?: null
     ): EndowmentSettingUpdatedEventFilter;
     EndowmentSettingUpdated(
-      id?: null,
+      endowId?: null,
       setting?: null
     ): EndowmentSettingUpdatedEventFilter;
 
-    "RemoveAllowance(address,address,address)"(
-      sender?: null,
-      spender?: null,
-      tokenAddress?: null
-    ): RemoveAllowanceEventFilter;
-    RemoveAllowance(
-      sender?: null,
-      spender?: null,
-      tokenAddress?: null
-    ): RemoveAllowanceEventFilter;
+    "EndowmentUpdated(uint256)"(endowId?: null): EndowmentUpdatedEventFilter;
+    EndowmentUpdated(endowId?: null): EndowmentUpdatedEventFilter;
 
-    "SwapToken(uint256,uint8,address,uint256,address,uint256)"(
-      id?: null,
+    "OwnerUpdated(address)"(owner?: null): OwnerUpdatedEventFilter;
+    OwnerUpdated(owner?: null): OwnerUpdatedEventFilter;
+
+    "TokenSwapped(uint256,uint8,address,uint256,address,uint256)"(
+      endowId?: null,
       accountType?: null,
       tokenIn?: null,
       amountIn?: null,
       tokenOut?: null,
       amountOut?: null
-    ): SwapTokenEventFilter;
-    SwapToken(
-      id?: null,
+    ): TokenSwappedEventFilter;
+    TokenSwapped(
+      endowId?: null,
       accountType?: null,
       tokenIn?: null,
       amountIn?: null,
       tokenOut?: null,
       amountOut?: null
-    ): SwapTokenEventFilter;
-
-    "UpdateConfig(tuple)"(config?: null): UpdateConfigEventFilter;
-    UpdateConfig(config?: null): UpdateConfigEventFilter;
-
-    "UpdateEndowment(uint256,tuple)"(
-      id?: null,
-      endowment?: null
-    ): UpdateEndowmentEventFilter;
-    UpdateEndowment(id?: null, endowment?: null): UpdateEndowmentEventFilter;
+    ): TokenSwappedEventFilter;
   };
 
   estimateGas: {
     createDaoContract(
-      createDaoMessage: SubDaoMessage.InstantiateMsgStruct,
+      createDaoMessage: SubDaoMessages.InstantiateMsgStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     createDaoContract(
-      createDaoMessage: SubDaoMessage.InstantiateMsgStruct,
+      createDaoMessage: SubDaoMessages.InstantiateMsgStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };

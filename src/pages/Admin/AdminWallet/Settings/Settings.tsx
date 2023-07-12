@@ -1,13 +1,16 @@
 import { PropsWithChildren } from "react";
 import { useModalContext } from "contexts/ModalContext";
+import { toHours } from "helpers/admin";
 import { useAdminContext } from "../../Context";
 import AutoExecutePrompt from "./AutoExecutePrompt";
+import DurationForm from "./DurationForm";
 import ThresholdForm from "./ThresholdForm";
 
 export default function Settings() {
   const { members, config } = useAdminContext();
   const { showModal } = useModalContext();
 
+  const hours = toHours(config.duration);
   return (
     <div className="grid content-start border border-prim p-4 @lg:p-8 rounded">
       <h2 className="font-bold text-2xl mb-8">Settings</h2>
@@ -23,6 +26,18 @@ export default function Settings() {
           <p>
             Proposals can be executed when <Bold>{config.threshold}</Bold> out{" "}
             <Bold>{members.length || 1}</Bold> members cast their vote.
+          </p>
+        </Container>
+        <Container
+          onBtnClick={() =>
+            showModal(DurationForm, {
+              initial: hours,
+            })
+          }
+        >
+          <p>
+            Proposals duration is <Bold>{hours}</Bold> hour
+            {+hours > 1 ? "s" : ""}.
           </p>
         </Container>
         <Container

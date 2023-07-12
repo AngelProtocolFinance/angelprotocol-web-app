@@ -20,6 +20,7 @@ export default withStepGuard<2>(function Management({ data }) {
       proposal: {
         threshold: 1,
         isAutoExecute: true,
+        duration: "1",
       },
     },
   });

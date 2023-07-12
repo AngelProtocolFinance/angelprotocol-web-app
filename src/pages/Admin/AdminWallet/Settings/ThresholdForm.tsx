@@ -48,14 +48,17 @@ export default function ThresholdForm({ added, initial }: Props) {
         multisig,
         threshold: fv.threshold,
       },
-      { curr: initial, new: fv.threshold }
+      {
+        title: fv.title,
+        description: fv.description,
+        content: { curr: initial, new: fv.threshold },
+      }
     );
 
     const { wallet, txMeta } = txResource;
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig: dest,
-      title: fv.title,
-      description: fv.description,
+
       destination: dest,
       value: "0",
       data,

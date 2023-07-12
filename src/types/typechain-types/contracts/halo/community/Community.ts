@@ -27,20 +27,6 @@ import type {
   PromiseOrValue,
 } from "../../../common";
 
-export declare namespace CommunityStorage {
-  export type ConfigStruct = {
-    timelockContract: PromiseOrValue<string>;
-    haloToken: PromiseOrValue<string>;
-    spendLimit: PromiseOrValue<BigNumberish>;
-  };
-
-  export type ConfigStructOutput = [string, string, BigNumber] & {
-    timelockContract: string;
-    haloToken: string;
-    spendLimit: BigNumber;
-  };
-}
-
 export declare namespace CommunityMessage {
   export type InstantiateMsgStruct = {
     timelockContract: PromiseOrValue<string>;
@@ -112,37 +98,31 @@ export interface CommunityInterface extends utils.Interface {
   ): Result;
 
   events: {
-    "CommunityConfigUpdated(tuple)": EventFragment;
-    "CommunitySpend(address,uint256)": EventFragment;
+    "ConfigUpdated()": EventFragment;
+    "HaloSpent(address,uint256)": EventFragment;
     "Initialized(uint8)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "CommunityConfigUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "CommunitySpend"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ConfigUpdated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "HaloSpent"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
 }
 
-export interface CommunityConfigUpdatedEventObject {
-  config: CommunityStorage.ConfigStructOutput;
-}
-export type CommunityConfigUpdatedEvent = TypedEvent<
-  [CommunityStorage.ConfigStructOutput],
-  CommunityConfigUpdatedEventObject
->;
+export interface ConfigUpdatedEventObject {}
+export type ConfigUpdatedEvent = TypedEvent<[], ConfigUpdatedEventObject>;
 
-export type CommunityConfigUpdatedEventFilter =
-  TypedEventFilter<CommunityConfigUpdatedEvent>;
+export type ConfigUpdatedEventFilter = TypedEventFilter<ConfigUpdatedEvent>;
 
-export interface CommunitySpendEventObject {
+export interface HaloSpentEventObject {
   recipient: string;
   amount: BigNumber;
 }
-export type CommunitySpendEvent = TypedEvent<
+export type HaloSpentEvent = TypedEvent<
   [string, BigNumber],
-  CommunitySpendEventObject
+  HaloSpentEventObject
 >;
 
-export type CommunitySpendEventFilter = TypedEventFilter<CommunitySpendEvent>;
+export type HaloSpentEventFilter = TypedEventFilter<HaloSpentEvent>;
 
 export interface InitializedEventObject {
   version: number;
@@ -245,16 +225,14 @@ export interface Community extends BaseContract {
   };
 
   filters: {
-    "CommunityConfigUpdated(tuple)"(
-      config?: null
-    ): CommunityConfigUpdatedEventFilter;
-    CommunityConfigUpdated(config?: null): CommunityConfigUpdatedEventFilter;
+    "ConfigUpdated()"(): ConfigUpdatedEventFilter;
+    ConfigUpdated(): ConfigUpdatedEventFilter;
 
-    "CommunitySpend(address,uint256)"(
+    "HaloSpent(address,uint256)"(
       recipient?: null,
       amount?: null
-    ): CommunitySpendEventFilter;
-    CommunitySpend(recipient?: null, amount?: null): CommunitySpendEventFilter;
+    ): HaloSpentEventFilter;
+    HaloSpent(recipient?: null, amount?: null): HaloSpentEventFilter;
 
     "Initialized(uint8)"(version?: null): InitializedEventFilter;
     Initialized(version?: null): InitializedEventFilter;

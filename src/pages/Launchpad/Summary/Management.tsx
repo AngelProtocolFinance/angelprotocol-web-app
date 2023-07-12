@@ -30,6 +30,12 @@ export default function Management({
           cast their vote.
         </li>
         <li>
+          Proposal duration is{" "}
+          <span className="font-semibold">
+            {proposal.duration} {+proposal.duration > 1 ? "hours" : "hour"}
+          </span>
+        </li>
+        <li>
           Proposals auto-execution is turned{" "}
           <span className="font-semibold">
             {proposal.isAutoExecute ? "ON" : "OFF"}

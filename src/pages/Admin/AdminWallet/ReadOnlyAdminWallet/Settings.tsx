@@ -1,8 +1,11 @@
 import { PropsWithChildren } from "react";
+import { toHours } from "helpers/admin";
 import { useAdminContext } from "../../Context";
 
 export default function Settings() {
   const { members, config } = useAdminContext();
+
+  const hours = +toHours(config.duration);
 
   return (
     <div className="grid content-start border border-prim p-4 @lg:p-8 rounded">
@@ -12,6 +15,12 @@ export default function Settings() {
           <p>
             Proposals can be executed when <Bold>{config.threshold}</Bold> out{" "}
             <Bold>{members.length || 1}</Bold> members cast their vote.
+          </p>
+        </Container>
+        <Container>
+          <p>
+            Proposals duration is <Bold>{hours}</Bold> hour
+            {hours > 1 ? "s" : ""}.
           </p>
         </Container>
         <Container>

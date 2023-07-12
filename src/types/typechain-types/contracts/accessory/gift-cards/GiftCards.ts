@@ -27,6 +27,18 @@ import type {
   PromiseOrValue,
 } from "../../../common";
 
+export declare namespace GiftCardsMessage {
+  export type InstantiateMsgStruct = {
+    keeper: PromiseOrValue<string>;
+    registrarContract: PromiseOrValue<string>;
+  };
+
+  export type InstantiateMsgStructOutput = [string, string] & {
+    keeper: string;
+    registrarContract: string;
+  };
+}
+
 export declare namespace GiftCardsStorage {
   export type ConfigStruct = {
     owner: PromiseOrValue<string>;
@@ -54,18 +66,6 @@ export declare namespace GiftCardsStorage {
     tokenAddress: string;
     amount: BigNumber;
     claimed: boolean;
-  };
-}
-
-export declare namespace GiftCardsMessage {
-  export type InstantiateMsgStruct = {
-    keeper: PromiseOrValue<string>;
-    registrarContract: PromiseOrValue<string>;
-  };
-
-  export type InstantiateMsgStructOutput = [string, string] & {
-    keeper: string;
-    registrarContract: string;
   };
 }
 
@@ -195,56 +195,47 @@ export interface GiftCardsInterface extends utils.Interface {
   ): Result;
 
   events: {
-    "GiftCardsUpdateBalances(address,address,uint256,uint8)": EventFragment;
-    "GiftCardsUpdateConfig(tuple)": EventFragment;
-    "GiftCardsUpdateDeposit(uint256,tuple)": EventFragment;
+    "BalancesUpdated(address,address,uint256,uint8)": EventFragment;
+    "ConfigUpdated()": EventFragment;
+    "DepositUpdated(uint256)": EventFragment;
     "Initialized(uint8)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "GiftCardsUpdateBalances"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "GiftCardsUpdateConfig"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "GiftCardsUpdateDeposit"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "BalancesUpdated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ConfigUpdated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "DepositUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
 }
 
-export interface GiftCardsUpdateBalancesEventObject {
+export interface BalancesUpdatedEventObject {
   addr: string;
   token: string;
   amt: BigNumber;
   action: number;
 }
-export type GiftCardsUpdateBalancesEvent = TypedEvent<
+export type BalancesUpdatedEvent = TypedEvent<
   [string, string, BigNumber, number],
-  GiftCardsUpdateBalancesEventObject
+  BalancesUpdatedEventObject
 >;
 
-export type GiftCardsUpdateBalancesEventFilter =
-  TypedEventFilter<GiftCardsUpdateBalancesEvent>;
+export type BalancesUpdatedEventFilter = TypedEventFilter<BalancesUpdatedEvent>;
 
-export interface GiftCardsUpdateConfigEventObject {
-  config: GiftCardsStorage.ConfigStructOutput;
-}
-export type GiftCardsUpdateConfigEvent = TypedEvent<
-  [GiftCardsStorage.ConfigStructOutput],
-  GiftCardsUpdateConfigEventObject
->;
+export interface ConfigUpdatedEventObject {}
+export type ConfigUpdatedEvent = TypedEvent<[], ConfigUpdatedEventObject>;
 
-export type GiftCardsUpdateConfigEventFilter =
-  TypedEventFilter<GiftCardsUpdateConfigEvent>;
+export type ConfigUpdatedEventFilter = TypedEventFilter<ConfigUpdatedEvent>;
 
-export interface GiftCardsUpdateDepositEventObject {
+export interface DepositUpdatedEventObject {
   depositId: BigNumber;
-  deposit: GiftCardsStorage.DepositStructOutput;
 }
-export type GiftCardsUpdateDepositEvent = TypedEvent<
-  [BigNumber, GiftCardsStorage.DepositStructOutput],
-  GiftCardsUpdateDepositEventObject
+export type DepositUpdatedEvent = TypedEvent<
+  [BigNumber],
+  DepositUpdatedEventObject
 >;
 
-export type GiftCardsUpdateDepositEventFilter =
-  TypedEventFilter<GiftCardsUpdateDepositEvent>;
+export type DepositUpdatedEventFilter = TypedEventFilter<DepositUpdatedEvent>;
 
 export interface InitializedEventObject {
   version: number;
@@ -474,32 +465,24 @@ export interface GiftCards extends BaseContract {
   };
 
   filters: {
-    "GiftCardsUpdateBalances(address,address,uint256,uint8)"(
+    "BalancesUpdated(address,address,uint256,uint8)"(
       addr?: null,
       token?: null,
       amt?: null,
       action?: null
-    ): GiftCardsUpdateBalancesEventFilter;
-    GiftCardsUpdateBalances(
+    ): BalancesUpdatedEventFilter;
+    BalancesUpdated(
       addr?: null,
       token?: null,
       amt?: null,
       action?: null
-    ): GiftCardsUpdateBalancesEventFilter;
+    ): BalancesUpdatedEventFilter;
 
-    "GiftCardsUpdateConfig(tuple)"(
-      config?: null
-    ): GiftCardsUpdateConfigEventFilter;
-    GiftCardsUpdateConfig(config?: null): GiftCardsUpdateConfigEventFilter;
+    "ConfigUpdated()"(): ConfigUpdatedEventFilter;
+    ConfigUpdated(): ConfigUpdatedEventFilter;
 
-    "GiftCardsUpdateDeposit(uint256,tuple)"(
-      depositId?: null,
-      deposit?: null
-    ): GiftCardsUpdateDepositEventFilter;
-    GiftCardsUpdateDeposit(
-      depositId?: null,
-      deposit?: null
-    ): GiftCardsUpdateDepositEventFilter;
+    "DepositUpdated(uint256)"(depositId?: null): DepositUpdatedEventFilter;
+    DepositUpdated(depositId?: null): DepositUpdatedEventFilter;
 
     "Initialized(uint8)"(version?: null): InitializedEventFilter;
     Initialized(version?: null): InitializedEventFilter;

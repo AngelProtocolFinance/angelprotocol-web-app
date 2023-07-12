@@ -135,21 +135,21 @@ export interface IRouterInterface extends utils.Interface {
 
   events: {
     "Deposit(tuple)": EventFragment;
-    "FallbackRefund(tuple,uint256)": EventFragment;
-    "Harvest(tuple)": EventFragment;
-    "LogError(tuple,string)": EventFragment;
-    "LogErrorBytes(tuple,bytes)": EventFragment;
-    "Redemption(tuple,uint256)": EventFragment;
-    "TokensSent(tuple,uint256)": EventFragment;
+    "ErrorBytesLogged(tuple,bytes)": EventFragment;
+    "ErrorLogged(tuple,string)": EventFragment;
+    "Redeem(tuple,uint256)": EventFragment;
+    "Refund(tuple,uint256)": EventFragment;
+    "RewardsHarvested(tuple)": EventFragment;
+    "Transfer(tuple,uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "Deposit"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "FallbackRefund"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Harvest"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "LogError"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "LogErrorBytes"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Redemption"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "TokensSent"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ErrorBytesLogged"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ErrorLogged"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Redeem"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Refund"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "RewardsHarvested"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
 }
 
 export interface DepositEventObject {
@@ -162,70 +162,72 @@ export type DepositEvent = TypedEvent<
 
 export type DepositEventFilter = TypedEventFilter<DepositEvent>;
 
-export interface FallbackRefundEventObject {
-  action: IVault.VaultActionDataStructOutput;
-  amount: BigNumber;
-}
-export type FallbackRefundEvent = TypedEvent<
-  [IVault.VaultActionDataStructOutput, BigNumber],
-  FallbackRefundEventObject
->;
-
-export type FallbackRefundEventFilter = TypedEventFilter<FallbackRefundEvent>;
-
-export interface HarvestEventObject {
-  action: IVault.VaultActionDataStructOutput;
-}
-export type HarvestEvent = TypedEvent<
-  [IVault.VaultActionDataStructOutput],
-  HarvestEventObject
->;
-
-export type HarvestEventFilter = TypedEventFilter<HarvestEvent>;
-
-export interface LogErrorEventObject {
-  action: IVault.VaultActionDataStructOutput;
-  message: string;
-}
-export type LogErrorEvent = TypedEvent<
-  [IVault.VaultActionDataStructOutput, string],
-  LogErrorEventObject
->;
-
-export type LogErrorEventFilter = TypedEventFilter<LogErrorEvent>;
-
-export interface LogErrorBytesEventObject {
+export interface ErrorBytesLoggedEventObject {
   action: IVault.VaultActionDataStructOutput;
   data: string;
 }
-export type LogErrorBytesEvent = TypedEvent<
+export type ErrorBytesLoggedEvent = TypedEvent<
   [IVault.VaultActionDataStructOutput, string],
-  LogErrorBytesEventObject
+  ErrorBytesLoggedEventObject
 >;
 
-export type LogErrorBytesEventFilter = TypedEventFilter<LogErrorBytesEvent>;
+export type ErrorBytesLoggedEventFilter =
+  TypedEventFilter<ErrorBytesLoggedEvent>;
 
-export interface RedemptionEventObject {
+export interface ErrorLoggedEventObject {
+  action: IVault.VaultActionDataStructOutput;
+  message: string;
+}
+export type ErrorLoggedEvent = TypedEvent<
+  [IVault.VaultActionDataStructOutput, string],
+  ErrorLoggedEventObject
+>;
+
+export type ErrorLoggedEventFilter = TypedEventFilter<ErrorLoggedEvent>;
+
+export interface RedeemEventObject {
   action: IVault.VaultActionDataStructOutput;
   amount: BigNumber;
 }
-export type RedemptionEvent = TypedEvent<
+export type RedeemEvent = TypedEvent<
   [IVault.VaultActionDataStructOutput, BigNumber],
-  RedemptionEventObject
+  RedeemEventObject
 >;
 
-export type RedemptionEventFilter = TypedEventFilter<RedemptionEvent>;
+export type RedeemEventFilter = TypedEventFilter<RedeemEvent>;
 
-export interface TokensSentEventObject {
+export interface RefundEventObject {
   action: IVault.VaultActionDataStructOutput;
   amount: BigNumber;
 }
-export type TokensSentEvent = TypedEvent<
+export type RefundEvent = TypedEvent<
   [IVault.VaultActionDataStructOutput, BigNumber],
-  TokensSentEventObject
+  RefundEventObject
 >;
 
-export type TokensSentEventFilter = TypedEventFilter<TokensSentEvent>;
+export type RefundEventFilter = TypedEventFilter<RefundEvent>;
+
+export interface RewardsHarvestedEventObject {
+  action: IVault.VaultActionDataStructOutput;
+}
+export type RewardsHarvestedEvent = TypedEvent<
+  [IVault.VaultActionDataStructOutput],
+  RewardsHarvestedEventObject
+>;
+
+export type RewardsHarvestedEventFilter =
+  TypedEventFilter<RewardsHarvestedEvent>;
+
+export interface TransferEventObject {
+  action: IVault.VaultActionDataStructOutput;
+  amount: BigNumber;
+}
+export type TransferEvent = TypedEvent<
+  [IVault.VaultActionDataStructOutput, BigNumber],
+  TransferEventObject
+>;
+
+export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
 export interface IRouter extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -369,38 +371,32 @@ export interface IRouter extends BaseContract {
     "Deposit(tuple)"(action?: null): DepositEventFilter;
     Deposit(action?: null): DepositEventFilter;
 
-    "FallbackRefund(tuple,uint256)"(
-      action?: null,
-      amount?: null
-    ): FallbackRefundEventFilter;
-    FallbackRefund(action?: null, amount?: null): FallbackRefundEventFilter;
-
-    "Harvest(tuple)"(action?: null): HarvestEventFilter;
-    Harvest(action?: null): HarvestEventFilter;
-
-    "LogError(tuple,string)"(
-      action?: null,
-      message?: null
-    ): LogErrorEventFilter;
-    LogError(action?: null, message?: null): LogErrorEventFilter;
-
-    "LogErrorBytes(tuple,bytes)"(
+    "ErrorBytesLogged(tuple,bytes)"(
       action?: null,
       data?: null
-    ): LogErrorBytesEventFilter;
-    LogErrorBytes(action?: null, data?: null): LogErrorBytesEventFilter;
+    ): ErrorBytesLoggedEventFilter;
+    ErrorBytesLogged(action?: null, data?: null): ErrorBytesLoggedEventFilter;
 
-    "Redemption(tuple,uint256)"(
+    "ErrorLogged(tuple,string)"(
+      action?: null,
+      message?: null
+    ): ErrorLoggedEventFilter;
+    ErrorLogged(action?: null, message?: null): ErrorLoggedEventFilter;
+
+    "Redeem(tuple,uint256)"(action?: null, amount?: null): RedeemEventFilter;
+    Redeem(action?: null, amount?: null): RedeemEventFilter;
+
+    "Refund(tuple,uint256)"(action?: null, amount?: null): RefundEventFilter;
+    Refund(action?: null, amount?: null): RefundEventFilter;
+
+    "RewardsHarvested(tuple)"(action?: null): RewardsHarvestedEventFilter;
+    RewardsHarvested(action?: null): RewardsHarvestedEventFilter;
+
+    "Transfer(tuple,uint256)"(
       action?: null,
       amount?: null
-    ): RedemptionEventFilter;
-    Redemption(action?: null, amount?: null): RedemptionEventFilter;
-
-    "TokensSent(tuple,uint256)"(
-      action?: null,
-      amount?: null
-    ): TokensSentEventFilter;
-    TokensSent(action?: null, amount?: null): TokensSentEventFilter;
+    ): TransferEventFilter;
+    Transfer(action?: null, amount?: null): TransferEventFilter;
   };
 
   estimateGas: {

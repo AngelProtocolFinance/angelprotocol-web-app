@@ -34,16 +34,19 @@ export default function useSubmit() {
 
       if (isTooltip(txResource)) throw new Error(txResource);
 
+      const { wallet, txMeta } = txResource;
       const [data, dest, meta] = encodeTx(
         "accounts.update-controller",
         update,
-        diff
+        {
+          title: `Update permission settings`,
+          description: `Update permission settings for endowment id:${id} by member:${wallet?.address}`,
+          content: diff,
+        }
       );
-      const { wallet, txMeta } = txResource;
       const tx = createTx(wallet.address, "multisig.submit-transaction", {
         multisig,
-        title: `Update permission settings`,
-        description: `Update permission settings for endowment id:${id} by member:${wallet?.address}`,
+
         destination: dest,
         value: "0",
         data,

@@ -1,7 +1,6 @@
 import { useFormContext } from "react-hook-form";
-import { Tooltip } from "components/admin";
+import { Reset, Submit, Tooltip } from "components/admin";
 import FeesTable from "components/ast";
-import { Reset, Submit } from "../../common/Btn";
 import { Form as Frm } from "../common/Form";
 import { SubHeading } from "../common/SubHeading";
 

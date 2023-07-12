@@ -1,10 +1,15 @@
 import { ASTProfile, EndowmentProfile } from "types/aws";
 import { AxelarBridgeFees } from "types/aws";
 import { EndowmentDetails } from "types/contracts";
-import { Transaction } from "types/contracts/multisig";
+import { ApplicationProposal } from "types/contracts/multisig";
 import { AccountType } from "types/lists";
+import { Transaction } from "types/tx";
 
-export type MultisigConfig = { threshold: number; requireExecution: boolean };
+export type MultisigConfig = {
+  threshold: number;
+  requireExecution: boolean;
+  duration: number;
+};
 
 type Base = {
   multisig: string;
@@ -61,3 +66,8 @@ export function endow(
 ): profile is EndowmentProfile & { type: "endowment" } {
   return profile.type === "endowment";
 }
+
+export type CharityApplication = ApplicationProposal & {
+  confirmations: number;
+  userConfirmed: boolean;
+};

@@ -144,31 +144,31 @@ export interface AirdropInterface extends utils.Interface {
   ): Result;
 
   events: {
-    "AirdropClaim(uint256,address,uint256)": EventFragment;
+    "AirdropClaimed(uint256,address,uint256)": EventFragment;
     "AirdropInitialized(address,address)": EventFragment;
-    "AirdropRegisterMerkleRoot(uint256,bytes32)": EventFragment;
-    "AirdropUpdateConfig(address)": EventFragment;
+    "ConfigUpdated()": EventFragment;
     "Initialized(uint8)": EventFragment;
+    "MerkleRootRegistered(uint256,bytes32)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "AirdropClaim"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "AirdropClaimed"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "AirdropInitialized"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "AirdropRegisterMerkleRoot"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "AirdropUpdateConfig"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ConfigUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "MerkleRootRegistered"): EventFragment;
 }
 
-export interface AirdropClaimEventObject {
+export interface AirdropClaimedEventObject {
   stage: BigNumber;
   sender: string;
   amount: BigNumber;
 }
-export type AirdropClaimEvent = TypedEvent<
+export type AirdropClaimedEvent = TypedEvent<
   [BigNumber, string, BigNumber],
-  AirdropClaimEventObject
+  AirdropClaimedEventObject
 >;
 
-export type AirdropClaimEventFilter = TypedEventFilter<AirdropClaimEvent>;
+export type AirdropClaimedEventFilter = TypedEventFilter<AirdropClaimedEvent>;
 
 export interface AirdropInitializedEventObject {
   owner: string;
@@ -182,28 +182,10 @@ export type AirdropInitializedEvent = TypedEvent<
 export type AirdropInitializedEventFilter =
   TypedEventFilter<AirdropInitializedEvent>;
 
-export interface AirdropRegisterMerkleRootEventObject {
-  stage: BigNumber;
-  merkleRoot: string;
-}
-export type AirdropRegisterMerkleRootEvent = TypedEvent<
-  [BigNumber, string],
-  AirdropRegisterMerkleRootEventObject
->;
+export interface ConfigUpdatedEventObject {}
+export type ConfigUpdatedEvent = TypedEvent<[], ConfigUpdatedEventObject>;
 
-export type AirdropRegisterMerkleRootEventFilter =
-  TypedEventFilter<AirdropRegisterMerkleRootEvent>;
-
-export interface AirdropUpdateConfigEventObject {
-  owner: string;
-}
-export type AirdropUpdateConfigEvent = TypedEvent<
-  [string],
-  AirdropUpdateConfigEventObject
->;
-
-export type AirdropUpdateConfigEventFilter =
-  TypedEventFilter<AirdropUpdateConfigEvent>;
+export type ConfigUpdatedEventFilter = TypedEventFilter<ConfigUpdatedEvent>;
 
 export interface InitializedEventObject {
   version: number;
@@ -211,6 +193,18 @@ export interface InitializedEventObject {
 export type InitializedEvent = TypedEvent<[number], InitializedEventObject>;
 
 export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
+
+export interface MerkleRootRegisteredEventObject {
+  stage: BigNumber;
+  merkleRoot: string;
+}
+export type MerkleRootRegisteredEvent = TypedEvent<
+  [BigNumber, string],
+  MerkleRootRegisteredEventObject
+>;
+
+export type MerkleRootRegisteredEventFilter =
+  TypedEventFilter<MerkleRootRegisteredEvent>;
 
 export interface Airdrop extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -357,16 +351,16 @@ export interface Airdrop extends BaseContract {
   };
 
   filters: {
-    "AirdropClaim(uint256,address,uint256)"(
+    "AirdropClaimed(uint256,address,uint256)"(
       stage?: null,
       sender?: null,
       amount?: null
-    ): AirdropClaimEventFilter;
-    AirdropClaim(
+    ): AirdropClaimedEventFilter;
+    AirdropClaimed(
       stage?: null,
       sender?: null,
       amount?: null
-    ): AirdropClaimEventFilter;
+    ): AirdropClaimedEventFilter;
 
     "AirdropInitialized(address,address)"(
       owner?: null,
@@ -377,22 +371,20 @@ export interface Airdrop extends BaseContract {
       haloToken?: null
     ): AirdropInitializedEventFilter;
 
-    "AirdropRegisterMerkleRoot(uint256,bytes32)"(
-      stage?: null,
-      merkleRoot?: null
-    ): AirdropRegisterMerkleRootEventFilter;
-    AirdropRegisterMerkleRoot(
-      stage?: null,
-      merkleRoot?: null
-    ): AirdropRegisterMerkleRootEventFilter;
-
-    "AirdropUpdateConfig(address)"(
-      owner?: null
-    ): AirdropUpdateConfigEventFilter;
-    AirdropUpdateConfig(owner?: null): AirdropUpdateConfigEventFilter;
+    "ConfigUpdated()"(): ConfigUpdatedEventFilter;
+    ConfigUpdated(): ConfigUpdatedEventFilter;
 
     "Initialized(uint8)"(version?: null): InitializedEventFilter;
     Initialized(version?: null): InitializedEventFilter;
+
+    "MerkleRootRegistered(uint256,bytes32)"(
+      stage?: null,
+      merkleRoot?: null
+    ): MerkleRootRegisteredEventFilter;
+    MerkleRootRegistered(
+      stage?: null,
+      merkleRoot?: null
+    ): MerkleRootRegisteredEventFilter;
   };
 
   estimateGas: {

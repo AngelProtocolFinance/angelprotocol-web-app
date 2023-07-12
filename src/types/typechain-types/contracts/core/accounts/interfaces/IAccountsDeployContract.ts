@@ -23,7 +23,7 @@ import type {
   PromiseOrValue,
 } from "../../../../common";
 
-export declare namespace AngelCoreStruct {
+export declare namespace SubDaoLib {
   export type VeTypeDataStruct = {
     value: PromiseOrValue<BigNumberish>;
     scale: PromiseOrValue<BigNumberish>;
@@ -45,20 +45,20 @@ export declare namespace AngelCoreStruct {
 
   export type VeTypeStruct = {
     ve_type: PromiseOrValue<BigNumberish>;
-    data: AngelCoreStruct.VeTypeDataStruct;
+    data: SubDaoLib.VeTypeDataStruct;
   };
 
   export type VeTypeStructOutput = [
     number,
-    AngelCoreStruct.VeTypeDataStructOutput
-  ] & { ve_type: number; data: AngelCoreStruct.VeTypeDataStructOutput };
+    SubDaoLib.VeTypeDataStructOutput
+  ] & { ve_type: number; data: SubDaoLib.VeTypeDataStructOutput };
 
   export type DaoTokenDataStruct = {
     existingData: PromiseOrValue<string>;
     newInitialSupply: PromiseOrValue<BigNumberish>;
     newName: PromiseOrValue<string>;
     newSymbol: PromiseOrValue<string>;
-    veBondingType: AngelCoreStruct.VeTypeStruct;
+    veBondingType: SubDaoLib.VeTypeStruct;
     veBondingName: PromiseOrValue<string>;
     veBondingSymbol: PromiseOrValue<string>;
     veBondingDecimals: PromiseOrValue<BigNumberish>;
@@ -72,7 +72,7 @@ export declare namespace AngelCoreStruct {
     BigNumber,
     string,
     string,
-    AngelCoreStruct.VeTypeStructOutput,
+    SubDaoLib.VeTypeStructOutput,
     string,
     string,
     BigNumber,
@@ -84,7 +84,7 @@ export declare namespace AngelCoreStruct {
     newInitialSupply: BigNumber;
     newName: string;
     newSymbol: string;
-    veBondingType: AngelCoreStruct.VeTypeStructOutput;
+    veBondingType: SubDaoLib.VeTypeStructOutput;
     veBondingName: string;
     veBondingSymbol: string;
     veBondingDecimals: BigNumber;
@@ -95,16 +95,16 @@ export declare namespace AngelCoreStruct {
 
   export type DaoTokenStruct = {
     token: PromiseOrValue<BigNumberish>;
-    data: AngelCoreStruct.DaoTokenDataStruct;
+    data: SubDaoLib.DaoTokenDataStruct;
   };
 
   export type DaoTokenStructOutput = [
     number,
-    AngelCoreStruct.DaoTokenDataStructOutput
-  ] & { token: number; data: AngelCoreStruct.DaoTokenDataStructOutput };
+    SubDaoLib.DaoTokenDataStructOutput
+  ] & { token: number; data: SubDaoLib.DaoTokenDataStructOutput };
 }
 
-export declare namespace SubDaoMessage {
+export declare namespace SubDaoMessages {
   export type InstantiateMsgStruct = {
     id: PromiseOrValue<BigNumberish>;
     owner: PromiseOrValue<string>;
@@ -115,7 +115,7 @@ export declare namespace SubDaoMessage {
     expirationPeriod: PromiseOrValue<BigNumberish>;
     proposalDeposit: PromiseOrValue<BigNumberish>;
     snapshotPeriod: PromiseOrValue<BigNumberish>;
-    token: AngelCoreStruct.DaoTokenStruct;
+    token: SubDaoLib.DaoTokenStruct;
     endowType: PromiseOrValue<BigNumberish>;
     endowOwner: PromiseOrValue<string>;
     registrarContract: PromiseOrValue<string>;
@@ -131,7 +131,7 @@ export declare namespace SubDaoMessage {
     BigNumber,
     BigNumber,
     BigNumber,
-    AngelCoreStruct.DaoTokenStructOutput,
+    SubDaoLib.DaoTokenStructOutput,
     number,
     string,
     string
@@ -145,7 +145,7 @@ export declare namespace SubDaoMessage {
     expirationPeriod: BigNumber;
     proposalDeposit: BigNumber;
     snapshotPeriod: BigNumber;
-    token: AngelCoreStruct.DaoTokenStructOutput;
+    token: SubDaoLib.DaoTokenStructOutput;
     endowType: number;
     endowOwner: string;
     registrarContract: string;
@@ -161,7 +161,7 @@ export interface IAccountsDeployContractInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "createDaoContract",
-    values: [SubDaoMessage.InstantiateMsgStruct]
+    values: [SubDaoMessages.InstantiateMsgStruct]
   ): string;
 
   decodeFunctionResult(
@@ -200,19 +200,19 @@ export interface IAccountsDeployContract extends BaseContract {
 
   functions: {
     createDaoContract(
-      createdaomessage: SubDaoMessage.InstantiateMsgStruct,
+      createdaomessage: SubDaoMessages.InstantiateMsgStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
 
   createDaoContract(
-    createdaomessage: SubDaoMessage.InstantiateMsgStruct,
+    createdaomessage: SubDaoMessages.InstantiateMsgStruct,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     createDaoContract(
-      createdaomessage: SubDaoMessage.InstantiateMsgStruct,
+      createdaomessage: SubDaoMessages.InstantiateMsgStruct,
       overrides?: CallOverrides
     ): Promise<string>;
   };
@@ -221,14 +221,14 @@ export interface IAccountsDeployContract extends BaseContract {
 
   estimateGas: {
     createDaoContract(
-      createdaomessage: SubDaoMessage.InstantiateMsgStruct,
+      createdaomessage: SubDaoMessages.InstantiateMsgStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     createDaoContract(
-      createdaomessage: SubDaoMessage.InstantiateMsgStruct,
+      createdaomessage: SubDaoMessages.InstantiateMsgStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };

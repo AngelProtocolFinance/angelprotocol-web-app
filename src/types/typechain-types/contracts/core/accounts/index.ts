@@ -7,4 +7,3 @@ import type * as facets from "./facets";
 export type { facets };
 import type * as interfaces from "./interfaces";
 export type { interfaces };
-export type { IAccounts } from "./IAccounts";

@@ -3,8 +3,5 @@
 /* eslint-disable */
 import type * as interfaces from "./interfaces";
 export type { interfaces };
-import type * as lib from "./lib";
-export type { lib };
-import type * as registrarSol from "./registrar.sol";
-export type { registrarSol };
 export type { LocalRegistrar } from "./LocalRegistrar";
+export type { Registrar } from "./Registrar";

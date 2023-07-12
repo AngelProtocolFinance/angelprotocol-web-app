@@ -1,12 +1,12 @@
 import type { BigNumber } from "@ethersproject/bignumber";
 import {
+  AccountsSplitDetails,
   Fee,
   GenericBalMap,
   SettingsPermission,
-  SplitDetails,
 } from "types/contracts";
 import { EndowmentType } from "types/lists";
-import { AngelCoreStruct } from "types/typechain-types/contracts/core/accounts/IAccounts";
+import { LibAccounts as AccountsLibs } from "types/typechain-types/contracts/core/accounts/interfaces/IAccounts";
 
 enum EndowmentTypeEnum {
   Charity,
@@ -23,7 +23,7 @@ export type DGenericBalance = {
 // ////////// CONVERTERS ///////////////
 
 export function toPermission(
-  d: AngelCoreStruct.SettingsPermissionStructOutput
+  d: AccountsLibs.SettingsPermissionStructOutput
 ): SettingsPermission {
   return {
     locked: d.locked,
@@ -57,8 +57,8 @@ export function toBalMap(d: DGenericBalance): GenericBalMap {
 }
 
 export function toSplit(
-  d: AngelCoreStruct.SplitDetailsStructOutput
-): SplitDetails {
+  d: AccountsLibs.SplitDetailsStructOutput
+): AccountsSplitDetails {
   return {
     min: d.min.toNumber(),
     max: d.max.toNumber(),
@@ -66,7 +66,7 @@ export function toSplit(
   };
 }
 
-export function toFee(d: AngelCoreStruct.FeeSettingStructOutput): Fee {
+export function toFee(d: AccountsLibs.FeeSettingStructOutput): Fee {
   return {
     payoutAddress: d.payoutAddress.toLowerCase(),
     bps: d.bps.toNumber(),

@@ -22,7 +22,6 @@ export default function ConfigExtension() {
 function Context(p: RegistrarConfig) {
   const initial: RegistrarConfigUpdate = {
     accountsContract: p.accountsContract,
-    approved_charities: [],
     splitMax: p.splitToLiquid.max,
     splitMin: p.splitToLiquid.min,
     splitDefault: p.splitToLiquid.defaultSplit,
@@ -43,11 +42,11 @@ function Context(p: RegistrarConfig) {
     haloTokenLpContract: p.haloTokenLpContract,
     charitySharesContract: p.charitySharesContract,
     fundraisingContract: p.fundraisingContract,
-    applicationsReview: p.applicationsReview,
-    uniswapSwapRouter: p.uniswapSwapRouter,
+    uniswapRouter: p.uniswapRouter,
+    uniswapFactory: p.uniswapFactory,
     multisigFactory: p.multisigFactory,
     multisigEmitter: p.multisigEmitter,
-    charityProposal: p.charityProposal,
+    charityApplications: p.charityApplications,
     lockedWithdrawal: p.lockedWithdrawal,
     proxyAdmin: p.proxyAdmin,
     usdcAddress: p.usdcAddress,

@@ -27,20 +27,6 @@ import type {
   PromiseOrValue,
 } from "../../../common";
 
-export declare namespace GovHodlerStorage {
-  export type ConfigStruct = {
-    owner: PromiseOrValue<string>;
-    haloToken: PromiseOrValue<string>;
-    timelockContract: PromiseOrValue<string>;
-  };
-
-  export type ConfigStructOutput = [string, string, string] & {
-    owner: string;
-    haloToken: string;
-    timelockContract: string;
-  };
-}
-
 export declare namespace GovHodlerMessage {
   export type InstantiateMsgStruct = {
     owner: PromiseOrValue<string>;
@@ -90,38 +76,31 @@ export interface GovHodlerInterface extends utils.Interface {
   ): Result;
 
   events: {
-    "GovHolderConfigUpdated(tuple)": EventFragment;
-    "GovHolderHaloClaimed(address,uint256)": EventFragment;
+    "ConfigUpdated()": EventFragment;
+    "HaloClaimed(address,uint256)": EventFragment;
     "Initialized(uint8)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "GovHolderConfigUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "GovHolderHaloClaimed"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ConfigUpdated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "HaloClaimed"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
 }
 
-export interface GovHolderConfigUpdatedEventObject {
-  config: GovHodlerStorage.ConfigStructOutput;
-}
-export type GovHolderConfigUpdatedEvent = TypedEvent<
-  [GovHodlerStorage.ConfigStructOutput],
-  GovHolderConfigUpdatedEventObject
->;
+export interface ConfigUpdatedEventObject {}
+export type ConfigUpdatedEvent = TypedEvent<[], ConfigUpdatedEventObject>;
 
-export type GovHolderConfigUpdatedEventFilter =
-  TypedEventFilter<GovHolderConfigUpdatedEvent>;
+export type ConfigUpdatedEventFilter = TypedEventFilter<ConfigUpdatedEvent>;
 
-export interface GovHolderHaloClaimedEventObject {
+export interface HaloClaimedEventObject {
   recipient: string;
   amount: BigNumber;
 }
-export type GovHolderHaloClaimedEvent = TypedEvent<
+export type HaloClaimedEvent = TypedEvent<
   [string, BigNumber],
-  GovHolderHaloClaimedEventObject
+  HaloClaimedEventObject
 >;
 
-export type GovHolderHaloClaimedEventFilter =
-  TypedEventFilter<GovHolderHaloClaimedEvent>;
+export type HaloClaimedEventFilter = TypedEventFilter<HaloClaimedEvent>;
 
 export interface InitializedEventObject {
   version: number;
@@ -209,19 +188,14 @@ export interface GovHodler extends BaseContract {
   };
 
   filters: {
-    "GovHolderConfigUpdated(tuple)"(
-      config?: null
-    ): GovHolderConfigUpdatedEventFilter;
-    GovHolderConfigUpdated(config?: null): GovHolderConfigUpdatedEventFilter;
+    "ConfigUpdated()"(): ConfigUpdatedEventFilter;
+    ConfigUpdated(): ConfigUpdatedEventFilter;
 
-    "GovHolderHaloClaimed(address,uint256)"(
+    "HaloClaimed(address,uint256)"(
       recipient?: null,
       amount?: null
-    ): GovHolderHaloClaimedEventFilter;
-    GovHolderHaloClaimed(
-      recipient?: null,
-      amount?: null
-    ): GovHolderHaloClaimedEventFilter;
+    ): HaloClaimedEventFilter;
+    HaloClaimed(recipient?: null, amount?: null): HaloClaimedEventFilter;
 
     "Initialized(uint8)"(version?: null): InitializedEventFilter;
     Initialized(version?: null): InitializedEventFilter;

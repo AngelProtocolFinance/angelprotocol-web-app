@@ -34,7 +34,11 @@ export default function useUpdateOwner() {
       {
         newOwner: fv.newOwner,
       },
-      { curr: fv.initialOwner, new: fv.newOwner }
+      {
+        title: fv.title,
+        description: fv.description,
+        content: { curr: fv.initialOwner, new: fv.newOwner },
+      }
     );
 
     const { wallet, txMeta } = txResource;
@@ -43,8 +47,7 @@ export default function useUpdateOwner() {
         type: "evm",
         val: createTx(wallet.address, "multisig.submit-transaction", {
           multisig,
-          title: fv.title,
-          description: fv.description,
+
           destination: dest,
           value: "0",
           data,

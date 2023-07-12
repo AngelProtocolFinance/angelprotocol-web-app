@@ -27,22 +27,6 @@ import type {
   PromiseOrValue,
 } from "../../../common";
 
-export declare namespace DistributorStorage {
-  export type ConfigStruct = {
-    timelockContract: PromiseOrValue<string>;
-    haloToken: PromiseOrValue<string>;
-    allowlist: PromiseOrValue<string>[];
-    spendLimit: PromiseOrValue<BigNumberish>;
-  };
-
-  export type ConfigStructOutput = [string, string, string[], BigNumber] & {
-    timelockContract: string;
-    haloToken: string;
-    allowlist: string[];
-    spendLimit: BigNumber;
-  };
-}
-
 export declare namespace DistributorMessage {
   export type InstantiateMsgStruct = {
     timelockContract: PromiseOrValue<string>;
@@ -148,19 +132,24 @@ export interface DistributorInterface extends utils.Interface {
   ): Result;
 
   events: {
+    "ConfigUpdated()": EventFragment;
     "DistributorAdded(address)": EventFragment;
-    "DistributorConfigUpdated(tuple)": EventFragment;
     "DistributorRemoved(address)": EventFragment;
-    "DistributorSpend(address,uint256)": EventFragment;
+    "HaloSpent(address,uint256)": EventFragment;
     "Initialized(uint8)": EventFragment;
   };
 
+  getEvent(nameOrSignatureOrTopic: "ConfigUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "DistributorAdded"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "DistributorConfigUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "DistributorRemoved"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "DistributorSpend"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "HaloSpent"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
 }
+
+export interface ConfigUpdatedEventObject {}
+export type ConfigUpdatedEvent = TypedEvent<[], ConfigUpdatedEventObject>;
+
+export type ConfigUpdatedEventFilter = TypedEventFilter<ConfigUpdatedEvent>;
 
 export interface DistributorAddedEventObject {
   distributor: string;
@@ -173,17 +162,6 @@ export type DistributorAddedEvent = TypedEvent<
 export type DistributorAddedEventFilter =
   TypedEventFilter<DistributorAddedEvent>;
 
-export interface DistributorConfigUpdatedEventObject {
-  config: DistributorStorage.ConfigStructOutput;
-}
-export type DistributorConfigUpdatedEvent = TypedEvent<
-  [DistributorStorage.ConfigStructOutput],
-  DistributorConfigUpdatedEventObject
->;
-
-export type DistributorConfigUpdatedEventFilter =
-  TypedEventFilter<DistributorConfigUpdatedEvent>;
-
 export interface DistributorRemovedEventObject {
   distributor: string;
 }
@@ -195,17 +173,16 @@ export type DistributorRemovedEvent = TypedEvent<
 export type DistributorRemovedEventFilter =
   TypedEventFilter<DistributorRemovedEvent>;
 
-export interface DistributorSpendEventObject {
+export interface HaloSpentEventObject {
   recipient: string;
   amount: BigNumber;
 }
-export type DistributorSpendEvent = TypedEvent<
+export type HaloSpentEvent = TypedEvent<
   [string, BigNumber],
-  DistributorSpendEventObject
+  HaloSpentEventObject
 >;
 
-export type DistributorSpendEventFilter =
-  TypedEventFilter<DistributorSpendEvent>;
+export type HaloSpentEventFilter = TypedEventFilter<HaloSpentEvent>;
 
 export interface InitializedEventObject {
   version: number;
@@ -338,31 +315,24 @@ export interface Distributor extends BaseContract {
   };
 
   filters: {
+    "ConfigUpdated()"(): ConfigUpdatedEventFilter;
+    ConfigUpdated(): ConfigUpdatedEventFilter;
+
     "DistributorAdded(address)"(
       distributor?: null
     ): DistributorAddedEventFilter;
     DistributorAdded(distributor?: null): DistributorAddedEventFilter;
-
-    "DistributorConfigUpdated(tuple)"(
-      config?: null
-    ): DistributorConfigUpdatedEventFilter;
-    DistributorConfigUpdated(
-      config?: null
-    ): DistributorConfigUpdatedEventFilter;
 
     "DistributorRemoved(address)"(
       distributor?: null
     ): DistributorRemovedEventFilter;
     DistributorRemoved(distributor?: null): DistributorRemovedEventFilter;
 
-    "DistributorSpend(address,uint256)"(
+    "HaloSpent(address,uint256)"(
       recipient?: null,
       amount?: null
-    ): DistributorSpendEventFilter;
-    DistributorSpend(
-      recipient?: null,
-      amount?: null
-    ): DistributorSpendEventFilter;
+    ): HaloSpentEventFilter;
+    HaloSpent(recipient?: null, amount?: null): HaloSpentEventFilter;
 
     "Initialized(uint8)"(version?: null): InitializedEventFilter;
     Initialized(version?: null): InitializedEventFilter;

@@ -1,6 +1,6 @@
+import { WithdrawMeta } from "types/tx";
 import Image from "components/Image";
 import TableSection, { Cells } from "components/TableSection";
-import { WithdrawMeta } from "contracts/createTx/meta";
 import { humanize } from "helpers";
 import KeyValue from "./common/KeyValue";
 import PreviewContainer from "./common/PreviewContainer";

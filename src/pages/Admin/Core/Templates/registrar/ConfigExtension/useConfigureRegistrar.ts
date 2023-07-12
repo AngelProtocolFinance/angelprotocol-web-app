@@ -42,7 +42,7 @@ export default function useConfigureRegistrar() {
         ...initial,
         ...fv,
       },
-      diff
+      { title, description, content: diff }
     );
 
     const { wallet, txMeta } = txResource;
@@ -51,8 +51,7 @@ export default function useConfigureRegistrar() {
         type: "evm",
         val: createTx(wallet.address, "multisig.submit-transaction", {
           multisig,
-          title,
-          description,
+
           destination: dest,
           value: "0",
           data,

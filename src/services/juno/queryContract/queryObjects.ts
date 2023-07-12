@@ -1,3 +1,4 @@
+import { AbiCoder } from "@ethersproject/abi";
 import { BigNumber } from "@ethersproject/bignumber";
 import {
   DGenericBalance,
@@ -8,16 +9,17 @@ import {
   toSplit,
 } from "./decoded-types";
 import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
+import { TxMeta } from "types/tx";
 import {
   AccountMessages,
   AccountStorage,
-} from "types/typechain-types/contracts/core/accounts/IAccounts";
+} from "types/typechain-types/contracts/core/accounts/interfaces/IAccounts";
 import {
+  IIndexFund,
   IndexFundStorage,
-  AngelCoreStruct as IndexFundStructs,
 } from "types/typechain-types/contracts/core/index-fund/IndexFund";
 import { RegistrarStorage } from "types/typechain-types/contracts/core/registrar/interfaces/IRegistrar";
-import { MultiSigStorage } from "types/typechain-types/contracts/multisigs/MultiSigGeneric";
+import { DecodedApplicationProposal } from "types/typechain-types/custom";
 import { accounts } from "contracts/evm/Account";
 import { erc20 } from "contracts/evm/ERC20";
 import { giftCard } from "contracts/evm/gift-card";
@@ -25,6 +27,7 @@ import { indexFund } from "contracts/evm/index-fund";
 import { multisig } from "contracts/evm/multisig";
 import { registrar } from "contracts/evm/registrar";
 import { toTuple } from "helpers";
+import { EMPTY_DATA } from "constants/evm";
 
 export const queryObjects: {
   [K in QT]: Q[K]["args"] extends null
@@ -42,7 +45,6 @@ export const queryObjects: {
       const d: RegistrarStorage.ConfigStructOutput =
         registrar.decodeFunctionResult("queryConfig", result)[0];
       return {
-        applicationsReview: d.applicationsReview.toLowerCase(),
         indexFundContract: d.indexFundContract.toLowerCase(),
         accountsContract: d.accountsContract.toLowerCase(),
         treasury: d.treasury.toLowerCase(),
@@ -63,10 +65,11 @@ export const queryObjects: {
         collectorShare: d.collectorShare.toNumber(),
         charitySharesContract: d.charitySharesContract.toLowerCase(),
         fundraisingContract: d.fundraisingContract.toLowerCase(),
-        uniswapSwapRouter: d.uniswapSwapRouter.toLowerCase(),
+        uniswapRouter: d.uniswapRouter.toLowerCase(),
+        uniswapFactory: d.uniswapFactory.toLocaleLowerCase(),
         multisigFactory: d.multisigFactory.toLowerCase(),
         multisigEmitter: d.multisigEmitter.toLowerCase(),
-        charityProposal: d.charityProposal.toLowerCase(),
+        charityApplications: d.charityApplications.toLowerCase(),
         lockedWithdrawal: d.lockedWithdrawal.toLowerCase(),
         proxyAdmin: d.proxyAdmin.toLowerCase(),
         usdcAddress: d.usdcAddress.toLowerCase(),
@@ -94,7 +97,7 @@ export const queryObjects: {
   "index-fund.fund": [
     ({ id }) => indexFund.encodeFunctionData("queryFundDetails", [id]),
     (result) => {
-      const d: IndexFundStructs.IndexFundStructOutput =
+      const d: IIndexFund.IndexFundStructOutput =
         indexFund.decodeFunctionResult("queryFundDetails", result)[0];
 
       return {
@@ -151,10 +154,17 @@ export const queryObjects: {
       return d.map((a) => a.toLowerCase());
     },
   ],
+  "multisig.is-owner": [
+    ({ addr }) => multisig.encodeFunctionData("isOwner", [addr]),
+    (result) => multisig.decodeFunctionResult("isOwner", result)[0],
+  ],
   "multisig.threshold": [
-    multisig.encodeFunctionData("required", []),
+    multisig.encodeFunctionData("approvalsRequired", []),
     (result) => {
-      const d: BigNumber = multisig.decodeFunctionResult("required", result)[0];
+      const d: BigNumber = multisig.decodeFunctionResult(
+        "approvalsRequired",
+        result
+      )[0];
       return d.toNumber();
     },
   ],
@@ -200,18 +210,29 @@ export const queryObjects: {
   "multisig.transaction": [
     ({ id }) => multisig.encodeFunctionData("transactions", [id]),
     (result, args) => {
-      const d: MultiSigStorage.TransactionStructOutput =
-        multisig.decodeFunctionResult("transactions", result) as any;
+      // no separate TransactionOutputStruct from typechain
+      const d: [string, BigNumber, string, boolean, BigNumber, string] & {
+        destination: string;
+        value: BigNumber;
+        data: string;
+        executed: boolean;
+        expiry: BigNumber;
+        metadata: string;
+      } = multisig.decodeFunctionResult("transactions", result) as any;
+
+      const parsed: TxMeta | undefined =
+        d.metadata === EMPTY_DATA
+          ? undefined
+          : JSON.parse(new AbiCoder().decode(["string"], d.metadata)[0]);
 
       return {
         id: args?.id ?? 0,
-        title: d.title,
-        description: d.description,
         destination: d.destination,
         value: d.value.toString(),
         data: d.data,
         status: d.executed ? "approved" : "open",
-        metadata: d.metadata,
+        expiry: d.expiry.toNumber(),
+        metadata: parsed,
       };
     },
   ],
@@ -224,6 +245,49 @@ export const queryObjects: {
         result
       )[0];
       return d.map((s) => s.toLowerCase());
+    },
+  ],
+  "multisig.tx-duration": [
+    multisig.encodeFunctionData("transactionExpiry", []),
+    (result) => {
+      const d: BigNumber = multisig.decodeFunctionResult(
+        "transactionExpiry",
+        result
+      )[0];
+      return d.toNumber();
+    },
+  ],
+  "multisig/review.is-confirmed": [
+    ({ id, addr }) =>
+      multisig.encodeFunctionData("getProposalConfirmationStatus", [id, addr]),
+    (result) =>
+      multisig.decodeFunctionResult("getProposalConfirmationStatus", result)[0],
+  ],
+  "multisig/review.proposal": [
+    ({ id }) => multisig.encodeFunctionData("proposals", [id]),
+    (result) => {
+      const d = multisig.decodeFunctionResult(
+        "proposals",
+        result
+      ) as DecodedApplicationProposal;
+
+      return {
+        //abi is tuple only
+        executed: d[4],
+        expiry: d[3].toNumber(),
+      };
+    },
+  ],
+  "multisig/review.prop-confirms": [
+    ({ id }) =>
+      multisig.encodeFunctionData("getProposalConfirmationCount", [id]),
+    (result) => {
+      const d: BigNumber = multisig.decodeFunctionResult(
+        "getProposalConfirmationCount",
+        result
+      )[0];
+
+      return d.toNumber();
     },
   ],
 
@@ -247,7 +311,6 @@ export const queryObjects: {
           w.toLowerCase()
         ),
         maturityAllowlist: d.maturityAllowlist.map((w) => w.toLowerCase()),
-        kycDonorsOnly: d.kycDonorsOnly,
         donationMatchActive: d.donationMatchActive,
 
         earlyLockedWithdrawFee: toFee(d.earlyLockedWithdrawFee),

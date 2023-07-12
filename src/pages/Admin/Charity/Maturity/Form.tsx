@@ -2,10 +2,9 @@ import { FormHTMLAttributes } from "react";
 import { useFormContext } from "react-hook-form";
 import { FV } from "./types";
 import Addresses from "components/Addresses";
-import { Tooltip } from "components/admin";
+import { Reset, Submit, Tooltip } from "components/admin";
 import { Toggle } from "components/ast";
 import { Field } from "components/form";
-import { Reset, Submit } from "../common/Btn";
 
 export default function Form({
   tooltip,

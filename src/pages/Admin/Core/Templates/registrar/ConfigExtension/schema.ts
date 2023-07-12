@@ -11,7 +11,6 @@ const shape: SchemaShape<FormValues> = {
   ...proposalShape,
 
   accountsContract: contract,
-  applicationsReview: contract,
   charitySharesContract: contract,
   donationMatchCharitesContract: contract,
   fundraisingContract: contract,
@@ -19,7 +18,8 @@ const shape: SchemaShape<FormValues> = {
   haloTokenLpContract: contract,
   haloToken: contract,
   indexFundContract: contract,
-  uniswapSwapRouter: contract,
+  uniswapRouter: contract,
+  charityApplications: contract,
 
   //wasm codes
   multisigFactory: contract,

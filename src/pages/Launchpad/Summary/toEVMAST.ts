@@ -1,7 +1,7 @@
 import { Completed, TFee } from "slices/launchpad/types";
 import { Fee, NewAST, SettingsPermission } from "types/contracts";
 import { isEmpty } from "helpers";
-import { blockTime } from "helpers/admin";
+import { blockTime, fromHours } from "helpers/admin";
 import { toContractSplit } from "helpers/ast";
 import { ADDRESS_ZERO } from "constants/evm";
 
@@ -17,7 +17,6 @@ export default function toEVMAST(
   creator: string
 ): NewAST {
   return {
-    owner: creator,
     withdrawBeforeMaturity: true, //not specified in launchpad design
     maturityTime: maturity.willMature ? blockTime(maturity.date) : 0,
     name: about.name,
@@ -27,57 +26,16 @@ export default function toEVMAST(
     logo: "/images/angelprotocol-rounded-logo.png",
     image: "",
     members: isEmpty(management.members) ? [creator] : management.members, //in launchpad design, weight is specified for each member
-    kycDonorsOnly: false, //not specified in launchpad design
     threshold: +management.proposal.threshold,
+    duration: fromHours(+management.proposal.duration),
     allowlistedBeneficiaries: whitelists.beneficiaries,
     allowlistedContributors: whitelists.contributors,
-
-    //not used in contract
-    splitMax: 100 - +splits.max,
-    splitMin: 100 - +splits.min,
-    splitDefault: +splits.default,
 
     // //fees
     earlyLockedWithdrawFee: toEndowFee(fees.earlyWithdraw),
     withdrawFee: toEndowFee(fees.withdrawal),
     depositFee: toEndowFee(fees.deposit),
     balanceFee: toEndowFee(fees.balance), //not included in launchpad, for edit later
-
-    //dao (overriden by bool createDao ):not included in launchpad, for edit later
-    dao: {
-      quorum: 0,
-      threshold: 0,
-      votingPeriod: 0,
-      timelockPeriod: 0,
-      expirationPeriod: 0,
-      proposalDeposit: 0,
-      snapshotPeriod: 0,
-      token: {
-        token: 0,
-        data: {
-          existingData: ADDRESS_ZERO,
-          newInitialSupply: "0",
-          newName: "",
-          newSymbol: "",
-          veBondingType: {
-            ve_type: 0,
-            data: {
-              value: 0,
-              scale: 0,
-              slope: 0,
-              power: 0,
-            },
-          },
-          veBondingName: "",
-          veBondingSymbol: "",
-          veBondingDecimals: 0,
-          veBondingReserveDenom: ADDRESS_ZERO,
-          veBondingReserveDecimals: 0,
-          veBondingPeriod: 0,
-        },
-      },
-    },
-    createDao: false,
 
     proposalLink: 0, //not specified in launchpad design
 

@@ -11,12 +11,16 @@ export const tags: ContractQueryTypes[] = [
   "erc20.balance",
 
   "multisig.members",
+  "multisig.is-owner",
   "multisig.txs",
   "multisig.tx-count",
   "multisig.threshold",
   "multisig.require-execution",
   "multisig.transaction",
   "multisig.votes",
+
+  "multisig/review.prop-confirms",
+  "multisig/review.proposal",
 
   "accounts.endowment",
   "accounts.state",

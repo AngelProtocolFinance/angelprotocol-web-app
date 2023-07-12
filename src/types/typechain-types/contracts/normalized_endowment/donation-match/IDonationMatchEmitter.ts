@@ -43,24 +43,24 @@ export declare namespace DonationMatchStorage {
 
 export interface IDonationMatchEmitterInterface extends utils.Interface {
   functions: {
-    "burnErC20(uint256,address,uint256)": FunctionFragment;
-    "executeDonorMatch(address,uint256,address,uint256,address)": FunctionFragment;
-    "giveApprovalErC20(uint256,address,address,uint256)": FunctionFragment;
-    "initializeDonationMatch(uint256,address,(address,address,address,address,uint24))": FunctionFragment;
-    "transferErC20(uint256,address,address,uint256)": FunctionFragment;
+    "burnErc20(uint32,address,uint256)": FunctionFragment;
+    "executeDonorMatch(address,uint256,address,uint32,address)": FunctionFragment;
+    "giveApprovalErc20(uint32,address,address,uint256)": FunctionFragment;
+    "initializeDonationMatch(uint32,address,(address,address,address,address,uint24))": FunctionFragment;
+    "transferErc20(uint32,address,address,uint256)": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "burnErC20"
+      | "burnErc20"
       | "executeDonorMatch"
-      | "giveApprovalErC20"
+      | "giveApprovalErc20"
       | "initializeDonationMatch"
-      | "transferErC20"
+      | "transferErc20"
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "burnErC20",
+    functionFragment: "burnErc20",
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
@@ -78,7 +78,7 @@ export interface IDonationMatchEmitterInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "giveApprovalErC20",
+    functionFragment: "giveApprovalErc20",
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
@@ -95,7 +95,7 @@ export interface IDonationMatchEmitterInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "transferErC20",
+    functionFragment: "transferErc20",
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
@@ -104,13 +104,13 @@ export interface IDonationMatchEmitterInterface extends utils.Interface {
     ]
   ): string;
 
-  decodeFunctionResult(functionFragment: "burnErC20", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "burnErc20", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "executeDonorMatch",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "giveApprovalErC20",
+    functionFragment: "giveApprovalErc20",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -118,7 +118,7 @@ export interface IDonationMatchEmitterInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "transferErC20",
+    functionFragment: "transferErc20",
     data: BytesLike
   ): Result;
 
@@ -152,7 +152,7 @@ export interface IDonationMatchEmitter extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    burnErC20(
+    burnErc20(
       endowmentId: PromiseOrValue<BigNumberish>,
       tokenAddress: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
@@ -168,7 +168,7 @@ export interface IDonationMatchEmitter extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    giveApprovalErC20(
+    giveApprovalErc20(
       endowmentId: PromiseOrValue<BigNumberish>,
       tokenAddress: PromiseOrValue<string>,
       recipient: PromiseOrValue<string>,
@@ -183,7 +183,7 @@ export interface IDonationMatchEmitter extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    transferErC20(
+    transferErc20(
       endowmentId: PromiseOrValue<BigNumberish>,
       tokenAddress: PromiseOrValue<string>,
       recipient: PromiseOrValue<string>,
@@ -192,7 +192,7 @@ export interface IDonationMatchEmitter extends BaseContract {
     ): Promise<ContractTransaction>;
   };
 
-  burnErC20(
+  burnErc20(
     endowmentId: PromiseOrValue<BigNumberish>,
     tokenAddress: PromiseOrValue<string>,
     amount: PromiseOrValue<BigNumberish>,
@@ -208,7 +208,7 @@ export interface IDonationMatchEmitter extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  giveApprovalErC20(
+  giveApprovalErc20(
     endowmentId: PromiseOrValue<BigNumberish>,
     tokenAddress: PromiseOrValue<string>,
     recipient: PromiseOrValue<string>,
@@ -223,7 +223,7 @@ export interface IDonationMatchEmitter extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  transferErC20(
+  transferErc20(
     endowmentId: PromiseOrValue<BigNumberish>,
     tokenAddress: PromiseOrValue<string>,
     recipient: PromiseOrValue<string>,
@@ -232,7 +232,7 @@ export interface IDonationMatchEmitter extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    burnErC20(
+    burnErc20(
       endowmentId: PromiseOrValue<BigNumberish>,
       tokenAddress: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
@@ -248,7 +248,7 @@ export interface IDonationMatchEmitter extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    giveApprovalErC20(
+    giveApprovalErc20(
       endowmentId: PromiseOrValue<BigNumberish>,
       tokenAddress: PromiseOrValue<string>,
       recipient: PromiseOrValue<string>,
@@ -263,7 +263,7 @@ export interface IDonationMatchEmitter extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    transferErC20(
+    transferErc20(
       endowmentId: PromiseOrValue<BigNumberish>,
       tokenAddress: PromiseOrValue<string>,
       recipient: PromiseOrValue<string>,
@@ -275,7 +275,7 @@ export interface IDonationMatchEmitter extends BaseContract {
   filters: {};
 
   estimateGas: {
-    burnErC20(
+    burnErc20(
       endowmentId: PromiseOrValue<BigNumberish>,
       tokenAddress: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
@@ -291,7 +291,7 @@ export interface IDonationMatchEmitter extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    giveApprovalErC20(
+    giveApprovalErc20(
       endowmentId: PromiseOrValue<BigNumberish>,
       tokenAddress: PromiseOrValue<string>,
       recipient: PromiseOrValue<string>,
@@ -306,7 +306,7 @@ export interface IDonationMatchEmitter extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    transferErC20(
+    transferErc20(
       endowmentId: PromiseOrValue<BigNumberish>,
       tokenAddress: PromiseOrValue<string>,
       recipient: PromiseOrValue<string>,
@@ -316,7 +316,7 @@ export interface IDonationMatchEmitter extends BaseContract {
   };
 
   populateTransaction: {
-    burnErC20(
+    burnErc20(
       endowmentId: PromiseOrValue<BigNumberish>,
       tokenAddress: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
@@ -332,7 +332,7 @@ export interface IDonationMatchEmitter extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    giveApprovalErC20(
+    giveApprovalErc20(
       endowmentId: PromiseOrValue<BigNumberish>,
       tokenAddress: PromiseOrValue<string>,
       recipient: PromiseOrValue<string>,
@@ -347,7 +347,7 @@ export interface IDonationMatchEmitter extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    transferErC20(
+    transferErc20(
       endowmentId: PromiseOrValue<BigNumberish>,
       tokenAddress: PromiseOrValue<string>,
       recipient: PromiseOrValue<string>,

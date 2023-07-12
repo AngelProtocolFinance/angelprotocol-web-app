@@ -98,20 +98,19 @@ export default function Maturity() {
       if (isEmpty(diff)) {
         return showModal(TxPrompt, { error: "No changes detected" });
       }
-
-      const [data, dest, meta] = encodeTx(
-        "accounts.update-settings",
-        update,
-        diff
-      );
-
       const { wallet, txMeta, isDelegated } = txResource;
+
+      const [data, dest, meta] = encodeTx("accounts.update-settings", update, {
+        title: `Update maturity`,
+        description: `Update maturity for endowment id:${id} by member:${wallet?.address}`,
+        content: diff,
+      });
+
       const tx: SimulContractTx = isDelegated
         ? { from: wallet.address, to: dest, data }
         : createTx(wallet.address, "multisig.submit-transaction", {
             multisig,
-            title: `Update maturity`,
-            description: `Update maturity for endowment id:${id} by member:${wallet?.address}`,
+
             destination: dest,
             value: "0",
             data,

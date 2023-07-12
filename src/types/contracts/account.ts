@@ -1,21 +1,25 @@
 import { OverrideProperties } from "type-fest";
 import {
-  AccountMessages,
-  AccountStorage,
-  AngelCoreStruct,
-} from "../typechain-types/contracts/core/accounts/IAccounts";
-import {
-  AngelCoreStruct as AccountDepositWithdrawEndowmentsCoreStruct,
   AccountMessages as AccountDepositWithdrawEndowmentsMessages,
+  IAccountsDepositWithdrawEndowments,
 } from "../typechain-types/contracts/core/accounts/facets/AccountsDepositWithdrawEndowments";
 import { AccountMessages as AccountsUpdateEndowmentSettingsControllerMessages } from "../typechain-types/contracts/core/accounts/facets/AccountsUpdateEndowmentSettingsController";
+import {
+  AccountMessages,
+  AccountStorage,
+  LibAccounts,
+} from "../typechain-types/contracts/core/accounts/interfaces/IAccounts";
 import { EndowmentType } from "../lists";
 import { Mapped, Plain } from "../utils";
-import { SplitDetails } from "./common";
 
 type BeneficiaryData = OverrideProperties<
-  AngelCoreStruct.BeneficiaryDataStruct,
+  LibAccounts.BeneficiaryDataStruct,
   { endowId: number; fundId: number; addr: string }
+>;
+
+export type AccountsSplitDetails = Mapped<
+  Plain<LibAccounts.SplitDetailsStruct>,
+  number
 >;
 
 /**
@@ -25,7 +29,7 @@ type BeneficiaryData = OverrideProperties<
  * 3 None
  */
 export type Beneficiary = OverrideProperties<
-  AngelCoreStruct.BeneficiaryStruct,
+  LibAccounts.BeneficiaryStruct,
   { data: BeneficiaryData; enumData: 0 | 1 | 2 | 3 }
 >;
 
@@ -69,7 +73,7 @@ type Vaults<T> = {
 export type AccountStrategies = Vaults<Strategy[]>;
 
 export type Delegate = OverrideProperties<
-  AngelCoreStruct.DelegateStruct,
+  LibAccounts.DelegateStruct,
   {
     addr: string | ADDRESS_ZERO;
     expires: number; // datetime int of delegation expiry: 0 if no expiry
@@ -77,7 +81,7 @@ export type Delegate = OverrideProperties<
 >;
 
 export type SettingsPermission = OverrideProperties<
-  AngelCoreStruct.SettingsPermissionStruct,
+  LibAccounts.SettingsPermissionStruct,
   {
     locked: boolean;
     delegate: Delegate;
@@ -85,7 +89,7 @@ export type SettingsPermission = OverrideProperties<
 >;
 
 export type SettingsController = Mapped<
-  AngelCoreStruct.SettingsControllerStruct,
+  LibAccounts.SettingsControllerStruct,
   SettingsPermission
 >;
 
@@ -98,7 +102,6 @@ export type EndowmentDetails = OverrideProperties<
     | "allowlistedBeneficiaries"
     | "allowlistedContributors"
     | "maturityAllowlist"
-    | "kycDonorsOnly"
     | "donationMatchActive"
     | "settingsController"
     | "ignoreUserSplits"
@@ -112,7 +115,7 @@ export type EndowmentDetails = OverrideProperties<
     endowType: EndowmentType;
     maturityTime: number;
     settingsController: SettingsController;
-    splitToLiquid: SplitDetails;
+    splitToLiquid: AccountsSplitDetails;
     earlyLockedWithdrawFee: Fee;
     withdrawFee: Fee;
     depositFee: Fee;
@@ -148,7 +151,7 @@ export type SettingsControllerUpdate = OverrideProperties<
 
 export type EndowmentSettingsUpdate = OverrideProperties<
   Plain<AccountsUpdateEndowmentSettingsControllerMessages.UpdateEndowmentSettingsRequestStruct>,
-  { id: number; splitToLiquid: SplitDetails; maturityTime: number }
+  { id: number; splitToLiquid: AccountsSplitDetails; maturityTime: number }
 >;
 
 export type CloseEndowmentRequest = {
@@ -168,7 +171,7 @@ export type ERC20Deposit = {
 };
 
 export type Fee = OverrideProperties<
-  Plain<AngelCoreStruct.FeeSettingStruct>,
+  Plain<LibAccounts.FeeSettingStruct>,
   { bps: number }
 >;
 
@@ -181,47 +184,6 @@ export type FeeSettingsUpdate = OverrideProperties<
     withdrawFee: Fee;
     balanceFee: Fee;
   }
->;
-
-type VETypeData = Mapped<AngelCoreStruct.VeTypeDataStruct, number>;
-
-/**
- * 0 - constant
- * 1 - linear
- * 2 - sqrt
- */
-type VEType = OverrideProperties<
-  AngelCoreStruct.VeTypeStruct,
-  { ve_type: 0 | 1 | 2; data: VETypeData }
->;
-
-type DaoTokenData = OverrideProperties<
-  Plain<AngelCoreStruct.DaoTokenDataStruct>,
-  {
-    newInitialSupply: string;
-    veBondingType: VEType;
-    veBondingDecimals: number;
-    veBondingReserveDecimals: number;
-    veBondingPeriod: number;
-  }
->;
-
-/**
- * 0 - existing CW20
- * 1 - new CW20
- * 2 - bonding curve
- */
-type DaoToken = OverrideProperties<
-  AngelCoreStruct.DaoTokenStruct,
-  {
-    token: 0 | 1 | 2;
-    data: DaoTokenData;
-  }
->;
-
-type DaoSetup = OverrideProperties<
-  Mapped<AngelCoreStruct.DaoSetupStruct, number>,
-  { token: DaoToken }
 >;
 
 export type NewAST = OverrideProperties<
@@ -243,24 +205,21 @@ export type NewAST = OverrideProperties<
      */
     endowType: 0 | 1 | 2;
     threshold: number;
-    splitMax: number;
-    splitMin: number;
-    splitDefault: number;
+    duration: number;
     earlyLockedWithdrawFee: Fee;
     withdrawFee: Fee;
     depositFee: Fee;
     balanceFee: Fee;
-    dao: DaoSetup;
     proposalLink: number;
     settingsController: SettingsController;
     parent: number;
-    splitToLiquid: SplitDetails;
+    splitToLiquid: AccountsSplitDetails;
     referralId: number;
   }
 >;
 
 export type Token = OverrideProperties<
-  AccountDepositWithdrawEndowmentsCoreStruct.TokenInfoStruct,
+  IAccountsDepositWithdrawEndowments.TokenInfoStruct,
   {
     addr: string;
     amnt: string;

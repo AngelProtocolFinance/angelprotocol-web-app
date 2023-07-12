@@ -1,5 +1,4 @@
 import React, { ReactNode } from "react";
-import { TxMeta } from "contracts/createTx/types";
 import { ProposalDetails } from "services/types";
 import { LogProcessor } from "types/evm";
 import { TagPayload } from "types/third-party/redux";
@@ -15,9 +14,7 @@ import {
   multisig as Multisig,
 } from "contracts/evm/multisig";
 import useTxSender from "hooks/useTxSender";
-import { fromAbiStr } from "helpers";
 import { getTagPayloads } from "helpers/admin";
-import { EMPTY_DATA } from "constants/evm";
 import { isTooltip, useAdminContext } from "../Context";
 
 const ERROR = "error";
@@ -128,9 +125,9 @@ function Button(props: React.ButtonHTMLAttributes<HTMLButtonElement>) {
 function extractTagFromMeta(
   proposalMeta: ProposalDetails["metadata"]
 ): TagPayload[] {
-  if (proposalMeta === EMPTY_DATA) {
+  if (!proposalMeta) {
     return [invalidateJunoTags(defaultProposalTags)];
   }
 
-  return getTagPayloads(fromAbiStr<TxMeta>(proposalMeta).id);
+  return getTagPayloads(proposalMeta.id);
 }

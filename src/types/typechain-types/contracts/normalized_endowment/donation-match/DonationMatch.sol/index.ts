@@ -3,4 +3,3 @@
 /* eslint-disable */
 export type { DonationMatch } from "./DonationMatch";
 export type { IERC20Burnable } from "./IERC20Burnable";
-export type { SubdaoToken } from "./SubdaoToken";
