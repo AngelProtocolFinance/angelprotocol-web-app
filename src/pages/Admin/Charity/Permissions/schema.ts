@@ -1,24 +1,32 @@
-import * as Yup from "yup";
+import { date, mixed, object, string } from "yup";
 import { FV, TPermission } from "./types";
 import { SchemaShape } from "schemas/types";
 import { requiredWalletAddr } from "schemas/string";
 import { chainIds } from "constants/chainIds";
 
-const _active: keyof TPermission = "isActive";
+const _delegated: keyof TPermission = "delegated";
+const _expires: keyof TPermission = "expires";
 
 const fieldShape: SchemaShape<TPermission> = {
-  addr: Yup.string().when(_active, {
+  addr: string().when(_delegated, {
     is: true,
     then: requiredWalletAddr(chainIds.polygon),
     otherwise: (schema) => schema.optional(),
   }),
+  expiry: mixed().when(_expires, {
+    is: true,
+    then: date()
+      .typeError("invalid date")
+      .min(new Date(), "must be in the future"),
+    otherwise: string(),
+  }),
 };
 
 const shape: SchemaShape<FV> = {
-  accountFees: Yup.object().shape(fieldShape),
-  allowList: Yup.object().shape(fieldShape),
-  donationSplitParams: Yup.object().shape(fieldShape),
-  profile: Yup.object().shape(fieldShape),
+  accountFees: object().shape(fieldShape),
+  allowList: object().shape(fieldShape),
+  donationSplitParams: object().shape(fieldShape),
+  profile: object().shape(fieldShape),
 };
 
-export const schema = Yup.object(shape);
+export const schema = object(shape);

@@ -9,7 +9,7 @@ import { defaultProposalTags } from "services/juno/tags";
 import { WalletState, useGetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import Loader from "components/Loader";
-import { blockTime } from "helpers/admin";
+import { blockTime, hasElapsed } from "helpers/admin";
 import { chainIds } from "constants/chainIds";
 import { adminRoutes, appRoutes } from "constants/routes";
 
@@ -168,7 +168,10 @@ export const useAdminContext = <T extends AdminType = any>(
         case "withdraw-locked":
           return maturityAllowlist.includes(sender);
         default:
-          return settingsController[op].delegate.addr === sender;
+          const { addr, expires } = settingsController[op].delegate;
+          return (
+            addr === sender && (expires !== 0 ? !hasElapsed(expires) : true)
+          );
       }
     });
 
