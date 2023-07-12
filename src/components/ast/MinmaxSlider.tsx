@@ -10,10 +10,10 @@ export function MinmaxSlider<T extends FieldValues>(props: {
 }) {
   const {
     field: { value: min, onChange: onMinChange },
-  } = useController({ name: props.names.min });
+  } = useController<Record<string, number>>({ name: props.names.min });
   const {
     field: { value: max, onChange: onMaxChange },
-  } = useController({ name: props.names.max });
+  } = useController<Record<string, number>>({ name: props.names.max });
 
   function handleMaxChange(e: ChangeEvent<HTMLInputElement>) {
     const max = +e.target.value;

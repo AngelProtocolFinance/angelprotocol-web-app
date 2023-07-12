@@ -34,7 +34,7 @@ export function CheckField<T extends FieldValues>({
             className={int + " peer"}
             type="checkbox"
             checked={value}
-            onChange={(e) => onChange(e.target.checked)}
+            onChange={(e) => onChange(e.target.checked as any)}
             id={id}
             disabled={isSubmitting || disabled}
           />
