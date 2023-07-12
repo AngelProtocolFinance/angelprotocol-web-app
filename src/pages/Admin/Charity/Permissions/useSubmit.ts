@@ -27,7 +27,6 @@ export default function useSubmit() {
     try {
       const update = controllerUpdate(id, fv, settings);
       const diff = getPayloadDiff(initial, update);
-
       if (isEmpty(diff)) {
         return handleError("No changes detected");
       }
