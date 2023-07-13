@@ -1,3 +1,4 @@
+import ExtLink from "components/ExtLink";
 import { Tooltip } from "components/admin";
 import Amounts from "./Amounts";
 import Beneficiary from "./Beneficiary";
@@ -41,8 +42,14 @@ export default function Form({ classes = "" }) {
           </>
         )}
         <Warning classes="-mt-3">
-          We recommend not using crypto exchange addresses for withdrawals. We
-          are not responsible for the loss of funds.
+          If withdrawing to an exchange, please ensure you’re using the correct
+          blockchain network and currency.{" "}
+          <ExtLink
+            href="https://intercom.help/angel-giving/en/articles/6628134-how-do-i-remove-usdc-funds-from-my-current-account"
+            className="text-blue hover:text-blue-l2"
+          >
+            More information.
+          </ExtLink>
         </Warning>
         {tooltip ? <Tooltip tooltip={tooltip} /> : <Submit />}
       </fieldset>
