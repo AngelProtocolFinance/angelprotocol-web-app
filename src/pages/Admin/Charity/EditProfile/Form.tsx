@@ -142,7 +142,7 @@ export default function Form({
         <ActivityCountries<FV, "active_in_countries">
           name="active_in_countries"
           classes={{
-            container: "bg-white dark:bg-blue-d6 px-4 py-3",
+            container: "bg-white dark:bg-blue-d6",
             button: "field-input-admin",
           }}
         />
