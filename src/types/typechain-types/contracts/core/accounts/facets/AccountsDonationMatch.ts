@@ -27,6 +27,39 @@ import type {
   PromiseOrValue,
 } from "../../../../common";
 
+export declare namespace IVault {
+  export type VaultActionDataStruct = {
+    destinationChain: PromiseOrValue<string>;
+    strategyId: PromiseOrValue<BytesLike>;
+    selector: PromiseOrValue<BytesLike>;
+    accountIds: PromiseOrValue<BigNumberish>[];
+    token: PromiseOrValue<string>;
+    lockAmt: PromiseOrValue<BigNumberish>;
+    liqAmt: PromiseOrValue<BigNumberish>;
+    status: PromiseOrValue<BigNumberish>;
+  };
+
+  export type VaultActionDataStructOutput = [
+    string,
+    string,
+    string,
+    number[],
+    string,
+    BigNumber,
+    BigNumber,
+    number
+  ] & {
+    destinationChain: string;
+    strategyId: string;
+    selector: string;
+    accountIds: number[];
+    token: string;
+    lockAmt: BigNumber;
+    liqAmt: BigNumber;
+    status: number;
+  };
+}
+
 export declare namespace AccountMessages {
   export type DonationMatchDataStruct = {
     reserveToken: PromiseOrValue<string>;
@@ -100,55 +133,71 @@ export interface AccountsDonationMatchInterface extends utils.Interface {
   ): Result;
 
   events: {
-    "AllowanceRemoved(address,address,address)": EventFragment;
-    "AllowanceUpdated(address,address,address,uint256)": EventFragment;
+    "AllowanceSpent(uint256,address,address,uint256)": EventFragment;
+    "AllowanceUpdated(uint256,address,address,uint256,uint256,uint256)": EventFragment;
     "ConfigUpdated()": EventFragment;
     "DaoContractCreated(uint32,address)": EventFragment;
     "DonationDeposited(uint256,address,uint256)": EventFragment;
     "DonationMatchCreated(uint256,address)": EventFragment;
     "DonationWithdrawn(uint256,address,address,uint256)": EventFragment;
-    "EndowmentCreated(uint256)": EventFragment;
+    "EndowmentClosed(uint256)": EventFragment;
+    "EndowmentCreated(uint256,uint8)": EventFragment;
+    "EndowmentDeposit(uint256,address,uint256,uint256)": EventFragment;
+    "EndowmentInvested(uint8)": EventFragment;
+    "EndowmentRedeemed(uint8)": EventFragment;
     "EndowmentSettingUpdated(uint256,string)": EventFragment;
     "EndowmentUpdated(uint256)": EventFragment;
+    "EndowmentWithdraw(uint256,address,uint256,uint8,address,uint32)": EventFragment;
     "OwnerUpdated(address)": EventFragment;
+    "RefundNeeded(tuple)": EventFragment;
     "TokenSwapped(uint256,uint8,address,uint256,address,uint256)": EventFragment;
+    "UnexpectedTokens(tuple)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "AllowanceRemoved"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "AllowanceSpent"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "AllowanceUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ConfigUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "DaoContractCreated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "DonationDeposited"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "DonationMatchCreated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "DonationWithdrawn"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "EndowmentClosed"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "EndowmentCreated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "EndowmentDeposit"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "EndowmentInvested"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "EndowmentRedeemed"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "EndowmentSettingUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "EndowmentUpdated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "EndowmentWithdraw"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnerUpdated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "RefundNeeded"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "TokenSwapped"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "UnexpectedTokens"): EventFragment;
 }
 
-export interface AllowanceRemovedEventObject {
-  sender: string;
+export interface AllowanceSpentEventObject {
+  endowId: BigNumber;
   spender: string;
   tokenAddress: string;
+  amount: BigNumber;
 }
-export type AllowanceRemovedEvent = TypedEvent<
-  [string, string, string],
-  AllowanceRemovedEventObject
+export type AllowanceSpentEvent = TypedEvent<
+  [BigNumber, string, string, BigNumber],
+  AllowanceSpentEventObject
 >;
 
-export type AllowanceRemovedEventFilter =
-  TypedEventFilter<AllowanceRemovedEvent>;
+export type AllowanceSpentEventFilter = TypedEventFilter<AllowanceSpentEvent>;
 
 export interface AllowanceUpdatedEventObject {
-  sender: string;
+  endowId: BigNumber;
   spender: string;
   tokenAddress: string;
-  allowance: BigNumber;
+  newBalance: BigNumber;
+  added: BigNumber;
+  deducted: BigNumber;
 }
 export type AllowanceUpdatedEvent = TypedEvent<
-  [string, string, string, BigNumber],
+  [BigNumber, string, string, BigNumber, BigNumber, BigNumber],
   AllowanceUpdatedEventObject
 >;
 
@@ -211,16 +260,63 @@ export type DonationWithdrawnEvent = TypedEvent<
 export type DonationWithdrawnEventFilter =
   TypedEventFilter<DonationWithdrawnEvent>;
 
-export interface EndowmentCreatedEventObject {
+export interface EndowmentClosedEventObject {
   endowId: BigNumber;
 }
-export type EndowmentCreatedEvent = TypedEvent<
+export type EndowmentClosedEvent = TypedEvent<
   [BigNumber],
+  EndowmentClosedEventObject
+>;
+
+export type EndowmentClosedEventFilter = TypedEventFilter<EndowmentClosedEvent>;
+
+export interface EndowmentCreatedEventObject {
+  endowId: BigNumber;
+  endowType: number;
+}
+export type EndowmentCreatedEvent = TypedEvent<
+  [BigNumber, number],
   EndowmentCreatedEventObject
 >;
 
 export type EndowmentCreatedEventFilter =
   TypedEventFilter<EndowmentCreatedEvent>;
+
+export interface EndowmentDepositEventObject {
+  endowId: BigNumber;
+  tokenAddress: string;
+  amountLocked: BigNumber;
+  amountLiquid: BigNumber;
+}
+export type EndowmentDepositEvent = TypedEvent<
+  [BigNumber, string, BigNumber, BigNumber],
+  EndowmentDepositEventObject
+>;
+
+export type EndowmentDepositEventFilter =
+  TypedEventFilter<EndowmentDepositEvent>;
+
+export interface EndowmentInvestedEventObject {
+  arg0: number;
+}
+export type EndowmentInvestedEvent = TypedEvent<
+  [number],
+  EndowmentInvestedEventObject
+>;
+
+export type EndowmentInvestedEventFilter =
+  TypedEventFilter<EndowmentInvestedEvent>;
+
+export interface EndowmentRedeemedEventObject {
+  arg0: number;
+}
+export type EndowmentRedeemedEvent = TypedEvent<
+  [number],
+  EndowmentRedeemedEventObject
+>;
+
+export type EndowmentRedeemedEventFilter =
+  TypedEventFilter<EndowmentRedeemedEvent>;
 
 export interface EndowmentSettingUpdatedEventObject {
   endowId: BigNumber;
@@ -245,12 +341,38 @@ export type EndowmentUpdatedEvent = TypedEvent<
 export type EndowmentUpdatedEventFilter =
   TypedEventFilter<EndowmentUpdatedEvent>;
 
+export interface EndowmentWithdrawEventObject {
+  endowId: BigNumber;
+  tokenAddress: string;
+  amount: BigNumber;
+  accountType: number;
+  beneficiaryAddress: string;
+  beneficiaryEndowId: number;
+}
+export type EndowmentWithdrawEvent = TypedEvent<
+  [BigNumber, string, BigNumber, number, string, number],
+  EndowmentWithdrawEventObject
+>;
+
+export type EndowmentWithdrawEventFilter =
+  TypedEventFilter<EndowmentWithdrawEvent>;
+
 export interface OwnerUpdatedEventObject {
   owner: string;
 }
 export type OwnerUpdatedEvent = TypedEvent<[string], OwnerUpdatedEventObject>;
 
 export type OwnerUpdatedEventFilter = TypedEventFilter<OwnerUpdatedEvent>;
+
+export interface RefundNeededEventObject {
+  arg0: IVault.VaultActionDataStructOutput;
+}
+export type RefundNeededEvent = TypedEvent<
+  [IVault.VaultActionDataStructOutput],
+  RefundNeededEventObject
+>;
+
+export type RefundNeededEventFilter = TypedEventFilter<RefundNeededEvent>;
 
 export interface TokenSwappedEventObject {
   endowId: BigNumber;
@@ -266,6 +388,17 @@ export type TokenSwappedEvent = TypedEvent<
 >;
 
 export type TokenSwappedEventFilter = TypedEventFilter<TokenSwappedEvent>;
+
+export interface UnexpectedTokensEventObject {
+  arg0: IVault.VaultActionDataStructOutput;
+}
+export type UnexpectedTokensEvent = TypedEvent<
+  [IVault.VaultActionDataStructOutput],
+  UnexpectedTokensEventObject
+>;
+
+export type UnexpectedTokensEventFilter =
+  TypedEventFilter<UnexpectedTokensEvent>;
 
 export interface AccountsDonationMatch extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -358,28 +491,34 @@ export interface AccountsDonationMatch extends BaseContract {
   };
 
   filters: {
-    "AllowanceRemoved(address,address,address)"(
-      sender?: null,
-      spender?: null,
-      tokenAddress?: null
-    ): AllowanceRemovedEventFilter;
-    AllowanceRemoved(
-      sender?: null,
-      spender?: null,
-      tokenAddress?: null
-    ): AllowanceRemovedEventFilter;
-
-    "AllowanceUpdated(address,address,address,uint256)"(
-      sender?: null,
+    "AllowanceSpent(uint256,address,address,uint256)"(
+      endowId?: null,
       spender?: null,
       tokenAddress?: null,
-      allowance?: null
+      amount?: null
+    ): AllowanceSpentEventFilter;
+    AllowanceSpent(
+      endowId?: null,
+      spender?: null,
+      tokenAddress?: null,
+      amount?: null
+    ): AllowanceSpentEventFilter;
+
+    "AllowanceUpdated(uint256,address,address,uint256,uint256,uint256)"(
+      endowId?: null,
+      spender?: null,
+      tokenAddress?: null,
+      newBalance?: null,
+      added?: null,
+      deducted?: null
     ): AllowanceUpdatedEventFilter;
     AllowanceUpdated(
-      sender?: null,
+      endowId?: null,
       spender?: null,
       tokenAddress?: null,
-      allowance?: null
+      newBalance?: null,
+      added?: null,
+      deducted?: null
     ): AllowanceUpdatedEventFilter;
 
     "ConfigUpdated()"(): ConfigUpdatedEventFilter;
@@ -427,8 +566,36 @@ export interface AccountsDonationMatch extends BaseContract {
       amount?: null
     ): DonationWithdrawnEventFilter;
 
-    "EndowmentCreated(uint256)"(endowId?: null): EndowmentCreatedEventFilter;
-    EndowmentCreated(endowId?: null): EndowmentCreatedEventFilter;
+    "EndowmentClosed(uint256)"(endowId?: null): EndowmentClosedEventFilter;
+    EndowmentClosed(endowId?: null): EndowmentClosedEventFilter;
+
+    "EndowmentCreated(uint256,uint8)"(
+      endowId?: null,
+      endowType?: null
+    ): EndowmentCreatedEventFilter;
+    EndowmentCreated(
+      endowId?: null,
+      endowType?: null
+    ): EndowmentCreatedEventFilter;
+
+    "EndowmentDeposit(uint256,address,uint256,uint256)"(
+      endowId?: null,
+      tokenAddress?: null,
+      amountLocked?: null,
+      amountLiquid?: null
+    ): EndowmentDepositEventFilter;
+    EndowmentDeposit(
+      endowId?: null,
+      tokenAddress?: null,
+      amountLocked?: null,
+      amountLiquid?: null
+    ): EndowmentDepositEventFilter;
+
+    "EndowmentInvested(uint8)"(arg0?: null): EndowmentInvestedEventFilter;
+    EndowmentInvested(arg0?: null): EndowmentInvestedEventFilter;
+
+    "EndowmentRedeemed(uint8)"(arg0?: null): EndowmentRedeemedEventFilter;
+    EndowmentRedeemed(arg0?: null): EndowmentRedeemedEventFilter;
 
     "EndowmentSettingUpdated(uint256,string)"(
       endowId?: null,
@@ -442,8 +609,28 @@ export interface AccountsDonationMatch extends BaseContract {
     "EndowmentUpdated(uint256)"(endowId?: null): EndowmentUpdatedEventFilter;
     EndowmentUpdated(endowId?: null): EndowmentUpdatedEventFilter;
 
+    "EndowmentWithdraw(uint256,address,uint256,uint8,address,uint32)"(
+      endowId?: null,
+      tokenAddress?: null,
+      amount?: null,
+      accountType?: null,
+      beneficiaryAddress?: null,
+      beneficiaryEndowId?: null
+    ): EndowmentWithdrawEventFilter;
+    EndowmentWithdraw(
+      endowId?: null,
+      tokenAddress?: null,
+      amount?: null,
+      accountType?: null,
+      beneficiaryAddress?: null,
+      beneficiaryEndowId?: null
+    ): EndowmentWithdrawEventFilter;
+
     "OwnerUpdated(address)"(owner?: null): OwnerUpdatedEventFilter;
     OwnerUpdated(owner?: null): OwnerUpdatedEventFilter;
+
+    "RefundNeeded(tuple)"(arg0?: null): RefundNeededEventFilter;
+    RefundNeeded(arg0?: null): RefundNeededEventFilter;
 
     "TokenSwapped(uint256,uint8,address,uint256,address,uint256)"(
       endowId?: null,
@@ -461,6 +648,9 @@ export interface AccountsDonationMatch extends BaseContract {
       tokenOut?: null,
       amountOut?: null
     ): TokenSwappedEventFilter;
+
+    "UnexpectedTokens(tuple)"(arg0?: null): UnexpectedTokensEventFilter;
+    UnexpectedTokens(arg0?: null): UnexpectedTokensEventFilter;
   };
 
   estimateGas: {
