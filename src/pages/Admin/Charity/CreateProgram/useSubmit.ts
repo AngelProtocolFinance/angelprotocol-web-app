@@ -22,7 +22,7 @@ export default function useSubmit() {
   const { showModal } = useModalContext();
   const updateProfile = useUpdateEndowmentProfile();
 
-  const editProfile: SubmitHandler<FV> = async (fv) => {
+  const submit: SubmitHandler<FV> = async (fv) => {
     try {
       /** special case for edit profile: since upload happens prior
        * to tx submission. Other users of useTxSender
@@ -61,7 +61,7 @@ export default function useSubmit() {
 
   return {
     reset,
-    editProfile: handleSubmit(editProfile),
+    submit: handleSubmit(submit),
     isSubmitting,
     id,
   };

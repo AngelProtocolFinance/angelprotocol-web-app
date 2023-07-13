@@ -13,6 +13,7 @@ export const VALID_MIME_TYPES = [
 ];
 
 export const MAX_SIZE_IN_BYTES = 1e6;
+export const MAX_CHARS = 500;
 
 // we only need to validate the pre-crop image and if we confirm it is valid
 // we can be sure that the cropped image is valid too
@@ -23,7 +24,10 @@ const fileObj = object().shape<SchemaShape<ImgLink>>({
 //construct strict shape to avoid hardcoding shape keys
 const shape: SchemaShape<FV> = {
   title: requiredString,
-  description: requiredString.max(500, "max length is 140 chars"),
+  description: requiredString.max(
+    MAX_CHARS,
+    `max length is ${MAX_CHARS} chars`
+  ),
   image: fileObj,
 };
 
