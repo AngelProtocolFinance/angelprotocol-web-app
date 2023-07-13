@@ -42,6 +42,7 @@ const {
   proposal,
   templates: templatesRoute,
   account,
+  create_program,
   ...restAdminRoutes
 } = adminRoutes;
 
