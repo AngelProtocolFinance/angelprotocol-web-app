@@ -75,16 +75,19 @@ export declare namespace LocalRegistrarLib {
 
   export type StrategyParamsStruct = {
     approvalState: PromiseOrValue<BigNumberish>;
+    network: PromiseOrValue<string>;
     Locked: LocalRegistrarLib.VaultParamsStruct;
     Liquid: LocalRegistrarLib.VaultParamsStruct;
   };
 
   export type StrategyParamsStructOutput = [
     number,
+    string,
     LocalRegistrarLib.VaultParamsStructOutput,
     LocalRegistrarLib.VaultParamsStructOutput
   ] & {
     approvalState: number;
+    network: string;
     Locked: LocalRegistrarLib.VaultParamsStructOutput;
     Liquid: LocalRegistrarLib.VaultParamsStructOutput;
   };
@@ -145,6 +148,7 @@ export declare namespace RegistrarStorage {
     usdcAddress: PromiseOrValue<string>;
     wMaticAddress: PromiseOrValue<string>;
     cw900lvAddress: PromiseOrValue<string>;
+    gasFwdFactory: PromiseOrValue<string>;
   };
 
   export type ConfigStructOutput = [
@@ -165,6 +169,7 @@ export declare namespace RegistrarStorage {
     string,
     string,
     BigNumber,
+    string,
     string,
     string,
     string,
@@ -207,12 +212,12 @@ export declare namespace RegistrarStorage {
     usdcAddress: string;
     wMaticAddress: string;
     cw900lvAddress: string;
+    gasFwdFactory: string;
   };
 }
 
-export declare namespace IAccountsVaultFacet {
+export declare namespace IAccountsStrategy {
   export type NetworkInfoStruct = {
-    name: PromiseOrValue<string>;
     chainId: PromiseOrValue<BigNumberish>;
     router: PromiseOrValue<string>;
     axelarGateway: PromiseOrValue<string>;
@@ -223,7 +228,6 @@ export declare namespace IAccountsVaultFacet {
   };
 
   export type NetworkInfoStructOutput = [
-    string,
     BigNumber,
     string,
     string,
@@ -232,7 +236,6 @@ export declare namespace IAccountsVaultFacet {
     string,
     BigNumber
   ] & {
-    name: string;
     chainId: BigNumber;
     router: string;
     axelarGateway: string;
@@ -276,6 +279,7 @@ export declare namespace RegistrarMessages {
     subdaoEmitter: PromiseOrValue<string>;
     donationMatchContract: PromiseOrValue<string>;
     cw900lvAddress: PromiseOrValue<string>;
+    gasFwdFactory: PromiseOrValue<string>;
   };
 
   export type UpdateConfigRequestStructOutput = [
@@ -284,6 +288,7 @@ export declare namespace RegistrarMessages {
     BigNumber,
     BigNumber,
     BigNumber,
+    string,
     string,
     string,
     string,
@@ -342,6 +347,7 @@ export declare namespace RegistrarMessages {
     subdaoEmitter: string;
     donationMatchContract: string;
     cw900lvAddress: string;
+    gasFwdFactory: string;
   };
 }
 
@@ -359,7 +365,7 @@ export interface IRegistrarInterface extends utils.Interface {
     "owner()": FunctionFragment;
     "queryAllStrategies()": FunctionFragment;
     "queryConfig()": FunctionFragment;
-    "queryNetworkConnection(uint256)": FunctionFragment;
+    "queryNetworkConnection(string)": FunctionFragment;
     "queryTokenPriceFeed(address)": FunctionFragment;
     "setAccountsContractAddressByChain(string,string)": FunctionFragment;
     "setAngelProtocolParams((address,address))": FunctionFragment;
@@ -367,11 +373,11 @@ export interface IRegistrarInterface extends utils.Interface {
     "setGasByToken(address,uint256)": FunctionFragment;
     "setRebalanceParams((bool,uint32,uint32,bool,uint32,uint32))": FunctionFragment;
     "setStrategyApprovalState(bytes4,uint8)": FunctionFragment;
-    "setStrategyParams(bytes4,address,address,uint8)": FunctionFragment;
+    "setStrategyParams(bytes4,string,address,address,uint8)": FunctionFragment;
     "setTokenAccepted(address,bool)": FunctionFragment;
     "setVaultOperatorApproved(address,bool)": FunctionFragment;
-    "updateConfig((address,uint256,uint256,uint256,uint256,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address))": FunctionFragment;
-    "updateNetworkConnections((string,uint256,address,address,string,string,address,uint256),string)": FunctionFragment;
+    "updateConfig((address,uint256,uint256,uint256,uint256,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address))": FunctionFragment;
+    "updateNetworkConnections(string,(uint256,address,address,string,string,address,uint256),string)": FunctionFragment;
     "updateOwner(address)": FunctionFragment;
     "updateTokenPriceFeed(address,address)": FunctionFragment;
   };
@@ -454,7 +460,7 @@ export interface IRegistrarInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "queryNetworkConnection",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "queryTokenPriceFeed",
@@ -494,6 +500,7 @@ export interface IRegistrarInterface extends utils.Interface {
       PromiseOrValue<BytesLike>,
       PromiseOrValue<string>,
       PromiseOrValue<string>,
+      PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>
     ]
   ): string;
@@ -511,7 +518,11 @@ export interface IRegistrarInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "updateNetworkConnections",
-    values: [IAccountsVaultFacet.NetworkInfoStruct, PromiseOrValue<string>]
+    values: [
+      PromiseOrValue<string>,
+      IAccountsStrategy.NetworkInfoStruct,
+      PromiseOrValue<string>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "updateOwner",
@@ -635,7 +646,7 @@ export interface IRegistrarInterface extends utils.Interface {
     "GasFeeUpdated(address,uint256)": EventFragment;
     "RebalanceParamsUpdated()": EventFragment;
     "StrategyApprovalUpdated(bytes4,uint8)": EventFragment;
-    "StrategyParamsUpdated(bytes4,address,address,uint8)": EventFragment;
+    "StrategyParamsUpdated(bytes4,string,address,address,uint8)": EventFragment;
     "TokenAcceptanceUpdated(address,bool)": EventFragment;
   };
 
@@ -719,12 +730,13 @@ export type StrategyApprovalUpdatedEventFilter =
 
 export interface StrategyParamsUpdatedEventObject {
   _strategyId: string;
+  _network: string;
   _lockAddr: string;
   _liqAddr: string;
   _approvalState: number;
 }
 export type StrategyParamsUpdatedEvent = TypedEvent<
-  [string, string, string, number],
+  [string, string, string, string, number],
   StrategyParamsUpdatedEventObject
 >;
 
@@ -824,11 +836,11 @@ export interface IRegistrar extends BaseContract {
     ): Promise<[RegistrarStorage.ConfigStructOutput]>;
 
     queryNetworkConnection(
-      chainId: PromiseOrValue<BigNumberish>,
+      networkName: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<
-      [IAccountsVaultFacet.NetworkInfoStructOutput] & {
-        response: IAccountsVaultFacet.NetworkInfoStructOutput;
+      [IAccountsStrategy.NetworkInfoStructOutput] & {
+        response: IAccountsStrategy.NetworkInfoStructOutput;
       }
     >;
 
@@ -874,6 +886,7 @@ export interface IRegistrar extends BaseContract {
 
     setStrategyParams(
       _strategyId: PromiseOrValue<BytesLike>,
+      _network: PromiseOrValue<string>,
       _liqAddr: PromiseOrValue<string>,
       _lockAddr: PromiseOrValue<string>,
       _approvalState: PromiseOrValue<BigNumberish>,
@@ -898,7 +911,8 @@ export interface IRegistrar extends BaseContract {
     ): Promise<ContractTransaction>;
 
     updateNetworkConnections(
-      networkInfo: IAccountsVaultFacet.NetworkInfoStruct,
+      networkName: PromiseOrValue<string>,
+      networkInfo: IAccountsStrategy.NetworkInfoStruct,
       action: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
@@ -967,9 +981,9 @@ export interface IRegistrar extends BaseContract {
   ): Promise<RegistrarStorage.ConfigStructOutput>;
 
   queryNetworkConnection(
-    chainId: PromiseOrValue<BigNumberish>,
+    networkName: PromiseOrValue<string>,
     overrides?: CallOverrides
-  ): Promise<IAccountsVaultFacet.NetworkInfoStructOutput>;
+  ): Promise<IAccountsStrategy.NetworkInfoStructOutput>;
 
   queryTokenPriceFeed(
     token: PromiseOrValue<string>,
@@ -1013,6 +1027,7 @@ export interface IRegistrar extends BaseContract {
 
   setStrategyParams(
     _strategyId: PromiseOrValue<BytesLike>,
+    _network: PromiseOrValue<string>,
     _liqAddr: PromiseOrValue<string>,
     _lockAddr: PromiseOrValue<string>,
     _approvalState: PromiseOrValue<BigNumberish>,
@@ -1037,7 +1052,8 @@ export interface IRegistrar extends BaseContract {
   ): Promise<ContractTransaction>;
 
   updateNetworkConnections(
-    networkInfo: IAccountsVaultFacet.NetworkInfoStruct,
+    networkName: PromiseOrValue<string>,
+    networkInfo: IAccountsStrategy.NetworkInfoStruct,
     action: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
@@ -1106,9 +1122,9 @@ export interface IRegistrar extends BaseContract {
     ): Promise<RegistrarStorage.ConfigStructOutput>;
 
     queryNetworkConnection(
-      chainId: PromiseOrValue<BigNumberish>,
+      networkName: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<IAccountsVaultFacet.NetworkInfoStructOutput>;
+    ): Promise<IAccountsStrategy.NetworkInfoStructOutput>;
 
     queryTokenPriceFeed(
       token: PromiseOrValue<string>,
@@ -1152,6 +1168,7 @@ export interface IRegistrar extends BaseContract {
 
     setStrategyParams(
       _strategyId: PromiseOrValue<BytesLike>,
+      _network: PromiseOrValue<string>,
       _liqAddr: PromiseOrValue<string>,
       _lockAddr: PromiseOrValue<string>,
       _approvalState: PromiseOrValue<BigNumberish>,
@@ -1176,7 +1193,8 @@ export interface IRegistrar extends BaseContract {
     ): Promise<void>;
 
     updateNetworkConnections(
-      networkInfo: IAccountsVaultFacet.NetworkInfoStruct,
+      networkName: PromiseOrValue<string>,
+      networkInfo: IAccountsStrategy.NetworkInfoStruct,
       action: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -1235,14 +1253,16 @@ export interface IRegistrar extends BaseContract {
       _approvalState?: null
     ): StrategyApprovalUpdatedEventFilter;
 
-    "StrategyParamsUpdated(bytes4,address,address,uint8)"(
+    "StrategyParamsUpdated(bytes4,string,address,address,uint8)"(
       _strategyId?: null,
+      _network?: null,
       _lockAddr?: null,
       _liqAddr?: null,
       _approvalState?: null
     ): StrategyParamsUpdatedEventFilter;
     StrategyParamsUpdated(
       _strategyId?: null,
+      _network?: null,
       _lockAddr?: null,
       _liqAddr?: null,
       _approvalState?: null
@@ -1305,7 +1325,7 @@ export interface IRegistrar extends BaseContract {
     queryConfig(overrides?: CallOverrides): Promise<BigNumber>;
 
     queryNetworkConnection(
-      chainId: PromiseOrValue<BigNumberish>,
+      networkName: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -1351,6 +1371,7 @@ export interface IRegistrar extends BaseContract {
 
     setStrategyParams(
       _strategyId: PromiseOrValue<BytesLike>,
+      _network: PromiseOrValue<string>,
       _liqAddr: PromiseOrValue<string>,
       _lockAddr: PromiseOrValue<string>,
       _approvalState: PromiseOrValue<BigNumberish>,
@@ -1375,7 +1396,8 @@ export interface IRegistrar extends BaseContract {
     ): Promise<BigNumber>;
 
     updateNetworkConnections(
-      networkInfo: IAccountsVaultFacet.NetworkInfoStruct,
+      networkName: PromiseOrValue<string>,
+      networkInfo: IAccountsStrategy.NetworkInfoStruct,
       action: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
@@ -1445,7 +1467,7 @@ export interface IRegistrar extends BaseContract {
     queryConfig(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     queryNetworkConnection(
-      chainId: PromiseOrValue<BigNumberish>,
+      networkName: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -1491,6 +1513,7 @@ export interface IRegistrar extends BaseContract {
 
     setStrategyParams(
       _strategyId: PromiseOrValue<BytesLike>,
+      _network: PromiseOrValue<string>,
       _liqAddr: PromiseOrValue<string>,
       _lockAddr: PromiseOrValue<string>,
       _approvalState: PromiseOrValue<BigNumberish>,
@@ -1515,7 +1538,8 @@ export interface IRegistrar extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     updateNetworkConnections(
-      networkInfo: IAccountsVaultFacet.NetworkInfoStruct,
+      networkName: PromiseOrValue<string>,
+      networkInfo: IAccountsStrategy.NetworkInfoStruct,
       action: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
