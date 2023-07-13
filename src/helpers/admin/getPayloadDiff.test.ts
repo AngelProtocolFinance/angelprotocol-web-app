@@ -1,4 +1,4 @@
-import { getPayloadDiff } from "./getPayloadDiff";
+import { NOT_SET, getPayloadDiff } from "./getPayloadDiff";
 
 describe("getPayloadDiff", () => {
   test("include changes from prev to next", () => {
@@ -20,7 +20,7 @@ describe("getPayloadDiff", () => {
       ["b", 2, 5],
       ["c", 3, 6],
       ["f.1", 2, 3],
-      ["d.1", "not-set", 2],
+      ["d.1", NOT_SET, 2],
     ]);
   });
 
@@ -58,11 +58,11 @@ describe("getPayloadDiff", () => {
         }
       )
     ).toStrictEqual([
-      ["b", "not-set", "b"],
-      ["d", "not-set", 0],
-      ["f", "not-set", 0],
-      ["g", "not-set", false],
-      ["i.0", "not-set", 1],
+      ["b", NOT_SET, "b"],
+      ["d", NOT_SET, 0],
+      ["f", NOT_SET, 0],
+      ["g", NOT_SET, false],
+      ["i.0", NOT_SET, 1],
     ]);
   });
 
@@ -152,9 +152,9 @@ describe("getPayloadDiff", () => {
     ).toStrictEqual([
       ["first.a", true, false],
       ["first.c", 1, 2],
-      ["first.d", "not-set", "a"],
-      ["first.e", "not-set", "a"],
-      ["first.f.a", "not-set", "a"],
+      ["first.d", NOT_SET, "a"],
+      ["first.e", NOT_SET, "a"],
+      ["first.f.a", NOT_SET, "a"],
     ]);
   });
 });

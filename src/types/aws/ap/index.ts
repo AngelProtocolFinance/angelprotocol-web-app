@@ -69,6 +69,21 @@ export type EndowmentCard = EndowmentBase & {
 
 export type EndowmentIdName = Pick<EndowmentBase, "id" | "name">;
 
+type MileStone = {
+  milestone_date: string; //isoDate
+  milestone_description: string;
+  milestone_media: string;
+  milestone_title: string;
+};
+
+type Program = {
+  program_banner: string;
+  program_description: string;
+  program_id: string;
+  program_title: string;
+  program_milestones: MileStone[];
+};
+
 export type EndowmentProfileUpdate = {
   //required
   id: number;
@@ -88,6 +103,8 @@ export type EndowmentProfileUpdate = {
   name: string;
   published: boolean;
   overview: string;
+  program: Program[];
+  program_id: string;
   registration_number: string;
   social_media_url_facebook: string;
   social_media_url_linkedin: string;
