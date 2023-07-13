@@ -156,6 +156,14 @@ export const LINKS: {
       size: 20.5,
     },
   },
+  programs: {
+    title: "Programs",
+    to: sidebarRoutes.programs,
+    icon: {
+      type: "ListBox",
+      size: 24,
+    },
+  },
   permissions: {
     title: "Permissions",
     to: sidebarRoutes.permissions,

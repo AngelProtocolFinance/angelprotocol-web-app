@@ -34,6 +34,7 @@ export const adminRoutes = {
   admin_wallet: "admin-wallet",
   //charity
   edit_profile: "edit-profile",
+  programs: "programs",
   withdraws: "withdraws",
   deposits: "deposits",
   // settings: "settings",
