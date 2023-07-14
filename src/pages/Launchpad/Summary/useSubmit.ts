@@ -60,7 +60,8 @@ export default function useSubmit() {
         const endowId = data as string | null;
         if (!endowId) {
           return showModal(TxPrompt, {
-            error: "Endowment was created but failed to save to AWS",
+            error:
+              "Failed to get id: endowment was created but failed to save to AWS",
             tx: okTx,
           });
         }
