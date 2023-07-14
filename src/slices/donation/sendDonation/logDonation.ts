@@ -1,8 +1,8 @@
 import { TxLogPayload } from "types/aws";
+import { network } from "services/constants";
 import { version as v } from "services/helpers";
 import { createAuthToken } from "helpers";
 import { LogDonationFail } from "errors/errors";
-import { IS_TEST } from "constants/env";
 import { APIs } from "constants/urls";
 
 //log donation, with optional receipt
@@ -15,7 +15,7 @@ const logDonation = async (payload: TxLogPayload) => {
       ...payload,
       ...payload.kycData,
       //helps AWS determine which txs are testnet and mainnet without checking all chainIDs
-      network: IS_TEST ? "testnet" : "mainnet",
+      network,
     }),
   });
 
