@@ -232,7 +232,6 @@ export declare namespace AccountStorage {
     image: PromiseOrValue<string>;
     maturityTime: PromiseOrValue<BigNumberish>;
     rebalance: LocalRegistrarLib.RebalanceParamsStruct;
-    pendingRedemptions: PromiseOrValue<BigNumberish>;
     proposalLink: PromiseOrValue<BigNumberish>;
     multisig: PromiseOrValue<string>;
     dao: PromiseOrValue<string>;
@@ -251,6 +250,7 @@ export declare namespace AccountStorage {
     ignoreUserSplits: PromiseOrValue<boolean>;
     splitToLiquid: LibAccounts.SplitDetailsStruct;
     referralId: PromiseOrValue<BigNumberish>;
+    gasFwd: PromiseOrValue<string>;
   };
 
   export type EndowmentStructOutput = [
@@ -263,7 +263,6 @@ export declare namespace AccountStorage {
     string,
     BigNumber,
     LocalRegistrarLib.RebalanceParamsStructOutput,
-    BigNumber,
     BigNumber,
     string,
     string,
@@ -281,7 +280,8 @@ export declare namespace AccountStorage {
     number,
     boolean,
     LibAccounts.SplitDetailsStructOutput,
-    BigNumber
+    BigNumber,
+    string
   ] & {
     owner: string;
     name: string;
@@ -292,7 +292,6 @@ export declare namespace AccountStorage {
     image: string;
     maturityTime: BigNumber;
     rebalance: LocalRegistrarLib.RebalanceParamsStructOutput;
-    pendingRedemptions: BigNumber;
     proposalLink: BigNumber;
     multisig: string;
     dao: string;
@@ -311,6 +310,7 @@ export declare namespace AccountStorage {
     ignoreUserSplits: boolean;
     splitToLiquid: LibAccounts.SplitDetailsStructOutput;
     referralId: BigNumber;
+    gasFwd: string;
   };
 }
 

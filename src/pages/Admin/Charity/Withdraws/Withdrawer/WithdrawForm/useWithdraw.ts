@@ -117,7 +117,7 @@ export default function useWithdraw() {
       const log = logs.find((l) => l.topics.includes(submissionTopic));
       if (!log) return LOG_ERROR;
 
-      const [, proposalId] = Multisig.decodeEventLog(
+      const [, , proposalId] = Multisig.decodeEventLog(
         "TransactionSubmitted",
         log.data,
         log.topics

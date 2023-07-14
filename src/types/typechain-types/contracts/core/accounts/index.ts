@@ -7,3 +7,5 @@ import type * as facets from "./facets";
 export type { facets };
 import type * as interfaces from "./interfaces";
 export type { interfaces };
+import type * as lib from "./lib";
+export type { lib };

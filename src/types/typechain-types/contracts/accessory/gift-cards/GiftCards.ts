@@ -195,47 +195,64 @@ export interface GiftCardsInterface extends utils.Interface {
   ): Result;
 
   events: {
-    "BalancesUpdated(address,address,uint256,uint8)": EventFragment;
     "ConfigUpdated()": EventFragment;
-    "DepositUpdated(uint256)": EventFragment;
+    "GiftCardBalanceSpent(address,address,uint256)": EventFragment;
+    "GiftCardClaimed(address,address,uint256)": EventFragment;
+    "GiftCardDeposited(address,address,uint256)": EventFragment;
     "Initialized(uint8)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "BalancesUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ConfigUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "DepositUpdated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "GiftCardBalanceSpent"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "GiftCardClaimed"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "GiftCardDeposited"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
 }
-
-export interface BalancesUpdatedEventObject {
-  addr: string;
-  token: string;
-  amt: BigNumber;
-  action: number;
-}
-export type BalancesUpdatedEvent = TypedEvent<
-  [string, string, BigNumber, number],
-  BalancesUpdatedEventObject
->;
-
-export type BalancesUpdatedEventFilter = TypedEventFilter<BalancesUpdatedEvent>;
 
 export interface ConfigUpdatedEventObject {}
 export type ConfigUpdatedEvent = TypedEvent<[], ConfigUpdatedEventObject>;
 
 export type ConfigUpdatedEventFilter = TypedEventFilter<ConfigUpdatedEvent>;
 
-export interface DepositUpdatedEventObject {
-  depositId: BigNumber;
+export interface GiftCardBalanceSpentEventObject {
+  addr: string;
+  token: string;
+  amt: BigNumber;
 }
-export type DepositUpdatedEvent = TypedEvent<
-  [BigNumber],
-  DepositUpdatedEventObject
+export type GiftCardBalanceSpentEvent = TypedEvent<
+  [string, string, BigNumber],
+  GiftCardBalanceSpentEventObject
 >;
 
-export type DepositUpdatedEventFilter = TypedEventFilter<DepositUpdatedEvent>;
+export type GiftCardBalanceSpentEventFilter =
+  TypedEventFilter<GiftCardBalanceSpentEvent>;
+
+export interface GiftCardClaimedEventObject {
+  addr: string;
+  token: string;
+  amt: BigNumber;
+}
+export type GiftCardClaimedEvent = TypedEvent<
+  [string, string, BigNumber],
+  GiftCardClaimedEventObject
+>;
+
+export type GiftCardClaimedEventFilter = TypedEventFilter<GiftCardClaimedEvent>;
+
+export interface GiftCardDepositedEventObject {
+  addr: string;
+  token: string;
+  amt: BigNumber;
+}
+export type GiftCardDepositedEvent = TypedEvent<
+  [string, string, BigNumber],
+  GiftCardDepositedEventObject
+>;
+
+export type GiftCardDepositedEventFilter =
+  TypedEventFilter<GiftCardDepositedEvent>;
 
 export interface InitializedEventObject {
   version: number;
@@ -465,24 +482,41 @@ export interface GiftCards extends BaseContract {
   };
 
   filters: {
-    "BalancesUpdated(address,address,uint256,uint8)"(
-      addr?: null,
-      token?: null,
-      amt?: null,
-      action?: null
-    ): BalancesUpdatedEventFilter;
-    BalancesUpdated(
-      addr?: null,
-      token?: null,
-      amt?: null,
-      action?: null
-    ): BalancesUpdatedEventFilter;
-
     "ConfigUpdated()"(): ConfigUpdatedEventFilter;
     ConfigUpdated(): ConfigUpdatedEventFilter;
 
-    "DepositUpdated(uint256)"(depositId?: null): DepositUpdatedEventFilter;
-    DepositUpdated(depositId?: null): DepositUpdatedEventFilter;
+    "GiftCardBalanceSpent(address,address,uint256)"(
+      addr?: null,
+      token?: null,
+      amt?: null
+    ): GiftCardBalanceSpentEventFilter;
+    GiftCardBalanceSpent(
+      addr?: null,
+      token?: null,
+      amt?: null
+    ): GiftCardBalanceSpentEventFilter;
+
+    "GiftCardClaimed(address,address,uint256)"(
+      addr?: null,
+      token?: null,
+      amt?: null
+    ): GiftCardClaimedEventFilter;
+    GiftCardClaimed(
+      addr?: null,
+      token?: null,
+      amt?: null
+    ): GiftCardClaimedEventFilter;
+
+    "GiftCardDeposited(address,address,uint256)"(
+      addr?: null,
+      token?: null,
+      amt?: null
+    ): GiftCardDepositedEventFilter;
+    GiftCardDeposited(
+      addr?: null,
+      token?: null,
+      amt?: null
+    ): GiftCardDepositedEventFilter;
 
     "Initialized(uint8)"(version?: null): InitializedEventFilter;
     Initialized(version?: null): InitializedEventFilter;

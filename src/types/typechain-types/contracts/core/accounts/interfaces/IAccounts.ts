@@ -28,6 +28,39 @@ import type {
   PromiseOrValue,
 } from "../../../../common";
 
+export declare namespace IVault {
+  export type VaultActionDataStruct = {
+    destinationChain: PromiseOrValue<string>;
+    strategyId: PromiseOrValue<BytesLike>;
+    selector: PromiseOrValue<BytesLike>;
+    accountIds: PromiseOrValue<BigNumberish>[];
+    token: PromiseOrValue<string>;
+    lockAmt: PromiseOrValue<BigNumberish>;
+    liqAmt: PromiseOrValue<BigNumberish>;
+    status: PromiseOrValue<BigNumberish>;
+  };
+
+  export type VaultActionDataStructOutput = [
+    string,
+    string,
+    string,
+    number[],
+    string,
+    BigNumber,
+    BigNumber,
+    number
+  ] & {
+    destinationChain: string;
+    strategyId: string;
+    selector: string;
+    accountIds: number[];
+    token: string;
+    lockAmt: BigNumber;
+    liqAmt: BigNumber;
+    status: number;
+  };
+}
+
 export declare namespace LibAccounts {
   export type BeneficiaryDataStruct = {
     endowId: PromiseOrValue<BigNumberish>;
@@ -451,6 +484,72 @@ export declare namespace AccountMessages {
     closingBeneficiary: LibAccounts.BeneficiaryStructOutput;
   };
 
+  export type InvestRequestStruct = {
+    strategy: PromiseOrValue<BytesLike>;
+    token: PromiseOrValue<string>;
+    lockAmt: PromiseOrValue<BigNumberish>;
+    liquidAmt: PromiseOrValue<BigNumberish>;
+    gasFee: PromiseOrValue<BigNumberish>;
+  };
+
+  export type InvestRequestStructOutput = [
+    string,
+    string,
+    BigNumber,
+    BigNumber,
+    BigNumber
+  ] & {
+    strategy: string;
+    token: string;
+    lockAmt: BigNumber;
+    liquidAmt: BigNumber;
+    gasFee: BigNumber;
+  };
+
+  export type RedeemRequestStruct = {
+    strategy: PromiseOrValue<BytesLike>;
+    token: PromiseOrValue<string>;
+    lockAmt: PromiseOrValue<BigNumberish>;
+    liquidAmt: PromiseOrValue<BigNumberish>;
+    gasFee: PromiseOrValue<BigNumberish>;
+  };
+
+  export type RedeemRequestStructOutput = [
+    string,
+    string,
+    BigNumber,
+    BigNumber,
+    BigNumber
+  ] & {
+    strategy: string;
+    token: string;
+    lockAmt: BigNumber;
+    liquidAmt: BigNumber;
+    gasFee: BigNumber;
+  };
+
+  export type RedeemAllRequestStruct = {
+    strategy: PromiseOrValue<BytesLike>;
+    token: PromiseOrValue<string>;
+    redeemLocked: PromiseOrValue<boolean>;
+    redeemLiquid: PromiseOrValue<boolean>;
+    gasFee: PromiseOrValue<BigNumberish>;
+  };
+
+  export type RedeemAllRequestStructOutput = [
+    string,
+    string,
+    boolean,
+    boolean,
+    BigNumber
+  ] & {
+    strategy: string;
+    token: string;
+    redeemLocked: boolean;
+    redeemLiquid: boolean;
+    gasFee: BigNumber;
+  };
+
   export type UpdateEndowmentControllerRequestStruct = {
     id: PromiseOrValue<BigNumberish>;
     settingsController: LibAccounts.SettingsControllerStruct;
@@ -587,7 +686,6 @@ export declare namespace AccountStorage {
     image: PromiseOrValue<string>;
     maturityTime: PromiseOrValue<BigNumberish>;
     rebalance: LocalRegistrarLib.RebalanceParamsStruct;
-    pendingRedemptions: PromiseOrValue<BigNumberish>;
     proposalLink: PromiseOrValue<BigNumberish>;
     multisig: PromiseOrValue<string>;
     dao: PromiseOrValue<string>;
@@ -606,6 +704,7 @@ export declare namespace AccountStorage {
     ignoreUserSplits: PromiseOrValue<boolean>;
     splitToLiquid: LibAccounts.SplitDetailsStruct;
     referralId: PromiseOrValue<BigNumberish>;
+    gasFwd: PromiseOrValue<string>;
   };
 
   export type EndowmentStructOutput = [
@@ -618,7 +717,6 @@ export declare namespace AccountStorage {
     string,
     BigNumber,
     LocalRegistrarLib.RebalanceParamsStructOutput,
-    BigNumber,
     BigNumber,
     string,
     string,
@@ -636,7 +734,8 @@ export declare namespace AccountStorage {
     number,
     boolean,
     LibAccounts.SplitDetailsStructOutput,
-    BigNumber
+    BigNumber,
+    string
   ] & {
     owner: string;
     name: string;
@@ -647,7 +746,6 @@ export declare namespace AccountStorage {
     image: string;
     maturityTime: BigNumber;
     rebalance: LocalRegistrarLib.RebalanceParamsStructOutput;
-    pendingRedemptions: BigNumber;
     proposalLink: BigNumber;
     multisig: string;
     dao: string;
@@ -666,6 +764,7 @@ export declare namespace AccountStorage {
     ignoreUserSplits: boolean;
     splitToLiquid: LibAccounts.SplitDetailsStructOutput;
     referralId: BigNumber;
+    gasFwd: string;
   };
 }
 
@@ -689,16 +788,17 @@ export interface IAccountsInterface extends utils.Interface {
     "depositDonationMatchErC20(uint32,address,uint256)": FunctionFragment;
     "depositERC20((uint32,uint256,uint256),address,uint256)": FunctionFragment;
     "depositMatic((uint32,uint256,uint256))": FunctionFragment;
-    "manageAllowances(uint32,uint8,address,address,uint256)": FunctionFragment;
+    "manageAllowances(uint32,address,address,uint256)": FunctionFragment;
+    "queryAllowance(uint32,address,address)": FunctionFragment;
     "queryConfig()": FunctionFragment;
     "queryEndowmentDetails(uint32)": FunctionFragment;
     "queryState(uint32)": FunctionFragment;
     "queryTokenAmount(uint32,uint8,address)": FunctionFragment;
     "setupDao(uint32,(uint256,uint256,uint256,uint256,uint256,uint128,uint256,(uint8,(address,uint256,string,string,(uint8,(uint128,uint256,uint128,uint128)),string,string,uint256,address,uint256,uint256))))": FunctionFragment;
     "spendAllowance(uint32,address,uint256,address)": FunctionFragment;
-    "strategyInvest(uint32,bytes4,string,uint256,uint256)": FunctionFragment;
-    "strategyRedeem(uint32,bytes4,string,uint256,uint256)": FunctionFragment;
-    "strategyRedeemAll(uint32,bytes4,string)": FunctionFragment;
+    "strategyInvest(uint32,(bytes4,string,uint256,uint256,uint256))": FunctionFragment;
+    "strategyRedeem(uint32,(bytes4,string,uint256,uint256,uint256))": FunctionFragment;
+    "strategyRedeemAll(uint32,(bytes4,string,bool,bool,uint256))": FunctionFragment;
     "swapToken(uint32,uint8,address,uint256,address,uint256)": FunctionFragment;
     "updateAcceptedToken(uint32,address,address,bool)": FunctionFragment;
     "updateConfig(address,uint256,(address,uint256))": FunctionFragment;
@@ -720,6 +820,7 @@ export interface IAccountsInterface extends utils.Interface {
       | "depositERC20"
       | "depositMatic"
       | "manageAllowances"
+      | "queryAllowance"
       | "queryConfig"
       | "queryEndowmentDetails"
       | "queryState"
@@ -777,10 +878,17 @@ export interface IAccountsInterface extends utils.Interface {
     functionFragment: "manageAllowances",
     values: [
       PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
       PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "queryAllowance",
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>
     ]
   ): string;
   encodeFunctionData(
@@ -818,30 +926,17 @@ export interface IAccountsInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "strategyInvest",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [PromiseOrValue<BigNumberish>, AccountMessages.InvestRequestStruct]
   ): string;
   encodeFunctionData(
     functionFragment: "strategyRedeem",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [PromiseOrValue<BigNumberish>, AccountMessages.RedeemRequestStruct]
   ): string;
   encodeFunctionData(
     functionFragment: "strategyRedeemAll",
     values: [
       PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<string>
+      AccountMessages.RedeemAllRequestStruct
     ]
   ): string;
   encodeFunctionData(
@@ -942,6 +1037,10 @@ export interface IAccountsInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "queryAllowance",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "queryConfig",
     data: BytesLike
   ): Result;
@@ -1007,55 +1106,71 @@ export interface IAccountsInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
 
   events: {
-    "AllowanceRemoved(address,address,address)": EventFragment;
-    "AllowanceUpdated(address,address,address,uint256)": EventFragment;
+    "AllowanceSpent(uint256,address,address,uint256)": EventFragment;
+    "AllowanceUpdated(uint256,address,address,uint256,uint256,uint256)": EventFragment;
     "ConfigUpdated()": EventFragment;
     "DaoContractCreated(uint32,address)": EventFragment;
     "DonationDeposited(uint256,address,uint256)": EventFragment;
     "DonationMatchCreated(uint256,address)": EventFragment;
     "DonationWithdrawn(uint256,address,address,uint256)": EventFragment;
-    "EndowmentCreated(uint256)": EventFragment;
+    "EndowmentClosed(uint256)": EventFragment;
+    "EndowmentCreated(uint256,uint8)": EventFragment;
+    "EndowmentDeposit(uint256,address,uint256,uint256)": EventFragment;
+    "EndowmentInvested(uint8)": EventFragment;
+    "EndowmentRedeemed(uint8)": EventFragment;
     "EndowmentSettingUpdated(uint256,string)": EventFragment;
     "EndowmentUpdated(uint256)": EventFragment;
+    "EndowmentWithdraw(uint256,address,uint256,uint8,address,uint32)": EventFragment;
     "OwnerUpdated(address)": EventFragment;
+    "RefundNeeded(tuple)": EventFragment;
     "TokenSwapped(uint256,uint8,address,uint256,address,uint256)": EventFragment;
+    "UnexpectedTokens(tuple)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "AllowanceRemoved"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "AllowanceSpent"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "AllowanceUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ConfigUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "DaoContractCreated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "DonationDeposited"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "DonationMatchCreated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "DonationWithdrawn"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "EndowmentClosed"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "EndowmentCreated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "EndowmentDeposit"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "EndowmentInvested"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "EndowmentRedeemed"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "EndowmentSettingUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "EndowmentUpdated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "EndowmentWithdraw"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnerUpdated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "RefundNeeded"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "TokenSwapped"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "UnexpectedTokens"): EventFragment;
 }
 
-export interface AllowanceRemovedEventObject {
-  sender: string;
+export interface AllowanceSpentEventObject {
+  endowId: BigNumber;
   spender: string;
   tokenAddress: string;
+  amount: BigNumber;
 }
-export type AllowanceRemovedEvent = TypedEvent<
-  [string, string, string],
-  AllowanceRemovedEventObject
+export type AllowanceSpentEvent = TypedEvent<
+  [BigNumber, string, string, BigNumber],
+  AllowanceSpentEventObject
 >;
 
-export type AllowanceRemovedEventFilter =
-  TypedEventFilter<AllowanceRemovedEvent>;
+export type AllowanceSpentEventFilter = TypedEventFilter<AllowanceSpentEvent>;
 
 export interface AllowanceUpdatedEventObject {
-  sender: string;
+  endowId: BigNumber;
   spender: string;
   tokenAddress: string;
-  allowance: BigNumber;
+  newBalance: BigNumber;
+  added: BigNumber;
+  deducted: BigNumber;
 }
 export type AllowanceUpdatedEvent = TypedEvent<
-  [string, string, string, BigNumber],
+  [BigNumber, string, string, BigNumber, BigNumber, BigNumber],
   AllowanceUpdatedEventObject
 >;
 
@@ -1118,16 +1233,63 @@ export type DonationWithdrawnEvent = TypedEvent<
 export type DonationWithdrawnEventFilter =
   TypedEventFilter<DonationWithdrawnEvent>;
 
-export interface EndowmentCreatedEventObject {
+export interface EndowmentClosedEventObject {
   endowId: BigNumber;
 }
-export type EndowmentCreatedEvent = TypedEvent<
+export type EndowmentClosedEvent = TypedEvent<
   [BigNumber],
+  EndowmentClosedEventObject
+>;
+
+export type EndowmentClosedEventFilter = TypedEventFilter<EndowmentClosedEvent>;
+
+export interface EndowmentCreatedEventObject {
+  endowId: BigNumber;
+  endowType: number;
+}
+export type EndowmentCreatedEvent = TypedEvent<
+  [BigNumber, number],
   EndowmentCreatedEventObject
 >;
 
 export type EndowmentCreatedEventFilter =
   TypedEventFilter<EndowmentCreatedEvent>;
+
+export interface EndowmentDepositEventObject {
+  endowId: BigNumber;
+  tokenAddress: string;
+  amountLocked: BigNumber;
+  amountLiquid: BigNumber;
+}
+export type EndowmentDepositEvent = TypedEvent<
+  [BigNumber, string, BigNumber, BigNumber],
+  EndowmentDepositEventObject
+>;
+
+export type EndowmentDepositEventFilter =
+  TypedEventFilter<EndowmentDepositEvent>;
+
+export interface EndowmentInvestedEventObject {
+  arg0: number;
+}
+export type EndowmentInvestedEvent = TypedEvent<
+  [number],
+  EndowmentInvestedEventObject
+>;
+
+export type EndowmentInvestedEventFilter =
+  TypedEventFilter<EndowmentInvestedEvent>;
+
+export interface EndowmentRedeemedEventObject {
+  arg0: number;
+}
+export type EndowmentRedeemedEvent = TypedEvent<
+  [number],
+  EndowmentRedeemedEventObject
+>;
+
+export type EndowmentRedeemedEventFilter =
+  TypedEventFilter<EndowmentRedeemedEvent>;
 
 export interface EndowmentSettingUpdatedEventObject {
   endowId: BigNumber;
@@ -1152,12 +1314,38 @@ export type EndowmentUpdatedEvent = TypedEvent<
 export type EndowmentUpdatedEventFilter =
   TypedEventFilter<EndowmentUpdatedEvent>;
 
+export interface EndowmentWithdrawEventObject {
+  endowId: BigNumber;
+  tokenAddress: string;
+  amount: BigNumber;
+  accountType: number;
+  beneficiaryAddress: string;
+  beneficiaryEndowId: number;
+}
+export type EndowmentWithdrawEvent = TypedEvent<
+  [BigNumber, string, BigNumber, number, string, number],
+  EndowmentWithdrawEventObject
+>;
+
+export type EndowmentWithdrawEventFilter =
+  TypedEventFilter<EndowmentWithdrawEvent>;
+
 export interface OwnerUpdatedEventObject {
   owner: string;
 }
 export type OwnerUpdatedEvent = TypedEvent<[string], OwnerUpdatedEventObject>;
 
 export type OwnerUpdatedEventFilter = TypedEventFilter<OwnerUpdatedEvent>;
+
+export interface RefundNeededEventObject {
+  arg0: IVault.VaultActionDataStructOutput;
+}
+export type RefundNeededEvent = TypedEvent<
+  [IVault.VaultActionDataStructOutput],
+  RefundNeededEventObject
+>;
+
+export type RefundNeededEventFilter = TypedEventFilter<RefundNeededEvent>;
 
 export interface TokenSwappedEventObject {
   endowId: BigNumber;
@@ -1173,6 +1361,17 @@ export type TokenSwappedEvent = TypedEvent<
 >;
 
 export type TokenSwappedEventFilter = TypedEventFilter<TokenSwappedEvent>;
+
+export interface UnexpectedTokensEventObject {
+  arg0: IVault.VaultActionDataStructOutput;
+}
+export type UnexpectedTokensEvent = TypedEvent<
+  [IVault.VaultActionDataStructOutput],
+  UnexpectedTokensEventObject
+>;
+
+export type UnexpectedTokensEventFilter =
+  TypedEventFilter<UnexpectedTokensEvent>;
 
 export interface IAccounts extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -1238,12 +1437,18 @@ export interface IAccounts extends BaseContract {
 
     manageAllowances(
       endowId: PromiseOrValue<BigNumberish>,
-      action: PromiseOrValue<BigNumberish>,
       spender: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
+
+    queryAllowance(
+      endowId: PromiseOrValue<BigNumberish>,
+      spender: PromiseOrValue<string>,
+      token: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
     queryConfig(
       overrides?: CallOverrides
@@ -1294,27 +1499,20 @@ export interface IAccounts extends BaseContract {
 
     strategyInvest(
       id: PromiseOrValue<BigNumberish>,
-      strategy: PromiseOrValue<BytesLike>,
-      token: PromiseOrValue<string>,
-      lockAmt: PromiseOrValue<BigNumberish>,
-      liquidAmt: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      investRequest: AccountMessages.InvestRequestStruct,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     strategyRedeem(
       id: PromiseOrValue<BigNumberish>,
-      strategy: PromiseOrValue<BytesLike>,
-      token: PromiseOrValue<string>,
-      lockAmt: PromiseOrValue<BigNumberish>,
-      liquidAmt: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      redeemRequest: AccountMessages.RedeemRequestStruct,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     strategyRedeemAll(
       id: PromiseOrValue<BigNumberish>,
-      strategy: PromiseOrValue<BytesLike>,
-      token: PromiseOrValue<string>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      redeemAllRequest: AccountMessages.RedeemAllRequestStruct,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     swapToken(
@@ -1423,12 +1621,18 @@ export interface IAccounts extends BaseContract {
 
   manageAllowances(
     endowId: PromiseOrValue<BigNumberish>,
-    action: PromiseOrValue<BigNumberish>,
     spender: PromiseOrValue<string>,
     token: PromiseOrValue<string>,
     amount: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
+
+  queryAllowance(
+    endowId: PromiseOrValue<BigNumberish>,
+    spender: PromiseOrValue<string>,
+    token: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   queryConfig(
     overrides?: CallOverrides
@@ -1467,27 +1671,20 @@ export interface IAccounts extends BaseContract {
 
   strategyInvest(
     id: PromiseOrValue<BigNumberish>,
-    strategy: PromiseOrValue<BytesLike>,
-    token: PromiseOrValue<string>,
-    lockAmt: PromiseOrValue<BigNumberish>,
-    liquidAmt: PromiseOrValue<BigNumberish>,
-    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    investRequest: AccountMessages.InvestRequestStruct,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   strategyRedeem(
     id: PromiseOrValue<BigNumberish>,
-    strategy: PromiseOrValue<BytesLike>,
-    token: PromiseOrValue<string>,
-    lockAmt: PromiseOrValue<BigNumberish>,
-    liquidAmt: PromiseOrValue<BigNumberish>,
-    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    redeemRequest: AccountMessages.RedeemRequestStruct,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   strategyRedeemAll(
     id: PromiseOrValue<BigNumberish>,
-    strategy: PromiseOrValue<BytesLike>,
-    token: PromiseOrValue<string>,
-    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    redeemAllRequest: AccountMessages.RedeemAllRequestStruct,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   swapToken(
@@ -1596,12 +1793,18 @@ export interface IAccounts extends BaseContract {
 
     manageAllowances(
       endowId: PromiseOrValue<BigNumberish>,
-      action: PromiseOrValue<BigNumberish>,
       spender: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    queryAllowance(
+      endowId: PromiseOrValue<BigNumberish>,
+      spender: PromiseOrValue<string>,
+      token: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     queryConfig(
       overrides?: CallOverrides
@@ -1640,26 +1843,19 @@ export interface IAccounts extends BaseContract {
 
     strategyInvest(
       id: PromiseOrValue<BigNumberish>,
-      strategy: PromiseOrValue<BytesLike>,
-      token: PromiseOrValue<string>,
-      lockAmt: PromiseOrValue<BigNumberish>,
-      liquidAmt: PromiseOrValue<BigNumberish>,
+      investRequest: AccountMessages.InvestRequestStruct,
       overrides?: CallOverrides
     ): Promise<void>;
 
     strategyRedeem(
       id: PromiseOrValue<BigNumberish>,
-      strategy: PromiseOrValue<BytesLike>,
-      token: PromiseOrValue<string>,
-      lockAmt: PromiseOrValue<BigNumberish>,
-      liquidAmt: PromiseOrValue<BigNumberish>,
+      redeemRequest: AccountMessages.RedeemRequestStruct,
       overrides?: CallOverrides
     ): Promise<void>;
 
     strategyRedeemAll(
       id: PromiseOrValue<BigNumberish>,
-      strategy: PromiseOrValue<BytesLike>,
-      token: PromiseOrValue<string>,
+      redeemAllRequest: AccountMessages.RedeemAllRequestStruct,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1733,28 +1929,34 @@ export interface IAccounts extends BaseContract {
   };
 
   filters: {
-    "AllowanceRemoved(address,address,address)"(
-      sender?: null,
-      spender?: null,
-      tokenAddress?: null
-    ): AllowanceRemovedEventFilter;
-    AllowanceRemoved(
-      sender?: null,
-      spender?: null,
-      tokenAddress?: null
-    ): AllowanceRemovedEventFilter;
-
-    "AllowanceUpdated(address,address,address,uint256)"(
-      sender?: null,
+    "AllowanceSpent(uint256,address,address,uint256)"(
+      endowId?: null,
       spender?: null,
       tokenAddress?: null,
-      allowance?: null
+      amount?: null
+    ): AllowanceSpentEventFilter;
+    AllowanceSpent(
+      endowId?: null,
+      spender?: null,
+      tokenAddress?: null,
+      amount?: null
+    ): AllowanceSpentEventFilter;
+
+    "AllowanceUpdated(uint256,address,address,uint256,uint256,uint256)"(
+      endowId?: null,
+      spender?: null,
+      tokenAddress?: null,
+      newBalance?: null,
+      added?: null,
+      deducted?: null
     ): AllowanceUpdatedEventFilter;
     AllowanceUpdated(
-      sender?: null,
+      endowId?: null,
       spender?: null,
       tokenAddress?: null,
-      allowance?: null
+      newBalance?: null,
+      added?: null,
+      deducted?: null
     ): AllowanceUpdatedEventFilter;
 
     "ConfigUpdated()"(): ConfigUpdatedEventFilter;
@@ -1802,8 +2004,36 @@ export interface IAccounts extends BaseContract {
       amount?: null
     ): DonationWithdrawnEventFilter;
 
-    "EndowmentCreated(uint256)"(endowId?: null): EndowmentCreatedEventFilter;
-    EndowmentCreated(endowId?: null): EndowmentCreatedEventFilter;
+    "EndowmentClosed(uint256)"(endowId?: null): EndowmentClosedEventFilter;
+    EndowmentClosed(endowId?: null): EndowmentClosedEventFilter;
+
+    "EndowmentCreated(uint256,uint8)"(
+      endowId?: null,
+      endowType?: null
+    ): EndowmentCreatedEventFilter;
+    EndowmentCreated(
+      endowId?: null,
+      endowType?: null
+    ): EndowmentCreatedEventFilter;
+
+    "EndowmentDeposit(uint256,address,uint256,uint256)"(
+      endowId?: null,
+      tokenAddress?: null,
+      amountLocked?: null,
+      amountLiquid?: null
+    ): EndowmentDepositEventFilter;
+    EndowmentDeposit(
+      endowId?: null,
+      tokenAddress?: null,
+      amountLocked?: null,
+      amountLiquid?: null
+    ): EndowmentDepositEventFilter;
+
+    "EndowmentInvested(uint8)"(arg0?: null): EndowmentInvestedEventFilter;
+    EndowmentInvested(arg0?: null): EndowmentInvestedEventFilter;
+
+    "EndowmentRedeemed(uint8)"(arg0?: null): EndowmentRedeemedEventFilter;
+    EndowmentRedeemed(arg0?: null): EndowmentRedeemedEventFilter;
 
     "EndowmentSettingUpdated(uint256,string)"(
       endowId?: null,
@@ -1817,8 +2047,28 @@ export interface IAccounts extends BaseContract {
     "EndowmentUpdated(uint256)"(endowId?: null): EndowmentUpdatedEventFilter;
     EndowmentUpdated(endowId?: null): EndowmentUpdatedEventFilter;
 
+    "EndowmentWithdraw(uint256,address,uint256,uint8,address,uint32)"(
+      endowId?: null,
+      tokenAddress?: null,
+      amount?: null,
+      accountType?: null,
+      beneficiaryAddress?: null,
+      beneficiaryEndowId?: null
+    ): EndowmentWithdrawEventFilter;
+    EndowmentWithdraw(
+      endowId?: null,
+      tokenAddress?: null,
+      amount?: null,
+      accountType?: null,
+      beneficiaryAddress?: null,
+      beneficiaryEndowId?: null
+    ): EndowmentWithdrawEventFilter;
+
     "OwnerUpdated(address)"(owner?: null): OwnerUpdatedEventFilter;
     OwnerUpdated(owner?: null): OwnerUpdatedEventFilter;
+
+    "RefundNeeded(tuple)"(arg0?: null): RefundNeededEventFilter;
+    RefundNeeded(arg0?: null): RefundNeededEventFilter;
 
     "TokenSwapped(uint256,uint8,address,uint256,address,uint256)"(
       endowId?: null,
@@ -1836,6 +2086,9 @@ export interface IAccounts extends BaseContract {
       tokenOut?: null,
       amountOut?: null
     ): TokenSwappedEventFilter;
+
+    "UnexpectedTokens(tuple)"(arg0?: null): UnexpectedTokensEventFilter;
+    UnexpectedTokens(arg0?: null): UnexpectedTokensEventFilter;
   };
 
   estimateGas: {
@@ -1876,11 +2129,17 @@ export interface IAccounts extends BaseContract {
 
     manageAllowances(
       endowId: PromiseOrValue<BigNumberish>,
-      action: PromiseOrValue<BigNumberish>,
       spender: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    queryAllowance(
+      endowId: PromiseOrValue<BigNumberish>,
+      spender: PromiseOrValue<string>,
+      token: PromiseOrValue<string>,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     queryConfig(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1918,27 +2177,20 @@ export interface IAccounts extends BaseContract {
 
     strategyInvest(
       id: PromiseOrValue<BigNumberish>,
-      strategy: PromiseOrValue<BytesLike>,
-      token: PromiseOrValue<string>,
-      lockAmt: PromiseOrValue<BigNumberish>,
-      liquidAmt: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      investRequest: AccountMessages.InvestRequestStruct,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     strategyRedeem(
       id: PromiseOrValue<BigNumberish>,
-      strategy: PromiseOrValue<BytesLike>,
-      token: PromiseOrValue<string>,
-      lockAmt: PromiseOrValue<BigNumberish>,
-      liquidAmt: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      redeemRequest: AccountMessages.RedeemRequestStruct,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     strategyRedeemAll(
       id: PromiseOrValue<BigNumberish>,
-      strategy: PromiseOrValue<BytesLike>,
-      token: PromiseOrValue<string>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      redeemAllRequest: AccountMessages.RedeemAllRequestStruct,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     swapToken(
@@ -2048,11 +2300,17 @@ export interface IAccounts extends BaseContract {
 
     manageAllowances(
       endowId: PromiseOrValue<BigNumberish>,
-      action: PromiseOrValue<BigNumberish>,
       spender: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    queryAllowance(
+      endowId: PromiseOrValue<BigNumberish>,
+      spender: PromiseOrValue<string>,
+      token: PromiseOrValue<string>,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     queryConfig(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -2090,27 +2348,20 @@ export interface IAccounts extends BaseContract {
 
     strategyInvest(
       id: PromiseOrValue<BigNumberish>,
-      strategy: PromiseOrValue<BytesLike>,
-      token: PromiseOrValue<string>,
-      lockAmt: PromiseOrValue<BigNumberish>,
-      liquidAmt: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      investRequest: AccountMessages.InvestRequestStruct,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     strategyRedeem(
       id: PromiseOrValue<BigNumberish>,
-      strategy: PromiseOrValue<BytesLike>,
-      token: PromiseOrValue<string>,
-      lockAmt: PromiseOrValue<BigNumberish>,
-      liquidAmt: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      redeemRequest: AccountMessages.RedeemRequestStruct,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     strategyRedeemAll(
       id: PromiseOrValue<BigNumberish>,
-      strategy: PromiseOrValue<BytesLike>,
-      token: PromiseOrValue<string>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      redeemAllRequest: AccountMessages.RedeemAllRequestStruct,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     swapToken(
