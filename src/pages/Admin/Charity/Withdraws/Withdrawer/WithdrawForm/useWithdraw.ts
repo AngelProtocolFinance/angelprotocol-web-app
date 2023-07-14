@@ -6,6 +6,7 @@ import { LogProcessor, SimulContractTx } from "types/evm";
 import { AccountType as CustomAccountType } from "types/lists";
 import { TxOnSuccess, TxSuccessMeta } from "types/tx";
 import { WithdrawMeta } from "types/tx";
+import { client } from "services/constants";
 import { version as v } from "services/helpers";
 import { useModalContext } from "contexts/ModalContext";
 import { TxPrompt } from "components/Prompt";
@@ -165,11 +166,14 @@ export default function useWithdraw() {
         };
 
         const generatedToken = createAuthToken("angelprotocol-web-app");
-        const response = await fetch(APIs.apes + `/${v(1)}/withdraw`, {
-          method: "POST",
-          headers: { authorization: generatedToken },
-          body: JSON.stringify(payload),
-        });
+        const response = await fetch(
+          APIs.apes + `/${v(3)}/withdraw/${client}`,
+          {
+            method: "POST",
+            headers: { authorization: generatedToken },
+            body: JSON.stringify(payload),
+          }
+        );
 
         if (!response.ok) {
           return showModal(TxPrompt, {
