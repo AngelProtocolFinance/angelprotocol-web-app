@@ -631,19 +631,20 @@ export interface CharityApplicationsInterface extends utils.Interface {
     "ApplicationConfirmed(uint256,address)": EventFragment;
     "ApplicationExecuted(uint256)": EventFragment;
     "ApplicationProposed(uint256)": EventFragment;
-    "ApprovalsRequiredChanged(uint256)": EventFragment;
-    "ConfirmationRevoked(address,uint256)": EventFragment;
-    "Deposit(address,uint256)": EventFragment;
+    "ApprovalsRequiredChanged(address,uint256)": EventFragment;
+    "ExpiryChanged(address,uint256)": EventFragment;
     "GasSent(uint256,address,uint256)": EventFragment;
     "Initialized(uint8)": EventFragment;
-    "OwnerAdded(address)": EventFragment;
-    "OwnerRemoved(address)": EventFragment;
-    "RequireExecutionChanged(bool)": EventFragment;
+    "InitializedMultiSig(address,address[],uint256,bool,uint256)": EventFragment;
+    "OwnerReplaced(address,address,address)": EventFragment;
+    "OwnersAdded(address,address[])": EventFragment;
+    "OwnersRemoved(address,address[])": EventFragment;
+    "RequireExecutionChanged(address,bool)": EventFragment;
     "SeedAssetSent(uint256,address,uint256)": EventFragment;
-    "TransactionConfirmed(address,uint256)": EventFragment;
-    "TransactionExecuted(uint256)": EventFragment;
-    "TransactionExpiryChanged(uint256)": EventFragment;
-    "TransactionSubmitted(address,uint256)": EventFragment;
+    "TransactionConfirmationRevoked(address,address,uint256)": EventFragment;
+    "TransactionConfirmed(address,address,uint256)": EventFragment;
+    "TransactionExecuted(address,uint256)": EventFragment;
+    "TransactionSubmitted(address,address,uint256)": EventFragment;
   };
 
   getEvent(
@@ -653,17 +654,20 @@ export interface CharityApplicationsInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: "ApplicationExecuted"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ApplicationProposed"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ApprovalsRequiredChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ConfirmationRevoked"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Deposit"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ExpiryChanged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "GasSent"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerAdded"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerRemoved"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "InitializedMultiSig"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "OwnerReplaced"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "OwnersAdded"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "OwnersRemoved"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RequireExecutionChanged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "SeedAssetSent"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "TransactionConfirmationRevoked"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "TransactionConfirmed"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "TransactionExecuted"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "TransactionExpiryChanged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "TransactionSubmitted"): EventFragment;
 }
 
@@ -714,35 +718,27 @@ export type ApplicationProposedEventFilter =
   TypedEventFilter<ApplicationProposedEvent>;
 
 export interface ApprovalsRequiredChangedEventObject {
+  msAddress: string;
   approvalsRequired: BigNumber;
 }
 export type ApprovalsRequiredChangedEvent = TypedEvent<
-  [BigNumber],
+  [string, BigNumber],
   ApprovalsRequiredChangedEventObject
 >;
 
 export type ApprovalsRequiredChangedEventFilter =
   TypedEventFilter<ApprovalsRequiredChangedEvent>;
 
-export interface ConfirmationRevokedEventObject {
-  sender: string;
-  transactionId: BigNumber;
+export interface ExpiryChangedEventObject {
+  msAddress: string;
+  transactionExpiry: BigNumber;
 }
-export type ConfirmationRevokedEvent = TypedEvent<
+export type ExpiryChangedEvent = TypedEvent<
   [string, BigNumber],
-  ConfirmationRevokedEventObject
+  ExpiryChangedEventObject
 >;
 
-export type ConfirmationRevokedEventFilter =
-  TypedEventFilter<ConfirmationRevokedEvent>;
-
-export interface DepositEventObject {
-  sender: string;
-  amount: BigNumber;
-}
-export type DepositEvent = TypedEvent<[string, BigNumber], DepositEventObject>;
-
-export type DepositEventFilter = TypedEventFilter<DepositEvent>;
+export type ExpiryChangedEventFilter = TypedEventFilter<ExpiryChangedEvent>;
 
 export interface GasSentEventObject {
   endowmentId: BigNumber;
@@ -763,25 +759,61 @@ export type InitializedEvent = TypedEvent<[number], InitializedEventObject>;
 
 export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
 
-export interface OwnerAddedEventObject {
-  owner: string;
+export interface InitializedMultiSigEventObject {
+  msAddress: string;
+  owners: string[];
+  approvalsRequired: BigNumber;
+  requireExecution: boolean;
+  transactionExpiry: BigNumber;
 }
-export type OwnerAddedEvent = TypedEvent<[string], OwnerAddedEventObject>;
+export type InitializedMultiSigEvent = TypedEvent<
+  [string, string[], BigNumber, boolean, BigNumber],
+  InitializedMultiSigEventObject
+>;
 
-export type OwnerAddedEventFilter = TypedEventFilter<OwnerAddedEvent>;
+export type InitializedMultiSigEventFilter =
+  TypedEventFilter<InitializedMultiSigEvent>;
 
-export interface OwnerRemovedEventObject {
-  owner: string;
+export interface OwnerReplacedEventObject {
+  msAddress: string;
+  currOwner: string;
+  newOwner: string;
 }
-export type OwnerRemovedEvent = TypedEvent<[string], OwnerRemovedEventObject>;
+export type OwnerReplacedEvent = TypedEvent<
+  [string, string, string],
+  OwnerReplacedEventObject
+>;
 
-export type OwnerRemovedEventFilter = TypedEventFilter<OwnerRemovedEvent>;
+export type OwnerReplacedEventFilter = TypedEventFilter<OwnerReplacedEvent>;
+
+export interface OwnersAddedEventObject {
+  msAddress: string;
+  owners: string[];
+}
+export type OwnersAddedEvent = TypedEvent<
+  [string, string[]],
+  OwnersAddedEventObject
+>;
+
+export type OwnersAddedEventFilter = TypedEventFilter<OwnersAddedEvent>;
+
+export interface OwnersRemovedEventObject {
+  msAddress: string;
+  owners: string[];
+}
+export type OwnersRemovedEvent = TypedEvent<
+  [string, string[]],
+  OwnersRemovedEventObject
+>;
+
+export type OwnersRemovedEventFilter = TypedEventFilter<OwnersRemovedEvent>;
 
 export interface RequireExecutionChangedEventObject {
+  msAddress: string;
   requireExecution: boolean;
 }
 export type RequireExecutionChangedEvent = TypedEvent<
-  [boolean],
+  [string, boolean],
   RequireExecutionChangedEventObject
 >;
 
@@ -800,12 +832,26 @@ export type SeedAssetSentEvent = TypedEvent<
 
 export type SeedAssetSentEventFilter = TypedEventFilter<SeedAssetSentEvent>;
 
+export interface TransactionConfirmationRevokedEventObject {
+  msAddress: string;
+  sender: string;
+  transactionId: BigNumber;
+}
+export type TransactionConfirmationRevokedEvent = TypedEvent<
+  [string, string, BigNumber],
+  TransactionConfirmationRevokedEventObject
+>;
+
+export type TransactionConfirmationRevokedEventFilter =
+  TypedEventFilter<TransactionConfirmationRevokedEvent>;
+
 export interface TransactionConfirmedEventObject {
+  msAddress: string;
   sender: string;
   transactionId: BigNumber;
 }
 export type TransactionConfirmedEvent = TypedEvent<
-  [string, BigNumber],
+  [string, string, BigNumber],
   TransactionConfirmedEventObject
 >;
 
@@ -813,33 +859,24 @@ export type TransactionConfirmedEventFilter =
   TypedEventFilter<TransactionConfirmedEvent>;
 
 export interface TransactionExecutedEventObject {
+  msAddress: string;
   transactionId: BigNumber;
 }
 export type TransactionExecutedEvent = TypedEvent<
-  [BigNumber],
+  [string, BigNumber],
   TransactionExecutedEventObject
 >;
 
 export type TransactionExecutedEventFilter =
   TypedEventFilter<TransactionExecutedEvent>;
 
-export interface TransactionExpiryChangedEventObject {
-  transactionExpiry: BigNumber;
-}
-export type TransactionExpiryChangedEvent = TypedEvent<
-  [BigNumber],
-  TransactionExpiryChangedEventObject
->;
-
-export type TransactionExpiryChangedEventFilter =
-  TypedEventFilter<TransactionExpiryChangedEvent>;
-
 export interface TransactionSubmittedEventObject {
+  msAddress: string;
   sender: string;
   transactionId: BigNumber;
 }
 export type TransactionSubmittedEvent = TypedEvent<
-  [string, BigNumber],
+  [string, string, BigNumber],
   TransactionSubmittedEventObject
 >;
 
@@ -1574,27 +1611,23 @@ export interface CharityApplications extends BaseContract {
     ): ApplicationProposedEventFilter;
     ApplicationProposed(proposalId?: null): ApplicationProposedEventFilter;
 
-    "ApprovalsRequiredChanged(uint256)"(
+    "ApprovalsRequiredChanged(address,uint256)"(
+      msAddress?: null,
       approvalsRequired?: null
     ): ApprovalsRequiredChangedEventFilter;
     ApprovalsRequiredChanged(
+      msAddress?: null,
       approvalsRequired?: null
     ): ApprovalsRequiredChangedEventFilter;
 
-    "ConfirmationRevoked(address,uint256)"(
-      sender?: null,
-      transactionId?: null
-    ): ConfirmationRevokedEventFilter;
-    ConfirmationRevoked(
-      sender?: null,
-      transactionId?: null
-    ): ConfirmationRevokedEventFilter;
-
-    "Deposit(address,uint256)"(
-      sender?: null,
-      amount?: null
-    ): DepositEventFilter;
-    Deposit(sender?: null, amount?: null): DepositEventFilter;
+    "ExpiryChanged(address,uint256)"(
+      msAddress?: null,
+      transactionExpiry?: null
+    ): ExpiryChangedEventFilter;
+    ExpiryChanged(
+      msAddress?: null,
+      transactionExpiry?: null
+    ): ExpiryChangedEventFilter;
 
     "GasSent(uint256,address,uint256)"(
       endowmentId?: null,
@@ -1610,16 +1643,50 @@ export interface CharityApplications extends BaseContract {
     "Initialized(uint8)"(version?: null): InitializedEventFilter;
     Initialized(version?: null): InitializedEventFilter;
 
-    "OwnerAdded(address)"(owner?: null): OwnerAddedEventFilter;
-    OwnerAdded(owner?: null): OwnerAddedEventFilter;
+    "InitializedMultiSig(address,address[],uint256,bool,uint256)"(
+      msAddress?: null,
+      owners?: null,
+      approvalsRequired?: null,
+      requireExecution?: null,
+      transactionExpiry?: null
+    ): InitializedMultiSigEventFilter;
+    InitializedMultiSig(
+      msAddress?: null,
+      owners?: null,
+      approvalsRequired?: null,
+      requireExecution?: null,
+      transactionExpiry?: null
+    ): InitializedMultiSigEventFilter;
 
-    "OwnerRemoved(address)"(owner?: null): OwnerRemovedEventFilter;
-    OwnerRemoved(owner?: null): OwnerRemovedEventFilter;
+    "OwnerReplaced(address,address,address)"(
+      msAddress?: null,
+      currOwner?: null,
+      newOwner?: null
+    ): OwnerReplacedEventFilter;
+    OwnerReplaced(
+      msAddress?: null,
+      currOwner?: null,
+      newOwner?: null
+    ): OwnerReplacedEventFilter;
 
-    "RequireExecutionChanged(bool)"(
+    "OwnersAdded(address,address[])"(
+      msAddress?: null,
+      owners?: null
+    ): OwnersAddedEventFilter;
+    OwnersAdded(msAddress?: null, owners?: null): OwnersAddedEventFilter;
+
+    "OwnersRemoved(address,address[])"(
+      msAddress?: null,
+      owners?: null
+    ): OwnersRemovedEventFilter;
+    OwnersRemoved(msAddress?: null, owners?: null): OwnersRemovedEventFilter;
+
+    "RequireExecutionChanged(address,bool)"(
+      msAddress?: null,
       requireExecution?: null
     ): RequireExecutionChangedEventFilter;
     RequireExecutionChanged(
+      msAddress?: null,
       requireExecution?: null
     ): RequireExecutionChangedEventFilter;
 
@@ -1634,32 +1701,44 @@ export interface CharityApplications extends BaseContract {
       amount?: null
     ): SeedAssetSentEventFilter;
 
-    "TransactionConfirmed(address,uint256)"(
+    "TransactionConfirmationRevoked(address,address,uint256)"(
+      msAddress?: null,
+      sender?: null,
+      transactionId?: null
+    ): TransactionConfirmationRevokedEventFilter;
+    TransactionConfirmationRevoked(
+      msAddress?: null,
+      sender?: null,
+      transactionId?: null
+    ): TransactionConfirmationRevokedEventFilter;
+
+    "TransactionConfirmed(address,address,uint256)"(
+      msAddress?: null,
       sender?: null,
       transactionId?: null
     ): TransactionConfirmedEventFilter;
     TransactionConfirmed(
+      msAddress?: null,
       sender?: null,
       transactionId?: null
     ): TransactionConfirmedEventFilter;
 
-    "TransactionExecuted(uint256)"(
+    "TransactionExecuted(address,uint256)"(
+      msAddress?: null,
       transactionId?: null
     ): TransactionExecutedEventFilter;
-    TransactionExecuted(transactionId?: null): TransactionExecutedEventFilter;
+    TransactionExecuted(
+      msAddress?: null,
+      transactionId?: null
+    ): TransactionExecutedEventFilter;
 
-    "TransactionExpiryChanged(uint256)"(
-      transactionExpiry?: null
-    ): TransactionExpiryChangedEventFilter;
-    TransactionExpiryChanged(
-      transactionExpiry?: null
-    ): TransactionExpiryChangedEventFilter;
-
-    "TransactionSubmitted(address,uint256)"(
+    "TransactionSubmitted(address,address,uint256)"(
+      msAddress?: null,
       sender?: null,
       transactionId?: null
     ): TransactionSubmittedEventFilter;
     TransactionSubmitted(
+      msAddress?: null,
       sender?: null,
       transactionId?: null
     ): TransactionSubmittedEventFilter;

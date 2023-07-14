@@ -25,22 +25,33 @@ import type {
 
 export interface IAccountsAllowanceInterface extends utils.Interface {
   functions: {
-    "manageAllowances(uint32,uint8,address,address,uint256)": FunctionFragment;
+    "manageAllowances(uint32,address,address,uint256)": FunctionFragment;
+    "queryAllowance(uint32,address,address)": FunctionFragment;
     "spendAllowance(uint32,address,uint256,address)": FunctionFragment;
   };
 
   getFunction(
-    nameOrSignatureOrTopic: "manageAllowances" | "spendAllowance"
+    nameOrSignatureOrTopic:
+      | "manageAllowances"
+      | "queryAllowance"
+      | "spendAllowance"
   ): FunctionFragment;
 
   encodeFunctionData(
     functionFragment: "manageAllowances",
     values: [
       PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
       PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "queryAllowance",
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>
     ]
   ): string;
   encodeFunctionData(
@@ -55,6 +66,10 @@ export interface IAccountsAllowanceInterface extends utils.Interface {
 
   decodeFunctionResult(
     functionFragment: "manageAllowances",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "queryAllowance",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -94,12 +109,18 @@ export interface IAccountsAllowance extends BaseContract {
   functions: {
     manageAllowances(
       endowId: PromiseOrValue<BigNumberish>,
-      action: PromiseOrValue<BigNumberish>,
       spender: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
+
+    queryAllowance(
+      endowId: PromiseOrValue<BigNumberish>,
+      spender: PromiseOrValue<string>,
+      token: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
     spendAllowance(
       endowId: PromiseOrValue<BigNumberish>,
@@ -112,12 +133,18 @@ export interface IAccountsAllowance extends BaseContract {
 
   manageAllowances(
     endowId: PromiseOrValue<BigNumberish>,
-    action: PromiseOrValue<BigNumberish>,
     spender: PromiseOrValue<string>,
     token: PromiseOrValue<string>,
     amount: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
+
+  queryAllowance(
+    endowId: PromiseOrValue<BigNumberish>,
+    spender: PromiseOrValue<string>,
+    token: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   spendAllowance(
     endowId: PromiseOrValue<BigNumberish>,
@@ -130,12 +157,18 @@ export interface IAccountsAllowance extends BaseContract {
   callStatic: {
     manageAllowances(
       endowId: PromiseOrValue<BigNumberish>,
-      action: PromiseOrValue<BigNumberish>,
       spender: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    queryAllowance(
+      endowId: PromiseOrValue<BigNumberish>,
+      spender: PromiseOrValue<string>,
+      token: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     spendAllowance(
       endowId: PromiseOrValue<BigNumberish>,
@@ -151,11 +184,17 @@ export interface IAccountsAllowance extends BaseContract {
   estimateGas: {
     manageAllowances(
       endowId: PromiseOrValue<BigNumberish>,
-      action: PromiseOrValue<BigNumberish>,
       spender: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    queryAllowance(
+      endowId: PromiseOrValue<BigNumberish>,
+      spender: PromiseOrValue<string>,
+      token: PromiseOrValue<string>,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     spendAllowance(
@@ -170,11 +209,17 @@ export interface IAccountsAllowance extends BaseContract {
   populateTransaction: {
     manageAllowances(
       endowId: PromiseOrValue<BigNumberish>,
-      action: PromiseOrValue<BigNumberish>,
       spender: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    queryAllowance(
+      endowId: PromiseOrValue<BigNumberish>,
+      spender: PromiseOrValue<string>,
+      token: PromiseOrValue<string>,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     spendAllowance(

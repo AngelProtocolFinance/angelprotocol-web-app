@@ -60,149 +60,147 @@ export declare namespace IVault {
   };
 }
 
-export declare namespace SubDaoLib {
-  export type VeTypeDataStruct = {
-    value: PromiseOrValue<BigNumberish>;
-    scale: PromiseOrValue<BigNumberish>;
-    slope: PromiseOrValue<BigNumberish>;
-    power: PromiseOrValue<BigNumberish>;
+export declare namespace AccountMessages {
+  export type InvestRequestStruct = {
+    strategy: PromiseOrValue<BytesLike>;
+    token: PromiseOrValue<string>;
+    lockAmt: PromiseOrValue<BigNumberish>;
+    liquidAmt: PromiseOrValue<BigNumberish>;
+    gasFee: PromiseOrValue<BigNumberish>;
   };
 
-  export type VeTypeDataStructOutput = [
-    BigNumber,
+  export type InvestRequestStructOutput = [
+    string,
+    string,
     BigNumber,
     BigNumber,
     BigNumber
   ] & {
-    value: BigNumber;
-    scale: BigNumber;
-    slope: BigNumber;
-    power: BigNumber;
+    strategy: string;
+    token: string;
+    lockAmt: BigNumber;
+    liquidAmt: BigNumber;
+    gasFee: BigNumber;
   };
 
-  export type VeTypeStruct = {
-    ve_type: PromiseOrValue<BigNumberish>;
-    data: SubDaoLib.VeTypeDataStruct;
+  export type RedeemRequestStruct = {
+    strategy: PromiseOrValue<BytesLike>;
+    token: PromiseOrValue<string>;
+    lockAmt: PromiseOrValue<BigNumberish>;
+    liquidAmt: PromiseOrValue<BigNumberish>;
+    gasFee: PromiseOrValue<BigNumberish>;
   };
 
-  export type VeTypeStructOutput = [
-    number,
-    SubDaoLib.VeTypeDataStructOutput
-  ] & { ve_type: number; data: SubDaoLib.VeTypeDataStructOutput };
-
-  export type DaoTokenDataStruct = {
-    existingData: PromiseOrValue<string>;
-    newInitialSupply: PromiseOrValue<BigNumberish>;
-    newName: PromiseOrValue<string>;
-    newSymbol: PromiseOrValue<string>;
-    veBondingType: SubDaoLib.VeTypeStruct;
-    veBondingName: PromiseOrValue<string>;
-    veBondingSymbol: PromiseOrValue<string>;
-    veBondingDecimals: PromiseOrValue<BigNumberish>;
-    veBondingReserveDenom: PromiseOrValue<string>;
-    veBondingReserveDecimals: PromiseOrValue<BigNumberish>;
-    veBondingPeriod: PromiseOrValue<BigNumberish>;
-  };
-
-  export type DaoTokenDataStructOutput = [
-    string,
-    BigNumber,
-    string,
-    string,
-    SubDaoLib.VeTypeStructOutput,
+  export type RedeemRequestStructOutput = [
     string,
     string,
     BigNumber,
-    string,
     BigNumber,
     BigNumber
   ] & {
-    existingData: string;
-    newInitialSupply: BigNumber;
-    newName: string;
-    newSymbol: string;
-    veBondingType: SubDaoLib.VeTypeStructOutput;
-    veBondingName: string;
-    veBondingSymbol: string;
-    veBondingDecimals: BigNumber;
-    veBondingReserveDenom: string;
-    veBondingReserveDecimals: BigNumber;
-    veBondingPeriod: BigNumber;
+    strategy: string;
+    token: string;
+    lockAmt: BigNumber;
+    liquidAmt: BigNumber;
+    gasFee: BigNumber;
   };
 
-  export type DaoTokenStruct = {
-    token: PromiseOrValue<BigNumberish>;
-    data: SubDaoLib.DaoTokenDataStruct;
+  export type RedeemAllRequestStruct = {
+    strategy: PromiseOrValue<BytesLike>;
+    token: PromiseOrValue<string>;
+    redeemLocked: PromiseOrValue<boolean>;
+    redeemLiquid: PromiseOrValue<boolean>;
+    gasFee: PromiseOrValue<BigNumberish>;
   };
 
-  export type DaoTokenStructOutput = [
-    number,
-    SubDaoLib.DaoTokenDataStructOutput
-  ] & { token: number; data: SubDaoLib.DaoTokenDataStructOutput };
-}
-
-export declare namespace SubDaoMessages {
-  export type InstantiateMsgStruct = {
-    id: PromiseOrValue<BigNumberish>;
-    owner: PromiseOrValue<string>;
-    quorum: PromiseOrValue<BigNumberish>;
-    threshold: PromiseOrValue<BigNumberish>;
-    votingPeriod: PromiseOrValue<BigNumberish>;
-    timelockPeriod: PromiseOrValue<BigNumberish>;
-    expirationPeriod: PromiseOrValue<BigNumberish>;
-    proposalDeposit: PromiseOrValue<BigNumberish>;
-    snapshotPeriod: PromiseOrValue<BigNumberish>;
-    token: SubDaoLib.DaoTokenStruct;
-    endowType: PromiseOrValue<BigNumberish>;
-    endowOwner: PromiseOrValue<string>;
-    registrarContract: PromiseOrValue<string>;
-  };
-
-  export type InstantiateMsgStructOutput = [
-    number,
+  export type RedeemAllRequestStructOutput = [
     string,
-    BigNumber,
-    BigNumber,
-    BigNumber,
-    BigNumber,
-    BigNumber,
-    BigNumber,
-    BigNumber,
-    SubDaoLib.DaoTokenStructOutput,
-    number,
     string,
-    string
+    boolean,
+    boolean,
+    BigNumber
   ] & {
-    id: number;
-    owner: string;
-    quorum: BigNumber;
-    threshold: BigNumber;
-    votingPeriod: BigNumber;
-    timelockPeriod: BigNumber;
-    expirationPeriod: BigNumber;
-    proposalDeposit: BigNumber;
-    snapshotPeriod: BigNumber;
-    token: SubDaoLib.DaoTokenStructOutput;
-    endowType: number;
-    endowOwner: string;
-    registrarContract: string;
+    strategy: string;
+    token: string;
+    redeemLocked: boolean;
+    redeemLiquid: boolean;
+    gasFee: BigNumber;
   };
 }
 
-export interface AccountsDeployContractInterface extends utils.Interface {
+export interface AccountsStrategyInterface extends utils.Interface {
   functions: {
-    "createDaoContract((uint32,address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,(uint8,(address,uint256,string,string,(uint8,(uint128,uint256,uint128,uint128)),string,string,uint256,address,uint256,uint256)),uint8,address,address))": FunctionFragment;
+    "execute(bytes32,string,string,bytes)": FunctionFragment;
+    "executeWithToken(bytes32,string,string,bytes,string,uint256)": FunctionFragment;
+    "gateway()": FunctionFragment;
+    "strategyInvest(uint32,(bytes4,string,uint256,uint256,uint256))": FunctionFragment;
+    "strategyRedeem(uint32,(bytes4,string,uint256,uint256,uint256))": FunctionFragment;
+    "strategyRedeemAll(uint32,(bytes4,string,bool,bool,uint256))": FunctionFragment;
   };
 
-  getFunction(nameOrSignatureOrTopic: "createDaoContract"): FunctionFragment;
+  getFunction(
+    nameOrSignatureOrTopic:
+      | "execute"
+      | "executeWithToken"
+      | "gateway"
+      | "strategyInvest"
+      | "strategyRedeem"
+      | "strategyRedeemAll"
+  ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "createDaoContract",
-    values: [SubDaoMessages.InstantiateMsgStruct]
+    functionFragment: "execute",
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BytesLike>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "executeWithToken",
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>
+    ]
+  ): string;
+  encodeFunctionData(functionFragment: "gateway", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "strategyInvest",
+    values: [PromiseOrValue<BigNumberish>, AccountMessages.InvestRequestStruct]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "strategyRedeem",
+    values: [PromiseOrValue<BigNumberish>, AccountMessages.RedeemRequestStruct]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "strategyRedeemAll",
+    values: [
+      PromiseOrValue<BigNumberish>,
+      AccountMessages.RedeemAllRequestStruct
+    ]
   ): string;
 
+  decodeFunctionResult(functionFragment: "execute", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "createDaoContract",
+    functionFragment: "executeWithToken",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "gateway", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "strategyInvest",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "strategyRedeem",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "strategyRedeemAll",
     data: BytesLike
   ): Result;
 
@@ -474,12 +472,12 @@ export type UnexpectedTokensEvent = TypedEvent<
 export type UnexpectedTokensEventFilter =
   TypedEventFilter<UnexpectedTokensEvent>;
 
-export interface AccountsDeployContract extends BaseContract {
+export interface AccountsStrategy extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: AccountsDeployContractInterface;
+  interface: AccountsStrategyInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -501,22 +499,121 @@ export interface AccountsDeployContract extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    createDaoContract(
-      createDaoMessage: SubDaoMessages.InstantiateMsgStruct,
+    execute(
+      commandId: PromiseOrValue<BytesLike>,
+      sourceChain: PromiseOrValue<string>,
+      sourceAddress: PromiseOrValue<string>,
+      payload: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    executeWithToken(
+      commandId: PromiseOrValue<BytesLike>,
+      sourceChain: PromiseOrValue<string>,
+      sourceAddress: PromiseOrValue<string>,
+      payload: PromiseOrValue<BytesLike>,
+      tokenSymbol: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    gateway(overrides?: CallOverrides): Promise<[string]>;
+
+    strategyInvest(
+      id: PromiseOrValue<BigNumberish>,
+      investRequest: AccountMessages.InvestRequestStruct,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    strategyRedeem(
+      id: PromiseOrValue<BigNumberish>,
+      redeemRequest: AccountMessages.RedeemRequestStruct,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    strategyRedeemAll(
+      id: PromiseOrValue<BigNumberish>,
+      redeemAllRequest: AccountMessages.RedeemAllRequestStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
 
-  createDaoContract(
-    createDaoMessage: SubDaoMessages.InstantiateMsgStruct,
+  execute(
+    commandId: PromiseOrValue<BytesLike>,
+    sourceChain: PromiseOrValue<string>,
+    sourceAddress: PromiseOrValue<string>,
+    payload: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  executeWithToken(
+    commandId: PromiseOrValue<BytesLike>,
+    sourceChain: PromiseOrValue<string>,
+    sourceAddress: PromiseOrValue<string>,
+    payload: PromiseOrValue<BytesLike>,
+    tokenSymbol: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  gateway(overrides?: CallOverrides): Promise<string>;
+
+  strategyInvest(
+    id: PromiseOrValue<BigNumberish>,
+    investRequest: AccountMessages.InvestRequestStruct,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  strategyRedeem(
+    id: PromiseOrValue<BigNumberish>,
+    redeemRequest: AccountMessages.RedeemRequestStruct,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  strategyRedeemAll(
+    id: PromiseOrValue<BigNumberish>,
+    redeemAllRequest: AccountMessages.RedeemAllRequestStruct,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    createDaoContract(
-      createDaoMessage: SubDaoMessages.InstantiateMsgStruct,
+    execute(
+      commandId: PromiseOrValue<BytesLike>,
+      sourceChain: PromiseOrValue<string>,
+      sourceAddress: PromiseOrValue<string>,
+      payload: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
-    ): Promise<string>;
+    ): Promise<void>;
+
+    executeWithToken(
+      commandId: PromiseOrValue<BytesLike>,
+      sourceChain: PromiseOrValue<string>,
+      sourceAddress: PromiseOrValue<string>,
+      payload: PromiseOrValue<BytesLike>,
+      tokenSymbol: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    gateway(overrides?: CallOverrides): Promise<string>;
+
+    strategyInvest(
+      id: PromiseOrValue<BigNumberish>,
+      investRequest: AccountMessages.InvestRequestStruct,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    strategyRedeem(
+      id: PromiseOrValue<BigNumberish>,
+      redeemRequest: AccountMessages.RedeemRequestStruct,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    strategyRedeemAll(
+      id: PromiseOrValue<BigNumberish>,
+      redeemAllRequest: AccountMessages.RedeemAllRequestStruct,
+      overrides?: CallOverrides
+    ): Promise<void>;
   };
 
   filters: {
@@ -683,15 +780,81 @@ export interface AccountsDeployContract extends BaseContract {
   };
 
   estimateGas: {
-    createDaoContract(
-      createDaoMessage: SubDaoMessages.InstantiateMsgStruct,
+    execute(
+      commandId: PromiseOrValue<BytesLike>,
+      sourceChain: PromiseOrValue<string>,
+      sourceAddress: PromiseOrValue<string>,
+      payload: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    executeWithToken(
+      commandId: PromiseOrValue<BytesLike>,
+      sourceChain: PromiseOrValue<string>,
+      sourceAddress: PromiseOrValue<string>,
+      payload: PromiseOrValue<BytesLike>,
+      tokenSymbol: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    gateway(overrides?: CallOverrides): Promise<BigNumber>;
+
+    strategyInvest(
+      id: PromiseOrValue<BigNumberish>,
+      investRequest: AccountMessages.InvestRequestStruct,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    strategyRedeem(
+      id: PromiseOrValue<BigNumberish>,
+      redeemRequest: AccountMessages.RedeemRequestStruct,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    strategyRedeemAll(
+      id: PromiseOrValue<BigNumberish>,
+      redeemAllRequest: AccountMessages.RedeemAllRequestStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    createDaoContract(
-      createDaoMessage: SubDaoMessages.InstantiateMsgStruct,
+    execute(
+      commandId: PromiseOrValue<BytesLike>,
+      sourceChain: PromiseOrValue<string>,
+      sourceAddress: PromiseOrValue<string>,
+      payload: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    executeWithToken(
+      commandId: PromiseOrValue<BytesLike>,
+      sourceChain: PromiseOrValue<string>,
+      sourceAddress: PromiseOrValue<string>,
+      payload: PromiseOrValue<BytesLike>,
+      tokenSymbol: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    gateway(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    strategyInvest(
+      id: PromiseOrValue<BigNumberish>,
+      investRequest: AccountMessages.InvestRequestStruct,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    strategyRedeem(
+      id: PromiseOrValue<BigNumberish>,
+      redeemRequest: AccountMessages.RedeemRequestStruct,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    strategyRedeemAll(
+      id: PromiseOrValue<BigNumberish>,
+      redeemAllRequest: AccountMessages.RedeemAllRequestStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };

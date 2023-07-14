@@ -4,3 +4,4 @@
 export type { GasFwd } from "./GasFwd";
 export type { GasFwdFactory } from "./GasFwdFactory";
 export type { IGasFwd } from "./IGasFwd";
+export type { IGasFwdFactory } from "./IGasFwdFactory";

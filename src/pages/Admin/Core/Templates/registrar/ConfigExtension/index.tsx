@@ -52,6 +52,7 @@ function Context(p: RegistrarConfig) {
     usdcAddress: p.usdcAddress,
     wMaticAddress: p.wMaticAddress,
     cw900lvAddress: p.cw900lvAddress,
+    gasFwdFactory: p.gasFwdFactory,
   };
 
   const methods = useForm<FormValues>({
