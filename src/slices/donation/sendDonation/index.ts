@@ -1,16 +1,17 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { DonateArgs, TxStatus, isFiat } from "../types";
-import { KYCData } from "types/aws";
+import { KYCData, TxLogPayload } from "types/aws";
 import { isTxResultError } from "types/tx";
 import { invalidateApesTags } from "services/apes";
+import { client, network } from "services/constants";
+import { version as v } from "services/helpers";
 import { createAuthToken, logger } from "helpers";
 import { sendTx } from "helpers/tx";
+import { LogDonationFail } from "errors/errors";
 import { chainIds } from "constants/chainIds";
-import { IS_TEST } from "constants/env";
 import { APIs } from "constants/urls";
 // import { SERVICE_PROVIDER } from "constants/fiatTransactions";
 import donation, { setTxStatus } from "../donation";
-import logDonation from "./logDonation";
 
 export const sendDonation = createAsyncThunk<void, DonateArgs>(
   `${donation.name}/sendDonation`,
@@ -25,15 +26,13 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
       const { token, pctLiquidSplit } = details;
       updateTx({ loadingMsg: "Payment is being processed..." });
 
+      const authToken = createAuthToken("angelprotocol-web-app");
       if (isFiat(wallet) || token.type === "fiat") {
-        const auth = createAuthToken("angelprotocol-web-app");
         const { widgetUrl } = await fetch(
-          `${APIs.apes}/v1/fiat/meld-widget-proxy/${
-            IS_TEST ? "testnet" : "mainnet"
-          }`,
+          `${APIs.apes}/${v(2)}/fiat/meld-widget-proxy/${client}/${network}`,
           {
             method: "POST",
-            headers: { authorization: auth },
+            headers: { authorization: authToken },
             body: JSON.stringify({
               amount: +token.amount,
               charityName: recipient.name,
@@ -82,7 +81,8 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
             : "Saving donation details",
       });
 
-      await logDonation({
+      /** SAVE DONATION */
+      const payload: TxLogPayload = {
         ...kycData /** receipt is sent to user if kyc is provider upfront */,
         amount: +token.amount,
         chainId: wallet.chain.chain_id,
@@ -95,7 +95,22 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
         transactionDate: new Date().toISOString(),
         walletAddress: wallet.address,
         endowmentId: recipient.id,
+      };
+
+      const response = await fetch(APIs.apes + `/${v(4)}/donation/${client}`, {
+        method: "POST",
+        headers: { authorization: authToken },
+        body: JSON.stringify({
+          ...payload,
+          ...payload.kycData,
+          //helps AWS determine which txs are testnet and mainnet without checking all chainIDs
+          network,
+        }),
       });
+
+      if (!response.ok) {
+        throw new LogDonationFail(payload.chainId, payload.transactionId);
+      }
 
       updateTx({ hash });
       //invalidate cache entries
