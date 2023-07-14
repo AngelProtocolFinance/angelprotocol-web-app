@@ -10,9 +10,9 @@ export type { IAccountsDepositWithdrawEndowments } from "./IAccountsDepositWithd
 export type { IAccountsDonationMatch } from "./IAccountsDonationMatch";
 export type { IAccountsEvents } from "./IAccountsEvents";
 export type { IAccountsQueryEndowments } from "./IAccountsQueryEndowments";
+export type { IAccountsStrategy } from "./IAccountsStrategy";
 export type { IAccountsSwapRouter } from "./IAccountsSwapRouter";
 export type { IAccountsUpdate } from "./IAccountsUpdate";
 export type { IAccountsUpdateEndowmentSettingsController } from "./IAccountsUpdateEndowmentSettingsController";
 export type { IAccountsUpdateEndowments } from "./IAccountsUpdateEndowments";
 export type { IAccountsUpdateStatusEndowments } from "./IAccountsUpdateStatusEndowments";
-export type { IAccountsVaultFacet } from "./IAccountsVaultFacet";

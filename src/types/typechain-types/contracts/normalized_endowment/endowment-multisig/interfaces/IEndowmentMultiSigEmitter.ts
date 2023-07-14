@@ -25,56 +25,42 @@ import type {
 
 export interface IEndowmentMultiSigEmitterInterface extends utils.Interface {
   functions: {
-    "addOwnersEndowment(uint256,address[])": FunctionFragment;
-    "approvalsRequirementChangeEndowment(uint256,uint256)": FunctionFragment;
-    "confirmEndowment(uint256,address,uint256)": FunctionFragment;
-    "createMultisig(address,uint256,address,address[],uint256,bool,uint256)": FunctionFragment;
-    "depositEndowment(uint256,address,uint256)": FunctionFragment;
-    "executeEndowment(uint256,uint256)": FunctionFragment;
-    "executeFailureEndowment(uint256,uint256)": FunctionFragment;
-    "removeOwnersEndowment(uint256,address[])": FunctionFragment;
-    "replaceOwnerEndowment(uint256,address,address)": FunctionFragment;
-    "requireExecutionChangeEndowment(uint256,bool)": FunctionFragment;
-    "revokeEndowment(uint256,address,uint256)": FunctionFragment;
-    "submitEndowment(uint256,uint256)": FunctionFragment;
-    "transactionExpiryChangeEndowment(uint256,uint256)": FunctionFragment;
+    "approvalsRequirementChangedEndowment(uint256,uint256)": FunctionFragment;
+    "createEndowmentMultisig(address,uint256,address,address[],uint256,bool,uint256)": FunctionFragment;
+    "expiryChangedEndowment(uint256,uint256)": FunctionFragment;
+    "ownerReplacedEndowment(uint256,address,address)": FunctionFragment;
+    "ownersAddedEndowment(uint256,address[])": FunctionFragment;
+    "ownersRemovedEndowment(uint256,address[])": FunctionFragment;
+    "requireExecutionChangedEndowment(uint256,bool)": FunctionFragment;
+    "transactionConfirmationOfFormerOwnerRevokedEndowment(uint256,address,uint256)": FunctionFragment;
+    "transactionConfirmationRevokedEndowment(uint256,address,uint256)": FunctionFragment;
+    "transactionConfirmedEndowment(uint256,address,uint256)": FunctionFragment;
+    "transactionExecutedEndowment(uint256,uint256)": FunctionFragment;
+    "transactionSubmittedEndowment(uint256,address,uint256)": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "addOwnersEndowment"
-      | "approvalsRequirementChangeEndowment"
-      | "confirmEndowment"
-      | "createMultisig"
-      | "depositEndowment"
-      | "executeEndowment"
-      | "executeFailureEndowment"
-      | "removeOwnersEndowment"
-      | "replaceOwnerEndowment"
-      | "requireExecutionChangeEndowment"
-      | "revokeEndowment"
-      | "submitEndowment"
-      | "transactionExpiryChangeEndowment"
+      | "approvalsRequirementChangedEndowment"
+      | "createEndowmentMultisig"
+      | "expiryChangedEndowment"
+      | "ownerReplacedEndowment"
+      | "ownersAddedEndowment"
+      | "ownersRemovedEndowment"
+      | "requireExecutionChangedEndowment"
+      | "transactionConfirmationOfFormerOwnerRevokedEndowment"
+      | "transactionConfirmationRevokedEndowment"
+      | "transactionConfirmedEndowment"
+      | "transactionExecutedEndowment"
+      | "transactionSubmittedEndowment"
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "addOwnersEndowment",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>[]]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "approvalsRequirementChangeEndowment",
+    functionFragment: "approvalsRequirementChangedEndowment",
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "confirmEndowment",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "createMultisig",
+    functionFragment: "createEndowmentMultisig",
     values: [
       PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>,
@@ -86,27 +72,11 @@ export interface IEndowmentMultiSigEmitterInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "depositEndowment",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "executeEndowment",
+    functionFragment: "expiryChangedEndowment",
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "executeFailureEndowment",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "removeOwnersEndowment",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>[]]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "replaceOwnerEndowment",
+    functionFragment: "ownerReplacedEndowment",
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
@@ -114,11 +84,19 @@ export interface IEndowmentMultiSigEmitterInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "requireExecutionChangeEndowment",
+    functionFragment: "ownersAddedEndowment",
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>[]]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "ownersRemovedEndowment",
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>[]]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "requireExecutionChangedEndowment",
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>]
   ): string;
   encodeFunctionData(
-    functionFragment: "revokeEndowment",
+    functionFragment: "transactionConfirmationOfFormerOwnerRevokedEndowment",
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
@@ -126,64 +104,80 @@ export interface IEndowmentMultiSigEmitterInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "submitEndowment",
+    functionFragment: "transactionConfirmationRevokedEndowment",
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "transactionConfirmedEndowment",
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "transactionExecutedEndowment",
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "transactionExpiryChangeEndowment",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    functionFragment: "transactionSubmittedEndowment",
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "addOwnersEndowment",
+    functionFragment: "approvalsRequirementChangedEndowment",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "approvalsRequirementChangeEndowment",
+    functionFragment: "createEndowmentMultisig",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "confirmEndowment",
+    functionFragment: "expiryChangedEndowment",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "createMultisig",
+    functionFragment: "ownerReplacedEndowment",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "depositEndowment",
+    functionFragment: "ownersAddedEndowment",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "executeEndowment",
+    functionFragment: "ownersRemovedEndowment",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "executeFailureEndowment",
+    functionFragment: "requireExecutionChangedEndowment",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "removeOwnersEndowment",
+    functionFragment: "transactionConfirmationOfFormerOwnerRevokedEndowment",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "replaceOwnerEndowment",
+    functionFragment: "transactionConfirmationRevokedEndowment",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "requireExecutionChangeEndowment",
+    functionFragment: "transactionConfirmedEndowment",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "revokeEndowment",
+    functionFragment: "transactionExecutedEndowment",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "submitEndowment",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "transactionExpiryChangeEndowment",
+    functionFragment: "transactionSubmittedEndowment",
     data: BytesLike
   ): Result;
 
@@ -217,26 +211,13 @@ export interface IEndowmentMultiSigEmitter extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    addOwnersEndowment(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      owners: PromiseOrValue<string>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    approvalsRequirementChangeEndowment(
+    approvalsRequirementChangedEndowment(
       endowmentId: PromiseOrValue<BigNumberish>,
       approvalsRequired: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    confirmEndowment(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      sender: PromiseOrValue<string>,
-      transactionId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    createMultisig(
+    createEndowmentMultisig(
       multisigAddress: PromiseOrValue<string>,
       endowmentId: PromiseOrValue<BigNumberish>,
       emitter: PromiseOrValue<string>,
@@ -247,84 +228,79 @@ export interface IEndowmentMultiSigEmitter extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    depositEndowment(
+    expiryChangedEndowment(
       endowmentId: PromiseOrValue<BigNumberish>,
-      sender: PromiseOrValue<string>,
-      value: PromiseOrValue<BigNumberish>,
+      transactionExpiry: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    executeEndowment(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      transactionId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    executeFailureEndowment(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      transactionId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    removeOwnersEndowment(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      owners: PromiseOrValue<string>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    replaceOwnerEndowment(
+    ownerReplacedEndowment(
       endowmentId: PromiseOrValue<BigNumberish>,
       currOwner: PromiseOrValue<string>,
       newOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    requireExecutionChangeEndowment(
+    ownersAddedEndowment(
+      endowmentId: PromiseOrValue<BigNumberish>,
+      owners: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    ownersRemovedEndowment(
+      endowmentId: PromiseOrValue<BigNumberish>,
+      owners: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    requireExecutionChangedEndowment(
       endowmentId: PromiseOrValue<BigNumberish>,
       requireExecution: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    revokeEndowment(
+    transactionConfirmationOfFormerOwnerRevokedEndowment(
       endowmentId: PromiseOrValue<BigNumberish>,
-      sender: PromiseOrValue<string>,
+      formerOwner: PromiseOrValue<string>,
       transactionId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    submitEndowment(
+    transactionConfirmationRevokedEndowment(
+      endowmentId: PromiseOrValue<BigNumberish>,
+      owner: PromiseOrValue<string>,
+      transactionId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    transactionConfirmedEndowment(
+      endowmentId: PromiseOrValue<BigNumberish>,
+      owner: PromiseOrValue<string>,
+      transactionId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    transactionExecutedEndowment(
       endowmentId: PromiseOrValue<BigNumberish>,
       transactionId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    transactionExpiryChangeEndowment(
+    transactionSubmittedEndowment(
       endowmentId: PromiseOrValue<BigNumberish>,
-      transactionExpiry: PromiseOrValue<BigNumberish>,
+      owner: PromiseOrValue<string>,
+      transactionId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
 
-  addOwnersEndowment(
-    endowmentId: PromiseOrValue<BigNumberish>,
-    owners: PromiseOrValue<string>[],
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  approvalsRequirementChangeEndowment(
+  approvalsRequirementChangedEndowment(
     endowmentId: PromiseOrValue<BigNumberish>,
     approvalsRequired: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  confirmEndowment(
-    endowmentId: PromiseOrValue<BigNumberish>,
-    sender: PromiseOrValue<string>,
-    transactionId: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  createMultisig(
+  createEndowmentMultisig(
     multisigAddress: PromiseOrValue<string>,
     endowmentId: PromiseOrValue<BigNumberish>,
     emitter: PromiseOrValue<string>,
@@ -335,84 +311,79 @@ export interface IEndowmentMultiSigEmitter extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  depositEndowment(
+  expiryChangedEndowment(
     endowmentId: PromiseOrValue<BigNumberish>,
-    sender: PromiseOrValue<string>,
-    value: PromiseOrValue<BigNumberish>,
+    transactionExpiry: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  executeEndowment(
-    endowmentId: PromiseOrValue<BigNumberish>,
-    transactionId: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  executeFailureEndowment(
-    endowmentId: PromiseOrValue<BigNumberish>,
-    transactionId: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  removeOwnersEndowment(
-    endowmentId: PromiseOrValue<BigNumberish>,
-    owners: PromiseOrValue<string>[],
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  replaceOwnerEndowment(
+  ownerReplacedEndowment(
     endowmentId: PromiseOrValue<BigNumberish>,
     currOwner: PromiseOrValue<string>,
     newOwner: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  requireExecutionChangeEndowment(
+  ownersAddedEndowment(
+    endowmentId: PromiseOrValue<BigNumberish>,
+    owners: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  ownersRemovedEndowment(
+    endowmentId: PromiseOrValue<BigNumberish>,
+    owners: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  requireExecutionChangedEndowment(
     endowmentId: PromiseOrValue<BigNumberish>,
     requireExecution: PromiseOrValue<boolean>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  revokeEndowment(
+  transactionConfirmationOfFormerOwnerRevokedEndowment(
     endowmentId: PromiseOrValue<BigNumberish>,
-    sender: PromiseOrValue<string>,
+    formerOwner: PromiseOrValue<string>,
     transactionId: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  submitEndowment(
+  transactionConfirmationRevokedEndowment(
+    endowmentId: PromiseOrValue<BigNumberish>,
+    owner: PromiseOrValue<string>,
+    transactionId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  transactionConfirmedEndowment(
+    endowmentId: PromiseOrValue<BigNumberish>,
+    owner: PromiseOrValue<string>,
+    transactionId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  transactionExecutedEndowment(
     endowmentId: PromiseOrValue<BigNumberish>,
     transactionId: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  transactionExpiryChangeEndowment(
+  transactionSubmittedEndowment(
     endowmentId: PromiseOrValue<BigNumberish>,
-    transactionExpiry: PromiseOrValue<BigNumberish>,
+    owner: PromiseOrValue<string>,
+    transactionId: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    addOwnersEndowment(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      owners: PromiseOrValue<string>[],
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    approvalsRequirementChangeEndowment(
+    approvalsRequirementChangedEndowment(
       endowmentId: PromiseOrValue<BigNumberish>,
       approvalsRequired: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    confirmEndowment(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      sender: PromiseOrValue<string>,
-      transactionId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    createMultisig(
+    createEndowmentMultisig(
       multisigAddress: PromiseOrValue<string>,
       endowmentId: PromiseOrValue<BigNumberish>,
       emitter: PromiseOrValue<string>,
@@ -423,60 +394,68 @@ export interface IEndowmentMultiSigEmitter extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    depositEndowment(
+    expiryChangedEndowment(
       endowmentId: PromiseOrValue<BigNumberish>,
-      sender: PromiseOrValue<string>,
-      value: PromiseOrValue<BigNumberish>,
+      transactionExpiry: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    executeEndowment(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      transactionId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    executeFailureEndowment(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      transactionId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    removeOwnersEndowment(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      owners: PromiseOrValue<string>[],
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    replaceOwnerEndowment(
+    ownerReplacedEndowment(
       endowmentId: PromiseOrValue<BigNumberish>,
       currOwner: PromiseOrValue<string>,
       newOwner: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    requireExecutionChangeEndowment(
+    ownersAddedEndowment(
+      endowmentId: PromiseOrValue<BigNumberish>,
+      owners: PromiseOrValue<string>[],
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    ownersRemovedEndowment(
+      endowmentId: PromiseOrValue<BigNumberish>,
+      owners: PromiseOrValue<string>[],
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    requireExecutionChangedEndowment(
       endowmentId: PromiseOrValue<BigNumberish>,
       requireExecution: PromiseOrValue<boolean>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    revokeEndowment(
+    transactionConfirmationOfFormerOwnerRevokedEndowment(
       endowmentId: PromiseOrValue<BigNumberish>,
-      sender: PromiseOrValue<string>,
+      formerOwner: PromiseOrValue<string>,
       transactionId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    submitEndowment(
+    transactionConfirmationRevokedEndowment(
+      endowmentId: PromiseOrValue<BigNumberish>,
+      owner: PromiseOrValue<string>,
+      transactionId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    transactionConfirmedEndowment(
+      endowmentId: PromiseOrValue<BigNumberish>,
+      owner: PromiseOrValue<string>,
+      transactionId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    transactionExecutedEndowment(
       endowmentId: PromiseOrValue<BigNumberish>,
       transactionId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    transactionExpiryChangeEndowment(
+    transactionSubmittedEndowment(
       endowmentId: PromiseOrValue<BigNumberish>,
-      transactionExpiry: PromiseOrValue<BigNumberish>,
+      owner: PromiseOrValue<string>,
+      transactionId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -484,26 +463,13 @@ export interface IEndowmentMultiSigEmitter extends BaseContract {
   filters: {};
 
   estimateGas: {
-    addOwnersEndowment(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      owners: PromiseOrValue<string>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    approvalsRequirementChangeEndowment(
+    approvalsRequirementChangedEndowment(
       endowmentId: PromiseOrValue<BigNumberish>,
       approvalsRequired: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    confirmEndowment(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      sender: PromiseOrValue<string>,
-      transactionId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    createMultisig(
+    createEndowmentMultisig(
       multisigAddress: PromiseOrValue<string>,
       endowmentId: PromiseOrValue<BigNumberish>,
       emitter: PromiseOrValue<string>,
@@ -514,85 +480,80 @@ export interface IEndowmentMultiSigEmitter extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    depositEndowment(
+    expiryChangedEndowment(
       endowmentId: PromiseOrValue<BigNumberish>,
-      sender: PromiseOrValue<string>,
-      value: PromiseOrValue<BigNumberish>,
+      transactionExpiry: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    executeEndowment(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      transactionId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    executeFailureEndowment(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      transactionId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    removeOwnersEndowment(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      owners: PromiseOrValue<string>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    replaceOwnerEndowment(
+    ownerReplacedEndowment(
       endowmentId: PromiseOrValue<BigNumberish>,
       currOwner: PromiseOrValue<string>,
       newOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    requireExecutionChangeEndowment(
+    ownersAddedEndowment(
+      endowmentId: PromiseOrValue<BigNumberish>,
+      owners: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    ownersRemovedEndowment(
+      endowmentId: PromiseOrValue<BigNumberish>,
+      owners: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    requireExecutionChangedEndowment(
       endowmentId: PromiseOrValue<BigNumberish>,
       requireExecution: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    revokeEndowment(
+    transactionConfirmationOfFormerOwnerRevokedEndowment(
       endowmentId: PromiseOrValue<BigNumberish>,
-      sender: PromiseOrValue<string>,
+      formerOwner: PromiseOrValue<string>,
       transactionId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    submitEndowment(
+    transactionConfirmationRevokedEndowment(
+      endowmentId: PromiseOrValue<BigNumberish>,
+      owner: PromiseOrValue<string>,
+      transactionId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    transactionConfirmedEndowment(
+      endowmentId: PromiseOrValue<BigNumberish>,
+      owner: PromiseOrValue<string>,
+      transactionId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    transactionExecutedEndowment(
       endowmentId: PromiseOrValue<BigNumberish>,
       transactionId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    transactionExpiryChangeEndowment(
+    transactionSubmittedEndowment(
       endowmentId: PromiseOrValue<BigNumberish>,
-      transactionExpiry: PromiseOrValue<BigNumberish>,
+      owner: PromiseOrValue<string>,
+      transactionId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    addOwnersEndowment(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      owners: PromiseOrValue<string>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    approvalsRequirementChangeEndowment(
+    approvalsRequirementChangedEndowment(
       endowmentId: PromiseOrValue<BigNumberish>,
       approvalsRequired: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    confirmEndowment(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      sender: PromiseOrValue<string>,
-      transactionId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    createMultisig(
+    createEndowmentMultisig(
       multisigAddress: PromiseOrValue<string>,
       endowmentId: PromiseOrValue<BigNumberish>,
       emitter: PromiseOrValue<string>,
@@ -603,60 +564,68 @@ export interface IEndowmentMultiSigEmitter extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    depositEndowment(
+    expiryChangedEndowment(
       endowmentId: PromiseOrValue<BigNumberish>,
-      sender: PromiseOrValue<string>,
-      value: PromiseOrValue<BigNumberish>,
+      transactionExpiry: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    executeEndowment(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      transactionId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    executeFailureEndowment(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      transactionId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    removeOwnersEndowment(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      owners: PromiseOrValue<string>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    replaceOwnerEndowment(
+    ownerReplacedEndowment(
       endowmentId: PromiseOrValue<BigNumberish>,
       currOwner: PromiseOrValue<string>,
       newOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    requireExecutionChangeEndowment(
+    ownersAddedEndowment(
+      endowmentId: PromiseOrValue<BigNumberish>,
+      owners: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    ownersRemovedEndowment(
+      endowmentId: PromiseOrValue<BigNumberish>,
+      owners: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    requireExecutionChangedEndowment(
       endowmentId: PromiseOrValue<BigNumberish>,
       requireExecution: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    revokeEndowment(
+    transactionConfirmationOfFormerOwnerRevokedEndowment(
       endowmentId: PromiseOrValue<BigNumberish>,
-      sender: PromiseOrValue<string>,
+      formerOwner: PromiseOrValue<string>,
       transactionId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    submitEndowment(
+    transactionConfirmationRevokedEndowment(
+      endowmentId: PromiseOrValue<BigNumberish>,
+      owner: PromiseOrValue<string>,
+      transactionId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    transactionConfirmedEndowment(
+      endowmentId: PromiseOrValue<BigNumberish>,
+      owner: PromiseOrValue<string>,
+      transactionId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    transactionExecutedEndowment(
       endowmentId: PromiseOrValue<BigNumberish>,
       transactionId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    transactionExpiryChangeEndowment(
+    transactionSubmittedEndowment(
       endowmentId: PromiseOrValue<BigNumberish>,
-      transactionExpiry: PromiseOrValue<BigNumberish>,
+      owner: PromiseOrValue<string>,
+      transactionId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };

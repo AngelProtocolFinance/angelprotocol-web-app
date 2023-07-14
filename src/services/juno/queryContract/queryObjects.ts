@@ -75,6 +75,7 @@ export const queryObjects: {
         usdcAddress: d.usdcAddress.toLowerCase(),
         wMaticAddress: d.wMaticAddress.toLowerCase(),
         cw900lvAddress: d.cw900lvAddress.toLowerCase(),
+        gasFwdFactory: d.gasFwdFactory.toLowerCase(),
       };
     },
   ],

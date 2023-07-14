@@ -93,16 +93,19 @@ export declare namespace LocalRegistrarLib {
 
   export type StrategyParamsStruct = {
     approvalState: PromiseOrValue<BigNumberish>;
+    network: PromiseOrValue<string>;
     Locked: LocalRegistrarLib.VaultParamsStruct;
     Liquid: LocalRegistrarLib.VaultParamsStruct;
   };
 
   export type StrategyParamsStructOutput = [
     number,
+    string,
     LocalRegistrarLib.VaultParamsStructOutput,
     LocalRegistrarLib.VaultParamsStructOutput
   ] & {
     approvalState: number;
+    network: string;
     Locked: LocalRegistrarLib.VaultParamsStructOutput;
     Liquid: LocalRegistrarLib.VaultParamsStructOutput;
   };
@@ -138,7 +141,7 @@ export interface IRegistrarGoldfinchInterface extends utils.Interface {
     "setGasByToken(address,uint256)": FunctionFragment;
     "setRebalanceParams((bool,uint32,uint32,bool,uint32,uint32))": FunctionFragment;
     "setStrategyApprovalState(bytes4,uint8)": FunctionFragment;
-    "setStrategyParams(bytes4,address,address,uint8)": FunctionFragment;
+    "setStrategyParams(bytes4,string,address,address,uint8)": FunctionFragment;
     "setTokenAccepted(address,bool)": FunctionFragment;
     "setVaultOperatorApproved(address,bool)": FunctionFragment;
   };
@@ -240,6 +243,7 @@ export interface IRegistrarGoldfinchInterface extends utils.Interface {
       PromiseOrValue<BytesLike>,
       PromiseOrValue<string>,
       PromiseOrValue<string>,
+      PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>
     ]
   ): string;
@@ -336,7 +340,7 @@ export interface IRegistrarGoldfinchInterface extends utils.Interface {
     "GasFeeUpdated(address,uint256)": EventFragment;
     "RebalanceParamsUpdated()": EventFragment;
     "StrategyApprovalUpdated(bytes4,uint8)": EventFragment;
-    "StrategyParamsUpdated(bytes4,address,address,uint8)": EventFragment;
+    "StrategyParamsUpdated(bytes4,string,address,address,uint8)": EventFragment;
     "TokenAcceptanceUpdated(address,bool)": EventFragment;
   };
 
@@ -420,12 +424,13 @@ export type StrategyApprovalUpdatedEventFilter =
 
 export interface StrategyParamsUpdatedEventObject {
   _strategyId: string;
+  _network: string;
   _lockAddr: string;
   _liqAddr: string;
   _approvalState: number;
 }
 export type StrategyParamsUpdatedEvent = TypedEvent<
-  [string, string, string, number],
+  [string, string, string, string, number],
   StrategyParamsUpdatedEventObject
 >;
 
@@ -555,6 +560,7 @@ export interface IRegistrarGoldfinch extends BaseContract {
 
     setStrategyParams(
       _strategyId: PromiseOrValue<BytesLike>,
+      _network: PromiseOrValue<string>,
       _liqAddr: PromiseOrValue<string>,
       _lockAddr: PromiseOrValue<string>,
       _approvalState: PromiseOrValue<BigNumberish>,
@@ -658,6 +664,7 @@ export interface IRegistrarGoldfinch extends BaseContract {
 
   setStrategyParams(
     _strategyId: PromiseOrValue<BytesLike>,
+    _network: PromiseOrValue<string>,
     _liqAddr: PromiseOrValue<string>,
     _lockAddr: PromiseOrValue<string>,
     _approvalState: PromiseOrValue<BigNumberish>,
@@ -761,6 +768,7 @@ export interface IRegistrarGoldfinch extends BaseContract {
 
     setStrategyParams(
       _strategyId: PromiseOrValue<BytesLike>,
+      _network: PromiseOrValue<string>,
       _liqAddr: PromiseOrValue<string>,
       _lockAddr: PromiseOrValue<string>,
       _approvalState: PromiseOrValue<BigNumberish>,
@@ -822,14 +830,16 @@ export interface IRegistrarGoldfinch extends BaseContract {
       _approvalState?: null
     ): StrategyApprovalUpdatedEventFilter;
 
-    "StrategyParamsUpdated(bytes4,address,address,uint8)"(
+    "StrategyParamsUpdated(bytes4,string,address,address,uint8)"(
       _strategyId?: null,
+      _network?: null,
       _lockAddr?: null,
       _liqAddr?: null,
       _approvalState?: null
     ): StrategyParamsUpdatedEventFilter;
     StrategyParamsUpdated(
       _strategyId?: null,
+      _network?: null,
       _lockAddr?: null,
       _liqAddr?: null,
       _approvalState?: null
@@ -924,6 +934,7 @@ export interface IRegistrarGoldfinch extends BaseContract {
 
     setStrategyParams(
       _strategyId: PromiseOrValue<BytesLike>,
+      _network: PromiseOrValue<string>,
       _liqAddr: PromiseOrValue<string>,
       _lockAddr: PromiseOrValue<string>,
       _approvalState: PromiseOrValue<BigNumberish>,
@@ -1028,6 +1039,7 @@ export interface IRegistrarGoldfinch extends BaseContract {
 
     setStrategyParams(
       _strategyId: PromiseOrValue<BytesLike>,
+      _network: PromiseOrValue<string>,
       _liqAddr: PromiseOrValue<string>,
       _lockAddr: PromiseOrValue<string>,
       _approvalState: PromiseOrValue<BigNumberish>,

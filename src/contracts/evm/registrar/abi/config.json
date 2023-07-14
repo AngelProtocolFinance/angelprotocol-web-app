@@ -166,6 +166,11 @@
             "internalType": "address",
             "name": "cw900lvAddress",
             "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "gasFwdFactory",
+            "type": "address"
           }
         ],
         "internalType": "struct RegistrarStorage.Config",

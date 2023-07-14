@@ -1,1 +1,1 @@
-["event EndowmentCreated(uint256)"]
+["event EndowmentCreated(uint256,uint8)"]
