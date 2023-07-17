@@ -20,7 +20,7 @@ type MileStone = {
   milestone_title: string;
 };
 
-type Program = {
+export type Program = {
   program_banner: string;
   program_description: string;
   program_id: string;

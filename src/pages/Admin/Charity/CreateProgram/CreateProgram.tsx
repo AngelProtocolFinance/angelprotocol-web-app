@@ -21,7 +21,7 @@ export default function CreateProgram() {
       queryState={queryState}
       messages={{
         loading: <FormSkeleton classes="max-w-4xl justify-self-center mt-6" />,
-        error: <FormError errorMessage="Failed to load profile" />,
+        error: <FormError errorMessage="Failed to load programs" />,
       }}
     >
       {(profile) => (
