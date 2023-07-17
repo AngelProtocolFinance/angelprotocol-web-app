@@ -194,6 +194,7 @@ const endowCardObj: {
   tagline: "",
   endow_type: "",
   published: false,
+  program: "",
 };
 const endowCardFields = Object.keys(endowCardObj).join(",");
 

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { adminRoutes } from "constants/routes";
+import List from "./List";
 
 export default function Programs() {
   return (
@@ -13,6 +14,7 @@ export default function Programs() {
           Create program
         </Link>
       </div>
+      <List />
     </div>
   );
 }
