@@ -1,11 +1,12 @@
 import { SubmitHandler, useFormContext } from "react-hook-form";
 import { FV } from "./types";
-import { EndowmentProfileUpdate } from "types/aws";
+import { EndowmentProfileUpdate, Program } from "types/aws";
 import { SemiPartial } from "types/utils";
 import { useModalContext } from "contexts/ModalContext";
 import { ImgLink } from "components/ImgEditor";
 import { TxPrompt } from "components/Prompt";
 import { isEmpty } from "helpers";
+import { getPayloadDiff } from "helpers/admin";
 import { getFullURL, uploadFiles } from "helpers/uploadFiles";
 import { useAdminContext } from "../../Context";
 import useUpdateEndowmentProfile from "../common/useUpdateEndowmentProfile";
@@ -17,12 +18,13 @@ export default function useSubmit() {
     reset,
     handleSubmit,
     formState: { isSubmitting },
+    getValues,
   } = useFormContext<FV>();
 
   const { showModal } = useModalContext();
   const updateProfile = useUpdateEndowmentProfile();
 
-  const submit: SubmitHandler<FV> = async (fv) => {
+  const submit: SubmitHandler<FV> = async ({ initial, ...fv }) => {
     try {
       /** special case for edit profile: since upload happens prior
        * to tx submission. Other users of useTxSender
@@ -36,20 +38,28 @@ export default function useSubmit() {
         );
       });
 
-      const updates: SemiPartial<EndowmentProfileUpdate, "id" | "owner"> = {
-        program: [
-          {
-            program_title: fv.title,
-            program_id: window.crypto.randomUUID(),
-            program_description: fv.description,
-            program_banner: imageURL,
-            program_milestones: [],
-          },
-        ],
-        id,
-        owner,
+      //having initial value means form is for editing
+
+      const program: Program = {
+        program_title: fv.title,
+        program_id: initial ? initial.program_id : window.crypto.randomUUID(),
+        program_description: fv.description,
+        program_banner: imageURL,
+        program_milestones: [],
       };
 
+      if (initial) {
+        const diff = getPayloadDiff(initial, program);
+        if (isEmpty(diff)) {
+          return showModal(TxPrompt, { error: "No changes detected" });
+        }
+      }
+
+      const updates: SemiPartial<EndowmentProfileUpdate, "id" | "owner"> = {
+        id,
+        owner,
+        program: [program],
+      };
       await updateProfile(updates);
     } catch (err) {
       console.log(err);
@@ -64,6 +74,7 @@ export default function useSubmit() {
     submit: handleSubmit(submit),
     isSubmitting,
     id,
+    isEdit: !!getValues("initial"),
   };
 }
 

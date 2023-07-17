@@ -16,14 +16,14 @@ export default function CreateProgram() {
   const { txResource } = useAdminContext(ops);
 
   const defaults: FV = {
-    action: program ? "edit" : "create",
     title: program?.program_title ?? "",
-    description: "",
+    description: program?.program_description ?? "",
     image: {
       name: "",
       publicUrl: program?.program_banner ?? "",
       preview: program?.program_banner ?? "",
     },
+    initial: program,
   };
 
   const methods = useForm<FV>({

@@ -1,3 +1,4 @@
+import { Program } from "types/aws";
 import { ImgLink } from "components/ImgEditor";
 
 export type FV = {
@@ -5,6 +6,5 @@ export type FV = {
   image: ImgLink;
   description: string;
 
-  //meta
-  action: "edit" | "create";
+  initial?: Program;
 };

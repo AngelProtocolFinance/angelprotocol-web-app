@@ -11,7 +11,7 @@ import useSubmit from "./useSubmit";
 export default function Form({
   tooltip,
 }: FormHTMLAttributes<HTMLFormElement> & { tooltip?: string }) {
-  const { isSubmitting, submit, reset } = useSubmit();
+  const { isSubmitting, submit, reset, isEdit } = useSubmit();
   return (
     <form
       onSubmit={submit}
@@ -66,7 +66,7 @@ export default function Form({
             type="submit"
             className="px-6 btn-orange text-sm"
           >
-            Submit changes
+            {isEdit ? "Submit changes" : "Create program"}
           </button>
         </div>
       </fieldset>
