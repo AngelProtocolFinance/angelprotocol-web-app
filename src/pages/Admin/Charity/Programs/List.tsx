@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Program as TProgram } from "types/aws";
 import { useAdminContext } from "pages/Admin/Context";
 import { useProfileQuery } from "services/aws/aws";
@@ -5,6 +6,7 @@ import ContentLoader from "components/ContentLoader";
 import Image from "components/Image";
 import QueryLoader from "components/QueryLoader";
 import { ErrorStatus, Info } from "components/Status";
+import { adminRoutes } from "constants/routes";
 
 export default function List() {
   const { id } = useAdminContext();
@@ -41,12 +43,19 @@ function Program(props: TProgram) {
         className="w-10 aspect-square object-cover"
       />
       <p className="font-bold">{props.program_title}</p>
-      <button className="btn-outline-filled w-24 py-2 ml-auto" type="button">
+      <button
+        className="btn-outline-filled w-24 py-2 text-sm ml-auto"
+        type="button"
+      >
         delete
       </button>
-      <button className="btn-outline-filled w-24 py-2" type="button">
+      <Link
+        to={"../" + adminRoutes.create_program}
+        className="btn-outline-filled w-24 py-2 text-sm"
+        state={props}
+      >
         edit
-      </button>
+      </Link>
     </div>
   );
 }

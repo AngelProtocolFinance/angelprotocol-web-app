@@ -11,7 +11,7 @@ import useSubmit from "./useSubmit";
 export default function Form({
   tooltip,
 }: FormHTMLAttributes<HTMLFormElement> & { tooltip?: string }) {
-  const { isSubmitting, id, submit, reset } = useSubmit();
+  const { isSubmitting, submit, reset } = useSubmit();
   return (
     <form
       onSubmit={submit}
