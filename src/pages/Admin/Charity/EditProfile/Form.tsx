@@ -34,7 +34,7 @@ export default function Form({
         reset();
       }}
       onSubmit={editProfile}
-      className=" w-full max-w-4xl justify-self-center grid content-start gap-6 mt-6 font-body"
+      className="w-full max-w-4xl justify-self-center grid content-start gap-6 mt-6 font-body "
     >
       <fieldset disabled={!!tooltip} className="group contents">
         <Link
@@ -95,7 +95,7 @@ export default function Form({
             charLimit={4000}
             classes={{
               container:
-                "rich-text-toolbar border border-prim text-sm grid grid-rows-[auto_1fr] rounded bg-orange-l6 dark:bg-blue-d7 p-3 min-h-[15rem]",
+                "rich-text-toolbar border border-prim text-sm grid grid-rows-[auto_1fr] rounded bg-gray-l6 dark:bg-blue-d5 p-3 min-h-[15rem]",
               error: "static field-error -mt-4",
               charCounter: "text-gray-d1 dark:text-gray",
             }}
@@ -138,7 +138,7 @@ export default function Form({
             placeholder="Select a country"
             fieldName="hq_country"
             classes={{
-              container: "px-4 bg-orange-l6 dark:bg-blue-d7",
+              container: "px-4 bg-gray-l6 dark:bg-blue-d5",
               input: "text-sm py-3.5",
               error: "field-error",
             }}
