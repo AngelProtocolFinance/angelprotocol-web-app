@@ -46,6 +46,7 @@ function Program(props: TProgram) {
       <button
         className="btn-outline-filled w-24 py-2 text-sm ml-auto"
         type="button"
+        disabled={true}
       >
         delete
       </button>
