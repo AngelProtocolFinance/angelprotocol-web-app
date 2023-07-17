@@ -1,12 +1,9 @@
 import { FormHTMLAttributes } from "react";
-import { Link } from "react-router-dom";
 import { FV } from "./types";
-import Icon from "components/Icon";
 import ImgEditor from "components/ImgEditor";
 import { RichTextEditor } from "components/RichText";
 import { Tooltip } from "components/admin";
 import { Field, Label } from "components/form";
-import { appRoutes } from "constants/routes";
 import Group from "./common/Group";
 import { MAX_CHARS, VALID_MIME_TYPES } from "./schema";
 import useSubmit from "./useSubmit";
@@ -25,13 +22,6 @@ export default function Form({
       className="w-full max-w-4xl justify-self-center grid content-start gap-6 mt-6 font-body"
     >
       <fieldset disabled={!!tooltip} className="group contents ">
-        <Link
-          to={`${appRoutes.profile}/${id}`}
-          className="text-blue hover:text-orange text-sm flex items-center gap-1"
-        >
-          <Icon type="Back" />
-          <span>Back to profile</span>
-        </Link>
         {tooltip && <Tooltip tooltip={tooltip} />}
         <Group title="Program information">
           <Field<FV>

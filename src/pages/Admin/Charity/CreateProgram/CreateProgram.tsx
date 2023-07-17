@@ -1,49 +1,28 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
+import { useLocation } from "react-router-dom";
 import { FV } from "./types";
-import { Profile as TProfile } from "services/types";
-import { useProfileQuery } from "services/aws/aws";
-import QueryLoader from "components/QueryLoader";
-import { FormError, FormSkeleton } from "components/admin";
-import { adminRoutes } from "constants/routes";
+import { Program } from "types/aws";
 import { isTooltip, useAdminContext } from "../../Context";
-import Seo from "../Seo";
 import Form from "./Form";
 import { ops } from "./ops";
 import { schema } from "./schema";
 
 export default function CreateProgram() {
-  const { id } = useAdminContext(ops);
-  const queryState = useProfileQuery(id);
+  const { state } = useLocation();
 
-  return (
-    <QueryLoader
-      queryState={queryState}
-      messages={{
-        loading: <FormSkeleton classes="max-w-4xl justify-self-center mt-6" />,
-        error: <FormError errorMessage="Failed to load programs" />,
-      }}
-    >
-      {(profile) => (
-        <>
-          <Seo title="Edit Profile" url={`${adminRoutes.edit_profile}/${id}`} />
-          <Context {...profile} />
-        </>
-      )}
-    </QueryLoader>
-  );
-}
+  const program = state as Program | undefined;
 
-function Context(props: TProfile) {
   const { txResource } = useAdminContext(ops);
 
   const defaults: FV = {
-    title: "",
+    action: program ? "edit" : "create",
+    title: program?.program_title ?? "",
     description: "",
     image: {
       name: "",
-      publicUrl: props.image ?? "",
-      preview: props.image ?? "",
+      publicUrl: program?.program_banner ?? "",
+      preview: program?.program_banner ?? "",
     },
   };
 
