@@ -1,9 +1,11 @@
 import { FormHTMLAttributes } from "react";
+import { Link } from "react-router-dom";
 import { FV } from "./types";
 import ImgEditor from "components/ImgEditor";
 import { RichTextEditor } from "components/RichText";
 import { Tooltip } from "components/admin";
 import { Field, Label } from "components/form";
+import { adminRoutes } from "constants/routes";
 import Group from "./common/Group";
 import { MAX_CHARS, VALID_MIME_TYPES } from "./schema";
 import useSubmit from "./useSubmit";
@@ -11,7 +13,7 @@ import useSubmit from "./useSubmit";
 export default function Form({
   tooltip,
 }: FormHTMLAttributes<HTMLFormElement> & { tooltip?: string }) {
-  const { isSubmitting, submit, reset, isEdit } = useSubmit();
+  const { isSubmitting, submit, reset, initial } = useSubmit();
   return (
     <form
       onSubmit={submit}
@@ -54,19 +56,28 @@ export default function Form({
         </Group>
 
         <div className="flex gap-3 group-disabled:hidden">
-          <button
-            disabled={isSubmitting}
-            type="reset"
-            className="px-6 btn-outline-filled text-sm"
-          >
-            Reset changes
-          </button>
+          {initial ? (
+            <button
+              disabled={isSubmitting}
+              type="reset"
+              className="px-6 btn-outline-filled text-sm"
+            >
+              Reset changes
+            </button>
+          ) : (
+            <Link
+              to={"../" + adminRoutes.programs}
+              className="px-6 btn-outline-filled text-sm"
+            >
+              Cancel
+            </Link>
+          )}
           <button
             disabled={isSubmitting}
             type="submit"
             className="px-6 btn-orange text-sm"
           >
-            {isEdit ? "Submit changes" : "Create program"}
+            {initial ? "Submit changes" : "Create program"}
           </button>
         </div>
       </fieldset>

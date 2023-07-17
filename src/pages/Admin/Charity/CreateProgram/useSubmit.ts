@@ -74,7 +74,7 @@ export default function useSubmit() {
     submit: handleSubmit(submit),
     isSubmitting,
     id,
-    isEdit: !!getValues("initial"),
+    initial: getValues("initial"),
   };
 }
 

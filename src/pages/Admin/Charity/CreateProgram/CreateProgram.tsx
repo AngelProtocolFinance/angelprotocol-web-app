@@ -15,19 +15,17 @@ export default function CreateProgram() {
 
   const { txResource } = useAdminContext(ops);
 
-  const defaults: FV = {
-    title: program?.program_title ?? "",
-    description: program?.program_description ?? "",
-    image: {
-      name: "",
-      publicUrl: program?.program_banner ?? "",
-      preview: program?.program_banner ?? "",
-    },
-    initial: program,
-  };
-
   const methods = useForm<FV>({
-    defaultValues: defaults,
+    defaultValues: {
+      title: program?.program_title ?? "",
+      description: program?.program_description ?? "",
+      image: {
+        name: "",
+        publicUrl: program?.program_banner ?? "",
+        preview: program?.program_banner ?? "",
+      },
+      initial: program,
+    },
     resolver: yupResolver(schema),
   });
 
