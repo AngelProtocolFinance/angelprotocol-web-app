@@ -8,7 +8,7 @@ export default function List() {
   const { id } = useAdminContext();
   const queryState = useProfileQuery(id);
 
-  console.log(queryState.data);
+  queryState.isLoading = true;
 
   return (
     <QueryLoader
@@ -25,8 +25,10 @@ export default function List() {
 
 function Skeleton() {
   return (
-    <div className="grid gap-3">
-      <ContentLoader className="h-12 w-full" />
+    <div className="grid gap-3 p-8 mt-4 border border-prim">
+      <ContentLoader className="h-24 w-full rounded" />
+      <ContentLoader className="h-24 w-full rounded" />
+      <ContentLoader className="h-24 w-full rounded" />
     </div>
   );
 }
