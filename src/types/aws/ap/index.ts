@@ -28,6 +28,13 @@ export type Program = {
   program_milestones: MileStone[];
 };
 
+export type EndowDesignation =
+  | "Charity"
+  | "Religious Organization"
+  | "University"
+  | "Hospital"
+  | "Other";
+
 type EndowmentBase = {
   hq_country?: string;
   endow_designation: EndowDesignation;
@@ -92,28 +99,38 @@ export type EndowmentProfileUpdate = {
 
   /** optional, though set as required in this type
   to force setting of default values - "", [], etc ..*/
+
   active_in_countries: string[];
-  categories_general: string[];
-  categories_sdgs: UNSDG_NUMS[];
+  categories: {
+    general: string[];
+    sdgs: UNSDG_NUMS[];
+  };
+  charity_navigator_rating: string;
+  contact_email: string;
+  // categories_sdgs: UNSDG_NUMS[];
   contributor_verification_required: boolean;
-  hq_country: string;
   endow_designation: string;
+  hq_country: string;
   image: string;
   kyc_donors_only: boolean;
   logo: string;
   name: string;
-  published: boolean;
+
   overview: string;
   program: Program[];
   program_id: string;
+  published: boolean;
   registration_number: string;
-  social_media_url_facebook: string;
-  social_media_url_linkedin: string;
-  social_media_url_twitter: string;
-  social_media_url_discord: string;
-  social_media_url_instagram: string;
-  social_media_url_youtube: string;
-  social_media_url_tiktok: string;
+  sdgs: UNSDG_NUMS[];
+  social_media_urls: {
+    facebook: string;
+    linkedin: string;
+    twitter: string;
+    discord: string;
+    instagram: string;
+    youtube: string;
+    tiktok: string;
+  };
   street_address: string;
   tagline: string;
   tier: EndowmentTierNum /** 1 - 3  */;
@@ -122,13 +139,6 @@ export type EndowmentProfileUpdate = {
 
 export type SortDirection = "asc" | "desc";
 export type EndowmentsSortKey = "name_internal" | "overall";
-
-export type EndowDesignation =
-  | "Charity"
-  | "Religious Organization"
-  | "University"
-  | "Hospital"
-  | "Other";
 
 export type EndowmentsQueryParams = {
   query: string; //set to "matchAll" if no search query

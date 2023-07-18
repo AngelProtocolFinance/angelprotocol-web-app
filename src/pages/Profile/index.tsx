@@ -15,17 +15,9 @@ export default function Profile() {
     skip: numId === 0,
   });
 
-  if (isLoading) {
-    return <Skeleton />;
-  }
-
-  if (isError || !data) {
-    return <PageError />;
-  }
-
-  if (!data.published) {
-    return <Unpublished />;
-  }
+  if (isLoading) return <Skeleton />;
+  if (isError || !data) return <PageError />;
+  if (!data.published) return <Unpublished />;
 
   return (
     <ProfileContext.Provider value={data}>

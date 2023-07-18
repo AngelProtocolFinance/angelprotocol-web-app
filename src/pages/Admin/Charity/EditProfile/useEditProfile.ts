@@ -1,6 +1,5 @@
 import { SubmitHandler, useFormContext } from "react-hook-form";
-import { FormValues as FV, FlatFormValues } from "./types";
-import { ProfileUpdateMsg } from "services/types";
+import { FV } from "./types";
 import { useModalContext } from "contexts/ModalContext";
 import { ImgLink } from "components/ImgEditor";
 import { TxPrompt } from "components/Prompt";
@@ -10,6 +9,7 @@ import { getFullURL, uploadFiles } from "helpers/uploadFiles";
 import { useAdminContext } from "../../Context";
 import useUpdateEndowmentProfile from "../common/useUpdateEndowmentProfile";
 import { ops } from "./ops";
+import { toProfileUpdate } from "./update";
 
 export default function useEditProfile() {
   const { id, owner } = useAdminContext<"charity">(ops);
@@ -23,23 +23,13 @@ export default function useEditProfile() {
   const { showModal } = useModalContext();
   const updateProfile = useUpdateEndowmentProfile();
 
-  const editProfile: SubmitHandler<FV> = async ({
-    initial,
-    image,
-    logo,
-    hq_country,
-    categories_sdgs,
-    active_in_countries,
-    endow_designation,
-    type,
-    ...newData
-  }) => {
+  const editProfile: SubmitHandler<FV> = async ({ initial, type, ...fv }) => {
     try {
       /** special case for edit profile: since upload happens prior
        * to tx submission. Other users of useTxSender
        */
 
-      const [bannerUrl, logoUrl] = await uploadImgs([image, logo], () => {
+      const [bannerUrl, logoUrl] = await uploadImgs([fv.image, fv.logo], () => {
         showModal(
           TxPrompt,
           { loading: "Uploading images.." },
@@ -47,32 +37,19 @@ export default function useEditProfile() {
         );
       });
 
-      const changes: FlatFormValues = {
-        image: bannerUrl,
-        logo: logoUrl,
-        hq_country: hq_country.name,
-        endow_designation: endow_designation.value,
-        categories_sdgs: categories_sdgs.map((opt) => opt.value),
-        active_in_countries: active_in_countries.map((opt) => opt.value),
-        ...newData,
-      };
+      const update = toProfileUpdate({
+        type: "final",
+        data: { ...fv, id, owner },
+        urls: { image: bannerUrl, logo: logoUrl },
+      });
 
-      const diff = getPayloadDiff(initial, changes);
+      const diff = getPayloadDiff(initial, update);
 
       if (Object.entries(diff).length <= 0) {
         return showModal(TxPrompt, { error: "No changes detected" });
       }
 
-      /** already clean - no need to futher clean "": to unset values { field: val }, field must have a value 
-     like ""; unlike contracts where if fields is not present, val is set to null.
-    */
-      const updates: ProfileUpdateMsg = {
-        ...changes,
-        id,
-        owner,
-      };
-
-      await updateProfile(updates);
+      await updateProfile(removeEmptyValues(update));
     } catch (err) {
       showModal(TxPrompt, {
         error: err instanceof Error ? err.message : "Unknown error occured",
@@ -100,3 +77,46 @@ async function uploadImgs(
     img.file && baseURL ? getFullURL(baseURL, img.file.name) : img.publicUrl
   );
 }
+
+interface AnyObject {
+  [key: string]: any;
+}
+
+const removeEmptyValues = <T extends AnyObject>(obj: T): T => {
+  const newObj: AnyObject = JSON.parse(JSON.stringify(obj));
+
+  const removeEmpty = (data: AnyObject): AnyObject => {
+    if (Array.isArray(data)) {
+      return data.filter((value: any) => {
+        if (typeof value === "object") {
+          const updatedValue = removeEmpty(value);
+          return Object.keys(updatedValue).length !== 0;
+        }
+        return true;
+      });
+    }
+
+    return Object.entries(data).reduce(
+      (acc: AnyObject, [key, value]: [string, any]) => {
+        if (
+          value === undefined ||
+          value === null ||
+          (typeof value === "string" && value.trim() === "")
+        ) {
+          return acc;
+        } else if (typeof value === "object") {
+          const updatedValue = removeEmpty(value);
+          if (Object.keys(updatedValue).length === 0) {
+            return acc;
+          }
+          return { ...acc, [key]: updatedValue };
+        } else {
+          return { ...acc, [key]: value };
+        }
+      },
+      {}
+    );
+  };
+
+  return removeEmpty(newObj) as T;
+};

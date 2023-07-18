@@ -1,5 +1,5 @@
 import { array, object, string } from "yup";
-import { FormValues } from "./types";
+import { FV } from "./types";
 import { SchemaShape } from "schemas/types";
 import { ImgLink } from "components/ImgEditor";
 import { OptionType } from "components/Selector";
@@ -23,9 +23,9 @@ const fileObj = object().shape<SchemaShape<ImgLink>>({
 });
 
 //construct strict shape to avoid hardcoding shape keys
-const shape: SchemaShape<FormValues> = {
+const shape: SchemaShape<FV> = {
   //not required for ASTs
-  categories_sdgs: array()
+  sdgs: array()
     .max(MAX_SDGS, `maximum ${MAX_SDGS} selections allowed`)
     .when("$isEndow", {
       is: true,
@@ -48,13 +48,15 @@ const shape: SchemaShape<FormValues> = {
   }),
   name: requiredString,
   active_in_countries: array(),
-  social_media_url_facebook: url,
-  social_media_url_twitter: url,
-  social_media_url_linkedin: url,
-  social_media_url_discord: url,
-  social_media_url_instagram: url,
-  social_media_url_youtube: url,
-  social_media_url_tiktok: url,
+  social_media_urls: object().shape<SchemaShape<FV["social_media_urls"]>>({
+    facebook: url,
+    twitter: url,
+    linkedin: url,
+    discord: url,
+    instagram: url,
+    youtube: url,
+    tiktok: url,
+  }),
 };
 
 export const schema = object().shape(shape);
