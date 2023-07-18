@@ -10,6 +10,7 @@ import Proposals from "../Proposals";
 import { LINKS } from "../constants";
 import Account from "./Account";
 import Contributions from "./Contributions";
+import CreateProgram from "./CreateProgram";
 import Dashboard from "./Dashboard";
 import Deposits from "./Deposits";
 import EditProfile from "./EditProfile";
@@ -17,6 +18,7 @@ import Invest from "./Invest";
 import Maturity from "./Maturity";
 import OtherSettings from "./OtherSettings";
 import Permissions from "./Permissions";
+import Programs from "./Programs";
 // import Settings from "./Settings";
 import Templates from "./Templates";
 import Whitelists from "./Whitelists";
@@ -36,7 +38,7 @@ const COMMON: LinkGroup[] = [
       // LINKS.settings,
     ],
   },
-  { title: "Profile", links: [LINKS.edit_profile] },
+  { title: "Profile", links: [LINKS.edit_profile, LINKS.programs] },
 ];
 
 const LINK_GROUPS: { [key in EndowmentType]: LinkGroup[] } = {
@@ -88,6 +90,8 @@ export default function Charity() {
         <Route path={adminRoutes.whitelists} element={<Whitelists />} />
         <Route path={adminRoutes.maturity} element={<Maturity />} />
         <Route path={adminRoutes.edit_profile} element={<EditProfile />} />
+        <Route path={adminRoutes.programs} element={<Programs />} />
+        <Route path={adminRoutes.create_program} element={<CreateProgram />} />
         <Route path={adminRoutes.permissions} element={<Permissions />} />
         <Route path={adminRoutes.other_settings} element={<OtherSettings />} />
         <Route path={adminRoutes.admin_wallet} element={<AdminWallet />} />

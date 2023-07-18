@@ -13,6 +13,21 @@ type EndowmentBalances = {
   on_hand_overall: number;
 };
 
+type MileStone = {
+  milestone_date: string; //isoDate
+  milestone_description: string;
+  milestone_media: string;
+  milestone_title: string;
+};
+
+export type Program = {
+  program_banner: string;
+  program_description: string;
+  program_id: string;
+  program_title: string;
+  program_milestones: MileStone[];
+};
+
 type EndowmentBase = {
   hq_country?: string;
   endow_designation: EndowDesignation;
@@ -22,6 +37,7 @@ type EndowmentBase = {
   image: string;
   kyc_donors_only: boolean;
   contributor_verification_required: boolean;
+  program: Program[];
 
   name: string;
   tagline: string;
@@ -88,6 +104,8 @@ export type EndowmentProfileUpdate = {
   name: string;
   published: boolean;
   overview: string;
+  program: Program[];
+  program_id: string;
   registration_number: string;
   social_media_url_facebook: string;
   social_media_url_linkedin: string;

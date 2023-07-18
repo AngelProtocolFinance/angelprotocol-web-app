@@ -29,7 +29,7 @@ export default function Form(props: Chain) {
         tokens={[props.native_currency]
           .concat(props.tokens)
           .map((t) => ({ ...t, amount: "0" }))}
-        classes={{ inputContainer: "bg-orange-l6 dark:bg-blue-d7" }}
+        classes={{ inputContainer: "bg-gray-l6 dark:bg-blue-d5" }}
         withBalance
       />
 

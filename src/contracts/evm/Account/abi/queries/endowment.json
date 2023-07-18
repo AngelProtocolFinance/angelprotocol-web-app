@@ -27,12 +27,12 @@
             "type": "uint256[]"
           },
           {
-            "internalType": "enum AngelCoreStruct.Tier",
+            "internalType": "enum LibAccounts.Tier",
             "name": "tier",
             "type": "uint8"
           },
           {
-            "internalType": "enum AngelCoreStruct.EndowmentType",
+            "internalType": "enum LibAccounts.EndowmentType",
             "name": "endowType",
             "type": "uint8"
           },
@@ -87,11 +87,6 @@
             "internalType": "struct LocalRegistrarLib.RebalanceParams",
             "name": "rebalance",
             "type": "tuple"
-          },
-          {
-            "internalType": "uint256",
-            "name": "pendingRedemptions",
-            "type": "uint256"
           },
           {
             "internalType": "uint256",
@@ -151,7 +146,7 @@
                 "type": "uint256"
               }
             ],
-            "internalType": "struct AngelCoreStruct.FeeSetting",
+            "internalType": "struct LibAccounts.FeeSetting",
             "name": "earlyLockedWithdrawFee",
             "type": "tuple"
           },
@@ -168,7 +163,7 @@
                 "type": "uint256"
               }
             ],
-            "internalType": "struct AngelCoreStruct.FeeSetting",
+            "internalType": "struct LibAccounts.FeeSetting",
             "name": "withdrawFee",
             "type": "tuple"
           },
@@ -185,7 +180,7 @@
                 "type": "uint256"
               }
             ],
-            "internalType": "struct AngelCoreStruct.FeeSetting",
+            "internalType": "struct LibAccounts.FeeSetting",
             "name": "depositFee",
             "type": "tuple"
           },
@@ -202,7 +197,7 @@
                 "type": "uint256"
               }
             ],
-            "internalType": "struct AngelCoreStruct.FeeSetting",
+            "internalType": "struct LibAccounts.FeeSetting",
             "name": "balanceFee",
             "type": "tuple"
           },
@@ -228,12 +223,12 @@
                         "type": "uint256"
                       }
                     ],
-                    "internalType": "struct AngelCoreStruct.Delegate",
+                    "internalType": "struct LibAccounts.Delegate",
                     "name": "delegate",
                     "type": "tuple"
                   }
                 ],
-                "internalType": "struct AngelCoreStruct.SettingsPermission",
+                "internalType": "struct LibAccounts.SettingsPermission",
                 "name": "acceptedTokens",
                 "type": "tuple"
               },
@@ -257,12 +252,12 @@
                         "type": "uint256"
                       }
                     ],
-                    "internalType": "struct AngelCoreStruct.Delegate",
+                    "internalType": "struct LibAccounts.Delegate",
                     "name": "delegate",
                     "type": "tuple"
                   }
                 ],
-                "internalType": "struct AngelCoreStruct.SettingsPermission",
+                "internalType": "struct LibAccounts.SettingsPermission",
                 "name": "lockedInvestmentManagement",
                 "type": "tuple"
               },
@@ -286,12 +281,12 @@
                         "type": "uint256"
                       }
                     ],
-                    "internalType": "struct AngelCoreStruct.Delegate",
+                    "internalType": "struct LibAccounts.Delegate",
                     "name": "delegate",
                     "type": "tuple"
                   }
                 ],
-                "internalType": "struct AngelCoreStruct.SettingsPermission",
+                "internalType": "struct LibAccounts.SettingsPermission",
                 "name": "liquidInvestmentManagement",
                 "type": "tuple"
               },
@@ -315,12 +310,12 @@
                         "type": "uint256"
                       }
                     ],
-                    "internalType": "struct AngelCoreStruct.Delegate",
+                    "internalType": "struct LibAccounts.Delegate",
                     "name": "delegate",
                     "type": "tuple"
                   }
                 ],
-                "internalType": "struct AngelCoreStruct.SettingsPermission",
+                "internalType": "struct LibAccounts.SettingsPermission",
                 "name": "allowlistedBeneficiaries",
                 "type": "tuple"
               },
@@ -344,12 +339,12 @@
                         "type": "uint256"
                       }
                     ],
-                    "internalType": "struct AngelCoreStruct.Delegate",
+                    "internalType": "struct LibAccounts.Delegate",
                     "name": "delegate",
                     "type": "tuple"
                   }
                 ],
-                "internalType": "struct AngelCoreStruct.SettingsPermission",
+                "internalType": "struct LibAccounts.SettingsPermission",
                 "name": "allowlistedContributors",
                 "type": "tuple"
               },
@@ -373,12 +368,12 @@
                         "type": "uint256"
                       }
                     ],
-                    "internalType": "struct AngelCoreStruct.Delegate",
+                    "internalType": "struct LibAccounts.Delegate",
                     "name": "delegate",
                     "type": "tuple"
                   }
                 ],
-                "internalType": "struct AngelCoreStruct.SettingsPermission",
+                "internalType": "struct LibAccounts.SettingsPermission",
                 "name": "maturityAllowlist",
                 "type": "tuple"
               },
@@ -402,12 +397,12 @@
                         "type": "uint256"
                       }
                     ],
-                    "internalType": "struct AngelCoreStruct.Delegate",
+                    "internalType": "struct LibAccounts.Delegate",
                     "name": "delegate",
                     "type": "tuple"
                   }
                 ],
-                "internalType": "struct AngelCoreStruct.SettingsPermission",
+                "internalType": "struct LibAccounts.SettingsPermission",
                 "name": "maturityTime",
                 "type": "tuple"
               },
@@ -431,12 +426,12 @@
                         "type": "uint256"
                       }
                     ],
-                    "internalType": "struct AngelCoreStruct.Delegate",
+                    "internalType": "struct LibAccounts.Delegate",
                     "name": "delegate",
                     "type": "tuple"
                   }
                 ],
-                "internalType": "struct AngelCoreStruct.SettingsPermission",
+                "internalType": "struct LibAccounts.SettingsPermission",
                 "name": "earlyLockedWithdrawFee",
                 "type": "tuple"
               },
@@ -460,12 +455,12 @@
                         "type": "uint256"
                       }
                     ],
-                    "internalType": "struct AngelCoreStruct.Delegate",
+                    "internalType": "struct LibAccounts.Delegate",
                     "name": "delegate",
                     "type": "tuple"
                   }
                 ],
-                "internalType": "struct AngelCoreStruct.SettingsPermission",
+                "internalType": "struct LibAccounts.SettingsPermission",
                 "name": "withdrawFee",
                 "type": "tuple"
               },
@@ -489,12 +484,12 @@
                         "type": "uint256"
                       }
                     ],
-                    "internalType": "struct AngelCoreStruct.Delegate",
+                    "internalType": "struct LibAccounts.Delegate",
                     "name": "delegate",
                     "type": "tuple"
                   }
                 ],
-                "internalType": "struct AngelCoreStruct.SettingsPermission",
+                "internalType": "struct LibAccounts.SettingsPermission",
                 "name": "depositFee",
                 "type": "tuple"
               },
@@ -518,12 +513,12 @@
                         "type": "uint256"
                       }
                     ],
-                    "internalType": "struct AngelCoreStruct.Delegate",
+                    "internalType": "struct LibAccounts.Delegate",
                     "name": "delegate",
                     "type": "tuple"
                   }
                 ],
-                "internalType": "struct AngelCoreStruct.SettingsPermission",
+                "internalType": "struct LibAccounts.SettingsPermission",
                 "name": "balanceFee",
                 "type": "tuple"
               },
@@ -547,12 +542,12 @@
                         "type": "uint256"
                       }
                     ],
-                    "internalType": "struct AngelCoreStruct.Delegate",
+                    "internalType": "struct LibAccounts.Delegate",
                     "name": "delegate",
                     "type": "tuple"
                   }
                 ],
-                "internalType": "struct AngelCoreStruct.SettingsPermission",
+                "internalType": "struct LibAccounts.SettingsPermission",
                 "name": "name",
                 "type": "tuple"
               },
@@ -576,12 +571,12 @@
                         "type": "uint256"
                       }
                     ],
-                    "internalType": "struct AngelCoreStruct.Delegate",
+                    "internalType": "struct LibAccounts.Delegate",
                     "name": "delegate",
                     "type": "tuple"
                   }
                 ],
-                "internalType": "struct AngelCoreStruct.SettingsPermission",
+                "internalType": "struct LibAccounts.SettingsPermission",
                 "name": "image",
                 "type": "tuple"
               },
@@ -605,12 +600,12 @@
                         "type": "uint256"
                       }
                     ],
-                    "internalType": "struct AngelCoreStruct.Delegate",
+                    "internalType": "struct LibAccounts.Delegate",
                     "name": "delegate",
                     "type": "tuple"
                   }
                 ],
-                "internalType": "struct AngelCoreStruct.SettingsPermission",
+                "internalType": "struct LibAccounts.SettingsPermission",
                 "name": "logo",
                 "type": "tuple"
               },
@@ -634,12 +629,12 @@
                         "type": "uint256"
                       }
                     ],
-                    "internalType": "struct AngelCoreStruct.Delegate",
+                    "internalType": "struct LibAccounts.Delegate",
                     "name": "delegate",
                     "type": "tuple"
                   }
                 ],
-                "internalType": "struct AngelCoreStruct.SettingsPermission",
+                "internalType": "struct LibAccounts.SettingsPermission",
                 "name": "sdgs",
                 "type": "tuple"
               },
@@ -663,12 +658,12 @@
                         "type": "uint256"
                       }
                     ],
-                    "internalType": "struct AngelCoreStruct.Delegate",
+                    "internalType": "struct LibAccounts.Delegate",
                     "name": "delegate",
                     "type": "tuple"
                   }
                 ],
-                "internalType": "struct AngelCoreStruct.SettingsPermission",
+                "internalType": "struct LibAccounts.SettingsPermission",
                 "name": "splitToLiquid",
                 "type": "tuple"
               },
@@ -692,17 +687,17 @@
                         "type": "uint256"
                       }
                     ],
-                    "internalType": "struct AngelCoreStruct.Delegate",
+                    "internalType": "struct LibAccounts.Delegate",
                     "name": "delegate",
                     "type": "tuple"
                   }
                 ],
-                "internalType": "struct AngelCoreStruct.SettingsPermission",
+                "internalType": "struct LibAccounts.SettingsPermission",
                 "name": "ignoreUserSplits",
                 "type": "tuple"
               }
             ],
-            "internalType": "struct AngelCoreStruct.SettingsController",
+            "internalType": "struct LibAccounts.SettingsController",
             "name": "settingsController",
             "type": "tuple"
           },
@@ -734,7 +729,7 @@
                 "type": "uint256"
               }
             ],
-            "internalType": "struct AngelCoreStruct.SplitDetails",
+            "internalType": "struct LibAccounts.SplitDetails",
             "name": "splitToLiquid",
             "type": "tuple"
           },
@@ -742,6 +737,11 @@
             "internalType": "uint256",
             "name": "referralId",
             "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "gasFwd",
+            "type": "address"
           }
         ],
         "internalType": "struct AccountStorage.Endowment",

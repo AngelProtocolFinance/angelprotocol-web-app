@@ -1,3 +1,4 @@
+import { Except } from "type-fest";
 import { Profile } from "services/types";
 import { EndowmentProfileUpdate } from "types/aws";
 import { Country } from "types/countries";
@@ -19,7 +20,7 @@ const _npo_type: K = "endow_designation";
 const _contributor_verification_required: K =
   "contributor_verification_required";
 
-export type FlatFormValues = Omit<
+export type FlatFormValues = Except<
   EndowmentProfileUpdate,
   /** to flatten */
   /** don't include for now */
@@ -29,6 +30,8 @@ export type FlatFormValues = Omit<
   | typeof _tier
   | typeof _owner
   | typeof _contributor_verification_required
+  | "program"
+  | "program_id"
 >;
 
 export type FormValues = Omit<

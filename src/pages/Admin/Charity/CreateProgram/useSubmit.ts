@@ -1,6 +1,6 @@
 import { SubmitHandler, useFormContext } from "react-hook-form";
-import { FormValues as FV, FlatFormValues } from "./types";
-import { EndowmentProfileUpdate } from "types/aws";
+import { FV } from "./types";
+import { EndowmentProfileUpdate, Program } from "types/aws";
 import { SemiPartial } from "types/utils";
 import { useModalContext } from "contexts/ModalContext";
 import { ImgLink } from "components/ImgEditor";
@@ -12,35 +12,25 @@ import { useAdminContext } from "../../Context";
 import useUpdateEndowmentProfile from "../common/useUpdateEndowmentProfile";
 import { ops } from "./ops";
 
-export default function useEditProfile() {
+export default function useSubmit() {
   const { id, owner } = useAdminContext<"charity">(ops);
   const {
     reset,
     handleSubmit,
-    getValues,
     formState: { isSubmitting },
+    getValues,
   } = useFormContext<FV>();
 
   const { showModal } = useModalContext();
   const updateProfile = useUpdateEndowmentProfile();
 
-  const editProfile: SubmitHandler<FV> = async ({
-    initial,
-    image,
-    logo,
-    hq_country,
-    categories_sdgs,
-    active_in_countries,
-    endow_designation,
-    type,
-    ...newData
-  }) => {
+  const submit: SubmitHandler<FV> = async ({ initial, ...fv }) => {
     try {
       /** special case for edit profile: since upload happens prior
        * to tx submission. Other users of useTxSender
        */
 
-      const [bannerUrl, logoUrl] = await uploadImgs([image, logo], () => {
+      const [imageURL] = await uploadImgs([fv.image], () => {
         showModal(
           TxPrompt,
           { loading: "Uploading images.." },
@@ -48,33 +38,31 @@ export default function useEditProfile() {
         );
       });
 
-      const changes: FlatFormValues = {
-        image: bannerUrl,
-        logo: logoUrl,
-        hq_country: hq_country.name,
-        endow_designation: endow_designation.value,
-        categories_sdgs: categories_sdgs.map((opt) => opt.value),
-        active_in_countries: active_in_countries.map((opt) => opt.value),
-        ...newData,
+      //having initial value means form is for editing
+
+      const program: Program = {
+        program_title: fv.title,
+        program_id: initial ? initial.program_id : window.crypto.randomUUID(),
+        program_description: fv.description,
+        program_banner: imageURL,
+        program_milestones: [],
       };
 
-      const diff = getPayloadDiff(initial, changes);
-
-      if (Object.entries(diff).length <= 0) {
-        return showModal(TxPrompt, { error: "No changes detected" });
+      if (initial) {
+        const diff = getPayloadDiff(initial, program);
+        if (isEmpty(diff)) {
+          return showModal(TxPrompt, { error: "No changes detected" });
+        }
       }
 
-      /** already clean - no need to futher clean "": to unset values { field: val }, field must have a value 
-     like ""; unlike contracts where if fields is not present, val is set to null.
-    */
       const updates: SemiPartial<EndowmentProfileUpdate, "id" | "owner"> = {
-        ...changes,
         id,
         owner,
+        program: [program],
       };
-
       await updateProfile(updates);
     } catch (err) {
+      console.log(err);
       showModal(TxPrompt, {
         error: err instanceof Error ? err.message : "Unknown error occured",
       });
@@ -83,10 +71,10 @@ export default function useEditProfile() {
 
   return {
     reset,
-    editProfile: handleSubmit(editProfile),
+    submit: handleSubmit(submit),
     isSubmitting,
     id,
-    type: getValues("type"),
+    initial: getValues("initial"),
   };
 }
 

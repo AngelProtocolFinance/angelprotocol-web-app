@@ -35,7 +35,7 @@ export function GroupContainer({
 }: PropsWithChildren<{ className?: string }>) {
   return (
     <div
-      className={`p-3 pb-6 grid gap-6 rounded bg-orange-l6 dark:bg-blue-d7 border border-prim ${className}`}
+      className={`p-3 pb-6 grid gap-6 rounded bg-gray-l6 dark:bg-blue-d5 border border-prim ${className}`}
     >
       {children}
     </div>

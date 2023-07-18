@@ -2,6 +2,7 @@ import { Primitive } from "type-fest";
 import { Diff, PrimitiveValue } from "types/utils";
 import { Obj, flatten } from "./flatten";
 
+export const NOT_SET = "not-set";
 //NOTE: intended for shallow form objects only atm
 export function getPayloadDiff<T extends object>(prev: T, next: T): Diff[] {
   const flatPrev = flatten(prev as Obj);
@@ -16,7 +17,7 @@ export function getPayloadDiff<T extends object>(prev: T, next: T): Diff[] {
     const p = flatPrev[key];
     if (areDiff(p, n) && some(n, [""])) {
       keys[key] = true;
-      diffs.push([key, some(p) ? p : "not-set", n]);
+      diffs.push([key, some(p) ? p : NOT_SET, n]);
     }
   }
 
@@ -29,7 +30,7 @@ export function getPayloadDiff<T extends object>(prev: T, next: T): Diff[] {
     const p = flatPrev[key];
     //dont consider "" if prev has no value
     if (none(p) && some(n) && !keys[key]) {
-      diffs.push([key, "not-set", n]);
+      diffs.push([key, NOT_SET, n]);
     }
   }
 

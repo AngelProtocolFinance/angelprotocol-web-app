@@ -221,7 +221,7 @@
   }
 
   .field-input-admin {
-    @apply bg-orange-l6 dark:bg-blue-d7;
+    @apply bg-gray-l6 dark:bg-blue-d5;
   }
 
   .field-kyc > input {
@@ -230,7 +230,7 @@
 
   .field-admin > textarea,
   .field-admin > input {
-    @apply bg-orange-l6 dark:bg-blue-d7;
+    @apply bg-gray-l6 dark:bg-blue-d5;
   }
 
   .field-admin-sec > input {

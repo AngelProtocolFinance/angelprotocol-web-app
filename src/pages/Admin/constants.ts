@@ -42,6 +42,7 @@ const {
   proposal,
   templates: templatesRoute,
   account,
+  create_program,
   ...restAdminRoutes
 } = adminRoutes;
 
@@ -154,6 +155,14 @@ export const LINKS: {
     icon: {
       type: "User",
       size: 20.5,
+    },
+  },
+  programs: {
+    title: "Programs",
+    to: sidebarRoutes.programs,
+    icon: {
+      type: "ListBox",
+      size: 24,
     },
   },
   permissions: {

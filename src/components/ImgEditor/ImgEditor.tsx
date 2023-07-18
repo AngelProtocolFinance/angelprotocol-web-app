@@ -63,7 +63,9 @@ export default function ImgEditor<T extends FieldValues, K extends keyof T>(
           ref,
         })}
         style={{
-          background: `url('${preview}') center/cover no-repeat`,
+          background: preview
+            ? `url('${preview}') center/cover no-repeat`
+            : undefined,
         }}
       >
         {noneUploaded ? (
