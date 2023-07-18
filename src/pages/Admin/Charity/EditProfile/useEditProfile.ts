@@ -1,7 +1,6 @@
 import { SubmitHandler, useFormContext } from "react-hook-form";
 import { FormValues as FV, FlatFormValues } from "./types";
-import { EndowmentProfileUpdate } from "types/aws";
-import { SemiPartial } from "types/utils";
+import { ProfileUpdateMsg } from "services/types";
 import { useModalContext } from "contexts/ModalContext";
 import { ImgLink } from "components/ImgEditor";
 import { TxPrompt } from "components/Prompt";
@@ -67,7 +66,7 @@ export default function useEditProfile() {
       /** already clean - no need to futher clean "": to unset values { field: val }, field must have a value 
      like ""; unlike contracts where if fields is not present, val is set to null.
     */
-      const updates: SemiPartial<EndowmentProfileUpdate, "id" | "owner"> = {
+      const updates: ProfileUpdateMsg = {
         ...changes,
         id,
         owner,

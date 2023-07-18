@@ -1,7 +1,7 @@
 import { SubmitHandler, useFormContext } from "react-hook-form";
 import { FV } from "./types";
-import { EndowmentProfileUpdate, Program } from "types/aws";
-import { SemiPartial } from "types/utils";
+import { ProfileUpdateMsg } from "services/types";
+import { Program } from "types/aws";
 import { useModalContext } from "contexts/ModalContext";
 import { ImgLink } from "components/ImgEditor";
 import { TxPrompt } from "components/Prompt";
@@ -55,7 +55,7 @@ export default function useSubmit() {
         }
       }
 
-      const updates: SemiPartial<EndowmentProfileUpdate, "id" | "owner"> = {
+      const updates: ProfileUpdateMsg = {
         id,
         owner,
         program: [program],

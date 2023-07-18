@@ -1,7 +1,6 @@
 import { toUtf8 } from "@cosmjs/encoding";
 import { hexlify } from "@ethersproject/bytes";
-import { EndowmentProfileUpdate } from "types/aws";
-import { SemiPartial } from "types/utils";
+import { ProfileUpdateMsg, ProgramDeleteMsg } from "services/types";
 import { useEditProfileMutation } from "services/aws/aws";
 import { useModalContext } from "contexts/ModalContext";
 import { TxPrompt } from "components/Prompt";
@@ -23,13 +22,11 @@ export default function useUpdateEndowmentProfile() {
   const { showModal } = useModalContext();
   const [submit] = useEditProfileMutation();
 
-  const updateProfile = async (
-    endowProfileUpdate: SemiPartial<EndowmentProfileUpdate, "id" | "owner">
-  ) => {
+  const updateProfile = async (msg: ProfileUpdateMsg | ProgramDeleteMsg) => {
     try {
       if (isTooltip(txResource)) throw new Error(txResource);
 
-      const cleanUpdates = cleanObject(endowProfileUpdate);
+      const cleanUpdates = cleanObject(msg);
 
       showModal(
         TxPrompt,

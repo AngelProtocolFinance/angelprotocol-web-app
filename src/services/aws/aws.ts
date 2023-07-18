@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
-import { Profile } from "../types";
+import { Profile, ProfileUpdatePayload, isDeleteMsg } from "../types";
 import {
   EndowListPaginatedAWSQueryRes,
   EndowmentCard,
@@ -11,7 +11,6 @@ import {
   WalletProfile,
 } from "types/aws";
 import { NetworkType } from "types/lists";
-import { SemiPartial } from "types/utils";
 import { createAuthToken } from "helpers";
 import { chainIds } from "constants/chainIds";
 import { IS_AST, IS_TEST } from "constants/env";
@@ -120,19 +119,13 @@ export const aws = createApi({
         };
       },
     }),
-    editProfile: builder.mutation<
-      EndowmentProfile,
-      {
-        unsignedMsg: SemiPartial<EndowmentProfileUpdate, "id" | "owner">;
-        rawSignature: string;
-      }
-    >({
+    editProfile: builder.mutation<EndowmentProfile, ProfileUpdatePayload>({
       invalidatesTags: (result, error) =>
         error ? [] : ["endowments", "profile", "walletProfile"],
       query: (payload) => {
         return {
           url: `/${v(2)}/profile/${network}/endowment`,
-          method: "PUT",
+          method: isDeleteMsg(payload.unsignedMsg) ? "DELETE" : "PUT",
           body: payload,
         };
       },
