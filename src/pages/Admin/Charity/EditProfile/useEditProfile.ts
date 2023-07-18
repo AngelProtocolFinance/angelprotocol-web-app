@@ -1,5 +1,6 @@
 import { SubmitHandler, useFormContext } from "react-hook-form";
 import { FV } from "./types";
+import { ProfileUpdateMsg } from "services/types";
 import { useModalContext } from "contexts/ModalContext";
 import { ImgLink } from "components/ImgEditor";
 import { TxPrompt } from "components/Prompt";
@@ -43,13 +44,20 @@ export default function useEditProfile() {
         urls: { image: bannerUrl, logo: logoUrl },
       });
 
-      const diff = getPayloadDiff(initial, update);
+      const diffs = getPayloadDiff(initial, update);
 
-      if (Object.entries(diff).length <= 0) {
+      if (Object.entries(diffs).length <= 0) {
         return showModal(TxPrompt, { error: "No changes detected" });
       }
 
-      await updateProfile(removeEmptyValues(update));
+      //only include top level keys that appeared on diff
+      const cleanUpdate: ProfileUpdateMsg = { id, owner };
+      for (const [path] of diffs) {
+        const key = path.split(".")[0] as keyof ProfileUpdateMsg;
+        (cleanUpdate as any)[key] = update[key];
+      }
+
+      await updateProfile(cleanUpdate);
     } catch (err) {
       showModal(TxPrompt, {
         error: err instanceof Error ? err.message : "Unknown error occured",
@@ -77,46 +85,3 @@ async function uploadImgs(
     img.file && baseURL ? getFullURL(baseURL, img.file.name) : img.publicUrl
   );
 }
-
-interface AnyObject {
-  [key: string]: any;
-}
-
-const removeEmptyValues = <T extends AnyObject>(obj: T): T => {
-  const newObj: AnyObject = JSON.parse(JSON.stringify(obj));
-
-  const removeEmpty = (data: AnyObject): AnyObject => {
-    if (Array.isArray(data)) {
-      return data.filter((value: any) => {
-        if (typeof value === "object") {
-          const updatedValue = removeEmpty(value);
-          return Object.keys(updatedValue).length !== 0;
-        }
-        return true;
-      });
-    }
-
-    return Object.entries(data).reduce(
-      (acc: AnyObject, [key, value]: [string, any]) => {
-        if (
-          value === undefined ||
-          value === null ||
-          (typeof value === "string" && value.trim() === "")
-        ) {
-          return acc;
-        } else if (typeof value === "object") {
-          const updatedValue = removeEmpty(value);
-          if (Object.keys(updatedValue).length === 0) {
-            return acc;
-          }
-          return { ...acc, [key]: updatedValue };
-        } else {
-          return { ...acc, [key]: value };
-        }
-      },
-      {}
-    );
-  };
-
-  return removeEmpty(newObj) as T;
-};
