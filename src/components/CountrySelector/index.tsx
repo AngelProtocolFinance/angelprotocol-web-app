@@ -42,7 +42,7 @@ export default function CountrySelector<
 
   const {
     field: { value: country, onChange: onCountryChange, ref },
-  } = useController<BaseFormShape>({
+  } = useController<Record<string, Country>>({
     name: props.fieldName,
   });
 
@@ -56,7 +56,7 @@ export default function CountrySelector<
     (async () => {
       if (country.name && !country.flag) {
         const flag = countries.find((c) => c.name === country.name)?.flag || "";
-        onCountryChange({ name: country.name, flag });
+        onCountryChange({ name: country.name, flag, code: country.code });
       }
     })();
     // eslint-disable-next-line

@@ -12,6 +12,8 @@ const fileKey: Key = "file";
 const previewKey: Key = "preview";
 const precropFileKey: Key = "precropFile";
 
+type FilePath = `${string}.${typeof fileKey}`;
+
 export default function useImgEditor<T extends FieldValues, K extends keyof T>({
   name,
   aspect,
@@ -24,8 +26,14 @@ export default function useImgEditor<T extends FieldValues, K extends keyof T>({
   const { setValue, watch } = useFormContext<T>();
   const { showModal } = useModalContext();
   const {
-    field: { value: currFile, onChange: onFileChange, ref },
-  } = useController<T>({ name: filePath });
+    field: {
+      value: currFile = new File([], "default file"),
+      onChange: onFileChange,
+      ref,
+    },
+  } = useController<Record<string, ImgLink>, FilePath>({
+    name: filePath,
+  });
 
   const { publicUrl, preview, precropFile }: ImgLink = watch(name as any);
   const isInitial = preview === publicUrl;
