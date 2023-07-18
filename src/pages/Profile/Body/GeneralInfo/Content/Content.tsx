@@ -14,6 +14,13 @@ export default function Content() {
           readOnly
         />
       </Container>
+      <Container title="Programs">
+        <RichText
+          content={profile.overview ?? ""}
+          classes={{ container: "w-full h-full px-8 py-10" }}
+          readOnly
+        />
+      </Container>
     </div>
   );
 }

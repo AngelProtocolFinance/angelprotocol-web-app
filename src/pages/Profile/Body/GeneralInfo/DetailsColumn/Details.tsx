@@ -2,12 +2,6 @@ import { PropsWithChildren } from "react";
 import { Profile } from "services/types";
 import { isEmpty } from "helpers";
 
-// import { chainIds } from "constants/chainIds";
-// import Copier from "components/Copier";
-// import ExtLink from "components/ExtLink";
-// import Icon from "components/Icon";
-// import { getAddressUrl, maskAddress } from "helpers";
-
 export default function Details(props: Profile) {
   const { active_in_countries = [] } = props;
 
@@ -24,23 +18,6 @@ export default function Details(props: Profile) {
           ? props.hq_country
           : active_in_countries.join(", ")}
       </Detail>
-      {/* <Detail title="endowment address">
-        <span className="flex items-center gap-4 w-full">
-          <span className="hidden sm:block">
-            {maskAddress(profile.owner, 14)}
-          </span>
-          <span className="sm:hidden">{maskAddress(profile.owner, 10)}</span>
-          <span className="flex items-center gap-3">
-            <Copier text={profile.owner} classes="text-lg" />
-            <ExtLink
-              href={getAddressUrl(chainIds.juno, profile.owner)}
-              className="text-lg"
-            >
-              <Icon type="ExternalLink" className="hover:text-orange" />
-            </ExtLink>
-          </span>
-        </span>
-      </Detail> */}
     </>
   );
 }

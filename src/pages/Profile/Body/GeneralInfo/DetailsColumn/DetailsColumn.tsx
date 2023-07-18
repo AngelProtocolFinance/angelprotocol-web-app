@@ -6,7 +6,7 @@ import Details from "./Details";
 import Socials from "./Socials";
 import Tags from "./Tags";
 
-export default function DetailsColumn({ className }: { className: string }) {
+export default function DetailsColumn({ className = "" }) {
   const profile = useProfileContext();
   return (
     <div className="flex flex-col gap-6 w-full">

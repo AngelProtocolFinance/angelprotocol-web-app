@@ -1,7 +1,9 @@
 import { useParams } from "react-router-dom";
 import { useProfileQuery } from "services/aws/aws";
 import Image from "components/Image";
+import Seo from "components/Seo";
 import { idParamToNum } from "helpers";
+import { APP_NAME, DAPP_URL } from "constants/env";
 import Body from "./Body";
 import PageError from "./PageError";
 import ProfileContext, { useProfileContext } from "./ProfileContext";
@@ -21,6 +23,13 @@ export default function Profile() {
 
   return (
     <ProfileContext.Provider value={data}>
+      <Seo
+        title={`${data.name} - ${APP_NAME}`}
+        description={`${(data.overview ?? "").slice(0, 140)}`}
+        name={data.name}
+        image={data.logo}
+        url={`${DAPP_URL}/profile/${data.id}`}
+      />
       <section className="grid grid-rows-[auto_auto_1fr] items-center isolate w-full h-full">
         <Banner />
         <Logo />
