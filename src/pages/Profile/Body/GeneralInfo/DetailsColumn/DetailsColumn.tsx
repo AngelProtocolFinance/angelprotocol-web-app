@@ -1,5 +1,5 @@
 import { endow } from "services/types";
-import { useProfileContext } from "pages/Profile/ProfileContext";
+import { useProfileContext } from "../../../ProfileContext";
 import DonateButton from "../../DonateButton";
 import Balances from "./Balances";
 import Details from "./Details";

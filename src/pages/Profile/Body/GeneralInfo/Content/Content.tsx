@@ -1,6 +1,7 @@
-import { useProfileContext } from "pages/Profile/ProfileContext";
 import RichText from "components/RichText";
+import { useProfileContext } from "../../../ProfileContext";
 import Container from "./Container";
+import Programs from "./Programs";
 
 export default function Content() {
   const profile = useProfileContext();
@@ -15,11 +16,7 @@ export default function Content() {
         />
       </Container>
       <Container title="Programs">
-        <RichText
-          content={profile.overview ?? ""}
-          classes={{ container: "w-full h-full px-8 py-10" }}
-          readOnly
-        />
+        <Programs />
       </Container>
     </div>
   );
