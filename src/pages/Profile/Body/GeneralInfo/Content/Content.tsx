@@ -15,9 +15,11 @@ export default function Content() {
           readOnly
         />
       </Container>
-      <Container title="Programs">
-        <Programs />
-      </Container>
+      {profile.program.length > 0 && (
+        <Container title="Programs">
+          <Programs />
+        </Container>
+      )}
     </div>
   );
 }

@@ -76,6 +76,7 @@ export type ASTProfile = Pick<EndowmentProfile,
     "id" 
   | "name" 
   | "tagline"
+  | "program"
   > 
   & Partial<Omit<EndowmentProfile,
    "id"
