@@ -23,7 +23,11 @@ function Program(props: TProgram) {
         <Link to={"/"} className="text-lg font-bold mb-3 block">
           {props.program_title}
         </Link>
-        <RichText content={props.program_description} readOnly />
+        <RichText
+          content={props.program_description}
+          readOnly
+          classes={{ container: "overflow-hidden h-32" }}
+        />
       </div>
     </div>
   );
