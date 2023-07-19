@@ -1,3 +1,4 @@
+import { Route, Routes } from "react-router-dom";
 import BookmarkBtn from "components/BookmarkBtn";
 import Breadcrumbs from "components/Breadcrumbs";
 import ExtLink from "components/ExtLink";
@@ -7,6 +8,7 @@ import { appRoutes } from "constants/routes";
 import { useProfileContext } from "../ProfileContext";
 import DonateButton from "./DonateButton";
 import GeneralInfo from "./GeneralInfo";
+import Program from "./Program";
 
 export default function Body() {
   const p = useProfileContext();
@@ -59,7 +61,20 @@ export default function Body() {
           </div>
         </div>
 
-        <GeneralInfo className="order-4 lg:col-span-2 w-full h-full" />
+        <Routes>
+          <Route
+            index
+            element={
+              <GeneralInfo className="order-4 lg:col-span-2 w-full h-full" />
+            }
+          />
+          <Route
+            path="program/:id"
+            element={
+              <Program className="order-4 lg:col-span-2 w-full h-full" />
+            }
+          />
+        </Routes>
       </div>
     </div>
   );

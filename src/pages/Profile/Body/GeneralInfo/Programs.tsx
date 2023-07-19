@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Program as TProgram } from "types/aws";
 import Image from "components/Image";
 import RichText from "components/RichText";
-import { useProfileContext } from "../../../ProfileContext";
+import { useProfileContext } from "../../ProfileContext";
 
 export default function Programs() {
   const { program } = useProfileContext();
@@ -17,12 +17,14 @@ export default function Programs() {
 
 function Program(props: TProgram) {
   return (
-    <div className="border border-prim rounded">
-      <Image src={props.program_banner} className="h-64 w-full object-cover" />
+    <div className="border border-prim rounded relative group overflow-hidden">
+      <Link
+        to={`program/${props.program_id}`}
+        className="absolute inset-0 group-hover:border group-hover:border-orange dark:group-hover:border-blue"
+      />
+      <Image src={props.program_banner} className="h-64 w-full object-cover " />
       <div className="p-5">
-        <Link to={"/"} className="text-lg font-bold mb-3 block">
-          {props.program_title}
-        </Link>
+        <p className="text-lg font-bold mb-3 block">{props.program_title}</p>
         <RichText
           content={props.program_description}
           readOnly
