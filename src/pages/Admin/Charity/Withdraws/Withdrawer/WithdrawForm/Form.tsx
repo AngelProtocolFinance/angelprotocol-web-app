@@ -46,7 +46,7 @@ export default function Form({ classes = "" }) {
           blockchain network and currency.{" "}
           <ExtLink
             href="https://intercom.help/angel-giving/en/articles/6628134-how-do-i-remove-usdc-funds-from-my-current-account"
-            className="text-blue hover:text-blue-l2"
+            className="text-blue hover:text-blue-l2 contents"
           >
             More information.
           </ExtLink>
