@@ -1,14 +1,47 @@
+import { useParams } from "react-router-dom";
+import { useProfileContext } from "pages/Profile/ProfileContext";
+import { useProgramQuery } from "services/aws/aws";
+import ContentLoader from "components/ContentLoader";
+import QueryLoader from "components/QueryLoader";
 import Container from "../common/Container";
 
 export default function Program({ className = "" }) {
+  const { id: endowId } = useProfileContext();
+  const { id: programId = "" } = useParams();
+  const query = useProgramQuery({ endowId, programId }, { skip: !programId });
+
+  return (
+    <QueryLoader
+      queryState={query}
+      classes={{ container: className }}
+      messages={{ loading: <Skeleton className={className} /> }}
+    >
+      {(program) => (
+        <div
+          className={`${className} grid grid-rows-[auto_auto] gap-8 w-full h-full lg:grid-rows-1 lg:grid-cols-[1fr_auto]`}
+        >
+          <Container title="Program" expanded>
+            hello world
+          </Container>
+          <div className="self-start lg:sticky lg:top-28">milestones</div>
+        </div>
+      )}
+    </QueryLoader>
+  );
+}
+
+function Skeleton({ className = "" }) {
   return (
     <div
       className={`${className} grid grid-rows-[auto_auto] gap-8 w-full h-full lg:grid-rows-1 lg:grid-cols-[1fr_auto]`}
     >
-      <Container title="Programs" expanded>
-        hello world
-      </Container>
-      <div className="self-start lg:sticky lg:top-28">milestones</div>
+      <ContentLoader className="h-80" />
+      <div className="self-start lg:sticky lg:top-28 flex flex-col gap-8 w-full lg:w-96 p-8 border border-prim rounded">
+        <ContentLoader className="h-40" />
+        <ContentLoader className="h-40" />
+        <ContentLoader className="h-40" />
+        <ContentLoader className="h-40" />
+      </div>
     </div>
   );
 }

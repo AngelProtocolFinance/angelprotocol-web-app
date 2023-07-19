@@ -7,6 +7,7 @@ import {
   EndowmentProfileUpdate,
   EndowmentsQueryParams,
   NewAST,
+  Program,
   TStrategy,
   WalletProfile,
 } from "types/aws";
@@ -119,6 +120,11 @@ export const aws = createApi({
         };
       },
     }),
+    program: builder.query<Program, { endowId: number; programId: string }>({
+      providesTags: ["profile"],
+      query: ({ endowId, programId }) =>
+        `/${v(1)}/profile/${network}/program/${endowId}/${programId}`,
+    }),
     editProfile: builder.mutation<EndowmentProfile, ProfileUpdatePayload>({
       invalidatesTags: (result, error) =>
         error ? [] : ["endowments", "profile", "walletProfile"],
@@ -154,6 +160,7 @@ export const {
   useStrategyCardsQuery,
   useEndowmentIdNamesQuery,
   useProfileQuery,
+  useProgramQuery,
   useEditProfileMutation,
 
   endpoints: {
