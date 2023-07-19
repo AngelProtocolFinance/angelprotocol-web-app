@@ -15,7 +15,7 @@ import { multisig as Multisig } from "contracts/evm/multisig";
 import useTxSender from "hooks/useTxSender";
 import { createAuthToken, logger, scaleToStr } from "helpers";
 import { getTagPayloads } from "helpers/admin";
-import { ap_wallets } from "constants/ap_wallets";
+import { apWallets } from "constants/ap-wallets";
 import { chainIds } from "constants/chainIds";
 import { EMAIL_SUPPORT } from "constants/env";
 import { ADDRESS_ZERO } from "constants/evm";
@@ -63,9 +63,7 @@ export default function useWithdraw() {
     const isPolygon = fv.network === chainIds.polygon;
     const isLocked = fv.type === "locked";
 
-    const beneficiary = isPolygon
-      ? fv.beneficiary
-      : ap_wallets.polygon_withdraw;
+    const beneficiary = isPolygon ? fv.beneficiary : apWallets.evmWithdraw;
 
     const metadata: WithdrawMeta = {
       beneficiary,
