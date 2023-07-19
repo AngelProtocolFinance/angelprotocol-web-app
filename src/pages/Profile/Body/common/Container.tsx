@@ -1,38 +1,62 @@
-import { PropsWithChildren, useState } from "react";
+import React, { PropsWithChildren, useState } from "react";
 import Icon from "components/Icon";
 
 type Props = PropsWithChildren<{
   title: string;
+  expanded?: true;
+  classes?: string;
 }>;
 
-export default function Container(props: Props) {
-  const [isOpen, setOpen] = useState(true);
+export default function Container({
+  expanded,
+  title,
+  children,
+  classes = "",
+}: Props) {
+  const [isOpen, setOpen] = useState(expanded ?? false);
 
   return (
-    <div className="flex flex-col gap-px w-full border border-prim rounded dark:bg-blue-d6 ">
-      <Header
-        isOpen={isOpen}
-        title={props.title}
-        onClick={() => setOpen((prev) => !prev)}
-      />
+    <div
+      className={`flex flex-col gap-px w-full border border-prim rounded dark:bg-blue-d6 ${classes}`}
+    >
+      {expanded ? (
+        <StaticHeader title={title} />
+      ) : (
+        <Header
+          isOpen={isOpen}
+          title={title}
+          onClick={() => setOpen((prev) => !prev)}
+        />
+      )}
+      {isOpen && children}
+    </div>
+  );
+}
 
-      {isOpen && props.children}
+type HeaderProps = {
+  classes?: string;
+  title: string;
+  children?: React.ReactNode;
+};
+
+function StaticHeader({ title, classes = "", children }: HeaderProps) {
+  return (
+    <div
+      className={`flex items-center justify-between px-8 py-5 w-full bg-orange-l5 border-prim rounded dark:bg-blue-d7 ${classes}`}
+    >
+      <span className="font-heading font-bold text-xl">{title}</span>
+      {children}
     </div>
   );
 }
 
 function Header(props: {
-  isOpen: boolean;
   title: string;
+  isOpen: boolean;
   onClick: () => void;
 }) {
   return (
-    <div
-      className={`flex items-center justify-between px-8 py-5 w-full bg-orange-l5 border-prim rounded dark:bg-blue-d7 ${
-        props.isOpen ? "border-b" : ""
-      }`}
-    >
-      <span className="font-heading font-bold text-xl">{props.title}</span>
+    <StaticHeader classes={props.isOpen ? "border-b" : ""} title={props.title}>
       <button
         onClick={props.onClick}
         className="flex items-center justify-center p-px w-10 h-10 border border-prim rounded"
@@ -40,6 +64,6 @@ function Header(props: {
       >
         <Icon type={props.isOpen ? "Dash" : "Plus"} />
       </button>
-    </div>
+    </StaticHeader>
   );
 }
