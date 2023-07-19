@@ -5,7 +5,6 @@ export const fee = (
   network: string,
   fees: AxelarBridgeFees["withdraw"]
 ): number => {
-  console.log({ fees });
   switch (network) {
     case chainIds.binance:
       return Math.ceil(fees.binance);
