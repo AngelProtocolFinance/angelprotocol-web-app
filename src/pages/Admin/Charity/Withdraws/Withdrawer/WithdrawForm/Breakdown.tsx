@@ -20,7 +20,7 @@ export default function Breakdown() {
    *  USDC is to be withdrawn
    *  bridge fee is greater than withraw amount
    */
-  if (network === chainIds.juno || usdc <= 0 || toReceive < 0) return null;
+  if (network === chainIds.polygon || usdc <= 0 || toReceive < 0) return null;
 
   return (
     <div className="divide-y divide-prim">
