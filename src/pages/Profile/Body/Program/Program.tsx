@@ -29,7 +29,10 @@ export default function Program({ className = "" }) {
               classes={{ container: "m-6" }}
             />
           </Container>
-          <Milestones classes="self-start lg:sticky lg:top-28" />
+          <Milestones
+            classes="self-start lg:sticky lg:top-28"
+            milestones={p.program_milestones}
+          />
         </div>
       )}
     </QueryLoader>

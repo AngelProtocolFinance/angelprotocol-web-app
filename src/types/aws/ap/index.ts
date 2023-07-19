@@ -13,7 +13,7 @@ type EndowmentBalances = {
   on_hand_overall: number;
 };
 
-type MileStone = {
+export type MileStone = {
   milestone_date: string; //isoDate
   milestone_description: string;
   milestone_media: string;
