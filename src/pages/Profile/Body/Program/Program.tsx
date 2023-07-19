@@ -3,7 +3,9 @@ import { useProfileContext } from "pages/Profile/ProfileContext";
 import { useProgramQuery } from "services/aws/aws";
 import ContentLoader from "components/ContentLoader";
 import QueryLoader from "components/QueryLoader";
+import RichText from "components/RichText";
 import Container from "../common/Container";
+import Milestones from "./Milestones";
 
 export default function Program({ className = "" }) {
   const { id: endowId } = useProfileContext();
@@ -16,14 +18,18 @@ export default function Program({ className = "" }) {
       classes={{ container: className }}
       messages={{ loading: <Skeleton className={className} /> }}
     >
-      {(program) => (
+      {(p) => (
         <div
           className={`${className} grid grid-rows-[auto_auto] gap-8 w-full h-full lg:grid-rows-1 lg:grid-cols-[1fr_auto]`}
         >
-          <Container title="Program" expanded>
-            hello world
+          <Container title={p.program_title} expanded>
+            <RichText
+              content={p.program_description}
+              readOnly
+              classes={{ container: "m-6" }}
+            />
           </Container>
-          <div className="self-start lg:sticky lg:top-28">milestones</div>
+          <Milestones classes="self-start lg:sticky lg:top-28" />
         </div>
       )}
     </QueryLoader>

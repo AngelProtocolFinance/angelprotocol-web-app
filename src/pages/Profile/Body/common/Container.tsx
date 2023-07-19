@@ -13,7 +13,7 @@ export default function Container({
   children,
   classes = "",
 }: Props) {
-  const [isOpen, setOpen] = useState(expanded ?? false);
+  const [isOpen, setOpen] = useState(true);
 
   return (
     <div
