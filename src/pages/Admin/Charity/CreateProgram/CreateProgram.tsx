@@ -25,6 +25,15 @@ export default function CreateProgram() {
         preview: program?.program_banner ?? "",
       },
       initial: program,
+      milestones:
+        program?.program_milestones.map((m) => ({
+          ...m,
+          milestone_media: {
+            name: "",
+            preview: m.milestone_media,
+            publicUrl: m.milestone_media,
+          },
+        })) ?? [],
     },
     resolver: yupResolver(schema),
   });
