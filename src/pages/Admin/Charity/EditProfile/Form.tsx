@@ -1,6 +1,6 @@
 import { FormHTMLAttributes } from "react";
 import { Link } from "react-router-dom";
-import { FormValues as FV } from "./types";
+import { FV } from "./types";
 import { UNSDG_NUMS } from "types/lists";
 import ActivityCountries from "components/ActivityCountries";
 import CountrySelector from "components/CountrySelector";
@@ -114,9 +114,9 @@ export default function Form({
               <Label className="-mb-4" required>
                 Aligned SDG#
               </Label>
-              <Selector<FV, "categories_sdgs", UNSDG_NUMS, true>
+              <Selector<FV, "sdgs", UNSDG_NUMS, true>
                 multiple
-                name="categories_sdgs"
+                name="sdgs"
                 options={sdgOptions}
                 classes={{ button: "field-input-admin" }}
               />
@@ -161,43 +161,43 @@ export default function Form({
         <Group title="Social Media">
           <Field<FV>
             classes="field-admin"
-            name="social_media_url_facebook"
+            name="social_media_urls.facebook"
             label="Facebook"
             placeholder="https://facebook.com/"
           />
           <Field<FV>
             classes="field-admin"
-            name="social_media_url_linkedin"
+            name="social_media_urls.linkedin"
             label="Linkedin"
             placeholder="https://linkedin.com/"
           />
           <Field<FV>
             classes="field-admin"
-            name="social_media_url_twitter"
+            name="social_media_urls.twitter"
             label="Twitter"
             placeholder="https://twitter.com/"
           />
           <Field<FV>
             classes="field-admin"
-            name="social_media_url_discord"
+            name="social_media_urls.discord"
             label="Discord"
             placeholder="https://discord.com/"
           />
           <Field<FV>
             classes="field-admin"
-            name="social_media_url_instagram"
+            name="social_media_urls.instagram"
             label="Instagram"
             placeholder="https://instagram.com/"
           />
           <Field<FV>
             classes="field-admin"
-            name="social_media_url_youtube"
+            name="social_media_urls.youtube"
             label="YouTube"
             placeholder="https://youtube.com/"
           />
           <Field<FV>
             classes="field-admin"
-            name="social_media_url_tiktok"
+            name="social_media_urls.tiktok"
             label="Tiktok"
             placeholder="https://tiktok.com/"
           />
