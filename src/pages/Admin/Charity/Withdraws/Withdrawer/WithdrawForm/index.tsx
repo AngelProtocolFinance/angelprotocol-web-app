@@ -11,8 +11,8 @@ import { schema } from "./schema";
 export default function WithdrawForm({
   classes = "",
   balances,
-  type,
-  fees,
+  accountType,
+  bridgeFees,
 }: WithdrawerProps & { classes?: string }) {
   const { wallet } = useGetWallet();
   const { endowType } = useAdminContext<"charity">();
@@ -27,14 +27,14 @@ export default function WithdrawForm({
     mode: "onChange",
     reValidateMode: "onChange",
     values: {
-      beneficiary: wallet?.address || "",
-      network: chainIds.polygon,
+      beneficiaryWallet: wallet?.address || "",
+      destinationChainId: chainIds.polygon,
       //transform to form format
       _amounts: "",
       endowType,
       amounts,
-      type,
-      fees,
+      accountType,
+      bridgeFees,
     },
     resolver: yupResolver(schema),
   });

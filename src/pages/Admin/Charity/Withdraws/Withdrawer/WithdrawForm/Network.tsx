@@ -15,22 +15,22 @@ const AVAILABLE_CHAINS: { chainId: string; name: string }[] = [
 
 export default function Network() {
   const { control, watch, trigger } = useFormContext<FV>();
-  const network = watch("network");
+  const destinationChainId = watch("destinationChainId");
 
   useEffect(() => {
     (async () => {
       //validate address on network change
-      await trigger("beneficiary");
+      await trigger("beneficiaryWallet");
       await trigger("amounts");
     })();
-  }, [network, trigger]);
+  }, [destinationChainId, trigger]);
 
   return (
     <div className="grid gap-3">
       <span className="font-work font-bold">Select network</span>
       <Controller
         control={control}
-        name="network"
+        name="destinationChainId"
         render={({ field: { onChange, value, onBlur } }) => (
           <Listbox
             onBlur={onBlur}

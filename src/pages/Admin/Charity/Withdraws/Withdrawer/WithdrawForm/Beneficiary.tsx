@@ -16,7 +16,7 @@ export default function Beneficiary({ classes = "" }) {
         Destination wallet
       </label>
       <input
-        {...register("beneficiary")}
+        {...register("beneficiaryWallet")}
         id={id}
         type="text"
         autoComplete="off"

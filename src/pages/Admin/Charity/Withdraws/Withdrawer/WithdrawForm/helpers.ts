@@ -1,12 +1,9 @@
-import { AxelarBridgeFees } from "types/aws";
+import { BridgeFees } from "types/aws";
 import { chainIds } from "constants/chainIds";
 
-export const fee = (
-  network: string,
-  fees: AxelarBridgeFees["withdraw"]
-): number => {
-  switch (network) {
-    case chainIds.binance:
+export const fee = (destinationChain: string, fees: BridgeFees): number => {
+  switch (destinationChain) {
+    case "binance":
       return Math.ceil(fees.binance);
     case chainIds.ethereum:
       return Math.ceil(fees.ethereum);

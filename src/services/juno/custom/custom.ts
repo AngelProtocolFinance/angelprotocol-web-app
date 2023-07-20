@@ -4,9 +4,9 @@ import {
   EndowBalance,
   IERC20,
   ProposalDetails,
-  WithdrawInfo,
+  WithdrawData,
 } from "../../types";
-import { AxelarBridgeFees } from "types/aws";
+import { BridgeFeesRes } from "types/aws";
 import { AcceptedTokens, AccountType } from "types/contracts";
 import { TransactionStatus } from "types/lists";
 import { Transaction } from "types/tx";
@@ -137,12 +137,12 @@ export const customApi = junoApi.injectEndpoints({
       queryFn: async ({ id }) => ({ data: await endowBalance(id) }),
     }),
 
-    withdrawInfo: builder.query<WithdrawInfo, { id: number }>({
+    withdrawData: builder.query<WithdrawData, { id: number }>({
       providesTags: ["accounts.token-balance"],
       queryFn: async ({ id }) => {
         const _fees = fetch(
           APIs.apes + `/${v(2)}/axelar-bridge-fees`
-        ).then<AxelarBridgeFees>((res) => {
+        ).then<BridgeFeesRes>((res) => {
           if (!res.ok) throw new Error("Failed to get fees");
           return res.json();
         });
@@ -151,7 +151,9 @@ export const customApi = junoApi.injectEndpoints({
           data: {
             balances,
             //juno field not present in /staging - fill for consistent type definition
-            fees: IS_TEST ? { ...fees["withdraw"], juno: 0 } : fees["withdraw"],
+            bridgeFees: IS_TEST
+              ? { ...fees["withdraw"], juno: 0 }
+              : fees["withdraw"],
           },
         };
       },
@@ -259,6 +261,6 @@ export const {
   useAdminResourcesQuery,
   useProposalDetailsQuery,
   useEndowBalanceQuery,
-  useWithdrawInfoQuery,
+  useWithdrawDataQuery,
   useApplicationQuery,
 } = customApi;

@@ -7,20 +7,20 @@ import { fee } from "./helpers";
 
 type TVal = Amount["value"];
 type TBal = Amount["balance"];
-type TNetwork = FV["network"];
-type TFees = FV["fees"];
-type TAccountType = FV["type"];
+type TChainId = FV["destinationChainId"];
+type TBridgeFees = FV["bridgeFees"];
+type TAccountType = FV["accountType"];
 
 const balKey: keyof Amount = "balance";
-const netKey: keyof FV = "network";
-const accountKey: keyof FV = "type";
+const chainIdKey: keyof FV = "destinationChainId";
+const accountTypeKey: keyof FV = "accountType";
 const amountsKey: keyof FV = "amounts";
-const feesKey: keyof FV = "fees";
+const bridgeFeesKey: keyof FV = "bridgeFees";
 
-const amount: (network: TNetwork, fees: TFees) => SchemaShape<Amount> = (
-  network,
-  fees
-) => ({
+const amount: (
+  network: TChainId,
+  bridgeFees: TBridgeFees
+) => SchemaShape<Amount> = (network, fees) => ({
   value: Yup.lazy((val: TVal) =>
     val === ""
       ? Yup.string() //required collected on _amount
@@ -43,8 +43,8 @@ const amount: (network: TNetwork, fees: TFees) => SchemaShape<Amount> = (
 });
 
 const shape: SchemaShape<FV> = {
-  amounts: Yup.array().when([netKey, feesKey], (...args: any[]) => {
-    const [network, fees, schema] = args as [TNetwork, TFees, any];
+  amounts: Yup.array().when([chainIdKey, bridgeFeesKey], (...args: any[]) => {
+    const [network, fees, schema] = args as [TChainId, TBridgeFees, any];
     return schema.of(Yup.object().shape(amount(network, fees)));
   }),
   //test if at least one amount is filled
@@ -53,14 +53,17 @@ const shape: SchemaShape<FV> = {
       amounts.some((amount) => amount.value !== "")
     )
   ),
-  beneficiary: Yup.string().when([netKey, accountKey], (...args: any[]) => {
-    const [network, accountType, schema] = args as [
-      TNetwork,
-      TAccountType,
-      any
-    ];
-    return accountType === "liquid" ? requiredWalletAddr(network) : schema;
-  }),
+  beneficiaryWallet: Yup.string().when(
+    [chainIdKey, accountTypeKey],
+    (...args: any[]) => {
+      const [network, accountType, schema] = args as [
+        TChainId,
+        TAccountType,
+        any
+      ];
+      return accountType === "liquid" ? requiredWalletAddr(network) : schema;
+    }
+  ),
 };
 
 export const schema = Yup.object(shape);

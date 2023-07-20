@@ -1,4 +1,4 @@
-import { useWithdrawInfoQuery } from "services/juno/custom";
+import { useWithdrawDataQuery } from "services/juno/custom";
 import ContentLoader from "components/ContentLoader";
 import QueryLoader from "components/QueryLoader";
 import { useAdminContext } from "../../../Context";
@@ -6,7 +6,7 @@ import Tabs from "./Tabs";
 
 export default function Withdrawer() {
   const { id } = useAdminContext<"charity">();
-  const queryState = useWithdrawInfoQuery({ id });
+  const queryState = useWithdrawDataQuery({ id });
 
   return (
     <QueryLoader
@@ -16,7 +16,9 @@ export default function Withdrawer() {
         error: "Failed to load withdraw form",
       }}
     >
-      {({ fees, balances }) => <Tabs balances={balances} fees={fees} />}
+      {({ bridgeFees, balances }) => (
+        <Tabs balances={balances} bridgeFees={bridgeFees} />
+      )}
     </QueryLoader>
   );
 }

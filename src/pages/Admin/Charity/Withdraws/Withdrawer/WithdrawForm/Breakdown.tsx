@@ -6,13 +6,13 @@ import { fee } from "./helpers";
 
 export default function Breakdown() {
   const { watch, getValues } = useFormContext<FV>();
-  const fees = getValues("fees");
-  const network = watch("network");
+  const bridgeFees = getValues("bridgeFees");
+  const destinationChainId = watch("destinationChainId");
   const amounts = watch("amounts");
   const amount = amounts.find((a) => a.tokenId === denoms.dusd)?.value ?? "0";
   const usdc = +amount;
 
-  const prettyFee = fee(network, fees);
+  const prettyFee = fee(destinationChainId, bridgeFees);
   const toReceive = usdc - prettyFee;
 
   /** only show breakdown:
@@ -20,7 +20,8 @@ export default function Breakdown() {
    *  USDC is to be withdrawn
    *  bridge fee is greater than withraw amount
    */
-  if (network === chainIds.polygon || usdc <= 0 || toReceive < 0) return null;
+  if (destinationChainId === chainIds.polygon || usdc <= 0 || toReceive < 0)
+    return null;
 
   return (
     <div className="divide-y divide-prim">
