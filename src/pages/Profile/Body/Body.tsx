@@ -1,26 +1,20 @@
+import { Route, Routes } from "react-router-dom";
 import BookmarkBtn from "components/BookmarkBtn";
 import Breadcrumbs from "components/Breadcrumbs";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
-import Seo from "components/Seo";
-import { APP_NAME, DAPP_URL, IS_AST } from "constants/env";
+import { IS_AST } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { useProfileContext } from "../ProfileContext";
 import DonateButton from "./DonateButton";
 import GeneralInfo from "./GeneralInfo";
+import Program from "./Program";
 
 export default function Body() {
   const p = useProfileContext();
 
   return (
     <div className="flex justify-center items-center w-full h-full">
-      <Seo
-        title={`${p.name} - ${APP_NAME}`}
-        description={`${(p.overview ?? "").slice(0, 140)}`}
-        name={p.name}
-        image={p.logo}
-        url={`${DAPP_URL}/profile/${p.id}`}
-      />
       <div className="padded-container grid gap-8 justify-items-center w-full h-full pt-32 pb-8 lg:grid-rows-[auto_auto_1fr] lg:grid-cols-[1fr_auto] lg:justify-items-start lg:gap-16 lg:pt-6 lg:pb-20">
         <Breadcrumbs
           className="font-body font-normal text-xs sm:text-sm lg:ml-52"
@@ -67,7 +61,20 @@ export default function Body() {
           </div>
         </div>
 
-        <GeneralInfo className="order-4 lg:col-span-2 w-full h-full" />
+        <Routes>
+          <Route
+            index
+            element={
+              <GeneralInfo className="order-4 lg:col-span-2 w-full h-full" />
+            }
+          />
+          <Route
+            path="program/:id"
+            element={
+              <Program className="order-4 lg:col-span-2 w-full h-full" />
+            }
+          />
+        </Routes>
       </div>
     </div>
   );

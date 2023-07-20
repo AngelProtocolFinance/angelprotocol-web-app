@@ -1,9 +1,14 @@
-import { ASTProfile, EndowmentProfile } from "types/aws";
+import {
+  ASTProfile,
+  EndowmentProfile,
+  EndowmentProfileUpdate,
+} from "types/aws";
 import { AxelarBridgeFees } from "types/aws";
 import { EndowmentDetails } from "types/contracts";
 import { ApplicationProposal } from "types/contracts/multisig";
 import { AccountType } from "types/lists";
 import { Transaction } from "types/tx";
+import { SemiPartial } from "types/utils";
 
 export type MultisigConfig = {
   threshold: number;
@@ -71,3 +76,27 @@ export type CharityApplication = ApplicationProposal & {
   confirmations: number;
   userConfirmed: boolean;
 };
+
+export type ProfileUpdateMsg = SemiPartial<
+  EndowmentProfileUpdate,
+  "id" | "owner"
+>;
+
+export type ProgramDeleteMsg = Pick<
+  EndowmentProfileUpdate,
+  "id" | "owner" | "program_id"
+>;
+
+export type ProfileUpdatePayload = {
+  unsignedMsg: ProfileUpdateMsg | ProgramDeleteMsg;
+  rawSignature: string;
+};
+
+export function isDeleteMsg(
+  msg: ProfileUpdateMsg | ProgramDeleteMsg
+): msg is ProgramDeleteMsg {
+  return (
+    //for edits, program_id is accompanied by program:[]
+    Object.keys(msg).length === 3 && !!(msg as ProgramDeleteMsg).program_id
+  );
+}
