@@ -27,24 +27,6 @@ import type {
   PromiseOrValue,
 } from "../../../common";
 
-export declare namespace APGoldfinchConfigLib {
-  export type CRVParamsStruct = {
-    allowedSlippage: PromiseOrValue<BigNumberish>;
-  };
-
-  export type CRVParamsStructOutput = [BigNumber] & {
-    allowedSlippage: BigNumber;
-  };
-
-  export type APGoldfinchConfigStruct = {
-    crvParams: APGoldfinchConfigLib.CRVParamsStruct;
-  };
-
-  export type APGoldfinchConfigStructOutput = [
-    APGoldfinchConfigLib.CRVParamsStructOutput
-  ] & { crvParams: APGoldfinchConfigLib.CRVParamsStructOutput };
-}
-
 export declare namespace LocalRegistrarLib {
   export type AngelProtocolParamsStruct = {
     routerAddr: PromiseOrValue<string>;
@@ -123,9 +105,38 @@ export declare namespace LibAccounts {
   };
 }
 
+export declare namespace IAccountsStrategy {
+  export type NetworkInfoStruct = {
+    chainId: PromiseOrValue<BigNumberish>;
+    router: PromiseOrValue<string>;
+    axelarGateway: PromiseOrValue<string>;
+    ibcChannel: PromiseOrValue<string>;
+    transferChannel: PromiseOrValue<string>;
+    gasReceiver: PromiseOrValue<string>;
+    gasLimit: PromiseOrValue<BigNumberish>;
+  };
+
+  export type NetworkInfoStructOutput = [
+    BigNumber,
+    string,
+    string,
+    string,
+    string,
+    string,
+    BigNumber
+  ] & {
+    chainId: BigNumber;
+    router: string;
+    axelarGateway: string;
+    ibcChannel: string;
+    transferChannel: string;
+    gasReceiver: string;
+    gasLimit: BigNumber;
+  };
+}
+
 export interface LocalRegistrarInterface extends utils.Interface {
   functions: {
-    "getAPGoldfinchParams()": FunctionFragment;
     "getAccountsContractAddressByChain(string)": FunctionFragment;
     "getAngelProtocolParams()": FunctionFragment;
     "getFeeSettingsByFeeType(uint8)": FunctionFragment;
@@ -139,8 +150,8 @@ export interface LocalRegistrarInterface extends utils.Interface {
     "initialize()": FunctionFragment;
     "isTokenAccepted(address)": FunctionFragment;
     "owner()": FunctionFragment;
+    "queryNetworkConnection(string)": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
-    "setAPGoldfinchParams(((uint256)))": FunctionFragment;
     "setAccountsContractAddressByChain(string,string)": FunctionFragment;
     "setAngelProtocolParams((address,address))": FunctionFragment;
     "setFeeSettingsByFeesType(uint8,uint256,address)": FunctionFragment;
@@ -152,11 +163,11 @@ export interface LocalRegistrarInterface extends utils.Interface {
     "setUniswapAddresses(address,address)": FunctionFragment;
     "setVaultOperatorApproved(address,bool)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
+    "updateNetworkConnections(string,(uint256,address,address,string,string,address,uint256),uint8)": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "getAPGoldfinchParams"
       | "getAccountsContractAddressByChain"
       | "getAngelProtocolParams"
       | "getFeeSettingsByFeeType"
@@ -170,8 +181,8 @@ export interface LocalRegistrarInterface extends utils.Interface {
       | "initialize"
       | "isTokenAccepted"
       | "owner"
+      | "queryNetworkConnection"
       | "renounceOwnership"
-      | "setAPGoldfinchParams"
       | "setAccountsContractAddressByChain"
       | "setAngelProtocolParams"
       | "setFeeSettingsByFeesType"
@@ -183,12 +194,9 @@ export interface LocalRegistrarInterface extends utils.Interface {
       | "setUniswapAddresses"
       | "setVaultOperatorApproved"
       | "transferOwnership"
+      | "updateNetworkConnections"
   ): FunctionFragment;
 
-  encodeFunctionData(
-    functionFragment: "getAPGoldfinchParams",
-    values?: undefined
-  ): string;
   encodeFunctionData(
     functionFragment: "getAccountsContractAddressByChain",
     values: [PromiseOrValue<string>]
@@ -239,12 +247,12 @@ export interface LocalRegistrarInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "renounceOwnership",
-    values?: undefined
+    functionFragment: "queryNetworkConnection",
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setAPGoldfinchParams",
-    values: [APGoldfinchConfigLib.APGoldfinchConfigStruct]
+    functionFragment: "renounceOwnership",
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "setAccountsContractAddressByChain",
@@ -300,11 +308,15 @@ export interface LocalRegistrarInterface extends utils.Interface {
     functionFragment: "transferOwnership",
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(
+    functionFragment: "updateNetworkConnections",
+    values: [
+      PromiseOrValue<string>,
+      IAccountsStrategy.NetworkInfoStruct,
+      PromiseOrValue<BigNumberish>
+    ]
+  ): string;
 
-  decodeFunctionResult(
-    functionFragment: "getAPGoldfinchParams",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(
     functionFragment: "getAccountsContractAddressByChain",
     data: BytesLike
@@ -352,11 +364,11 @@ export interface LocalRegistrarInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "renounceOwnership",
+    functionFragment: "queryNetworkConnection",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setAPGoldfinchParams",
+    functionFragment: "renounceOwnership",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -403,6 +415,10 @@ export interface LocalRegistrarInterface extends utils.Interface {
     functionFragment: "transferOwnership",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "updateNetworkConnections",
+    data: BytesLike
+  ): Result;
 
   events: {
     "AccountsContractStorageUpdated(string,string)": EventFragment;
@@ -410,6 +426,8 @@ export interface LocalRegistrarInterface extends utils.Interface {
     "FeeSettingsUpdated(uint8,uint256,address)": EventFragment;
     "GasFeeUpdated(address,uint256)": EventFragment;
     "Initialized(uint8)": EventFragment;
+    "NetworkConnectionPosted(uint256)": EventFragment;
+    "NetworkConnectionRemoved(uint256)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
     "RebalanceParamsUpdated()": EventFragment;
     "StrategyApprovalUpdated(bytes4,uint8)": EventFragment;
@@ -424,6 +442,8 @@ export interface LocalRegistrarInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: "FeeSettingsUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "GasFeeUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "NetworkConnectionPosted"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "NetworkConnectionRemoved"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RebalanceParamsUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "StrategyApprovalUpdated"): EventFragment;
@@ -482,6 +502,28 @@ export interface InitializedEventObject {
 export type InitializedEvent = TypedEvent<[number], InitializedEventObject>;
 
 export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
+
+export interface NetworkConnectionPostedEventObject {
+  chainId: BigNumber;
+}
+export type NetworkConnectionPostedEvent = TypedEvent<
+  [BigNumber],
+  NetworkConnectionPostedEventObject
+>;
+
+export type NetworkConnectionPostedEventFilter =
+  TypedEventFilter<NetworkConnectionPostedEvent>;
+
+export interface NetworkConnectionRemovedEventObject {
+  chainId: BigNumber;
+}
+export type NetworkConnectionRemovedEvent = TypedEvent<
+  [BigNumber],
+  NetworkConnectionRemovedEventObject
+>;
+
+export type NetworkConnectionRemovedEventFilter =
+  TypedEventFilter<NetworkConnectionRemovedEvent>;
 
 export interface OwnershipTransferredEventObject {
   previousOwner: string;
@@ -570,10 +612,6 @@ export interface LocalRegistrar extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    getAPGoldfinchParams(
-      overrides?: CallOverrides
-    ): Promise<[APGoldfinchConfigLib.APGoldfinchConfigStructOutput]>;
-
     getAccountsContractAddressByChain(
       _targetChain: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -627,12 +665,16 @@ export interface LocalRegistrar extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
+    queryNetworkConnection(
+      networkName: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<
+      [IAccountsStrategy.NetworkInfoStructOutput] & {
+        response: IAccountsStrategy.NetworkInfoStructOutput;
+      }
+    >;
 
-    setAPGoldfinchParams(
-      _apGoldfinch: APGoldfinchConfigLib.APGoldfinchConfigStruct,
+    renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -702,11 +744,14 @@ export interface LocalRegistrar extends BaseContract {
       newOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
-  };
 
-  getAPGoldfinchParams(
-    overrides?: CallOverrides
-  ): Promise<APGoldfinchConfigLib.APGoldfinchConfigStructOutput>;
+    updateNetworkConnections(
+      networkName: PromiseOrValue<string>,
+      networkInfo: IAccountsStrategy.NetworkInfoStruct,
+      action: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+  };
 
   getAccountsContractAddressByChain(
     _targetChain: PromiseOrValue<string>,
@@ -761,12 +806,12 @@ export interface LocalRegistrar extends BaseContract {
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  renounceOwnership(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
+  queryNetworkConnection(
+    networkName: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<IAccountsStrategy.NetworkInfoStructOutput>;
 
-  setAPGoldfinchParams(
-    _apGoldfinch: APGoldfinchConfigLib.APGoldfinchConfigStruct,
+  renounceOwnership(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -837,11 +882,14 @@ export interface LocalRegistrar extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  callStatic: {
-    getAPGoldfinchParams(
-      overrides?: CallOverrides
-    ): Promise<APGoldfinchConfigLib.APGoldfinchConfigStructOutput>;
+  updateNetworkConnections(
+    networkName: PromiseOrValue<string>,
+    networkInfo: IAccountsStrategy.NetworkInfoStruct,
+    action: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
 
+  callStatic: {
     getAccountsContractAddressByChain(
       _targetChain: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -893,12 +941,12 @@ export interface LocalRegistrar extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    renounceOwnership(overrides?: CallOverrides): Promise<void>;
-
-    setAPGoldfinchParams(
-      _apGoldfinch: APGoldfinchConfigLib.APGoldfinchConfigStruct,
+    queryNetworkConnection(
+      networkName: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<void>;
+    ): Promise<IAccountsStrategy.NetworkInfoStructOutput>;
+
+    renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     setAccountsContractAddressByChain(
       _chainName: PromiseOrValue<string>,
@@ -966,6 +1014,13 @@ export interface LocalRegistrar extends BaseContract {
       newOwner: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    updateNetworkConnections(
+      networkName: PromiseOrValue<string>,
+      networkInfo: IAccountsStrategy.NetworkInfoStruct,
+      action: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
   };
 
   filters: {
@@ -1000,6 +1055,18 @@ export interface LocalRegistrar extends BaseContract {
 
     "Initialized(uint8)"(version?: null): InitializedEventFilter;
     Initialized(version?: null): InitializedEventFilter;
+
+    "NetworkConnectionPosted(uint256)"(
+      chainId?: null
+    ): NetworkConnectionPostedEventFilter;
+    NetworkConnectionPosted(chainId?: null): NetworkConnectionPostedEventFilter;
+
+    "NetworkConnectionRemoved(uint256)"(
+      chainId?: null
+    ): NetworkConnectionRemovedEventFilter;
+    NetworkConnectionRemoved(
+      chainId?: null
+    ): NetworkConnectionRemovedEventFilter;
 
     "OwnershipTransferred(address,address)"(
       previousOwner?: PromiseOrValue<string> | null,
@@ -1048,8 +1115,6 @@ export interface LocalRegistrar extends BaseContract {
   };
 
   estimateGas: {
-    getAPGoldfinchParams(overrides?: CallOverrides): Promise<BigNumber>;
-
     getAccountsContractAddressByChain(
       _targetChain: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -1099,12 +1164,12 @@ export interface LocalRegistrar extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    queryNetworkConnection(
+      networkName: PromiseOrValue<string>,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    setAPGoldfinchParams(
-      _apGoldfinch: APGoldfinchConfigLib.APGoldfinchConfigStruct,
+    renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1174,13 +1239,16 @@ export interface LocalRegistrar extends BaseContract {
       newOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
+
+    updateNetworkConnections(
+      networkName: PromiseOrValue<string>,
+      networkInfo: IAccountsStrategy.NetworkInfoStruct,
+      action: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    getAPGoldfinchParams(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     getAccountsContractAddressByChain(
       _targetChain: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -1238,12 +1306,12 @@ export interface LocalRegistrar extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    queryNetworkConnection(
+      networkName: PromiseOrValue<string>,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    setAPGoldfinchParams(
-      _apGoldfinch: APGoldfinchConfigLib.APGoldfinchConfigStruct,
+    renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -1311,6 +1379,13 @@ export interface LocalRegistrar extends BaseContract {
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    updateNetworkConnections(
+      networkName: PromiseOrValue<string>,
+      networkInfo: IAccountsStrategy.NetworkInfoStruct,
+      action: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };
