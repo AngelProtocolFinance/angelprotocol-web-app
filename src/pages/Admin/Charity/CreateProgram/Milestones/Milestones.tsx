@@ -2,6 +2,7 @@ import { useFieldArray } from "react-hook-form";
 import { FV } from "../types";
 import Icon from "components/Icon";
 import { dateToFormFormat } from "components/form";
+import Milestone from "./Milestone";
 
 export default function Milestones() {
   const { fields, append } = useFieldArray<FV, "milestones">({
@@ -12,9 +13,8 @@ export default function Milestones() {
       <div className="flex items-center gap-3 justify-between">
         <h4 className="text-2xl font-body">Milestones</h4>
         <button
-          onClick={() => {
-            console.log("append");
-            return append({
+          onClick={() =>
+            append({
               milestone_date: dateToFormFormat(new Date()),
               milestone_description: "",
               milestone_title: `Milestone ${fields.length + 1}`,
@@ -23,8 +23,8 @@ export default function Milestones() {
                 preview: "",
                 publicUrl: "",
               },
-            });
-          }}
+            })
+          }
           type="button"
           className="btn-outline-filled text-sm w-52 py-2"
         >
@@ -33,15 +33,8 @@ export default function Milestones() {
         </button>
       </div>
       <div className="grid gap-6">
-        {fields.map((f) => (
-          <div
-            key={f.id}
-            className="py-3 px-4 rounded border border-prim text-center dark:bg-blue-d7"
-          >
-            <span className="text-xl font-bold font-heading">
-              {f.milestone_title}
-            </span>
-          </div>
+        {fields.map((m) => (
+          <Milestone {...m} key={m.id} />
         ))}
       </div>
     </div>

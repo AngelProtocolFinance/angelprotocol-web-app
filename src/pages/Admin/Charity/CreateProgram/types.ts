@@ -2,7 +2,7 @@ import { OverrideProperties } from "type-fest";
 import { MileStone, Program } from "types/aws";
 import { ImgLink } from "components/ImgEditor";
 
-type FormMilestone = OverrideProperties<
+export type FormMilestone = OverrideProperties<
   MileStone,
   { milestone_media: ImgLink }
 >;
