@@ -9,7 +9,8 @@ import Warning from "./Warning";
 import useWithdraw from "./useWithdraw";
 
 export default function Form({ classes = "" }) {
-  const { withdraw, fee, network, tooltip, accountType } = useWithdraw();
+  const { withdraw, bridgeFee, chainName, tooltip, accountType } =
+    useWithdraw();
 
   return (
     <form
@@ -30,14 +31,14 @@ export default function Form({ classes = "" }) {
           </>
         )}
 
-        {network !== "Polygon" && (
+        {chainName !== "Polygon" && (
           <>
             <Warning>
-              Withraws to {network} are processed on a hourly basis by our
+              Withraws to {chainName} are processed on a hourly basis by our
               cross-chain pipelines.
             </Warning>
             <Warning classes="-mt-1 mb-2">
-              The minimum withdrawal amount is {fee} USDC.
+              The minimum withdrawal amount is {bridgeFee} USDC.
             </Warning>
           </>
         )}

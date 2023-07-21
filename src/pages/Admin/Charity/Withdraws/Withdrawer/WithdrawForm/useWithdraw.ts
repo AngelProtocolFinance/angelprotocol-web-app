@@ -22,7 +22,7 @@ import { adminRoutes, appRoutes } from "constants/routes";
 import { tokens } from "constants/tokens";
 import { APIs } from "constants/urls";
 import { TxMeta, isTooltip, useAdminContext } from "../../../../Context";
-import { fee, names } from "./helpers";
+import { bridgeFee, chainName } from "./helpers";
 
 const LOG_ERROR = "error";
 
@@ -207,8 +207,8 @@ export default function useWithdraw() {
 
   return {
     withdraw: handleSubmit(withdraw),
-    fee: fee(destinationChainId, getValues("bridgeFees")),
-    network: names(destinationChainId),
+    bridgeFee: bridgeFee(destinationChainId, getValues("bridgeFees")),
+    chainName: chainName(destinationChainId),
     tooltip: isTooltip(txResource) ? txResource : undefined,
     accountType,
   };

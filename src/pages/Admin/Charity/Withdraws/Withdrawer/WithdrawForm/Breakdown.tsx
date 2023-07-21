@@ -2,7 +2,7 @@ import { useFormContext } from "react-hook-form";
 import { FV } from "./types";
 import { chainIds } from "constants/chainIds";
 import { denoms } from "constants/tokens";
-import { fee } from "./helpers";
+import { bridgeFee } from "./helpers";
 
 export default function Breakdown() {
   const { watch, getValues } = useFormContext<FV>();
@@ -13,7 +13,7 @@ export default function Breakdown() {
     amounts.find((a) => a.tokenId === denoms.dusd)?.value ?? "0";
   const usdcAmount = +usdcAmountStr;
 
-  const prettyFee = fee(destinationChainId, bridgeFees);
+  const prettyFee = bridgeFee(destinationChainId, bridgeFees);
   const toReceive = usdcAmount - prettyFee;
 
   /** only show breakdown:

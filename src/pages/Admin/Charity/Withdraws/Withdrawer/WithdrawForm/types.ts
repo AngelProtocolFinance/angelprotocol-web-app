@@ -16,7 +16,7 @@ export type WithdrawerProps = {
   protocolFeeRates: ProtocolFeeRates;
 };
 
-type EndowFeeRates = {
+export type EndowFeeRates = {
   earlyLockedWithdrawBps: number;
   withdrawBps: number;
   depositBps: number;

@@ -3,7 +3,7 @@ import { Amount, FV } from "./types";
 import { SchemaShape } from "schemas/types";
 import { tokenConstraint } from "schemas/number";
 import { requiredWalletAddr } from "schemas/string";
-import { fee } from "./helpers";
+import { bridgeFee } from "./helpers";
 
 type TVal = Amount["value"];
 type TBal = Amount["balance"];
@@ -18,9 +18,9 @@ const amountsKey: keyof FV = "amounts";
 const bridgeFeesKey: keyof FV = "bridgeFees";
 
 const amount: (
-  network: TChainId,
+  destinationChainId: TChainId,
   bridgeFees: TBridgeFees
-) => SchemaShape<Amount> = (network, fees) => ({
+) => SchemaShape<Amount> = (destinationChainId, bridgeFees) => ({
   value: Yup.lazy((val: TVal) =>
     val === ""
       ? Yup.string() //required collected on _amount
@@ -35,8 +35,8 @@ const amount: (
                * NOTE: this is on the assumption that endow TOH would just be USDC
                * for other tokens, must first get dollar amount
                */
-              `minimum ${fee(network, fees)} USDC`,
-              () => +val >= fee(network, fees)
+              `minimum ${bridgeFee(destinationChainId, bridgeFees)} USDC`,
+              () => +val >= bridgeFee(destinationChainId, bridgeFees)
             )
         )
   ),

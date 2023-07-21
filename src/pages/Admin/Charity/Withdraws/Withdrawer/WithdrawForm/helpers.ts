@@ -1,22 +1,28 @@
+import { EndowFeeRates } from "./types";
+import { ProtocolFeeRates } from "services/types";
 import { BridgeFees } from "types/aws";
+import { AccountType } from "types/lists";
 import { chainIds } from "constants/chainIds";
 
-export const fee = (destinationChain: string, fees: BridgeFees): number => {
+export const bridgeFee = (
+  destinationChain: string,
+  bridgeFees: BridgeFees
+): number => {
   switch (destinationChain) {
     case "binance":
-      return Math.ceil(fees.binance);
+      return Math.ceil(bridgeFees.binance);
     case chainIds.ethereum:
-      return Math.ceil(fees.ethereum);
+      return Math.ceil(bridgeFees.ethereum);
     case chainIds.terra:
-      return Math.ceil(fees["terra-2"]);
+      return Math.ceil(bridgeFees["terra-2"]);
     case chainIds.juno:
-      return Math.ceil(fees.juno);
+      return Math.ceil(bridgeFees.juno);
     default:
       return 0;
   }
 };
 
-export const names = (
+export const chainName = (
   network: string
 ): "Binance" | "Ethereum" | "Polygon" | "Terra" | "Juno" => {
   //prettier-ignore
@@ -28,3 +34,12 @@ export const names = (
     default: return "Juno";
   }
 };
+
+export const feeRows = (
+  destinationChainId: string,
+  withdrawAmount: number,
+  accountType: AccountType,
+  bridgeFees: BridgeFees,
+  protocolFeeRates: ProtocolFeeRates,
+  endowFeeRates: EndowFeeRates
+) => {};
