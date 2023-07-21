@@ -52,9 +52,16 @@ export interface IERC20 {
 
 export type EndowBalance = { [key in AccountType]: IERC20[] };
 
+export type ProtocolFeeRates = {
+  withdrawBps: number;
+  //applied to charities only
+  earlyLockedWithdrawBps: number;
+};
+
 export type WithdrawData = {
   balances: EndowBalance;
   bridgeFees: BridgeFees;
+  protocolFeeRates: ProtocolFeeRates;
 };
 
 export type Profile =

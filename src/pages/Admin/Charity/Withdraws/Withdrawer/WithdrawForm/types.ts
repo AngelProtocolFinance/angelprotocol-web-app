@@ -1,4 +1,4 @@
-import { IERC20 } from "services/types";
+import { IERC20, ProtocolFeeRates } from "services/types";
 import { BridgeFees } from "types/aws";
 import { EndowmentType } from "types/lists";
 import { AccountType } from "types/lists";
@@ -7,6 +7,19 @@ export type Amount = {
   tokenId: string; //
   value: string;
   balance: string;
+};
+
+export type WithdrawerProps = {
+  balances: IERC20[];
+  accountType: AccountType;
+  bridgeFees: BridgeFees;
+  protocolFeeRates: ProtocolFeeRates;
+};
+
+type EndowFeeRates = {
+  earlyLockedWithdrawBps: number;
+  withdrawBps: number;
+  depositBps: number;
 };
 
 export type FV = {
@@ -19,11 +32,5 @@ export type FV = {
   _amounts: string; //collective amounts error
   endowType: EndowmentType;
   accountType: AccountType;
-  bridgeFees: BridgeFees;
-};
-
-export type WithdrawerProps = {
-  balances: IERC20[];
-  accountType: AccountType;
-  bridgeFees: BridgeFees;
-};
+  endowFeeRates: EndowFeeRates;
+} & Pick<WithdrawerProps, "accountType" | "bridgeFees" | "protocolFeeRates">;

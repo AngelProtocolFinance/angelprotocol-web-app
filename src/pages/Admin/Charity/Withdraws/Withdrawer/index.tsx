@@ -16,8 +16,12 @@ export default function Withdrawer() {
         error: "Failed to load withdraw form",
       }}
     >
-      {({ bridgeFees, balances }) => (
-        <Tabs balances={balances} bridgeFees={bridgeFees} />
+      {({ bridgeFees, balances, protocolFeeRates }) => (
+        <Tabs
+          balances={balances}
+          bridgeFees={bridgeFees}
+          protocolFeeRates={protocolFeeRates}
+        />
       )}
     </QueryLoader>
   );

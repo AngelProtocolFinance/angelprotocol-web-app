@@ -12,7 +12,7 @@ import { TransactionStatus } from "types/lists";
 import { Transaction } from "types/tx";
 import { version as v } from "services/helpers";
 import { idParamToNum } from "helpers";
-import { IS_TEST } from "constants/env";
+import { IS_AST, IS_TEST } from "constants/env";
 import { APIs } from "constants/urls";
 import { junoApi } from "..";
 import { queryContract } from "../queryContract";
@@ -140,13 +140,30 @@ export const customApi = junoApi.injectEndpoints({
     withdrawData: builder.query<WithdrawData, { id: number }>({
       providesTags: ["accounts.token-balance"],
       queryFn: async ({ id }) => {
-        const _fees = fetch(
+        const bridgeFees = fetch(
           APIs.apes + `/${v(2)}/axelar-bridge-fees`
         ).then<BridgeFeesRes>((res) => {
           if (!res.ok) throw new Error("Failed to get fees");
           return res.json();
         });
-        const [balances, fees] = await Promise.all([endowBalance(id), _fees]);
+
+        const [
+          balances,
+          fees,
+          earlyLockedWithdrawFeeSetting,
+          withdrawFeeSetting,
+        ] = await Promise.all([
+          endowBalance(id),
+          bridgeFees,
+          queryContract("registrar.fee-setting", {
+            type: IS_AST
+              ? "EarlyLockedWithdrawNormal"
+              : "EarlyLockedWithdrawCharity",
+          }),
+          queryContract("registrar.fee-setting", {
+            type: IS_AST ? "WithdrawNormal" : "WithdrawCharity",
+          }),
+        ]);
         return {
           data: {
             balances,
@@ -154,6 +171,10 @@ export const customApi = junoApi.injectEndpoints({
             bridgeFees: IS_TEST
               ? { ...fees["withdraw"], juno: 0 }
               : fees["withdraw"],
+            protocolFeeRates: {
+              withdrawBps: withdrawFeeSetting.bps,
+              earlyLockedWithdrawBps: earlyLockedWithdrawFeeSetting.bps,
+            },
           },
         };
       },
