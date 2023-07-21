@@ -16,8 +16,13 @@ export default function WithdrawForm({
   protocolFeeRates,
 }: WithdrawerProps & { classes?: string }) {
   const { wallet } = useGetWallet();
-  const { endowType, earlyLockedWithdrawFee, depositFee, withdrawFee } =
-    useAdminContext<"charity">();
+  const {
+    endowType,
+    earlyLockedWithdrawFee,
+    depositFee,
+    withdrawFee,
+    maturityTime,
+  } = useAdminContext<"charity">();
 
   const amounts: Amount[] = balances.map((c) => ({
     tokenId: c.address,
@@ -34,6 +39,7 @@ export default function WithdrawForm({
       //transform to form format
       _amounts: "",
       endowType,
+      maturityTime,
       amounts,
       accountType,
       bridgeFees,

@@ -33,4 +33,5 @@ export type FV = {
   endowType: EndowmentType;
   accountType: AccountType;
   endowFeeRates: EndowFeeRates;
+  maturityTime: number;
 } & Pick<WithdrawerProps, "accountType" | "bridgeFees" | "protocolFeeRates">;
