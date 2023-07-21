@@ -2,6 +2,8 @@ import {
   AccountType,
   EndowmentDetails,
   EndowmentState,
+  FeeSetting,
+  FeeType,
   FundDetails,
   GenericBalMap,
   IndexFundConfig,
@@ -22,6 +24,7 @@ type Query<Args, Result> = {
 export interface ContractQueries {
   "registrar.config": Query<null, RegistrarConfig>;
   "registrar.owner": Query<null, string>;
+  "registrar.fee-setting": Query<{ type: FeeType }, FeeSetting>;
 
   "index-fund.config": Query<null, IndexFundConfig>;
   "index-fund.fund": Query<ID, FundDetails>;
