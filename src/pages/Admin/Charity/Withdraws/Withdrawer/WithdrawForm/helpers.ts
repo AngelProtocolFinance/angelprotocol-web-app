@@ -1,4 +1,5 @@
 import Decimal from "decimal.js";
+import { Except } from "type-fest";
 import { FV } from "./types";
 import { BridgeFees } from "types/aws";
 import { roundDownToNum } from "helpers";
@@ -40,14 +41,16 @@ const FEE_BASIS = 10_000;
 
 export const feeData = ({
   destinationChainId,
-  amounts,
+  withdrawAmount,
   accountType,
   endowFeeRates,
   bridgeFees,
   protocolFeeRates,
   maturityTime,
   endowType,
-}: FV) => {
+}: Except<FV, "beneficiaryWallet" | "amounts"> & {
+  withdrawAmount: number;
+}) => {
   /**
    * amount
    *
@@ -58,7 +61,7 @@ export const feeData = ({
    * if cross chain, - bridgeFee
    */
 
-  const withdrawAmountDec = new Decimal(amounts[0].value);
+  const withdrawAmountDec = new Decimal(withdrawAmount);
 
   const _bridgeFee = bridgeFee(destinationChainId, bridgeFees);
   const withdrawFee = withdrawAmountDec
@@ -91,14 +94,21 @@ export const feeData = ({
     .add(_bridgeFee);
   const toReceive = toDepositAmount.sub(depositFee).sub(_bridgeFee);
 
+  const items = [
+    { name: "Withdraw Fee", value: withdrawFee.toNumber() },
+    {
+      name: "Early Withdraw Fee",
+      value: roundDownToNum(earlyLockedWithdrawFee),
+    },
+    { name: "Deposit Fee", value: depositFee.toNumber() },
+    { name: "Bridge Fee", value: _bridgeFee },
+    { name: "To Receive", value: toReceive.toNumber() },
+  ];
+
+  console.log({ items });
+
   return {
-    items: [
-      ["Withdraw Fee", roundDownToNum(withdrawFee)],
-      ["Early Withdraw Fee", roundDownToNum(earlyLockedWithdrawFee)],
-      ["Deposit Fee", roundDownToNum(depositFee)],
-      ["Bridge Fee", roundDownToNum(_bridgeFee)],
-      ["To Receive", roundDownToNum(toReceive)],
-    ],
+    items,
     totalFee: roundDownToNum(totalFee),
     toReceive: roundDownToNum(toReceive),
   };

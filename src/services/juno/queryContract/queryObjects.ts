@@ -83,21 +83,26 @@ export const queryObjects: {
   "registrar.fee-setting": [
     ({ type }) => {
       const feeType = (() => {
-        //prettier-ignore
-        switch(type){
-          case "Default": return 0
-          case "Harvest": return 1
-          case "WithdrawCharity": return 2
-          case "WithdrawNormal": return 3
-          case "EarlyLockedWithdrawCharity": return 4
-          case "EarlyLockedWithdrawNormal": return 5
+        switch (type) {
+          case "Harvest":
+            return 1;
+          case "WithdrawCharity":
+            return 2;
+          case "WithdrawNormal":
+            return 3;
+          case "EarlyLockedWithdrawCharity":
+            return 4;
+          case "EarlyLockedWithdrawNormal":
+            return 5;
+          default: //Default
+            return 0;
         }
       })();
-      return indexFund.encodeFunctionData("getFeeSettingsByFeeType", [feeType]);
+      return registrar.encodeFunctionData("getFeeSettingsByFeeType", [feeType]);
     },
     (result) => {
       const d: RegistrarLibAccounts.FeeSettingStructOutput =
-        indexFund.decodeFunctionResult("queryConfig", result)[0];
+        registrar.decodeFunctionResult("getFeeSettingsByFeeType", result)[0];
       return {
         payoutAddress: d.payoutAddress.toLowerCase(),
         bps: d.bps.toNumber(),

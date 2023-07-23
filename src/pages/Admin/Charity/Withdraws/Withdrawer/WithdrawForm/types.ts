@@ -22,16 +22,18 @@ export type EndowFeeRates = {
   depositBps: number;
 };
 
-export type FV = {
-  amounts: Amount[];
-  destinationChainId: string;
-  //FUTURE: support endowement | index-fund
-  beneficiaryWallet: string;
-
-  //meta
+/** data that isn't represented by any form UI */
+export type FormMeta = {
   _amounts: string; //collective amounts error
   endowType: EndowmentType;
   accountType: AccountType;
   endowFeeRates: EndowFeeRates;
   maturityTime: number;
 } & Pick<WithdrawerProps, "accountType" | "bridgeFees" | "protocolFeeRates">;
+
+export type FV = {
+  amounts: Amount[];
+  destinationChainId: string;
+  //FUTURE: support endowement | index-fund
+  beneficiaryWallet: string;
+} & FormMeta;

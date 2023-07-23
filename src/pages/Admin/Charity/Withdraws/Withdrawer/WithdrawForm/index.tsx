@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { Amount, FV, WithdrawerProps } from "./types";
+import { Amount, FV, FormMeta, WithdrawerProps } from "./types";
 import { useAdminContext } from "pages/Admin/Context";
 import { useGetWallet } from "contexts/WalletContext";
 import { condense, roundDown } from "helpers";
@@ -30,27 +30,34 @@ export default function WithdrawForm({
     value: "",
   }));
 
-  const methods = useForm<FV>({
+  const meta: FormMeta = {
+    _amounts: "",
+    endowType,
+    maturityTime,
+    accountType,
+    bridgeFees,
+    protocolFeeRates,
+    endowFeeRates: {
+      earlyLockedWithdrawBps: earlyLockedWithdrawFee.bps,
+      depositBps: depositFee.bps,
+      withdrawBps: withdrawFee.bps,
+    },
+  };
+  console.log({ meta });
+
+  const values: FV = {
+    ...meta,
+    amounts,
+    beneficiaryWallet: wallet?.address || "",
+    destinationChainId: chainIds.polygon,
+  };
+
+  const methods = useForm<FV, { meta: FormMeta }>({
     mode: "onChange",
     reValidateMode: "onChange",
-    values: {
-      beneficiaryWallet: wallet?.address || "",
-      destinationChainId: chainIds.polygon,
-      //transform to form format
-      _amounts: "",
-      endowType,
-      maturityTime,
-      amounts,
-      accountType,
-      bridgeFees,
-      protocolFeeRates,
-      endowFeeRates: {
-        earlyLockedWithdrawBps: earlyLockedWithdrawFee.bps,
-        depositBps: depositFee.bps,
-        withdrawBps: withdrawFee.bps,
-      },
-    },
+    values,
     resolver: yupResolver(schema),
+    context: { meta },
   });
   return (
     <FormProvider {...methods}>
