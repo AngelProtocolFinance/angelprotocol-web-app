@@ -54,19 +54,24 @@ export const feeData = ({
   endowType,
 }: FeeArgs) => {
   /**
-   * amount
+   * //RAW AMOUNT//
+   * less withdrawFeeAp
+   * less earlyWithdrawFee: if locked && !mature
    *
-   * - withdrawFee
-   * if locked && !mature - earlyWithdrawFee
-   * if locked --> liquid - depositFee ( as transferFee)
+   * // DEDUCTED PROTOCOL FEES // (though earlyWithdrawFeeBps for normal endowments doesn't come from registrar)
+   * less withdrawFeeEndow
    *
-   * if cross chain, - bridgeFee
+   * // AMOUNT TO DEPOSIT/ERC20 Transfer //
+   * less depositFee ( as transferFee): if locked --> liquid
+   * less bridgeFee: if cross chain
+   *
+   * // AMOUNT TO RECEIVE //
    */
 
   const withdrawAmountDec = new Decimal(withdrawAmount);
 
-  const withdrawFee = withdrawAmountDec
-    .mul(protocolFeeRates.withdrawBps + endowFeeRates.withdrawBps)
+  const withdrawFeeAp = withdrawAmountDec
+    .mul(protocolFeeRates.withdrawBps)
     .div(FEE_BASIS);
 
   const earlyLockedWithdrawFee = (() => {
@@ -84,9 +89,15 @@ export const feeData = ({
       .div(FEE_BASIS);
   })();
 
-  const toDepositAmount = withdrawAmountDec
-    .sub(withdrawFee)
+  const amountLessApFees = withdrawAmountDec
+    .sub(withdrawFeeAp)
     .sub(earlyLockedWithdrawFee);
+
+  const withdrawFeeEndow = amountLessApFees
+    .mul(endowFeeRates.withdrawBps)
+    .div(FEE_BASIS);
+
+  const toDepositAmount = amountLessApFees.sub(withdrawFeeEndow);
 
   /** TODO: factor-in locked withdraw to beneficiary wallet
    *  e.g fv.BeneficiaryType
@@ -97,10 +108,13 @@ export const feeData = ({
       : new Decimal(0);
 
   const _bridgeFee = bridgeFee(destinationChainId, bridgeFees);
-  const totalFee = withdrawFee
+
+  const totalFee = withdrawFeeAp
+    .add(withdrawFeeEndow)
     .add(earlyLockedWithdrawFee)
     .add(depositFee)
     .add(_bridgeFee);
+
   const toReceive = toDepositAmount.sub(depositFee).sub(_bridgeFee);
 
   type FeeItem = {
@@ -108,7 +122,10 @@ export const feeData = ({
     value: number;
   };
   const items: FeeItem[] = [
-    { name: "Withdraw Fee", value: roundDownToNum(withdrawFee, 4) },
+    {
+      name: "Withdraw Fee",
+      value: roundDownToNum(withdrawFeeAp.add(withdrawFeeEndow), 4),
+    },
     {
       name: "Early Withdraw Fee",
       value: roundDownToNum(earlyLockedWithdrawFee),
