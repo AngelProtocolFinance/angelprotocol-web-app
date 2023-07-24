@@ -17,8 +17,8 @@ const mainnet:Contracts = {
 const testnet:Contracts = {
   registrar:             "0xe1215B3e150dd298d787D41a4879959D30Dc3939",
   "index-fund":          "0xf6B32b4a0371050321fC01672FDfad76aF55603f",
-  "multisig/ap":         "0xeA2B4CD932f5Cecea867D8794206c5D51A13a516",
-  "multisig/review":     "0x3769916a8c97FFf1C48DE49b03181578576aFdF1",
+  "multisig/ap":         "0x9034E5Bb0e03c985952C3506363Fe936c4A799f5",
+  "multisig/review":     "0xbF338a5f1030c9c3c7d729214A0299201149146C",
   accounts:              "0xE2e48880d780c4Fa36655EC9014DBbdA1164C0cA",
   "gift-card":           "0x47e49a7700c9D79412bb47385eD349106d4941F9",
 }
