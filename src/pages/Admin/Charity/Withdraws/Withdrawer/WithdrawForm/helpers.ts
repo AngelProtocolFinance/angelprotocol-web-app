@@ -109,19 +109,19 @@ export const feeData = ({
     value: number;
   };
   const items: FeeItem[] = [
-    { name: "Withdraw Fee", value: withdrawFee.toNumber() },
+    { name: "Withdraw Fee", value: roundDownToNum(withdrawFee, 6) },
     {
       name: "Early Withdraw Fee",
-      value: roundDownToNum(earlyLockedWithdrawFee),
+      value: roundDownToNum(earlyLockedWithdrawFee, 6),
     },
-    { name: "Transfer Fee", value: depositFee.toNumber() },
-    { name: "Bridge Fee", value: _bridgeFee },
-    { name: "To Receive", value: toReceive.toNumber() },
+    { name: "Transfer Fee", value: roundDownToNum(depositFee, 6) },
+    { name: "Bridge Fee", value: roundDownToNum(_bridgeFee, 6) },
+    { name: "To Receive", value: roundDownToNum(toReceive, 6) },
   ];
 
   return {
     items,
-    totalFee: roundDownToNum(totalFee),
-    toReceive: roundDownToNum(toReceive),
+    totalFee: roundDownToNum(totalFee, 6),
+    toReceive: roundDownToNum(toReceive, 6),
   };
 };

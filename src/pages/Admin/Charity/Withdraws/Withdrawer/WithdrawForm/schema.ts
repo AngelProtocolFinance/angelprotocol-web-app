@@ -38,8 +38,8 @@ const amount: (
                * NOTE: this is on the assumption that endow TOH would just be USDC
                * for other tokens, must first get dollar amount
                */
-              `minimum ${totalFee} USDC`,
-              () => +withdrawAmount >= totalFee
+              `must be greater than minimum ${totalFee} USDC`,
+              () => +withdrawAmount > totalFee
             )
         );
   }),

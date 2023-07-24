@@ -22,20 +22,17 @@ export default function Breakdown() {
    * - user has nothing to receive after fees
    * - no fees applies
    */
-  if (toReceive < 0 || feeItems.length < 1) return null;
+
+  const filteredFeeItems = feeItems.filter((item) => item.value > 0);
+
+  if (toReceive <= 0 || filteredFeeItems.length <= 1) return null;
 
   return (
     <div className="divide-y divide-prim">
       <p className="font-bold font-work mb-2">Summary</p>
-      {feeItems
-        .filter(
-          (item, idx) =>
-            item.value > 0 ||
-            idx === feeItems.length - 1 /** always show last item */
-        )
-        .map(({ name, value }) => (
-          <Item key={name} title={name} value={value + " USDC"} />
-        ))}
+      {filteredFeeItems.map(({ name, value }) => (
+        <Item key={name} title={name} value={value + " USDC"} />
+      ))}
     </div>
   );
 }
