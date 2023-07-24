@@ -287,7 +287,7 @@ export const {
 } = customApi;
 
 type Result<T> = { data: T } | { errors: unknown };
-function graphQL<T>(query: string): Promise<T> {
+export function graphQL<T>(query: string): Promise<T> {
   return fetch("https://graphql.cosmwasm.com/v1/graphql", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
