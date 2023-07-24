@@ -39,6 +39,10 @@ export const chainName = (
 
 const FEE_BASIS = 10_000;
 
+type FeeArgs = Except<FV, "beneficiaryWallet" | "amounts"> & {
+  withdrawAmount: number;
+};
+
 export const feeData = ({
   destinationChainId,
   withdrawAmount,
@@ -48,9 +52,7 @@ export const feeData = ({
   protocolFeeRates,
   maturityTime,
   endowType,
-}: Except<FV, "beneficiaryWallet" | "amounts"> & {
-  withdrawAmount: number;
-}) => {
+}: FeeArgs) => {
   /**
    * amount
    *
@@ -64,17 +66,25 @@ export const feeData = ({
   const withdrawAmountDec = new Decimal(withdrawAmount);
 
   const _bridgeFee = bridgeFee(destinationChainId, bridgeFees);
+
   const withdrawFee = withdrawAmountDec
     .mul(protocolFeeRates.withdrawBps)
     .div(FEE_BASIS);
 
-  const earlyLockedWithdrawFee = hasElapsed(maturityTime)
-    ? new Decimal(0)
-    : endowType === "normal"
-    ? withdrawAmountDec.mul(endowFeeRates.earlyLockedWithdrawBps).div(FEE_BASIS)
-    : withdrawAmountDec
-        .mul(protocolFeeRates.earlyLockedWithdrawBps)
+  const earlyLockedWithdrawFee = (() => {
+    if (accountType === "liquid") return new Decimal(0);
+
+    if (endowType === "normal") {
+      if (hasElapsed(maturityTime)) return new Decimal(0);
+      return withdrawAmountDec
+        .mul(endowFeeRates.earlyLockedWithdrawBps)
         .div(FEE_BASIS);
+    }
+
+    return withdrawAmountDec
+      .mul(protocolFeeRates.earlyLockedWithdrawBps)
+      .div(FEE_BASIS);
+  })();
 
   const toDepositAmount = withdrawAmountDec
     .sub(withdrawFee)
@@ -94,18 +104,20 @@ export const feeData = ({
     .add(_bridgeFee);
   const toReceive = toDepositAmount.sub(depositFee).sub(_bridgeFee);
 
-  const items = [
+  type FeeItem = {
+    name: string;
+    value: number;
+  };
+  const items: FeeItem[] = [
     { name: "Withdraw Fee", value: withdrawFee.toNumber() },
     {
       name: "Early Withdraw Fee",
       value: roundDownToNum(earlyLockedWithdrawFee),
     },
-    { name: "Deposit Fee", value: depositFee.toNumber() },
+    { name: "Transfer Fee", value: depositFee.toNumber() },
     { name: "Bridge Fee", value: _bridgeFee },
     { name: "To Receive", value: toReceive.toNumber() },
   ];
-
-  console.log({ items });
 
   return {
     items,

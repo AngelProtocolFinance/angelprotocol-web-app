@@ -43,7 +43,6 @@ export default function WithdrawForm({
       withdrawBps: withdrawFee.bps,
     },
   };
-  console.log({ meta });
 
   const values: FV = {
     ...meta,

@@ -27,9 +27,10 @@ export default function Form({ classes = "" }) {
           <>
             <Network />
             <Beneficiary />
-            <Breakdown />
           </>
         )}
+
+        <Breakdown />
 
         {chainName !== "Polygon" && (
           <>

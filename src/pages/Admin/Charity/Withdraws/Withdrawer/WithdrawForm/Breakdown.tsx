@@ -11,19 +11,30 @@ export default function Breakdown() {
     amounts.find((a) => a.tokenId === denoms.dusd)?.value ?? "0";
 
   const fv = getValues(); //doesn't trigger re-render
-  const { items: feeItems } = feeData({
+  const { items: feeItems, toReceive } = feeData({
     ...fv,
     destinationChainId,
     withdrawAmount: +usdcAmountStr,
   });
 
+  /**
+   * don't show breakdown if:
+   * - user has nothing to receive after fees
+   * - no fees applies
+   */
+  if (toReceive < 0 || feeItems.length < 1) return null;
+
   return (
     <div className="divide-y divide-prim">
       <p className="font-bold font-work mb-2">Summary</p>
       {feeItems
-        .filter((item) => item.value > 0)
+        .filter(
+          (item, idx) =>
+            item.value > 0 ||
+            idx === feeItems.length - 1 /** always show last item */
+        )
         .map(({ name, value }) => (
-          <Item title={name} value={value + " USDC"} />
+          <Item key={name} title={name} value={value + " USDC"} />
         ))}
     </div>
   );
