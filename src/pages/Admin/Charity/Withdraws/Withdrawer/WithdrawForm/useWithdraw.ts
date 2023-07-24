@@ -6,6 +6,7 @@ import { LogProcessor, SimulContractTx } from "types/evm";
 import { AccountType as CustomAccountType } from "types/lists";
 import { TxOnSuccess, TxSuccessMeta } from "types/tx";
 import { WithdrawMeta } from "types/tx";
+import { client } from "services/constants";
 import { version as v } from "services/helpers";
 import { useModalContext } from "contexts/ModalContext";
 import { TxPrompt } from "components/Prompt";
@@ -14,7 +15,7 @@ import { multisig as Multisig } from "contracts/evm/multisig";
 import useTxSender from "hooks/useTxSender";
 import { createAuthToken, logger, scaleToStr } from "helpers";
 import { getTagPayloads } from "helpers/admin";
-import { ap_wallets } from "constants/ap_wallets";
+import { apWallets } from "constants/ap-wallets";
 import { chainIds } from "constants/chainIds";
 import { EMAIL_SUPPORT } from "constants/env";
 import { ADDRESS_ZERO } from "constants/evm";
@@ -64,7 +65,7 @@ export default function useWithdraw() {
 
     const beneficiary = isPolygon
       ? fv.beneficiaryWallet
-      : ap_wallets.polygon_withdraw;
+      : apWallets.evmWithdraw;
 
     const metadata: WithdrawMeta = {
       beneficiary,
@@ -165,11 +166,14 @@ export default function useWithdraw() {
         };
 
         const generatedToken = createAuthToken("angelprotocol-web-app");
-        const response = await fetch(APIs.apes + `/${v(1)}/withdraw`, {
-          method: "POST",
-          headers: { authorization: generatedToken },
-          body: JSON.stringify(payload),
-        });
+        const response = await fetch(
+          APIs.apes + `/${v(3)}/withdraw/${client}`,
+          {
+            method: "POST",
+            headers: { authorization: generatedToken },
+            body: JSON.stringify(payload),
+          }
+        );
 
         if (!response.ok) {
           return showModal(TxPrompt, {
