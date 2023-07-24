@@ -358,7 +358,7 @@ export interface ICharityApplicationsInterface extends utils.Interface {
     "ApplicationConfirmationRevoked(uint256,address)": EventFragment;
     "ApplicationConfirmed(uint256,address)": EventFragment;
     "ApplicationExecuted(uint256)": EventFragment;
-    "ApplicationProposed(uint256)": EventFragment;
+    "ApplicationProposed(uint256,address,string,uint256)": EventFragment;
     "GasSent(uint256,address,uint256)": EventFragment;
     "SeedAssetSent(uint256,address,uint256)": EventFragment;
   };
@@ -410,9 +410,12 @@ export type ApplicationExecutedEventFilter =
 
 export interface ApplicationProposedEventObject {
   proposalId: BigNumber;
+  proposer: string;
+  charityName: string;
+  expiry: BigNumber;
 }
 export type ApplicationProposedEvent = TypedEvent<
-  [BigNumber],
+  [BigNumber, string, string, BigNumber],
   ApplicationProposedEventObject
 >;
 
@@ -674,10 +677,18 @@ export interface ICharityApplications extends BaseContract {
     ): ApplicationExecutedEventFilter;
     ApplicationExecuted(proposalId?: null): ApplicationExecutedEventFilter;
 
-    "ApplicationProposed(uint256)"(
-      proposalId?: null
+    "ApplicationProposed(uint256,address,string,uint256)"(
+      proposalId?: null,
+      proposer?: null,
+      charityName?: null,
+      expiry?: null
     ): ApplicationProposedEventFilter;
-    ApplicationProposed(proposalId?: null): ApplicationProposedEventFilter;
+    ApplicationProposed(
+      proposalId?: null,
+      proposer?: null,
+      charityName?: null,
+      expiry?: null
+    ): ApplicationProposedEventFilter;
 
     "GasSent(uint256,address,uint256)"(
       endowmentId?: null,

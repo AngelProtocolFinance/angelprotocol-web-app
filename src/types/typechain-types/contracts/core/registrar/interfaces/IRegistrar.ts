@@ -360,6 +360,8 @@ export interface IRegistrarInterface extends utils.Interface {
     "getRebalanceParams()": FunctionFragment;
     "getStrategyApprovalState(bytes4)": FunctionFragment;
     "getStrategyParamsById(bytes4)": FunctionFragment;
+    "getUniswapFactoryAddress()": FunctionFragment;
+    "getUniswapRouterAddress()": FunctionFragment;
     "getVaultOperatorApproved(address)": FunctionFragment;
     "isTokenAccepted(address)": FunctionFragment;
     "owner()": FunctionFragment;
@@ -375,8 +377,10 @@ export interface IRegistrarInterface extends utils.Interface {
     "setStrategyApprovalState(bytes4,uint8)": FunctionFragment;
     "setStrategyParams(bytes4,string,address,address,uint8)": FunctionFragment;
     "setTokenAccepted(address,bool)": FunctionFragment;
+    "setUniswapAddresses(address,address)": FunctionFragment;
     "setVaultOperatorApproved(address,bool)": FunctionFragment;
     "updateConfig((address,uint256,uint256,uint256,uint256,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address))": FunctionFragment;
+    "updateNetworkConnections(string,(uint256,address,address,string,string,address,uint256),uint8)": FunctionFragment;
     "updateNetworkConnections(string,(uint256,address,address,string,string,address,uint256),string)": FunctionFragment;
     "updateOwner(address)": FunctionFragment;
     "updateTokenPriceFeed(address,address)": FunctionFragment;
@@ -391,6 +395,8 @@ export interface IRegistrarInterface extends utils.Interface {
       | "getRebalanceParams"
       | "getStrategyApprovalState"
       | "getStrategyParamsById"
+      | "getUniswapFactoryAddress"
+      | "getUniswapRouterAddress"
       | "getVaultOperatorApproved"
       | "isTokenAccepted"
       | "owner"
@@ -406,9 +412,11 @@ export interface IRegistrarInterface extends utils.Interface {
       | "setStrategyApprovalState"
       | "setStrategyParams"
       | "setTokenAccepted"
+      | "setUniswapAddresses"
       | "setVaultOperatorApproved"
       | "updateConfig"
-      | "updateNetworkConnections"
+      | "updateNetworkConnections(string,(uint256,address,address,string,string,address,uint256),uint8)"
+      | "updateNetworkConnections(string,(uint256,address,address,string,string,address,uint256),string)"
       | "updateOwner"
       | "updateTokenPriceFeed"
   ): FunctionFragment;
@@ -440,6 +448,14 @@ export interface IRegistrarInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "getStrategyParamsById",
     values: [PromiseOrValue<BytesLike>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getUniswapFactoryAddress",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getUniswapRouterAddress",
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "getVaultOperatorApproved",
@@ -509,6 +525,10 @@ export interface IRegistrarInterface extends utils.Interface {
     values: [PromiseOrValue<string>, PromiseOrValue<boolean>]
   ): string;
   encodeFunctionData(
+    functionFragment: "setUniswapAddresses",
+    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "setVaultOperatorApproved",
     values: [PromiseOrValue<string>, PromiseOrValue<boolean>]
   ): string;
@@ -517,7 +537,15 @@ export interface IRegistrarInterface extends utils.Interface {
     values: [RegistrarMessages.UpdateConfigRequestStruct]
   ): string;
   encodeFunctionData(
-    functionFragment: "updateNetworkConnections",
+    functionFragment: "updateNetworkConnections(string,(uint256,address,address,string,string,address,uint256),uint8)",
+    values: [
+      PromiseOrValue<string>,
+      IAccountsStrategy.NetworkInfoStruct,
+      PromiseOrValue<BigNumberish>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "updateNetworkConnections(string,(uint256,address,address,string,string,address,uint256),string)",
     values: [
       PromiseOrValue<string>,
       IAccountsStrategy.NetworkInfoStruct,
@@ -559,6 +587,14 @@ export interface IRegistrarInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "getStrategyParamsById",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getUniswapFactoryAddress",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getUniswapRouterAddress",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -619,6 +655,10 @@ export interface IRegistrarInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "setUniswapAddresses",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "setVaultOperatorApproved",
     data: BytesLike
   ): Result;
@@ -627,7 +667,11 @@ export interface IRegistrarInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "updateNetworkConnections",
+    functionFragment: "updateNetworkConnections(string,(uint256,address,address,string,string,address,uint256),uint8)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "updateNetworkConnections(string,(uint256,address,address,string,string,address,uint256),string)",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -644,6 +688,8 @@ export interface IRegistrarInterface extends utils.Interface {
     "AngelProtocolParamsUpdated()": EventFragment;
     "FeeSettingsUpdated(uint8,uint256,address)": EventFragment;
     "GasFeeUpdated(address,uint256)": EventFragment;
+    "NetworkConnectionPosted(uint256)": EventFragment;
+    "NetworkConnectionRemoved(uint256)": EventFragment;
     "RebalanceParamsUpdated()": EventFragment;
     "StrategyApprovalUpdated(bytes4,uint8)": EventFragment;
     "StrategyParamsUpdated(bytes4,string,address,address,uint8)": EventFragment;
@@ -656,6 +702,8 @@ export interface IRegistrarInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: "AngelProtocolParamsUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "FeeSettingsUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "GasFeeUpdated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "NetworkConnectionPosted"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "NetworkConnectionRemoved"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RebalanceParamsUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "StrategyApprovalUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "StrategyParamsUpdated"): EventFragment;
@@ -706,6 +754,28 @@ export type GasFeeUpdatedEvent = TypedEvent<
 >;
 
 export type GasFeeUpdatedEventFilter = TypedEventFilter<GasFeeUpdatedEvent>;
+
+export interface NetworkConnectionPostedEventObject {
+  chainId: BigNumber;
+}
+export type NetworkConnectionPostedEvent = TypedEvent<
+  [BigNumber],
+  NetworkConnectionPostedEventObject
+>;
+
+export type NetworkConnectionPostedEventFilter =
+  TypedEventFilter<NetworkConnectionPostedEvent>;
+
+export interface NetworkConnectionRemovedEventObject {
+  chainId: BigNumber;
+}
+export type NetworkConnectionRemovedEvent = TypedEvent<
+  [BigNumber],
+  NetworkConnectionRemovedEventObject
+>;
+
+export type NetworkConnectionRemovedEventFilter =
+  TypedEventFilter<NetworkConnectionRemovedEvent>;
 
 export interface RebalanceParamsUpdatedEventObject {}
 export type RebalanceParamsUpdatedEvent = TypedEvent<
@@ -815,6 +885,10 @@ export interface IRegistrar extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[LocalRegistrarLib.StrategyParamsStructOutput]>;
 
+    getUniswapFactoryAddress(overrides?: CallOverrides): Promise<[string]>;
+
+    getUniswapRouterAddress(overrides?: CallOverrides): Promise<[string]>;
+
     getVaultOperatorApproved(
       _operator: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -899,6 +973,12 @@ export interface IRegistrar extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    setUniswapAddresses(
+      _uniswapRouter: PromiseOrValue<string>,
+      _uniswapFactory: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     setVaultOperatorApproved(
       _operator: PromiseOrValue<string>,
       _isApproved: PromiseOrValue<boolean>,
@@ -910,7 +990,14 @@ export interface IRegistrar extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    updateNetworkConnections(
+    "updateNetworkConnections(string,(uint256,address,address,string,string,address,uint256),uint8)"(
+      networkName: PromiseOrValue<string>,
+      networkInfo: IAccountsStrategy.NetworkInfoStruct,
+      action: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "updateNetworkConnections(string,(uint256,address,address,string,string,address,uint256),string)"(
       networkName: PromiseOrValue<string>,
       networkInfo: IAccountsStrategy.NetworkInfoStruct,
       action: PromiseOrValue<string>,
@@ -961,6 +1048,10 @@ export interface IRegistrar extends BaseContract {
     _strategyId: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides
   ): Promise<LocalRegistrarLib.StrategyParamsStructOutput>;
+
+  getUniswapFactoryAddress(overrides?: CallOverrides): Promise<string>;
+
+  getUniswapRouterAddress(overrides?: CallOverrides): Promise<string>;
 
   getVaultOperatorApproved(
     _operator: PromiseOrValue<string>,
@@ -1040,6 +1131,12 @@ export interface IRegistrar extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  setUniswapAddresses(
+    _uniswapRouter: PromiseOrValue<string>,
+    _uniswapFactory: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   setVaultOperatorApproved(
     _operator: PromiseOrValue<string>,
     _isApproved: PromiseOrValue<boolean>,
@@ -1051,7 +1148,14 @@ export interface IRegistrar extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  updateNetworkConnections(
+  "updateNetworkConnections(string,(uint256,address,address,string,string,address,uint256),uint8)"(
+    networkName: PromiseOrValue<string>,
+    networkInfo: IAccountsStrategy.NetworkInfoStruct,
+    action: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "updateNetworkConnections(string,(uint256,address,address,string,string,address,uint256),string)"(
     networkName: PromiseOrValue<string>,
     networkInfo: IAccountsStrategy.NetworkInfoStruct,
     action: PromiseOrValue<string>,
@@ -1102,6 +1206,10 @@ export interface IRegistrar extends BaseContract {
       _strategyId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<LocalRegistrarLib.StrategyParamsStructOutput>;
+
+    getUniswapFactoryAddress(overrides?: CallOverrides): Promise<string>;
+
+    getUniswapRouterAddress(overrides?: CallOverrides): Promise<string>;
 
     getVaultOperatorApproved(
       _operator: PromiseOrValue<string>,
@@ -1181,6 +1289,12 @@ export interface IRegistrar extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    setUniswapAddresses(
+      _uniswapRouter: PromiseOrValue<string>,
+      _uniswapFactory: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     setVaultOperatorApproved(
       _operator: PromiseOrValue<string>,
       _isApproved: PromiseOrValue<boolean>,
@@ -1192,7 +1306,14 @@ export interface IRegistrar extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    updateNetworkConnections(
+    "updateNetworkConnections(string,(uint256,address,address,string,string,address,uint256),uint8)"(
+      networkName: PromiseOrValue<string>,
+      networkInfo: IAccountsStrategy.NetworkInfoStruct,
+      action: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "updateNetworkConnections(string,(uint256,address,address,string,string,address,uint256),string)"(
       networkName: PromiseOrValue<string>,
       networkInfo: IAccountsStrategy.NetworkInfoStruct,
       action: PromiseOrValue<string>,
@@ -1240,6 +1361,18 @@ export interface IRegistrar extends BaseContract {
       _gasFee?: null
     ): GasFeeUpdatedEventFilter;
     GasFeeUpdated(_tokenAddr?: null, _gasFee?: null): GasFeeUpdatedEventFilter;
+
+    "NetworkConnectionPosted(uint256)"(
+      chainId?: null
+    ): NetworkConnectionPostedEventFilter;
+    NetworkConnectionPosted(chainId?: null): NetworkConnectionPostedEventFilter;
+
+    "NetworkConnectionRemoved(uint256)"(
+      chainId?: null
+    ): NetworkConnectionRemovedEventFilter;
+    NetworkConnectionRemoved(
+      chainId?: null
+    ): NetworkConnectionRemovedEventFilter;
 
     "RebalanceParamsUpdated()"(): RebalanceParamsUpdatedEventFilter;
     RebalanceParamsUpdated(): RebalanceParamsUpdatedEventFilter;
@@ -1307,6 +1440,10 @@ export interface IRegistrar extends BaseContract {
       _strategyId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    getUniswapFactoryAddress(overrides?: CallOverrides): Promise<BigNumber>;
+
+    getUniswapRouterAddress(overrides?: CallOverrides): Promise<BigNumber>;
 
     getVaultOperatorApproved(
       _operator: PromiseOrValue<string>,
@@ -1384,6 +1521,12 @@ export interface IRegistrar extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    setUniswapAddresses(
+      _uniswapRouter: PromiseOrValue<string>,
+      _uniswapFactory: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     setVaultOperatorApproved(
       _operator: PromiseOrValue<string>,
       _isApproved: PromiseOrValue<boolean>,
@@ -1395,7 +1538,14 @@ export interface IRegistrar extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    updateNetworkConnections(
+    "updateNetworkConnections(string,(uint256,address,address,string,string,address,uint256),uint8)"(
+      networkName: PromiseOrValue<string>,
+      networkInfo: IAccountsStrategy.NetworkInfoStruct,
+      action: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "updateNetworkConnections(string,(uint256,address,address,string,string,address,uint256),string)"(
       networkName: PromiseOrValue<string>,
       networkInfo: IAccountsStrategy.NetworkInfoStruct,
       action: PromiseOrValue<string>,
@@ -1445,6 +1595,14 @@ export interface IRegistrar extends BaseContract {
 
     getStrategyParamsById(
       _strategyId: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getUniswapFactoryAddress(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getUniswapRouterAddress(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -1526,6 +1684,12 @@ export interface IRegistrar extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
+    setUniswapAddresses(
+      _uniswapRouter: PromiseOrValue<string>,
+      _uniswapFactory: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     setVaultOperatorApproved(
       _operator: PromiseOrValue<string>,
       _isApproved: PromiseOrValue<boolean>,
@@ -1537,7 +1701,14 @@ export interface IRegistrar extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    updateNetworkConnections(
+    "updateNetworkConnections(string,(uint256,address,address,string,string,address,uint256),uint8)"(
+      networkName: PromiseOrValue<string>,
+      networkInfo: IAccountsStrategy.NetworkInfoStruct,
+      action: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "updateNetworkConnections(string,(uint256,address,address,string,string,address,uint256),string)"(
       networkName: PromiseOrValue<string>,
       networkInfo: IAccountsStrategy.NetworkInfoStruct,
       action: PromiseOrValue<string>,

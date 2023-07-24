@@ -30,10 +30,14 @@ export interface IGasFwdFactoryInterface extends utils.Interface {
   functions: {
     "create()": FunctionFragment;
     "updateImplementation(address)": FunctionFragment;
+    "updateRegistrar(address)": FunctionFragment;
   };
 
   getFunction(
-    nameOrSignatureOrTopic: "create" | "updateImplementation"
+    nameOrSignatureOrTopic:
+      | "create"
+      | "updateImplementation"
+      | "updateRegistrar"
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: "create", values?: undefined): string;
@@ -41,10 +45,18 @@ export interface IGasFwdFactoryInterface extends utils.Interface {
     functionFragment: "updateImplementation",
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(
+    functionFragment: "updateRegistrar",
+    values: [PromiseOrValue<string>]
+  ): string;
 
   decodeFunctionResult(functionFragment: "create", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "updateImplementation",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "updateRegistrar",
     data: BytesLike
   ): Result;
 
@@ -97,6 +109,11 @@ export interface IGasFwdFactory extends BaseContract {
       _impl: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
+
+    updateRegistrar(
+      _impl: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
   };
 
   create(
@@ -108,10 +125,20 @@ export interface IGasFwdFactory extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  updateRegistrar(
+    _impl: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   callStatic: {
     create(overrides?: CallOverrides): Promise<string>;
 
     updateImplementation(
+      _impl: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    updateRegistrar(
       _impl: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -131,6 +158,11 @@ export interface IGasFwdFactory extends BaseContract {
       _impl: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
+
+    updateRegistrar(
+      _impl: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -139,6 +171,11 @@ export interface IGasFwdFactory extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     updateImplementation(
+      _impl: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    updateRegistrar(
       _impl: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;

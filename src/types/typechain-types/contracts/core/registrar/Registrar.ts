@@ -27,24 +27,6 @@ import type {
   PromiseOrValue,
 } from "../../../common";
 
-export declare namespace APGoldfinchConfigLib {
-  export type CRVParamsStruct = {
-    allowedSlippage: PromiseOrValue<BigNumberish>;
-  };
-
-  export type CRVParamsStructOutput = [BigNumber] & {
-    allowedSlippage: BigNumber;
-  };
-
-  export type APGoldfinchConfigStruct = {
-    crvParams: APGoldfinchConfigLib.CRVParamsStruct;
-  };
-
-  export type APGoldfinchConfigStructOutput = [
-    APGoldfinchConfigLib.CRVParamsStructOutput
-  ] & { crvParams: APGoldfinchConfigLib.CRVParamsStructOutput };
-}
-
 export declare namespace LocalRegistrarLib {
   export type AngelProtocolParamsStruct = {
     routerAddr: PromiseOrValue<string>;
@@ -393,7 +375,6 @@ export declare namespace IAccountsStrategy {
 
 export interface RegistrarInterface extends utils.Interface {
   functions: {
-    "getAPGoldfinchParams()": FunctionFragment;
     "getAccountsContractAddressByChain(string)": FunctionFragment;
     "getAngelProtocolParams()": FunctionFragment;
     "getFeeSettingsByFeeType(uint8)": FunctionFragment;
@@ -413,7 +394,6 @@ export interface RegistrarInterface extends utils.Interface {
     "queryNetworkConnection(string)": FunctionFragment;
     "queryTokenPriceFeed(address)": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
-    "setAPGoldfinchParams(((uint256)))": FunctionFragment;
     "setAccountsContractAddressByChain(string,string)": FunctionFragment;
     "setAngelProtocolParams((address,address))": FunctionFragment;
     "setFeeSettingsByFeesType(uint8,uint256,address)": FunctionFragment;
@@ -426,13 +406,12 @@ export interface RegistrarInterface extends utils.Interface {
     "setVaultOperatorApproved(address,bool)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
     "updateConfig((address,uint256,uint256,uint256,uint256,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address))": FunctionFragment;
-    "updateNetworkConnections(string,(uint256,address,address,string,string,address,uint256),string)": FunctionFragment;
+    "updateNetworkConnections(string,(uint256,address,address,string,string,address,uint256),uint8)": FunctionFragment;
     "updateTokenPriceFeed(address,address)": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "getAPGoldfinchParams"
       | "getAccountsContractAddressByChain"
       | "getAngelProtocolParams"
       | "getFeeSettingsByFeeType"
@@ -452,7 +431,6 @@ export interface RegistrarInterface extends utils.Interface {
       | "queryNetworkConnection"
       | "queryTokenPriceFeed"
       | "renounceOwnership"
-      | "setAPGoldfinchParams"
       | "setAccountsContractAddressByChain"
       | "setAngelProtocolParams"
       | "setFeeSettingsByFeesType"
@@ -469,10 +447,6 @@ export interface RegistrarInterface extends utils.Interface {
       | "updateTokenPriceFeed"
   ): FunctionFragment;
 
-  encodeFunctionData(
-    functionFragment: "getAPGoldfinchParams",
-    values?: undefined
-  ): string;
   encodeFunctionData(
     functionFragment: "getAccountsContractAddressByChain",
     values: [PromiseOrValue<string>]
@@ -547,10 +521,6 @@ export interface RegistrarInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "setAPGoldfinchParams",
-    values: [APGoldfinchConfigLib.APGoldfinchConfigStruct]
-  ): string;
-  encodeFunctionData(
     functionFragment: "setAccountsContractAddressByChain",
     values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
@@ -613,7 +583,7 @@ export interface RegistrarInterface extends utils.Interface {
     values: [
       PromiseOrValue<string>,
       IAccountsStrategy.NetworkInfoStruct,
-      PromiseOrValue<string>
+      PromiseOrValue<BigNumberish>
     ]
   ): string;
   encodeFunctionData(
@@ -621,10 +591,6 @@ export interface RegistrarInterface extends utils.Interface {
     values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
 
-  decodeFunctionResult(
-    functionFragment: "getAPGoldfinchParams",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(
     functionFragment: "getAccountsContractAddressByChain",
     data: BytesLike
@@ -696,10 +662,6 @@ export interface RegistrarInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "renounceOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setAPGoldfinchParams",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -958,10 +920,6 @@ export interface Registrar extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    getAPGoldfinchParams(
-      overrides?: CallOverrides
-    ): Promise<[APGoldfinchConfigLib.APGoldfinchConfigStructOutput]>;
-
     getAccountsContractAddressByChain(
       _targetChain: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -1046,11 +1004,6 @@ export interface Registrar extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    setAPGoldfinchParams(
-      _apGoldfinch: APGoldfinchConfigLib.APGoldfinchConfigStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
     setAccountsContractAddressByChain(
       _chainName: PromiseOrValue<string>,
       _accountsContractAddress: PromiseOrValue<string>,
@@ -1126,7 +1079,7 @@ export interface Registrar extends BaseContract {
     updateNetworkConnections(
       networkName: PromiseOrValue<string>,
       networkInfo: IAccountsStrategy.NetworkInfoStruct,
-      action: PromiseOrValue<string>,
+      action: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -1136,10 +1089,6 @@ export interface Registrar extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
-
-  getAPGoldfinchParams(
-    overrides?: CallOverrides
-  ): Promise<APGoldfinchConfigLib.APGoldfinchConfigStructOutput>;
 
   getAccountsContractAddressByChain(
     _targetChain: PromiseOrValue<string>,
@@ -1219,11 +1168,6 @@ export interface Registrar extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  setAPGoldfinchParams(
-    _apGoldfinch: APGoldfinchConfigLib.APGoldfinchConfigStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
   setAccountsContractAddressByChain(
     _chainName: PromiseOrValue<string>,
     _accountsContractAddress: PromiseOrValue<string>,
@@ -1299,7 +1243,7 @@ export interface Registrar extends BaseContract {
   updateNetworkConnections(
     networkName: PromiseOrValue<string>,
     networkInfo: IAccountsStrategy.NetworkInfoStruct,
-    action: PromiseOrValue<string>,
+    action: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -1310,10 +1254,6 @@ export interface Registrar extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    getAPGoldfinchParams(
-      overrides?: CallOverrides
-    ): Promise<APGoldfinchConfigLib.APGoldfinchConfigStructOutput>;
-
     getAccountsContractAddressByChain(
       _targetChain: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -1387,11 +1327,6 @@ export interface Registrar extends BaseContract {
     ): Promise<string>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
-
-    setAPGoldfinchParams(
-      _apGoldfinch: APGoldfinchConfigLib.APGoldfinchConfigStruct,
-      overrides?: CallOverrides
-    ): Promise<void>;
 
     setAccountsContractAddressByChain(
       _chainName: PromiseOrValue<string>,
@@ -1468,7 +1403,7 @@ export interface Registrar extends BaseContract {
     updateNetworkConnections(
       networkName: PromiseOrValue<string>,
       networkInfo: IAccountsStrategy.NetworkInfoStruct,
-      action: PromiseOrValue<string>,
+      action: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1574,8 +1509,6 @@ export interface Registrar extends BaseContract {
   };
 
   estimateGas: {
-    getAPGoldfinchParams(overrides?: CallOverrides): Promise<BigNumber>;
-
     getAccountsContractAddressByChain(
       _targetChain: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -1645,11 +1578,6 @@ export interface Registrar extends BaseContract {
     ): Promise<BigNumber>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    setAPGoldfinchParams(
-      _apGoldfinch: APGoldfinchConfigLib.APGoldfinchConfigStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1728,7 +1656,7 @@ export interface Registrar extends BaseContract {
     updateNetworkConnections(
       networkName: PromiseOrValue<string>,
       networkInfo: IAccountsStrategy.NetworkInfoStruct,
-      action: PromiseOrValue<string>,
+      action: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1740,10 +1668,6 @@ export interface Registrar extends BaseContract {
   };
 
   populateTransaction: {
-    getAPGoldfinchParams(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     getAccountsContractAddressByChain(
       _targetChain: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -1826,11 +1750,6 @@ export interface Registrar extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    setAPGoldfinchParams(
-      _apGoldfinch: APGoldfinchConfigLib.APGoldfinchConfigStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
     setAccountsContractAddressByChain(
       _chainName: PromiseOrValue<string>,
       _accountsContractAddress: PromiseOrValue<string>,
@@ -1906,7 +1825,7 @@ export interface Registrar extends BaseContract {
     updateNetworkConnections(
       networkName: PromiseOrValue<string>,
       networkInfo: IAccountsStrategy.NetworkInfoStruct,
-      action: PromiseOrValue<string>,
+      action: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
