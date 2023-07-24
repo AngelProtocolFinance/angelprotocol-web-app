@@ -285,3 +285,20 @@ export const {
   useWithdrawDataQuery,
   useApplicationQuery,
 } = customApi;
+
+type Result<T> = { data: T } | { errors: unknown };
+function graphQL<T>(query: string): Promise<T> {
+  return fetch("https://graphql.cosmwasm.com/v1/graphql", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ query }),
+  })
+    .then<Result<T>>((res) => {
+      if (!res.ok) throw new Error(`Failed grapQL request:${query}`);
+      return res.json();
+    })
+    .then((data) => {
+      if ("errors" in data) throw new Error(`Failed grapQL request:${query}`);
+      return data.data;
+    });
+}
