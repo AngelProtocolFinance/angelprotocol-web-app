@@ -65,10 +65,8 @@ export const feeData = ({
 
   const withdrawAmountDec = new Decimal(withdrawAmount);
 
-  const _bridgeFee = bridgeFee(destinationChainId, bridgeFees);
-
   const withdrawFee = withdrawAmountDec
-    .mul(protocolFeeRates.withdrawBps)
+    .mul(protocolFeeRates.withdrawBps + endowFeeRates.withdrawBps)
     .div(FEE_BASIS);
 
   const earlyLockedWithdrawFee = (() => {
@@ -98,6 +96,7 @@ export const feeData = ({
       ? toDepositAmount.mul(endowFeeRates.depositBps).div(FEE_BASIS)
       : new Decimal(0);
 
+  const _bridgeFee = bridgeFee(destinationChainId, bridgeFees);
   const totalFee = withdrawFee
     .add(earlyLockedWithdrawFee)
     .add(depositFee)
@@ -109,19 +108,19 @@ export const feeData = ({
     value: number;
   };
   const items: FeeItem[] = [
-    { name: "Withdraw Fee", value: roundDownToNum(withdrawFee, 6) },
+    { name: "Withdraw Fee", value: roundDownToNum(withdrawFee) },
     {
       name: "Early Withdraw Fee",
-      value: roundDownToNum(earlyLockedWithdrawFee, 6),
+      value: roundDownToNum(earlyLockedWithdrawFee),
     },
-    { name: "Transfer Fee", value: roundDownToNum(depositFee, 6) },
-    { name: "Bridge Fee", value: roundDownToNum(_bridgeFee, 6) },
-    { name: "To Receive", value: roundDownToNum(toReceive, 6) },
+    { name: "Transfer Fee", value: roundDownToNum(depositFee) },
+    { name: "Bridge Fee", value: roundDownToNum(_bridgeFee) },
+    { name: "To Receive", value: roundDownToNum(toReceive) },
   ];
 
   return {
     items,
-    totalFee: roundDownToNum(totalFee, 6),
-    toReceive: roundDownToNum(toReceive, 6),
+    totalFee: roundDownToNum(totalFee),
+    toReceive: roundDownToNum(toReceive),
   };
 };
