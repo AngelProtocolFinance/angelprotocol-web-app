@@ -16,6 +16,17 @@ export type TransactionsRes = GraphQLRes<{
   multsigTransactions: TransactionRes[];
 }>;
 
+export type Paginated<T extends any[]> = {
+  items: T;
+  next?: number;
+};
+
+export type TransactionsArgs = {
+  multisig: string;
+  page: number;
+  status: TransactionStatus;
+};
+
 export type Transaction = {
   id: number;
   title: string;

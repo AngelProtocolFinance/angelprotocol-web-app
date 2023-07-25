@@ -5,9 +5,14 @@ import {
   retry,
 } from "@reduxjs/toolkit/query/react";
 import Decimal from "decimal.js";
-import { Transaction, TransactionsRes } from "./types";
+import {
+  Paginated,
+  Transaction,
+  TransactionsArgs,
+  TransactionsRes,
+} from "./types";
 import { TransactionStatus } from "types/lists";
-import { hasElapsed } from "helpers/admin";
+import { blockTime, hasElapsed } from "helpers/admin";
 
 type Result = { result: string };
 
@@ -23,35 +28,55 @@ const customBaseQuery: BaseQueryFn = retry(
   { maxRetries: 1 }
 );
 
+const TX_PER_PAGE = 5;
 export const subgraph = createApi({
   reducerPath: "subgraph",
   baseQuery: customBaseQuery,
   endpoints: (builder) => ({
-    proposals: builder.query<Transaction[], unknown>({
-      query: () => ({
-        method: "POST",
-        body: {
-          query: `{
-            multiSigTransactions(orderBy: transactionId, orderDirection: desc) {
-              executed
-              expiry
-              transactionId
-              confirmations {
-                owner {
-                  id
+    proposals: builder.query<Paginated<Transaction[]>, TransactionsArgs>({
+      query: ({ page, status, multisig }) => {
+        const skip = (page - 1) * TX_PER_PAGE;
+
+        const statusClause =
+          status === "expired"
+            ? `executed: false, expiry_lt:${blockTime("now")}`
+            : status === "open"
+            ? `executed: false, expiry_gte:${blockTime("now")}`
+            : `executed: true`;
+
+        return {
+          method: "POST",
+          body: {
+            query: `{
+              multiSigTransactions(
+                orderBy: transactionId
+                orderDirection: desc
+                skip: ${skip}
+                first: ${TX_PER_PAGE}
+                where: { 
+                  multiSig: ${multisig}, 
+                  ${statusClause},
+              ) {
+                executed
+                expiry
+                transactionId
+                multiSig {
+                  owners {
+                    id
+                  }
+                },
+                confirmations {
+                  owner {
+                    id
+                  }
                 }
               }
-              multiSig {
-                owners {
-                  id
-                }
-              }
-            }
-          }`,
-        },
-      }),
-      transformResponse: (res: TransactionsRes) => {
-        return res.data.multsigTransactions.map((t) => {
+            }`,
+          },
+        };
+      },
+      transformResponse: (res: TransactionsRes, api, { page, status }) => {
+        const transactions = res.data.multsigTransactions.map((t) => {
           const status: TransactionStatus = t.executed
             ? "approved"
             : hasElapsed(t.expiry)
@@ -73,6 +98,11 @@ export const subgraph = createApi({
             owners: t.multiSig.owners.map((o) => o.id.toLowerCase()),
           };
         });
+
+        return {
+          items: transactions,
+          next: transactions.length < TX_PER_PAGE ? undefined : page + 1,
+        };
       },
     }),
     latestBlock: builder.query<string, unknown>({
