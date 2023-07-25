@@ -4,7 +4,6 @@ import {
   fetchBaseQuery,
   retry,
 } from "@reduxjs/toolkit/query/react";
-import Decimal from "decimal.js";
 import {
   Paginated,
   Transaction,
@@ -13,8 +12,6 @@ import {
 } from "./types";
 import { TransactionStatus } from "types/lists";
 import { blockTime, hasElapsed } from "helpers/admin";
-
-type Result = { result: string };
 
 const GRAPHQL_ENDPOINT =
   "https://api.studio.thegraph.com/query/49156/angel-giving/version/latest";
@@ -37,12 +34,18 @@ export const subgraph = createApi({
       query: ({ page, status, multisig }) => {
         const skip = (page - 1) * TX_PER_PAGE;
 
-        const statusClause =
-          status === "expired"
-            ? `executed: false, expiry_lt:"${blockTime("now")}"`
-            : status === "open"
-            ? `executed: false, expiry_gte:"${blockTime("now")}"`
-            : `executed: true`;
+        const statusClause = ((status) => {
+          switch (status) {
+            case "expired":
+              return `executed: false, expiry_lt:"${blockTime("now")}"`;
+            case "open":
+              return `executed: false, expiry_gte:"${blockTime("now")}"`;
+            case "approved":
+              return `executed: true`;
+            default:
+              return "";
+          }
+        })(status);
 
         return {
           method: "POST",
@@ -105,16 +108,11 @@ export const subgraph = createApi({
         };
       },
     }),
-    latestBlock: builder.query<string, unknown>({
-      query: () => ({
-        method: "POST",
-        body: { jsonrpc: "2.0", id: 1, method: "eth_blockNumber", params: [] },
-      }),
-      transformResponse: (res: Result) => {
-        return new Decimal(res.result).toString();
-      },
-    }),
   }),
 });
 
-export const { useProposalsQuery, useLazyProposalsQuery } = subgraph;
+export const {
+  useProposalsQuery,
+  useLazyProposalsQuery,
+  util: { updateQueryData: updateSubgraphQueryData },
+} = subgraph;

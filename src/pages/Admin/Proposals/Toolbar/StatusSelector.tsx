@@ -33,4 +33,5 @@ const pollStatusOptions: { [key in ProposalStatusOptions]: string } = {
   open: "open",
   approved: "approved",
   expired: "expired",
+  all: "all",
 };

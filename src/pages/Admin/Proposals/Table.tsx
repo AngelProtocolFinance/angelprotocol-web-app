@@ -1,18 +1,19 @@
 import { Link } from "react-router-dom";
-import { Transaction } from "types/tx";
+import { Transaction } from "services/subgraph";
 import TableSection, { Cells } from "components/TableSection";
 import { adminRoutes } from "constants/routes";
 
 type Props = {
-  proposals: Transaction[];
+  txs: Transaction[];
   classes?: string;
   more?: (() => void) | "loading";
 };
-export default function Table({ proposals, classes = "", more }: Props) {
+export default function Table({ txs, classes = "", more }: Props) {
   return (
     <table
       className={
-        classes + " outline rounded outline-gray-l3 dark:outline-bluegray"
+        classes +
+        " outline outline-1 rounded outline-gray-l3 dark:outline-bluegray"
       }
     >
       <TableSection
@@ -31,8 +32,8 @@ export default function Table({ proposals, classes = "", more }: Props) {
         rowClass="last:border-none border-b border-prim divide-x divide-prim hover:bg-orange-l5 hover:dark:bg-bluegray"
         type="tbody"
       >
-        {proposals
-          .map(({ metadata, status, id }) => (
+        {txs
+          .map(({ title, status, id }) => (
             <Cells type="td" cellClass="py-3 px-4" key={id}>
               <td className="uppercase text-xs font-semibold text-center">
                 <span
@@ -49,7 +50,7 @@ export default function Table({ proposals, classes = "", more }: Props) {
                 to={`../${adminRoutes.proposal}/${id}`}
                 className="text-sm hover:text-blue dark:text-blue-l2 block max-w-[11.5rem] @xl:max-w-lg overflow-hidden text-ellipsis"
               >
-                {metadata?.title ?? `Proposal id: ${id}`}
+                {title}
               </Link>
             </Cells>
           ))

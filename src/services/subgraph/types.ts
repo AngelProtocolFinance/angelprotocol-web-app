@@ -24,7 +24,7 @@ export type Paginated<T extends any[]> = {
 export type TransactionsArgs = {
   multisig: string;
   page: number;
-  status: TransactionStatus;
+  status?: TransactionStatus;
 };
 
 export type Transaction = {
