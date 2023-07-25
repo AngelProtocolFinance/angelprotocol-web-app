@@ -149,12 +149,11 @@ export declare namespace AccountMessages {
   export type ConfigResponseStruct = {
     owner: PromiseOrValue<string>;
     version: PromiseOrValue<string>;
+    networkName: PromiseOrValue<string>;
     registrarContract: PromiseOrValue<string>;
     nextAccountId: PromiseOrValue<BigNumberish>;
     maxGeneralCategoryId: PromiseOrValue<BigNumberish>;
     subDao: PromiseOrValue<string>;
-    gateway: PromiseOrValue<string>;
-    gasReceiver: PromiseOrValue<string>;
     earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct;
   };
 
@@ -162,21 +161,19 @@ export declare namespace AccountMessages {
     string,
     string,
     string,
+    string,
     BigNumber,
     BigNumber,
-    string,
-    string,
     string,
     LibAccounts.FeeSettingStructOutput
   ] & {
     owner: string;
     version: string;
+    networkName: string;
     registrarContract: string;
     nextAccountId: BigNumber;
     maxGeneralCategoryId: BigNumber;
     subDao: string;
-    gateway: string;
-    gasReceiver: string;
     earlyLockedWithdrawFee: LibAccounts.FeeSettingStructOutput;
   };
 

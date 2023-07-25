@@ -23,7 +23,7 @@ import { adminRoutes, appRoutes } from "constants/routes";
 import { tokens } from "constants/tokens";
 import { APIs } from "constants/urls";
 import { TxMeta, isTooltip, useAdminContext } from "../../../../Context";
-import { fee, names } from "./helpers";
+import { bridgeFee, chainName } from "./helpers";
 
 const LOG_ERROR = "error";
 
@@ -41,7 +41,7 @@ type WithdrawLogPayload = {
 
 export default function useWithdraw() {
   const { handleSubmit, watch, getValues } = useFormContext<FV>();
-  const type = watch("type");
+  const accountType = watch("accountType");
 
   const {
     multisig,
@@ -49,21 +49,23 @@ export default function useWithdraw() {
     txResource,
     ...endow
   } = useAdminContext<"charity">([
-    type === "liquid" ? "withdraw-liquid" : "withdraw-locked",
+    accountType === "liquid" ? "withdraw-liquid" : "withdraw-locked",
   ]);
 
   const { showModal } = useModalContext();
   const sendTx = useTxSender();
 
-  const network = watch("network");
+  const destinationChainId = watch("destinationChainId");
   async function withdraw(fv: FV) {
     if (isTooltip(txResource)) throw new Error(txResource);
 
-    const accType: AccountType = fv.type === "locked" ? 0 : 1;
-    const isPolygon = fv.network === chainIds.polygon;
-    const isLocked = fv.type === "locked";
+    const accType: AccountType = fv.accountType === "locked" ? 0 : 1;
+    const isPolygon = fv.destinationChainId === chainIds.polygon;
+    const isLocked = fv.accountType === "locked";
 
-    const beneficiary = isPolygon ? fv.beneficiary : apWallets.evmWithdraw;
+    const beneficiary = isPolygon
+      ? fv.beneficiaryWallet
+      : apWallets.evmWithdraw;
 
     const metadata: WithdrawMeta = {
       beneficiary,
@@ -88,8 +90,8 @@ export default function useWithdraw() {
       },
       {
         content: metadata,
-        title: `${fv.type} withdraw `,
-        description: `${fv.type} withdraw from endowment id: ${endowmentId}`,
+        title: `${fv.accountType} withdraw `,
+        description: `${fv.accountType} withdraw from endowment id: ${endowmentId}`,
       }
     );
 
@@ -156,9 +158,9 @@ export default function useWithdraw() {
           denomination: tokens[fv.amounts[0].tokenId].symbol,
           endowment_id: endowmentId,
           endowment_multisig: multisig,
-          target_chain: fv.network,
-          target_wallet: fv.beneficiary,
-          type: fv.type,
+          target_chain: fv.destinationChainId,
+          target_wallet: fv.beneficiaryWallet,
+          type: fv.accountType,
           /** undefined proposalID means withdraw is direct */
           ...(proposalID ? { proposal_id: proposalID } : {}),
         };
@@ -209,10 +211,10 @@ export default function useWithdraw() {
 
   return {
     withdraw: handleSubmit(withdraw),
-    fee: fee(network, getValues("fees")),
-    network: names(network),
+    bridgeFee: bridgeFee(destinationChainId, getValues("bridgeFees")),
+    chainName: chainName(destinationChainId),
     tooltip: isTooltip(txResource) ? txResource : undefined,
-    type,
+    accountType,
   };
 }
 

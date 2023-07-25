@@ -18,6 +18,7 @@ import {
   IIndexFund,
   IndexFundStorage,
 } from "types/typechain-types/contracts/core/index-fund/IndexFund";
+import { LibAccounts as RegistrarLibAccounts } from "types/typechain-types/contracts/core/registrar/LocalRegistrar";
 import { RegistrarStorage } from "types/typechain-types/contracts/core/registrar/interfaces/IRegistrar";
 import { DecodedApplicationProposal } from "types/typechain-types/custom";
 import { accounts } from "contracts/evm/Account";
@@ -76,6 +77,35 @@ export const queryObjects: {
         wMaticAddress: d.wMaticAddress.toLowerCase(),
         cw900lvAddress: d.cw900lvAddress.toLowerCase(),
         gasFwdFactory: d.gasFwdFactory.toLowerCase(),
+      };
+    },
+  ],
+  "registrar.fee-setting": [
+    ({ type }) => {
+      const feeType = (() => {
+        switch (type) {
+          case "Harvest":
+            return 1;
+          case "WithdrawCharity":
+            return 2;
+          case "WithdrawNormal":
+            return 3;
+          case "EarlyLockedWithdrawCharity":
+            return 4;
+          case "EarlyLockedWithdrawNormal":
+            return 5;
+          default: //Default
+            return 0;
+        }
+      })();
+      return registrar.encodeFunctionData("getFeeSettingsByFeeType", [feeType]);
+    },
+    (result) => {
+      const d: RegistrarLibAccounts.FeeSettingStructOutput =
+        registrar.decodeFunctionResult("getFeeSettingsByFeeType", result)[0];
+      return {
+        payoutAddress: d.payoutAddress.toLowerCase(),
+        bps: d.bps.toNumber(),
       };
     },
   ],

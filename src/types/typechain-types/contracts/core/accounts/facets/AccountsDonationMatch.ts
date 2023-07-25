@@ -86,20 +86,20 @@ export declare namespace AccountMessages {
 
 export interface AccountsDonationMatchInterface extends utils.Interface {
   functions: {
-    "depositDonationMatchErC20(uint32,address,uint256)": FunctionFragment;
+    "depositDonationMatchERC20(uint32,address,uint256)": FunctionFragment;
     "setupDonationMatch(uint32,(uint8,(address,address,uint24)))": FunctionFragment;
-    "withdrawDonationMatchErC20(uint32,address,uint256)": FunctionFragment;
+    "withdrawDonationMatchERC20(uint32,address,uint256)": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "depositDonationMatchErC20"
+      | "depositDonationMatchERC20"
       | "setupDonationMatch"
-      | "withdrawDonationMatchErC20"
+      | "withdrawDonationMatchERC20"
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "depositDonationMatchErC20",
+    functionFragment: "depositDonationMatchERC20",
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
@@ -111,7 +111,7 @@ export interface AccountsDonationMatchInterface extends utils.Interface {
     values: [PromiseOrValue<BigNumberish>, AccountMessages.DonationMatchStruct]
   ): string;
   encodeFunctionData(
-    functionFragment: "withdrawDonationMatchErC20",
+    functionFragment: "withdrawDonationMatchERC20",
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
@@ -120,7 +120,7 @@ export interface AccountsDonationMatchInterface extends utils.Interface {
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "depositDonationMatchErC20",
+    functionFragment: "depositDonationMatchERC20",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -128,7 +128,7 @@ export interface AccountsDonationMatchInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "withdrawDonationMatchErC20",
+    functionFragment: "withdrawDonationMatchERC20",
     data: BytesLike
   ): Result;
 
@@ -427,7 +427,7 @@ export interface AccountsDonationMatch extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    depositDonationMatchErC20(
+    depositDonationMatchERC20(
       id: PromiseOrValue<BigNumberish>,
       token: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
@@ -440,7 +440,7 @@ export interface AccountsDonationMatch extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    withdrawDonationMatchErC20(
+    withdrawDonationMatchERC20(
       id: PromiseOrValue<BigNumberish>,
       recipient: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
@@ -448,7 +448,7 @@ export interface AccountsDonationMatch extends BaseContract {
     ): Promise<ContractTransaction>;
   };
 
-  depositDonationMatchErC20(
+  depositDonationMatchERC20(
     id: PromiseOrValue<BigNumberish>,
     token: PromiseOrValue<string>,
     amount: PromiseOrValue<BigNumberish>,
@@ -461,7 +461,7 @@ export interface AccountsDonationMatch extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  withdrawDonationMatchErC20(
+  withdrawDonationMatchERC20(
     id: PromiseOrValue<BigNumberish>,
     recipient: PromiseOrValue<string>,
     amount: PromiseOrValue<BigNumberish>,
@@ -469,7 +469,7 @@ export interface AccountsDonationMatch extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    depositDonationMatchErC20(
+    depositDonationMatchERC20(
       id: PromiseOrValue<BigNumberish>,
       token: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
@@ -482,7 +482,7 @@ export interface AccountsDonationMatch extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    withdrawDonationMatchErC20(
+    withdrawDonationMatchERC20(
       id: PromiseOrValue<BigNumberish>,
       recipient: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
@@ -654,7 +654,7 @@ export interface AccountsDonationMatch extends BaseContract {
   };
 
   estimateGas: {
-    depositDonationMatchErC20(
+    depositDonationMatchERC20(
       id: PromiseOrValue<BigNumberish>,
       token: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
@@ -667,7 +667,7 @@ export interface AccountsDonationMatch extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    withdrawDonationMatchErC20(
+    withdrawDonationMatchERC20(
       id: PromiseOrValue<BigNumberish>,
       recipient: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
@@ -676,7 +676,7 @@ export interface AccountsDonationMatch extends BaseContract {
   };
 
   populateTransaction: {
-    depositDonationMatchErC20(
+    depositDonationMatchERC20(
       id: PromiseOrValue<BigNumberish>,
       token: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
@@ -689,7 +689,7 @@ export interface AccountsDonationMatch extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    withdrawDonationMatchErC20(
+    withdrawDonationMatchERC20(
       id: PromiseOrValue<BigNumberish>,
       recipient: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,

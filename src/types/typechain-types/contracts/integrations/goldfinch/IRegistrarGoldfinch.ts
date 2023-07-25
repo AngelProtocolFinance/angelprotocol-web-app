@@ -123,6 +123,36 @@ export declare namespace LibAccounts {
   };
 }
 
+export declare namespace IAccountsStrategy {
+  export type NetworkInfoStruct = {
+    chainId: PromiseOrValue<BigNumberish>;
+    router: PromiseOrValue<string>;
+    axelarGateway: PromiseOrValue<string>;
+    ibcChannel: PromiseOrValue<string>;
+    transferChannel: PromiseOrValue<string>;
+    gasReceiver: PromiseOrValue<string>;
+    gasLimit: PromiseOrValue<BigNumberish>;
+  };
+
+  export type NetworkInfoStructOutput = [
+    BigNumber,
+    string,
+    string,
+    string,
+    string,
+    string,
+    BigNumber
+  ] & {
+    chainId: BigNumber;
+    router: string;
+    axelarGateway: string;
+    ibcChannel: string;
+    transferChannel: string;
+    gasReceiver: string;
+    gasLimit: BigNumber;
+  };
+}
+
 export interface IRegistrarGoldfinchInterface extends utils.Interface {
   functions: {
     "getAPGoldfinchParams()": FunctionFragment;
@@ -133,8 +163,11 @@ export interface IRegistrarGoldfinchInterface extends utils.Interface {
     "getRebalanceParams()": FunctionFragment;
     "getStrategyApprovalState(bytes4)": FunctionFragment;
     "getStrategyParamsById(bytes4)": FunctionFragment;
+    "getUniswapFactoryAddress()": FunctionFragment;
+    "getUniswapRouterAddress()": FunctionFragment;
     "getVaultOperatorApproved(address)": FunctionFragment;
     "isTokenAccepted(address)": FunctionFragment;
+    "queryNetworkConnection(string)": FunctionFragment;
     "setAccountsContractAddressByChain(string,string)": FunctionFragment;
     "setAngelProtocolParams((address,address))": FunctionFragment;
     "setFeeSettingsByFeesType(uint8,uint256,address)": FunctionFragment;
@@ -143,7 +176,9 @@ export interface IRegistrarGoldfinchInterface extends utils.Interface {
     "setStrategyApprovalState(bytes4,uint8)": FunctionFragment;
     "setStrategyParams(bytes4,string,address,address,uint8)": FunctionFragment;
     "setTokenAccepted(address,bool)": FunctionFragment;
+    "setUniswapAddresses(address,address)": FunctionFragment;
     "setVaultOperatorApproved(address,bool)": FunctionFragment;
+    "updateNetworkConnections(string,(uint256,address,address,string,string,address,uint256),uint8)": FunctionFragment;
   };
 
   getFunction(
@@ -156,8 +191,11 @@ export interface IRegistrarGoldfinchInterface extends utils.Interface {
       | "getRebalanceParams"
       | "getStrategyApprovalState"
       | "getStrategyParamsById"
+      | "getUniswapFactoryAddress"
+      | "getUniswapRouterAddress"
       | "getVaultOperatorApproved"
       | "isTokenAccepted"
+      | "queryNetworkConnection"
       | "setAccountsContractAddressByChain"
       | "setAngelProtocolParams"
       | "setFeeSettingsByFeesType"
@@ -166,7 +204,9 @@ export interface IRegistrarGoldfinchInterface extends utils.Interface {
       | "setStrategyApprovalState"
       | "setStrategyParams"
       | "setTokenAccepted"
+      | "setUniswapAddresses"
       | "setVaultOperatorApproved"
+      | "updateNetworkConnections"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -202,11 +242,23 @@ export interface IRegistrarGoldfinchInterface extends utils.Interface {
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
+    functionFragment: "getUniswapFactoryAddress",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getUniswapRouterAddress",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "getVaultOperatorApproved",
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "isTokenAccepted",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "queryNetworkConnection",
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
@@ -252,8 +304,20 @@ export interface IRegistrarGoldfinchInterface extends utils.Interface {
     values: [PromiseOrValue<string>, PromiseOrValue<boolean>]
   ): string;
   encodeFunctionData(
+    functionFragment: "setUniswapAddresses",
+    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "setVaultOperatorApproved",
     values: [PromiseOrValue<string>, PromiseOrValue<boolean>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "updateNetworkConnections",
+    values: [
+      PromiseOrValue<string>,
+      IAccountsStrategy.NetworkInfoStruct,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
 
   decodeFunctionResult(
@@ -289,11 +353,23 @@ export interface IRegistrarGoldfinchInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "getUniswapFactoryAddress",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getUniswapRouterAddress",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "getVaultOperatorApproved",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "isTokenAccepted",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "queryNetworkConnection",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -329,7 +405,15 @@ export interface IRegistrarGoldfinchInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "setUniswapAddresses",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "setVaultOperatorApproved",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "updateNetworkConnections",
     data: BytesLike
   ): Result;
 
@@ -338,6 +422,8 @@ export interface IRegistrarGoldfinchInterface extends utils.Interface {
     "AngelProtocolParamsUpdated()": EventFragment;
     "FeeSettingsUpdated(uint8,uint256,address)": EventFragment;
     "GasFeeUpdated(address,uint256)": EventFragment;
+    "NetworkConnectionPosted(uint256)": EventFragment;
+    "NetworkConnectionRemoved(uint256)": EventFragment;
     "RebalanceParamsUpdated()": EventFragment;
     "StrategyApprovalUpdated(bytes4,uint8)": EventFragment;
     "StrategyParamsUpdated(bytes4,string,address,address,uint8)": EventFragment;
@@ -350,6 +436,8 @@ export interface IRegistrarGoldfinchInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: "AngelProtocolParamsUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "FeeSettingsUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "GasFeeUpdated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "NetworkConnectionPosted"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "NetworkConnectionRemoved"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RebalanceParamsUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "StrategyApprovalUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "StrategyParamsUpdated"): EventFragment;
@@ -400,6 +488,28 @@ export type GasFeeUpdatedEvent = TypedEvent<
 >;
 
 export type GasFeeUpdatedEventFilter = TypedEventFilter<GasFeeUpdatedEvent>;
+
+export interface NetworkConnectionPostedEventObject {
+  chainId: BigNumber;
+}
+export type NetworkConnectionPostedEvent = TypedEvent<
+  [BigNumber],
+  NetworkConnectionPostedEventObject
+>;
+
+export type NetworkConnectionPostedEventFilter =
+  TypedEventFilter<NetworkConnectionPostedEvent>;
+
+export interface NetworkConnectionRemovedEventObject {
+  chainId: BigNumber;
+}
+export type NetworkConnectionRemovedEvent = TypedEvent<
+  [BigNumber],
+  NetworkConnectionRemovedEventObject
+>;
+
+export type NetworkConnectionRemovedEventFilter =
+  TypedEventFilter<NetworkConnectionRemovedEvent>;
 
 export interface RebalanceParamsUpdatedEventObject {}
 export type RebalanceParamsUpdatedEvent = TypedEvent<
@@ -513,6 +623,10 @@ export interface IRegistrarGoldfinch extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[LocalRegistrarLib.StrategyParamsStructOutput]>;
 
+    getUniswapFactoryAddress(overrides?: CallOverrides): Promise<[string]>;
+
+    getUniswapRouterAddress(overrides?: CallOverrides): Promise<[string]>;
+
     getVaultOperatorApproved(
       _operator: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -522,6 +636,15 @@ export interface IRegistrarGoldfinch extends BaseContract {
       _tokenAddr: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
+
+    queryNetworkConnection(
+      networkName: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<
+      [IAccountsStrategy.NetworkInfoStructOutput] & {
+        response: IAccountsStrategy.NetworkInfoStructOutput;
+      }
+    >;
 
     setAccountsContractAddressByChain(
       _chainName: PromiseOrValue<string>,
@@ -573,9 +696,22 @@ export interface IRegistrarGoldfinch extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    setUniswapAddresses(
+      _uniswapRouter: PromiseOrValue<string>,
+      _uniswapFactory: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     setVaultOperatorApproved(
       _operator: PromiseOrValue<string>,
       _isApproved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    updateNetworkConnections(
+      networkName: PromiseOrValue<string>,
+      networkInfo: IAccountsStrategy.NetworkInfoStruct,
+      action: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
@@ -617,6 +753,10 @@ export interface IRegistrarGoldfinch extends BaseContract {
     overrides?: CallOverrides
   ): Promise<LocalRegistrarLib.StrategyParamsStructOutput>;
 
+  getUniswapFactoryAddress(overrides?: CallOverrides): Promise<string>;
+
+  getUniswapRouterAddress(overrides?: CallOverrides): Promise<string>;
+
   getVaultOperatorApproved(
     _operator: PromiseOrValue<string>,
     overrides?: CallOverrides
@@ -626,6 +766,11 @@ export interface IRegistrarGoldfinch extends BaseContract {
     _tokenAddr: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<boolean>;
+
+  queryNetworkConnection(
+    networkName: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<IAccountsStrategy.NetworkInfoStructOutput>;
 
   setAccountsContractAddressByChain(
     _chainName: PromiseOrValue<string>,
@@ -677,9 +822,22 @@ export interface IRegistrarGoldfinch extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  setUniswapAddresses(
+    _uniswapRouter: PromiseOrValue<string>,
+    _uniswapFactory: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   setVaultOperatorApproved(
     _operator: PromiseOrValue<string>,
     _isApproved: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  updateNetworkConnections(
+    networkName: PromiseOrValue<string>,
+    networkInfo: IAccountsStrategy.NetworkInfoStruct,
+    action: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -721,6 +879,10 @@ export interface IRegistrarGoldfinch extends BaseContract {
       overrides?: CallOverrides
     ): Promise<LocalRegistrarLib.StrategyParamsStructOutput>;
 
+    getUniswapFactoryAddress(overrides?: CallOverrides): Promise<string>;
+
+    getUniswapRouterAddress(overrides?: CallOverrides): Promise<string>;
+
     getVaultOperatorApproved(
       _operator: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -730,6 +892,11 @@ export interface IRegistrarGoldfinch extends BaseContract {
       _tokenAddr: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<boolean>;
+
+    queryNetworkConnection(
+      networkName: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<IAccountsStrategy.NetworkInfoStructOutput>;
 
     setAccountsContractAddressByChain(
       _chainName: PromiseOrValue<string>,
@@ -781,9 +948,22 @@ export interface IRegistrarGoldfinch extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    setUniswapAddresses(
+      _uniswapRouter: PromiseOrValue<string>,
+      _uniswapFactory: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     setVaultOperatorApproved(
       _operator: PromiseOrValue<string>,
       _isApproved: PromiseOrValue<boolean>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    updateNetworkConnections(
+      networkName: PromiseOrValue<string>,
+      networkInfo: IAccountsStrategy.NetworkInfoStruct,
+      action: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -817,6 +997,18 @@ export interface IRegistrarGoldfinch extends BaseContract {
       _gasFee?: null
     ): GasFeeUpdatedEventFilter;
     GasFeeUpdated(_tokenAddr?: null, _gasFee?: null): GasFeeUpdatedEventFilter;
+
+    "NetworkConnectionPosted(uint256)"(
+      chainId?: null
+    ): NetworkConnectionPostedEventFilter;
+    NetworkConnectionPosted(chainId?: null): NetworkConnectionPostedEventFilter;
+
+    "NetworkConnectionRemoved(uint256)"(
+      chainId?: null
+    ): NetworkConnectionRemovedEventFilter;
+    NetworkConnectionRemoved(
+      chainId?: null
+    ): NetworkConnectionRemovedEventFilter;
 
     "RebalanceParamsUpdated()"(): RebalanceParamsUpdatedEventFilter;
     RebalanceParamsUpdated(): RebalanceParamsUpdatedEventFilter;
@@ -887,6 +1079,10 @@ export interface IRegistrarGoldfinch extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    getUniswapFactoryAddress(overrides?: CallOverrides): Promise<BigNumber>;
+
+    getUniswapRouterAddress(overrides?: CallOverrides): Promise<BigNumber>;
+
     getVaultOperatorApproved(
       _operator: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -894,6 +1090,11 @@ export interface IRegistrarGoldfinch extends BaseContract {
 
     isTokenAccepted(
       _tokenAddr: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    queryNetworkConnection(
+      networkName: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -947,9 +1148,22 @@ export interface IRegistrarGoldfinch extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    setUniswapAddresses(
+      _uniswapRouter: PromiseOrValue<string>,
+      _uniswapFactory: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     setVaultOperatorApproved(
       _operator: PromiseOrValue<string>,
       _isApproved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    updateNetworkConnections(
+      networkName: PromiseOrValue<string>,
+      networkInfo: IAccountsStrategy.NetworkInfoStruct,
+      action: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
@@ -992,6 +1206,14 @@ export interface IRegistrarGoldfinch extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    getUniswapFactoryAddress(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getUniswapRouterAddress(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     getVaultOperatorApproved(
       _operator: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -999,6 +1221,11 @@ export interface IRegistrarGoldfinch extends BaseContract {
 
     isTokenAccepted(
       _tokenAddr: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    queryNetworkConnection(
+      networkName: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -1052,9 +1279,22 @@ export interface IRegistrarGoldfinch extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
+    setUniswapAddresses(
+      _uniswapRouter: PromiseOrValue<string>,
+      _uniswapFactory: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     setVaultOperatorApproved(
       _operator: PromiseOrValue<string>,
       _isApproved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    updateNetworkConnections(
+      networkName: PromiseOrValue<string>,
+      networkInfo: IAccountsStrategy.NetworkInfoStruct,
+      action: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };

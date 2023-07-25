@@ -9,7 +9,7 @@ import Warning from "./Warning";
 import useWithdraw from "./useWithdraw";
 
 export default function Form({ classes = "" }) {
-  const { withdraw, fee, network, tooltip, type } = useWithdraw();
+  const { withdraw, chainName, tooltip, accountType } = useWithdraw();
 
   return (
     <form
@@ -22,31 +22,27 @@ export default function Form({ classes = "" }) {
         <Amounts />
 
         {/** locked just goes to liquid */}
-        {type === "liquid" && (
+        {accountType === "liquid" && (
           <>
             <Network />
             <Beneficiary />
-            <Breakdown />
           </>
         )}
 
-        {network !== "Polygon" && (
-          <>
-            <Warning>
-              Withraws to {network} are processed on a hourly basis by our
-              cross-chain pipelines.
-            </Warning>
-            <Warning classes="-mt-1 mb-2">
-              The minimum withdrawal amount is {fee} USDC.
-            </Warning>
-          </>
+        <Breakdown />
+
+        {chainName !== "Polygon" && (
+          <Warning>
+            Withraws to {chainName} are processed on a hourly basis by our
+            cross-chain pipelines.
+          </Warning>
         )}
         <Warning classes="-mt-3">
           If withdrawing to an exchange, please ensure you’re using the correct
           blockchain network and currency.{" "}
           <ExtLink
             href="https://intercom.help/angel-giving/en/articles/6628134-how-do-i-remove-usdc-funds-from-my-current-account"
-            className="text-blue hover:text-blue-l2"
+            className="text-blue hover:text-blue-l2 contents"
           >
             More information.
           </ExtLink>
