@@ -60,21 +60,9 @@ export declare namespace IVault {
   };
 }
 
-export declare namespace LibAccounts {
-  export type FeeSettingStruct = {
-    payoutAddress: PromiseOrValue<string>;
-    bps: PromiseOrValue<BigNumberish>;
-  };
-
-  export type FeeSettingStructOutput = [string, BigNumber] & {
-    payoutAddress: string;
-    bps: BigNumber;
-  };
-}
-
 export interface AccountsUpdateInterface extends utils.Interface {
   functions: {
-    "updateConfig(address,uint256,(address,uint256))": FunctionFragment;
+    "updateConfig(address)": FunctionFragment;
     "updateOwner(address)": FunctionFragment;
   };
 
@@ -84,11 +72,7 @@ export interface AccountsUpdateInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "updateConfig",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      LibAccounts.FeeSettingStruct
-    ]
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "updateOwner",
@@ -401,8 +385,6 @@ export interface AccountsUpdate extends BaseContract {
   functions: {
     updateConfig(
       newRegistrar: PromiseOrValue<string>,
-      maxGeneralCategoryId: PromiseOrValue<BigNumberish>,
-      earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -414,8 +396,6 @@ export interface AccountsUpdate extends BaseContract {
 
   updateConfig(
     newRegistrar: PromiseOrValue<string>,
-    maxGeneralCategoryId: PromiseOrValue<BigNumberish>,
-    earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -427,8 +407,6 @@ export interface AccountsUpdate extends BaseContract {
   callStatic: {
     updateConfig(
       newRegistrar: PromiseOrValue<string>,
-      maxGeneralCategoryId: PromiseOrValue<BigNumberish>,
-      earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -604,8 +582,6 @@ export interface AccountsUpdate extends BaseContract {
   estimateGas: {
     updateConfig(
       newRegistrar: PromiseOrValue<string>,
-      maxGeneralCategoryId: PromiseOrValue<BigNumberish>,
-      earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -618,8 +594,6 @@ export interface AccountsUpdate extends BaseContract {
   populateTransaction: {
     updateConfig(
       newRegistrar: PromiseOrValue<string>,
-      maxGeneralCategoryId: PromiseOrValue<BigNumberish>,
-      earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

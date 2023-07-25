@@ -241,7 +241,7 @@ export interface ICharityApplicationsInterface extends utils.Interface {
     "getProposalConfirmationCount(uint256)": FunctionFragment;
     "getProposalConfirmationStatus(uint256,address)": FunctionFragment;
     "initializeApplications(address[],uint256,bool,uint256,address,uint256,uint256,address,uint256)": FunctionFragment;
-    "proposeApplication((bool,uint256,string,uint256[],uint8,uint8,string,string,address[],uint256,uint256,address[],address[],(address,uint256),(address,uint256),(address,uint256),(address,uint256),uint256,((bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256))),uint32,address[],bool,(uint256,uint256,uint256),uint256),string)": FunctionFragment;
+    "proposeApplication((bool,uint256,string,uint256[],uint8,uint8,string,string,address[],uint256,uint256,address[],address[],(address,uint256),(address,uint256),(address,uint256),(address,uint256),uint256,((bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256))),uint32,address[],bool,(uint256,uint256,uint256),uint256),bytes)": FunctionFragment;
     "queryConfig()": FunctionFragment;
     "revokeProposalConfirmation(uint256)": FunctionFragment;
     "updateConfig(uint256,address,uint256,uint256,address,uint256)": FunctionFragment;
@@ -294,7 +294,7 @@ export interface ICharityApplicationsInterface extends utils.Interface {
     functionFragment: "proposeApplication",
     values: [
       AccountMessages.CreateEndowmentRequestStruct,
-      PromiseOrValue<string>
+      PromiseOrValue<BytesLike>
     ]
   ): string;
   encodeFunctionData(
@@ -358,7 +358,7 @@ export interface ICharityApplicationsInterface extends utils.Interface {
     "ApplicationConfirmationRevoked(uint256,address)": EventFragment;
     "ApplicationConfirmed(uint256,address)": EventFragment;
     "ApplicationExecuted(uint256)": EventFragment;
-    "ApplicationProposed(uint256,address,string,uint256)": EventFragment;
+    "ApplicationProposed(uint256,address,string,uint256,bytes)": EventFragment;
     "GasSent(uint256,address,uint256)": EventFragment;
     "SeedAssetSent(uint256,address,uint256)": EventFragment;
   };
@@ -413,9 +413,10 @@ export interface ApplicationProposedEventObject {
   proposer: string;
   charityName: string;
   expiry: BigNumber;
+  metadata: string;
 }
 export type ApplicationProposedEvent = TypedEvent<
-  [BigNumber, string, string, BigNumber],
+  [BigNumber, string, string, BigNumber, string],
   ApplicationProposedEventObject
 >;
 
@@ -509,7 +510,7 @@ export interface ICharityApplications extends BaseContract {
 
     proposeApplication(
       application: AccountMessages.CreateEndowmentRequestStruct,
-      meta: PromiseOrValue<string>,
+      metadata: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -569,7 +570,7 @@ export interface ICharityApplications extends BaseContract {
 
   proposeApplication(
     application: AccountMessages.CreateEndowmentRequestStruct,
-    meta: PromiseOrValue<string>,
+    metadata: PromiseOrValue<BytesLike>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -629,7 +630,7 @@ export interface ICharityApplications extends BaseContract {
 
     proposeApplication(
       application: AccountMessages.CreateEndowmentRequestStruct,
-      meta: PromiseOrValue<string>,
+      metadata: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -677,17 +678,19 @@ export interface ICharityApplications extends BaseContract {
     ): ApplicationExecutedEventFilter;
     ApplicationExecuted(proposalId?: null): ApplicationExecutedEventFilter;
 
-    "ApplicationProposed(uint256,address,string,uint256)"(
+    "ApplicationProposed(uint256,address,string,uint256,bytes)"(
       proposalId?: null,
       proposer?: null,
       charityName?: null,
-      expiry?: null
+      expiry?: null,
+      metadata?: null
     ): ApplicationProposedEventFilter;
     ApplicationProposed(
       proposalId?: null,
       proposer?: null,
       charityName?: null,
-      expiry?: null
+      expiry?: null,
+      metadata?: null
     ): ApplicationProposedEventFilter;
 
     "GasSent(uint256,address,uint256)"(
@@ -750,7 +753,7 @@ export interface ICharityApplications extends BaseContract {
 
     proposeApplication(
       application: AccountMessages.CreateEndowmentRequestStruct,
-      meta: PromiseOrValue<string>,
+      metadata: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -809,7 +812,7 @@ export interface ICharityApplications extends BaseContract {
 
     proposeApplication(
       application: AccountMessages.CreateEndowmentRequestStruct,
-      meta: PromiseOrValue<string>,
+      metadata: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

@@ -443,8 +443,6 @@ export declare namespace AccountMessages {
     networkName: PromiseOrValue<string>;
     registrarContract: PromiseOrValue<string>;
     nextAccountId: PromiseOrValue<BigNumberish>;
-    maxGeneralCategoryId: PromiseOrValue<BigNumberish>;
-    earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct;
   };
 
   export type ConfigResponseStructOutput = [
@@ -452,17 +450,13 @@ export declare namespace AccountMessages {
     string,
     string,
     string,
-    BigNumber,
-    BigNumber,
-    LibAccounts.FeeSettingStructOutput
+    BigNumber
   ] & {
     owner: string;
     version: string;
     networkName: string;
     registrarContract: string;
     nextAccountId: BigNumber;
-    maxGeneralCategoryId: BigNumber;
-    earlyLockedWithdrawFee: LibAccounts.FeeSettingStructOutput;
   };
 
   export type StateResponseStruct = {
@@ -818,7 +812,7 @@ export interface IAccountsInterface extends utils.Interface {
     "strategyRedeemAll(uint32,(bytes4,string,bool,bool,uint256))": FunctionFragment;
     "swapToken(uint32,uint8,address,uint256,address,uint256)": FunctionFragment;
     "updateAcceptedToken(uint32,address,address,bool)": FunctionFragment;
-    "updateConfig(address,uint256,(address,uint256))": FunctionFragment;
+    "updateConfig(address)": FunctionFragment;
     "updateDelegate(uint32,uint8,uint8,address,uint256)": FunctionFragment;
     "updateEndowmentController((uint32,((bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)))))": FunctionFragment;
     "updateEndowmentDetails((uint32,address,string,uint256[],string,string,(bool,uint32,uint32,bool,uint32,uint32)))": FunctionFragment;
@@ -985,11 +979,7 @@ export interface IAccountsInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "updateConfig",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      LibAccounts.FeeSettingStruct
-    ]
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "updateDelegate",
@@ -1581,8 +1571,6 @@ export interface IAccounts extends BaseContract {
 
     updateConfig(
       newRegistrar: PromiseOrValue<string>,
-      maxGeneralCategoryId: PromiseOrValue<BigNumberish>,
-      earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -1766,8 +1754,6 @@ export interface IAccounts extends BaseContract {
 
   updateConfig(
     newRegistrar: PromiseOrValue<string>,
-    maxGeneralCategoryId: PromiseOrValue<BigNumberish>,
-    earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -1951,8 +1937,6 @@ export interface IAccounts extends BaseContract {
 
     updateConfig(
       newRegistrar: PromiseOrValue<string>,
-      maxGeneralCategoryId: PromiseOrValue<BigNumberish>,
-      earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -2298,8 +2282,6 @@ export interface IAccounts extends BaseContract {
 
     updateConfig(
       newRegistrar: PromiseOrValue<string>,
-      maxGeneralCategoryId: PromiseOrValue<BigNumberish>,
-      earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -2482,8 +2464,6 @@ export interface IAccounts extends BaseContract {
 
     updateConfig(
       newRegistrar: PromiseOrValue<string>,
-      maxGeneralCategoryId: PromiseOrValue<BigNumberish>,
-      earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

@@ -41,7 +41,7 @@ export interface EndowmentMultiSigEmitterInterface extends utils.Interface {
     "transactionConfirmationRevokedEndowment(uint256,address,uint256)": FunctionFragment;
     "transactionConfirmedEndowment(uint256,address,uint256)": FunctionFragment;
     "transactionExecutedEndowment(uint256,uint256)": FunctionFragment;
-    "transactionSubmittedEndowment(uint256,address,uint256)": FunctionFragment;
+    "transactionSubmittedEndowment(uint256,address,uint256,bytes)": FunctionFragment;
   };
 
   getFunction(
@@ -138,7 +138,8 @@ export interface EndowmentMultiSigEmitterInterface extends utils.Interface {
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>
     ]
   ): string;
 
@@ -208,7 +209,7 @@ export interface EndowmentMultiSigEmitterInterface extends utils.Interface {
     "TransactionConfirmationRevoked(uint256,address,uint256)": EventFragment;
     "TransactionConfirmed(uint256,address,uint256)": EventFragment;
     "TransactionExecuted(uint256,uint256)": EventFragment;
-    "TransactionSubmitted(uint256,address,uint256)": EventFragment;
+    "TransactionSubmitted(uint256,address,uint256,bytes)": EventFragment;
   };
 
   getEvent(
@@ -380,9 +381,10 @@ export interface TransactionSubmittedEventObject {
   endowmentId: BigNumber;
   owner: string;
   transactionId: BigNumber;
+  metadata: string;
 }
 export type TransactionSubmittedEvent = TypedEvent<
-  [BigNumber, string, BigNumber],
+  [BigNumber, string, BigNumber, string],
   TransactionSubmittedEventObject
 >;
 
@@ -500,6 +502,7 @@ export interface EndowmentMultiSigEmitter extends BaseContract {
       endowmentId: PromiseOrValue<BigNumberish>,
       owner: PromiseOrValue<string>,
       transactionId: PromiseOrValue<BigNumberish>,
+      metadata: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
@@ -588,6 +591,7 @@ export interface EndowmentMultiSigEmitter extends BaseContract {
     endowmentId: PromiseOrValue<BigNumberish>,
     owner: PromiseOrValue<string>,
     transactionId: PromiseOrValue<BigNumberish>,
+    metadata: PromiseOrValue<BytesLike>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -676,6 +680,7 @@ export interface EndowmentMultiSigEmitter extends BaseContract {
       endowmentId: PromiseOrValue<BigNumberish>,
       owner: PromiseOrValue<string>,
       transactionId: PromiseOrValue<BigNumberish>,
+      metadata: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -795,15 +800,17 @@ export interface EndowmentMultiSigEmitter extends BaseContract {
       transactionId?: null
     ): TransactionExecutedEventFilter;
 
-    "TransactionSubmitted(uint256,address,uint256)"(
+    "TransactionSubmitted(uint256,address,uint256,bytes)"(
       endowmentId?: null,
       owner?: null,
-      transactionId?: null
+      transactionId?: null,
+      metadata?: null
     ): TransactionSubmittedEventFilter;
     TransactionSubmitted(
       endowmentId?: null,
       owner?: null,
-      transactionId?: null
+      transactionId?: null,
+      metadata?: null
     ): TransactionSubmittedEventFilter;
   };
 
@@ -892,6 +899,7 @@ export interface EndowmentMultiSigEmitter extends BaseContract {
       endowmentId: PromiseOrValue<BigNumberish>,
       owner: PromiseOrValue<string>,
       transactionId: PromiseOrValue<BigNumberish>,
+      metadata: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
@@ -981,6 +989,7 @@ export interface EndowmentMultiSigEmitter extends BaseContract {
       endowmentId: PromiseOrValue<BigNumberish>,
       owner: PromiseOrValue<string>,
       transactionId: PromiseOrValue<BigNumberish>,
+      metadata: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };

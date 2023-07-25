@@ -340,7 +340,7 @@ export interface EndowmentMultiSigInterface extends utils.Interface {
     "TransactionConfirmationRevoked(address,address,uint256)": EventFragment;
     "TransactionConfirmed(address,address,uint256)": EventFragment;
     "TransactionExecuted(address,uint256)": EventFragment;
-    "TransactionSubmitted(address,address,uint256)": EventFragment;
+    "TransactionSubmitted(address,address,uint256,bytes)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "ApprovalsRequiredChanged"): EventFragment;
@@ -492,9 +492,10 @@ export interface TransactionSubmittedEventObject {
   msAddress: string;
   sender: string;
   transactionId: BigNumber;
+  metadata: string;
 }
 export type TransactionSubmittedEvent = TypedEvent<
-  [string, string, BigNumber],
+  [string, string, BigNumber, string],
   TransactionSubmittedEventObject
 >;
 
@@ -1057,15 +1058,17 @@ export interface EndowmentMultiSig extends BaseContract {
       transactionId?: null
     ): TransactionExecutedEventFilter;
 
-    "TransactionSubmitted(address,address,uint256)"(
+    "TransactionSubmitted(address,address,uint256,bytes)"(
       msAddress?: null,
       sender?: null,
-      transactionId?: null
+      transactionId?: null,
+      metadata?: null
     ): TransactionSubmittedEventFilter;
     TransactionSubmitted(
       msAddress?: null,
       sender?: null,
-      transactionId?: null
+      transactionId?: null,
+      metadata?: null
     ): TransactionSubmittedEventFilter;
   };
 
