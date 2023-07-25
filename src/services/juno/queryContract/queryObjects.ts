@@ -1,4 +1,3 @@
-import { AbiCoder } from "@ethersproject/abi";
 import { BigNumber } from "@ethersproject/bignumber";
 import {
   DGenericBalance,
@@ -9,6 +8,7 @@ import {
   toSplit,
 } from "./decoded-types";
 import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
+import { TransactionStatus } from "types/lists";
 import { TxMeta } from "types/tx";
 import {
   AccountMessages,
@@ -27,7 +27,8 @@ import { giftCard } from "contracts/evm/gift-card";
 import { indexFund } from "contracts/evm/index-fund";
 import { multisig } from "contracts/evm/multisig";
 import { registrar } from "contracts/evm/registrar";
-import { toTuple } from "helpers";
+import { fromAbiStr, toTuple } from "helpers";
+import { hasElapsed } from "helpers/admin";
 import { EMPTY_DATA } from "constants/evm";
 
 export const queryObjects: {
@@ -250,17 +251,21 @@ export const queryObjects: {
       } = multisig.decodeFunctionResult("transactions", result) as any;
 
       const parsed: TxMeta | undefined =
-        d.metadata === EMPTY_DATA
-          ? undefined
-          : JSON.parse(new AbiCoder().decode(["string"], d.metadata)[0]);
+        d.metadata === EMPTY_DATA ? undefined : fromAbiStr(d.metadata);
+      const expiry = d.expiry.toNumber();
+      const status: TransactionStatus = d.executed
+        ? "approved"
+        : hasElapsed(expiry)
+        ? "expired"
+        : "open";
 
       return {
         id: args?.id ?? 0,
         destination: d.destination,
         value: d.value.toString(),
         data: d.data,
-        status: d.executed ? "approved" : "open",
-        expiry: d.expiry.toNumber(),
+        status,
+        expiry,
         metadata: parsed,
       };
     },
