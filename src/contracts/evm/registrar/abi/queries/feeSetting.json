@@ -1,0 +1,33 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "enum LibAccounts.FeeTypes",
+        "name": "_feeType",
+        "type": "uint8"
+      }
+    ],
+    "name": "getFeeSettingsByFeeType",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "payoutAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "bps",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct LibAccounts.FeeSetting",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

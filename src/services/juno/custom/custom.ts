@@ -4,13 +4,15 @@ import {
   EndowBalance,
   IERC20,
   ProposalDetails,
-  WithdrawInfo,
+  WithdrawData,
 } from "../../types";
-import { AxelarBridgeFees } from "types/aws";
+import { BridgeFeesRes } from "types/aws";
 import { AcceptedTokens, AccountType } from "types/contracts";
 import { TransactionStatus } from "types/lists";
 import { Transaction } from "types/tx";
+import { version as v } from "services/helpers";
 import { idParamToNum } from "helpers";
+import { IS_AST, IS_TEST } from "constants/env";
 import { APIs } from "constants/urls";
 import { junoApi } from "..";
 import { queryContract } from "../queryContract";
@@ -135,18 +137,45 @@ export const customApi = junoApi.injectEndpoints({
       queryFn: async ({ id }) => ({ data: await endowBalance(id) }),
     }),
 
-    withdrawInfo: builder.query<WithdrawInfo, { id: number }>({
+    withdrawData: builder.query<WithdrawData, { id: number }>({
       providesTags: ["accounts.token-balance"],
       queryFn: async ({ id }) => {
-        const _fees = fetch(
-          APIs.apes + "/v1/axelar-bridge-fees"
-        ).then<AxelarBridgeFees>((res) => {
+        const bridgeFees = fetch(
+          APIs.apes + `/${v(2)}/axelar-bridge-fees`
+        ).then<BridgeFeesRes>((res) => {
           if (!res.ok) throw new Error("Failed to get fees");
           return res.json();
         });
-        const [balances, fees] = await Promise.all([endowBalance(id), _fees]);
+
+        const [
+          balances,
+          fees,
+          earlyLockedWithdrawFeeSetting,
+          withdrawFeeSetting,
+        ] = await Promise.all([
+          endowBalance(id),
+          bridgeFees,
+          queryContract("registrar.fee-setting", {
+            type: IS_AST
+              ? "EarlyLockedWithdrawNormal"
+              : "EarlyLockedWithdrawCharity",
+          }),
+          queryContract("registrar.fee-setting", {
+            type: IS_AST ? "WithdrawNormal" : "WithdrawCharity",
+          }),
+        ]);
         return {
-          data: { balances, fees: fees["withdraw"] },
+          data: {
+            balances,
+            //juno field not present in /staging - fill for consistent type definition
+            bridgeFees: IS_TEST
+              ? { ...fees["withdraw"], juno: 0 }
+              : fees["withdraw"],
+            protocolFeeRates: {
+              withdrawBps: withdrawFeeSetting.bps,
+              earlyLockedWithdrawBps: earlyLockedWithdrawFeeSetting.bps,
+            },
+          },
         };
       },
     }),
@@ -253,6 +282,6 @@ export const {
   useAdminResourcesQuery,
   useProposalDetailsQuery,
   useEndowBalanceQuery,
-  useWithdrawInfoQuery,
+  useWithdrawDataQuery,
   useApplicationQuery,
 } = customApi;

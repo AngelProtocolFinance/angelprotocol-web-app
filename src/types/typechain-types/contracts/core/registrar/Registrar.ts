@@ -123,12 +123,14 @@ export declare namespace RegistrarMessages {
     splitToLiquid: LibAccounts.SplitDetailsStruct;
     router: PromiseOrValue<string>;
     axelarGateway: PromiseOrValue<string>;
-    axelarGasRecv: PromiseOrValue<string>;
+    axelarGasService: PromiseOrValue<string>;
+    networkName: PromiseOrValue<string>;
   };
 
   export type InstantiateRequestStructOutput = [
     string,
     LibAccounts.SplitDetailsStructOutput,
+    string,
     string,
     string,
     string
@@ -137,7 +139,8 @@ export declare namespace RegistrarMessages {
     splitToLiquid: LibAccounts.SplitDetailsStructOutput;
     router: string;
     axelarGateway: string;
-    axelarGasRecv: string;
+    axelarGasService: string;
+    networkName: string;
   };
 
   export type UpdateConfigRequestStruct = {
@@ -385,7 +388,7 @@ export interface RegistrarInterface extends utils.Interface {
     "getUniswapFactoryAddress()": FunctionFragment;
     "getUniswapRouterAddress()": FunctionFragment;
     "getVaultOperatorApproved(address)": FunctionFragment;
-    "initialize((address,(uint256,uint256,uint256),address,address,address))": FunctionFragment;
+    "initialize((address,(uint256,uint256,uint256),address,address,address,string))": FunctionFragment;
     "initialize()": FunctionFragment;
     "isTokenAccepted(address)": FunctionFragment;
     "owner()": FunctionFragment;
@@ -422,7 +425,7 @@ export interface RegistrarInterface extends utils.Interface {
       | "getUniswapFactoryAddress"
       | "getUniswapRouterAddress"
       | "getVaultOperatorApproved"
-      | "initialize((address,(uint256,uint256,uint256),address,address,address))"
+      | "initialize((address,(uint256,uint256,uint256),address,address,address,string))"
       | "initialize()"
       | "isTokenAccepted"
       | "owner"
@@ -488,7 +491,7 @@ export interface RegistrarInterface extends utils.Interface {
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "initialize((address,(uint256,uint256,uint256),address,address,address))",
+    functionFragment: "initialize((address,(uint256,uint256,uint256),address,address,address,string))",
     values: [RegistrarMessages.InstantiateRequestStruct]
   ): string;
   encodeFunctionData(
@@ -632,7 +635,7 @@ export interface RegistrarInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "initialize((address,(uint256,uint256,uint256),address,address,address))",
+    functionFragment: "initialize((address,(uint256,uint256,uint256),address,address,address,string))",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -962,7 +965,7 @@ export interface Registrar extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
-    "initialize((address,(uint256,uint256,uint256),address,address,address))"(
+    "initialize((address,(uint256,uint256,uint256),address,address,address,string))"(
       details: RegistrarMessages.InstantiateRequestStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
@@ -1132,7 +1135,7 @@ export interface Registrar extends BaseContract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
-  "initialize((address,(uint256,uint256,uint256),address,address,address))"(
+  "initialize((address,(uint256,uint256,uint256),address,address,address,string))"(
     details: RegistrarMessages.InstantiateRequestStruct,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
@@ -1296,7 +1299,7 @@ export interface Registrar extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    "initialize((address,(uint256,uint256,uint256),address,address,address))"(
+    "initialize((address,(uint256,uint256,uint256),address,address,address,string))"(
       details: RegistrarMessages.InstantiateRequestStruct,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -1547,7 +1550,7 @@ export interface Registrar extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    "initialize((address,(uint256,uint256,uint256),address,address,address))"(
+    "initialize((address,(uint256,uint256,uint256),address,address,address,string))"(
       details: RegistrarMessages.InstantiateRequestStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
@@ -1714,7 +1717,7 @@ export interface Registrar extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    "initialize((address,(uint256,uint256,uint256),address,address,address))"(
+    "initialize((address,(uint256,uint256,uint256),address,address,address,string))"(
       details: RegistrarMessages.InstantiateRequestStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;

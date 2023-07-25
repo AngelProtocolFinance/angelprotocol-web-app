@@ -1,6 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { Amount, FV, WithdrawerProps } from "./types";
+import { Amount, FV, FormMeta, WithdrawerProps } from "./types";
+import { useAdminContext } from "pages/Admin/Context";
 import { useGetWallet } from "contexts/WalletContext";
 import { condense, roundDown } from "helpers";
 import { chainIds } from "constants/chainIds";
@@ -10,10 +11,18 @@ import { schema } from "./schema";
 export default function WithdrawForm({
   classes = "",
   balances,
-  type,
-  fees,
+  accountType,
+  bridgeFees,
+  protocolFeeRates,
 }: WithdrawerProps & { classes?: string }) {
   const { wallet } = useGetWallet();
+  const {
+    endowType,
+    earlyLockedWithdrawFee,
+    depositFee,
+    withdrawFee,
+    maturityTime,
+  } = useAdminContext<"charity">();
 
   const amounts: Amount[] = balances.map((c) => ({
     tokenId: c.address,
@@ -21,18 +30,33 @@ export default function WithdrawForm({
     value: "",
   }));
 
-  const methods = useForm<FV>({
+  const meta: FormMeta = {
+    _amounts: "",
+    endowType,
+    maturityTime,
+    accountType,
+    bridgeFees,
+    protocolFeeRates,
+    endowFeeRates: {
+      earlyLockedWithdrawBps: earlyLockedWithdrawFee.bps,
+      depositBps: depositFee.bps,
+      withdrawBps: withdrawFee.bps,
+    },
+  };
+
+  const values: FV = {
+    ...meta,
+    amounts,
+    beneficiaryWallet: wallet?.address || "",
+    destinationChainId: chainIds.polygon,
+  };
+
+  const methods = useForm<FV, { meta: FormMeta }>({
     mode: "onChange",
     reValidateMode: "onChange",
-    defaultValues: {
-      beneficiary: wallet?.address || "",
-      network: chainIds.polygon,
-      //transform to form format
-      amounts,
-      type,
-      fees,
-    },
+    values,
     resolver: yupResolver(schema),
+    context: { meta },
   });
   return (
     <FormProvider {...methods}>

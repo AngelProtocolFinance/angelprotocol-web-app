@@ -6,30 +6,31 @@ import Icon, { DrawerIcon } from "components/Icon";
 import { chainIds } from "constants/chainIds";
 
 const AVAILABLE_CHAINS: { chainId: string; name: string }[] = [
-  { chainId: chainIds.juno, name: "juno" },
-  { chainId: chainIds.ethereum, name: "ethereum" },
-  { chainId: chainIds.binance, name: "binance" },
   { chainId: chainIds.polygon, name: "polygon" },
+  { chainId: chainIds.binance, name: "binance" },
+  { chainId: chainIds.ethereum, name: "ethereum" },
+  { chainId: chainIds.terra, name: "terra" },
+  { chainId: chainIds.juno, name: "juno" },
 ];
 
 export default function Network() {
   const { control, watch, trigger } = useFormContext<FV>();
-  const network = watch("network");
+  const destinationChainId = watch("destinationChainId");
 
   useEffect(() => {
     (async () => {
       //validate address on network change
-      await trigger("beneficiary");
+      await trigger("beneficiaryWallet");
       await trigger("amounts");
     })();
-  }, [network, trigger]);
+  }, [destinationChainId, trigger]);
 
   return (
     <div className="grid gap-3">
       <span className="font-work font-bold">Select network</span>
       <Controller
         control={control}
-        name="network"
+        name="destinationChainId"
         render={({ field: { onChange, value, onBlur } }) => (
           <Listbox
             onBlur={onBlur}

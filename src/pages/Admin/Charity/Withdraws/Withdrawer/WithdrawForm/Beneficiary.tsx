@@ -16,7 +16,7 @@ export default function Beneficiary({ classes = "" }) {
         Destination wallet
       </label>
       <input
-        {...register("beneficiary")}
+        {...register("beneficiaryWallet")}
         id={id}
         type="text"
         autoComplete="off"
@@ -25,7 +25,7 @@ export default function Beneficiary({ classes = "" }) {
       />
       <ErrorMessage
         errors={errors}
-        name="beneficiary"
+        name="beneficiaryWallet"
         as="span"
         className="text-right text-red dark:text-red-l2 text-xs -mt-2"
       />

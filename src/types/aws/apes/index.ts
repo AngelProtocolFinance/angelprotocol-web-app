@@ -80,16 +80,13 @@ export type WithdrawLogQueryParams = {
   proposal_status?: string | null; // comma separated ProposalStatus values
 };
 
-export type AxelarBridgeFees = {
-  deposit: {
-    binance: number;
-    ethereum: number;
-    polygon: number;
-    "terra-2": number;
-  };
-  withdraw: {
-    binance: number;
-    ethereum: number;
-    polygon: number;
-  };
+export type BridgeFees = {
+  binance: number;
+  ethereum: number;
+  "terra-2": number;
+  juno: number;
+};
+export type BridgeFeesRes = {
+  deposit: BridgeFees;
+  withdraw: BridgeFees;
 };

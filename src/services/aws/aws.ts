@@ -11,14 +11,12 @@ import {
   TStrategy,
   WalletProfile,
 } from "types/aws";
-import { NetworkType } from "types/lists";
+import { network } from "services/constants";
 import { createAuthToken } from "helpers";
 import { chainIds } from "constants/chainIds";
-import { IS_AST, IS_TEST } from "constants/env";
+import { IS_AST } from "constants/env";
 import { APIs } from "constants/urls";
 import { version as v } from "../helpers";
-
-const network: NetworkType = IS_TEST ? "testnet" : "mainnet";
 
 const getWalletProfileQuery = (walletAddr: string) =>
   `/${v(2)}/profile/${network}/user/${walletAddr}`;
