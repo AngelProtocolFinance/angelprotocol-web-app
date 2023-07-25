@@ -13,7 +13,7 @@ type TransactionRes = {
 };
 
 export type TransactionsRes = GraphQLRes<{
-  multsigTransactions: TransactionRes[];
+  multiSigTransactions: TransactionRes[];
 }>;
 
 export type Paginated<T extends any[]> = {

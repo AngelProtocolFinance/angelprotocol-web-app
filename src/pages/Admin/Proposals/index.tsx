@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useProposalsQuery } from "services/juno/custom";
+import { useProposalsQuery as useSubgraphProposalsQuery } from "services/subgraph";
 import Seo from "components/Seo";
 import { useGetter } from "store/accessors";
 import { APP_NAME, DAPP_URL } from "constants/env";
@@ -12,6 +13,14 @@ export default function Proposals() {
   const { multisig } = useAdminContext();
   const [pageNum, setPageNum] = useState(1);
   const { activeStatus } = useGetter((state) => state.admin.proposals);
+
+  const query = useSubgraphProposalsQuery({
+    multisig,
+    page: 1,
+    status: "approved",
+  });
+
+  console.log({ query });
 
   const {
     data: { proposals, next } = { proposals: [], next: undefined },

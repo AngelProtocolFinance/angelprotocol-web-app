@@ -39,9 +39,9 @@ export const subgraph = createApi({
 
         const statusClause =
           status === "expired"
-            ? `executed: false, expiry_lt:${blockTime("now")}`
+            ? `executed: false, expiry_lt:"${blockTime("now")}"`
             : status === "open"
-            ? `executed: false, expiry_gte:${blockTime("now")}`
+            ? `executed: false, expiry_gte:"${blockTime("now")}"`
             : `executed: true`;
 
         return {
@@ -54,8 +54,8 @@ export const subgraph = createApi({
                 skip: ${skip}
                 first: ${TX_PER_PAGE}
                 where: { 
-                  multiSig: ${multisig}, 
-                  ${statusClause},
+                  multiSig: "${multisig}", 
+                  ${statusClause}}
               ) {
                 executed
                 expiry
@@ -76,7 +76,7 @@ export const subgraph = createApi({
         };
       },
       transformResponse: (res: TransactionsRes, api, { page, status }) => {
-        const transactions = res.data.multsigTransactions.map((t) => {
+        const transactions = res.data.multiSigTransactions.map((t) => {
           const status: TransactionStatus = t.executed
             ? "approved"
             : hasElapsed(t.expiry)
