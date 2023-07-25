@@ -26,7 +26,7 @@ import type {
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "../../common";
+} from "../../../../common";
 
 export declare namespace IStrategy {
   export type StrategyConfigStruct = {
@@ -44,7 +44,7 @@ export declare namespace IStrategy {
   };
 }
 
-export interface DummyStrategyInterface extends utils.Interface {
+export interface GoerliDummyInterface extends utils.Interface {
   functions: {
     "deposit(uint256)": FunctionFragment;
     "getStrategyConfig()": FunctionFragment;
@@ -220,12 +220,12 @@ export type WithdrewPositionEvent = TypedEvent<
 export type WithdrewPositionEventFilter =
   TypedEventFilter<WithdrewPositionEvent>;
 
-export interface DummyStrategy extends BaseContract {
+export interface GoerliDummy extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: DummyStrategyInterface;
+  interface: GoerliDummyInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

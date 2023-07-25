@@ -444,7 +444,6 @@ export declare namespace AccountMessages {
     registrarContract: PromiseOrValue<string>;
     nextAccountId: PromiseOrValue<BigNumberish>;
     maxGeneralCategoryId: PromiseOrValue<BigNumberish>;
-    subDao: PromiseOrValue<string>;
     earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct;
   };
 
@@ -455,7 +454,6 @@ export declare namespace AccountMessages {
     string,
     BigNumber,
     BigNumber,
-    string,
     LibAccounts.FeeSettingStructOutput
   ] & {
     owner: string;
@@ -464,7 +462,6 @@ export declare namespace AccountMessages {
     registrarContract: string;
     nextAccountId: BigNumber;
     maxGeneralCategoryId: BigNumber;
-    subDao: string;
     earlyLockedWithdrawFee: LibAccounts.FeeSettingStructOutput;
   };
 
