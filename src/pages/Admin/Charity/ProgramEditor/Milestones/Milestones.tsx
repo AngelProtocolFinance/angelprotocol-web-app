@@ -1,6 +1,7 @@
 import { useFieldArray } from "react-hook-form";
 import { FV } from "../types";
 import Icon from "components/Icon";
+import { Info } from "components/Status";
 import { dateToFormFormat } from "components/form";
 import Milestone from "./Milestone";
 
@@ -36,11 +37,15 @@ export default function Milestones() {
           <span>Add milestone</span>
         </button>
       </div>
-      <div className="grid gap-6">
-        {fields.map((m, idx) => (
-          <Milestone {...m} key={m.id} idx={idx} onRemove={onRemove} />
-        ))}
-      </div>
+      {fields.length > 0 ? (
+        <div className="grid gap-6">
+          {fields.map((m, idx) => (
+            <Milestone {...m} key={m.id} idx={idx} onRemove={onRemove} />
+          ))}
+        </div>
+      ) : (
+        <Info classes="text-base">No milestones</Info>
+      )}
     </div>
   );
 }
