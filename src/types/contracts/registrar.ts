@@ -31,3 +31,18 @@ export type RegistrarConfigUpdate = OverrideProperties<
     collectorShare: number;
   }
 >;
+
+//word version of enum, conversion to number done in query
+export type FeeType =
+  | "Default"
+  | "Harvest"
+  | "WithdrawCharity"
+  | "WithdrawNormal"
+  | "EarlyLockedWithdrawCharity"
+  | "EarlyLockedWithdrawNormal";
+
+//same with accounts/Fee
+export type FeeSetting = OverrideProperties<
+  Plain<LibAccounts.FeeSettingStruct>,
+  { bps: number }
+>;

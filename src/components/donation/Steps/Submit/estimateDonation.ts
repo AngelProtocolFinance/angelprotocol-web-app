@@ -9,7 +9,7 @@ import createCosmosMsg from "contracts/createCosmosMsg";
 import { createTx } from "contracts/createTx/createTx";
 import { logger, scale, scaleToStr } from "helpers";
 import { estimateTx } from "helpers/tx";
-import { ap_wallets } from "constants/ap_wallets";
+import { apWallets } from "constants/ap-wallets";
 import { ADDRESS_ZERO } from "constants/evm";
 
 export async function estimateDonation({
@@ -38,7 +38,7 @@ export async function estimateDonation({
     if (chain.type === "juno-native") {
       const sender = wallet.address;
       const scaledAmount = scaleToStr(token.amount, token.decimals);
-      const to = ap_wallets.juno_deposit;
+      const to = apWallets.junoDeposit;
       const msg =
         token.type === "juno-native" || token.type === "ibc"
           ? createCosmosMsg(sender, "recipient.send", {
@@ -60,13 +60,13 @@ export async function estimateDonation({
 
       const msg =
         token.type === "terra-native" || token.type === "ibc"
-          ? new MsgSend(wallet.address, ap_wallets.terra, [
+          ? new MsgSend(wallet.address, apWallets.terra, [
               new Coin(token.token_id, scaledAmount),
             ])
           : new MsgExecuteContract(wallet.address, token.token_id, {
               transfer: {
                 amount: scaledAmount,
-                recipient: ap_wallets.terra,
+                recipient: apWallets.terra,
               },
             });
 
@@ -82,12 +82,12 @@ export async function estimateDonation({
             return {
               from: wallet.address,
               value: scaledAmount,
-              to: ap_wallets.eth,
+              to: apWallets.evmDeposit,
             };
           case "erc20": {
             return createTx(wallet.address, "erc20.transfer", {
               erc20: token.token_id,
-              to: ap_wallets.eth,
+              to: apWallets.evmDeposit,
               amount: scaledAmount,
             });
           }

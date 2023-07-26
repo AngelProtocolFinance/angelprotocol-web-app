@@ -233,7 +233,7 @@ export interface SubDaoInterface extends utils.Interface {
     "initializeSubDao((uint32,address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,(uint8,(address,uint256,string,string,(uint8,(uint128,uint256,uint128,uint128)),string,string,uint256,address,uint256,uint256)),uint8,address,address),address)": FunctionFragment;
     "queryConfig()": FunctionFragment;
     "queryState()": FunctionFragment;
-    "registerContract(address,address)": FunctionFragment;
+    "registerContracts(address,address)": FunctionFragment;
     "updateConfig(address,uint256,uint256,uint256,uint256,uint256,uint256,uint256)": FunctionFragment;
   };
 
@@ -248,7 +248,7 @@ export interface SubDaoInterface extends utils.Interface {
       | "initializeSubDao"
       | "queryConfig"
       | "queryState"
-      | "registerContract"
+      | "registerContracts"
       | "updateConfig"
   ): FunctionFragment;
 
@@ -295,7 +295,7 @@ export interface SubDaoInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "registerContract",
+    functionFragment: "registerContracts",
     values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
@@ -334,7 +334,7 @@ export interface SubDaoInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "queryState", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "registerContract",
+    functionFragment: "registerContracts",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -432,9 +432,9 @@ export interface SubDao extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[SubDaoStorage.StateStructOutput]>;
 
-    registerContract(
-      vetoken: PromiseOrValue<string>,
-      swapfactory: PromiseOrValue<string>,
+    registerContracts(
+      veToken: PromiseOrValue<string>,
+      swapFactory: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -500,9 +500,9 @@ export interface SubDao extends BaseContract {
     overrides?: CallOverrides
   ): Promise<SubDaoStorage.StateStructOutput>;
 
-  registerContract(
-    vetoken: PromiseOrValue<string>,
-    swapfactory: PromiseOrValue<string>,
+  registerContracts(
+    veToken: PromiseOrValue<string>,
+    swapFactory: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -568,9 +568,9 @@ export interface SubDao extends BaseContract {
       overrides?: CallOverrides
     ): Promise<SubDaoStorage.StateStructOutput>;
 
-    registerContract(
-      vetoken: PromiseOrValue<string>,
-      swapfactory: PromiseOrValue<string>,
+    registerContracts(
+      veToken: PromiseOrValue<string>,
+      swapFactory: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -638,9 +638,9 @@ export interface SubDao extends BaseContract {
 
     queryState(overrides?: CallOverrides): Promise<BigNumber>;
 
-    registerContract(
-      vetoken: PromiseOrValue<string>,
-      swapfactory: PromiseOrValue<string>,
+    registerContracts(
+      veToken: PromiseOrValue<string>,
+      swapFactory: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -703,9 +703,9 @@ export interface SubDao extends BaseContract {
 
     queryState(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    registerContract(
-      vetoken: PromiseOrValue<string>,
-      swapfactory: PromiseOrValue<string>,
+    registerContracts(
+      veToken: PromiseOrValue<string>,
+      swapFactory: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

@@ -1,33 +1,38 @@
 import { useFormContext } from "react-hook-form";
 import { FV } from "./types";
-import { chainIds } from "constants/chainIds";
 import { denoms } from "constants/tokens";
-import { fee } from "./helpers";
+import { feeData } from "./helpers";
 
 export default function Breakdown() {
   const { watch, getValues } = useFormContext<FV>();
-  const fees = getValues("fees");
-  const network = watch("network");
+  const destinationChainId = watch("destinationChainId");
   const amounts = watch("amounts");
-  const amount = amounts.find((a) => a.tokenId === denoms.dusd)?.value ?? "0";
-  const usdc = +amount;
+  const usdcAmountStr =
+    amounts.find((a) => a.tokenId === denoms.dusd)?.value ?? "0";
 
-  const prettyFee = fee(network, fees);
-  const toReceive = usdc - prettyFee;
+  const fv = getValues(); //doesn't trigger re-render
+  const { items: feeItems, toReceive } = feeData({
+    ...fv,
+    destinationChainId,
+    withdrawAmount: +usdcAmountStr,
+  });
 
-  /** only show breakdown:
-   *  cross chain transfer
-   *  USDC is to be withdrawn
-   *  bridge fee is greater than withraw amount
+  /**
+   * don't show breakdown if:
+   * - user has nothing to receive after fees
+   * - no fees applies
    */
-  if (network === chainIds.juno || usdc <= 0 || toReceive < 0) return null;
+
+  const filteredFeeItems = feeItems.filter((item) => item.value > 0);
+
+  if (toReceive <= 0 || filteredFeeItems.length <= 1) return null;
 
   return (
     <div className="divide-y divide-prim">
       <p className="font-bold font-work mb-2">Summary</p>
-      <Item title="amount" value={usdc.toFixed(2) + " USDC"} />
-      <Item title="bridge fee" value={prettyFee.toFixed(2) + " USDC"} />
-      <Item title="to receive" value={toReceive.toFixed(2) + " USDC"} />
+      {filteredFeeItems.map(({ name, value }) => (
+        <Item key={name} title={name} value={value + " USDC"} />
+      ))}
     </div>
   );
 }

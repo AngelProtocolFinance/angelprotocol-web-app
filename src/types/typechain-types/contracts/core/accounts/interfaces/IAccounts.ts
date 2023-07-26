@@ -440,12 +440,10 @@ export declare namespace AccountMessages {
   export type ConfigResponseStruct = {
     owner: PromiseOrValue<string>;
     version: PromiseOrValue<string>;
+    networkName: PromiseOrValue<string>;
     registrarContract: PromiseOrValue<string>;
     nextAccountId: PromiseOrValue<BigNumberish>;
     maxGeneralCategoryId: PromiseOrValue<BigNumberish>;
-    subDao: PromiseOrValue<string>;
-    gateway: PromiseOrValue<string>;
-    gasReceiver: PromiseOrValue<string>;
     earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct;
   };
 
@@ -453,21 +451,17 @@ export declare namespace AccountMessages {
     string,
     string,
     string,
+    string,
     BigNumber,
     BigNumber,
-    string,
-    string,
-    string,
     LibAccounts.FeeSettingStructOutput
   ] & {
     owner: string;
     version: string;
+    networkName: string;
     registrarContract: string;
     nextAccountId: BigNumber;
     maxGeneralCategoryId: BigNumber;
-    subDao: string;
-    gateway: string;
-    gasReceiver: string;
     earlyLockedWithdrawFee: LibAccounts.FeeSettingStructOutput;
   };
 
@@ -483,6 +477,28 @@ export declare namespace AccountMessages {
     closingEndowment: boolean;
     closingBeneficiary: LibAccounts.BeneficiaryStructOutput;
   };
+
+  export type DonationMatchDataStruct = {
+    reserveToken: PromiseOrValue<string>;
+    uniswapFactory: PromiseOrValue<string>;
+    poolFee: PromiseOrValue<BigNumberish>;
+  };
+
+  export type DonationMatchDataStructOutput = [string, string, number] & {
+    reserveToken: string;
+    uniswapFactory: string;
+    poolFee: number;
+  };
+
+  export type DonationMatchStruct = {
+    enumData: PromiseOrValue<BigNumberish>;
+    data: AccountMessages.DonationMatchDataStruct;
+  };
+
+  export type DonationMatchStructOutput = [
+    number,
+    AccountMessages.DonationMatchDataStructOutput
+  ] & { enumData: number; data: AccountMessages.DonationMatchDataStructOutput };
 
   export type InvestRequestStruct = {
     strategy: PromiseOrValue<BytesLike>;
@@ -785,7 +801,7 @@ export interface IAccountsInterface extends utils.Interface {
     "closeEndowment(uint32,((uint32,uint256,address),uint8))": FunctionFragment;
     "createDaoContract((uint32,address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,(uint8,(address,uint256,string,string,(uint8,(uint128,uint256,uint128,uint128)),string,string,uint256,address,uint256,uint256)),uint8,address,address))": FunctionFragment;
     "createEndowment((bool,uint256,string,uint256[],uint8,uint8,string,string,address[],uint256,uint256,address[],address[],(address,uint256),(address,uint256),(address,uint256),(address,uint256),uint256,((bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256))),uint32,address[],bool,(uint256,uint256,uint256),uint256))": FunctionFragment;
-    "depositDonationMatchErC20(uint32,address,uint256)": FunctionFragment;
+    "depositDonationMatchERC20(uint32,address,uint256)": FunctionFragment;
     "depositERC20((uint32,uint256,uint256),address,uint256)": FunctionFragment;
     "depositMatic((uint32,uint256,uint256))": FunctionFragment;
     "manageAllowances(uint32,address,address,uint256)": FunctionFragment;
@@ -795,6 +811,7 @@ export interface IAccountsInterface extends utils.Interface {
     "queryState(uint32)": FunctionFragment;
     "queryTokenAmount(uint32,uint8,address)": FunctionFragment;
     "setupDao(uint32,(uint256,uint256,uint256,uint256,uint256,uint128,uint256,(uint8,(address,uint256,string,string,(uint8,(uint128,uint256,uint128,uint128)),string,string,uint256,address,uint256,uint256))))": FunctionFragment;
+    "setupDonationMatch(uint32,(uint8,(address,address,uint24)))": FunctionFragment;
     "spendAllowance(uint32,address,uint256,address)": FunctionFragment;
     "strategyInvest(uint32,(bytes4,string,uint256,uint256,uint256))": FunctionFragment;
     "strategyRedeem(uint32,(bytes4,string,uint256,uint256,uint256))": FunctionFragment;
@@ -809,6 +826,7 @@ export interface IAccountsInterface extends utils.Interface {
     "updateFeeSettings((uint32,(address,uint256),(address,uint256),(address,uint256),(address,uint256)))": FunctionFragment;
     "updateOwner(address)": FunctionFragment;
     "withdraw(uint32,uint8,address,uint32,(address,uint256)[])": FunctionFragment;
+    "withdrawDonationMatchERC20(uint32,address,uint256)": FunctionFragment;
   };
 
   getFunction(
@@ -816,7 +834,7 @@ export interface IAccountsInterface extends utils.Interface {
       | "closeEndowment"
       | "createDaoContract"
       | "createEndowment"
-      | "depositDonationMatchErC20"
+      | "depositDonationMatchERC20"
       | "depositERC20"
       | "depositMatic"
       | "manageAllowances"
@@ -826,6 +844,7 @@ export interface IAccountsInterface extends utils.Interface {
       | "queryState"
       | "queryTokenAmount"
       | "setupDao"
+      | "setupDonationMatch"
       | "spendAllowance"
       | "strategyInvest"
       | "strategyRedeem"
@@ -840,6 +859,7 @@ export interface IAccountsInterface extends utils.Interface {
       | "updateFeeSettings"
       | "updateOwner"
       | "withdraw"
+      | "withdrawDonationMatchERC20"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -855,7 +875,7 @@ export interface IAccountsInterface extends utils.Interface {
     values: [AccountMessages.CreateEndowmentRequestStruct]
   ): string;
   encodeFunctionData(
-    functionFragment: "depositDonationMatchErC20",
+    functionFragment: "depositDonationMatchERC20",
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
@@ -914,6 +934,10 @@ export interface IAccountsInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "setupDao",
     values: [PromiseOrValue<BigNumberish>, SubDaoLib.DaoSetupStruct]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setupDonationMatch",
+    values: [PromiseOrValue<BigNumberish>, AccountMessages.DonationMatchStruct]
   ): string;
   encodeFunctionData(
     functionFragment: "spendAllowance",
@@ -1007,6 +1031,14 @@ export interface IAccountsInterface extends utils.Interface {
       IAccountsDepositWithdrawEndowments.TokenInfoStruct[]
     ]
   ): string;
+  encodeFunctionData(
+    functionFragment: "withdrawDonationMatchERC20",
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>
+    ]
+  ): string;
 
   decodeFunctionResult(
     functionFragment: "closeEndowment",
@@ -1021,7 +1053,7 @@ export interface IAccountsInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "depositDonationMatchErC20",
+    functionFragment: "depositDonationMatchERC20",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -1054,6 +1086,10 @@ export interface IAccountsInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "setupDao", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "setupDonationMatch",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "spendAllowance",
     data: BytesLike
@@ -1104,6 +1140,10 @@ export interface IAccountsInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "withdrawDonationMatchERC20",
+    data: BytesLike
+  ): Result;
 
   events: {
     "AllowanceSpent(uint256,address,address,uint256)": EventFragment;
@@ -1416,7 +1456,7 @@ export interface IAccounts extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    depositDonationMatchErC20(
+    depositDonationMatchERC20(
       id: PromiseOrValue<BigNumberish>,
       token: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
@@ -1486,6 +1526,12 @@ export interface IAccounts extends BaseContract {
     setupDao(
       id: PromiseOrValue<BigNumberish>,
       details: SubDaoLib.DaoSetupStruct,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    setupDonationMatch(
+      id: PromiseOrValue<BigNumberish>,
+      details: AccountMessages.DonationMatchStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -1582,6 +1628,13 @@ export interface IAccounts extends BaseContract {
       tokens: IAccountsDepositWithdrawEndowments.TokenInfoStruct[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
+
+    withdrawDonationMatchERC20(
+      id: PromiseOrValue<BigNumberish>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
   };
 
   closeEndowment(
@@ -1600,7 +1653,7 @@ export interface IAccounts extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  depositDonationMatchErC20(
+  depositDonationMatchERC20(
     id: PromiseOrValue<BigNumberish>,
     token: PromiseOrValue<string>,
     amount: PromiseOrValue<BigNumberish>,
@@ -1658,6 +1711,12 @@ export interface IAccounts extends BaseContract {
   setupDao(
     id: PromiseOrValue<BigNumberish>,
     details: SubDaoLib.DaoSetupStruct,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  setupDonationMatch(
+    id: PromiseOrValue<BigNumberish>,
+    details: AccountMessages.DonationMatchStruct,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -1755,6 +1814,13 @@ export interface IAccounts extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  withdrawDonationMatchERC20(
+    id: PromiseOrValue<BigNumberish>,
+    recipient: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   callStatic: {
     closeEndowment(
       id: PromiseOrValue<BigNumberish>,
@@ -1772,7 +1838,7 @@ export interface IAccounts extends BaseContract {
       overrides?: CallOverrides
     ): Promise<number>;
 
-    depositDonationMatchErC20(
+    depositDonationMatchERC20(
       id: PromiseOrValue<BigNumberish>,
       token: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
@@ -1830,6 +1896,12 @@ export interface IAccounts extends BaseContract {
     setupDao(
       id: PromiseOrValue<BigNumberish>,
       details: SubDaoLib.DaoSetupStruct,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setupDonationMatch(
+      id: PromiseOrValue<BigNumberish>,
+      details: AccountMessages.DonationMatchStruct,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1924,6 +1996,13 @@ export interface IAccounts extends BaseContract {
       beneficiaryAddress: PromiseOrValue<string>,
       beneficiaryEndowId: PromiseOrValue<BigNumberish>,
       tokens: IAccountsDepositWithdrawEndowments.TokenInfoStruct[],
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    withdrawDonationMatchERC20(
+      id: PromiseOrValue<BigNumberish>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -2108,7 +2187,7 @@ export interface IAccounts extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    depositDonationMatchErC20(
+    depositDonationMatchERC20(
       id: PromiseOrValue<BigNumberish>,
       token: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
@@ -2167,6 +2246,12 @@ export interface IAccounts extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    setupDonationMatch(
+      id: PromiseOrValue<BigNumberish>,
+      details: AccountMessages.DonationMatchStruct,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     spendAllowance(
       endowId: PromiseOrValue<BigNumberish>,
       token: PromiseOrValue<string>,
@@ -2260,6 +2345,13 @@ export interface IAccounts extends BaseContract {
       tokens: IAccountsDepositWithdrawEndowments.TokenInfoStruct[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
+
+    withdrawDonationMatchERC20(
+      id: PromiseOrValue<BigNumberish>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -2279,7 +2371,7 @@ export interface IAccounts extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    depositDonationMatchErC20(
+    depositDonationMatchERC20(
       id: PromiseOrValue<BigNumberish>,
       token: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
@@ -2338,6 +2430,12 @@ export interface IAccounts extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
+    setupDonationMatch(
+      id: PromiseOrValue<BigNumberish>,
+      details: AccountMessages.DonationMatchStruct,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     spendAllowance(
       endowId: PromiseOrValue<BigNumberish>,
       token: PromiseOrValue<string>,
@@ -2429,6 +2527,13 @@ export interface IAccounts extends BaseContract {
       beneficiaryAddress: PromiseOrValue<string>,
       beneficiaryEndowId: PromiseOrValue<BigNumberish>,
       tokens: IAccountsDepositWithdrawEndowments.TokenInfoStruct[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    withdrawDonationMatchERC20(
+      id: PromiseOrValue<BigNumberish>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };
