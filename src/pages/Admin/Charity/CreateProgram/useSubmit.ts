@@ -30,13 +30,16 @@ export default function useSubmit() {
        * to tx submission. Other users of useTxSender
        */
 
-      const [imageURL] = await uploadImgs([fv.image], () => {
-        showModal(
-          TxPrompt,
-          { loading: "Uploading images.." },
-          { isDismissible: false }
-        );
-      });
+      const [imageURL, ...milestoneMediaURLs] = await uploadImgs(
+        [fv.image, ...fv.milestones.map((m) => m.milestone_media)],
+        () => {
+          showModal(
+            TxPrompt,
+            { loading: "Uploading images.." },
+            { isDismissible: false }
+          );
+        }
+      );
 
       //having initial value means form is for editing
 
@@ -45,7 +48,10 @@ export default function useSubmit() {
         program_id: initial ? initial.program_id : window.crypto.randomUUID(),
         program_description: fv.description,
         program_banner: imageURL,
-        program_milestones: [],
+        program_milestones: fv.milestones.map((m, i) => ({
+          ...m,
+          milestone_media: milestoneMediaURLs[i],
+        })),
       };
 
       if (initial) {

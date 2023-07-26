@@ -23,6 +23,7 @@ export default function Milestones() {
                 preview: "",
                 publicUrl: "",
               },
+              idx: fields.length + 1,
             })
           }
           type="button"
@@ -33,8 +34,8 @@ export default function Milestones() {
         </button>
       </div>
       <div className="grid gap-6">
-        {fields.map((m) => (
-          <Milestone {...m} key={m.id} />
+        {fields.map((m, idx) => (
+          <Milestone {...m} key={m.id} idx={idx} />
         ))}
       </div>
     </div>

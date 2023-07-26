@@ -1,8 +1,14 @@
 import { Disclosure } from "@headlessui/react";
-import { FormMilestone } from "../types";
+import { Path } from "react-hook-form";
+import { FV, FormMilestone } from "../types";
 import { DrawerIcon } from "components/Icon";
+import ImgEditor from "components/ImgEditor/ImgEditor";
+import { RichTextEditor } from "components/RichText";
+import { Field, Label } from "components/form";
+import { MAX_CHARS, VALID_MIME_TYPES } from "../schema";
 
-export default function Milestone({ milestone_title }: FormMilestone) {
+export default function Milestone({ milestone_title, idx }: FormMilestone) {
+  const mediaName: Path<FV> = `milestones.${idx}.milestone_media`;
   return (
     <Disclosure
       as="div"
@@ -20,10 +26,47 @@ export default function Milestone({ milestone_title }: FormMilestone) {
       <Disclosure.Panel
         as="div"
         className={({ open }) =>
-          `${open ? "border-t border-prim" : ""} dark:bg-blue-d5`
+          `${
+            open ? "border-t border-prim" : ""
+          } dark:bg-blue-d5 py-6 px-4 grid content-start gap-6`
         }
       >
-        hello world
+        <Label className="-mb-4">Image of milestone</Label>
+        <ImgEditor<FV, typeof mediaName>
+          // resolved T[Path<T>] does not equal to ImgLink though it is the same ??
+          name={mediaName as never}
+          accept={VALID_MIME_TYPES}
+          aspect={[4, 1]}
+          classes={{ container: "mb-4", dropzone: "w-full aspect-[4/1]" }}
+        />
+        <Field<FV, "date">
+          type="date"
+          classes={{ input: "date-input uppercase" }}
+          name={`milestones.${idx}.milestone_date`}
+          label="Date of milestone"
+          placeholder="e.g. John"
+          required
+        />
+        <Field<FV>
+          classes="field-admin"
+          name={`milestones.${idx}.milestone_title`}
+          label="Title of milestone"
+          placeholder="e.g. John"
+          required
+        />
+        <Label className="-mb-4" required>
+          Description of milestone
+        </Label>
+        <RichTextEditor<FV>
+          fieldName={`milestones.${idx}.milestone_description`}
+          charLimit={MAX_CHARS}
+          classes={{
+            container:
+              "rich-text-toolbar border border-prim text-sm grid grid-rows-[auto_1fr] rounded bg-gray-l6 dark:bg-blue-d5 p-3 min-h-[15rem]",
+            error: "static field-error -mt-4",
+            charCounter: "text-gray-d1 dark:text-gray",
+          }}
+        />
       </Disclosure.Panel>
     </Disclosure>
   );

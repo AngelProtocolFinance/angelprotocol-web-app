@@ -1,4 +1,4 @@
-import { FieldValues } from "react-hook-form";
+import { FieldValues, Path } from "react-hook-form";
 import { FileObject } from "types/aws";
 
 export type ImgLink = FileObject & {
@@ -9,7 +9,7 @@ export type ImgLink = FileObject & {
 
 type Classes = { container?: string; dropzone?: string };
 
-export type Props<T extends FieldValues, K extends keyof T> = {
+export type Props<T extends FieldValues, K extends Path<T>> = {
   // we get common props with this intersection,
   // which are only props from T
   // (Path<T> returns all possible paths through T)
