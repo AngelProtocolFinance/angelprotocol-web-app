@@ -41,18 +41,18 @@ export default function ProgramEditor() {
       }}
       messages={{ loading: "Loading program", error: "Failed to load program" }}
     >
-      {(program) => (
+      {(p) => (
         <Context
           {...{
-            title: program.program_title,
-            description: program.program_description,
+            title: p.program_title,
+            description: p.program_description,
             image: {
               name: "",
-              publicUrl: program.program_banner,
-              preview: program.program_banner,
+              publicUrl: p.program_banner,
+              preview: p.program_banner,
             },
-            initial: program,
-            milestones: program.program_milestones.map((m, idx) => ({
+            initial: p,
+            milestones: p.program_milestones.map((m, idx) => ({
               ...m,
               milestone_media: {
                 name: "",
