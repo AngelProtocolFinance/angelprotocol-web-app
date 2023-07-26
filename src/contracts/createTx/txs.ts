@@ -44,7 +44,7 @@ export const txs: { [T in TxType]: (args: TxArgs<T>) => string } = {
   "multisig.change-auto-execute": ({ autoExecute }) =>
     multisig.encodeFunctionData("changeRequireExecution", [!autoExecute]),
   "multisig.change-duration": ({ duration }) =>
-    multisig.encodeFunctionData("changeRequireExecution", [duration]),
+    multisig.encodeFunctionData("changeTransactionExpiry", [duration]),
 
   "multisig/review.confirm-prop": ({ id }) =>
     multisig.encodeFunctionData("confirmProposal", [id]),
