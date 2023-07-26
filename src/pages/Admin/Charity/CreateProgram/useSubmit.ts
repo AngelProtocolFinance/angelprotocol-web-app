@@ -26,10 +26,6 @@ export default function useSubmit() {
 
   const submit: SubmitHandler<FV> = async ({ initial, ...fv }) => {
     try {
-      /** special case for edit profile: since upload happens prior
-       * to tx submission. Other users of useTxSender
-       */
-
       const [imageURL, ...milestoneMediaURLs] = await uploadImgs(
         [fv.image, ...fv.milestones.map((m) => m.milestone_media)],
         () => {
@@ -48,7 +44,7 @@ export default function useSubmit() {
         program_id: initial ? initial.program_id : window.crypto.randomUUID(),
         program_description: fv.description,
         program_banner: imageURL,
-        program_milestones: fv.milestones.map((m, i) => ({
+        program_milestones: fv.milestones.map(({ idx, ...m }, i) => ({
           ...m,
           milestone_media: milestoneMediaURLs[i],
         })),
