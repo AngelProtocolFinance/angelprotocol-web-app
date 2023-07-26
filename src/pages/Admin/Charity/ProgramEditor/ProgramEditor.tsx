@@ -13,7 +13,7 @@ const NEW = "new";
 export default function ProgramEditor() {
   const { id: programId } = useParams();
   const { id: endowId } = useAdminContext();
-  const profileQuery = useProfileQuery(endowId);
+  const profileQuery = useProfileQuery(endowId, { skip: programId === NEW });
 
   if (programId === NEW)
     return (
