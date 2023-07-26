@@ -35,7 +35,7 @@ export const adminRoutes = {
   //charity
   edit_profile: "edit-profile",
   programs: "programs",
-  create_program: "create-program",
+  program_editor: "program-editor",
   withdraws: "withdraws",
   deposits: "deposits",
   // settings: "settings",

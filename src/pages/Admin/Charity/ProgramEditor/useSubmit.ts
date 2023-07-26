@@ -63,6 +63,7 @@ export default function useSubmit() {
         program: [program],
       };
       await updateProfile(updates);
+      if (!initial) reset(); //for new program, reset form after submit
     } catch (err) {
       console.log(err);
       showModal(TxPrompt, {
