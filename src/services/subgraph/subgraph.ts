@@ -14,7 +14,7 @@ import { TransactionStatus } from "types/lists";
 import { blockTime, hasElapsed } from "helpers/admin";
 
 const GRAPHQL_ENDPOINT =
-  "https://api.studio.thegraph.com/query/49156/angel-giving/version/latest";
+  "https://api.studio.thegraph.com/query/49156/angel-giving/v0.0.23";
 
 const customBaseQuery: BaseQueryFn = retry(
   async (args, api, extraOptions) => {
