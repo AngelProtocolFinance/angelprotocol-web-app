@@ -46,6 +46,7 @@ export default function useSubmit() {
         program_banner: imageURL,
         program_milestones: fv.milestones.map(({ idx, ...m }, i) => ({
           ...m,
+          milestone_date: new Date(m.milestone_date).toISOString(),
           milestone_media: milestoneMediaURLs[i],
         })),
       };

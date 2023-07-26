@@ -14,6 +14,7 @@ export default function Milestone({
   const { watch } = useFormContext<FV>();
   const mediaName: Path<FV> = `milestones.${idx}.milestone_media`;
   const title = watch(`milestones.${idx}.milestone_title`);
+
   return (
     <Disclosure as="div" className="border border-prim rounded overflow-hidden">
       <div className="relative py-3 px-4 text-center bg-orange-l6 dark:bg-blue-d7">
