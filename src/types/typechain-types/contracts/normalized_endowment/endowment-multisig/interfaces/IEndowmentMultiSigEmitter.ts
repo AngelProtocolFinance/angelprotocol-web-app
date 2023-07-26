@@ -36,7 +36,7 @@ export interface IEndowmentMultiSigEmitterInterface extends utils.Interface {
     "transactionConfirmationRevokedEndowment(uint256,address,uint256)": FunctionFragment;
     "transactionConfirmedEndowment(uint256,address,uint256)": FunctionFragment;
     "transactionExecutedEndowment(uint256,uint256)": FunctionFragment;
-    "transactionSubmittedEndowment(uint256,address,uint256)": FunctionFragment;
+    "transactionSubmittedEndowment(uint256,address,uint256,bytes)": FunctionFragment;
   };
 
   getFunction(
@@ -128,7 +128,8 @@ export interface IEndowmentMultiSigEmitterInterface extends utils.Interface {
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>
     ]
   ): string;
 
@@ -290,6 +291,7 @@ export interface IEndowmentMultiSigEmitter extends BaseContract {
       endowmentId: PromiseOrValue<BigNumberish>,
       owner: PromiseOrValue<string>,
       transactionId: PromiseOrValue<BigNumberish>,
+      metadata: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
@@ -373,6 +375,7 @@ export interface IEndowmentMultiSigEmitter extends BaseContract {
     endowmentId: PromiseOrValue<BigNumberish>,
     owner: PromiseOrValue<string>,
     transactionId: PromiseOrValue<BigNumberish>,
+    metadata: PromiseOrValue<BytesLike>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -456,6 +459,7 @@ export interface IEndowmentMultiSigEmitter extends BaseContract {
       endowmentId: PromiseOrValue<BigNumberish>,
       owner: PromiseOrValue<string>,
       transactionId: PromiseOrValue<BigNumberish>,
+      metadata: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -542,6 +546,7 @@ export interface IEndowmentMultiSigEmitter extends BaseContract {
       endowmentId: PromiseOrValue<BigNumberish>,
       owner: PromiseOrValue<string>,
       transactionId: PromiseOrValue<BigNumberish>,
+      metadata: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
@@ -626,6 +631,7 @@ export interface IEndowmentMultiSigEmitter extends BaseContract {
       endowmentId: PromiseOrValue<BigNumberish>,
       owner: PromiseOrValue<string>,
       transactionId: PromiseOrValue<BigNumberish>,
+      metadata: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };

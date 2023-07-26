@@ -259,7 +259,7 @@ export interface CharityApplicationsInterface extends utils.Interface {
     "isOwner(address)": FunctionFragment;
     "proposalConfirmations(uint256)": FunctionFragment;
     "proposals(uint256)": FunctionFragment;
-    "proposeApplication((bool,uint256,string,uint256[],uint8,uint8,string,string,address[],uint256,uint256,address[],address[],(address,uint256),(address,uint256),(address,uint256),(address,uint256),uint256,((bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256))),uint32,address[],bool,(uint256,uint256,uint256),uint256),string)": FunctionFragment;
+    "proposeApplication((bool,uint256,string,uint256[],uint8,uint8,string,string,address[],uint256,uint256,address[],address[],(address,uint256),(address,uint256),(address,uint256),(address,uint256),uint256,((bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256))),uint32,address[],bool,(uint256,uint256,uint256),uint256),bytes)": FunctionFragment;
     "queryConfig()": FunctionFragment;
     "removeOwners(address[])": FunctionFragment;
     "replaceOwner(address,address)": FunctionFragment;
@@ -424,7 +424,7 @@ export interface CharityApplicationsInterface extends utils.Interface {
     functionFragment: "proposeApplication",
     values: [
       AccountMessages.CreateEndowmentRequestStruct,
-      PromiseOrValue<string>
+      PromiseOrValue<BytesLike>
     ]
   ): string;
   encodeFunctionData(
@@ -630,7 +630,7 @@ export interface CharityApplicationsInterface extends utils.Interface {
     "ApplicationConfirmationRevoked(uint256,address)": EventFragment;
     "ApplicationConfirmed(uint256,address)": EventFragment;
     "ApplicationExecuted(uint256)": EventFragment;
-    "ApplicationProposed(uint256,address,string,uint256)": EventFragment;
+    "ApplicationProposed(uint256,address,string,uint256,bytes)": EventFragment;
     "ApprovalsRequiredChanged(address,uint256)": EventFragment;
     "ExpiryChanged(address,uint256)": EventFragment;
     "GasSent(uint256,address,uint256)": EventFragment;
@@ -644,7 +644,7 @@ export interface CharityApplicationsInterface extends utils.Interface {
     "TransactionConfirmationRevoked(address,address,uint256)": EventFragment;
     "TransactionConfirmed(address,address,uint256)": EventFragment;
     "TransactionExecuted(address,uint256)": EventFragment;
-    "TransactionSubmitted(address,address,uint256)": EventFragment;
+    "TransactionSubmitted(address,address,uint256,bytes)": EventFragment;
   };
 
   getEvent(
@@ -711,9 +711,10 @@ export interface ApplicationProposedEventObject {
   proposer: string;
   charityName: string;
   expiry: BigNumber;
+  metadata: string;
 }
 export type ApplicationProposedEvent = TypedEvent<
-  [BigNumber, string, string, BigNumber],
+  [BigNumber, string, string, BigNumber, string],
   ApplicationProposedEventObject
 >;
 
@@ -877,9 +878,10 @@ export interface TransactionSubmittedEventObject {
   msAddress: string;
   sender: string;
   transactionId: BigNumber;
+  metadata: string;
 }
 export type TransactionSubmittedEvent = TypedEvent<
-  [string, string, BigNumber],
+  [string, string, BigNumber, string],
   TransactionSubmittedEventObject
 >;
 
@@ -1050,7 +1052,7 @@ export interface CharityApplications extends BaseContract {
       ] & {
         proposer: string;
         application: AccountMessages.CreateEndowmentRequestStructOutput;
-        meta: string;
+        metadata: string;
         expiry: BigNumber;
         executed: boolean;
       }
@@ -1058,7 +1060,7 @@ export interface CharityApplications extends BaseContract {
 
     proposeApplication(
       _application: AccountMessages.CreateEndowmentRequestStruct,
-      _meta: PromiseOrValue<string>,
+      _metadata: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -1274,7 +1276,7 @@ export interface CharityApplications extends BaseContract {
     ] & {
       proposer: string;
       application: AccountMessages.CreateEndowmentRequestStructOutput;
-      meta: string;
+      metadata: string;
       expiry: BigNumber;
       executed: boolean;
     }
@@ -1282,7 +1284,7 @@ export interface CharityApplications extends BaseContract {
 
   proposeApplication(
     _application: AccountMessages.CreateEndowmentRequestStruct,
-    _meta: PromiseOrValue<string>,
+    _metadata: PromiseOrValue<BytesLike>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -1498,7 +1500,7 @@ export interface CharityApplications extends BaseContract {
       ] & {
         proposer: string;
         application: AccountMessages.CreateEndowmentRequestStructOutput;
-        meta: string;
+        metadata: string;
         expiry: BigNumber;
         executed: boolean;
       }
@@ -1506,7 +1508,7 @@ export interface CharityApplications extends BaseContract {
 
     proposeApplication(
       _application: AccountMessages.CreateEndowmentRequestStruct,
-      _meta: PromiseOrValue<string>,
+      _metadata: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1609,17 +1611,19 @@ export interface CharityApplications extends BaseContract {
     ): ApplicationExecutedEventFilter;
     ApplicationExecuted(proposalId?: null): ApplicationExecutedEventFilter;
 
-    "ApplicationProposed(uint256,address,string,uint256)"(
+    "ApplicationProposed(uint256,address,string,uint256,bytes)"(
       proposalId?: null,
       proposer?: null,
       charityName?: null,
-      expiry?: null
+      expiry?: null,
+      metadata?: null
     ): ApplicationProposedEventFilter;
     ApplicationProposed(
       proposalId?: null,
       proposer?: null,
       charityName?: null,
-      expiry?: null
+      expiry?: null,
+      metadata?: null
     ): ApplicationProposedEventFilter;
 
     "ApprovalsRequiredChanged(address,uint256)"(
@@ -1743,15 +1747,17 @@ export interface CharityApplications extends BaseContract {
       transactionId?: null
     ): TransactionExecutedEventFilter;
 
-    "TransactionSubmitted(address,address,uint256)"(
+    "TransactionSubmitted(address,address,uint256,bytes)"(
       msAddress?: null,
       sender?: null,
-      transactionId?: null
+      transactionId?: null,
+      metadata?: null
     ): TransactionSubmittedEventFilter;
     TransactionSubmitted(
       msAddress?: null,
       sender?: null,
-      transactionId?: null
+      transactionId?: null,
+      metadata?: null
     ): TransactionSubmittedEventFilter;
   };
 
@@ -1877,7 +1883,7 @@ export interface CharityApplications extends BaseContract {
 
     proposeApplication(
       _application: AccountMessages.CreateEndowmentRequestStruct,
-      _meta: PromiseOrValue<string>,
+      _metadata: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -2067,7 +2073,7 @@ export interface CharityApplications extends BaseContract {
 
     proposeApplication(
       _application: AccountMessages.CreateEndowmentRequestStruct,
-      _meta: PromiseOrValue<string>,
+      _metadata: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

@@ -21,6 +21,70 @@ import type {
   PromiseOrValue,
 } from "../../../../common";
 
+export declare namespace AccountMessages {
+  export type ConfigResponseStruct = {
+    owner: PromiseOrValue<string>;
+    version: PromiseOrValue<string>;
+    networkName: PromiseOrValue<string>;
+    registrarContract: PromiseOrValue<string>;
+    nextAccountId: PromiseOrValue<BigNumberish>;
+  };
+
+  export type ConfigResponseStructOutput = [
+    string,
+    string,
+    string,
+    string,
+    BigNumber
+  ] & {
+    owner: string;
+    version: string;
+    networkName: string;
+    registrarContract: string;
+    nextAccountId: BigNumber;
+  };
+
+  export type StateResponseStruct = {
+    closingEndowment: PromiseOrValue<boolean>;
+    closingBeneficiary: LibAccounts.BeneficiaryStruct;
+  };
+
+  export type StateResponseStructOutput = [
+    boolean,
+    LibAccounts.BeneficiaryStructOutput
+  ] & {
+    closingEndowment: boolean;
+    closingBeneficiary: LibAccounts.BeneficiaryStructOutput;
+  };
+}
+
+export declare namespace LocalRegistrarLib {
+  export type RebalanceParamsStruct = {
+    rebalanceLiquidProfits: PromiseOrValue<boolean>;
+    lockedRebalanceToLiquid: PromiseOrValue<BigNumberish>;
+    interestDistribution: PromiseOrValue<BigNumberish>;
+    lockedPrincipleToLiquid: PromiseOrValue<boolean>;
+    principleDistribution: PromiseOrValue<BigNumberish>;
+    basis: PromiseOrValue<BigNumberish>;
+  };
+
+  export type RebalanceParamsStructOutput = [
+    boolean,
+    number,
+    number,
+    boolean,
+    number,
+    number
+  ] & {
+    rebalanceLiquidProfits: boolean;
+    lockedRebalanceToLiquid: number;
+    interestDistribution: number;
+    lockedPrincipleToLiquid: boolean;
+    principleDistribution: number;
+    basis: number;
+  };
+}
+
 export declare namespace LibAccounts {
   export type FeeSettingStruct = {
     payoutAddress: PromiseOrValue<string>;
@@ -143,76 +207,6 @@ export declare namespace LibAccounts {
     LibAccounts.BeneficiaryDataStructOutput,
     number
   ] & { data: LibAccounts.BeneficiaryDataStructOutput; enumData: number };
-}
-
-export declare namespace AccountMessages {
-  export type ConfigResponseStruct = {
-    owner: PromiseOrValue<string>;
-    version: PromiseOrValue<string>;
-    networkName: PromiseOrValue<string>;
-    registrarContract: PromiseOrValue<string>;
-    nextAccountId: PromiseOrValue<BigNumberish>;
-    maxGeneralCategoryId: PromiseOrValue<BigNumberish>;
-    earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct;
-  };
-
-  export type ConfigResponseStructOutput = [
-    string,
-    string,
-    string,
-    string,
-    BigNumber,
-    BigNumber,
-    LibAccounts.FeeSettingStructOutput
-  ] & {
-    owner: string;
-    version: string;
-    networkName: string;
-    registrarContract: string;
-    nextAccountId: BigNumber;
-    maxGeneralCategoryId: BigNumber;
-    earlyLockedWithdrawFee: LibAccounts.FeeSettingStructOutput;
-  };
-
-  export type StateResponseStruct = {
-    closingEndowment: PromiseOrValue<boolean>;
-    closingBeneficiary: LibAccounts.BeneficiaryStruct;
-  };
-
-  export type StateResponseStructOutput = [
-    boolean,
-    LibAccounts.BeneficiaryStructOutput
-  ] & {
-    closingEndowment: boolean;
-    closingBeneficiary: LibAccounts.BeneficiaryStructOutput;
-  };
-}
-
-export declare namespace LocalRegistrarLib {
-  export type RebalanceParamsStruct = {
-    rebalanceLiquidProfits: PromiseOrValue<boolean>;
-    lockedRebalanceToLiquid: PromiseOrValue<BigNumberish>;
-    interestDistribution: PromiseOrValue<BigNumberish>;
-    lockedPrincipleToLiquid: PromiseOrValue<boolean>;
-    principleDistribution: PromiseOrValue<BigNumberish>;
-    basis: PromiseOrValue<BigNumberish>;
-  };
-
-  export type RebalanceParamsStructOutput = [
-    boolean,
-    number,
-    number,
-    boolean,
-    number,
-    number
-  ] & {
-    rebalanceLiquidProfits: boolean;
-    lockedRebalanceToLiquid: number;
-    interestDistribution: number;
-    lockedPrincipleToLiquid: boolean;
-    principleDistribution: number;
-    basis: number;
-  };
 }
 
 export declare namespace AccountStorage {

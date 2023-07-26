@@ -292,7 +292,7 @@ export interface StorageApplications extends BaseContract {
       ] & {
         proposer: string;
         application: AccountMessages.CreateEndowmentRequestStructOutput;
-        meta: string;
+        metadata: string;
         expiry: BigNumber;
         executed: boolean;
       }
@@ -329,7 +329,7 @@ export interface StorageApplications extends BaseContract {
     ] & {
       proposer: string;
       application: AccountMessages.CreateEndowmentRequestStructOutput;
-      meta: string;
+      metadata: string;
       expiry: BigNumber;
       executed: boolean;
     }
@@ -366,7 +366,7 @@ export interface StorageApplications extends BaseContract {
       ] & {
         proposer: string;
         application: AccountMessages.CreateEndowmentRequestStructOutput;
-        meta: string;
+        metadata: string;
         expiry: BigNumber;
         executed: boolean;
       }
