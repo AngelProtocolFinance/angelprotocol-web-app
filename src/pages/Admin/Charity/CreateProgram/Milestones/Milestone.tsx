@@ -15,11 +15,8 @@ export default function Milestone({
   const mediaName: Path<FV> = `milestones.${idx}.milestone_media`;
   const title = watch(`milestones.${idx}.milestone_title`);
   return (
-    <Disclosure
-      as="div"
-      className="border border-prim rounded dark:bg-blue-d7 overflow-hidden"
-    >
-      <div className="relative py-3 px-4 text-center">
+    <Disclosure as="div" className="border border-prim rounded overflow-hidden">
+      <div className="relative py-3 px-4 text-center bg-orange-l6 dark:bg-blue-d7">
         <span className="text-xl font-bold font-heading">
           {title || `Milestone ${idx + 1}`}
         </span>
@@ -33,7 +30,7 @@ export default function Milestone({
         className={({ open }) =>
           `${
             open ? "border-t border-prim" : ""
-          } dark:bg-blue-d5 py-6 px-4 grid content-start gap-6`
+          } bg-white dark:bg-blue-d6 py-6 px-4 grid content-start gap-6`
         }
       >
         <Label className="-mb-4">Image of milestone</Label>
@@ -42,11 +39,14 @@ export default function Milestone({
           name={mediaName as never}
           accept={VALID_MIME_TYPES}
           aspect={[4, 1]}
-          classes={{ container: "mb-4", dropzone: "w-full aspect-[4/1]" }}
+          classes={{
+            container: "mb-4",
+            dropzone: "w-full @md:aspect-[4/1] h-36 @md:h-auto",
+          }}
         />
         <Field<FV, "date">
           type="date"
-          classes={{ input: "date-input uppercase" }}
+          classes={{ input: "date-input uppercase", container: "field-admin" }}
           name={`milestones.${idx}.milestone_date`}
           label="Date of milestone"
           placeholder="e.g. John"
@@ -74,7 +74,7 @@ export default function Milestone({
         />
         <button
           type="button"
-          className="btn-outline-filled justify-self-end"
+          className="btn-outline-filled @md:justify-self-end w-full @lg:w-52 py-2 text-sm"
           onClick={() => onRemove(idx)}
         >
           Delete milestone

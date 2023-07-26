@@ -12,8 +12,8 @@ export default function Milestones() {
   const onRemove = (idx: number) => remove(idx);
 
   return (
-    <div className="grid gap-6 p-4 @lg:p-6 border border-prim rounded bg-white dark:bg-blue-d6">
-      <div className="flex items-center gap-3 justify-between">
+    <div className="@container grid gap-6 p-4 @lg:p-6 border border-prim rounded bg-white dark:bg-blue-d6">
+      <div className="flex flex-col @md:flex-row items-center gap-3 justify-between">
         <h4 className="text-2xl font-body">Milestones</h4>
         <button
           onClick={() =>
@@ -30,7 +30,7 @@ export default function Milestones() {
             })
           }
           type="button"
-          className="btn-outline-filled text-sm w-52 py-2"
+          className="btn-outline-filled text-sm w-full @md:w-52 py-2"
         >
           <Icon type="Plus" className="mr-2" />
           <span>Add milestone</span>
