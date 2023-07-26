@@ -36,7 +36,7 @@ export default function Milestone({
         <Label className="-mb-4">Image of milestone</Label>
         <ImgEditor<FV, typeof mediaName>
           // resolved T[Path<T>] does not equal to ImgLink though it is the same ??
-          name={mediaName as never}
+          name={mediaName}
           accept={VALID_MIME_TYPES}
           aspect={[4, 1]}
           classes={{
