@@ -1,5 +1,5 @@
 import { Disclosure } from "@headlessui/react";
-import { Path } from "react-hook-form";
+import { Path, useFormContext } from "react-hook-form";
 import { FV, FormMilestone } from "../types";
 import { DrawerIcon } from "components/Icon";
 import ImgEditor from "components/ImgEditor/ImgEditor";
@@ -7,8 +7,13 @@ import { RichTextEditor } from "components/RichText";
 import { Field, Label } from "components/form";
 import { MAX_CHARS, VALID_MIME_TYPES } from "../schema";
 
-export default function Milestone({ milestone_title, idx }: FormMilestone) {
+export default function Milestone({
+  idx,
+  onRemove,
+}: FormMilestone & { onRemove(idx: number): void }) {
+  const { watch } = useFormContext<FV>();
   const mediaName: Path<FV> = `milestones.${idx}.milestone_media`;
+  const title = watch(`milestones.${idx}.milestone_title`);
   return (
     <Disclosure
       as="div"
@@ -16,7 +21,7 @@ export default function Milestone({ milestone_title, idx }: FormMilestone) {
     >
       <div className="relative py-3 px-4 text-center">
         <span className="text-xl font-bold font-heading">
-          {milestone_title}
+          {title || `Milestone ${idx + 1}`}
         </span>
         <Disclosure.Button className="absolute right-4 top-1/2 -translate-y-1/2">
           {({ open }) => <DrawerIcon isOpen={open} size={24} />}
@@ -67,6 +72,13 @@ export default function Milestone({ milestone_title, idx }: FormMilestone) {
             charCounter: "text-gray-d1 dark:text-gray",
           }}
         />
+        <button
+          type="button"
+          className="btn-outline-filled justify-self-end"
+          onClick={() => onRemove(idx)}
+        >
+          Delete milestone
+        </button>
       </Disclosure.Panel>
     </Disclosure>
   );

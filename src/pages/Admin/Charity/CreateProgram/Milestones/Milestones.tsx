@@ -5,9 +5,12 @@ import { dateToFormFormat } from "components/form";
 import Milestone from "./Milestone";
 
 export default function Milestones() {
-  const { fields, append } = useFieldArray<FV, "milestones">({
+  const { fields, append, remove } = useFieldArray<FV, "milestones">({
     name: "milestones",
   });
+
+  const onRemove = (idx: number) => remove(idx);
+
   return (
     <div className="grid gap-6 p-4 @lg:p-6 border border-prim rounded bg-white dark:bg-blue-d6">
       <div className="flex items-center gap-3 justify-between">
@@ -35,7 +38,7 @@ export default function Milestones() {
       </div>
       <div className="grid gap-6">
         {fields.map((m, idx) => (
-          <Milestone {...m} key={m.id} idx={idx} />
+          <Milestone {...m} key={m.id} idx={idx} onRemove={onRemove} />
         ))}
       </div>
     </div>
