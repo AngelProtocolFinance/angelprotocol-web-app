@@ -2,8 +2,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { FV } from "./types";
-import { useProfileQuery } from "services/aws/aws";
+import { useProgramQuery } from "services/aws/aws";
 import QueryLoader from "components/QueryLoader";
+import { dateToFormFormat } from "components/form";
 import { isTooltip, useAdminContext } from "../../Context";
 import Form from "./Form";
 import { ops } from "./ops";
@@ -11,9 +12,12 @@ import { schema } from "./schema";
 
 const NEW = "new";
 export default function ProgramEditor() {
-  const { id: programId } = useParams();
+  const { id: programId = "" } = useParams();
   const { id: endowId } = useAdminContext();
-  const profileQuery = useProfileQuery(endowId, { skip: programId === NEW });
+  const programQuery = useProgramQuery(
+    { endowId, programId },
+    { skip: !programId || programId === NEW }
+  );
 
   if (programId === NEW)
     return (
@@ -33,12 +37,7 @@ export default function ProgramEditor() {
 
   return (
     <QueryLoader
-      queryState={{
-        ...profileQuery,
-        data: profileQuery.data?.program.find(
-          (p) => p.program_id === programId
-        ),
-      }}
+      queryState={programQuery}
       messages={{ loading: "Loading program", error: "Failed to load program" }}
     >
       {(p) => (
@@ -54,6 +53,7 @@ export default function ProgramEditor() {
             initial: p,
             milestones: p.program_milestones.map((m, idx) => ({
               ...m,
+              milestone_date: dateToFormFormat(new Date(m.milestone_date)),
               milestone_media: {
                 name: "",
                 preview: m.milestone_media,
