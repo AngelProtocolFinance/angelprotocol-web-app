@@ -11,12 +11,23 @@ export default function Milestone({
   idx,
   onRemove,
 }: FormMilestone & { onRemove(idx: number): void }) {
-  const { watch } = useFormContext<FV>();
+  const {
+    watch,
+    formState: { errors },
+  } = useFormContext<FV>();
   const mediaName: Path<FV> = `milestones.${idx}.milestone_media`;
   const title = watch(`milestones.${idx}.milestone_title`);
 
+  const milestoneError = errors.milestones?.[idx];
+
   return (
-    <Disclosure as="div" className="border border-prim rounded overflow-hidden">
+    <Disclosure
+      as="div"
+      className={`border ${
+        //helps distinguish erroneous milestone just in case user collapses dropdown with errors left
+        milestoneError ? "border-red" : "border-prim"
+      } rounded overflow-hidden`}
+    >
       <div className="relative py-3 px-4 text-center bg-orange-l6 dark:bg-blue-d7">
         <span className="text-xl font-bold font-heading">
           {title || `Milestone ${idx + 1}`}
@@ -60,9 +71,7 @@ export default function Milestone({
           placeholder="e.g. John"
           required
         />
-        <Label className="-mb-4" required>
-          Description of milestone
-        </Label>
+        <Label className="-mb-4">Description of milestone</Label>
         <RichTextEditor<FV>
           fieldName={`milestones.${idx}.milestone_description`}
           charLimit={MAX_CHARS}

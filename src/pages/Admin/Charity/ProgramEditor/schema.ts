@@ -28,6 +28,7 @@ const milestoneShape: SchemaShape<FormMilestone> = {
     `max length is ${MAX_CHARS} chars`
   ),
   milestone_title: requiredString,
+  milestone_media: fileObj,
 };
 
 //construct strict shape to avoid hardcoding shape keys
