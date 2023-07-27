@@ -38,11 +38,17 @@ export default function Milestones() {
         </button>
       </div>
       {fields.length > 0 ? (
-        <div className="grid gap-6">
-          {fields.map((m, idx) => (
-            <Milestone {...m} key={m.id} idx={idx} onRemove={onRemove} />
-          ))}
-        </div>
+        <>
+          <span className="text-sm text-gray-d1 dark:text-gray">
+            Milestones will be publicly displayed in descending order by their
+            date.
+          </span>
+          <div className="grid gap-6">
+            {fields.map((m, idx) => (
+              <Milestone {...m} key={m.id} idx={idx} onRemove={onRemove} />
+            ))}
+          </div>
+        </>
       ) : (
         <Info classes="text-base">No milestones</Info>
       )}
