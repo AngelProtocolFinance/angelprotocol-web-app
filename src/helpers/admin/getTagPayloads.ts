@@ -39,6 +39,10 @@ export function getTagPayloads(type?: TxMeta["id"]): TagPayload[] {
       _tags.push("multisig.require-execution");
       break;
 
+    case "multisig.change-duration":
+      _tags.push("multisig.tx-duration");
+      break;
+
     case "multisig/review.confirm-prop":
       _tags.push("multisig/review.prop-confirms");
       break;

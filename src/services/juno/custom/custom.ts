@@ -57,6 +57,7 @@ export const customApi = junoApi.injectEndpoints({
         "multisig.members",
         "multisig.threshold",
         "multisig.require-execution",
+        "multisig.tx-duration",
         "accounts.endowment",
       ],
       async queryFn(args) {
