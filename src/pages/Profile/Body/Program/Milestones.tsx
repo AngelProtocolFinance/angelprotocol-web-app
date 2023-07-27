@@ -43,9 +43,11 @@ function Milestone({
         isComplete ? "border-orange" : "border-prim"
       }`}
     >
-      <div className="pl-6 sm:pl-8">
-        <Image src={milestone_media} className="h-60 w-full rounded" />
-      </div>
+      {milestone_media && (
+        <div className="pl-6 sm:pl-8">
+          <Image src={milestone_media} className="h-60 w-full rounded" />
+        </div>
+      )}
 
       <p className="mt-4 pl-6 sm:pl-8 mb-3 text-gray-d1 dark:text-gray text-xs">
         {new Date(milestone_date).toLocaleDateString()}
