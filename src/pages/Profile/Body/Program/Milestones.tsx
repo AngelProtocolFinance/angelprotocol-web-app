@@ -36,7 +36,7 @@ function Milestone({
   milestone_description,
 }: TMilestone) {
   return (
-    <div className="pb-8">
+    <div className="pb-4 pt-4 first:pt-0 last:pb-0 pl-8 border-l border-orange">
       <Image
         src={milestone_media}
         className="h-60 w-full rounded"
