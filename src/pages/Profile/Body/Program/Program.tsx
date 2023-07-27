@@ -20,7 +20,7 @@ export default function Program({ className = "" }) {
     >
       {(p) => (
         <div
-          className={`${className} grid grid-rows-[auto_auto] gap-8 w-full h-full lg:grid-rows-1 lg:grid-cols-[1fr_auto]`}
+          className={`${className} grid items-start grid-rows-[auto_auto] gap-8 w-full lg:grid-rows-1 lg:grid-cols-[1fr_auto]`}
         >
           <Container title={p.program_title} expanded>
             <RichText
