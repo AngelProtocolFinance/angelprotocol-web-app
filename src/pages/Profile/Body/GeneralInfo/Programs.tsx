@@ -7,7 +7,7 @@ import { useProfileContext } from "../../ProfileContext";
 export default function Programs() {
   const { program } = useProfileContext();
   return (
-    <div className="w-full h-full px-8 py-10 grid grid-cols-[repeat(auto-fill,minmax(373px,1fr))] gap-8">
+    <div className="w-full h-full px-8 py-10 grid sm:grid-cols-[repeat(auto-fill,minmax(373px,1fr))] gap-8">
       {program.map((p) => (
         <Program {...p} key={p.program_id} />
       ))}
