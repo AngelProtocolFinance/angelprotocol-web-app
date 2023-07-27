@@ -17,7 +17,7 @@ export default function Milestones({ classes = "", milestones }: Props) {
       expanded
     >
       {milestones.length > 0 ? (
-        <div className="m-8">
+        <div className="m-6 sm:m-8">
           {milestones.map((m, idx) => (
             <Milestone {...m} key={idx} />
           ))}
@@ -43,14 +43,14 @@ function Milestone({
         isComplete ? "border-orange" : "border-prim"
       }`}
     >
-      <div className="pl-8">
+      <div className="pl-6 sm:pl-8">
         <Image src={milestone_media} className="h-60 w-full rounded" />
       </div>
 
-      <p className="mt-4 pl-8 mb-3 text-gray-d1 dark:text-gray text-xs">
+      <p className="mt-4 pl-6 sm:pl-8 mb-3 text-gray-d1 dark:text-gray text-xs">
         {new Date(milestone_date).toLocaleDateString()}
       </p>
-      <h6 className="pl-8 font-bold font-work mb-3 relative">
+      <h6 className="pl-6 sm:pl-8 font-bold font-work mb-3 relative">
         {milestone_title}
         <span className="bg-white dark:bg-blue-d6 w-4 h-6 absolute left-[-0.5px] top-1/2 -translate-y-1/2 -translate-x-1/2" />
         <span
@@ -59,7 +59,7 @@ function Milestone({
           } w-4 h-4 rounded-full absolute left-[-0.5px] top-1/2 -translate-y-1/2 -translate-x-1/2`}
         />
       </h6>
-      <div className="pl-8">
+      <div className="pl-6 sm:pl-8">
         <RichText
           content={milestone_description}
           readOnly
