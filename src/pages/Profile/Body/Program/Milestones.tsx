@@ -35,8 +35,14 @@ function Milestone({
   milestone_title,
   milestone_description,
 }: TMilestone) {
+  const isComplete = new Date() >= new Date(milestone_date);
+
   return (
-    <div className="pb-4 pt-4 first:pt-0 last:pb-0 border-l border-orange">
+    <div
+      className={`pb-4 pt-4 first:pt-0 last:pb-0 border-l ${
+        isComplete ? "border-orange" : "border-prim"
+      }`}
+    >
       <div className="pl-8">
         <Image src={milestone_media} className="h-60 w-full rounded" />
       </div>
@@ -46,16 +52,22 @@ function Milestone({
       </p>
       <h6 className="pl-8 font-bold font-work mb-3 relative">
         {milestone_title}
-        <span className="bg-white w-4 h-6 rounded-full absolute left-[-0.5px] top-1/2 -translate-y-1/2 -translate-x-1/2" />
-        <span className="bg-orange w-4 h-4 rounded-full absolute left-[-0.5px] top-1/2 -translate-y-1/2 -translate-x-1/2" />
+        <span className="bg-white dark:bg-blue-d6 w-4 h-6 absolute left-[-0.5px] top-1/2 -translate-y-1/2 -translate-x-1/2" />
+        <span
+          className={`${
+            isComplete ? "bg-orange" : "bg-gray-l3 dark:bg-bluegray"
+          } w-4 h-4 rounded-full absolute left-[-0.5px] top-1/2 -translate-y-1/2 -translate-x-1/2`}
+        />
       </h6>
-      <RichText
-        content={milestone_description}
-        readOnly
-        classes={{
-          container: "text-gray-d1 dark:text-gray text-sm ml-8 w-full",
-        }}
-      />
+      <div className="pl-8">
+        <RichText
+          content={milestone_description}
+          readOnly
+          classes={{
+            container: "text-gray-d1 dark:text-gray text-sm w-full",
+          }}
+        />
+      </div>
     </div>
   );
 }
