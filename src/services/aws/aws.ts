@@ -46,6 +46,7 @@ export const aws = createApi({
     "profile",
     "endowments",
     "strategy",
+    "program",
   ],
   reducerPath: "aws",
   baseQuery: awsBaseQuery,
@@ -119,7 +120,7 @@ export const aws = createApi({
       },
     }),
     program: builder.query<Program, { endowId: number; programId: string }>({
-      providesTags: ["profile"],
+      providesTags: ["profile", "program"],
       query: ({ endowId, programId }) =>
         `/${v(1)}/profile/${network}/program/${endowId}/${programId}`,
     }),

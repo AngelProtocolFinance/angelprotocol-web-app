@@ -1,7 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 import React from "react";
 import { useDropzone } from "react-dropzone";
-import { FieldValues, useFormContext } from "react-hook-form";
+import { FieldValues, Path, useFormContext } from "react-hook-form";
 import { ImgLink, Props } from "./types";
 import Icon from "components/Icon";
 import { humanize } from "helpers";
@@ -12,7 +12,7 @@ const BYTES_IN_MB = 1e6;
 type Key = keyof ImgLink;
 const precropFileKey: Key = "precropFile";
 
-export default function ImgEditor<T extends FieldValues, K extends keyof T>(
+export default function ImgEditor<T extends FieldValues, K extends Path<T>>(
   props: Props<T, K>
 ) {
   const { name, classes, maxSize } = props;

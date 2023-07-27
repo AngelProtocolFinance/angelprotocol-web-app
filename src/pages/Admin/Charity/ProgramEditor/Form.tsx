@@ -6,6 +6,7 @@ import { RichTextEditor } from "components/RichText";
 import { Tooltip } from "components/admin";
 import { Field, Label } from "components/form";
 import { adminRoutes } from "constants/routes";
+import Milestones from "./Milestones";
 import Group from "./common/Group";
 import { MAX_CHARS, VALID_MIME_TYPES } from "./schema";
 import useSubmit from "./useSubmit";
@@ -21,7 +22,7 @@ export default function Form({
         e.preventDefault();
         reset();
       }}
-      className="w-full max-w-4xl justify-self-center grid content-start gap-6 mt-6 font-body"
+      className="@container w-full max-w-4xl justify-self-center grid content-start gap-6 mt-6 font-body"
     >
       <fieldset disabled={!!tooltip} className="group contents ">
         {tooltip && <Tooltip tooltip={tooltip} />}
@@ -54,6 +55,8 @@ export default function Form({
             }}
           />
         </Group>
+
+        <Milestones />
 
         <div className="flex gap-3 group-disabled:hidden">
           {initial ? (
