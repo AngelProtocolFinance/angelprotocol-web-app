@@ -20,7 +20,7 @@ export default function Program({ className = "" }) {
     >
       {(p) => (
         <div
-          className={`${className} grid grid-rows-[auto_auto] gap-8 w-full h-full lg:grid-rows-1 lg:grid-cols-[1fr_auto]`}
+          className={`${className} grid items-start grid-rows-[auto_auto] gap-8 w-full lg:grid-rows-1 lg:grid-cols-[1fr_auto]`}
         >
           <Container title={p.program_title} expanded>
             <RichText
@@ -45,7 +45,7 @@ function Skeleton({ className = "" }) {
       className={`${className} grid grid-rows-[auto_auto] gap-8 w-full h-full lg:grid-rows-1 lg:grid-cols-[1fr_auto]`}
     >
       <ContentLoader className="h-80" />
-      <div className="self-start lg:sticky lg:top-28 flex flex-col gap-8 w-full lg:w-96 p-8 border border-prim rounded">
+      <div className="self-start lg:sticky lg:top-28 flex flex-col gap-8 w-full lg:w-[29.75rem] p-8 border border-prim rounded">
         <ContentLoader className="h-40" />
         <ContentLoader className="h-40" />
         <ContentLoader className="h-40" />
