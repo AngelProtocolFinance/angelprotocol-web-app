@@ -17,7 +17,7 @@ import { blockTime, hasElapsed } from "helpers/admin";
 import { EMPTY_DATA } from "constants/evm";
 
 const GRAPHQL_ENDPOINT =
-  "https://api.studio.thegraph.com/proxy/49156/angel-giving/v0.0.28";
+  "https://api.studio.thegraph.com/query/49156/angel-giving/v0.0.29";
 
 const customBaseQuery: BaseQueryFn = retry(
   async (args, api, extraOptions) => {
@@ -69,7 +69,9 @@ export const subgraph = createApi({
                 transactionId
                 multiSig {
                   owners {
-                    id
+                    owner {
+                      id
+                    }
                   }
                 },
                 confirmations {
@@ -82,11 +84,12 @@ export const subgraph = createApi({
           },
         };
       },
-      transformResponse: (res: TransactionsRes, api, { page, status }) => {
+      transformResponse: (res: TransactionsRes, api, { page }) => {
+        console.log({ res });
         const transactions = res.data.multiSigTransactions.map((t) => {
           const status: TransactionStatus = t.executed
             ? "approved"
-            : hasElapsed(t.expiry)
+            : hasElapsed(+t.expiry)
             ? "expired"
             : "open";
 
@@ -95,13 +98,15 @@ export const subgraph = createApi({
 
           return {
             id: t.transactionId,
-            expiry: t.expiry,
+            expiry: +t.expiry,
             status,
             confirmations: t.confirmations.map((c) => c.owner.id.toLowerCase()),
-            owners: t.multiSig.owners.map((o) => o.id.toLowerCase()),
+            owners: t.multiSig.owners.map((o) => o.owner.id.toLowerCase()),
             meta: parsed,
           };
         });
+
+        console.log(transactions);
 
         return {
           items: transactions,

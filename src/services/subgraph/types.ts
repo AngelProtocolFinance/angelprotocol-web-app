@@ -2,14 +2,14 @@ import { TransactionStatus } from "types/lists";
 import { TxMeta } from "types/tx";
 
 type GraphQLRes<T> = { data: T };
-type Confirmation = { owner: { id: string } };
 type Owner = { id: string };
+type Confirmation = { owner: Owner };
 type TransactionRes = {
   executed: boolean;
-  expiry: number;
+  expiry: string;
   transactionId: number;
   confirmations: Confirmation[];
-  multiSig: { owners: Owner[] };
+  multiSig: { owners: { owner: Owner }[] };
   metadata: string;
 };
 
