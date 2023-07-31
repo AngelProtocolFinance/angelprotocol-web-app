@@ -11,10 +11,13 @@ import {
   TransactionsRes,
 } from "./types";
 import { TransactionStatus } from "types/lists";
+import { TxMeta } from "types/tx";
+import { fromAbiStr } from "helpers";
 import { blockTime, hasElapsed } from "helpers/admin";
+import { EMPTY_DATA } from "constants/evm";
 
 const GRAPHQL_ENDPOINT =
-  "https://api.studio.thegraph.com/query/49156/angel-giving/v0.0.23";
+  "https://api.studio.thegraph.com/proxy/49156/angel-giving/v0.0.28";
 
 const customBaseQuery: BaseQueryFn = retry(
   async (args, api, extraOptions) => {
@@ -31,7 +34,7 @@ export const subgraph = createApi({
   baseQuery: customBaseQuery,
   endpoints: (builder) => ({
     proposals: builder.query<Paginated<Transaction[]>, TransactionsArgs>({
-      query: ({ page, status, multisig }) => {
+      query: ({ page, status, multisigId }) => {
         const skip = (page - 1) * TX_PER_PAGE;
 
         const statusClause = ((status) => {
@@ -57,10 +60,11 @@ export const subgraph = createApi({
                 skip: ${skip}
                 first: ${TX_PER_PAGE}
                 where: { 
-                  multiSig: "${multisig}", 
+                  multiSig: "${multisigId}", 
                   ${statusClause}}
               ) {
                 executed
+                metadata
                 expiry
                 transactionId
                 multiSig {
@@ -86,19 +90,16 @@ export const subgraph = createApi({
             ? "expired"
             : "open";
 
-          //TODO: add once live
-          // const parsed: TxMeta | undefined =
-          //   t.metadata === EMPTY_DATA
-          //     ? undefined
-          //     : fromAbiStr(t.metadata);
+          const parsed: TxMeta | undefined =
+            t.metadata === EMPTY_DATA ? undefined : fromAbiStr(t.metadata);
 
           return {
             id: t.transactionId,
-            title: `Transaction ${t.transactionId}`,
             expiry: t.expiry,
             status,
             confirmations: t.confirmations.map((c) => c.owner.id.toLowerCase()),
             owners: t.multiSig.owners.map((o) => o.id.toLowerCase()),
+            meta: parsed,
           };
         });
 

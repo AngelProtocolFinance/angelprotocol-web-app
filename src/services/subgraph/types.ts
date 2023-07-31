@@ -1,4 +1,5 @@
 import { TransactionStatus } from "types/lists";
+import { TxMeta } from "types/tx";
 
 type GraphQLRes<T> = { data: T };
 type Confirmation = { owner: { id: string } };
@@ -22,16 +23,16 @@ export type Paginated<T extends any[]> = {
 };
 
 export type TransactionsArgs = {
-  multisig: string;
+  multisigId: string;
   page: number;
   status?: TransactionStatus;
 };
 
 export type Transaction = {
   id: number;
-  title: string;
   expiry: number;
   status: TransactionStatus;
   confirmations: string[];
   owners: string[];
+  meta?: TxMeta;
 };

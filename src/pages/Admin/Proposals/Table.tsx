@@ -33,7 +33,7 @@ export default function Table({ txs, classes = "", more }: Props) {
         type="tbody"
       >
         {txs
-          .map(({ title, status, id }) => (
+          .map(({ meta, status, id }) => (
             <Cells type="td" cellClass="py-3 px-4" key={id}>
               <td className="uppercase text-xs font-semibold text-center">
                 <span
@@ -50,7 +50,7 @@ export default function Table({ txs, classes = "", more }: Props) {
                 to={`../${adminRoutes.proposal}/${id}`}
                 className="text-sm hover:text-blue dark:text-blue-l2 block max-w-[11.5rem] @xl:max-w-lg overflow-hidden text-ellipsis"
               >
-                {title}
+                {meta?.title ?? `Transaction ${id}`}
               </Link>
             </Cells>
           ))

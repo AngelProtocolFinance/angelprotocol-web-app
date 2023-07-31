@@ -12,7 +12,7 @@ import Table from "./Table";
 import Toolbar from "./Toolbar";
 
 export default function Proposals() {
-  const { multisig } = useAdminContext();
+  const { multisig, type, id } = useAdminContext();
   const dispatch = useSetter();
   const { activeStatus } = useGetter((state) => state.admin.proposals);
 
@@ -22,10 +22,12 @@ export default function Proposals() {
     isLoading,
     originalArgs,
   } = useProposalsQuery({
-    multisig,
+    multisigId: type === "charity" ? `${id}` : multisig,
     page: 1,
     status: activeStatus === "all" ? undefined : activeStatus,
   });
+
+  console.log({ items });
   const [loadMore] = useLazyProposalsQuery();
 
   async function more() {
