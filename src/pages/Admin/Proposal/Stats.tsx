@@ -1,9 +1,9 @@
-import { ProposalDetails } from "services/types";
+import { Transaction } from "services/subgraph";
 import { roundDownToNum } from "helpers";
 
-export default function Stats({ signed, signers }: ProposalDetails) {
-  const numSigned = signed.length;
-  const numSigners = signers.length;
+export default function Stats({ confirmations, owners }: Transaction) {
+  const numSigned = confirmations.length;
+  const numSigners = owners.length;
 
   const pctSigned = getPct(numSigned, numSigners);
   const pctPending = 100 - pctSigned;

@@ -6,6 +6,7 @@ import {
 } from "@reduxjs/toolkit/query/react";
 import {
   Paginated,
+  SingleTransactionRes,
   Transaction,
   TransactionsArgs,
   TransactionsRes,
@@ -87,12 +88,6 @@ export const subgraph = createApi({
       },
       transformResponse: (res: TransactionsRes, api, { page }) => {
         const transactions = res.data.multiSigTransactions.map((t) => {
-          const status: TransactionStatus = t.executed
-            ? "approved"
-            : hasElapsed(+t.expiry)
-            ? "expired"
-            : "open";
-
           const parsed: TxMeta | undefined =
             t.metadata === EMPTY_DATA ? undefined : fromAbiStr(t.metadata);
 
@@ -100,7 +95,7 @@ export const subgraph = createApi({
             recordId: t.id,
             transactionId: +t.transactionId,
             expiry: +t.expiry,
-            status,
+            status: txStatus(t.expiry, t.executed),
             confirmations: t.confirmations.map((c) => c.owner.id.toLowerCase()),
             owners: t.multiSig.owners.map((o) => o.owner.id.toLowerCase()),
             meta: parsed,
@@ -115,11 +110,62 @@ export const subgraph = createApi({
         };
       },
     }),
+    proposal: builder.query<Transaction, { recordId: string }>({
+      query: ({ recordId }) => {
+        return {
+          method: "POST",
+          body: {
+            query: `{
+              multiSigTransaction(id: "${recordId}") {
+                id
+                executed
+                metadata
+                expiry
+                transactionId
+                multiSig {
+                  owners {
+                    owner {
+                      id
+                    }
+                  }
+                },
+                confirmations {
+                  owner {
+                    id
+                  }
+                }
+              }
+            }`,
+          },
+        };
+      },
+      transformResponse: ({
+        data: { multiSigTransaction: t },
+      }: SingleTransactionRes) => {
+        console.log({ t });
+        const parsed: TxMeta | undefined =
+          t.metadata === EMPTY_DATA ? undefined : fromAbiStr(t.metadata);
+
+        return {
+          recordId: t.id,
+          transactionId: +t.transactionId,
+          expiry: +t.expiry,
+          status: txStatus(t.expiry, t.executed),
+          confirmations: t.confirmations.map((c) => c.owner.id.toLowerCase()),
+          owners: t.multiSig.owners.map((o) => o.owner.id.toLowerCase()),
+          meta: parsed,
+        };
+      },
+    }),
   }),
 });
 
 export const {
   useProposalsQuery,
+  useProposalQuery,
   useLazyProposalsQuery,
   util: { updateQueryData: updateSubgraphQueryData },
 } = subgraph;
+
+const txStatus = (expiry: string, executed: boolean): TransactionStatus =>
+  executed ? "approved" : hasElapsed(+expiry) ? "expired" : "open";

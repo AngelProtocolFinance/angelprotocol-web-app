@@ -18,6 +18,10 @@ export type TransactionsRes = GraphQLRes<{
   multiSigTransactions: TransactionRes[];
 }>;
 
+export type SingleTransactionRes = GraphQLRes<{
+  multiSigTransaction: TransactionRes;
+}>;
+
 export type Paginated<T extends any[]> = {
   items: T;
   next?: number;
