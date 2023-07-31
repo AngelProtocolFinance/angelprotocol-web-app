@@ -63,6 +63,7 @@ export const subgraph = createApi({
                   multiSig: "${multisigId}", 
                   ${statusClause}}
               ) {
+                id
                 executed
                 metadata
                 expiry
@@ -85,7 +86,6 @@ export const subgraph = createApi({
         };
       },
       transformResponse: (res: TransactionsRes, api, { page }) => {
-        console.log({ res });
         const transactions = res.data.multiSigTransactions.map((t) => {
           const status: TransactionStatus = t.executed
             ? "approved"
@@ -97,7 +97,8 @@ export const subgraph = createApi({
             t.metadata === EMPTY_DATA ? undefined : fromAbiStr(t.metadata);
 
           return {
-            id: t.transactionId,
+            recordId: t.id,
+            transactionId: +t.transactionId,
             expiry: +t.expiry,
             status,
             confirmations: t.confirmations.map((c) => c.owner.id.toLowerCase()),
@@ -106,7 +107,7 @@ export const subgraph = createApi({
           };
         });
 
-        console.log(transactions);
+        console.log({ res, transactions });
 
         return {
           items: transactions,

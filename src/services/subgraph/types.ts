@@ -5,9 +5,10 @@ type GraphQLRes<T> = { data: T };
 type Owner = { id: string };
 type Confirmation = { owner: Owner };
 type TransactionRes = {
+  id: string; //record-id
   executed: boolean;
   expiry: string;
-  transactionId: number;
+  transactionId: string;
   confirmations: Confirmation[];
   multiSig: { owners: { owner: Owner }[] };
   metadata: string;
@@ -29,7 +30,8 @@ export type TransactionsArgs = {
 };
 
 export type Transaction = {
-  id: number;
+  transactionId: number;
+  recordId: string;
   expiry: number;
   status: TransactionStatus;
   confirmations: string[];
