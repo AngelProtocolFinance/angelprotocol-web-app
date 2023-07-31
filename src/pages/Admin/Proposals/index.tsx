@@ -27,7 +27,6 @@ export default function Proposals() {
     status: activeStatus === "all" ? undefined : activeStatus,
   });
 
-  console.log({ items });
   const [loadMore] = useLazyProposalsQuery();
 
   async function more() {
