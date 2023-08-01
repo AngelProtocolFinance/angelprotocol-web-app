@@ -11,11 +11,22 @@ type TransactionRes = {
   metadata: string;
 };
 
-export type TransactionsRes = GraphQLRes<{
+export type GraphQLTransactionsRes = GraphQLRes<{
   multiSigTransactions: TransactionRes[];
 }>;
 
-export type SingleTransactionRes = GraphQLRes<{
+export type MultisigRes = {
+  id: string; //record-id
+  owners: { owner: Owner }[];
+  address: string;
+  approvalsRequired: string;
+  requireExecution: boolean;
+  transactionExpiry: string;
+};
+
+export type MultisigOwnersRes = Pick<MultisigRes, "owners">;
+
+export type GraphQLTransactionRes = GraphQLRes<{
   multiSigTransaction: TransactionRes;
 }>;
 

@@ -1,5 +1,5 @@
 import {
-  AdminResources,
+  AdminResource,
   CharityApplication,
   EndowBalance,
   IERC20,
@@ -7,49 +7,38 @@ import {
 } from "../../types";
 import { BridgeFeesRes } from "types/aws";
 import { AcceptedTokens, AccountType } from "types/contracts";
+import { MultisigOwnersRes, MultisigRes } from "types/subgraph";
 import { version as v } from "services/helpers";
-import { idParamToNum } from "helpers";
 import { IS_AST, IS_TEST } from "constants/env";
 import { APIs } from "constants/urls";
-import { junoApi } from "..";
+import { GRAPHQL_ENDPOINT } from "../../constants";
+import { junoApi } from "../index";
 import { queryContract } from "../queryContract";
-import { apCWs, multisigInfo } from "./helpers/admin-resource";
+import { multisigRecordId } from "./constants";
 
 export const customApi = junoApi.injectEndpoints({
   endpoints: (builder) => ({
     isMember: builder.query<boolean, { user: string; endowmentId?: string }>({
       providesTags: ["multisig.members", "accounts.endowment"],
-      async queryFn(args) {
-        const numId = idParamToNum(args.endowmentId);
-        const AP = apCWs[numId];
-        /** special case for ap admin usage */
-        if (AP) {
-          const { multisig } = AP;
-          //skip endowment query, query hardcoded cw3 straight
-          const members = await queryContract("multisig.members", { multisig });
-
-          return {
-            data: members.includes(args.user),
-          };
-        }
-
-        const endowment = await queryContract("accounts.endowment", {
-          id: numId,
-        });
-
-        const members = await queryContract("multisig.members", {
-          multisig: endowment.owner,
-        });
+      async queryFn({ endowmentId = "", user }) {
+        const {
+          multiSig: { owners },
+        } = await querySubgraph<{ multiSig: MultisigOwnersRes }>(`{
+          multiSig(id:"${multisigRecordId(endowmentId)[0]}") {
+            owners {
+              owner {
+                id
+              }
+            }
+          }
+        }`);
 
         return {
-          data: members.includes(args.user),
+          data: owners.some(({ owner: { id } }) => id.toLowerCase() === user),
         };
       },
     }),
-    adminResources: builder.query<
-      AdminResources,
-      { endowmentId?: string; user?: string }
-    >({
+    adminResource: builder.query<AdminResource, { endowmentId?: string }>({
       providesTags: [
         "multisig.members",
         "multisig.threshold",
@@ -57,46 +46,41 @@ export const customApi = junoApi.injectEndpoints({
         "multisig.tx-duration",
         "accounts.endowment",
       ],
-      async queryFn(args) {
-        const numId = idParamToNum(args.endowmentId);
-        const AP = apCWs[numId];
-        /** special case for ap admin usage */
-        if (AP) {
-          const { multisig, type } = AP;
-          //skip endowment query, query hardcoded cw3 straight
+      async queryFn({ endowmentId = "" }) {
+        const [recordId, type] = multisigRecordId(endowmentId);
+        const [{ multiSig: m }, endowment] = await Promise.all([
+          querySubgraph<{ multiSig: MultisigRes }>(`{
+            multiSig(id: "${recordId}") {
+              id
+              address
+              owners {
+                owner {
+                  id
+                }
+              }
+              approvalsRequired
+              requireExecution
+              transactionExpiry
+            }
+          }`),
+          typeof recordId === "number"
+            ? queryContract("accounts.endowment", { id: recordId })
+            : Promise.resolve({}),
+        ]);
 
-          const [config, members] = await multisigInfo(multisig, args.user);
-
-          return {
-            data: {
-              type: type as any,
-              id: numId,
-              members,
-              multisig,
-              config,
-            },
-          };
-        }
-
-        const endowment = await queryContract("accounts.endowment", {
-          id: numId,
-        });
-
-        const [config, members] = await multisigInfo(
-          endowment.owner,
-          args.user
-        );
-
-        return {
-          data: {
-            type: "charity",
-            id: numId,
-            members,
-            multisig: endowment.owner,
-            config,
-            ...endowment,
+        const resource: AdminResource = {
+          type: type as any,
+          multisig: m.address.toLowerCase(),
+          members: m.owners.map(({ owner: { id } }) => id.toLowerCase()),
+          id: typeof recordId === "number" ? recordId : 0,
+          config: {
+            threshold: +m.approvalsRequired,
+            requireExecution: m.requireExecution,
+            duration: +m.transactionExpiry,
           },
+          ...endowment,
         };
+        return { data: resource };
       },
     }),
     endowBalance: builder.query<EndowBalance, { id: number }>({
@@ -199,7 +183,7 @@ async function endowBalance(id: number): Promise<EndowBalance> {
 
 export const {
   useIsMemberQuery,
-  useAdminResourcesQuery,
+  useAdminResourceQuery,
   useEndowBalanceQuery,
   useWithdrawDataQuery,
   useApplicationQuery,
@@ -207,7 +191,7 @@ export const {
 
 type Result<T> = { data: T } | { errors: unknown };
 async function querySubgraph<T>(query: string): Promise<T> {
-  return fetch("https://graphql.cosmwasm.com/v1/graphql", {
+  return fetch(GRAPHQL_ENDPOINT, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ query }),

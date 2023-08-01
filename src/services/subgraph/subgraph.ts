@@ -7,18 +7,16 @@ import {
 import { TransactionsArgs } from "./types";
 import { TransactionStatus } from "types/lists";
 import {
+  GraphQLTransactionRes,
+  GraphQLTransactionsRes,
   Paginated,
-  SingleTransactionRes,
-  TransactionsRes,
 } from "types/subgraph";
 import { Transaction, TxMeta } from "types/tx";
 import { fromAbiStr } from "helpers";
 import { blockTime, hasElapsed } from "helpers/admin";
 import { EMPTY_DATA } from "constants/evm";
+import { GRAPHQL_ENDPOINT } from "../constants";
 import { tags } from "./tags";
-
-const GRAPHQL_ENDPOINT =
-  "https://api.studio.thegraph.com/query/49156/angel-giving/v0.0.29";
 
 const customBaseQuery: BaseQueryFn = retry(
   async (args, api, extraOptions) => {
@@ -87,7 +85,7 @@ export const subgraph = createApi({
           },
         };
       },
-      transformResponse: (res: TransactionsRes, api, { page }) => {
+      transformResponse: (res: GraphQLTransactionsRes, api, { page }) => {
         const transactions = res.data.multiSigTransactions.map((t) => {
           const parsed: TxMeta | undefined =
             t.metadata === EMPTY_DATA ? undefined : fromAbiStr(t.metadata);
@@ -142,55 +140,7 @@ export const subgraph = createApi({
       },
       transformResponse: ({
         data: { multiSigTransaction: t },
-      }: SingleTransactionRes) => {
-        console.log({ t });
-        const parsed: TxMeta | undefined =
-          t.metadata === EMPTY_DATA ? undefined : fromAbiStr(t.metadata);
-
-        return {
-          recordId: t.id,
-          transactionId: +t.transactionId,
-          expiry: +t.expiry,
-          status: txStatus(t.expiry, t.executed),
-          confirmations: t.confirmations.map((c) => c.owner.id.toLowerCase()),
-          owners: t.multiSig.owners.map((o) => o.owner.id.toLowerCase()),
-          meta: parsed,
-        };
-      },
-    }),
-    multisig: builder.query<Transaction, { recordId: string }>({
-      query: ({ recordId }) => {
-        return {
-          method: "POST",
-          body: {
-            query: `{
-              multiSigTransaction(id: "${recordId}") {
-                id
-                executed
-                metadata
-                expiry
-                transactionId
-                multiSig {
-                  owners {
-                    owner {
-                      id
-                    }
-                  }
-                },
-                confirmations {
-                  owner {
-                    id
-                  }
-                }
-              }
-            }`,
-          },
-        };
-      },
-      transformResponse: ({
-        data: { multiSigTransaction: t },
-      }: SingleTransactionRes) => {
-        console.log({ t });
+      }: GraphQLTransactionRes) => {
         const parsed: TxMeta | undefined =
           t.metadata === EMPTY_DATA ? undefined : fromAbiStr(t.metadata);
 
