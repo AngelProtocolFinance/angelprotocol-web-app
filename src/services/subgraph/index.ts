@@ -1,9 +1,15 @@
-export {
-  subgraph,
+import { subgraph } from "./subgraph";
+
+export default subgraph;
+
+export const {
   useProposalsQuery,
   useProposalQuery,
   useLazyProposalsQuery,
-  updateSubgraphQueryData,
-} from "./subgraph";
+  util: {
+    updateQueryData: updateSubgraphQueryData,
+    invalidateTags: invalidateSubgraphTags,
+  },
+} = subgraph;
 
-export type { Transaction } from "./types";
+export * from "./tags";

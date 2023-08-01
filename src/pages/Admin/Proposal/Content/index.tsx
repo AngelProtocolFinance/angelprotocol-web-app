@@ -1,4 +1,4 @@
-import { Transaction } from "services/subgraph";
+import { Transaction } from "types/tx";
 import { DetailLabel } from "components/admin";
 import Preview from "./Preview";
 

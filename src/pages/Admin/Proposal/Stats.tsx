@@ -1,4 +1,4 @@
-import { Transaction } from "services/subgraph";
+import { Transaction } from "types/tx";
 import { roundDownToNum } from "helpers";
 
 export default function Stats({ confirmations, owners }: Transaction) {

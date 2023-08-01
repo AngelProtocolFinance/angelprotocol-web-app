@@ -1,5 +1,5 @@
+import { Transaction } from "types/tx";
 import { invalidateJunoTags } from "services/juno";
-import { Transaction } from "services/subgraph";
 import { useGetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import { createTx } from "contracts/createTx/createTx";
@@ -27,7 +27,7 @@ export default function Votes({
           id: transactionId,
         }),
       },
-      tagPayloads: [invalidateJunoTags(["multisig.txs"])],
+      tagPayloads: [invalidateJunoTags([])],
     });
   }
 

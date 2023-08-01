@@ -12,11 +12,9 @@ export const tags: ContractQueryTypes[] = [
 
   "multisig.members",
   "multisig.is-owner",
-  "multisig.txs",
   "multisig.tx-count",
   "multisig.threshold",
   "multisig.require-execution",
-  "multisig.transaction",
   "multisig.votes",
 
   "multisig/review.prop-confirms",
@@ -27,7 +25,4 @@ export const tags: ContractQueryTypes[] = [
   "accounts.token-balance",
 ];
 
-export const defaultProposalTags: ContractQueryTypes[] = [
-  "multisig.txs",
-  "multisig.transaction",
-];
+export type EVMTag = typeof tags[number];

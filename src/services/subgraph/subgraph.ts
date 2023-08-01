@@ -4,18 +4,18 @@ import {
   fetchBaseQuery,
   retry,
 } from "@reduxjs/toolkit/query/react";
+import { TransactionsArgs } from "./types";
+import { TransactionStatus } from "types/lists";
 import {
   Paginated,
   SingleTransactionRes,
-  Transaction,
-  TransactionsArgs,
   TransactionsRes,
-} from "./types";
-import { TransactionStatus } from "types/lists";
-import { TxMeta } from "types/tx";
+} from "types/subgraph";
+import { Transaction, TxMeta } from "types/tx";
 import { fromAbiStr } from "helpers";
 import { blockTime, hasElapsed } from "helpers/admin";
 import { EMPTY_DATA } from "constants/evm";
+import { tags } from "./tags";
 
 const GRAPHQL_ENDPOINT =
   "https://api.studio.thegraph.com/query/49156/angel-giving/v0.0.29";
@@ -32,6 +32,7 @@ const customBaseQuery: BaseQueryFn = retry(
 const TX_PER_PAGE = 5;
 export const subgraph = createApi({
   reducerPath: "subgraph",
+  tagTypes: tags,
   baseQuery: customBaseQuery,
   endpoints: (builder) => ({
     proposals: builder.query<Paginated<Transaction[]>, TransactionsArgs>({
@@ -157,15 +158,55 @@ export const subgraph = createApi({
         };
       },
     }),
+    multisig: builder.query<Transaction, { recordId: string }>({
+      query: ({ recordId }) => {
+        return {
+          method: "POST",
+          body: {
+            query: `{
+              multiSigTransaction(id: "${recordId}") {
+                id
+                executed
+                metadata
+                expiry
+                transactionId
+                multiSig {
+                  owners {
+                    owner {
+                      id
+                    }
+                  }
+                },
+                confirmations {
+                  owner {
+                    id
+                  }
+                }
+              }
+            }`,
+          },
+        };
+      },
+      transformResponse: ({
+        data: { multiSigTransaction: t },
+      }: SingleTransactionRes) => {
+        console.log({ t });
+        const parsed: TxMeta | undefined =
+          t.metadata === EMPTY_DATA ? undefined : fromAbiStr(t.metadata);
+
+        return {
+          recordId: t.id,
+          transactionId: +t.transactionId,
+          expiry: +t.expiry,
+          status: txStatus(t.expiry, t.executed),
+          confirmations: t.confirmations.map((c) => c.owner.id.toLowerCase()),
+          owners: t.multiSig.owners.map((o) => o.owner.id.toLowerCase()),
+          meta: parsed,
+        };
+      },
+    }),
   }),
 });
-
-export const {
-  useProposalsQuery,
-  useProposalQuery,
-  useLazyProposalsQuery,
-  util: { updateQueryData: updateSubgraphQueryData },
-} = subgraph;
 
 const txStatus = (expiry: string, executed: boolean): TransactionStatus =>
   executed ? "approved" : hasElapsed(+expiry) ? "expired" : "open";

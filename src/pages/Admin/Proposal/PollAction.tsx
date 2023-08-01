@@ -1,9 +1,8 @@
 import React, { ReactNode } from "react";
-import { ProposalDetails } from "services/types";
 import { TagPayload } from "types/third-party/redux";
+import { Transaction } from "types/tx";
 import { invalidateJunoTags } from "services/juno";
-import { defaultProposalTags } from "services/juno/tags";
-import { Transaction } from "services/subgraph";
+import { defaultProposalTags, invalidateSubgraphTags } from "services/subgraph";
 import { useGetWallet } from "contexts/WalletContext";
 import { createTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
@@ -76,11 +75,9 @@ function Button(props: React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return <button {...props} className="text-sm px-6 py-1.5 btn-orange" />;
 }
 
-function extractTagFromMeta(
-  proposalMeta: ProposalDetails["metadata"]
-): TagPayload[] {
+function extractTagFromMeta(proposalMeta: Transaction["meta"]): TagPayload[] {
   if (!proposalMeta) {
-    return [invalidateJunoTags(defaultProposalTags)];
+    return [invalidateSubgraphTags(defaultProposalTags)];
   }
 
   return getTagPayloads(proposalMeta.id);

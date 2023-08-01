@@ -3,13 +3,10 @@ import {
   CharityApplication,
   EndowBalance,
   IERC20,
-  ProposalDetails,
   WithdrawData,
 } from "../../types";
 import { BridgeFeesRes } from "types/aws";
 import { AcceptedTokens, AccountType } from "types/contracts";
-import { TransactionStatus } from "types/lists";
-import { Transaction } from "types/tx";
 import { version as v } from "services/helpers";
 import { idParamToNum } from "helpers";
 import { IS_AST, IS_TEST } from "constants/env";
@@ -102,37 +99,6 @@ export const customApi = junoApi.injectEndpoints({
         };
       },
     }),
-    proposalDetails: builder.query<
-      ProposalDetails,
-      { id?: string; multisig: string }
-    >({
-      providesTags: [
-        "multisig.votes",
-        "multisig.members",
-        "multisig.is-owner", //TODO: temp:remove once members query is available
-        "multisig.transaction",
-      ],
-      async queryFn({ id: idParam, multisig }) {
-        const id = idParamToNum(idParam);
-
-        const [signed, signers, transaction] = await Promise.all([
-          queryContract("multisig.votes", {
-            multisig,
-            id,
-          }),
-          queryContract("multisig.members", { multisig }),
-          queryContract("multisig.transaction", { multisig, id }),
-        ]);
-
-        return {
-          data: {
-            ...transaction,
-            signed,
-            signers,
-          },
-        };
-      },
-    }),
     endowBalance: builder.query<EndowBalance, { id: number }>({
       providesTags: ["accounts.token-balance"],
       queryFn: async ({ id }) => ({ data: await endowBalance(id) }),
@@ -176,52 +142,6 @@ export const customApi = junoApi.injectEndpoints({
               withdrawBps: withdrawFeeSetting.bps,
               earlyLockedWithdrawBps: earlyLockedWithdrawFeeSetting.bps,
             },
-          },
-        };
-      },
-    }),
-
-    proposals: builder.query<
-      { proposals: Transaction[]; next?: number },
-      { multisig: string; status: TransactionStatus; page: number }
-    >({
-      providesTags: ["multisig.tx-count", "multisig.txs"],
-      async queryFn(args) {
-        const { status, multisig, page } = args;
-        const proposalsPerPage = 5;
-
-        const count = await queryContract("multisig.tx-count", {
-          multisig,
-          open: status === "open",
-          approved: status === "approved",
-        });
-
-        //get last 5 proposals
-        const range: [number, number] = [
-          Math.max(0, count - proposalsPerPage * args.page),
-          count,
-        ];
-
-        const txs = await queryContract("multisig.txs", {
-          multisig,
-          range,
-          status,
-        });
-
-        const details = await Promise.all(
-          txs.map((t) =>
-            queryContract("multisig.transaction", { multisig, id: t.id }).then(
-              (t) => ({ ...t, id: t.id })
-            )
-          )
-        );
-
-        details.sort((a, b) => b.id - a.id);
-
-        return {
-          data: {
-            proposals: details,
-            next: range[0] > 0 ? page + 1 : undefined,
           },
         };
       },
@@ -279,10 +199,25 @@ async function endowBalance(id: number): Promise<EndowBalance> {
 
 export const {
   useIsMemberQuery,
-  useProposalsQuery,
   useAdminResourcesQuery,
-  useProposalDetailsQuery,
   useEndowBalanceQuery,
   useWithdrawDataQuery,
   useApplicationQuery,
 } = customApi;
+
+type Result<T> = { data: T } | { errors: unknown };
+async function querySubgraph<T>(query: string): Promise<T> {
+  return fetch("https://graphql.cosmwasm.com/v1/graphql", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ query }),
+  })
+    .then<Result<T>>((res) => {
+      if (!res.ok) throw new Error(`Failed grapQL request:${query}`);
+      return res.json();
+    })
+    .then((data) => {
+      if ("errors" in data) throw new Error(`Failed grapQL request:${query}`);
+      return data.data;
+    });
+}

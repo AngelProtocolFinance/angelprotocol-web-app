@@ -1,4 +1,4 @@
-import { useProposalsQuery } from "services/juno/custom";
+import { useProposalsQuery } from "services/subgraph";
 import QueryLoader from "components/QueryLoader";
 import { IS_AST } from "constants/env";
 import { useAdminContext } from "../../Context";
@@ -7,9 +7,9 @@ import Balances from "../common/Balances";
 import Table from "./Table";
 
 export default function Dashboard() {
-  const { multisig } = useAdminContext<"charity">();
+  const { multisig, type, id } = useAdminContext<"charity">();
   const { data, ...rest } = useProposalsQuery({
-    multisig,
+    multisigId: type === "charity" ? `${id}` : multisig,
     status: "open",
     page: 1,
   });
@@ -23,7 +23,7 @@ export default function Dashboard() {
         New Proposals
       </h3>
       <QueryLoader
-        queryState={{ ...rest, data: data?.proposals || [] }}
+        queryState={{ ...rest, data: data?.items || [] }}
         messages={{
           loading: "Getting recent proposals..",
           error: "Failed to get proposals",

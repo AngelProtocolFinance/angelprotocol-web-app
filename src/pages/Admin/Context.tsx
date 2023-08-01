@@ -4,8 +4,8 @@ import { AdminParams } from "./types";
 import { AdminResources, MultisigConfig } from "services/types";
 import { SettingsController } from "types/contracts";
 import { SenderArgs } from "types/tx";
-import { customApi, useAdminResourcesQuery } from "services/juno/custom";
-import { defaultProposalTags } from "services/juno/tags";
+import { useAdminResourcesQuery } from "services/juno/custom";
+import { defaultProposalTags, invalidateSubgraphTags } from "services/subgraph";
 import { WalletState, useGetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import Loader from "components/Loader";
@@ -235,6 +235,6 @@ function txMeta(
   return {
     willExecute,
     successMeta: { message, link: { url, description } },
-    tagPayloads: [customApi.util.invalidateTags(defaultProposalTags)],
+    tagPayloads: [invalidateSubgraphTags(defaultProposalTags)],
   };
 }

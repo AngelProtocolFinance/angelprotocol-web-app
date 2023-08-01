@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Transaction } from "services/subgraph";
+import { Transaction } from "types/tx";
 import TableSection, { Cells } from "components/TableSection";
 import { adminRoutes } from "constants/routes";
 

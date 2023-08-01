@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { apes } from "services/apes";
 import { aws } from "services/aws/aws";
 import { junoApi } from "services/juno";
-import { subgraph } from "services/subgraph";
+import subgraph from "services/subgraph";
 import { adminReducer } from "slices/admin";
 import authReducer from "slices/authSlice";
 import { componentReducer } from "slices/components";

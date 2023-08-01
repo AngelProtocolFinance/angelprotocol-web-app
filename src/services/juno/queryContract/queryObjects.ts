@@ -8,8 +8,6 @@ import {
   toSplit,
 } from "./decoded-types";
 import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
-import { TransactionStatus } from "types/lists";
-import { TxMeta } from "types/tx";
 import {
   AccountMessages,
   AccountStorage,
@@ -27,9 +25,7 @@ import { giftCard } from "contracts/evm/gift-card";
 import { indexFund } from "contracts/evm/index-fund";
 import { multisig } from "contracts/evm/multisig";
 import { registrar } from "contracts/evm/registrar";
-import { fromAbiStr, toTuple } from "helpers";
-import { hasElapsed } from "helpers/admin";
-import { EMPTY_DATA } from "constants/evm";
+import { toTuple } from "helpers";
 
 export const queryObjects: {
   [K in QT]: Q[K]["args"] extends null
@@ -211,63 +207,6 @@ export const queryObjects: {
         result
       )[0];
       return d.toNumber();
-    },
-  ],
-  "multisig.txs": [
-    ({ range: [from, to], status }) => {
-      return multisig.encodeFunctionData(
-        "getTransactionIds",
-        toTuple({
-          from,
-          to,
-          pending: status === "open",
-          executed: status === "approved",
-        })
-      );
-    },
-    (result, args) => {
-      const ids: BigNumber[] = multisig.decodeFunctionResult(
-        "getTransactionIds",
-        result
-      )[0];
-
-      return ids.map((id) => ({
-        id: id.toNumber(),
-        status: args?.status ?? "open",
-      }));
-    },
-  ],
-  "multisig.transaction": [
-    ({ id }) => multisig.encodeFunctionData("transactions", [id]),
-    (result, args) => {
-      // no separate TransactionOutputStruct from typechain
-      const d: [string, BigNumber, string, boolean, BigNumber, string] & {
-        destination: string;
-        value: BigNumber;
-        data: string;
-        executed: boolean;
-        expiry: BigNumber;
-        metadata: string;
-      } = multisig.decodeFunctionResult("transactions", result) as any;
-
-      const parsed: TxMeta | undefined =
-        d.metadata === EMPTY_DATA ? undefined : fromAbiStr(d.metadata);
-      const expiry = d.expiry.toNumber();
-      const status: TransactionStatus = d.executed
-        ? "approved"
-        : hasElapsed(expiry)
-        ? "expired"
-        : "open";
-
-      return {
-        id: args?.id ?? 0,
-        destination: d.destination,
-        value: d.value.toString(),
-        data: d.data,
-        status,
-        expiry,
-        metadata: parsed,
-      };
     },
   ],
 

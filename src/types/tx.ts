@@ -243,19 +243,12 @@ export type TxMeta = ValueOf<{
   [K in keyof Txs]: { id: K; data?: Txs[K]["meta"] };
 }> & { title: string; description: string };
 
-// export type Transaction = OverrideProperties<
-//   Except<Plain<MultiSigStorage.TransactionStruct>, "executed">,
-//   { value: string; metadata?: TxMeta; data: string }
-//   //add id and status
-// > & { status: TransactionStatus; id: number };
-
-//no corresponding struct in typechain
 export type Transaction = {
-  id: number;
-  destination: string;
-  value: string;
-  data: string;
-  status: TransactionStatus;
+  transactionId: number;
+  recordId: string;
   expiry: number;
-  metadata?: TxMeta;
+  status: TransactionStatus;
+  confirmations: string[];
+  owners: string[];
+  meta?: TxMeta;
 };

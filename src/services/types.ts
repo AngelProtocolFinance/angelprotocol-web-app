@@ -7,7 +7,6 @@ import {
 import { EndowmentDetails } from "types/contracts";
 import { ApplicationProposal } from "types/contracts/multisig";
 import { AccountType } from "types/lists";
-import { Transaction } from "types/tx";
 import { SemiPartial } from "types/utils";
 
 export type MultisigConfig = {
@@ -34,11 +33,6 @@ type CharityResources = Base & {
 } & EndowmentDetails;
 
 export type AdminResources = APResources | ReviewResources | CharityResources;
-
-export type ProposalDetails = Transaction & {
-  signers: string[];
-  signed: string[];
-};
 
 export type ChainQueryArgs = {
   address: string;
