@@ -159,9 +159,14 @@ export type CloseEndowmentRequest = {
   beneficiary: Beneficiary;
 };
 
-type DepositRequest = Mapped<
+type DepositRequest = OverrideProperties<
   AccountDepositWithdrawEndowmentsMessages.DepositRequestStruct,
-  number
+  {
+    id: number;
+    lockedPercentage: number;
+    liquidPercentage: number;
+    donationMatch: string;
+  }
 >;
 
 export type ERC20Deposit = {

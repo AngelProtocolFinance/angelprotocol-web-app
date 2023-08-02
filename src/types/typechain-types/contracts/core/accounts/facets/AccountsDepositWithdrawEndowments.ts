@@ -66,12 +66,19 @@ export declare namespace AccountMessages {
     id: PromiseOrValue<BigNumberish>;
     lockedPercentage: PromiseOrValue<BigNumberish>;
     liquidPercentage: PromiseOrValue<BigNumberish>;
+    donationMatch: PromiseOrValue<string>;
   };
 
-  export type DepositRequestStructOutput = [number, BigNumber, BigNumber] & {
+  export type DepositRequestStructOutput = [
+    number,
+    BigNumber,
+    BigNumber,
+    string
+  ] & {
     id: number;
     lockedPercentage: BigNumber;
     liquidPercentage: BigNumber;
+    donationMatch: string;
   };
 }
 
@@ -90,8 +97,8 @@ export declare namespace IAccountsDepositWithdrawEndowments {
 export interface AccountsDepositWithdrawEndowmentsInterface
   extends utils.Interface {
   functions: {
-    "depositERC20((uint32,uint256,uint256),address,uint256)": FunctionFragment;
-    "depositMatic((uint32,uint256,uint256))": FunctionFragment;
+    "depositERC20((uint32,uint256,uint256,address),address,uint256)": FunctionFragment;
+    "depositMatic((uint32,uint256,uint256,address))": FunctionFragment;
     "withdraw(uint32,uint8,address,uint32,(address,uint256)[])": FunctionFragment;
   };
 

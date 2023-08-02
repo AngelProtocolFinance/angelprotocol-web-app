@@ -24,14 +24,18 @@ import type {
 
 export interface DiamondInitInterface extends utils.Interface {
   functions: {
-    "init(address,address)": FunctionFragment;
+    "init(address,address,string)": FunctionFragment;
   };
 
   getFunction(nameOrSignatureOrTopic: "init"): FunctionFragment;
 
   encodeFunctionData(
     functionFragment: "init",
-    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>
+    ]
   ): string;
 
   decodeFunctionResult(functionFragment: "init", data: BytesLike): Result;
@@ -69,6 +73,7 @@ export interface DiamondInit extends BaseContract {
     init(
       owner: PromiseOrValue<string>,
       registrar: PromiseOrValue<string>,
+      networkName: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
@@ -76,6 +81,7 @@ export interface DiamondInit extends BaseContract {
   init(
     owner: PromiseOrValue<string>,
     registrar: PromiseOrValue<string>,
+    networkName: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -83,6 +89,7 @@ export interface DiamondInit extends BaseContract {
     init(
       owner: PromiseOrValue<string>,
       registrar: PromiseOrValue<string>,
+      networkName: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -93,6 +100,7 @@ export interface DiamondInit extends BaseContract {
     init(
       owner: PromiseOrValue<string>,
       registrar: PromiseOrValue<string>,
+      networkName: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
@@ -101,6 +109,7 @@ export interface DiamondInit extends BaseContract {
     init(
       owner: PromiseOrValue<string>,
       registrar: PromiseOrValue<string>,
+      networkName: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };

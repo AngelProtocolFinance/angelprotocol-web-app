@@ -429,12 +429,19 @@ export declare namespace AccountMessages {
     id: PromiseOrValue<BigNumberish>;
     lockedPercentage: PromiseOrValue<BigNumberish>;
     liquidPercentage: PromiseOrValue<BigNumberish>;
+    donationMatch: PromiseOrValue<string>;
   };
 
-  export type DepositRequestStructOutput = [number, BigNumber, BigNumber] & {
+  export type DepositRequestStructOutput = [
+    number,
+    BigNumber,
+    BigNumber,
+    string
+  ] & {
     id: number;
     lockedPercentage: BigNumber;
     liquidPercentage: BigNumber;
+    donationMatch: string;
   };
 
   export type ConfigResponseStruct = {
@@ -796,8 +803,8 @@ export interface IAccountsInterface extends utils.Interface {
     "createDaoContract((uint32,address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,(uint8,(address,uint256,string,string,(uint8,(uint128,uint256,uint128,uint128)),string,string,uint256,address,uint256,uint256)),uint8,address,address))": FunctionFragment;
     "createEndowment((bool,uint256,string,uint256[],uint8,uint8,string,string,address[],uint256,uint256,address[],address[],(address,uint256),(address,uint256),(address,uint256),(address,uint256),uint256,((bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256))),uint32,address[],bool,(uint256,uint256,uint256),uint256))": FunctionFragment;
     "depositDonationMatchERC20(uint32,address,uint256)": FunctionFragment;
-    "depositERC20((uint32,uint256,uint256),address,uint256)": FunctionFragment;
-    "depositMatic((uint32,uint256,uint256))": FunctionFragment;
+    "depositERC20((uint32,uint256,uint256,address),address,uint256)": FunctionFragment;
+    "depositMatic((uint32,uint256,uint256,address))": FunctionFragment;
     "manageAllowances(uint32,address,address,uint256)": FunctionFragment;
     "queryAllowance(uint32,address,address)": FunctionFragment;
     "queryConfig()": FunctionFragment;

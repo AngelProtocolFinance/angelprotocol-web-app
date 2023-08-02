@@ -37,7 +37,6 @@ export interface EndowmentMultiSigEmitterInterface extends utils.Interface {
     "ownersAddedEndowment(uint256,address[])": FunctionFragment;
     "ownersRemovedEndowment(uint256,address[])": FunctionFragment;
     "requireExecutionChangedEndowment(uint256,bool)": FunctionFragment;
-    "transactionConfirmationOfFormerOwnerRevokedEndowment(uint256,address,uint256)": FunctionFragment;
     "transactionConfirmationRevokedEndowment(uint256,address,uint256)": FunctionFragment;
     "transactionConfirmedEndowment(uint256,address,uint256)": FunctionFragment;
     "transactionExecutedEndowment(uint256,uint256)": FunctionFragment;
@@ -54,7 +53,6 @@ export interface EndowmentMultiSigEmitterInterface extends utils.Interface {
       | "ownersAddedEndowment"
       | "ownersRemovedEndowment"
       | "requireExecutionChangedEndowment"
-      | "transactionConfirmationOfFormerOwnerRevokedEndowment"
       | "transactionConfirmationRevokedEndowment"
       | "transactionConfirmedEndowment"
       | "transactionExecutedEndowment"
@@ -104,14 +102,6 @@ export interface EndowmentMultiSigEmitterInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "requireExecutionChangedEndowment",
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "transactionConfirmationOfFormerOwnerRevokedEndowment",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
   ): string;
   encodeFunctionData(
     functionFragment: "transactionConfirmationRevokedEndowment",
@@ -176,10 +166,6 @@ export interface EndowmentMultiSigEmitterInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "transactionConfirmationOfFormerOwnerRevokedEndowment",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
     functionFragment: "transactionConfirmationRevokedEndowment",
     data: BytesLike
   ): Result;
@@ -205,7 +191,6 @@ export interface EndowmentMultiSigEmitterInterface extends utils.Interface {
     "OwnersAdded(uint256,address[])": EventFragment;
     "OwnersRemoved(uint256,address[])": EventFragment;
     "RequireExecutionChanged(uint256,bool)": EventFragment;
-    "TransactionConfirmationOfFormerOwnerRevoked(uint256,address,uint256)": EventFragment;
     "TransactionConfirmationRevoked(uint256,address,uint256)": EventFragment;
     "TransactionConfirmed(uint256,address,uint256)": EventFragment;
     "TransactionExecuted(uint256,uint256)": EventFragment;
@@ -222,9 +207,6 @@ export interface EndowmentMultiSigEmitterInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: "OwnersAdded"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnersRemoved"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RequireExecutionChanged"): EventFragment;
-  getEvent(
-    nameOrSignatureOrTopic: "TransactionConfirmationOfFormerOwnerRevoked"
-  ): EventFragment;
   getEvent(
     nameOrSignatureOrTopic: "TransactionConfirmationRevoked"
   ): EventFragment;
@@ -325,19 +307,6 @@ export type RequireExecutionChangedEvent = TypedEvent<
 
 export type RequireExecutionChangedEventFilter =
   TypedEventFilter<RequireExecutionChangedEvent>;
-
-export interface TransactionConfirmationOfFormerOwnerRevokedEventObject {
-  endowmentId: BigNumber;
-  formerOwner: string;
-  transactionId: BigNumber;
-}
-export type TransactionConfirmationOfFormerOwnerRevokedEvent = TypedEvent<
-  [BigNumber, string, BigNumber],
-  TransactionConfirmationOfFormerOwnerRevokedEventObject
->;
-
-export type TransactionConfirmationOfFormerOwnerRevokedEventFilter =
-  TypedEventFilter<TransactionConfirmationOfFormerOwnerRevokedEvent>;
 
 export interface TransactionConfirmationRevokedEventObject {
   endowmentId: BigNumber;
@@ -471,13 +440,6 @@ export interface EndowmentMultiSigEmitter extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    transactionConfirmationOfFormerOwnerRevokedEndowment(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      formerOwner: PromiseOrValue<string>,
-      transactionId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
     transactionConfirmationRevokedEndowment(
       endowmentId: PromiseOrValue<BigNumberish>,
       owner: PromiseOrValue<string>,
@@ -560,13 +522,6 @@ export interface EndowmentMultiSigEmitter extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  transactionConfirmationOfFormerOwnerRevokedEndowment(
-    endowmentId: PromiseOrValue<BigNumberish>,
-    formerOwner: PromiseOrValue<string>,
-    transactionId: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
   transactionConfirmationRevokedEndowment(
     endowmentId: PromiseOrValue<BigNumberish>,
     owner: PromiseOrValue<string>,
@@ -646,13 +601,6 @@ export interface EndowmentMultiSigEmitter extends BaseContract {
     requireExecutionChangedEndowment(
       endowmentId: PromiseOrValue<BigNumberish>,
       requireExecution: PromiseOrValue<boolean>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    transactionConfirmationOfFormerOwnerRevokedEndowment(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      formerOwner: PromiseOrValue<string>,
-      transactionId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -758,17 +706,6 @@ export interface EndowmentMultiSigEmitter extends BaseContract {
       requireExecution?: null
     ): RequireExecutionChangedEventFilter;
 
-    "TransactionConfirmationOfFormerOwnerRevoked(uint256,address,uint256)"(
-      endowmentId?: null,
-      formerOwner?: null,
-      transactionId?: null
-    ): TransactionConfirmationOfFormerOwnerRevokedEventFilter;
-    TransactionConfirmationOfFormerOwnerRevoked(
-      endowmentId?: null,
-      formerOwner?: null,
-      transactionId?: null
-    ): TransactionConfirmationOfFormerOwnerRevokedEventFilter;
-
     "TransactionConfirmationRevoked(uint256,address,uint256)"(
       endowmentId?: null,
       owner?: null,
@@ -868,13 +805,6 @@ export interface EndowmentMultiSigEmitter extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    transactionConfirmationOfFormerOwnerRevokedEndowment(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      formerOwner: PromiseOrValue<string>,
-      transactionId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
     transactionConfirmationRevokedEndowment(
       endowmentId: PromiseOrValue<BigNumberish>,
       owner: PromiseOrValue<string>,
@@ -955,13 +885,6 @@ export interface EndowmentMultiSigEmitter extends BaseContract {
     requireExecutionChangedEndowment(
       endowmentId: PromiseOrValue<BigNumberish>,
       requireExecution: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    transactionConfirmationOfFormerOwnerRevokedEndowment(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      formerOwner: PromiseOrValue<string>,
-      transactionId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

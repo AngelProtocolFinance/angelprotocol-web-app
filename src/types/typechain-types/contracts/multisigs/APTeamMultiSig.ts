@@ -41,7 +41,7 @@ export interface APTeamMultiSigInterface extends utils.Interface {
     "getConfirmationCount(uint256)": FunctionFragment;
     "getConfirmationStatus(uint256,address)": FunctionFragment;
     "getOwnerStatus(address)": FunctionFragment;
-    "initialize(address[],uint256,bool,uint256)": FunctionFragment;
+    "initializeAPTeam(address[],uint256,bool,uint256)": FunctionFragment;
     "isConfirmed(uint256)": FunctionFragment;
     "isOwner(address)": FunctionFragment;
     "removeOwners(address[])": FunctionFragment;
@@ -70,7 +70,7 @@ export interface APTeamMultiSigInterface extends utils.Interface {
       | "getConfirmationCount"
       | "getConfirmationStatus"
       | "getOwnerStatus"
-      | "initialize"
+      | "initializeAPTeam"
       | "isConfirmed"
       | "isOwner"
       | "removeOwners"
@@ -134,7 +134,7 @@ export interface APTeamMultiSigInterface extends utils.Interface {
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "initialize",
+    functionFragment: "initializeAPTeam",
     values: [
       PromiseOrValue<string>[],
       PromiseOrValue<BigNumberish>,
@@ -241,7 +241,10 @@ export interface APTeamMultiSigInterface extends utils.Interface {
     functionFragment: "getOwnerStatus",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "initializeAPTeam",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "isConfirmed",
     data: BytesLike
@@ -544,7 +547,7 @@ export interface APTeamMultiSig extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
-    initialize(
+    initializeAPTeam(
       owners: PromiseOrValue<string>[],
       _approvalsRequired: PromiseOrValue<BigNumberish>,
       _requireExecution: PromiseOrValue<boolean>,
@@ -673,7 +676,7 @@ export interface APTeamMultiSig extends BaseContract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
-  initialize(
+  initializeAPTeam(
     owners: PromiseOrValue<string>[],
     _approvalsRequired: PromiseOrValue<BigNumberish>,
     _requireExecution: PromiseOrValue<boolean>,
@@ -802,7 +805,7 @@ export interface APTeamMultiSig extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    initialize(
+    initializeAPTeam(
       owners: PromiseOrValue<string>[],
       _approvalsRequired: PromiseOrValue<BigNumberish>,
       _requireExecution: PromiseOrValue<boolean>,
@@ -1046,7 +1049,7 @@ export interface APTeamMultiSig extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    initialize(
+    initializeAPTeam(
       owners: PromiseOrValue<string>[],
       _approvalsRequired: PromiseOrValue<BigNumberish>,
       _requireExecution: PromiseOrValue<boolean>,
@@ -1167,7 +1170,7 @@ export interface APTeamMultiSig extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    initialize(
+    initializeAPTeam(
       owners: PromiseOrValue<string>[],
       _approvalsRequired: PromiseOrValue<BigNumberish>,
       _requireExecution: PromiseOrValue<boolean>,

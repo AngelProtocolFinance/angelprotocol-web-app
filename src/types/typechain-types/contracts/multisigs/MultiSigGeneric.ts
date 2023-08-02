@@ -41,7 +41,6 @@ export interface MultiSigGenericInterface extends utils.Interface {
     "getConfirmationCount(uint256)": FunctionFragment;
     "getConfirmationStatus(uint256,address)": FunctionFragment;
     "getOwnerStatus(address)": FunctionFragment;
-    "initialize(address[],uint256,bool,uint256)": FunctionFragment;
     "isConfirmed(uint256)": FunctionFragment;
     "isOwner(address)": FunctionFragment;
     "removeOwners(address[])": FunctionFragment;
@@ -70,7 +69,6 @@ export interface MultiSigGenericInterface extends utils.Interface {
       | "getConfirmationCount"
       | "getConfirmationStatus"
       | "getOwnerStatus"
-      | "initialize"
       | "isConfirmed"
       | "isOwner"
       | "removeOwners"
@@ -132,15 +130,6 @@ export interface MultiSigGenericInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "getOwnerStatus",
     values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "initialize",
-    values: [
-      PromiseOrValue<string>[],
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<boolean>,
-      PromiseOrValue<BigNumberish>
-    ]
   ): string;
   encodeFunctionData(
     functionFragment: "isConfirmed",
@@ -241,7 +230,6 @@ export interface MultiSigGenericInterface extends utils.Interface {
     functionFragment: "getOwnerStatus",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "isConfirmed",
     data: BytesLike
@@ -544,14 +532,6 @@ export interface MultiSigGeneric extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
-    initialize(
-      owners: PromiseOrValue<string>[],
-      _approvalsRequired: PromiseOrValue<BigNumberish>,
-      _requireExecution: PromiseOrValue<boolean>,
-      _transactionExpiry: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
     isConfirmed(
       transactionId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -673,14 +653,6 @@ export interface MultiSigGeneric extends BaseContract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
-  initialize(
-    owners: PromiseOrValue<string>[],
-    _approvalsRequired: PromiseOrValue<BigNumberish>,
-    _requireExecution: PromiseOrValue<boolean>,
-    _transactionExpiry: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
   isConfirmed(
     transactionId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
@@ -801,14 +773,6 @@ export interface MultiSigGeneric extends BaseContract {
       ownerAddr: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<boolean>;
-
-    initialize(
-      owners: PromiseOrValue<string>[],
-      _approvalsRequired: PromiseOrValue<BigNumberish>,
-      _requireExecution: PromiseOrValue<boolean>,
-      _transactionExpiry: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
 
     isConfirmed(
       transactionId: PromiseOrValue<BigNumberish>,
@@ -1046,14 +1010,6 @@ export interface MultiSigGeneric extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    initialize(
-      owners: PromiseOrValue<string>[],
-      _approvalsRequired: PromiseOrValue<BigNumberish>,
-      _requireExecution: PromiseOrValue<boolean>,
-      _transactionExpiry: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
     isConfirmed(
       transactionId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -1165,14 +1121,6 @@ export interface MultiSigGeneric extends BaseContract {
     getOwnerStatus(
       ownerAddr: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    initialize(
-      owners: PromiseOrValue<string>[],
-      _approvalsRequired: PromiseOrValue<BigNumberish>,
-      _requireExecution: PromiseOrValue<boolean>,
-      _transactionExpiry: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     isConfirmed(
