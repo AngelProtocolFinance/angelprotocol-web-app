@@ -8,6 +8,7 @@ import {
   GenericBalMap,
   IndexFundConfig,
   RegistrarConfig,
+  StrategyParams,
 } from "types/contracts";
 import { ApplicationProposal, PageOptions } from "types/contracts/multisig";
 import { Contract } from "types/lists";
@@ -26,6 +27,7 @@ export interface ContractQueries {
   "registrar.owner": Query<null, string>;
   "registrar.fee-setting": Query<{ type: FeeType }, FeeSetting>;
   "registrar.strategy-ids": Query<null, string[]>;
+  "registrar.strategy-params": Query<{ id: string }, StrategyParams>;
 
   "index-fund.config": Query<null, IndexFundConfig>;
   "index-fund.fund": Query<ID, FundDetails>;

@@ -32,7 +32,12 @@ export default function App() {
         type="button"
         onClick={async () => {
           const result = await queryContract("registrar.strategy-ids", {});
-          console.log({ result });
+          const strategyParams = await queryContract(
+            "registrar.strategy-params",
+            { id: result[0] }
+          );
+
+          console.log({ strategyParams, result });
         }}
       >
         test query

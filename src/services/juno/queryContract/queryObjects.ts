@@ -18,7 +18,10 @@ import {
   IIndexFund,
   IndexFundStorage,
 } from "types/typechain-types/contracts/core/index-fund/IndexFund";
-import { LibAccounts as RegistrarLibAccounts } from "types/typechain-types/contracts/core/registrar/LocalRegistrar";
+import {
+  LocalRegistrarLib,
+  LibAccounts as RegistrarLibAccounts,
+} from "types/typechain-types/contracts/core/registrar/LocalRegistrar";
 import { RegistrarStorage } from "types/typechain-types/contracts/core/registrar/interfaces/IRegistrar";
 import { DecodedApplicationProposal } from "types/typechain-types/custom";
 import { accounts } from "contracts/evm/Account";
@@ -43,6 +46,26 @@ export const queryObjects: {
   "registrar.strategy-ids": [
     registrar.encodeFunctionData("queryAllStrategies", []),
     (result) => registrar.decodeFunctionResult("queryAllStrategies", result)[0],
+  ],
+  "registrar.strategy-params": [
+    ({ id }) => registrar.encodeFunctionData("getStrategyParamsById", [id]),
+    (result) => {
+      const d: LocalRegistrarLib.StrategyParamsStructOutput =
+        registrar.decodeFunctionResult("getStrategyParamsById", result)[0];
+
+      return {
+        approvalState: d.approvalState,
+        network: d.network,
+        Locked: {
+          Type: d.Locked.Type,
+          vaultAddr: d.Locked.vaultAddr.toLowerCase(),
+        },
+        Liquid: {
+          Type: d.Liquid.Type,
+          vaultAddr: d.Liquid.vaultAddr.toLowerCase(),
+        },
+      };
+    },
   ],
   "registrar.config": [
     registrar.encodeFunctionData("queryConfig", []),

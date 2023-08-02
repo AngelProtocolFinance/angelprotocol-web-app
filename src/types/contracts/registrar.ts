@@ -48,13 +48,23 @@ export type FeeSetting = OverrideProperties<
   { bps: number }
 >;
 
+/**
+ * 0 - locked
+ * 1 - liquid
+ */
 type VaultParams = OverrideProperties<
   LocalRegistrarLib.VaultParamsStruct,
   {
-    Type: 0 /** locked */ | 1 /** liquid */;
+    Type: number;
     vaultAddr: string;
   }
 >;
+/**
+ * 0 - not approved
+ * 1 - approved
+ * 2 - withdraw only
+ * 3 - deprecated
+ */
 export type StrategyParams = OverrideProperties<
   LocalRegistrarLib.StrategyParamsStruct,
   {
