@@ -1,6 +1,7 @@
 import { OverrideProperties } from "type-fest";
 import {
   LibAccounts,
+  LocalRegistrarLib,
   RegistrarMessages,
   RegistrarStorage,
 } from "../typechain-types/contracts/core/registrar/interfaces/IRegistrar";
@@ -45,4 +46,21 @@ export type FeeType =
 export type FeeSetting = OverrideProperties<
   Plain<LibAccounts.FeeSettingStruct>,
   { bps: number }
+>;
+
+type VaultParams = OverrideProperties<
+  LocalRegistrarLib.VaultParamsStruct,
+  {
+    Type: 0 /** locked */ | 1 /** liquid */;
+    vaultAddr: string;
+  }
+>;
+export type StrategyParams = OverrideProperties<
+  LocalRegistrarLib.StrategyParamsStruct,
+  {
+    approvalState: number;
+    network: string;
+    Locked: VaultParams;
+    Liquid: VaultParams;
+  }
 >;

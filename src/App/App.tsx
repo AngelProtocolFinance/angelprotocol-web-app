@@ -1,6 +1,7 @@
 import { WalletProvider } from "@terra-money/wallet-provider";
 import { lazy } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { queryContract } from "services/juno/queryContract";
 import ModalContext from "contexts/ModalContext";
 import WalletContext from "contexts/WalletContext";
 import useScrollTop from "hooks/useScrollTop";
@@ -27,6 +28,15 @@ export default function App() {
 
   return (
     <WalletProvider {...chainOptions}>
+      <button
+        type="button"
+        onClick={async () => {
+          const result = await queryContract("registrar.strategy-ids", {});
+          console.log({ result });
+        }}
+      >
+        test query
+      </button>
       <WalletContext>
         <ModalContext>
           <Routes>

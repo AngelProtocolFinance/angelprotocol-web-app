@@ -25,6 +25,7 @@ export interface ContractQueries {
   "registrar.config": Query<null, RegistrarConfig>;
   "registrar.owner": Query<null, string>;
   "registrar.fee-setting": Query<{ type: FeeType }, FeeSetting>;
+  "registrar.strategy-ids": Query<null, string[]>;
 
   "index-fund.config": Query<null, IndexFundConfig>;
   "index-fund.fund": Query<ID, FundDetails>;

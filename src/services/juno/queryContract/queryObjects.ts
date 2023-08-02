@@ -40,6 +40,10 @@ export const queryObjects: {
     registrar.encodeFunctionData("owner", []),
     (result) => registrar.decodeFunctionResult("owner", result)[0],
   ],
+  "registrar.strategy-ids": [
+    registrar.encodeFunctionData("queryAllStrategies", []),
+    (result) => registrar.decodeFunctionResult("queryAllStrategies", result)[0],
+  ],
   "registrar.config": [
     registrar.encodeFunctionData("queryConfig", []),
     (result) => {
