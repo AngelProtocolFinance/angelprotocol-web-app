@@ -1,0 +1,67 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "bytes4",
+        "name": "_strategyId",
+        "type": "bytes4"
+      }
+    ],
+    "name": "getStrategyParamsById",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "enum LocalRegistrarLib.StrategyApprovalState",
+            "name": "approvalState",
+            "type": "uint8"
+          },
+          {
+            "internalType": "string",
+            "name": "network",
+            "type": "string"
+          },
+          {
+            "components": [
+              {
+                "internalType": "enum IVault.VaultType",
+                "name": "Type",
+                "type": "uint8"
+              },
+              {
+                "internalType": "address",
+                "name": "vaultAddr",
+                "type": "address"
+              }
+            ],
+            "internalType": "struct LocalRegistrarLib.VaultParams",
+            "name": "Locked",
+            "type": "tuple"
+          },
+          {
+            "components": [
+              {
+                "internalType": "enum IVault.VaultType",
+                "name": "Type",
+                "type": "uint8"
+              },
+              {
+                "internalType": "address",
+                "name": "vaultAddr",
+                "type": "address"
+              }
+            ],
+            "internalType": "struct LocalRegistrarLib.VaultParams",
+            "name": "Liquid",
+            "type": "tuple"
+          }
+        ],
+        "internalType": "struct LocalRegistrarLib.StrategyParams",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]
