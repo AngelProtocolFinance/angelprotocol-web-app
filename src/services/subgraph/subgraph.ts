@@ -101,8 +101,6 @@ export const subgraph = createApi({
           };
         });
 
-        console.log({ res, transactions });
-
         return {
           items: transactions,
           next: transactions.length < TX_PER_PAGE ? undefined : page + 1,
