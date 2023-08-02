@@ -75,7 +75,7 @@ export const subgraph = createApi({
                     }
                   }
                 },
-                confirmations {
+                confirmations(where:{confirmed:true}) {
                   owner {
                     id
                   }
@@ -128,7 +128,7 @@ export const subgraph = createApi({
                     }
                   }
                 },
-                confirmations {
+                confirmations(where:{confirmed:true}) {
                   owner {
                     id
                   }
