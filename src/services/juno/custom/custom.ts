@@ -25,7 +25,7 @@ export const customApi = junoApi.injectEndpoints({
           multiSig: { owners },
         } = await querySubgraph<{ multiSig: MultisigOwnersRes }>(`{
           multiSig(id:"${multisigRecordId(endowmentId)[0]}") {
-            owners {
+            owners (where:{ active:true }) {
               owner {
                 id
               }
@@ -53,7 +53,7 @@ export const customApi = junoApi.injectEndpoints({
             multiSig(id: "${recordId}") {
               id
               address
-              owners {
+              owners (where:{active:true}) {
                 owner {
                   id
                 }

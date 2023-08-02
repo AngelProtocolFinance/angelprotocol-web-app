@@ -69,7 +69,7 @@ export const subgraph = createApi({
                 expiry
                 transactionId
                 multiSig {
-                  owners {
+                  owners (where:{ active:true }) {
                     owner {
                       id
                     }
@@ -122,7 +122,7 @@ export const subgraph = createApi({
                 expiry
                 transactionId
                 multiSig {
-                  owners {
+                  owners(where:{ active: true }) {
                     owner {
                       id
                     }
