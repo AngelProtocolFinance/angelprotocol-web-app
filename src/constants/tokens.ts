@@ -9,7 +9,7 @@ export enum denoms {
   halo = "halo_contract_addr", //replace with halo contract addr
   ujuno = "ujuno",
   ujunox = "ujunox",
-  dusd = "0xe6b8a5CF854791412c1f6EFC7CAf629f5Df1c747",
+  uausdc = "0x2c852e740B62308c46DD29B982FBb650D063Bd07",
 }
 
 const _symbols: { [key in denoms]: string } = {
@@ -18,7 +18,7 @@ const _symbols: { [key in denoms]: string } = {
   [denoms.halo]: "HALO",
   [denoms.ujuno]: "JUNO",
   [denoms.ujunox]: "JUNOX",
-  [denoms.dusd]: "DUSD",
+  [denoms.uausdc]: "aUSDC",
 };
 
 export const symbols: { [index: string]: string } = new Proxy(_symbols, {
@@ -31,7 +31,7 @@ type CoinAsset = { symbol: string; icon: string };
 const _tokens: { [key in denoms]: CoinAsset } = {
   [denoms.uusdx]: { icon: usdcIcon, symbol: _symbols.uusdx },
   [denoms.axlusdc]: { icon: usdcIcon, symbol: _symbols[denoms.axlusdc] },
-  [denoms.dusd]: { icon: usdcIcon, symbol: _symbols[denoms.dusd] },
+  [denoms.uausdc]: { icon: usdcIcon, symbol: _symbols[denoms.uausdc] },
   [denoms.halo]: { icon: haloIcon, symbol: _symbols[denoms.halo] },
   [denoms.ujuno]: { icon: junoIcon, symbol: _symbols.ujuno },
   [denoms.ujunox]: { icon: junoIcon, symbol: _symbols.ujunox },
