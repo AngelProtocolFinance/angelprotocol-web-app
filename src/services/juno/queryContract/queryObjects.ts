@@ -172,64 +172,7 @@ export const queryObjects: {
   ],
 
   /** multisig */
-  "multisig.members": [
-    multisig.encodeFunctionData("getOwners", []),
-    (result) => {
-      const d: string[] = multisig.decodeFunctionResult("getOwners", result)[0];
-      //wallets outputs lowercase addresses, but addresses from contracts are not
-      return d.map((a) => a.toLowerCase());
-    },
-  ],
-  "multisig.is-owner": [
-    ({ addr }) => multisig.encodeFunctionData("isOwner", [addr]),
-    (result) => multisig.decodeFunctionResult("isOwner", result)[0],
-  ],
-  "multisig.threshold": [
-    multisig.encodeFunctionData("approvalsRequired", []),
-    (result) => {
-      const d: BigNumber = multisig.decodeFunctionResult(
-        "approvalsRequired",
-        result
-      )[0];
-      return d.toNumber();
-    },
-  ],
-  "multisig.require-execution": [
-    multisig.encodeFunctionData("requireExecution", []),
-    (result) => multisig.decodeFunctionResult("requireExecution", result)[0],
-  ],
-  "multisig.tx-count": [
-    (options) =>
-      multisig.encodeFunctionData("getTransactionCount", toTuple(options)),
-    (result) => {
-      const d: BigNumber = multisig.decodeFunctionResult(
-        "getTransactionCount",
-        result
-      )[0];
-      return d.toNumber();
-    },
-  ],
 
-  "multisig.votes": [
-    ({ id }) => multisig.encodeFunctionData("getConfirmations", [id]),
-    (result) => {
-      const d: string[] = multisig.decodeFunctionResult(
-        "getConfirmations",
-        result
-      )[0];
-      return d.map((s) => s.toLowerCase());
-    },
-  ],
-  "multisig.tx-duration": [
-    multisig.encodeFunctionData("transactionExpiry", []),
-    (result) => {
-      const d: BigNumber = multisig.decodeFunctionResult(
-        "transactionExpiry",
-        result
-      )[0];
-      return d.toNumber();
-    },
-  ],
   "multisig/review.is-confirmed": [
     ({ id, addr }) =>
       multisig.encodeFunctionData("getProposalConfirmationStatus", [id, addr]),

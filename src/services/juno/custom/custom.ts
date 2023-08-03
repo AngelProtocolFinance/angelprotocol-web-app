@@ -19,7 +19,7 @@ import { multisigRecordId } from "./constants";
 export const customApi = junoApi.injectEndpoints({
   endpoints: (builder) => ({
     isMember: builder.query<boolean, { user: string; endowmentId?: string }>({
-      providesTags: ["multisig.members", "accounts.endowment"],
+      providesTags: ["multisig-subgraph"],
       async queryFn({ endowmentId = "", user }) {
         const {
           multiSig: { owners },
@@ -39,13 +39,7 @@ export const customApi = junoApi.injectEndpoints({
       },
     }),
     adminResource: builder.query<AdminResource, { endowmentId?: string }>({
-      providesTags: [
-        "multisig.members",
-        "multisig.threshold",
-        "multisig.require-execution",
-        "multisig.tx-duration",
-        "accounts.endowment",
-      ],
+      providesTags: ["accounts.endowment", "multisig-subgraph"],
       async queryFn({ endowmentId = "" }) {
         const [recordId, type] = multisigRecordId(endowmentId);
         const [{ multiSig: m }, endowment] = await Promise.all([

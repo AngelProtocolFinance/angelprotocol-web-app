@@ -33,20 +33,10 @@ export function getTagPayloads(type?: TxMeta["id"]): TagPayload[] {
 
     case "multisig.add-owners":
     case "multisig.remove-owners":
-      _evm.push("multisig.members");
-      _evm.push("multisig.threshold"); //cases where threshold > members.length
-      break;
-
     case "multisig.change-threshold":
-      _evm.push("multisig.threshold");
-      break;
-
     case "multisig.change-auto-execute":
-      _evm.push("multisig.require-execution");
-      break;
-
     case "multisig.change-duration":
-      _evm.push("multisig.tx-duration");
+      _evm.push("multisig-subgraph");
       break;
 
     case "multisig/review.confirm-prop":

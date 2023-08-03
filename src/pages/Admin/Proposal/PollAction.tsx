@@ -48,7 +48,7 @@ export default function PollAction(props: Transaction) {
       },
       tagPayloads: willExecute
         ? extractTagFromMeta(props.meta)
-        : [invalidateJunoTags(["multisig.votes"])],
+        : [invalidateJunoTags(["multisig-subgraph"])],
     });
   }
 

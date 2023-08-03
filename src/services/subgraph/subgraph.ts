@@ -34,6 +34,7 @@ export const subgraph = createApi({
   baseQuery: customBaseQuery,
   endpoints: (builder) => ({
     proposals: builder.query<Paginated<Transaction[]>, TransactionsArgs>({
+      providesTags: ["transactions"],
       query: ({ page, status, multisigId }) => {
         const skip = (page - 1) * TX_PER_PAGE;
 
@@ -108,6 +109,7 @@ export const subgraph = createApi({
       },
     }),
     proposal: builder.query<Transaction, { recordId: string }>({
+      providesTags: ["transaction"],
       query: ({ recordId }) => {
         return {
           method: "POST",
