@@ -15,4 +15,4 @@ export {
   type SortDirection,
 } from "./useSortDonations";
 
-export { default as usePaginatedDonations } from "./usePaginatedDonations";
+export { default as usePaginatedDonationRecords } from "./usePaginatedDonations";

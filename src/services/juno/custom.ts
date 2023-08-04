@@ -160,24 +160,26 @@ export const customApi = junoApi.injectEndpoints({
           addr: args.user,
         });
 
-        const cw3config = await queryContract(
-          "cw3Config",
-          endowment.owner,
-          null
-        );
-        return {
-          data: {
-            cw3: endowment.owner,
-            cw4: cw3config.group_addr,
-            endowmentId: numId,
-            endowment,
-            cw3config,
-            role: "charity",
-            propMeta: await getPropMeta(numId, endowment.owner, cw3config),
-          },
-        };
-
+        if (!!voter.weight) {
+          const cw3config = await queryContract(
+            "cw3Config",
+            endowment.owner,
+            null
+          );
+          return {
+            data: {
+              cw3: endowment.owner,
+              cw4: cw3config.group_addr,
+              endowmentId: numId,
+              endowment,
+              cw3config,
+              role: "charity",
+              propMeta: await getPropMeta(numId, endowment.owner, cw3config),
+            },
+          };
+        }
         //if wallet is now owner, don't return anything
+        return { data: undefined };
 
         //query is member
       },

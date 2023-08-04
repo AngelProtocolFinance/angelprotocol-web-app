@@ -1,16 +1,17 @@
 import { useAdminResources } from "pages/Admin/Guard";
-import { useDonationsQuery } from "services/apes";
+import usePaginatedDonationRecords from "services/apes/donations/usePaginatedDonations";
 import QueryLoader from "components/QueryLoader";
 import Table from "./Table";
 
-// import DonationsTable from "./DonationsTable";
-
 export default function Donations({ classes = "" }: { classes?: string }) {
   const { endowmentId } = useAdminResources();
-  const { data, isLoading, isError } = useDonationsQuery({
-    id: endowmentId.toString(),
-  });
 
+  const { data, isLoading, isError, hasMore, loadNextPage, isLoadingNextPage } =
+    usePaginatedDonationRecords({
+      endowmentId: endowmentId.toString(),
+    });
+
+  const isLoadingOrError = isLoading || isLoadingNextPage || isError;
   return (
     <div className={`grid grid-rows-[auto_1fr] ${classes}`}>
       <h1 className="text-2xl font-extrabold uppercase mb-2">
@@ -28,7 +29,15 @@ export default function Donations({ classes = "" }: { classes?: string }) {
           empty: "No donations found",
         }}
       >
-        {(donations) => <Table donations={donations} />}
+        {(donations) => (
+          <Table
+            donations={donations}
+            hasMore={hasMore}
+            onLoadMore={loadNextPage}
+            disabled={isLoadingOrError}
+            isLoading={isLoadingNextPage}
+          />
+        )}
       </QueryLoader>
     </div>
   );

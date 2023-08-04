@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { DonationMadeByDonor } from "types/aws";
-import { usePaginatedDonations } from "services/apes";
+import { usePaginatedDonationRecords } from "services/apes";
 import CsvExporter from "components/CsvExporter";
 import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
@@ -22,7 +22,7 @@ export default function Donations() {
     loadNextPage,
     onQueryChange,
     setParams,
-  } = usePaginatedDonations({ donorAddress });
+  } = usePaginatedDonationRecords({ donorAddress });
 
   const isLoadingOrError = isLoading || isLoadingNextPage || isError;
 
