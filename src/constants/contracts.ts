@@ -16,10 +16,10 @@ const mainnet:Contracts = {
 //prettier-ignore
 const testnet:Contracts = {
   registrar:             "0xe1215B3e150dd298d787D41a4879959D30Dc3939",
-  "index-fund":          "0xf6B32b4a0371050321fC01672FDfad76aF55603f",
-  "multisig/ap":         "0x9034E5Bb0e03c985952C3506363Fe936c4A799f5",
-  "multisig/review":     "0xbF338a5f1030c9c3c7d729214A0299201149146C",
-  accounts:              "0xDC17A0fde92737C58DEE41053cb27EcC0AcAB13e",
+  "index-fund":          "0x2b75bc94116b4037677A270035850b280A3874E9",
+  "multisig/ap":         "0x58F5663E1029F85Ee77b1AD08241d9e626fa4AA9",
+  "multisig/review":     "0x34742B1297AFc4E0F08b6511133091B53C3DF427",
+  accounts:              "0x232A7A490290978D2610f077CC5bcc182Ae47034",
   "gift-card":           "0x47e49a7700c9D79412bb47385eD349106d4941F9",
 }
 
