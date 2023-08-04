@@ -1,19 +1,17 @@
 import { useMemo, useState } from "react";
-import { Donation } from "types/aws";
+import { DonationRecord } from "types/aws";
 
 export type SortDirection = "asc" | "desc";
-export type SortKey = keyof Pick<
-  Donation,
-  "amount" | "date" | "chainName" | "charityName" | "usdValue"
->;
 
 //TODO: remove custom sorter and pass sort params to AWS instead
-export default function useSortDonations(donations: Donation[]) {
-  const [sortKey, setSortKey] = useState<SortKey>("date");
+export default function useSortDonations<T extends DonationRecord>(
+  donations: T[]
+) {
+  const [sortKey, setSortKey] = useState<keyof T>("date");
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
 
   //if key is already set, just toggle direction
-  const handleHeaderClick = (headerKey: SortKey) => () => {
+  const handleHeaderClick = (headerKey: keyof T) => () => {
     if (headerKey === sortKey) {
       setSortDirection((prev) => (prev === "asc" ? "desc" : "asc"));
     } else {

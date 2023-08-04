@@ -1,11 +1,12 @@
-import { SortDirection, SortKey } from "services/apes";
+import { DonationRecord } from "types/aws";
+import { SortDirection } from "services/apes";
 import Icon from "components/Icon";
 
-export function HeaderButton(
+export function HeaderButton<T extends DonationRecord>(
   props: React.ButtonHTMLAttributes<HTMLButtonElement> & {
     _sortDirection: SortDirection;
-    _sortKey: SortKey;
-    _activeSortKey: SortKey;
+    _sortKey: keyof T;
+    _activeSortKey: keyof T;
   }
 ) {
   const { _activeSortKey, _sortKey, _sortDirection, children, ...restProps } =

@@ -1,17 +1,3 @@
-export type Donation = {
-  amount: number;
-  chainId: string;
-  chainName: string;
-  charityName: string;
-  date: string;
-  donationFinalized: boolean;
-  hash: string;
-  id: string; // charity ID
-  symbol: string;
-  usdValue: number;
-  kycData?: KYCData;
-};
-
 export type KYCData = {
   fullName: string; // "John Doe"
   email: string; // "john@doe.email.com"
@@ -23,6 +9,32 @@ export type KYCData = {
   consent_tax: boolean;
   consent_marketing: boolean;
 };
+
+type DonationRecordBase = {
+  amount: number;
+  chainId: string;
+  date: string;
+  hash: string;
+  symbol: string;
+  kycData?: KYCData;
+};
+
+type DonorAddress = string;
+type RecipientEndowId = string;
+
+export type DonationReceivedByEndow = DonationRecordBase & {
+  id: DonorAddress;
+};
+
+export type DonationMadeByDonor = DonationRecordBase & {
+  id: RecipientEndowId;
+  chainName: string;
+  charityName: string;
+  donationFinalized: boolean;
+  usdValue: number;
+};
+
+export type DonationRecord = DonationReceivedByEndow | DonationMadeByDonor;
 
 export type ReceiptPayload = KYCData & {
   transactionId: string; // tx hash

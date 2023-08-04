@@ -1,4 +1,4 @@
-import { Donation, KYCData } from "types/aws";
+import { DonationReceivedByEndow, DonationRecord, KYCData } from "types/aws";
 import { useSortDonations } from "services/apes";
 import CsvExporter from "components/CsvExporter";
 import ExtLink from "components/ExtLink";
@@ -7,7 +7,7 @@ import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
 import { getTxUrl, humanize, maskAddress } from "helpers";
 
-export default function Table(props: { donations: Donation[] }) {
+export default function Table(props: { donations: DonationRecord[] }) {
   const { handleHeaderClick, sorted, sortDirection, sortKey } =
     useSortDonations(props.donations);
 
@@ -18,6 +18,14 @@ export default function Table(props: { donations: Donation[] }) {
           type="th"
           cellClass="text-left uppercase font-heading font-semibold text-sm p-2 first:pl-0 last:pr-0"
         >
+          <HeaderButton
+            onClick={handleHeaderClick("amount")}
+            _activeSortKey={sortKey}
+            _sortKey="amount"
+            _sortDirection={sortDirection}
+          >
+            Amount
+          </HeaderButton>
           <HeaderButton
             onClick={handleHeaderClick("amount")}
             _activeSortKey={sortKey}
@@ -84,7 +92,10 @@ export default function Table(props: { donations: Donation[] }) {
   );
 }
 
-const csvHeadersDonations: { key: keyof Donation; label: string }[] = [
+const csvHeadersDonations: {
+  key: keyof DonationReceivedByEndow;
+  label: string;
+}[] = [
   { key: "amount", label: "Amount" },
   { key: "symbol", label: "Currency" },
   { key: "date", label: "Date" },

@@ -1,17 +1,13 @@
 import {
-  Donation,
+  DonationRecord,
   DonationsQueryParams,
+  PaginatedAWSQueryRes,
   ReceiptPayload,
   Token,
 } from "types/aws";
 import { createAuthToken } from "helpers";
 import { IS_TEST } from "constants/env";
 import { apes } from "../apes";
-
-type DonationResult = {
-  Items: Donation[];
-  ItemCutoff: number | undefined;
-};
 
 export const donations_api = apes.injectEndpoints({
   endpoints: (builder) => ({
@@ -29,7 +25,10 @@ export const donations_api = apes.injectEndpoints({
         };
       },
     }),
-    donations: builder.query<DonationResult, DonationsQueryParams>({
+    donations: builder.query<
+      PaginatedAWSQueryRes<DonationRecord[]>,
+      DonationsQueryParams
+    >({
       providesTags: ["donations"],
       query: ({ id, ...rest }) => {
         return {

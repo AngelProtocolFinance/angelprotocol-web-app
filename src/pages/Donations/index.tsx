@@ -1,4 +1,6 @@
-import { Donation } from "types/aws";
+import { useParams } from "react-router-dom";
+import { DonationMadeByDonor } from "types/aws";
+import { usePaginatedDonations } from "services/apes";
 import CsvExporter from "components/CsvExporter";
 import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
@@ -7,11 +9,10 @@ import Filter from "./Filter";
 import MobileTable from "./MobileTable";
 import NoDonations from "./NoDonations";
 import Table from "./Table";
-import useDonations from "./useDonations";
 
 export default function Donations() {
+  const { address: donorAddress = "" } = useParams<{ address: string }>();
   const {
-    address,
     data,
     hasMore,
     isError,
@@ -21,7 +22,7 @@ export default function Donations() {
     loadNextPage,
     onQueryChange,
     setParams,
-  } = useDonations();
+  } = usePaginatedDonations({ donorAddress });
 
   const isLoadingOrError = isLoading || isLoadingNextPage || isError;
 
@@ -57,7 +58,7 @@ export default function Donations() {
       <Filter
         isDisabled={isLoadingOrError}
         setParams={setParams}
-        donorAddress={address || ""}
+        donorAddress={donorAddress}
         classes="max-lg:col-span-full max-lg:w-full"
       />
       <QueryLoader
@@ -97,7 +98,7 @@ export default function Donations() {
   );
 }
 
-const csvHeaders: { key: keyof Donation; label: string }[] = [
+const csvHeaders: { key: keyof DonationMadeByDonor; label: string }[] = [
   { key: "amount", label: "Amount" },
   { key: "usdValue", label: "USD Value" },
   { key: "symbol", label: "Currency" },

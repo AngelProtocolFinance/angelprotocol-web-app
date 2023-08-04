@@ -13,5 +13,6 @@ export const {
 export {
   default as useSortDonations,
   type SortDirection,
-  type SortKey,
 } from "./useSortDonations";
+
+export { default as usePaginatedDonations } from "./usePaginatedDonations";
