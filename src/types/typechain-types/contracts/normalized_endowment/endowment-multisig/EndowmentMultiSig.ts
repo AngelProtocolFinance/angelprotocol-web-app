@@ -44,7 +44,6 @@ export interface EndowmentMultiSigInterface extends utils.Interface {
     "getConfirmationStatus(uint256,address)": FunctionFragment;
     "getOwnerStatus(address)": FunctionFragment;
     "initialize(uint256,address,address[],uint256,bool,uint256)": FunctionFragment;
-    "initialize(address[],uint256,bool,uint256)": FunctionFragment;
     "isConfirmed(uint256)": FunctionFragment;
     "isOwner(address)": FunctionFragment;
     "removeOwners(address[])": FunctionFragment;
@@ -75,8 +74,7 @@ export interface EndowmentMultiSigInterface extends utils.Interface {
       | "getConfirmationCount"
       | "getConfirmationStatus"
       | "getOwnerStatus"
-      | "initialize(uint256,address,address[],uint256,bool,uint256)"
-      | "initialize(address[],uint256,bool,uint256)"
+      | "initialize"
       | "isConfirmed"
       | "isOwner"
       | "removeOwners"
@@ -148,19 +146,10 @@ export interface EndowmentMultiSigInterface extends utils.Interface {
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "initialize(uint256,address,address[],uint256,bool,uint256)",
+    functionFragment: "initialize",
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
-      PromiseOrValue<string>[],
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<boolean>,
-      PromiseOrValue<BigNumberish>
-    ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "initialize(address[],uint256,bool,uint256)",
-    values: [
       PromiseOrValue<string>[],
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<boolean>,
@@ -274,14 +263,7 @@ export interface EndowmentMultiSigInterface extends utils.Interface {
     functionFragment: "getOwnerStatus",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "initialize(uint256,address,address[],uint256,bool,uint256)",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "initialize(address[],uint256,bool,uint256)",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "isConfirmed",
     data: BytesLike
@@ -588,21 +570,13 @@ export interface EndowmentMultiSig extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
-    "initialize(uint256,address,address[],uint256,bool,uint256)"(
+    initialize(
       _endowmentId: PromiseOrValue<BigNumberish>,
       _emitter: PromiseOrValue<string>,
       _owners: PromiseOrValue<string>[],
       _required: PromiseOrValue<BigNumberish>,
       _requireExecution: PromiseOrValue<boolean>,
       _transactionExpiry: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    "initialize(address[],uint256,bool,uint256)"(
-      arg0: PromiseOrValue<string>[],
-      arg1: PromiseOrValue<BigNumberish>,
-      arg2: PromiseOrValue<boolean>,
-      arg3: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -731,21 +705,13 @@ export interface EndowmentMultiSig extends BaseContract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
-  "initialize(uint256,address,address[],uint256,bool,uint256)"(
+  initialize(
     _endowmentId: PromiseOrValue<BigNumberish>,
     _emitter: PromiseOrValue<string>,
     _owners: PromiseOrValue<string>[],
     _required: PromiseOrValue<BigNumberish>,
     _requireExecution: PromiseOrValue<boolean>,
     _transactionExpiry: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  "initialize(address[],uint256,bool,uint256)"(
-    arg0: PromiseOrValue<string>[],
-    arg1: PromiseOrValue<BigNumberish>,
-    arg2: PromiseOrValue<boolean>,
-    arg3: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -874,21 +840,13 @@ export interface EndowmentMultiSig extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    "initialize(uint256,address,address[],uint256,bool,uint256)"(
+    initialize(
       _endowmentId: PromiseOrValue<BigNumberish>,
       _emitter: PromiseOrValue<string>,
       _owners: PromiseOrValue<string>[],
       _required: PromiseOrValue<BigNumberish>,
       _requireExecution: PromiseOrValue<boolean>,
       _transactionExpiry: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    "initialize(address[],uint256,bool,uint256)"(
-      arg0: PromiseOrValue<string>[],
-      arg1: PromiseOrValue<BigNumberish>,
-      arg2: PromiseOrValue<boolean>,
-      arg3: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1132,21 +1090,13 @@ export interface EndowmentMultiSig extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    "initialize(uint256,address,address[],uint256,bool,uint256)"(
+    initialize(
       _endowmentId: PromiseOrValue<BigNumberish>,
       _emitter: PromiseOrValue<string>,
       _owners: PromiseOrValue<string>[],
       _required: PromiseOrValue<BigNumberish>,
       _requireExecution: PromiseOrValue<boolean>,
       _transactionExpiry: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    "initialize(address[],uint256,bool,uint256)"(
-      arg0: PromiseOrValue<string>[],
-      arg1: PromiseOrValue<BigNumberish>,
-      arg2: PromiseOrValue<boolean>,
-      arg3: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1267,21 +1217,13 @@ export interface EndowmentMultiSig extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    "initialize(uint256,address,address[],uint256,bool,uint256)"(
+    initialize(
       _endowmentId: PromiseOrValue<BigNumberish>,
       _emitter: PromiseOrValue<string>,
       _owners: PromiseOrValue<string>[],
       _required: PromiseOrValue<BigNumberish>,
       _requireExecution: PromiseOrValue<boolean>,
       _transactionExpiry: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    "initialize(address[],uint256,bool,uint256)"(
-      arg0: PromiseOrValue<string>[],
-      arg1: PromiseOrValue<BigNumberish>,
-      arg2: PromiseOrValue<boolean>,
-      arg3: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

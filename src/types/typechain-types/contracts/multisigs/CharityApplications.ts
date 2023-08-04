@@ -253,7 +253,6 @@ export interface CharityApplicationsInterface extends utils.Interface {
     "getOwnerStatus(address)": FunctionFragment;
     "getProposalConfirmationCount(uint256)": FunctionFragment;
     "getProposalConfirmationStatus(uint256,address)": FunctionFragment;
-    "initialize(address[],uint256,bool,uint256)": FunctionFragment;
     "initializeApplications(address[],uint256,bool,uint256,address,uint256,uint256,address,uint256)": FunctionFragment;
     "isConfirmed(uint256)": FunctionFragment;
     "isOwner(address)": FunctionFragment;
@@ -294,7 +293,6 @@ export interface CharityApplicationsInterface extends utils.Interface {
       | "getOwnerStatus"
       | "getProposalConfirmationCount"
       | "getProposalConfirmationStatus"
-      | "initialize"
       | "initializeApplications"
       | "isConfirmed"
       | "isOwner"
@@ -380,15 +378,6 @@ export interface CharityApplicationsInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "getProposalConfirmationStatus",
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "initialize",
-    values: [
-      PromiseOrValue<string>[],
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<boolean>,
-      PromiseOrValue<BigNumberish>
-    ]
   ): string;
   encodeFunctionData(
     functionFragment: "initializeApplications",
@@ -554,7 +543,6 @@ export interface CharityApplicationsInterface extends utils.Interface {
     functionFragment: "getProposalConfirmationStatus",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "initializeApplications",
     data: BytesLike
@@ -1003,14 +991,6 @@ export interface CharityApplications extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
-    initialize(
-      arg0: PromiseOrValue<string>[],
-      arg1: PromiseOrValue<BigNumberish>,
-      arg2: PromiseOrValue<boolean>,
-      arg3: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
     initializeApplications(
       owners: PromiseOrValue<string>[],
       _approvalsRequired: PromiseOrValue<BigNumberish>,
@@ -1227,14 +1207,6 @@ export interface CharityApplications extends BaseContract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
-  initialize(
-    arg0: PromiseOrValue<string>[],
-    arg1: PromiseOrValue<BigNumberish>,
-    arg2: PromiseOrValue<boolean>,
-    arg3: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
   initializeApplications(
     owners: PromiseOrValue<string>[],
     _approvalsRequired: PromiseOrValue<BigNumberish>,
@@ -1450,14 +1422,6 @@ export interface CharityApplications extends BaseContract {
       ownerAddr: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<boolean>;
-
-    initialize(
-      arg0: PromiseOrValue<string>[],
-      arg1: PromiseOrValue<BigNumberish>,
-      arg2: PromiseOrValue<boolean>,
-      arg3: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
 
     initializeApplications(
       owners: PromiseOrValue<string>[],
@@ -1840,14 +1804,6 @@ export interface CharityApplications extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    initialize(
-      arg0: PromiseOrValue<string>[],
-      arg1: PromiseOrValue<BigNumberish>,
-      arg2: PromiseOrValue<boolean>,
-      arg3: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
     initializeApplications(
       owners: PromiseOrValue<string>[],
       _approvalsRequired: PromiseOrValue<BigNumberish>,
@@ -2028,14 +1984,6 @@ export interface CharityApplications extends BaseContract {
       proposalId: PromiseOrValue<BigNumberish>,
       ownerAddr: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    initialize(
-      arg0: PromiseOrValue<string>[],
-      arg1: PromiseOrValue<BigNumberish>,
-      arg2: PromiseOrValue<boolean>,
-      arg3: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     initializeApplications(
