@@ -24,24 +24,17 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../common";
 
 export declare namespace LibAccounts {
-  export type FeeSettingStruct = {
-    payoutAddress: PromiseOrValue<string>;
-    bps: PromiseOrValue<BigNumberish>;
-  };
+  export type FeeSettingStruct = { payoutAddress: string; bps: BigNumberish };
 
   export type FeeSettingStructOutput = [string, BigNumber] & {
     payoutAddress: string;
     bps: BigNumber;
   };
 
-  export type DelegateStruct = {
-    addr: PromiseOrValue<string>;
-    expires: PromiseOrValue<BigNumberish>;
-  };
+  export type DelegateStruct = { addr: string; expires: BigNumberish };
 
   export type DelegateStructOutput = [string, BigNumber] & {
     addr: string;
@@ -49,7 +42,7 @@ export declare namespace LibAccounts {
   };
 
   export type SettingsPermissionStruct = {
-    locked: PromiseOrValue<boolean>;
+    locked: boolean;
     delegate: LibAccounts.DelegateStruct;
   };
 
@@ -117,9 +110,9 @@ export declare namespace LibAccounts {
   };
 
   export type SplitDetailsStruct = {
-    max: PromiseOrValue<BigNumberish>;
-    min: PromiseOrValue<BigNumberish>;
-    defaultSplit: PromiseOrValue<BigNumberish>;
+    max: BigNumberish;
+    min: BigNumberish;
+    defaultSplit: BigNumberish;
   };
 
   export type SplitDetailsStructOutput = [BigNumber, BigNumber, BigNumber] & {
@@ -131,30 +124,30 @@ export declare namespace LibAccounts {
 
 export declare namespace AccountMessages {
   export type CreateEndowmentRequestStruct = {
-    withdrawBeforeMaturity: PromiseOrValue<boolean>;
-    maturityTime: PromiseOrValue<BigNumberish>;
-    name: PromiseOrValue<string>;
-    sdgs: PromiseOrValue<BigNumberish>[];
-    tier: PromiseOrValue<BigNumberish>;
-    endowType: PromiseOrValue<BigNumberish>;
-    logo: PromiseOrValue<string>;
-    image: PromiseOrValue<string>;
-    members: PromiseOrValue<string>[];
-    threshold: PromiseOrValue<BigNumberish>;
-    duration: PromiseOrValue<BigNumberish>;
-    allowlistedBeneficiaries: PromiseOrValue<string>[];
-    allowlistedContributors: PromiseOrValue<string>[];
+    withdrawBeforeMaturity: boolean;
+    maturityTime: BigNumberish;
+    name: string;
+    sdgs: BigNumberish[];
+    tier: BigNumberish;
+    endowType: BigNumberish;
+    logo: string;
+    image: string;
+    members: string[];
+    threshold: BigNumberish;
+    duration: BigNumberish;
+    allowlistedBeneficiaries: string[];
+    allowlistedContributors: string[];
     earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct;
     withdrawFee: LibAccounts.FeeSettingStruct;
     depositFee: LibAccounts.FeeSettingStruct;
     balanceFee: LibAccounts.FeeSettingStruct;
-    proposalLink: PromiseOrValue<BigNumberish>;
+    proposalLink: BigNumberish;
     settingsController: LibAccounts.SettingsControllerStruct;
-    parent: PromiseOrValue<BigNumberish>;
-    maturityAllowlist: PromiseOrValue<string>[];
-    ignoreUserSplits: PromiseOrValue<boolean>;
+    parent: BigNumberish;
+    maturityAllowlist: string[];
+    ignoreUserSplits: boolean;
     splitToLiquid: LibAccounts.SplitDetailsStruct;
-    referralId: PromiseOrValue<BigNumberish>;
+    referralId: BigNumberish;
   };
 
   export type CreateEndowmentRequestStructOutput = [
@@ -212,11 +205,11 @@ export declare namespace AccountMessages {
 
 export declare namespace ApplicationsStorage {
   export type ConfigStruct = {
-    accountsContract: PromiseOrValue<string>;
-    seedSplitToLiquid: PromiseOrValue<BigNumberish>;
-    gasAmount: PromiseOrValue<BigNumberish>;
-    seedAsset: PromiseOrValue<string>;
-    seedAmount: PromiseOrValue<BigNumberish>;
+    accountsContract: string;
+    seedSplitToLiquid: BigNumberish;
+    gasAmount: BigNumberish;
+    seedAsset: string;
+    seedAmount: BigNumberish;
   };
 
   export type ConfigStructOutput = [
@@ -318,103 +311,94 @@ export interface CharityApplicationsInterface extends utils.Interface {
     functionFragment: "activeOwnersCount",
     values?: undefined
   ): string;
-  encodeFunctionData(
-    functionFragment: "addOwners",
-    values: [PromiseOrValue<string>[]]
-  ): string;
+  encodeFunctionData(functionFragment: "addOwners", values: [string[]]): string;
   encodeFunctionData(
     functionFragment: "approvalsRequired",
     values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "changeApprovalsRequirement",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "changeRequireExecution",
-    values: [PromiseOrValue<boolean>]
+    values: [boolean]
   ): string;
   encodeFunctionData(
     functionFragment: "changeTransactionExpiry",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "config", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "confirmProposal",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "confirmTransaction",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "confirmations",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "executeProposal",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "executeTransaction",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "getConfirmationCount",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "getConfirmationStatus",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+    values: [BigNumberish, string]
   ): string;
   encodeFunctionData(
     functionFragment: "getOwnerStatus",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "getProposalConfirmationCount",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "getProposalConfirmationStatus",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+    values: [BigNumberish, string]
   ): string;
   encodeFunctionData(
     functionFragment: "initializeApplications",
     values: [
-      PromiseOrValue<string>[],
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<boolean>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
+      string[],
+      BigNumberish,
+      boolean,
+      BigNumberish,
+      string,
+      BigNumberish,
+      BigNumberish,
+      string,
+      BigNumberish
     ]
   ): string;
   encodeFunctionData(
     functionFragment: "isConfirmed",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
-  encodeFunctionData(
-    functionFragment: "isOwner",
-    values: [PromiseOrValue<string>]
-  ): string;
+  encodeFunctionData(functionFragment: "isOwner", values: [string]): string;
   encodeFunctionData(
     functionFragment: "proposalConfirmations",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "proposals",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "proposeApplication",
-    values: [
-      AccountMessages.CreateEndowmentRequestStruct,
-      PromiseOrValue<BytesLike>
-    ]
+    values: [AccountMessages.CreateEndowmentRequestStruct, BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "queryConfig",
@@ -422,11 +406,11 @@ export interface CharityApplicationsInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "removeOwners",
-    values: [PromiseOrValue<string>[]]
+    values: [string[]]
   ): string;
   encodeFunctionData(
     functionFragment: "replaceOwner",
-    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+    values: [string, string]
   ): string;
   encodeFunctionData(
     functionFragment: "requireExecution",
@@ -434,28 +418,23 @@ export interface CharityApplicationsInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "revokeConfirmation",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "revokeConfirmationOfFormerOwner",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+    values: [BigNumberish, string]
   ): string;
   encodeFunctionData(
     functionFragment: "revokeProposalConfirmation",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "submitTransaction",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>
-    ]
+    values: [string, BigNumberish, BytesLike, BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "supportsInterface",
-    values: [PromiseOrValue<BytesLike>]
+    values: [BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "transactionCount",
@@ -467,17 +446,17 @@ export interface CharityApplicationsInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "transactions",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "updateConfig",
     values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
+      BigNumberish,
+      string,
+      BigNumberish,
+      BigNumberish,
+      string,
+      BigNumberish
     ]
   ): string;
 
@@ -906,25 +885,25 @@ export interface CharityApplications extends BaseContract {
     activeOwnersCount(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     addOwners(
-      owners: PromiseOrValue<string>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      owners: string[],
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     approvalsRequired(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     changeApprovalsRequirement(
-      _approvalsRequired: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _approvalsRequired: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     changeRequireExecution(
-      _requireExecution: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _requireExecution: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     changeTransactionExpiry(
-      _transactionExpiry: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _transactionExpiry: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     config(
@@ -940,87 +919,84 @@ export interface CharityApplications extends BaseContract {
     >;
 
     confirmProposal(
-      proposalId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      proposalId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     confirmTransaction(
-      transactionId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      transactionId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     confirmations(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber] & { count: BigNumber }>;
 
     executeProposal(
-      proposalId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      proposalId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     executeTransaction(
-      transactionId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      transactionId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     getConfirmationCount(
-      transactionId: PromiseOrValue<BigNumberish>,
+      transactionId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     getConfirmationStatus(
-      transactionId: PromiseOrValue<BigNumberish>,
-      ownerAddr: PromiseOrValue<string>,
+      transactionId: BigNumberish,
+      ownerAddr: string,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
     getOwnerStatus(
-      ownerAddr: PromiseOrValue<string>,
+      ownerAddr: string,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
     getProposalConfirmationCount(
-      proposalId: PromiseOrValue<BigNumberish>,
+      proposalId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     getProposalConfirmationStatus(
-      proposalId: PromiseOrValue<BigNumberish>,
-      ownerAddr: PromiseOrValue<string>,
+      proposalId: BigNumberish,
+      ownerAddr: string,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
     initializeApplications(
-      owners: PromiseOrValue<string>[],
-      _approvalsRequired: PromiseOrValue<BigNumberish>,
-      _requireExecution: PromiseOrValue<boolean>,
-      _transactionExpiry: PromiseOrValue<BigNumberish>,
-      _accountsContract: PromiseOrValue<string>,
-      _gasAmount: PromiseOrValue<BigNumberish>,
-      _seedSplitToLiquid: PromiseOrValue<BigNumberish>,
-      _seedAsset: PromiseOrValue<string>,
-      _seedAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      owners: string[],
+      _approvalsRequired: BigNumberish,
+      _requireExecution: boolean,
+      _transactionExpiry: BigNumberish,
+      _accountsContract: string,
+      _gasAmount: BigNumberish,
+      _seedSplitToLiquid: BigNumberish,
+      _seedAsset: string,
+      _seedAmount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     isConfirmed(
-      transactionId: PromiseOrValue<BigNumberish>,
+      transactionId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
-    isOwner(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    isOwner(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
 
     proposalConfirmations(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber] & { count: BigNumber }>;
 
     proposals(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<
       [
@@ -1040,8 +1016,8 @@ export interface CharityApplications extends BaseContract {
 
     proposeApplication(
       _application: AccountMessages.CreateEndowmentRequestStruct,
-      _metadata: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _metadata: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     queryConfig(
@@ -1049,44 +1025,44 @@ export interface CharityApplications extends BaseContract {
     ): Promise<[ApplicationsStorage.ConfigStructOutput]>;
 
     removeOwners(
-      owners: PromiseOrValue<string>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      owners: string[],
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     replaceOwner(
-      currOwner: PromiseOrValue<string>,
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      currOwner: string,
+      newOwner: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     requireExecution(overrides?: CallOverrides): Promise<[boolean]>;
 
     revokeConfirmation(
-      transactionId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      transactionId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     revokeConfirmationOfFormerOwner(
-      transactionId: PromiseOrValue<BigNumberish>,
-      formerOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      transactionId: BigNumberish,
+      formerOwner: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     revokeProposalConfirmation(
-      proposalId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      proposalId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     submitTransaction(
-      destination: PromiseOrValue<string>,
-      value: PromiseOrValue<BigNumberish>,
-      data: PromiseOrValue<BytesLike>,
-      metadata: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      destination: string,
+      value: BigNumberish,
+      data: BytesLike,
+      metadata: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     supportsInterface(
-      interfaceId: PromiseOrValue<BytesLike>,
+      interfaceId: BytesLike,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
@@ -1095,7 +1071,7 @@ export interface CharityApplications extends BaseContract {
     transactionExpiry(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transactions(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<
       [string, BigNumber, string, boolean, BigNumber, string] & {
@@ -1109,38 +1085,38 @@ export interface CharityApplications extends BaseContract {
     >;
 
     updateConfig(
-      _transactionExpiry: PromiseOrValue<BigNumberish>,
-      accountsContract: PromiseOrValue<string>,
-      seedSplitToLiquid: PromiseOrValue<BigNumberish>,
-      gasAmount: PromiseOrValue<BigNumberish>,
-      seedAsset: PromiseOrValue<string>,
-      seedAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _transactionExpiry: BigNumberish,
+      accountsContract: string,
+      seedSplitToLiquid: BigNumberish,
+      gasAmount: BigNumberish,
+      seedAsset: string,
+      seedAmount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   activeOwnersCount(overrides?: CallOverrides): Promise<BigNumber>;
 
   addOwners(
-    owners: PromiseOrValue<string>[],
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    owners: string[],
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   approvalsRequired(overrides?: CallOverrides): Promise<BigNumber>;
 
   changeApprovalsRequirement(
-    _approvalsRequired: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _approvalsRequired: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   changeRequireExecution(
-    _requireExecution: PromiseOrValue<boolean>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _requireExecution: boolean,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   changeTransactionExpiry(
-    _transactionExpiry: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _transactionExpiry: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   config(
@@ -1156,87 +1132,84 @@ export interface CharityApplications extends BaseContract {
   >;
 
   confirmProposal(
-    proposalId: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    proposalId: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   confirmTransaction(
-    transactionId: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    transactionId: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   confirmations(
-    arg0: PromiseOrValue<BigNumberish>,
+    arg0: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   executeProposal(
-    proposalId: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    proposalId: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   executeTransaction(
-    transactionId: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    transactionId: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   getConfirmationCount(
-    transactionId: PromiseOrValue<BigNumberish>,
+    transactionId: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   getConfirmationStatus(
-    transactionId: PromiseOrValue<BigNumberish>,
-    ownerAddr: PromiseOrValue<string>,
+    transactionId: BigNumberish,
+    ownerAddr: string,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
   getOwnerStatus(
-    ownerAddr: PromiseOrValue<string>,
+    ownerAddr: string,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
   getProposalConfirmationCount(
-    proposalId: PromiseOrValue<BigNumberish>,
+    proposalId: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   getProposalConfirmationStatus(
-    proposalId: PromiseOrValue<BigNumberish>,
-    ownerAddr: PromiseOrValue<string>,
+    proposalId: BigNumberish,
+    ownerAddr: string,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
   initializeApplications(
-    owners: PromiseOrValue<string>[],
-    _approvalsRequired: PromiseOrValue<BigNumberish>,
-    _requireExecution: PromiseOrValue<boolean>,
-    _transactionExpiry: PromiseOrValue<BigNumberish>,
-    _accountsContract: PromiseOrValue<string>,
-    _gasAmount: PromiseOrValue<BigNumberish>,
-    _seedSplitToLiquid: PromiseOrValue<BigNumberish>,
-    _seedAsset: PromiseOrValue<string>,
-    _seedAmount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    owners: string[],
+    _approvalsRequired: BigNumberish,
+    _requireExecution: boolean,
+    _transactionExpiry: BigNumberish,
+    _accountsContract: string,
+    _gasAmount: BigNumberish,
+    _seedSplitToLiquid: BigNumberish,
+    _seedAsset: string,
+    _seedAmount: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   isConfirmed(
-    transactionId: PromiseOrValue<BigNumberish>,
+    transactionId: BigNumberish,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
-  isOwner(
-    arg0: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
+  isOwner(arg0: string, overrides?: CallOverrides): Promise<boolean>;
 
   proposalConfirmations(
-    arg0: PromiseOrValue<BigNumberish>,
+    arg0: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   proposals(
-    arg0: PromiseOrValue<BigNumberish>,
+    arg0: BigNumberish,
     overrides?: CallOverrides
   ): Promise<
     [
@@ -1256,8 +1229,8 @@ export interface CharityApplications extends BaseContract {
 
   proposeApplication(
     _application: AccountMessages.CreateEndowmentRequestStruct,
-    _metadata: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _metadata: BytesLike,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   queryConfig(
@@ -1265,44 +1238,44 @@ export interface CharityApplications extends BaseContract {
   ): Promise<ApplicationsStorage.ConfigStructOutput>;
 
   removeOwners(
-    owners: PromiseOrValue<string>[],
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    owners: string[],
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   replaceOwner(
-    currOwner: PromiseOrValue<string>,
-    newOwner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    currOwner: string,
+    newOwner: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   requireExecution(overrides?: CallOverrides): Promise<boolean>;
 
   revokeConfirmation(
-    transactionId: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    transactionId: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   revokeConfirmationOfFormerOwner(
-    transactionId: PromiseOrValue<BigNumberish>,
-    formerOwner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    transactionId: BigNumberish,
+    formerOwner: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   revokeProposalConfirmation(
-    proposalId: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    proposalId: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   submitTransaction(
-    destination: PromiseOrValue<string>,
-    value: PromiseOrValue<BigNumberish>,
-    data: PromiseOrValue<BytesLike>,
-    metadata: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    destination: string,
+    value: BigNumberish,
+    data: BytesLike,
+    metadata: BytesLike,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   supportsInterface(
-    interfaceId: PromiseOrValue<BytesLike>,
+    interfaceId: BytesLike,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
@@ -1311,7 +1284,7 @@ export interface CharityApplications extends BaseContract {
   transactionExpiry(overrides?: CallOverrides): Promise<BigNumber>;
 
   transactions(
-    arg0: PromiseOrValue<BigNumberish>,
+    arg0: BigNumberish,
     overrides?: CallOverrides
   ): Promise<
     [string, BigNumber, string, boolean, BigNumber, string] & {
@@ -1325,37 +1298,34 @@ export interface CharityApplications extends BaseContract {
   >;
 
   updateConfig(
-    _transactionExpiry: PromiseOrValue<BigNumberish>,
-    accountsContract: PromiseOrValue<string>,
-    seedSplitToLiquid: PromiseOrValue<BigNumberish>,
-    gasAmount: PromiseOrValue<BigNumberish>,
-    seedAsset: PromiseOrValue<string>,
-    seedAmount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _transactionExpiry: BigNumberish,
+    accountsContract: string,
+    seedSplitToLiquid: BigNumberish,
+    gasAmount: BigNumberish,
+    seedAsset: string,
+    seedAmount: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     activeOwnersCount(overrides?: CallOverrides): Promise<BigNumber>;
 
-    addOwners(
-      owners: PromiseOrValue<string>[],
-      overrides?: CallOverrides
-    ): Promise<void>;
+    addOwners(owners: string[], overrides?: CallOverrides): Promise<void>;
 
     approvalsRequired(overrides?: CallOverrides): Promise<BigNumber>;
 
     changeApprovalsRequirement(
-      _approvalsRequired: PromiseOrValue<BigNumberish>,
+      _approvalsRequired: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     changeRequireExecution(
-      _requireExecution: PromiseOrValue<boolean>,
+      _requireExecution: boolean,
       overrides?: CallOverrides
     ): Promise<void>;
 
     changeTransactionExpiry(
-      _transactionExpiry: PromiseOrValue<BigNumberish>,
+      _transactionExpiry: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1372,87 +1342,84 @@ export interface CharityApplications extends BaseContract {
     >;
 
     confirmProposal(
-      proposalId: PromiseOrValue<BigNumberish>,
+      proposalId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     confirmTransaction(
-      transactionId: PromiseOrValue<BigNumberish>,
+      transactionId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     confirmations(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     executeProposal(
-      proposalId: PromiseOrValue<BigNumberish>,
+      proposalId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<number>;
 
     executeTransaction(
-      transactionId: PromiseOrValue<BigNumberish>,
+      transactionId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     getConfirmationCount(
-      transactionId: PromiseOrValue<BigNumberish>,
+      transactionId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getConfirmationStatus(
-      transactionId: PromiseOrValue<BigNumberish>,
-      ownerAddr: PromiseOrValue<string>,
+      transactionId: BigNumberish,
+      ownerAddr: string,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     getOwnerStatus(
-      ownerAddr: PromiseOrValue<string>,
+      ownerAddr: string,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     getProposalConfirmationCount(
-      proposalId: PromiseOrValue<BigNumberish>,
+      proposalId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getProposalConfirmationStatus(
-      proposalId: PromiseOrValue<BigNumberish>,
-      ownerAddr: PromiseOrValue<string>,
+      proposalId: BigNumberish,
+      ownerAddr: string,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     initializeApplications(
-      owners: PromiseOrValue<string>[],
-      _approvalsRequired: PromiseOrValue<BigNumberish>,
-      _requireExecution: PromiseOrValue<boolean>,
-      _transactionExpiry: PromiseOrValue<BigNumberish>,
-      _accountsContract: PromiseOrValue<string>,
-      _gasAmount: PromiseOrValue<BigNumberish>,
-      _seedSplitToLiquid: PromiseOrValue<BigNumberish>,
-      _seedAsset: PromiseOrValue<string>,
-      _seedAmount: PromiseOrValue<BigNumberish>,
+      owners: string[],
+      _approvalsRequired: BigNumberish,
+      _requireExecution: boolean,
+      _transactionExpiry: BigNumberish,
+      _accountsContract: string,
+      _gasAmount: BigNumberish,
+      _seedSplitToLiquid: BigNumberish,
+      _seedAsset: string,
+      _seedAmount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     isConfirmed(
-      transactionId: PromiseOrValue<BigNumberish>,
+      transactionId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    isOwner(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
+    isOwner(arg0: string, overrides?: CallOverrides): Promise<boolean>;
 
     proposalConfirmations(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     proposals(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<
       [
@@ -1472,7 +1439,7 @@ export interface CharityApplications extends BaseContract {
 
     proposeApplication(
       _application: AccountMessages.CreateEndowmentRequestStruct,
-      _metadata: PromiseOrValue<BytesLike>,
+      _metadata: BytesLike,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1480,45 +1447,42 @@ export interface CharityApplications extends BaseContract {
       overrides?: CallOverrides
     ): Promise<ApplicationsStorage.ConfigStructOutput>;
 
-    removeOwners(
-      owners: PromiseOrValue<string>[],
-      overrides?: CallOverrides
-    ): Promise<void>;
+    removeOwners(owners: string[], overrides?: CallOverrides): Promise<void>;
 
     replaceOwner(
-      currOwner: PromiseOrValue<string>,
-      newOwner: PromiseOrValue<string>,
+      currOwner: string,
+      newOwner: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     requireExecution(overrides?: CallOverrides): Promise<boolean>;
 
     revokeConfirmation(
-      transactionId: PromiseOrValue<BigNumberish>,
+      transactionId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     revokeConfirmationOfFormerOwner(
-      transactionId: PromiseOrValue<BigNumberish>,
-      formerOwner: PromiseOrValue<string>,
+      transactionId: BigNumberish,
+      formerOwner: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     revokeProposalConfirmation(
-      proposalId: PromiseOrValue<BigNumberish>,
+      proposalId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     submitTransaction(
-      destination: PromiseOrValue<string>,
-      value: PromiseOrValue<BigNumberish>,
-      data: PromiseOrValue<BytesLike>,
-      metadata: PromiseOrValue<BytesLike>,
+      destination: string,
+      value: BigNumberish,
+      data: BytesLike,
+      metadata: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     supportsInterface(
-      interfaceId: PromiseOrValue<BytesLike>,
+      interfaceId: BytesLike,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
@@ -1527,7 +1491,7 @@ export interface CharityApplications extends BaseContract {
     transactionExpiry(overrides?: CallOverrides): Promise<BigNumber>;
 
     transactions(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<
       [string, BigNumber, string, boolean, BigNumber, string] & {
@@ -1541,12 +1505,12 @@ export interface CharityApplications extends BaseContract {
     >;
 
     updateConfig(
-      _transactionExpiry: PromiseOrValue<BigNumberish>,
-      accountsContract: PromiseOrValue<string>,
-      seedSplitToLiquid: PromiseOrValue<BigNumberish>,
-      gasAmount: PromiseOrValue<BigNumberish>,
-      seedAsset: PromiseOrValue<string>,
-      seedAmount: PromiseOrValue<BigNumberish>,
+      _transactionExpiry: BigNumberish,
+      accountsContract: string,
+      seedSplitToLiquid: BigNumberish,
+      gasAmount: BigNumberish,
+      seedAsset: string,
+      seedAmount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -1729,161 +1693,158 @@ export interface CharityApplications extends BaseContract {
     activeOwnersCount(overrides?: CallOverrides): Promise<BigNumber>;
 
     addOwners(
-      owners: PromiseOrValue<string>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      owners: string[],
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     approvalsRequired(overrides?: CallOverrides): Promise<BigNumber>;
 
     changeApprovalsRequirement(
-      _approvalsRequired: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _approvalsRequired: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     changeRequireExecution(
-      _requireExecution: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _requireExecution: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     changeTransactionExpiry(
-      _transactionExpiry: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _transactionExpiry: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     config(overrides?: CallOverrides): Promise<BigNumber>;
 
     confirmProposal(
-      proposalId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      proposalId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     confirmTransaction(
-      transactionId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      transactionId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     confirmations(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     executeProposal(
-      proposalId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      proposalId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     executeTransaction(
-      transactionId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      transactionId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     getConfirmationCount(
-      transactionId: PromiseOrValue<BigNumberish>,
+      transactionId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getConfirmationStatus(
-      transactionId: PromiseOrValue<BigNumberish>,
-      ownerAddr: PromiseOrValue<string>,
+      transactionId: BigNumberish,
+      ownerAddr: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getOwnerStatus(
-      ownerAddr: PromiseOrValue<string>,
+      ownerAddr: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getProposalConfirmationCount(
-      proposalId: PromiseOrValue<BigNumberish>,
+      proposalId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getProposalConfirmationStatus(
-      proposalId: PromiseOrValue<BigNumberish>,
-      ownerAddr: PromiseOrValue<string>,
+      proposalId: BigNumberish,
+      ownerAddr: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     initializeApplications(
-      owners: PromiseOrValue<string>[],
-      _approvalsRequired: PromiseOrValue<BigNumberish>,
-      _requireExecution: PromiseOrValue<boolean>,
-      _transactionExpiry: PromiseOrValue<BigNumberish>,
-      _accountsContract: PromiseOrValue<string>,
-      _gasAmount: PromiseOrValue<BigNumberish>,
-      _seedSplitToLiquid: PromiseOrValue<BigNumberish>,
-      _seedAsset: PromiseOrValue<string>,
-      _seedAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      owners: string[],
+      _approvalsRequired: BigNumberish,
+      _requireExecution: boolean,
+      _transactionExpiry: BigNumberish,
+      _accountsContract: string,
+      _gasAmount: BigNumberish,
+      _seedSplitToLiquid: BigNumberish,
+      _seedAsset: string,
+      _seedAmount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     isConfirmed(
-      transactionId: PromiseOrValue<BigNumberish>,
+      transactionId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    isOwner(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    isOwner(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     proposalConfirmations(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     proposals(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     proposeApplication(
       _application: AccountMessages.CreateEndowmentRequestStruct,
-      _metadata: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _metadata: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     queryConfig(overrides?: CallOverrides): Promise<BigNumber>;
 
     removeOwners(
-      owners: PromiseOrValue<string>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      owners: string[],
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     replaceOwner(
-      currOwner: PromiseOrValue<string>,
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      currOwner: string,
+      newOwner: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     requireExecution(overrides?: CallOverrides): Promise<BigNumber>;
 
     revokeConfirmation(
-      transactionId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      transactionId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     revokeConfirmationOfFormerOwner(
-      transactionId: PromiseOrValue<BigNumberish>,
-      formerOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      transactionId: BigNumberish,
+      formerOwner: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     revokeProposalConfirmation(
-      proposalId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      proposalId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     submitTransaction(
-      destination: PromiseOrValue<string>,
-      value: PromiseOrValue<BigNumberish>,
-      data: PromiseOrValue<BytesLike>,
-      metadata: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      destination: string,
+      value: BigNumberish,
+      data: BytesLike,
+      metadata: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     supportsInterface(
-      interfaceId: PromiseOrValue<BytesLike>,
+      interfaceId: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -1892,18 +1853,18 @@ export interface CharityApplications extends BaseContract {
     transactionExpiry(overrides?: CallOverrides): Promise<BigNumber>;
 
     transactions(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     updateConfig(
-      _transactionExpiry: PromiseOrValue<BigNumberish>,
-      accountsContract: PromiseOrValue<string>,
-      seedSplitToLiquid: PromiseOrValue<BigNumberish>,
-      gasAmount: PromiseOrValue<BigNumberish>,
-      seedAsset: PromiseOrValue<string>,
-      seedAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _transactionExpiry: BigNumberish,
+      accountsContract: string,
+      seedSplitToLiquid: BigNumberish,
+      gasAmount: BigNumberish,
+      seedAsset: string,
+      seedAmount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
@@ -1911,161 +1872,161 @@ export interface CharityApplications extends BaseContract {
     activeOwnersCount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     addOwners(
-      owners: PromiseOrValue<string>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      owners: string[],
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     approvalsRequired(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     changeApprovalsRequirement(
-      _approvalsRequired: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _approvalsRequired: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     changeRequireExecution(
-      _requireExecution: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _requireExecution: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     changeTransactionExpiry(
-      _transactionExpiry: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _transactionExpiry: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     config(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     confirmProposal(
-      proposalId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      proposalId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     confirmTransaction(
-      transactionId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      transactionId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     confirmations(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     executeProposal(
-      proposalId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      proposalId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     executeTransaction(
-      transactionId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      transactionId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     getConfirmationCount(
-      transactionId: PromiseOrValue<BigNumberish>,
+      transactionId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getConfirmationStatus(
-      transactionId: PromiseOrValue<BigNumberish>,
-      ownerAddr: PromiseOrValue<string>,
+      transactionId: BigNumberish,
+      ownerAddr: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getOwnerStatus(
-      ownerAddr: PromiseOrValue<string>,
+      ownerAddr: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getProposalConfirmationCount(
-      proposalId: PromiseOrValue<BigNumberish>,
+      proposalId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getProposalConfirmationStatus(
-      proposalId: PromiseOrValue<BigNumberish>,
-      ownerAddr: PromiseOrValue<string>,
+      proposalId: BigNumberish,
+      ownerAddr: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     initializeApplications(
-      owners: PromiseOrValue<string>[],
-      _approvalsRequired: PromiseOrValue<BigNumberish>,
-      _requireExecution: PromiseOrValue<boolean>,
-      _transactionExpiry: PromiseOrValue<BigNumberish>,
-      _accountsContract: PromiseOrValue<string>,
-      _gasAmount: PromiseOrValue<BigNumberish>,
-      _seedSplitToLiquid: PromiseOrValue<BigNumberish>,
-      _seedAsset: PromiseOrValue<string>,
-      _seedAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      owners: string[],
+      _approvalsRequired: BigNumberish,
+      _requireExecution: boolean,
+      _transactionExpiry: BigNumberish,
+      _accountsContract: string,
+      _gasAmount: BigNumberish,
+      _seedSplitToLiquid: BigNumberish,
+      _seedAsset: string,
+      _seedAmount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     isConfirmed(
-      transactionId: PromiseOrValue<BigNumberish>,
+      transactionId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     isOwner(
-      arg0: PromiseOrValue<string>,
+      arg0: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     proposalConfirmations(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     proposals(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     proposeApplication(
       _application: AccountMessages.CreateEndowmentRequestStruct,
-      _metadata: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _metadata: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     queryConfig(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     removeOwners(
-      owners: PromiseOrValue<string>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      owners: string[],
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     replaceOwner(
-      currOwner: PromiseOrValue<string>,
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      currOwner: string,
+      newOwner: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     requireExecution(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     revokeConfirmation(
-      transactionId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      transactionId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     revokeConfirmationOfFormerOwner(
-      transactionId: PromiseOrValue<BigNumberish>,
-      formerOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      transactionId: BigNumberish,
+      formerOwner: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     revokeProposalConfirmation(
-      proposalId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      proposalId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     submitTransaction(
-      destination: PromiseOrValue<string>,
-      value: PromiseOrValue<BigNumberish>,
-      data: PromiseOrValue<BytesLike>,
-      metadata: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      destination: string,
+      value: BigNumberish,
+      data: BytesLike,
+      metadata: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     supportsInterface(
-      interfaceId: PromiseOrValue<BytesLike>,
+      interfaceId: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -2074,18 +2035,18 @@ export interface CharityApplications extends BaseContract {
     transactionExpiry(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transactions(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     updateConfig(
-      _transactionExpiry: PromiseOrValue<BigNumberish>,
-      accountsContract: PromiseOrValue<string>,
-      seedSplitToLiquid: PromiseOrValue<BigNumberish>,
-      gasAmount: PromiseOrValue<BigNumberish>,
-      seedAsset: PromiseOrValue<string>,
-      seedAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _transactionExpiry: BigNumberish,
+      accountsContract: string,
+      seedSplitToLiquid: BigNumberish,
+      gasAmount: BigNumberish,
+      seedAsset: string,
+      seedAmount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

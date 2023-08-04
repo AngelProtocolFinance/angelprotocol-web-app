@@ -24,19 +24,18 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../../common";
 
 export declare namespace IVault {
   export type VaultActionDataStruct = {
-    destinationChain: PromiseOrValue<string>;
-    strategyId: PromiseOrValue<BytesLike>;
-    selector: PromiseOrValue<BytesLike>;
-    accountIds: PromiseOrValue<BigNumberish>[];
-    token: PromiseOrValue<string>;
-    lockAmt: PromiseOrValue<BigNumberish>;
-    liqAmt: PromiseOrValue<BigNumberish>;
-    status: PromiseOrValue<BigNumberish>;
+    destinationChain: string;
+    strategyId: BytesLike;
+    selector: BytesLike;
+    accountIds: BigNumberish[];
+    token: string;
+    lockAmt: BigNumberish;
+    liqAmt: BigNumberish;
+    status: BigNumberish;
   };
 
   export type VaultActionDataStructOutput = [
@@ -70,12 +69,12 @@ export interface AccountsSwapRouterInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "swapToken",
     values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
+      BigNumberish,
+      BigNumberish,
+      string,
+      BigNumberish,
+      string,
+      BigNumberish
     ]
   ): string;
 
@@ -98,9 +97,9 @@ export interface AccountsSwapRouterInterface extends utils.Interface {
     "EndowmentUpdated(uint256)": EventFragment;
     "EndowmentWithdraw(uint256,address,uint256,uint8,address,uint32)": EventFragment;
     "OwnerUpdated(address)": EventFragment;
-    "RefundNeeded(tuple)": EventFragment;
+    "RefundNeeded((string,bytes4,bytes4,uint32[],address,uint256,uint256,uint8))": EventFragment;
     "TokenSwapped(uint256,uint8,address,uint256,address,uint256)": EventFragment;
-    "UnexpectedTokens(tuple)": EventFragment;
+    "UnexpectedTokens((string,bytes4,bytes4,uint32[],address,uint256,uint256,uint8))": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "AllowanceSpent"): EventFragment;
@@ -377,34 +376,34 @@ export interface AccountsSwapRouter extends BaseContract {
 
   functions: {
     swapToken(
-      id: PromiseOrValue<BigNumberish>,
-      accountType: PromiseOrValue<BigNumberish>,
-      tokenIn: PromiseOrValue<string>,
-      amountIn: PromiseOrValue<BigNumberish>,
-      tokenOut: PromiseOrValue<string>,
-      slippage: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      id: BigNumberish,
+      accountType: BigNumberish,
+      tokenIn: string,
+      amountIn: BigNumberish,
+      tokenOut: string,
+      slippage: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   swapToken(
-    id: PromiseOrValue<BigNumberish>,
-    accountType: PromiseOrValue<BigNumberish>,
-    tokenIn: PromiseOrValue<string>,
-    amountIn: PromiseOrValue<BigNumberish>,
-    tokenOut: PromiseOrValue<string>,
-    slippage: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    id: BigNumberish,
+    accountType: BigNumberish,
+    tokenIn: string,
+    amountIn: BigNumberish,
+    tokenOut: string,
+    slippage: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     swapToken(
-      id: PromiseOrValue<BigNumberish>,
-      accountType: PromiseOrValue<BigNumberish>,
-      tokenIn: PromiseOrValue<string>,
-      amountIn: PromiseOrValue<BigNumberish>,
-      tokenOut: PromiseOrValue<string>,
-      slippage: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
+      accountType: BigNumberish,
+      tokenIn: string,
+      amountIn: BigNumberish,
+      tokenOut: string,
+      slippage: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -548,7 +547,9 @@ export interface AccountsSwapRouter extends BaseContract {
     "OwnerUpdated(address)"(owner?: null): OwnerUpdatedEventFilter;
     OwnerUpdated(owner?: null): OwnerUpdatedEventFilter;
 
-    "RefundNeeded(tuple)"(arg0?: null): RefundNeededEventFilter;
+    "RefundNeeded((string,bytes4,bytes4,uint32[],address,uint256,uint256,uint8))"(
+      arg0?: null
+    ): RefundNeededEventFilter;
     RefundNeeded(arg0?: null): RefundNeededEventFilter;
 
     "TokenSwapped(uint256,uint8,address,uint256,address,uint256)"(
@@ -568,31 +569,33 @@ export interface AccountsSwapRouter extends BaseContract {
       amountOut?: null
     ): TokenSwappedEventFilter;
 
-    "UnexpectedTokens(tuple)"(arg0?: null): UnexpectedTokensEventFilter;
+    "UnexpectedTokens((string,bytes4,bytes4,uint32[],address,uint256,uint256,uint8))"(
+      arg0?: null
+    ): UnexpectedTokensEventFilter;
     UnexpectedTokens(arg0?: null): UnexpectedTokensEventFilter;
   };
 
   estimateGas: {
     swapToken(
-      id: PromiseOrValue<BigNumberish>,
-      accountType: PromiseOrValue<BigNumberish>,
-      tokenIn: PromiseOrValue<string>,
-      amountIn: PromiseOrValue<BigNumberish>,
-      tokenOut: PromiseOrValue<string>,
-      slippage: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      id: BigNumberish,
+      accountType: BigNumberish,
+      tokenIn: string,
+      amountIn: BigNumberish,
+      tokenOut: string,
+      slippage: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     swapToken(
-      id: PromiseOrValue<BigNumberish>,
-      accountType: PromiseOrValue<BigNumberish>,
-      tokenIn: PromiseOrValue<string>,
-      amountIn: PromiseOrValue<BigNumberish>,
-      tokenOut: PromiseOrValue<string>,
-      slippage: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      id: BigNumberish,
+      accountType: BigNumberish,
+      tokenIn: string,
+      amountIn: BigNumberish,
+      tokenOut: string,
+      slippage: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

@@ -20,7 +20,6 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../common";
 
 export interface GFITraderInterface extends utils.Interface {
@@ -47,7 +46,7 @@ export interface GFITraderInterface extends utils.Interface {
   encodeFunctionData(functionFragment: "poolFee", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "swapExactInputMultihop",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    values: [BigNumberish, BigNumberish]
   ): string;
 
   decodeFunctionResult(functionFragment: "GFI", data: BytesLike): Result;
@@ -98,9 +97,9 @@ export interface GFITrader extends BaseContract {
     poolFee(overrides?: CallOverrides): Promise<[number]>;
 
     swapExactInputMultihop(
-      amountIn: PromiseOrValue<BigNumberish>,
-      amountOutMin: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amountIn: BigNumberish,
+      amountOutMin: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
@@ -113,9 +112,9 @@ export interface GFITrader extends BaseContract {
   poolFee(overrides?: CallOverrides): Promise<number>;
 
   swapExactInputMultihop(
-    amountIn: PromiseOrValue<BigNumberish>,
-    amountOutMin: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    amountIn: BigNumberish,
+    amountOutMin: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -128,8 +127,8 @@ export interface GFITrader extends BaseContract {
     poolFee(overrides?: CallOverrides): Promise<number>;
 
     swapExactInputMultihop(
-      amountIn: PromiseOrValue<BigNumberish>,
-      amountOutMin: PromiseOrValue<BigNumberish>,
+      amountIn: BigNumberish,
+      amountOutMin: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
   };
@@ -146,9 +145,9 @@ export interface GFITrader extends BaseContract {
     poolFee(overrides?: CallOverrides): Promise<BigNumber>;
 
     swapExactInputMultihop(
-      amountIn: PromiseOrValue<BigNumberish>,
-      amountOutMin: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amountIn: BigNumberish,
+      amountOutMin: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
@@ -162,9 +161,9 @@ export interface GFITrader extends BaseContract {
     poolFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     swapExactInputMultihop(
-      amountIn: PromiseOrValue<BigNumberish>,
-      amountOutMin: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amountIn: BigNumberish,
+      amountOutMin: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

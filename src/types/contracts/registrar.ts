@@ -5,10 +5,10 @@ import {
   RegistrarMessages,
   RegistrarStorage,
 } from "../typechain-types/contracts/core/registrar/interfaces/IRegistrar";
-import { Mapped, Plain } from "../utils";
+import { Mapped } from "../utils";
 
 export type RegistrarSplitDetails = Mapped<
-  Plain<LibAccounts.SplitDetailsStruct>,
+  LibAccounts.SplitDetailsStruct,
   number
 >;
 
@@ -19,12 +19,12 @@ export type AcceptedTokens = {
 };
 
 export type RegistrarConfig = OverrideProperties<
-  Plain<RegistrarStorage.ConfigStruct>,
+  RegistrarStorage.ConfigStruct,
   { splitToLiquid: RegistrarSplitDetails; collectorShare: number }
 >;
 
 export type RegistrarConfigUpdate = OverrideProperties<
-  Plain<RegistrarMessages.UpdateConfigRequestStruct>,
+  RegistrarMessages.UpdateConfigRequestStruct,
   {
     splitMax: number;
     splitMin: number;
@@ -44,7 +44,7 @@ export type FeeType =
 
 //same with accounts/Fee
 export type FeeSetting = OverrideProperties<
-  Plain<LibAccounts.FeeSettingStruct>,
+  LibAccounts.FeeSettingStruct,
   { bps: number }
 >;
 

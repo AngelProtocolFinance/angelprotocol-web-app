@@ -20,7 +20,6 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../common";
 
 export interface ISubDaoTokenInterface extends utils.Interface {
@@ -32,12 +31,7 @@ export interface ISubDaoTokenInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "executeDonorMatch",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>
-    ]
+    values: [BigNumberish, string, BigNumberish, string]
   ): string;
 
   decodeFunctionResult(
@@ -76,28 +70,28 @@ export interface ISubDaoToken extends BaseContract {
 
   functions: {
     executeDonorMatch(
-      amount: PromiseOrValue<BigNumberish>,
-      accountscontract: PromiseOrValue<string>,
-      endowmentid: PromiseOrValue<BigNumberish>,
-      donor: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      accountscontract: string,
+      endowmentid: BigNumberish,
+      donor: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   executeDonorMatch(
-    amount: PromiseOrValue<BigNumberish>,
-    accountscontract: PromiseOrValue<string>,
-    endowmentid: PromiseOrValue<BigNumberish>,
-    donor: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    amount: BigNumberish,
+    accountscontract: string,
+    endowmentid: BigNumberish,
+    donor: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     executeDonorMatch(
-      amount: PromiseOrValue<BigNumberish>,
-      accountscontract: PromiseOrValue<string>,
-      endowmentid: PromiseOrValue<BigNumberish>,
-      donor: PromiseOrValue<string>,
+      amount: BigNumberish,
+      accountscontract: string,
+      endowmentid: BigNumberish,
+      donor: string,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -106,21 +100,21 @@ export interface ISubDaoToken extends BaseContract {
 
   estimateGas: {
     executeDonorMatch(
-      amount: PromiseOrValue<BigNumberish>,
-      accountscontract: PromiseOrValue<string>,
-      endowmentid: PromiseOrValue<BigNumberish>,
-      donor: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      accountscontract: string,
+      endowmentid: BigNumberish,
+      donor: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     executeDonorMatch(
-      amount: PromiseOrValue<BigNumberish>,
-      accountscontract: PromiseOrValue<string>,
-      endowmentid: PromiseOrValue<BigNumberish>,
-      donor: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      accountscontract: string,
+      endowmentid: BigNumberish,
+      donor: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

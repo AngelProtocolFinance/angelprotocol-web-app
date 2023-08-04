@@ -23,7 +23,6 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../../../common";
 
 export interface IERC173Interface extends utils.Interface {
@@ -39,7 +38,7 @@ export interface IERC173Interface extends utils.Interface {
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "transferOwnership",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
 
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
@@ -97,23 +96,23 @@ export interface IERC173 extends BaseContract {
     owner(overrides?: CallOverrides): Promise<[string] & { owner: string }>;
 
     transferOwnership(
-      newowner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newowner: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   owner(overrides?: CallOverrides): Promise<string>;
 
   transferOwnership(
-    newowner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    newowner: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     owner(overrides?: CallOverrides): Promise<string>;
 
     transferOwnership(
-      newowner: PromiseOrValue<string>,
+      newowner: string,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -133,8 +132,8 @@ export interface IERC173 extends BaseContract {
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newowner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newowner: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
@@ -142,8 +141,8 @@ export interface IERC173 extends BaseContract {
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newowner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newowner: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

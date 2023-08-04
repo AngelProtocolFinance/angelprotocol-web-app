@@ -25,15 +25,14 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../common";
 
 export declare namespace IStrategy {
   export type StrategyConfigStruct = {
-    strategySelector: PromiseOrValue<BytesLike>;
-    baseToken: PromiseOrValue<string>;
-    yieldToken: PromiseOrValue<string>;
-    admin: PromiseOrValue<string>;
+    strategySelector: BytesLike;
+    baseToken: string;
+    yieldToken: string;
+    admin: string;
   };
 
   export type StrategyConfigStructOutput = [string, string, string, string] & {
@@ -75,7 +74,7 @@ export interface FluxStrategyInterface extends utils.Interface {
   encodeFunctionData(functionFragment: "config", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "deposit",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "getStrategyConfig",
@@ -85,11 +84,11 @@ export interface FluxStrategyInterface extends utils.Interface {
   encodeFunctionData(functionFragment: "paused", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "previewDeposit",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "previewWithdraw",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "setStrategyConfig",
@@ -98,7 +97,7 @@ export interface FluxStrategyInterface extends utils.Interface {
   encodeFunctionData(functionFragment: "unpause", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "withdraw",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
 
   decodeFunctionResult(functionFragment: "config", data: BytesLike): Result;
@@ -125,7 +124,7 @@ export interface FluxStrategyInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
 
   events: {
-    "ConfigChanged(tuple)": EventFragment;
+    "ConfigChanged((bytes4,address,address,address))": EventFragment;
     "EnteredPosition(uint256,uint256)": EventFragment;
     "LogError(string)": EventFragment;
     "LogErrorBytes(bytes)": EventFragment;
@@ -243,8 +242,8 @@ export interface FluxStrategy extends BaseContract {
     >;
 
     deposit(
-      amt: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      amt: BigNumberish,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     getStrategyConfig(
@@ -252,33 +251,33 @@ export interface FluxStrategy extends BaseContract {
     ): Promise<[IStrategy.StrategyConfigStructOutput]>;
 
     pause(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     paused(overrides?: CallOverrides): Promise<[boolean]>;
 
     previewDeposit(
-      amt: PromiseOrValue<BigNumberish>,
+      amt: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     previewWithdraw(
-      amt: PromiseOrValue<BigNumberish>,
+      amt: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     setStrategyConfig(
       _newConfig: IStrategy.StrategyConfigStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     unpause(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     withdraw(
-      amt: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      amt: BigNumberish,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
@@ -294,8 +293,8 @@ export interface FluxStrategy extends BaseContract {
   >;
 
   deposit(
-    amt: PromiseOrValue<BigNumberish>,
-    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    amt: BigNumberish,
+    overrides?: PayableOverrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   getStrategyConfig(
@@ -303,33 +302,33 @@ export interface FluxStrategy extends BaseContract {
   ): Promise<IStrategy.StrategyConfigStructOutput>;
 
   pause(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   paused(overrides?: CallOverrides): Promise<boolean>;
 
   previewDeposit(
-    amt: PromiseOrValue<BigNumberish>,
+    amt: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   previewWithdraw(
-    amt: PromiseOrValue<BigNumberish>,
+    amt: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   setStrategyConfig(
     _newConfig: IStrategy.StrategyConfigStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   unpause(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   withdraw(
-    amt: PromiseOrValue<BigNumberish>,
-    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    amt: BigNumberish,
+    overrides?: PayableOverrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -344,10 +343,7 @@ export interface FluxStrategy extends BaseContract {
       }
     >;
 
-    deposit(
-      amt: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    deposit(amt: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
     getStrategyConfig(
       overrides?: CallOverrides
@@ -358,12 +354,12 @@ export interface FluxStrategy extends BaseContract {
     paused(overrides?: CallOverrides): Promise<boolean>;
 
     previewDeposit(
-      amt: PromiseOrValue<BigNumberish>,
+      amt: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     previewWithdraw(
-      amt: PromiseOrValue<BigNumberish>,
+      amt: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -374,14 +370,13 @@ export interface FluxStrategy extends BaseContract {
 
     unpause(overrides?: CallOverrides): Promise<void>;
 
-    withdraw(
-      amt: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    withdraw(amt: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   filters: {
-    "ConfigChanged(tuple)"(stratConfig?: null): ConfigChangedEventFilter;
+    "ConfigChanged((bytes4,address,address,address))"(
+      stratConfig?: null
+    ): ConfigChangedEventFilter;
     ConfigChanged(stratConfig?: null): ConfigChangedEventFilter;
 
     "EnteredPosition(uint256,uint256)"(
@@ -419,40 +414,36 @@ export interface FluxStrategy extends BaseContract {
     config(overrides?: CallOverrides): Promise<BigNumber>;
 
     deposit(
-      amt: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      amt: BigNumberish,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<BigNumber>;
 
     getStrategyConfig(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pause(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    pause(overrides?: Overrides & { from?: string }): Promise<BigNumber>;
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
     previewDeposit(
-      amt: PromiseOrValue<BigNumberish>,
+      amt: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     previewWithdraw(
-      amt: PromiseOrValue<BigNumberish>,
+      amt: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     setStrategyConfig(
       _newConfig: IStrategy.StrategyConfigStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
-    unpause(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    unpause(overrides?: Overrides & { from?: string }): Promise<BigNumber>;
 
     withdraw(
-      amt: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      amt: BigNumberish,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
@@ -460,40 +451,40 @@ export interface FluxStrategy extends BaseContract {
     config(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     deposit(
-      amt: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      amt: BigNumberish,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     getStrategyConfig(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     pause(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     previewDeposit(
-      amt: PromiseOrValue<BigNumberish>,
+      amt: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     previewWithdraw(
-      amt: PromiseOrValue<BigNumberish>,
+      amt: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     setStrategyConfig(
       _newConfig: IStrategy.StrategyConfigStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     unpause(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     withdraw(
-      amt: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      amt: BigNumberish,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

@@ -20,7 +20,6 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../../common";
 
 export interface IAccountsSwapRouterInterface extends utils.Interface {
@@ -33,12 +32,12 @@ export interface IAccountsSwapRouterInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "swapToken",
     values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
+      BigNumberish,
+      BigNumberish,
+      string,
+      BigNumberish,
+      string,
+      BigNumberish
     ]
   ): string;
 
@@ -75,34 +74,34 @@ export interface IAccountsSwapRouter extends BaseContract {
 
   functions: {
     swapToken(
-      id: PromiseOrValue<BigNumberish>,
-      accountType: PromiseOrValue<BigNumberish>,
-      tokenIn: PromiseOrValue<string>,
-      amountIn: PromiseOrValue<BigNumberish>,
-      tokenOut: PromiseOrValue<string>,
-      slippage: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      id: BigNumberish,
+      accountType: BigNumberish,
+      tokenIn: string,
+      amountIn: BigNumberish,
+      tokenOut: string,
+      slippage: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   swapToken(
-    id: PromiseOrValue<BigNumberish>,
-    accountType: PromiseOrValue<BigNumberish>,
-    tokenIn: PromiseOrValue<string>,
-    amountIn: PromiseOrValue<BigNumberish>,
-    tokenOut: PromiseOrValue<string>,
-    slippage: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    id: BigNumberish,
+    accountType: BigNumberish,
+    tokenIn: string,
+    amountIn: BigNumberish,
+    tokenOut: string,
+    slippage: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     swapToken(
-      id: PromiseOrValue<BigNumberish>,
-      accountType: PromiseOrValue<BigNumberish>,
-      tokenIn: PromiseOrValue<string>,
-      amountIn: PromiseOrValue<BigNumberish>,
-      tokenOut: PromiseOrValue<string>,
-      slippage: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
+      accountType: BigNumberish,
+      tokenIn: string,
+      amountIn: BigNumberish,
+      tokenOut: string,
+      slippage: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -111,25 +110,25 @@ export interface IAccountsSwapRouter extends BaseContract {
 
   estimateGas: {
     swapToken(
-      id: PromiseOrValue<BigNumberish>,
-      accountType: PromiseOrValue<BigNumberish>,
-      tokenIn: PromiseOrValue<string>,
-      amountIn: PromiseOrValue<BigNumberish>,
-      tokenOut: PromiseOrValue<string>,
-      slippage: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      id: BigNumberish,
+      accountType: BigNumberish,
+      tokenIn: string,
+      amountIn: BigNumberish,
+      tokenOut: string,
+      slippage: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     swapToken(
-      id: PromiseOrValue<BigNumberish>,
-      accountType: PromiseOrValue<BigNumberish>,
-      tokenIn: PromiseOrValue<string>,
-      amountIn: PromiseOrValue<BigNumberish>,
-      tokenOut: PromiseOrValue<string>,
-      slippage: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      id: BigNumberish,
+      accountType: BigNumberish,
+      tokenIn: string,
+      amountIn: BigNumberish,
+      tokenOut: string,
+      slippage: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

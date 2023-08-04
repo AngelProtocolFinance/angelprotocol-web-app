@@ -27,9 +27,6 @@ export default function Nav() {
       <NavLink to={routes["index-fund.config"]} className={styler}>
         Update Config
       </NavLink>
-      <NavLink to={routes["index-fund.update-owner"]} className={styler}>
-        Update Owner
-      </NavLink>
       <Category title="Registrar" classes="mt-4" />
       <NavLink to={routes["registrar.update-config"]} className={styler}>
         Contracts & WASM codes

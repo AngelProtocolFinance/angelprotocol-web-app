@@ -25,7 +25,6 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../common";
 
 export interface TimeLockInterface extends utils.Interface {
@@ -114,29 +113,14 @@ export interface TimeLockInterface extends utils.Interface {
     functionFragment: "TIMELOCK_ADMIN_ROLE",
     values?: undefined
   ): string;
-  encodeFunctionData(
-    functionFragment: "cancel",
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
+  encodeFunctionData(functionFragment: "cancel", values: [BytesLike]): string;
   encodeFunctionData(
     functionFragment: "execute",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>
-    ]
+    values: [string, BigNumberish, BytesLike, BytesLike, BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "executeBatch",
-    values: [
-      PromiseOrValue<string>[],
-      PromiseOrValue<BigNumberish>[],
-      PromiseOrValue<BytesLike>[],
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>
-    ]
+    values: [string[], BigNumberish[], BytesLike[], BytesLike, BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "getMinDelay",
@@ -144,131 +128,97 @@ export interface TimeLockInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "getRoleAdmin",
-    values: [PromiseOrValue<BytesLike>]
+    values: [BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "getTimestamp",
-    values: [PromiseOrValue<BytesLike>]
+    values: [BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "grantRole",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
+    values: [BytesLike, string]
   ): string;
   encodeFunctionData(
     functionFragment: "hasRole",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
+    values: [BytesLike, string]
   ): string;
   encodeFunctionData(
     functionFragment: "hashOperation",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>
-    ]
+    values: [string, BigNumberish, BytesLike, BytesLike, BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "hashOperationBatch",
-    values: [
-      PromiseOrValue<string>[],
-      PromiseOrValue<BigNumberish>[],
-      PromiseOrValue<BytesLike>[],
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>
-    ]
+    values: [string[], BigNumberish[], BytesLike[], BytesLike, BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "initTimeLock",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>[],
-      PromiseOrValue<string>[],
-      PromiseOrValue<string>
-    ]
+    values: [BigNumberish, string[], string[], string]
   ): string;
   encodeFunctionData(
     functionFragment: "isOperation",
-    values: [PromiseOrValue<BytesLike>]
+    values: [BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "isOperationDone",
-    values: [PromiseOrValue<BytesLike>]
+    values: [BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "isOperationPending",
-    values: [PromiseOrValue<BytesLike>]
+    values: [BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "isOperationReady",
-    values: [PromiseOrValue<BytesLike>]
+    values: [BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "onERC1155BatchReceived",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>[],
-      PromiseOrValue<BigNumberish>[],
-      PromiseOrValue<BytesLike>
-    ]
+    values: [string, string, BigNumberish[], BigNumberish[], BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "onERC1155Received",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>
-    ]
+    values: [string, string, BigNumberish, BigNumberish, BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "onERC721Received",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>
-    ]
+    values: [string, string, BigNumberish, BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "renounceRole",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
+    values: [BytesLike, string]
   ): string;
   encodeFunctionData(
     functionFragment: "revokeRole",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
+    values: [BytesLike, string]
   ): string;
   encodeFunctionData(
     functionFragment: "schedule",
     values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BigNumberish>
+      string,
+      BigNumberish,
+      BytesLike,
+      BytesLike,
+      BytesLike,
+      BigNumberish
     ]
   ): string;
   encodeFunctionData(
     functionFragment: "scheduleBatch",
     values: [
-      PromiseOrValue<string>[],
-      PromiseOrValue<BigNumberish>[],
-      PromiseOrValue<BytesLike>[],
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BigNumberish>
+      string[],
+      BigNumberish[],
+      BytesLike[],
+      BytesLike,
+      BytesLike,
+      BigNumberish
     ]
   ): string;
   encodeFunctionData(
     functionFragment: "supportsInterface",
-    values: [PromiseOrValue<BytesLike>]
+    values: [BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "updateDelay",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
 
   decodeFunctionResult(
@@ -372,6 +322,7 @@ export interface TimeLockInterface extends utils.Interface {
 
   events: {
     "CallExecuted(bytes32,uint256,address,uint256,bytes)": EventFragment;
+    "CallSalt(bytes32,bytes32)": EventFragment;
     "CallScheduled(bytes32,uint256,address,uint256,bytes,bytes32,uint256)": EventFragment;
     "Cancelled(bytes32)": EventFragment;
     "Initialized(uint8)": EventFragment;
@@ -382,6 +333,7 @@ export interface TimeLockInterface extends utils.Interface {
   };
 
   getEvent(nameOrSignatureOrTopic: "CallExecuted"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "CallSalt"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "CallScheduled"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Cancelled"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
@@ -404,6 +356,14 @@ export type CallExecutedEvent = TypedEvent<
 >;
 
 export type CallExecutedEventFilter = TypedEventFilter<CallExecutedEvent>;
+
+export interface CallSaltEventObject {
+  id: string;
+  salt: string;
+}
+export type CallSaltEvent = TypedEvent<[string, string], CallSaltEventObject>;
+
+export type CallSaltEventFilter = TypedEventFilter<CallSaltEvent>;
 
 export interface CallScheduledEventObject {
   id: string;
@@ -521,166 +481,158 @@ export interface TimeLock extends BaseContract {
     TIMELOCK_ADMIN_ROLE(overrides?: CallOverrides): Promise<[string]>;
 
     cancel(
-      id: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      id: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     execute(
-      target: PromiseOrValue<string>,
-      value: PromiseOrValue<BigNumberish>,
-      payload: PromiseOrValue<BytesLike>,
-      predecessor: PromiseOrValue<BytesLike>,
-      salt: PromiseOrValue<BytesLike>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      target: string,
+      value: BigNumberish,
+      payload: BytesLike,
+      predecessor: BytesLike,
+      salt: BytesLike,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     executeBatch(
-      targets: PromiseOrValue<string>[],
-      values: PromiseOrValue<BigNumberish>[],
-      payloads: PromiseOrValue<BytesLike>[],
-      predecessor: PromiseOrValue<BytesLike>,
-      salt: PromiseOrValue<BytesLike>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      targets: string[],
+      values: BigNumberish[],
+      payloads: BytesLike[],
+      predecessor: BytesLike,
+      salt: BytesLike,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<ContractTransaction>;
 
-    getMinDelay(
-      overrides?: CallOverrides
-    ): Promise<[BigNumber] & { duration: BigNumber }>;
+    getMinDelay(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getRoleAdmin(
-      role: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
+    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<[string]>;
 
     getTimestamp(
-      id: PromiseOrValue<BytesLike>,
+      id: BytesLike,
       overrides?: CallOverrides
-    ): Promise<[BigNumber] & { timestamp: BigNumber }>;
+    ): Promise<[BigNumber]>;
 
     grantRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      role: BytesLike,
+      account: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     hasRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
+      role: BytesLike,
+      account: string,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
     hashOperation(
-      target: PromiseOrValue<string>,
-      value: PromiseOrValue<BigNumberish>,
-      data: PromiseOrValue<BytesLike>,
-      predecessor: PromiseOrValue<BytesLike>,
-      salt: PromiseOrValue<BytesLike>,
+      target: string,
+      value: BigNumberish,
+      data: BytesLike,
+      predecessor: BytesLike,
+      salt: BytesLike,
       overrides?: CallOverrides
-    ): Promise<[string] & { hash: string }>;
+    ): Promise<[string]>;
 
     hashOperationBatch(
-      targets: PromiseOrValue<string>[],
-      values: PromiseOrValue<BigNumberish>[],
-      payloads: PromiseOrValue<BytesLike>[],
-      predecessor: PromiseOrValue<BytesLike>,
-      salt: PromiseOrValue<BytesLike>,
+      targets: string[],
+      values: BigNumberish[],
+      payloads: BytesLike[],
+      predecessor: BytesLike,
+      salt: BytesLike,
       overrides?: CallOverrides
-    ): Promise<[string] & { hash: string }>;
+    ): Promise<[string]>;
 
     initTimeLock(
-      minDelay: PromiseOrValue<BigNumberish>,
-      proposers: PromiseOrValue<string>[],
-      executors: PromiseOrValue<string>[],
-      admin: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      minDelay: BigNumberish,
+      proposers: string[],
+      executors: string[],
+      admin: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
-    isOperation(
-      id: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<[boolean] & { registered: boolean }>;
+    isOperation(id: BytesLike, overrides?: CallOverrides): Promise<[boolean]>;
 
     isOperationDone(
-      id: PromiseOrValue<BytesLike>,
+      id: BytesLike,
       overrides?: CallOverrides
-    ): Promise<[boolean] & { done: boolean }>;
+    ): Promise<[boolean]>;
 
     isOperationPending(
-      id: PromiseOrValue<BytesLike>,
+      id: BytesLike,
       overrides?: CallOverrides
-    ): Promise<[boolean] & { pending: boolean }>;
+    ): Promise<[boolean]>;
 
     isOperationReady(
-      id: PromiseOrValue<BytesLike>,
+      id: BytesLike,
       overrides?: CallOverrides
-    ): Promise<[boolean] & { ready: boolean }>;
+    ): Promise<[boolean]>;
 
     onERC1155BatchReceived(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
-      arg2: PromiseOrValue<BigNumberish>[],
-      arg3: PromiseOrValue<BigNumberish>[],
-      arg4: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      arg0: string,
+      arg1: string,
+      arg2: BigNumberish[],
+      arg3: BigNumberish[],
+      arg4: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     onERC1155Received(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
-      arg2: PromiseOrValue<BigNumberish>,
-      arg3: PromiseOrValue<BigNumberish>,
-      arg4: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      arg0: string,
+      arg1: string,
+      arg2: BigNumberish,
+      arg3: BigNumberish,
+      arg4: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     onERC721Received(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
-      arg2: PromiseOrValue<BigNumberish>,
-      arg3: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      arg0: string,
+      arg1: string,
+      arg2: BigNumberish,
+      arg3: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     renounceRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      role: BytesLike,
+      account: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     revokeRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      role: BytesLike,
+      account: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     schedule(
-      target: PromiseOrValue<string>,
-      value: PromiseOrValue<BigNumberish>,
-      data: PromiseOrValue<BytesLike>,
-      predecessor: PromiseOrValue<BytesLike>,
-      salt: PromiseOrValue<BytesLike>,
-      delay: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      target: string,
+      value: BigNumberish,
+      data: BytesLike,
+      predecessor: BytesLike,
+      salt: BytesLike,
+      delay: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     scheduleBatch(
-      targets: PromiseOrValue<string>[],
-      values: PromiseOrValue<BigNumberish>[],
-      payloads: PromiseOrValue<BytesLike>[],
-      predecessor: PromiseOrValue<BytesLike>,
-      salt: PromiseOrValue<BytesLike>,
-      delay: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      targets: string[],
+      values: BigNumberish[],
+      payloads: BytesLike[],
+      predecessor: BytesLike,
+      salt: BytesLike,
+      delay: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     supportsInterface(
-      interfaceId: PromiseOrValue<BytesLike>,
+      interfaceId: BytesLike,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
     updateDelay(
-      newDelay: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newDelay: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
@@ -695,164 +647,149 @@ export interface TimeLock extends BaseContract {
   TIMELOCK_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
 
   cancel(
-    id: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    id: BytesLike,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   execute(
-    target: PromiseOrValue<string>,
-    value: PromiseOrValue<BigNumberish>,
-    payload: PromiseOrValue<BytesLike>,
-    predecessor: PromiseOrValue<BytesLike>,
-    salt: PromiseOrValue<BytesLike>,
-    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    target: string,
+    value: BigNumberish,
+    payload: BytesLike,
+    predecessor: BytesLike,
+    salt: BytesLike,
+    overrides?: PayableOverrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   executeBatch(
-    targets: PromiseOrValue<string>[],
-    values: PromiseOrValue<BigNumberish>[],
-    payloads: PromiseOrValue<BytesLike>[],
-    predecessor: PromiseOrValue<BytesLike>,
-    salt: PromiseOrValue<BytesLike>,
-    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    targets: string[],
+    values: BigNumberish[],
+    payloads: BytesLike[],
+    predecessor: BytesLike,
+    salt: BytesLike,
+    overrides?: PayableOverrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   getMinDelay(overrides?: CallOverrides): Promise<BigNumber>;
 
-  getRoleAdmin(
-    role: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<string>;
+  getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
 
-  getTimestamp(
-    id: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  getTimestamp(id: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
 
   grantRole(
-    role: PromiseOrValue<BytesLike>,
-    account: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    role: BytesLike,
+    account: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   hasRole(
-    role: PromiseOrValue<BytesLike>,
-    account: PromiseOrValue<string>,
+    role: BytesLike,
+    account: string,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
   hashOperation(
-    target: PromiseOrValue<string>,
-    value: PromiseOrValue<BigNumberish>,
-    data: PromiseOrValue<BytesLike>,
-    predecessor: PromiseOrValue<BytesLike>,
-    salt: PromiseOrValue<BytesLike>,
+    target: string,
+    value: BigNumberish,
+    data: BytesLike,
+    predecessor: BytesLike,
+    salt: BytesLike,
     overrides?: CallOverrides
   ): Promise<string>;
 
   hashOperationBatch(
-    targets: PromiseOrValue<string>[],
-    values: PromiseOrValue<BigNumberish>[],
-    payloads: PromiseOrValue<BytesLike>[],
-    predecessor: PromiseOrValue<BytesLike>,
-    salt: PromiseOrValue<BytesLike>,
+    targets: string[],
+    values: BigNumberish[],
+    payloads: BytesLike[],
+    predecessor: BytesLike,
+    salt: BytesLike,
     overrides?: CallOverrides
   ): Promise<string>;
 
   initTimeLock(
-    minDelay: PromiseOrValue<BigNumberish>,
-    proposers: PromiseOrValue<string>[],
-    executors: PromiseOrValue<string>[],
-    admin: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    minDelay: BigNumberish,
+    proposers: string[],
+    executors: string[],
+    admin: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
-  isOperation(
-    id: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
+  isOperation(id: BytesLike, overrides?: CallOverrides): Promise<boolean>;
 
-  isOperationDone(
-    id: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
+  isOperationDone(id: BytesLike, overrides?: CallOverrides): Promise<boolean>;
 
   isOperationPending(
-    id: PromiseOrValue<BytesLike>,
+    id: BytesLike,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
-  isOperationReady(
-    id: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
+  isOperationReady(id: BytesLike, overrides?: CallOverrides): Promise<boolean>;
 
   onERC1155BatchReceived(
-    arg0: PromiseOrValue<string>,
-    arg1: PromiseOrValue<string>,
-    arg2: PromiseOrValue<BigNumberish>[],
-    arg3: PromiseOrValue<BigNumberish>[],
-    arg4: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    arg0: string,
+    arg1: string,
+    arg2: BigNumberish[],
+    arg3: BigNumberish[],
+    arg4: BytesLike,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   onERC1155Received(
-    arg0: PromiseOrValue<string>,
-    arg1: PromiseOrValue<string>,
-    arg2: PromiseOrValue<BigNumberish>,
-    arg3: PromiseOrValue<BigNumberish>,
-    arg4: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    arg0: string,
+    arg1: string,
+    arg2: BigNumberish,
+    arg3: BigNumberish,
+    arg4: BytesLike,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   onERC721Received(
-    arg0: PromiseOrValue<string>,
-    arg1: PromiseOrValue<string>,
-    arg2: PromiseOrValue<BigNumberish>,
-    arg3: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    arg0: string,
+    arg1: string,
+    arg2: BigNumberish,
+    arg3: BytesLike,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   renounceRole(
-    role: PromiseOrValue<BytesLike>,
-    account: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    role: BytesLike,
+    account: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   revokeRole(
-    role: PromiseOrValue<BytesLike>,
-    account: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    role: BytesLike,
+    account: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   schedule(
-    target: PromiseOrValue<string>,
-    value: PromiseOrValue<BigNumberish>,
-    data: PromiseOrValue<BytesLike>,
-    predecessor: PromiseOrValue<BytesLike>,
-    salt: PromiseOrValue<BytesLike>,
-    delay: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    target: string,
+    value: BigNumberish,
+    data: BytesLike,
+    predecessor: BytesLike,
+    salt: BytesLike,
+    delay: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   scheduleBatch(
-    targets: PromiseOrValue<string>[],
-    values: PromiseOrValue<BigNumberish>[],
-    payloads: PromiseOrValue<BytesLike>[],
-    predecessor: PromiseOrValue<BytesLike>,
-    salt: PromiseOrValue<BytesLike>,
-    delay: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    targets: string[],
+    values: BigNumberish[],
+    payloads: BytesLike[],
+    predecessor: BytesLike,
+    salt: BytesLike,
+    delay: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   supportsInterface(
-    interfaceId: PromiseOrValue<BytesLike>,
+    interfaceId: BytesLike,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
   updateDelay(
-    newDelay: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    newDelay: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -866,187 +803,178 @@ export interface TimeLock extends BaseContract {
 
     TIMELOCK_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
 
-    cancel(
-      id: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    cancel(id: BytesLike, overrides?: CallOverrides): Promise<void>;
 
     execute(
-      target: PromiseOrValue<string>,
-      value: PromiseOrValue<BigNumberish>,
-      payload: PromiseOrValue<BytesLike>,
-      predecessor: PromiseOrValue<BytesLike>,
-      salt: PromiseOrValue<BytesLike>,
+      target: string,
+      value: BigNumberish,
+      payload: BytesLike,
+      predecessor: BytesLike,
+      salt: BytesLike,
       overrides?: CallOverrides
     ): Promise<void>;
 
     executeBatch(
-      targets: PromiseOrValue<string>[],
-      values: PromiseOrValue<BigNumberish>[],
-      payloads: PromiseOrValue<BytesLike>[],
-      predecessor: PromiseOrValue<BytesLike>,
-      salt: PromiseOrValue<BytesLike>,
+      targets: string[],
+      values: BigNumberish[],
+      payloads: BytesLike[],
+      predecessor: BytesLike,
+      salt: BytesLike,
       overrides?: CallOverrides
     ): Promise<void>;
 
     getMinDelay(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getRoleAdmin(
-      role: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<string>;
+    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
 
-    getTimestamp(
-      id: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    getTimestamp(id: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
 
     grantRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
+      role: BytesLike,
+      account: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     hasRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
+      role: BytesLike,
+      account: string,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     hashOperation(
-      target: PromiseOrValue<string>,
-      value: PromiseOrValue<BigNumberish>,
-      data: PromiseOrValue<BytesLike>,
-      predecessor: PromiseOrValue<BytesLike>,
-      salt: PromiseOrValue<BytesLike>,
+      target: string,
+      value: BigNumberish,
+      data: BytesLike,
+      predecessor: BytesLike,
+      salt: BytesLike,
       overrides?: CallOverrides
     ): Promise<string>;
 
     hashOperationBatch(
-      targets: PromiseOrValue<string>[],
-      values: PromiseOrValue<BigNumberish>[],
-      payloads: PromiseOrValue<BytesLike>[],
-      predecessor: PromiseOrValue<BytesLike>,
-      salt: PromiseOrValue<BytesLike>,
+      targets: string[],
+      values: BigNumberish[],
+      payloads: BytesLike[],
+      predecessor: BytesLike,
+      salt: BytesLike,
       overrides?: CallOverrides
     ): Promise<string>;
 
     initTimeLock(
-      minDelay: PromiseOrValue<BigNumberish>,
-      proposers: PromiseOrValue<string>[],
-      executors: PromiseOrValue<string>[],
-      admin: PromiseOrValue<string>,
+      minDelay: BigNumberish,
+      proposers: string[],
+      executors: string[],
+      admin: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    isOperation(
-      id: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
+    isOperation(id: BytesLike, overrides?: CallOverrides): Promise<boolean>;
 
-    isOperationDone(
-      id: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
+    isOperationDone(id: BytesLike, overrides?: CallOverrides): Promise<boolean>;
 
     isOperationPending(
-      id: PromiseOrValue<BytesLike>,
+      id: BytesLike,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     isOperationReady(
-      id: PromiseOrValue<BytesLike>,
+      id: BytesLike,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     onERC1155BatchReceived(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
-      arg2: PromiseOrValue<BigNumberish>[],
-      arg3: PromiseOrValue<BigNumberish>[],
-      arg4: PromiseOrValue<BytesLike>,
+      arg0: string,
+      arg1: string,
+      arg2: BigNumberish[],
+      arg3: BigNumberish[],
+      arg4: BytesLike,
       overrides?: CallOverrides
     ): Promise<string>;
 
     onERC1155Received(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
-      arg2: PromiseOrValue<BigNumberish>,
-      arg3: PromiseOrValue<BigNumberish>,
-      arg4: PromiseOrValue<BytesLike>,
+      arg0: string,
+      arg1: string,
+      arg2: BigNumberish,
+      arg3: BigNumberish,
+      arg4: BytesLike,
       overrides?: CallOverrides
     ): Promise<string>;
 
     onERC721Received(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
-      arg2: PromiseOrValue<BigNumberish>,
-      arg3: PromiseOrValue<BytesLike>,
+      arg0: string,
+      arg1: string,
+      arg2: BigNumberish,
+      arg3: BytesLike,
       overrides?: CallOverrides
     ): Promise<string>;
 
     renounceRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
+      role: BytesLike,
+      account: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     revokeRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
+      role: BytesLike,
+      account: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     schedule(
-      target: PromiseOrValue<string>,
-      value: PromiseOrValue<BigNumberish>,
-      data: PromiseOrValue<BytesLike>,
-      predecessor: PromiseOrValue<BytesLike>,
-      salt: PromiseOrValue<BytesLike>,
-      delay: PromiseOrValue<BigNumberish>,
+      target: string,
+      value: BigNumberish,
+      data: BytesLike,
+      predecessor: BytesLike,
+      salt: BytesLike,
+      delay: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     scheduleBatch(
-      targets: PromiseOrValue<string>[],
-      values: PromiseOrValue<BigNumberish>[],
-      payloads: PromiseOrValue<BytesLike>[],
-      predecessor: PromiseOrValue<BytesLike>,
-      salt: PromiseOrValue<BytesLike>,
-      delay: PromiseOrValue<BigNumberish>,
+      targets: string[],
+      values: BigNumberish[],
+      payloads: BytesLike[],
+      predecessor: BytesLike,
+      salt: BytesLike,
+      delay: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     supportsInterface(
-      interfaceId: PromiseOrValue<BytesLike>,
+      interfaceId: BytesLike,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     updateDelay(
-      newDelay: PromiseOrValue<BigNumberish>,
+      newDelay: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
   };
 
   filters: {
     "CallExecuted(bytes32,uint256,address,uint256,bytes)"(
-      id?: PromiseOrValue<BytesLike> | null,
-      index?: PromiseOrValue<BigNumberish> | null,
+      id?: BytesLike | null,
+      index?: BigNumberish | null,
       target?: null,
       value?: null,
       data?: null
     ): CallExecutedEventFilter;
     CallExecuted(
-      id?: PromiseOrValue<BytesLike> | null,
-      index?: PromiseOrValue<BigNumberish> | null,
+      id?: BytesLike | null,
+      index?: BigNumberish | null,
       target?: null,
       value?: null,
       data?: null
     ): CallExecutedEventFilter;
 
+    "CallSalt(bytes32,bytes32)"(
+      id?: BytesLike | null,
+      salt?: null
+    ): CallSaltEventFilter;
+    CallSalt(id?: BytesLike | null, salt?: null): CallSaltEventFilter;
+
     "CallScheduled(bytes32,uint256,address,uint256,bytes,bytes32,uint256)"(
-      id?: PromiseOrValue<BytesLike> | null,
-      index?: PromiseOrValue<BigNumberish> | null,
+      id?: BytesLike | null,
+      index?: BigNumberish | null,
       target?: null,
       value?: null,
       data?: null,
@@ -1054,8 +982,8 @@ export interface TimeLock extends BaseContract {
       delay?: null
     ): CallScheduledEventFilter;
     CallScheduled(
-      id?: PromiseOrValue<BytesLike> | null,
-      index?: PromiseOrValue<BigNumberish> | null,
+      id?: BytesLike | null,
+      index?: BigNumberish | null,
       target?: null,
       value?: null,
       data?: null,
@@ -1063,10 +991,8 @@ export interface TimeLock extends BaseContract {
       delay?: null
     ): CallScheduledEventFilter;
 
-    "Cancelled(bytes32)"(
-      id?: PromiseOrValue<BytesLike> | null
-    ): CancelledEventFilter;
-    Cancelled(id?: PromiseOrValue<BytesLike> | null): CancelledEventFilter;
+    "Cancelled(bytes32)"(id?: BytesLike | null): CancelledEventFilter;
+    Cancelled(id?: BytesLike | null): CancelledEventFilter;
 
     "Initialized(uint8)"(version?: null): InitializedEventFilter;
     Initialized(version?: null): InitializedEventFilter;
@@ -1081,36 +1007,36 @@ export interface TimeLock extends BaseContract {
     ): MinDelayChangeEventFilter;
 
     "RoleAdminChanged(bytes32,bytes32,bytes32)"(
-      role?: PromiseOrValue<BytesLike> | null,
-      previousAdminRole?: PromiseOrValue<BytesLike> | null,
-      newAdminRole?: PromiseOrValue<BytesLike> | null
+      role?: BytesLike | null,
+      previousAdminRole?: BytesLike | null,
+      newAdminRole?: BytesLike | null
     ): RoleAdminChangedEventFilter;
     RoleAdminChanged(
-      role?: PromiseOrValue<BytesLike> | null,
-      previousAdminRole?: PromiseOrValue<BytesLike> | null,
-      newAdminRole?: PromiseOrValue<BytesLike> | null
+      role?: BytesLike | null,
+      previousAdminRole?: BytesLike | null,
+      newAdminRole?: BytesLike | null
     ): RoleAdminChangedEventFilter;
 
     "RoleGranted(bytes32,address,address)"(
-      role?: PromiseOrValue<BytesLike> | null,
-      account?: PromiseOrValue<string> | null,
-      sender?: PromiseOrValue<string> | null
+      role?: BytesLike | null,
+      account?: string | null,
+      sender?: string | null
     ): RoleGrantedEventFilter;
     RoleGranted(
-      role?: PromiseOrValue<BytesLike> | null,
-      account?: PromiseOrValue<string> | null,
-      sender?: PromiseOrValue<string> | null
+      role?: BytesLike | null,
+      account?: string | null,
+      sender?: string | null
     ): RoleGrantedEventFilter;
 
     "RoleRevoked(bytes32,address,address)"(
-      role?: PromiseOrValue<BytesLike> | null,
-      account?: PromiseOrValue<string> | null,
-      sender?: PromiseOrValue<string> | null
+      role?: BytesLike | null,
+      account?: string | null,
+      sender?: string | null
     ): RoleRevokedEventFilter;
     RoleRevoked(
-      role?: PromiseOrValue<BytesLike> | null,
-      account?: PromiseOrValue<string> | null,
-      sender?: PromiseOrValue<string> | null
+      role?: BytesLike | null,
+      account?: string | null,
+      sender?: string | null
     ): RoleRevokedEventFilter;
   };
 
@@ -1126,164 +1052,158 @@ export interface TimeLock extends BaseContract {
     TIMELOCK_ADMIN_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
 
     cancel(
-      id: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      id: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     execute(
-      target: PromiseOrValue<string>,
-      value: PromiseOrValue<BigNumberish>,
-      payload: PromiseOrValue<BytesLike>,
-      predecessor: PromiseOrValue<BytesLike>,
-      salt: PromiseOrValue<BytesLike>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      target: string,
+      value: BigNumberish,
+      payload: BytesLike,
+      predecessor: BytesLike,
+      salt: BytesLike,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<BigNumber>;
 
     executeBatch(
-      targets: PromiseOrValue<string>[],
-      values: PromiseOrValue<BigNumberish>[],
-      payloads: PromiseOrValue<BytesLike>[],
-      predecessor: PromiseOrValue<BytesLike>,
-      salt: PromiseOrValue<BytesLike>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      targets: string[],
+      values: BigNumberish[],
+      payloads: BytesLike[],
+      predecessor: BytesLike,
+      salt: BytesLike,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<BigNumber>;
 
     getMinDelay(overrides?: CallOverrides): Promise<BigNumber>;
 
     getRoleAdmin(
-      role: PromiseOrValue<BytesLike>,
+      role: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getTimestamp(
-      id: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    getTimestamp(id: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
 
     grantRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      role: BytesLike,
+      account: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     hasRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
+      role: BytesLike,
+      account: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     hashOperation(
-      target: PromiseOrValue<string>,
-      value: PromiseOrValue<BigNumberish>,
-      data: PromiseOrValue<BytesLike>,
-      predecessor: PromiseOrValue<BytesLike>,
-      salt: PromiseOrValue<BytesLike>,
+      target: string,
+      value: BigNumberish,
+      data: BytesLike,
+      predecessor: BytesLike,
+      salt: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     hashOperationBatch(
-      targets: PromiseOrValue<string>[],
-      values: PromiseOrValue<BigNumberish>[],
-      payloads: PromiseOrValue<BytesLike>[],
-      predecessor: PromiseOrValue<BytesLike>,
-      salt: PromiseOrValue<BytesLike>,
+      targets: string[],
+      values: BigNumberish[],
+      payloads: BytesLike[],
+      predecessor: BytesLike,
+      salt: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     initTimeLock(
-      minDelay: PromiseOrValue<BigNumberish>,
-      proposers: PromiseOrValue<string>[],
-      executors: PromiseOrValue<string>[],
-      admin: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      minDelay: BigNumberish,
+      proposers: string[],
+      executors: string[],
+      admin: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
-    isOperation(
-      id: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    isOperation(id: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
 
     isOperationDone(
-      id: PromiseOrValue<BytesLike>,
+      id: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     isOperationPending(
-      id: PromiseOrValue<BytesLike>,
+      id: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     isOperationReady(
-      id: PromiseOrValue<BytesLike>,
+      id: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     onERC1155BatchReceived(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
-      arg2: PromiseOrValue<BigNumberish>[],
-      arg3: PromiseOrValue<BigNumberish>[],
-      arg4: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      arg0: string,
+      arg1: string,
+      arg2: BigNumberish[],
+      arg3: BigNumberish[],
+      arg4: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     onERC1155Received(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
-      arg2: PromiseOrValue<BigNumberish>,
-      arg3: PromiseOrValue<BigNumberish>,
-      arg4: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      arg0: string,
+      arg1: string,
+      arg2: BigNumberish,
+      arg3: BigNumberish,
+      arg4: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     onERC721Received(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
-      arg2: PromiseOrValue<BigNumberish>,
-      arg3: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      arg0: string,
+      arg1: string,
+      arg2: BigNumberish,
+      arg3: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     renounceRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      role: BytesLike,
+      account: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     revokeRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      role: BytesLike,
+      account: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     schedule(
-      target: PromiseOrValue<string>,
-      value: PromiseOrValue<BigNumberish>,
-      data: PromiseOrValue<BytesLike>,
-      predecessor: PromiseOrValue<BytesLike>,
-      salt: PromiseOrValue<BytesLike>,
-      delay: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      target: string,
+      value: BigNumberish,
+      data: BytesLike,
+      predecessor: BytesLike,
+      salt: BytesLike,
+      delay: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     scheduleBatch(
-      targets: PromiseOrValue<string>[],
-      values: PromiseOrValue<BigNumberish>[],
-      payloads: PromiseOrValue<BytesLike>[],
-      predecessor: PromiseOrValue<BytesLike>,
-      salt: PromiseOrValue<BytesLike>,
-      delay: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      targets: string[],
+      values: BigNumberish[],
+      payloads: BytesLike[],
+      predecessor: BytesLike,
+      salt: BytesLike,
+      delay: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     supportsInterface(
-      interfaceId: PromiseOrValue<BytesLike>,
+      interfaceId: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     updateDelay(
-      newDelay: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newDelay: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
@@ -1303,164 +1223,164 @@ export interface TimeLock extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     cancel(
-      id: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      id: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     execute(
-      target: PromiseOrValue<string>,
-      value: PromiseOrValue<BigNumberish>,
-      payload: PromiseOrValue<BytesLike>,
-      predecessor: PromiseOrValue<BytesLike>,
-      salt: PromiseOrValue<BytesLike>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      target: string,
+      value: BigNumberish,
+      payload: BytesLike,
+      predecessor: BytesLike,
+      salt: BytesLike,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     executeBatch(
-      targets: PromiseOrValue<string>[],
-      values: PromiseOrValue<BigNumberish>[],
-      payloads: PromiseOrValue<BytesLike>[],
-      predecessor: PromiseOrValue<BytesLike>,
-      salt: PromiseOrValue<BytesLike>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      targets: string[],
+      values: BigNumberish[],
+      payloads: BytesLike[],
+      predecessor: BytesLike,
+      salt: BytesLike,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     getMinDelay(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getRoleAdmin(
-      role: PromiseOrValue<BytesLike>,
+      role: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getTimestamp(
-      id: PromiseOrValue<BytesLike>,
+      id: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     grantRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      role: BytesLike,
+      account: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     hasRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
+      role: BytesLike,
+      account: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     hashOperation(
-      target: PromiseOrValue<string>,
-      value: PromiseOrValue<BigNumberish>,
-      data: PromiseOrValue<BytesLike>,
-      predecessor: PromiseOrValue<BytesLike>,
-      salt: PromiseOrValue<BytesLike>,
+      target: string,
+      value: BigNumberish,
+      data: BytesLike,
+      predecessor: BytesLike,
+      salt: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     hashOperationBatch(
-      targets: PromiseOrValue<string>[],
-      values: PromiseOrValue<BigNumberish>[],
-      payloads: PromiseOrValue<BytesLike>[],
-      predecessor: PromiseOrValue<BytesLike>,
-      salt: PromiseOrValue<BytesLike>,
+      targets: string[],
+      values: BigNumberish[],
+      payloads: BytesLike[],
+      predecessor: BytesLike,
+      salt: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     initTimeLock(
-      minDelay: PromiseOrValue<BigNumberish>,
-      proposers: PromiseOrValue<string>[],
-      executors: PromiseOrValue<string>[],
-      admin: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      minDelay: BigNumberish,
+      proposers: string[],
+      executors: string[],
+      admin: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     isOperation(
-      id: PromiseOrValue<BytesLike>,
+      id: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     isOperationDone(
-      id: PromiseOrValue<BytesLike>,
+      id: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     isOperationPending(
-      id: PromiseOrValue<BytesLike>,
+      id: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     isOperationReady(
-      id: PromiseOrValue<BytesLike>,
+      id: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     onERC1155BatchReceived(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
-      arg2: PromiseOrValue<BigNumberish>[],
-      arg3: PromiseOrValue<BigNumberish>[],
-      arg4: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      arg0: string,
+      arg1: string,
+      arg2: BigNumberish[],
+      arg3: BigNumberish[],
+      arg4: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     onERC1155Received(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
-      arg2: PromiseOrValue<BigNumberish>,
-      arg3: PromiseOrValue<BigNumberish>,
-      arg4: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      arg0: string,
+      arg1: string,
+      arg2: BigNumberish,
+      arg3: BigNumberish,
+      arg4: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     onERC721Received(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
-      arg2: PromiseOrValue<BigNumberish>,
-      arg3: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      arg0: string,
+      arg1: string,
+      arg2: BigNumberish,
+      arg3: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     renounceRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      role: BytesLike,
+      account: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     revokeRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      role: BytesLike,
+      account: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     schedule(
-      target: PromiseOrValue<string>,
-      value: PromiseOrValue<BigNumberish>,
-      data: PromiseOrValue<BytesLike>,
-      predecessor: PromiseOrValue<BytesLike>,
-      salt: PromiseOrValue<BytesLike>,
-      delay: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      target: string,
+      value: BigNumberish,
+      data: BytesLike,
+      predecessor: BytesLike,
+      salt: BytesLike,
+      delay: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     scheduleBatch(
-      targets: PromiseOrValue<string>[],
-      values: PromiseOrValue<BigNumberish>[],
-      payloads: PromiseOrValue<BytesLike>[],
-      predecessor: PromiseOrValue<BytesLike>,
-      salt: PromiseOrValue<BytesLike>,
-      delay: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      targets: string[],
+      values: BigNumberish[],
+      payloads: BytesLike[],
+      predecessor: BytesLike,
+      salt: BytesLike,
+      delay: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     supportsInterface(
-      interfaceId: PromiseOrValue<BytesLike>,
+      interfaceId: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     updateDelay(
-      newDelay: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newDelay: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

@@ -24,15 +24,14 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../common";
 
 export declare namespace DistributorMessage {
   export type InstantiateMsgStruct = {
-    timelockContract: PromiseOrValue<string>;
-    haloToken: PromiseOrValue<string>;
-    allowlist: PromiseOrValue<string>[];
-    spendLimit: PromiseOrValue<BigNumberish>;
+    timelockContract: string;
+    haloToken: string;
+    allowlist: string[];
+    spendLimit: BigNumberish;
   };
 
   export type InstantiateMsgStructOutput = [
@@ -48,10 +47,10 @@ export declare namespace DistributorMessage {
   };
 
   export type ConfigResponseStruct = {
-    timelockContract: PromiseOrValue<string>;
-    haloToken: PromiseOrValue<string>;
-    allowlist: PromiseOrValue<string>[];
-    spendLimit: PromiseOrValue<BigNumberish>;
+    timelockContract: string;
+    haloToken: string;
+    allowlist: string[];
+    spendLimit: BigNumberish;
   };
 
   export type ConfigResponseStructOutput = [
@@ -89,7 +88,7 @@ export interface DistributorInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "addDistributor",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "initialize",
@@ -101,15 +100,15 @@ export interface DistributorInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "removeDistributor",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "spend",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "updateConfig",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+    values: [BigNumberish, string]
   ): string;
 
   decodeFunctionResult(
@@ -219,13 +218,13 @@ export interface Distributor extends BaseContract {
 
   functions: {
     addDistributor(
-      distributor: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      distributor: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     initialize(
       details: DistributorMessage.InstantiateMsgStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     queryConfig(
@@ -233,31 +232,31 @@ export interface Distributor extends BaseContract {
     ): Promise<[DistributorMessage.ConfigResponseStructOutput]>;
 
     removeDistributor(
-      distributor: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      distributor: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     spend(
-      recipient: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      recipient: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     updateConfig(
-      spendLimit: PromiseOrValue<BigNumberish>,
-      timelockContract: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      spendLimit: BigNumberish,
+      timelockContract: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   addDistributor(
-    distributor: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    distributor: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   initialize(
     details: DistributorMessage.InstantiateMsgStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   queryConfig(
@@ -265,25 +264,25 @@ export interface Distributor extends BaseContract {
   ): Promise<DistributorMessage.ConfigResponseStructOutput>;
 
   removeDistributor(
-    distributor: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    distributor: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   spend(
-    recipient: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    recipient: string,
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   updateConfig(
-    spendLimit: PromiseOrValue<BigNumberish>,
-    timelockContract: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    spendLimit: BigNumberish,
+    timelockContract: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     addDistributor(
-      distributor: PromiseOrValue<string>,
+      distributor: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -297,19 +296,19 @@ export interface Distributor extends BaseContract {
     ): Promise<DistributorMessage.ConfigResponseStructOutput>;
 
     removeDistributor(
-      distributor: PromiseOrValue<string>,
+      distributor: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     spend(
-      recipient: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      recipient: string,
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     updateConfig(
-      spendLimit: PromiseOrValue<BigNumberish>,
-      timelockContract: PromiseOrValue<string>,
+      spendLimit: BigNumberish,
+      timelockContract: string,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -340,63 +339,63 @@ export interface Distributor extends BaseContract {
 
   estimateGas: {
     addDistributor(
-      distributor: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      distributor: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     initialize(
       details: DistributorMessage.InstantiateMsgStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     queryConfig(overrides?: CallOverrides): Promise<BigNumber>;
 
     removeDistributor(
-      distributor: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      distributor: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     spend(
-      recipient: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      recipient: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     updateConfig(
-      spendLimit: PromiseOrValue<BigNumberish>,
-      timelockContract: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      spendLimit: BigNumberish,
+      timelockContract: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     addDistributor(
-      distributor: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      distributor: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     initialize(
       details: DistributorMessage.InstantiateMsgStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     queryConfig(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     removeDistributor(
-      distributor: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      distributor: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     spend(
-      recipient: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      recipient: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     updateConfig(
-      spendLimit: PromiseOrValue<BigNumberish>,
-      timelockContract: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      spendLimit: BigNumberish,
+      timelockContract: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

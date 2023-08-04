@@ -27,8 +27,8 @@ export default function Config() {
 function FundConfigContext(props: IndexFundConfig) {
   const initial: IndexFundConfigUpdate = {
     fundRotation: props.fundRotation,
-    fundMemberLimit: props.fundMemberLimit,
     fundingGoal: props.fundingGoal,
+    registrarContract: props.registrarContract,
   };
   const methods = useForm<FormValues>({
     resolver: yupResolver(schema),

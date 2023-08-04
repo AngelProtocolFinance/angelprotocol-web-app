@@ -24,7 +24,6 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../common";
 
 export interface EndowmentMultiSigFactoryInterface extends utils.Interface {
@@ -57,29 +56,23 @@ export interface EndowmentMultiSigFactoryInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "create",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>[],
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [BigNumberish, string, string[], BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "endowmentIdToMultisig",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "getInstantiationCount",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "instantiations",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "isInstantiation",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
@@ -88,15 +81,15 @@ export interface EndowmentMultiSigFactoryInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "transferOwnership",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "updateImplementation",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "updateProxyAdmin",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
 
   decodeFunctionResult(functionFragment: "create", data: BytesLike): Result;
@@ -221,155 +214,149 @@ export interface EndowmentMultiSigFactory extends BaseContract {
 
   functions: {
     create(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      emitterAddress: PromiseOrValue<string>,
-      owners: PromiseOrValue<string>[],
-      required: PromiseOrValue<BigNumberish>,
-      transactionExpiry: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      endowmentId: BigNumberish,
+      emitterAddress: string,
+      owners: string[],
+      required: BigNumberish,
+      transactionExpiry: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     endowmentIdToMultisig(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[string]>;
 
     getInstantiationCount(
-      creator: PromiseOrValue<string>,
+      creator: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     instantiations(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<BigNumberish>,
+      arg0: string,
+      arg1: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[string]>;
 
     isInstantiation(
-      arg0: PromiseOrValue<string>,
+      arg0: string,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newOwner: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     updateImplementation(
-      implementationAddress: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      implementationAddress: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     updateProxyAdmin(
-      proxyAdmin: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      proxyAdmin: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   create(
-    endowmentId: PromiseOrValue<BigNumberish>,
-    emitterAddress: PromiseOrValue<string>,
-    owners: PromiseOrValue<string>[],
-    required: PromiseOrValue<BigNumberish>,
-    transactionExpiry: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    endowmentId: BigNumberish,
+    emitterAddress: string,
+    owners: string[],
+    required: BigNumberish,
+    transactionExpiry: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   endowmentIdToMultisig(
-    arg0: PromiseOrValue<BigNumberish>,
+    arg0: BigNumberish,
     overrides?: CallOverrides
   ): Promise<string>;
 
   getInstantiationCount(
-    creator: PromiseOrValue<string>,
+    creator: string,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   instantiations(
-    arg0: PromiseOrValue<string>,
-    arg1: PromiseOrValue<BigNumberish>,
+    arg0: string,
+    arg1: BigNumberish,
     overrides?: CallOverrides
   ): Promise<string>;
 
-  isInstantiation(
-    arg0: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
+  isInstantiation(arg0: string, overrides?: CallOverrides): Promise<boolean>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
   renounceOwnership(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    newOwner: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   updateImplementation(
-    implementationAddress: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    implementationAddress: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   updateProxyAdmin(
-    proxyAdmin: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    proxyAdmin: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     create(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      emitterAddress: PromiseOrValue<string>,
-      owners: PromiseOrValue<string>[],
-      required: PromiseOrValue<BigNumberish>,
-      transactionExpiry: PromiseOrValue<BigNumberish>,
+      endowmentId: BigNumberish,
+      emitterAddress: string,
+      owners: string[],
+      required: BigNumberish,
+      transactionExpiry: BigNumberish,
       overrides?: CallOverrides
     ): Promise<string>;
 
     endowmentIdToMultisig(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<string>;
 
     getInstantiationCount(
-      creator: PromiseOrValue<string>,
+      creator: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     instantiations(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<BigNumberish>,
+      arg0: string,
+      arg1: BigNumberish,
       overrides?: CallOverrides
     ): Promise<string>;
 
-    isInstantiation(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
+    isInstantiation(arg0: string, overrides?: CallOverrides): Promise<boolean>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     transferOwnership(
-      newOwner: PromiseOrValue<string>,
+      newOwner: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     updateImplementation(
-      implementationAddress: PromiseOrValue<string>,
+      implementationAddress: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     updateProxyAdmin(
-      proxyAdmin: PromiseOrValue<string>,
+      proxyAdmin: string,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -392,12 +379,12 @@ export interface EndowmentMultiSigFactory extends BaseContract {
     ): ImplementationUpdatedEventFilter;
 
     "OwnershipTransferred(address,address)"(
-      previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      previousOwner?: string | null,
+      newOwner?: string | null
     ): OwnershipTransferredEventFilter;
     OwnershipTransferred(
-      previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      previousOwner?: string | null,
+      newOwner?: string | null
     ): OwnershipTransferredEventFilter;
 
     "ProxyAdminUpdated(address)"(admin?: null): ProxyAdminUpdatedEventFilter;
@@ -406,107 +393,107 @@ export interface EndowmentMultiSigFactory extends BaseContract {
 
   estimateGas: {
     create(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      emitterAddress: PromiseOrValue<string>,
-      owners: PromiseOrValue<string>[],
-      required: PromiseOrValue<BigNumberish>,
-      transactionExpiry: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      endowmentId: BigNumberish,
+      emitterAddress: string,
+      owners: string[],
+      required: BigNumberish,
+      transactionExpiry: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     endowmentIdToMultisig(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getInstantiationCount(
-      creator: PromiseOrValue<string>,
+      creator: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     instantiations(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<BigNumberish>,
+      arg0: string,
+      arg1: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     isInstantiation(
-      arg0: PromiseOrValue<string>,
+      arg0: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newOwner: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     updateImplementation(
-      implementationAddress: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      implementationAddress: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     updateProxyAdmin(
-      proxyAdmin: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      proxyAdmin: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     create(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      emitterAddress: PromiseOrValue<string>,
-      owners: PromiseOrValue<string>[],
-      required: PromiseOrValue<BigNumberish>,
-      transactionExpiry: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      endowmentId: BigNumberish,
+      emitterAddress: string,
+      owners: string[],
+      required: BigNumberish,
+      transactionExpiry: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     endowmentIdToMultisig(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getInstantiationCount(
-      creator: PromiseOrValue<string>,
+      creator: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     instantiations(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<BigNumberish>,
+      arg0: string,
+      arg1: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     isInstantiation(
-      arg0: PromiseOrValue<string>,
+      arg0: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newOwner: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     updateImplementation(
-      implementationAddress: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      implementationAddress: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     updateProxyAdmin(
-      proxyAdmin: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      proxyAdmin: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

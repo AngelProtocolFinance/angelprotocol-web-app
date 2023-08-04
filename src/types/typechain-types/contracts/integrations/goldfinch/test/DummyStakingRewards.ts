@@ -24,17 +24,16 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../../common";
 
 export declare namespace StakingRewardsVesting {
   export type RewardsStruct = {
-    totalUnvested: PromiseOrValue<BigNumberish>;
-    totalVested: PromiseOrValue<BigNumberish>;
-    totalPreviouslyVested: PromiseOrValue<BigNumberish>;
-    totalClaimed: PromiseOrValue<BigNumberish>;
-    startTime: PromiseOrValue<BigNumberish>;
-    endTime: PromiseOrValue<BigNumberish>;
+    totalUnvested: BigNumberish;
+    totalVested: BigNumberish;
+    totalPreviouslyVested: BigNumberish;
+    totalClaimed: BigNumberish;
+    startTime: BigNumberish;
+    endTime: BigNumberish;
   };
 
   export type RewardsStructOutput = [
@@ -56,13 +55,13 @@ export declare namespace StakingRewardsVesting {
 
 export declare namespace IStakingRewards {
   export type StakedPositionStruct = {
-    amount: PromiseOrValue<BigNumberish>;
+    amount: BigNumberish;
     rewards: StakingRewardsVesting.RewardsStruct;
-    leverageMultiplier: PromiseOrValue<BigNumberish>;
-    lockedUntil: PromiseOrValue<BigNumberish>;
-    positionType: PromiseOrValue<BigNumberish>;
-    unsafeEffectiveMultiplier: PromiseOrValue<BigNumberish>;
-    unsafeBaseTokenExchangeRate: PromiseOrValue<BigNumberish>;
+    leverageMultiplier: BigNumberish;
+    lockedUntil: BigNumberish;
+    positionType: BigNumberish;
+    unsafeEffectiveMultiplier: BigNumberish;
+    unsafeBaseTokenExchangeRate: BigNumberish;
   };
 
   export type StakedPositionStructOutput = [
@@ -154,48 +153,38 @@ export interface DummyStakingRewardsInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "addToStake",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    values: [BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "approve",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "balanceByTokenId",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
-  encodeFunctionData(
-    functionFragment: "balanceOf",
-    values: [PromiseOrValue<string>]
-  ): string;
+  encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
   encodeFunctionData(
     functionFragment: "depositToveAndStakeFrom",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [string, BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "getApproved",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "getPosition",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "getReward",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "isApprovedForAll",
-    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+    values: [string, string]
   ): string;
-  encodeFunctionData(
-    functionFragment: "kick",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
+  encodeFunctionData(functionFragment: "kick", values: [BigNumberish]): string;
   encodeFunctionData(
     functionFragment: "lastUpdateTime",
     values?: undefined
@@ -203,73 +192,60 @@ export interface DummyStakingRewardsInterface extends utils.Interface {
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "ownerOf",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "rewardsByTokenId",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "safeTransferFrom(address,address,uint256)",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [string, string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "safeTransferFrom(address,address,uint256,bytes)",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>
-    ]
+    values: [string, string, BigNumberish, BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "setApprovalForAll",
-    values: [PromiseOrValue<string>, PromiseOrValue<boolean>]
+    values: [string, boolean]
   ): string;
   encodeFunctionData(
     functionFragment: "setBalanceByToken",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    values: [BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "setCounter",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "setRewardByToken",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    values: [BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "stake",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    values: [BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "stakedBalanceOf",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "supportsInterface",
-    values: [PromiseOrValue<BytesLike>]
+    values: [BytesLike]
   ): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "tokenURI",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "transferFrom",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [string, string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "unstake",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    values: [BigNumberish, BigNumberish]
   ): string;
 
   decodeFunctionResult(
@@ -426,58 +402,55 @@ export interface DummyStakingRewards extends BaseContract {
     accumulatedRewardsPerToken(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     addToStake(
-      tokenId: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      tokenId: BigNumberish,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     approve(
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      to: string,
+      tokenId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     balanceByTokenId(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
-    balanceOf(
-      owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    balanceOf(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     depositToveAndStakeFrom(
-      nftRecipient: PromiseOrValue<string>,
-      fiduAmount: PromiseOrValue<BigNumberish>,
-      usdcAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      nftRecipient: string,
+      fiduAmount: BigNumberish,
+      usdcAmount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     getApproved(
-      tokenId: PromiseOrValue<BigNumberish>,
+      tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[string]>;
 
     getPosition(
-      tokenId: PromiseOrValue<BigNumberish>,
+      tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[IStakingRewards.StakedPositionStructOutput]>;
 
     getReward(
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      tokenId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     isApprovedForAll(
-      owner: PromiseOrValue<string>,
-      operator: PromiseOrValue<string>,
+      owner: string,
+      operator: string,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
     kick(
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      tokenId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     lastUpdateTime(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -485,414 +458,387 @@ export interface DummyStakingRewards extends BaseContract {
     name(overrides?: CallOverrides): Promise<[string]>;
 
     ownerOf(
-      tokenId: PromiseOrValue<BigNumberish>,
+      tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[string]>;
 
     rewardsByTokenId(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     "safeTransferFrom(address,address,uint256)"(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      from: string,
+      to: string,
+      tokenId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     "safeTransferFrom(address,address,uint256,bytes)"(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      data: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      from: string,
+      to: string,
+      tokenId: BigNumberish,
+      data: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     setApprovalForAll(
-      operator: PromiseOrValue<string>,
-      approved: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      operator: string,
+      approved: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     setBalanceByToken(
-      tokenId: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      tokenId: BigNumberish,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     setCounter(
-      num: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      num: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     setRewardByToken(
-      tokenId: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      tokenId: BigNumberish,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     stake(
-      amount: PromiseOrValue<BigNumberish>,
-      arg1: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      arg1: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     stakedBalanceOf(
-      tokenId: PromiseOrValue<BigNumberish>,
+      tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     supportsInterface(
-      interfaceId: PromiseOrValue<BytesLike>,
+      interfaceId: BytesLike,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
     tokenURI(
-      tokenId: PromiseOrValue<BigNumberish>,
+      tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[string]>;
 
     transferFrom(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      from: string,
+      to: string,
+      tokenId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     unstake(
-      tokenId: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      tokenId: BigNumberish,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   accumulatedRewardsPerToken(overrides?: CallOverrides): Promise<BigNumber>;
 
   addToStake(
-    tokenId: PromiseOrValue<BigNumberish>,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    tokenId: BigNumberish,
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   approve(
-    to: PromiseOrValue<string>,
-    tokenId: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    to: string,
+    tokenId: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   balanceByTokenId(
-    arg0: PromiseOrValue<BigNumberish>,
+    arg0: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  balanceOf(
-    owner: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
   depositToveAndStakeFrom(
-    nftRecipient: PromiseOrValue<string>,
-    fiduAmount: PromiseOrValue<BigNumberish>,
-    usdcAmount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    nftRecipient: string,
+    fiduAmount: BigNumberish,
+    usdcAmount: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   getApproved(
-    tokenId: PromiseOrValue<BigNumberish>,
+    tokenId: BigNumberish,
     overrides?: CallOverrides
   ): Promise<string>;
 
   getPosition(
-    tokenId: PromiseOrValue<BigNumberish>,
+    tokenId: BigNumberish,
     overrides?: CallOverrides
   ): Promise<IStakingRewards.StakedPositionStructOutput>;
 
   getReward(
-    tokenId: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    tokenId: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   isApprovedForAll(
-    owner: PromiseOrValue<string>,
-    operator: PromiseOrValue<string>,
+    owner: string,
+    operator: string,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
   kick(
-    tokenId: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    tokenId: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   lastUpdateTime(overrides?: CallOverrides): Promise<BigNumber>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
-  ownerOf(
-    tokenId: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<string>;
+  ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
   rewardsByTokenId(
-    arg0: PromiseOrValue<BigNumberish>,
+    arg0: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   "safeTransferFrom(address,address,uint256)"(
-    from: PromiseOrValue<string>,
-    to: PromiseOrValue<string>,
-    tokenId: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    from: string,
+    to: string,
+    tokenId: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   "safeTransferFrom(address,address,uint256,bytes)"(
-    from: PromiseOrValue<string>,
-    to: PromiseOrValue<string>,
-    tokenId: PromiseOrValue<BigNumberish>,
-    data: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    from: string,
+    to: string,
+    tokenId: BigNumberish,
+    data: BytesLike,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   setApprovalForAll(
-    operator: PromiseOrValue<string>,
-    approved: PromiseOrValue<boolean>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    operator: string,
+    approved: boolean,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   setBalanceByToken(
-    tokenId: PromiseOrValue<BigNumberish>,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    tokenId: BigNumberish,
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   setCounter(
-    num: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    num: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   setRewardByToken(
-    tokenId: PromiseOrValue<BigNumberish>,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    tokenId: BigNumberish,
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   stake(
-    amount: PromiseOrValue<BigNumberish>,
-    arg1: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    amount: BigNumberish,
+    arg1: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   stakedBalanceOf(
-    tokenId: PromiseOrValue<BigNumberish>,
+    tokenId: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   supportsInterface(
-    interfaceId: PromiseOrValue<BytesLike>,
+    interfaceId: BytesLike,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
-  tokenURI(
-    tokenId: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<string>;
+  tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
   transferFrom(
-    from: PromiseOrValue<string>,
-    to: PromiseOrValue<string>,
-    tokenId: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    from: string,
+    to: string,
+    tokenId: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   unstake(
-    tokenId: PromiseOrValue<BigNumberish>,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    tokenId: BigNumberish,
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     accumulatedRewardsPerToken(overrides?: CallOverrides): Promise<BigNumber>;
 
     addToStake(
-      tokenId: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
+      tokenId: BigNumberish,
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     approve(
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
+      to: string,
+      tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     balanceByTokenId(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    balanceOf(
-      owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     depositToveAndStakeFrom(
-      nftRecipient: PromiseOrValue<string>,
-      fiduAmount: PromiseOrValue<BigNumberish>,
-      usdcAmount: PromiseOrValue<BigNumberish>,
+      nftRecipient: string,
+      fiduAmount: BigNumberish,
+      usdcAmount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     getApproved(
-      tokenId: PromiseOrValue<BigNumberish>,
+      tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<string>;
 
     getPosition(
-      tokenId: PromiseOrValue<BigNumberish>,
+      tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<IStakingRewards.StakedPositionStructOutput>;
 
-    getReward(
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    getReward(tokenId: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
     isApprovedForAll(
-      owner: PromiseOrValue<string>,
-      operator: PromiseOrValue<string>,
+      owner: string,
+      operator: string,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    kick(
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    kick(tokenId: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
     lastUpdateTime(overrides?: CallOverrides): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
-    ownerOf(
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<string>;
+    ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
     rewardsByTokenId(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     "safeTransferFrom(address,address,uint256)"(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
+      from: string,
+      to: string,
+      tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     "safeTransferFrom(address,address,uint256,bytes)"(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      data: PromiseOrValue<BytesLike>,
+      from: string,
+      to: string,
+      tokenId: BigNumberish,
+      data: BytesLike,
       overrides?: CallOverrides
     ): Promise<void>;
 
     setApprovalForAll(
-      operator: PromiseOrValue<string>,
-      approved: PromiseOrValue<boolean>,
+      operator: string,
+      approved: boolean,
       overrides?: CallOverrides
     ): Promise<void>;
 
     setBalanceByToken(
-      tokenId: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
+      tokenId: BigNumberish,
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    setCounter(
-      num: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    setCounter(num: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
     setRewardByToken(
-      tokenId: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
+      tokenId: BigNumberish,
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     stake(
-      amount: PromiseOrValue<BigNumberish>,
-      arg1: PromiseOrValue<BigNumberish>,
+      amount: BigNumberish,
+      arg1: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     stakedBalanceOf(
-      tokenId: PromiseOrValue<BigNumberish>,
+      tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     supportsInterface(
-      interfaceId: PromiseOrValue<BytesLike>,
+      interfaceId: BytesLike,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
-    tokenURI(
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<string>;
+    tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
     transferFrom(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
+      from: string,
+      to: string,
+      tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     unstake(
-      tokenId: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
+      tokenId: BigNumberish,
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
   };
 
   filters: {
     "Approval(address,address,uint256)"(
-      owner?: PromiseOrValue<string> | null,
-      approved?: PromiseOrValue<string> | null,
-      tokenId?: PromiseOrValue<BigNumberish> | null
+      owner?: string | null,
+      approved?: string | null,
+      tokenId?: BigNumberish | null
     ): ApprovalEventFilter;
     Approval(
-      owner?: PromiseOrValue<string> | null,
-      approved?: PromiseOrValue<string> | null,
-      tokenId?: PromiseOrValue<BigNumberish> | null
+      owner?: string | null,
+      approved?: string | null,
+      tokenId?: BigNumberish | null
     ): ApprovalEventFilter;
 
     "ApprovalForAll(address,address,bool)"(
-      owner?: PromiseOrValue<string> | null,
-      operator?: PromiseOrValue<string> | null,
+      owner?: string | null,
+      operator?: string | null,
       approved?: null
     ): ApprovalForAllEventFilter;
     ApprovalForAll(
-      owner?: PromiseOrValue<string> | null,
-      operator?: PromiseOrValue<string> | null,
+      owner?: string | null,
+      operator?: string | null,
       approved?: null
     ): ApprovalForAllEventFilter;
 
     "Transfer(address,address,uint256)"(
-      from?: PromiseOrValue<string> | null,
-      to?: PromiseOrValue<string> | null,
-      tokenId?: PromiseOrValue<BigNumberish> | null
+      from?: string | null,
+      to?: string | null,
+      tokenId?: BigNumberish | null
     ): TransferEventFilter;
     Transfer(
-      from?: PromiseOrValue<string> | null,
-      to?: PromiseOrValue<string> | null,
-      tokenId?: PromiseOrValue<BigNumberish> | null
+      from?: string | null,
+      to?: string | null,
+      tokenId?: BigNumberish | null
     ): TransferEventFilter;
   };
 
@@ -900,58 +846,55 @@ export interface DummyStakingRewards extends BaseContract {
     accumulatedRewardsPerToken(overrides?: CallOverrides): Promise<BigNumber>;
 
     addToStake(
-      tokenId: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      tokenId: BigNumberish,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     approve(
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      to: string,
+      tokenId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     balanceByTokenId(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    balanceOf(
-      owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     depositToveAndStakeFrom(
-      nftRecipient: PromiseOrValue<string>,
-      fiduAmount: PromiseOrValue<BigNumberish>,
-      usdcAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      nftRecipient: string,
+      fiduAmount: BigNumberish,
+      usdcAmount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     getApproved(
-      tokenId: PromiseOrValue<BigNumberish>,
+      tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getPosition(
-      tokenId: PromiseOrValue<BigNumberish>,
+      tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getReward(
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      tokenId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     isApprovedForAll(
-      owner: PromiseOrValue<string>,
-      operator: PromiseOrValue<string>,
+      owner: string,
+      operator: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     kick(
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      tokenId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     lastUpdateTime(overrides?: CallOverrides): Promise<BigNumber>;
@@ -959,87 +902,87 @@ export interface DummyStakingRewards extends BaseContract {
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
     ownerOf(
-      tokenId: PromiseOrValue<BigNumberish>,
+      tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     rewardsByTokenId(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     "safeTransferFrom(address,address,uint256)"(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      from: string,
+      to: string,
+      tokenId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     "safeTransferFrom(address,address,uint256,bytes)"(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      data: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      from: string,
+      to: string,
+      tokenId: BigNumberish,
+      data: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     setApprovalForAll(
-      operator: PromiseOrValue<string>,
-      approved: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      operator: string,
+      approved: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     setBalanceByToken(
-      tokenId: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      tokenId: BigNumberish,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     setCounter(
-      num: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      num: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     setRewardByToken(
-      tokenId: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      tokenId: BigNumberish,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     stake(
-      amount: PromiseOrValue<BigNumberish>,
-      arg1: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      arg1: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     stakedBalanceOf(
-      tokenId: PromiseOrValue<BigNumberish>,
+      tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     supportsInterface(
-      interfaceId: PromiseOrValue<BytesLike>,
+      interfaceId: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
     tokenURI(
-      tokenId: PromiseOrValue<BigNumberish>,
+      tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     transferFrom(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      from: string,
+      to: string,
+      tokenId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     unstake(
-      tokenId: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      tokenId: BigNumberish,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
@@ -1049,58 +992,58 @@ export interface DummyStakingRewards extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     addToStake(
-      tokenId: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      tokenId: BigNumberish,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     approve(
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      to: string,
+      tokenId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     balanceByTokenId(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     balanceOf(
-      owner: PromiseOrValue<string>,
+      owner: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     depositToveAndStakeFrom(
-      nftRecipient: PromiseOrValue<string>,
-      fiduAmount: PromiseOrValue<BigNumberish>,
-      usdcAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      nftRecipient: string,
+      fiduAmount: BigNumberish,
+      usdcAmount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     getApproved(
-      tokenId: PromiseOrValue<BigNumberish>,
+      tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getPosition(
-      tokenId: PromiseOrValue<BigNumberish>,
+      tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getReward(
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      tokenId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     isApprovedForAll(
-      owner: PromiseOrValue<string>,
-      operator: PromiseOrValue<string>,
+      owner: string,
+      operator: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     kick(
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      tokenId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     lastUpdateTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1108,87 +1051,87 @@ export interface DummyStakingRewards extends BaseContract {
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     ownerOf(
-      tokenId: PromiseOrValue<BigNumberish>,
+      tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     rewardsByTokenId(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     "safeTransferFrom(address,address,uint256)"(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      from: string,
+      to: string,
+      tokenId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     "safeTransferFrom(address,address,uint256,bytes)"(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      data: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      from: string,
+      to: string,
+      tokenId: BigNumberish,
+      data: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     setApprovalForAll(
-      operator: PromiseOrValue<string>,
-      approved: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      operator: string,
+      approved: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     setBalanceByToken(
-      tokenId: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      tokenId: BigNumberish,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     setCounter(
-      num: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      num: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     setRewardByToken(
-      tokenId: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      tokenId: BigNumberish,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     stake(
-      amount: PromiseOrValue<BigNumberish>,
-      arg1: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      arg1: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     stakedBalanceOf(
-      tokenId: PromiseOrValue<BigNumberish>,
+      tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     supportsInterface(
-      interfaceId: PromiseOrValue<BytesLike>,
+      interfaceId: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     tokenURI(
-      tokenId: PromiseOrValue<BigNumberish>,
+      tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      from: string,
+      to: string,
+      tokenId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     unstake(
-      tokenId: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      tokenId: BigNumberish,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

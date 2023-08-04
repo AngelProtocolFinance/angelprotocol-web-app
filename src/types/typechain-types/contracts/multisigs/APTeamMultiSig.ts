@@ -24,7 +24,6 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../common";
 
 export interface APTeamMultiSigInterface extends utils.Interface {
@@ -89,74 +88,63 @@ export interface APTeamMultiSigInterface extends utils.Interface {
     functionFragment: "activeOwnersCount",
     values?: undefined
   ): string;
-  encodeFunctionData(
-    functionFragment: "addOwners",
-    values: [PromiseOrValue<string>[]]
-  ): string;
+  encodeFunctionData(functionFragment: "addOwners", values: [string[]]): string;
   encodeFunctionData(
     functionFragment: "approvalsRequired",
     values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "changeApprovalsRequirement",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "changeRequireExecution",
-    values: [PromiseOrValue<boolean>]
+    values: [boolean]
   ): string;
   encodeFunctionData(
     functionFragment: "changeTransactionExpiry",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "confirmTransaction",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "confirmations",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "executeTransaction",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "getConfirmationCount",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "getConfirmationStatus",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+    values: [BigNumberish, string]
   ): string;
   encodeFunctionData(
     functionFragment: "getOwnerStatus",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "initializeAPTeam",
-    values: [
-      PromiseOrValue<string>[],
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<boolean>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [string[], BigNumberish, boolean, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "isConfirmed",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
-  encodeFunctionData(
-    functionFragment: "isOwner",
-    values: [PromiseOrValue<string>]
-  ): string;
+  encodeFunctionData(functionFragment: "isOwner", values: [string]): string;
   encodeFunctionData(
     functionFragment: "removeOwners",
-    values: [PromiseOrValue<string>[]]
+    values: [string[]]
   ): string;
   encodeFunctionData(
     functionFragment: "replaceOwner",
-    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+    values: [string, string]
   ): string;
   encodeFunctionData(
     functionFragment: "requireExecution",
@@ -164,24 +152,19 @@ export interface APTeamMultiSigInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "revokeConfirmation",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "revokeConfirmationOfFormerOwner",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+    values: [BigNumberish, string]
   ): string;
   encodeFunctionData(
     functionFragment: "submitTransaction",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>
-    ]
+    values: [string, BigNumberish, BytesLike, BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "supportsInterface",
-    values: [PromiseOrValue<BytesLike>]
+    values: [BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "transactionCount",
@@ -193,7 +176,7 @@ export interface APTeamMultiSigInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "transactions",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
 
   decodeFunctionResult(
@@ -495,110 +478,107 @@ export interface APTeamMultiSig extends BaseContract {
     activeOwnersCount(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     addOwners(
-      owners: PromiseOrValue<string>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      owners: string[],
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     approvalsRequired(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     changeApprovalsRequirement(
-      _approvalsRequired: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _approvalsRequired: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     changeRequireExecution(
-      _requireExecution: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _requireExecution: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     changeTransactionExpiry(
-      _transactionExpiry: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _transactionExpiry: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     confirmTransaction(
-      transactionId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      transactionId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     confirmations(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber] & { count: BigNumber }>;
 
     executeTransaction(
-      transactionId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      transactionId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     getConfirmationCount(
-      transactionId: PromiseOrValue<BigNumberish>,
+      transactionId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     getConfirmationStatus(
-      transactionId: PromiseOrValue<BigNumberish>,
-      ownerAddr: PromiseOrValue<string>,
+      transactionId: BigNumberish,
+      ownerAddr: string,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
     getOwnerStatus(
-      ownerAddr: PromiseOrValue<string>,
+      ownerAddr: string,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
     initializeAPTeam(
-      owners: PromiseOrValue<string>[],
-      _approvalsRequired: PromiseOrValue<BigNumberish>,
-      _requireExecution: PromiseOrValue<boolean>,
-      _transactionExpiry: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      owners: string[],
+      _approvalsRequired: BigNumberish,
+      _requireExecution: boolean,
+      _transactionExpiry: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     isConfirmed(
-      transactionId: PromiseOrValue<BigNumberish>,
+      transactionId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
-    isOwner(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    isOwner(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
 
     removeOwners(
-      owners: PromiseOrValue<string>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      owners: string[],
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     replaceOwner(
-      currOwner: PromiseOrValue<string>,
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      currOwner: string,
+      newOwner: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     requireExecution(overrides?: CallOverrides): Promise<[boolean]>;
 
     revokeConfirmation(
-      transactionId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      transactionId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     revokeConfirmationOfFormerOwner(
-      transactionId: PromiseOrValue<BigNumberish>,
-      formerOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      transactionId: BigNumberish,
+      formerOwner: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     submitTransaction(
-      destination: PromiseOrValue<string>,
-      value: PromiseOrValue<BigNumberish>,
-      data: PromiseOrValue<BytesLike>,
-      metadata: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      destination: string,
+      value: BigNumberish,
+      data: BytesLike,
+      metadata: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     supportsInterface(
-      interfaceId: PromiseOrValue<BytesLike>,
+      interfaceId: BytesLike,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
@@ -607,7 +587,7 @@ export interface APTeamMultiSig extends BaseContract {
     transactionExpiry(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transactions(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<
       [string, BigNumber, string, boolean, BigNumber, string] & {
@@ -624,110 +604,107 @@ export interface APTeamMultiSig extends BaseContract {
   activeOwnersCount(overrides?: CallOverrides): Promise<BigNumber>;
 
   addOwners(
-    owners: PromiseOrValue<string>[],
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    owners: string[],
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   approvalsRequired(overrides?: CallOverrides): Promise<BigNumber>;
 
   changeApprovalsRequirement(
-    _approvalsRequired: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _approvalsRequired: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   changeRequireExecution(
-    _requireExecution: PromiseOrValue<boolean>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _requireExecution: boolean,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   changeTransactionExpiry(
-    _transactionExpiry: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _transactionExpiry: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   confirmTransaction(
-    transactionId: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    transactionId: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   confirmations(
-    arg0: PromiseOrValue<BigNumberish>,
+    arg0: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   executeTransaction(
-    transactionId: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    transactionId: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   getConfirmationCount(
-    transactionId: PromiseOrValue<BigNumberish>,
+    transactionId: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   getConfirmationStatus(
-    transactionId: PromiseOrValue<BigNumberish>,
-    ownerAddr: PromiseOrValue<string>,
+    transactionId: BigNumberish,
+    ownerAddr: string,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
   getOwnerStatus(
-    ownerAddr: PromiseOrValue<string>,
+    ownerAddr: string,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
   initializeAPTeam(
-    owners: PromiseOrValue<string>[],
-    _approvalsRequired: PromiseOrValue<BigNumberish>,
-    _requireExecution: PromiseOrValue<boolean>,
-    _transactionExpiry: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    owners: string[],
+    _approvalsRequired: BigNumberish,
+    _requireExecution: boolean,
+    _transactionExpiry: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   isConfirmed(
-    transactionId: PromiseOrValue<BigNumberish>,
+    transactionId: BigNumberish,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
-  isOwner(
-    arg0: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
+  isOwner(arg0: string, overrides?: CallOverrides): Promise<boolean>;
 
   removeOwners(
-    owners: PromiseOrValue<string>[],
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    owners: string[],
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   replaceOwner(
-    currOwner: PromiseOrValue<string>,
-    newOwner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    currOwner: string,
+    newOwner: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   requireExecution(overrides?: CallOverrides): Promise<boolean>;
 
   revokeConfirmation(
-    transactionId: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    transactionId: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   revokeConfirmationOfFormerOwner(
-    transactionId: PromiseOrValue<BigNumberish>,
-    formerOwner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    transactionId: BigNumberish,
+    formerOwner: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   submitTransaction(
-    destination: PromiseOrValue<string>,
-    value: PromiseOrValue<BigNumberish>,
-    data: PromiseOrValue<BytesLike>,
-    metadata: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    destination: string,
+    value: BigNumberish,
+    data: BytesLike,
+    metadata: BytesLike,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   supportsInterface(
-    interfaceId: PromiseOrValue<BytesLike>,
+    interfaceId: BytesLike,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
@@ -736,7 +713,7 @@ export interface APTeamMultiSig extends BaseContract {
   transactionExpiry(overrides?: CallOverrides): Promise<BigNumber>;
 
   transactions(
-    arg0: PromiseOrValue<BigNumberish>,
+    arg0: BigNumberish,
     overrides?: CallOverrides
   ): Promise<
     [string, BigNumber, string, boolean, BigNumber, string] & {
@@ -752,111 +729,102 @@ export interface APTeamMultiSig extends BaseContract {
   callStatic: {
     activeOwnersCount(overrides?: CallOverrides): Promise<BigNumber>;
 
-    addOwners(
-      owners: PromiseOrValue<string>[],
-      overrides?: CallOverrides
-    ): Promise<void>;
+    addOwners(owners: string[], overrides?: CallOverrides): Promise<void>;
 
     approvalsRequired(overrides?: CallOverrides): Promise<BigNumber>;
 
     changeApprovalsRequirement(
-      _approvalsRequired: PromiseOrValue<BigNumberish>,
+      _approvalsRequired: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     changeRequireExecution(
-      _requireExecution: PromiseOrValue<boolean>,
+      _requireExecution: boolean,
       overrides?: CallOverrides
     ): Promise<void>;
 
     changeTransactionExpiry(
-      _transactionExpiry: PromiseOrValue<BigNumberish>,
+      _transactionExpiry: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     confirmTransaction(
-      transactionId: PromiseOrValue<BigNumberish>,
+      transactionId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     confirmations(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     executeTransaction(
-      transactionId: PromiseOrValue<BigNumberish>,
+      transactionId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     getConfirmationCount(
-      transactionId: PromiseOrValue<BigNumberish>,
+      transactionId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getConfirmationStatus(
-      transactionId: PromiseOrValue<BigNumberish>,
-      ownerAddr: PromiseOrValue<string>,
+      transactionId: BigNumberish,
+      ownerAddr: string,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     getOwnerStatus(
-      ownerAddr: PromiseOrValue<string>,
+      ownerAddr: string,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     initializeAPTeam(
-      owners: PromiseOrValue<string>[],
-      _approvalsRequired: PromiseOrValue<BigNumberish>,
-      _requireExecution: PromiseOrValue<boolean>,
-      _transactionExpiry: PromiseOrValue<BigNumberish>,
+      owners: string[],
+      _approvalsRequired: BigNumberish,
+      _requireExecution: boolean,
+      _transactionExpiry: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     isConfirmed(
-      transactionId: PromiseOrValue<BigNumberish>,
+      transactionId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    isOwner(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
+    isOwner(arg0: string, overrides?: CallOverrides): Promise<boolean>;
 
-    removeOwners(
-      owners: PromiseOrValue<string>[],
-      overrides?: CallOverrides
-    ): Promise<void>;
+    removeOwners(owners: string[], overrides?: CallOverrides): Promise<void>;
 
     replaceOwner(
-      currOwner: PromiseOrValue<string>,
-      newOwner: PromiseOrValue<string>,
+      currOwner: string,
+      newOwner: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     requireExecution(overrides?: CallOverrides): Promise<boolean>;
 
     revokeConfirmation(
-      transactionId: PromiseOrValue<BigNumberish>,
+      transactionId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     revokeConfirmationOfFormerOwner(
-      transactionId: PromiseOrValue<BigNumberish>,
-      formerOwner: PromiseOrValue<string>,
+      transactionId: BigNumberish,
+      formerOwner: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     submitTransaction(
-      destination: PromiseOrValue<string>,
-      value: PromiseOrValue<BigNumberish>,
-      data: PromiseOrValue<BytesLike>,
-      metadata: PromiseOrValue<BytesLike>,
+      destination: string,
+      value: BigNumberish,
+      data: BytesLike,
+      metadata: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     supportsInterface(
-      interfaceId: PromiseOrValue<BytesLike>,
+      interfaceId: BytesLike,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
@@ -865,7 +833,7 @@ export interface APTeamMultiSig extends BaseContract {
     transactionExpiry(overrides?: CallOverrides): Promise<BigNumber>;
 
     transactions(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<
       [string, BigNumber, string, boolean, BigNumber, string] & {
@@ -997,110 +965,107 @@ export interface APTeamMultiSig extends BaseContract {
     activeOwnersCount(overrides?: CallOverrides): Promise<BigNumber>;
 
     addOwners(
-      owners: PromiseOrValue<string>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      owners: string[],
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     approvalsRequired(overrides?: CallOverrides): Promise<BigNumber>;
 
     changeApprovalsRequirement(
-      _approvalsRequired: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _approvalsRequired: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     changeRequireExecution(
-      _requireExecution: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _requireExecution: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     changeTransactionExpiry(
-      _transactionExpiry: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _transactionExpiry: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     confirmTransaction(
-      transactionId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      transactionId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     confirmations(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     executeTransaction(
-      transactionId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      transactionId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     getConfirmationCount(
-      transactionId: PromiseOrValue<BigNumberish>,
+      transactionId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getConfirmationStatus(
-      transactionId: PromiseOrValue<BigNumberish>,
-      ownerAddr: PromiseOrValue<string>,
+      transactionId: BigNumberish,
+      ownerAddr: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getOwnerStatus(
-      ownerAddr: PromiseOrValue<string>,
+      ownerAddr: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     initializeAPTeam(
-      owners: PromiseOrValue<string>[],
-      _approvalsRequired: PromiseOrValue<BigNumberish>,
-      _requireExecution: PromiseOrValue<boolean>,
-      _transactionExpiry: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      owners: string[],
+      _approvalsRequired: BigNumberish,
+      _requireExecution: boolean,
+      _transactionExpiry: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     isConfirmed(
-      transactionId: PromiseOrValue<BigNumberish>,
+      transactionId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    isOwner(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    isOwner(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     removeOwners(
-      owners: PromiseOrValue<string>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      owners: string[],
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     replaceOwner(
-      currOwner: PromiseOrValue<string>,
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      currOwner: string,
+      newOwner: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     requireExecution(overrides?: CallOverrides): Promise<BigNumber>;
 
     revokeConfirmation(
-      transactionId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      transactionId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     revokeConfirmationOfFormerOwner(
-      transactionId: PromiseOrValue<BigNumberish>,
-      formerOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      transactionId: BigNumberish,
+      formerOwner: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     submitTransaction(
-      destination: PromiseOrValue<string>,
-      value: PromiseOrValue<BigNumberish>,
-      data: PromiseOrValue<BytesLike>,
-      metadata: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      destination: string,
+      value: BigNumberish,
+      data: BytesLike,
+      metadata: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     supportsInterface(
-      interfaceId: PromiseOrValue<BytesLike>,
+      interfaceId: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -1109,7 +1074,7 @@ export interface APTeamMultiSig extends BaseContract {
     transactionExpiry(overrides?: CallOverrides): Promise<BigNumber>;
 
     transactions(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
   };
@@ -1118,110 +1083,110 @@ export interface APTeamMultiSig extends BaseContract {
     activeOwnersCount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     addOwners(
-      owners: PromiseOrValue<string>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      owners: string[],
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     approvalsRequired(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     changeApprovalsRequirement(
-      _approvalsRequired: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _approvalsRequired: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     changeRequireExecution(
-      _requireExecution: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _requireExecution: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     changeTransactionExpiry(
-      _transactionExpiry: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _transactionExpiry: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     confirmTransaction(
-      transactionId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      transactionId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     confirmations(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     executeTransaction(
-      transactionId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      transactionId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     getConfirmationCount(
-      transactionId: PromiseOrValue<BigNumberish>,
+      transactionId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getConfirmationStatus(
-      transactionId: PromiseOrValue<BigNumberish>,
-      ownerAddr: PromiseOrValue<string>,
+      transactionId: BigNumberish,
+      ownerAddr: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getOwnerStatus(
-      ownerAddr: PromiseOrValue<string>,
+      ownerAddr: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     initializeAPTeam(
-      owners: PromiseOrValue<string>[],
-      _approvalsRequired: PromiseOrValue<BigNumberish>,
-      _requireExecution: PromiseOrValue<boolean>,
-      _transactionExpiry: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      owners: string[],
+      _approvalsRequired: BigNumberish,
+      _requireExecution: boolean,
+      _transactionExpiry: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     isConfirmed(
-      transactionId: PromiseOrValue<BigNumberish>,
+      transactionId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     isOwner(
-      arg0: PromiseOrValue<string>,
+      arg0: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     removeOwners(
-      owners: PromiseOrValue<string>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      owners: string[],
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     replaceOwner(
-      currOwner: PromiseOrValue<string>,
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      currOwner: string,
+      newOwner: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     requireExecution(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     revokeConfirmation(
-      transactionId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      transactionId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     revokeConfirmationOfFormerOwner(
-      transactionId: PromiseOrValue<BigNumberish>,
-      formerOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      transactionId: BigNumberish,
+      formerOwner: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     submitTransaction(
-      destination: PromiseOrValue<string>,
-      value: PromiseOrValue<BigNumberish>,
-      data: PromiseOrValue<BytesLike>,
-      metadata: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      destination: string,
+      value: BigNumberish,
+      data: BytesLike,
+      metadata: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     supportsInterface(
-      interfaceId: PromiseOrValue<BytesLike>,
+      interfaceId: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -1230,7 +1195,7 @@ export interface APTeamMultiSig extends BaseContract {
     transactionExpiry(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transactions(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };

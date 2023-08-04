@@ -24,19 +24,18 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../../common";
 
 export declare namespace IVault {
   export type VaultActionDataStruct = {
-    destinationChain: PromiseOrValue<string>;
-    strategyId: PromiseOrValue<BytesLike>;
-    selector: PromiseOrValue<BytesLike>;
-    accountIds: PromiseOrValue<BigNumberish>[];
-    token: PromiseOrValue<string>;
-    lockAmt: PromiseOrValue<BigNumberish>;
-    liqAmt: PromiseOrValue<BigNumberish>;
-    status: PromiseOrValue<BigNumberish>;
+    destinationChain: string;
+    strategyId: BytesLike;
+    selector: BytesLike;
+    accountIds: BigNumberish[];
+    token: string;
+    lockAmt: BigNumberish;
+    liqAmt: BigNumberish;
+    status: BigNumberish;
   };
 
   export type VaultActionDataStructOutput = [
@@ -62,11 +61,11 @@ export declare namespace IVault {
 
 export declare namespace AccountMessages {
   export type InvestRequestStruct = {
-    strategy: PromiseOrValue<BytesLike>;
-    token: PromiseOrValue<string>;
-    lockAmt: PromiseOrValue<BigNumberish>;
-    liquidAmt: PromiseOrValue<BigNumberish>;
-    gasFee: PromiseOrValue<BigNumberish>;
+    strategy: BytesLike;
+    token: string;
+    lockAmt: BigNumberish;
+    liquidAmt: BigNumberish;
+    gasFee: BigNumberish;
   };
 
   export type InvestRequestStructOutput = [
@@ -84,11 +83,11 @@ export declare namespace AccountMessages {
   };
 
   export type RedeemRequestStruct = {
-    strategy: PromiseOrValue<BytesLike>;
-    token: PromiseOrValue<string>;
-    lockAmt: PromiseOrValue<BigNumberish>;
-    liquidAmt: PromiseOrValue<BigNumberish>;
-    gasFee: PromiseOrValue<BigNumberish>;
+    strategy: BytesLike;
+    token: string;
+    lockAmt: BigNumberish;
+    liquidAmt: BigNumberish;
+    gasFee: BigNumberish;
   };
 
   export type RedeemRequestStructOutput = [
@@ -106,11 +105,11 @@ export declare namespace AccountMessages {
   };
 
   export type RedeemAllRequestStruct = {
-    strategy: PromiseOrValue<BytesLike>;
-    token: PromiseOrValue<string>;
-    redeemLocked: PromiseOrValue<boolean>;
-    redeemLiquid: PromiseOrValue<boolean>;
-    gasFee: PromiseOrValue<BigNumberish>;
+    strategy: BytesLike;
+    token: string;
+    redeemLocked: boolean;
+    redeemLiquid: boolean;
+    gasFee: BigNumberish;
   };
 
   export type RedeemAllRequestStructOutput = [
@@ -150,39 +149,24 @@ export interface AccountsStrategyInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "execute",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BytesLike>
-    ]
+    values: [BytesLike, string, string, BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "executeWithToken",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [BytesLike, string, string, BytesLike, string, BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "gateway", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "strategyInvest",
-    values: [PromiseOrValue<BigNumberish>, AccountMessages.InvestRequestStruct]
+    values: [BigNumberish, AccountMessages.InvestRequestStruct]
   ): string;
   encodeFunctionData(
     functionFragment: "strategyRedeem",
-    values: [PromiseOrValue<BigNumberish>, AccountMessages.RedeemRequestStruct]
+    values: [BigNumberish, AccountMessages.RedeemRequestStruct]
   ): string;
   encodeFunctionData(
     functionFragment: "strategyRedeemAll",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      AccountMessages.RedeemAllRequestStruct
-    ]
+    values: [BigNumberish, AccountMessages.RedeemAllRequestStruct]
   ): string;
 
   decodeFunctionResult(functionFragment: "execute", data: BytesLike): Result;
@@ -221,9 +205,9 @@ export interface AccountsStrategyInterface extends utils.Interface {
     "EndowmentUpdated(uint256)": EventFragment;
     "EndowmentWithdraw(uint256,address,uint256,uint8,address,uint32)": EventFragment;
     "OwnerUpdated(address)": EventFragment;
-    "RefundNeeded(tuple)": EventFragment;
+    "RefundNeeded((string,bytes4,bytes4,uint32[],address,uint256,uint256,uint8))": EventFragment;
     "TokenSwapped(uint256,uint8,address,uint256,address,uint256)": EventFragment;
-    "UnexpectedTokens(tuple)": EventFragment;
+    "UnexpectedTokens((string,bytes4,bytes4,uint32[],address,uint256,uint256,uint8))": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "AllowanceSpent"): EventFragment;
@@ -500,117 +484,117 @@ export interface AccountsStrategy extends BaseContract {
 
   functions: {
     execute(
-      commandId: PromiseOrValue<BytesLike>,
-      sourceChain: PromiseOrValue<string>,
-      sourceAddress: PromiseOrValue<string>,
-      payload: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      commandId: BytesLike,
+      sourceChain: string,
+      sourceAddress: string,
+      payload: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     executeWithToken(
-      commandId: PromiseOrValue<BytesLike>,
-      sourceChain: PromiseOrValue<string>,
-      sourceAddress: PromiseOrValue<string>,
-      payload: PromiseOrValue<BytesLike>,
-      tokenSymbol: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      commandId: BytesLike,
+      sourceChain: string,
+      sourceAddress: string,
+      payload: BytesLike,
+      tokenSymbol: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     gateway(overrides?: CallOverrides): Promise<[string]>;
 
     strategyInvest(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       investRequest: AccountMessages.InvestRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     strategyRedeem(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       redeemRequest: AccountMessages.RedeemRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     strategyRedeemAll(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       redeemAllRequest: AccountMessages.RedeemAllRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   execute(
-    commandId: PromiseOrValue<BytesLike>,
-    sourceChain: PromiseOrValue<string>,
-    sourceAddress: PromiseOrValue<string>,
-    payload: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    commandId: BytesLike,
+    sourceChain: string,
+    sourceAddress: string,
+    payload: BytesLike,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   executeWithToken(
-    commandId: PromiseOrValue<BytesLike>,
-    sourceChain: PromiseOrValue<string>,
-    sourceAddress: PromiseOrValue<string>,
-    payload: PromiseOrValue<BytesLike>,
-    tokenSymbol: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    commandId: BytesLike,
+    sourceChain: string,
+    sourceAddress: string,
+    payload: BytesLike,
+    tokenSymbol: string,
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   gateway(overrides?: CallOverrides): Promise<string>;
 
   strategyInvest(
-    id: PromiseOrValue<BigNumberish>,
+    id: BigNumberish,
     investRequest: AccountMessages.InvestRequestStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   strategyRedeem(
-    id: PromiseOrValue<BigNumberish>,
+    id: BigNumberish,
     redeemRequest: AccountMessages.RedeemRequestStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   strategyRedeemAll(
-    id: PromiseOrValue<BigNumberish>,
+    id: BigNumberish,
     redeemAllRequest: AccountMessages.RedeemAllRequestStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     execute(
-      commandId: PromiseOrValue<BytesLike>,
-      sourceChain: PromiseOrValue<string>,
-      sourceAddress: PromiseOrValue<string>,
-      payload: PromiseOrValue<BytesLike>,
+      commandId: BytesLike,
+      sourceChain: string,
+      sourceAddress: string,
+      payload: BytesLike,
       overrides?: CallOverrides
     ): Promise<void>;
 
     executeWithToken(
-      commandId: PromiseOrValue<BytesLike>,
-      sourceChain: PromiseOrValue<string>,
-      sourceAddress: PromiseOrValue<string>,
-      payload: PromiseOrValue<BytesLike>,
-      tokenSymbol: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      commandId: BytesLike,
+      sourceChain: string,
+      sourceAddress: string,
+      payload: BytesLike,
+      tokenSymbol: string,
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     gateway(overrides?: CallOverrides): Promise<string>;
 
     strategyInvest(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       investRequest: AccountMessages.InvestRequestStruct,
       overrides?: CallOverrides
     ): Promise<void>;
 
     strategyRedeem(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       redeemRequest: AccountMessages.RedeemRequestStruct,
       overrides?: CallOverrides
     ): Promise<void>;
 
     strategyRedeemAll(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       redeemAllRequest: AccountMessages.RedeemAllRequestStruct,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -755,7 +739,9 @@ export interface AccountsStrategy extends BaseContract {
     "OwnerUpdated(address)"(owner?: null): OwnerUpdatedEventFilter;
     OwnerUpdated(owner?: null): OwnerUpdatedEventFilter;
 
-    "RefundNeeded(tuple)"(arg0?: null): RefundNeededEventFilter;
+    "RefundNeeded((string,bytes4,bytes4,uint32[],address,uint256,uint256,uint8))"(
+      arg0?: null
+    ): RefundNeededEventFilter;
     RefundNeeded(arg0?: null): RefundNeededEventFilter;
 
     "TokenSwapped(uint256,uint8,address,uint256,address,uint256)"(
@@ -775,87 +761,89 @@ export interface AccountsStrategy extends BaseContract {
       amountOut?: null
     ): TokenSwappedEventFilter;
 
-    "UnexpectedTokens(tuple)"(arg0?: null): UnexpectedTokensEventFilter;
+    "UnexpectedTokens((string,bytes4,bytes4,uint32[],address,uint256,uint256,uint8))"(
+      arg0?: null
+    ): UnexpectedTokensEventFilter;
     UnexpectedTokens(arg0?: null): UnexpectedTokensEventFilter;
   };
 
   estimateGas: {
     execute(
-      commandId: PromiseOrValue<BytesLike>,
-      sourceChain: PromiseOrValue<string>,
-      sourceAddress: PromiseOrValue<string>,
-      payload: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      commandId: BytesLike,
+      sourceChain: string,
+      sourceAddress: string,
+      payload: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     executeWithToken(
-      commandId: PromiseOrValue<BytesLike>,
-      sourceChain: PromiseOrValue<string>,
-      sourceAddress: PromiseOrValue<string>,
-      payload: PromiseOrValue<BytesLike>,
-      tokenSymbol: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      commandId: BytesLike,
+      sourceChain: string,
+      sourceAddress: string,
+      payload: BytesLike,
+      tokenSymbol: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     gateway(overrides?: CallOverrides): Promise<BigNumber>;
 
     strategyInvest(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       investRequest: AccountMessages.InvestRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     strategyRedeem(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       redeemRequest: AccountMessages.RedeemRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     strategyRedeemAll(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       redeemAllRequest: AccountMessages.RedeemAllRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     execute(
-      commandId: PromiseOrValue<BytesLike>,
-      sourceChain: PromiseOrValue<string>,
-      sourceAddress: PromiseOrValue<string>,
-      payload: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      commandId: BytesLike,
+      sourceChain: string,
+      sourceAddress: string,
+      payload: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     executeWithToken(
-      commandId: PromiseOrValue<BytesLike>,
-      sourceChain: PromiseOrValue<string>,
-      sourceAddress: PromiseOrValue<string>,
-      payload: PromiseOrValue<BytesLike>,
-      tokenSymbol: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      commandId: BytesLike,
+      sourceChain: string,
+      sourceAddress: string,
+      payload: BytesLike,
+      tokenSymbol: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     gateway(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     strategyInvest(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       investRequest: AccountMessages.InvestRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     strategyRedeem(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       redeemRequest: AccountMessages.RedeemRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     strategyRedeemAll(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       redeemAllRequest: AccountMessages.RedeemAllRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

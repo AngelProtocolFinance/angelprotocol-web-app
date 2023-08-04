@@ -24,24 +24,17 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../common";
 
 export declare namespace LibAccounts {
-  export type FeeSettingStruct = {
-    payoutAddress: PromiseOrValue<string>;
-    bps: PromiseOrValue<BigNumberish>;
-  };
+  export type FeeSettingStruct = { payoutAddress: string; bps: BigNumberish };
 
   export type FeeSettingStructOutput = [string, BigNumber] & {
     payoutAddress: string;
     bps: BigNumber;
   };
 
-  export type DelegateStruct = {
-    addr: PromiseOrValue<string>;
-    expires: PromiseOrValue<BigNumberish>;
-  };
+  export type DelegateStruct = { addr: string; expires: BigNumberish };
 
   export type DelegateStructOutput = [string, BigNumber] & {
     addr: string;
@@ -49,7 +42,7 @@ export declare namespace LibAccounts {
   };
 
   export type SettingsPermissionStruct = {
-    locked: PromiseOrValue<boolean>;
+    locked: boolean;
     delegate: LibAccounts.DelegateStruct;
   };
 
@@ -117,9 +110,9 @@ export declare namespace LibAccounts {
   };
 
   export type SplitDetailsStruct = {
-    max: PromiseOrValue<BigNumberish>;
-    min: PromiseOrValue<BigNumberish>;
-    defaultSplit: PromiseOrValue<BigNumberish>;
+    max: BigNumberish;
+    min: BigNumberish;
+    defaultSplit: BigNumberish;
   };
 
   export type SplitDetailsStructOutput = [BigNumber, BigNumber, BigNumber] & {
@@ -131,30 +124,30 @@ export declare namespace LibAccounts {
 
 export declare namespace AccountMessages {
   export type CreateEndowmentRequestStruct = {
-    withdrawBeforeMaturity: PromiseOrValue<boolean>;
-    maturityTime: PromiseOrValue<BigNumberish>;
-    name: PromiseOrValue<string>;
-    sdgs: PromiseOrValue<BigNumberish>[];
-    tier: PromiseOrValue<BigNumberish>;
-    endowType: PromiseOrValue<BigNumberish>;
-    logo: PromiseOrValue<string>;
-    image: PromiseOrValue<string>;
-    members: PromiseOrValue<string>[];
-    threshold: PromiseOrValue<BigNumberish>;
-    duration: PromiseOrValue<BigNumberish>;
-    allowlistedBeneficiaries: PromiseOrValue<string>[];
-    allowlistedContributors: PromiseOrValue<string>[];
+    withdrawBeforeMaturity: boolean;
+    maturityTime: BigNumberish;
+    name: string;
+    sdgs: BigNumberish[];
+    tier: BigNumberish;
+    endowType: BigNumberish;
+    logo: string;
+    image: string;
+    members: string[];
+    threshold: BigNumberish;
+    duration: BigNumberish;
+    allowlistedBeneficiaries: string[];
+    allowlistedContributors: string[];
     earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct;
     withdrawFee: LibAccounts.FeeSettingStruct;
     depositFee: LibAccounts.FeeSettingStruct;
     balanceFee: LibAccounts.FeeSettingStruct;
-    proposalLink: PromiseOrValue<BigNumberish>;
+    proposalLink: BigNumberish;
     settingsController: LibAccounts.SettingsControllerStruct;
-    parent: PromiseOrValue<BigNumberish>;
-    maturityAllowlist: PromiseOrValue<string>[];
-    ignoreUserSplits: PromiseOrValue<boolean>;
+    parent: BigNumberish;
+    maturityAllowlist: string[];
+    ignoreUserSplits: boolean;
     splitToLiquid: LibAccounts.SplitDetailsStruct;
-    referralId: PromiseOrValue<BigNumberish>;
+    referralId: BigNumberish;
   };
 
   export type CreateEndowmentRequestStructOutput = [
@@ -212,11 +205,11 @@ export declare namespace AccountMessages {
 
 export declare namespace ApplicationsStorage {
   export type ConfigStruct = {
-    accountsContract: PromiseOrValue<string>;
-    seedSplitToLiquid: PromiseOrValue<BigNumberish>;
-    gasAmount: PromiseOrValue<BigNumberish>;
-    seedAsset: PromiseOrValue<string>;
-    seedAmount: PromiseOrValue<BigNumberish>;
+    accountsContract: string;
+    seedSplitToLiquid: BigNumberish;
+    gasAmount: BigNumberish;
+    seedAsset: string;
+    seedAmount: BigNumberish;
   };
 
   export type ConfigStructOutput = [
@@ -262,40 +255,37 @@ export interface ICharityApplicationsInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "confirmProposal",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "executeProposal",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "getProposalConfirmationCount",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "getProposalConfirmationStatus",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+    values: [BigNumberish, string]
   ): string;
   encodeFunctionData(
     functionFragment: "initializeApplications",
     values: [
-      PromiseOrValue<string>[],
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<boolean>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
+      string[],
+      BigNumberish,
+      boolean,
+      BigNumberish,
+      string,
+      BigNumberish,
+      BigNumberish,
+      string,
+      BigNumberish
     ]
   ): string;
   encodeFunctionData(
     functionFragment: "proposeApplication",
-    values: [
-      AccountMessages.CreateEndowmentRequestStruct,
-      PromiseOrValue<BytesLike>
-    ]
+    values: [AccountMessages.CreateEndowmentRequestStruct, BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "queryConfig",
@@ -303,17 +293,17 @@ export interface ICharityApplicationsInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "revokeProposalConfirmation",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "updateConfig",
     values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
+      BigNumberish,
+      string,
+      BigNumberish,
+      BigNumberish,
+      string,
+      BigNumberish
     ]
   ): string;
 
@@ -475,43 +465,43 @@ export interface ICharityApplications extends BaseContract {
 
   functions: {
     confirmProposal(
-      proposalId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      proposalId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     executeProposal(
-      proposalId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      proposalId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     getProposalConfirmationCount(
-      proposalId: PromiseOrValue<BigNumberish>,
+      proposalId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     getProposalConfirmationStatus(
-      proposalId: PromiseOrValue<BigNumberish>,
-      ownerAddr: PromiseOrValue<string>,
+      proposalId: BigNumberish,
+      ownerAddr: string,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
     initializeApplications(
-      owners: PromiseOrValue<string>[],
-      _approvalsRequired: PromiseOrValue<BigNumberish>,
-      _requireExecution: PromiseOrValue<boolean>,
-      _transactionExpiry: PromiseOrValue<BigNumberish>,
-      _accountsContract: PromiseOrValue<string>,
-      _gasAmount: PromiseOrValue<BigNumberish>,
-      _seedSplitToLiquid: PromiseOrValue<BigNumberish>,
-      _seedAsset: PromiseOrValue<string>,
-      _seedAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      owners: string[],
+      _approvalsRequired: BigNumberish,
+      _requireExecution: boolean,
+      _transactionExpiry: BigNumberish,
+      _accountsContract: string,
+      _gasAmount: BigNumberish,
+      _seedSplitToLiquid: BigNumberish,
+      _seedAsset: string,
+      _seedAmount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     proposeApplication(
       application: AccountMessages.CreateEndowmentRequestStruct,
-      metadata: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      metadata: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     queryConfig(
@@ -519,59 +509,59 @@ export interface ICharityApplications extends BaseContract {
     ): Promise<[ApplicationsStorage.ConfigStructOutput]>;
 
     revokeProposalConfirmation(
-      proposalId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      proposalId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     updateConfig(
-      _transactionExpiry: PromiseOrValue<BigNumberish>,
-      accountsContract: PromiseOrValue<string>,
-      seedSplitToLiquid: PromiseOrValue<BigNumberish>,
-      gasAmount: PromiseOrValue<BigNumberish>,
-      seedAsset: PromiseOrValue<string>,
-      seedAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _transactionExpiry: BigNumberish,
+      accountsContract: string,
+      seedSplitToLiquid: BigNumberish,
+      gasAmount: BigNumberish,
+      seedAsset: string,
+      seedAmount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   confirmProposal(
-    proposalId: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    proposalId: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   executeProposal(
-    proposalId: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    proposalId: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   getProposalConfirmationCount(
-    proposalId: PromiseOrValue<BigNumberish>,
+    proposalId: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   getProposalConfirmationStatus(
-    proposalId: PromiseOrValue<BigNumberish>,
-    ownerAddr: PromiseOrValue<string>,
+    proposalId: BigNumberish,
+    ownerAddr: string,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
   initializeApplications(
-    owners: PromiseOrValue<string>[],
-    _approvalsRequired: PromiseOrValue<BigNumberish>,
-    _requireExecution: PromiseOrValue<boolean>,
-    _transactionExpiry: PromiseOrValue<BigNumberish>,
-    _accountsContract: PromiseOrValue<string>,
-    _gasAmount: PromiseOrValue<BigNumberish>,
-    _seedSplitToLiquid: PromiseOrValue<BigNumberish>,
-    _seedAsset: PromiseOrValue<string>,
-    _seedAmount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    owners: string[],
+    _approvalsRequired: BigNumberish,
+    _requireExecution: boolean,
+    _transactionExpiry: BigNumberish,
+    _accountsContract: string,
+    _gasAmount: BigNumberish,
+    _seedSplitToLiquid: BigNumberish,
+    _seedAsset: string,
+    _seedAmount: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   proposeApplication(
     application: AccountMessages.CreateEndowmentRequestStruct,
-    metadata: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    metadata: BytesLike,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   queryConfig(
@@ -579,58 +569,58 @@ export interface ICharityApplications extends BaseContract {
   ): Promise<ApplicationsStorage.ConfigStructOutput>;
 
   revokeProposalConfirmation(
-    proposalId: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    proposalId: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   updateConfig(
-    _transactionExpiry: PromiseOrValue<BigNumberish>,
-    accountsContract: PromiseOrValue<string>,
-    seedSplitToLiquid: PromiseOrValue<BigNumberish>,
-    gasAmount: PromiseOrValue<BigNumberish>,
-    seedAsset: PromiseOrValue<string>,
-    seedAmount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _transactionExpiry: BigNumberish,
+    accountsContract: string,
+    seedSplitToLiquid: BigNumberish,
+    gasAmount: BigNumberish,
+    seedAsset: string,
+    seedAmount: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     confirmProposal(
-      proposalId: PromiseOrValue<BigNumberish>,
+      proposalId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     executeProposal(
-      proposalId: PromiseOrValue<BigNumberish>,
+      proposalId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<number>;
 
     getProposalConfirmationCount(
-      proposalId: PromiseOrValue<BigNumberish>,
+      proposalId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getProposalConfirmationStatus(
-      proposalId: PromiseOrValue<BigNumberish>,
-      ownerAddr: PromiseOrValue<string>,
+      proposalId: BigNumberish,
+      ownerAddr: string,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     initializeApplications(
-      owners: PromiseOrValue<string>[],
-      _approvalsRequired: PromiseOrValue<BigNumberish>,
-      _requireExecution: PromiseOrValue<boolean>,
-      _transactionExpiry: PromiseOrValue<BigNumberish>,
-      _accountsContract: PromiseOrValue<string>,
-      _gasAmount: PromiseOrValue<BigNumberish>,
-      _seedSplitToLiquid: PromiseOrValue<BigNumberish>,
-      _seedAsset: PromiseOrValue<string>,
-      _seedAmount: PromiseOrValue<BigNumberish>,
+      owners: string[],
+      _approvalsRequired: BigNumberish,
+      _requireExecution: boolean,
+      _transactionExpiry: BigNumberish,
+      _accountsContract: string,
+      _gasAmount: BigNumberish,
+      _seedSplitToLiquid: BigNumberish,
+      _seedAsset: string,
+      _seedAmount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     proposeApplication(
       application: AccountMessages.CreateEndowmentRequestStruct,
-      metadata: PromiseOrValue<BytesLike>,
+      metadata: BytesLike,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -639,17 +629,17 @@ export interface ICharityApplications extends BaseContract {
     ): Promise<ApplicationsStorage.ConfigStructOutput>;
 
     revokeProposalConfirmation(
-      proposalId: PromiseOrValue<BigNumberish>,
+      proposalId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     updateConfig(
-      _transactionExpiry: PromiseOrValue<BigNumberish>,
-      accountsContract: PromiseOrValue<string>,
-      seedSplitToLiquid: PromiseOrValue<BigNumberish>,
-      gasAmount: PromiseOrValue<BigNumberish>,
-      seedAsset: PromiseOrValue<string>,
-      seedAmount: PromiseOrValue<BigNumberish>,
+      _transactionExpiry: BigNumberish,
+      accountsContract: string,
+      seedSplitToLiquid: BigNumberish,
+      gasAmount: BigNumberish,
+      seedAsset: string,
+      seedAmount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -718,119 +708,119 @@ export interface ICharityApplications extends BaseContract {
 
   estimateGas: {
     confirmProposal(
-      proposalId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      proposalId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     executeProposal(
-      proposalId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      proposalId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     getProposalConfirmationCount(
-      proposalId: PromiseOrValue<BigNumberish>,
+      proposalId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getProposalConfirmationStatus(
-      proposalId: PromiseOrValue<BigNumberish>,
-      ownerAddr: PromiseOrValue<string>,
+      proposalId: BigNumberish,
+      ownerAddr: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     initializeApplications(
-      owners: PromiseOrValue<string>[],
-      _approvalsRequired: PromiseOrValue<BigNumberish>,
-      _requireExecution: PromiseOrValue<boolean>,
-      _transactionExpiry: PromiseOrValue<BigNumberish>,
-      _accountsContract: PromiseOrValue<string>,
-      _gasAmount: PromiseOrValue<BigNumberish>,
-      _seedSplitToLiquid: PromiseOrValue<BigNumberish>,
-      _seedAsset: PromiseOrValue<string>,
-      _seedAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      owners: string[],
+      _approvalsRequired: BigNumberish,
+      _requireExecution: boolean,
+      _transactionExpiry: BigNumberish,
+      _accountsContract: string,
+      _gasAmount: BigNumberish,
+      _seedSplitToLiquid: BigNumberish,
+      _seedAsset: string,
+      _seedAmount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     proposeApplication(
       application: AccountMessages.CreateEndowmentRequestStruct,
-      metadata: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      metadata: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     queryConfig(overrides?: CallOverrides): Promise<BigNumber>;
 
     revokeProposalConfirmation(
-      proposalId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      proposalId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     updateConfig(
-      _transactionExpiry: PromiseOrValue<BigNumberish>,
-      accountsContract: PromiseOrValue<string>,
-      seedSplitToLiquid: PromiseOrValue<BigNumberish>,
-      gasAmount: PromiseOrValue<BigNumberish>,
-      seedAsset: PromiseOrValue<string>,
-      seedAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _transactionExpiry: BigNumberish,
+      accountsContract: string,
+      seedSplitToLiquid: BigNumberish,
+      gasAmount: BigNumberish,
+      seedAsset: string,
+      seedAmount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     confirmProposal(
-      proposalId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      proposalId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     executeProposal(
-      proposalId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      proposalId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     getProposalConfirmationCount(
-      proposalId: PromiseOrValue<BigNumberish>,
+      proposalId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getProposalConfirmationStatus(
-      proposalId: PromiseOrValue<BigNumberish>,
-      ownerAddr: PromiseOrValue<string>,
+      proposalId: BigNumberish,
+      ownerAddr: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     initializeApplications(
-      owners: PromiseOrValue<string>[],
-      _approvalsRequired: PromiseOrValue<BigNumberish>,
-      _requireExecution: PromiseOrValue<boolean>,
-      _transactionExpiry: PromiseOrValue<BigNumberish>,
-      _accountsContract: PromiseOrValue<string>,
-      _gasAmount: PromiseOrValue<BigNumberish>,
-      _seedSplitToLiquid: PromiseOrValue<BigNumberish>,
-      _seedAsset: PromiseOrValue<string>,
-      _seedAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      owners: string[],
+      _approvalsRequired: BigNumberish,
+      _requireExecution: boolean,
+      _transactionExpiry: BigNumberish,
+      _accountsContract: string,
+      _gasAmount: BigNumberish,
+      _seedSplitToLiquid: BigNumberish,
+      _seedAsset: string,
+      _seedAmount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     proposeApplication(
       application: AccountMessages.CreateEndowmentRequestStruct,
-      metadata: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      metadata: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     queryConfig(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     revokeProposalConfirmation(
-      proposalId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      proposalId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     updateConfig(
-      _transactionExpiry: PromiseOrValue<BigNumberish>,
-      accountsContract: PromiseOrValue<string>,
-      seedSplitToLiquid: PromiseOrValue<BigNumberish>,
-      gasAmount: PromiseOrValue<BigNumberish>,
-      seedAsset: PromiseOrValue<string>,
-      seedAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _transactionExpiry: BigNumberish,
+      accountsContract: string,
+      seedSplitToLiquid: BigNumberish,
+      gasAmount: BigNumberish,
+      seedAsset: string,
+      seedAmount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

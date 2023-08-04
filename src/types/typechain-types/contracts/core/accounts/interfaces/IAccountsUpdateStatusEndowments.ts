@@ -20,14 +20,13 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../../common";
 
 export declare namespace LibAccounts {
   export type BeneficiaryDataStruct = {
-    endowId: PromiseOrValue<BigNumberish>;
-    fundId: PromiseOrValue<BigNumberish>;
-    addr: PromiseOrValue<string>;
+    endowId: BigNumberish;
+    fundId: BigNumberish;
+    addr: string;
   };
 
   export type BeneficiaryDataStructOutput = [number, BigNumber, string] & {
@@ -38,7 +37,7 @@ export declare namespace LibAccounts {
 
   export type BeneficiaryStruct = {
     data: LibAccounts.BeneficiaryDataStruct;
-    enumData: PromiseOrValue<BigNumberish>;
+    enumData: BigNumberish;
   };
 
   export type BeneficiaryStructOutput = [
@@ -57,7 +56,7 @@ export interface IAccountsUpdateStatusEndowmentsInterface
 
   encodeFunctionData(
     functionFragment: "closeEndowment",
-    values: [PromiseOrValue<BigNumberish>, LibAccounts.BeneficiaryStruct]
+    values: [BigNumberish, LibAccounts.BeneficiaryStruct]
   ): string;
 
   decodeFunctionResult(
@@ -96,21 +95,21 @@ export interface IAccountsUpdateStatusEndowments extends BaseContract {
 
   functions: {
     closeEndowment(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       beneficiary: LibAccounts.BeneficiaryStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   closeEndowment(
-    id: PromiseOrValue<BigNumberish>,
+    id: BigNumberish,
     beneficiary: LibAccounts.BeneficiaryStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     closeEndowment(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       beneficiary: LibAccounts.BeneficiaryStruct,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -120,17 +119,17 @@ export interface IAccountsUpdateStatusEndowments extends BaseContract {
 
   estimateGas: {
     closeEndowment(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       beneficiary: LibAccounts.BeneficiaryStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     closeEndowment(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       beneficiary: LibAccounts.BeneficiaryStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

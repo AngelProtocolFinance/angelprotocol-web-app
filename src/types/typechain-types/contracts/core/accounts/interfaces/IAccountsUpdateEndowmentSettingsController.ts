@@ -20,14 +20,10 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../../common";
 
 export declare namespace LibAccounts {
-  export type DelegateStruct = {
-    addr: PromiseOrValue<string>;
-    expires: PromiseOrValue<BigNumberish>;
-  };
+  export type DelegateStruct = { addr: string; expires: BigNumberish };
 
   export type DelegateStructOutput = [string, BigNumber] & {
     addr: string;
@@ -35,7 +31,7 @@ export declare namespace LibAccounts {
   };
 
   export type SettingsPermissionStruct = {
-    locked: PromiseOrValue<boolean>;
+    locked: boolean;
     delegate: LibAccounts.DelegateStruct;
   };
 
@@ -103,9 +99,9 @@ export declare namespace LibAccounts {
   };
 
   export type SplitDetailsStruct = {
-    max: PromiseOrValue<BigNumberish>;
-    min: PromiseOrValue<BigNumberish>;
-    defaultSplit: PromiseOrValue<BigNumberish>;
+    max: BigNumberish;
+    min: BigNumberish;
+    defaultSplit: BigNumberish;
   };
 
   export type SplitDetailsStructOutput = [BigNumber, BigNumber, BigNumber] & {
@@ -114,10 +110,7 @@ export declare namespace LibAccounts {
     defaultSplit: BigNumber;
   };
 
-  export type FeeSettingStruct = {
-    payoutAddress: PromiseOrValue<string>;
-    bps: PromiseOrValue<BigNumberish>;
-  };
+  export type FeeSettingStruct = { payoutAddress: string; bps: BigNumberish };
 
   export type FeeSettingStructOutput = [string, BigNumber] & {
     payoutAddress: string;
@@ -127,7 +120,7 @@ export declare namespace LibAccounts {
 
 export declare namespace AccountMessages {
   export type UpdateEndowmentControllerRequestStruct = {
-    id: PromiseOrValue<BigNumberish>;
+    id: BigNumberish;
     settingsController: LibAccounts.SettingsControllerStruct;
   };
 
@@ -140,15 +133,15 @@ export declare namespace AccountMessages {
   };
 
   export type UpdateEndowmentSettingsRequestStruct = {
-    id: PromiseOrValue<BigNumberish>;
-    donationMatchActive: PromiseOrValue<boolean>;
-    maturityTime: PromiseOrValue<BigNumberish>;
-    allowlistedBeneficiaries: PromiseOrValue<string>[];
-    allowlistedContributors: PromiseOrValue<string>[];
-    maturity_allowlist_add: PromiseOrValue<string>[];
-    maturity_allowlist_remove: PromiseOrValue<string>[];
+    id: BigNumberish;
+    donationMatchActive: boolean;
+    maturityTime: BigNumberish;
+    allowlistedBeneficiaries: string[];
+    allowlistedContributors: string[];
+    maturity_allowlist_add: string[];
+    maturity_allowlist_remove: string[];
     splitToLiquid: LibAccounts.SplitDetailsStruct;
-    ignoreUserSplits: PromiseOrValue<boolean>;
+    ignoreUserSplits: boolean;
   };
 
   export type UpdateEndowmentSettingsRequestStructOutput = [
@@ -174,7 +167,7 @@ export declare namespace AccountMessages {
   };
 
   export type UpdateFeeSettingRequestStruct = {
-    id: PromiseOrValue<BigNumberish>;
+    id: BigNumberish;
     earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct;
     depositFee: LibAccounts.FeeSettingStruct;
     withdrawFee: LibAccounts.FeeSettingStruct;
@@ -270,33 +263,33 @@ export interface IAccountsUpdateEndowmentSettingsController
   functions: {
     updateEndowmentController(
       details: AccountMessages.UpdateEndowmentControllerRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     updateEndowmentSettings(
       details: AccountMessages.UpdateEndowmentSettingsRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     updateFeeSettings(
       details: AccountMessages.UpdateFeeSettingRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   updateEndowmentController(
     details: AccountMessages.UpdateEndowmentControllerRequestStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   updateEndowmentSettings(
     details: AccountMessages.UpdateEndowmentSettingsRequestStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   updateFeeSettings(
     details: AccountMessages.UpdateFeeSettingRequestStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -321,34 +314,34 @@ export interface IAccountsUpdateEndowmentSettingsController
   estimateGas: {
     updateEndowmentController(
       details: AccountMessages.UpdateEndowmentControllerRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     updateEndowmentSettings(
       details: AccountMessages.UpdateEndowmentSettingsRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     updateFeeSettings(
       details: AccountMessages.UpdateFeeSettingRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     updateEndowmentController(
       details: AccountMessages.UpdateEndowmentControllerRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     updateEndowmentSettings(
       details: AccountMessages.UpdateEndowmentSettingsRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     updateFeeSettings(
       details: AccountMessages.UpdateFeeSettingRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }
