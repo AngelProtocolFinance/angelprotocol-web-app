@@ -20,7 +20,6 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../common";
 
 export interface IGasFwdInterface extends utils.Interface {
@@ -33,12 +32,9 @@ export interface IGasFwdInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "payForGas",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [string, BigNumberish]
   ): string;
-  encodeFunctionData(
-    functionFragment: "sweep",
-    values: [PromiseOrValue<string>]
-  ): string;
+  encodeFunctionData(functionFragment: "sweep", values: [string]): string;
 
   decodeFunctionResult(functionFragment: "payForGas", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "sweep", data: BytesLike): Result;
@@ -74,66 +70,63 @@ export interface IGasFwd extends BaseContract {
 
   functions: {
     payForGas(
-      token: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      token: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     sweep(
-      token: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      token: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   payForGas(
-    token: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    token: string,
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   sweep(
-    token: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    token: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     payForGas(
-      token: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      token: string,
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    sweep(
-      token: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    sweep(token: string, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   filters: {};
 
   estimateGas: {
     payForGas(
-      token: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      token: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     sweep(
-      token: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      token: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     payForGas(
-      token: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      token: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     sweep(
-      token: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      token: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

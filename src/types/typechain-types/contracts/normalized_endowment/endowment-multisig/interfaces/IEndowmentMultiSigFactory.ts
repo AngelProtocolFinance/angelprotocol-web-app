@@ -20,7 +20,6 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../../common";
 
 export interface IEndowmentMultiSigFactoryInterface extends utils.Interface {
@@ -41,25 +40,19 @@ export interface IEndowmentMultiSigFactoryInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "create",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>[],
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [BigNumberish, string, string[], BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "endowmentIdToMultisig",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "updateImplementation",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "updateProxyAdmin",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
 
   decodeFunctionResult(functionFragment: "create", data: BytesLike): Result;
@@ -107,76 +100,76 @@ export interface IEndowmentMultiSigFactory extends BaseContract {
 
   functions: {
     create(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      emitterAddress: PromiseOrValue<string>,
-      owners: PromiseOrValue<string>[],
-      required: PromiseOrValue<BigNumberish>,
-      transactionExpiry: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      endowmentId: BigNumberish,
+      emitterAddress: string,
+      owners: string[],
+      required: BigNumberish,
+      transactionExpiry: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     endowmentIdToMultisig(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      endowmentId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     updateImplementation(
-      implementationAddress: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      implementationAddress: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     updateProxyAdmin(
-      proxyAdminAddress: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      proxyAdminAddress: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   create(
-    endowmentId: PromiseOrValue<BigNumberish>,
-    emitterAddress: PromiseOrValue<string>,
-    owners: PromiseOrValue<string>[],
-    required: PromiseOrValue<BigNumberish>,
-    transactionExpiry: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    endowmentId: BigNumberish,
+    emitterAddress: string,
+    owners: string[],
+    required: BigNumberish,
+    transactionExpiry: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   endowmentIdToMultisig(
-    endowmentId: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    endowmentId: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   updateImplementation(
-    implementationAddress: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    implementationAddress: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   updateProxyAdmin(
-    proxyAdminAddress: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    proxyAdminAddress: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     create(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      emitterAddress: PromiseOrValue<string>,
-      owners: PromiseOrValue<string>[],
-      required: PromiseOrValue<BigNumberish>,
-      transactionExpiry: PromiseOrValue<BigNumberish>,
+      endowmentId: BigNumberish,
+      emitterAddress: string,
+      owners: string[],
+      required: BigNumberish,
+      transactionExpiry: BigNumberish,
       overrides?: CallOverrides
     ): Promise<string>;
 
     endowmentIdToMultisig(
-      endowmentId: PromiseOrValue<BigNumberish>,
+      endowmentId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<string>;
 
     updateImplementation(
-      implementationAddress: PromiseOrValue<string>,
+      implementationAddress: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     updateProxyAdmin(
-      proxyAdminAddress: PromiseOrValue<string>,
+      proxyAdminAddress: string,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -185,53 +178,53 @@ export interface IEndowmentMultiSigFactory extends BaseContract {
 
   estimateGas: {
     create(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      emitterAddress: PromiseOrValue<string>,
-      owners: PromiseOrValue<string>[],
-      required: PromiseOrValue<BigNumberish>,
-      transactionExpiry: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      endowmentId: BigNumberish,
+      emitterAddress: string,
+      owners: string[],
+      required: BigNumberish,
+      transactionExpiry: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     endowmentIdToMultisig(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      endowmentId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     updateImplementation(
-      implementationAddress: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      implementationAddress: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     updateProxyAdmin(
-      proxyAdminAddress: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      proxyAdminAddress: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     create(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      emitterAddress: PromiseOrValue<string>,
-      owners: PromiseOrValue<string>[],
-      required: PromiseOrValue<BigNumberish>,
-      transactionExpiry: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      endowmentId: BigNumberish,
+      emitterAddress: string,
+      owners: string[],
+      required: BigNumberish,
+      transactionExpiry: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     endowmentIdToMultisig(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      endowmentId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     updateImplementation(
-      implementationAddress: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      implementationAddress: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     updateProxyAdmin(
-      proxyAdminAddress: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      proxyAdminAddress: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

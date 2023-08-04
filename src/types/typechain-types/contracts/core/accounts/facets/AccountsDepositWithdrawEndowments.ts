@@ -25,19 +25,18 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../../common";
 
 export declare namespace IVault {
   export type VaultActionDataStruct = {
-    destinationChain: PromiseOrValue<string>;
-    strategyId: PromiseOrValue<BytesLike>;
-    selector: PromiseOrValue<BytesLike>;
-    accountIds: PromiseOrValue<BigNumberish>[];
-    token: PromiseOrValue<string>;
-    lockAmt: PromiseOrValue<BigNumberish>;
-    liqAmt: PromiseOrValue<BigNumberish>;
-    status: PromiseOrValue<BigNumberish>;
+    destinationChain: string;
+    strategyId: BytesLike;
+    selector: BytesLike;
+    accountIds: BigNumberish[];
+    token: string;
+    lockAmt: BigNumberish;
+    liqAmt: BigNumberish;
+    status: BigNumberish;
   };
 
   export type VaultActionDataStructOutput = [
@@ -63,10 +62,10 @@ export declare namespace IVault {
 
 export declare namespace AccountMessages {
   export type DepositRequestStruct = {
-    id: PromiseOrValue<BigNumberish>;
-    lockedPercentage: PromiseOrValue<BigNumberish>;
-    liquidPercentage: PromiseOrValue<BigNumberish>;
-    donationMatch: PromiseOrValue<string>;
+    id: BigNumberish;
+    lockedPercentage: BigNumberish;
+    liquidPercentage: BigNumberish;
+    donationMatch: string;
   };
 
   export type DepositRequestStructOutput = [
@@ -83,10 +82,7 @@ export declare namespace AccountMessages {
 }
 
 export declare namespace IAccountsDepositWithdrawEndowments {
-  export type TokenInfoStruct = {
-    addr: PromiseOrValue<string>;
-    amnt: PromiseOrValue<BigNumberish>;
-  };
+  export type TokenInfoStruct = { addr: string; amnt: BigNumberish };
 
   export type TokenInfoStructOutput = [string, BigNumber] & {
     addr: string;
@@ -108,11 +104,7 @@ export interface AccountsDepositWithdrawEndowmentsInterface
 
   encodeFunctionData(
     functionFragment: "depositERC20",
-    values: [
-      AccountMessages.DepositRequestStruct,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [AccountMessages.DepositRequestStruct, string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "depositMatic",
@@ -121,10 +113,10 @@ export interface AccountsDepositWithdrawEndowmentsInterface
   encodeFunctionData(
     functionFragment: "withdraw",
     values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
+      BigNumberish,
+      BigNumberish,
+      string,
+      BigNumberish,
       IAccountsDepositWithdrawEndowments.TokenInfoStruct[]
     ]
   ): string;
@@ -156,9 +148,9 @@ export interface AccountsDepositWithdrawEndowmentsInterface
     "EndowmentUpdated(uint256)": EventFragment;
     "EndowmentWithdraw(uint256,address,uint256,uint8,address,uint32)": EventFragment;
     "OwnerUpdated(address)": EventFragment;
-    "RefundNeeded(tuple)": EventFragment;
+    "RefundNeeded((string,bytes4,bytes4,uint32[],address,uint256,uint256,uint8))": EventFragment;
     "TokenSwapped(uint256,uint8,address,uint256,address,uint256)": EventFragment;
-    "UnexpectedTokens(tuple)": EventFragment;
+    "UnexpectedTokens((string,bytes4,bytes4,uint32[],address,uint256,uint256,uint8))": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "AllowanceSpent"): EventFragment;
@@ -436,52 +428,52 @@ export interface AccountsDepositWithdrawEndowments extends BaseContract {
   functions: {
     depositERC20(
       details: AccountMessages.DepositRequestStruct,
-      tokenAddress: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      tokenAddress: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     depositMatic(
       details: AccountMessages.DepositRequestStruct,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     withdraw(
-      id: PromiseOrValue<BigNumberish>,
-      acctType: PromiseOrValue<BigNumberish>,
-      beneficiaryAddress: PromiseOrValue<string>,
-      beneficiaryEndowId: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
+      acctType: BigNumberish,
+      beneficiaryAddress: string,
+      beneficiaryEndowId: BigNumberish,
       tokens: IAccountsDepositWithdrawEndowments.TokenInfoStruct[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   depositERC20(
     details: AccountMessages.DepositRequestStruct,
-    tokenAddress: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    tokenAddress: string,
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   depositMatic(
     details: AccountMessages.DepositRequestStruct,
-    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    overrides?: PayableOverrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   withdraw(
-    id: PromiseOrValue<BigNumberish>,
-    acctType: PromiseOrValue<BigNumberish>,
-    beneficiaryAddress: PromiseOrValue<string>,
-    beneficiaryEndowId: PromiseOrValue<BigNumberish>,
+    id: BigNumberish,
+    acctType: BigNumberish,
+    beneficiaryAddress: string,
+    beneficiaryEndowId: BigNumberish,
     tokens: IAccountsDepositWithdrawEndowments.TokenInfoStruct[],
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     depositERC20(
       details: AccountMessages.DepositRequestStruct,
-      tokenAddress: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      tokenAddress: string,
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -491,10 +483,10 @@ export interface AccountsDepositWithdrawEndowments extends BaseContract {
     ): Promise<void>;
 
     withdraw(
-      id: PromiseOrValue<BigNumberish>,
-      acctType: PromiseOrValue<BigNumberish>,
-      beneficiaryAddress: PromiseOrValue<string>,
-      beneficiaryEndowId: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
+      acctType: BigNumberish,
+      beneficiaryAddress: string,
+      beneficiaryEndowId: BigNumberish,
       tokens: IAccountsDepositWithdrawEndowments.TokenInfoStruct[],
       overrides?: CallOverrides
     ): Promise<void>;
@@ -639,7 +631,9 @@ export interface AccountsDepositWithdrawEndowments extends BaseContract {
     "OwnerUpdated(address)"(owner?: null): OwnerUpdatedEventFilter;
     OwnerUpdated(owner?: null): OwnerUpdatedEventFilter;
 
-    "RefundNeeded(tuple)"(arg0?: null): RefundNeededEventFilter;
+    "RefundNeeded((string,bytes4,bytes4,uint32[],address,uint256,uint256,uint8))"(
+      arg0?: null
+    ): RefundNeededEventFilter;
     RefundNeeded(arg0?: null): RefundNeededEventFilter;
 
     "TokenSwapped(uint256,uint8,address,uint256,address,uint256)"(
@@ -659,53 +653,55 @@ export interface AccountsDepositWithdrawEndowments extends BaseContract {
       amountOut?: null
     ): TokenSwappedEventFilter;
 
-    "UnexpectedTokens(tuple)"(arg0?: null): UnexpectedTokensEventFilter;
+    "UnexpectedTokens((string,bytes4,bytes4,uint32[],address,uint256,uint256,uint8))"(
+      arg0?: null
+    ): UnexpectedTokensEventFilter;
     UnexpectedTokens(arg0?: null): UnexpectedTokensEventFilter;
   };
 
   estimateGas: {
     depositERC20(
       details: AccountMessages.DepositRequestStruct,
-      tokenAddress: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      tokenAddress: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     depositMatic(
       details: AccountMessages.DepositRequestStruct,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<BigNumber>;
 
     withdraw(
-      id: PromiseOrValue<BigNumberish>,
-      acctType: PromiseOrValue<BigNumberish>,
-      beneficiaryAddress: PromiseOrValue<string>,
-      beneficiaryEndowId: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
+      acctType: BigNumberish,
+      beneficiaryAddress: string,
+      beneficiaryEndowId: BigNumberish,
       tokens: IAccountsDepositWithdrawEndowments.TokenInfoStruct[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     depositERC20(
       details: AccountMessages.DepositRequestStruct,
-      tokenAddress: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      tokenAddress: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     depositMatic(
       details: AccountMessages.DepositRequestStruct,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     withdraw(
-      id: PromiseOrValue<BigNumberish>,
-      acctType: PromiseOrValue<BigNumberish>,
-      beneficiaryAddress: PromiseOrValue<string>,
-      beneficiaryEndowId: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
+      acctType: BigNumberish,
+      beneficiaryAddress: string,
+      beneficiaryEndowId: BigNumberish,
       tokens: IAccountsDepositWithdrawEndowments.TokenInfoStruct[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

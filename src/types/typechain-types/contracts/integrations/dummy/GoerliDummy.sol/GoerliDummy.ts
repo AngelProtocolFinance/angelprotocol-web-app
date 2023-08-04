@@ -25,15 +25,14 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../../common";
 
 export declare namespace IStrategy {
   export type StrategyConfigStruct = {
-    strategySelector: PromiseOrValue<BytesLike>;
-    baseToken: PromiseOrValue<string>;
-    yieldToken: PromiseOrValue<string>;
-    admin: PromiseOrValue<string>;
+    strategySelector: BytesLike;
+    baseToken: string;
+    yieldToken: string;
+    admin: string;
   };
 
   export type StrategyConfigStructOutput = [string, string, string, string] & {
@@ -76,7 +75,7 @@ export interface GoerliDummyInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "deposit",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "getStrategyConfig",
@@ -86,19 +85,19 @@ export interface GoerliDummyInterface extends utils.Interface {
   encodeFunctionData(functionFragment: "paused", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "previewDeposit",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "previewWithdraw",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "setDummyAmt",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "setDummyPreviewAmt",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "setStrategyConfig",
@@ -107,7 +106,7 @@ export interface GoerliDummyInterface extends utils.Interface {
   encodeFunctionData(functionFragment: "unpause", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "withdraw",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
 
   decodeFunctionResult(functionFragment: "deposit", data: BytesLike): Result;
@@ -141,7 +140,7 @@ export interface GoerliDummyInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
 
   events: {
-    "ConfigChanged(tuple)": EventFragment;
+    "ConfigChanged((bytes4,address,address,address))": EventFragment;
     "EnteredPosition(uint256,uint256)": EventFragment;
     "LogError(string)": EventFragment;
     "LogErrorBytes(bytes)": EventFragment;
@@ -248,8 +247,8 @@ export interface GoerliDummy extends BaseContract {
 
   functions: {
     deposit(
-      amt: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      amt: BigNumberish,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     getStrategyConfig(
@@ -257,49 +256,49 @@ export interface GoerliDummy extends BaseContract {
     ): Promise<[IStrategy.StrategyConfigStructOutput]>;
 
     pause(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     paused(overrides?: CallOverrides): Promise<[boolean]>;
 
     previewDeposit(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     previewWithdraw(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     setDummyAmt(
-      amt: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amt: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     setDummyPreviewAmt(
-      amt: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amt: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     setStrategyConfig(
       _newConfig: IStrategy.StrategyConfigStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     unpause(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     withdraw(
-      amt: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      amt: BigNumberish,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   deposit(
-    amt: PromiseOrValue<BigNumberish>,
-    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    amt: BigNumberish,
+    overrides?: PayableOverrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   getStrategyConfig(
@@ -307,50 +306,47 @@ export interface GoerliDummy extends BaseContract {
   ): Promise<IStrategy.StrategyConfigStructOutput>;
 
   pause(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   paused(overrides?: CallOverrides): Promise<boolean>;
 
   previewDeposit(
-    arg0: PromiseOrValue<BigNumberish>,
+    arg0: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   previewWithdraw(
-    arg0: PromiseOrValue<BigNumberish>,
+    arg0: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   setDummyAmt(
-    amt: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    amt: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   setDummyPreviewAmt(
-    amt: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    amt: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   setStrategyConfig(
     _newConfig: IStrategy.StrategyConfigStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   unpause(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   withdraw(
-    amt: PromiseOrValue<BigNumberish>,
-    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    amt: BigNumberish,
+    overrides?: PayableOverrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    deposit(
-      amt: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    deposit(amt: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
     getStrategyConfig(
       overrides?: CallOverrides
@@ -361,22 +357,19 @@ export interface GoerliDummy extends BaseContract {
     paused(overrides?: CallOverrides): Promise<boolean>;
 
     previewDeposit(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     previewWithdraw(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    setDummyAmt(
-      amt: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    setDummyAmt(amt: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
     setDummyPreviewAmt(
-      amt: PromiseOrValue<BigNumberish>,
+      amt: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -387,14 +380,13 @@ export interface GoerliDummy extends BaseContract {
 
     unpause(overrides?: CallOverrides): Promise<void>;
 
-    withdraw(
-      amt: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    withdraw(amt: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   filters: {
-    "ConfigChanged(tuple)"(stratConfig?: null): ConfigChangedEventFilter;
+    "ConfigChanged((bytes4,address,address,address))"(
+      stratConfig?: null
+    ): ConfigChangedEventFilter;
     ConfigChanged(stratConfig?: null): ConfigChangedEventFilter;
 
     "EnteredPosition(uint256,uint256)"(
@@ -430,99 +422,95 @@ export interface GoerliDummy extends BaseContract {
 
   estimateGas: {
     deposit(
-      amt: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      amt: BigNumberish,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<BigNumber>;
 
     getStrategyConfig(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pause(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    pause(overrides?: Overrides & { from?: string }): Promise<BigNumber>;
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
     previewDeposit(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     previewWithdraw(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     setDummyAmt(
-      amt: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amt: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     setDummyPreviewAmt(
-      amt: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amt: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     setStrategyConfig(
       _newConfig: IStrategy.StrategyConfigStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
-    unpause(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    unpause(overrides?: Overrides & { from?: string }): Promise<BigNumber>;
 
     withdraw(
-      amt: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      amt: BigNumberish,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     deposit(
-      amt: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      amt: BigNumberish,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     getStrategyConfig(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     pause(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     previewDeposit(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     previewWithdraw(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     setDummyAmt(
-      amt: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amt: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     setDummyPreviewAmt(
-      amt: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amt: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     setStrategyConfig(
       _newConfig: IStrategy.StrategyConfigStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     unpause(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     withdraw(
-      amt: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      amt: BigNumberish,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

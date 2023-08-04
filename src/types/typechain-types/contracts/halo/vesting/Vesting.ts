@@ -24,11 +24,10 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../common";
 
 export declare namespace VestingMessage {
-  export type InstantiateMsgStruct = { haloToken: PromiseOrValue<string> };
+  export type InstantiateMsgStruct = { haloToken: string };
 
   export type InstantiateMsgStructOutput = [string] & { haloToken: string };
 }
@@ -67,7 +66,7 @@ export interface VestingInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "deposit",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "haloToken", values?: undefined): string;
   encodeFunctionData(
@@ -76,7 +75,7 @@ export interface VestingInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "modifyVestingDuration",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
@@ -89,11 +88,11 @@ export interface VestingInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "transferOwnership",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "vesting",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "vestingDuration",
@@ -101,11 +100,11 @@ export interface VestingInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "vestingNumber",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "withdraw",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
 
   decodeFunctionResult(functionFragment: "deposit", data: BytesLike): Result;
@@ -235,38 +234,38 @@ export interface Vesting extends BaseContract {
 
   functions: {
     deposit(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     haloToken(overrides?: CallOverrides): Promise<[string]>;
 
     initialize(
       details: VestingMessage.InstantiateMsgStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     modifyVestingDuration(
-      vestingduration: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      vestingduration: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     totalVested(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newOwner: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     vesting(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<BigNumberish>,
+      arg0: string,
+      arg1: BigNumberish,
       overrides?: CallOverrides
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -280,49 +279,49 @@ export interface Vesting extends BaseContract {
     vestingDuration(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     vestingNumber(
-      arg0: PromiseOrValue<string>,
+      arg0: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     withdraw(
-      vestingId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      vestingId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   deposit(
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   haloToken(overrides?: CallOverrides): Promise<string>;
 
   initialize(
     details: VestingMessage.InstantiateMsgStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   modifyVestingDuration(
-    vestingduration: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    vestingduration: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
   renounceOwnership(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   totalVested(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferOwnership(
-    newOwner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    newOwner: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   vesting(
-    arg0: PromiseOrValue<string>,
-    arg1: PromiseOrValue<BigNumberish>,
+    arg0: string,
+    arg1: BigNumberish,
     overrides?: CallOverrides
   ): Promise<
     [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -335,21 +334,15 @@ export interface Vesting extends BaseContract {
 
   vestingDuration(overrides?: CallOverrides): Promise<BigNumber>;
 
-  vestingNumber(
-    arg0: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  vestingNumber(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
   withdraw(
-    vestingId: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    vestingId: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    deposit(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    deposit(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
     haloToken(overrides?: CallOverrides): Promise<string>;
 
@@ -359,7 +352,7 @@ export interface Vesting extends BaseContract {
     ): Promise<void>;
 
     modifyVestingDuration(
-      vestingduration: PromiseOrValue<BigNumberish>,
+      vestingduration: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -370,13 +363,13 @@ export interface Vesting extends BaseContract {
     totalVested(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: PromiseOrValue<string>,
+      newOwner: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     vesting(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<BigNumberish>,
+      arg0: string,
+      arg1: BigNumberish,
       overrides?: CallOverrides
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -389,15 +382,9 @@ export interface Vesting extends BaseContract {
 
     vestingDuration(overrides?: CallOverrides): Promise<BigNumber>;
 
-    vestingNumber(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    vestingNumber(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdraw(
-      vestingId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    withdraw(vestingId: BigNumberish, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
@@ -422,12 +409,12 @@ export interface Vesting extends BaseContract {
     Initialized(version?: null): InitializedEventFilter;
 
     "OwnershipTransferred(address,address)"(
-      previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      previousOwner?: string | null,
+      newOwner?: string | null
     ): OwnershipTransferredEventFilter;
     OwnershipTransferred(
-      previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      previousOwner?: string | null,
+      newOwner?: string | null
     ): OwnershipTransferredEventFilter;
 
     "VestingDurationModified(uint256)"(
@@ -440,101 +427,98 @@ export interface Vesting extends BaseContract {
 
   estimateGas: {
     deposit(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     haloToken(overrides?: CallOverrides): Promise<BigNumber>;
 
     initialize(
       details: VestingMessage.InstantiateMsgStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     modifyVestingDuration(
-      vestingduration: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      vestingduration: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     totalVested(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newOwner: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     vesting(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<BigNumberish>,
+      arg0: string,
+      arg1: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     vestingDuration(overrides?: CallOverrides): Promise<BigNumber>;
 
-    vestingNumber(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    vestingNumber(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     withdraw(
-      vestingId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      vestingId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     deposit(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     haloToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     initialize(
       details: VestingMessage.InstantiateMsgStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     modifyVestingDuration(
-      vestingduration: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      vestingduration: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     totalVested(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newOwner: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     vesting(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<BigNumberish>,
+      arg0: string,
+      arg1: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     vestingDuration(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     vestingNumber(
-      arg0: PromiseOrValue<string>,
+      arg0: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     withdraw(
-      vestingId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      vestingId: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

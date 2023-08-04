@@ -24,7 +24,6 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../common";
 
 export interface ERC4626APInterface extends utils.Interface {
@@ -86,24 +85,20 @@ export interface ERC4626APInterface extends utils.Interface {
   encodeFunctionData(functionFragment: "asset", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "balanceOf",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "convertToAssets",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "convertToShares",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "depositERC4626",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [string, BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "getPricePerFullShare",
@@ -111,48 +106,44 @@ export interface ERC4626APInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "maxDeposit",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "maxMint",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "maxRedeem",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "maxWithdraw",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "mint",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    values: [BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "previewDeposit",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "previewMint",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "previewRedeem",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "previewWithdraw",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "redeemERC4626",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [BigNumberish, string, BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
   encodeFunctionData(
@@ -165,23 +156,15 @@ export interface ERC4626APInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "transfer",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    values: [BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "transferFrom",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [BigNumberish, BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "withdraw",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [BigNumberish, string, BigNumberish]
   ): string;
 
   decodeFunctionResult(functionFragment: "asset", data: BytesLike): Result;
@@ -328,84 +311,84 @@ export interface ERC4626AP extends BaseContract {
     asset(overrides?: CallOverrides): Promise<[string]>;
 
     balanceOf(
-      account: PromiseOrValue<BigNumberish>,
+      account: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     convertToAssets(
-      shares: PromiseOrValue<BigNumberish>,
+      shares: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     convertToShares(
-      assets: PromiseOrValue<BigNumberish>,
+      assets: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
     depositERC4626(
-      strategy: PromiseOrValue<string>,
-      assets: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      strategy: string,
+      assets: BigNumberish,
+      receiver: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     getPricePerFullShare(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     maxDeposit(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     maxMint(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     maxRedeem(
-      owner: PromiseOrValue<BigNumberish>,
+      owner: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     maxWithdraw(
-      owner: PromiseOrValue<BigNumberish>,
+      owner: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     mint(
-      shares: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      shares: BigNumberish,
+      receiver: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
     previewDeposit(
-      assets: PromiseOrValue<BigNumberish>,
+      assets: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     previewMint(
-      shares: PromiseOrValue<BigNumberish>,
+      shares: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     previewRedeem(
-      shares: PromiseOrValue<BigNumberish>,
+      shares: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     previewWithdraw(
-      assets: PromiseOrValue<BigNumberish>,
+      assets: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     redeemERC4626(
-      shares: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<string>,
-      owner: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      shares: BigNumberish,
+      receiver: string,
+      owner: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
@@ -415,107 +398,98 @@ export interface ERC4626AP extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
-      arg0: PromiseOrValue<BigNumberish>,
-      arg1: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      arg0: BigNumberish,
+      arg1: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      from: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      from: BigNumberish,
+      to: BigNumberish,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     withdraw(
-      assets: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<string>,
-      owner: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      assets: BigNumberish,
+      receiver: string,
+      owner: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   asset(overrides?: CallOverrides): Promise<string>;
 
   balanceOf(
-    account: PromiseOrValue<BigNumberish>,
+    account: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   convertToAssets(
-    shares: PromiseOrValue<BigNumberish>,
+    shares: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   convertToShares(
-    assets: PromiseOrValue<BigNumberish>,
+    assets: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
   depositERC4626(
-    strategy: PromiseOrValue<string>,
-    assets: PromiseOrValue<BigNumberish>,
-    receiver: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    strategy: string,
+    assets: BigNumberish,
+    receiver: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   getPricePerFullShare(overrides?: CallOverrides): Promise<BigNumber>;
 
-  maxDeposit(
-    arg0: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  maxDeposit(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
-  maxMint(
-    arg0: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  maxMint(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
-  maxRedeem(
-    owner: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  maxRedeem(owner: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
   maxWithdraw(
-    owner: PromiseOrValue<BigNumberish>,
+    owner: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   mint(
-    shares: PromiseOrValue<BigNumberish>,
-    receiver: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    shares: BigNumberish,
+    receiver: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
   previewDeposit(
-    assets: PromiseOrValue<BigNumberish>,
+    assets: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   previewMint(
-    shares: PromiseOrValue<BigNumberish>,
+    shares: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   previewRedeem(
-    shares: PromiseOrValue<BigNumberish>,
+    shares: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   previewWithdraw(
-    assets: PromiseOrValue<BigNumberish>,
+    assets: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   redeemERC4626(
-    shares: PromiseOrValue<BigNumberish>,
-    receiver: PromiseOrValue<string>,
-    owner: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    shares: BigNumberish,
+    receiver: string,
+    owner: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
@@ -525,106 +499,103 @@ export interface ERC4626AP extends BaseContract {
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    arg0: PromiseOrValue<BigNumberish>,
-    arg1: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    arg0: BigNumberish,
+    arg1: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    from: PromiseOrValue<BigNumberish>,
-    to: PromiseOrValue<BigNumberish>,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    from: BigNumberish,
+    to: BigNumberish,
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   withdraw(
-    assets: PromiseOrValue<BigNumberish>,
-    receiver: PromiseOrValue<string>,
-    owner: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    assets: BigNumberish,
+    receiver: string,
+    owner: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     asset(overrides?: CallOverrides): Promise<string>;
 
     balanceOf(
-      account: PromiseOrValue<BigNumberish>,
+      account: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     convertToAssets(
-      shares: PromiseOrValue<BigNumberish>,
+      shares: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     convertToShares(
-      assets: PromiseOrValue<BigNumberish>,
+      assets: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
     depositERC4626(
-      strategy: PromiseOrValue<string>,
-      assets: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<BigNumberish>,
+      strategy: string,
+      assets: BigNumberish,
+      receiver: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getPricePerFullShare(overrides?: CallOverrides): Promise<BigNumber>;
 
     maxDeposit(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    maxMint(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    maxMint(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
     maxRedeem(
-      owner: PromiseOrValue<BigNumberish>,
+      owner: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     maxWithdraw(
-      owner: PromiseOrValue<BigNumberish>,
+      owner: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     mint(
-      shares: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<BigNumberish>,
+      shares: BigNumberish,
+      receiver: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
     previewDeposit(
-      assets: PromiseOrValue<BigNumberish>,
+      assets: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     previewMint(
-      shares: PromiseOrValue<BigNumberish>,
+      shares: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     previewRedeem(
-      shares: PromiseOrValue<BigNumberish>,
+      shares: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     previewWithdraw(
-      assets: PromiseOrValue<BigNumberish>,
+      assets: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     redeemERC4626(
-      shares: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<string>,
-      owner: PromiseOrValue<BigNumberish>,
+      shares: BigNumberish,
+      receiver: string,
+      owner: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -635,22 +606,22 @@ export interface ERC4626AP extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      arg0: PromiseOrValue<BigNumberish>,
-      arg1: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
+      arg1: BigNumberish,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     transferFrom(
-      from: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
+      from: BigNumberish,
+      to: BigNumberish,
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     withdraw(
-      assets: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<string>,
-      owner: PromiseOrValue<BigNumberish>,
+      assets: BigNumberish,
+      receiver: string,
+      owner: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
   };
@@ -696,84 +667,81 @@ export interface ERC4626AP extends BaseContract {
     asset(overrides?: CallOverrides): Promise<BigNumber>;
 
     balanceOf(
-      account: PromiseOrValue<BigNumberish>,
+      account: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     convertToAssets(
-      shares: PromiseOrValue<BigNumberish>,
+      shares: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     convertToShares(
-      assets: PromiseOrValue<BigNumberish>,
+      assets: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
     depositERC4626(
-      strategy: PromiseOrValue<string>,
-      assets: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      strategy: string,
+      assets: BigNumberish,
+      receiver: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     getPricePerFullShare(overrides?: CallOverrides): Promise<BigNumber>;
 
     maxDeposit(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    maxMint(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    maxMint(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
     maxRedeem(
-      owner: PromiseOrValue<BigNumberish>,
+      owner: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     maxWithdraw(
-      owner: PromiseOrValue<BigNumberish>,
+      owner: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     mint(
-      shares: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      shares: BigNumberish,
+      receiver: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
     previewDeposit(
-      assets: PromiseOrValue<BigNumberish>,
+      assets: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     previewMint(
-      shares: PromiseOrValue<BigNumberish>,
+      shares: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     previewRedeem(
-      shares: PromiseOrValue<BigNumberish>,
+      shares: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     previewWithdraw(
-      assets: PromiseOrValue<BigNumberish>,
+      assets: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     redeemERC4626(
-      shares: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<string>,
-      owner: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      shares: BigNumberish,
+      receiver: string,
+      owner: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
@@ -783,23 +751,23 @@ export interface ERC4626AP extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      arg0: PromiseOrValue<BigNumberish>,
-      arg1: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      arg0: BigNumberish,
+      arg1: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     transferFrom(
-      from: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      from: BigNumberish,
+      to: BigNumberish,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     withdraw(
-      assets: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<string>,
-      owner: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      assets: BigNumberish,
+      receiver: string,
+      owner: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
@@ -807,27 +775,27 @@ export interface ERC4626AP extends BaseContract {
     asset(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     balanceOf(
-      account: PromiseOrValue<BigNumberish>,
+      account: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     convertToAssets(
-      shares: PromiseOrValue<BigNumberish>,
+      shares: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     convertToShares(
-      assets: PromiseOrValue<BigNumberish>,
+      assets: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     depositERC4626(
-      strategy: PromiseOrValue<string>,
-      assets: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      strategy: string,
+      assets: BigNumberish,
+      receiver: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     getPricePerFullShare(
@@ -835,58 +803,58 @@ export interface ERC4626AP extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     maxDeposit(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     maxMint(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     maxRedeem(
-      owner: PromiseOrValue<BigNumberish>,
+      owner: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     maxWithdraw(
-      owner: PromiseOrValue<BigNumberish>,
+      owner: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     mint(
-      shares: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      shares: BigNumberish,
+      receiver: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     previewDeposit(
-      assets: PromiseOrValue<BigNumberish>,
+      assets: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     previewMint(
-      shares: PromiseOrValue<BigNumberish>,
+      shares: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     previewRedeem(
-      shares: PromiseOrValue<BigNumberish>,
+      shares: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     previewWithdraw(
-      assets: PromiseOrValue<BigNumberish>,
+      assets: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     redeemERC4626(
-      shares: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<string>,
-      owner: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      shares: BigNumberish,
+      receiver: string,
+      owner: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -896,23 +864,23 @@ export interface ERC4626AP extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      arg0: PromiseOrValue<BigNumberish>,
-      arg1: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      arg0: BigNumberish,
+      arg1: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      from: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      from: BigNumberish,
+      to: BigNumberish,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     withdraw(
-      assets: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<string>,
-      owner: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      assets: BigNumberish,
+      receiver: string,
+      owner: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

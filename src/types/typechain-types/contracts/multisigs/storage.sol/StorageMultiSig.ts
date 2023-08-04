@@ -18,7 +18,6 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../common";
 
 export interface StorageMultiSigInterface extends utils.Interface {
@@ -55,12 +54,9 @@ export interface StorageMultiSigInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "confirmations",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
-  encodeFunctionData(
-    functionFragment: "isOwner",
-    values: [PromiseOrValue<string>]
-  ): string;
+  encodeFunctionData(functionFragment: "isOwner", values: [string]): string;
   encodeFunctionData(
     functionFragment: "requireExecution",
     values?: undefined
@@ -75,7 +71,7 @@ export interface StorageMultiSigInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "transactions",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
 
   decodeFunctionResult(
@@ -143,14 +139,11 @@ export interface StorageMultiSig extends BaseContract {
     approvalsRequired(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     confirmations(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber] & { count: BigNumber }>;
 
-    isOwner(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    isOwner(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
 
     requireExecution(overrides?: CallOverrides): Promise<[boolean]>;
 
@@ -159,7 +152,7 @@ export interface StorageMultiSig extends BaseContract {
     transactionExpiry(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transactions(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<
       [string, BigNumber, string, boolean, BigNumber, string] & {
@@ -178,14 +171,11 @@ export interface StorageMultiSig extends BaseContract {
   approvalsRequired(overrides?: CallOverrides): Promise<BigNumber>;
 
   confirmations(
-    arg0: PromiseOrValue<BigNumberish>,
+    arg0: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  isOwner(
-    arg0: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
+  isOwner(arg0: string, overrides?: CallOverrides): Promise<boolean>;
 
   requireExecution(overrides?: CallOverrides): Promise<boolean>;
 
@@ -194,7 +184,7 @@ export interface StorageMultiSig extends BaseContract {
   transactionExpiry(overrides?: CallOverrides): Promise<BigNumber>;
 
   transactions(
-    arg0: PromiseOrValue<BigNumberish>,
+    arg0: BigNumberish,
     overrides?: CallOverrides
   ): Promise<
     [string, BigNumber, string, boolean, BigNumber, string] & {
@@ -213,14 +203,11 @@ export interface StorageMultiSig extends BaseContract {
     approvalsRequired(overrides?: CallOverrides): Promise<BigNumber>;
 
     confirmations(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    isOwner(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
+    isOwner(arg0: string, overrides?: CallOverrides): Promise<boolean>;
 
     requireExecution(overrides?: CallOverrides): Promise<boolean>;
 
@@ -229,7 +216,7 @@ export interface StorageMultiSig extends BaseContract {
     transactionExpiry(overrides?: CallOverrides): Promise<BigNumber>;
 
     transactions(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<
       [string, BigNumber, string, boolean, BigNumber, string] & {
@@ -251,14 +238,11 @@ export interface StorageMultiSig extends BaseContract {
     approvalsRequired(overrides?: CallOverrides): Promise<BigNumber>;
 
     confirmations(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    isOwner(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    isOwner(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     requireExecution(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -267,7 +251,7 @@ export interface StorageMultiSig extends BaseContract {
     transactionExpiry(overrides?: CallOverrides): Promise<BigNumber>;
 
     transactions(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
   };
@@ -278,12 +262,12 @@ export interface StorageMultiSig extends BaseContract {
     approvalsRequired(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     confirmations(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     isOwner(
-      arg0: PromiseOrValue<string>,
+      arg0: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -294,7 +278,7 @@ export interface StorageMultiSig extends BaseContract {
     transactionExpiry(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transactions(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };

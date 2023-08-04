@@ -24,16 +24,15 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../common";
 
 export declare namespace CollectorMessage {
   export type InstantiateMsgStruct = {
-    registrarContract: PromiseOrValue<string>;
-    timelockContract: PromiseOrValue<string>;
-    haloToken: PromiseOrValue<string>;
-    distributorContract: PromiseOrValue<string>;
-    rewardFactor: PromiseOrValue<BigNumberish>;
+    registrarContract: string;
+    timelockContract: string;
+    haloToken: string;
+    distributorContract: string;
+    rewardFactor: BigNumberish;
   };
 
   export type InstantiateMsgStructOutput = [
@@ -51,12 +50,12 @@ export declare namespace CollectorMessage {
   };
 
   export type ConfigResponseStruct = {
-    owner: PromiseOrValue<string>;
-    registrarContract: PromiseOrValue<string>;
-    haloToken: PromiseOrValue<string>;
-    timelockContract: PromiseOrValue<string>;
-    distributorContract: PromiseOrValue<string>;
-    rewardFactor: PromiseOrValue<BigNumberish>;
+    owner: string;
+    registrarContract: string;
+    haloToken: string;
+    timelockContract: string;
+    distributorContract: string;
+    rewardFactor: BigNumberish;
   };
 
   export type ConfigResponseStructOutput = [
@@ -106,17 +105,10 @@ export interface CollectorInterface extends utils.Interface {
     functionFragment: "swapRouter",
     values?: undefined
   ): string;
-  encodeFunctionData(
-    functionFragment: "sweep",
-    values: [PromiseOrValue<string>]
-  ): string;
+  encodeFunctionData(functionFragment: "sweep", values: [string]): string;
   encodeFunctionData(
     functionFragment: "updateConfig",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>
-    ]
+    values: [BigNumberish, string, string]
   ): string;
 
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
@@ -196,7 +188,7 @@ export interface Collector extends BaseContract {
   functions: {
     initialize(
       details: CollectorMessage.InstantiateMsgStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     queryConfig(
@@ -206,21 +198,21 @@ export interface Collector extends BaseContract {
     swapRouter(overrides?: CallOverrides): Promise<[string]>;
 
     sweep(
-      sweepToken: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      sweepToken: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     updateConfig(
-      rewardFactor: PromiseOrValue<BigNumberish>,
-      timelockContract: PromiseOrValue<string>,
-      registrarContract: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      rewardFactor: BigNumberish,
+      timelockContract: string,
+      registrarContract: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   initialize(
     details: CollectorMessage.InstantiateMsgStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   queryConfig(
@@ -230,15 +222,15 @@ export interface Collector extends BaseContract {
   swapRouter(overrides?: CallOverrides): Promise<string>;
 
   sweep(
-    sweepToken: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    sweepToken: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   updateConfig(
-    rewardFactor: PromiseOrValue<BigNumberish>,
-    timelockContract: PromiseOrValue<string>,
-    registrarContract: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    rewardFactor: BigNumberish,
+    timelockContract: string,
+    registrarContract: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -253,15 +245,12 @@ export interface Collector extends BaseContract {
 
     swapRouter(overrides?: CallOverrides): Promise<string>;
 
-    sweep(
-      sweepToken: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    sweep(sweepToken: string, overrides?: CallOverrides): Promise<void>;
 
     updateConfig(
-      rewardFactor: PromiseOrValue<BigNumberish>,
-      timelockContract: PromiseOrValue<string>,
-      registrarContract: PromiseOrValue<string>,
+      rewardFactor: BigNumberish,
+      timelockContract: string,
+      registrarContract: string,
       overrides?: CallOverrides
     ): Promise<boolean>;
   };
@@ -288,7 +277,7 @@ export interface Collector extends BaseContract {
   estimateGas: {
     initialize(
       details: CollectorMessage.InstantiateMsgStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     queryConfig(overrides?: CallOverrides): Promise<BigNumber>;
@@ -296,22 +285,22 @@ export interface Collector extends BaseContract {
     swapRouter(overrides?: CallOverrides): Promise<BigNumber>;
 
     sweep(
-      sweepToken: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      sweepToken: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     updateConfig(
-      rewardFactor: PromiseOrValue<BigNumberish>,
-      timelockContract: PromiseOrValue<string>,
-      registrarContract: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      rewardFactor: BigNumberish,
+      timelockContract: string,
+      registrarContract: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     initialize(
       details: CollectorMessage.InstantiateMsgStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     queryConfig(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -319,15 +308,15 @@ export interface Collector extends BaseContract {
     swapRouter(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     sweep(
-      sweepToken: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      sweepToken: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     updateConfig(
-      rewardFactor: PromiseOrValue<BigNumberish>,
-      timelockContract: PromiseOrValue<string>,
-      registrarContract: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      rewardFactor: BigNumberish,
+      timelockContract: string,
+      registrarContract: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

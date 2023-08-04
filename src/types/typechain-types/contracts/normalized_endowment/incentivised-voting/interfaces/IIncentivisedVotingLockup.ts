@@ -20,7 +20,6 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../../common";
 
 export interface IIncentivisedVotingLockupInterface extends utils.Interface {
@@ -55,22 +54,16 @@ export interface IIncentivisedVotingLockupInterface extends utils.Interface {
       | "withdraw"
   ): FunctionFragment;
 
-  encodeFunctionData(
-    functionFragment: "balanceOf",
-    values: [PromiseOrValue<string>]
-  ): string;
+  encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
   encodeFunctionData(
     functionFragment: "balanceOfAt",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "createLock",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    values: [BigNumberish, BigNumberish]
   ): string;
-  encodeFunctionData(
-    functionFragment: "eject",
-    values: [PromiseOrValue<string>]
-  ): string;
+  encodeFunctionData(functionFragment: "eject", values: [string]): string;
   encodeFunctionData(functionFragment: "exit", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "expireContract",
@@ -78,15 +71,15 @@ export interface IIncentivisedVotingLockupInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "getLastUserPoint",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "increaseLockAmount",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "increaseLockLength",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "totalSupply",
@@ -94,7 +87,7 @@ export interface IIncentivisedVotingLockupInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "totalSupplyAt",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "withdraw", values?: undefined): string;
 
@@ -162,38 +155,35 @@ export interface IIncentivisedVotingLockup extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    balanceOf(
-      owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    balanceOf(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     balanceOfAt(
-      owner: PromiseOrValue<string>,
-      blocknumber: PromiseOrValue<BigNumberish>,
+      owner: string,
+      blocknumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     createLock(
-      value: PromiseOrValue<BigNumberish>,
-      unlocktime: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      value: BigNumberish,
+      unlocktime: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     eject(
-      user: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      user: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     exit(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     expireContract(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     getLastUserPoint(
-      addr: PromiseOrValue<string>,
+      addr: string,
       overrides?: CallOverrides
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -204,59 +194,54 @@ export interface IIncentivisedVotingLockup extends BaseContract {
     >;
 
     increaseLockAmount(
-      value: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      value: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     increaseLockLength(
-      unlocktime: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      unlocktime: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     totalSupplyAt(
-      blocknumber: PromiseOrValue<BigNumberish>,
+      blocknumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     withdraw(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
-  balanceOf(
-    owner: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
   balanceOfAt(
-    owner: PromiseOrValue<string>,
-    blocknumber: PromiseOrValue<BigNumberish>,
+    owner: string,
+    blocknumber: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   createLock(
-    value: PromiseOrValue<BigNumberish>,
-    unlocktime: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    value: BigNumberish,
+    unlocktime: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   eject(
-    user: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    user: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
-  exit(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
+  exit(overrides?: Overrides & { from?: string }): Promise<ContractTransaction>;
 
   expireContract(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   getLastUserPoint(
-    addr: PromiseOrValue<string>,
+    addr: string,
     overrides?: CallOverrides
   ): Promise<
     [BigNumber, BigNumber, BigNumber] & {
@@ -267,55 +252,49 @@ export interface IIncentivisedVotingLockup extends BaseContract {
   >;
 
   increaseLockAmount(
-    value: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    value: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   increaseLockLength(
-    unlocktime: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    unlocktime: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   totalSupplyAt(
-    blocknumber: PromiseOrValue<BigNumberish>,
+    blocknumber: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   withdraw(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    balanceOf(
-      owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     balanceOfAt(
-      owner: PromiseOrValue<string>,
-      blocknumber: PromiseOrValue<BigNumberish>,
+      owner: string,
+      blocknumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     createLock(
-      value: PromiseOrValue<BigNumberish>,
-      unlocktime: PromiseOrValue<BigNumberish>,
+      value: BigNumberish,
+      unlocktime: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    eject(
-      user: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    eject(user: string, overrides?: CallOverrides): Promise<void>;
 
     exit(overrides?: CallOverrides): Promise<void>;
 
     expireContract(overrides?: CallOverrides): Promise<void>;
 
     getLastUserPoint(
-      addr: PromiseOrValue<string>,
+      addr: string,
       overrides?: CallOverrides
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -326,19 +305,19 @@ export interface IIncentivisedVotingLockup extends BaseContract {
     >;
 
     increaseLockAmount(
-      value: PromiseOrValue<BigNumberish>,
+      value: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     increaseLockLength(
-      unlocktime: PromiseOrValue<BigNumberish>,
+      unlocktime: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupplyAt(
-      blocknumber: PromiseOrValue<BigNumberish>,
+      blocknumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -348,118 +327,111 @@ export interface IIncentivisedVotingLockup extends BaseContract {
   filters: {};
 
   estimateGas: {
-    balanceOf(
-      owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     balanceOfAt(
-      owner: PromiseOrValue<string>,
-      blocknumber: PromiseOrValue<BigNumberish>,
+      owner: string,
+      blocknumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     createLock(
-      value: PromiseOrValue<BigNumberish>,
-      unlocktime: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      value: BigNumberish,
+      unlocktime: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     eject(
-      user: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      user: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
-    exit(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    exit(overrides?: Overrides & { from?: string }): Promise<BigNumber>;
 
     expireContract(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     getLastUserPoint(
-      addr: PromiseOrValue<string>,
+      addr: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     increaseLockAmount(
-      value: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      value: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     increaseLockLength(
-      unlocktime: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      unlocktime: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupplyAt(
-      blocknumber: PromiseOrValue<BigNumberish>,
+      blocknumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    withdraw(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    withdraw(overrides?: Overrides & { from?: string }): Promise<BigNumber>;
   };
 
   populateTransaction: {
     balanceOf(
-      owner: PromiseOrValue<string>,
+      owner: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     balanceOfAt(
-      owner: PromiseOrValue<string>,
-      blocknumber: PromiseOrValue<BigNumberish>,
+      owner: string,
+      blocknumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     createLock(
-      value: PromiseOrValue<BigNumberish>,
-      unlocktime: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      value: BigNumberish,
+      unlocktime: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     eject(
-      user: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      user: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     exit(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     expireContract(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     getLastUserPoint(
-      addr: PromiseOrValue<string>,
+      addr: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     increaseLockAmount(
-      value: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      value: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     increaseLockLength(
-      unlocktime: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      unlocktime: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSupplyAt(
-      blocknumber: PromiseOrValue<BigNumberish>,
+      blocknumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     withdraw(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

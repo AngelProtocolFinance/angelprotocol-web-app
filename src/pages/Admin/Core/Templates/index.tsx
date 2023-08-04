@@ -7,7 +7,6 @@ import FundSender from "../../templates/cw3/FundSender";
 import Nav from "./Nav";
 import FundConfig from "./index-fund/Config";
 import CreateFund from "./index-fund/CreateFund";
-import IndexFundOwner from "./index-fund/IndexFundOwner";
 import FundMembers from "./index-fund/Members";
 import RemoveFund from "./index-fund/RemoveFund";
 import RegistrarConfigExtension from "./registrar/ConfigExtension";
@@ -37,10 +36,6 @@ export default function Templates() {
           element={<FundMembers />}
         />
         <Route path={routes["index-fund.config"]} element={<FundConfig />} />
-        <Route
-          path={routes["index-fund.update-owner"]}
-          element={<IndexFundOwner />}
-        />
 
         {/** _registrar */}
         <Route

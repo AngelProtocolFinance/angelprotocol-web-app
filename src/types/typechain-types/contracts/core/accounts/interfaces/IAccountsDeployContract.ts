@@ -20,15 +20,14 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../../common";
 
 export declare namespace SubDaoLib {
   export type VeTypeDataStruct = {
-    value: PromiseOrValue<BigNumberish>;
-    scale: PromiseOrValue<BigNumberish>;
-    slope: PromiseOrValue<BigNumberish>;
-    power: PromiseOrValue<BigNumberish>;
+    value: BigNumberish;
+    scale: BigNumberish;
+    slope: BigNumberish;
+    power: BigNumberish;
   };
 
   export type VeTypeDataStructOutput = [
@@ -44,7 +43,7 @@ export declare namespace SubDaoLib {
   };
 
   export type VeTypeStruct = {
-    ve_type: PromiseOrValue<BigNumberish>;
+    ve_type: BigNumberish;
     data: SubDaoLib.VeTypeDataStruct;
   };
 
@@ -54,17 +53,17 @@ export declare namespace SubDaoLib {
   ] & { ve_type: number; data: SubDaoLib.VeTypeDataStructOutput };
 
   export type DaoTokenDataStruct = {
-    existingData: PromiseOrValue<string>;
-    newInitialSupply: PromiseOrValue<BigNumberish>;
-    newName: PromiseOrValue<string>;
-    newSymbol: PromiseOrValue<string>;
+    existingData: string;
+    newInitialSupply: BigNumberish;
+    newName: string;
+    newSymbol: string;
     veBondingType: SubDaoLib.VeTypeStruct;
-    veBondingName: PromiseOrValue<string>;
-    veBondingSymbol: PromiseOrValue<string>;
-    veBondingDecimals: PromiseOrValue<BigNumberish>;
-    veBondingReserveDenom: PromiseOrValue<string>;
-    veBondingReserveDecimals: PromiseOrValue<BigNumberish>;
-    veBondingPeriod: PromiseOrValue<BigNumberish>;
+    veBondingName: string;
+    veBondingSymbol: string;
+    veBondingDecimals: BigNumberish;
+    veBondingReserveDenom: string;
+    veBondingReserveDecimals: BigNumberish;
+    veBondingPeriod: BigNumberish;
   };
 
   export type DaoTokenDataStructOutput = [
@@ -94,7 +93,7 @@ export declare namespace SubDaoLib {
   };
 
   export type DaoTokenStruct = {
-    token: PromiseOrValue<BigNumberish>;
+    token: BigNumberish;
     data: SubDaoLib.DaoTokenDataStruct;
   };
 
@@ -106,19 +105,19 @@ export declare namespace SubDaoLib {
 
 export declare namespace SubDaoMessages {
   export type InstantiateMsgStruct = {
-    id: PromiseOrValue<BigNumberish>;
-    owner: PromiseOrValue<string>;
-    quorum: PromiseOrValue<BigNumberish>;
-    threshold: PromiseOrValue<BigNumberish>;
-    votingPeriod: PromiseOrValue<BigNumberish>;
-    timelockPeriod: PromiseOrValue<BigNumberish>;
-    expirationPeriod: PromiseOrValue<BigNumberish>;
-    proposalDeposit: PromiseOrValue<BigNumberish>;
-    snapshotPeriod: PromiseOrValue<BigNumberish>;
+    id: BigNumberish;
+    owner: string;
+    quorum: BigNumberish;
+    threshold: BigNumberish;
+    votingPeriod: BigNumberish;
+    timelockPeriod: BigNumberish;
+    expirationPeriod: BigNumberish;
+    proposalDeposit: BigNumberish;
+    snapshotPeriod: BigNumberish;
     token: SubDaoLib.DaoTokenStruct;
-    endowType: PromiseOrValue<BigNumberish>;
-    endowOwner: PromiseOrValue<string>;
-    registrarContract: PromiseOrValue<string>;
+    endowType: BigNumberish;
+    endowOwner: string;
+    registrarContract: string;
   };
 
   export type InstantiateMsgStructOutput = [
@@ -201,13 +200,13 @@ export interface IAccountsDeployContract extends BaseContract {
   functions: {
     createDaoContract(
       createdaomessage: SubDaoMessages.InstantiateMsgStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   createDaoContract(
     createdaomessage: SubDaoMessages.InstantiateMsgStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -222,14 +221,14 @@ export interface IAccountsDeployContract extends BaseContract {
   estimateGas: {
     createDaoContract(
       createdaomessage: SubDaoMessages.InstantiateMsgStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     createDaoContract(
       createdaomessage: SubDaoMessages.InstantiateMsgStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

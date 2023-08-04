@@ -25,19 +25,22 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../common";
 
 export interface GovInterface extends utils.Interface {
   functions: {
     "BALLOT_TYPEHASH()": FunctionFragment;
+    "CLOCK_MODE()": FunctionFragment;
     "COUNTING_MODE()": FunctionFragment;
     "EXTENDED_BALLOT_TYPEHASH()": FunctionFragment;
+    "cancel(address[],uint256[],bytes[],bytes32)": FunctionFragment;
     "castVote(uint256,uint8)": FunctionFragment;
     "castVoteBySig(uint256,uint8,uint8,bytes32,bytes32)": FunctionFragment;
     "castVoteWithReason(uint256,uint8,string)": FunctionFragment;
     "castVoteWithReasonAndParams(uint256,uint8,string,bytes)": FunctionFragment;
     "castVoteWithReasonAndParamsBySig(uint256,uint8,string,bytes,uint8,bytes32,bytes32)": FunctionFragment;
+    "clock()": FunctionFragment;
+    "eip712Domain()": FunctionFragment;
     "execute(address[],uint256[],bytes[],bytes32)": FunctionFragment;
     "getVotes(address,uint256)": FunctionFragment;
     "getVotesWithParams(address,uint256,bytes)": FunctionFragment;
@@ -50,6 +53,7 @@ export interface GovInterface extends utils.Interface {
     "onERC721Received(address,address,uint256,bytes)": FunctionFragment;
     "proposalDeadline(uint256)": FunctionFragment;
     "proposalEta(uint256)": FunctionFragment;
+    "proposalProposer(uint256)": FunctionFragment;
     "proposalSnapshot(uint256)": FunctionFragment;
     "proposalThreshold()": FunctionFragment;
     "proposalVotes(uint256)": FunctionFragment;
@@ -77,13 +81,17 @@ export interface GovInterface extends utils.Interface {
   getFunction(
     nameOrSignatureOrTopic:
       | "BALLOT_TYPEHASH"
+      | "CLOCK_MODE"
       | "COUNTING_MODE"
       | "EXTENDED_BALLOT_TYPEHASH"
+      | "cancel"
       | "castVote"
       | "castVoteBySig"
       | "castVoteWithReason"
       | "castVoteWithReasonAndParams"
       | "castVoteWithReasonAndParamsBySig"
+      | "clock"
+      | "eip712Domain"
       | "execute"
       | "getVotes"
       | "getVotesWithParams"
@@ -96,6 +104,7 @@ export interface GovInterface extends utils.Interface {
       | "onERC721Received"
       | "proposalDeadline"
       | "proposalEta"
+      | "proposalProposer"
       | "proposalSnapshot"
       | "proposalThreshold"
       | "proposalVotes"
@@ -125,6 +134,10 @@ export interface GovInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "CLOCK_MODE",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "COUNTING_MODE",
     values?: undefined
   ): string;
@@ -133,134 +146,101 @@ export interface GovInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "cancel",
+    values: [string[], BigNumberish[], BytesLike[], BytesLike]
+  ): string;
+  encodeFunctionData(
     functionFragment: "castVote",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    values: [BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "castVoteBySig",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>
-    ]
+    values: [BigNumberish, BigNumberish, BigNumberish, BytesLike, BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "castVoteWithReason",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>
-    ]
+    values: [BigNumberish, BigNumberish, string]
   ): string;
   encodeFunctionData(
     functionFragment: "castVoteWithReasonAndParams",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BytesLike>
-    ]
+    values: [BigNumberish, BigNumberish, string, BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "castVoteWithReasonAndParamsBySig",
     values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>
+      BigNumberish,
+      BigNumberish,
+      string,
+      BytesLike,
+      BigNumberish,
+      BytesLike,
+      BytesLike
     ]
+  ): string;
+  encodeFunctionData(functionFragment: "clock", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "eip712Domain",
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "execute",
-    values: [
-      PromiseOrValue<string>[],
-      PromiseOrValue<BigNumberish>[],
-      PromiseOrValue<BytesLike>[],
-      PromiseOrValue<BytesLike>
-    ]
+    values: [string[], BigNumberish[], BytesLike[], BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "getVotes",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "getVotesWithParams",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>
-    ]
+    values: [string, BigNumberish, BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "hasVoted",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+    values: [BigNumberish, string]
   ): string;
   encodeFunctionData(
     functionFragment: "hashProposal",
-    values: [
-      PromiseOrValue<string>[],
-      PromiseOrValue<BigNumberish>[],
-      PromiseOrValue<BytesLike>[],
-      PromiseOrValue<BytesLike>
-    ]
+    values: [string[], BigNumberish[], BytesLike[], BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "initialize",
     values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
+      string,
+      string,
+      BigNumberish,
+      BigNumberish,
+      BigNumberish,
+      BigNumberish
     ]
   ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "onERC1155BatchReceived",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>[],
-      PromiseOrValue<BigNumberish>[],
-      PromiseOrValue<BytesLike>
-    ]
+    values: [string, string, BigNumberish[], BigNumberish[], BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "onERC1155Received",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>
-    ]
+    values: [string, string, BigNumberish, BigNumberish, BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "onERC721Received",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>
-    ]
+    values: [string, string, BigNumberish, BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "proposalDeadline",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "proposalEta",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "proposalProposer",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "proposalSnapshot",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "proposalThreshold",
@@ -268,29 +248,19 @@ export interface GovInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "proposalVotes",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "propose",
-    values: [
-      PromiseOrValue<string>[],
-      PromiseOrValue<BigNumberish>[],
-      PromiseOrValue<BytesLike>[],
-      PromiseOrValue<string>
-    ]
+    values: [string[], BigNumberish[], BytesLike[], string]
   ): string;
   encodeFunctionData(
     functionFragment: "queue",
-    values: [
-      PromiseOrValue<string>[],
-      PromiseOrValue<BigNumberish>[],
-      PromiseOrValue<BytesLike>[],
-      PromiseOrValue<BytesLike>
-    ]
+    values: [string[], BigNumberish[], BytesLike[], BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "quorum",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "quorumDenominator",
@@ -298,7 +268,7 @@ export interface GovInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "quorumNumerator(uint256)",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "quorumNumerator()",
@@ -306,41 +276,34 @@ export interface GovInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "relay",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>
-    ]
+    values: [string, BigNumberish, BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "setProposalThreshold",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "setVotingDelay",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "setVotingPeriod",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
-  encodeFunctionData(
-    functionFragment: "state",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
+  encodeFunctionData(functionFragment: "state", values: [BigNumberish]): string;
   encodeFunctionData(
     functionFragment: "supportsInterface",
-    values: [PromiseOrValue<BytesLike>]
+    values: [BytesLike]
   ): string;
   encodeFunctionData(functionFragment: "timelock", values?: undefined): string;
   encodeFunctionData(functionFragment: "token", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "updateQuorumNumerator",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "updateTimelock",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(functionFragment: "version", values?: undefined): string;
   encodeFunctionData(
@@ -356,6 +319,7 @@ export interface GovInterface extends utils.Interface {
     functionFragment: "BALLOT_TYPEHASH",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "CLOCK_MODE", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "COUNTING_MODE",
     data: BytesLike
@@ -364,6 +328,7 @@ export interface GovInterface extends utils.Interface {
     functionFragment: "EXTENDED_BALLOT_TYPEHASH",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "cancel", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "castVote", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "castVoteBySig",
@@ -379,6 +344,11 @@ export interface GovInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "castVoteWithReasonAndParamsBySig",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "clock", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "eip712Domain",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "execute", data: BytesLike): Result;
@@ -412,6 +382,10 @@ export interface GovInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "proposalEta",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "proposalProposer",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -480,6 +454,7 @@ export interface GovInterface extends utils.Interface {
   ): Result;
 
   events: {
+    "EIP712DomainChanged()": EventFragment;
     "Initialized(uint8)": EventFragment;
     "ProposalCanceled(uint256)": EventFragment;
     "ProposalCreated(uint256,address,address[],uint256[],string[],bytes[],uint256,uint256,string)": EventFragment;
@@ -494,6 +469,7 @@ export interface GovInterface extends utils.Interface {
     "VotingPeriodSet(uint256,uint256)": EventFragment;
   };
 
+  getEvent(nameOrSignatureOrTopic: "EIP712DomainChanged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ProposalCanceled"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ProposalCreated"): EventFragment;
@@ -507,6 +483,15 @@ export interface GovInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: "VotingDelaySet"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "VotingPeriodSet"): EventFragment;
 }
+
+export interface EIP712DomainChangedEventObject {}
+export type EIP712DomainChangedEvent = TypedEvent<
+  [],
+  EIP712DomainChangedEventObject
+>;
+
+export type EIP712DomainChangedEventFilter =
+  TypedEventFilter<EIP712DomainChangedEvent>;
 
 export interface InitializedEventObject {
   version: number;
@@ -533,8 +518,8 @@ export interface ProposalCreatedEventObject {
   values: BigNumber[];
   signatures: string[];
   calldatas: string[];
-  startBlock: BigNumber;
-  endBlock: BigNumber;
+  voteStart: BigNumber;
+  voteEnd: BigNumber;
   description: string;
 }
 export type ProposalCreatedEvent = TypedEvent<
@@ -692,143 +677,174 @@ export interface Gov extends BaseContract {
   functions: {
     BALLOT_TYPEHASH(overrides?: CallOverrides): Promise<[string]>;
 
+    CLOCK_MODE(overrides?: CallOverrides): Promise<[string]>;
+
     COUNTING_MODE(overrides?: CallOverrides): Promise<[string]>;
 
     EXTENDED_BALLOT_TYPEHASH(overrides?: CallOverrides): Promise<[string]>;
 
+    cancel(
+      targets: string[],
+      values: BigNumberish[],
+      calldatas: BytesLike[],
+      descriptionHash: BytesLike,
+      overrides?: Overrides & { from?: string }
+    ): Promise<ContractTransaction>;
+
     castVote(
-      proposalId: PromiseOrValue<BigNumberish>,
-      support: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      proposalId: BigNumberish,
+      support: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     castVoteBySig(
-      proposalId: PromiseOrValue<BigNumberish>,
-      support: PromiseOrValue<BigNumberish>,
-      v: PromiseOrValue<BigNumberish>,
-      r: PromiseOrValue<BytesLike>,
-      s: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      proposalId: BigNumberish,
+      support: BigNumberish,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     castVoteWithReason(
-      proposalId: PromiseOrValue<BigNumberish>,
-      support: PromiseOrValue<BigNumberish>,
-      reason: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      proposalId: BigNumberish,
+      support: BigNumberish,
+      reason: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     castVoteWithReasonAndParams(
-      proposalId: PromiseOrValue<BigNumberish>,
-      support: PromiseOrValue<BigNumberish>,
-      reason: PromiseOrValue<string>,
-      params: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      proposalId: BigNumberish,
+      support: BigNumberish,
+      reason: string,
+      params: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     castVoteWithReasonAndParamsBySig(
-      proposalId: PromiseOrValue<BigNumberish>,
-      support: PromiseOrValue<BigNumberish>,
-      reason: PromiseOrValue<string>,
-      params: PromiseOrValue<BytesLike>,
-      v: PromiseOrValue<BigNumberish>,
-      r: PromiseOrValue<BytesLike>,
-      s: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      proposalId: BigNumberish,
+      support: BigNumberish,
+      reason: string,
+      params: BytesLike,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
+    clock(overrides?: CallOverrides): Promise<[number]>;
+
+    eip712Domain(
+      overrides?: CallOverrides
+    ): Promise<
+      [string, string, string, BigNumber, string, string, BigNumber[]] & {
+        fields: string;
+        name: string;
+        version: string;
+        chainId: BigNumber;
+        verifyingContract: string;
+        salt: string;
+        extensions: BigNumber[];
+      }
+    >;
+
     execute(
-      targets: PromiseOrValue<string>[],
-      values: PromiseOrValue<BigNumberish>[],
-      calldatas: PromiseOrValue<BytesLike>[],
-      descriptionHash: PromiseOrValue<BytesLike>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      targets: string[],
+      values: BigNumberish[],
+      calldatas: BytesLike[],
+      descriptionHash: BytesLike,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     getVotes(
-      account: PromiseOrValue<string>,
-      blockNumber: PromiseOrValue<BigNumberish>,
+      account: string,
+      timepoint: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     getVotesWithParams(
-      account: PromiseOrValue<string>,
-      blockNumber: PromiseOrValue<BigNumberish>,
-      params: PromiseOrValue<BytesLike>,
+      account: string,
+      timepoint: BigNumberish,
+      params: BytesLike,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     hasVoted(
-      proposalId: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
+      proposalId: BigNumberish,
+      account: string,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
     hashProposal(
-      targets: PromiseOrValue<string>[],
-      values: PromiseOrValue<BigNumberish>[],
-      calldatas: PromiseOrValue<BytesLike>[],
-      descriptionHash: PromiseOrValue<BytesLike>,
+      targets: string[],
+      values: BigNumberish[],
+      calldatas: BytesLike[],
+      descriptionHash: BytesLike,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     initialize(
-      token: PromiseOrValue<string>,
-      timelock: PromiseOrValue<string>,
-      initialVotingDelay: PromiseOrValue<BigNumberish>,
-      initialVotingPeriod: PromiseOrValue<BigNumberish>,
-      initialProposalThreshold: PromiseOrValue<BigNumberish>,
-      quorumNumeratorValue: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      token: string,
+      timelock: string,
+      initialVotingDelay: BigNumberish,
+      initialVotingPeriod: BigNumberish,
+      initialProposalThreshold: BigNumberish,
+      quorumNumeratorValue: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
     onERC1155BatchReceived(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
-      arg2: PromiseOrValue<BigNumberish>[],
-      arg3: PromiseOrValue<BigNumberish>[],
-      arg4: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      arg0: string,
+      arg1: string,
+      arg2: BigNumberish[],
+      arg3: BigNumberish[],
+      arg4: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     onERC1155Received(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
-      arg2: PromiseOrValue<BigNumberish>,
-      arg3: PromiseOrValue<BigNumberish>,
-      arg4: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      arg0: string,
+      arg1: string,
+      arg2: BigNumberish,
+      arg3: BigNumberish,
+      arg4: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     onERC721Received(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
-      arg2: PromiseOrValue<BigNumberish>,
-      arg3: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      arg0: string,
+      arg1: string,
+      arg2: BigNumberish,
+      arg3: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     proposalDeadline(
-      proposalId: PromiseOrValue<BigNumberish>,
+      proposalId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     proposalEta(
-      proposalId: PromiseOrValue<BigNumberish>,
+      proposalId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
+    proposalProposer(
+      proposalId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
+
     proposalSnapshot(
-      proposalId: PromiseOrValue<BigNumberish>,
+      proposalId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     proposalThreshold(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     proposalVotes(
-      proposalId: PromiseOrValue<BigNumberish>,
+      proposalId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -839,64 +855,64 @@ export interface Gov extends BaseContract {
     >;
 
     propose(
-      targets: PromiseOrValue<string>[],
-      values: PromiseOrValue<BigNumberish>[],
-      calldatas: PromiseOrValue<BytesLike>[],
-      description: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      targets: string[],
+      values: BigNumberish[],
+      calldatas: BytesLike[],
+      description: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     queue(
-      targets: PromiseOrValue<string>[],
-      values: PromiseOrValue<BigNumberish>[],
-      calldatas: PromiseOrValue<BytesLike>[],
-      descriptionHash: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      targets: string[],
+      values: BigNumberish[],
+      calldatas: BytesLike[],
+      descriptionHash: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     quorum(
-      blockNumber: PromiseOrValue<BigNumberish>,
+      blockNumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     quorumDenominator(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     "quorumNumerator(uint256)"(
-      blockNumber: PromiseOrValue<BigNumberish>,
+      timepoint: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     "quorumNumerator()"(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     relay(
-      target: PromiseOrValue<string>,
-      value: PromiseOrValue<BigNumberish>,
-      data: PromiseOrValue<BytesLike>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      target: string,
+      value: BigNumberish,
+      data: BytesLike,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     setProposalThreshold(
-      newProposalThreshold: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newProposalThreshold: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     setVotingDelay(
-      newVotingDelay: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newVotingDelay: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     setVotingPeriod(
-      newVotingPeriod: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newVotingPeriod: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     state(
-      proposalId: PromiseOrValue<BigNumberish>,
+      proposalId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[number]>;
 
     supportsInterface(
-      interfaceId: PromiseOrValue<BytesLike>,
+      interfaceId: BytesLike,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
@@ -905,13 +921,13 @@ export interface Gov extends BaseContract {
     token(overrides?: CallOverrides): Promise<[string]>;
 
     updateQuorumNumerator(
-      newQuorumNumerator: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newQuorumNumerator: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     updateTimelock(
-      newTimelock: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newTimelock: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     version(overrides?: CallOverrides): Promise<[string]>;
@@ -923,143 +939,174 @@ export interface Gov extends BaseContract {
 
   BALLOT_TYPEHASH(overrides?: CallOverrides): Promise<string>;
 
+  CLOCK_MODE(overrides?: CallOverrides): Promise<string>;
+
   COUNTING_MODE(overrides?: CallOverrides): Promise<string>;
 
   EXTENDED_BALLOT_TYPEHASH(overrides?: CallOverrides): Promise<string>;
 
+  cancel(
+    targets: string[],
+    values: BigNumberish[],
+    calldatas: BytesLike[],
+    descriptionHash: BytesLike,
+    overrides?: Overrides & { from?: string }
+  ): Promise<ContractTransaction>;
+
   castVote(
-    proposalId: PromiseOrValue<BigNumberish>,
-    support: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    proposalId: BigNumberish,
+    support: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   castVoteBySig(
-    proposalId: PromiseOrValue<BigNumberish>,
-    support: PromiseOrValue<BigNumberish>,
-    v: PromiseOrValue<BigNumberish>,
-    r: PromiseOrValue<BytesLike>,
-    s: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    proposalId: BigNumberish,
+    support: BigNumberish,
+    v: BigNumberish,
+    r: BytesLike,
+    s: BytesLike,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   castVoteWithReason(
-    proposalId: PromiseOrValue<BigNumberish>,
-    support: PromiseOrValue<BigNumberish>,
-    reason: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    proposalId: BigNumberish,
+    support: BigNumberish,
+    reason: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   castVoteWithReasonAndParams(
-    proposalId: PromiseOrValue<BigNumberish>,
-    support: PromiseOrValue<BigNumberish>,
-    reason: PromiseOrValue<string>,
-    params: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    proposalId: BigNumberish,
+    support: BigNumberish,
+    reason: string,
+    params: BytesLike,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   castVoteWithReasonAndParamsBySig(
-    proposalId: PromiseOrValue<BigNumberish>,
-    support: PromiseOrValue<BigNumberish>,
-    reason: PromiseOrValue<string>,
-    params: PromiseOrValue<BytesLike>,
-    v: PromiseOrValue<BigNumberish>,
-    r: PromiseOrValue<BytesLike>,
-    s: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    proposalId: BigNumberish,
+    support: BigNumberish,
+    reason: string,
+    params: BytesLike,
+    v: BigNumberish,
+    r: BytesLike,
+    s: BytesLike,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
+  clock(overrides?: CallOverrides): Promise<number>;
+
+  eip712Domain(
+    overrides?: CallOverrides
+  ): Promise<
+    [string, string, string, BigNumber, string, string, BigNumber[]] & {
+      fields: string;
+      name: string;
+      version: string;
+      chainId: BigNumber;
+      verifyingContract: string;
+      salt: string;
+      extensions: BigNumber[];
+    }
+  >;
+
   execute(
-    targets: PromiseOrValue<string>[],
-    values: PromiseOrValue<BigNumberish>[],
-    calldatas: PromiseOrValue<BytesLike>[],
-    descriptionHash: PromiseOrValue<BytesLike>,
-    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    targets: string[],
+    values: BigNumberish[],
+    calldatas: BytesLike[],
+    descriptionHash: BytesLike,
+    overrides?: PayableOverrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   getVotes(
-    account: PromiseOrValue<string>,
-    blockNumber: PromiseOrValue<BigNumberish>,
+    account: string,
+    timepoint: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   getVotesWithParams(
-    account: PromiseOrValue<string>,
-    blockNumber: PromiseOrValue<BigNumberish>,
-    params: PromiseOrValue<BytesLike>,
+    account: string,
+    timepoint: BigNumberish,
+    params: BytesLike,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   hasVoted(
-    proposalId: PromiseOrValue<BigNumberish>,
-    account: PromiseOrValue<string>,
+    proposalId: BigNumberish,
+    account: string,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
   hashProposal(
-    targets: PromiseOrValue<string>[],
-    values: PromiseOrValue<BigNumberish>[],
-    calldatas: PromiseOrValue<BytesLike>[],
-    descriptionHash: PromiseOrValue<BytesLike>,
+    targets: string[],
+    values: BigNumberish[],
+    calldatas: BytesLike[],
+    descriptionHash: BytesLike,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   initialize(
-    token: PromiseOrValue<string>,
-    timelock: PromiseOrValue<string>,
-    initialVotingDelay: PromiseOrValue<BigNumberish>,
-    initialVotingPeriod: PromiseOrValue<BigNumberish>,
-    initialProposalThreshold: PromiseOrValue<BigNumberish>,
-    quorumNumeratorValue: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    token: string,
+    timelock: string,
+    initialVotingDelay: BigNumberish,
+    initialVotingPeriod: BigNumberish,
+    initialProposalThreshold: BigNumberish,
+    quorumNumeratorValue: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
   onERC1155BatchReceived(
-    arg0: PromiseOrValue<string>,
-    arg1: PromiseOrValue<string>,
-    arg2: PromiseOrValue<BigNumberish>[],
-    arg3: PromiseOrValue<BigNumberish>[],
-    arg4: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    arg0: string,
+    arg1: string,
+    arg2: BigNumberish[],
+    arg3: BigNumberish[],
+    arg4: BytesLike,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   onERC1155Received(
-    arg0: PromiseOrValue<string>,
-    arg1: PromiseOrValue<string>,
-    arg2: PromiseOrValue<BigNumberish>,
-    arg3: PromiseOrValue<BigNumberish>,
-    arg4: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    arg0: string,
+    arg1: string,
+    arg2: BigNumberish,
+    arg3: BigNumberish,
+    arg4: BytesLike,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   onERC721Received(
-    arg0: PromiseOrValue<string>,
-    arg1: PromiseOrValue<string>,
-    arg2: PromiseOrValue<BigNumberish>,
-    arg3: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    arg0: string,
+    arg1: string,
+    arg2: BigNumberish,
+    arg3: BytesLike,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   proposalDeadline(
-    proposalId: PromiseOrValue<BigNumberish>,
+    proposalId: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   proposalEta(
-    proposalId: PromiseOrValue<BigNumberish>,
+    proposalId: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
+  proposalProposer(
+    proposalId: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<string>;
+
   proposalSnapshot(
-    proposalId: PromiseOrValue<BigNumberish>,
+    proposalId: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   proposalThreshold(overrides?: CallOverrides): Promise<BigNumber>;
 
   proposalVotes(
-    proposalId: PromiseOrValue<BigNumberish>,
+    proposalId: BigNumberish,
     overrides?: CallOverrides
   ): Promise<
     [BigNumber, BigNumber, BigNumber] & {
@@ -1070,64 +1117,61 @@ export interface Gov extends BaseContract {
   >;
 
   propose(
-    targets: PromiseOrValue<string>[],
-    values: PromiseOrValue<BigNumberish>[],
-    calldatas: PromiseOrValue<BytesLike>[],
-    description: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    targets: string[],
+    values: BigNumberish[],
+    calldatas: BytesLike[],
+    description: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   queue(
-    targets: PromiseOrValue<string>[],
-    values: PromiseOrValue<BigNumberish>[],
-    calldatas: PromiseOrValue<BytesLike>[],
-    descriptionHash: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    targets: string[],
+    values: BigNumberish[],
+    calldatas: BytesLike[],
+    descriptionHash: BytesLike,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   quorum(
-    blockNumber: PromiseOrValue<BigNumberish>,
+    blockNumber: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   quorumDenominator(overrides?: CallOverrides): Promise<BigNumber>;
 
   "quorumNumerator(uint256)"(
-    blockNumber: PromiseOrValue<BigNumberish>,
+    timepoint: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   "quorumNumerator()"(overrides?: CallOverrides): Promise<BigNumber>;
 
   relay(
-    target: PromiseOrValue<string>,
-    value: PromiseOrValue<BigNumberish>,
-    data: PromiseOrValue<BytesLike>,
-    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    target: string,
+    value: BigNumberish,
+    data: BytesLike,
+    overrides?: PayableOverrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   setProposalThreshold(
-    newProposalThreshold: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    newProposalThreshold: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   setVotingDelay(
-    newVotingDelay: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    newVotingDelay: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   setVotingPeriod(
-    newVotingPeriod: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    newVotingPeriod: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
-  state(
-    proposalId: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<number>;
+  state(proposalId: BigNumberish, overrides?: CallOverrides): Promise<number>;
 
   supportsInterface(
-    interfaceId: PromiseOrValue<BytesLike>,
+    interfaceId: BytesLike,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
@@ -1136,13 +1180,13 @@ export interface Gov extends BaseContract {
   token(overrides?: CallOverrides): Promise<string>;
 
   updateQuorumNumerator(
-    newQuorumNumerator: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    newQuorumNumerator: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   updateTimelock(
-    newTimelock: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    newTimelock: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   version(overrides?: CallOverrides): Promise<string>;
@@ -1154,143 +1198,174 @@ export interface Gov extends BaseContract {
   callStatic: {
     BALLOT_TYPEHASH(overrides?: CallOverrides): Promise<string>;
 
+    CLOCK_MODE(overrides?: CallOverrides): Promise<string>;
+
     COUNTING_MODE(overrides?: CallOverrides): Promise<string>;
 
     EXTENDED_BALLOT_TYPEHASH(overrides?: CallOverrides): Promise<string>;
 
+    cancel(
+      targets: string[],
+      values: BigNumberish[],
+      calldatas: BytesLike[],
+      descriptionHash: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     castVote(
-      proposalId: PromiseOrValue<BigNumberish>,
-      support: PromiseOrValue<BigNumberish>,
+      proposalId: BigNumberish,
+      support: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     castVoteBySig(
-      proposalId: PromiseOrValue<BigNumberish>,
-      support: PromiseOrValue<BigNumberish>,
-      v: PromiseOrValue<BigNumberish>,
-      r: PromiseOrValue<BytesLike>,
-      s: PromiseOrValue<BytesLike>,
+      proposalId: BigNumberish,
+      support: BigNumberish,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     castVoteWithReason(
-      proposalId: PromiseOrValue<BigNumberish>,
-      support: PromiseOrValue<BigNumberish>,
-      reason: PromiseOrValue<string>,
+      proposalId: BigNumberish,
+      support: BigNumberish,
+      reason: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     castVoteWithReasonAndParams(
-      proposalId: PromiseOrValue<BigNumberish>,
-      support: PromiseOrValue<BigNumberish>,
-      reason: PromiseOrValue<string>,
-      params: PromiseOrValue<BytesLike>,
+      proposalId: BigNumberish,
+      support: BigNumberish,
+      reason: string,
+      params: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     castVoteWithReasonAndParamsBySig(
-      proposalId: PromiseOrValue<BigNumberish>,
-      support: PromiseOrValue<BigNumberish>,
-      reason: PromiseOrValue<string>,
-      params: PromiseOrValue<BytesLike>,
-      v: PromiseOrValue<BigNumberish>,
-      r: PromiseOrValue<BytesLike>,
-      s: PromiseOrValue<BytesLike>,
+      proposalId: BigNumberish,
+      support: BigNumberish,
+      reason: string,
+      params: BytesLike,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    clock(overrides?: CallOverrides): Promise<number>;
+
+    eip712Domain(
+      overrides?: CallOverrides
+    ): Promise<
+      [string, string, string, BigNumber, string, string, BigNumber[]] & {
+        fields: string;
+        name: string;
+        version: string;
+        chainId: BigNumber;
+        verifyingContract: string;
+        salt: string;
+        extensions: BigNumber[];
+      }
+    >;
+
     execute(
-      targets: PromiseOrValue<string>[],
-      values: PromiseOrValue<BigNumberish>[],
-      calldatas: PromiseOrValue<BytesLike>[],
-      descriptionHash: PromiseOrValue<BytesLike>,
+      targets: string[],
+      values: BigNumberish[],
+      calldatas: BytesLike[],
+      descriptionHash: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getVotes(
-      account: PromiseOrValue<string>,
-      blockNumber: PromiseOrValue<BigNumberish>,
+      account: string,
+      timepoint: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getVotesWithParams(
-      account: PromiseOrValue<string>,
-      blockNumber: PromiseOrValue<BigNumberish>,
-      params: PromiseOrValue<BytesLike>,
+      account: string,
+      timepoint: BigNumberish,
+      params: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     hasVoted(
-      proposalId: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
+      proposalId: BigNumberish,
+      account: string,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     hashProposal(
-      targets: PromiseOrValue<string>[],
-      values: PromiseOrValue<BigNumberish>[],
-      calldatas: PromiseOrValue<BytesLike>[],
-      descriptionHash: PromiseOrValue<BytesLike>,
+      targets: string[],
+      values: BigNumberish[],
+      calldatas: BytesLike[],
+      descriptionHash: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     initialize(
-      token: PromiseOrValue<string>,
-      timelock: PromiseOrValue<string>,
-      initialVotingDelay: PromiseOrValue<BigNumberish>,
-      initialVotingPeriod: PromiseOrValue<BigNumberish>,
-      initialProposalThreshold: PromiseOrValue<BigNumberish>,
-      quorumNumeratorValue: PromiseOrValue<BigNumberish>,
+      token: string,
+      timelock: string,
+      initialVotingDelay: BigNumberish,
+      initialVotingPeriod: BigNumberish,
+      initialProposalThreshold: BigNumberish,
+      quorumNumeratorValue: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
     onERC1155BatchReceived(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
-      arg2: PromiseOrValue<BigNumberish>[],
-      arg3: PromiseOrValue<BigNumberish>[],
-      arg4: PromiseOrValue<BytesLike>,
+      arg0: string,
+      arg1: string,
+      arg2: BigNumberish[],
+      arg3: BigNumberish[],
+      arg4: BytesLike,
       overrides?: CallOverrides
     ): Promise<string>;
 
     onERC1155Received(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
-      arg2: PromiseOrValue<BigNumberish>,
-      arg3: PromiseOrValue<BigNumberish>,
-      arg4: PromiseOrValue<BytesLike>,
+      arg0: string,
+      arg1: string,
+      arg2: BigNumberish,
+      arg3: BigNumberish,
+      arg4: BytesLike,
       overrides?: CallOverrides
     ): Promise<string>;
 
     onERC721Received(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
-      arg2: PromiseOrValue<BigNumberish>,
-      arg3: PromiseOrValue<BytesLike>,
+      arg0: string,
+      arg1: string,
+      arg2: BigNumberish,
+      arg3: BytesLike,
       overrides?: CallOverrides
     ): Promise<string>;
 
     proposalDeadline(
-      proposalId: PromiseOrValue<BigNumberish>,
+      proposalId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     proposalEta(
-      proposalId: PromiseOrValue<BigNumberish>,
+      proposalId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    proposalProposer(
+      proposalId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
     proposalSnapshot(
-      proposalId: PromiseOrValue<BigNumberish>,
+      proposalId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     proposalThreshold(overrides?: CallOverrides): Promise<BigNumber>;
 
     proposalVotes(
-      proposalId: PromiseOrValue<BigNumberish>,
+      proposalId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -1301,64 +1376,61 @@ export interface Gov extends BaseContract {
     >;
 
     propose(
-      targets: PromiseOrValue<string>[],
-      values: PromiseOrValue<BigNumberish>[],
-      calldatas: PromiseOrValue<BytesLike>[],
-      description: PromiseOrValue<string>,
+      targets: string[],
+      values: BigNumberish[],
+      calldatas: BytesLike[],
+      description: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     queue(
-      targets: PromiseOrValue<string>[],
-      values: PromiseOrValue<BigNumberish>[],
-      calldatas: PromiseOrValue<BytesLike>[],
-      descriptionHash: PromiseOrValue<BytesLike>,
+      targets: string[],
+      values: BigNumberish[],
+      calldatas: BytesLike[],
+      descriptionHash: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     quorum(
-      blockNumber: PromiseOrValue<BigNumberish>,
+      blockNumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     quorumDenominator(overrides?: CallOverrides): Promise<BigNumber>;
 
     "quorumNumerator(uint256)"(
-      blockNumber: PromiseOrValue<BigNumberish>,
+      timepoint: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     "quorumNumerator()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     relay(
-      target: PromiseOrValue<string>,
-      value: PromiseOrValue<BigNumberish>,
-      data: PromiseOrValue<BytesLike>,
+      target: string,
+      value: BigNumberish,
+      data: BytesLike,
       overrides?: CallOverrides
     ): Promise<void>;
 
     setProposalThreshold(
-      newProposalThreshold: PromiseOrValue<BigNumberish>,
+      newProposalThreshold: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     setVotingDelay(
-      newVotingDelay: PromiseOrValue<BigNumberish>,
+      newVotingDelay: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     setVotingPeriod(
-      newVotingPeriod: PromiseOrValue<BigNumberish>,
+      newVotingPeriod: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    state(
-      proposalId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<number>;
+    state(proposalId: BigNumberish, overrides?: CallOverrides): Promise<number>;
 
     supportsInterface(
-      interfaceId: PromiseOrValue<BytesLike>,
+      interfaceId: BytesLike,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
@@ -1367,12 +1439,12 @@ export interface Gov extends BaseContract {
     token(overrides?: CallOverrides): Promise<string>;
 
     updateQuorumNumerator(
-      newQuorumNumerator: PromiseOrValue<BigNumberish>,
+      newQuorumNumerator: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     updateTimelock(
-      newTimelock: PromiseOrValue<string>,
+      newTimelock: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1384,6 +1456,9 @@ export interface Gov extends BaseContract {
   };
 
   filters: {
+    "EIP712DomainChanged()"(): EIP712DomainChangedEventFilter;
+    EIP712DomainChanged(): EIP712DomainChangedEventFilter;
+
     "Initialized(uint8)"(version?: null): InitializedEventFilter;
     Initialized(version?: null): InitializedEventFilter;
 
@@ -1397,8 +1472,8 @@ export interface Gov extends BaseContract {
       values?: null,
       signatures?: null,
       calldatas?: null,
-      startBlock?: null,
-      endBlock?: null,
+      voteStart?: null,
+      voteEnd?: null,
       description?: null
     ): ProposalCreatedEventFilter;
     ProposalCreated(
@@ -1408,8 +1483,8 @@ export interface Gov extends BaseContract {
       values?: null,
       signatures?: null,
       calldatas?: null,
-      startBlock?: null,
-      endBlock?: null,
+      voteStart?: null,
+      voteEnd?: null,
       description?: null
     ): ProposalCreatedEventFilter;
 
@@ -1450,14 +1525,14 @@ export interface Gov extends BaseContract {
     ): TimelockChangeEventFilter;
 
     "VoteCast(address,uint256,uint8,uint256,string)"(
-      voter?: PromiseOrValue<string> | null,
+      voter?: string | null,
       proposalId?: null,
       support?: null,
       weight?: null,
       reason?: null
     ): VoteCastEventFilter;
     VoteCast(
-      voter?: PromiseOrValue<string> | null,
+      voter?: string | null,
       proposalId?: null,
       support?: null,
       weight?: null,
@@ -1465,7 +1540,7 @@ export interface Gov extends BaseContract {
     ): VoteCastEventFilter;
 
     "VoteCastWithParams(address,uint256,uint8,uint256,string,bytes)"(
-      voter?: PromiseOrValue<string> | null,
+      voter?: string | null,
       proposalId?: null,
       support?: null,
       weight?: null,
@@ -1473,7 +1548,7 @@ export interface Gov extends BaseContract {
       params?: null
     ): VoteCastWithParamsEventFilter;
     VoteCastWithParams(
-      voter?: PromiseOrValue<string> | null,
+      voter?: string | null,
       proposalId?: null,
       support?: null,
       weight?: null,
@@ -1503,205 +1578,224 @@ export interface Gov extends BaseContract {
   estimateGas: {
     BALLOT_TYPEHASH(overrides?: CallOverrides): Promise<BigNumber>;
 
+    CLOCK_MODE(overrides?: CallOverrides): Promise<BigNumber>;
+
     COUNTING_MODE(overrides?: CallOverrides): Promise<BigNumber>;
 
     EXTENDED_BALLOT_TYPEHASH(overrides?: CallOverrides): Promise<BigNumber>;
 
+    cancel(
+      targets: string[],
+      values: BigNumberish[],
+      calldatas: BytesLike[],
+      descriptionHash: BytesLike,
+      overrides?: Overrides & { from?: string }
+    ): Promise<BigNumber>;
+
     castVote(
-      proposalId: PromiseOrValue<BigNumberish>,
-      support: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      proposalId: BigNumberish,
+      support: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     castVoteBySig(
-      proposalId: PromiseOrValue<BigNumberish>,
-      support: PromiseOrValue<BigNumberish>,
-      v: PromiseOrValue<BigNumberish>,
-      r: PromiseOrValue<BytesLike>,
-      s: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      proposalId: BigNumberish,
+      support: BigNumberish,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     castVoteWithReason(
-      proposalId: PromiseOrValue<BigNumberish>,
-      support: PromiseOrValue<BigNumberish>,
-      reason: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      proposalId: BigNumberish,
+      support: BigNumberish,
+      reason: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     castVoteWithReasonAndParams(
-      proposalId: PromiseOrValue<BigNumberish>,
-      support: PromiseOrValue<BigNumberish>,
-      reason: PromiseOrValue<string>,
-      params: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      proposalId: BigNumberish,
+      support: BigNumberish,
+      reason: string,
+      params: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     castVoteWithReasonAndParamsBySig(
-      proposalId: PromiseOrValue<BigNumberish>,
-      support: PromiseOrValue<BigNumberish>,
-      reason: PromiseOrValue<string>,
-      params: PromiseOrValue<BytesLike>,
-      v: PromiseOrValue<BigNumberish>,
-      r: PromiseOrValue<BytesLike>,
-      s: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      proposalId: BigNumberish,
+      support: BigNumberish,
+      reason: string,
+      params: BytesLike,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
+    clock(overrides?: CallOverrides): Promise<BigNumber>;
+
+    eip712Domain(overrides?: CallOverrides): Promise<BigNumber>;
+
     execute(
-      targets: PromiseOrValue<string>[],
-      values: PromiseOrValue<BigNumberish>[],
-      calldatas: PromiseOrValue<BytesLike>[],
-      descriptionHash: PromiseOrValue<BytesLike>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      targets: string[],
+      values: BigNumberish[],
+      calldatas: BytesLike[],
+      descriptionHash: BytesLike,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<BigNumber>;
 
     getVotes(
-      account: PromiseOrValue<string>,
-      blockNumber: PromiseOrValue<BigNumberish>,
+      account: string,
+      timepoint: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getVotesWithParams(
-      account: PromiseOrValue<string>,
-      blockNumber: PromiseOrValue<BigNumberish>,
-      params: PromiseOrValue<BytesLike>,
+      account: string,
+      timepoint: BigNumberish,
+      params: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     hasVoted(
-      proposalId: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
+      proposalId: BigNumberish,
+      account: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     hashProposal(
-      targets: PromiseOrValue<string>[],
-      values: PromiseOrValue<BigNumberish>[],
-      calldatas: PromiseOrValue<BytesLike>[],
-      descriptionHash: PromiseOrValue<BytesLike>,
+      targets: string[],
+      values: BigNumberish[],
+      calldatas: BytesLike[],
+      descriptionHash: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     initialize(
-      token: PromiseOrValue<string>,
-      timelock: PromiseOrValue<string>,
-      initialVotingDelay: PromiseOrValue<BigNumberish>,
-      initialVotingPeriod: PromiseOrValue<BigNumberish>,
-      initialProposalThreshold: PromiseOrValue<BigNumberish>,
-      quorumNumeratorValue: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      token: string,
+      timelock: string,
+      initialVotingDelay: BigNumberish,
+      initialVotingPeriod: BigNumberish,
+      initialProposalThreshold: BigNumberish,
+      quorumNumeratorValue: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
     onERC1155BatchReceived(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
-      arg2: PromiseOrValue<BigNumberish>[],
-      arg3: PromiseOrValue<BigNumberish>[],
-      arg4: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      arg0: string,
+      arg1: string,
+      arg2: BigNumberish[],
+      arg3: BigNumberish[],
+      arg4: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     onERC1155Received(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
-      arg2: PromiseOrValue<BigNumberish>,
-      arg3: PromiseOrValue<BigNumberish>,
-      arg4: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      arg0: string,
+      arg1: string,
+      arg2: BigNumberish,
+      arg3: BigNumberish,
+      arg4: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     onERC721Received(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
-      arg2: PromiseOrValue<BigNumberish>,
-      arg3: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      arg0: string,
+      arg1: string,
+      arg2: BigNumberish,
+      arg3: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     proposalDeadline(
-      proposalId: PromiseOrValue<BigNumberish>,
+      proposalId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     proposalEta(
-      proposalId: PromiseOrValue<BigNumberish>,
+      proposalId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    proposalProposer(
+      proposalId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     proposalSnapshot(
-      proposalId: PromiseOrValue<BigNumberish>,
+      proposalId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     proposalThreshold(overrides?: CallOverrides): Promise<BigNumber>;
 
     proposalVotes(
-      proposalId: PromiseOrValue<BigNumberish>,
+      proposalId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     propose(
-      targets: PromiseOrValue<string>[],
-      values: PromiseOrValue<BigNumberish>[],
-      calldatas: PromiseOrValue<BytesLike>[],
-      description: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      targets: string[],
+      values: BigNumberish[],
+      calldatas: BytesLike[],
+      description: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     queue(
-      targets: PromiseOrValue<string>[],
-      values: PromiseOrValue<BigNumberish>[],
-      calldatas: PromiseOrValue<BytesLike>[],
-      descriptionHash: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      targets: string[],
+      values: BigNumberish[],
+      calldatas: BytesLike[],
+      descriptionHash: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     quorum(
-      blockNumber: PromiseOrValue<BigNumberish>,
+      blockNumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     quorumDenominator(overrides?: CallOverrides): Promise<BigNumber>;
 
     "quorumNumerator(uint256)"(
-      blockNumber: PromiseOrValue<BigNumberish>,
+      timepoint: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     "quorumNumerator()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     relay(
-      target: PromiseOrValue<string>,
-      value: PromiseOrValue<BigNumberish>,
-      data: PromiseOrValue<BytesLike>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      target: string,
+      value: BigNumberish,
+      data: BytesLike,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<BigNumber>;
 
     setProposalThreshold(
-      newProposalThreshold: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newProposalThreshold: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     setVotingDelay(
-      newVotingDelay: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newVotingDelay: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     setVotingPeriod(
-      newVotingPeriod: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newVotingPeriod: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     state(
-      proposalId: PromiseOrValue<BigNumberish>,
+      proposalId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     supportsInterface(
-      interfaceId: PromiseOrValue<BytesLike>,
+      interfaceId: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -1710,13 +1804,13 @@ export interface Gov extends BaseContract {
     token(overrides?: CallOverrides): Promise<BigNumber>;
 
     updateQuorumNumerator(
-      newQuorumNumerator: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newQuorumNumerator: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     updateTimelock(
-      newTimelock: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newTimelock: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     version(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1729,173 +1823,192 @@ export interface Gov extends BaseContract {
   populateTransaction: {
     BALLOT_TYPEHASH(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    CLOCK_MODE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     COUNTING_MODE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     EXTENDED_BALLOT_TYPEHASH(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    cancel(
+      targets: string[],
+      values: BigNumberish[],
+      calldatas: BytesLike[],
+      descriptionHash: BytesLike,
+      overrides?: Overrides & { from?: string }
+    ): Promise<PopulatedTransaction>;
+
     castVote(
-      proposalId: PromiseOrValue<BigNumberish>,
-      support: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      proposalId: BigNumberish,
+      support: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     castVoteBySig(
-      proposalId: PromiseOrValue<BigNumberish>,
-      support: PromiseOrValue<BigNumberish>,
-      v: PromiseOrValue<BigNumberish>,
-      r: PromiseOrValue<BytesLike>,
-      s: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      proposalId: BigNumberish,
+      support: BigNumberish,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     castVoteWithReason(
-      proposalId: PromiseOrValue<BigNumberish>,
-      support: PromiseOrValue<BigNumberish>,
-      reason: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      proposalId: BigNumberish,
+      support: BigNumberish,
+      reason: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     castVoteWithReasonAndParams(
-      proposalId: PromiseOrValue<BigNumberish>,
-      support: PromiseOrValue<BigNumberish>,
-      reason: PromiseOrValue<string>,
-      params: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      proposalId: BigNumberish,
+      support: BigNumberish,
+      reason: string,
+      params: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     castVoteWithReasonAndParamsBySig(
-      proposalId: PromiseOrValue<BigNumberish>,
-      support: PromiseOrValue<BigNumberish>,
-      reason: PromiseOrValue<string>,
-      params: PromiseOrValue<BytesLike>,
-      v: PromiseOrValue<BigNumberish>,
-      r: PromiseOrValue<BytesLike>,
-      s: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      proposalId: BigNumberish,
+      support: BigNumberish,
+      reason: string,
+      params: BytesLike,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
+    clock(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    eip712Domain(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     execute(
-      targets: PromiseOrValue<string>[],
-      values: PromiseOrValue<BigNumberish>[],
-      calldatas: PromiseOrValue<BytesLike>[],
-      descriptionHash: PromiseOrValue<BytesLike>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      targets: string[],
+      values: BigNumberish[],
+      calldatas: BytesLike[],
+      descriptionHash: BytesLike,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     getVotes(
-      account: PromiseOrValue<string>,
-      blockNumber: PromiseOrValue<BigNumberish>,
+      account: string,
+      timepoint: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getVotesWithParams(
-      account: PromiseOrValue<string>,
-      blockNumber: PromiseOrValue<BigNumberish>,
-      params: PromiseOrValue<BytesLike>,
+      account: string,
+      timepoint: BigNumberish,
+      params: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     hasVoted(
-      proposalId: PromiseOrValue<BigNumberish>,
-      account: PromiseOrValue<string>,
+      proposalId: BigNumberish,
+      account: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     hashProposal(
-      targets: PromiseOrValue<string>[],
-      values: PromiseOrValue<BigNumberish>[],
-      calldatas: PromiseOrValue<BytesLike>[],
-      descriptionHash: PromiseOrValue<BytesLike>,
+      targets: string[],
+      values: BigNumberish[],
+      calldatas: BytesLike[],
+      descriptionHash: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     initialize(
-      token: PromiseOrValue<string>,
-      timelock: PromiseOrValue<string>,
-      initialVotingDelay: PromiseOrValue<BigNumberish>,
-      initialVotingPeriod: PromiseOrValue<BigNumberish>,
-      initialProposalThreshold: PromiseOrValue<BigNumberish>,
-      quorumNumeratorValue: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      token: string,
+      timelock: string,
+      initialVotingDelay: BigNumberish,
+      initialVotingPeriod: BigNumberish,
+      initialProposalThreshold: BigNumberish,
+      quorumNumeratorValue: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     onERC1155BatchReceived(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
-      arg2: PromiseOrValue<BigNumberish>[],
-      arg3: PromiseOrValue<BigNumberish>[],
-      arg4: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      arg0: string,
+      arg1: string,
+      arg2: BigNumberish[],
+      arg3: BigNumberish[],
+      arg4: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     onERC1155Received(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
-      arg2: PromiseOrValue<BigNumberish>,
-      arg3: PromiseOrValue<BigNumberish>,
-      arg4: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      arg0: string,
+      arg1: string,
+      arg2: BigNumberish,
+      arg3: BigNumberish,
+      arg4: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     onERC721Received(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
-      arg2: PromiseOrValue<BigNumberish>,
-      arg3: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      arg0: string,
+      arg1: string,
+      arg2: BigNumberish,
+      arg3: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     proposalDeadline(
-      proposalId: PromiseOrValue<BigNumberish>,
+      proposalId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     proposalEta(
-      proposalId: PromiseOrValue<BigNumberish>,
+      proposalId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    proposalProposer(
+      proposalId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     proposalSnapshot(
-      proposalId: PromiseOrValue<BigNumberish>,
+      proposalId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     proposalThreshold(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     proposalVotes(
-      proposalId: PromiseOrValue<BigNumberish>,
+      proposalId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     propose(
-      targets: PromiseOrValue<string>[],
-      values: PromiseOrValue<BigNumberish>[],
-      calldatas: PromiseOrValue<BytesLike>[],
-      description: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      targets: string[],
+      values: BigNumberish[],
+      calldatas: BytesLike[],
+      description: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     queue(
-      targets: PromiseOrValue<string>[],
-      values: PromiseOrValue<BigNumberish>[],
-      calldatas: PromiseOrValue<BytesLike>[],
-      descriptionHash: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      targets: string[],
+      values: BigNumberish[],
+      calldatas: BytesLike[],
+      descriptionHash: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     quorum(
-      blockNumber: PromiseOrValue<BigNumberish>,
+      blockNumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     quorumDenominator(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     "quorumNumerator(uint256)"(
-      blockNumber: PromiseOrValue<BigNumberish>,
+      timepoint: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -1904,34 +2017,34 @@ export interface Gov extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     relay(
-      target: PromiseOrValue<string>,
-      value: PromiseOrValue<BigNumberish>,
-      data: PromiseOrValue<BytesLike>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      target: string,
+      value: BigNumberish,
+      data: BytesLike,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     setProposalThreshold(
-      newProposalThreshold: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newProposalThreshold: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     setVotingDelay(
-      newVotingDelay: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newVotingDelay: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     setVotingPeriod(
-      newVotingPeriod: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newVotingPeriod: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     state(
-      proposalId: PromiseOrValue<BigNumberish>,
+      proposalId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     supportsInterface(
-      interfaceId: PromiseOrValue<BytesLike>,
+      interfaceId: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -1940,13 +2053,13 @@ export interface Gov extends BaseContract {
     token(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     updateQuorumNumerator(
-      newQuorumNumerator: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newQuorumNumerator: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     updateTimelock(
-      newTimelock: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newTimelock: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     version(overrides?: CallOverrides): Promise<PopulatedTransaction>;

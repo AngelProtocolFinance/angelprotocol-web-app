@@ -18,24 +18,17 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../common";
 
 export declare namespace LibAccounts {
-  export type FeeSettingStruct = {
-    payoutAddress: PromiseOrValue<string>;
-    bps: PromiseOrValue<BigNumberish>;
-  };
+  export type FeeSettingStruct = { payoutAddress: string; bps: BigNumberish };
 
   export type FeeSettingStructOutput = [string, BigNumber] & {
     payoutAddress: string;
     bps: BigNumber;
   };
 
-  export type DelegateStruct = {
-    addr: PromiseOrValue<string>;
-    expires: PromiseOrValue<BigNumberish>;
-  };
+  export type DelegateStruct = { addr: string; expires: BigNumberish };
 
   export type DelegateStructOutput = [string, BigNumber] & {
     addr: string;
@@ -43,7 +36,7 @@ export declare namespace LibAccounts {
   };
 
   export type SettingsPermissionStruct = {
-    locked: PromiseOrValue<boolean>;
+    locked: boolean;
     delegate: LibAccounts.DelegateStruct;
   };
 
@@ -111,9 +104,9 @@ export declare namespace LibAccounts {
   };
 
   export type SplitDetailsStruct = {
-    max: PromiseOrValue<BigNumberish>;
-    min: PromiseOrValue<BigNumberish>;
-    defaultSplit: PromiseOrValue<BigNumberish>;
+    max: BigNumberish;
+    min: BigNumberish;
+    defaultSplit: BigNumberish;
   };
 
   export type SplitDetailsStructOutput = [BigNumber, BigNumber, BigNumber] & {
@@ -125,30 +118,30 @@ export declare namespace LibAccounts {
 
 export declare namespace AccountMessages {
   export type CreateEndowmentRequestStruct = {
-    withdrawBeforeMaturity: PromiseOrValue<boolean>;
-    maturityTime: PromiseOrValue<BigNumberish>;
-    name: PromiseOrValue<string>;
-    sdgs: PromiseOrValue<BigNumberish>[];
-    tier: PromiseOrValue<BigNumberish>;
-    endowType: PromiseOrValue<BigNumberish>;
-    logo: PromiseOrValue<string>;
-    image: PromiseOrValue<string>;
-    members: PromiseOrValue<string>[];
-    threshold: PromiseOrValue<BigNumberish>;
-    duration: PromiseOrValue<BigNumberish>;
-    allowlistedBeneficiaries: PromiseOrValue<string>[];
-    allowlistedContributors: PromiseOrValue<string>[];
+    withdrawBeforeMaturity: boolean;
+    maturityTime: BigNumberish;
+    name: string;
+    sdgs: BigNumberish[];
+    tier: BigNumberish;
+    endowType: BigNumberish;
+    logo: string;
+    image: string;
+    members: string[];
+    threshold: BigNumberish;
+    duration: BigNumberish;
+    allowlistedBeneficiaries: string[];
+    allowlistedContributors: string[];
     earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct;
     withdrawFee: LibAccounts.FeeSettingStruct;
     depositFee: LibAccounts.FeeSettingStruct;
     balanceFee: LibAccounts.FeeSettingStruct;
-    proposalLink: PromiseOrValue<BigNumberish>;
+    proposalLink: BigNumberish;
     settingsController: LibAccounts.SettingsControllerStruct;
-    parent: PromiseOrValue<BigNumberish>;
-    maturityAllowlist: PromiseOrValue<string>[];
-    ignoreUserSplits: PromiseOrValue<boolean>;
+    parent: BigNumberish;
+    maturityAllowlist: string[];
+    ignoreUserSplits: boolean;
     splitToLiquid: LibAccounts.SplitDetailsStruct;
-    referralId: PromiseOrValue<BigNumberish>;
+    referralId: BigNumberish;
   };
 
   export type CreateEndowmentRequestStructOutput = [
@@ -218,11 +211,11 @@ export interface StorageApplicationsInterface extends utils.Interface {
   encodeFunctionData(functionFragment: "config", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "proposalConfirmations",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "proposals",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
 
   decodeFunctionResult(functionFragment: "config", data: BytesLike): Result;
@@ -275,12 +268,12 @@ export interface StorageApplications extends BaseContract {
     >;
 
     proposalConfirmations(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber] & { count: BigNumber }>;
 
     proposals(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<
       [
@@ -312,12 +305,12 @@ export interface StorageApplications extends BaseContract {
   >;
 
   proposalConfirmations(
-    arg0: PromiseOrValue<BigNumberish>,
+    arg0: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   proposals(
-    arg0: PromiseOrValue<BigNumberish>,
+    arg0: BigNumberish,
     overrides?: CallOverrides
   ): Promise<
     [
@@ -349,12 +342,12 @@ export interface StorageApplications extends BaseContract {
     >;
 
     proposalConfirmations(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     proposals(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<
       [
@@ -379,12 +372,12 @@ export interface StorageApplications extends BaseContract {
     config(overrides?: CallOverrides): Promise<BigNumber>;
 
     proposalConfirmations(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     proposals(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
   };
@@ -393,12 +386,12 @@ export interface StorageApplications extends BaseContract {
     config(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     proposalConfirmations(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     proposals(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };

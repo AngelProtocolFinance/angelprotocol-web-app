@@ -14,7 +14,6 @@ export const templates: {
   "index-fund.remove-fund": "index-fund_remove-fund",
   "index-fund.update-members": "index-fund_update-members",
   "index-fund.config": "index-fund_config",
-  "index-fund.update-owner": "index-fund_update-owner",
 
   "multisig.fund-transfer": "multisig_fund-transfer",
 

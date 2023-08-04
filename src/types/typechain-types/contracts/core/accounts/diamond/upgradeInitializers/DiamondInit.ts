@@ -19,7 +19,6 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../../../common";
 
 export interface DiamondInitInterface extends utils.Interface {
@@ -31,11 +30,7 @@ export interface DiamondInitInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "init",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>
-    ]
+    values: [string, string, string]
   ): string;
 
   decodeFunctionResult(functionFragment: "init", data: BytesLike): Result;
@@ -71,25 +66,25 @@ export interface DiamondInit extends BaseContract {
 
   functions: {
     init(
-      owner: PromiseOrValue<string>,
-      registrar: PromiseOrValue<string>,
-      networkName: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      owner: string,
+      registrar: string,
+      networkName: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   init(
-    owner: PromiseOrValue<string>,
-    registrar: PromiseOrValue<string>,
-    networkName: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    owner: string,
+    registrar: string,
+    networkName: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     init(
-      owner: PromiseOrValue<string>,
-      registrar: PromiseOrValue<string>,
-      networkName: PromiseOrValue<string>,
+      owner: string,
+      registrar: string,
+      networkName: string,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -98,19 +93,19 @@ export interface DiamondInit extends BaseContract {
 
   estimateGas: {
     init(
-      owner: PromiseOrValue<string>,
-      registrar: PromiseOrValue<string>,
-      networkName: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      owner: string,
+      registrar: string,
+      networkName: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     init(
-      owner: PromiseOrValue<string>,
-      registrar: PromiseOrValue<string>,
-      networkName: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      owner: string,
+      registrar: string,
+      networkName: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

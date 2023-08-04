@@ -24,7 +24,6 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../common";
 
 export interface ERC20UpgradeInterface extends utils.Interface {
@@ -85,36 +84,30 @@ export interface ERC20UpgradeInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "allowance",
-    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+    values: [string, string]
   ): string;
   encodeFunctionData(
     functionFragment: "approve",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [string, BigNumberish]
   ): string;
-  encodeFunctionData(
-    functionFragment: "balanceOf",
-    values: [PromiseOrValue<string>]
-  ): string;
+  encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
   encodeFunctionData(
     functionFragment: "balanceOfAt",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [string, BigNumberish]
   ): string;
-  encodeFunctionData(
-    functionFragment: "burn",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
+  encodeFunctionData(functionFragment: "burn", values: [BigNumberish]): string;
   encodeFunctionData(
     functionFragment: "burnFrom",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [string, BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "decreaseAllowance",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "increaseAllowance",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "initialize",
@@ -122,7 +115,7 @@ export interface ERC20UpgradeInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "mint",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [string, BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
@@ -140,23 +133,19 @@ export interface ERC20UpgradeInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "totalSupplyAt",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "transfer",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "transferFrom",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [string, string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "transferOwnership",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(functionFragment: "unpause", values?: undefined): string;
 
@@ -320,61 +309,58 @@ export interface ERC20Upgrade extends BaseContract {
 
   functions: {
     allowance(
-      owner: PromiseOrValue<string>,
-      spender: PromiseOrValue<string>,
+      owner: string,
+      spender: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     approve(
-      spender: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      spender: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
-    balanceOf(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    balanceOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     balanceOfAt(
-      account: PromiseOrValue<string>,
-      snapshotId: PromiseOrValue<BigNumberish>,
+      account: string,
+      snapshotId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     burn(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     burnFrom(
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      account: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
     decreaseAllowance(
-      spender: PromiseOrValue<string>,
-      subtractedValue: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      spender: string,
+      subtractedValue: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     increaseAllowance(
-      spender: PromiseOrValue<string>,
-      addedValue: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      spender: string,
+      addedValue: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     initialize(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     mint(
-      to: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      to: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
@@ -382,17 +368,17 @@ export interface ERC20Upgrade extends BaseContract {
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     pause(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     paused(overrides?: CallOverrides): Promise<[boolean]>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     snapshot(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
@@ -400,89 +386,86 @@ export interface ERC20Upgrade extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     totalSupplyAt(
-      snapshotId: PromiseOrValue<BigNumberish>,
+      snapshotId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     transfer(
-      to: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      to: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      from: string,
+      to: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newOwner: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     unpause(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   allowance(
-    owner: PromiseOrValue<string>,
-    spender: PromiseOrValue<string>,
+    owner: string,
+    spender: string,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   approve(
-    spender: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    spender: string,
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
-  balanceOf(
-    account: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
   balanceOfAt(
-    account: PromiseOrValue<string>,
-    snapshotId: PromiseOrValue<BigNumberish>,
+    account: string,
+    snapshotId: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   burn(
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   burnFrom(
-    account: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    account: string,
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
   decreaseAllowance(
-    spender: PromiseOrValue<string>,
-    subtractedValue: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    spender: string,
+    subtractedValue: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   increaseAllowance(
-    spender: PromiseOrValue<string>,
-    addedValue: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    spender: string,
+    addedValue: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   initialize(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   mint(
-    to: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    to: string,
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
@@ -490,17 +473,17 @@ export interface ERC20Upgrade extends BaseContract {
   owner(overrides?: CallOverrides): Promise<string>;
 
   pause(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   paused(overrides?: CallOverrides): Promise<boolean>;
 
   renounceOwnership(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   snapshot(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
@@ -508,86 +491,80 @@ export interface ERC20Upgrade extends BaseContract {
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   totalSupplyAt(
-    snapshotId: PromiseOrValue<BigNumberish>,
+    snapshotId: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   transfer(
-    to: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    to: string,
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    from: PromiseOrValue<string>,
-    to: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    from: string,
+    to: string,
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    newOwner: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   unpause(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     allowance(
-      owner: PromiseOrValue<string>,
-      spender: PromiseOrValue<string>,
+      owner: string,
+      spender: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     approve(
-      spender: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      spender: string,
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    balanceOf(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     balanceOfAt(
-      account: PromiseOrValue<string>,
-      snapshotId: PromiseOrValue<BigNumberish>,
+      account: string,
+      snapshotId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    burn(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    burn(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
     burnFrom(
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      account: string,
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
     decreaseAllowance(
-      spender: PromiseOrValue<string>,
-      subtractedValue: PromiseOrValue<BigNumberish>,
+      spender: string,
+      subtractedValue: BigNumberish,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     increaseAllowance(
-      spender: PromiseOrValue<string>,
-      addedValue: PromiseOrValue<BigNumberish>,
+      spender: string,
+      addedValue: BigNumberish,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     initialize(overrides?: CallOverrides): Promise<void>;
 
     mint(
-      to: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      to: string,
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -608,25 +585,25 @@ export interface ERC20Upgrade extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupplyAt(
-      snapshotId: PromiseOrValue<BigNumberish>,
+      snapshotId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     transfer(
-      to: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      to: string,
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     transferFrom(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      from: string,
+      to: string,
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     transferOwnership(
-      newOwner: PromiseOrValue<string>,
+      newOwner: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -635,13 +612,13 @@ export interface ERC20Upgrade extends BaseContract {
 
   filters: {
     "Approval(address,address,uint256)"(
-      owner?: PromiseOrValue<string> | null,
-      spender?: PromiseOrValue<string> | null,
+      owner?: string | null,
+      spender?: string | null,
       value?: null
     ): ApprovalEventFilter;
     Approval(
-      owner?: PromiseOrValue<string> | null,
-      spender?: PromiseOrValue<string> | null,
+      owner?: string | null,
+      spender?: string | null,
       value?: null
     ): ApprovalEventFilter;
 
@@ -649,12 +626,12 @@ export interface ERC20Upgrade extends BaseContract {
     Initialized(version?: null): InitializedEventFilter;
 
     "OwnershipTransferred(address,address)"(
-      previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      previousOwner?: string | null,
+      newOwner?: string | null
     ): OwnershipTransferredEventFilter;
     OwnershipTransferred(
-      previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      previousOwner?: string | null,
+      newOwner?: string | null
     ): OwnershipTransferredEventFilter;
 
     "Paused(address)"(account?: null): PausedEventFilter;
@@ -664,13 +641,13 @@ export interface ERC20Upgrade extends BaseContract {
     Snapshot(id?: null): SnapshotEventFilter;
 
     "Transfer(address,address,uint256)"(
-      from?: PromiseOrValue<string> | null,
-      to?: PromiseOrValue<string> | null,
+      from?: string | null,
+      to?: string | null,
       value?: null
     ): TransferEventFilter;
     Transfer(
-      from?: PromiseOrValue<string> | null,
-      to?: PromiseOrValue<string> | null,
+      from?: string | null,
+      to?: string | null,
       value?: null
     ): TransferEventFilter;
 
@@ -680,170 +657,159 @@ export interface ERC20Upgrade extends BaseContract {
 
   estimateGas: {
     allowance(
-      owner: PromiseOrValue<string>,
-      spender: PromiseOrValue<string>,
+      owner: string,
+      spender: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     approve(
-      spender: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      spender: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
-    balanceOf(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     balanceOfAt(
-      account: PromiseOrValue<string>,
-      snapshotId: PromiseOrValue<BigNumberish>,
+      account: string,
+      snapshotId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     burn(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     burnFrom(
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      account: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
     decreaseAllowance(
-      spender: PromiseOrValue<string>,
-      subtractedValue: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      spender: string,
+      subtractedValue: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     increaseAllowance(
-      spender: PromiseOrValue<string>,
-      addedValue: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      spender: string,
+      addedValue: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
-    initialize(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    initialize(overrides?: Overrides & { from?: string }): Promise<BigNumber>;
 
     mint(
-      to: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      to: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pause(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    pause(overrides?: Overrides & { from?: string }): Promise<BigNumber>;
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
-    snapshot(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    snapshot(overrides?: Overrides & { from?: string }): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupplyAt(
-      snapshotId: PromiseOrValue<BigNumberish>,
+      snapshotId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     transfer(
-      to: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      to: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     transferFrom(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      from: string,
+      to: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newOwner: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
-    unpause(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    unpause(overrides?: Overrides & { from?: string }): Promise<BigNumber>;
   };
 
   populateTransaction: {
     allowance(
-      owner: PromiseOrValue<string>,
-      spender: PromiseOrValue<string>,
+      owner: string,
+      spender: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     approve(
-      spender: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      spender: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     balanceOf(
-      account: PromiseOrValue<string>,
+      account: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     balanceOfAt(
-      account: PromiseOrValue<string>,
-      snapshotId: PromiseOrValue<BigNumberish>,
+      account: string,
+      snapshotId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     burn(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     burnFrom(
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      account: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decreaseAllowance(
-      spender: PromiseOrValue<string>,
-      subtractedValue: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      spender: string,
+      subtractedValue: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     increaseAllowance(
-      spender: PromiseOrValue<string>,
-      addedValue: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      spender: string,
+      addedValue: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     initialize(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     mint(
-      to: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      to: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -851,17 +817,17 @@ export interface ERC20Upgrade extends BaseContract {
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     pause(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     snapshot(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -869,30 +835,30 @@ export interface ERC20Upgrade extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSupplyAt(
-      snapshotId: PromiseOrValue<BigNumberish>,
+      snapshotId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     transfer(
-      to: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      to: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      from: string,
+      to: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newOwner: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     unpause(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

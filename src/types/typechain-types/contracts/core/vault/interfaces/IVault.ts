@@ -25,20 +25,19 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../../common";
 
 export declare namespace IVault {
   export type VaultConfigStruct = {
-    vaultType: PromiseOrValue<BigNumberish>;
-    strategySelector: PromiseOrValue<BytesLike>;
-    strategy: PromiseOrValue<string>;
-    registrar: PromiseOrValue<string>;
-    baseToken: PromiseOrValue<string>;
-    yieldToken: PromiseOrValue<string>;
-    apTokenName: PromiseOrValue<string>;
-    apTokenSymbol: PromiseOrValue<string>;
-    admin: PromiseOrValue<string>;
+    vaultType: BigNumberish;
+    strategySelector: BytesLike;
+    strategy: string;
+    registrar: string;
+    baseToken: string;
+    yieldToken: string;
+    apTokenName: string;
+    apTokenSymbol: string;
+    admin: string;
   };
 
   export type VaultConfigStructOutput = [
@@ -64,11 +63,13 @@ export declare namespace IVault {
   };
 
   export type RedemptionResponseStruct = {
-    amount: PromiseOrValue<BigNumberish>;
-    status: PromiseOrValue<BigNumberish>;
+    token: string;
+    amount: BigNumberish;
+    status: BigNumberish;
   };
 
-  export type RedemptionResponseStructOutput = [BigNumber, number] & {
+  export type RedemptionResponseStructOutput = [string, BigNumber, number] & {
+    token: string;
     amount: BigNumber;
     status: number;
   };
@@ -96,11 +97,7 @@ export interface IVaultInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "deposit",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [BigNumberish, string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "getVaultConfig",
@@ -108,15 +105,15 @@ export interface IVaultInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "harvest",
-    values: [PromiseOrValue<BigNumberish>[]]
+    values: [BigNumberish[]]
   ): string;
   encodeFunctionData(
     functionFragment: "redeem",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    values: [BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "redeemAll",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "setVaultConfig",
@@ -212,10 +209,10 @@ export interface IVault extends BaseContract {
 
   functions: {
     deposit(
-      accountId: PromiseOrValue<BigNumberish>,
-      token: PromiseOrValue<string>,
-      amt: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      accountId: BigNumberish,
+      token: string,
+      amt: BigNumberish,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     getVaultConfig(
@@ -223,32 +220,32 @@ export interface IVault extends BaseContract {
     ): Promise<[IVault.VaultConfigStructOutput]>;
 
     harvest(
-      accountIds: PromiseOrValue<BigNumberish>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      accountIds: BigNumberish[],
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     redeem(
-      accountId: PromiseOrValue<BigNumberish>,
-      amt: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      accountId: BigNumberish,
+      amt: BigNumberish,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     redeemAll(
-      accountId: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      accountId: BigNumberish,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     setVaultConfig(
       _newConfig: IVault.VaultConfigStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   deposit(
-    accountId: PromiseOrValue<BigNumberish>,
-    token: PromiseOrValue<string>,
-    amt: PromiseOrValue<BigNumberish>,
-    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    accountId: BigNumberish,
+    token: string,
+    amt: BigNumberish,
+    overrides?: PayableOverrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   getVaultConfig(
@@ -256,31 +253,31 @@ export interface IVault extends BaseContract {
   ): Promise<IVault.VaultConfigStructOutput>;
 
   harvest(
-    accountIds: PromiseOrValue<BigNumberish>[],
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    accountIds: BigNumberish[],
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   redeem(
-    accountId: PromiseOrValue<BigNumberish>,
-    amt: PromiseOrValue<BigNumberish>,
-    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    accountId: BigNumberish,
+    amt: BigNumberish,
+    overrides?: PayableOverrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   redeemAll(
-    accountId: PromiseOrValue<BigNumberish>,
-    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    accountId: BigNumberish,
+    overrides?: PayableOverrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   setVaultConfig(
     _newConfig: IVault.VaultConfigStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     deposit(
-      accountId: PromiseOrValue<BigNumberish>,
-      token: PromiseOrValue<string>,
-      amt: PromiseOrValue<BigNumberish>,
+      accountId: BigNumberish,
+      token: string,
+      amt: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -289,18 +286,18 @@ export interface IVault extends BaseContract {
     ): Promise<IVault.VaultConfigStructOutput>;
 
     harvest(
-      accountIds: PromiseOrValue<BigNumberish>[],
+      accountIds: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<void>;
 
     redeem(
-      accountId: PromiseOrValue<BigNumberish>,
-      amt: PromiseOrValue<BigNumberish>,
+      accountId: BigNumberish,
+      amt: BigNumberish,
       overrides?: CallOverrides
     ): Promise<IVault.RedemptionResponseStructOutput>;
 
     redeemAll(
-      accountId: PromiseOrValue<BigNumberish>,
+      accountId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<IVault.RedemptionResponseStructOutput>;
 
@@ -345,65 +342,65 @@ export interface IVault extends BaseContract {
 
   estimateGas: {
     deposit(
-      accountId: PromiseOrValue<BigNumberish>,
-      token: PromiseOrValue<string>,
-      amt: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      accountId: BigNumberish,
+      token: string,
+      amt: BigNumberish,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<BigNumber>;
 
     getVaultConfig(overrides?: CallOverrides): Promise<BigNumber>;
 
     harvest(
-      accountIds: PromiseOrValue<BigNumberish>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      accountIds: BigNumberish[],
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     redeem(
-      accountId: PromiseOrValue<BigNumberish>,
-      amt: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      accountId: BigNumberish,
+      amt: BigNumberish,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<BigNumber>;
 
     redeemAll(
-      accountId: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      accountId: BigNumberish,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<BigNumber>;
 
     setVaultConfig(
       _newConfig: IVault.VaultConfigStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     deposit(
-      accountId: PromiseOrValue<BigNumberish>,
-      token: PromiseOrValue<string>,
-      amt: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      accountId: BigNumberish,
+      token: string,
+      amt: BigNumberish,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     getVaultConfig(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     harvest(
-      accountIds: PromiseOrValue<BigNumberish>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      accountIds: BigNumberish[],
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     redeem(
-      accountId: PromiseOrValue<BigNumberish>,
-      amt: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      accountId: BigNumberish,
+      amt: BigNumberish,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     redeemAll(
-      accountId: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      accountId: BigNumberish,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     setVaultConfig(
       _newConfig: IVault.VaultConfigStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

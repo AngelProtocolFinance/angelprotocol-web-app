@@ -7,7 +7,6 @@ import { proposalShape } from "../../../../constants";
 const shape: SchemaShape<FormValues> = {
   ...proposalShape,
   fundingGoal: requiredTokenAmount,
-  fundMemberLimit: requiredPositiveNumber,
   fundRotation: requiredPositiveNumber,
 };
 

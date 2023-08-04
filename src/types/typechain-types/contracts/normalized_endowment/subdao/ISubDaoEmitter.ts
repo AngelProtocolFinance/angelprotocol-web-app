@@ -20,7 +20,6 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../common";
 
 export interface ISubDaoEmitterInterface extends utils.Interface {
@@ -47,16 +46,11 @@ export interface ISubDaoEmitterInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "initializeSubDao",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "transferSubDao",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [string, string, string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "updateSubDaoConfig",
@@ -64,15 +58,11 @@ export interface ISubDaoEmitterInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "updateSubDaoPoll",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+    values: [BigNumberish, string]
   ): string;
   encodeFunctionData(
     functionFragment: "updateSubDaoPollAndStatus",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [BigNumberish, string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "updateSubDaoState",
@@ -80,7 +70,7 @@ export interface ISubDaoEmitterInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "updateVotingStatus",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+    values: [BigNumberish, string]
   ): string;
 
   decodeFunctionResult(
@@ -143,120 +133,117 @@ export interface ISubDaoEmitter extends BaseContract {
 
   functions: {
     initializeSubDao(
-      subdao: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      subdao: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     transferSubDao(
-      tokenAddress: PromiseOrValue<string>,
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      tokenAddress: string,
+      from: string,
+      to: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     updateSubDaoConfig(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     updateSubDaoPoll(
-      pollId: PromiseOrValue<BigNumberish>,
-      voter: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      pollId: BigNumberish,
+      voter: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     updateSubDaoPollAndStatus(
-      pollId: PromiseOrValue<BigNumberish>,
-      voter: PromiseOrValue<string>,
-      pollStatus: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      pollId: BigNumberish,
+      voter: string,
+      pollStatus: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     updateSubDaoState(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     updateVotingStatus(
-      pollId: PromiseOrValue<BigNumberish>,
-      voter: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      pollId: BigNumberish,
+      voter: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   initializeSubDao(
-    subdao: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    subdao: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   transferSubDao(
-    tokenAddress: PromiseOrValue<string>,
-    from: PromiseOrValue<string>,
-    to: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    tokenAddress: string,
+    from: string,
+    to: string,
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   updateSubDaoConfig(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   updateSubDaoPoll(
-    pollId: PromiseOrValue<BigNumberish>,
-    voter: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    pollId: BigNumberish,
+    voter: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   updateSubDaoPollAndStatus(
-    pollId: PromiseOrValue<BigNumberish>,
-    voter: PromiseOrValue<string>,
-    pollStatus: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    pollId: BigNumberish,
+    voter: string,
+    pollStatus: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   updateSubDaoState(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   updateVotingStatus(
-    pollId: PromiseOrValue<BigNumberish>,
-    voter: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    pollId: BigNumberish,
+    voter: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    initializeSubDao(
-      subdao: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    initializeSubDao(subdao: string, overrides?: CallOverrides): Promise<void>;
 
     transferSubDao(
-      tokenAddress: PromiseOrValue<string>,
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      tokenAddress: string,
+      from: string,
+      to: string,
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     updateSubDaoConfig(overrides?: CallOverrides): Promise<void>;
 
     updateSubDaoPoll(
-      pollId: PromiseOrValue<BigNumberish>,
-      voter: PromiseOrValue<string>,
+      pollId: BigNumberish,
+      voter: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     updateSubDaoPollAndStatus(
-      pollId: PromiseOrValue<BigNumberish>,
-      voter: PromiseOrValue<string>,
-      pollStatus: PromiseOrValue<BigNumberish>,
+      pollId: BigNumberish,
+      voter: string,
+      pollStatus: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     updateSubDaoState(overrides?: CallOverrides): Promise<void>;
 
     updateVotingStatus(
-      pollId: PromiseOrValue<BigNumberish>,
-      voter: PromiseOrValue<string>,
+      pollId: BigNumberish,
+      voter: string,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -265,85 +252,85 @@ export interface ISubDaoEmitter extends BaseContract {
 
   estimateGas: {
     initializeSubDao(
-      subdao: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      subdao: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     transferSubDao(
-      tokenAddress: PromiseOrValue<string>,
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      tokenAddress: string,
+      from: string,
+      to: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     updateSubDaoConfig(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     updateSubDaoPoll(
-      pollId: PromiseOrValue<BigNumberish>,
-      voter: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      pollId: BigNumberish,
+      voter: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     updateSubDaoPollAndStatus(
-      pollId: PromiseOrValue<BigNumberish>,
-      voter: PromiseOrValue<string>,
-      pollStatus: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      pollId: BigNumberish,
+      voter: string,
+      pollStatus: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     updateSubDaoState(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     updateVotingStatus(
-      pollId: PromiseOrValue<BigNumberish>,
-      voter: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      pollId: BigNumberish,
+      voter: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     initializeSubDao(
-      subdao: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      subdao: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     transferSubDao(
-      tokenAddress: PromiseOrValue<string>,
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      tokenAddress: string,
+      from: string,
+      to: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     updateSubDaoConfig(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     updateSubDaoPoll(
-      pollId: PromiseOrValue<BigNumberish>,
-      voter: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      pollId: BigNumberish,
+      voter: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     updateSubDaoPollAndStatus(
-      pollId: PromiseOrValue<BigNumberish>,
-      voter: PromiseOrValue<string>,
-      pollStatus: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      pollId: BigNumberish,
+      voter: string,
+      pollStatus: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     updateSubDaoState(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     updateVotingStatus(
-      pollId: PromiseOrValue<BigNumberish>,
-      voter: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      pollId: BigNumberish,
+      voter: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

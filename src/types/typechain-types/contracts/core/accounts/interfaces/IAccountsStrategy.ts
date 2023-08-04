@@ -20,16 +20,15 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../../common";
 
 export declare namespace AccountMessages {
   export type InvestRequestStruct = {
-    strategy: PromiseOrValue<BytesLike>;
-    token: PromiseOrValue<string>;
-    lockAmt: PromiseOrValue<BigNumberish>;
-    liquidAmt: PromiseOrValue<BigNumberish>;
-    gasFee: PromiseOrValue<BigNumberish>;
+    strategy: BytesLike;
+    token: string;
+    lockAmt: BigNumberish;
+    liquidAmt: BigNumberish;
+    gasFee: BigNumberish;
   };
 
   export type InvestRequestStructOutput = [
@@ -47,11 +46,11 @@ export declare namespace AccountMessages {
   };
 
   export type RedeemRequestStruct = {
-    strategy: PromiseOrValue<BytesLike>;
-    token: PromiseOrValue<string>;
-    lockAmt: PromiseOrValue<BigNumberish>;
-    liquidAmt: PromiseOrValue<BigNumberish>;
-    gasFee: PromiseOrValue<BigNumberish>;
+    strategy: BytesLike;
+    token: string;
+    lockAmt: BigNumberish;
+    liquidAmt: BigNumberish;
+    gasFee: BigNumberish;
   };
 
   export type RedeemRequestStructOutput = [
@@ -69,11 +68,11 @@ export declare namespace AccountMessages {
   };
 
   export type RedeemAllRequestStruct = {
-    strategy: PromiseOrValue<BytesLike>;
-    token: PromiseOrValue<string>;
-    redeemLocked: PromiseOrValue<boolean>;
-    redeemLiquid: PromiseOrValue<boolean>;
-    gasFee: PromiseOrValue<BigNumberish>;
+    strategy: BytesLike;
+    token: string;
+    redeemLocked: boolean;
+    redeemLiquid: boolean;
+    gasFee: BigNumberish;
   };
 
   export type RedeemAllRequestStructOutput = [
@@ -107,18 +106,15 @@ export interface IAccountsStrategyInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "strategyInvest",
-    values: [PromiseOrValue<BigNumberish>, AccountMessages.InvestRequestStruct]
+    values: [BigNumberish, AccountMessages.InvestRequestStruct]
   ): string;
   encodeFunctionData(
     functionFragment: "strategyRedeem",
-    values: [PromiseOrValue<BigNumberish>, AccountMessages.RedeemRequestStruct]
+    values: [BigNumberish, AccountMessages.RedeemRequestStruct]
   ): string;
   encodeFunctionData(
     functionFragment: "strategyRedeemAll",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      AccountMessages.RedeemAllRequestStruct
-    ]
+    values: [BigNumberish, AccountMessages.RedeemAllRequestStruct]
   ): string;
 
   decodeFunctionResult(
@@ -165,57 +161,57 @@ export interface IAccountsStrategy extends BaseContract {
 
   functions: {
     strategyInvest(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       investRequest: AccountMessages.InvestRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     strategyRedeem(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       redeemRequest: AccountMessages.RedeemRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     strategyRedeemAll(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       redeemAllRequest: AccountMessages.RedeemAllRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   strategyInvest(
-    id: PromiseOrValue<BigNumberish>,
+    id: BigNumberish,
     investRequest: AccountMessages.InvestRequestStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   strategyRedeem(
-    id: PromiseOrValue<BigNumberish>,
+    id: BigNumberish,
     redeemRequest: AccountMessages.RedeemRequestStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   strategyRedeemAll(
-    id: PromiseOrValue<BigNumberish>,
+    id: BigNumberish,
     redeemAllRequest: AccountMessages.RedeemAllRequestStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     strategyInvest(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       investRequest: AccountMessages.InvestRequestStruct,
       overrides?: CallOverrides
     ): Promise<void>;
 
     strategyRedeem(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       redeemRequest: AccountMessages.RedeemRequestStruct,
       overrides?: CallOverrides
     ): Promise<void>;
 
     strategyRedeemAll(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       redeemAllRequest: AccountMessages.RedeemAllRequestStruct,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -225,41 +221,41 @@ export interface IAccountsStrategy extends BaseContract {
 
   estimateGas: {
     strategyInvest(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       investRequest: AccountMessages.InvestRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     strategyRedeem(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       redeemRequest: AccountMessages.RedeemRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     strategyRedeemAll(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       redeemAllRequest: AccountMessages.RedeemAllRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     strategyInvest(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       investRequest: AccountMessages.InvestRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     strategyRedeem(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       redeemRequest: AccountMessages.RedeemRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     strategyRedeemAll(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       redeemAllRequest: AccountMessages.RedeemAllRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

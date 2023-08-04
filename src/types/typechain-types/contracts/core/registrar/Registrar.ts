@@ -24,13 +24,12 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../common";
 
 export declare namespace LocalRegistrarLib {
   export type AngelProtocolParamsStruct = {
-    routerAddr: PromiseOrValue<string>;
-    refundAddr: PromiseOrValue<string>;
+    routerAddr: string;
+    refundAddr: string;
   };
 
   export type AngelProtocolParamsStructOutput = [string, string] & {
@@ -39,12 +38,12 @@ export declare namespace LocalRegistrarLib {
   };
 
   export type RebalanceParamsStruct = {
-    rebalanceLiquidProfits: PromiseOrValue<boolean>;
-    lockedRebalanceToLiquid: PromiseOrValue<BigNumberish>;
-    interestDistribution: PromiseOrValue<BigNumberish>;
-    lockedPrincipleToLiquid: PromiseOrValue<boolean>;
-    principleDistribution: PromiseOrValue<BigNumberish>;
-    basis: PromiseOrValue<BigNumberish>;
+    rebalanceLiquidProfits: boolean;
+    lockedRebalanceToLiquid: BigNumberish;
+    interestDistribution: BigNumberish;
+    lockedPrincipleToLiquid: boolean;
+    principleDistribution: BigNumberish;
+    basis: BigNumberish;
   };
 
   export type RebalanceParamsStructOutput = [
@@ -63,10 +62,7 @@ export declare namespace LocalRegistrarLib {
     basis: number;
   };
 
-  export type VaultParamsStruct = {
-    Type: PromiseOrValue<BigNumberish>;
-    vaultAddr: PromiseOrValue<string>;
-  };
+  export type VaultParamsStruct = { Type: BigNumberish; vaultAddr: string };
 
   export type VaultParamsStructOutput = [number, string] & {
     Type: number;
@@ -74,8 +70,8 @@ export declare namespace LocalRegistrarLib {
   };
 
   export type StrategyParamsStruct = {
-    approvalState: PromiseOrValue<BigNumberish>;
-    network: PromiseOrValue<string>;
+    approvalState: BigNumberish;
+    network: string;
     Locked: LocalRegistrarLib.VaultParamsStruct;
     Liquid: LocalRegistrarLib.VaultParamsStruct;
   };
@@ -94,10 +90,7 @@ export declare namespace LocalRegistrarLib {
 }
 
 export declare namespace LibAccounts {
-  export type FeeSettingStruct = {
-    payoutAddress: PromiseOrValue<string>;
-    bps: PromiseOrValue<BigNumberish>;
-  };
+  export type FeeSettingStruct = { payoutAddress: string; bps: BigNumberish };
 
   export type FeeSettingStructOutput = [string, BigNumber] & {
     payoutAddress: string;
@@ -105,9 +98,9 @@ export declare namespace LibAccounts {
   };
 
   export type SplitDetailsStruct = {
-    max: PromiseOrValue<BigNumberish>;
-    min: PromiseOrValue<BigNumberish>;
-    defaultSplit: PromiseOrValue<BigNumberish>;
+    max: BigNumberish;
+    min: BigNumberish;
+    defaultSplit: BigNumberish;
   };
 
   export type SplitDetailsStructOutput = [BigNumber, BigNumber, BigNumber] & {
@@ -119,12 +112,12 @@ export declare namespace LibAccounts {
 
 export declare namespace RegistrarMessages {
   export type InstantiateRequestStruct = {
-    treasury: PromiseOrValue<string>;
+    treasury: string;
     splitToLiquid: LibAccounts.SplitDetailsStruct;
-    router: PromiseOrValue<string>;
-    axelarGateway: PromiseOrValue<string>;
-    axelarGasService: PromiseOrValue<string>;
-    networkName: PromiseOrValue<string>;
+    router: string;
+    axelarGateway: string;
+    axelarGasService: string;
+    networkName: string;
   };
 
   export type InstantiateRequestStructOutput = [
@@ -144,38 +137,38 @@ export declare namespace RegistrarMessages {
   };
 
   export type UpdateConfigRequestStruct = {
-    accountsContract: PromiseOrValue<string>;
-    splitMax: PromiseOrValue<BigNumberish>;
-    splitMin: PromiseOrValue<BigNumberish>;
-    splitDefault: PromiseOrValue<BigNumberish>;
-    collectorShare: PromiseOrValue<BigNumberish>;
-    indexFundContract: PromiseOrValue<string>;
-    govContract: PromiseOrValue<string>;
-    treasury: PromiseOrValue<string>;
-    donationMatchCharitesContract: PromiseOrValue<string>;
-    donationMatchEmitter: PromiseOrValue<string>;
-    haloToken: PromiseOrValue<string>;
-    haloTokenLpContract: PromiseOrValue<string>;
-    charitySharesContract: PromiseOrValue<string>;
-    fundraisingContract: PromiseOrValue<string>;
-    uniswapRouter: PromiseOrValue<string>;
-    uniswapFactory: PromiseOrValue<string>;
-    multisigFactory: PromiseOrValue<string>;
-    multisigEmitter: PromiseOrValue<string>;
-    charityApplications: PromiseOrValue<string>;
-    lockedWithdrawal: PromiseOrValue<string>;
-    proxyAdmin: PromiseOrValue<string>;
-    usdcAddress: PromiseOrValue<string>;
-    wMaticAddress: PromiseOrValue<string>;
-    subdaoGovContract: PromiseOrValue<string>;
-    subdaoTokenContract: PromiseOrValue<string>;
-    subdaoBondingTokenContract: PromiseOrValue<string>;
-    subdaoCw900Contract: PromiseOrValue<string>;
-    subdaoDistributorContract: PromiseOrValue<string>;
-    subdaoEmitter: PromiseOrValue<string>;
-    donationMatchContract: PromiseOrValue<string>;
-    cw900lvAddress: PromiseOrValue<string>;
-    gasFwdFactory: PromiseOrValue<string>;
+    accountsContract: string;
+    splitMax: BigNumberish;
+    splitMin: BigNumberish;
+    splitDefault: BigNumberish;
+    collectorShare: BigNumberish;
+    indexFundContract: string;
+    govContract: string;
+    treasury: string;
+    donationMatchCharitesContract: string;
+    donationMatchEmitter: string;
+    haloToken: string;
+    haloTokenLpContract: string;
+    charitySharesContract: string;
+    fundraisingContract: string;
+    uniswapRouter: string;
+    uniswapFactory: string;
+    multisigFactory: string;
+    multisigEmitter: string;
+    charityApplications: string;
+    lockedWithdrawal: string;
+    proxyAdmin: string;
+    usdcAddress: string;
+    wMaticAddress: string;
+    subdaoGovContract: string;
+    subdaoTokenContract: string;
+    subdaoBondingTokenContract: string;
+    subdaoCw900Contract: string;
+    subdaoDistributorContract: string;
+    subdaoEmitter: string;
+    donationMatchContract: string;
+    cw900lvAddress: string;
+    gasFwdFactory: string;
   };
 
   export type UpdateConfigRequestStructOutput = [
@@ -249,36 +242,36 @@ export declare namespace RegistrarMessages {
 
 export declare namespace RegistrarStorage {
   export type ConfigStruct = {
-    indexFundContract: PromiseOrValue<string>;
-    accountsContract: PromiseOrValue<string>;
-    treasury: PromiseOrValue<string>;
-    subdaoGovContract: PromiseOrValue<string>;
-    subdaoTokenContract: PromiseOrValue<string>;
-    subdaoBondingTokenContract: PromiseOrValue<string>;
-    subdaoCw900Contract: PromiseOrValue<string>;
-    subdaoDistributorContract: PromiseOrValue<string>;
-    subdaoEmitter: PromiseOrValue<string>;
-    donationMatchContract: PromiseOrValue<string>;
-    donationMatchCharitesContract: PromiseOrValue<string>;
-    donationMatchEmitter: PromiseOrValue<string>;
+    indexFundContract: string;
+    accountsContract: string;
+    treasury: string;
+    subdaoGovContract: string;
+    subdaoTokenContract: string;
+    subdaoBondingTokenContract: string;
+    subdaoCw900Contract: string;
+    subdaoDistributorContract: string;
+    subdaoEmitter: string;
+    donationMatchContract: string;
+    donationMatchCharitesContract: string;
+    donationMatchEmitter: string;
     splitToLiquid: LibAccounts.SplitDetailsStruct;
-    haloToken: PromiseOrValue<string>;
-    haloTokenLpContract: PromiseOrValue<string>;
-    govContract: PromiseOrValue<string>;
-    collectorShare: PromiseOrValue<BigNumberish>;
-    charitySharesContract: PromiseOrValue<string>;
-    fundraisingContract: PromiseOrValue<string>;
-    uniswapRouter: PromiseOrValue<string>;
-    uniswapFactory: PromiseOrValue<string>;
-    multisigFactory: PromiseOrValue<string>;
-    multisigEmitter: PromiseOrValue<string>;
-    charityApplications: PromiseOrValue<string>;
-    lockedWithdrawal: PromiseOrValue<string>;
-    proxyAdmin: PromiseOrValue<string>;
-    usdcAddress: PromiseOrValue<string>;
-    wMaticAddress: PromiseOrValue<string>;
-    cw900lvAddress: PromiseOrValue<string>;
-    gasFwdFactory: PromiseOrValue<string>;
+    haloToken: string;
+    haloTokenLpContract: string;
+    govContract: string;
+    collectorShare: BigNumberish;
+    charitySharesContract: string;
+    fundraisingContract: string;
+    uniswapRouter: string;
+    uniswapFactory: string;
+    multisigFactory: string;
+    multisigEmitter: string;
+    charityApplications: string;
+    lockedWithdrawal: string;
+    proxyAdmin: string;
+    usdcAddress: string;
+    wMaticAddress: string;
+    cw900lvAddress: string;
+    gasFwdFactory: string;
   };
 
   export type ConfigStructOutput = [
@@ -348,13 +341,13 @@ export declare namespace RegistrarStorage {
 
 export declare namespace IAccountsStrategy {
   export type NetworkInfoStruct = {
-    chainId: PromiseOrValue<BigNumberish>;
-    router: PromiseOrValue<string>;
-    axelarGateway: PromiseOrValue<string>;
-    ibcChannel: PromiseOrValue<string>;
-    transferChannel: PromiseOrValue<string>;
-    gasReceiver: PromiseOrValue<string>;
-    gasLimit: PromiseOrValue<BigNumberish>;
+    chainId: BigNumberish;
+    router: string;
+    axelarGateway: string;
+    ibcChannel: string;
+    transferChannel: string;
+    gasReceiver: string;
+    gasLimit: BigNumberish;
   };
 
   export type NetworkInfoStructOutput = [
@@ -452,7 +445,7 @@ export interface RegistrarInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "getAccountsContractAddressByChain",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "getAngelProtocolParams",
@@ -460,11 +453,11 @@ export interface RegistrarInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "getFeeSettingsByFeeType",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "getGasByToken",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "getRebalanceParams",
@@ -472,11 +465,11 @@ export interface RegistrarInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "getStrategyApprovalState",
-    values: [PromiseOrValue<BytesLike>]
+    values: [BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "getStrategyParamsById",
-    values: [PromiseOrValue<BytesLike>]
+    values: [BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "getUniswapFactoryAddress",
@@ -488,7 +481,7 @@ export interface RegistrarInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "getVaultOperatorApproved",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "initialize((address,(uint256,uint256,uint256),address,address,address,string))",
@@ -500,7 +493,7 @@ export interface RegistrarInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "isTokenAccepted",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
@@ -513,11 +506,11 @@ export interface RegistrarInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "queryNetworkConnection",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "queryTokenPriceFeed",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "renounceOwnership",
@@ -525,7 +518,7 @@ export interface RegistrarInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "setAccountsContractAddressByChain",
-    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+    values: [string, string]
   ): string;
   encodeFunctionData(
     functionFragment: "setAngelProtocolParams",
@@ -533,15 +526,11 @@ export interface RegistrarInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "setFeeSettingsByFeesType",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>
-    ]
+    values: [BigNumberish, BigNumberish, string]
   ): string;
   encodeFunctionData(
     functionFragment: "setGasByToken",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "setRebalanceParams",
@@ -549,33 +538,27 @@ export interface RegistrarInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "setStrategyApprovalState",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>]
+    values: [BytesLike, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "setStrategyParams",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [BytesLike, string, string, string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "setTokenAccepted",
-    values: [PromiseOrValue<string>, PromiseOrValue<boolean>]
+    values: [string, boolean]
   ): string;
   encodeFunctionData(
     functionFragment: "setUniswapAddresses",
-    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+    values: [string, string]
   ): string;
   encodeFunctionData(
     functionFragment: "setVaultOperatorApproved",
-    values: [PromiseOrValue<string>, PromiseOrValue<boolean>]
+    values: [string, boolean]
   ): string;
   encodeFunctionData(
     functionFragment: "transferOwnership",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "updateConfig",
@@ -583,15 +566,11 @@ export interface RegistrarInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "updateNetworkConnections",
-    values: [
-      PromiseOrValue<string>,
-      IAccountsStrategy.NetworkInfoStruct,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [string, IAccountsStrategy.NetworkInfoStruct, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "updateTokenPriceFeed",
-    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+    values: [string, string]
   ): string;
 
   decodeFunctionResult(
@@ -924,7 +903,7 @@ export interface Registrar extends BaseContract {
 
   functions: {
     getAccountsContractAddressByChain(
-      _targetChain: PromiseOrValue<string>,
+      _targetChain: string,
       overrides?: CallOverrides
     ): Promise<[string]>;
 
@@ -933,12 +912,12 @@ export interface Registrar extends BaseContract {
     ): Promise<[LocalRegistrarLib.AngelProtocolParamsStructOutput]>;
 
     getFeeSettingsByFeeType(
-      _feeType: PromiseOrValue<BigNumberish>,
+      _feeType: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[LibAccounts.FeeSettingStructOutput]>;
 
     getGasByToken(
-      _tokenAddr: PromiseOrValue<string>,
+      _tokenAddr: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
@@ -947,12 +926,12 @@ export interface Registrar extends BaseContract {
     ): Promise<[LocalRegistrarLib.RebalanceParamsStructOutput]>;
 
     getStrategyApprovalState(
-      _strategyId: PromiseOrValue<BytesLike>,
+      _strategyId: BytesLike,
       overrides?: CallOverrides
     ): Promise<[number]>;
 
     getStrategyParamsById(
-      _strategyId: PromiseOrValue<BytesLike>,
+      _strategyId: BytesLike,
       overrides?: CallOverrides
     ): Promise<[LocalRegistrarLib.StrategyParamsStructOutput]>;
 
@@ -961,21 +940,21 @@ export interface Registrar extends BaseContract {
     getUniswapRouterAddress(overrides?: CallOverrides): Promise<[string]>;
 
     getVaultOperatorApproved(
-      _operator: PromiseOrValue<string>,
+      _operator: string,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
     "initialize((address,(uint256,uint256,uint256),address,address,address,string))"(
       details: RegistrarMessages.InstantiateRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     "initialize()"(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     isTokenAccepted(
-      _tokenAddr: PromiseOrValue<string>,
+      _tokenAddr: string,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
@@ -990,7 +969,7 @@ export interface Registrar extends BaseContract {
     ): Promise<[RegistrarStorage.ConfigStructOutput]>;
 
     queryNetworkConnection(
-      networkName: PromiseOrValue<string>,
+      networkName: string,
       overrides?: CallOverrides
     ): Promise<
       [IAccountsStrategy.NetworkInfoStructOutput] & {
@@ -999,102 +978,102 @@ export interface Registrar extends BaseContract {
     >;
 
     queryTokenPriceFeed(
-      token: PromiseOrValue<string>,
+      token: string,
       overrides?: CallOverrides
     ): Promise<[string]>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     setAccountsContractAddressByChain(
-      _chainName: PromiseOrValue<string>,
-      _accountsContractAddress: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _chainName: string,
+      _accountsContractAddress: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     setAngelProtocolParams(
       _angelProtocolParams: LocalRegistrarLib.AngelProtocolParamsStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     setFeeSettingsByFeesType(
-      _feeType: PromiseOrValue<BigNumberish>,
-      _rate: PromiseOrValue<BigNumberish>,
-      _payout: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _feeType: BigNumberish,
+      _rate: BigNumberish,
+      _payout: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     setGasByToken(
-      _tokenAddr: PromiseOrValue<string>,
-      _gasFee: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _tokenAddr: string,
+      _gasFee: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     setRebalanceParams(
       _rebalanceParams: LocalRegistrarLib.RebalanceParamsStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     setStrategyApprovalState(
-      _strategyId: PromiseOrValue<BytesLike>,
-      _approvalState: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _strategyId: BytesLike,
+      _approvalState: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     setStrategyParams(
-      _strategyId: PromiseOrValue<BytesLike>,
-      _network: PromiseOrValue<string>,
-      _lockAddr: PromiseOrValue<string>,
-      _liqAddr: PromiseOrValue<string>,
-      _approvalState: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _strategyId: BytesLike,
+      _network: string,
+      _lockAddr: string,
+      _liqAddr: string,
+      _approvalState: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     setTokenAccepted(
-      _tokenAddr: PromiseOrValue<string>,
-      _isAccepted: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _tokenAddr: string,
+      _isAccepted: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     setUniswapAddresses(
-      _uniswapRouter: PromiseOrValue<string>,
-      _uniswapFactory: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _uniswapRouter: string,
+      _uniswapFactory: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     setVaultOperatorApproved(
-      _operator: PromiseOrValue<string>,
-      _isApproved: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _operator: string,
+      _isApproved: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newOwner: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     updateConfig(
       details: RegistrarMessages.UpdateConfigRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     updateNetworkConnections(
-      networkName: PromiseOrValue<string>,
+      networkName: string,
       networkInfo: IAccountsStrategy.NetworkInfoStruct,
-      action: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      action: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     updateTokenPriceFeed(
-      token: PromiseOrValue<string>,
-      priceFeed: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      token: string,
+      priceFeed: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   getAccountsContractAddressByChain(
-    _targetChain: PromiseOrValue<string>,
+    _targetChain: string,
     overrides?: CallOverrides
   ): Promise<string>;
 
@@ -1103,12 +1082,12 @@ export interface Registrar extends BaseContract {
   ): Promise<LocalRegistrarLib.AngelProtocolParamsStructOutput>;
 
   getFeeSettingsByFeeType(
-    _feeType: PromiseOrValue<BigNumberish>,
+    _feeType: BigNumberish,
     overrides?: CallOverrides
   ): Promise<LibAccounts.FeeSettingStructOutput>;
 
   getGasByToken(
-    _tokenAddr: PromiseOrValue<string>,
+    _tokenAddr: string,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
@@ -1117,12 +1096,12 @@ export interface Registrar extends BaseContract {
   ): Promise<LocalRegistrarLib.RebalanceParamsStructOutput>;
 
   getStrategyApprovalState(
-    _strategyId: PromiseOrValue<BytesLike>,
+    _strategyId: BytesLike,
     overrides?: CallOverrides
   ): Promise<number>;
 
   getStrategyParamsById(
-    _strategyId: PromiseOrValue<BytesLike>,
+    _strategyId: BytesLike,
     overrides?: CallOverrides
   ): Promise<LocalRegistrarLib.StrategyParamsStructOutput>;
 
@@ -1131,21 +1110,21 @@ export interface Registrar extends BaseContract {
   getUniswapRouterAddress(overrides?: CallOverrides): Promise<string>;
 
   getVaultOperatorApproved(
-    _operator: PromiseOrValue<string>,
+    _operator: string,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
   "initialize((address,(uint256,uint256,uint256),address,address,address,string))"(
     details: RegistrarMessages.InstantiateRequestStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   "initialize()"(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   isTokenAccepted(
-    _tokenAddr: PromiseOrValue<string>,
+    _tokenAddr: string,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
@@ -1158,107 +1137,107 @@ export interface Registrar extends BaseContract {
   ): Promise<RegistrarStorage.ConfigStructOutput>;
 
   queryNetworkConnection(
-    networkName: PromiseOrValue<string>,
+    networkName: string,
     overrides?: CallOverrides
   ): Promise<IAccountsStrategy.NetworkInfoStructOutput>;
 
   queryTokenPriceFeed(
-    token: PromiseOrValue<string>,
+    token: string,
     overrides?: CallOverrides
   ): Promise<string>;
 
   renounceOwnership(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   setAccountsContractAddressByChain(
-    _chainName: PromiseOrValue<string>,
-    _accountsContractAddress: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _chainName: string,
+    _accountsContractAddress: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   setAngelProtocolParams(
     _angelProtocolParams: LocalRegistrarLib.AngelProtocolParamsStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   setFeeSettingsByFeesType(
-    _feeType: PromiseOrValue<BigNumberish>,
-    _rate: PromiseOrValue<BigNumberish>,
-    _payout: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _feeType: BigNumberish,
+    _rate: BigNumberish,
+    _payout: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   setGasByToken(
-    _tokenAddr: PromiseOrValue<string>,
-    _gasFee: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _tokenAddr: string,
+    _gasFee: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   setRebalanceParams(
     _rebalanceParams: LocalRegistrarLib.RebalanceParamsStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   setStrategyApprovalState(
-    _strategyId: PromiseOrValue<BytesLike>,
-    _approvalState: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _strategyId: BytesLike,
+    _approvalState: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   setStrategyParams(
-    _strategyId: PromiseOrValue<BytesLike>,
-    _network: PromiseOrValue<string>,
-    _lockAddr: PromiseOrValue<string>,
-    _liqAddr: PromiseOrValue<string>,
-    _approvalState: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _strategyId: BytesLike,
+    _network: string,
+    _lockAddr: string,
+    _liqAddr: string,
+    _approvalState: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   setTokenAccepted(
-    _tokenAddr: PromiseOrValue<string>,
-    _isAccepted: PromiseOrValue<boolean>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _tokenAddr: string,
+    _isAccepted: boolean,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   setUniswapAddresses(
-    _uniswapRouter: PromiseOrValue<string>,
-    _uniswapFactory: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _uniswapRouter: string,
+    _uniswapFactory: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   setVaultOperatorApproved(
-    _operator: PromiseOrValue<string>,
-    _isApproved: PromiseOrValue<boolean>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _operator: string,
+    _isApproved: boolean,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    newOwner: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   updateConfig(
     details: RegistrarMessages.UpdateConfigRequestStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   updateNetworkConnections(
-    networkName: PromiseOrValue<string>,
+    networkName: string,
     networkInfo: IAccountsStrategy.NetworkInfoStruct,
-    action: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    action: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   updateTokenPriceFeed(
-    token: PromiseOrValue<string>,
-    priceFeed: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    token: string,
+    priceFeed: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     getAccountsContractAddressByChain(
-      _targetChain: PromiseOrValue<string>,
+      _targetChain: string,
       overrides?: CallOverrides
     ): Promise<string>;
 
@@ -1267,12 +1246,12 @@ export interface Registrar extends BaseContract {
     ): Promise<LocalRegistrarLib.AngelProtocolParamsStructOutput>;
 
     getFeeSettingsByFeeType(
-      _feeType: PromiseOrValue<BigNumberish>,
+      _feeType: BigNumberish,
       overrides?: CallOverrides
     ): Promise<LibAccounts.FeeSettingStructOutput>;
 
     getGasByToken(
-      _tokenAddr: PromiseOrValue<string>,
+      _tokenAddr: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -1281,12 +1260,12 @@ export interface Registrar extends BaseContract {
     ): Promise<LocalRegistrarLib.RebalanceParamsStructOutput>;
 
     getStrategyApprovalState(
-      _strategyId: PromiseOrValue<BytesLike>,
+      _strategyId: BytesLike,
       overrides?: CallOverrides
     ): Promise<number>;
 
     getStrategyParamsById(
-      _strategyId: PromiseOrValue<BytesLike>,
+      _strategyId: BytesLike,
       overrides?: CallOverrides
     ): Promise<LocalRegistrarLib.StrategyParamsStructOutput>;
 
@@ -1295,7 +1274,7 @@ export interface Registrar extends BaseContract {
     getUniswapRouterAddress(overrides?: CallOverrides): Promise<string>;
 
     getVaultOperatorApproved(
-      _operator: PromiseOrValue<string>,
+      _operator: string,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
@@ -1307,7 +1286,7 @@ export interface Registrar extends BaseContract {
     "initialize()"(overrides?: CallOverrides): Promise<void>;
 
     isTokenAccepted(
-      _tokenAddr: PromiseOrValue<string>,
+      _tokenAddr: string,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
@@ -1320,20 +1299,20 @@ export interface Registrar extends BaseContract {
     ): Promise<RegistrarStorage.ConfigStructOutput>;
 
     queryNetworkConnection(
-      networkName: PromiseOrValue<string>,
+      networkName: string,
       overrides?: CallOverrides
     ): Promise<IAccountsStrategy.NetworkInfoStructOutput>;
 
     queryTokenPriceFeed(
-      token: PromiseOrValue<string>,
+      token: string,
       overrides?: CallOverrides
     ): Promise<string>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     setAccountsContractAddressByChain(
-      _chainName: PromiseOrValue<string>,
-      _accountsContractAddress: PromiseOrValue<string>,
+      _chainName: string,
+      _accountsContractAddress: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1343,15 +1322,15 @@ export interface Registrar extends BaseContract {
     ): Promise<void>;
 
     setFeeSettingsByFeesType(
-      _feeType: PromiseOrValue<BigNumberish>,
-      _rate: PromiseOrValue<BigNumberish>,
-      _payout: PromiseOrValue<string>,
+      _feeType: BigNumberish,
+      _rate: BigNumberish,
+      _payout: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     setGasByToken(
-      _tokenAddr: PromiseOrValue<string>,
-      _gasFee: PromiseOrValue<BigNumberish>,
+      _tokenAddr: string,
+      _gasFee: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1361,40 +1340,40 @@ export interface Registrar extends BaseContract {
     ): Promise<void>;
 
     setStrategyApprovalState(
-      _strategyId: PromiseOrValue<BytesLike>,
-      _approvalState: PromiseOrValue<BigNumberish>,
+      _strategyId: BytesLike,
+      _approvalState: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     setStrategyParams(
-      _strategyId: PromiseOrValue<BytesLike>,
-      _network: PromiseOrValue<string>,
-      _lockAddr: PromiseOrValue<string>,
-      _liqAddr: PromiseOrValue<string>,
-      _approvalState: PromiseOrValue<BigNumberish>,
+      _strategyId: BytesLike,
+      _network: string,
+      _lockAddr: string,
+      _liqAddr: string,
+      _approvalState: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     setTokenAccepted(
-      _tokenAddr: PromiseOrValue<string>,
-      _isAccepted: PromiseOrValue<boolean>,
+      _tokenAddr: string,
+      _isAccepted: boolean,
       overrides?: CallOverrides
     ): Promise<void>;
 
     setUniswapAddresses(
-      _uniswapRouter: PromiseOrValue<string>,
-      _uniswapFactory: PromiseOrValue<string>,
+      _uniswapRouter: string,
+      _uniswapFactory: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     setVaultOperatorApproved(
-      _operator: PromiseOrValue<string>,
-      _isApproved: PromiseOrValue<boolean>,
+      _operator: string,
+      _isApproved: boolean,
       overrides?: CallOverrides
     ): Promise<void>;
 
     transferOwnership(
-      newOwner: PromiseOrValue<string>,
+      newOwner: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1404,15 +1383,15 @@ export interface Registrar extends BaseContract {
     ): Promise<void>;
 
     updateNetworkConnections(
-      networkName: PromiseOrValue<string>,
+      networkName: string,
       networkInfo: IAccountsStrategy.NetworkInfoStruct,
-      action: PromiseOrValue<BigNumberish>,
+      action: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     updateTokenPriceFeed(
-      token: PromiseOrValue<string>,
-      priceFeed: PromiseOrValue<string>,
+      token: string,
+      priceFeed: string,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -1466,12 +1445,12 @@ export interface Registrar extends BaseContract {
     ): NetworkConnectionRemovedEventFilter;
 
     "OwnershipTransferred(address,address)"(
-      previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      previousOwner?: string | null,
+      newOwner?: string | null
     ): OwnershipTransferredEventFilter;
     OwnershipTransferred(
-      previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      previousOwner?: string | null,
+      newOwner?: string | null
     ): OwnershipTransferredEventFilter;
 
     "RebalanceParamsUpdated()"(): RebalanceParamsUpdatedEventFilter;
@@ -1513,31 +1492,31 @@ export interface Registrar extends BaseContract {
 
   estimateGas: {
     getAccountsContractAddressByChain(
-      _targetChain: PromiseOrValue<string>,
+      _targetChain: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getAngelProtocolParams(overrides?: CallOverrides): Promise<BigNumber>;
 
     getFeeSettingsByFeeType(
-      _feeType: PromiseOrValue<BigNumberish>,
+      _feeType: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getGasByToken(
-      _tokenAddr: PromiseOrValue<string>,
+      _tokenAddr: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getRebalanceParams(overrides?: CallOverrides): Promise<BigNumber>;
 
     getStrategyApprovalState(
-      _strategyId: PromiseOrValue<BytesLike>,
+      _strategyId: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getStrategyParamsById(
-      _strategyId: PromiseOrValue<BytesLike>,
+      _strategyId: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -1546,21 +1525,21 @@ export interface Registrar extends BaseContract {
     getUniswapRouterAddress(overrides?: CallOverrides): Promise<BigNumber>;
 
     getVaultOperatorApproved(
-      _operator: PromiseOrValue<string>,
+      _operator: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     "initialize((address,(uint256,uint256,uint256),address,address,address,string))"(
       details: RegistrarMessages.InstantiateRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     "initialize()"(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     isTokenAccepted(
-      _tokenAddr: PromiseOrValue<string>,
+      _tokenAddr: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -1571,108 +1550,108 @@ export interface Registrar extends BaseContract {
     queryConfig(overrides?: CallOverrides): Promise<BigNumber>;
 
     queryNetworkConnection(
-      networkName: PromiseOrValue<string>,
+      networkName: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     queryTokenPriceFeed(
-      token: PromiseOrValue<string>,
+      token: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     setAccountsContractAddressByChain(
-      _chainName: PromiseOrValue<string>,
-      _accountsContractAddress: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _chainName: string,
+      _accountsContractAddress: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     setAngelProtocolParams(
       _angelProtocolParams: LocalRegistrarLib.AngelProtocolParamsStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     setFeeSettingsByFeesType(
-      _feeType: PromiseOrValue<BigNumberish>,
-      _rate: PromiseOrValue<BigNumberish>,
-      _payout: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _feeType: BigNumberish,
+      _rate: BigNumberish,
+      _payout: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     setGasByToken(
-      _tokenAddr: PromiseOrValue<string>,
-      _gasFee: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _tokenAddr: string,
+      _gasFee: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     setRebalanceParams(
       _rebalanceParams: LocalRegistrarLib.RebalanceParamsStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     setStrategyApprovalState(
-      _strategyId: PromiseOrValue<BytesLike>,
-      _approvalState: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _strategyId: BytesLike,
+      _approvalState: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     setStrategyParams(
-      _strategyId: PromiseOrValue<BytesLike>,
-      _network: PromiseOrValue<string>,
-      _lockAddr: PromiseOrValue<string>,
-      _liqAddr: PromiseOrValue<string>,
-      _approvalState: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _strategyId: BytesLike,
+      _network: string,
+      _lockAddr: string,
+      _liqAddr: string,
+      _approvalState: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     setTokenAccepted(
-      _tokenAddr: PromiseOrValue<string>,
-      _isAccepted: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _tokenAddr: string,
+      _isAccepted: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     setUniswapAddresses(
-      _uniswapRouter: PromiseOrValue<string>,
-      _uniswapFactory: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _uniswapRouter: string,
+      _uniswapFactory: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     setVaultOperatorApproved(
-      _operator: PromiseOrValue<string>,
-      _isApproved: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _operator: string,
+      _isApproved: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newOwner: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     updateConfig(
       details: RegistrarMessages.UpdateConfigRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     updateNetworkConnections(
-      networkName: PromiseOrValue<string>,
+      networkName: string,
       networkInfo: IAccountsStrategy.NetworkInfoStruct,
-      action: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      action: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     updateTokenPriceFeed(
-      token: PromiseOrValue<string>,
-      priceFeed: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      token: string,
+      priceFeed: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     getAccountsContractAddressByChain(
-      _targetChain: PromiseOrValue<string>,
+      _targetChain: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -1681,12 +1660,12 @@ export interface Registrar extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     getFeeSettingsByFeeType(
-      _feeType: PromiseOrValue<BigNumberish>,
+      _feeType: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getGasByToken(
-      _tokenAddr: PromiseOrValue<string>,
+      _tokenAddr: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -1695,12 +1674,12 @@ export interface Registrar extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     getStrategyApprovalState(
-      _strategyId: PromiseOrValue<BytesLike>,
+      _strategyId: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getStrategyParamsById(
-      _strategyId: PromiseOrValue<BytesLike>,
+      _strategyId: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -1713,21 +1692,21 @@ export interface Registrar extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     getVaultOperatorApproved(
-      _operator: PromiseOrValue<string>,
+      _operator: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     "initialize((address,(uint256,uint256,uint256),address,address,address,string))"(
       details: RegistrarMessages.InstantiateRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     "initialize()"(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     isTokenAccepted(
-      _tokenAddr: PromiseOrValue<string>,
+      _tokenAddr: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -1740,102 +1719,102 @@ export interface Registrar extends BaseContract {
     queryConfig(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     queryNetworkConnection(
-      networkName: PromiseOrValue<string>,
+      networkName: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     queryTokenPriceFeed(
-      token: PromiseOrValue<string>,
+      token: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     setAccountsContractAddressByChain(
-      _chainName: PromiseOrValue<string>,
-      _accountsContractAddress: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _chainName: string,
+      _accountsContractAddress: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     setAngelProtocolParams(
       _angelProtocolParams: LocalRegistrarLib.AngelProtocolParamsStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     setFeeSettingsByFeesType(
-      _feeType: PromiseOrValue<BigNumberish>,
-      _rate: PromiseOrValue<BigNumberish>,
-      _payout: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _feeType: BigNumberish,
+      _rate: BigNumberish,
+      _payout: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     setGasByToken(
-      _tokenAddr: PromiseOrValue<string>,
-      _gasFee: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _tokenAddr: string,
+      _gasFee: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     setRebalanceParams(
       _rebalanceParams: LocalRegistrarLib.RebalanceParamsStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     setStrategyApprovalState(
-      _strategyId: PromiseOrValue<BytesLike>,
-      _approvalState: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _strategyId: BytesLike,
+      _approvalState: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     setStrategyParams(
-      _strategyId: PromiseOrValue<BytesLike>,
-      _network: PromiseOrValue<string>,
-      _lockAddr: PromiseOrValue<string>,
-      _liqAddr: PromiseOrValue<string>,
-      _approvalState: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _strategyId: BytesLike,
+      _network: string,
+      _lockAddr: string,
+      _liqAddr: string,
+      _approvalState: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     setTokenAccepted(
-      _tokenAddr: PromiseOrValue<string>,
-      _isAccepted: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _tokenAddr: string,
+      _isAccepted: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     setUniswapAddresses(
-      _uniswapRouter: PromiseOrValue<string>,
-      _uniswapFactory: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _uniswapRouter: string,
+      _uniswapFactory: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     setVaultOperatorApproved(
-      _operator: PromiseOrValue<string>,
-      _isApproved: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _operator: string,
+      _isApproved: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newOwner: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     updateConfig(
       details: RegistrarMessages.UpdateConfigRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     updateNetworkConnections(
-      networkName: PromiseOrValue<string>,
+      networkName: string,
       networkInfo: IAccountsStrategy.NetworkInfoStruct,
-      action: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      action: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     updateTokenPriceFeed(
-      token: PromiseOrValue<string>,
-      priceFeed: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      token: string,
+      priceFeed: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

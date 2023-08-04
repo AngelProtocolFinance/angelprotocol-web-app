@@ -22,55 +22,49 @@ import type {
   OnEvent,
 } from "../../../../common";
 
-export interface IAccountsAllowanceInterface extends utils.Interface {
+export interface IAccountsGasManagerInterface extends utils.Interface {
   functions: {
-    "manageAllowances(uint32,address,address,uint256)": FunctionFragment;
-    "queryAllowance(uint32,address,address)": FunctionFragment;
-    "spendAllowance(uint32,address,uint256,address)": FunctionFragment;
+    "addGas(uint32,uint8,address,uint256)": FunctionFragment;
+    "sweepForClosure(uint32,address)": FunctionFragment;
+    "sweepForEndowment(uint32,uint8,address)": FunctionFragment;
   };
 
   getFunction(
-    nameOrSignatureOrTopic:
-      | "manageAllowances"
-      | "queryAllowance"
-      | "spendAllowance"
+    nameOrSignatureOrTopic: "addGas" | "sweepForClosure" | "sweepForEndowment"
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "manageAllowances",
-    values: [BigNumberish, string, string, BigNumberish]
+    functionFragment: "addGas",
+    values: [BigNumberish, BigNumberish, string, BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "queryAllowance",
-    values: [BigNumberish, string, string]
+    functionFragment: "sweepForClosure",
+    values: [BigNumberish, string]
   ): string;
   encodeFunctionData(
-    functionFragment: "spendAllowance",
-    values: [BigNumberish, string, BigNumberish, string]
+    functionFragment: "sweepForEndowment",
+    values: [BigNumberish, BigNumberish, string]
   ): string;
 
+  decodeFunctionResult(functionFragment: "addGas", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "manageAllowances",
+    functionFragment: "sweepForClosure",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "queryAllowance",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "spendAllowance",
+    functionFragment: "sweepForEndowment",
     data: BytesLike
   ): Result;
 
   events: {};
 }
 
-export interface IAccountsAllowance extends BaseContract {
+export interface IAccountsGasManager extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: IAccountsAllowanceInterface;
+  interface: IAccountsGasManagerInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -92,126 +86,116 @@ export interface IAccountsAllowance extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    manageAllowances(
-      endowId: BigNumberish,
-      spender: string,
+    addGas(
+      id: BigNumberish,
+      vault: BigNumberish,
       token: string,
       amount: BigNumberish,
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
-    queryAllowance(
-      endowId: BigNumberish,
-      spender: string,
+    sweepForClosure(
+      id: BigNumberish,
       token: string,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+      overrides?: Overrides & { from?: string }
+    ): Promise<ContractTransaction>;
 
-    spendAllowance(
-      endowId: BigNumberish,
+    sweepForEndowment(
+      id: BigNumberish,
+      vault: BigNumberish,
       token: string,
-      amount: BigNumberish,
-      recipient: string,
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
-  manageAllowances(
-    endowId: BigNumberish,
-    spender: string,
+  addGas(
+    id: BigNumberish,
+    vault: BigNumberish,
     token: string,
     amount: BigNumberish,
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
-  queryAllowance(
-    endowId: BigNumberish,
-    spender: string,
+  sweepForClosure(
+    id: BigNumberish,
     token: string,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+    overrides?: Overrides & { from?: string }
+  ): Promise<ContractTransaction>;
 
-  spendAllowance(
-    endowId: BigNumberish,
+  sweepForEndowment(
+    id: BigNumberish,
+    vault: BigNumberish,
     token: string,
-    amount: BigNumberish,
-    recipient: string,
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    manageAllowances(
-      endowId: BigNumberish,
-      spender: string,
+    addGas(
+      id: BigNumberish,
+      vault: BigNumberish,
       token: string,
       amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    queryAllowance(
-      endowId: BigNumberish,
-      spender: string,
+    sweepForClosure(
+      id: BigNumberish,
       token: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    spendAllowance(
-      endowId: BigNumberish,
+    sweepForEndowment(
+      id: BigNumberish,
+      vault: BigNumberish,
       token: string,
-      amount: BigNumberish,
-      recipient: string,
       overrides?: CallOverrides
-    ): Promise<void>;
+    ): Promise<BigNumber>;
   };
 
   filters: {};
 
   estimateGas: {
-    manageAllowances(
-      endowId: BigNumberish,
-      spender: string,
+    addGas(
+      id: BigNumberish,
+      vault: BigNumberish,
       token: string,
       amount: BigNumberish,
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
-    queryAllowance(
-      endowId: BigNumberish,
-      spender: string,
+    sweepForClosure(
+      id: BigNumberish,
       token: string,
-      overrides?: CallOverrides
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
-    spendAllowance(
-      endowId: BigNumberish,
+    sweepForEndowment(
+      id: BigNumberish,
+      vault: BigNumberish,
       token: string,
-      amount: BigNumberish,
-      recipient: string,
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    manageAllowances(
-      endowId: BigNumberish,
-      spender: string,
+    addGas(
+      id: BigNumberish,
+      vault: BigNumberish,
       token: string,
       amount: BigNumberish,
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
-    queryAllowance(
-      endowId: BigNumberish,
-      spender: string,
+    sweepForClosure(
+      id: BigNumberish,
       token: string,
-      overrides?: CallOverrides
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
-    spendAllowance(
-      endowId: BigNumberish,
+    sweepForEndowment(
+      id: BigNumberish,
+      vault: BigNumberish,
       token: string,
-      amount: BigNumberish,
-      recipient: string,
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };

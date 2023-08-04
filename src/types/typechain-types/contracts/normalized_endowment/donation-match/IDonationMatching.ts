@@ -20,16 +20,15 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../common";
 
 export declare namespace DonationMatchStorage {
   export type ConfigStruct = {
-    reserveToken: PromiseOrValue<string>;
-    uniswapFactory: PromiseOrValue<string>;
-    usdcAddress: PromiseOrValue<string>;
-    registrarContract: PromiseOrValue<string>;
-    poolFee: PromiseOrValue<BigNumberish>;
+    reserveToken: string;
+    uniswapFactory: string;
+    usdcAddress: string;
+    registrarContract: string;
+    poolFee: BigNumberish;
   };
 
   export type ConfigStructOutput = [string, string, string, string, number] & {
@@ -53,12 +52,7 @@ export interface IDonationMatchingInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "executeDonorMatch",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>
-    ]
+    values: [BigNumberish, BigNumberish, string, string]
   ): string;
   encodeFunctionData(
     functionFragment: "queryConfig",
@@ -105,11 +99,11 @@ export interface IDonationMatching extends BaseContract {
 
   functions: {
     executeDonorMatch(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
-      donor: PromiseOrValue<string>,
-      token: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      endowmentId: BigNumberish,
+      amount: BigNumberish,
+      donor: string,
+      token: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     queryConfig(
@@ -118,11 +112,11 @@ export interface IDonationMatching extends BaseContract {
   };
 
   executeDonorMatch(
-    endowmentId: PromiseOrValue<BigNumberish>,
-    amount: PromiseOrValue<BigNumberish>,
-    donor: PromiseOrValue<string>,
-    token: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    endowmentId: BigNumberish,
+    amount: BigNumberish,
+    donor: string,
+    token: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   queryConfig(
@@ -131,10 +125,10 @@ export interface IDonationMatching extends BaseContract {
 
   callStatic: {
     executeDonorMatch(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
-      donor: PromiseOrValue<string>,
-      token: PromiseOrValue<string>,
+      endowmentId: BigNumberish,
+      amount: BigNumberish,
+      donor: string,
+      token: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -147,11 +141,11 @@ export interface IDonationMatching extends BaseContract {
 
   estimateGas: {
     executeDonorMatch(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
-      donor: PromiseOrValue<string>,
-      token: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      endowmentId: BigNumberish,
+      amount: BigNumberish,
+      donor: string,
+      token: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     queryConfig(overrides?: CallOverrides): Promise<BigNumber>;
@@ -159,11 +153,11 @@ export interface IDonationMatching extends BaseContract {
 
   populateTransaction: {
     executeDonorMatch(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
-      donor: PromiseOrValue<string>,
-      token: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      endowmentId: BigNumberish,
+      amount: BigNumberish,
+      donor: string,
+      token: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     queryConfig(overrides?: CallOverrides): Promise<PopulatedTransaction>;

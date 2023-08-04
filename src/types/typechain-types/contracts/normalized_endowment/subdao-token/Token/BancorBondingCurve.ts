@@ -18,7 +18,6 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../../common";
 
 export interface BancorBondingCurveInterface extends utils.Interface {
@@ -37,21 +36,11 @@ export interface BancorBondingCurveInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "calculatePurchaseReturn",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "calculateSaleReturn",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "version", values?: undefined): string;
 
@@ -96,18 +85,18 @@ export interface BancorBondingCurve extends BaseContract {
 
   functions: {
     calculatePurchaseReturn(
-      supply: PromiseOrValue<BigNumberish>,
-      reservebalance: PromiseOrValue<BigNumberish>,
-      reserveratio: PromiseOrValue<BigNumberish>,
-      depositamount: PromiseOrValue<BigNumberish>,
+      supply: BigNumberish,
+      reservebalance: BigNumberish,
+      reserveratio: BigNumberish,
+      depositamount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     calculateSaleReturn(
-      supply: PromiseOrValue<BigNumberish>,
-      reservebalance: PromiseOrValue<BigNumberish>,
-      reserveratio: PromiseOrValue<BigNumberish>,
-      sellamount: PromiseOrValue<BigNumberish>,
+      supply: BigNumberish,
+      reservebalance: BigNumberish,
+      reserveratio: BigNumberish,
+      sellamount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
@@ -115,18 +104,18 @@ export interface BancorBondingCurve extends BaseContract {
   };
 
   calculatePurchaseReturn(
-    supply: PromiseOrValue<BigNumberish>,
-    reservebalance: PromiseOrValue<BigNumberish>,
-    reserveratio: PromiseOrValue<BigNumberish>,
-    depositamount: PromiseOrValue<BigNumberish>,
+    supply: BigNumberish,
+    reservebalance: BigNumberish,
+    reserveratio: BigNumberish,
+    depositamount: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   calculateSaleReturn(
-    supply: PromiseOrValue<BigNumberish>,
-    reservebalance: PromiseOrValue<BigNumberish>,
-    reserveratio: PromiseOrValue<BigNumberish>,
-    sellamount: PromiseOrValue<BigNumberish>,
+    supply: BigNumberish,
+    reservebalance: BigNumberish,
+    reserveratio: BigNumberish,
+    sellamount: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
@@ -134,18 +123,18 @@ export interface BancorBondingCurve extends BaseContract {
 
   callStatic: {
     calculatePurchaseReturn(
-      supply: PromiseOrValue<BigNumberish>,
-      reservebalance: PromiseOrValue<BigNumberish>,
-      reserveratio: PromiseOrValue<BigNumberish>,
-      depositamount: PromiseOrValue<BigNumberish>,
+      supply: BigNumberish,
+      reservebalance: BigNumberish,
+      reserveratio: BigNumberish,
+      depositamount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     calculateSaleReturn(
-      supply: PromiseOrValue<BigNumberish>,
-      reservebalance: PromiseOrValue<BigNumberish>,
-      reserveratio: PromiseOrValue<BigNumberish>,
-      sellamount: PromiseOrValue<BigNumberish>,
+      supply: BigNumberish,
+      reservebalance: BigNumberish,
+      reserveratio: BigNumberish,
+      sellamount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -156,18 +145,18 @@ export interface BancorBondingCurve extends BaseContract {
 
   estimateGas: {
     calculatePurchaseReturn(
-      supply: PromiseOrValue<BigNumberish>,
-      reservebalance: PromiseOrValue<BigNumberish>,
-      reserveratio: PromiseOrValue<BigNumberish>,
-      depositamount: PromiseOrValue<BigNumberish>,
+      supply: BigNumberish,
+      reservebalance: BigNumberish,
+      reserveratio: BigNumberish,
+      depositamount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     calculateSaleReturn(
-      supply: PromiseOrValue<BigNumberish>,
-      reservebalance: PromiseOrValue<BigNumberish>,
-      reserveratio: PromiseOrValue<BigNumberish>,
-      sellamount: PromiseOrValue<BigNumberish>,
+      supply: BigNumberish,
+      reservebalance: BigNumberish,
+      reserveratio: BigNumberish,
+      sellamount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -176,18 +165,18 @@ export interface BancorBondingCurve extends BaseContract {
 
   populateTransaction: {
     calculatePurchaseReturn(
-      supply: PromiseOrValue<BigNumberish>,
-      reservebalance: PromiseOrValue<BigNumberish>,
-      reserveratio: PromiseOrValue<BigNumberish>,
-      depositamount: PromiseOrValue<BigNumberish>,
+      supply: BigNumberish,
+      reservebalance: BigNumberish,
+      reserveratio: BigNumberish,
+      depositamount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     calculateSaleReturn(
-      supply: PromiseOrValue<BigNumberish>,
-      reservebalance: PromiseOrValue<BigNumberish>,
-      reserveratio: PromiseOrValue<BigNumberish>,
-      sellamount: PromiseOrValue<BigNumberish>,
+      supply: BigNumberish,
+      reservebalance: BigNumberish,
+      reserveratio: BigNumberish,
+      sellamount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

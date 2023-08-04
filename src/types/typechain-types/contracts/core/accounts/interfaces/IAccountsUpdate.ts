@@ -19,7 +19,6 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../../common";
 
 export interface IAccountsUpdateInterface extends utils.Interface {
@@ -34,12 +33,9 @@ export interface IAccountsUpdateInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "updateConfig",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
-  encodeFunctionData(
-    functionFragment: "updateOwner",
-    values: [PromiseOrValue<string>]
-  ): string;
+  encodeFunctionData(functionFragment: "updateOwner", values: [string]): string;
 
   decodeFunctionResult(
     functionFragment: "updateConfig",
@@ -81,61 +77,58 @@ export interface IAccountsUpdate extends BaseContract {
 
   functions: {
     updateConfig(
-      newRegistrar: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newRegistrar: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     updateOwner(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newOwner: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   updateConfig(
-    newRegistrar: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    newRegistrar: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   updateOwner(
-    newOwner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    newOwner: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     updateConfig(
-      newRegistrar: PromiseOrValue<string>,
+      newRegistrar: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    updateOwner(
-      newOwner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    updateOwner(newOwner: string, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {};
 
   estimateGas: {
     updateConfig(
-      newRegistrar: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newRegistrar: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     updateOwner(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newOwner: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     updateConfig(
-      newRegistrar: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newRegistrar: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     updateOwner(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newOwner: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }
