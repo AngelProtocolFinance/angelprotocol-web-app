@@ -1,9 +1,9 @@
 import { Disclosure } from "@headlessui/react";
 import { PropsWithChildren } from "react";
 import { TableProps } from "./types";
+import { useSortDonations } from "services/apes";
 import Icon, { DrawerIcon } from "components/Icon";
 import useKYC from "components/KYC/useKYC";
-import useSort from "hooks/useSort";
 import { humanize } from "helpers";
 import LoadMoreBtn from "./LoadMoreBtn";
 
@@ -15,7 +15,7 @@ export default function MobileTable({
   hasMore,
   onLoadMore,
 }: TableProps) {
-  const { sorted } = useSort(donations);
+  const { sorted } = useSortDonations(donations);
   const showKYCForm = useKYC();
 
   return (

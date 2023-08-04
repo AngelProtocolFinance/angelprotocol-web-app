@@ -1,16 +1,15 @@
 import { Donation, KYCData } from "types/aws";
+import { useSortDonations } from "services/apes";
 import CsvExporter from "components/CsvExporter";
 import ExtLink from "components/ExtLink";
 import { HeaderButton } from "components/HeaderButton";
 import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
-import useSort from "hooks/useSort";
 import { getTxUrl, humanize, maskAddress } from "helpers";
 
 export default function Table(props: { donations: Donation[] }) {
-  const { handleHeaderClick, sorted, sortDirection, sortKey } = useSort(
-    props.donations
-  );
+  const { handleHeaderClick, sorted, sortDirection, sortKey } =
+    useSortDonations(props.donations);
 
   return (
     <table className="w-full border-collapse self-start">

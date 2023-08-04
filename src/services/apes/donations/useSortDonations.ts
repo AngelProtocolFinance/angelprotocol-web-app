@@ -8,7 +8,7 @@ export type SortKey = keyof Pick<
 >;
 
 //TODO: remove custom sorter and pass sort params to AWS instead
-export default function useSort(donations: Donation[]) {
+export default function useSortDonations(donations: Donation[]) {
   const [sortKey, setSortKey] = useState<SortKey>("date");
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
 

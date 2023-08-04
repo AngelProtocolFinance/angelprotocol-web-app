@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import { TableProps } from "./types";
+import { useSortDonations } from "services/apes";
 import ExtLink from "components/ExtLink";
 import { HeaderButton } from "components/HeaderButton";
 import Icon from "components/Icon";
 import useKYC from "components/KYC/useKYC";
 import TableSection, { Cells } from "components/TableSection";
-import useSort from "hooks/useSort";
 import { getTxUrl, humanize } from "helpers";
 import { appRoutes } from "constants/routes";
 import LoadMoreBtn from "./LoadMoreBtn";
@@ -19,7 +19,7 @@ export default function Table({
   onLoadMore,
 }: TableProps) {
   const { handleHeaderClick, sorted, sortDirection, sortKey } =
-    useSort(donations);
+    useSortDonations(donations);
 
   const showKYCForm = useKYC();
 
