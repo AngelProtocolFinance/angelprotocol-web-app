@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { TableProps } from "./types";
-import { DonationMadeByDonor } from "types/aws";
 import { useSortDonations } from "services/apes";
 import ExtLink from "components/ExtLink";
 import { HeaderButton } from "components/HeaderButton";
@@ -20,7 +19,7 @@ export default function Table({
   onLoadMore,
 }: TableProps) {
   const { handleHeaderClick, sorted, sortDirection, sortKey } =
-    useSortDonations<DonationMadeByDonor>(donations as DonationMadeByDonor[]);
+    useSortDonations(donations);
 
   const showKYCForm = useKYC();
 
