@@ -1,5 +1,6 @@
 import { PropsWithChildren } from "react";
 import { TStrategy } from "types/aws";
+import { useAdminContext } from "pages/Admin/Context";
 import { useModalContext } from "contexts/ModalContext";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
@@ -18,6 +19,7 @@ export default function Strategy(props: TStrategy) {
     website,
   } = props;
   const { showModal } = useModalContext();
+  const { id } = useAdminContext();
 
   return (
     <div className="@container border border-prim rounded bg-orange-l6 dark:bg-blue-d6">
@@ -46,7 +48,7 @@ export default function Strategy(props: TStrategy) {
         <KeyVal title="Market Cap">{humanize(market_cap, 0)} USD</KeyVal>
         <button
           type="button"
-          onClick={() => showModal(Investor, props)}
+          onClick={() => showModal(Investor, { ...props, endowId: id })}
           className="mt-6 @lg:mt-0 btn-outline-filled px-8 py-2 ml-auto w-full @lg:w-auto col-span-full"
         >
           invest

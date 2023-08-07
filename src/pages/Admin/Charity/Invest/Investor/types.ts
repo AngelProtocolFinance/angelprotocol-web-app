@@ -10,3 +10,5 @@ export type FormValues = {
   //meta
   tokens: TokenWithAmount[];
 };
+
+export type AccountBalances = { [key in AccountType]: number };

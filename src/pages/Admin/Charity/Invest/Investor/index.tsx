@@ -1,27 +1,41 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { FormValues } from "./types";
+import { AccountBalances, FormValues } from "./types";
 import { TStrategy } from "types/aws";
 import { TokenWithAmount } from "types/slices";
+import { useEndowBalanceQuery } from "services/juno/custom";
+import { condenseToNum } from "helpers";
 import Form from "./Form";
 import { schema } from "./schema";
 
-export default function Investor(props: TStrategy) {
-  const balances = {
-    locked: 5,
-    liquid: 5,
-  };
+type Props = TStrategy & { endowId: number };
+export default function Investor({ endowId, ...strategy }: Props) {
+  const { data } = useEndowBalanceQuery({
+    id: endowId,
+  });
+
+  const accountBalances: AccountBalances = ((data) => {
+    if (!data) return { liquid: 0, locked: 0 };
+    //endowBalance only outputs aUSDC for now
+    const liquidToken = data.liquid[0];
+    const lockedToken = data.locked[0];
+    return {
+      liquid: condenseToNum(liquidToken.amount),
+      locked: condenseToNum(lockedToken.amount),
+    };
+  })(data);
+
   const token: TokenWithAmount = {
     approved: true,
     decimals: 6,
     logo: "", //not used
     min_donation_amnt: 0.01,
     name: "", //not used
-    symbol: "USDC",
+    symbol: "aUSDC",
     token_id: "uusd",
-    type: "juno-native",
+    type: "erc20",
     amount: "0",
-    balance: balances.liquid,
+    balance: accountBalances.liquid,
   };
 
   const methods = useForm<FormValues>({
@@ -38,7 +52,7 @@ export default function Investor(props: TStrategy) {
   });
   return (
     <FormProvider {...methods}>
-      <Form {...props} />
+      <Form {...strategy} accountBalances={accountBalances} />
     </FormProvider>
   );
 }

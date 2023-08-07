@@ -1,13 +1,11 @@
 import { FormValues } from "./types";
 import { InvestRequest } from "types/contracts";
-import { AccountType } from "types/lists";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
-import { scaleToStr } from "helpers";
 import { getTagPayloads } from "helpers/admin";
 import { isTooltip, useAdminContext } from "../../../Context";
 
-export default function useSubmit(vault: string, type: AccountType) {
+export default function useSubmit() {
   const { multisig, id, txResource } = useAdminContext();
   const { sendTx, isSending } = useTxSender(true);
 
@@ -19,7 +17,7 @@ export default function useSubmit(vault: string, type: AccountType) {
       token: "aUSDC",
       lockAmt: "100",
       liquidAmt: "100",
-      gasFee: "1000",
+      gasFee: "1000000",
     };
 
     const [data, dest, meta] = encodeTx(
@@ -30,8 +28,8 @@ export default function useSubmit(vault: string, type: AccountType) {
       },
       {
         title: "Invest",
-        description: `Invest funds to: ${vault}`,
-        content: null as never,
+        description: `Invest funds to strategy:${investRequest.strategy}`,
+        content: null,
       }
     );
 

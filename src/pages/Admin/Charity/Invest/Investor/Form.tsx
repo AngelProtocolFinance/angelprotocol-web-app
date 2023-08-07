@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { FormValues as FV } from "./types";
+import { AccountBalances, FormValues as FV } from "./types";
 import { TStrategy } from "types/aws";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
@@ -9,16 +9,20 @@ import TokenField from "components/TokenField";
 import AccountOptions from "./AccountOptions";
 import useSubmit from "./useSubmit";
 
-export default function Form({ name, description, rating }: TStrategy) {
+type FormProps = TStrategy & { accountBalances: AccountBalances };
+export default function Form({
+  name,
+  description,
+  rating,
+  accountBalances,
+}: FormProps) {
   const { getValues, handleSubmit } = useFormContext<FV>();
-  const { isSending } = useSubmit("13123", "liquid");
+  const { isSending, submit } = useSubmit();
   const { closeModal } = useModalContext();
   return (
     <Modal
-      onSubmit={handleSubmit(() => {
-        alert("show summary");
-      })}
       as="form"
+      onSubmit={handleSubmit(submit)}
       className="max-h-[95vh] overflow-y-auto max-w-[37.5rem] w-[95vw] sm:w-full fixed-center z-20 bg-gray-l6 dark:bg-blue-d6 border border-prim rounded"
     >
       <div className="relative border-b border-prim py-5 text-center bg-orange-l6 dark:bg-blue-d7">
@@ -44,7 +48,7 @@ export default function Form({ name, description, rating }: TStrategy) {
         />
         <KeyValue title="Accepted Currency" value="USDC" />
       </div>
-      <AccountOptions balances={{ locked: 0, liquid: 0 }} classes="mx-8 mb-6" />
+      <AccountOptions balances={accountBalances} classes="mx-8 mb-6" />
       <TokenField<FV, "token">
         name="token"
         tokens={getValues("tokens")}
@@ -78,13 +82,13 @@ export default function Form({ name, description, rating }: TStrategy) {
   );
 }
 
-type Props = {
+type KVProps = {
   classes?: string;
   title: string;
   value: string;
   tooltip?: string;
 };
-function KeyValue({ title, value, tooltip, classes = "" }: Props) {
+function KeyValue({ title, value, tooltip, classes = "" }: KVProps) {
   return (
     <div className={`flex justify-between py-3 items-center ${classes}`}>
       <span className="text-gray-d1 dark:text-gray">
