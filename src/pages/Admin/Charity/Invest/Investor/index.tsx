@@ -8,8 +8,8 @@ import { schema } from "./schema";
 
 export default function Investor(props: TStrategy) {
   const balances = {
-    locked: 0,
-    liquid: 0,
+    locked: 5,
+    liquid: 5,
   };
   const token: TokenWithAmount = {
     approved: true,

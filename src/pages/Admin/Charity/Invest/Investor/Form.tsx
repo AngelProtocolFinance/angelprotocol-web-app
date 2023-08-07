@@ -67,12 +67,11 @@ export default function Form({ name, description, rating }: TStrategy) {
           Cancel
         </button>
         <button
-          disabled={true} // isSending
+          disabled={isSending}
           type="submit"
           className="text-sm min-w-[8rem] py-2 btn-orange disabled:bg-gray-l1"
         >
           {isSending ? <LoadingStatus>Processing...</LoadingStatus> : "Invest"}
-          <span className="text-xs pl-1">(Coming soon)</span>
         </button>
       </div>
     </Modal>

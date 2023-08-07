@@ -1,4 +1,5 @@
 import { FormValues } from "./types";
+import { InvestRequest } from "types/contracts";
 import { AccountType } from "types/lists";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
@@ -13,14 +14,19 @@ export default function useSubmit(vault: string, type: AccountType) {
   async function submit({ token }: FormValues) {
     if (isTooltip(txResource)) throw new Error(txResource);
 
+    const investRequest: InvestRequest = {
+      strategy: "0x12345678",
+      token: "aUSDC",
+      lockAmt: "100",
+      liquidAmt: "100",
+      gasFee: "1000",
+    };
+
     const [data, dest, meta] = encodeTx(
-      "accounts.invest",
+      "accounts.invest-v2",
       {
         id,
-        account: type === "locked" ? 0 : 1,
-        vaults: [vault],
-        tokens: [token.token_id],
-        amounts: [scaleToStr(token.amount)],
+        investRequest,
       },
       {
         title: "Invest",

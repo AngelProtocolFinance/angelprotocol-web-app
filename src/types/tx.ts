@@ -13,6 +13,7 @@ import {
   FeeSettingsUpdate,
   FundMemberUpdate,
   IndexFundConfigUpdate,
+  InvestPayload,
   NewAST,
   NewFund,
   RegistrarConfigUpdate,
@@ -172,6 +173,7 @@ type Txs = {
     },
     never //future
   >;
+  "accounts.invest-v2": Tx<InvestPayload, null /** future */>;
   "accounts.redeem": Tx<
     {
       id: number;
