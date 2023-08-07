@@ -1,16 +1,17 @@
 import { Transaction } from "types/tx";
 import { roundDownToNum } from "helpers";
+import { useAdminContext } from "../Context";
 
 export default function Stats({ confirmations, owners }: Transaction) {
+  const {
+    config: { threshold },
+  } = useAdminContext();
   const numSigned = confirmations.length;
   const numSigners = owners.length;
 
-  const pctSigned = getPct(numSigned, numSigners);
+  const pctSigned = pct(numSigned, numSigners);
   const pctPending = 100 - pctSigned;
-  const pctTarget = getPct(
-    1 /** TODO: this info can only be obtained from deployment: way to change this? */,
-    numSigners
-  );
+  const pctTarget = pct(threshold, numSigners);
 
   return (
     <div>
@@ -75,6 +76,6 @@ function Stat(props: {
   );
 }
 
-function getPct(numerator: number, denominator: number) {
+function pct(numerator: number, denominator: number) {
   return roundDownToNum((numerator / denominator) * 100);
 }
