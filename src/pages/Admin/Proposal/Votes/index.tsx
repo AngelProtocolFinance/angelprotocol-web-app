@@ -44,7 +44,7 @@ export default function Votes({
           <li key={o} className="p-3 flex items-center  text-sm">
             <span className="mr-auto">{o}</span>
             {userSigned &&
-            status !== "approved" &&
+            status === "open" &&
             wallet &&
             wallet.address === o ? (
               <button
