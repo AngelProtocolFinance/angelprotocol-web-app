@@ -4,7 +4,9 @@ export interface AWSQueryRes<T> {
   Items: T;
 }
 
-export type PaginatedAWSQueryRes<T> = AWSQueryRes<T> & { ItemCutoff: number };
+export type PaginatedAWSQueryRes<T> = AWSQueryRes<T> & {
+  ItemCutoff: number | null;
+};
 
 export type FileObject = {
   name: string;

@@ -1,28 +1,40 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
-import { DonationsQueryParams } from "types/aws";
+import {
+  DonationMadeByDonor,
+  DonationReceivedByEndow,
+  DonationsQueryParams,
+  PaginatedAWSQueryRes,
+} from "types/aws";
+import { useSetter } from "store/accessors";
+import useDebouncer from "hooks/useDebouncer";
 import {
   updateDonationsQueryData,
   useDonationsQuery,
   useLazyDonationsQuery,
-} from "services/apes";
-import { useSetter } from "store/accessors";
-import useDebouncer from "hooks/useDebouncer";
+} from "./index";
 
-export default function useDonations() {
-  const { address } = useParams<{ address: string }>();
+type DonorOwner = { donorAddress: string };
+type EndowmentOwner = { endowmentId: string };
 
+type RecordOwner = DonorOwner | EndowmentOwner;
+
+export default function usePaginatedDonationRecords<T extends RecordOwner>(
+  owner: T
+) {
   const dispatch = useSetter();
 
   const [query, setQuery] = useState<string>("");
   const [debouncedQuery, isDebouncing] = useDebouncer(query, 500);
 
+  const id: string =
+    "endowmentId" in owner ? owner.endowmentId : owner.donorAddress;
+
   const [params, setParams] = useState<DonationsQueryParams>({
-    id: address || "",
+    id,
   });
 
   const queryState = useDonationsQuery(params, {
-    skip: !address,
+    skip: !id,
     selectFromResult({ data, ...rest }) {
       if (!data?.Items) {
         return { data, ...rest };
@@ -73,8 +85,9 @@ export default function useDonations() {
   const hasMore = !!data?.ItemCutoff;
 
   return {
-    address,
-    data,
+    data: data as T extends EndowmentOwner
+      ? PaginatedAWSQueryRes<DonationReceivedByEndow[]>
+      : PaginatedAWSQueryRes<DonationMadeByDonor[]>,
     hasMore,
     isError: isError || isErrorNextPage,
     isLoading: isLoading || isDebouncing,
