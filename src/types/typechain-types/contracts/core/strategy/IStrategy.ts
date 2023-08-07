@@ -25,15 +25,14 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../common";
 
 export declare namespace IStrategy {
   export type StrategyConfigStruct = {
-    strategySelector: PromiseOrValue<BytesLike>;
-    baseToken: PromiseOrValue<string>;
-    yieldToken: PromiseOrValue<string>;
-    admin: PromiseOrValue<string>;
+    strategySelector: BytesLike;
+    baseToken: string;
+    yieldToken: string;
+    admin: string;
   };
 
   export type StrategyConfigStructOutput = [string, string, string, string] & {
@@ -68,7 +67,7 @@ export interface IStrategyInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "deposit",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "getStrategyConfig",
@@ -77,11 +76,11 @@ export interface IStrategyInterface extends utils.Interface {
   encodeFunctionData(functionFragment: "paused", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "previewDeposit",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "previewWithdraw",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "setStrategyConfig",
@@ -89,7 +88,7 @@ export interface IStrategyInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "withdraw",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
 
   decodeFunctionResult(functionFragment: "deposit", data: BytesLike): Result;
@@ -113,7 +112,7 @@ export interface IStrategyInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
 
   events: {
-    "ConfigChanged(tuple)": EventFragment;
+    "ConfigChanged((bytes4,address,address,address))": EventFragment;
     "EnteredPosition(uint256,uint256)": EventFragment;
     "LogError(string)": EventFragment;
     "LogErrorBytes(bytes)": EventFragment;
@@ -202,8 +201,8 @@ export interface IStrategy extends BaseContract {
 
   functions: {
     deposit(
-      amt: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      amt: BigNumberish,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     getStrategyConfig(
@@ -213,29 +212,29 @@ export interface IStrategy extends BaseContract {
     paused(overrides?: CallOverrides): Promise<[boolean]>;
 
     previewDeposit(
-      amt: PromiseOrValue<BigNumberish>,
+      amt: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     previewWithdraw(
-      amt: PromiseOrValue<BigNumberish>,
+      amt: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     setStrategyConfig(
       _newConfig: IStrategy.StrategyConfigStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     withdraw(
-      amt: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      amt: BigNumberish,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   deposit(
-    amt: PromiseOrValue<BigNumberish>,
-    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    amt: BigNumberish,
+    overrides?: PayableOverrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   getStrategyConfig(
@@ -245,30 +244,27 @@ export interface IStrategy extends BaseContract {
   paused(overrides?: CallOverrides): Promise<boolean>;
 
   previewDeposit(
-    amt: PromiseOrValue<BigNumberish>,
+    amt: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   previewWithdraw(
-    amt: PromiseOrValue<BigNumberish>,
+    amt: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   setStrategyConfig(
     _newConfig: IStrategy.StrategyConfigStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   withdraw(
-    amt: PromiseOrValue<BigNumberish>,
-    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    amt: BigNumberish,
+    overrides?: PayableOverrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    deposit(
-      amt: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    deposit(amt: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
     getStrategyConfig(
       overrides?: CallOverrides
@@ -277,12 +273,12 @@ export interface IStrategy extends BaseContract {
     paused(overrides?: CallOverrides): Promise<boolean>;
 
     previewDeposit(
-      amt: PromiseOrValue<BigNumberish>,
+      amt: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     previewWithdraw(
-      amt: PromiseOrValue<BigNumberish>,
+      amt: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -291,14 +287,13 @@ export interface IStrategy extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    withdraw(
-      amt: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    withdraw(amt: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   filters: {
-    "ConfigChanged(tuple)"(stratConfig?: null): ConfigChangedEventFilter;
+    "ConfigChanged((bytes4,address,address,address))"(
+      stratConfig?: null
+    ): ConfigChangedEventFilter;
     ConfigChanged(stratConfig?: null): ConfigChangedEventFilter;
 
     "EnteredPosition(uint256,uint256)"(
@@ -328,8 +323,8 @@ export interface IStrategy extends BaseContract {
 
   estimateGas: {
     deposit(
-      amt: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      amt: BigNumberish,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<BigNumber>;
 
     getStrategyConfig(overrides?: CallOverrides): Promise<BigNumber>;
@@ -337,30 +332,30 @@ export interface IStrategy extends BaseContract {
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
     previewDeposit(
-      amt: PromiseOrValue<BigNumberish>,
+      amt: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     previewWithdraw(
-      amt: PromiseOrValue<BigNumberish>,
+      amt: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     setStrategyConfig(
       _newConfig: IStrategy.StrategyConfigStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     withdraw(
-      amt: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      amt: BigNumberish,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     deposit(
-      amt: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      amt: BigNumberish,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     getStrategyConfig(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -368,23 +363,23 @@ export interface IStrategy extends BaseContract {
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     previewDeposit(
-      amt: PromiseOrValue<BigNumberish>,
+      amt: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     previewWithdraw(
-      amt: PromiseOrValue<BigNumberish>,
+      amt: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     setStrategyConfig(
       _newConfig: IStrategy.StrategyConfigStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     withdraw(
-      amt: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      amt: BigNumberish,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

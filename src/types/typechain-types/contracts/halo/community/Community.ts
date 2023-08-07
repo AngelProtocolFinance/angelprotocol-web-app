@@ -24,14 +24,13 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../common";
 
 export declare namespace CommunityMessage {
   export type InstantiateMsgStruct = {
-    timelockContract: PromiseOrValue<string>;
-    haloToken: PromiseOrValue<string>;
-    spendLimit: PromiseOrValue<BigNumberish>;
+    timelockContract: string;
+    haloToken: string;
+    spendLimit: BigNumberish;
   };
 
   export type InstantiateMsgStructOutput = [string, string, BigNumber] & {
@@ -41,9 +40,9 @@ export declare namespace CommunityMessage {
   };
 
   export type ConfigResponseStruct = {
-    timelockContract: PromiseOrValue<string>;
-    haloToken: PromiseOrValue<string>;
-    spendLimit: PromiseOrValue<BigNumberish>;
+    timelockContract: string;
+    haloToken: string;
+    spendLimit: BigNumberish;
   };
 
   export type ConfigResponseStructOutput = [string, string, BigNumber] & {
@@ -79,11 +78,11 @@ export interface CommunityInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "spend",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "updateConfig",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+    values: [BigNumberish, string]
   ): string;
 
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
@@ -160,7 +159,7 @@ export interface Community extends BaseContract {
   functions: {
     initialize(
       details: CommunityMessage.InstantiateMsgStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     queryConfig(
@@ -168,21 +167,21 @@ export interface Community extends BaseContract {
     ): Promise<[CommunityMessage.ConfigResponseStructOutput]>;
 
     spend(
-      recipient: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      recipient: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     updateConfig(
-      spendLimit: PromiseOrValue<BigNumberish>,
-      timelockContract: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      spendLimit: BigNumberish,
+      timelockContract: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   initialize(
     details: CommunityMessage.InstantiateMsgStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   queryConfig(
@@ -190,15 +189,15 @@ export interface Community extends BaseContract {
   ): Promise<CommunityMessage.ConfigResponseStructOutput>;
 
   spend(
-    recipient: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    recipient: string,
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   updateConfig(
-    spendLimit: PromiseOrValue<BigNumberish>,
-    timelockContract: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    spendLimit: BigNumberish,
+    timelockContract: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -212,14 +211,14 @@ export interface Community extends BaseContract {
     ): Promise<CommunityMessage.ConfigResponseStructOutput>;
 
     spend(
-      recipient: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      recipient: string,
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     updateConfig(
-      spendLimit: PromiseOrValue<BigNumberish>,
-      timelockContract: PromiseOrValue<string>,
+      spendLimit: BigNumberish,
+      timelockContract: string,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -241,42 +240,42 @@ export interface Community extends BaseContract {
   estimateGas: {
     initialize(
       details: CommunityMessage.InstantiateMsgStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     queryConfig(overrides?: CallOverrides): Promise<BigNumber>;
 
     spend(
-      recipient: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      recipient: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     updateConfig(
-      spendLimit: PromiseOrValue<BigNumberish>,
-      timelockContract: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      spendLimit: BigNumberish,
+      timelockContract: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     initialize(
       details: CommunityMessage.InstantiateMsgStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     queryConfig(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     spend(
-      recipient: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      recipient: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     updateConfig(
-      spendLimit: PromiseOrValue<BigNumberish>,
-      timelockContract: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      spendLimit: BigNumberish,
+      timelockContract: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

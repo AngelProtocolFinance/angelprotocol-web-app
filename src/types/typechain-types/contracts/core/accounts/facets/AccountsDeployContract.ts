@@ -24,19 +24,18 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../../common";
 
 export declare namespace IVault {
   export type VaultActionDataStruct = {
-    destinationChain: PromiseOrValue<string>;
-    strategyId: PromiseOrValue<BytesLike>;
-    selector: PromiseOrValue<BytesLike>;
-    accountIds: PromiseOrValue<BigNumberish>[];
-    token: PromiseOrValue<string>;
-    lockAmt: PromiseOrValue<BigNumberish>;
-    liqAmt: PromiseOrValue<BigNumberish>;
-    status: PromiseOrValue<BigNumberish>;
+    destinationChain: string;
+    strategyId: BytesLike;
+    selector: BytesLike;
+    accountIds: BigNumberish[];
+    token: string;
+    lockAmt: BigNumberish;
+    liqAmt: BigNumberish;
+    status: BigNumberish;
   };
 
   export type VaultActionDataStructOutput = [
@@ -62,10 +61,10 @@ export declare namespace IVault {
 
 export declare namespace SubDaoLib {
   export type VeTypeDataStruct = {
-    value: PromiseOrValue<BigNumberish>;
-    scale: PromiseOrValue<BigNumberish>;
-    slope: PromiseOrValue<BigNumberish>;
-    power: PromiseOrValue<BigNumberish>;
+    value: BigNumberish;
+    scale: BigNumberish;
+    slope: BigNumberish;
+    power: BigNumberish;
   };
 
   export type VeTypeDataStructOutput = [
@@ -81,7 +80,7 @@ export declare namespace SubDaoLib {
   };
 
   export type VeTypeStruct = {
-    ve_type: PromiseOrValue<BigNumberish>;
+    ve_type: BigNumberish;
     data: SubDaoLib.VeTypeDataStruct;
   };
 
@@ -91,17 +90,17 @@ export declare namespace SubDaoLib {
   ] & { ve_type: number; data: SubDaoLib.VeTypeDataStructOutput };
 
   export type DaoTokenDataStruct = {
-    existingData: PromiseOrValue<string>;
-    newInitialSupply: PromiseOrValue<BigNumberish>;
-    newName: PromiseOrValue<string>;
-    newSymbol: PromiseOrValue<string>;
+    existingData: string;
+    newInitialSupply: BigNumberish;
+    newName: string;
+    newSymbol: string;
     veBondingType: SubDaoLib.VeTypeStruct;
-    veBondingName: PromiseOrValue<string>;
-    veBondingSymbol: PromiseOrValue<string>;
-    veBondingDecimals: PromiseOrValue<BigNumberish>;
-    veBondingReserveDenom: PromiseOrValue<string>;
-    veBondingReserveDecimals: PromiseOrValue<BigNumberish>;
-    veBondingPeriod: PromiseOrValue<BigNumberish>;
+    veBondingName: string;
+    veBondingSymbol: string;
+    veBondingDecimals: BigNumberish;
+    veBondingReserveDenom: string;
+    veBondingReserveDecimals: BigNumberish;
+    veBondingPeriod: BigNumberish;
   };
 
   export type DaoTokenDataStructOutput = [
@@ -131,7 +130,7 @@ export declare namespace SubDaoLib {
   };
 
   export type DaoTokenStruct = {
-    token: PromiseOrValue<BigNumberish>;
+    token: BigNumberish;
     data: SubDaoLib.DaoTokenDataStruct;
   };
 
@@ -143,19 +142,19 @@ export declare namespace SubDaoLib {
 
 export declare namespace SubDaoMessages {
   export type InstantiateMsgStruct = {
-    id: PromiseOrValue<BigNumberish>;
-    owner: PromiseOrValue<string>;
-    quorum: PromiseOrValue<BigNumberish>;
-    threshold: PromiseOrValue<BigNumberish>;
-    votingPeriod: PromiseOrValue<BigNumberish>;
-    timelockPeriod: PromiseOrValue<BigNumberish>;
-    expirationPeriod: PromiseOrValue<BigNumberish>;
-    proposalDeposit: PromiseOrValue<BigNumberish>;
-    snapshotPeriod: PromiseOrValue<BigNumberish>;
+    id: BigNumberish;
+    owner: string;
+    quorum: BigNumberish;
+    threshold: BigNumberish;
+    votingPeriod: BigNumberish;
+    timelockPeriod: BigNumberish;
+    expirationPeriod: BigNumberish;
+    proposalDeposit: BigNumberish;
+    snapshotPeriod: BigNumberish;
     token: SubDaoLib.DaoTokenStruct;
-    endowType: PromiseOrValue<BigNumberish>;
-    endowOwner: PromiseOrValue<string>;
-    registrarContract: PromiseOrValue<string>;
+    endowType: BigNumberish;
+    endowOwner: string;
+    registrarContract: string;
   };
 
   export type InstantiateMsgStructOutput = [
@@ -223,9 +222,9 @@ export interface AccountsDeployContractInterface extends utils.Interface {
     "EndowmentUpdated(uint256)": EventFragment;
     "EndowmentWithdraw(uint256,address,uint256,uint8,address,uint32)": EventFragment;
     "OwnerUpdated(address)": EventFragment;
-    "RefundNeeded(tuple)": EventFragment;
+    "RefundNeeded((string,bytes4,bytes4,uint32[],address,uint256,uint256,uint8))": EventFragment;
     "TokenSwapped(uint256,uint8,address,uint256,address,uint256)": EventFragment;
-    "UnexpectedTokens(tuple)": EventFragment;
+    "UnexpectedTokens((string,bytes4,bytes4,uint32[],address,uint256,uint256,uint8))": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "AllowanceSpent"): EventFragment;
@@ -503,13 +502,13 @@ export interface AccountsDeployContract extends BaseContract {
   functions: {
     createDaoContract(
       createDaoMessage: SubDaoMessages.InstantiateMsgStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   createDaoContract(
     createDaoMessage: SubDaoMessages.InstantiateMsgStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -658,7 +657,9 @@ export interface AccountsDeployContract extends BaseContract {
     "OwnerUpdated(address)"(owner?: null): OwnerUpdatedEventFilter;
     OwnerUpdated(owner?: null): OwnerUpdatedEventFilter;
 
-    "RefundNeeded(tuple)"(arg0?: null): RefundNeededEventFilter;
+    "RefundNeeded((string,bytes4,bytes4,uint32[],address,uint256,uint256,uint8))"(
+      arg0?: null
+    ): RefundNeededEventFilter;
     RefundNeeded(arg0?: null): RefundNeededEventFilter;
 
     "TokenSwapped(uint256,uint8,address,uint256,address,uint256)"(
@@ -678,21 +679,23 @@ export interface AccountsDeployContract extends BaseContract {
       amountOut?: null
     ): TokenSwappedEventFilter;
 
-    "UnexpectedTokens(tuple)"(arg0?: null): UnexpectedTokensEventFilter;
+    "UnexpectedTokens((string,bytes4,bytes4,uint32[],address,uint256,uint256,uint8))"(
+      arg0?: null
+    ): UnexpectedTokensEventFilter;
     UnexpectedTokens(arg0?: null): UnexpectedTokensEventFilter;
   };
 
   estimateGas: {
     createDaoContract(
       createDaoMessage: SubDaoMessages.InstantiateMsgStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     createDaoContract(
       createDaoMessage: SubDaoMessages.InstantiateMsgStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

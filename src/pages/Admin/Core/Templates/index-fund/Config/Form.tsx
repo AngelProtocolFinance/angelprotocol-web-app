@@ -31,12 +31,6 @@ export default function Form() {
       <Field<FV, "number">
         type="number"
         classes="field-admin"
-        label="Fund member limit"
-        name="fundMemberLimit"
-      />
-      <Field<FV, "number">
-        type="number"
-        classes="field-admin"
         label="Fund rotation"
         name="fundRotation"
       />

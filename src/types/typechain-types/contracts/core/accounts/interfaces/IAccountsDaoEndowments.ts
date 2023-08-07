@@ -20,15 +20,14 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../../common";
 
 export declare namespace SubDaoLib {
   export type VeTypeDataStruct = {
-    value: PromiseOrValue<BigNumberish>;
-    scale: PromiseOrValue<BigNumberish>;
-    slope: PromiseOrValue<BigNumberish>;
-    power: PromiseOrValue<BigNumberish>;
+    value: BigNumberish;
+    scale: BigNumberish;
+    slope: BigNumberish;
+    power: BigNumberish;
   };
 
   export type VeTypeDataStructOutput = [
@@ -44,7 +43,7 @@ export declare namespace SubDaoLib {
   };
 
   export type VeTypeStruct = {
-    ve_type: PromiseOrValue<BigNumberish>;
+    ve_type: BigNumberish;
     data: SubDaoLib.VeTypeDataStruct;
   };
 
@@ -54,17 +53,17 @@ export declare namespace SubDaoLib {
   ] & { ve_type: number; data: SubDaoLib.VeTypeDataStructOutput };
 
   export type DaoTokenDataStruct = {
-    existingData: PromiseOrValue<string>;
-    newInitialSupply: PromiseOrValue<BigNumberish>;
-    newName: PromiseOrValue<string>;
-    newSymbol: PromiseOrValue<string>;
+    existingData: string;
+    newInitialSupply: BigNumberish;
+    newName: string;
+    newSymbol: string;
     veBondingType: SubDaoLib.VeTypeStruct;
-    veBondingName: PromiseOrValue<string>;
-    veBondingSymbol: PromiseOrValue<string>;
-    veBondingDecimals: PromiseOrValue<BigNumberish>;
-    veBondingReserveDenom: PromiseOrValue<string>;
-    veBondingReserveDecimals: PromiseOrValue<BigNumberish>;
-    veBondingPeriod: PromiseOrValue<BigNumberish>;
+    veBondingName: string;
+    veBondingSymbol: string;
+    veBondingDecimals: BigNumberish;
+    veBondingReserveDenom: string;
+    veBondingReserveDecimals: BigNumberish;
+    veBondingPeriod: BigNumberish;
   };
 
   export type DaoTokenDataStructOutput = [
@@ -94,7 +93,7 @@ export declare namespace SubDaoLib {
   };
 
   export type DaoTokenStruct = {
-    token: PromiseOrValue<BigNumberish>;
+    token: BigNumberish;
     data: SubDaoLib.DaoTokenDataStruct;
   };
 
@@ -104,13 +103,13 @@ export declare namespace SubDaoLib {
   ] & { token: number; data: SubDaoLib.DaoTokenDataStructOutput };
 
   export type DaoSetupStruct = {
-    quorum: PromiseOrValue<BigNumberish>;
-    threshold: PromiseOrValue<BigNumberish>;
-    votingPeriod: PromiseOrValue<BigNumberish>;
-    timelockPeriod: PromiseOrValue<BigNumberish>;
-    expirationPeriod: PromiseOrValue<BigNumberish>;
-    proposalDeposit: PromiseOrValue<BigNumberish>;
-    snapshotPeriod: PromiseOrValue<BigNumberish>;
+    quorum: BigNumberish;
+    threshold: BigNumberish;
+    votingPeriod: BigNumberish;
+    timelockPeriod: BigNumberish;
+    expirationPeriod: BigNumberish;
+    proposalDeposit: BigNumberish;
+    snapshotPeriod: BigNumberish;
     token: SubDaoLib.DaoTokenStruct;
   };
 
@@ -144,7 +143,7 @@ export interface IAccountsDaoEndowmentsInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "setupDao",
-    values: [PromiseOrValue<BigNumberish>, SubDaoLib.DaoSetupStruct]
+    values: [BigNumberish, SubDaoLib.DaoSetupStruct]
   ): string;
 
   decodeFunctionResult(functionFragment: "setupDao", data: BytesLike): Result;
@@ -180,21 +179,21 @@ export interface IAccountsDaoEndowments extends BaseContract {
 
   functions: {
     setupDao(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       details: SubDaoLib.DaoSetupStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   setupDao(
-    id: PromiseOrValue<BigNumberish>,
+    id: BigNumberish,
     details: SubDaoLib.DaoSetupStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     setupDao(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       details: SubDaoLib.DaoSetupStruct,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -204,17 +203,17 @@ export interface IAccountsDaoEndowments extends BaseContract {
 
   estimateGas: {
     setupDao(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       details: SubDaoLib.DaoSetupStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     setupDao(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       details: SubDaoLib.DaoSetupStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

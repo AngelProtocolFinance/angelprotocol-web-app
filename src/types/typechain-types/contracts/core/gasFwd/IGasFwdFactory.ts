@@ -23,7 +23,6 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../common";
 
 export interface IGasFwdFactoryInterface extends utils.Interface {
@@ -43,11 +42,11 @@ export interface IGasFwdFactoryInterface extends utils.Interface {
   encodeFunctionData(functionFragment: "create", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "updateImplementation",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "updateRegistrar",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
 
   decodeFunctionResult(functionFragment: "create", data: BytesLike): Result;
@@ -102,46 +101,43 @@ export interface IGasFwdFactory extends BaseContract {
 
   functions: {
     create(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     updateImplementation(
-      _impl: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _impl: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     updateRegistrar(
-      _impl: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _impl: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   create(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   updateImplementation(
-    _impl: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _impl: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   updateRegistrar(
-    _impl: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _impl: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     create(overrides?: CallOverrides): Promise<string>;
 
     updateImplementation(
-      _impl: PromiseOrValue<string>,
+      _impl: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    updateRegistrar(
-      _impl: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    updateRegistrar(_impl: string, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
@@ -150,34 +146,32 @@ export interface IGasFwdFactory extends BaseContract {
   };
 
   estimateGas: {
-    create(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    create(overrides?: Overrides & { from?: string }): Promise<BigNumber>;
 
     updateImplementation(
-      _impl: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _impl: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     updateRegistrar(
-      _impl: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _impl: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     create(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     updateImplementation(
-      _impl: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _impl: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     updateRegistrar(
-      _impl: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _impl: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

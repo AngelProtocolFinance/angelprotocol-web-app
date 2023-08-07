@@ -20,7 +20,6 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../../common";
 
 export interface DummyCRVLPInterface extends utils.Interface {
@@ -55,61 +54,37 @@ export interface DummyCRVLPInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "add_liquidity",
-    values: [
-      [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<boolean>,
-      PromiseOrValue<string>
-    ]
+    values: [[BigNumberish, BigNumberish], BigNumberish, boolean, string]
   ): string;
   encodeFunctionData(
     functionFragment: "balances",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "calc_token_amount",
-    values: [[PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]]
+    values: [[BigNumberish, BigNumberish]]
   ): string;
-  encodeFunctionData(
-    functionFragment: "coins",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
+  encodeFunctionData(functionFragment: "coins", values: [BigNumberish]): string;
   encodeFunctionData(
     functionFragment: "exchange",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "get_dy",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [BigNumberish, BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "lp_price", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "remove_liquidity",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
-    ]
+    values: [BigNumberish, [BigNumberish, BigNumberish]]
   ): string;
   encodeFunctionData(
     functionFragment: "remove_liquidity_one_coin",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [BigNumberish, BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "setDys",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    values: [BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "token", values?: undefined): string;
 
@@ -168,185 +143,170 @@ export interface DummyCRVLP extends BaseContract {
 
   functions: {
     add_liquidity(
-      amounts: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-      min_mint_amount: PromiseOrValue<BigNumberish>,
-      use_eth: PromiseOrValue<boolean>,
-      receiver: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amounts: [BigNumberish, BigNumberish],
+      min_mint_amount: BigNumberish,
+      use_eth: boolean,
+      receiver: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     balances(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     calc_token_amount(
-      amounts: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+      amounts: [BigNumberish, BigNumberish],
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
-    coins(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
+    coins(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
 
     exchange(
-      i: PromiseOrValue<BigNumberish>,
-      arg1: PromiseOrValue<BigNumberish>,
-      dx: PromiseOrValue<BigNumberish>,
-      arg3: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      i: BigNumberish,
+      arg1: BigNumberish,
+      dx: BigNumberish,
+      arg3: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     get_dy(
-      arg0: PromiseOrValue<BigNumberish>,
-      arg1: PromiseOrValue<BigNumberish>,
-      arg2: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
+      arg1: BigNumberish,
+      arg2: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     lp_price(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     remove_liquidity(
-      _amount: PromiseOrValue<BigNumberish>,
-      min_amounts: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _amount: BigNumberish,
+      min_amounts: [BigNumberish, BigNumberish],
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     remove_liquidity_one_coin(
-      token_amount: PromiseOrValue<BigNumberish>,
-      i: PromiseOrValue<BigNumberish>,
-      min_amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      token_amount: BigNumberish,
+      i: BigNumberish,
+      min_amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     setDys(
-      _dy_for_get_dy: PromiseOrValue<BigNumberish>,
-      _dy_for_exchange: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _dy_for_get_dy: BigNumberish,
+      _dy_for_exchange: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     token(overrides?: CallOverrides): Promise<[string]>;
   };
 
   add_liquidity(
-    amounts: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-    min_mint_amount: PromiseOrValue<BigNumberish>,
-    use_eth: PromiseOrValue<boolean>,
-    receiver: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    amounts: [BigNumberish, BigNumberish],
+    min_mint_amount: BigNumberish,
+    use_eth: boolean,
+    receiver: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
-  balances(
-    arg0: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  balances(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
   calc_token_amount(
-    amounts: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+    amounts: [BigNumberish, BigNumberish],
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  coins(
-    arg0: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<string>;
+  coins(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
   exchange(
-    i: PromiseOrValue<BigNumberish>,
-    arg1: PromiseOrValue<BigNumberish>,
-    dx: PromiseOrValue<BigNumberish>,
-    arg3: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    i: BigNumberish,
+    arg1: BigNumberish,
+    dx: BigNumberish,
+    arg3: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   get_dy(
-    arg0: PromiseOrValue<BigNumberish>,
-    arg1: PromiseOrValue<BigNumberish>,
-    arg2: PromiseOrValue<BigNumberish>,
+    arg0: BigNumberish,
+    arg1: BigNumberish,
+    arg2: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   lp_price(overrides?: CallOverrides): Promise<BigNumber>;
 
   remove_liquidity(
-    _amount: PromiseOrValue<BigNumberish>,
-    min_amounts: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _amount: BigNumberish,
+    min_amounts: [BigNumberish, BigNumberish],
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   remove_liquidity_one_coin(
-    token_amount: PromiseOrValue<BigNumberish>,
-    i: PromiseOrValue<BigNumberish>,
-    min_amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    token_amount: BigNumberish,
+    i: BigNumberish,
+    min_amount: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   setDys(
-    _dy_for_get_dy: PromiseOrValue<BigNumberish>,
-    _dy_for_exchange: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _dy_for_get_dy: BigNumberish,
+    _dy_for_exchange: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   token(overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
     add_liquidity(
-      amounts: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-      min_mint_amount: PromiseOrValue<BigNumberish>,
-      use_eth: PromiseOrValue<boolean>,
-      receiver: PromiseOrValue<string>,
+      amounts: [BigNumberish, BigNumberish],
+      min_mint_amount: BigNumberish,
+      use_eth: boolean,
+      receiver: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    balances(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    balances(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
     calc_token_amount(
-      amounts: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+      amounts: [BigNumberish, BigNumberish],
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    coins(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<string>;
+    coins(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
     exchange(
-      i: PromiseOrValue<BigNumberish>,
-      arg1: PromiseOrValue<BigNumberish>,
-      dx: PromiseOrValue<BigNumberish>,
-      arg3: PromiseOrValue<BigNumberish>,
+      i: BigNumberish,
+      arg1: BigNumberish,
+      dx: BigNumberish,
+      arg3: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     get_dy(
-      arg0: PromiseOrValue<BigNumberish>,
-      arg1: PromiseOrValue<BigNumberish>,
-      arg2: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
+      arg1: BigNumberish,
+      arg2: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     lp_price(overrides?: CallOverrides): Promise<BigNumber>;
 
     remove_liquidity(
-      _amount: PromiseOrValue<BigNumberish>,
-      min_amounts: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+      _amount: BigNumberish,
+      min_amounts: [BigNumberish, BigNumberish],
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     remove_liquidity_one_coin(
-      token_amount: PromiseOrValue<BigNumberish>,
-      i: PromiseOrValue<BigNumberish>,
-      min_amount: PromiseOrValue<BigNumberish>,
+      token_amount: BigNumberish,
+      i: BigNumberish,
+      min_amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     setDys(
-      _dy_for_get_dy: PromiseOrValue<BigNumberish>,
-      _dy_for_exchange: PromiseOrValue<BigNumberish>,
+      _dy_for_get_dy: BigNumberish,
+      _dy_for_exchange: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -357,62 +317,56 @@ export interface DummyCRVLP extends BaseContract {
 
   estimateGas: {
     add_liquidity(
-      amounts: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-      min_mint_amount: PromiseOrValue<BigNumberish>,
-      use_eth: PromiseOrValue<boolean>,
-      receiver: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amounts: [BigNumberish, BigNumberish],
+      min_mint_amount: BigNumberish,
+      use_eth: boolean,
+      receiver: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
-    balances(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    balances(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
     calc_token_amount(
-      amounts: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+      amounts: [BigNumberish, BigNumberish],
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    coins(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    coins(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
     exchange(
-      i: PromiseOrValue<BigNumberish>,
-      arg1: PromiseOrValue<BigNumberish>,
-      dx: PromiseOrValue<BigNumberish>,
-      arg3: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      i: BigNumberish,
+      arg1: BigNumberish,
+      dx: BigNumberish,
+      arg3: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     get_dy(
-      arg0: PromiseOrValue<BigNumberish>,
-      arg1: PromiseOrValue<BigNumberish>,
-      arg2: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
+      arg1: BigNumberish,
+      arg2: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     lp_price(overrides?: CallOverrides): Promise<BigNumber>;
 
     remove_liquidity(
-      _amount: PromiseOrValue<BigNumberish>,
-      min_amounts: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _amount: BigNumberish,
+      min_amounts: [BigNumberish, BigNumberish],
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     remove_liquidity_one_coin(
-      token_amount: PromiseOrValue<BigNumberish>,
-      i: PromiseOrValue<BigNumberish>,
-      min_amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      token_amount: BigNumberish,
+      i: BigNumberish,
+      min_amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     setDys(
-      _dy_for_get_dy: PromiseOrValue<BigNumberish>,
-      _dy_for_exchange: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _dy_for_get_dy: BigNumberish,
+      _dy_for_exchange: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     token(overrides?: CallOverrides): Promise<BigNumber>;
@@ -420,62 +374,62 @@ export interface DummyCRVLP extends BaseContract {
 
   populateTransaction: {
     add_liquidity(
-      amounts: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-      min_mint_amount: PromiseOrValue<BigNumberish>,
-      use_eth: PromiseOrValue<boolean>,
-      receiver: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amounts: [BigNumberish, BigNumberish],
+      min_mint_amount: BigNumberish,
+      use_eth: boolean,
+      receiver: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     balances(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     calc_token_amount(
-      amounts: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+      amounts: [BigNumberish, BigNumberish],
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     coins(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     exchange(
-      i: PromiseOrValue<BigNumberish>,
-      arg1: PromiseOrValue<BigNumberish>,
-      dx: PromiseOrValue<BigNumberish>,
-      arg3: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      i: BigNumberish,
+      arg1: BigNumberish,
+      dx: BigNumberish,
+      arg3: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     get_dy(
-      arg0: PromiseOrValue<BigNumberish>,
-      arg1: PromiseOrValue<BigNumberish>,
-      arg2: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
+      arg1: BigNumberish,
+      arg2: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     lp_price(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     remove_liquidity(
-      _amount: PromiseOrValue<BigNumberish>,
-      min_amounts: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _amount: BigNumberish,
+      min_amounts: [BigNumberish, BigNumberish],
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     remove_liquidity_one_coin(
-      token_amount: PromiseOrValue<BigNumberish>,
-      i: PromiseOrValue<BigNumberish>,
-      min_amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      token_amount: BigNumberish,
+      i: BigNumberish,
+      min_amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     setDys(
-      _dy_for_get_dy: PromiseOrValue<BigNumberish>,
-      _dy_for_exchange: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _dy_for_get_dy: BigNumberish,
+      _dy_for_exchange: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     token(overrides?: CallOverrides): Promise<PopulatedTransaction>;

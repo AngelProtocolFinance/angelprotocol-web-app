@@ -25,20 +25,19 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../common";
 
 export declare namespace IVault {
   export type VaultConfigStruct = {
-    vaultType: PromiseOrValue<BigNumberish>;
-    strategySelector: PromiseOrValue<BytesLike>;
-    strategy: PromiseOrValue<string>;
-    registrar: PromiseOrValue<string>;
-    baseToken: PromiseOrValue<string>;
-    yieldToken: PromiseOrValue<string>;
-    apTokenName: PromiseOrValue<string>;
-    apTokenSymbol: PromiseOrValue<string>;
-    admin: PromiseOrValue<string>;
+    vaultType: BigNumberish;
+    strategySelector: BytesLike;
+    strategy: string;
+    registrar: string;
+    baseToken: string;
+    yieldToken: string;
+    apTokenName: string;
+    apTokenSymbol: string;
+    admin: string;
   };
 
   export type VaultConfigStructOutput = [
@@ -64,11 +63,13 @@ export declare namespace IVault {
   };
 
   export type RedemptionResponseStruct = {
-    amount: PromiseOrValue<BigNumberish>;
-    status: PromiseOrValue<BigNumberish>;
+    token: string;
+    amount: BigNumberish;
+    status: BigNumberish;
   };
 
-  export type RedemptionResponseStructOutput = [BigNumber, number] & {
+  export type RedemptionResponseStructOutput = [string, BigNumber, number] & {
+    token: string;
     amount: BigNumber;
     status: number;
   };
@@ -149,32 +150,24 @@ export interface APVault_V1Interface extends utils.Interface {
   encodeFunctionData(functionFragment: "asset", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "balanceOf",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "convertToAssets",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "convertToShares",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "deposit",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [BigNumberish, string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "depositERC4626",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [string, BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "getPricePerFullShare",
@@ -186,64 +179,60 @@ export interface APVault_V1Interface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "harvest",
-    values: [PromiseOrValue<BigNumberish>[]]
+    values: [BigNumberish[]]
   ): string;
   encodeFunctionData(
     functionFragment: "maxDeposit",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "maxMint",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "maxRedeem",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "maxWithdraw",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "mint",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    values: [BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "previewDeposit",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "previewMint",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "previewRedeem",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "previewWithdraw",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "principleByAccountId",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "redeem",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    values: [BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "redeemAll",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "redeemERC4626",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [BigNumberish, string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "setVaultConfig",
@@ -260,15 +249,11 @@ export interface APVault_V1Interface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "transfer",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    values: [BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "transferFrom",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [BigNumberish, BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "vaultConfig",
@@ -276,11 +261,7 @@ export interface APVault_V1Interface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "withdraw",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [BigNumberish, string, BigNumberish]
   ): string;
 
   decodeFunctionResult(functionFragment: "asset", data: BytesLike): Result;
@@ -490,34 +471,34 @@ export interface APVault_V1 extends BaseContract {
     asset(overrides?: CallOverrides): Promise<[string]>;
 
     balanceOf(
-      account: PromiseOrValue<BigNumberish>,
+      account: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     convertToAssets(
-      shares: PromiseOrValue<BigNumberish>,
+      shares: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     convertToShares(
-      assets: PromiseOrValue<BigNumberish>,
+      assets: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
     deposit(
-      accountId: PromiseOrValue<BigNumberish>,
-      token: PromiseOrValue<string>,
-      amt: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      accountId: BigNumberish,
+      token: string,
+      amt: BigNumberish,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     depositERC4626(
-      strategy: PromiseOrValue<string>,
-      assets: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      strategy: string,
+      assets: BigNumberish,
+      receiver: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     getPricePerFullShare(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -527,60 +508,60 @@ export interface APVault_V1 extends BaseContract {
     ): Promise<[IVault.VaultConfigStructOutput]>;
 
     harvest(
-      accountIds: PromiseOrValue<BigNumberish>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      accountIds: BigNumberish[],
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     maxDeposit(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     maxMint(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     maxRedeem(
-      owner: PromiseOrValue<BigNumberish>,
+      owner: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     maxWithdraw(
-      owner: PromiseOrValue<BigNumberish>,
+      owner: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     mint(
-      shares: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      shares: BigNumberish,
+      receiver: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
     previewDeposit(
-      assets: PromiseOrValue<BigNumberish>,
+      assets: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     previewMint(
-      shares: PromiseOrValue<BigNumberish>,
+      shares: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     previewRedeem(
-      shares: PromiseOrValue<BigNumberish>,
+      shares: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     previewWithdraw(
-      assets: PromiseOrValue<BigNumberish>,
+      assets: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     principleByAccountId(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<
       [BigNumber, BigNumber] & {
@@ -590,26 +571,26 @@ export interface APVault_V1 extends BaseContract {
     >;
 
     redeem(
-      accountId: PromiseOrValue<BigNumberish>,
-      amt: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      accountId: BigNumberish,
+      amt: BigNumberish,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     redeemAll(
-      accountId: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      accountId: BigNumberish,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     redeemERC4626(
-      shares: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<string>,
-      owner: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      shares: BigNumberish,
+      receiver: string,
+      owner: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     setVaultConfig(
       _newConfig: IVault.VaultConfigStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
@@ -619,16 +600,16 @@ export interface APVault_V1 extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
-      arg0: PromiseOrValue<BigNumberish>,
-      arg1: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      arg0: BigNumberish,
+      arg1: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      from: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      from: BigNumberish,
+      to: BigNumberish,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     vaultConfig(
@@ -658,44 +639,44 @@ export interface APVault_V1 extends BaseContract {
     >;
 
     withdraw(
-      assets: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<string>,
-      owner: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      assets: BigNumberish,
+      receiver: string,
+      owner: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   asset(overrides?: CallOverrides): Promise<string>;
 
   balanceOf(
-    account: PromiseOrValue<BigNumberish>,
+    account: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   convertToAssets(
-    shares: PromiseOrValue<BigNumberish>,
+    shares: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   convertToShares(
-    assets: PromiseOrValue<BigNumberish>,
+    assets: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
   deposit(
-    accountId: PromiseOrValue<BigNumberish>,
-    token: PromiseOrValue<string>,
-    amt: PromiseOrValue<BigNumberish>,
-    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    accountId: BigNumberish,
+    token: string,
+    amt: BigNumberish,
+    overrides?: PayableOverrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   depositERC4626(
-    strategy: PromiseOrValue<string>,
-    assets: PromiseOrValue<BigNumberish>,
-    receiver: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    strategy: string,
+    assets: BigNumberish,
+    receiver: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   getPricePerFullShare(overrides?: CallOverrides): Promise<BigNumber>;
@@ -705,60 +686,51 @@ export interface APVault_V1 extends BaseContract {
   ): Promise<IVault.VaultConfigStructOutput>;
 
   harvest(
-    accountIds: PromiseOrValue<BigNumberish>[],
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    accountIds: BigNumberish[],
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
-  maxDeposit(
-    arg0: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  maxDeposit(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
-  maxMint(
-    arg0: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  maxMint(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
-  maxRedeem(
-    owner: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  maxRedeem(owner: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
   maxWithdraw(
-    owner: PromiseOrValue<BigNumberish>,
+    owner: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   mint(
-    shares: PromiseOrValue<BigNumberish>,
-    receiver: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    shares: BigNumberish,
+    receiver: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
   previewDeposit(
-    assets: PromiseOrValue<BigNumberish>,
+    assets: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   previewMint(
-    shares: PromiseOrValue<BigNumberish>,
+    shares: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   previewRedeem(
-    shares: PromiseOrValue<BigNumberish>,
+    shares: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   previewWithdraw(
-    assets: PromiseOrValue<BigNumberish>,
+    assets: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   principleByAccountId(
-    arg0: PromiseOrValue<BigNumberish>,
+    arg0: BigNumberish,
     overrides?: CallOverrides
   ): Promise<
     [BigNumber, BigNumber] & {
@@ -768,26 +740,26 @@ export interface APVault_V1 extends BaseContract {
   >;
 
   redeem(
-    accountId: PromiseOrValue<BigNumberish>,
-    amt: PromiseOrValue<BigNumberish>,
-    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    accountId: BigNumberish,
+    amt: BigNumberish,
+    overrides?: PayableOverrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   redeemAll(
-    accountId: PromiseOrValue<BigNumberish>,
-    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    accountId: BigNumberish,
+    overrides?: PayableOverrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   redeemERC4626(
-    shares: PromiseOrValue<BigNumberish>,
-    receiver: PromiseOrValue<string>,
-    owner: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    shares: BigNumberish,
+    receiver: string,
+    owner: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   setVaultConfig(
     _newConfig: IVault.VaultConfigStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
@@ -797,16 +769,16 @@ export interface APVault_V1 extends BaseContract {
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    arg0: PromiseOrValue<BigNumberish>,
-    arg1: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    arg0: BigNumberish,
+    arg1: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    from: PromiseOrValue<BigNumberish>,
-    to: PromiseOrValue<BigNumberish>,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    from: BigNumberish,
+    to: BigNumberish,
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   vaultConfig(
@@ -826,43 +798,43 @@ export interface APVault_V1 extends BaseContract {
   >;
 
   withdraw(
-    assets: PromiseOrValue<BigNumberish>,
-    receiver: PromiseOrValue<string>,
-    owner: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    assets: BigNumberish,
+    receiver: string,
+    owner: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     asset(overrides?: CallOverrides): Promise<string>;
 
     balanceOf(
-      account: PromiseOrValue<BigNumberish>,
+      account: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     convertToAssets(
-      shares: PromiseOrValue<BigNumberish>,
+      shares: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     convertToShares(
-      assets: PromiseOrValue<BigNumberish>,
+      assets: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
     deposit(
-      accountId: PromiseOrValue<BigNumberish>,
-      token: PromiseOrValue<string>,
-      amt: PromiseOrValue<BigNumberish>,
+      accountId: BigNumberish,
+      token: string,
+      amt: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     depositERC4626(
-      strategy: PromiseOrValue<string>,
-      assets: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<BigNumberish>,
+      strategy: string,
+      assets: BigNumberish,
+      receiver: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -873,60 +845,57 @@ export interface APVault_V1 extends BaseContract {
     ): Promise<IVault.VaultConfigStructOutput>;
 
     harvest(
-      accountIds: PromiseOrValue<BigNumberish>[],
+      accountIds: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<void>;
 
     maxDeposit(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    maxMint(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    maxMint(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
     maxRedeem(
-      owner: PromiseOrValue<BigNumberish>,
+      owner: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     maxWithdraw(
-      owner: PromiseOrValue<BigNumberish>,
+      owner: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     mint(
-      shares: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<BigNumberish>,
+      shares: BigNumberish,
+      receiver: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
     previewDeposit(
-      assets: PromiseOrValue<BigNumberish>,
+      assets: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     previewMint(
-      shares: PromiseOrValue<BigNumberish>,
+      shares: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     previewRedeem(
-      shares: PromiseOrValue<BigNumberish>,
+      shares: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     previewWithdraw(
-      assets: PromiseOrValue<BigNumberish>,
+      assets: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     principleByAccountId(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<
       [BigNumber, BigNumber] & {
@@ -936,20 +905,20 @@ export interface APVault_V1 extends BaseContract {
     >;
 
     redeem(
-      accountId: PromiseOrValue<BigNumberish>,
-      amt: PromiseOrValue<BigNumberish>,
+      accountId: BigNumberish,
+      amt: BigNumberish,
       overrides?: CallOverrides
     ): Promise<IVault.RedemptionResponseStructOutput>;
 
     redeemAll(
-      accountId: PromiseOrValue<BigNumberish>,
+      accountId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<IVault.RedemptionResponseStructOutput>;
 
     redeemERC4626(
-      shares: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<string>,
-      owner: PromiseOrValue<BigNumberish>,
+      shares: BigNumberish,
+      receiver: string,
+      owner: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -965,15 +934,15 @@ export interface APVault_V1 extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      arg0: PromiseOrValue<BigNumberish>,
-      arg1: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
+      arg1: BigNumberish,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     transferFrom(
-      from: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
+      from: BigNumberish,
+      to: BigNumberish,
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
@@ -1004,9 +973,9 @@ export interface APVault_V1 extends BaseContract {
     >;
 
     withdraw(
-      assets: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<string>,
-      owner: PromiseOrValue<BigNumberish>,
+      assets: BigNumberish,
+      receiver: string,
+      owner: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
   };
@@ -1083,34 +1052,34 @@ export interface APVault_V1 extends BaseContract {
     asset(overrides?: CallOverrides): Promise<BigNumber>;
 
     balanceOf(
-      account: PromiseOrValue<BigNumberish>,
+      account: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     convertToAssets(
-      shares: PromiseOrValue<BigNumberish>,
+      shares: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     convertToShares(
-      assets: PromiseOrValue<BigNumberish>,
+      assets: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
     deposit(
-      accountId: PromiseOrValue<BigNumberish>,
-      token: PromiseOrValue<string>,
-      amt: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      accountId: BigNumberish,
+      token: string,
+      amt: BigNumberish,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<BigNumber>;
 
     depositERC4626(
-      strategy: PromiseOrValue<string>,
-      assets: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      strategy: string,
+      assets: BigNumberish,
+      receiver: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     getPricePerFullShare(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1118,84 +1087,81 @@ export interface APVault_V1 extends BaseContract {
     getVaultConfig(overrides?: CallOverrides): Promise<BigNumber>;
 
     harvest(
-      accountIds: PromiseOrValue<BigNumberish>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      accountIds: BigNumberish[],
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     maxDeposit(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    maxMint(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    maxMint(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
     maxRedeem(
-      owner: PromiseOrValue<BigNumberish>,
+      owner: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     maxWithdraw(
-      owner: PromiseOrValue<BigNumberish>,
+      owner: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     mint(
-      shares: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      shares: BigNumberish,
+      receiver: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
     previewDeposit(
-      assets: PromiseOrValue<BigNumberish>,
+      assets: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     previewMint(
-      shares: PromiseOrValue<BigNumberish>,
+      shares: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     previewRedeem(
-      shares: PromiseOrValue<BigNumberish>,
+      shares: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     previewWithdraw(
-      assets: PromiseOrValue<BigNumberish>,
+      assets: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     principleByAccountId(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     redeem(
-      accountId: PromiseOrValue<BigNumberish>,
-      amt: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      accountId: BigNumberish,
+      amt: BigNumberish,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<BigNumber>;
 
     redeemAll(
-      accountId: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      accountId: BigNumberish,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<BigNumber>;
 
     redeemERC4626(
-      shares: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<string>,
-      owner: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      shares: BigNumberish,
+      receiver: string,
+      owner: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     setVaultConfig(
       _newConfig: IVault.VaultConfigStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1205,25 +1171,25 @@ export interface APVault_V1 extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      arg0: PromiseOrValue<BigNumberish>,
-      arg1: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      arg0: BigNumberish,
+      arg1: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     transferFrom(
-      from: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      from: BigNumberish,
+      to: BigNumberish,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     vaultConfig(overrides?: CallOverrides): Promise<BigNumber>;
 
     withdraw(
-      assets: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<string>,
-      owner: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      assets: BigNumberish,
+      receiver: string,
+      owner: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
@@ -1231,34 +1197,34 @@ export interface APVault_V1 extends BaseContract {
     asset(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     balanceOf(
-      account: PromiseOrValue<BigNumberish>,
+      account: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     convertToAssets(
-      shares: PromiseOrValue<BigNumberish>,
+      shares: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     convertToShares(
-      assets: PromiseOrValue<BigNumberish>,
+      assets: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     deposit(
-      accountId: PromiseOrValue<BigNumberish>,
-      token: PromiseOrValue<string>,
-      amt: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      accountId: BigNumberish,
+      token: string,
+      amt: BigNumberish,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     depositERC4626(
-      strategy: PromiseOrValue<string>,
-      assets: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      strategy: string,
+      assets: BigNumberish,
+      receiver: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     getPricePerFullShare(
@@ -1268,84 +1234,84 @@ export interface APVault_V1 extends BaseContract {
     getVaultConfig(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     harvest(
-      accountIds: PromiseOrValue<BigNumberish>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      accountIds: BigNumberish[],
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     maxDeposit(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     maxMint(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     maxRedeem(
-      owner: PromiseOrValue<BigNumberish>,
+      owner: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     maxWithdraw(
-      owner: PromiseOrValue<BigNumberish>,
+      owner: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     mint(
-      shares: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      shares: BigNumberish,
+      receiver: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     previewDeposit(
-      assets: PromiseOrValue<BigNumberish>,
+      assets: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     previewMint(
-      shares: PromiseOrValue<BigNumberish>,
+      shares: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     previewRedeem(
-      shares: PromiseOrValue<BigNumberish>,
+      shares: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     previewWithdraw(
-      assets: PromiseOrValue<BigNumberish>,
+      assets: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     principleByAccountId(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     redeem(
-      accountId: PromiseOrValue<BigNumberish>,
-      amt: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      accountId: BigNumberish,
+      amt: BigNumberish,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     redeemAll(
-      accountId: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      accountId: BigNumberish,
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     redeemERC4626(
-      shares: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<string>,
-      owner: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      shares: BigNumberish,
+      receiver: string,
+      owner: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     setVaultConfig(
       _newConfig: IVault.VaultConfigStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1355,25 +1321,25 @@ export interface APVault_V1 extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      arg0: PromiseOrValue<BigNumberish>,
-      arg1: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      arg0: BigNumberish,
+      arg1: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      from: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<BigNumberish>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      from: BigNumberish,
+      to: BigNumberish,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     vaultConfig(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdraw(
-      assets: PromiseOrValue<BigNumberish>,
-      receiver: PromiseOrValue<string>,
-      owner: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      assets: BigNumberish,
+      receiver: string,
+      owner: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

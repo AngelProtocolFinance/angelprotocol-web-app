@@ -18,7 +18,6 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../common";
 
 export interface SubDaoLibInterface extends utils.Interface {
@@ -47,39 +46,35 @@ export interface SubDaoLibInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "queryAddressVotingBalanceAtBlock",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [string, string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "queryTotalVotingBalanceAtBlock",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "utfStringLength",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "validateDescription",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "validateLink",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "validateQuorum",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "validateThreshold",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "validateTitle",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
 
   decodeFunctionResult(
@@ -146,225 +141,192 @@ export interface SubDaoLib extends BaseContract {
 
   functions: {
     queryAddressVotingBalanceAtBlock(
-      veAddr: PromiseOrValue<string>,
-      targetAddr: PromiseOrValue<string>,
-      blocknumber: PromiseOrValue<BigNumberish>,
+      veAddr: string,
+      targetAddr: string,
+      blocknumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     queryTotalVotingBalanceAtBlock(
-      veaddr: PromiseOrValue<string>,
-      blocknumber: PromiseOrValue<BigNumberish>,
+      veaddr: string,
+      blocknumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     utfStringLength(
-      str: PromiseOrValue<string>,
+      str: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber] & { length: BigNumber }>;
 
     validateDescription(
-      description: PromiseOrValue<string>,
+      description: string,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
-    validateLink(
-      link: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    validateLink(link: string, overrides?: CallOverrides): Promise<[boolean]>;
 
     validateQuorum(
-      quorum: PromiseOrValue<BigNumberish>,
+      quorum: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
     validateThreshold(
-      threshold: PromiseOrValue<BigNumberish>,
+      threshold: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
-    validateTitle(
-      title: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    validateTitle(title: string, overrides?: CallOverrides): Promise<[boolean]>;
   };
 
   queryAddressVotingBalanceAtBlock(
-    veAddr: PromiseOrValue<string>,
-    targetAddr: PromiseOrValue<string>,
-    blocknumber: PromiseOrValue<BigNumberish>,
+    veAddr: string,
+    targetAddr: string,
+    blocknumber: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   queryTotalVotingBalanceAtBlock(
-    veaddr: PromiseOrValue<string>,
-    blocknumber: PromiseOrValue<BigNumberish>,
+    veaddr: string,
+    blocknumber: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  utfStringLength(
-    str: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  utfStringLength(str: string, overrides?: CallOverrides): Promise<BigNumber>;
 
   validateDescription(
-    description: PromiseOrValue<string>,
+    description: string,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
-  validateLink(
-    link: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
+  validateLink(link: string, overrides?: CallOverrides): Promise<boolean>;
 
   validateQuorum(
-    quorum: PromiseOrValue<BigNumberish>,
+    quorum: BigNumberish,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
   validateThreshold(
-    threshold: PromiseOrValue<BigNumberish>,
+    threshold: BigNumberish,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
-  validateTitle(
-    title: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
+  validateTitle(title: string, overrides?: CallOverrides): Promise<boolean>;
 
   callStatic: {
     queryAddressVotingBalanceAtBlock(
-      veAddr: PromiseOrValue<string>,
-      targetAddr: PromiseOrValue<string>,
-      blocknumber: PromiseOrValue<BigNumberish>,
+      veAddr: string,
+      targetAddr: string,
+      blocknumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     queryTotalVotingBalanceAtBlock(
-      veaddr: PromiseOrValue<string>,
-      blocknumber: PromiseOrValue<BigNumberish>,
+      veaddr: string,
+      blocknumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    utfStringLength(
-      str: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    utfStringLength(str: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     validateDescription(
-      description: PromiseOrValue<string>,
+      description: string,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    validateLink(
-      link: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
+    validateLink(link: string, overrides?: CallOverrides): Promise<boolean>;
 
     validateQuorum(
-      quorum: PromiseOrValue<BigNumberish>,
+      quorum: BigNumberish,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     validateThreshold(
-      threshold: PromiseOrValue<BigNumberish>,
+      threshold: BigNumberish,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    validateTitle(
-      title: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
+    validateTitle(title: string, overrides?: CallOverrides): Promise<boolean>;
   };
 
   filters: {};
 
   estimateGas: {
     queryAddressVotingBalanceAtBlock(
-      veAddr: PromiseOrValue<string>,
-      targetAddr: PromiseOrValue<string>,
-      blocknumber: PromiseOrValue<BigNumberish>,
+      veAddr: string,
+      targetAddr: string,
+      blocknumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     queryTotalVotingBalanceAtBlock(
-      veaddr: PromiseOrValue<string>,
-      blocknumber: PromiseOrValue<BigNumberish>,
+      veaddr: string,
+      blocknumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    utfStringLength(
-      str: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    utfStringLength(str: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     validateDescription(
-      description: PromiseOrValue<string>,
+      description: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    validateLink(
-      link: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    validateLink(link: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     validateQuorum(
-      quorum: PromiseOrValue<BigNumberish>,
+      quorum: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     validateThreshold(
-      threshold: PromiseOrValue<BigNumberish>,
+      threshold: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    validateTitle(
-      title: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    validateTitle(title: string, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
     queryAddressVotingBalanceAtBlock(
-      veAddr: PromiseOrValue<string>,
-      targetAddr: PromiseOrValue<string>,
-      blocknumber: PromiseOrValue<BigNumberish>,
+      veAddr: string,
+      targetAddr: string,
+      blocknumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     queryTotalVotingBalanceAtBlock(
-      veaddr: PromiseOrValue<string>,
-      blocknumber: PromiseOrValue<BigNumberish>,
+      veaddr: string,
+      blocknumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     utfStringLength(
-      str: PromiseOrValue<string>,
+      str: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     validateDescription(
-      description: PromiseOrValue<string>,
+      description: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     validateLink(
-      link: PromiseOrValue<string>,
+      link: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     validateQuorum(
-      quorum: PromiseOrValue<BigNumberish>,
+      quorum: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     validateThreshold(
-      threshold: PromiseOrValue<BigNumberish>,
+      threshold: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     validateTitle(
-      title: PromiseOrValue<string>,
+      title: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };

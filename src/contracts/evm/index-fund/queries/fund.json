@@ -28,7 +28,7 @@
           },
           {
             "internalType": "uint32[]",
-            "name": "members",
+            "name": "endowments",
             "type": "uint32[]"
           },
           {
@@ -42,7 +42,7 @@
             "type": "uint256"
           }
         ],
-        "internalType": "struct AngelCoreStruct.IndexFund",
+        "internalType": "struct IIndexFund.FundResponse",
         "name": "",
         "type": "tuple"
       }

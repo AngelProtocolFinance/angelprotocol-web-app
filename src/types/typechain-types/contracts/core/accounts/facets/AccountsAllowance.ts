@@ -24,19 +24,18 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../../common";
 
 export declare namespace IVault {
   export type VaultActionDataStruct = {
-    destinationChain: PromiseOrValue<string>;
-    strategyId: PromiseOrValue<BytesLike>;
-    selector: PromiseOrValue<BytesLike>;
-    accountIds: PromiseOrValue<BigNumberish>[];
-    token: PromiseOrValue<string>;
-    lockAmt: PromiseOrValue<BigNumberish>;
-    liqAmt: PromiseOrValue<BigNumberish>;
-    status: PromiseOrValue<BigNumberish>;
+    destinationChain: string;
+    strategyId: BytesLike;
+    selector: BytesLike;
+    accountIds: BigNumberish[];
+    token: string;
+    lockAmt: BigNumberish;
+    liqAmt: BigNumberish;
+    status: BigNumberish;
   };
 
   export type VaultActionDataStructOutput = [
@@ -76,29 +75,15 @@ export interface AccountsAllowanceInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "manageAllowances",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [BigNumberish, string, string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "queryAllowance",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>
-    ]
+    values: [BigNumberish, string, string]
   ): string;
   encodeFunctionData(
     functionFragment: "spendAllowance",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>
-    ]
+    values: [BigNumberish, string, BigNumberish, string]
   ): string;
 
   decodeFunctionResult(
@@ -131,9 +116,9 @@ export interface AccountsAllowanceInterface extends utils.Interface {
     "EndowmentUpdated(uint256)": EventFragment;
     "EndowmentWithdraw(uint256,address,uint256,uint8,address,uint32)": EventFragment;
     "OwnerUpdated(address)": EventFragment;
-    "RefundNeeded(tuple)": EventFragment;
+    "RefundNeeded((string,bytes4,bytes4,uint32[],address,uint256,uint256,uint8))": EventFragment;
     "TokenSwapped(uint256,uint8,address,uint256,address,uint256)": EventFragment;
-    "UnexpectedTokens(tuple)": EventFragment;
+    "UnexpectedTokens((string,bytes4,bytes4,uint32[],address,uint256,uint256,uint8))": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "AllowanceSpent"): EventFragment;
@@ -410,73 +395,73 @@ export interface AccountsAllowance extends BaseContract {
 
   functions: {
     manageAllowances(
-      endowId: PromiseOrValue<BigNumberish>,
-      spender: PromiseOrValue<string>,
-      token: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      endowId: BigNumberish,
+      spender: string,
+      token: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     queryAllowance(
-      endowId: PromiseOrValue<BigNumberish>,
-      spender: PromiseOrValue<string>,
-      token: PromiseOrValue<string>,
+      endowId: BigNumberish,
+      spender: string,
+      token: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     spendAllowance(
-      endowId: PromiseOrValue<BigNumberish>,
-      token: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      recipient: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      endowId: BigNumberish,
+      token: string,
+      amount: BigNumberish,
+      recipient: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   manageAllowances(
-    endowId: PromiseOrValue<BigNumberish>,
-    spender: PromiseOrValue<string>,
-    token: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    endowId: BigNumberish,
+    spender: string,
+    token: string,
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   queryAllowance(
-    endowId: PromiseOrValue<BigNumberish>,
-    spender: PromiseOrValue<string>,
-    token: PromiseOrValue<string>,
+    endowId: BigNumberish,
+    spender: string,
+    token: string,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   spendAllowance(
-    endowId: PromiseOrValue<BigNumberish>,
-    token: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    recipient: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    endowId: BigNumberish,
+    token: string,
+    amount: BigNumberish,
+    recipient: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     manageAllowances(
-      endowId: PromiseOrValue<BigNumberish>,
-      spender: PromiseOrValue<string>,
-      token: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      endowId: BigNumberish,
+      spender: string,
+      token: string,
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     queryAllowance(
-      endowId: PromiseOrValue<BigNumberish>,
-      spender: PromiseOrValue<string>,
-      token: PromiseOrValue<string>,
+      endowId: BigNumberish,
+      spender: string,
+      token: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     spendAllowance(
-      endowId: PromiseOrValue<BigNumberish>,
-      token: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      recipient: PromiseOrValue<string>,
+      endowId: BigNumberish,
+      token: string,
+      amount: BigNumberish,
+      recipient: string,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -620,7 +605,9 @@ export interface AccountsAllowance extends BaseContract {
     "OwnerUpdated(address)"(owner?: null): OwnerUpdatedEventFilter;
     OwnerUpdated(owner?: null): OwnerUpdatedEventFilter;
 
-    "RefundNeeded(tuple)"(arg0?: null): RefundNeededEventFilter;
+    "RefundNeeded((string,bytes4,bytes4,uint32[],address,uint256,uint256,uint8))"(
+      arg0?: null
+    ): RefundNeededEventFilter;
     RefundNeeded(arg0?: null): RefundNeededEventFilter;
 
     "TokenSwapped(uint256,uint8,address,uint256,address,uint256)"(
@@ -640,57 +627,59 @@ export interface AccountsAllowance extends BaseContract {
       amountOut?: null
     ): TokenSwappedEventFilter;
 
-    "UnexpectedTokens(tuple)"(arg0?: null): UnexpectedTokensEventFilter;
+    "UnexpectedTokens((string,bytes4,bytes4,uint32[],address,uint256,uint256,uint8))"(
+      arg0?: null
+    ): UnexpectedTokensEventFilter;
     UnexpectedTokens(arg0?: null): UnexpectedTokensEventFilter;
   };
 
   estimateGas: {
     manageAllowances(
-      endowId: PromiseOrValue<BigNumberish>,
-      spender: PromiseOrValue<string>,
-      token: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      endowId: BigNumberish,
+      spender: string,
+      token: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     queryAllowance(
-      endowId: PromiseOrValue<BigNumberish>,
-      spender: PromiseOrValue<string>,
-      token: PromiseOrValue<string>,
+      endowId: BigNumberish,
+      spender: string,
+      token: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     spendAllowance(
-      endowId: PromiseOrValue<BigNumberish>,
-      token: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      recipient: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      endowId: BigNumberish,
+      token: string,
+      amount: BigNumberish,
+      recipient: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     manageAllowances(
-      endowId: PromiseOrValue<BigNumberish>,
-      spender: PromiseOrValue<string>,
-      token: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      endowId: BigNumberish,
+      spender: string,
+      token: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     queryAllowance(
-      endowId: PromiseOrValue<BigNumberish>,
-      spender: PromiseOrValue<string>,
-      token: PromiseOrValue<string>,
+      endowId: BigNumberish,
+      spender: string,
+      token: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     spendAllowance(
-      endowId: PromiseOrValue<BigNumberish>,
-      token: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      recipient: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      endowId: BigNumberish,
+      token: string,
+      amount: BigNumberish,
+      recipient: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

@@ -24,19 +24,18 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../../common";
 
 export declare namespace IVault {
   export type VaultActionDataStruct = {
-    destinationChain: PromiseOrValue<string>;
-    strategyId: PromiseOrValue<BytesLike>;
-    selector: PromiseOrValue<BytesLike>;
-    accountIds: PromiseOrValue<BigNumberish>[];
-    token: PromiseOrValue<string>;
-    lockAmt: PromiseOrValue<BigNumberish>;
-    liqAmt: PromiseOrValue<BigNumberish>;
-    status: PromiseOrValue<BigNumberish>;
+    destinationChain: string;
+    strategyId: BytesLike;
+    selector: BytesLike;
+    accountIds: BigNumberish[];
+    token: string;
+    lockAmt: BigNumberish;
+    liqAmt: BigNumberish;
+    status: BigNumberish;
   };
 
   export type VaultActionDataStructOutput = [
@@ -61,20 +60,14 @@ export declare namespace IVault {
 }
 
 export declare namespace LibAccounts {
-  export type FeeSettingStruct = {
-    payoutAddress: PromiseOrValue<string>;
-    bps: PromiseOrValue<BigNumberish>;
-  };
+  export type FeeSettingStruct = { payoutAddress: string; bps: BigNumberish };
 
   export type FeeSettingStructOutput = [string, BigNumber] & {
     payoutAddress: string;
     bps: BigNumber;
   };
 
-  export type DelegateStruct = {
-    addr: PromiseOrValue<string>;
-    expires: PromiseOrValue<BigNumberish>;
-  };
+  export type DelegateStruct = { addr: string; expires: BigNumberish };
 
   export type DelegateStructOutput = [string, BigNumber] & {
     addr: string;
@@ -82,7 +75,7 @@ export declare namespace LibAccounts {
   };
 
   export type SettingsPermissionStruct = {
-    locked: PromiseOrValue<boolean>;
+    locked: boolean;
     delegate: LibAccounts.DelegateStruct;
   };
 
@@ -150,9 +143,9 @@ export declare namespace LibAccounts {
   };
 
   export type SplitDetailsStruct = {
-    max: PromiseOrValue<BigNumberish>;
-    min: PromiseOrValue<BigNumberish>;
-    defaultSplit: PromiseOrValue<BigNumberish>;
+    max: BigNumberish;
+    min: BigNumberish;
+    defaultSplit: BigNumberish;
   };
 
   export type SplitDetailsStructOutput = [BigNumber, BigNumber, BigNumber] & {
@@ -164,30 +157,30 @@ export declare namespace LibAccounts {
 
 export declare namespace AccountMessages {
   export type CreateEndowmentRequestStruct = {
-    withdrawBeforeMaturity: PromiseOrValue<boolean>;
-    maturityTime: PromiseOrValue<BigNumberish>;
-    name: PromiseOrValue<string>;
-    sdgs: PromiseOrValue<BigNumberish>[];
-    tier: PromiseOrValue<BigNumberish>;
-    endowType: PromiseOrValue<BigNumberish>;
-    logo: PromiseOrValue<string>;
-    image: PromiseOrValue<string>;
-    members: PromiseOrValue<string>[];
-    threshold: PromiseOrValue<BigNumberish>;
-    duration: PromiseOrValue<BigNumberish>;
-    allowlistedBeneficiaries: PromiseOrValue<string>[];
-    allowlistedContributors: PromiseOrValue<string>[];
+    withdrawBeforeMaturity: boolean;
+    maturityTime: BigNumberish;
+    name: string;
+    sdgs: BigNumberish[];
+    tier: BigNumberish;
+    endowType: BigNumberish;
+    logo: string;
+    image: string;
+    members: string[];
+    threshold: BigNumberish;
+    duration: BigNumberish;
+    allowlistedBeneficiaries: string[];
+    allowlistedContributors: string[];
     earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct;
     withdrawFee: LibAccounts.FeeSettingStruct;
     depositFee: LibAccounts.FeeSettingStruct;
     balanceFee: LibAccounts.FeeSettingStruct;
-    proposalLink: PromiseOrValue<BigNumberish>;
+    proposalLink: BigNumberish;
     settingsController: LibAccounts.SettingsControllerStruct;
-    parent: PromiseOrValue<BigNumberish>;
-    maturityAllowlist: PromiseOrValue<string>[];
-    ignoreUserSplits: PromiseOrValue<boolean>;
+    parent: BigNumberish;
+    maturityAllowlist: string[];
+    ignoreUserSplits: boolean;
     splitToLiquid: LibAccounts.SplitDetailsStruct;
-    referralId: PromiseOrValue<BigNumberish>;
+    referralId: BigNumberish;
   };
 
   export type CreateEndowmentRequestStructOutput = [
@@ -277,9 +270,9 @@ export interface AccountsCreateEndowmentInterface extends utils.Interface {
     "EndowmentUpdated(uint256)": EventFragment;
     "EndowmentWithdraw(uint256,address,uint256,uint8,address,uint32)": EventFragment;
     "OwnerUpdated(address)": EventFragment;
-    "RefundNeeded(tuple)": EventFragment;
+    "RefundNeeded((string,bytes4,bytes4,uint32[],address,uint256,uint256,uint8))": EventFragment;
     "TokenSwapped(uint256,uint8,address,uint256,address,uint256)": EventFragment;
-    "UnexpectedTokens(tuple)": EventFragment;
+    "UnexpectedTokens((string,bytes4,bytes4,uint32[],address,uint256,uint256,uint8))": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "AllowanceSpent"): EventFragment;
@@ -557,13 +550,13 @@ export interface AccountsCreateEndowment extends BaseContract {
   functions: {
     createEndowment(
       details: AccountMessages.CreateEndowmentRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   createEndowment(
     details: AccountMessages.CreateEndowmentRequestStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -712,7 +705,9 @@ export interface AccountsCreateEndowment extends BaseContract {
     "OwnerUpdated(address)"(owner?: null): OwnerUpdatedEventFilter;
     OwnerUpdated(owner?: null): OwnerUpdatedEventFilter;
 
-    "RefundNeeded(tuple)"(arg0?: null): RefundNeededEventFilter;
+    "RefundNeeded((string,bytes4,bytes4,uint32[],address,uint256,uint256,uint8))"(
+      arg0?: null
+    ): RefundNeededEventFilter;
     RefundNeeded(arg0?: null): RefundNeededEventFilter;
 
     "TokenSwapped(uint256,uint8,address,uint256,address,uint256)"(
@@ -732,21 +727,23 @@ export interface AccountsCreateEndowment extends BaseContract {
       amountOut?: null
     ): TokenSwappedEventFilter;
 
-    "UnexpectedTokens(tuple)"(arg0?: null): UnexpectedTokensEventFilter;
+    "UnexpectedTokens((string,bytes4,bytes4,uint32[],address,uint256,uint256,uint8))"(
+      arg0?: null
+    ): UnexpectedTokensEventFilter;
     UnexpectedTokens(arg0?: null): UnexpectedTokensEventFilter;
   };
 
   estimateGas: {
     createEndowment(
       details: AccountMessages.CreateEndowmentRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     createEndowment(
       details: AccountMessages.CreateEndowmentRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

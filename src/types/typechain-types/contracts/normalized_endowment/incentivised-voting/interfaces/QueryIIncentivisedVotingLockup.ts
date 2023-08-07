@@ -18,7 +18,6 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../../common";
 
 export interface QueryIIncentivisedVotingLockupInterface
@@ -38,13 +37,10 @@ export interface QueryIIncentivisedVotingLockupInterface
       | "totalSupplyAt"
   ): FunctionFragment;
 
-  encodeFunctionData(
-    functionFragment: "balanceOf",
-    values: [PromiseOrValue<string>]
-  ): string;
+  encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
   encodeFunctionData(
     functionFragment: "balanceOfAt",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "totalSupply",
@@ -52,7 +48,7 @@ export interface QueryIIncentivisedVotingLockupInterface
   ): string;
   encodeFunctionData(
     functionFragment: "totalSupplyAt",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
 
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
@@ -99,59 +95,50 @@ export interface QueryIIncentivisedVotingLockup extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    balanceOf(
-      owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    balanceOf(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     balanceOfAt(
-      owner: PromiseOrValue<string>,
-      blocknumber: PromiseOrValue<BigNumberish>,
+      owner: string,
+      blocknumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     totalSupplyAt(
-      blocknumber: PromiseOrValue<BigNumberish>,
+      blocknumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
   };
 
-  balanceOf(
-    owner: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
   balanceOfAt(
-    owner: PromiseOrValue<string>,
-    blocknumber: PromiseOrValue<BigNumberish>,
+    owner: string,
+    blocknumber: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   totalSupplyAt(
-    blocknumber: PromiseOrValue<BigNumberish>,
+    blocknumber: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   callStatic: {
-    balanceOf(
-      owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     balanceOfAt(
-      owner: PromiseOrValue<string>,
-      blocknumber: PromiseOrValue<BigNumberish>,
+      owner: string,
+      blocknumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupplyAt(
-      blocknumber: PromiseOrValue<BigNumberish>,
+      blocknumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
   };
@@ -159,41 +146,38 @@ export interface QueryIIncentivisedVotingLockup extends BaseContract {
   filters: {};
 
   estimateGas: {
-    balanceOf(
-      owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     balanceOfAt(
-      owner: PromiseOrValue<string>,
-      blocknumber: PromiseOrValue<BigNumberish>,
+      owner: string,
+      blocknumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupplyAt(
-      blocknumber: PromiseOrValue<BigNumberish>,
+      blocknumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     balanceOf(
-      owner: PromiseOrValue<string>,
+      owner: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     balanceOfAt(
-      owner: PromiseOrValue<string>,
-      blocknumber: PromiseOrValue<BigNumberish>,
+      owner: string,
+      blocknumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSupplyAt(
-      blocknumber: PromiseOrValue<BigNumberish>,
+      blocknumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };

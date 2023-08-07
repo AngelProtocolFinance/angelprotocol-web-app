@@ -60,8 +60,6 @@ export const txs: { [T in TxType]: (args: TxArgs<T>) => string } = {
   // //// INDEX FUND ////
   "index-fund.config": (config) =>
     indexFund.encodeFunctionData("updateConfig", [toTuple(config)]),
-  "index-fund.update-owner": ({ newOwner }) =>
-    indexFund.encodeFunctionData("updateOwner", [newOwner]),
   "index-fund.create-fund": (fund) =>
     indexFund.encodeFunctionData("createIndexFund", toTuple(fund)),
   "index-fund.remove-fund": ({ id }) =>

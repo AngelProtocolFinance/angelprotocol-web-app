@@ -20,16 +20,15 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../common";
 
 export declare namespace DonationMatchStorage {
   export type ConfigStruct = {
-    reserveToken: PromiseOrValue<string>;
-    uniswapFactory: PromiseOrValue<string>;
-    usdcAddress: PromiseOrValue<string>;
-    registrarContract: PromiseOrValue<string>;
-    poolFee: PromiseOrValue<BigNumberish>;
+    reserveToken: string;
+    uniswapFactory: string;
+    usdcAddress: string;
+    registrarContract: string;
+    poolFee: BigNumberish;
   };
 
   export type ConfigStructOutput = [string, string, string, string, number] & {
@@ -61,47 +60,23 @@ export interface IDonationMatchEmitterInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "burnErc20",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [BigNumberish, string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "executeDonorMatch",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>
-    ]
+    values: [string, BigNumberish, string, BigNumberish, string]
   ): string;
   encodeFunctionData(
     functionFragment: "giveApprovalErc20",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [BigNumberish, string, string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "initializeDonationMatch",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      DonationMatchStorage.ConfigStruct
-    ]
+    values: [BigNumberish, string, DonationMatchStorage.ConfigStruct]
   ): string;
   encodeFunctionData(
     functionFragment: "transferErc20",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [BigNumberish, string, string, BigNumberish]
   ): string;
 
   decodeFunctionResult(functionFragment: "burnErc20", data: BytesLike): Result;
@@ -153,121 +128,121 @@ export interface IDonationMatchEmitter extends BaseContract {
 
   functions: {
     burnErc20(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      tokenAddress: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      endowmentId: BigNumberish,
+      tokenAddress: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     executeDonorMatch(
-      tokenAddress: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      accountsContract: PromiseOrValue<string>,
-      endowmentId: PromiseOrValue<BigNumberish>,
-      donor: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      tokenAddress: string,
+      amount: BigNumberish,
+      accountsContract: string,
+      endowmentId: BigNumberish,
+      donor: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     giveApprovalErc20(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      tokenAddress: PromiseOrValue<string>,
-      recipient: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      endowmentId: BigNumberish,
+      tokenAddress: string,
+      recipient: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     initializeDonationMatch(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      donationMatch: PromiseOrValue<string>,
+      endowmentId: BigNumberish,
+      donationMatch: string,
       config: DonationMatchStorage.ConfigStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     transferErc20(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      tokenAddress: PromiseOrValue<string>,
-      recipient: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      endowmentId: BigNumberish,
+      tokenAddress: string,
+      recipient: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   burnErc20(
-    endowmentId: PromiseOrValue<BigNumberish>,
-    tokenAddress: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    endowmentId: BigNumberish,
+    tokenAddress: string,
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   executeDonorMatch(
-    tokenAddress: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    accountsContract: PromiseOrValue<string>,
-    endowmentId: PromiseOrValue<BigNumberish>,
-    donor: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    tokenAddress: string,
+    amount: BigNumberish,
+    accountsContract: string,
+    endowmentId: BigNumberish,
+    donor: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   giveApprovalErc20(
-    endowmentId: PromiseOrValue<BigNumberish>,
-    tokenAddress: PromiseOrValue<string>,
-    recipient: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    endowmentId: BigNumberish,
+    tokenAddress: string,
+    recipient: string,
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   initializeDonationMatch(
-    endowmentId: PromiseOrValue<BigNumberish>,
-    donationMatch: PromiseOrValue<string>,
+    endowmentId: BigNumberish,
+    donationMatch: string,
     config: DonationMatchStorage.ConfigStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   transferErc20(
-    endowmentId: PromiseOrValue<BigNumberish>,
-    tokenAddress: PromiseOrValue<string>,
-    recipient: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    endowmentId: BigNumberish,
+    tokenAddress: string,
+    recipient: string,
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     burnErc20(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      tokenAddress: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      endowmentId: BigNumberish,
+      tokenAddress: string,
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     executeDonorMatch(
-      tokenAddress: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      accountsContract: PromiseOrValue<string>,
-      endowmentId: PromiseOrValue<BigNumberish>,
-      donor: PromiseOrValue<string>,
+      tokenAddress: string,
+      amount: BigNumberish,
+      accountsContract: string,
+      endowmentId: BigNumberish,
+      donor: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     giveApprovalErc20(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      tokenAddress: PromiseOrValue<string>,
-      recipient: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      endowmentId: BigNumberish,
+      tokenAddress: string,
+      recipient: string,
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     initializeDonationMatch(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      donationMatch: PromiseOrValue<string>,
+      endowmentId: BigNumberish,
+      donationMatch: string,
       config: DonationMatchStorage.ConfigStruct,
       overrides?: CallOverrides
     ): Promise<void>;
 
     transferErc20(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      tokenAddress: PromiseOrValue<string>,
-      recipient: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      endowmentId: BigNumberish,
+      tokenAddress: string,
+      recipient: string,
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -276,83 +251,83 @@ export interface IDonationMatchEmitter extends BaseContract {
 
   estimateGas: {
     burnErc20(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      tokenAddress: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      endowmentId: BigNumberish,
+      tokenAddress: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     executeDonorMatch(
-      tokenAddress: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      accountsContract: PromiseOrValue<string>,
-      endowmentId: PromiseOrValue<BigNumberish>,
-      donor: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      tokenAddress: string,
+      amount: BigNumberish,
+      accountsContract: string,
+      endowmentId: BigNumberish,
+      donor: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     giveApprovalErc20(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      tokenAddress: PromiseOrValue<string>,
-      recipient: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      endowmentId: BigNumberish,
+      tokenAddress: string,
+      recipient: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     initializeDonationMatch(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      donationMatch: PromiseOrValue<string>,
+      endowmentId: BigNumberish,
+      donationMatch: string,
       config: DonationMatchStorage.ConfigStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     transferErc20(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      tokenAddress: PromiseOrValue<string>,
-      recipient: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      endowmentId: BigNumberish,
+      tokenAddress: string,
+      recipient: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     burnErc20(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      tokenAddress: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      endowmentId: BigNumberish,
+      tokenAddress: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     executeDonorMatch(
-      tokenAddress: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      accountsContract: PromiseOrValue<string>,
-      endowmentId: PromiseOrValue<BigNumberish>,
-      donor: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      tokenAddress: string,
+      amount: BigNumberish,
+      accountsContract: string,
+      endowmentId: BigNumberish,
+      donor: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     giveApprovalErc20(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      tokenAddress: PromiseOrValue<string>,
-      recipient: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      endowmentId: BigNumberish,
+      tokenAddress: string,
+      recipient: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     initializeDonationMatch(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      donationMatch: PromiseOrValue<string>,
+      endowmentId: BigNumberish,
+      donationMatch: string,
       config: DonationMatchStorage.ConfigStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     transferErc20(
-      endowmentId: PromiseOrValue<BigNumberish>,
-      tokenAddress: PromiseOrValue<string>,
-      recipient: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      endowmentId: BigNumberish,
+      tokenAddress: string,
+      recipient: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

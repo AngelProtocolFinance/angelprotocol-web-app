@@ -10,7 +10,7 @@ import {
   LibAccounts,
 } from "../typechain-types/contracts/core/accounts/interfaces/IAccounts";
 import { EndowmentType } from "../lists";
-import { Mapped, Plain } from "../utils";
+import { Mapped } from "../utils";
 
 type BeneficiaryData = OverrideProperties<
   LibAccounts.BeneficiaryDataStruct,
@@ -18,7 +18,7 @@ type BeneficiaryData = OverrideProperties<
 >;
 
 export type AccountsSplitDetails = Mapped<
-  Plain<LibAccounts.SplitDetailsStruct>,
+  LibAccounts.SplitDetailsStruct,
   number
 >;
 
@@ -95,7 +95,7 @@ export type SettingsController = Mapped<
 
 export type EndowmentDetails = OverrideProperties<
   Pick<
-    Plain<AccountStorage.EndowmentStruct>,
+    AccountStorage.EndowmentStruct,
     | "owner"
     | "endowType"
     | "maturityTime"
@@ -150,7 +150,7 @@ export type SettingsControllerUpdate = OverrideProperties<
 >;
 
 export type EndowmentSettingsUpdate = OverrideProperties<
-  Plain<AccountsUpdateEndowmentSettingsControllerMessages.UpdateEndowmentSettingsRequestStruct>,
+  AccountsUpdateEndowmentSettingsControllerMessages.UpdateEndowmentSettingsRequestStruct,
   { id: number; splitToLiquid: AccountsSplitDetails; maturityTime: number }
 >;
 
@@ -176,7 +176,7 @@ export type ERC20Deposit = {
 };
 
 export type Fee = OverrideProperties<
-  Plain<LibAccounts.FeeSettingStruct>,
+  LibAccounts.FeeSettingStruct,
   { bps: number }
 >;
 
@@ -192,7 +192,7 @@ export type FeeSettingsUpdate = OverrideProperties<
 >;
 
 export type NewAST = OverrideProperties<
-  Plain<AccountMessages.CreateEndowmentRequestStruct>,
+  AccountMessages.CreateEndowmentRequestStruct,
   {
     maturityTime: number;
     sdgs: number[];

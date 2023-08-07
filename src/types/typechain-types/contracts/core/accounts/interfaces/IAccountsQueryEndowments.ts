@@ -18,16 +18,15 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../../common";
 
 export declare namespace AccountMessages {
   export type ConfigResponseStruct = {
-    owner: PromiseOrValue<string>;
-    version: PromiseOrValue<string>;
-    networkName: PromiseOrValue<string>;
-    registrarContract: PromiseOrValue<string>;
-    nextAccountId: PromiseOrValue<BigNumberish>;
+    owner: string;
+    version: string;
+    networkName: string;
+    registrarContract: string;
+    nextAccountId: BigNumberish;
   };
 
   export type ConfigResponseStructOutput = [
@@ -45,7 +44,7 @@ export declare namespace AccountMessages {
   };
 
   export type StateResponseStruct = {
-    closingEndowment: PromiseOrValue<boolean>;
+    closingEndowment: boolean;
     closingBeneficiary: LibAccounts.BeneficiaryStruct;
   };
 
@@ -60,12 +59,12 @@ export declare namespace AccountMessages {
 
 export declare namespace LocalRegistrarLib {
   export type RebalanceParamsStruct = {
-    rebalanceLiquidProfits: PromiseOrValue<boolean>;
-    lockedRebalanceToLiquid: PromiseOrValue<BigNumberish>;
-    interestDistribution: PromiseOrValue<BigNumberish>;
-    lockedPrincipleToLiquid: PromiseOrValue<boolean>;
-    principleDistribution: PromiseOrValue<BigNumberish>;
-    basis: PromiseOrValue<BigNumberish>;
+    rebalanceLiquidProfits: boolean;
+    lockedRebalanceToLiquid: BigNumberish;
+    interestDistribution: BigNumberish;
+    lockedPrincipleToLiquid: boolean;
+    principleDistribution: BigNumberish;
+    basis: BigNumberish;
   };
 
   export type RebalanceParamsStructOutput = [
@@ -86,20 +85,14 @@ export declare namespace LocalRegistrarLib {
 }
 
 export declare namespace LibAccounts {
-  export type FeeSettingStruct = {
-    payoutAddress: PromiseOrValue<string>;
-    bps: PromiseOrValue<BigNumberish>;
-  };
+  export type FeeSettingStruct = { payoutAddress: string; bps: BigNumberish };
 
   export type FeeSettingStructOutput = [string, BigNumber] & {
     payoutAddress: string;
     bps: BigNumber;
   };
 
-  export type DelegateStruct = {
-    addr: PromiseOrValue<string>;
-    expires: PromiseOrValue<BigNumberish>;
-  };
+  export type DelegateStruct = { addr: string; expires: BigNumberish };
 
   export type DelegateStructOutput = [string, BigNumber] & {
     addr: string;
@@ -107,7 +100,7 @@ export declare namespace LibAccounts {
   };
 
   export type SettingsPermissionStruct = {
-    locked: PromiseOrValue<boolean>;
+    locked: boolean;
     delegate: LibAccounts.DelegateStruct;
   };
 
@@ -175,9 +168,9 @@ export declare namespace LibAccounts {
   };
 
   export type SplitDetailsStruct = {
-    max: PromiseOrValue<BigNumberish>;
-    min: PromiseOrValue<BigNumberish>;
-    defaultSplit: PromiseOrValue<BigNumberish>;
+    max: BigNumberish;
+    min: BigNumberish;
+    defaultSplit: BigNumberish;
   };
 
   export type SplitDetailsStructOutput = [BigNumber, BigNumber, BigNumber] & {
@@ -187,9 +180,9 @@ export declare namespace LibAccounts {
   };
 
   export type BeneficiaryDataStruct = {
-    endowId: PromiseOrValue<BigNumberish>;
-    fundId: PromiseOrValue<BigNumberish>;
-    addr: PromiseOrValue<string>;
+    endowId: BigNumberish;
+    fundId: BigNumberish;
+    addr: string;
   };
 
   export type BeneficiaryDataStructOutput = [number, BigNumber, string] & {
@@ -200,7 +193,7 @@ export declare namespace LibAccounts {
 
   export type BeneficiaryStruct = {
     data: LibAccounts.BeneficiaryDataStruct;
-    enumData: PromiseOrValue<BigNumberish>;
+    enumData: BigNumberish;
   };
 
   export type BeneficiaryStructOutput = [
@@ -211,34 +204,34 @@ export declare namespace LibAccounts {
 
 export declare namespace AccountStorage {
   export type EndowmentStruct = {
-    owner: PromiseOrValue<string>;
-    name: PromiseOrValue<string>;
-    sdgs: PromiseOrValue<BigNumberish>[];
-    tier: PromiseOrValue<BigNumberish>;
-    endowType: PromiseOrValue<BigNumberish>;
-    logo: PromiseOrValue<string>;
-    image: PromiseOrValue<string>;
-    maturityTime: PromiseOrValue<BigNumberish>;
+    owner: string;
+    name: string;
+    sdgs: BigNumberish[];
+    tier: BigNumberish;
+    endowType: BigNumberish;
+    logo: string;
+    image: string;
+    maturityTime: BigNumberish;
     rebalance: LocalRegistrarLib.RebalanceParamsStruct;
-    proposalLink: PromiseOrValue<BigNumberish>;
-    multisig: PromiseOrValue<string>;
-    dao: PromiseOrValue<string>;
-    daoToken: PromiseOrValue<string>;
-    donationMatchActive: PromiseOrValue<boolean>;
-    donationMatchContract: PromiseOrValue<string>;
-    allowlistedBeneficiaries: PromiseOrValue<string>[];
-    allowlistedContributors: PromiseOrValue<string>[];
-    maturityAllowlist: PromiseOrValue<string>[];
+    proposalLink: BigNumberish;
+    multisig: string;
+    dao: string;
+    daoToken: string;
+    donationMatchActive: boolean;
+    donationMatchContract: string;
+    allowlistedBeneficiaries: string[];
+    allowlistedContributors: string[];
+    maturityAllowlist: string[];
     earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct;
     withdrawFee: LibAccounts.FeeSettingStruct;
     depositFee: LibAccounts.FeeSettingStruct;
     balanceFee: LibAccounts.FeeSettingStruct;
     settingsController: LibAccounts.SettingsControllerStruct;
-    parent: PromiseOrValue<BigNumberish>;
-    ignoreUserSplits: PromiseOrValue<boolean>;
+    parent: BigNumberish;
+    ignoreUserSplits: boolean;
     splitToLiquid: LibAccounts.SplitDetailsStruct;
-    referralId: PromiseOrValue<BigNumberish>;
-    gasFwd: PromiseOrValue<string>;
+    referralId: BigNumberish;
+    gasFwd: string;
   };
 
   export type EndowmentStructOutput = [
@@ -324,19 +317,15 @@ export interface IAccountsQueryEndowmentsInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "queryEndowmentDetails",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "queryState",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "queryTokenAmount",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>
-    ]
+    values: [BigNumberish, BigNumberish, string]
   ): string;
 
   decodeFunctionResult(
@@ -392,7 +381,7 @@ export interface IAccountsQueryEndowments extends BaseContract {
     >;
 
     queryEndowmentDetails(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<
       [AccountStorage.EndowmentStructOutput] & {
@@ -401,7 +390,7 @@ export interface IAccountsQueryEndowments extends BaseContract {
     >;
 
     queryState(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<
       [AccountMessages.StateResponseStructOutput] & {
@@ -410,9 +399,9 @@ export interface IAccountsQueryEndowments extends BaseContract {
     >;
 
     queryTokenAmount(
-      id: PromiseOrValue<BigNumberish>,
-      accountType: PromiseOrValue<BigNumberish>,
-      tokenaddress: PromiseOrValue<string>,
+      id: BigNumberish,
+      accountType: BigNumberish,
+      tokenaddress: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber] & { tokenAmount: BigNumber }>;
   };
@@ -422,19 +411,19 @@ export interface IAccountsQueryEndowments extends BaseContract {
   ): Promise<AccountMessages.ConfigResponseStructOutput>;
 
   queryEndowmentDetails(
-    id: PromiseOrValue<BigNumberish>,
+    id: BigNumberish,
     overrides?: CallOverrides
   ): Promise<AccountStorage.EndowmentStructOutput>;
 
   queryState(
-    id: PromiseOrValue<BigNumberish>,
+    id: BigNumberish,
     overrides?: CallOverrides
   ): Promise<AccountMessages.StateResponseStructOutput>;
 
   queryTokenAmount(
-    id: PromiseOrValue<BigNumberish>,
-    accountType: PromiseOrValue<BigNumberish>,
-    tokenaddress: PromiseOrValue<string>,
+    id: BigNumberish,
+    accountType: BigNumberish,
+    tokenaddress: string,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
@@ -444,19 +433,19 @@ export interface IAccountsQueryEndowments extends BaseContract {
     ): Promise<AccountMessages.ConfigResponseStructOutput>;
 
     queryEndowmentDetails(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<AccountStorage.EndowmentStructOutput>;
 
     queryState(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<AccountMessages.StateResponseStructOutput>;
 
     queryTokenAmount(
-      id: PromiseOrValue<BigNumberish>,
-      accountType: PromiseOrValue<BigNumberish>,
-      tokenaddress: PromiseOrValue<string>,
+      id: BigNumberish,
+      accountType: BigNumberish,
+      tokenaddress: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
   };
@@ -467,19 +456,16 @@ export interface IAccountsQueryEndowments extends BaseContract {
     queryConfig(overrides?: CallOverrides): Promise<BigNumber>;
 
     queryEndowmentDetails(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    queryState(
-      id: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    queryState(id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
     queryTokenAmount(
-      id: PromiseOrValue<BigNumberish>,
-      accountType: PromiseOrValue<BigNumberish>,
-      tokenaddress: PromiseOrValue<string>,
+      id: BigNumberish,
+      accountType: BigNumberish,
+      tokenaddress: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
   };
@@ -488,19 +474,19 @@ export interface IAccountsQueryEndowments extends BaseContract {
     queryConfig(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     queryEndowmentDetails(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     queryState(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     queryTokenAmount(
-      id: PromiseOrValue<BigNumberish>,
-      accountType: PromiseOrValue<BigNumberish>,
-      tokenaddress: PromiseOrValue<string>,
+      id: BigNumberish,
+      accountType: BigNumberish,
+      tokenaddress: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };

@@ -200,7 +200,6 @@ type Txs = {
 
   // //// INDEX FUND ////
   "index-fund.config": Tx<IndexFundConfigUpdate, Diff[]>;
-  "index-fund.update-owner": Tx<{ newOwner: string }, OwnerMeta>;
   "index-fund.create-fund": Tx<NewFund, NewFund>;
   "index-fund.remove-fund": Tx<ID, ID>;
   "index-fund.remove-member": Tx<ID, ID>;

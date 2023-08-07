@@ -24,19 +24,18 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../../common";
 
 export declare namespace IVault {
   export type VaultActionDataStruct = {
-    destinationChain: PromiseOrValue<string>;
-    strategyId: PromiseOrValue<BytesLike>;
-    selector: PromiseOrValue<BytesLike>;
-    accountIds: PromiseOrValue<BigNumberish>[];
-    token: PromiseOrValue<string>;
-    lockAmt: PromiseOrValue<BigNumberish>;
-    liqAmt: PromiseOrValue<BigNumberish>;
-    status: PromiseOrValue<BigNumberish>;
+    destinationChain: string;
+    strategyId: BytesLike;
+    selector: BytesLike;
+    accountIds: BigNumberish[];
+    token: string;
+    lockAmt: BigNumberish;
+    liqAmt: BigNumberish;
+    status: BigNumberish;
   };
 
   export type VaultActionDataStructOutput = [
@@ -62,9 +61,9 @@ export declare namespace IVault {
 
 export declare namespace LibAccounts {
   export type BeneficiaryDataStruct = {
-    endowId: PromiseOrValue<BigNumberish>;
-    fundId: PromiseOrValue<BigNumberish>;
-    addr: PromiseOrValue<string>;
+    endowId: BigNumberish;
+    fundId: BigNumberish;
+    addr: string;
   };
 
   export type BeneficiaryDataStructOutput = [number, BigNumber, string] & {
@@ -75,7 +74,7 @@ export declare namespace LibAccounts {
 
   export type BeneficiaryStruct = {
     data: LibAccounts.BeneficiaryDataStruct;
-    enumData: PromiseOrValue<BigNumberish>;
+    enumData: BigNumberish;
   };
 
   export type BeneficiaryStructOutput = [
@@ -97,11 +96,11 @@ export interface AccountsUpdateStatusEndowmentsInterface
 
   encodeFunctionData(
     functionFragment: "closeEndowment",
-    values: [PromiseOrValue<BigNumberish>, LibAccounts.BeneficiaryStruct]
+    values: [BigNumberish, LibAccounts.BeneficiaryStruct]
   ): string;
   encodeFunctionData(
     functionFragment: "forceSetStrategyInactive",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>]
+    values: [BigNumberish, BytesLike]
   ): string;
 
   decodeFunctionResult(
@@ -130,9 +129,9 @@ export interface AccountsUpdateStatusEndowmentsInterface
     "EndowmentUpdated(uint256)": EventFragment;
     "EndowmentWithdraw(uint256,address,uint256,uint8,address,uint32)": EventFragment;
     "OwnerUpdated(address)": EventFragment;
-    "RefundNeeded(tuple)": EventFragment;
+    "RefundNeeded((string,bytes4,bytes4,uint32[],address,uint256,uint256,uint8))": EventFragment;
     "TokenSwapped(uint256,uint8,address,uint256,address,uint256)": EventFragment;
-    "UnexpectedTokens(tuple)": EventFragment;
+    "UnexpectedTokens((string,bytes4,bytes4,uint32[],address,uint256,uint256,uint8))": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "AllowanceSpent"): EventFragment;
@@ -409,40 +408,40 @@ export interface AccountsUpdateStatusEndowments extends BaseContract {
 
   functions: {
     closeEndowment(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       beneficiary: LibAccounts.BeneficiaryStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     forceSetStrategyInactive(
-      id: PromiseOrValue<BigNumberish>,
-      strategySelector: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      id: BigNumberish,
+      strategySelector: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   closeEndowment(
-    id: PromiseOrValue<BigNumberish>,
+    id: BigNumberish,
     beneficiary: LibAccounts.BeneficiaryStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   forceSetStrategyInactive(
-    id: PromiseOrValue<BigNumberish>,
-    strategySelector: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    id: BigNumberish,
+    strategySelector: BytesLike,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     closeEndowment(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       beneficiary: LibAccounts.BeneficiaryStruct,
       overrides?: CallOverrides
     ): Promise<void>;
 
     forceSetStrategyInactive(
-      id: PromiseOrValue<BigNumberish>,
-      strategySelector: PromiseOrValue<BytesLike>,
+      id: BigNumberish,
+      strategySelector: BytesLike,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -586,7 +585,9 @@ export interface AccountsUpdateStatusEndowments extends BaseContract {
     "OwnerUpdated(address)"(owner?: null): OwnerUpdatedEventFilter;
     OwnerUpdated(owner?: null): OwnerUpdatedEventFilter;
 
-    "RefundNeeded(tuple)"(arg0?: null): RefundNeededEventFilter;
+    "RefundNeeded((string,bytes4,bytes4,uint32[],address,uint256,uint256,uint8))"(
+      arg0?: null
+    ): RefundNeededEventFilter;
     RefundNeeded(arg0?: null): RefundNeededEventFilter;
 
     "TokenSwapped(uint256,uint8,address,uint256,address,uint256)"(
@@ -606,35 +607,37 @@ export interface AccountsUpdateStatusEndowments extends BaseContract {
       amountOut?: null
     ): TokenSwappedEventFilter;
 
-    "UnexpectedTokens(tuple)"(arg0?: null): UnexpectedTokensEventFilter;
+    "UnexpectedTokens((string,bytes4,bytes4,uint32[],address,uint256,uint256,uint8))"(
+      arg0?: null
+    ): UnexpectedTokensEventFilter;
     UnexpectedTokens(arg0?: null): UnexpectedTokensEventFilter;
   };
 
   estimateGas: {
     closeEndowment(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       beneficiary: LibAccounts.BeneficiaryStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     forceSetStrategyInactive(
-      id: PromiseOrValue<BigNumberish>,
-      strategySelector: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      id: BigNumberish,
+      strategySelector: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     closeEndowment(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       beneficiary: LibAccounts.BeneficiaryStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     forceSetStrategyInactive(
-      id: PromiseOrValue<BigNumberish>,
-      strategySelector: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      id: BigNumberish,
+      strategySelector: BytesLike,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

@@ -25,19 +25,18 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../../common";
 
 export declare namespace IVault {
   export type VaultActionDataStruct = {
-    destinationChain: PromiseOrValue<string>;
-    strategyId: PromiseOrValue<BytesLike>;
-    selector: PromiseOrValue<BytesLike>;
-    accountIds: PromiseOrValue<BigNumberish>[];
-    token: PromiseOrValue<string>;
-    lockAmt: PromiseOrValue<BigNumberish>;
-    liqAmt: PromiseOrValue<BigNumberish>;
-    status: PromiseOrValue<BigNumberish>;
+    destinationChain: string;
+    strategyId: BytesLike;
+    selector: BytesLike;
+    accountIds: BigNumberish[];
+    token: string;
+    lockAmt: BigNumberish;
+    liqAmt: BigNumberish;
+    status: BigNumberish;
   };
 
   export type VaultActionDataStructOutput = [
@@ -63,9 +62,9 @@ export declare namespace IVault {
 
 export declare namespace LibAccounts {
   export type BeneficiaryDataStruct = {
-    endowId: PromiseOrValue<BigNumberish>;
-    fundId: PromiseOrValue<BigNumberish>;
-    addr: PromiseOrValue<string>;
+    endowId: BigNumberish;
+    fundId: BigNumberish;
+    addr: string;
   };
 
   export type BeneficiaryDataStructOutput = [number, BigNumber, string] & {
@@ -76,7 +75,7 @@ export declare namespace LibAccounts {
 
   export type BeneficiaryStruct = {
     data: LibAccounts.BeneficiaryDataStruct;
-    enumData: PromiseOrValue<BigNumberish>;
+    enumData: BigNumberish;
   };
 
   export type BeneficiaryStructOutput = [
@@ -84,20 +83,14 @@ export declare namespace LibAccounts {
     number
   ] & { data: LibAccounts.BeneficiaryDataStructOutput; enumData: number };
 
-  export type FeeSettingStruct = {
-    payoutAddress: PromiseOrValue<string>;
-    bps: PromiseOrValue<BigNumberish>;
-  };
+  export type FeeSettingStruct = { payoutAddress: string; bps: BigNumberish };
 
   export type FeeSettingStructOutput = [string, BigNumber] & {
     payoutAddress: string;
     bps: BigNumber;
   };
 
-  export type DelegateStruct = {
-    addr: PromiseOrValue<string>;
-    expires: PromiseOrValue<BigNumberish>;
-  };
+  export type DelegateStruct = { addr: string; expires: BigNumberish };
 
   export type DelegateStructOutput = [string, BigNumber] & {
     addr: string;
@@ -105,7 +98,7 @@ export declare namespace LibAccounts {
   };
 
   export type SettingsPermissionStruct = {
-    locked: PromiseOrValue<boolean>;
+    locked: boolean;
     delegate: LibAccounts.DelegateStruct;
   };
 
@@ -173,9 +166,9 @@ export declare namespace LibAccounts {
   };
 
   export type SplitDetailsStruct = {
-    max: PromiseOrValue<BigNumberish>;
-    min: PromiseOrValue<BigNumberish>;
-    defaultSplit: PromiseOrValue<BigNumberish>;
+    max: BigNumberish;
+    min: BigNumberish;
+    defaultSplit: BigNumberish;
   };
 
   export type SplitDetailsStructOutput = [BigNumber, BigNumber, BigNumber] & {
@@ -187,10 +180,10 @@ export declare namespace LibAccounts {
 
 export declare namespace SubDaoLib {
   export type VeTypeDataStruct = {
-    value: PromiseOrValue<BigNumberish>;
-    scale: PromiseOrValue<BigNumberish>;
-    slope: PromiseOrValue<BigNumberish>;
-    power: PromiseOrValue<BigNumberish>;
+    value: BigNumberish;
+    scale: BigNumberish;
+    slope: BigNumberish;
+    power: BigNumberish;
   };
 
   export type VeTypeDataStructOutput = [
@@ -206,7 +199,7 @@ export declare namespace SubDaoLib {
   };
 
   export type VeTypeStruct = {
-    ve_type: PromiseOrValue<BigNumberish>;
+    ve_type: BigNumberish;
     data: SubDaoLib.VeTypeDataStruct;
   };
 
@@ -216,17 +209,17 @@ export declare namespace SubDaoLib {
   ] & { ve_type: number; data: SubDaoLib.VeTypeDataStructOutput };
 
   export type DaoTokenDataStruct = {
-    existingData: PromiseOrValue<string>;
-    newInitialSupply: PromiseOrValue<BigNumberish>;
-    newName: PromiseOrValue<string>;
-    newSymbol: PromiseOrValue<string>;
+    existingData: string;
+    newInitialSupply: BigNumberish;
+    newName: string;
+    newSymbol: string;
     veBondingType: SubDaoLib.VeTypeStruct;
-    veBondingName: PromiseOrValue<string>;
-    veBondingSymbol: PromiseOrValue<string>;
-    veBondingDecimals: PromiseOrValue<BigNumberish>;
-    veBondingReserveDenom: PromiseOrValue<string>;
-    veBondingReserveDecimals: PromiseOrValue<BigNumberish>;
-    veBondingPeriod: PromiseOrValue<BigNumberish>;
+    veBondingName: string;
+    veBondingSymbol: string;
+    veBondingDecimals: BigNumberish;
+    veBondingReserveDenom: string;
+    veBondingReserveDecimals: BigNumberish;
+    veBondingPeriod: BigNumberish;
   };
 
   export type DaoTokenDataStructOutput = [
@@ -256,7 +249,7 @@ export declare namespace SubDaoLib {
   };
 
   export type DaoTokenStruct = {
-    token: PromiseOrValue<BigNumberish>;
+    token: BigNumberish;
     data: SubDaoLib.DaoTokenDataStruct;
   };
 
@@ -266,13 +259,13 @@ export declare namespace SubDaoLib {
   ] & { token: number; data: SubDaoLib.DaoTokenDataStructOutput };
 
   export type DaoSetupStruct = {
-    quorum: PromiseOrValue<BigNumberish>;
-    threshold: PromiseOrValue<BigNumberish>;
-    votingPeriod: PromiseOrValue<BigNumberish>;
-    timelockPeriod: PromiseOrValue<BigNumberish>;
-    expirationPeriod: PromiseOrValue<BigNumberish>;
-    proposalDeposit: PromiseOrValue<BigNumberish>;
-    snapshotPeriod: PromiseOrValue<BigNumberish>;
+    quorum: BigNumberish;
+    threshold: BigNumberish;
+    votingPeriod: BigNumberish;
+    timelockPeriod: BigNumberish;
+    expirationPeriod: BigNumberish;
+    proposalDeposit: BigNumberish;
+    snapshotPeriod: BigNumberish;
     token: SubDaoLib.DaoTokenStruct;
   };
 
@@ -299,19 +292,19 @@ export declare namespace SubDaoLib {
 
 export declare namespace SubDaoMessages {
   export type InstantiateMsgStruct = {
-    id: PromiseOrValue<BigNumberish>;
-    owner: PromiseOrValue<string>;
-    quorum: PromiseOrValue<BigNumberish>;
-    threshold: PromiseOrValue<BigNumberish>;
-    votingPeriod: PromiseOrValue<BigNumberish>;
-    timelockPeriod: PromiseOrValue<BigNumberish>;
-    expirationPeriod: PromiseOrValue<BigNumberish>;
-    proposalDeposit: PromiseOrValue<BigNumberish>;
-    snapshotPeriod: PromiseOrValue<BigNumberish>;
+    id: BigNumberish;
+    owner: string;
+    quorum: BigNumberish;
+    threshold: BigNumberish;
+    votingPeriod: BigNumberish;
+    timelockPeriod: BigNumberish;
+    expirationPeriod: BigNumberish;
+    proposalDeposit: BigNumberish;
+    snapshotPeriod: BigNumberish;
     token: SubDaoLib.DaoTokenStruct;
-    endowType: PromiseOrValue<BigNumberish>;
-    endowOwner: PromiseOrValue<string>;
-    registrarContract: PromiseOrValue<string>;
+    endowType: BigNumberish;
+    endowOwner: string;
+    registrarContract: string;
   };
 
   export type InstantiateMsgStructOutput = [
@@ -347,30 +340,30 @@ export declare namespace SubDaoMessages {
 
 export declare namespace AccountMessages {
   export type CreateEndowmentRequestStruct = {
-    withdrawBeforeMaturity: PromiseOrValue<boolean>;
-    maturityTime: PromiseOrValue<BigNumberish>;
-    name: PromiseOrValue<string>;
-    sdgs: PromiseOrValue<BigNumberish>[];
-    tier: PromiseOrValue<BigNumberish>;
-    endowType: PromiseOrValue<BigNumberish>;
-    logo: PromiseOrValue<string>;
-    image: PromiseOrValue<string>;
-    members: PromiseOrValue<string>[];
-    threshold: PromiseOrValue<BigNumberish>;
-    duration: PromiseOrValue<BigNumberish>;
-    allowlistedBeneficiaries: PromiseOrValue<string>[];
-    allowlistedContributors: PromiseOrValue<string>[];
+    withdrawBeforeMaturity: boolean;
+    maturityTime: BigNumberish;
+    name: string;
+    sdgs: BigNumberish[];
+    tier: BigNumberish;
+    endowType: BigNumberish;
+    logo: string;
+    image: string;
+    members: string[];
+    threshold: BigNumberish;
+    duration: BigNumberish;
+    allowlistedBeneficiaries: string[];
+    allowlistedContributors: string[];
     earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct;
     withdrawFee: LibAccounts.FeeSettingStruct;
     depositFee: LibAccounts.FeeSettingStruct;
     balanceFee: LibAccounts.FeeSettingStruct;
-    proposalLink: PromiseOrValue<BigNumberish>;
+    proposalLink: BigNumberish;
     settingsController: LibAccounts.SettingsControllerStruct;
-    parent: PromiseOrValue<BigNumberish>;
-    maturityAllowlist: PromiseOrValue<string>[];
-    ignoreUserSplits: PromiseOrValue<boolean>;
+    parent: BigNumberish;
+    maturityAllowlist: string[];
+    ignoreUserSplits: boolean;
     splitToLiquid: LibAccounts.SplitDetailsStruct;
-    referralId: PromiseOrValue<BigNumberish>;
+    referralId: BigNumberish;
   };
 
   export type CreateEndowmentRequestStructOutput = [
@@ -426,10 +419,10 @@ export declare namespace AccountMessages {
   };
 
   export type DepositRequestStruct = {
-    id: PromiseOrValue<BigNumberish>;
-    lockedPercentage: PromiseOrValue<BigNumberish>;
-    liquidPercentage: PromiseOrValue<BigNumberish>;
-    donationMatch: PromiseOrValue<string>;
+    id: BigNumberish;
+    lockedPercentage: BigNumberish;
+    liquidPercentage: BigNumberish;
+    donationMatch: string;
   };
 
   export type DepositRequestStructOutput = [
@@ -445,11 +438,11 @@ export declare namespace AccountMessages {
   };
 
   export type ConfigResponseStruct = {
-    owner: PromiseOrValue<string>;
-    version: PromiseOrValue<string>;
-    networkName: PromiseOrValue<string>;
-    registrarContract: PromiseOrValue<string>;
-    nextAccountId: PromiseOrValue<BigNumberish>;
+    owner: string;
+    version: string;
+    networkName: string;
+    registrarContract: string;
+    nextAccountId: BigNumberish;
   };
 
   export type ConfigResponseStructOutput = [
@@ -467,7 +460,7 @@ export declare namespace AccountMessages {
   };
 
   export type StateResponseStruct = {
-    closingEndowment: PromiseOrValue<boolean>;
+    closingEndowment: boolean;
     closingBeneficiary: LibAccounts.BeneficiaryStruct;
   };
 
@@ -480,9 +473,9 @@ export declare namespace AccountMessages {
   };
 
   export type DonationMatchDataStruct = {
-    reserveToken: PromiseOrValue<string>;
-    uniswapFactory: PromiseOrValue<string>;
-    poolFee: PromiseOrValue<BigNumberish>;
+    reserveToken: string;
+    uniswapFactory: string;
+    poolFee: BigNumberish;
   };
 
   export type DonationMatchDataStructOutput = [string, string, number] & {
@@ -492,7 +485,7 @@ export declare namespace AccountMessages {
   };
 
   export type DonationMatchStruct = {
-    enumData: PromiseOrValue<BigNumberish>;
+    enumData: BigNumberish;
     data: AccountMessages.DonationMatchDataStruct;
   };
 
@@ -502,11 +495,11 @@ export declare namespace AccountMessages {
   ] & { enumData: number; data: AccountMessages.DonationMatchDataStructOutput };
 
   export type InvestRequestStruct = {
-    strategy: PromiseOrValue<BytesLike>;
-    token: PromiseOrValue<string>;
-    lockAmt: PromiseOrValue<BigNumberish>;
-    liquidAmt: PromiseOrValue<BigNumberish>;
-    gasFee: PromiseOrValue<BigNumberish>;
+    strategy: BytesLike;
+    token: string;
+    lockAmt: BigNumberish;
+    liquidAmt: BigNumberish;
+    gasFee: BigNumberish;
   };
 
   export type InvestRequestStructOutput = [
@@ -524,11 +517,11 @@ export declare namespace AccountMessages {
   };
 
   export type RedeemRequestStruct = {
-    strategy: PromiseOrValue<BytesLike>;
-    token: PromiseOrValue<string>;
-    lockAmt: PromiseOrValue<BigNumberish>;
-    liquidAmt: PromiseOrValue<BigNumberish>;
-    gasFee: PromiseOrValue<BigNumberish>;
+    strategy: BytesLike;
+    token: string;
+    lockAmt: BigNumberish;
+    liquidAmt: BigNumberish;
+    gasFee: BigNumberish;
   };
 
   export type RedeemRequestStructOutput = [
@@ -546,11 +539,11 @@ export declare namespace AccountMessages {
   };
 
   export type RedeemAllRequestStruct = {
-    strategy: PromiseOrValue<BytesLike>;
-    token: PromiseOrValue<string>;
-    redeemLocked: PromiseOrValue<boolean>;
-    redeemLiquid: PromiseOrValue<boolean>;
-    gasFee: PromiseOrValue<BigNumberish>;
+    strategy: BytesLike;
+    token: string;
+    redeemLocked: boolean;
+    redeemLiquid: boolean;
+    gasFee: BigNumberish;
   };
 
   export type RedeemAllRequestStructOutput = [
@@ -568,7 +561,7 @@ export declare namespace AccountMessages {
   };
 
   export type UpdateEndowmentControllerRequestStruct = {
-    id: PromiseOrValue<BigNumberish>;
+    id: BigNumberish;
     settingsController: LibAccounts.SettingsControllerStruct;
   };
 
@@ -581,12 +574,12 @@ export declare namespace AccountMessages {
   };
 
   export type UpdateEndowmentDetailsRequestStruct = {
-    id: PromiseOrValue<BigNumberish>;
-    owner: PromiseOrValue<string>;
-    name: PromiseOrValue<string>;
-    sdgs: PromiseOrValue<BigNumberish>[];
-    logo: PromiseOrValue<string>;
-    image: PromiseOrValue<string>;
+    id: BigNumberish;
+    owner: string;
+    name: string;
+    sdgs: BigNumberish[];
+    logo: string;
+    image: string;
     rebalance: LocalRegistrarLib.RebalanceParamsStruct;
   };
 
@@ -609,15 +602,15 @@ export declare namespace AccountMessages {
   };
 
   export type UpdateEndowmentSettingsRequestStruct = {
-    id: PromiseOrValue<BigNumberish>;
-    donationMatchActive: PromiseOrValue<boolean>;
-    maturityTime: PromiseOrValue<BigNumberish>;
-    allowlistedBeneficiaries: PromiseOrValue<string>[];
-    allowlistedContributors: PromiseOrValue<string>[];
-    maturity_allowlist_add: PromiseOrValue<string>[];
-    maturity_allowlist_remove: PromiseOrValue<string>[];
+    id: BigNumberish;
+    donationMatchActive: boolean;
+    maturityTime: BigNumberish;
+    allowlistedBeneficiaries: string[];
+    allowlistedContributors: string[];
+    maturity_allowlist_add: string[];
+    maturity_allowlist_remove: string[];
     splitToLiquid: LibAccounts.SplitDetailsStruct;
-    ignoreUserSplits: PromiseOrValue<boolean>;
+    ignoreUserSplits: boolean;
   };
 
   export type UpdateEndowmentSettingsRequestStructOutput = [
@@ -643,7 +636,7 @@ export declare namespace AccountMessages {
   };
 
   export type UpdateFeeSettingRequestStruct = {
-    id: PromiseOrValue<BigNumberish>;
+    id: BigNumberish;
     earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct;
     depositFee: LibAccounts.FeeSettingStruct;
     withdrawFee: LibAccounts.FeeSettingStruct;
@@ -667,12 +660,12 @@ export declare namespace AccountMessages {
 
 export declare namespace LocalRegistrarLib {
   export type RebalanceParamsStruct = {
-    rebalanceLiquidProfits: PromiseOrValue<boolean>;
-    lockedRebalanceToLiquid: PromiseOrValue<BigNumberish>;
-    interestDistribution: PromiseOrValue<BigNumberish>;
-    lockedPrincipleToLiquid: PromiseOrValue<boolean>;
-    principleDistribution: PromiseOrValue<BigNumberish>;
-    basis: PromiseOrValue<BigNumberish>;
+    rebalanceLiquidProfits: boolean;
+    lockedRebalanceToLiquid: BigNumberish;
+    interestDistribution: BigNumberish;
+    lockedPrincipleToLiquid: boolean;
+    principleDistribution: BigNumberish;
+    basis: BigNumberish;
   };
 
   export type RebalanceParamsStructOutput = [
@@ -694,34 +687,34 @@ export declare namespace LocalRegistrarLib {
 
 export declare namespace AccountStorage {
   export type EndowmentStruct = {
-    owner: PromiseOrValue<string>;
-    name: PromiseOrValue<string>;
-    sdgs: PromiseOrValue<BigNumberish>[];
-    tier: PromiseOrValue<BigNumberish>;
-    endowType: PromiseOrValue<BigNumberish>;
-    logo: PromiseOrValue<string>;
-    image: PromiseOrValue<string>;
-    maturityTime: PromiseOrValue<BigNumberish>;
+    owner: string;
+    name: string;
+    sdgs: BigNumberish[];
+    tier: BigNumberish;
+    endowType: BigNumberish;
+    logo: string;
+    image: string;
+    maturityTime: BigNumberish;
     rebalance: LocalRegistrarLib.RebalanceParamsStruct;
-    proposalLink: PromiseOrValue<BigNumberish>;
-    multisig: PromiseOrValue<string>;
-    dao: PromiseOrValue<string>;
-    daoToken: PromiseOrValue<string>;
-    donationMatchActive: PromiseOrValue<boolean>;
-    donationMatchContract: PromiseOrValue<string>;
-    allowlistedBeneficiaries: PromiseOrValue<string>[];
-    allowlistedContributors: PromiseOrValue<string>[];
-    maturityAllowlist: PromiseOrValue<string>[];
+    proposalLink: BigNumberish;
+    multisig: string;
+    dao: string;
+    daoToken: string;
+    donationMatchActive: boolean;
+    donationMatchContract: string;
+    allowlistedBeneficiaries: string[];
+    allowlistedContributors: string[];
+    maturityAllowlist: string[];
     earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct;
     withdrawFee: LibAccounts.FeeSettingStruct;
     depositFee: LibAccounts.FeeSettingStruct;
     balanceFee: LibAccounts.FeeSettingStruct;
     settingsController: LibAccounts.SettingsControllerStruct;
-    parent: PromiseOrValue<BigNumberish>;
-    ignoreUserSplits: PromiseOrValue<boolean>;
+    parent: BigNumberish;
+    ignoreUserSplits: boolean;
     splitToLiquid: LibAccounts.SplitDetailsStruct;
-    referralId: PromiseOrValue<BigNumberish>;
-    gasFwd: PromiseOrValue<string>;
+    referralId: BigNumberish;
+    gasFwd: string;
   };
 
   export type EndowmentStructOutput = [
@@ -786,10 +779,7 @@ export declare namespace AccountStorage {
 }
 
 export declare namespace IAccountsDepositWithdrawEndowments {
-  export type TokenInfoStruct = {
-    addr: PromiseOrValue<string>;
-    amnt: PromiseOrValue<BigNumberish>;
-  };
+  export type TokenInfoStruct = { addr: string; amnt: BigNumberish };
 
   export type TokenInfoStructOutput = [string, BigNumber] & {
     addr: string;
@@ -799,6 +789,7 @@ export declare namespace IAccountsDepositWithdrawEndowments {
 
 export interface IAccountsInterface extends utils.Interface {
   functions: {
+    "addGas(uint32,uint8,address,uint256)": FunctionFragment;
     "closeEndowment(uint32,((uint32,uint256,address),uint8))": FunctionFragment;
     "createDaoContract((uint32,address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,(uint8,(address,uint256,string,string,(uint8,(uint128,uint256,uint128,uint128)),string,string,uint256,address,uint256,uint256)),uint8,address,address))": FunctionFragment;
     "createEndowment((bool,uint256,string,uint256[],uint8,uint8,string,string,address[],uint256,uint256,address[],address[],(address,uint256),(address,uint256),(address,uint256),(address,uint256),uint256,((bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256))),uint32,address[],bool,(uint256,uint256,uint256),uint256))": FunctionFragment;
@@ -818,6 +809,8 @@ export interface IAccountsInterface extends utils.Interface {
     "strategyRedeem(uint32,(bytes4,string,uint256,uint256,uint256))": FunctionFragment;
     "strategyRedeemAll(uint32,(bytes4,string,bool,bool,uint256))": FunctionFragment;
     "swapToken(uint32,uint8,address,uint256,address,uint256)": FunctionFragment;
+    "sweepForClosure(uint32,address)": FunctionFragment;
+    "sweepForEndowment(uint32,uint8,address)": FunctionFragment;
     "updateAcceptedToken(uint32,address,address,bool)": FunctionFragment;
     "updateConfig(address)": FunctionFragment;
     "updateDelegate(uint32,uint8,uint8,address,uint256)": FunctionFragment;
@@ -832,6 +825,7 @@ export interface IAccountsInterface extends utils.Interface {
 
   getFunction(
     nameOrSignatureOrTopic:
+      | "addGas"
       | "closeEndowment"
       | "createDaoContract"
       | "createEndowment"
@@ -851,6 +845,8 @@ export interface IAccountsInterface extends utils.Interface {
       | "strategyRedeem"
       | "strategyRedeemAll"
       | "swapToken"
+      | "sweepForClosure"
+      | "sweepForEndowment"
       | "updateAcceptedToken"
       | "updateConfig"
       | "updateDelegate"
@@ -864,8 +860,12 @@ export interface IAccountsInterface extends utils.Interface {
   ): FunctionFragment;
 
   encodeFunctionData(
+    functionFragment: "addGas",
+    values: [BigNumberish, BigNumberish, string, BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "closeEndowment",
-    values: [PromiseOrValue<BigNumberish>, LibAccounts.BeneficiaryStruct]
+    values: [BigNumberish, LibAccounts.BeneficiaryStruct]
   ): string;
   encodeFunctionData(
     functionFragment: "createDaoContract",
@@ -877,19 +877,11 @@ export interface IAccountsInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "depositDonationMatchERC20",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [BigNumberish, string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "depositERC20",
-    values: [
-      AccountMessages.DepositRequestStruct,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [AccountMessages.DepositRequestStruct, string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "depositMatic",
@@ -897,20 +889,11 @@ export interface IAccountsInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "manageAllowances",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [BigNumberish, string, string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "queryAllowance",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>
-    ]
+    values: [BigNumberish, string, string]
   ): string;
   encodeFunctionData(
     functionFragment: "queryConfig",
@@ -918,85 +901,70 @@ export interface IAccountsInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "queryEndowmentDetails",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "queryState",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "queryTokenAmount",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>
-    ]
+    values: [BigNumberish, BigNumberish, string]
   ): string;
   encodeFunctionData(
     functionFragment: "setupDao",
-    values: [PromiseOrValue<BigNumberish>, SubDaoLib.DaoSetupStruct]
+    values: [BigNumberish, SubDaoLib.DaoSetupStruct]
   ): string;
   encodeFunctionData(
     functionFragment: "setupDonationMatch",
-    values: [PromiseOrValue<BigNumberish>, AccountMessages.DonationMatchStruct]
+    values: [BigNumberish, AccountMessages.DonationMatchStruct]
   ): string;
   encodeFunctionData(
     functionFragment: "spendAllowance",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>
-    ]
+    values: [BigNumberish, string, BigNumberish, string]
   ): string;
   encodeFunctionData(
     functionFragment: "strategyInvest",
-    values: [PromiseOrValue<BigNumberish>, AccountMessages.InvestRequestStruct]
+    values: [BigNumberish, AccountMessages.InvestRequestStruct]
   ): string;
   encodeFunctionData(
     functionFragment: "strategyRedeem",
-    values: [PromiseOrValue<BigNumberish>, AccountMessages.RedeemRequestStruct]
+    values: [BigNumberish, AccountMessages.RedeemRequestStruct]
   ): string;
   encodeFunctionData(
     functionFragment: "strategyRedeemAll",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      AccountMessages.RedeemAllRequestStruct
-    ]
+    values: [BigNumberish, AccountMessages.RedeemAllRequestStruct]
   ): string;
   encodeFunctionData(
     functionFragment: "swapToken",
     values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
+      BigNumberish,
+      BigNumberish,
+      string,
+      BigNumberish,
+      string,
+      BigNumberish
     ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "sweepForClosure",
+    values: [BigNumberish, string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "sweepForEndowment",
+    values: [BigNumberish, BigNumberish, string]
   ): string;
   encodeFunctionData(
     functionFragment: "updateAcceptedToken",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<boolean>
-    ]
+    values: [BigNumberish, string, string, boolean]
   ): string;
   encodeFunctionData(
     functionFragment: "updateConfig",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "updateDelegate",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [BigNumberish, BigNumberish, BigNumberish, string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "updateEndowmentController",
@@ -1014,29 +982,23 @@ export interface IAccountsInterface extends utils.Interface {
     functionFragment: "updateFeeSettings",
     values: [AccountMessages.UpdateFeeSettingRequestStruct]
   ): string;
-  encodeFunctionData(
-    functionFragment: "updateOwner",
-    values: [PromiseOrValue<string>]
-  ): string;
+  encodeFunctionData(functionFragment: "updateOwner", values: [string]): string;
   encodeFunctionData(
     functionFragment: "withdraw",
     values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
+      BigNumberish,
+      BigNumberish,
+      string,
+      BigNumberish,
       IAccountsDepositWithdrawEndowments.TokenInfoStruct[]
     ]
   ): string;
   encodeFunctionData(
     functionFragment: "withdrawDonationMatchERC20",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [BigNumberish, string, BigNumberish]
   ): string;
 
+  decodeFunctionResult(functionFragment: "addGas", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "closeEndowment",
     data: BytesLike
@@ -1105,6 +1067,14 @@ export interface IAccountsInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "swapToken", data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: "sweepForClosure",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "sweepForEndowment",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "updateAcceptedToken",
     data: BytesLike
   ): Result;
@@ -1159,9 +1129,9 @@ export interface IAccountsInterface extends utils.Interface {
     "EndowmentUpdated(uint256)": EventFragment;
     "EndowmentWithdraw(uint256,address,uint256,uint8,address,uint32)": EventFragment;
     "OwnerUpdated(address)": EventFragment;
-    "RefundNeeded(tuple)": EventFragment;
+    "RefundNeeded((string,bytes4,bytes4,uint32[],address,uint256,uint256,uint8))": EventFragment;
     "TokenSwapped(uint256,uint8,address,uint256,address,uint256)": EventFragment;
-    "UnexpectedTokens(tuple)": EventFragment;
+    "UnexpectedTokens((string,bytes4,bytes4,uint32[],address,uint256,uint256,uint8))": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "AllowanceSpent"): EventFragment;
@@ -1437,53 +1407,61 @@ export interface IAccounts extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    addGas(
+      id: BigNumberish,
+      vault: BigNumberish,
+      token: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
+    ): Promise<ContractTransaction>;
+
     closeEndowment(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       beneficiary: LibAccounts.BeneficiaryStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     createDaoContract(
       createdaomessage: SubDaoMessages.InstantiateMsgStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     createEndowment(
       details: AccountMessages.CreateEndowmentRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     depositDonationMatchERC20(
-      id: PromiseOrValue<BigNumberish>,
-      token: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      id: BigNumberish,
+      token: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     depositERC20(
       details: AccountMessages.DepositRequestStruct,
-      tokenAddress: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      tokenAddress: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     depositMatic(
       details: AccountMessages.DepositRequestStruct,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     manageAllowances(
-      endowId: PromiseOrValue<BigNumberish>,
-      spender: PromiseOrValue<string>,
-      token: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      endowId: BigNumberish,
+      spender: string,
+      token: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     queryAllowance(
-      endowId: PromiseOrValue<BigNumberish>,
-      spender: PromiseOrValue<string>,
-      token: PromiseOrValue<string>,
+      endowId: BigNumberish,
+      spender: string,
+      token: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
@@ -1496,7 +1474,7 @@ export interface IAccounts extends BaseContract {
     >;
 
     queryEndowmentDetails(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<
       [AccountStorage.EndowmentStructOutput] & {
@@ -1505,7 +1483,7 @@ export interface IAccounts extends BaseContract {
     >;
 
     queryState(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<
       [AccountMessages.StateResponseStructOutput] & {
@@ -1514,171 +1492,192 @@ export interface IAccounts extends BaseContract {
     >;
 
     queryTokenAmount(
-      id: PromiseOrValue<BigNumberish>,
-      accountType: PromiseOrValue<BigNumberish>,
-      tokenaddress: PromiseOrValue<string>,
+      id: BigNumberish,
+      accountType: BigNumberish,
+      tokenaddress: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber] & { tokenAmount: BigNumber }>;
 
     setupDao(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       details: SubDaoLib.DaoSetupStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     setupDonationMatch(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       details: AccountMessages.DonationMatchStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     spendAllowance(
-      endowId: PromiseOrValue<BigNumberish>,
-      token: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      recipient: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      endowId: BigNumberish,
+      token: string,
+      amount: BigNumberish,
+      recipient: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     strategyInvest(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       investRequest: AccountMessages.InvestRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     strategyRedeem(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       redeemRequest: AccountMessages.RedeemRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     strategyRedeemAll(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       redeemAllRequest: AccountMessages.RedeemAllRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     swapToken(
-      id: PromiseOrValue<BigNumberish>,
-      accountType: PromiseOrValue<BigNumberish>,
-      tokenIn: PromiseOrValue<string>,
-      amountIn: PromiseOrValue<BigNumberish>,
-      tokenOut: PromiseOrValue<string>,
-      slippage: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      id: BigNumberish,
+      accountType: BigNumberish,
+      tokenIn: string,
+      amountIn: BigNumberish,
+      tokenOut: string,
+      slippage: BigNumberish,
+      overrides?: Overrides & { from?: string }
+    ): Promise<ContractTransaction>;
+
+    sweepForClosure(
+      id: BigNumberish,
+      token: string,
+      overrides?: Overrides & { from?: string }
+    ): Promise<ContractTransaction>;
+
+    sweepForEndowment(
+      id: BigNumberish,
+      vault: BigNumberish,
+      token: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     updateAcceptedToken(
-      endowId: PromiseOrValue<BigNumberish>,
-      tokenAddr: PromiseOrValue<string>,
-      priceFeedAddr: PromiseOrValue<string>,
-      tokenStatus: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      endowId: BigNumberish,
+      tokenAddr: string,
+      priceFeedAddr: string,
+      tokenStatus: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     updateConfig(
-      newRegistrar: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newRegistrar: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     updateDelegate(
-      id: PromiseOrValue<BigNumberish>,
-      setting: PromiseOrValue<BigNumberish>,
-      action: PromiseOrValue<BigNumberish>,
-      delegateAddress: PromiseOrValue<string>,
-      delegateExpiry: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      id: BigNumberish,
+      setting: BigNumberish,
+      action: BigNumberish,
+      delegateAddress: string,
+      delegateExpiry: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     updateEndowmentController(
       details: AccountMessages.UpdateEndowmentControllerRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     updateEndowmentDetails(
       details: AccountMessages.UpdateEndowmentDetailsRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     updateEndowmentSettings(
       details: AccountMessages.UpdateEndowmentSettingsRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     updateFeeSettings(
       details: AccountMessages.UpdateFeeSettingRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     updateOwner(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newOwner: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     withdraw(
-      id: PromiseOrValue<BigNumberish>,
-      acctType: PromiseOrValue<BigNumberish>,
-      beneficiaryAddress: PromiseOrValue<string>,
-      beneficiaryEndowId: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
+      acctType: BigNumberish,
+      beneficiaryAddress: string,
+      beneficiaryEndowId: BigNumberish,
       tokens: IAccountsDepositWithdrawEndowments.TokenInfoStruct[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     withdrawDonationMatchERC20(
-      id: PromiseOrValue<BigNumberish>,
-      recipient: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      id: BigNumberish,
+      recipient: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
+  addGas(
+    id: BigNumberish,
+    vault: BigNumberish,
+    token: string,
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string }
+  ): Promise<ContractTransaction>;
+
   closeEndowment(
-    id: PromiseOrValue<BigNumberish>,
+    id: BigNumberish,
     beneficiary: LibAccounts.BeneficiaryStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   createDaoContract(
     createdaomessage: SubDaoMessages.InstantiateMsgStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   createEndowment(
     details: AccountMessages.CreateEndowmentRequestStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   depositDonationMatchERC20(
-    id: PromiseOrValue<BigNumberish>,
-    token: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    id: BigNumberish,
+    token: string,
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   depositERC20(
     details: AccountMessages.DepositRequestStruct,
-    tokenAddress: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    tokenAddress: string,
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   depositMatic(
     details: AccountMessages.DepositRequestStruct,
-    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    overrides?: PayableOverrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   manageAllowances(
-    endowId: PromiseOrValue<BigNumberish>,
-    spender: PromiseOrValue<string>,
-    token: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    endowId: BigNumberish,
+    spender: string,
+    token: string,
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   queryAllowance(
-    endowId: PromiseOrValue<BigNumberish>,
-    spender: PromiseOrValue<string>,
-    token: PromiseOrValue<string>,
+    endowId: BigNumberish,
+    spender: string,
+    token: string,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
@@ -1687,136 +1686,157 @@ export interface IAccounts extends BaseContract {
   ): Promise<AccountMessages.ConfigResponseStructOutput>;
 
   queryEndowmentDetails(
-    id: PromiseOrValue<BigNumberish>,
+    id: BigNumberish,
     overrides?: CallOverrides
   ): Promise<AccountStorage.EndowmentStructOutput>;
 
   queryState(
-    id: PromiseOrValue<BigNumberish>,
+    id: BigNumberish,
     overrides?: CallOverrides
   ): Promise<AccountMessages.StateResponseStructOutput>;
 
   queryTokenAmount(
-    id: PromiseOrValue<BigNumberish>,
-    accountType: PromiseOrValue<BigNumberish>,
-    tokenaddress: PromiseOrValue<string>,
+    id: BigNumberish,
+    accountType: BigNumberish,
+    tokenaddress: string,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   setupDao(
-    id: PromiseOrValue<BigNumberish>,
+    id: BigNumberish,
     details: SubDaoLib.DaoSetupStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   setupDonationMatch(
-    id: PromiseOrValue<BigNumberish>,
+    id: BigNumberish,
     details: AccountMessages.DonationMatchStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   spendAllowance(
-    endowId: PromiseOrValue<BigNumberish>,
-    token: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    recipient: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    endowId: BigNumberish,
+    token: string,
+    amount: BigNumberish,
+    recipient: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   strategyInvest(
-    id: PromiseOrValue<BigNumberish>,
+    id: BigNumberish,
     investRequest: AccountMessages.InvestRequestStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   strategyRedeem(
-    id: PromiseOrValue<BigNumberish>,
+    id: BigNumberish,
     redeemRequest: AccountMessages.RedeemRequestStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   strategyRedeemAll(
-    id: PromiseOrValue<BigNumberish>,
+    id: BigNumberish,
     redeemAllRequest: AccountMessages.RedeemAllRequestStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   swapToken(
-    id: PromiseOrValue<BigNumberish>,
-    accountType: PromiseOrValue<BigNumberish>,
-    tokenIn: PromiseOrValue<string>,
-    amountIn: PromiseOrValue<BigNumberish>,
-    tokenOut: PromiseOrValue<string>,
-    slippage: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    id: BigNumberish,
+    accountType: BigNumberish,
+    tokenIn: string,
+    amountIn: BigNumberish,
+    tokenOut: string,
+    slippage: BigNumberish,
+    overrides?: Overrides & { from?: string }
+  ): Promise<ContractTransaction>;
+
+  sweepForClosure(
+    id: BigNumberish,
+    token: string,
+    overrides?: Overrides & { from?: string }
+  ): Promise<ContractTransaction>;
+
+  sweepForEndowment(
+    id: BigNumberish,
+    vault: BigNumberish,
+    token: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   updateAcceptedToken(
-    endowId: PromiseOrValue<BigNumberish>,
-    tokenAddr: PromiseOrValue<string>,
-    priceFeedAddr: PromiseOrValue<string>,
-    tokenStatus: PromiseOrValue<boolean>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    endowId: BigNumberish,
+    tokenAddr: string,
+    priceFeedAddr: string,
+    tokenStatus: boolean,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   updateConfig(
-    newRegistrar: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    newRegistrar: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   updateDelegate(
-    id: PromiseOrValue<BigNumberish>,
-    setting: PromiseOrValue<BigNumberish>,
-    action: PromiseOrValue<BigNumberish>,
-    delegateAddress: PromiseOrValue<string>,
-    delegateExpiry: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    id: BigNumberish,
+    setting: BigNumberish,
+    action: BigNumberish,
+    delegateAddress: string,
+    delegateExpiry: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   updateEndowmentController(
     details: AccountMessages.UpdateEndowmentControllerRequestStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   updateEndowmentDetails(
     details: AccountMessages.UpdateEndowmentDetailsRequestStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   updateEndowmentSettings(
     details: AccountMessages.UpdateEndowmentSettingsRequestStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   updateFeeSettings(
     details: AccountMessages.UpdateFeeSettingRequestStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   updateOwner(
-    newOwner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    newOwner: string,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   withdraw(
-    id: PromiseOrValue<BigNumberish>,
-    acctType: PromiseOrValue<BigNumberish>,
-    beneficiaryAddress: PromiseOrValue<string>,
-    beneficiaryEndowId: PromiseOrValue<BigNumberish>,
+    id: BigNumberish,
+    acctType: BigNumberish,
+    beneficiaryAddress: string,
+    beneficiaryEndowId: BigNumberish,
     tokens: IAccountsDepositWithdrawEndowments.TokenInfoStruct[],
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   withdrawDonationMatchERC20(
-    id: PromiseOrValue<BigNumberish>,
-    recipient: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    id: BigNumberish,
+    recipient: string,
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
+    addGas(
+      id: BigNumberish,
+      vault: BigNumberish,
+      token: string,
+      amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     closeEndowment(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       beneficiary: LibAccounts.BeneficiaryStruct,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -1832,16 +1852,16 @@ export interface IAccounts extends BaseContract {
     ): Promise<number>;
 
     depositDonationMatchERC20(
-      id: PromiseOrValue<BigNumberish>,
-      token: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
+      token: string,
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     depositERC20(
       details: AccountMessages.DepositRequestStruct,
-      tokenAddress: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      tokenAddress: string,
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1851,17 +1871,17 @@ export interface IAccounts extends BaseContract {
     ): Promise<void>;
 
     manageAllowances(
-      endowId: PromiseOrValue<BigNumberish>,
-      spender: PromiseOrValue<string>,
-      token: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      endowId: BigNumberish,
+      spender: string,
+      token: string,
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     queryAllowance(
-      endowId: PromiseOrValue<BigNumberish>,
-      spender: PromiseOrValue<string>,
-      token: PromiseOrValue<string>,
+      endowId: BigNumberish,
+      spender: string,
+      token: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -1870,89 +1890,102 @@ export interface IAccounts extends BaseContract {
     ): Promise<AccountMessages.ConfigResponseStructOutput>;
 
     queryEndowmentDetails(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<AccountStorage.EndowmentStructOutput>;
 
     queryState(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<AccountMessages.StateResponseStructOutput>;
 
     queryTokenAmount(
-      id: PromiseOrValue<BigNumberish>,
-      accountType: PromiseOrValue<BigNumberish>,
-      tokenaddress: PromiseOrValue<string>,
+      id: BigNumberish,
+      accountType: BigNumberish,
+      tokenaddress: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     setupDao(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       details: SubDaoLib.DaoSetupStruct,
       overrides?: CallOverrides
     ): Promise<void>;
 
     setupDonationMatch(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       details: AccountMessages.DonationMatchStruct,
       overrides?: CallOverrides
     ): Promise<void>;
 
     spendAllowance(
-      endowId: PromiseOrValue<BigNumberish>,
-      token: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      recipient: PromiseOrValue<string>,
+      endowId: BigNumberish,
+      token: string,
+      amount: BigNumberish,
+      recipient: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     strategyInvest(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       investRequest: AccountMessages.InvestRequestStruct,
       overrides?: CallOverrides
     ): Promise<void>;
 
     strategyRedeem(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       redeemRequest: AccountMessages.RedeemRequestStruct,
       overrides?: CallOverrides
     ): Promise<void>;
 
     strategyRedeemAll(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       redeemAllRequest: AccountMessages.RedeemAllRequestStruct,
       overrides?: CallOverrides
     ): Promise<void>;
 
     swapToken(
-      id: PromiseOrValue<BigNumberish>,
-      accountType: PromiseOrValue<BigNumberish>,
-      tokenIn: PromiseOrValue<string>,
-      amountIn: PromiseOrValue<BigNumberish>,
-      tokenOut: PromiseOrValue<string>,
-      slippage: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
+      accountType: BigNumberish,
+      tokenIn: string,
+      amountIn: BigNumberish,
+      tokenOut: string,
+      slippage: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
+    sweepForClosure(
+      id: BigNumberish,
+      token: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    sweepForEndowment(
+      id: BigNumberish,
+      vault: BigNumberish,
+      token: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     updateAcceptedToken(
-      endowId: PromiseOrValue<BigNumberish>,
-      tokenAddr: PromiseOrValue<string>,
-      priceFeedAddr: PromiseOrValue<string>,
-      tokenStatus: PromiseOrValue<boolean>,
+      endowId: BigNumberish,
+      tokenAddr: string,
+      priceFeedAddr: string,
+      tokenStatus: boolean,
       overrides?: CallOverrides
     ): Promise<void>;
 
     updateConfig(
-      newRegistrar: PromiseOrValue<string>,
+      newRegistrar: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     updateDelegate(
-      id: PromiseOrValue<BigNumberish>,
-      setting: PromiseOrValue<BigNumberish>,
-      action: PromiseOrValue<BigNumberish>,
-      delegateAddress: PromiseOrValue<string>,
-      delegateExpiry: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
+      setting: BigNumberish,
+      action: BigNumberish,
+      delegateAddress: string,
+      delegateExpiry: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1976,24 +2009,21 @@ export interface IAccounts extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    updateOwner(
-      newOwner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    updateOwner(newOwner: string, overrides?: CallOverrides): Promise<void>;
 
     withdraw(
-      id: PromiseOrValue<BigNumberish>,
-      acctType: PromiseOrValue<BigNumberish>,
-      beneficiaryAddress: PromiseOrValue<string>,
-      beneficiaryEndowId: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
+      acctType: BigNumberish,
+      beneficiaryAddress: string,
+      beneficiaryEndowId: BigNumberish,
       tokens: IAccountsDepositWithdrawEndowments.TokenInfoStruct[],
       overrides?: CallOverrides
     ): Promise<void>;
 
     withdrawDonationMatchERC20(
-      id: PromiseOrValue<BigNumberish>,
-      recipient: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
+      recipient: string,
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -2137,7 +2167,9 @@ export interface IAccounts extends BaseContract {
     "OwnerUpdated(address)"(owner?: null): OwnerUpdatedEventFilter;
     OwnerUpdated(owner?: null): OwnerUpdatedEventFilter;
 
-    "RefundNeeded(tuple)"(arg0?: null): RefundNeededEventFilter;
+    "RefundNeeded((string,bytes4,bytes4,uint32[],address,uint256,uint256,uint8))"(
+      arg0?: null
+    ): RefundNeededEventFilter;
     RefundNeeded(arg0?: null): RefundNeededEventFilter;
 
     "TokenSwapped(uint256,uint8,address,uint256,address,uint256)"(
@@ -2157,371 +2189,412 @@ export interface IAccounts extends BaseContract {
       amountOut?: null
     ): TokenSwappedEventFilter;
 
-    "UnexpectedTokens(tuple)"(arg0?: null): UnexpectedTokensEventFilter;
+    "UnexpectedTokens((string,bytes4,bytes4,uint32[],address,uint256,uint256,uint8))"(
+      arg0?: null
+    ): UnexpectedTokensEventFilter;
     UnexpectedTokens(arg0?: null): UnexpectedTokensEventFilter;
   };
 
   estimateGas: {
+    addGas(
+      id: BigNumberish,
+      vault: BigNumberish,
+      token: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
+    ): Promise<BigNumber>;
+
     closeEndowment(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       beneficiary: LibAccounts.BeneficiaryStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     createDaoContract(
       createdaomessage: SubDaoMessages.InstantiateMsgStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     createEndowment(
       details: AccountMessages.CreateEndowmentRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     depositDonationMatchERC20(
-      id: PromiseOrValue<BigNumberish>,
-      token: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      id: BigNumberish,
+      token: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     depositERC20(
       details: AccountMessages.DepositRequestStruct,
-      tokenAddress: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      tokenAddress: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     depositMatic(
       details: AccountMessages.DepositRequestStruct,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<BigNumber>;
 
     manageAllowances(
-      endowId: PromiseOrValue<BigNumberish>,
-      spender: PromiseOrValue<string>,
-      token: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      endowId: BigNumberish,
+      spender: string,
+      token: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     queryAllowance(
-      endowId: PromiseOrValue<BigNumberish>,
-      spender: PromiseOrValue<string>,
-      token: PromiseOrValue<string>,
+      endowId: BigNumberish,
+      spender: string,
+      token: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     queryConfig(overrides?: CallOverrides): Promise<BigNumber>;
 
     queryEndowmentDetails(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    queryState(
-      id: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    queryState(id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
     queryTokenAmount(
-      id: PromiseOrValue<BigNumberish>,
-      accountType: PromiseOrValue<BigNumberish>,
-      tokenaddress: PromiseOrValue<string>,
+      id: BigNumberish,
+      accountType: BigNumberish,
+      tokenaddress: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     setupDao(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       details: SubDaoLib.DaoSetupStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     setupDonationMatch(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       details: AccountMessages.DonationMatchStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     spendAllowance(
-      endowId: PromiseOrValue<BigNumberish>,
-      token: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      recipient: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      endowId: BigNumberish,
+      token: string,
+      amount: BigNumberish,
+      recipient: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     strategyInvest(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       investRequest: AccountMessages.InvestRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     strategyRedeem(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       redeemRequest: AccountMessages.RedeemRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     strategyRedeemAll(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       redeemAllRequest: AccountMessages.RedeemAllRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     swapToken(
-      id: PromiseOrValue<BigNumberish>,
-      accountType: PromiseOrValue<BigNumberish>,
-      tokenIn: PromiseOrValue<string>,
-      amountIn: PromiseOrValue<BigNumberish>,
-      tokenOut: PromiseOrValue<string>,
-      slippage: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      id: BigNumberish,
+      accountType: BigNumberish,
+      tokenIn: string,
+      amountIn: BigNumberish,
+      tokenOut: string,
+      slippage: BigNumberish,
+      overrides?: Overrides & { from?: string }
+    ): Promise<BigNumber>;
+
+    sweepForClosure(
+      id: BigNumberish,
+      token: string,
+      overrides?: Overrides & { from?: string }
+    ): Promise<BigNumber>;
+
+    sweepForEndowment(
+      id: BigNumberish,
+      vault: BigNumberish,
+      token: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     updateAcceptedToken(
-      endowId: PromiseOrValue<BigNumberish>,
-      tokenAddr: PromiseOrValue<string>,
-      priceFeedAddr: PromiseOrValue<string>,
-      tokenStatus: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      endowId: BigNumberish,
+      tokenAddr: string,
+      priceFeedAddr: string,
+      tokenStatus: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     updateConfig(
-      newRegistrar: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newRegistrar: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     updateDelegate(
-      id: PromiseOrValue<BigNumberish>,
-      setting: PromiseOrValue<BigNumberish>,
-      action: PromiseOrValue<BigNumberish>,
-      delegateAddress: PromiseOrValue<string>,
-      delegateExpiry: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      id: BigNumberish,
+      setting: BigNumberish,
+      action: BigNumberish,
+      delegateAddress: string,
+      delegateExpiry: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     updateEndowmentController(
       details: AccountMessages.UpdateEndowmentControllerRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     updateEndowmentDetails(
       details: AccountMessages.UpdateEndowmentDetailsRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     updateEndowmentSettings(
       details: AccountMessages.UpdateEndowmentSettingsRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     updateFeeSettings(
       details: AccountMessages.UpdateFeeSettingRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     updateOwner(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newOwner: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     withdraw(
-      id: PromiseOrValue<BigNumberish>,
-      acctType: PromiseOrValue<BigNumberish>,
-      beneficiaryAddress: PromiseOrValue<string>,
-      beneficiaryEndowId: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
+      acctType: BigNumberish,
+      beneficiaryAddress: string,
+      beneficiaryEndowId: BigNumberish,
       tokens: IAccountsDepositWithdrawEndowments.TokenInfoStruct[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     withdrawDonationMatchERC20(
-      id: PromiseOrValue<BigNumberish>,
-      recipient: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      id: BigNumberish,
+      recipient: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
+    addGas(
+      id: BigNumberish,
+      vault: BigNumberish,
+      token: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
+    ): Promise<PopulatedTransaction>;
+
     closeEndowment(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       beneficiary: LibAccounts.BeneficiaryStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     createDaoContract(
       createdaomessage: SubDaoMessages.InstantiateMsgStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     createEndowment(
       details: AccountMessages.CreateEndowmentRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     depositDonationMatchERC20(
-      id: PromiseOrValue<BigNumberish>,
-      token: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      id: BigNumberish,
+      token: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     depositERC20(
       details: AccountMessages.DepositRequestStruct,
-      tokenAddress: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      tokenAddress: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     depositMatic(
       details: AccountMessages.DepositRequestStruct,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      overrides?: PayableOverrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     manageAllowances(
-      endowId: PromiseOrValue<BigNumberish>,
-      spender: PromiseOrValue<string>,
-      token: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      endowId: BigNumberish,
+      spender: string,
+      token: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     queryAllowance(
-      endowId: PromiseOrValue<BigNumberish>,
-      spender: PromiseOrValue<string>,
-      token: PromiseOrValue<string>,
+      endowId: BigNumberish,
+      spender: string,
+      token: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     queryConfig(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     queryEndowmentDetails(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     queryState(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     queryTokenAmount(
-      id: PromiseOrValue<BigNumberish>,
-      accountType: PromiseOrValue<BigNumberish>,
-      tokenaddress: PromiseOrValue<string>,
+      id: BigNumberish,
+      accountType: BigNumberish,
+      tokenaddress: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     setupDao(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       details: SubDaoLib.DaoSetupStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     setupDonationMatch(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       details: AccountMessages.DonationMatchStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     spendAllowance(
-      endowId: PromiseOrValue<BigNumberish>,
-      token: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      recipient: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      endowId: BigNumberish,
+      token: string,
+      amount: BigNumberish,
+      recipient: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     strategyInvest(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       investRequest: AccountMessages.InvestRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     strategyRedeem(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       redeemRequest: AccountMessages.RedeemRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     strategyRedeemAll(
-      id: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
       redeemAllRequest: AccountMessages.RedeemAllRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     swapToken(
-      id: PromiseOrValue<BigNumberish>,
-      accountType: PromiseOrValue<BigNumberish>,
-      tokenIn: PromiseOrValue<string>,
-      amountIn: PromiseOrValue<BigNumberish>,
-      tokenOut: PromiseOrValue<string>,
-      slippage: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      id: BigNumberish,
+      accountType: BigNumberish,
+      tokenIn: string,
+      amountIn: BigNumberish,
+      tokenOut: string,
+      slippage: BigNumberish,
+      overrides?: Overrides & { from?: string }
+    ): Promise<PopulatedTransaction>;
+
+    sweepForClosure(
+      id: BigNumberish,
+      token: string,
+      overrides?: Overrides & { from?: string }
+    ): Promise<PopulatedTransaction>;
+
+    sweepForEndowment(
+      id: BigNumberish,
+      vault: BigNumberish,
+      token: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     updateAcceptedToken(
-      endowId: PromiseOrValue<BigNumberish>,
-      tokenAddr: PromiseOrValue<string>,
-      priceFeedAddr: PromiseOrValue<string>,
-      tokenStatus: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      endowId: BigNumberish,
+      tokenAddr: string,
+      priceFeedAddr: string,
+      tokenStatus: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     updateConfig(
-      newRegistrar: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newRegistrar: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     updateDelegate(
-      id: PromiseOrValue<BigNumberish>,
-      setting: PromiseOrValue<BigNumberish>,
-      action: PromiseOrValue<BigNumberish>,
-      delegateAddress: PromiseOrValue<string>,
-      delegateExpiry: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      id: BigNumberish,
+      setting: BigNumberish,
+      action: BigNumberish,
+      delegateAddress: string,
+      delegateExpiry: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     updateEndowmentController(
       details: AccountMessages.UpdateEndowmentControllerRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     updateEndowmentDetails(
       details: AccountMessages.UpdateEndowmentDetailsRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     updateEndowmentSettings(
       details: AccountMessages.UpdateEndowmentSettingsRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     updateFeeSettings(
       details: AccountMessages.UpdateFeeSettingRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     updateOwner(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newOwner: string,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     withdraw(
-      id: PromiseOrValue<BigNumberish>,
-      acctType: PromiseOrValue<BigNumberish>,
-      beneficiaryAddress: PromiseOrValue<string>,
-      beneficiaryEndowId: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
+      acctType: BigNumberish,
+      beneficiaryAddress: string,
+      beneficiaryEndowId: BigNumberish,
       tokens: IAccountsDepositWithdrawEndowments.TokenInfoStruct[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     withdrawDonationMatchERC20(
-      id: PromiseOrValue<BigNumberish>,
-      recipient: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      id: BigNumberish,
+      recipient: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

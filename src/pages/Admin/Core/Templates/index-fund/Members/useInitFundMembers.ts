@@ -26,7 +26,7 @@ export default function useInitFundMembers() {
     !fundId
   );
 
-  const fundMembers = fund?.members || [];
+  const fundMembers = fund?.endowments || [];
   const fundMembersCopy = useGetter((state) => state.admin.fundMembers);
 
   useEffect(() => {

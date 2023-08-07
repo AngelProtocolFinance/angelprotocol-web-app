@@ -17,7 +17,6 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../../common";
 
 export interface StringArrayInterface extends utils.Interface {
@@ -36,15 +35,15 @@ export interface StringArrayInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "addressToString",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "stringCompare",
-    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+    values: [string, string]
   ): string;
   encodeFunctionData(
     functionFragment: "stringIndexOf",
-    values: [PromiseOrValue<string>[], PromiseOrValue<string>]
+    values: [string[], string]
   ): string;
 
   decodeFunctionResult(
@@ -90,56 +89,47 @@ export interface StringArray extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    addressToString(
-      addr: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
+    addressToString(addr: string, overrides?: CallOverrides): Promise<[string]>;
 
     stringCompare(
-      s1: PromiseOrValue<string>,
-      s2: PromiseOrValue<string>,
+      s1: string,
+      s2: string,
       overrides?: CallOverrides
     ): Promise<[boolean] & { result: boolean }>;
 
     stringIndexOf(
-      arr: PromiseOrValue<string>[],
-      searchFor: PromiseOrValue<string>,
+      arr: string[],
+      searchFor: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber, boolean]>;
   };
 
-  addressToString(
-    addr: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<string>;
+  addressToString(addr: string, overrides?: CallOverrides): Promise<string>;
 
   stringCompare(
-    s1: PromiseOrValue<string>,
-    s2: PromiseOrValue<string>,
+    s1: string,
+    s2: string,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
   stringIndexOf(
-    arr: PromiseOrValue<string>[],
-    searchFor: PromiseOrValue<string>,
+    arr: string[],
+    searchFor: string,
     overrides?: CallOverrides
   ): Promise<[BigNumber, boolean]>;
 
   callStatic: {
-    addressToString(
-      addr: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<string>;
+    addressToString(addr: string, overrides?: CallOverrides): Promise<string>;
 
     stringCompare(
-      s1: PromiseOrValue<string>,
-      s2: PromiseOrValue<string>,
+      s1: string,
+      s2: string,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     stringIndexOf(
-      arr: PromiseOrValue<string>[],
-      searchFor: PromiseOrValue<string>,
+      arr: string[],
+      searchFor: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber, boolean]>;
   };
@@ -148,38 +138,38 @@ export interface StringArray extends BaseContract {
 
   estimateGas: {
     addressToString(
-      addr: PromiseOrValue<string>,
+      addr: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     stringCompare(
-      s1: PromiseOrValue<string>,
-      s2: PromiseOrValue<string>,
+      s1: string,
+      s2: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     stringIndexOf(
-      arr: PromiseOrValue<string>[],
-      searchFor: PromiseOrValue<string>,
+      arr: string[],
+      searchFor: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     addressToString(
-      addr: PromiseOrValue<string>,
+      addr: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     stringCompare(
-      s1: PromiseOrValue<string>,
-      s2: PromiseOrValue<string>,
+      s1: string,
+      s2: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     stringIndexOf(
-      arr: PromiseOrValue<string>[],
-      searchFor: PromiseOrValue<string>,
+      arr: string[],
+      searchFor: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };

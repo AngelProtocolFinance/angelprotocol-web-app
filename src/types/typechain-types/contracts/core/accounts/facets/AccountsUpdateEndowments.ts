@@ -24,19 +24,18 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../../../../common";
 
 export declare namespace IVault {
   export type VaultActionDataStruct = {
-    destinationChain: PromiseOrValue<string>;
-    strategyId: PromiseOrValue<BytesLike>;
-    selector: PromiseOrValue<BytesLike>;
-    accountIds: PromiseOrValue<BigNumberish>[];
-    token: PromiseOrValue<string>;
-    lockAmt: PromiseOrValue<BigNumberish>;
-    liqAmt: PromiseOrValue<BigNumberish>;
-    status: PromiseOrValue<BigNumberish>;
+    destinationChain: string;
+    strategyId: BytesLike;
+    selector: BytesLike;
+    accountIds: BigNumberish[];
+    token: string;
+    lockAmt: BigNumberish;
+    liqAmt: BigNumberish;
+    status: BigNumberish;
   };
 
   export type VaultActionDataStructOutput = [
@@ -62,12 +61,12 @@ export declare namespace IVault {
 
 export declare namespace LocalRegistrarLib {
   export type RebalanceParamsStruct = {
-    rebalanceLiquidProfits: PromiseOrValue<boolean>;
-    lockedRebalanceToLiquid: PromiseOrValue<BigNumberish>;
-    interestDistribution: PromiseOrValue<BigNumberish>;
-    lockedPrincipleToLiquid: PromiseOrValue<boolean>;
-    principleDistribution: PromiseOrValue<BigNumberish>;
-    basis: PromiseOrValue<BigNumberish>;
+    rebalanceLiquidProfits: boolean;
+    lockedRebalanceToLiquid: BigNumberish;
+    interestDistribution: BigNumberish;
+    lockedPrincipleToLiquid: boolean;
+    principleDistribution: BigNumberish;
+    basis: BigNumberish;
   };
 
   export type RebalanceParamsStructOutput = [
@@ -89,12 +88,12 @@ export declare namespace LocalRegistrarLib {
 
 export declare namespace AccountMessages {
   export type UpdateEndowmentDetailsRequestStruct = {
-    id: PromiseOrValue<BigNumberish>;
-    owner: PromiseOrValue<string>;
-    name: PromiseOrValue<string>;
-    sdgs: PromiseOrValue<BigNumberish>[];
-    logo: PromiseOrValue<string>;
-    image: PromiseOrValue<string>;
+    id: BigNumberish;
+    owner: string;
+    name: string;
+    sdgs: BigNumberish[];
+    logo: string;
+    image: string;
     rebalance: LocalRegistrarLib.RebalanceParamsStruct;
   };
 
@@ -133,22 +132,11 @@ export interface AccountsUpdateEndowmentsInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "updateAcceptedToken",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<boolean>
-    ]
+    values: [BigNumberish, string, string, boolean]
   ): string;
   encodeFunctionData(
     functionFragment: "updateDelegate",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [BigNumberish, BigNumberish, BigNumberish, string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "updateEndowmentDetails",
@@ -185,9 +173,9 @@ export interface AccountsUpdateEndowmentsInterface extends utils.Interface {
     "EndowmentUpdated(uint256)": EventFragment;
     "EndowmentWithdraw(uint256,address,uint256,uint8,address,uint32)": EventFragment;
     "OwnerUpdated(address)": EventFragment;
-    "RefundNeeded(tuple)": EventFragment;
+    "RefundNeeded((string,bytes4,bytes4,uint32[],address,uint256,uint256,uint8))": EventFragment;
     "TokenSwapped(uint256,uint8,address,uint256,address,uint256)": EventFragment;
-    "UnexpectedTokens(tuple)": EventFragment;
+    "UnexpectedTokens((string,bytes4,bytes4,uint32[],address,uint256,uint256,uint8))": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "AllowanceSpent"): EventFragment;
@@ -464,65 +452,65 @@ export interface AccountsUpdateEndowments extends BaseContract {
 
   functions: {
     updateAcceptedToken(
-      endowId: PromiseOrValue<BigNumberish>,
-      tokenAddr: PromiseOrValue<string>,
-      priceFeedAddr: PromiseOrValue<string>,
-      tokenStatus: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      endowId: BigNumberish,
+      tokenAddr: string,
+      priceFeedAddr: string,
+      tokenStatus: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     updateDelegate(
-      id: PromiseOrValue<BigNumberish>,
-      setting: PromiseOrValue<BigNumberish>,
-      action: PromiseOrValue<BigNumberish>,
-      delegateAddress: PromiseOrValue<string>,
-      delegateExpiry: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      id: BigNumberish,
+      setting: BigNumberish,
+      action: BigNumberish,
+      delegateAddress: string,
+      delegateExpiry: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     updateEndowmentDetails(
       details: AccountMessages.UpdateEndowmentDetailsRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
 
   updateAcceptedToken(
-    endowId: PromiseOrValue<BigNumberish>,
-    tokenAddr: PromiseOrValue<string>,
-    priceFeedAddr: PromiseOrValue<string>,
-    tokenStatus: PromiseOrValue<boolean>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    endowId: BigNumberish,
+    tokenAddr: string,
+    priceFeedAddr: string,
+    tokenStatus: boolean,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   updateDelegate(
-    id: PromiseOrValue<BigNumberish>,
-    setting: PromiseOrValue<BigNumberish>,
-    action: PromiseOrValue<BigNumberish>,
-    delegateAddress: PromiseOrValue<string>,
-    delegateExpiry: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    id: BigNumberish,
+    setting: BigNumberish,
+    action: BigNumberish,
+    delegateAddress: string,
+    delegateExpiry: BigNumberish,
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   updateEndowmentDetails(
     details: AccountMessages.UpdateEndowmentDetailsRequestStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     updateAcceptedToken(
-      endowId: PromiseOrValue<BigNumberish>,
-      tokenAddr: PromiseOrValue<string>,
-      priceFeedAddr: PromiseOrValue<string>,
-      tokenStatus: PromiseOrValue<boolean>,
+      endowId: BigNumberish,
+      tokenAddr: string,
+      priceFeedAddr: string,
+      tokenStatus: boolean,
       overrides?: CallOverrides
     ): Promise<void>;
 
     updateDelegate(
-      id: PromiseOrValue<BigNumberish>,
-      setting: PromiseOrValue<BigNumberish>,
-      action: PromiseOrValue<BigNumberish>,
-      delegateAddress: PromiseOrValue<string>,
-      delegateExpiry: PromiseOrValue<BigNumberish>,
+      id: BigNumberish,
+      setting: BigNumberish,
+      action: BigNumberish,
+      delegateAddress: string,
+      delegateExpiry: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -671,7 +659,9 @@ export interface AccountsUpdateEndowments extends BaseContract {
     "OwnerUpdated(address)"(owner?: null): OwnerUpdatedEventFilter;
     OwnerUpdated(owner?: null): OwnerUpdatedEventFilter;
 
-    "RefundNeeded(tuple)"(arg0?: null): RefundNeededEventFilter;
+    "RefundNeeded((string,bytes4,bytes4,uint32[],address,uint256,uint256,uint8))"(
+      arg0?: null
+    ): RefundNeededEventFilter;
     RefundNeeded(arg0?: null): RefundNeededEventFilter;
 
     "TokenSwapped(uint256,uint8,address,uint256,address,uint256)"(
@@ -691,55 +681,57 @@ export interface AccountsUpdateEndowments extends BaseContract {
       amountOut?: null
     ): TokenSwappedEventFilter;
 
-    "UnexpectedTokens(tuple)"(arg0?: null): UnexpectedTokensEventFilter;
+    "UnexpectedTokens((string,bytes4,bytes4,uint32[],address,uint256,uint256,uint8))"(
+      arg0?: null
+    ): UnexpectedTokensEventFilter;
     UnexpectedTokens(arg0?: null): UnexpectedTokensEventFilter;
   };
 
   estimateGas: {
     updateAcceptedToken(
-      endowId: PromiseOrValue<BigNumberish>,
-      tokenAddr: PromiseOrValue<string>,
-      priceFeedAddr: PromiseOrValue<string>,
-      tokenStatus: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      endowId: BigNumberish,
+      tokenAddr: string,
+      priceFeedAddr: string,
+      tokenStatus: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     updateDelegate(
-      id: PromiseOrValue<BigNumberish>,
-      setting: PromiseOrValue<BigNumberish>,
-      action: PromiseOrValue<BigNumberish>,
-      delegateAddress: PromiseOrValue<string>,
-      delegateExpiry: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      id: BigNumberish,
+      setting: BigNumberish,
+      action: BigNumberish,
+      delegateAddress: string,
+      delegateExpiry: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     updateEndowmentDetails(
       details: AccountMessages.UpdateEndowmentDetailsRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     updateAcceptedToken(
-      endowId: PromiseOrValue<BigNumberish>,
-      tokenAddr: PromiseOrValue<string>,
-      priceFeedAddr: PromiseOrValue<string>,
-      tokenStatus: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      endowId: BigNumberish,
+      tokenAddr: string,
+      priceFeedAddr: string,
+      tokenStatus: boolean,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     updateDelegate(
-      id: PromiseOrValue<BigNumberish>,
-      setting: PromiseOrValue<BigNumberish>,
-      action: PromiseOrValue<BigNumberish>,
-      delegateAddress: PromiseOrValue<string>,
-      delegateExpiry: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      id: BigNumberish,
+      setting: BigNumberish,
+      action: BigNumberish,
+      delegateAddress: string,
+      delegateExpiry: BigNumberish,
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     updateEndowmentDetails(
       details: AccountMessages.UpdateEndowmentDetailsRequestStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
 }

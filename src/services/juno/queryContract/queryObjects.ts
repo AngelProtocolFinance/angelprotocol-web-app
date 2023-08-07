@@ -117,10 +117,8 @@ export const queryObjects: {
         indexFund.decodeFunctionResult("queryConfig", result)[0];
 
       return {
-        owner: d.owner.toLowerCase(),
         registrarContract: d.registrarContract.toLowerCase(),
         fundRotation: d.fundRotation.toNumber(),
-        fundMemberLimit: d.fundMemberLimit.toNumber(),
         fundingGoal: d.fundingGoal.toNumber(),
       };
     },
@@ -128,14 +126,14 @@ export const queryObjects: {
   "index-fund.fund": [
     ({ id }) => indexFund.encodeFunctionData("queryFundDetails", [id]),
     (result) => {
-      const d: IIndexFund.IndexFundStructOutput =
+      const d: IIndexFund.FundResponseStructOutput =
         indexFund.decodeFunctionResult("queryFundDetails", result)[0];
 
       return {
         id: d.id.toNumber(),
         name: d.name,
         description: d.description,
-        members: d.members.map((m) => m),
+        endowments: d.endowments.map((m) => m),
         splitToLiquid: d.splitToLiquid.toNumber(),
         expiryTime: d.expiryTime.toNumber(),
       };
