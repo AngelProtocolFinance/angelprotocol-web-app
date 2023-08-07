@@ -8,7 +8,9 @@ export type EndowListPaginatedAWSQueryRes<T> = AWSQueryRes<T> & {
   Page: number;
   NumOfPages: number;
 };
-export type PaginatedAWSQueryRes<T> = AWSQueryRes<T> & { ItemCutoff: number };
+export type PaginatedAWSQueryRes<T> = AWSQueryRes<T> & {
+  ItemCutoff: number | null;
+};
 
 export type FileObject = {
   name: string;
