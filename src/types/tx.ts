@@ -131,8 +131,8 @@ export type TransferMeta = {
   token: MetaToken;
 };
 
-export type MultisigMemberMeta = {
-  address: string;
+export type MultisigMembersMeta = {
+  addresses: string[];
   action: "add" | "remove";
 };
 
@@ -183,8 +183,8 @@ type Txs = {
 
   // //// MULTISIG ////
   "multisig.submit-transaction": Tx<NewTransaction, never>; //no meta
-  "multisig.add-owners": Tx<Addresses, MultisigMemberMeta>;
-  "multisig.remove-owners": Tx<Addresses, MultisigMemberMeta>;
+  "multisig.add-owners": Tx<Addresses, MultisigMembersMeta>;
+  "multisig.remove-owners": Tx<Addresses, MultisigMembersMeta>;
   "multisig.confirm-tx": Tx<ID, never>; //no meta
   "multisig.revoke-tx": Tx<ID, never>; //no meta
   "multisig.execute-tx": Tx<ID, never>; //no meta
