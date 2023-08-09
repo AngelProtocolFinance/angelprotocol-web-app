@@ -62,6 +62,6 @@ export default function Content(props: DonationRecipient) {
 
 function isFinalized(state: DonationState): boolean {
   return (
-    state.step === 4 && (state.status === "error" || "hash" in state.status)
+    state.step === "tx" && (state.status === "error" || "hash" in state.status)
   );
 }

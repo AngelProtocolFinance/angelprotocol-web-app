@@ -3,40 +3,41 @@ import {
   DonationDetails,
   DonationRecipient,
   DonationState,
+  DonationStep,
   FormStep,
+  KYC,
   KYCStep,
-  SkippableKYC,
   SubmitStep,
   TxStatus,
 } from "./types";
 
-const initialState: DonationState = { step: 0 };
+const initialState: DonationState = { step: "init" };
 
 const donation = createSlice({
   name: "donate",
   initialState: initialState as DonationState,
   reducers: {
     setRecipient: (_, { payload }: PayloadAction<DonationRecipient>) => {
-      return { step: 1, recipient: payload };
+      return { step: "donate-form", recipient: payload };
     },
     setDetails: (state, { payload }: PayloadAction<DonationDetails>) => {
       return {
         ...(state as KYCStep),
-        step: 2,
+        step: "kyc-form",
         details: payload,
       };
     },
     resetDetails: (state) => {
       return {
         ...(state as FormStep),
-        step: 1,
+        step: "donate-form",
         details: undefined,
       };
     },
-    setKYC: (state, { payload }: PayloadAction<SkippableKYC>) => {
+    setKYC: (state, { payload }: PayloadAction<KYC>) => {
       return {
         ...(state as SubmitStep),
-        step: 3,
+        step: "submit",
         kyc: payload,
       };
     },
@@ -44,13 +45,13 @@ const donation = createSlice({
     setTxStatus(state, { payload }: PayloadAction<TxStatus>) {
       return {
         ...(state as SubmitStep),
-        step: 4,
+        step: "tx",
         status: payload,
       };
     },
 
-    setStep(state, { payload }: PayloadAction<number>) {
-      state.step = payload as DonationState["step"];
+    setStep(state, { payload }: PayloadAction<DonationStep>) {
+      state.step = payload;
     },
   },
 });

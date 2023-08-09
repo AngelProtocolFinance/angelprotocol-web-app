@@ -19,46 +19,44 @@ export default function CurrentStep(props: ConfigParams) {
     !wallet && dispatch(resetDetails());
   }, [wallet, dispatch]);
 
-  if (state.step <= 3) {
-    if (isLoading) {
+  if (state.step === "tx") {
+    <Result {...state} classes="justify-self-center mt-16" />;
+  }
+
+  if (isLoading) {
+    return (
+      <LoadingStatus classes="justify-self-center">
+        Loading wallet
+      </LoadingStatus>
+    );
+  }
+
+  if (!wallet) {
+    return (
+      <Status icon="Info" classes="justify-self-center">
+        You need to connect your wallet to make a donation
+      </Status>
+    );
+  }
+
+  switch (state.step) {
+    case "submit": {
+      return <Submit {...state} wallet={wallet} />;
+    }
+    case "kyc-form": {
       return (
-        <LoadingStatus classes="justify-self-center">
-          Loading wallet
-        </LoadingStatus>
+        <KYC
+          type="on-donation"
+          state={state}
+          classes="grid gap-5 sm:grid-cols-2"
+        />
       );
     }
-
-    if (!wallet) {
-      return (
-        <Status icon="Info" classes="justify-self-center">
-          You need to connect your wallet to make a donation
-        </Status>
-      );
+    case "donate-form": {
+      return <Donater {...state} config={props} wallet={wallet} />;
     }
-
-    switch (state.step) {
-      case 3: {
-        return <Submit {...state} wallet={wallet} />;
-      }
-      case 2: {
-        return (
-          <KYC
-            type="on-donation"
-            state={state}
-            classes="grid gap-5 sm:grid-cols-2"
-          />
-        );
-      }
-      case 1: {
-        return <Donater {...state} config={props} wallet={wallet} />;
-      }
-      default: {
-        return <></>; // <Steps /> sets to step 1 onMount
-      }
+    default: {
+      return <></>; // <Steps /> sets to step 1 onMount
     }
-  } else if (state.step === 4) {
-    return <Result {...state} classes="justify-self-center mt-16" />;
-  } else {
-    return <></>;
   }
 }

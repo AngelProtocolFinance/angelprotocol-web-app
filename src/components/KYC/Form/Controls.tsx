@@ -16,19 +16,17 @@ export default function Controls({
   const dispatch = useSetter();
   const { state } = props;
   const {
-    step,
     recipient: { id: endowId },
   } = state;
-
-  function goBack() {
-    dispatch(setStep(step - 1));
-  }
 
   return (
     <div className={`${classes} grid grid-cols-2 gap-5`}>
       <button
         className="btn-donate btn-outline-filled"
-        onClick={goBack}
+        onClick={() => {
+          //kyc is always after donate form
+          dispatch(setStep("donate-form"));
+        }}
         type="button"
       >
         Back

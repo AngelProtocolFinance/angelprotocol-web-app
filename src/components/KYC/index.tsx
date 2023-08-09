@@ -9,24 +9,13 @@ import { schema } from "./schema";
 export default function KYC(props: Props) {
   const isOnDonation = props.type === "on-donation";
 
-  let defaultValues: Partial<FormValues> = {};
-  if (isOnDonation && props.state.kyc) {
-    const { kyc } = props.state;
-    if (kyc === "skipped") {
-      defaultValues = {
-        hasAgreedToTerms: true,
-        country: placeHolderCountryOption,
-        usState: { label: "", value: "" },
-      };
-    } else {
-      defaultValues = { ...kyc };
-    }
-  } else {
-    defaultValues = {
-      country: placeHolderCountryOption,
-      usState: { label: "", value: "" },
-    };
-  }
+  const defaultValues: Partial<FormValues> =
+    isOnDonation && props.state.kyc
+      ? props.state.kyc
+      : {
+          country: placeHolderCountryOption,
+          usState: { label: "", value: "" },
+        };
 
   const methods = useForm<FormValues>({
     mode: "onSubmit",
