@@ -31,8 +31,6 @@ export default function Form(props: {
     reset();
   }
 
-  const wasCompleted = !!getValues("token.amount");
-
   return (
     <form
       onSubmit={handleSubmit(submit)}
@@ -64,9 +62,8 @@ export default function Form(props: {
         )}
         <button
           className="btn-orange btn-donate w-1/2"
-          disabled={
-            !isValid || (wasCompleted ? false : !isDirty) || isSubmitting
-          }
+          //make sure that fields doesn't make form dirty on initial load
+          disabled={!isValid || !isDirty || isSubmitting}
           type="submit"
         >
           Continue
