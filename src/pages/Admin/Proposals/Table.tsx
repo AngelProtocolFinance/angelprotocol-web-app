@@ -4,15 +4,16 @@ import TableSection, { Cells } from "components/TableSection";
 import { adminRoutes } from "constants/routes";
 
 type Props = {
-  proposals: Transaction[];
+  txs: Transaction[];
   classes?: string;
   more?: (() => void) | "loading";
 };
-export default function Table({ proposals, classes = "", more }: Props) {
+export default function Table({ txs, classes = "", more }: Props) {
   return (
     <table
       className={
-        classes + " outline rounded outline-gray-l3 dark:outline-bluegray"
+        classes +
+        " outline outline-1 rounded outline-gray-l3 dark:outline-bluegray"
       }
     >
       <TableSection
@@ -31,9 +32,9 @@ export default function Table({ proposals, classes = "", more }: Props) {
         rowClass="last:border-none border-b border-prim divide-x divide-prim hover:bg-orange-l5 hover:dark:bg-bluegray"
         type="tbody"
       >
-        {proposals
-          .map(({ metadata, status, id }) => (
-            <Cells type="td" cellClass="py-3 px-4" key={id}>
+        {txs
+          .map(({ meta, status, recordId, transactionId }) => (
+            <Cells type="td" cellClass="py-3 px-4" key={transactionId}>
               <td className="uppercase text-xs font-semibold text-center">
                 <span
                   className={`px-2 py-1 text-white ${
@@ -46,10 +47,10 @@ export default function Table({ proposals, classes = "", more }: Props) {
                 </span>
               </td>
               <Link
-                to={`../${adminRoutes.proposal}/${id}`}
+                to={`../${adminRoutes.proposal}/${recordId}`}
                 className="text-sm hover:text-blue dark:text-blue-l2 block max-w-[11.5rem] @xl:max-w-lg overflow-hidden text-ellipsis"
               >
-                {metadata?.title ?? `Proposal id: ${id}`}
+                {meta?.title ?? `Transaction ${transactionId}`}
               </Link>
             </Cells>
           ))

@@ -1,20 +1,20 @@
 import React, { ReactNode } from "react";
-import { ProposalDetails } from "services/types";
 import { TagPayload } from "types/third-party/redux";
+import { Transaction } from "types/tx";
 import { invalidateJunoTags } from "services/juno";
-import { defaultProposalTags } from "services/juno/tags";
+import { defaultProposalTags, invalidateSubgraphTags } from "services/subgraph";
 import { useGetWallet } from "contexts/WalletContext";
 import { createTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
-import { getTagPayloads } from "helpers/admin";
+import { getTagPayloads, hasElapsed } from "helpers/admin";
 import { isTooltip, useAdminContext } from "../Context";
 
-export default function PollAction(props: ProposalDetails) {
+export default function PollAction(props: Transaction) {
   const { wallet } = useGetWallet();
   const sendTx = useTxSender();
   const { multisig, config, txResource } = useAdminContext();
 
-  const numSigned = props.signed.length;
+  const numSigned = props.confirmations.length;
   const willExecute =
     numSigned + 1 >= config.threshold && !config.requireExecution;
 
@@ -27,10 +27,10 @@ export default function PollAction(props: ProposalDetails) {
         type: "evm",
         val: createTx(wallet.address, "multisig.execute-tx", {
           multisig,
-          id: props.id,
+          id: props.transactionId,
         }),
       },
-      tagPayloads: extractTagFromMeta(props.metadata),
+      tagPayloads: extractTagFromMeta(props.meta),
     });
   }
 
@@ -43,42 +43,28 @@ export default function PollAction(props: ProposalDetails) {
         type: "evm",
         val: createTx(wallet.address, "multisig.confirm-tx", {
           multisig,
-          id: props.id,
+          id: props.transactionId,
         }),
       },
       tagPayloads: willExecute
-        ? extractTagFromMeta(props.metadata)
-        : [invalidateJunoTags(["multisig.votes"])],
+        ? extractTagFromMeta(props.meta)
+        : [invalidateJunoTags(["multisig-subgraph"])],
     });
   }
 
-  const EXED = props.status === "approved";
-  //for execution
-  const EX = props.status === "open" && numSigned >= config.threshold;
-  //user signed
-  const S = props.signed.some((s) => s === wallet?.address);
+  if (props.status === "approved" || hasElapsed(props.expiry)) return <></>;
 
-  let node: ReactNode = null;
-  //poll is executed
-  if (EXED) {
-    node = <></>;
-    //voting period ended and poll is passed waiting to be executed
-  } else if (EX) {
-    node = node = <Button onClick={executeProposal}>Execute Poll</Button>;
-    //voting period ended, but poll is not passed
-  } else {
-    //voting ongoing
-    if (S) {
-      node = <Text>Signed</Text>;
-    } else {
-      node = (
-        <Button onClick={sign}>
-          {willExecute ? "Sign and execute" : "Sign"}
-        </Button>
-      );
-    }
+  if (props.status === "open" && numSigned >= config.threshold) {
+    return <Button onClick={executeProposal}>Execute Poll</Button>;
   }
-  return <>{node}</>;
+  //vote is ongoing
+  if (props.confirmations.some((s) => s === wallet?.address)) {
+    return <Text>Signed</Text>;
+  }
+
+  return (
+    <Button onClick={sign}>{willExecute ? "Sign and execute" : "Sign"}</Button>
+  );
 }
 
 function Text(props: { children: ReactNode }) {
@@ -89,11 +75,9 @@ function Button(props: React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return <button {...props} className="text-sm px-6 py-1.5 btn-orange" />;
 }
 
-function extractTagFromMeta(
-  proposalMeta: ProposalDetails["metadata"]
-): TagPayload[] {
+function extractTagFromMeta(proposalMeta: Transaction["meta"]): TagPayload[] {
   if (!proposalMeta) {
-    return [invalidateJunoTags(defaultProposalTags)];
+    return [invalidateSubgraphTags(defaultProposalTags)];
   }
 
   return getTagPayloads(proposalMeta.id);

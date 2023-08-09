@@ -19,12 +19,12 @@ export default function Table({ proposals }: Props) {
         rowClass="last:border-none border-b border-prim hover:bg-blue-l4 hover:dark:bg-blue-d4"
         type="tbody"
       >
-        {proposals.map(({ metadata, status, id }) => (
-          <Cells type="td" cellClass="p-1.5" key={id}>
-            <>{metadata?.title ?? `Multisig transaction: ${id}`}</>
+        {proposals.map(({ meta, status, transactionId, recordId }) => (
+          <Cells type="td" cellClass="p-1.5" key={recordId}>
+            <>{meta?.title ?? `Multisig transaction: ${transactionId}`}</>
             <span className="uppercase text-sm">{status}</span>
             <Link
-              to={`${adminRoutes.proposal}/${id}`}
+              to={`${adminRoutes.proposal}/${recordId}`}
               className="flex items-center uppercase text-sm hover:bg-blue-l4 hover:dark:bg-blue-d4"
             >
               <span>Details</span>

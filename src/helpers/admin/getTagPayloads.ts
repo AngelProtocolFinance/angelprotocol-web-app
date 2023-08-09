@@ -2,49 +2,49 @@ import { TagPayload } from "types/third-party/redux";
 import { TxMeta } from "types/tx";
 import { ApesTag, invalidateApesTags } from "services/apes";
 import { invalidateJunoTags } from "services/juno";
-import { defaultProposalTags } from "services/juno/tags";
+import { EVMTag } from "services/juno/tags";
+import {
+  SubgraphTag,
+  defaultProposalTags,
+  invalidateSubgraphTags,
+} from "services/subgraph";
 
 export function getTagPayloads(type?: TxMeta["id"]): TagPayload[] {
-  const _tags = [...defaultProposalTags];
+  const _evm: EVMTag[] = [];
   const _apes: ApesTag[] = [];
+  const _subgraph: SubgraphTag[] = defaultProposalTags;
 
   switch (type) {
     case "accounts.update-controller":
     case "accounts.update-settings":
     case "accounts.update-fee-settings":
-      _tags.push("accounts.endowment");
+      _evm.push("accounts.endowment");
       break;
 
     case "accounts.withdraw":
-      _tags.push("accounts.token-balance");
+      _evm.push("accounts.token-balance");
       break;
 
     case "index-fund.remove-fund":
     case "index-fund.create-fund":
     case "index-fund.config":
-      _tags.push("index-fund.fund");
+      _evm.push("index-fund.fund");
       break;
 
     case "multisig.add-owners":
     case "multisig.remove-owners":
-      _tags.push("multisig.members");
-      _tags.push("multisig.threshold"); //cases where threshold > members.length
-      break;
-
     case "multisig.change-threshold":
-      _tags.push("multisig.threshold");
-      break;
-
     case "multisig.change-auto-execute":
-      _tags.push("multisig.require-execution");
+    case "multisig.change-duration":
+      _evm.push("multisig-subgraph");
       break;
 
     case "multisig/review.confirm-prop":
-      _tags.push("multisig/review.prop-confirms");
+      _evm.push("multisig/review.prop-confirms");
       break;
 
     case "multisig/review.execute-prop":
-      _tags.push("multisig/review.proposal");
+      _evm.push("multisig/review.proposal");
       break;
 
     case "erc20.transfer":
@@ -53,18 +53,22 @@ export function getTagPayloads(type?: TxMeta["id"]): TagPayload[] {
 
     case "accounts.invest":
     case "accounts.redeem":
-      _tags.push("accounts.state");
+      _evm.push("accounts.state");
       break;
 
     case "accounts.close":
-      _tags.push("accounts.endowment");
+      _evm.push("accounts.endowment");
       break;
 
     case "registrar.update-config":
     case "registrar.update-owner":
-      _tags.push("registrar.config");
+      _evm.push("registrar.config");
       break;
   }
 
-  return [invalidateJunoTags(_tags), invalidateApesTags(_apes)];
+  return [
+    invalidateJunoTags(_evm),
+    invalidateApesTags(_apes),
+    invalidateSubgraphTags(_subgraph),
+  ];
 }

@@ -3,6 +3,7 @@ import { TransactionStatus } from "types/lists";
 const bgColors: { [key in TransactionStatus]: string } = {
   open: "bg-orange",
   approved: "bg-blue",
+  expired: "bg-red",
 };
 
 export default function Status({ status }: { status: TransactionStatus }) {

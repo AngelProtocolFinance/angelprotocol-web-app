@@ -1,4 +1,4 @@
-import { ProposalDetails } from "services/types";
+import { Transaction } from "types/tx";
 import { invalidateJunoTags } from "services/juno";
 import { useGetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
@@ -7,16 +7,16 @@ import useTxSender from "hooks/useTxSender";
 import { useAdminContext } from "../../Context";
 
 export default function Votes({
-  id,
-  signed,
-  signers,
+  transactionId,
+  confirmations,
+  owners,
   status,
   classes = "",
-}: ProposalDetails & { classes?: string }) {
+}: Transaction & { classes?: string }) {
   const { multisig } = useAdminContext();
   const { wallet } = useGetWallet();
   const send = useTxSender();
-  const userSigned = signed.some((s) => s === wallet?.address);
+  const userSigned = confirmations.some((s) => s === wallet?.address);
 
   async function revoke(sender: string) {
     await send({
@@ -24,10 +24,10 @@ export default function Votes({
         type: "evm",
         val: createTx(sender, "multisig.revoke-tx", {
           multisig,
-          id,
+          id: transactionId,
         }),
       },
-      tagPayloads: [invalidateJunoTags(["multisig.txs"])],
+      tagPayloads: [invalidateJunoTags([])],
     });
   }
 
@@ -38,15 +38,15 @@ export default function Votes({
         classes + " grid rounded border border-prim divide-y divide-prim"
       }
     >
-      {signers.map((s) => {
-        const confirmed = signed.includes(s);
+      {owners.map((o) => {
+        const confirmed = confirmations.includes(o);
         return (
-          <li key={s} className="p-3 flex items-center  text-sm">
-            <span className="mr-auto">{s}</span>
+          <li key={o} className="p-3 flex items-center  text-sm">
+            <span className="mr-auto">{o}</span>
             {userSigned &&
-            status !== "approved" &&
+            status === "open" &&
             wallet &&
-            wallet.address === s ? (
+            wallet.address === o ? (
               <button
                 disabled={disabled}
                 type="button"

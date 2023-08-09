@@ -7,7 +7,6 @@ import {
 import { EndowmentDetails } from "types/contracts";
 import { ApplicationProposal } from "types/contracts/multisig";
 import { AccountType } from "types/lists";
-import { Transaction } from "types/tx";
 import { SemiPartial } from "types/utils";
 
 export type MultisigConfig = {
@@ -23,22 +22,17 @@ type Base = {
   config: MultisigConfig;
 };
 
-type APResources = Base & {
+type APResource = Base & {
   type: "ap";
 };
-type ReviewResources = Base & {
+type ReviewResource = Base & {
   type: "review";
 };
-type CharityResources = Base & {
+type CharityResource = Base & {
   type: "charity";
 } & EndowmentDetails;
 
-export type AdminResources = APResources | ReviewResources | CharityResources;
-
-export type ProposalDetails = Transaction & {
-  signers: string[];
-  signed: string[];
-};
+export type AdminResource = APResource | ReviewResource | CharityResource;
 
 export type ChainQueryArgs = {
   address: string;
@@ -105,3 +99,12 @@ export function isDeleteMsg(
     Object.keys(msg).length === 3 && !!(msg as ProgramDeleteMsg).program_id
   );
 }
+
+export type Multisig = {
+  recordId: string;
+  address: string;
+  owners: string[];
+  approvalsRequired: number;
+  requireExecution: boolean;
+  transactionExpiry: number;
+};

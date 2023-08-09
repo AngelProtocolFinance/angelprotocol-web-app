@@ -1,11 +1,11 @@
 import { ReactNode, createContext, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { AdminParams } from "./types";
-import { AdminResources, MultisigConfig } from "services/types";
+import { AdminResource, MultisigConfig } from "services/types";
 import { SettingsController } from "types/contracts";
 import { SenderArgs } from "types/tx";
-import { customApi, useAdminResourcesQuery } from "services/juno/custom";
-import { defaultProposalTags } from "services/juno/tags";
+import { useAdminResourceQuery } from "services/juno/custom";
+import { defaultProposalTags, invalidateSubgraphTags } from "services/subgraph";
 import { WalletState, useGetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import Loader from "components/Loader";
@@ -14,16 +14,12 @@ import { chainIds } from "constants/chainIds";
 import { adminRoutes, appRoutes } from "constants/routes";
 
 export function Context(props: {
-  children(resources: AdminResources): ReactNode;
+  children(resources: AdminResource): ReactNode;
 }) {
   const { id } = useParams<AdminParams>();
-  const { wallet } = useGetWallet();
 
-  const { data, isLoading, isError } = useAdminResourcesQuery(
-    {
-      endowmentId: id,
-      user: wallet?.address,
-    },
+  const { data, isLoading, isError } = useAdminResourceQuery(
+    { endowmentId: id },
     { skip: !id }
   );
 
@@ -55,17 +51,14 @@ export type TxResource = {
 };
 type Tooltip = string;
 
-type AdminType = AdminResources["type"];
-type Resource<T extends AdminType> = Extract<AdminResources, { type: T }>;
+type AdminType = AdminResource["type"];
+type Resource<T extends AdminType> = Extract<AdminResource, { type: T }>;
 
-type AdminContext<T extends AdminType> = Extract<
-  AdminResources,
-  { type: T }
-> & {
+type AdminContext<T extends AdminType> = Extract<AdminResource, { type: T }> & {
   txResource: TxResource | Tooltip;
 };
 
-const context = createContext({} as AdminResources);
+const context = createContext({} as AdminResource);
 export const useAdminContext = <T extends AdminType = any>(
   operations?: Operation[]
 ): AdminContext<T> => {
@@ -235,6 +228,6 @@ function txMeta(
   return {
     willExecute,
     successMeta: { message, link: { url, description } },
-    tagPayloads: [customApi.util.invalidateTags(defaultProposalTags)],
+    tagPayloads: [invalidateSubgraphTags(defaultProposalTags)],
   };
 }

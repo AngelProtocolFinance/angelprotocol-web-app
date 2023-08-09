@@ -7,7 +7,7 @@ interface State {
 }
 
 const initialState: State = {
-  activeStatus: "open",
+  activeStatus: "all",
   activeGroup: "all",
 };
 

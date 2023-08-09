@@ -1,4 +1,3 @@
-import { AbiCoder } from "@ethersproject/abi";
 import { BigNumber } from "@ethersproject/bignumber";
 import {
   DGenericBalance,
@@ -9,7 +8,6 @@ import {
   toSplit,
 } from "./decoded-types";
 import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
-import { TxMeta } from "types/tx";
 import {
   AccountMessages,
   AccountStorage,
@@ -28,7 +26,6 @@ import { indexFund } from "contracts/evm/index-fund";
 import { multisig } from "contracts/evm/multisig";
 import { registrar } from "contracts/evm/registrar";
 import { toTuple } from "helpers";
-import { EMPTY_DATA } from "constants/evm";
 
 export const queryObjects: {
   [K in QT]: Q[K]["args"] extends null
@@ -175,117 +172,7 @@ export const queryObjects: {
   ],
 
   /** multisig */
-  "multisig.members": [
-    multisig.encodeFunctionData("getOwners", []),
-    (result) => {
-      const d: string[] = multisig.decodeFunctionResult("getOwners", result)[0];
-      //wallets outputs lowercase addresses, but addresses from contracts are not
-      return d.map((a) => a.toLowerCase());
-    },
-  ],
-  "multisig.is-owner": [
-    ({ addr }) => multisig.encodeFunctionData("isOwner", [addr]),
-    (result) => multisig.decodeFunctionResult("isOwner", result)[0],
-  ],
-  "multisig.threshold": [
-    multisig.encodeFunctionData("approvalsRequired", []),
-    (result) => {
-      const d: BigNumber = multisig.decodeFunctionResult(
-        "approvalsRequired",
-        result
-      )[0];
-      return d.toNumber();
-    },
-  ],
-  "multisig.require-execution": [
-    multisig.encodeFunctionData("requireExecution", []),
-    (result) => multisig.decodeFunctionResult("requireExecution", result)[0],
-  ],
-  "multisig.tx-count": [
-    (options) =>
-      multisig.encodeFunctionData("getTransactionCount", toTuple(options)),
-    (result) => {
-      const d: BigNumber = multisig.decodeFunctionResult(
-        "getTransactionCount",
-        result
-      )[0];
-      return d.toNumber();
-    },
-  ],
-  "multisig.txs": [
-    ({ range: [from, to], status }) => {
-      return multisig.encodeFunctionData(
-        "getTransactionIds",
-        toTuple({
-          from,
-          to,
-          pending: status === "open",
-          executed: status === "approved",
-        })
-      );
-    },
-    (result, args) => {
-      const ids: BigNumber[] = multisig.decodeFunctionResult(
-        "getTransactionIds",
-        result
-      )[0];
 
-      return ids.map((id) => ({
-        id: id.toNumber(),
-        status: args?.status ?? "open",
-      }));
-    },
-  ],
-  "multisig.transaction": [
-    ({ id }) => multisig.encodeFunctionData("transactions", [id]),
-    (result, args) => {
-      // no separate TransactionOutputStruct from typechain
-      const d: [string, BigNumber, string, boolean, BigNumber, string] & {
-        destination: string;
-        value: BigNumber;
-        data: string;
-        executed: boolean;
-        expiry: BigNumber;
-        metadata: string;
-      } = multisig.decodeFunctionResult("transactions", result) as any;
-
-      const parsed: TxMeta | undefined =
-        d.metadata === EMPTY_DATA
-          ? undefined
-          : JSON.parse(new AbiCoder().decode(["string"], d.metadata)[0]);
-
-      return {
-        id: args?.id ?? 0,
-        destination: d.destination,
-        value: d.value.toString(),
-        data: d.data,
-        status: d.executed ? "approved" : "open",
-        expiry: d.expiry.toNumber(),
-        metadata: parsed,
-      };
-    },
-  ],
-
-  "multisig.votes": [
-    ({ id }) => multisig.encodeFunctionData("getConfirmations", [id]),
-    (result) => {
-      const d: string[] = multisig.decodeFunctionResult(
-        "getConfirmations",
-        result
-      )[0];
-      return d.map((s) => s.toLowerCase());
-    },
-  ],
-  "multisig.tx-duration": [
-    multisig.encodeFunctionData("transactionExpiry", []),
-    (result) => {
-      const d: BigNumber = multisig.decodeFunctionResult(
-        "transactionExpiry",
-        result
-      )[0];
-      return d.toNumber();
-    },
-  ],
   "multisig/review.is-confirmed": [
     ({ id, addr }) =>
       multisig.encodeFunctionData("getProposalConfirmationStatus", [id, addr]),

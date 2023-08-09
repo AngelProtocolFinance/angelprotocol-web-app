@@ -1,6 +1,6 @@
 import { ContractQueryTypes } from "./queryContract/types";
 
-export const tags: ContractQueryTypes[] = [
+const contractTags: ContractQueryTypes[] = [
   "registrar.config",
 
   "index-fund.config",
@@ -10,15 +10,6 @@ export const tags: ContractQueryTypes[] = [
 
   "erc20.balance",
 
-  "multisig.members",
-  "multisig.is-owner",
-  "multisig.txs",
-  "multisig.tx-count",
-  "multisig.threshold",
-  "multisig.require-execution",
-  "multisig.transaction",
-  "multisig.votes",
-
   "multisig/review.prop-confirms",
   "multisig/review.proposal",
 
@@ -27,7 +18,8 @@ export const tags: ContractQueryTypes[] = [
   "accounts.token-balance",
 ];
 
-export const defaultProposalTags: ContractQueryTypes[] = [
-  "multisig.txs",
-  "multisig.transaction",
-];
+const customTags = ["multisig-subgraph"] as const;
+
+export const tags = [...contractTags, ...customTags];
+
+export type EVMTag = typeof tags[number];
