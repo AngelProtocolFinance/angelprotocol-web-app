@@ -50,7 +50,6 @@ export default function Donater({
           unfold={unfoldAdvancedOptions}
         />
       )}
-
       <button
         type="button"
         className="btn-orange justify-self-center w-44 font-body mt-8"

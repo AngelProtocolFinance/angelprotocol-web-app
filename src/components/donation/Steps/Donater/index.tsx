@@ -67,6 +67,7 @@ export default function Donater({
           ),
       chainName: isFiat(wallet) ? "" : wallet.chain.chain_name,
       chainId: isFiat(wallet) ? "" : wallet.chain.chain_id,
+      userOptForKYC: false,
     },
     resolver: yupResolver(schema),
   });

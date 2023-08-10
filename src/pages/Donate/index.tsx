@@ -44,10 +44,10 @@ export default function Donate() {
             <Content
               name={profile.name}
               id={numId}
-              isKYCRequired={profile.kyc_donors_only ?? false}
-              skipKycStep={
-                profile.type === "ast" &&
-                !profile.contributor_verification_required
+              isKYCRequired={
+                //prettier-ignore
+                (profile.type === "ast" && profile.contributor_verification_required) ||
+                (profile.kyc_donors_only ?? false)
               }
             />
           </>

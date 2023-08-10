@@ -2,7 +2,6 @@ import { useGetter } from "store/accessors";
 import { DonationState } from "slices/donation";
 import { PAYMENT_WORDS } from "constants/common";
 import CurrentStep from "./CurrentStep";
-import Progress from "./Progress";
 
 export type ConfigParams = {
   hideAdvOpts?: boolean;
@@ -19,14 +18,10 @@ export function Steps({ className = "", ...params }: Props) {
   return (
     <div className={`justify-self-center grid ${className}`}>
       {!isFinalized(state) && (
-        <>
-          <span className="text-center font-normal text-xs sm:text-sm">
-            Connect the wallet of your choice to donate crypto. <br />
-            Continue below to {PAYMENT_WORDS.verb} fiat (Dollars, GBP, AUD,
-            Euro)
-          </span>
-          <Progress classes="my-12" />
-        </>
+        <span className="text-center font-normal text-xs sm:text-sm mb-12">
+          Connect the wallet of your choice to donate crypto. <br />
+          Continue below to {PAYMENT_WORDS.verb} fiat (Dollars, GBP, AUD, Euro)
+        </span>
       )}
 
       <CurrentStep {...params} />
@@ -36,6 +31,6 @@ export function Steps({ className = "", ...params }: Props) {
 
 function isFinalized(state: DonationState): boolean {
   return (
-    state.step === 4 && (state.status === "error" || "hash" in state.status)
+    state.step === "tx" && (state.status === "error" || "hash" in state.status)
   );
 }

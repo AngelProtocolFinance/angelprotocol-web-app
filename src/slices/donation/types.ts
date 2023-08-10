@@ -9,7 +9,6 @@ export type DonationRecipient = {
   id: number;
   name: string;
   isKYCRequired: boolean;
-  skipKycStep: boolean;
 };
 
 export type DonationDetails = {
@@ -23,6 +22,7 @@ export type DonationDetails = {
   chainId: string;
   chainName: string;
   tokens: TokenWithAmount[];
+  userOptForKYC: boolean;
 };
 
 export type KYC = {
@@ -38,32 +38,31 @@ export type KYC = {
   agreedToGetUpdates: boolean;
 };
 
-export type SkippableKYC = KYC | "skipped";
-
 type InitStep = {
-  step: 0;
+  step: "init";
   recipient?: DonationRecipient;
 };
 
 export type FormStep = {
-  step: 1;
+  step: "donate-form";
   details?: DonationDetails;
 } & Omit<Required<InitStep>, "step">;
 
 export type KYCStep = {
-  step: 2;
-  kyc?: SkippableKYC;
+  step: "kyc-form";
+  kyc?: KYC;
 } & Omit<Required<FormStep>, "step">;
 
 export type SubmitStep = {
-  step: 3;
-} & Omit<Required<KYCStep>, "step">;
+  step: "submit";
+  //donation can be submitted without KYC
+} & Omit<KYCStep, "step">;
 
 export type DonationState = InitStep | FormStep | KYCStep | SubmitStep | TxStep;
 
 export type TxStatus = { loadingMsg: string } | "error" | { hash: string };
 export type TxStep = {
-  step: 4;
+  step: "tx";
   status: TxStatus;
 } & Omit<SubmitStep, "step">;
 
@@ -83,3 +82,4 @@ export type WithWallet<T> = T & { wallet: WalletState | FiatWallet };
 export function isFiat(wallet: WalletState | FiatWallet): wallet is FiatWallet {
   return !!(wallet as FiatWallet).tokens;
 }
+export type DonationStep = DonationState["step"];

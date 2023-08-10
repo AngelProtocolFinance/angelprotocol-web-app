@@ -13,10 +13,6 @@ export default function Err({
 }) {
   const dispatch = useSetter();
 
-  function goToForm() {
-    dispatch(setStep(1));
-  }
-
   return (
     <div className={`grid justify-items-center ${classes}`}>
       <div className="bg-red rounded-full aspect-square grid place-items-center mb-8">
@@ -39,7 +35,9 @@ export default function Err({
         </Link>
         <button
           type="button"
-          onClick={goToForm}
+          onClick={() => {
+            dispatch(setStep("donate-form"));
+          }}
           className="w-full btn-orange btn-donate"
         >
           Change payment details

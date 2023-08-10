@@ -5,7 +5,7 @@ import { matchRoutes, useLocation } from "react-router-dom";
 import { DonateValues } from "../types";
 import CountrySelector from "components/CountrySelector";
 import TokenField from "components/TokenField";
-import { Label } from "components/form";
+import { CheckField, Label } from "components/form";
 import { useGetter } from "store/accessors";
 import { setDetails } from "slices/donation";
 import { PAYMENT_WORDS } from "constants/common";
@@ -28,6 +28,9 @@ export default function Form(props: {
   const isInsideWidget = useIsInsideWidget();
 
   const endowId = useGetter((state) => state.donation.recipient?.id);
+  const isKYCRequired = useGetter(
+    (state) => state.donation.recipient?.isKYCRequired
+  );
 
   const dispatch = useDispatch();
 
@@ -35,8 +38,6 @@ export default function Form(props: {
     dispatch(setDetails(data));
     reset();
   }
-
-  const wasCompleted = !!getValues("token.amount");
 
   const tokenType = watch("token.type");
 
@@ -77,6 +78,18 @@ export default function Form(props: {
         </>
       )}
 
+      {!isKYCRequired && (
+        // if KYC is required, KYC form is automatically shown on next step
+        <CheckField<DonateValues>
+          name="userOptForKYC"
+          classes={{
+            container: "text-sm",
+            error: "mt-2",
+          }}
+        >
+          Please send me a tax receipt
+        </CheckField>
+      )}
       {!props.hideAdvOpts && (
         <AdvancedOptions classes="mt-10" unfold={props.unfoldAdvOpts} />
       )}
@@ -96,9 +109,8 @@ export default function Form(props: {
         )}
         <button
           className="btn-orange btn-donate w-1/2"
-          disabled={
-            !isValid || (wasCompleted ? false : isDirty) || isSubmitting
-          }
+          //make sure that fields doesn't make form dirty on initial load
+          disabled={!isValid || !isDirty || isSubmitting}
           type="submit"
         >
           Continue

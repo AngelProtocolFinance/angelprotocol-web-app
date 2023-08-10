@@ -28,7 +28,7 @@ export default function Submit(props: WithWallet<SubmitStep>) {
   }, [props, terraWallet]);
 
   function goBack() {
-    dispatch(setStep(props.step - 1));
+    dispatch(setStep(props.kyc ? "kyc-form" : "donate-form"));
   }
 
   function submit({ tx }: Estimate) {
