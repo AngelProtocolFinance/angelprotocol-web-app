@@ -43,6 +43,7 @@ export default function Donater({
           ),
       chainName: wallet.chain.chain_name,
       chainId: wallet.chain.chain_id,
+      userOptForKYC: false,
     },
     resolver: yupResolver(schema),
   });
