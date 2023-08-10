@@ -21,6 +21,7 @@ export type DonationDetails = {
   chainId: string;
   chainName: string;
   tokens: TokenWithAmount[];
+  userOptForKYC: boolean;
 };
 
 export type KYC = {

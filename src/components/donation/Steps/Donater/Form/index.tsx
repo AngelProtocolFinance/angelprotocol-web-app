@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { matchRoutes, useLocation } from "react-router-dom";
 import { DonateValues } from "../types";
 import TokenField from "components/TokenField";
+import { CheckField } from "components/form";
 import { useGetter } from "store/accessors";
 import { setDetails } from "slices/donation";
 import { appRoutes } from "constants/routes";
@@ -23,6 +24,9 @@ export default function Form(props: {
   const isInsideWidget = useIsInsideWidget();
 
   const endowId = useGetter((state) => state.donation.recipient?.id);
+  const isKYCRequired = useGetter(
+    (state) => state.donation.recipient?.isKYCRequired
+  );
 
   const dispatch = useDispatch();
 
@@ -43,6 +47,19 @@ export default function Form(props: {
         withGiftcard
         label="Enter the donation amount:"
       />
+
+      {!isKYCRequired && (
+        // if KYC is required, KYC form is automatically shown on next step
+        <CheckField<DonateValues>
+          name="userOptForKYC"
+          classes={{
+            container: "text-sm",
+            error: "mt-2",
+          }}
+        >
+          Please send me a tax receipt
+        </CheckField>
+      )}
       {!props.hideAdvOpts && (
         <AdvancedOptions classes="mt-10" unfold={props.unfoldAdvOpts} />
       )}
