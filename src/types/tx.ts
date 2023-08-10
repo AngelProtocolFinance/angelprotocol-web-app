@@ -228,6 +228,10 @@ type Txs = {
   "registrar.update-owner": Tx<{ newOwner: string }, OwnerMeta>;
   "registrar.update-config": Tx<RegistrarConfigUpdate, Diff[]>;
   "registrar.add-token": Tx<{ token: string }, never>; //future
+  "registrar.add-accounts-contract": Tx<
+    { chainName: string; contractAddress: string },
+    never
+  >; //future
 };
 
 export type TxType = keyof Txs;
