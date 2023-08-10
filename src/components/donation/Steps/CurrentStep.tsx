@@ -20,7 +20,7 @@ export default function CurrentStep(props: ConfigParams) {
   }, [wallet, dispatch]);
 
   if (state.step === "tx") {
-    <Result {...state} classes="justify-self-center mt-16" />;
+    return <Result {...state} classes="justify-self-center mt-16" />;
   }
 
   if (isLoading) {
@@ -55,6 +55,8 @@ export default function CurrentStep(props: ConfigParams) {
     case "donate-form": {
       return <Donater {...state} config={props} wallet={wallet} />;
     }
+
+    //init
     default: {
       return <></>; // <Steps /> sets to step 1 onMount
     }
