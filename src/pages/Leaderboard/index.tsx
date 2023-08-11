@@ -12,7 +12,7 @@ export default function Leaderboard() {
     <section className="padded-container grid content-start mt-8 pb-16 font-work">
       <Seo title={`Leaderboad - ${APP_NAME}`} url={`${DAPP_URL}/leaderboard`} />
       <DonationMetrics />
-      <h3 className="mt-6 uppercase text-3xl">Leaderboard</h3>
+      <h3 className="mt-6 uppercase text-3xl">Impact board</h3>
       <QueryLoader
         queryState={queryState}
         messages={{
