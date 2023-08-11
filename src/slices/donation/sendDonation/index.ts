@@ -59,26 +59,22 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
       }
       const { hash } = result;
 
-      const kycData: KYCData | undefined =
-        kyc === "skipped"
-          ? undefined
-          : {
-              fullName: `${kyc.name.first} ${kyc.name.last}`,
-              email: kyc.email,
-              streetAddress: `${kyc.address.street} ${kyc.address.complement}`,
-              city: kyc.city,
-              state: kyc.usState.value || kyc.state,
-              zipCode: kyc.postalCode,
-              country: kyc.country.name,
-              consent_tax: true,
-              consent_marketing: true,
-            };
+      const kycData: KYCData | undefined = kyc
+        ? {
+            fullName: `${kyc.name.first} ${kyc.name.last}`,
+            email: kyc.email,
+            streetAddress: `${kyc.address.street} ${kyc.address.complement}`,
+            city: kyc.city,
+            state: kyc.usState.value || kyc.state,
+            zipCode: kyc.postalCode,
+            country: kyc.country.name,
+            consent_tax: true,
+            consent_marketing: true,
+          }
+        : undefined;
 
       updateTx({
-        loadingMsg:
-          kyc !== "skipped"
-            ? "Requesting receipt.."
-            : "Saving donation details",
+        loadingMsg: kyc ? "Requesting receipt.." : "Saving donation details",
       });
 
       /** SAVE DONATION */

@@ -49,12 +49,12 @@ export default function DonateWidget() {
             />
             <InnerComponent
               id={profile.id}
-              isKYCRequired={profile.kyc_donors_only ?? false}
-              name={profile.name}
-              skipKycStep={
-                profile.type === "ast" &&
-                !profile.contributor_verification_required
+              isKYCRequired={
+                //prettier-ignore
+                (profile.type === "ast" && profile.contributor_verification_required) ||
+                (profile.kyc_donors_only ?? false)
               }
+              name={profile.name}
             />
           </>
         )}
