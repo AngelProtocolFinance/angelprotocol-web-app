@@ -1,4 +1,4 @@
-import * as Yup from "yup";
+import { array, lazy, object, string } from "yup";
 import { Amount, WithdrawValues as WV } from "./types";
 import { SchemaShape } from "schemas/types";
 import { tokenConstraint } from "schemas/number";
@@ -20,13 +20,13 @@ const amount: (network: TNetwork, fees: TFees) => SchemaShape<Amount> = (
   network,
   fees
 ) => ({
-  value: Yup.lazy((val: TVal) =>
+  value: lazy((val: TVal) =>
     val === ""
-      ? Yup.string() //required collected on _amount
-      : tokenConstraint.when(balKey, (balance: TBal, schema) =>
+      ? string() //required collected on _amount
+      : tokenConstraint.when(balKey, ([balance], schema) =>
           schema
             .test("enough balance", "not enough balance", () => {
-              return +balance >= +val;
+              return +(balance as TBal) >= +val;
             })
             .test(
               "must be greater than fee",
@@ -42,22 +42,22 @@ const amount: (network: TNetwork, fees: TFees) => SchemaShape<Amount> = (
 });
 
 const shape: SchemaShape<WV> = {
-  amounts: Yup.array().when([netKey, feesKey], (...args: any[]) => {
-    const [network, fees, schema] = args as [TNetwork, TFees, any];
-    return schema.of(Yup.object().shape(amount(network, fees)));
+  amounts: array().when([netKey, feesKey], (vals, schema) => {
+    const [network, fees] = vals as [TNetwork, TFees];
+    return schema.of(object().shape(amount(network, fees)));
   }),
   //test if at least one amount is filled
-  _amounts: Yup.string().when(amountsKey, (amounts: Amount[], schema) =>
+  _amounts: string().when(amountsKey, ([amounts], schema) =>
     schema.test("at least one is filled", "", () =>
-      amounts.some((amount) => amount.value !== "")
+      (amounts as Amount[]).some((amount) => amount.value !== "")
     )
   ),
-  beneficiary: Yup.string().when(netKey, (network: TNetwork) =>
-    requiredWalletAddr(network)
+  beneficiary: string().when(netKey, ([network]) =>
+    requiredWalletAddr(network as TNetwork)
   ),
-  reason: Yup.string().when(heightKey, (height, schema) =>
+  reason: string().when(heightKey, ([height], schema) =>
     height > 0 ? schema.required("reason required") : schema.optional()
   ),
 };
 
-export const schema = Yup.object(shape);
+export const schema = object(shape);
