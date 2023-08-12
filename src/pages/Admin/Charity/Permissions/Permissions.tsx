@@ -21,6 +21,7 @@ export default function Permissions() {
     allowList: formPermission(controller.allowlistedBeneficiaries),
     donationSplitParams: formPermission(controller.splitToLiquid),
     profile: formPermission(controller.name),
+    investments: formPermission(controller.liquidInvestmentManagement),
   };
 
   const methods = useForm<FV>({

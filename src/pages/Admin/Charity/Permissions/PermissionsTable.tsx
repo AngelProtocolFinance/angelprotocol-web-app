@@ -17,6 +17,7 @@ export default function PermissionsTable({ classes = "" }) {
             allowList: true,
             donationSplitParams: true,
             profile: true,
+            investments: true,
           })
         : setOpen({}),
     {
@@ -78,6 +79,12 @@ export default function PermissionsTable({ classes = "" }) {
         <Permission
           title="Changes to profile"
           name="profile"
+          onToggle={handleToggle}
+          isOpen={!!open.profile}
+        />
+        <Permission
+          title="Investments"
+          name="investments"
           onToggle={handleToggle}
           isOpen={!!open.profile}
         />

@@ -17,13 +17,14 @@ export function controllerUpdate(
   const allowList = toPermission("allowList");
   const donationSplitParams = toPermission("donationSplitParams");
   const profile = toPermission("profile");
+  const investments = toPermission("investments");
 
   return {
     id: endowId,
     settingsController: {
       acceptedTokens: controller.acceptedTokens,
-      lockedInvestmentManagement: controller.lockedInvestmentManagement,
-      liquidInvestmentManagement: controller.liquidInvestmentManagement,
+      lockedInvestmentManagement: investments,
+      liquidInvestmentManagement: investments,
       allowlistedBeneficiaries: allowList,
       allowlistedContributors: allowList,
       maturityAllowlist: controller.maturityAllowlist,

@@ -17,6 +17,7 @@ export type TPermissions = {
   allowList: TPermission;
   donationSplitParams: TPermission;
   profile: TPermission;
+  investments: TPermission;
 };
 
 export type FV = TPermissions & {
