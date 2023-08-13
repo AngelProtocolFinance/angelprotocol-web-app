@@ -15,13 +15,8 @@ export const tokenShape: SchemaShape<TWA> = {
   amount: Yup.lazy((amount: string) =>
     amount === ""
       ? Yup.string().required("required")
-      : tokenConstraint.when([minKey, balKey, giftKey], (...args: any[]) => {
-          const [minAmount, balance, gift, schema] = args as [
-            Min,
-            Bal,
-            Gift,
-            any
-          ];
+      : tokenConstraint.when([minKey, balKey, giftKey], (values, schema) => {
+          const [minAmount, balance, gift] = values as [Min, Bal, Gift];
           return !!minAmount
             ? schema
                 .min(minAmount || 0, `amount must be at least ${minAmount}`)

@@ -8,10 +8,11 @@ import { requiredString } from "schemas/string";
 type Key = keyof FormValues;
 const roleKey: Key = "role";
 
-const otherOption = string().when(roleKey, (vals, schema) => {
-  const [option] = vals as [OptionType<ContactRoles | ReferralMethods>];
-  return option.value === "other" ? schema.required("required") : schema;
-});
+const otherOption = string().when(roleKey, ([option], schema) =>
+  (option as OptionType<ContactRoles | ReferralMethods>).value === "other"
+    ? schema.required("required")
+    : schema
+);
 
 export const schema = object<any, SchemaShape<FormValues>>({
   orgName: requiredString,

@@ -7,8 +7,8 @@ const type: Keys = "type";
 const vote: Keys = "vote";
 
 const shape: SchemaShape<VV> = {
-  reason: Yup.string().when([vote, type], (...args: any[]) => {
-    const [vote, type, schema] = args as [VV["vote"], VV["type"], any];
+  reason: Yup.string().when([vote, type], (values, schema) => {
+    const [vote, type] = values as [VV["vote"], VV["type"]];
     return type === "application" && vote === "no"
       ? schema.required("reason is required")
       : schema.optional();
