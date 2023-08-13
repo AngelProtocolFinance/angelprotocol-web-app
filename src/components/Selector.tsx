@@ -25,7 +25,7 @@ interface Props<
   T extends FieldValues,
   K extends Path<T>,
   V extends ValKey,
-  M extends boolean
+  M extends boolean,
 > {
   name: T[K] extends VarOption<M, V> ? K : never;
   multiple?: M;
@@ -45,7 +45,7 @@ export function Selector<
   T extends FieldValues,
   K extends Path<T>,
   ValueType extends ValKey,
-  Multiple extends boolean
+  Multiple extends boolean,
 >({
   name,
   disabled,

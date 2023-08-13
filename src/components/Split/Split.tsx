@@ -12,7 +12,7 @@ type Props<FV extends FieldValues, P extends Path<FV>, T extends Path<FV>> = {
 export default function Split<
   FV extends FieldValues,
   P extends Path<FV>,
-  T extends Path<FV>
+  T extends Path<FV>,
 >(props: Props<FV, P, T>) {
   const { watch } = useFormContext<FV>();
 
