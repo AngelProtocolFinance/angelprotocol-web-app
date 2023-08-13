@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { apes } from "services/apes";
 import { aws } from "services/aws/aws";
+import { axelar } from "services/axelar";
 import { junoApi } from "services/juno";
 import { adminReducer } from "slices/admin";
 import authReducer from "slices/authSlice";
@@ -20,6 +21,7 @@ export const store = configureStore({
     [aws.reducerPath]: aws.reducer,
     [apes.reducerPath]: apes.reducer,
     [junoApi.reducerPath]: junoApi.reducer,
+    [axelar.reducerPath]: axelar.reducer,
     //auth: authReducer,
     //future: futureReducer,
   },
@@ -28,6 +30,7 @@ export const store = configureStore({
       aws.middleware,
       apes.middleware,
       junoApi.middleware,
+      axelar.middleware,
     ]),
 });
 export type RootState = ReturnType<typeof store.getState>;
