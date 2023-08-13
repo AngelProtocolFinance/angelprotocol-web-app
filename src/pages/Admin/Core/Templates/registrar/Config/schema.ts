@@ -1,4 +1,4 @@
-import * as Yup from "yup";
+import { ObjectSchema, object } from "yup";
 import { RegistrarConfigValues } from "pages/Admin/types";
 import { SchemaShape } from "schemas/types";
 import { percentString, positiveNumber } from "schemas/number";
@@ -7,7 +7,7 @@ import { proposalShape } from "../../../../constants";
 
 const contractAddrSchema = contractAddr.nullable();
 
-const shape: SchemaShape<RegistrarConfigValues> = {
+export const schema = object<any, SchemaShape<RegistrarConfigValues>>({
   ...proposalShape,
 
   accounts_contract: contractAddrSchema,
@@ -24,6 +24,4 @@ const shape: SchemaShape<RegistrarConfigValues> = {
   split_min: percentString,
   cw3_code: positiveNumber,
   cw4_code: positiveNumber,
-};
-
-export const schema = Yup.object(shape);
+}) as ObjectSchema<RegistrarConfigValues>;

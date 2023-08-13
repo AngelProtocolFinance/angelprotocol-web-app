@@ -1,4 +1,4 @@
-import { array, lazy, object, string } from "yup";
+import { ObjectSchema, array, lazy, object, string } from "yup";
 import { Amount, WithdrawValues as WV } from "./types";
 import { SchemaShape } from "schemas/types";
 import { tokenConstraint } from "schemas/number";
@@ -41,10 +41,10 @@ const amount: (network: TNetwork, fees: TFees) => SchemaShape<Amount> = (
   ),
 });
 
-const shape: SchemaShape<WV> = {
+export const schema = object<any, SchemaShape<WV>>({
   amounts: array().when([netKey, feesKey], (vals, schema) => {
     const [network, fees] = vals as [TNetwork, TFees];
-    return schema.of(object().shape(amount(network, fees)));
+    return schema.of(object(amount(network, fees)));
   }),
   //test if at least one amount is filled
   _amounts: string().when(amountsKey, ([amounts], schema) =>
@@ -58,6 +58,4 @@ const shape: SchemaShape<WV> = {
   reason: string().when(heightKey, ([height], schema) =>
     height > 0 ? schema.required("reason required") : schema.optional()
   ),
-};
-
-export const schema = object(shape);
+}) as ObjectSchema<WV>;

@@ -1,5 +1,5 @@
-import * as Yup from "yup";
-import { FormValues } from "./types";
+import { ObjectSchema, array, object } from "yup";
+import { FormValues as FV } from "./types";
 import { SchemaShape } from "schemas/types";
 import { Country } from "types/countries";
 import { ImgLink } from "components/ImgEditor";
@@ -19,7 +19,7 @@ export const MAX_SIZE_IN_BYTES = 1e6;
 
 // we only need to validate the pre-crop image and if we confirm it is valid
 // we can be sure that the cropped image is valid too
-const fileObj = Yup.object().shape<SchemaShape<ImgLink>>({
+const fileObj = object<any, SchemaShape<ImgLink>>({
   precropFile: genFileSchema(MAX_SIZE_IN_BYTES, VALID_MIME_TYPES).when(
     "publicUrl",
     {
@@ -30,8 +30,9 @@ const fileObj = Yup.object().shape<SchemaShape<ImgLink>>({
 });
 
 //construct strict shape to avoid hardcoding shape keys
-const shape: SchemaShape<FormValues> = {
-  categories_sdgs: Yup.array()
+
+export const schema = object<any, SchemaShape<FV>>({
+  categories_sdgs: array()
     .min(1, "required")
     .max(MAX_SDGS, `maximum ${MAX_SDGS} selections allowed`),
   tagline: requiredString.max(140, "max length is 140 chars"),
@@ -39,16 +40,16 @@ const shape: SchemaShape<FormValues> = {
   logo: fileObj,
   url: url.required("required"),
   // registration_number: no need to validate,
-  hq_country: Yup.object().shape<SchemaShape<Country>>({
+  hq_country: object<any, SchemaShape<Country>>({
     name: requiredString,
   }),
-  endow_designation: Yup.object().shape<SchemaShape<OptionType<string>>>({
+  endow_designation: object<any, SchemaShape<OptionType<string>>>({
     label: requiredString,
     value: requiredString,
   }),
   name: requiredString,
   overview: requiredString,
-  active_in_countries: Yup.array(),
+  active_in_countries: array(),
   social_media_url_facebook: url,
   social_media_url_twitter: url,
   social_media_url_linkedin: url,
@@ -56,6 +57,4 @@ const shape: SchemaShape<FormValues> = {
   social_media_url_instagram: url,
   social_media_url_youtube: url,
   social_media_url_tiktok: url,
-};
-
-export const schema = Yup.object().shape(shape);
+}) as ObjectSchema<FV>;

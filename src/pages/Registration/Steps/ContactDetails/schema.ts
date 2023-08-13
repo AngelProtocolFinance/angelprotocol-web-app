@@ -1,4 +1,4 @@
-import { object, string } from "yup";
+import { ObjectSchema, object, string } from "yup";
 import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
 import { ContactRoles, ReferralMethods } from "types/aws";
@@ -24,4 +24,4 @@ export const schema = object<any, SchemaShape<FormValues>>({
   //referralMethod - preselected
   otherReferralMethod: otherOption,
   otherRole: otherOption,
-});
+}) as ObjectSchema<FormValues>;

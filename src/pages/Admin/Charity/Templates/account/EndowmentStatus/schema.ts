@@ -1,4 +1,4 @@
-import { StringSchema, object, string } from "yup";
+import { ObjectSchema, StringSchema, object, string } from "yup";
 import { EndowmentUpdateValues as EPV } from "pages/Admin/types";
 import { SchemaShape } from "schemas/types";
 import { requiredPositiveNumber } from "schemas/number";
@@ -24,7 +24,7 @@ const genTypeTest =
     }
   };
 
-export const schema = object<SchemaShape<EPV>>({
+export const schema = object<any, SchemaShape<EPV>>({
   ...proposalShape,
   id: requiredPositiveNumber,
   beneficiaryType: string().required("beneficiary must be selected"),
@@ -33,4 +33,4 @@ export const schema = object<SchemaShape<EPV>>({
   wallet: string().when(beneficiaryTypeKey, genTypeTest("wallet")),
   endowmentId: string().when(beneficiaryTypeKey, genTypeTest("endowment")),
   indexFund: string().when(beneficiaryTypeKey, genTypeTest("index fund")),
-});
+}) as ObjectSchema<EPV>;

@@ -106,7 +106,7 @@
     "@walletconnect/types": "2.9.0",
     "eslint": "^8.3.0",
     "eslint-config-prettier": "9.0.0",
-    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-prettier": "5.0.0",
     "https-browserify": "^1.0.0",
     "husky": "^8.0.3",
     "lint-staged": "^13.2.0",
