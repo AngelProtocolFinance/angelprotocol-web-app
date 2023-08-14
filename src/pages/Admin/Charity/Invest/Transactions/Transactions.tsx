@@ -5,10 +5,10 @@ import Table from "./Table";
 export default function Transactions() {
   return (
     <div>
-      <h3 className="font-bold text-2xl mt-8 mb-4 text-center @lg:text-left">
-        Recent transactions
-      </h3>
-      <TableLoader />
+      <h3 className="font-bold text-2xl mt-8 mb-4">Recent transactions</h3>
+      <div className="w-full overflow-y-auto scroller">
+        <TableLoader />
+      </div>
     </div>
   );
 }

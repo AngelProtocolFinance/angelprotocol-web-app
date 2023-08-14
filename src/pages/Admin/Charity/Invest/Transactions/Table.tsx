@@ -2,6 +2,7 @@ import { Transaction } from "types/axelar";
 import ExtLink from "components/ExtLink";
 import LoaderRing from "components/LoaderRing";
 import TableSection, { Cells } from "components/TableSection";
+import { humanize } from "helpers";
 import { IS_TEST } from "constants/env";
 
 type Props = {
@@ -34,6 +35,7 @@ export default function Table({
           cellClass="px-3 py-4 text-xs uppercase font-semibold text-left first:rounded-tl last:rounded-tr"
         >
           <>Status</>
+          <>Token</>
           <>Amount</>
           <>Hash</>
         </Cells>
@@ -53,14 +55,15 @@ export default function Table({
               }`}
             >
               <>{tx.status}</>
-              <>{tx.amount + tx.symbol}</>
+              <>{tx.symbol}</>
+              <>{humanize(tx.amount, 4)}</>
               <ExtLink
                 href={`${
                   IS_TEST
                     ? "https://testnet.axelarscan.io/gmp"
                     : "https://axelarscan.io/gmp"
                 }/${tx.call.transactionHash}`}
-                className="flex items-center justify-between gap-1 cursor-pointer text-sm hover:underline"
+                className="cursor-pointer text-sm hover:underline"
               >
                 {tx.call.transactionHash}
               </ExtLink>
