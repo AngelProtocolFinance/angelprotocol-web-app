@@ -21,32 +21,33 @@ export default function Members() {
 
   const submit: SubmitHandler<FV> = async (fv) => {
     if (isTooltip(txResource)) throw new Error(txResource);
+    if (fv.action === "initial") throw new Error("no action selected"); //to narrow fv.action
 
     const prev = new Set(members);
     const curr = new Set(fv.members);
 
-    const [data, dest, meta] = (() => {
-      switch (fv.action) {
-        case "add": {
-          const toAdd = fv.members.filter((m) => !prev.has(m));
-          return encodeTx("multisig.add-owners", {
-            multisig,
-            addresses: toAdd,
-          });
-        }
-        case "remove": {
-          const toRemove = fv.initial.filter((m) => !curr.has(m));
-          return encodeTx("multisig.remove-owners", {
-            multisig,
-            addresses: toRemove,
-          });
-        }
-        default:
-          throw new Error("Invalid action");
-      }
-    })();
+    const changes =
+      fv.action === "add"
+        ? fv.members.filter((m) => !prev.has(m))
+        : fv.initial.filter((m) => !curr.has(m));
 
     const { wallet, txMeta } = txResource;
+    const [data, dest, meta] = encodeTx(
+      fv.action === "add" ? "multisig.add-owners" : "multisig.remove-owners",
+      {
+        multisig,
+        addresses: changes,
+      },
+      {
+        title: `${fv.action} members by ${wallet.address}`,
+        description: `${fv.action} members by ${wallet.address}`,
+        content: {
+          action: fv.action,
+          addresses: changes,
+        },
+      }
+    );
+
     const tx = createTx(wallet.address, "multisig.submit-transaction", {
       multisig: dest,
       destination: dest,

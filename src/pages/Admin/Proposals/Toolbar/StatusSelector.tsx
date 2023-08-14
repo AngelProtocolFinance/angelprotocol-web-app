@@ -30,6 +30,8 @@ export default function StatusSelector({ classes = "" }) {
 }
 
 const pollStatusOptions: { [key in ProposalStatusOptions]: string } = {
+  all: "all",
   open: "open",
   approved: "approved",
+  expired: "expired",
 };

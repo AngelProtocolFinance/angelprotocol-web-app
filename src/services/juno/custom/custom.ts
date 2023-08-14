@@ -1,135 +1,80 @@
 import {
-  AdminResources,
+  AdminResource,
   CharityApplication,
   EndowBalance,
   IERC20,
-  ProposalDetails,
   WithdrawData,
 } from "../../types";
 import { BridgeFeesRes } from "types/aws";
 import { AcceptedTokens, AccountType } from "types/contracts";
-import { TransactionStatus } from "types/lists";
-import { Transaction } from "types/tx";
+import { MultisigOwnersRes, MultisigRes } from "types/subgraph";
 import { version as v } from "services/helpers";
-import { idParamToNum } from "helpers";
 import { IS_AST, IS_TEST } from "constants/env";
 import { APIs } from "constants/urls";
-import { junoApi } from "..";
+import { GRAPHQL_ENDPOINT } from "../../constants";
+import { junoApi } from "../index";
 import { queryContract } from "../queryContract";
-import { apCWs, multisigInfo } from "./helpers/admin-resource";
+import { multisigRecordId } from "./constants";
 
 export const customApi = junoApi.injectEndpoints({
   endpoints: (builder) => ({
     isMember: builder.query<boolean, { user: string; endowmentId?: string }>({
-      providesTags: ["multisig.members", "accounts.endowment"],
-      async queryFn(args) {
-        const numId = idParamToNum(args.endowmentId);
-        const AP = apCWs[numId];
-        /** special case for ap admin usage */
-        if (AP) {
-          const { multisig } = AP;
-          //skip endowment query, query hardcoded cw3 straight
-          const members = await queryContract("multisig.members", { multisig });
-
-          return {
-            data: members.includes(args.user),
-          };
-        }
-
-        const endowment = await queryContract("accounts.endowment", {
-          id: numId,
-        });
-
-        const members = await queryContract("multisig.members", {
-          multisig: endowment.owner,
-        });
+      providesTags: ["multisig-subgraph"],
+      async queryFn({ endowmentId = "", user }) {
+        const {
+          multiSig: { owners },
+        } = await querySubgraph<{ multiSig: MultisigOwnersRes }>(`{
+          multiSig(id:"${multisigRecordId(endowmentId)[0]}") {
+            owners (where:{ active:true }) {
+              owner {
+                id
+              }
+            }
+          }
+        }`);
 
         return {
-          data: members.includes(args.user),
+          data: owners.some(({ owner: { id } }) => id.toLowerCase() === user),
         };
       },
     }),
-    adminResources: builder.query<
-      AdminResources,
-      { endowmentId?: string; user?: string }
-    >({
-      providesTags: [
-        "multisig.members",
-        "multisig.threshold",
-        "multisig.require-execution",
-        "accounts.endowment",
-      ],
-      async queryFn(args) {
-        const numId = idParamToNum(args.endowmentId);
-        const AP = apCWs[numId];
-        /** special case for ap admin usage */
-        if (AP) {
-          const { multisig, type } = AP;
-          //skip endowment query, query hardcoded cw3 straight
-
-          const [config, members] = await multisigInfo(multisig, args.user);
-
-          return {
-            data: {
-              type: type as any,
-              id: numId,
-              members,
-              multisig,
-              config,
-            },
-          };
-        }
-
-        const endowment = await queryContract("accounts.endowment", {
-          id: numId,
-        });
-
-        const [config, members] = await multisigInfo(
-          endowment.owner,
-          args.user
-        );
-
-        return {
-          data: {
-            type: "charity",
-            id: numId,
-            members,
-            multisig: endowment.owner,
-            config,
-            ...endowment,
-          },
-        };
-      },
-    }),
-    proposalDetails: builder.query<
-      ProposalDetails,
-      { id?: string; multisig: string }
-    >({
-      providesTags: [
-        "multisig.votes",
-        "multisig.members",
-        "multisig.is-owner", //TODO: temp:remove once members query is available
-        "multisig.transaction",
-      ],
-      async queryFn({ id: idParam, multisig }) {
-        const id = idParamToNum(idParam);
-
-        const [signed, signers, transaction] = await Promise.all([
-          queryContract("multisig.votes", {
-            multisig,
-            id,
-          }),
-          queryContract("multisig.members", { multisig }),
-          queryContract("multisig.transaction", { multisig, id }),
+    adminResource: builder.query<AdminResource, { endowmentId?: string }>({
+      providesTags: ["accounts.endowment", "multisig-subgraph"],
+      async queryFn({ endowmentId = "" }) {
+        const [recordId, type] = multisigRecordId(endowmentId);
+        const [{ multiSig: m }, endowment] = await Promise.all([
+          querySubgraph<{ multiSig: MultisigRes }>(`{
+            multiSig(id: "${recordId}") {
+              id
+              address
+              owners (where:{active:true}) {
+                owner {
+                  id
+                }
+              }
+              approvalsRequired
+              requireExecution
+              transactionExpiry
+            }
+          }`),
+          typeof recordId === "number"
+            ? queryContract("accounts.endowment", { id: recordId })
+            : Promise.resolve({}),
         ]);
 
-        return {
-          data: {
-            ...transaction,
-            signed,
-            signers,
+        const resource: AdminResource = {
+          type: type as any,
+          multisig: m.address.toLowerCase(),
+          members: m.owners.map(({ owner: { id } }) => id.toLowerCase()),
+          id: typeof recordId === "number" ? recordId : 0,
+          config: {
+            threshold: +m.approvalsRequired,
+            requireExecution: m.requireExecution,
+            duration: +m.transactionExpiry,
           },
+          ...endowment,
         };
+        return { data: resource };
       },
     }),
     endowBalance: builder.query<EndowBalance, { id: number }>({
@@ -175,52 +120,6 @@ export const customApi = junoApi.injectEndpoints({
               withdrawBps: withdrawFeeSetting.bps,
               earlyLockedWithdrawBps: earlyLockedWithdrawFeeSetting.bps,
             },
-          },
-        };
-      },
-    }),
-
-    proposals: builder.query<
-      { proposals: Transaction[]; next?: number },
-      { multisig: string; status: TransactionStatus; page: number }
-    >({
-      providesTags: ["multisig.tx-count", "multisig.txs"],
-      async queryFn(args) {
-        const { status, multisig, page } = args;
-        const proposalsPerPage = 5;
-
-        const count = await queryContract("multisig.tx-count", {
-          multisig,
-          open: status === "open",
-          approved: status === "approved",
-        });
-
-        //get last 5 proposals
-        const range: [number, number] = [
-          Math.max(0, count - proposalsPerPage * args.page),
-          count,
-        ];
-
-        const txs = await queryContract("multisig.txs", {
-          multisig,
-          range,
-          status,
-        });
-
-        const details = await Promise.all(
-          txs.map((t) =>
-            queryContract("multisig.transaction", { multisig, id: t.id }).then(
-              (t) => ({ ...t, id: t.id })
-            )
-          )
-        );
-
-        details.sort((a, b) => b.id - a.id);
-
-        return {
-          data: {
-            proposals: details,
-            next: range[0] > 0 ? page + 1 : undefined,
           },
         };
       },
@@ -278,10 +177,25 @@ async function endowBalance(id: number): Promise<EndowBalance> {
 
 export const {
   useIsMemberQuery,
-  useProposalsQuery,
-  useAdminResourcesQuery,
-  useProposalDetailsQuery,
+  useAdminResourceQuery,
   useEndowBalanceQuery,
   useWithdrawDataQuery,
   useApplicationQuery,
 } = customApi;
+
+type Result<T> = { data: T } | { errors: unknown };
+async function querySubgraph<T>(query: string): Promise<T> {
+  return fetch(GRAPHQL_ENDPOINT, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ query }),
+  })
+    .then<Result<T>>((res) => {
+      if (!res.ok) throw new Error(`Failed grapQL request:${query}`);
+      return res.json();
+    })
+    .then((data) => {
+      if ("errors" in data) throw new Error(`Failed grapQL request:${query}`);
+      return data.data;
+    });
+}

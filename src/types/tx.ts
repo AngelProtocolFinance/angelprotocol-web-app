@@ -132,8 +132,8 @@ export type TransferMeta = {
   token: MetaToken;
 };
 
-export type MultisigMemberMeta = {
-  address: string;
+export type MultisigMembersMeta = {
+  addresses: string[];
   action: "add" | "remove";
 };
 
@@ -185,8 +185,8 @@ type Txs = {
 
   // //// MULTISIG ////
   "multisig.submit-transaction": Tx<NewTransaction, never>; //no meta
-  "multisig.add-owners": Tx<Addresses, MultisigMemberMeta>;
-  "multisig.remove-owners": Tx<Addresses, MultisigMemberMeta>;
+  "multisig.add-owners": Tx<Addresses, MultisigMembersMeta>;
+  "multisig.remove-owners": Tx<Addresses, MultisigMembersMeta>;
   "multisig.confirm-tx": Tx<ID, never>; //no meta
   "multisig.revoke-tx": Tx<ID, never>; //no meta
   "multisig.execute-tx": Tx<ID, never>; //no meta
@@ -249,19 +249,12 @@ export type TxMeta = ValueOf<{
   [K in keyof Txs]: { id: K; data?: Txs[K]["meta"] };
 }> & { title: string; description: string };
 
-// export type Transaction = OverrideProperties<
-//   Except<Plain<MultiSigStorage.TransactionStruct>, "executed">,
-//   { value: string; metadata?: TxMeta; data: string }
-//   //add id and status
-// > & { status: TransactionStatus; id: number };
-
-//no corresponding struct in typechain
 export type Transaction = {
-  id: number;
-  destination: string;
-  value: string;
-  data: string;
-  status: TransactionStatus;
+  transactionId: number;
+  recordId: string;
   expiry: number;
-  metadata?: TxMeta;
+  status: TransactionStatus;
+  confirmations: string[];
+  owners: string[];
+  meta?: TxMeta;
 };

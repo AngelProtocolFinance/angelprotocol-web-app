@@ -14,4 +14,5 @@ export function Status(props: { status: TransactionStatus }) {
 const statusClasses: { [key in TransactionStatus]: string } = {
   approved: "bg-blue",
   open: "bg-orange",
+  expired: "bg-red",
 };

@@ -10,9 +10,8 @@ import {
   RegistrarConfig,
   StrategyParams,
 } from "types/contracts";
-import { ApplicationProposal, PageOptions } from "types/contracts/multisig";
+import { ApplicationProposal } from "types/contracts/multisig";
 import { Contract } from "types/lists";
-import { Transaction } from "types/tx";
 
 type Addr = { addr: string };
 type ID = { id: number };
@@ -35,16 +34,6 @@ export interface ContractQueries {
 
   "erc20.balance": Query<Addr, string>;
   "erc20.allowance": Query<{ owner: string; spender: string }, string>;
-
-  "multisig.members": Query<null, string[]>;
-  "multisig.txs": Query<PageOptions, Pick<Transaction, "id" | "status">[]>;
-  "multisig.threshold": Query<null, number>;
-  "multisig.require-execution": Query<null, boolean>;
-  "multisig.transaction": Query<ID, Transaction>;
-  "multisig.is-owner": Query<Addr, boolean>;
-  "multisig.tx-count": Query<{ open: boolean; approved: boolean }, number>;
-  "multisig.votes": Query<ID, string[]>;
-  "multisig.tx-duration": Query<null, number>;
 
   "multisig/review.is-confirmed": Query<ID & Addr, boolean>;
   "multisig/review.proposal": Query<ID, ApplicationProposal>;

@@ -1,7 +1,10 @@
-import { useState } from "react";
-import { useProposalsQuery } from "services/juno/custom";
+import {
+  updateSubgraphQueryData,
+  useLazyProposalsQuery,
+  useProposalsQuery,
+} from "services/subgraph";
 import Seo from "components/Seo";
-import { useGetter } from "store/accessors";
+import { useGetter, useSetter } from "store/accessors";
 import { APP_NAME, DAPP_URL } from "constants/env";
 import { adminRoutes } from "constants/routes";
 import { useAdminContext } from "../Context";
@@ -9,23 +12,43 @@ import Table from "./Table";
 import Toolbar from "./Toolbar";
 
 export default function Proposals() {
-  const { multisig } = useAdminContext();
-  const [pageNum, setPageNum] = useState(1);
+  const { multisig, type, id } = useAdminContext();
+  const dispatch = useSetter();
   const { activeStatus } = useGetter((state) => state.admin.proposals);
 
   const {
-    data: { proposals, next } = { proposals: [], next: undefined },
-    isLoading,
+    data: { items, next } = { items: [], next: undefined },
     isFetching,
+    isLoading,
+    originalArgs,
   } = useProposalsQuery({
-    multisig,
-    page: pageNum,
-    status: activeStatus,
+    multisigId: type === "charity" ? `${id}` : multisig,
+    page: 1,
+    status: activeStatus === "all" ? undefined : activeStatus,
   });
 
-  function more() {
-    //loadMore button will be hidden if next page is undefined
-    setPageNum((prev) => prev + 1);
+  const [loadMore] = useLazyProposalsQuery();
+
+  async function more() {
+    if (
+      next &&
+      originalArgs /** txs won't show if no initial query is made */
+    ) {
+      const { data: newPage } = await loadMore({
+        ...originalArgs,
+        page: next,
+      });
+
+      if (newPage) {
+        //pessimistic update to original cache data
+        dispatch(
+          updateSubgraphQueryData("proposals", originalArgs, (prevResult) => {
+            prevResult.items.push(...newPage.items);
+            prevResult.next = newPage.next;
+          })
+        );
+      }
+    }
   }
 
   return (
@@ -37,9 +60,9 @@ export default function Proposals() {
 
       <Toolbar classes="@xl:mb-6" />
 
-      {(proposals.length > 0 && (
+      {(items.length > 0 && (
         <Table
-          proposals={proposals}
+          txs={items}
           more={isFetching ? "loading" : next ? more : undefined}
         />
       )) || (

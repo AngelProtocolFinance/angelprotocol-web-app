@@ -1,11 +1,10 @@
 import Icon from "components/Icon";
-import { SortDirection, SortKey } from "hooks/useSort";
 
 export function HeaderButton<T>(
   props: React.ButtonHTMLAttributes<HTMLButtonElement> & {
-    _sortDirection: SortDirection;
-    _sortKey: SortKey<T>;
-    _activeSortKey: SortKey<T>;
+    _sortDirection: "asc" | "desc";
+    _sortKey: keyof T;
+    _activeSortKey: keyof T;
   }
 ) {
   const { _activeSortKey, _sortKey, _sortDirection, children, ...restProps } =

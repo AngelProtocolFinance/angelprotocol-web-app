@@ -10,7 +10,7 @@ export const hasElapsed = (timestamp: number) =>
  * @param date - date string or "now"
  * @returns block timestamp in seconds
  */
-export const blockTime = (date: "now" | string) =>
+export const blockTime = (date: "now" | string): number =>
   Math.floor((date === "now" ? new Date() : new Date(date)).getTime() / 1000);
 
 export const fromBlockTime = (blockTime: number | string) =>
