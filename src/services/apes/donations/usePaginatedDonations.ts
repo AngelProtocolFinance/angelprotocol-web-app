@@ -5,14 +5,14 @@ import {
   DonationsQueryParams,
   PaginatedAWSQueryRes,
 } from "types/aws";
+import { useSetter } from "store/accessors";
+import useDebouncer from "hooks/useDebouncer";
+import { chainIds } from "constants/chainIds";
 import {
   updateDonationsQueryData,
   useDonationsQuery,
   useLazyDonationsQuery,
-} from "services/apes";
-import { useSetter } from "store/accessors";
-import useDebouncer from "hooks/useDebouncer";
-import { chainIds } from "constants/chainIds";
+} from "./index";
 
 type DonorOwner = { donorAddress: string };
 type EndowmentOwner = { endowmentId: string };

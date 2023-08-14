@@ -4,6 +4,7 @@ import {
   fetchBaseQuery,
   retry,
 } from "@reduxjs/toolkit/query/react";
+import { QueryRes, Transaction } from "types/axelar";
 import { contracts } from "constants/contracts";
 import { IS_TEST } from "constants/env";
 
@@ -18,43 +19,34 @@ const customBaseQuery: BaseQueryFn = retry(
   { maxRetries: 1 }
 );
 
-type Res<T> = {
-  data: T[];
-  total: number;
-  time_spent: 21;
+type Transactions = {
+  items: Transaction[];
+  next: number | undefined;
 };
-
-type Transaction = {
-  symbol: string;
-  amount: number;
-  status: string;
-  call: {
-    transactionHash: string;
-  };
-};
-
+const TX_PER_PAGE = 5;
 export const axelar = createApi({
   reducerPath: "axelar",
   baseQuery: customBaseQuery,
   endpoints: (builder) => ({
     //implementation endpoint of useQueryHook
-    transactions: builder.query<Transaction[], unknown>({
-      query: () => ({
+    transactions: builder.query<Transactions, { page: number }>({
+      query: ({ page }) => ({
         method: "POST",
         body: JSON.stringify({
           method: "searchGMP",
           contractMethod: "callContractWithToken",
           sourceChain: "polygon",
           sourceContractAddress: contracts["accounts"],
-          from: 0,
-          size: 5,
+          from: (page - 1) * TX_PER_PAGE,
+          size: TX_PER_PAGE,
         }),
       }),
-      transformResponse(res: Res<Transaction>) {
-        return res.data;
+      transformResponse(res: QueryRes<Transaction>, meta, { page: currPage }) {
+        return {
+          items: res.data,
+          next: currPage * TX_PER_PAGE < res.total ? currPage + 1 : undefined,
+        };
       },
     }),
   }),
 });
-
-export const { useTransactionsQuery } = axelar;
