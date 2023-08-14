@@ -1,7 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { object } from "yup";
-import { SchemaShape } from "schemas/types";
 import Modal from "components/Modal";
 import { Field } from "components/form";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
