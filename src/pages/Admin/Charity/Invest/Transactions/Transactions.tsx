@@ -3,6 +3,17 @@ import QueryLoader from "components/QueryLoader";
 import Table from "./Table";
 
 export default function Transactions() {
+  return (
+    <div>
+      <h3 className="font-bold text-2xl mt-8 mb-4 text-center @lg:text-left">
+        Recent transactions
+      </h3>
+      <TableLoader />
+    </div>
+  );
+}
+
+function TableLoader() {
   const {
     items,
     hasMore,
