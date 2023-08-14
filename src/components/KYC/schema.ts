@@ -1,28 +1,26 @@
-import * as Yup from "yup";
-import { FormValues } from "./types";
+import { ObjectSchema, boolean, object, string } from "yup";
+import { FormValues as FV } from "./types";
 import { SchemaShape } from "schemas/types";
 import { requiredString } from "schemas/string";
 
-const shape: SchemaShape<FormValues> = {
-  name: Yup.object().shape({
+export const schema = object<any, SchemaShape<FV>>({
+  name: object<any, SchemaShape<FV["name"]>>({
     first: requiredString,
     last: requiredString,
   }),
-  address: Yup.object().shape({
+  address: object<any, SchemaShape<FV["address"]>>({
     street: requiredString,
     //complement: optional
   }),
   city: requiredString,
   postalCode: requiredString,
-  country: Yup.object().shape<SchemaShape<FormValues["country"]>>({
+  country: object<any, SchemaShape<FV["country"]>>({
     name: requiredString,
   }),
   //  usState: no need to validate, optional and preselected
-  email: Yup.string().email("invalid").required("required"),
-  hasAgreedToTerms: Yup.boolean().oneOf(
+  email: string().email("invalid").required("required"),
+  hasAgreedToTerms: boolean().oneOf(
     [true],
     "donors must agree to donation terms"
   ),
-};
-
-export const schema = Yup.object().shape(shape);
+}) as ObjectSchema<FV>;

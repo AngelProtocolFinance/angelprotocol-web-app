@@ -1,10 +1,8 @@
-import * as Yup from "yup";
+import { ObjectSchema, object } from "yup";
 import { FundDestroyValues } from "pages/Admin/types";
 import { SchemaShape } from "schemas/types";
 import { proposalShape } from "../../../../constants";
 
-const shape: SchemaShape<FundDestroyValues> = {
+export const schema = object<any, SchemaShape<FundDestroyValues>>({
   ...proposalShape,
-};
-
-export const schema = Yup.object(shape);
+}) as ObjectSchema<FundDestroyValues>;

@@ -1,4 +1,4 @@
-import * as Yup from "yup";
+import { ObjectSchema, StringSchema, object, string } from "yup";
 import { EndowmentUpdateValues as EPV } from "pages/Admin/types";
 import { SchemaShape } from "schemas/types";
 import { requiredPositiveNumber } from "schemas/number";
@@ -9,7 +9,8 @@ type BeneficiaryType = EPV["beneficiaryType"];
 const beneficiaryTypeKey: keyof EPV = "beneficiaryType";
 
 const genTypeTest =
-  (requiredType: BeneficiaryType) => (type: BeneficiaryType, schema: any) => {
+  (requiredType: BeneficiaryType) => (values: any[], schema: StringSchema) => {
+    const [type] = values as [BeneficiaryType];
     if (requiredType === type) {
       switch (type) {
         case "endowment":
@@ -23,14 +24,13 @@ const genTypeTest =
     }
   };
 
-const shape: SchemaShape<EPV> = {
+export const schema = object<any, SchemaShape<EPV>>({
   ...proposalShape,
   id: requiredPositiveNumber,
-  beneficiaryType: Yup.string().required("beneficiary must be selected"),
+  beneficiaryType: string().required("beneficiary must be selected"),
 
   //beneficiaries
-  wallet: Yup.string().when(beneficiaryTypeKey, genTypeTest("wallet")),
-  endowmentId: Yup.string().when(beneficiaryTypeKey, genTypeTest("endowment")),
-  indexFund: Yup.string().when(beneficiaryTypeKey, genTypeTest("index fund")),
-};
-export const schema = Yup.object(shape);
+  wallet: string().when(beneficiaryTypeKey, genTypeTest("wallet")),
+  endowmentId: string().when(beneficiaryTypeKey, genTypeTest("endowment")),
+  indexFund: string().when(beneficiaryTypeKey, genTypeTest("index fund")),
+}) as ObjectSchema<EPV>;

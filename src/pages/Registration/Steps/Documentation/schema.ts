@@ -1,4 +1,4 @@
-import * as Yup from "yup";
+import { ObjectSchema, array, bool, object, string } from "yup";
 import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
 import { FileObject } from "types/aws";
@@ -23,37 +23,39 @@ const previewsKey: keyof Asset = "previews";
 
 function genAssetShape(isRequired: boolean = false): SchemaShape<Asset> {
   return {
-    files: Yup.array(
-      genFileSchema(MB_LIMIT * BYTES_IN_MB, VALID_MIME_TYPES)
-    ).when(previewsKey, (previews: FileObject[], schema: any) =>
-      previews.length <= 0 && isRequired ? schema.min(1, "required") : schema
+    files: array(genFileSchema(MB_LIMIT * BYTES_IN_MB, VALID_MIME_TYPES)).when(
+      previewsKey,
+      ([previews], schema) =>
+        (previews as FileObject[]).length <= 0 && isRequired
+          ? schema.min(1, "required")
+          : schema
     ),
   };
 }
 
-export const schema = Yup.object().shape<SchemaShape<FormValues>>({
-  proofOfIdentity: Yup.object().shape(genAssetShape(true)),
-  proofOfRegistration: Yup.object().shape(genAssetShape(true)),
-  website: Yup.string().required("required").url("invalid url"),
-  sdgs: Yup.array()
+export const schema = object<any, SchemaShape<FormValues>>({
+  proofOfIdentity: object(genAssetShape(true)),
+  proofOfRegistration: object(genAssetShape(true)),
+  website: string().required("required").url("invalid url"),
+  sdgs: array()
     .min(1, "required")
     .max(MAX_SDGS, `maximum ${MAX_SDGS} selections allowed`),
-  hqCountry: Yup.object().shape<SchemaShape<Country>>({
+  hqCountry: object<any, SchemaShape<Country>>({
     name: requiredString,
   }),
-  endowDesignation: Yup.object().shape<SchemaShape<OptionType<string>>>({
+  endowDesignation: object<any, SchemaShape<OptionType<string>>>({
     label: requiredString,
     value: requiredString,
   }),
   //level 2-3 fields not required
-  financialStatements: Yup.object().shape(genAssetShape()),
-  auditedFinancialReports: Yup.object().shape(genAssetShape()),
+  financialStatements: object(genAssetShape()),
+  auditedFinancialReports: object(genAssetShape()),
   //isKYCRequired defaulted to No on default value
 
-  hasAuthority: Yup.bool().isTrue(
+  hasAuthority: bool().isTrue(
     "Please confirm that you have the authority to create this endowment"
   ),
-  hasAgreedToTerms: Yup.bool().isTrue(
+  hasAgreedToTerms: bool().isTrue(
     "Please confirm that you agree to our Terms and Conditions"
   ),
-});
+}) as ObjectSchema<FormValues>;

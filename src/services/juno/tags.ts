@@ -9,7 +9,7 @@ export const rootTags = [
   "custom",
 ] as const;
 
-type JunoTag = typeof rootTags[number];
+type JunoTag = (typeof rootTags)[number];
 
 export enum adminTags {
   proposals = "proposals",

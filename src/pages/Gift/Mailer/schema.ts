@@ -1,13 +1,13 @@
-import * as Yup from "yup";
+import { ObjectSchema, object, string } from "yup";
 import { FormValues as FV } from "./types";
 import { SchemaShape } from "schemas/types";
 import { requiredString } from "schemas/string";
 
-export const schema = Yup.object().shape<SchemaShape<FV>>({
+export const schema = object<any, SchemaShape<FV>>({
   purchaser: requiredString,
-  recipient: Yup.object().shape<SchemaShape<FV["recipient"]>>({
+  recipient: object<any, SchemaShape<FV["recipient"]>>({
     name: requiredString,
     email: requiredString.email("invalid email"),
   }),
-  message: Yup.string(),
-});
+  message: string(),
+}) as ObjectSchema<FV>;
