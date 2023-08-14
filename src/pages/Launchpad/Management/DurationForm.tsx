@@ -19,7 +19,7 @@ export default function DurationForm({ onChange, initial }: Props) {
   const methods = useForm<FV>({
     defaultValues: { duration: initial },
     resolver: yupResolver(
-      object().shape<SchemaShape<FV>>({
+      object({
         duration: requiredPositiveNumber,
       })
     ),

@@ -2,7 +2,6 @@ import { Dialog } from "@headlessui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { object } from "yup";
-import { SchemaShape } from "schemas/types";
 import { useModalContext } from "contexts/ModalContext";
 import { Field } from "components/form";
 import { requiredWalletAddr } from "schemas/string";
@@ -19,7 +18,7 @@ export default function AddForm({ onAdd, name, added }: Props) {
   const { closeModal } = useModalContext();
   const methods = useForm<FV>({
     resolver: yupResolver(
-      object().shape<SchemaShape<FV>>({
+      object({
         addr: requiredWalletAddr(chainIds.polygon).notOneOf(
           added,
           "address already added"

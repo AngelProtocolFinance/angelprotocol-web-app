@@ -1,7 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { object } from "yup";
-import { SchemaShape } from "schemas/types";
 import { useModalContext } from "contexts/ModalContext";
 import Modal from "components/Modal";
 import { Field } from "components/form";
@@ -22,7 +21,7 @@ export default function MemberForm({ onChange, added, initial }: Props) {
   const methods = useForm<FV>({
     defaultValues: initial ? { addr: initial } : { addr: "" },
     resolver: yupResolver(
-      object().shape<SchemaShape<FV>>({
+      object({
         addr: requiredWalletAddr(chainIds.polygon).notOneOf(
           initial ? [] : added,
           "address already added"

@@ -1,4 +1,4 @@
-import { DateSchema, date, lazy, object, ref, string } from "yup";
+import { ObjectSchema, date, lazy, object, ref, string } from "yup";
 import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
 
@@ -10,19 +10,19 @@ const dateSchema = date()
   .typeError("invalid")
   .max(now, "can't be later than today");
 
-export const schema = object().shape<SchemaShape<FormValues>>({
-  startDate: dateSchema.when(endKey, (end, schema: DateSchema) =>
-    date().isValidSync(end)
-      ? schema.max(end, "can't be later than end date")
+export const schema = object<any, SchemaShape<FormValues>>({
+  startDate: dateSchema.when(endKey, ([endDate], schema) =>
+    date().isValidSync(endDate)
+      ? schema.max(endDate, "can't be later than end date")
       : schema
   ),
   endDate: lazy((val) =>
     val
-      ? dateSchema.when(startKey, (start, schema: DateSchema) =>
-          date().isValidSync(start)
+      ? dateSchema.when(startKey, ([startDate], schema) =>
+          date().isValidSync(startDate)
             ? schema.min(ref(startKey), "can't be earlier than start date")
             : schema
         )
       : string().required("invalid")
   ),
-});
+}) as ObjectSchema<FormValues>;

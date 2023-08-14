@@ -1,5 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
+import { object } from "yup";
 import { FormValues } from "./types";
 import { useGetWallet } from "contexts/WalletContext";
 import { isEthereumAddress } from "schemas/tests";

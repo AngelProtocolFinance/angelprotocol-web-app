@@ -25,7 +25,7 @@ const nameKey: keyof Country = "name";
 
 export default function CountrySelector<
   T extends FieldValues,
-  K extends Path<T>
+  K extends Path<T>,
 >(props: {
   fieldName: T[K] extends Country ? K : never;
   onReset?(): void;

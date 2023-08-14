@@ -1,4 +1,4 @@
-import { object, string } from "yup";
+import { ObjectSchema, object, string } from "yup";
 import { Beneficiary, FormValues as FV } from "./types";
 import { SchemaShape as SS } from "schemas/types";
 import { requiredPositiveNumber } from "schemas/number";
@@ -8,12 +8,12 @@ import { proposalShape } from "../../../../constants";
 type BeneficiaryType = Beneficiary["type"];
 const key: keyof Beneficiary = "type";
 
-const shape: SS<FV> = {
+export const schema = object<any, SS<FV>>({
   ...proposalShape,
   beneficiary: object().shape<SS<Beneficiary>>({
     id: string().required("beneficiary is required"),
-    type: string().when(key, (type: BeneficiaryType) => {
-      switch (type) {
+    type: string().when(key, ([type]) => {
+      switch (type as BeneficiaryType) {
         case "endowment":
         case "indexfund":
           return requiredPositiveNumber;
@@ -22,5 +22,4 @@ const shape: SS<FV> = {
       }
     }),
   }),
-};
-export const schema = object(shape);
+}) as ObjectSchema<FV>;

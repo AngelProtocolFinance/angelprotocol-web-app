@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { number, object } from "yup";
+import { ObjectSchema, number, object } from "yup";
 import { ProposalBase } from "../../types";
 import { SchemaShape } from "schemas/types";
 import Modal from "components/Modal";
@@ -22,20 +22,20 @@ export default function ThresholdForm({ added, initial }: Props) {
   const { sendTx, isSending } = useTxSender(true);
   const { txResource, multisig } = useAdminContext();
 
+  const schema = object<any, SchemaShape<FV>>({
+    ...proposalShape,
+    threshold: number()
+      .typeError("required")
+      .integer("no decimals")
+      .min(1, "at least 1")
+      //if no members set, default to 1
+      .max(added.length || 1, "can't be more than number of members")
+      .test("new value", `should be new`, (val) => val !== initial),
+  }) as ObjectSchema<FV>;
+
   const methods = useForm<FV>({
     defaultValues: { threshold: initial },
-    resolver: yupResolver(
-      object().shape<SchemaShape<FV>>({
-        ...proposalShape,
-        threshold: number()
-          .typeError("required")
-          .integer("no decimals")
-          .min(1, "at least 1")
-          //if no members set, default to 1
-          .max(added.length || 1, "can't be more than number of members")
-          .test("new value", `should be new`, (val) => val !== initial),
-      })
-    ),
+    resolver: yupResolver(schema),
   });
   const { handleSubmit } = methods;
 

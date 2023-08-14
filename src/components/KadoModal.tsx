@@ -11,7 +11,7 @@ import IFrame from "./IFrame";
 import Modal from "./Modal";
 
 const KADO_NETWORKS = ["ethereum", "juno", "terra", "polygon"] as const;
-type KADO_NETWORK_VALUES = typeof KADO_NETWORKS[number];
+type KADO_NETWORK_VALUES = (typeof KADO_NETWORKS)[number];
 
 const NETWORK_LIST = KADO_NETWORKS.join(",");
 
