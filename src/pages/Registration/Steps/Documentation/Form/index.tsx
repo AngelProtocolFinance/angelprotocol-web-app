@@ -26,10 +26,9 @@ export default function Form() {
     <form className="w-full" onSubmit={submit}>
       <Level num={1} />
       <p className="mt-2 text-sm">
-        {`Your organization is eligible to create its endowment. Donors can donate
-        funds through your organization’s landing page on ${APP_NAME}’s
-        interface. Your organization is not displayed on the marketplace and
-        cannot be found through the search bar.`}
+        This information will be kept private and will be used to validate you
+        are an authorized representative of {data.contact.orgName} whose
+        organization is registered and in good standing.
       </p>
       <Label className="mt-8 mb-2" required>
         Your proof of identity
