@@ -18,9 +18,8 @@ export default function Form({ classes = "" }: { classes?: string }) {
         Let's start with your contact details
       </h2>
       <p className="text-center sm:text-left text-lg mb-8">
-        This information will let us know more about your organization and who
-        you are. Once this form is submitted, you will be able to resume your
-        registration if it gets interrupted in the future.
+        Thank you for sharing! This information will be kept private and will
+        let us know more about you and your organization
       </p>
       <h3 className="mb-4">Personal information</h3>
       <Field<FV>
