@@ -14,7 +14,6 @@ import { steps } from "../../../routes";
 import { useRegState } from "../../StepGuard";
 import { MB_LIMIT } from "../schema";
 // import { CashEligibleCheckbox } from "./CashEligibleCheckbox";
-import Level from "./Level";
 import { Radio } from "./Radio";
 import useSubmit from "./useSubmit";
 
@@ -53,7 +52,7 @@ export default function Form() {
         placeholder="e.g. https://www.example.com"
       />
       <Label className="mb-2" required>
-        Proof of registration as a 501(C)(3) charity or equivalent
+        Proof of registration as a 501(C)(3) nonprofit or equivalent
       </Label>
       <FileDropzone<FV, "proofOfRegistration">
         name="proofOfRegistration"
