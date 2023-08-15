@@ -28,7 +28,7 @@ export default function Donater({
     mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: state.details || {
-      token: wallet.displayCoin,
+      token: _tokens[0],
       pctLiquidSplit: liquidPct,
 
       //meta
