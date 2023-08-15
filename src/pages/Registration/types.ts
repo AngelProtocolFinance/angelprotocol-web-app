@@ -10,8 +10,6 @@ import { Asset } from "components/registration";
 export type InitReg = {
   reference: string;
   email: string;
-  isEmailVerified: boolean;
-  lastVerified: string; // ISO string
 };
 
 //STEP 1

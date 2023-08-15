@@ -67,8 +67,6 @@ function getInit(i: InitContact): InitReg {
   return {
     email: i.Email,
     reference: i.PK,
-    isEmailVerified: i.EmailVerified,
-    lastVerified: i.EmailVerificationLastSentDate,
   };
 }
 

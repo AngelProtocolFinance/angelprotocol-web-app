@@ -5,8 +5,7 @@ import { APP_NAME, DAPP_URL } from "constants/env";
 import Signup from "./Signup";
 import routes from "./routes";
 
-const ConfirmEmail = lazy(() => import("./ConfirmEmail"));
-const VerifiedEmail = lazy(() => import("./VerifiedEmail"));
+const Welcome = lazy(() => import("./Welcome"));
 const Steps = lazy(() => import("./Steps"));
 const Resume = lazy(() => import("./Resume"));
 const Success = lazy(() => import("./Success"));
@@ -22,15 +21,9 @@ export default function Registration() {
       />
       <Routes>
         <Route
-          path={routes.confirmEmail}
+          path={routes.welcome}
           element={
-            <ConfirmEmail classes="my-8 md:my-[10.5rem] mx-6 justify-self-center" />
-          }
-        />
-        <Route
-          path={routes.verifyEmail}
-          element={
-            <VerifiedEmail classes="my-10 md:my-32 mx-6 justify-self-center" />
+            <Welcome classes="my-10 md:my-32 mx-6 justify-self-center" />
           }
         />
         <Route
