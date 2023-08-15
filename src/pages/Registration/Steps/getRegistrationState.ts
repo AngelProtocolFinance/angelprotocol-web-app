@@ -112,11 +112,6 @@ function formatDocumentation({
     })),
     hqCountry: { name: HqCountry, flag: "", code: "" },
     endowDesignation: { value: EndowDesignation, label: EndowDesignation },
-    //level 2
-    financialStatements: genFileAsset(fs || []),
-
-    //level 3
-    auditedFinancialReports: genFileAsset(afr || []),
     /**TODO: must be part of Registration not Metadata */
     isKYCRequired: KycDonorsOnly ? "Yes" : "No",
 

@@ -32,19 +32,15 @@ export type ContactPerson = {
 
 //STEP 2
 export type Documentation = {
-  //level1
+  //registrant identity
   proofOfIdentity: Asset;
+
+  //organization details
   proofOfRegistration: Asset;
   website: string;
   sdgs: OptionType<UNSDG_NUMS>[];
 
-  //level 2
-  financialStatements: Asset;
-
-  //level3
-  auditedFinancialReports: Asset;
   isKYCRequired: "Yes" | "No";
-
   cashEligible: boolean;
   //so user won't click again on resume
   hasAuthority: boolean;

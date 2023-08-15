@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { FormValues } from "../types";
 import { useUpdateRegMutation } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
-import { handleMutationResult } from "helpers";
 import { useRegState } from "../../StepGuard";
 import { getFilePreviews } from "./getFilePreviews";
 
@@ -34,12 +33,11 @@ export default function useSubmit() {
     cashEligible,
     ...documents
   }: FormValues) => {
-    if (documentation && !isDirty) {
-      return navigate(`../${step}`, { state: init });
-    }
-
-    const previews = await getFilePreviews({ ...documents });
-    handleMutationResult(
+    try {
+      if (documentation && !isDirty) {
+        return navigate(`../${step}`, { state: init });
+      }
+      const previews = await getFilePreviews({ ...documents });
       await updateReg({
         type: "documentation",
         reference: init.reference,
@@ -50,16 +48,15 @@ export default function useSubmit() {
         ) /**TODO: AWS update to accept number[] */,
         ProofOfIdentity: previews.proofOfIdentity[0], //poi is level1 and required
         ProofOfRegistration: previews.proofOfRegistration[0], //por is level1 and required,
-        FinancialStatements: previews.financialStatements,
-        AuditedFinancialReports: previews.auditedFinancialReports,
         KycDonorsOnly: isKYCRequired === "Yes",
         HqCountry: hqCountry.name,
         EndowDesignation: endowDesignation.value,
         ActiveInCountries: activeInCountries.map((opt) => opt.value),
         CashEligible: cashEligible,
-      }),
-      handleError
-    );
+      });
+    } catch (err) {
+      handleError(err);
+    }
   };
   return { submit: handleSubmit(submit), isSubmitting };
 }

@@ -20,8 +20,6 @@ function Documentation() {
       : {
           proofOfIdentity: genFileAsset([]),
           proofOfRegistration: genFileAsset([]),
-          financialStatements: genFileAsset([]),
-          auditedFinancialReports: genFileAsset([]),
           website: "",
           hasAuthority: false,
           hasAgreedToTerms: false,
