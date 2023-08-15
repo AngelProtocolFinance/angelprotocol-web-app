@@ -32,7 +32,6 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
     register,
     setValue,
     resetField,
-    getValues,
     formState: { errors, isSubmitting },
   } = useFormContext<T>();
   const {
@@ -44,11 +43,8 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
   const amountField: any = `${name}.${amountKey}`;
 
   useEffect(() => {
-    //whenever token_id changes, get token amount
-    const tokenAmount = getValues(amountField);
-    if (tokenAmount) resetField(amountField);
-    //eslint-disable-next-line
-  }, [token.token_id, amountField, resetField, getValues]);
+    resetField(amountField);
+  }, [token.token_id, amountField, resetField]);
 
   const onSetAmount: OnSetAmount = (balance) =>
     setValue(amountField, balance as any, {
