@@ -22,4 +22,4 @@ const customTags = ["multisig-subgraph"] as const;
 
 export const tags = [...contractTags, ...customTags];
 
-export type EVMTag = typeof tags[number];
+export type EVMTag = (typeof tags)[number];

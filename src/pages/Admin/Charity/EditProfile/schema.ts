@@ -1,4 +1,4 @@
-import { array, object, string } from "yup";
+import { ObjectSchema, array, object, string } from "yup";
 import { FV } from "./types";
 import { SchemaShape } from "schemas/types";
 import { ImgLink } from "components/ImgEditor";
@@ -18,12 +18,13 @@ export const MAX_SIZE_IN_BYTES = 1e6;
 
 // we only need to validate the pre-crop image and if we confirm it is valid
 // we can be sure that the cropped image is valid too
-const fileObj = object().shape<SchemaShape<ImgLink>>({
+const fileObj = object<any, SchemaShape<ImgLink>>({
   precropFile: genFileSchema(MAX_SIZE_IN_BYTES, VALID_MIME_TYPES),
 });
 
 //construct strict shape to avoid hardcoding shape keys
-const shape: SchemaShape<FV> = {
+
+export const schema = object<any, SchemaShape<FV>>({
   //not required for ASTs
   sdgs: array()
     .max(MAX_SDGS, `maximum ${MAX_SDGS} selections allowed`)
@@ -36,14 +37,14 @@ const shape: SchemaShape<FV> = {
   logo: fileObj,
   url: url,
   // registration_number: no need to validate,
-  endow_designation: object().shape<SchemaShape<OptionType<string>>>({
+  endow_designation: object<any, SchemaShape<OptionType<string>>>({
     label: string().when("$isEndow", {
       is: true,
-      then: requiredString,
+      then: () => requiredString,
     }),
     value: string().when("$isEndow", {
       is: true,
-      then: requiredString,
+      then: () => requiredString,
     }),
   }),
   name: requiredString,
@@ -57,6 +58,4 @@ const shape: SchemaShape<FV> = {
     youtube: url,
     tiktok: url,
   }),
-};
-
-export const schema = object().shape(shape);
+}) as ObjectSchema<FV>;

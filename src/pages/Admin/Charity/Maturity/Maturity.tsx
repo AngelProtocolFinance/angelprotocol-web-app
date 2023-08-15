@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { mixed, object, string, date as yupDate } from "yup";
+import { ObjectSchema, mixed, object, string, date as yupDate } from "yup";
 import { FV } from "./types";
 import { SchemaShape } from "schemas/types";
 import { EndowmentSettingsUpdate } from "types/contracts";
@@ -19,6 +19,17 @@ import {
 } from "helpers/admin";
 import { isTooltip, useAdminContext } from "../../Context";
 import Form from "./Form";
+
+const schema = object<any, SchemaShape<FV>>({
+  date: mixed().when("willMature", {
+    is: true,
+    then: () =>
+      yupDate()
+        .typeError("invalid date")
+        .min(new Date(), "must be in the future"),
+    otherwise: () => string(),
+  }),
+}) as ObjectSchema<FV>;
 
 export default function Maturity() {
   const {
@@ -58,17 +69,7 @@ export default function Maturity() {
   };
 
   const methods = useForm<FV>({
-    resolver: yupResolver(
-      object().shape<SchemaShape<FV>>({
-        date: mixed().when("willMature", {
-          is: true,
-          then: yupDate()
-            .typeError("invalid date")
-            .min(new Date(), "must be in the future"),
-          otherwise: string(),
-        }),
-      })
-    ),
+    resolver: yupResolver(schema),
     defaultValues: defaults,
   });
 

@@ -12,7 +12,7 @@ type Props<T extends FieldValues, K extends Path<T>> = {
 
 export default function ActivityCountries<
   T extends FieldValues,
-  K extends Path<T>
+  K extends Path<T>,
 >({ name, classes }: Props<T, K>) {
   return (
     <Selector<T, K, string, true>

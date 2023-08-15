@@ -1,4 +1,4 @@
-import { array, date, object, string } from "yup";
+import { ObjectSchema, array, date, object, string } from "yup";
 import { FV, FormMilestone } from "./types";
 import { SchemaShape } from "schemas/types";
 import { ImgLink } from "components/ImgEditor";
@@ -21,7 +21,7 @@ const fileObj = object().shape<SchemaShape<ImgLink>>({
   precropFile: genFileSchema(MAX_SIZE_IN_BYTES, VALID_MIME_TYPES),
 });
 
-const milestoneShape: SchemaShape<FormMilestone> = {
+const milesStoneSchema = object<any, SchemaShape<FormMilestone>>({
   milestone_date: date().typeError("invalid date"),
   milestone_description: string().max(
     MAX_CHARS,
@@ -29,17 +29,16 @@ const milestoneShape: SchemaShape<FormMilestone> = {
   ),
   milestone_title: requiredString,
   milestone_media: fileObj,
-};
+});
 
 //construct strict shape to avoid hardcoding shape keys
-const shape: SchemaShape<FV> = {
+
+export const schema = object<any, SchemaShape<FV>>({
   title: requiredString,
   description: requiredString.max(
     MAX_CHARS,
     `max length is ${MAX_CHARS} chars`
   ),
   image: fileObj,
-  milestones: array(object().shape(milestoneShape)),
-};
-
-export const schema = object().shape(shape);
+  milestones: array(milesStoneSchema),
+}) as ObjectSchema<FV>;

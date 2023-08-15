@@ -1,10 +1,9 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { object, string } from "yup";
+import { ObjectSchema, object, string } from "yup";
 import { FV } from "./types";
 import { SchemaShape } from "schemas/types";
-import { TFee, TFees } from "slices/launchpad/types";
-import { Fee } from "types/ast";
+import { Fee, Fees as TFees } from "types/ast";
 import { Fee as ContractFee, FeeSettingsUpdate } from "types/contracts";
 import { SimulContractTx } from "types/evm";
 import { useModalContext } from "contexts/ModalContext";
@@ -13,21 +12,28 @@ import { feeKeys } from "components/ast";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { getPayloadDiff, getTagPayloads } from "helpers/admin";
-import { positiveNumber, requiredPercent } from "schemas/number";
+import { requiredPercent } from "schemas/number";
 import { requiredWalletAddr } from "schemas/string";
 import { chainIds } from "constants/chainIds";
 import { ADDRESS_ZERO } from "constants/evm";
 import { isTooltip, useAdminContext } from "../../../Context";
 import Form from "./Form";
 
-const fee: SchemaShape<TFee> = {
-  receiver: string().when(feeKeys.isActive, (v, schema) =>
+const fee: SchemaShape<Fee> = {
+  receiver: string().when(feeKeys.isActive, ([v], schema) =>
     v ? requiredWalletAddr(chainIds.polygon) : schema.optional()
   ),
-  rate: string().when(feeKeys.isActive, (v, schema) =>
+  rate: string().when(feeKeys.isActive, ([v], schema) =>
     v ? requiredPercent : schema.optional()
   ),
 };
+
+const schema = object<any, SchemaShape<TFees>>({
+  earlyWithdraw: object(fee),
+  deposit: object(fee),
+  withdrawal: object(fee),
+  balance: object(fee),
+}) as ObjectSchema<FV>;
 
 export default function Fees() {
   const {
@@ -66,15 +72,7 @@ export default function Fees() {
 
   const methods = useForm<FV>({
     mode: "onChange",
-    resolver: yupResolver(
-      object().shape<SchemaShape<TFees>>({
-        earlyWithdraw: object().shape(fee),
-        deposit: object().shape(fee),
-        withdrawal: object().shape(fee),
-        balance: object().shape(fee),
-        referral_id: positiveNumber,
-      })
-    ),
+    resolver: yupResolver(schema),
     defaultValues,
   });
 
