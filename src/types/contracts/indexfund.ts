@@ -3,7 +3,6 @@ import {
   IIndexFund,
   IndexFundStorage,
 } from "../typechain-types/contracts/core/index-fund/IndexFund";
-import { Mapped } from "types/utils";
 
 export type IndexFundConfig = OverrideProperties<
   IndexFundStorage.ConfigStruct,

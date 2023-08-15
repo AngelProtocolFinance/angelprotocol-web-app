@@ -1,14 +1,15 @@
 import { ObjectSchema, object, string } from "yup";
-import { DonateValues } from "./types";
+import { DonateValues as DV } from "./types";
 import { SchemaShape } from "schemas/types";
 import { Country } from "types/countries";
+import { TokenWithAmount } from "types/slices";
 import { tokenShape } from "schemas/shape";
 import { requiredString } from "schemas/string";
 
-export const schema = object().shape<SchemaShape<DonateValues>>({
-  token: object().shape(tokenShape()),
-  country: object().when("token", (val, schema: ObjectSchema<any>) =>
-    val.type === "fiat"
+export const schema = object<any, SchemaShape<DV>>({
+  token: object(tokenShape()),
+  country: object().when("token", ([val], schema) =>
+    (val as TokenWithAmount).type === "fiat"
       ? schema.shape<SchemaShape<Country>>({
           name: requiredString,
         })
@@ -16,4 +17,4 @@ export const schema = object().shape<SchemaShape<DonateValues>>({
   ),
 
   //no need to validate split, restricted by slider
-});
+}) as ObjectSchema<DV>;

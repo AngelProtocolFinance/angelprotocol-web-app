@@ -1,7 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { object } from "yup";
-import { SchemaShape } from "schemas/types";
 import { useModalContext } from "contexts/ModalContext";
 import Modal from "components/Modal";
 import { Field } from "components/form";
@@ -19,7 +18,7 @@ export default function DurationForm({ onChange, initial }: Props) {
   const methods = useForm<FV>({
     defaultValues: { duration: initial },
     resolver: yupResolver(
-      object().shape<SchemaShape<FV>>({
+      object({
         duration: requiredPositiveNumber,
       })
     ),

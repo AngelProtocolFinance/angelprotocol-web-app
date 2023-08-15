@@ -1,10 +1,12 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import { object, string } from "yup";
 import { useNewsletterSubscribeMutation } from "services/aws/hubspot";
 import { useErrorContext } from "contexts/ErrorContext";
 import Icon from "components/Icon";
-import { FormValues, schema } from "./schema";
+
+type FV = { email: string };
 
 export default function SubscriptionForm() {
   const { handleError } = useErrorContext();
@@ -15,12 +17,18 @@ export default function SubscriptionForm() {
     register,
     reset,
     formState: { isSubmitting, errors },
-  } = useForm<FormValues>({
-    resolver: yupResolver(schema),
+  } = useForm<FV>({
+    resolver: yupResolver(
+      object({
+        email: string()
+          .email("Invalid email format")
+          .required("Please enter your email."),
+      })
+    ),
     reValidateMode: "onSubmit",
   });
 
-  async function submit(data: FormValues) {
+  async function submit(data: FV) {
     try {
       const response = await subscribe(data.email);
 

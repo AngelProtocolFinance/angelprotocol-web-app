@@ -1,4 +1,4 @@
-import * as Yup from "yup";
+import { ObjectSchema, object } from "yup";
 import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
 import { walletAddr } from "schemas/string";
@@ -7,7 +7,7 @@ import { proposalShape } from "../../../../constants";
 
 const contract = walletAddr(chainIds.polygon);
 
-const shape: SchemaShape<FormValues> = {
+export const schema = object<any, SchemaShape<FormValues>>({
   ...proposalShape,
 
   accountsContract: contract,
@@ -28,6 +28,4 @@ const shape: SchemaShape<FormValues> = {
   subdaoCw900Contract: contract,
   subdaoDistributorContract: contract,
   subdaoGovContract: contract,
-};
-
-export const schema = Yup.object(shape);
+}) as ObjectSchema<FormValues>;

@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { number, object } from "yup";
+import { ObjectSchema, number, object } from "yup";
 import { SchemaShape } from "schemas/types";
 import { useModalContext } from "contexts/ModalContext";
 import Modal from "components/Modal";
@@ -16,18 +16,19 @@ type FV = { threshold: number };
 
 export default function ThresholdForm({ onChange, added, initial }: Props) {
   const { closeModal } = useModalContext();
+
+  const schema = object<any, SchemaShape<FV>>({
+    threshold: number()
+      .typeError("required")
+      .integer("no decimals")
+      .min(1, "at least 1")
+      //if no members set, default to 1
+      .max(added.length || 1, "can't be more than number of members"),
+  }) as ObjectSchema<FV>;
+
   const methods = useForm<FV>({
     defaultValues: { threshold: initial },
-    resolver: yupResolver(
-      object().shape<SchemaShape<FV>>({
-        threshold: number()
-          .typeError("required")
-          .integer("no decimals")
-          .min(1, "at least 1")
-          //if no members set, default to 1
-          .max(added.length || 1, "can't be more than number of members"),
-      })
-    ),
+    resolver: yupResolver(schema),
   });
   const { handleSubmit } = methods;
 

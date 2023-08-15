@@ -1,13 +1,11 @@
-import * as Yup from "yup";
+import { ObjectSchema, object } from "yup";
 import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
 import { requiredWalletAddr } from "schemas/string";
 import { chainIds } from "constants/chainIds";
 import { proposalShape } from "../../../../constants";
 
-const shape: SchemaShape<FormValues> = {
+export const schema = object<any, SchemaShape<FormValues>>({
   ...proposalShape,
   newOwner: requiredWalletAddr(chainIds.polygon),
-};
-
-export const schema = Yup.object(shape);
+}) as ObjectSchema<FormValues>;
