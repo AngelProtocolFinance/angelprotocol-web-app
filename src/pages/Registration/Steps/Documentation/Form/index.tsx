@@ -95,44 +95,11 @@ export default function Form() {
       </Label>
       <ActivityCountries<FV, "activeInCountries"> name="activeInCountries" />
 
-      <Separator classes="my-8" />
-
-      <Level num={2} />
-      <p className="mt-2 text-sm mb-8">
-        All benefits from Level 1 + your organization will be visible in the
-        marketplace.
-      </p>
-      <Label className="mb-2">
-        At least one of the last 2 year’s financial statements
-      </Label>
-      <FileDropzone<FV, "financialStatements">
-        multiple
-        name="financialStatements"
-        tooltip={fileTooltip}
-      />
-
-      <Separator classes="my-8" />
-
-      <Level num={3} />
-      <p className="mt-2 text-sm mb-8">
-        3rd party audited financial report or published Annual Report
-      </p>
-      <Label className="mb-2">
-        At least one of the last 2 year’s financial statements
-      </Label>
-      <FileDropzone<FV, "auditedFinancialReports">
-        multiple
-        name="auditedFinancialReports"
-        tooltip={fileTooltip}
-      />
-
-      <Separator classes="my-8" />
-
-      <Label>
+      <Label className="mt-6">
         Only accept donations from donors who have provided their personal
         information (name and address):
       </Label>
-      <div className="flex gap-4 mt-4">
+      <div className="flex gap-4 mt-4 accent-orange">
         <Radio value="Yes" />
         <Radio value="No" />
       </div>
@@ -144,7 +111,7 @@ export default function Form() {
         classes={{
           container: "check-field-reg text-sm mb-3",
           input: "checkbox-reg self-start sm:self-center",
-          error: "mt-1",
+          error: "mt-t",
         }}
       >
         By checking this box, you declare that you have the authority to create
