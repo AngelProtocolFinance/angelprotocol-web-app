@@ -39,7 +39,7 @@ function Dashboard() {
     );
   };
 
-  const { documentation, status } = data;
+  const { status } = data;
   const isStepDisabled = isSubmitting || status === "Under Review";
 
   if (status === "Active") {
@@ -55,11 +55,7 @@ function Dashboard() {
       </p>
 
       <Step num={1} disabled={isStepDisabled} />
-      <Step
-        num={2}
-        disabled={isStepDisabled}
-        status={`Level ${documentation.tier}`}
-      />
+      <Step num={2} disabled={isStepDisabled} />
       <Step num={3} disabled={isStepDisabled} />
 
       <EndowmentStatus
