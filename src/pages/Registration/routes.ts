@@ -5,6 +5,7 @@ enum routes {
   welcome = "welcome",
   steps = "steps",
   sign_notice = "sign-notice",
+  sign_result = "sign-result",
 }
 
 export enum steps {

@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import Seo from "components/Seo";
 import { APP_NAME, DAPP_URL } from "constants/env";
 import SignNotice from "./SignNotice";
+import SignResult from "./SigningResult";
 import Signup from "./Signup";
 import routes from "./routes";
 
@@ -45,6 +46,12 @@ export default function Registration() {
           path={routes.sign_notice}
           element={
             <SignNotice classes="justify-self-center mt-10 sm:mt-[5.5rem] mb-6 sm:mb-20" />
+          }
+        />
+        <Route
+          path={routes.sign_result}
+          element={
+            <SignResult classes="justify-self-center mt-10 sm:mt-[5.5rem] mb-6 sm:mb-20" />
           }
         />
         <Route index element={<Signup classes="justify-self-center my-20" />} />
