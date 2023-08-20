@@ -108,3 +108,9 @@ export type Multisig = {
   requireExecution: boolean;
   transactionExpiry: number;
 };
+
+export type FiscalSponsorhipAgreementSigner = {
+  id: string;
+  name: string;
+  email: string;
+};

@@ -1,3 +1,4 @@
+import { FiscalSponsorhipAgreementSigner } from "services/types";
 import { ApplicationStatusOptions } from "slices/admin/types";
 import {
   AWSQueryRes,
@@ -12,7 +13,7 @@ import {
 } from "types/aws";
 import { adminTags } from "services/aws/tags";
 import { logger } from "helpers";
-import { EMAIL_SUPPORT } from "constants/env";
+import { DAPP_URL, EMAIL_SUPPORT, IS_TEST } from "constants/env";
 import { version as v } from "../../helpers";
 import { aws } from "../aws";
 
@@ -39,6 +40,22 @@ const registration_api = aws.injectEndpoints({
       },
       transformResponse(res: SavedRegistration) {
         return { ...res, reqId: 0 };
+      },
+    }),
+    fiscalSponsorshipAgreement: builder.query<
+      { url: string },
+      FiscalSponsorhipAgreementSigner
+    >({
+      query: (signer) => {
+        return {
+          url: `${v(1)}/registration/fiscal-sponsorship-agreement`,
+          method: "POST",
+          body: {
+            signer,
+            //manually change this to localhost:4200 for local testing
+            redirectURL: DAPP_URL + "/register/sign-result",
+          },
+        };
       },
     }),
     updateReg: builder.mutation<
