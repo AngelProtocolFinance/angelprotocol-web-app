@@ -102,13 +102,23 @@ export default function Form() {
       <ActivityCountries<FV, "activeInCountries"> name="activeInCountries" />
 
       <Label className="mt-6">
+        Is your organization authorized to receive US tax deductible donations
+        and issue tax receipts?
+      </Label>
+      <div className="flex gap-4 mt-4 accent-orange">
+        <Radio name="isAuthorizedToReceiveTaxDeductibleDonations" value="Yes" />
+        <Radio name="isAuthorizedToReceiveTaxDeductibleDonations" value="No" />
+      </div>
+
+      <Label className="mt-6">
         Only accept donations from donors who have provided their personal
         information (name and address):
       </Label>
       <div className="flex gap-4 mt-4 accent-orange">
-        <Radio value="Yes" />
-        <Radio value="No" />
+        <Radio name="isKYCRequired" value="Yes" />
+        <Radio name="isKYCRequired" value="No" />
       </div>
+
       <Separator classes="my-8" />
       {/*<CashEligibleCheckbox />*/}
       <CheckField<FV>

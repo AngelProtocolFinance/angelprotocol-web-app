@@ -33,8 +33,6 @@ export default function useSubmit() {
     cashEligible,
     ein,
     isAuthorizedToReceiveTaxDeductibleDonations,
-    fiscalSponsorshipAgreement,
-    fiscalSponsorshipAgreementURL,
     ...documents
   }: FormValues) => {
     try {
@@ -59,9 +57,7 @@ export default function useSubmit() {
         CashEligible: cashEligible,
         EIN: ein,
         AuthorizedToReceiveTaxDeductibleDonations:
-          isAuthorizedToReceiveTaxDeductibleDonations,
-        FiscalSponsorshipAgreement: fiscalSponsorshipAgreement,
-        FiscalSponsorshipAgreementURL: fiscalSponsorshipAgreementURL,
+          isAuthorizedToReceiveTaxDeductibleDonations === "Yes" ? true : false,
       });
     } catch (err) {
       handleError(err);

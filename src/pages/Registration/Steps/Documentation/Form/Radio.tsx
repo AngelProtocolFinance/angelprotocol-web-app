@@ -1,19 +1,24 @@
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "../types";
 
-export function Radio({ value }: { value: FV["isKYCRequired"] }) {
+type Props<Field extends keyof FV> = {
+  name: Field;
+  value: FV[Field] extends string ? FV[Field] : never;
+};
+
+export function Radio<Field extends keyof FV>({ name, value }: Props<Field>) {
   const {
     register,
     formState: { isSubmitting },
   } = useFormContext<FV>();
-  const id = `__${value}`;
+  const id = `__${name}`;
   return (
     <div className="flex items-center gap-2.5">
       <input
         id={id}
         type="radio"
         disabled={isSubmitting}
-        {...register("isKYCRequired")}
+        {...register(name)}
         className="radio"
         value={value}
       />

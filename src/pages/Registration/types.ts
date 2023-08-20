@@ -47,9 +47,7 @@ export type Documentation = {
   hqCountry: Country;
   endowDesignation: OptionType<string>;
   activeInCountries: OptionType<string>[];
-  isAuthorizedToReceiveTaxDeductibleDonations: boolean;
-  fiscalSponsorshipAgreement: string;
-  fiscalSponsorshipAgreementURL: string;
+  isAuthorizedToReceiveTaxDeductibleDonations: "Yes" | "No";
 
   //others
   isKYCRequired: "Yes" | "No";

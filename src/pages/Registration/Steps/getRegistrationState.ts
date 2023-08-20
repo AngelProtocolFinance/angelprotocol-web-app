@@ -121,9 +121,7 @@ function formatDocumentation({
     //general
     activeInCountries: ActiveInCountries.map((c) => ({ label: c, value: c })),
     isAuthorizedToReceiveTaxDeductibleDonations:
-      AuthorizedToReceiveTaxDeductibleDonations,
-    fiscalSponsorshipAgreement: FiscalSponsorshipAgreement,
-    fiscalSponsorshipAgreementURL: FiscalSponsorshipAgreementURL,
+      AuthorizedToReceiveTaxDeductibleDonations ? "Yes" : "No",
 
     //meta
     tier: Tier,
