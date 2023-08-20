@@ -92,19 +92,23 @@ function formatDocumentation({
   Tier,
   ProofOfIdentity: poi,
   ProofOfRegistration: por,
-  FinancialStatements: fs,
-  AuditedFinancialReports: afr,
   Website,
   UN_SDG,
   KycDonorsOnly,
   HqCountry,
   EndowDesignation,
   ActiveInCountries,
+  AuthorizedToReceiveTaxDeductibleDonations,
+  EIN,
+  FiscalSponsorshipAgreement = "",
+  FiscalSponsorshipAgreementURL = "",
 }: DoneDocs["Registration"]): Documentation {
   return {
     //level 1
     proofOfIdentity: genFileAsset([poi]),
     proofOfRegistration: genFileAsset([por]),
+    ein: EIN,
+
     website: Website,
     sdgs: UN_SDG.map((sdg) => ({
       value: sdg,
@@ -113,16 +117,20 @@ function formatDocumentation({
     hqCountry: { name: HqCountry, flag: "", code: "" },
     endowDesignation: { value: EndowDesignation, label: EndowDesignation },
     /**TODO: must be part of Registration not Metadata */
-    isKYCRequired: KycDonorsOnly ? "Yes" : "No",
 
     //general
     activeInCountries: ActiveInCountries.map((c) => ({ label: c, value: c })),
+    isAuthorizedToReceiveTaxDeductibleDonations:
+      AuthorizedToReceiveTaxDeductibleDonations,
+    fiscalSponsorshipAgreement: FiscalSponsorshipAgreement,
+    fiscalSponsorshipAgreementURL: FiscalSponsorshipAgreementURL,
 
     //meta
     tier: Tier,
     cashEligible: false,
     hasAuthority: true,
     hasAgreedToTerms: true,
+    isKYCRequired: KycDonorsOnly ? "Yes" : "No",
   };
 }
 

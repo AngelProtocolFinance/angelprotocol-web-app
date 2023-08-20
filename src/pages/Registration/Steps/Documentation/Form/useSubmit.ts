@@ -31,6 +31,10 @@ export default function useSubmit() {
     activeInCountries,
     endowDesignation,
     cashEligible,
+    ein,
+    isAuthorizedToReceiveTaxDeductibleDonations,
+    fiscalSponsorshipAgreement,
+    fiscalSponsorshipAgreementURL,
     ...documents
   }: FormValues) => {
     try {
@@ -48,13 +52,16 @@ export default function useSubmit() {
         ) /**TODO: AWS update to accept number[] */,
         ProofOfIdentity: previews.proofOfIdentity[0], //poi is level1 and required
         ProofOfRegistration: previews.proofOfRegistration[0], //por is level1 and required,
-        AuditedFinancialReports: [],
-        FinancialStatements: [],
         KycDonorsOnly: isKYCRequired === "Yes",
         HqCountry: hqCountry.name,
         EndowDesignation: endowDesignation.value,
         ActiveInCountries: activeInCountries.map((opt) => opt.value),
         CashEligible: cashEligible,
+        EIN: ein,
+        AuthorizedToReceiveTaxDeductibleDonations:
+          isAuthorizedToReceiveTaxDeductibleDonations,
+        FiscalSponsorshipAgreement: fiscalSponsorshipAgreement,
+        FiscalSponsorshipAgreementURL: fiscalSponsorshipAgreementURL,
       });
     } catch (err) {
       handleError(err);

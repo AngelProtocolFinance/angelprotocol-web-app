@@ -37,14 +37,6 @@ export default function Summary({
       <Label classes="mt-6 mb-1">Documents</Label>
       <Documents label="Proof of Identity" docs={[r.ProofOfIdentity]} />
       <Documents label="Proof of Registration" docs={[r.ProofOfRegistration]} />
-      <Documents
-        label="Financial Statement"
-        docs={r.FinancialStatements || []}
-      />
-      <Documents
-        label="Audited Financial Report"
-        docs={r.AuditedFinancialReports || []}
-      />
 
       <Proposal txId={r.application_id} classes="mt-4" />
     </div>

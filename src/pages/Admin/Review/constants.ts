@@ -5,4 +5,6 @@ export const statusColors: { [key in RegistrationStatus]: { text: string } } = {
   "Under Review": { text: "text-orange" },
   Active: { text: "text-green-l1" },
   Rejected: { text: "text-red-l1" },
+  //this will not be used as application can't be made if `RegistrationStatus:Pending Signature`
+  "Pending Signature": { text: "text-orange" },
 };

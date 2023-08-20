@@ -36,21 +36,25 @@ export type Documentation = {
   proofOfIdentity: Asset;
 
   //organization details
+  ein: string;
   proofOfRegistration: Asset;
   website: string;
   sdgs: OptionType<UNSDG_NUMS>[];
 
-  isKYCRequired: "Yes" | "No";
-  cashEligible: boolean;
-  //so user won't click again on resume
-  hasAuthority: boolean;
   hasAgreedToTerms: boolean;
   tier: EndowmentTierNum;
 
   hqCountry: Country;
   endowDesignation: OptionType<string>;
-  // general info
   activeInCountries: OptionType<string>[];
+  isAuthorizedToReceiveTaxDeductibleDonations: boolean;
+  fiscalSponsorshipAgreement: string;
+  fiscalSponsorshipAgreementURL: string;
+
+  //others
+  isKYCRequired: "Yes" | "No";
+  cashEligible: boolean;
+  hasAuthority: boolean;
 };
 
 //STEP 3

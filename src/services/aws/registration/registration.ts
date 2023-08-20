@@ -13,7 +13,7 @@ import {
 } from "types/aws";
 import { adminTags } from "services/aws/tags";
 import { logger } from "helpers";
-import { DAPP_URL, EMAIL_SUPPORT, IS_TEST } from "constants/env";
+import { DAPP_URL, EMAIL_SUPPORT } from "constants/env";
 import { version as v } from "../../helpers";
 import { aws } from "../aws";
 
@@ -25,7 +25,7 @@ const registration_api = aws.injectEndpoints({
     >({
       invalidatesTags: [{ type: "admin", id: adminTags.registration }],
       query: ({ email }) => ({
-        url: "v2/registration",
+        url: "v3/registration",
         method: "POST",
         body: { Email: email },
       }),
@@ -144,7 +144,7 @@ const registration_api = aws.injectEndpoints({
       invalidatesTags: [{ type: "admin", id: adminTags.registration }],
       query: ({ uuid, email }) => {
         return {
-          url: "v2/registration/build-email",
+          url: "v3/registration/build-email",
           method: "POST",
           params: { uuid, type: "verify-email" },
           body: { Email: email },
