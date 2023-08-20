@@ -33,7 +33,7 @@ export default function Form() {
       <h4 className="text-center sm:text-left text-lg mt-8">
         Government issued ID
       </h4>
-      <Label required className="mb-2">
+      <Label required className="mb-2 mt-1">
         Please provide passport, driver's license, or ID card.
       </Label>
       <FileDropzone<FV, "proofOfIdentity">
@@ -47,6 +47,13 @@ export default function Form() {
       <Field<FV>
         name="website"
         label="Website of your organization"
+        required
+        classes={{ container: "mb-6 mt-2" }}
+        placeholder="e.g. https://www.example.com"
+      />
+      <Field<FV>
+        name="ein"
+        label="EIN# (or equivalent non-US charity/nonprofit registration number)"
         required
         classes={{ container: "mb-6 mt-1" }}
         placeholder="e.g. https://www.example.com"
