@@ -1,4 +1,32 @@
+import { Navigate, useLocation } from "react-router-dom";
+import { CompleteRegistration } from "./types";
+import { DoneWallet, RegistrationUpdate } from "types/aws";
+import {
+  useFiscalSponsorshipAgreementMutation,
+  useUpdateRegMutation,
+} from "services/aws/registration";
+import { useErrorContext } from "contexts/ErrorContext";
+import { useGetter } from "store/accessors";
+
 export default function SignatureNotice({ classes = "" }) {
+  const { handleError } = useErrorContext();
+  const { state } = useLocation();
+  const reg = state as CompleteRegistration | undefined;
+
+  const savedRegistration = useGetter(
+    (state) =>
+      //sign-notice is always shown after submitting wallet
+      state.aws.queries[`reg("${reg?.init.reference}")`]?.data as DoneWallet
+  );
+  const [generateSigningURL, { isLoading: isGeneratingSigningURL }] =
+    useFiscalSponsorshipAgreementMutation();
+  const [updateRegistration, { isLoading: isSavingSigningURL }] =
+    useUpdateRegMutation();
+
+  if (!reg || !savedRegistration) {
+    return <Navigate to={".."} />;
+  }
+
   return (
     <div className={classes}>
       <h4>Thank you for registering your account!</h4>
@@ -19,8 +47,42 @@ export default function SignatureNotice({ classes = "" }) {
         agreement:
       </p>
 
-      <button type="button" className="btn-orange mt-4">
-        Fiscal sponsorship agreement --&gt;
+      <button
+        type="button"
+        className="btn-orange mt-4"
+        onClick={async () => {
+          try {
+            //get url
+            const { Website, ProofOfIdentity, ProofOfRegistration } =
+              savedRegistration.Registration;
+            const reference = reg.init.reference;
+            const { url } = await generateSigningURL({
+              id: reference,
+              email: reg.init.email,
+              name: reg.contact.firstName + " " + reg.contact.lastName,
+            }).unwrap();
+            //save URL in db
+            await updateRegistration({
+              type: "documentation",
+              reference,
+              //include required fields to hint documentation update
+              Website,
+              ProofOfIdentity,
+              ProofOfRegistration,
+              //
+              FiscalSponsorshipAgreementSigningURL: url,
+            } as RegistrationUpdate).unwrap();
+
+            //redirect to signing URL
+            window.location.href = url;
+          } catch (err) {
+            handleError(err);
+          }
+        }}
+      >
+        {isGeneratingSigningURL || isSavingSigningURL
+          ? "Redirecting..."
+          : "Sign Fiscal Sponsorship Agreement"}
       </button>
     </div>
   );

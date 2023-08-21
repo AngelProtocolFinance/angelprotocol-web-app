@@ -144,7 +144,9 @@ type WalletUpdate = {
   type: "wallet";
 } & WalletData;
 
-export type RegistrationUpdate = ContactUpdate | DocsUpdate | WalletUpdate;
+export type RegistrationUpdate = (ContactUpdate | DocsUpdate | WalletUpdate) & {
+  reference: string;
+};
 
 export type ContactUpdateResult = {
   ContactPerson: ContactDetails;

@@ -42,7 +42,7 @@ const registration_api = aws.injectEndpoints({
         return { ...res, reqId: 0 };
       },
     }),
-    fiscalSponsorshipAgreement: builder.query<
+    fiscalSponsorshipAgreement: builder.mutation<
       { url: string },
       FiscalSponsorhipAgreementSigner
     >({
@@ -58,10 +58,7 @@ const registration_api = aws.injectEndpoints({
         };
       },
     }),
-    updateReg: builder.mutation<
-      any,
-      RegistrationUpdate & { reference: string }
-    >({
+    updateReg: builder.mutation<any, RegistrationUpdate>({
       query: ({ type, reference, ...payload }) => {
         return {
           url: "v3/registration",
@@ -173,6 +170,7 @@ export const {
   useRegQuery,
   useLazyRegQuery,
   useEndowmentApplicationsQuery,
+  useFiscalSponsorshipAgreementMutation,
 
   //mutations
   useUpdateRegMutation,
