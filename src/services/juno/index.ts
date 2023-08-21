@@ -25,7 +25,7 @@ export const junoApi = createApi({
   tagTypes: rootTags,
   endpoints: (builder) => ({
     latestBlock: builder.query<string, unknown>({
-      query: () => "/blocks/latest",
+      query: () => "/cosmos/base/tendermint/v1beta1/blocks/latest",
       transformResponse: (res: BlockLatest) => {
         return res.block.header.height;
       },
