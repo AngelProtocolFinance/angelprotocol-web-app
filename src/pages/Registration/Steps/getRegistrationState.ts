@@ -84,6 +84,7 @@ function formatContactPerson(
     otherRole: c.OtherRole,
     referralMethod: c.ReferralMethod,
     otherReferralMethod: c.OtherReferralMethod,
+    referralCode: c.ReferralCode,
     goals: c.Goals,
   };
 }
@@ -100,8 +101,6 @@ function formatDocumentation({
   ActiveInCountries,
   AuthorizedToReceiveTaxDeductibleDonations,
   EIN,
-  FiscalSponsorshipAgreement = "",
-  FiscalSponsorshipAgreementURL = "",
 }: DoneDocs["Registration"]): Documentation {
   return {
     //level 1

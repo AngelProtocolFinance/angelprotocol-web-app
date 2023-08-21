@@ -79,16 +79,26 @@ export default function Form({ classes = "" }: { classes?: string }) {
         name="referralMethod"
         options={referralOptions}
       >
-        {({ value }) =>
-          value === "other" && (
-            <Field<FV>
-              name="otherReferralMethod"
-              label="Please provide additional information"
-              required
-              classes={{ container: "mt-4" }}
-            />
-          )
-        }
+        {({ value }) => (
+          <>
+            {value === "other" && (
+              <Field<FV>
+                name="otherReferralMethod"
+                label="Please provide additional information"
+                required
+                classes={{ container: "mt-4" }}
+              />
+            )}
+            {value === "referral" && (
+              <Field<FV>
+                name="referralCode"
+                label="Referral Code"
+                required
+                classes={{ container: "mt-4" }}
+              />
+            )}
+          </>
+        )}
       </Selector>
       <Field
         name="goals"

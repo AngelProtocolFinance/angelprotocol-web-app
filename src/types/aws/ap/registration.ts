@@ -81,8 +81,8 @@ export type TDocumentation = {
   //fiscal sponsorship
   AuthorizedToReceiveTaxDeductibleDonations: boolean;
   //only exists if AuthorizedToReceiveTaxDeductibleDonations is false
-  FiscalSponsorshipAgreementURL?: string;
-  FiscalSponsorshipAgreement?: string;
+  FiscalSponsorshipAgreementSigningURL?: string;
+  SignedFiscalSponsorshipAgreement?: string;
 
   //others
   KycDonorsOnly: boolean;

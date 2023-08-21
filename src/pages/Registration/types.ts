@@ -24,6 +24,7 @@ export type ContactPerson = {
   orgName: string;
   role: ContactRoles;
   otherRole: string;
+  referralCode: string;
 
   referralMethod: ReferralMethods;
   otherReferralMethod: string;
