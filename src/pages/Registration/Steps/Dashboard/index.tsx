@@ -42,6 +42,10 @@ function Dashboard() {
   const { status } = data;
   const isStepDisabled = isSubmitting || status === "Under Review";
 
+  if (status === "Pending Signature") {
+    return <Navigate to={`../../${routes.sign_notice}`} state={data} />;
+  }
+
   if (status === "Active") {
     return <Navigate to={`../../${routes.success}`} state={data} />;
   }

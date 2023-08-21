@@ -15,9 +15,13 @@ export default function SignatureNotice({ classes = "" }) {
       <p>
         Angel Giving provides fiscal sponsorship services at market-leading cost
         for our partner organizations to enable this ability (2.9%). If you
-        would like to proceed, please review and sign the following fiscal
-        sponsorship agreement:
+        would like to proceed, please review and sign the fiscal sponsorship
+        agreement:
       </p>
+
+      <button type="button" className="btn-orange mt-4">
+        Fiscal sponsorship agreement --&gt;
+      </button>
     </div>
   );
 }
