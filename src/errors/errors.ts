@@ -125,7 +125,9 @@ export class TxResultFail extends Error {
   txHash: string;
   constructor(chain: Chain, txHash: string) {
     //No need to dump to user technical details of why result failed, a link to failed tx is sufficient
-    super("Failed to broadcast transaction");
+    super(
+      "Failed to broadcast transaction. Please try transaction again later"
+    );
     this.chain = chain;
     this.txHash = txHash;
     this.name = "TxResultFail";
