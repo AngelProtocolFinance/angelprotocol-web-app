@@ -145,7 +145,9 @@ export default function Form() {
         By checking this box, you declare that you have read and agreed to our{" "}
         <ExtLink className="underline text-orange" href={TERMS_OF_USE}>
           Terms & Conditions
-        </ExtLink>
+        </ExtLink>{" "}
+        as well as the Terms & Conditions of our technology partner Seraphim
+        Labs.
       </CheckField>
       <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
         <Link
