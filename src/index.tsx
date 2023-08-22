@@ -3,13 +3,7 @@ import React from "react";
 import { StrictMode, Suspense, lazy } from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
-import {
-  BrowserRouter,
-  createRoutesFromChildren,
-  matchRoutes,
-  useLocation,
-  useNavigationType,
-} from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import Loader from "components/Loader";
 import { store } from "store/store";
 import { initTheme } from "helpers";
@@ -31,22 +25,6 @@ const root = createRoot(container as Element);
 
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRY_DSN,
-  integrations: [
-    new Sentry.BrowserTracing({
-      // See docs for support of different versions of variation of react router
-      // https://docs.sentry.io/platforms/javascript/guides/react/configuration/integrations/react-router/
-      routingInstrumentation: Sentry.reactRouterV6Instrumentation(
-        React.useEffect,
-        useLocation,
-        useNavigationType,
-        createRoutesFromChildren,
-        matchRoutes
-      ),
-    }),
-    new Sentry.Replay(),
-  ],
-  tracesSampleRate: 1.0,
-  replaysOnErrorSampleRate: 1.0,
 });
 
 root.render(
