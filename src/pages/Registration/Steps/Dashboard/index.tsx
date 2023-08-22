@@ -39,10 +39,13 @@ function Dashboard() {
     );
   };
 
-  const { status } = data;
+  const { status, documentation } = data;
   const isStepDisabled = isSubmitting || status === "Under Review";
 
-  if (status === "Pending Signature") {
+  if (
+    documentation.isAuthorizedToReceiveTaxDeductibleDonations === "No" &&
+    !documentation.signedFiscalSponsorshipAgreement
+  ) {
     return <Navigate to={`../../${routes.sign_notice}`} state={data} />;
   }
 

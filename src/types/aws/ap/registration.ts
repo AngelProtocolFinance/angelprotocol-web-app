@@ -4,7 +4,7 @@ import { FileObject } from "../common";
 
 export type RegistrationStatus =
   //| "Pending Signature"
-  "Inactive" | "Under Review" | "Active" | "Rejected" | "Pending Signature";
+  "Inactive" | "Under Review" | "Active" | "Rejected";
 
 export type ApplicationStatus = "approved" | "not-complete" | "under-review";
 
