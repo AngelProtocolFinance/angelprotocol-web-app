@@ -30,7 +30,7 @@ const container = document.getElementById("root");
 const root = createRoot(container as Element);
 
 Sentry.init({
-  dsn: "https://4da0ddd9b67e4801af699469048265f8@o1061537.ingest.sentry.io/6051923",
+  dsn: process.env.REACT_APP_SENTRY_DSN,
   integrations: [
     new Sentry.BrowserTracing({
       // See docs for support of different versions of variation of react router
