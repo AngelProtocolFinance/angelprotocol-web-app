@@ -100,6 +100,8 @@ function formatDocumentation({
   EndowDesignation,
   ActiveInCountries,
   AuthorizedToReceiveTaxDeductibleDonations,
+  FiscalSponsorshipAgreementSigningURL = "",
+  SignedFiscalSponsorshipAgreement = "",
   EIN,
 }: DoneDocs["Registration"]): Documentation {
   return {
@@ -121,6 +123,8 @@ function formatDocumentation({
     activeInCountries: ActiveInCountries.map((c) => ({ label: c, value: c })),
     isAuthorizedToReceiveTaxDeductibleDonations:
       AuthorizedToReceiveTaxDeductibleDonations ? "Yes" : "No",
+    fiscalSponsorshipAgreementSigningURL: FiscalSponsorshipAgreementSigningURL,
+    signedFiscalSponsorshipAgreement: SignedFiscalSponsorshipAgreement,
 
     //meta
     tier: Tier,

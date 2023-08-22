@@ -29,6 +29,8 @@ function Documentation() {
           endowDesignation: { value: "", label: "" },
           activeInCountries: [],
           isAuthorizedToReceiveTaxDeductibleDonations: "No",
+          signedFiscalSponsorshipAgreement: "",
+          fiscalSponsorshipAgreementSigningURL: "",
 
           hasAuthority: false,
           hasAgreedToTerms: false,

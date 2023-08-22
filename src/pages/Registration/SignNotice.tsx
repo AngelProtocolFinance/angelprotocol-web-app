@@ -1,33 +1,76 @@
+import { useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { CompleteRegistration } from "./types";
-import { DoneWallet } from "types/aws";
 import { useFiscalSponsorshipAgreementSigningURLMutation } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
+
+const initialText = "Proceed to signing agreement";
+const redirectingText = "Redirecting...";
 
 export default function SignatureNotice({ classes = "" }) {
   const { handleError } = useErrorContext();
   const { state } = useLocation();
   const reg = state as CompleteRegistration | undefined;
 
-  const [generateSigningURL, { isLoading }] =
+  const [generateSigningURL] =
     useFiscalSponsorshipAgreementSigningURLMutation();
+
+  //use standalone state, as mutation state ends before redirect
+  const [submitText, setSubmitText] = useState(initialText);
 
   if (!reg) return <Navigate to={".."} />;
 
+  async function proceed({
+    init,
+    contact,
+    documentation,
+  }: CompleteRegistration) {
+    try {
+      setSubmitText(redirectingText);
+
+      if (documentation.fiscalSponsorshipAgreementSigningURL) {
+        console.log(documentation);
+        window.location.href =
+          documentation.fiscalSponsorshipAgreementSigningURL;
+        return;
+      }
+
+      const reference = init.reference;
+      const { url } = await generateSigningURL({
+        id: reference,
+        email: init.email,
+        name: contact.firstName + " " + contact.lastName,
+      }).unwrap();
+
+      window.location.href = url;
+    } catch (err) {
+      setSubmitText(initialText);
+      handleError(err);
+    }
+  }
+
   return (
-    <div className={classes}>
-      <h4>Thank you for registering your account!</h4>
+    <div
+      className={
+        classes + " grid padded-container max-w-lg justify-items-center"
+      }
+    >
+      <h4 className="text-3xl mt-10 text-center">
+        Thank you for registering your account!
+      </h4>
 
-      <p>You're almost done, we just need to take one final step.</p>
+      <p className="mt-6 text-lg">
+        You're almost done, we just need to take one final step.
+      </p>
 
-      <p>
+      <p className="text-center mt-6">
         Angel Giving serves as a granting organization, accepting donations on
         behalf of our partner nonprofits and granting them out after processing
         and converting. This requires our partner nonprofits to be able to
         accept US tax-deductible donations.
       </p>
 
-      <p>
+      <p className="mt-6 text-center">
         Angel Giving provides fiscal sponsorship services at market-leading cost
         for our partner organizations to enable this ability (2.9%). If you
         would like to proceed, please review and sign the fiscal sponsorship
@@ -36,23 +79,11 @@ export default function SignatureNotice({ classes = "" }) {
 
       <button
         type="button"
-        className="btn-orange mt-4"
-        onClick={async () => {
-          try {
-            const reference = reg.init.reference;
-            const { url } = await generateSigningURL({
-              id: reference,
-              email: reg.init.email,
-              name: reg.contact.firstName + " " + reg.contact.lastName,
-            }).unwrap();
-
-            window.location.href = url;
-          } catch (err) {
-            handleError(err);
-          }
-        }}
+        disabled={submitText === redirectingText}
+        className="w-full max-w-[26.25rem] btn-orange btn-reg mt-6"
+        onClick={() => proceed(reg)}
       >
-        {isLoading ? "Redirecting..." : "Sign Fiscal Sponsorship Agreement"}
+        {submitText}
       </button>
     </div>
   );
