@@ -1,3 +1,3 @@
-export default function Success() {
-  return <div></div>;
+export default function Success({ classes = "" }) {
+  return <div className={classes}></div>;
 }

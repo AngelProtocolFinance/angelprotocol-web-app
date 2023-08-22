@@ -42,7 +42,7 @@ const registration_api = aws.injectEndpoints({
         return { ...res, reqId: 0 };
       },
     }),
-    fiscalSponsorshipAgreement: builder.mutation<
+    fiscalSponsorshipAgreementSigningURL: builder.mutation<
       { url: string },
       FiscalSponsorhipAgreementSigner
     >({
@@ -52,11 +52,22 @@ const registration_api = aws.injectEndpoints({
           method: "POST",
           body: {
             signer,
-            //manually change this to localhost:4200 for local testing
-            redirectURL: DAPP_URL + "/register/sign-result",
+            // DAPP_URL + "/register/sign-result"
+            //"http://localhost:4200/register/sign-result"
+            redirectURL: "http://localhost:4200/register/sign-result",
           },
         };
       },
+    }),
+    fiscalSponsorshipAgreement: builder.query<
+      {
+        downloadURL: string;
+        signer: FiscalSponsorhipAgreementSigner;
+      },
+      { etchEID: string }
+    >({
+      query: ({ etchEID }) =>
+        `${v(1)}/registration/fiscal-sponsorship-agreement`,
     }),
     updateReg: builder.mutation<any, RegistrationUpdate>({
       query: ({ type, reference, ...payload }) => {
@@ -170,7 +181,7 @@ export const {
   useRegQuery,
   useLazyRegQuery,
   useEndowmentApplicationsQuery,
-  useFiscalSponsorshipAgreementMutation,
+  useFiscalSponsorshipAgreementSigningURLMutation,
 
   //mutations
   useUpdateRegMutation,

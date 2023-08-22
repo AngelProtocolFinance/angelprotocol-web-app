@@ -109,8 +109,10 @@ export type Multisig = {
   transactionExpiry: number;
 };
 
-export type FiscalSponsorhipAgreementSigner = {
-  id: string;
-  name: string;
-  email: string;
-};
+export type FiscalSponsorhipAgreementSigner =
+  | {
+      id: string;
+      name: string;
+      email: string;
+    }
+  | string; //signerEID;

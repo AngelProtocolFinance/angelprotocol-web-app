@@ -8,7 +8,7 @@ export default function SignResult({ classes = "" }) {
     (acc, [key, value]) => ({ ...acc, [key]: value }),
     {} as QueryParams
   );
-  //continue registration
+
   return (
     <div
       className={
