@@ -1,9 +1,32 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useLazyRegQuery } from "services/aws/registration";
 import Icon from "components/Icon";
+import { getSavedRegistrationReference } from "helpers";
 import { appRoutes } from "constants/routes";
-import routes, { steps } from "../routes";
+import { getRegistrationState } from "../Steps/getRegistrationState";
+import routes from "../routes";
 
 export default function Success() {
+  const [checkPrevRegistration, { isLoading }] = useLazyRegQuery();
+  const navigate = useNavigate();
+
+  //redirect page from anvil has no information about the registration
+  const proceed = async () => {
+    try {
+      const reference = getSavedRegistrationReference();
+      if (!reference) return navigate(appRoutes.register);
+      const { reqId, ...savedRegistration } = await checkPrevRegistration(
+        reference
+      ).unwrap();
+      const state = getRegistrationState(savedRegistration);
+      navigate(`${appRoutes.register}/${routes.steps}/${state.step}`, {
+        state: state.data.init,
+      });
+    } catch (err) {
+      navigate(appRoutes.register);
+    }
+  };
+
   return (
     <>
       <Icon type="CheckCircle" className="text-green" size={70} />
@@ -11,12 +34,13 @@ export default function Success() {
         Signature saved!
       </h1>
 
-      <Link
+      <button
+        disabled={isLoading}
         className="w-full max-w-[26.25rem] btn-orange btn-reg mt-4"
-        to={`${appRoutes.register}/${routes.steps}/${steps.summary}`}
+        onClick={proceed}
       >
-        Continue
-      </Link>
+        {isLoading ? "Loading..." : "Continue"}
+      </button>
     </>
   );
 }
