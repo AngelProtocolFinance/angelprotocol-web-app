@@ -42,7 +42,7 @@ export default function Summary({
           label="Fiscal Sponsorship Agreement"
           docs={[
             {
-              publicUrl: "r.SignedFiscalSponsorshipAgreement",
+              publicUrl: r.SignedFiscalSponsorshipAgreement,
               name: "Fiscal Sponsorship Agreement",
             },
           ]}
