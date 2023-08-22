@@ -12,7 +12,7 @@ type SignerCompleteQueryParams = BaseQueryParams & {
   signerStatus: "completed";
 };
 
-type ErrorQueryParams = BaseQueryParams & {
+export type ErrorQueryParams = BaseQueryParams & {
   action: "signerError";
   signerStatus: "sent";
   errorType: "tokenExpired" | "tokenInvalid" | "notFound" | "unknown";
@@ -22,5 +22,6 @@ type ErrorQueryParams = BaseQueryParams & {
 
 export type QueryParams = SignerCompleteQueryParams | ErrorQueryParams;
 
-const isSuccess = (params: QueryParams): params is SignerCompleteQueryParams =>
-  params.action === "signerComplete";
+export const isSuccess = (
+  params: QueryParams
+): params is SignerCompleteQueryParams => params.action === "signerComplete";

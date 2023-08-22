@@ -13,7 +13,7 @@ import {
 } from "types/aws";
 import { adminTags } from "services/aws/tags";
 import { logger } from "helpers";
-import { DAPP_URL, EMAIL_SUPPORT } from "constants/env";
+import { EMAIL_SUPPORT } from "constants/env";
 import { version as v } from "../../helpers";
 import { aws } from "../aws";
 
@@ -58,16 +58,6 @@ const registration_api = aws.injectEndpoints({
           },
         };
       },
-    }),
-    fiscalSponsorshipAgreement: builder.query<
-      {
-        downloadURL: string;
-        signer: FiscalSponsorhipAgreementSigner;
-      },
-      { etchEID: string }
-    >({
-      query: ({ etchEID }) =>
-        `${v(1)}/registration/fiscal-sponsorship-agreement`,
     }),
     updateReg: builder.mutation<any, RegistrationUpdate>({
       query: ({ type, reference, ...payload }) => {

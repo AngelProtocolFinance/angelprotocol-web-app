@@ -1,5 +1,7 @@
 import { useSearchParams } from "react-router-dom";
-import { QueryParams } from "./types";
+import { QueryParams, isSuccess } from "./types";
+import ErrorPage from "./ErrorPage";
+import Success from "./Success";
 
 export default function SignResult({ classes = "" }) {
   const [URLSearchParams] = useSearchParams();
@@ -12,11 +14,11 @@ export default function SignResult({ classes = "" }) {
   return (
     <div
       className={
-        classes + " grid padded-container max-w-lg justify-items-center"
+        classes +
+        " grid padded-container max-w-lg justify-items-center content-start"
       }
     >
-      <h3>Signing successful!</h3>
-      <button>continue registration</button>
+      {isSuccess(params) ? <Success /> : <ErrorPage {...params} />}
     </div>
   );
 }

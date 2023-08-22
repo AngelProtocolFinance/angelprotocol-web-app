@@ -11,7 +11,7 @@ export function Radio<Field extends keyof FV>({ name, value }: Props<Field>) {
     register,
     formState: { isSubmitting },
   } = useFormContext<FV>();
-  const id = `__${name}`;
+  const id = `__${name}__${value}`;
   return (
     <div className="flex items-center gap-2.5">
       <input
