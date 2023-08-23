@@ -3,10 +3,10 @@ import {
   AccountMessages as AccountDepositWithdrawEndowmentsMessages,
   IAccountsDepositWithdrawEndowments,
 } from "../typechain-types/contracts/core/accounts/facets/AccountsDepositWithdrawEndowments";
+import { AccountMessages as AccountsQueryEndowmentsMessages } from "../typechain-types/contracts/core/accounts/facets/AccountsQueryEndowments";
 import { AccountMessages as AccountsUpdateEndowmentSettingsControllerMessages } from "../typechain-types/contracts/core/accounts/facets/AccountsUpdateEndowmentSettingsController";
 import {
   AccountMessages,
-  AccountStorage,
   LibAccounts,
 } from "../typechain-types/contracts/core/accounts/interfaces/IAccounts";
 import { EndowmentType } from "../lists";
@@ -95,7 +95,7 @@ export type SettingsController = Mapped<
 
 export type EndowmentDetails = OverrideProperties<
   Pick<
-    AccountStorage.EndowmentStruct,
+    AccountsQueryEndowmentsMessages.EndowmentResponseStruct,
     | "owner"
     | "endowType"
     | "maturityTime"

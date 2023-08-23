@@ -8,10 +8,7 @@ import {
   toSplit,
 } from "./decoded-types";
 import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
-import {
-  AccountMessages,
-  AccountStorage,
-} from "types/typechain-types/contracts/core/accounts/interfaces/IAccounts";
+import { AccountMessages } from "types/typechain-types/contracts/core/accounts/interfaces/IAccounts";
 import {
   IIndexFund,
   IndexFundStorage,
@@ -211,7 +208,7 @@ export const queryObjects: {
   "accounts.endowment": [
     ({ id }) => accounts.encodeFunctionData("queryEndowmentDetails", [id]),
     (result) => {
-      const d: AccountStorage.EndowmentStructOutput =
+      const d: AccountMessages.EndowmentResponseStructOutput =
         accounts.decodeFunctionResult("queryEndowmentDetails", result)[0];
 
       const controller = d.settingsController;

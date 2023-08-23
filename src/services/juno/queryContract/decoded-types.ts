@@ -10,8 +10,8 @@ import { LibAccounts as AccountsLibs } from "types/typechain-types/contracts/cor
 
 enum EndowmentTypeEnum {
   Charity,
-  Normal,
-  None,
+  Ast,
+  Daf,
 }
 
 export type DGenericBalance = {
@@ -38,10 +38,10 @@ export function toEndowType(type: EndowmentTypeEnum): EndowmentType {
   switch (type) {
     case EndowmentTypeEnum.Charity:
       return "charity";
-    case EndowmentTypeEnum.Normal:
-      return "normal";
+    case EndowmentTypeEnum.Ast:
+      return "ast";
     default:
-      return "normal";
+      return "daf";
   }
 }
 
