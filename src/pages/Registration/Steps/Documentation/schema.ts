@@ -47,9 +47,6 @@ export const schema = object<any, SchemaShape<FormValues>>({
     label: requiredString,
     value: requiredString,
   }),
-  //level 2-3 fields not required
-  financialStatements: object(genAssetShape()),
-  auditedFinancialReports: object(genAssetShape()),
   //isKYCRequired defaulted to No on default value
 
   hasAuthority: bool().isTrue(

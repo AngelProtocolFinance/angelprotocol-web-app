@@ -3,14 +3,13 @@ import { EndowmentTierNum } from "../../contracts";
 import { FileObject } from "../common";
 
 export type RegistrationStatus =
-  | "Inactive"
-  | "Under Review"
-  | "Active"
-  | "Rejected";
+  //| "Pending Signature"
+  "Inactive" | "Under Review" | "Active" | "Rejected";
 
 export type ApplicationStatus = "approved" | "not-complete" | "under-review";
 
 export type ReferralMethods =
+  | "referral"
   | "angel-alliance"
   | "discord"
   | "facebook"
@@ -47,8 +46,6 @@ export type InitContact = {
   PK: string;
   SK: "ContactPerson";
   Email: string;
-  EmailVerified: boolean;
-  EmailVerificationLastSentDate: string /** ISO string */;
 };
 
 type InitMeta = {
@@ -64,23 +61,32 @@ export type ContactDetails = {
   Role: ContactRoles;
   OtherRole: string;
   ReferralMethod: ReferralMethods;
-  OtherReferralMethod: string;
+  ReferralCode: string; //when ReferralMethod is "referral"
+  OtherReferralMethod: string; //when ReferralMethod is "other"
 };
 
 export type TDocumentation = {
+  //user identity
   ProofOfIdentity: FileObject;
+
+  //organization details
+  EIN: string;
   ProofOfRegistration: FileObject;
   Website: string;
   Tier: EndowmentTierNum;
-  //based on tier
-  FinancialStatements?: FileObject[];
-  AuditedFinancialReports?: FileObject[];
-  KycDonorsOnly: boolean;
-  CashEligible: boolean;
   HqCountry: string;
   EndowDesignation: string;
-  // general
   ActiveInCountries: string[];
+
+  //fiscal sponsorship
+  AuthorizedToReceiveTaxDeductibleDonations: boolean;
+  //only exists if AuthorizedToReceiveTaxDeductibleDonations is false
+  FiscalSponsorshipAgreementSigningURL?: string;
+  SignedFiscalSponsorshipAgreement?: string;
+
+  //others
+  KycDonorsOnly: boolean;
+  CashEligible: boolean;
 };
 
 //INIT STEP
@@ -138,7 +144,9 @@ type WalletUpdate = {
   type: "wallet";
 } & WalletData;
 
-export type RegistrationUpdate = ContactUpdate | DocsUpdate | WalletUpdate;
+export type RegistrationUpdate = (ContactUpdate | DocsUpdate | WalletUpdate) & {
+  reference: string;
+};
 
 export type ContactUpdateResult = {
   ContactPerson: ContactDetails;

@@ -39,8 +39,15 @@ function Dashboard() {
     );
   };
 
-  const { documentation, status } = data;
+  const { status, documentation } = data;
   const isStepDisabled = isSubmitting || status === "Under Review";
+
+  if (
+    documentation.isAuthorizedToReceiveTaxDeductibleDonations === "No" &&
+    !documentation.signedFiscalSponsorshipAgreement
+  ) {
+    return <Navigate to={`../../${routes.sign_notice}`} state={data} />;
+  }
 
   if (status === "Active") {
     return <Navigate to={`../../${routes.success}`} state={data} />;
@@ -55,11 +62,7 @@ function Dashboard() {
       </p>
 
       <Step num={1} disabled={isStepDisabled} />
-      <Step
-        num={2}
-        disabled={isStepDisabled}
-        status={`Level ${documentation.tier}`}
-      />
+      <Step num={2} disabled={isStepDisabled} />
       <Step num={3} disabled={isStepDisabled} />
 
       <EndowmentStatus

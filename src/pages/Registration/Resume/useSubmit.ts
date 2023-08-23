@@ -31,10 +31,6 @@ export default function useSubmit() {
     const state = getRegistrationState(data);
     const init = state.data.init;
 
-    if ("data" in state && !state.data.init.isEmailVerified) {
-      return navigate(`../${routes.confirmEmail}`, { state: init });
-    }
-
     navigate(`../${routes.steps}/${state.step}`, { state: init });
   };
 

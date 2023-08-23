@@ -7,12 +7,20 @@ import { requiredString } from "schemas/string";
 
 type Key = keyof FormValues;
 const roleKey: Key = "role";
+const referralMethodKey: Key = "referralMethod";
 
-const otherOption = string().when(roleKey, ([option], schema) =>
-  (option as OptionType<ContactRoles | ReferralMethods>).value === "other"
+const otherRole = string().when(roleKey, ([option], schema) =>
+  (option as OptionType<ContactRoles>).value === "other"
     ? schema.required("required")
     : schema
 );
+
+const otherReferralMethod = (referralMethod: ReferralMethods) =>
+  string().when(referralMethodKey, ([option], schema) =>
+    (option as OptionType<ReferralMethods>).value === referralMethod
+      ? schema.required("required")
+      : schema
+  );
 
 export const schema = object<any, SchemaShape<FormValues>>({
   orgName: requiredString,
@@ -22,6 +30,7 @@ export const schema = object<any, SchemaShape<FormValues>>({
   goals: requiredString,
   //role - preselected
   //referralMethod - preselected
-  otherReferralMethod: otherOption,
-  otherRole: otherOption,
+  otherReferralMethod: otherReferralMethod("other"),
+  referralCode: otherReferralMethod("referral"),
+  otherRole: otherRole,
 }) as ObjectSchema<FormValues>;

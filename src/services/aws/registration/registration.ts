@@ -1,3 +1,4 @@
+import { FiscalSponsorhipAgreementSigner } from "services/types";
 import { ApplicationStatusOptions } from "slices/admin/types";
 import {
   AWSQueryRes,
@@ -24,7 +25,7 @@ const registration_api = aws.injectEndpoints({
     >({
       invalidatesTags: [{ type: "admin", id: adminTags.registration }],
       query: ({ email }) => ({
-        url: "v2/registration",
+        url: "v3/registration",
         method: "POST",
         body: { Email: email },
       }),
@@ -41,10 +42,24 @@ const registration_api = aws.injectEndpoints({
         return { ...res, reqId: 0 };
       },
     }),
-    updateReg: builder.mutation<
-      any,
-      RegistrationUpdate & { reference: string }
+    fiscalSponsorshipAgreementSigningURL: builder.mutation<
+      { url: string },
+      FiscalSponsorhipAgreementSigner
     >({
+      query: (signer) => {
+        return {
+          url: `${v(1)}/registration/fiscal-sponsorship-agreement`,
+          method: "POST",
+          body: {
+            signer,
+            // DAPP_URL + "/register/sign-result"
+            //"http://localhost:4200/register/sign-result"
+            redirectURL: "http://localhost:4200/register/sign-result",
+          },
+        };
+      },
+    }),
+    updateReg: builder.mutation<any, RegistrationUpdate>({
       query: ({ type, reference, ...payload }) => {
         return {
           url: "v3/registration",
@@ -127,7 +142,7 @@ const registration_api = aws.injectEndpoints({
       invalidatesTags: [{ type: "admin", id: adminTags.registration }],
       query: ({ uuid, email }) => {
         return {
-          url: "v2/registration/build-email",
+          url: "v3/registration/build-email",
           method: "POST",
           params: { uuid, type: "verify-email" },
           body: { Email: email },
@@ -156,6 +171,7 @@ export const {
   useRegQuery,
   useLazyRegQuery,
   useEndowmentApplicationsQuery,
+  useFiscalSponsorshipAgreementSigningURLMutation,
 
   //mutations
   useUpdateRegMutation,

@@ -67,8 +67,6 @@ function getInit(i: InitContact): InitReg {
   return {
     email: i.Email,
     reference: i.PK,
-    isEmailVerified: i.EmailVerified,
-    lastVerified: i.EmailVerificationLastSentDate,
   };
 }
 
@@ -86,6 +84,7 @@ function formatContactPerson(
     otherRole: c.OtherRole,
     referralMethod: c.ReferralMethod,
     otherReferralMethod: c.OtherReferralMethod,
+    referralCode: c.ReferralCode,
     goals: c.Goals,
   };
 }
@@ -94,19 +93,23 @@ function formatDocumentation({
   Tier,
   ProofOfIdentity: poi,
   ProofOfRegistration: por,
-  FinancialStatements: fs,
-  AuditedFinancialReports: afr,
   Website,
   UN_SDG,
   KycDonorsOnly,
   HqCountry,
   EndowDesignation,
   ActiveInCountries,
+  AuthorizedToReceiveTaxDeductibleDonations,
+  FiscalSponsorshipAgreementSigningURL = "",
+  SignedFiscalSponsorshipAgreement = "",
+  EIN,
 }: DoneDocs["Registration"]): Documentation {
   return {
     //level 1
     proofOfIdentity: genFileAsset([poi]),
     proofOfRegistration: genFileAsset([por]),
+    ein: EIN,
+
     website: Website,
     sdgs: UN_SDG.map((sdg) => ({
       value: sdg,
@@ -114,22 +117,21 @@ function formatDocumentation({
     })),
     hqCountry: { name: HqCountry, flag: "", code: "" },
     endowDesignation: { value: EndowDesignation, label: EndowDesignation },
-    //level 2
-    financialStatements: genFileAsset(fs || []),
-
-    //level 3
-    auditedFinancialReports: genFileAsset(afr || []),
     /**TODO: must be part of Registration not Metadata */
-    isKYCRequired: KycDonorsOnly ? "Yes" : "No",
 
     //general
     activeInCountries: ActiveInCountries.map((c) => ({ label: c, value: c })),
+    isAuthorizedToReceiveTaxDeductibleDonations:
+      AuthorizedToReceiveTaxDeductibleDonations ? "Yes" : "No",
+    fiscalSponsorshipAgreementSigningURL: FiscalSponsorshipAgreementSigningURL,
+    signedFiscalSponsorshipAgreement: SignedFiscalSponsorshipAgreement,
 
     //meta
     tier: Tier,
     cashEligible: false,
     hasAuthority: true,
     hasAgreedToTerms: true,
+    isKYCRequired: KycDonorsOnly ? "Yes" : "No",
   };
 }
 
