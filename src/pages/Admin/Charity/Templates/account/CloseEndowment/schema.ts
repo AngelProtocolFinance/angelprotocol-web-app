@@ -1,7 +1,6 @@
 import { ObjectSchema, object, string } from "yup";
 import { Beneficiary, FormValues as FV } from "./types";
 import { SchemaShape as SS } from "schemas/types";
-import { requiredPositiveNumber } from "schemas/number";
 import { requiredWalletAddr } from "schemas/string";
 import { proposalShape } from "../../../../constants";
 
