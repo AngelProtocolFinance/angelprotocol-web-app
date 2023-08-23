@@ -1,3 +1,4 @@
+import * as Sentry from "@sentry/react";
 import { WalletProvider } from "@terra-money/wallet-provider";
 import { lazy } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
@@ -25,11 +26,13 @@ export default function App() {
   const location = useLocation();
   useScrollTop(location.pathname);
 
+  const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes);
+
   return (
     <WalletProvider {...chainOptions}>
       <WalletContext>
         <ModalContext>
-          <Routes>
+          <SentryRoutes>
             <Route
               path={`${appRoutes.donate_widget}/:id`}
               element={<DonateWidget />}
@@ -67,7 +70,7 @@ export default function App() {
                 />
               }
             />
-          </Routes>
+          </SentryRoutes>
         </ModalContext>
       </WalletContext>
     </WalletProvider>
