@@ -33,6 +33,8 @@ export default function useSubmit() {
     cashEligible,
     ein,
     isAuthorizedToReceiveTaxDeductibleDonations,
+    signedFiscalSponsorshipAgreement,
+    fiscalSponsorshipAgreementSigningURL,
     ...documents
   }: FormValues) => {
     try {

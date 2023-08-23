@@ -13,7 +13,7 @@ import {
 } from "types/aws";
 import { adminTags } from "services/aws/tags";
 import { logger } from "helpers";
-import { DAPP_URL, EMAIL_SUPPORT } from "constants/env";
+import { EMAIL_SUPPORT } from "constants/env";
 import { version as v } from "../../helpers";
 import { aws } from "../aws";
 
@@ -42,7 +42,7 @@ const registration_api = aws.injectEndpoints({
         return { ...res, reqId: 0 };
       },
     }),
-    fiscalSponsorshipAgreement: builder.query<
+    fiscalSponsorshipAgreementSigningURL: builder.mutation<
       { url: string },
       FiscalSponsorhipAgreementSigner
     >({
@@ -52,16 +52,14 @@ const registration_api = aws.injectEndpoints({
           method: "POST",
           body: {
             signer,
-            //manually change this to localhost:4200 for local testing
-            redirectURL: DAPP_URL + "/register/sign-result",
+            // DAPP_URL + "/register/sign-result"
+            //"http://localhost:4200/register/sign-result"
+            redirectURL: "http://localhost:4200/register/sign-result",
           },
         };
       },
     }),
-    updateReg: builder.mutation<
-      any,
-      RegistrationUpdate & { reference: string }
-    >({
+    updateReg: builder.mutation<any, RegistrationUpdate>({
       query: ({ type, reference, ...payload }) => {
         return {
           url: "v3/registration",
@@ -173,6 +171,7 @@ export const {
   useRegQuery,
   useLazyRegQuery,
   useEndowmentApplicationsQuery,
+  useFiscalSponsorshipAgreementSigningURLMutation,
 
   //mutations
   useUpdateRegMutation,

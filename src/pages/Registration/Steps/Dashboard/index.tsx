@@ -39,8 +39,15 @@ function Dashboard() {
     );
   };
 
-  const { status } = data;
+  const { status, documentation } = data;
   const isStepDisabled = isSubmitting || status === "Under Review";
+
+  if (
+    documentation.isAuthorizedToReceiveTaxDeductibleDonations === "No" &&
+    !documentation.signedFiscalSponsorshipAgreement
+  ) {
+    return <Navigate to={`../../${routes.sign_notice}`} state={data} />;
+  }
 
   if (status === "Active") {
     return <Navigate to={`../../${routes.success}`} state={data} />;

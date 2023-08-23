@@ -4,7 +4,7 @@ import { FileObject } from "../common";
 
 export type RegistrationStatus =
   //| "Pending Signature"
-  "Inactive" | "Under Review" | "Active" | "Rejected" | "Pending Signature";
+  "Inactive" | "Under Review" | "Active" | "Rejected";
 
 export type ApplicationStatus = "approved" | "not-complete" | "under-review";
 
@@ -144,7 +144,9 @@ type WalletUpdate = {
   type: "wallet";
 } & WalletData;
 
-export type RegistrationUpdate = ContactUpdate | DocsUpdate | WalletUpdate;
+export type RegistrationUpdate = (ContactUpdate | DocsUpdate | WalletUpdate) & {
+  reference: string;
+};
 
 export type ContactUpdateResult = {
   ContactPerson: ContactDetails;

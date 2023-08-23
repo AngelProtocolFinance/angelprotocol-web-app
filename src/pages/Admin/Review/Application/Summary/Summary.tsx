@@ -37,6 +37,17 @@ export default function Summary({
       <Label classes="mt-6 mb-1">Documents</Label>
       <Documents label="Proof of Identity" docs={[r.ProofOfIdentity]} />
       <Documents label="Proof of Registration" docs={[r.ProofOfRegistration]} />
+      {r.SignedFiscalSponsorshipAgreement && (
+        <Documents
+          label="Fiscal Sponsorship Agreement"
+          docs={[
+            {
+              publicUrl: r.SignedFiscalSponsorshipAgreement,
+              name: "Fiscal Sponsorship Agreement",
+            },
+          ]}
+        />
+      )}
 
       <Proposal txId={r.application_id} classes="mt-4" />
     </div>
