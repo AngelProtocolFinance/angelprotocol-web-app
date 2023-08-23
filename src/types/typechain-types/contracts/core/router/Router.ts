@@ -61,21 +61,19 @@ export declare namespace IVault {
 
 export interface RouterInterface extends utils.Interface {
   functions: {
-    "chain()": FunctionFragment;
     "deposit((string,bytes4,bytes4,uint32[],address,uint256,uint256,uint8),string,uint256)": FunctionFragment;
     "execute(bytes32,string,string,bytes)": FunctionFragment;
     "executeLocal(string,string,bytes)": FunctionFragment;
     "executeWithToken(bytes32,string,string,bytes,string,uint256)": FunctionFragment;
     "executeWithTokenLocal(string,string,bytes,string,uint256)": FunctionFragment;
     "gateway()": FunctionFragment;
-    "initialize(string,address)": FunctionFragment;
+    "initialize(address)": FunctionFragment;
     "registrar()": FunctionFragment;
     "sendTokens(string,string,bytes,string,uint256,address,uint256)": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "chain"
       | "deposit"
       | "execute"
       | "executeLocal"
@@ -87,7 +85,6 @@ export interface RouterInterface extends utils.Interface {
       | "sendTokens"
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: "chain", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "deposit",
     values: [IVault.VaultActionDataStruct, string, BigNumberish]
@@ -109,10 +106,7 @@ export interface RouterInterface extends utils.Interface {
     values: [string, string, BytesLike, string, BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "gateway", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "initialize",
-    values: [string, string]
-  ): string;
+  encodeFunctionData(functionFragment: "initialize", values: [string]): string;
   encodeFunctionData(functionFragment: "registrar", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "sendTokens",
@@ -127,7 +121,6 @@ export interface RouterInterface extends utils.Interface {
     ]
   ): string;
 
-  decodeFunctionResult(functionFragment: "chain", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "deposit", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "execute", data: BytesLike): Result;
   decodeFunctionResult(
@@ -279,8 +272,6 @@ export interface Router extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    chain(overrides?: CallOverrides): Promise<[string]>;
-
     deposit(
       action: IVault.VaultActionDataStruct,
       tokenSymbol: string,
@@ -325,7 +316,6 @@ export interface Router extends BaseContract {
     gateway(overrides?: CallOverrides): Promise<[string]>;
 
     initialize(
-      _chain: string,
       _registrar: string,
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
@@ -343,8 +333,6 @@ export interface Router extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
-
-  chain(overrides?: CallOverrides): Promise<string>;
 
   deposit(
     action: IVault.VaultActionDataStruct,
@@ -390,7 +378,6 @@ export interface Router extends BaseContract {
   gateway(overrides?: CallOverrides): Promise<string>;
 
   initialize(
-    _chain: string,
     _registrar: string,
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
@@ -409,8 +396,6 @@ export interface Router extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    chain(overrides?: CallOverrides): Promise<string>;
-
     deposit(
       action: IVault.VaultActionDataStruct,
       tokenSymbol: string,
@@ -454,11 +439,7 @@ export interface Router extends BaseContract {
 
     gateway(overrides?: CallOverrides): Promise<string>;
 
-    initialize(
-      _chain: string,
-      _registrar: string,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    initialize(_registrar: string, overrides?: CallOverrides): Promise<void>;
 
     registrar(overrides?: CallOverrides): Promise<string>;
 
@@ -520,8 +501,6 @@ export interface Router extends BaseContract {
   };
 
   estimateGas: {
-    chain(overrides?: CallOverrides): Promise<BigNumber>;
-
     deposit(
       action: IVault.VaultActionDataStruct,
       tokenSymbol: string,
@@ -566,7 +545,6 @@ export interface Router extends BaseContract {
     gateway(overrides?: CallOverrides): Promise<BigNumber>;
 
     initialize(
-      _chain: string,
       _registrar: string,
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
@@ -586,8 +564,6 @@ export interface Router extends BaseContract {
   };
 
   populateTransaction: {
-    chain(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     deposit(
       action: IVault.VaultActionDataStruct,
       tokenSymbol: string,
@@ -632,7 +608,6 @@ export interface Router extends BaseContract {
     gateway(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     initialize(
-      _chain: string,
       _registrar: string,
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;

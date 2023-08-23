@@ -137,6 +137,7 @@ export declare namespace AccountMessages {
     duration: BigNumberish;
     allowlistedBeneficiaries: string[];
     allowlistedContributors: string[];
+    maturityAllowlist: string[];
     earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct;
     withdrawFee: LibAccounts.FeeSettingStruct;
     depositFee: LibAccounts.FeeSettingStruct;
@@ -144,7 +145,6 @@ export declare namespace AccountMessages {
     proposalLink: BigNumberish;
     settingsController: LibAccounts.SettingsControllerStruct;
     parent: BigNumberish;
-    maturityAllowlist: string[];
     ignoreUserSplits: boolean;
     splitToLiquid: LibAccounts.SplitDetailsStruct;
     referralId: BigNumberish;
@@ -164,6 +164,7 @@ export declare namespace AccountMessages {
     BigNumber,
     string[],
     string[],
+    string[],
     LibAccounts.FeeSettingStructOutput,
     LibAccounts.FeeSettingStructOutput,
     LibAccounts.FeeSettingStructOutput,
@@ -171,7 +172,6 @@ export declare namespace AccountMessages {
     BigNumber,
     LibAccounts.SettingsControllerStructOutput,
     number,
-    string[],
     boolean,
     LibAccounts.SplitDetailsStructOutput,
     BigNumber
@@ -189,6 +189,7 @@ export declare namespace AccountMessages {
     duration: BigNumber;
     allowlistedBeneficiaries: string[];
     allowlistedContributors: string[];
+    maturityAllowlist: string[];
     earlyLockedWithdrawFee: LibAccounts.FeeSettingStructOutput;
     withdrawFee: LibAccounts.FeeSettingStructOutput;
     depositFee: LibAccounts.FeeSettingStructOutput;
@@ -196,7 +197,6 @@ export declare namespace AccountMessages {
     proposalLink: BigNumber;
     settingsController: LibAccounts.SettingsControllerStructOutput;
     parent: number;
-    maturityAllowlist: string[];
     ignoreUserSplits: boolean;
     splitToLiquid: LibAccounts.SplitDetailsStructOutput;
     referralId: BigNumber;
@@ -234,7 +234,7 @@ export interface ICharityApplicationsInterface extends utils.Interface {
     "getProposalConfirmationCount(uint256)": FunctionFragment;
     "getProposalConfirmationStatus(uint256,address)": FunctionFragment;
     "initializeApplications(address[],uint256,bool,uint256,address,uint256,uint256,address,uint256)": FunctionFragment;
-    "proposeApplication((bool,uint256,string,uint256[],uint8,uint8,string,string,address[],uint256,uint256,address[],address[],(address,uint256),(address,uint256),(address,uint256),(address,uint256),uint256,((bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256))),uint32,address[],bool,(uint256,uint256,uint256),uint256),bytes)": FunctionFragment;
+    "proposeApplication((bool,uint256,string,uint256[],uint8,uint8,string,string,address[],uint256,uint256,address[],address[],address[],(address,uint256),(address,uint256),(address,uint256),(address,uint256),uint256,((bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256))),uint32,bool,(uint256,uint256,uint256),uint256),bytes)": FunctionFragment;
     "queryConfig()": FunctionFragment;
     "revokeProposalConfirmation(uint256)": FunctionFragment;
     "updateConfig(uint256,address,uint256,uint256,address,uint256)": FunctionFragment;

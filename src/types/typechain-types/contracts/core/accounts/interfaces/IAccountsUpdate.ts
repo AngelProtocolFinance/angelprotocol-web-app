@@ -4,6 +4,7 @@
 import type {
   BaseContract,
   BigNumber,
+  BigNumberish,
   BytesLike,
   CallOverrides,
   ContractTransaction,
@@ -24,21 +25,33 @@ import type {
 export interface IAccountsUpdateInterface extends utils.Interface {
   functions: {
     "updateConfig(address)": FunctionFragment;
+    "updateDafApprovedEndowments(uint32[],uint32[])": FunctionFragment;
     "updateOwner(address)": FunctionFragment;
   };
 
   getFunction(
-    nameOrSignatureOrTopic: "updateConfig" | "updateOwner"
+    nameOrSignatureOrTopic:
+      | "updateConfig"
+      | "updateDafApprovedEndowments"
+      | "updateOwner"
   ): FunctionFragment;
 
   encodeFunctionData(
     functionFragment: "updateConfig",
     values: [string]
   ): string;
+  encodeFunctionData(
+    functionFragment: "updateDafApprovedEndowments",
+    values: [BigNumberish[], BigNumberish[]]
+  ): string;
   encodeFunctionData(functionFragment: "updateOwner", values: [string]): string;
 
   decodeFunctionResult(
     functionFragment: "updateConfig",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "updateDafApprovedEndowments",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -81,6 +94,12 @@ export interface IAccountsUpdate extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
+    updateDafApprovedEndowments(
+      add: BigNumberish[],
+      remove: BigNumberish[],
+      overrides?: Overrides & { from?: string }
+    ): Promise<ContractTransaction>;
+
     updateOwner(
       newOwner: string,
       overrides?: Overrides & { from?: string }
@@ -89,6 +108,12 @@ export interface IAccountsUpdate extends BaseContract {
 
   updateConfig(
     newRegistrar: string,
+    overrides?: Overrides & { from?: string }
+  ): Promise<ContractTransaction>;
+
+  updateDafApprovedEndowments(
+    add: BigNumberish[],
+    remove: BigNumberish[],
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
@@ -103,6 +128,12 @@ export interface IAccountsUpdate extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    updateDafApprovedEndowments(
+      add: BigNumberish[],
+      remove: BigNumberish[],
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     updateOwner(newOwner: string, overrides?: CallOverrides): Promise<void>;
   };
 
@@ -111,6 +142,12 @@ export interface IAccountsUpdate extends BaseContract {
   estimateGas: {
     updateConfig(
       newRegistrar: string,
+      overrides?: Overrides & { from?: string }
+    ): Promise<BigNumber>;
+
+    updateDafApprovedEndowments(
+      add: BigNumberish[],
+      remove: BigNumberish[],
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
@@ -123,6 +160,12 @@ export interface IAccountsUpdate extends BaseContract {
   populateTransaction: {
     updateConfig(
       newRegistrar: string,
+      overrides?: Overrides & { from?: string }
+    ): Promise<PopulatedTransaction>;
+
+    updateDafApprovedEndowments(
+      add: BigNumberish[],
+      remove: BigNumberish[],
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 

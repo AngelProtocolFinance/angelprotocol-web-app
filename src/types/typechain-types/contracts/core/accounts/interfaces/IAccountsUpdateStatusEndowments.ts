@@ -23,15 +23,10 @@ import type {
 } from "../../../../common";
 
 export declare namespace LibAccounts {
-  export type BeneficiaryDataStruct = {
-    endowId: BigNumberish;
-    fundId: BigNumberish;
-    addr: string;
-  };
+  export type BeneficiaryDataStruct = { endowId: BigNumberish; addr: string };
 
-  export type BeneficiaryDataStructOutput = [number, BigNumber, string] & {
+  export type BeneficiaryDataStructOutput = [number, string] & {
     endowId: number;
-    fundId: BigNumber;
     addr: string;
   };
 
@@ -49,7 +44,7 @@ export declare namespace LibAccounts {
 export interface IAccountsUpdateStatusEndowmentsInterface
   extends utils.Interface {
   functions: {
-    "closeEndowment(uint32,((uint32,uint256,address),uint8))": FunctionFragment;
+    "closeEndowment(uint32,((uint32,address),uint8))": FunctionFragment;
   };
 
   getFunction(nameOrSignatureOrTopic: "closeEndowment"): FunctionFragment;

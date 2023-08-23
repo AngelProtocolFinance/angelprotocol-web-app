@@ -149,7 +149,7 @@ export interface GasFwd extends BaseContract {
       token: string,
       amount: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<void>;
+    ): Promise<BigNumber>;
 
     sweep(token: string, overrides?: CallOverrides): Promise<BigNumber>;
   };

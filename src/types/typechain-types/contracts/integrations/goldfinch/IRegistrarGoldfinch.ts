@@ -42,17 +42,16 @@ export declare namespace APGoldfinchConfigLib {
   ] & { crvParams: APGoldfinchConfigLib.CRVParamsStructOutput };
 }
 
+export declare namespace LibAccounts {
+  export type FeeSettingStruct = { payoutAddress: string; bps: BigNumberish };
+
+  export type FeeSettingStructOutput = [string, BigNumber] & {
+    payoutAddress: string;
+    bps: BigNumber;
+  };
+}
+
 export declare namespace LocalRegistrarLib {
-  export type AngelProtocolParamsStruct = {
-    routerAddr: string;
-    refundAddr: string;
-  };
-
-  export type AngelProtocolParamsStructOutput = [string, string] & {
-    routerAddr: string;
-    refundAddr: string;
-  };
-
   export type RebalanceParamsStruct = {
     rebalanceLiquidProfits: boolean;
     lockedRebalanceToLiquid: BigNumberish;
@@ -78,51 +77,26 @@ export declare namespace LocalRegistrarLib {
     basis: number;
   };
 
-  export type VaultParamsStruct = { Type: BigNumberish; vaultAddr: string };
-
-  export type VaultParamsStructOutput = [number, string] & {
-    Type: number;
-    vaultAddr: string;
-  };
-
   export type StrategyParamsStruct = {
     approvalState: BigNumberish;
     network: string;
-    Locked: LocalRegistrarLib.VaultParamsStruct;
-    Liquid: LocalRegistrarLib.VaultParamsStruct;
+    lockedVaultAddr: string;
+    liquidVaultAddr: string;
   };
 
-  export type StrategyParamsStructOutput = [
-    number,
-    string,
-    LocalRegistrarLib.VaultParamsStructOutput,
-    LocalRegistrarLib.VaultParamsStructOutput
-  ] & {
+  export type StrategyParamsStructOutput = [number, string, string, string] & {
     approvalState: number;
     network: string;
-    Locked: LocalRegistrarLib.VaultParamsStructOutput;
-    Liquid: LocalRegistrarLib.VaultParamsStructOutput;
+    lockedVaultAddr: string;
+    liquidVaultAddr: string;
   };
-}
 
-export declare namespace LibAccounts {
-  export type FeeSettingStruct = { payoutAddress: string; bps: BigNumberish };
-
-  export type FeeSettingStructOutput = [string, BigNumber] & {
-    payoutAddress: string;
-    bps: BigNumber;
-  };
-}
-
-export declare namespace IAccountsStrategy {
   export type NetworkInfoStruct = {
     chainId: BigNumberish;
     router: string;
     axelarGateway: string;
-    ibcChannel: string;
-    transferChannel: string;
     gasReceiver: string;
-    gasLimit: BigNumberish;
+    refundAddr: string;
   };
 
   export type NetworkInfoStructOutput = [
@@ -130,17 +104,13 @@ export declare namespace IAccountsStrategy {
     string,
     string,
     string,
-    string,
-    string,
-    BigNumber
+    string
   ] & {
     chainId: BigNumber;
     router: string;
     axelarGateway: string;
-    ibcChannel: string;
-    transferChannel: string;
     gasReceiver: string;
-    gasLimit: BigNumber;
+    refundAddr: string;
   };
 }
 
@@ -148,7 +118,6 @@ export interface IRegistrarGoldfinchInterface extends utils.Interface {
   functions: {
     "getAPGoldfinchParams()": FunctionFragment;
     "getAccountsContractAddressByChain(string)": FunctionFragment;
-    "getAngelProtocolParams()": FunctionFragment;
     "getFeeSettingsByFeeType(uint8)": FunctionFragment;
     "getGasByToken(address)": FunctionFragment;
     "getRebalanceParams()": FunctionFragment;
@@ -160,7 +129,6 @@ export interface IRegistrarGoldfinchInterface extends utils.Interface {
     "isTokenAccepted(address)": FunctionFragment;
     "queryNetworkConnection(string)": FunctionFragment;
     "setAccountsContractAddressByChain(string,string)": FunctionFragment;
-    "setAngelProtocolParams((address,address))": FunctionFragment;
     "setFeeSettingsByFeesType(uint8,uint256,address)": FunctionFragment;
     "setGasByToken(address,uint256)": FunctionFragment;
     "setRebalanceParams((bool,uint32,uint32,bool,uint32,uint32))": FunctionFragment;
@@ -169,14 +137,14 @@ export interface IRegistrarGoldfinchInterface extends utils.Interface {
     "setTokenAccepted(address,bool)": FunctionFragment;
     "setUniswapAddresses(address,address)": FunctionFragment;
     "setVaultOperatorApproved(address,bool)": FunctionFragment;
-    "updateNetworkConnections(string,(uint256,address,address,string,string,address,uint256),uint8)": FunctionFragment;
+    "thisChain()": FunctionFragment;
+    "updateNetworkConnections(string,(uint256,address,address,address,address),uint8)": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
       | "getAPGoldfinchParams"
       | "getAccountsContractAddressByChain"
-      | "getAngelProtocolParams"
       | "getFeeSettingsByFeeType"
       | "getGasByToken"
       | "getRebalanceParams"
@@ -188,7 +156,6 @@ export interface IRegistrarGoldfinchInterface extends utils.Interface {
       | "isTokenAccepted"
       | "queryNetworkConnection"
       | "setAccountsContractAddressByChain"
-      | "setAngelProtocolParams"
       | "setFeeSettingsByFeesType"
       | "setGasByToken"
       | "setRebalanceParams"
@@ -197,6 +164,7 @@ export interface IRegistrarGoldfinchInterface extends utils.Interface {
       | "setTokenAccepted"
       | "setUniswapAddresses"
       | "setVaultOperatorApproved"
+      | "thisChain"
       | "updateNetworkConnections"
   ): FunctionFragment;
 
@@ -207,10 +175,6 @@ export interface IRegistrarGoldfinchInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "getAccountsContractAddressByChain",
     values: [string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getAngelProtocolParams",
-    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "getFeeSettingsByFeeType",
@@ -257,10 +221,6 @@ export interface IRegistrarGoldfinchInterface extends utils.Interface {
     values: [string, string]
   ): string;
   encodeFunctionData(
-    functionFragment: "setAngelProtocolParams",
-    values: [LocalRegistrarLib.AngelProtocolParamsStruct]
-  ): string;
-  encodeFunctionData(
     functionFragment: "setFeeSettingsByFeesType",
     values: [BigNumberish, BigNumberish, string]
   ): string;
@@ -292,9 +252,10 @@ export interface IRegistrarGoldfinchInterface extends utils.Interface {
     functionFragment: "setVaultOperatorApproved",
     values: [string, boolean]
   ): string;
+  encodeFunctionData(functionFragment: "thisChain", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "updateNetworkConnections",
-    values: [string, IAccountsStrategy.NetworkInfoStruct, BigNumberish]
+    values: [string, LocalRegistrarLib.NetworkInfoStruct, BigNumberish]
   ): string;
 
   decodeFunctionResult(
@@ -303,10 +264,6 @@ export interface IRegistrarGoldfinchInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "getAccountsContractAddressByChain",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getAngelProtocolParams",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -354,10 +311,6 @@ export interface IRegistrarGoldfinchInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setAngelProtocolParams",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
     functionFragment: "setFeeSettingsByFeesType",
     data: BytesLike
   ): Result;
@@ -389,6 +342,7 @@ export interface IRegistrarGoldfinchInterface extends utils.Interface {
     functionFragment: "setVaultOperatorApproved",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "thisChain", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "updateNetworkConnections",
     data: BytesLike
@@ -396,7 +350,6 @@ export interface IRegistrarGoldfinchInterface extends utils.Interface {
 
   events: {
     "AccountsContractStorageUpdated(string,string)": EventFragment;
-    "AngelProtocolParamsUpdated()": EventFragment;
     "FeeSettingsUpdated(uint8,uint256,address)": EventFragment;
     "GasFeeUpdated(address,uint256)": EventFragment;
     "NetworkConnectionPosted(uint256)": EventFragment;
@@ -410,7 +363,6 @@ export interface IRegistrarGoldfinchInterface extends utils.Interface {
   getEvent(
     nameOrSignatureOrTopic: "AccountsContractStorageUpdated"
   ): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "AngelProtocolParamsUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "FeeSettingsUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "GasFeeUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "NetworkConnectionPosted"): EventFragment;
@@ -432,15 +384,6 @@ export type AccountsContractStorageUpdatedEvent = TypedEvent<
 
 export type AccountsContractStorageUpdatedEventFilter =
   TypedEventFilter<AccountsContractStorageUpdatedEvent>;
-
-export interface AngelProtocolParamsUpdatedEventObject {}
-export type AngelProtocolParamsUpdatedEvent = TypedEvent<
-  [],
-  AngelProtocolParamsUpdatedEventObject
->;
-
-export type AngelProtocolParamsUpdatedEventFilter =
-  TypedEventFilter<AngelProtocolParamsUpdatedEvent>;
 
 export interface FeeSettingsUpdatedEventObject {
   _feeType: number;
@@ -572,10 +515,6 @@ export interface IRegistrarGoldfinch extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string]>;
 
-    getAngelProtocolParams(
-      overrides?: CallOverrides
-    ): Promise<[LocalRegistrarLib.AngelProtocolParamsStructOutput]>;
-
     getFeeSettingsByFeeType(
       _feeType: BigNumberish,
       overrides?: CallOverrides
@@ -618,19 +557,14 @@ export interface IRegistrarGoldfinch extends BaseContract {
       networkName: string,
       overrides?: CallOverrides
     ): Promise<
-      [IAccountsStrategy.NetworkInfoStructOutput] & {
-        response: IAccountsStrategy.NetworkInfoStructOutput;
+      [LocalRegistrarLib.NetworkInfoStructOutput] & {
+        response: LocalRegistrarLib.NetworkInfoStructOutput;
       }
     >;
 
     setAccountsContractAddressByChain(
       _chainName: string,
       _accountsContractAddress: string,
-      overrides?: Overrides & { from?: string }
-    ): Promise<ContractTransaction>;
-
-    setAngelProtocolParams(
-      _angelProtocolParams: LocalRegistrarLib.AngelProtocolParamsStruct,
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
@@ -685,9 +619,11 @@ export interface IRegistrarGoldfinch extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
+    thisChain(overrides?: CallOverrides): Promise<[string]>;
+
     updateNetworkConnections(
       networkName: string,
-      networkInfo: IAccountsStrategy.NetworkInfoStruct,
+      networkInfo: LocalRegistrarLib.NetworkInfoStruct,
       action: BigNumberish,
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
@@ -701,10 +637,6 @@ export interface IRegistrarGoldfinch extends BaseContract {
     _targetChain: string,
     overrides?: CallOverrides
   ): Promise<string>;
-
-  getAngelProtocolParams(
-    overrides?: CallOverrides
-  ): Promise<LocalRegistrarLib.AngelProtocolParamsStructOutput>;
 
   getFeeSettingsByFeeType(
     _feeType: BigNumberish,
@@ -747,16 +679,11 @@ export interface IRegistrarGoldfinch extends BaseContract {
   queryNetworkConnection(
     networkName: string,
     overrides?: CallOverrides
-  ): Promise<IAccountsStrategy.NetworkInfoStructOutput>;
+  ): Promise<LocalRegistrarLib.NetworkInfoStructOutput>;
 
   setAccountsContractAddressByChain(
     _chainName: string,
     _accountsContractAddress: string,
-    overrides?: Overrides & { from?: string }
-  ): Promise<ContractTransaction>;
-
-  setAngelProtocolParams(
-    _angelProtocolParams: LocalRegistrarLib.AngelProtocolParamsStruct,
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
@@ -811,9 +738,11 @@ export interface IRegistrarGoldfinch extends BaseContract {
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
+  thisChain(overrides?: CallOverrides): Promise<string>;
+
   updateNetworkConnections(
     networkName: string,
-    networkInfo: IAccountsStrategy.NetworkInfoStruct,
+    networkInfo: LocalRegistrarLib.NetworkInfoStruct,
     action: BigNumberish,
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
@@ -827,10 +756,6 @@ export interface IRegistrarGoldfinch extends BaseContract {
       _targetChain: string,
       overrides?: CallOverrides
     ): Promise<string>;
-
-    getAngelProtocolParams(
-      overrides?: CallOverrides
-    ): Promise<LocalRegistrarLib.AngelProtocolParamsStructOutput>;
 
     getFeeSettingsByFeeType(
       _feeType: BigNumberish,
@@ -873,16 +798,11 @@ export interface IRegistrarGoldfinch extends BaseContract {
     queryNetworkConnection(
       networkName: string,
       overrides?: CallOverrides
-    ): Promise<IAccountsStrategy.NetworkInfoStructOutput>;
+    ): Promise<LocalRegistrarLib.NetworkInfoStructOutput>;
 
     setAccountsContractAddressByChain(
       _chainName: string,
       _accountsContractAddress: string,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    setAngelProtocolParams(
-      _angelProtocolParams: LocalRegistrarLib.AngelProtocolParamsStruct,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -937,9 +857,11 @@ export interface IRegistrarGoldfinch extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    thisChain(overrides?: CallOverrides): Promise<string>;
+
     updateNetworkConnections(
       networkName: string,
-      networkInfo: IAccountsStrategy.NetworkInfoStruct,
+      networkInfo: LocalRegistrarLib.NetworkInfoStruct,
       action: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -954,9 +876,6 @@ export interface IRegistrarGoldfinch extends BaseContract {
       _chainName?: null,
       _accountsContractAddress?: null
     ): AccountsContractStorageUpdatedEventFilter;
-
-    "AngelProtocolParamsUpdated()"(): AngelProtocolParamsUpdatedEventFilter;
-    AngelProtocolParamsUpdated(): AngelProtocolParamsUpdatedEventFilter;
 
     "FeeSettingsUpdated(uint8,uint256,address)"(
       _feeType?: null,
@@ -1032,8 +951,6 @@ export interface IRegistrarGoldfinch extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getAngelProtocolParams(overrides?: CallOverrides): Promise<BigNumber>;
-
     getFeeSettingsByFeeType(
       _feeType: BigNumberish,
       overrides?: CallOverrides
@@ -1078,11 +995,6 @@ export interface IRegistrarGoldfinch extends BaseContract {
     setAccountsContractAddressByChain(
       _chainName: string,
       _accountsContractAddress: string,
-      overrides?: Overrides & { from?: string }
-    ): Promise<BigNumber>;
-
-    setAngelProtocolParams(
-      _angelProtocolParams: LocalRegistrarLib.AngelProtocolParamsStruct,
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
@@ -1137,9 +1049,11 @@ export interface IRegistrarGoldfinch extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
+    thisChain(overrides?: CallOverrides): Promise<BigNumber>;
+
     updateNetworkConnections(
       networkName: string,
-      networkInfo: IAccountsStrategy.NetworkInfoStruct,
+      networkInfo: LocalRegistrarLib.NetworkInfoStruct,
       action: BigNumberish,
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
@@ -1152,10 +1066,6 @@ export interface IRegistrarGoldfinch extends BaseContract {
 
     getAccountsContractAddressByChain(
       _targetChain: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    getAngelProtocolParams(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -1212,11 +1122,6 @@ export interface IRegistrarGoldfinch extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
-    setAngelProtocolParams(
-      _angelProtocolParams: LocalRegistrarLib.AngelProtocolParamsStruct,
-      overrides?: Overrides & { from?: string }
-    ): Promise<PopulatedTransaction>;
-
     setFeeSettingsByFeesType(
       _feeType: BigNumberish,
       _rate: BigNumberish,
@@ -1268,9 +1173,11 @@ export interface IRegistrarGoldfinch extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
+    thisChain(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     updateNetworkConnections(
       networkName: string,
-      networkInfo: IAccountsStrategy.NetworkInfoStruct,
+      networkInfo: LocalRegistrarLib.NetworkInfoStruct,
       action: BigNumberish,
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;

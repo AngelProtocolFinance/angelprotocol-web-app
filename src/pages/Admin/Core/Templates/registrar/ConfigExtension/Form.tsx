@@ -28,40 +28,6 @@ export default function Form() {
         name="description"
         required
       />
-      <Label className="-mb-4 font-bold">Latest contract factories</Label>
-      <GroupContainer>
-        <Field<FV>
-          classes="field-admin-sec"
-          label="Multisig"
-          name="multisigFactory"
-        />
-        <Field<FV>
-          classes="field-admin-sec"
-          label="Subdao Bonding Token"
-          name="subdaoBondingTokenContract"
-        />
-        <Field<FV>
-          classes="field-admin-sec"
-          label="Subdao CW20 Token"
-          name="subdaoTokenContract"
-        />
-        <Field<FV>
-          classes="field-admin-sec"
-          label="Subdao CW900"
-          name="subdaoCw900Contract"
-        />
-        <Field<FV>
-          classes="field-admin-sec"
-          label="Subdao Distributor"
-          name="subdaoDistributorContract"
-        />
-        <Field<FV>
-          classes="field-admin-sec"
-          label="Subdao Gov"
-          name="subdaoGovContract"
-        />
-      </GroupContainer>
-
       <Label className="-mb-4 font-bold">Contract Directory</Label>
       <GroupContainer>
         <Field<FV>
@@ -71,33 +37,14 @@ export default function Form() {
         />
         <Field<FV>
           classes="field-admin-sec"
-          label="Charity Application"
-          name="charityApplications"
+          label="AP Team Multisig"
+          name="apTeamMultisig"
         />
-        <Field<FV>
-          classes="field-admin-sec"
-          label="Donation Match"
-          name="donationMatchCharitesContract"
-        />
-        <Field<FV>
-          classes="field-admin-sec"
-          label="Fundraising"
-          name="fundraisingContract"
-        />
+        <Field<FV> classes="field-admin-sec" label="Treasury" name="treasury" />
         <Field<FV>
           classes="field-admin-sec"
           label="Index fund"
           name="indexFundContract"
-        />
-        <Field<FV>
-          classes="field-admin-sec"
-          label="Governance"
-          name="govContract"
-        />
-        <Field<FV>
-          classes="field-admin-sec"
-          label="Halo Token LP"
-          name="haloTokenLpContract"
         />
         <Field<FV>
           classes="field-admin-sec"
@@ -106,8 +53,54 @@ export default function Form() {
         />
         <Field<FV>
           classes="field-admin-sec"
+          label="Governance"
+          name="govContract"
+        />
+        <Field<FV>
+          classes="field-admin-sec"
+          label="Fundraising"
+          name="fundraisingContract"
+        />
+        <Field<FV>
+          classes="field-admin-sec"
           label="Swaps Router"
           name="uniswapRouter"
+        />
+        <Field<FV>
+          classes="field-admin-sec"
+          label="Uniswap Router"
+          name="uniswapRouter"
+        />
+        <Field<FV>
+          classes="field-admin-sec"
+          label="Multisig Factory"
+          name="multisigFactory"
+        />
+        <Field<FV>
+          classes="field-admin-sec"
+          label="Multisig Emitter"
+          name="multisigEmitter"
+        />
+        <Field<FV>
+          classes="field-admin-sec"
+          label="Charity applications"
+          name="charityApplications"
+        />
+        <Field<FV>
+          classes="field-admin-sec"
+          label="Proxy admin"
+          name="proxyAdmin"
+        />
+        <Field<FV> classes="field-admin-sec" label="USDC" name="usdcAddress" />,
+        <Field<FV>
+          classes="field-admin-sec"
+          label="WMATIC"
+          name="wMaticAddress"
+        />
+        <Field<FV>
+          classes="field-admin-sec"
+          label="Gas Forwarder Factory"
+          name="gasFwdFactory"
         />
       </GroupContainer>
 
