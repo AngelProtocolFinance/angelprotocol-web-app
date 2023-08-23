@@ -23,20 +23,12 @@ export default function useEditWhitelists() {
   const sendTx = useTxSender();
   const tooltip = isTooltip(txResource) ? txResource : undefined;
 
-  const editWhitelists: SubmitHandler<FormValues> = async ({
-    initial,
-    contributors,
-    beneficiaries,
-  }) => {
+  const editWhitelists: SubmitHandler<FormValues> = async ({ initial }) => {
     try {
       if (isTooltip(txResource)) throw new Error(txResource);
 
       const update: EndowmentSettingsUpdate = {
         ...initial,
-        allowlistedBeneficiaries: isEmpty(beneficiaries)
-          ? [multisig]
-          : beneficiaries,
-        allowlistedContributors: contributors,
       };
 
       const diff = getPayloadDiff(initial, update);

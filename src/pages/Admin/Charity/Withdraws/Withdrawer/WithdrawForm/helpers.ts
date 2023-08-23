@@ -77,7 +77,7 @@ export const feeData = ({
   const earlyLockedWithdrawFee = (() => {
     if (accountType === "liquid") return new Decimal(0);
 
-    if (endowType === "normal") {
+    if (endowType === "ast") {
       if (hasElapsed(maturityTime)) return new Decimal(0);
       return withdrawAmountDec
         .mul(endowFeeRates.earlyLockedWithdrawBps)
