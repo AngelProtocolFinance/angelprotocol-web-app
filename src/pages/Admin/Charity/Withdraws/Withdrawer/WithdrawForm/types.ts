@@ -34,6 +34,6 @@ export type FormMeta = {
 export type FV = {
   amounts: Amount[];
   destinationChainId: string;
-  //FUTURE: support endowement | index-fund
+  //FUTURE: support endowement
   beneficiaryWallet: string;
 } & FormMeta;

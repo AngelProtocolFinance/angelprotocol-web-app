@@ -15,8 +15,6 @@ export const schema = object<any, SS<FV>>({
     type: string().when(key, ([type]) => {
       switch (type as BeneficiaryType) {
         case "endowment":
-        case "indexfund":
-          return requiredPositiveNumber;
         default: //wallet
           return requiredWalletAddr();
       }

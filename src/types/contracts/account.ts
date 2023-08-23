@@ -14,7 +14,7 @@ import { Mapped } from "../utils";
 
 type BeneficiaryData = OverrideProperties<
   LibAccounts.BeneficiaryDataStruct,
-  { endowId: number; fundId: number; addr: string }
+  { endowId: number }
 >;
 
 export type AccountsSplitDetails = Mapped<
