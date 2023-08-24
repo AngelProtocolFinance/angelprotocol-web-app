@@ -2,3 +2,4 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { IVault } from "./IVault";
+export type { IVaultEmitter } from "./IVaultEmitter";

@@ -78,33 +78,6 @@ export declare namespace IVault {
   };
 }
 
-export declare namespace LocalRegistrarLib {
-  export type RebalanceParamsStruct = {
-    rebalanceLiquidProfits: boolean;
-    lockedRebalanceToLiquid: BigNumberish;
-    interestDistribution: BigNumberish;
-    lockedPrincipleToLiquid: boolean;
-    principleDistribution: BigNumberish;
-    basis: BigNumberish;
-  };
-
-  export type RebalanceParamsStructOutput = [
-    boolean,
-    number,
-    number,
-    boolean,
-    number,
-    number
-  ] & {
-    rebalanceLiquidProfits: boolean;
-    lockedRebalanceToLiquid: number;
-    interestDistribution: number;
-    lockedPrincipleToLiquid: boolean;
-    principleDistribution: number;
-    basis: number;
-  };
-}
-
 export declare namespace AccountMessages {
   export type UpdateEndowmentDetailsRequestStruct = {
     id: BigNumberish;
@@ -113,7 +86,6 @@ export declare namespace AccountMessages {
     sdgs: BigNumberish[];
     logo: string;
     image: string;
-    rebalance: LocalRegistrarLib.RebalanceParamsStruct;
   };
 
   export type UpdateEndowmentDetailsRequestStructOutput = [
@@ -122,8 +94,7 @@ export declare namespace AccountMessages {
     string,
     BigNumber[],
     string,
-    string,
-    LocalRegistrarLib.RebalanceParamsStructOutput
+    string
   ] & {
     id: number;
     owner: string;
@@ -131,7 +102,6 @@ export declare namespace AccountMessages {
     sdgs: BigNumber[];
     logo: string;
     image: string;
-    rebalance: LocalRegistrarLib.RebalanceParamsStructOutput;
   };
 }
 
@@ -140,7 +110,7 @@ export interface AccountsUpdateEndowmentsInterface extends utils.Interface {
     "revokeDelegate(uint32,uint8)": FunctionFragment;
     "setDelegate(uint32,uint8,address,uint256)": FunctionFragment;
     "updateAcceptedToken(uint32,address,address,bool)": FunctionFragment;
-    "updateEndowmentDetails((uint32,address,string,uint256[],string,string,(bool,uint32,uint32,bool,uint32,uint32)))": FunctionFragment;
+    "updateEndowmentDetails((uint32,address,string,uint256[],string,string))": FunctionFragment;
   };
 
   getFunction(

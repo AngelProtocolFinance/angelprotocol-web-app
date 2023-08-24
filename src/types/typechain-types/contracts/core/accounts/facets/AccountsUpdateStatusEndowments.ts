@@ -408,7 +408,7 @@ export interface AccountsUpdateStatusEndowments extends BaseContract {
 
     forceSetStrategyInactive(
       id: BigNumberish,
-      strategySelector: BytesLike,
+      strategyId: BytesLike,
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
@@ -421,7 +421,7 @@ export interface AccountsUpdateStatusEndowments extends BaseContract {
 
   forceSetStrategyInactive(
     id: BigNumberish,
-    strategySelector: BytesLike,
+    strategyId: BytesLike,
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
@@ -434,7 +434,7 @@ export interface AccountsUpdateStatusEndowments extends BaseContract {
 
     forceSetStrategyInactive(
       id: BigNumberish,
-      strategySelector: BytesLike,
+      strategyId: BytesLike,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -638,7 +638,7 @@ export interface AccountsUpdateStatusEndowments extends BaseContract {
 
     forceSetStrategyInactive(
       id: BigNumberish,
-      strategySelector: BytesLike,
+      strategyId: BytesLike,
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
@@ -652,7 +652,7 @@ export interface AccountsUpdateStatusEndowments extends BaseContract {
 
     forceSetStrategyInactive(
       id: BigNumberish,
-      strategySelector: BytesLike,
+      strategyId: BytesLike,
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };

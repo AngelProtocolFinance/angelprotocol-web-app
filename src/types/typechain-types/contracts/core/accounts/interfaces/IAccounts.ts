@@ -303,7 +303,6 @@ export declare namespace AccountMessages {
     logo: string;
     image: string;
     maturityTime: BigNumberish;
-    rebalance: LocalRegistrarLib.RebalanceParamsStruct;
     proposalLink: BigNumberish;
     multisig: string;
     dao: string;
@@ -333,7 +332,6 @@ export declare namespace AccountMessages {
     string,
     string,
     BigNumber,
-    LocalRegistrarLib.RebalanceParamsStructOutput,
     BigNumber,
     string,
     string,
@@ -361,7 +359,6 @@ export declare namespace AccountMessages {
     logo: string;
     image: string;
     maturityTime: BigNumber;
-    rebalance: LocalRegistrarLib.RebalanceParamsStructOutput;
     proposalLink: BigNumber;
     multisig: string;
     dao: string;
@@ -481,7 +478,6 @@ export declare namespace AccountMessages {
     sdgs: BigNumberish[];
     logo: string;
     image: string;
-    rebalance: LocalRegistrarLib.RebalanceParamsStruct;
   };
 
   export type UpdateEndowmentDetailsRequestStructOutput = [
@@ -490,8 +486,7 @@ export declare namespace AccountMessages {
     string,
     BigNumber[],
     string,
-    string,
-    LocalRegistrarLib.RebalanceParamsStructOutput
+    string
   ] & {
     id: number;
     owner: string;
@@ -499,7 +494,6 @@ export declare namespace AccountMessages {
     sdgs: BigNumber[];
     logo: string;
     image: string;
-    rebalance: LocalRegistrarLib.RebalanceParamsStructOutput;
   };
 
   export type UpdateEndowmentSettingsRequestStruct = {
@@ -547,33 +541,6 @@ export declare namespace AccountMessages {
   };
 }
 
-export declare namespace LocalRegistrarLib {
-  export type RebalanceParamsStruct = {
-    rebalanceLiquidProfits: boolean;
-    lockedRebalanceToLiquid: BigNumberish;
-    interestDistribution: BigNumberish;
-    lockedPrincipleToLiquid: boolean;
-    principleDistribution: BigNumberish;
-    basis: BigNumberish;
-  };
-
-  export type RebalanceParamsStructOutput = [
-    boolean,
-    number,
-    number,
-    boolean,
-    number,
-    number
-  ] & {
-    rebalanceLiquidProfits: boolean;
-    lockedRebalanceToLiquid: number;
-    interestDistribution: number;
-    lockedPrincipleToLiquid: boolean;
-    principleDistribution: number;
-    basis: number;
-  };
-}
-
 export declare namespace IAccountsDepositWithdrawEndowments {
   export type TokenInfoStruct = { addr: string; amnt: BigNumberish };
 
@@ -610,7 +577,7 @@ export interface IAccountsInterface extends utils.Interface {
     "updateDafApprovedEndowments(uint32[],uint32[])": FunctionFragment;
     "updateEndowmentAllowlist(uint32,uint8,address[],address[])": FunctionFragment;
     "updateEndowmentController((uint32,((bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)))))": FunctionFragment;
-    "updateEndowmentDetails((uint32,address,string,uint256[],string,string,(bool,uint32,uint32,bool,uint32,uint32)))": FunctionFragment;
+    "updateEndowmentDetails((uint32,address,string,uint256[],string,string))": FunctionFragment;
     "updateEndowmentSettings((uint32,bool,uint256,(uint256,uint256,uint256),bool))": FunctionFragment;
     "updateFeeSettings((uint32,(address,uint256),(address,uint256),(address,uint256),(address,uint256)))": FunctionFragment;
     "updateOwner(address)": FunctionFragment;

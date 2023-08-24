@@ -250,6 +250,7 @@ export interface RegistrarInterface extends utils.Interface {
     "getStrategyParamsById(bytes4)": FunctionFragment;
     "getUniswapFactoryAddress()": FunctionFragment;
     "getUniswapRouterAddress()": FunctionFragment;
+    "getVaultEmitterAddress()": FunctionFragment;
     "getVaultOperatorApproved(address)": FunctionFragment;
     "initialize((address,address,address,address,address,string,address))": FunctionFragment;
     "initialize(string)": FunctionFragment;
@@ -268,6 +269,7 @@ export interface RegistrarInterface extends utils.Interface {
     "setStrategyParams(bytes4,string,address,address,uint8)": FunctionFragment;
     "setTokenAccepted(address,bool)": FunctionFragment;
     "setUniswapAddresses(address,address)": FunctionFragment;
+    "setVaultEmitterAddress(address)": FunctionFragment;
     "setVaultOperatorApproved(address,bool)": FunctionFragment;
     "thisChain()": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
@@ -286,6 +288,7 @@ export interface RegistrarInterface extends utils.Interface {
       | "getStrategyParamsById"
       | "getUniswapFactoryAddress"
       | "getUniswapRouterAddress"
+      | "getVaultEmitterAddress"
       | "getVaultOperatorApproved"
       | "initialize((address,address,address,address,address,string,address))"
       | "initialize(string)"
@@ -304,6 +307,7 @@ export interface RegistrarInterface extends utils.Interface {
       | "setStrategyParams"
       | "setTokenAccepted"
       | "setUniswapAddresses"
+      | "setVaultEmitterAddress"
       | "setVaultOperatorApproved"
       | "thisChain"
       | "transferOwnership"
@@ -342,6 +346,10 @@ export interface RegistrarInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "getUniswapRouterAddress",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getVaultEmitterAddress",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -414,6 +422,10 @@ export interface RegistrarInterface extends utils.Interface {
     values: [string, string]
   ): string;
   encodeFunctionData(
+    functionFragment: "setVaultEmitterAddress",
+    values: [string]
+  ): string;
+  encodeFunctionData(
     functionFragment: "setVaultOperatorApproved",
     values: [string, boolean]
   ): string;
@@ -465,6 +477,10 @@ export interface RegistrarInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "getUniswapRouterAddress",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getVaultEmitterAddress",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -534,6 +550,10 @@ export interface RegistrarInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "setUniswapAddresses",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setVaultEmitterAddress",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -779,6 +799,8 @@ export interface Registrar extends BaseContract {
 
     getUniswapRouterAddress(overrides?: CallOverrides): Promise<[string]>;
 
+    getVaultEmitterAddress(overrides?: CallOverrides): Promise<[string]>;
+
     getVaultOperatorApproved(
       _operator: string,
       overrides?: CallOverrides
@@ -878,6 +900,11 @@ export interface Registrar extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
+    setVaultEmitterAddress(
+      _vaultEmitter: string,
+      overrides?: Overrides & { from?: string }
+    ): Promise<ContractTransaction>;
+
     setVaultOperatorApproved(
       _operator: string,
       _isApproved: boolean,
@@ -942,6 +969,8 @@ export interface Registrar extends BaseContract {
   getUniswapFactoryAddress(overrides?: CallOverrides): Promise<string>;
 
   getUniswapRouterAddress(overrides?: CallOverrides): Promise<string>;
+
+  getVaultEmitterAddress(overrides?: CallOverrides): Promise<string>;
 
   getVaultOperatorApproved(
     _operator: string,
@@ -1036,6 +1065,11 @@ export interface Registrar extends BaseContract {
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
+  setVaultEmitterAddress(
+    _vaultEmitter: string,
+    overrides?: Overrides & { from?: string }
+  ): Promise<ContractTransaction>;
+
   setVaultOperatorApproved(
     _operator: string,
     _isApproved: boolean,
@@ -1100,6 +1134,8 @@ export interface Registrar extends BaseContract {
     getUniswapFactoryAddress(overrides?: CallOverrides): Promise<string>;
 
     getUniswapRouterAddress(overrides?: CallOverrides): Promise<string>;
+
+    getVaultEmitterAddress(overrides?: CallOverrides): Promise<string>;
 
     getVaultOperatorApproved(
       _operator: string,
@@ -1189,6 +1225,11 @@ export interface Registrar extends BaseContract {
     setUniswapAddresses(
       _uniswapRouter: string,
       _uniswapFactory: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setVaultEmitterAddress(
+      _vaultEmitter: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1347,6 +1388,8 @@ export interface Registrar extends BaseContract {
 
     getUniswapRouterAddress(overrides?: CallOverrides): Promise<BigNumber>;
 
+    getVaultEmitterAddress(overrides?: CallOverrides): Promise<BigNumber>;
+
     getVaultOperatorApproved(
       _operator: string,
       overrides?: CallOverrides
@@ -1438,6 +1481,11 @@ export interface Registrar extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
+    setVaultEmitterAddress(
+      _vaultEmitter: string,
+      overrides?: Overrides & { from?: string }
+    ): Promise<BigNumber>;
+
     setVaultOperatorApproved(
       _operator: string,
       _isApproved: boolean,
@@ -1505,6 +1553,10 @@ export interface Registrar extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     getUniswapRouterAddress(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getVaultEmitterAddress(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -1598,6 +1650,11 @@ export interface Registrar extends BaseContract {
     setUniswapAddresses(
       _uniswapRouter: string,
       _uniswapFactory: string,
+      overrides?: Overrides & { from?: string }
+    ): Promise<PopulatedTransaction>;
+
+    setVaultEmitterAddress(
+      _vaultEmitter: string,
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
