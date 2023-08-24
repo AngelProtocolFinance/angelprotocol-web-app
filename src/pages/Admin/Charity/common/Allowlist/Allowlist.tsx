@@ -6,6 +6,7 @@ export default function Allowlist(props: Props) {
   const { initial } = props;
   const methods = useForm<FV>({
     defaultValues: {
+      type: props.type,
       initial,
       addresses: initial,
     },
