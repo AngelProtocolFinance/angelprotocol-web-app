@@ -1,5 +1,4 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { createPortal } from "react-dom";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { ObjectSchema, mixed, object, string, date as yupDate } from "yup";
 import { FV } from "./types";
@@ -19,7 +18,6 @@ import {
   getTagPayloads,
 } from "helpers/admin";
 import { isTooltip, useAdminContext } from "../../../Context";
-import Allowlist from "../../common/Allowlist";
 import Form from "./Form";
 
 const schema = object<any, SchemaShape<FV>>({
@@ -33,13 +31,12 @@ const schema = object<any, SchemaShape<FV>>({
   }),
 }) as ObjectSchema<FV>;
 
-export default function MaturityDate(props: { allowlistContainerID: string }) {
+export default function MaturityDate() {
   const {
     id,
     donationMatchActive,
     splitToLiquid,
     ignoreUserSplits,
-    maturityAllowlist,
     maturityTime,
     txResource,
     multisig,
@@ -113,37 +110,19 @@ export default function MaturityDate(props: { allowlistContainerID: string }) {
     }
   };
 
-  const { handleSubmit, reset, watch } = methods;
+  const { handleSubmit, reset } = methods;
   const tooltip = isTooltip(txResource) ? txResource : undefined;
 
-  const isMaturitySet = watch("willMature");
-
   return (
-    <>
-      <FormProvider {...methods}>
-        <Form
-          onSubmit={handleSubmit(onSubmit)}
-          onReset={(e) => {
-            e.preventDefault();
-            reset();
-          }}
-          tooltip={tooltip}
-        />
-      </FormProvider>
-      {isMaturitySet &&
-        createPortal(
-          <Allowlist
-            operation="maturityAllowlist"
-            type="maturity"
-            memberName="beneficiary"
-            title="Beneficiary Whitelist at Maturity"
-            emptyMessage="Multisig wallet is the only beneficiary"
-            initial={maturityAllowlist}
-          />,
-          window.document.getElementById(
-            props.allowlistContainerID
-          ) as HTMLElement
-        )}
-    </>
+    <FormProvider {...methods}>
+      <Form
+        onSubmit={handleSubmit(onSubmit)}
+        onReset={(e) => {
+          e.preventDefault();
+          reset();
+        }}
+        tooltip={tooltip}
+      />
+    </FormProvider>
   );
 }
