@@ -47,8 +47,8 @@ export default function useSubmit(op: Operation) {
 
       const { wallet, txMeta, isDelegated } = txResource;
       const [data, dest, meta] = encodeTx("accounts.update-allowlist", update, {
-        title: `Update whitelists settings`,
-        description: `Update whitelists settings for endowment id:${id} by member:${wallet.address}`,
+        title: `Update ${type} allowlist`,
+        description: `Update ${type} allowlist for endowment id:${id} by member:${wallet.address}`,
         content: { add: toAdd, remove: toRemove },
       });
 
