@@ -4,7 +4,7 @@ import { Tooltip } from "components/admin";
 import useEditWhitelists from "./useSubmit";
 
 export default function Form(props: Props) {
-  const { submit, reset, isSubmitting, tooltip } = useEditWhitelists(
+  const { submit, reset, isSubmitting, tooltip, isDirty } = useEditWhitelists(
     props.operation
   );
 
@@ -30,7 +30,7 @@ export default function Form(props: Props) {
         <div className="grid grid-cols-2 sm:flex gap-3 m-2 group-disabled:hidden">
           <button
             type="reset"
-            disabled={isSubmitting}
+            disabled={isSubmitting || !isDirty}
             className="text-sm px-8 btn-outline-filled"
           >
             Reset Changes
