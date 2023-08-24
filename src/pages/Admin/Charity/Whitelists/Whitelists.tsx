@@ -1,43 +1,30 @@
-import { FormProvider, useForm } from "react-hook-form";
-import { FormValues as FV } from "./types";
-import { EndowmentSettingsUpdate } from "types/contracts";
 import { useAdminContext } from "../../Context";
-import Form from "./Form";
-import { ops } from "./constants";
+import Allowlist from "../common/Allowlist";
 
 export default function Whitelists() {
-  const {
-    allowlistedBeneficiaries,
-    allowlistedContributors,
-    id,
-    donationMatchActive,
-    splitToLiquid,
-    ignoreUserSplits,
-    maturityTime,
-  } = useAdminContext<"charity">(ops);
-
-  const initial: EndowmentSettingsUpdate = {
-    id,
-    donationMatchActive,
-    maturityTime,
-    splitToLiquid,
-    ignoreUserSplits,
-  };
-
-  const methods = useForm<FV>({
-    defaultValues: {
-      beneficiaries: allowlistedBeneficiaries,
-      contributors: allowlistedContributors,
-      initial,
-    },
-  });
+  const { allowlistedBeneficiaries, allowlistedContributors } =
+    useAdminContext<"charity">();
 
   return (
     <>
       <h2 className="text-[2rem] font-bold mb-10">Whitelists</h2>
-      <FormProvider {...methods}>
-        <Form />
-      </FormProvider>
+      <Allowlist
+        operation="allowlistedContributors"
+        type="contributor"
+        memberName="contributor"
+        title="Contributors"
+        emptyMessage="Anyone can contribute to your AST."
+        initial={allowlistedContributors}
+        classes="mb-10"
+      />
+      <Allowlist
+        operation="allowlistedBeneficiaries"
+        type="beneficiary"
+        memberName="beneficiary"
+        title="Beneficiaries"
+        emptyMessage="Only the multisig wallet is allowed to withdraw funds."
+        initial={allowlistedBeneficiaries}
+      />
     </>
   );
 }
