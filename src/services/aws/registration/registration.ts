@@ -52,7 +52,7 @@ const registration_api = aws.injectEndpoints({
           method: "POST",
           body: {
             signer,
-            redirectURL: `${window.location.origin}/register/sign-result}`,
+            redirectURL: `${window.location.origin}/register/sign-result`,
           },
         };
       },
