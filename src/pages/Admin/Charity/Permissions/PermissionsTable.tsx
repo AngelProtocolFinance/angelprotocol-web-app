@@ -17,6 +17,7 @@ export default function PermissionsTable({ classes = "" }) {
             contributorAllowlist: true,
             beneficiaryAllowlist: true,
             maturityAllowlist: true,
+            maturityTime: true,
             donationSplitParams: true,
             profile: true,
           })
