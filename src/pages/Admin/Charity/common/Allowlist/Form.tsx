@@ -27,7 +27,7 @@ export default function Form(props: Props) {
           emptyMsg={props.emptyMessage}
           classes="mb-8"
         />
-        <div className="grid grid-cols-2 sm:flex gap-2 m-2 group-disabled:hidden">
+        <div className="grid grid-cols-2 sm:flex gap-3 m-2 group-disabled:hidden">
           <button
             type="reset"
             disabled={isSubmitting}
