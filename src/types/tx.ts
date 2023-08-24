@@ -7,6 +7,7 @@ import { FetchedChain, Token, TokenType } from "./aws";
 import {
   Token as AccountToken,
   AccountType,
+  AllowlistUpdate,
   CloseEndowmentRequest,
   ERC20Deposit,
   EndowmentSettingsUpdate,
@@ -151,6 +152,10 @@ type Txs = {
   "accounts.update-settings": Tx<EndowmentSettingsUpdate, Diff[]>;
   "accounts.update-fee-settings": Tx<FeeSettingsUpdate, Diff[]>;
   "accounts.deposit-erc20": Tx<ERC20Deposit, never>; //not multisig tx
+  "accounts.update-allowlist": Tx<
+    AllowlistUpdate,
+    Pick<AllowlistUpdate, "add" | "remove">
+  >;
   "accounts.withdraw": Tx<
     {
       id: number;
