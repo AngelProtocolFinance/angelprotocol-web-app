@@ -52,43 +52,6 @@
             "type": "uint256"
           },
           {
-            "components": [
-              {
-                "internalType": "bool",
-                "name": "rebalanceLiquidProfits",
-                "type": "bool"
-              },
-              {
-                "internalType": "uint32",
-                "name": "lockedRebalanceToLiquid",
-                "type": "uint32"
-              },
-              {
-                "internalType": "uint32",
-                "name": "interestDistribution",
-                "type": "uint32"
-              },
-              {
-                "internalType": "bool",
-                "name": "lockedPrincipleToLiquid",
-                "type": "bool"
-              },
-              {
-                "internalType": "uint32",
-                "name": "principleDistribution",
-                "type": "uint32"
-              },
-              {
-                "internalType": "uint32",
-                "name": "basis",
-                "type": "uint32"
-              }
-            ],
-            "internalType": "struct LocalRegistrarLib.RebalanceParams",
-            "name": "rebalance",
-            "type": "tuple"
-          },
-          {
             "internalType": "uint256",
             "name": "proposalLink",
             "type": "uint256"
