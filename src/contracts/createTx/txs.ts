@@ -17,7 +17,7 @@ export const txs: { [T in TxType]: (args: TxArgs<T>) => string } = {
   "accounts.update-settings": (update) =>
     accounts.encodeFunctionData("updateEndowmentSettings", [toTuple(update)]),
   "accounts.update-allowlist": (update) =>
-    accounts.encodeFunctionData("updateEndowmentAllowlist", [toTuple(update)]),
+    accounts.encodeFunctionData("updateEndowmentAllowlist", toTuple(update)),
   "accounts.update-fee-settings": (update) =>
     accounts.encodeFunctionData("updateFeeSettings", [toTuple(update)]),
   "accounts.deposit-erc20": (args) =>
