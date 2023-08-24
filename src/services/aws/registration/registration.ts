@@ -52,9 +52,7 @@ const registration_api = aws.injectEndpoints({
           method: "POST",
           body: {
             signer,
-            // DAPP_URL + "/register/sign-result"
-            //"http://localhost:4200/register/sign-result"
-            redirectURL: "http://localhost:4200/register/sign-result",
+            redirectURL: `${window.location.origin}/register/sign-result}`,
           },
         };
       },
