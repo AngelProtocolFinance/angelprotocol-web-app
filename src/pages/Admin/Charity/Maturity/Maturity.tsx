@@ -40,7 +40,7 @@ export default function Maturity() {
     maturityTime,
     txResource,
     multisig,
-  } = useAdminContext<"charity">(["maturityAllowlist", "maturityTime"]);
+  } = useAdminContext<"charity">(["maturityTime"]);
   const { showModal } = useModalContext();
   const sendTx = useTxSender();
 
