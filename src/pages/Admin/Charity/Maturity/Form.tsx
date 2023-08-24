@@ -1,7 +1,6 @@
 import { FormHTMLAttributes } from "react";
 import { useFormContext } from "react-hook-form";
 import { FV } from "./types";
-import Addresses from "components/Addresses";
 import { Reset, Submit, Tooltip } from "components/admin";
 import { Toggle } from "components/ast";
 import { Field } from "components/form";
@@ -39,14 +38,6 @@ export default function Form({
                 input: "date-input uppercase mt-2 field-input-admin",
                 label: "text-xl font-bold",
               }}
-            />
-
-            <Addresses<FV, "beneficiaries">
-              memberName="beneficiary"
-              name="beneficiaries"
-              title="Beneficiaries"
-              emptyMsg="Multisig wallet is the only beneficiary"
-              classes="bg-white dark:bg-blue-d6 p-4 @lg:p-8"
             />
           </>
         ) : null}

@@ -1,5 +1,5 @@
 [
   "function updateOwner(address)",
-  "function updateConfig(tuple(address,uint256,uint256,uint256,uint256,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address))",
+  "function updateConfig(tuple(address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address))",
   "function setTokenAccepted(address,bool)"
 ]

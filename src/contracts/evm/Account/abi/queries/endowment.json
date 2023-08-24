@@ -105,18 +105,13 @@
           },
           {
             "internalType": "address",
-            "name": "daoToken",
+            "name": "donationMatch",
             "type": "address"
           },
           {
             "internalType": "bool",
             "name": "donationMatchActive",
             "type": "bool"
-          },
-          {
-            "internalType": "address",
-            "name": "donationMatchContract",
-            "type": "address"
           },
           {
             "internalType": "address[]",
@@ -744,8 +739,8 @@
             "type": "address"
           }
         ],
-        "internalType": "struct AccountStorage.Endowment",
-        "name": "endowment",
+        "internalType": "struct AccountMessages.EndowmentResponse",
+        "name": "",
         "type": "tuple"
       }
     ],

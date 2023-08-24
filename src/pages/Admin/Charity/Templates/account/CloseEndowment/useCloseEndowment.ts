@@ -18,25 +18,17 @@ export default function useCloseEndowment() {
     const [beneficiary, beneficiaryMeta] = (function (): [Beneficiary, string] {
       const { id, type } = fv.beneficiary;
       switch (type) {
-        case "indexfund":
-          return [
-            {
-              data: { fundId: +id, endowId: 0, addr: ADDRESS_ZERO },
-              enumData: 1,
-            },
-            `index fund sdg: ${fv.beneficiary.id}`,
-          ];
         case "endowment":
           return [
             {
-              data: { fundId: 0, endowId: +id, addr: ADDRESS_ZERO },
+              data: { endowId: +id, addr: ADDRESS_ZERO },
               enumData: 0,
             },
             `endowment id: ${fv.beneficiary.id}`,
           ];
         default: //wallet
           return [
-            { data: { fundId: 0, endowId: 0, addr: id }, enumData: 3 },
+            { data: { endowId: 0, addr: id }, enumData: 1 },
             `wallet addr: ${fv.beneficiary.id}`,
           ];
       }

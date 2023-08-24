@@ -20,10 +20,6 @@ export default function Whitelists() {
     id,
     donationMatchActive,
     maturityTime,
-    allowlistedBeneficiaries,
-    allowlistedContributors,
-    maturity_allowlist_add: [], //not included in form
-    maturity_allowlist_remove: [], //not included in form
     splitToLiquid,
     ignoreUserSplits,
   };

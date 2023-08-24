@@ -43,6 +43,94 @@ export declare namespace AccountMessages {
     nextAccountId: BigNumber;
   };
 
+  export type EndowmentResponseStruct = {
+    owner: string;
+    name: string;
+    sdgs: BigNumberish[];
+    tier: BigNumberish;
+    endowType: BigNumberish;
+    logo: string;
+    image: string;
+    maturityTime: BigNumberish;
+    rebalance: LocalRegistrarLib.RebalanceParamsStruct;
+    proposalLink: BigNumberish;
+    multisig: string;
+    dao: string;
+    donationMatch: string;
+    donationMatchActive: boolean;
+    allowlistedBeneficiaries: string[];
+    allowlistedContributors: string[];
+    maturityAllowlist: string[];
+    earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct;
+    withdrawFee: LibAccounts.FeeSettingStruct;
+    depositFee: LibAccounts.FeeSettingStruct;
+    balanceFee: LibAccounts.FeeSettingStruct;
+    settingsController: LibAccounts.SettingsControllerStruct;
+    parent: BigNumberish;
+    ignoreUserSplits: boolean;
+    splitToLiquid: LibAccounts.SplitDetailsStruct;
+    referralId: BigNumberish;
+    gasFwd: string;
+  };
+
+  export type EndowmentResponseStructOutput = [
+    string,
+    string,
+    BigNumber[],
+    number,
+    number,
+    string,
+    string,
+    BigNumber,
+    LocalRegistrarLib.RebalanceParamsStructOutput,
+    BigNumber,
+    string,
+    string,
+    string,
+    boolean,
+    string[],
+    string[],
+    string[],
+    LibAccounts.FeeSettingStructOutput,
+    LibAccounts.FeeSettingStructOutput,
+    LibAccounts.FeeSettingStructOutput,
+    LibAccounts.FeeSettingStructOutput,
+    LibAccounts.SettingsControllerStructOutput,
+    number,
+    boolean,
+    LibAccounts.SplitDetailsStructOutput,
+    BigNumber,
+    string
+  ] & {
+    owner: string;
+    name: string;
+    sdgs: BigNumber[];
+    tier: number;
+    endowType: number;
+    logo: string;
+    image: string;
+    maturityTime: BigNumber;
+    rebalance: LocalRegistrarLib.RebalanceParamsStructOutput;
+    proposalLink: BigNumber;
+    multisig: string;
+    dao: string;
+    donationMatch: string;
+    donationMatchActive: boolean;
+    allowlistedBeneficiaries: string[];
+    allowlistedContributors: string[];
+    maturityAllowlist: string[];
+    earlyLockedWithdrawFee: LibAccounts.FeeSettingStructOutput;
+    withdrawFee: LibAccounts.FeeSettingStructOutput;
+    depositFee: LibAccounts.FeeSettingStructOutput;
+    balanceFee: LibAccounts.FeeSettingStructOutput;
+    settingsController: LibAccounts.SettingsControllerStructOutput;
+    parent: number;
+    ignoreUserSplits: boolean;
+    splitToLiquid: LibAccounts.SplitDetailsStructOutput;
+    referralId: BigNumber;
+    gasFwd: string;
+  };
+
   export type StateResponseStruct = {
     closingEndowment: boolean;
     closingBeneficiary: LibAccounts.BeneficiaryStruct;
@@ -179,15 +267,10 @@ export declare namespace LibAccounts {
     defaultSplit: BigNumber;
   };
 
-  export type BeneficiaryDataStruct = {
-    endowId: BigNumberish;
-    fundId: BigNumberish;
-    addr: string;
-  };
+  export type BeneficiaryDataStruct = { endowId: BigNumberish; addr: string };
 
-  export type BeneficiaryDataStructOutput = [number, BigNumber, string] & {
+  export type BeneficiaryDataStructOutput = [number, string] & {
     endowId: number;
-    fundId: BigNumber;
     addr: string;
   };
 
@@ -200,99 +283,6 @@ export declare namespace LibAccounts {
     LibAccounts.BeneficiaryDataStructOutput,
     number
   ] & { data: LibAccounts.BeneficiaryDataStructOutput; enumData: number };
-}
-
-export declare namespace AccountStorage {
-  export type EndowmentStruct = {
-    owner: string;
-    name: string;
-    sdgs: BigNumberish[];
-    tier: BigNumberish;
-    endowType: BigNumberish;
-    logo: string;
-    image: string;
-    maturityTime: BigNumberish;
-    rebalance: LocalRegistrarLib.RebalanceParamsStruct;
-    proposalLink: BigNumberish;
-    multisig: string;
-    dao: string;
-    daoToken: string;
-    donationMatchActive: boolean;
-    donationMatchContract: string;
-    allowlistedBeneficiaries: string[];
-    allowlistedContributors: string[];
-    maturityAllowlist: string[];
-    earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct;
-    withdrawFee: LibAccounts.FeeSettingStruct;
-    depositFee: LibAccounts.FeeSettingStruct;
-    balanceFee: LibAccounts.FeeSettingStruct;
-    settingsController: LibAccounts.SettingsControllerStruct;
-    parent: BigNumberish;
-    ignoreUserSplits: boolean;
-    splitToLiquid: LibAccounts.SplitDetailsStruct;
-    referralId: BigNumberish;
-    gasFwd: string;
-  };
-
-  export type EndowmentStructOutput = [
-    string,
-    string,
-    BigNumber[],
-    number,
-    number,
-    string,
-    string,
-    BigNumber,
-    LocalRegistrarLib.RebalanceParamsStructOutput,
-    BigNumber,
-    string,
-    string,
-    string,
-    boolean,
-    string,
-    string[],
-    string[],
-    string[],
-    LibAccounts.FeeSettingStructOutput,
-    LibAccounts.FeeSettingStructOutput,
-    LibAccounts.FeeSettingStructOutput,
-    LibAccounts.FeeSettingStructOutput,
-    LibAccounts.SettingsControllerStructOutput,
-    number,
-    boolean,
-    LibAccounts.SplitDetailsStructOutput,
-    BigNumber,
-    string
-  ] & {
-    owner: string;
-    name: string;
-    sdgs: BigNumber[];
-    tier: number;
-    endowType: number;
-    logo: string;
-    image: string;
-    maturityTime: BigNumber;
-    rebalance: LocalRegistrarLib.RebalanceParamsStructOutput;
-    proposalLink: BigNumber;
-    multisig: string;
-    dao: string;
-    daoToken: string;
-    donationMatchActive: boolean;
-    donationMatchContract: string;
-    allowlistedBeneficiaries: string[];
-    allowlistedContributors: string[];
-    maturityAllowlist: string[];
-    earlyLockedWithdrawFee: LibAccounts.FeeSettingStructOutput;
-    withdrawFee: LibAccounts.FeeSettingStructOutput;
-    depositFee: LibAccounts.FeeSettingStructOutput;
-    balanceFee: LibAccounts.FeeSettingStructOutput;
-    settingsController: LibAccounts.SettingsControllerStructOutput;
-    parent: number;
-    ignoreUserSplits: boolean;
-    splitToLiquid: LibAccounts.SplitDetailsStructOutput;
-    referralId: BigNumber;
-    gasFwd: string;
-  };
 }
 
 export interface AccountsQueryEndowmentsInterface extends utils.Interface {
@@ -383,11 +373,7 @@ export interface AccountsQueryEndowments extends BaseContract {
     queryEndowmentDetails(
       id: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<
-      [AccountStorage.EndowmentStructOutput] & {
-        endowment: AccountStorage.EndowmentStructOutput;
-      }
-    >;
+    ): Promise<[AccountMessages.EndowmentResponseStructOutput]>;
 
     queryState(
       id: BigNumberish,
@@ -413,7 +399,7 @@ export interface AccountsQueryEndowments extends BaseContract {
   queryEndowmentDetails(
     id: BigNumberish,
     overrides?: CallOverrides
-  ): Promise<AccountStorage.EndowmentStructOutput>;
+  ): Promise<AccountMessages.EndowmentResponseStructOutput>;
 
   queryState(
     id: BigNumberish,
@@ -435,7 +421,7 @@ export interface AccountsQueryEndowments extends BaseContract {
     queryEndowmentDetails(
       id: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<AccountStorage.EndowmentStructOutput>;
+    ): Promise<AccountMessages.EndowmentResponseStructOutput>;
 
     queryState(
       id: BigNumberish,

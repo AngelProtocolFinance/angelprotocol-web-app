@@ -41,7 +41,7 @@ const COMMON: LinkGroup[] = [
   { title: "Profile", links: [LINKS.edit_profile, LINKS.programs] },
 ];
 
-const LINK_GROUPS: { [key in EndowmentType]: LinkGroup[] } = {
+const LINK_GROUPS: { [key in Exclude<EndowmentType, "daf">]: LinkGroup[] } = {
   charity: [
     ...COMMON,
     {
@@ -54,7 +54,7 @@ const LINK_GROUPS: { [key in EndowmentType]: LinkGroup[] } = {
       ],
     },
   ],
-  normal: [
+  ast: [
     ...COMMON,
     {
       title: "Manage",
@@ -75,7 +75,13 @@ export default function Charity() {
 
   return (
     <Routes>
-      <Route element={<Layout linkGroups={LINK_GROUPS[endowType]} />}>
+      <Route
+        element={
+          <Layout
+            linkGroups={LINK_GROUPS[endowType === "daf" ? "charity" : "ast"]}
+          />
+        }
+      >
         <Route path={`${adminRoutes.proposal}/:id`} element={<Proposal />} />
         <Route path={adminRoutes.proposals} element={<Proposals />} />
         <Route path={`${adminRoutes.templates}/*`} element={<Templates />} />

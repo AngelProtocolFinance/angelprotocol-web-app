@@ -1,7 +1,6 @@
 import { ObjectSchema, object, string } from "yup";
 import { Beneficiary, FormValues as FV } from "./types";
 import { SchemaShape as SS } from "schemas/types";
-import { requiredPositiveNumber } from "schemas/number";
 import { requiredWalletAddr } from "schemas/string";
 import { proposalShape } from "../../../../constants";
 
@@ -15,8 +14,6 @@ export const schema = object<any, SS<FV>>({
     type: string().when(key, ([type]) => {
       switch (type as BeneficiaryType) {
         case "endowment":
-        case "indexfund":
-          return requiredPositiveNumber;
         default: //wallet
           return requiredWalletAddr();
       }

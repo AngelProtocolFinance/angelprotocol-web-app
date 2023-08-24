@@ -8,10 +8,7 @@ import {
   toSplit,
 } from "./decoded-types";
 import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
-import {
-  AccountMessages,
-  AccountStorage,
-} from "types/typechain-types/contracts/core/accounts/interfaces/IAccounts";
+import { AccountMessages } from "types/typechain-types/contracts/core/accounts/interfaces/IAccounts";
 import {
   IIndexFund,
   IndexFundStorage,
@@ -43,36 +40,21 @@ export const queryObjects: {
       const d: RegistrarStorage.ConfigStructOutput =
         registrar.decodeFunctionResult("queryConfig", result)[0];
       return {
-        indexFundContract: d.indexFundContract.toLowerCase(),
         accountsContract: d.accountsContract.toLowerCase(),
+        apTeamMultisig: d.apTeamMultisig.toLowerCase(),
         treasury: d.treasury.toLowerCase(),
-        subdaoGovContract: d.subdaoGovContract.toLowerCase(),
-        subdaoTokenContract: d.subdaoTokenContract.toLowerCase(),
-        subdaoBondingTokenContract: d.subdaoBondingTokenContract.toLowerCase(),
-        subdaoCw900Contract: d.subdaoCw900Contract.toLowerCase(),
-        subdaoDistributorContract: d.subdaoDistributorContract.toLowerCase(),
-        subdaoEmitter: d.subdaoEmitter.toLowerCase(),
-        donationMatchContract: d.donationMatchContract.toLowerCase(),
-        donationMatchCharitesContract:
-          d.donationMatchCharitesContract.toLowerCase(),
-        donationMatchEmitter: d.donationMatchEmitter.toLowerCase(),
-        splitToLiquid: toSplit(d.splitToLiquid),
+        indexFundContract: d.indexFundContract.toLowerCase(),
         haloToken: d.haloToken.toLowerCase(),
-        haloTokenLpContract: d.haloTokenLpContract.toLowerCase(),
         govContract: d.govContract.toLowerCase(),
-        collectorShare: d.collectorShare.toNumber(),
-        charitySharesContract: d.charitySharesContract.toLowerCase(),
         fundraisingContract: d.fundraisingContract.toLowerCase(),
         uniswapRouter: d.uniswapRouter.toLowerCase(),
-        uniswapFactory: d.uniswapFactory.toLocaleLowerCase(),
+        uniswapFactory: d.uniswapFactory.toLowerCase(),
         multisigFactory: d.multisigFactory.toLowerCase(),
         multisigEmitter: d.multisigEmitter.toLowerCase(),
         charityApplications: d.charityApplications.toLowerCase(),
-        lockedWithdrawal: d.lockedWithdrawal.toLowerCase(),
         proxyAdmin: d.proxyAdmin.toLowerCase(),
         usdcAddress: d.usdcAddress.toLowerCase(),
         wMaticAddress: d.wMaticAddress.toLowerCase(),
-        cw900lvAddress: d.cw900lvAddress.toLowerCase(),
         gasFwdFactory: d.gasFwdFactory.toLowerCase(),
       };
     },
@@ -211,7 +193,7 @@ export const queryObjects: {
   "accounts.endowment": [
     ({ id }) => accounts.encodeFunctionData("queryEndowmentDetails", [id]),
     (result) => {
-      const d: AccountStorage.EndowmentStructOutput =
+      const d: AccountMessages.EndowmentResponseStructOutput =
         accounts.decodeFunctionResult("queryEndowmentDetails", result)[0];
 
       const controller = d.settingsController;
@@ -281,7 +263,6 @@ export const queryObjects: {
         closingBeneficiary: {
           data: {
             endowId: bene.data.endowId,
-            fundId: bene.data.fundId.toNumber(),
             addr: bene.data.addr.toLowerCase(),
           },
           enumData: bene.enumData as any /** 0 | 1 | 2 | 3 */,

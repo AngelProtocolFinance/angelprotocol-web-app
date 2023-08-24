@@ -5,7 +5,7 @@ import { useController } from "react-hook-form";
 import { FormValues as FV, Beneficiary as TBeneficiary } from "./types";
 import { Field, Label } from "components/form";
 
-const types: TBeneficiary["type"][] = ["wallet", "indexfund", "endowment"];
+const types: TBeneficiary["type"][] = ["wallet", "endowment"];
 
 export default function Beneficiary() {
   const {
@@ -57,15 +57,6 @@ export default function Beneficiary() {
         <Field<FV>
           classes="field-admin"
           label="Endowment id"
-          name="beneficiary.id"
-          placeholder="1"
-          required
-        />
-      )}
-      {type === "index fund" && (
-        <Field<FV>
-          classes="field-admin"
-          label="Fund id"
           name="beneficiary.id"
           placeholder="1"
           required

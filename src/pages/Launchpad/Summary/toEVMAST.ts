@@ -30,7 +30,7 @@ export default function toEVMAST(
     duration: fromHours(+management.proposal.duration),
     allowlistedBeneficiaries: whitelists.beneficiaries,
     allowlistedContributors: whitelists.contributors,
-
+    maturityAllowlist: maturity.beneficiaries,
     // //fees
     earlyLockedWithdrawFee: toEndowFee(fees.earlyWithdraw),
     withdrawFee: toEndowFee(fees.withdrawal),
@@ -60,7 +60,6 @@ export default function toEVMAST(
     },
     // settingsController: SettingsController; //not included in launchpad, for edit later
     parent: 0,
-    maturityAllowlist: maturity.beneficiaries,
     ignoreUserSplits: !splits.isCustom,
     splitToLiquid: toContractSplit(splits),
 

@@ -134,52 +134,53 @@ export interface IVaultInterface extends utils.Interface {
   ): Result;
 
   events: {
-    "Deposit(uint32,uint8,address,uint256)": EventFragment;
-    "Redeem(uint32,uint8,address,uint256)": EventFragment;
-    "RewardsHarvested(uint32[])": EventFragment;
+    "Deposit(uint32,address,uint256,uint256)": EventFragment;
+    "Redeem(uint32,address,uint256,uint256)": EventFragment;
+    "VaultConfigUpdated(address,(uint8,bytes4,address,address,address,address,string,string,address))": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "Deposit"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Redeem"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RewardsHarvested"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "VaultConfigUpdated"): EventFragment;
 }
 
 export interface DepositEventObject {
-  accountId: number;
-  vaultType: number;
-  tokenDeposited: string;
-  amtDeposited: BigNumber;
+  endowId: number;
+  vault: string;
+  amount: BigNumber;
+  sharesReceived: BigNumber;
 }
 export type DepositEvent = TypedEvent<
-  [number, number, string, BigNumber],
+  [number, string, BigNumber, BigNumber],
   DepositEventObject
 >;
 
 export type DepositEventFilter = TypedEventFilter<DepositEvent>;
 
 export interface RedeemEventObject {
-  accountId: number;
-  vaultType: number;
-  tokenRedeemed: string;
-  amtRedeemed: BigNumber;
+  endowId: number;
+  vault: string;
+  shares: BigNumber;
+  amountRedeemed: BigNumber;
 }
 export type RedeemEvent = TypedEvent<
-  [number, number, string, BigNumber],
+  [number, string, BigNumber, BigNumber],
   RedeemEventObject
 >;
 
 export type RedeemEventFilter = TypedEventFilter<RedeemEvent>;
 
-export interface RewardsHarvestedEventObject {
-  accountIds: number[];
+export interface VaultConfigUpdatedEventObject {
+  vault: string;
+  config: IVault.VaultConfigStructOutput;
 }
-export type RewardsHarvestedEvent = TypedEvent<
-  [number[]],
-  RewardsHarvestedEventObject
+export type VaultConfigUpdatedEvent = TypedEvent<
+  [string, IVault.VaultConfigStructOutput],
+  VaultConfigUpdatedEventObject
 >;
 
-export type RewardsHarvestedEventFilter =
-  TypedEventFilter<RewardsHarvestedEvent>;
+export type VaultConfigUpdatedEventFilter =
+  TypedEventFilter<VaultConfigUpdatedEvent>;
 
 export interface IVault extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -308,36 +309,40 @@ export interface IVault extends BaseContract {
   };
 
   filters: {
-    "Deposit(uint32,uint8,address,uint256)"(
-      accountId?: null,
-      vaultType?: null,
-      tokenDeposited?: null,
-      amtDeposited?: null
+    "Deposit(uint32,address,uint256,uint256)"(
+      endowId?: null,
+      vault?: null,
+      amount?: null,
+      sharesReceived?: null
     ): DepositEventFilter;
     Deposit(
-      accountId?: null,
-      vaultType?: null,
-      tokenDeposited?: null,
-      amtDeposited?: null
+      endowId?: null,
+      vault?: null,
+      amount?: null,
+      sharesReceived?: null
     ): DepositEventFilter;
 
-    "Redeem(uint32,uint8,address,uint256)"(
-      accountId?: null,
-      vaultType?: null,
-      tokenRedeemed?: null,
-      amtRedeemed?: null
+    "Redeem(uint32,address,uint256,uint256)"(
+      endowId?: null,
+      vault?: null,
+      shares?: null,
+      amountRedeemed?: null
     ): RedeemEventFilter;
     Redeem(
-      accountId?: null,
-      vaultType?: null,
-      tokenRedeemed?: null,
-      amtRedeemed?: null
+      endowId?: null,
+      vault?: null,
+      shares?: null,
+      amountRedeemed?: null
     ): RedeemEventFilter;
 
-    "RewardsHarvested(uint32[])"(
-      accountIds?: null
-    ): RewardsHarvestedEventFilter;
-    RewardsHarvested(accountIds?: null): RewardsHarvestedEventFilter;
+    "VaultConfigUpdated(address,(uint8,bytes4,address,address,address,address,string,string,address))"(
+      vault?: null,
+      config?: null
+    ): VaultConfigUpdatedEventFilter;
+    VaultConfigUpdated(
+      vault?: null,
+      config?: null
+    ): VaultConfigUpdatedEventFilter;
   };
 
   estimateGas: {

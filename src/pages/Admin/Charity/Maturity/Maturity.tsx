@@ -33,14 +33,11 @@ const schema = object<any, SchemaShape<FV>>({
 
 export default function Maturity() {
   const {
-    allowlistedBeneficiaries,
-    allowlistedContributors,
     id,
     donationMatchActive,
     splitToLiquid,
     ignoreUserSplits,
     maturityTime,
-    maturityAllowlist,
     txResource,
     multisig,
   } = useAdminContext<"charity">(["maturityAllowlist", "maturityTime"]);
@@ -51,10 +48,6 @@ export default function Maturity() {
     id,
     donationMatchActive,
     maturityTime,
-    allowlistedBeneficiaries,
-    allowlistedContributors,
-    maturity_allowlist_add: [], //not included in form
-    maturity_allowlist_remove: [], //not included in form
     splitToLiquid,
     ignoreUserSplits,
   };
@@ -62,7 +55,6 @@ export default function Maturity() {
   const willMature = maturityTime !== 0;
   const defaults: FV = {
     willMature,
-    beneficiaries: maturityAllowlist,
     //date is valid date-string, when data.willMature is true
     date: willMature ? dateToFormFormat(fromBlockTime(maturityTime)) : "",
     initial,
@@ -73,26 +65,14 @@ export default function Maturity() {
     defaultValues: defaults,
   });
 
-  const onSubmit: SubmitHandler<FV> = async ({
-    initial,
-    beneficiaries,
-    willMature,
-    date,
-  }) => {
+  const onSubmit: SubmitHandler<FV> = async ({ initial, willMature, date }) => {
     try {
       if (isTooltip(txResource)) throw new Error(txResource);
-
-      const prev = new Set(maturityAllowlist);
-      const curr = new Set(beneficiaries);
-      const add = beneficiaries.filter((b) => !prev.has(b));
-      const remove = maturityAllowlist.filter((b) => !curr.has(b));
 
       const update: EndowmentSettingsUpdate = {
         ...initial,
         maturityTime: willMature ? blockTime(date) : 0,
-        maturity_allowlist_add: willMature ? add : [],
         //if maturity is disabled, remove all beneficiaries
-        maturity_allowlist_remove: willMature ? remove : maturityAllowlist,
       };
 
       const diff = getPayloadDiff(initial, update);
