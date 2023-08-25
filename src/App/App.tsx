@@ -14,7 +14,6 @@ const Profile = lazy(() => import("pages/Profile"));
 const Donations = lazy(() => import("pages/Donations"));
 const Leaderboard = lazy(() => import("pages/Leaderboard"));
 const Marketplace = lazy(() => import("pages/Marketplace"));
-const Registration = lazy(() => import("pages/Registration"));
 const Donate = lazy(() => import("pages/Donate"));
 const Gift = lazy(() => import("pages/Gift"));
 const DonateWidget = lazy(() => import("pages/DonateWidget"));
@@ -40,17 +39,12 @@ export default function App() {
                 element={<Profile />}
               />
               <Route path={`${appRoutes.admin}/:id/*`} element={<Admin />} />
-
               <Route
                 path={`${appRoutes.donations}/:address`}
                 element={<Donations />}
               />
               <Route path={`${appRoutes.donate}/:id`} element={<Donate />} />
               <Route path={appRoutes.leaderboard} element={<Leaderboard />} />
-              <Route
-                path={`${appRoutes.register}/*`}
-                element={<Registration />}
-              />
               <Route path={`${appRoutes.gift}/*`} element={<Gift />} />
               <Route index element={<Marketplace />} />
             </Route>
