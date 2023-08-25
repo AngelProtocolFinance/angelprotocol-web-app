@@ -111,8 +111,8 @@ export default function Form() {
       </div>
 
       <Label className="mt-6">
-        Only accept donations from donors who have provided their personal
-        information (name and address):
+        Do you want to ONLY accept donations from donors who have provided their
+        personal information (name and address):
       </Label>
       <div className="flex gap-4 mt-4 accent-orange">
         <Radio name="isKYCRequired" value="Yes" />
