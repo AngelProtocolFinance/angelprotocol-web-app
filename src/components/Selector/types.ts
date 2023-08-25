@@ -36,4 +36,5 @@ export interface MultiselectorProps<
   name: PathValue<T, K> extends OptionType<V>[] ? K : never;
   options: OptionType<V>[];
   children?: (selected: OptionType<V>[]) => ReactNode;
+  searchable?: true;
 }

@@ -17,21 +17,32 @@ export function MultiSelector<
   T extends FieldValues,
   K extends Path<T>,
   V extends ValKey,
->({ name, disabled, options, children, classes }: MultiselectorProps<T, K, V>) {
+>({
+  name,
+  disabled,
+  options,
+  children,
+  classes,
+  searchable,
+}: MultiselectorProps<T, K, V>) {
   const { container = "", button = "" } = classes || {};
 
   ///// ***HOOK FORM*** /////
   const {
     formState: { isSubmitting, errors },
-    field: { value: selected, onChange, ref },
+    field: { value: selected, onChange: onSelectedChange, ref },
   } = useController<{ [index: string]: OptionType<V>[] }>({ name: name });
   const { resetField } = useFormContext<T>();
 
   /// **SEARCH** ///
-  const [searchText] = useState("");
-  const filteredOptions = options.filter((o) =>
-    searchText ? o.label.toLowerCase().includes(searchText.toLowerCase()) : true
-  );
+  const [searchText, setSearchText] = useState("");
+  const filteredOptions =
+    searchable && searchText
+      ? options.filter((o) =>
+          o.label.toLowerCase().includes(searchText.toLowerCase())
+        )
+      : options;
+
   const optionsAvailable = searchText ? filteredOptions.length >= 1 : true;
 
   const isAllSelected = selected.length === options.length;
@@ -43,7 +54,7 @@ export function MultiSelector<
         disabled={isDisabled}
         value={selected}
         by={valueKey}
-        onChange={(val) => onChange(val)}
+        onChange={onSelectedChange}
         as="div"
         className={`relative ${container}`}
         multiple
@@ -63,9 +74,19 @@ export function MultiSelector<
                     key={opt.value}
                     option={opt}
                     selected={selected}
-                    onChange={onChange}
+                    onChange={onSelectedChange}
                   />
                 ))}
+                {searchable && (
+                  <div className="inline-flex items-center gap-2 text-gray-d1 dark:text-gray pl-3 bg-white/5 rounded">
+                    <Icon type="Search" size={20} />
+                    <Combobox.Input
+                      className="appearance-none bg-transparent first:pl-3 focus:outline-none h-10"
+                      value={searchText}
+                      onChange={(e) => setSearchText(e.target.value)}
+                    />
+                  </div>
+                )}
               </span>
               <DrawerIcon
                 isOpen={open}
@@ -79,9 +100,13 @@ export function MultiSelector<
           {optionsAvailable && (
             <div className="flex justify-between p-4">
               {isAllSelected ? (
-                <Action onClick={() => onChange([])}>Deselect All</Action>
+                <Action onClick={() => onSelectedChange([])}>
+                  Deselect All
+                </Action>
               ) : (
-                <Action onClick={() => onChange(options)}>Select All</Action>
+                <Action onClick={() => onSelectedChange(options)}>
+                  Select All
+                </Action>
               )}
 
               <Action onClick={() => resetField(name)}>Reset</Action>

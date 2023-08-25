@@ -22,6 +22,7 @@ export default function ActivityCountries<
         label: c.name,
         value: c.name,
       }))}
+      searchable
     />
   );
 }
