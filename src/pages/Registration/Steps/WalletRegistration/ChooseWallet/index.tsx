@@ -9,7 +9,11 @@ export default function ChooseWallet() {
     <div className="w-full grid">
       <h3 className="text-lg">Choose a wallet</h3>
       <p className="mb-8 text-sm text-gray-d1 dark:text-gray mt-2">
-        We recommend using a new wallet.
+        We recommend using a new wallet to access your Angel Giving account. If
+        you have not had a Polygon wallet before, we recommend using Web3 Auth.
+        This simple method does not use a{" "}
+        <span className="italic">seedphrase</span> and will enable you to use an
+        email address or one of your social media accounts to log in.
       </p>
       <WalletConnector name="Web3 Auth" label="Socal login or email" />
       <WalletConnector name="Metamask" label="Metamask" />
