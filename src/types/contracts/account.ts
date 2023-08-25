@@ -191,6 +191,21 @@ export type FeeSettingsUpdate = OverrideProperties<
   }
 >;
 
+// function params not exporter separately
+/**
+ * types
+ * 0 - beneficiaries
+ * 1 - contributors
+ * 2 - maturity
+ */
+export type AllowlistUpdate = {
+  id: number;
+
+  allowlistType: number;
+  add: string[];
+  remove: string[];
+};
+
 export type NewAST = OverrideProperties<
   AccountMessages.CreateEndowmentRequestStruct,
   {
