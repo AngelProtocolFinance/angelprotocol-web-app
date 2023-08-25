@@ -1,13 +1,14 @@
-import { RefCallBack } from "react-hook-form";
+import { forwardRef } from "react";
 
-export default function FocusableInput(props: { ref: RefCallBack }) {
-  /** add this so hook-form can focus on this field if didn't pass validation */
+const FocusableInput = forwardRef<HTMLInputElement>(function Input(props, ref) {
   return (
     <input
-      ref={props.ref}
+      ref={ref}
       aria-hidden
       className="peer h-0 w-0 focus:outline-none absolute"
       tabIndex={-1}
     />
   );
-}
+});
+
+export default FocusableInput;
