@@ -4,10 +4,7 @@
 export type { IAccounts } from "./IAccounts";
 export type { IAccountsAllowance } from "./IAccountsAllowance";
 export type { IAccountsCreateEndowment } from "./IAccountsCreateEndowment";
-export type { IAccountsDaoEndowments } from "./IAccountsDaoEndowments";
-export type { IAccountsDeployContract } from "./IAccountsDeployContract";
 export type { IAccountsDepositWithdrawEndowments } from "./IAccountsDepositWithdrawEndowments";
-export type { IAccountsDonationMatch } from "./IAccountsDonationMatch";
 export type { IAccountsEvents } from "./IAccountsEvents";
 export type { IAccountsGasManager } from "./IAccountsGasManager";
 export type { IAccountsQueryEndowments } from "./IAccountsQueryEndowments";

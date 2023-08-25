@@ -23,7 +23,10 @@ const fieldShape: SchemaShape<TPermission> = {
 
 export const schema = object<any, SchemaShape<FV>>({
   accountFees: object(fieldShape),
-  allowList: object(fieldShape),
+  beneficiaryAllowlist: object(fieldShape),
+  contributorAllowlist: object(fieldShape),
+  maturityAllowlist: object(fieldShape),
+  maturityTime: object(fieldShape),
   donationSplitParams: object(fieldShape),
   profile: object(fieldShape),
 }) as ObjectSchema<FV>;

@@ -14,11 +14,7 @@ import type {
   Signer,
   utils,
 } from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
+import type { FunctionFragment, Result } from "@ethersproject/abi";
 import type { Listener, Provider } from "@ethersproject/providers";
 import type {
   TypedEventFilter,
@@ -30,7 +26,7 @@ import type {
 export declare namespace IVault {
   export type VaultConfigStruct = {
     vaultType: BigNumberish;
-    strategySelector: BytesLike;
+    strategyId: BytesLike;
     strategy: string;
     registrar: string;
     baseToken: string;
@@ -52,7 +48,7 @@ export declare namespace IVault {
     string
   ] & {
     vaultType: number;
-    strategySelector: string;
+    strategyId: string;
     strategy: string;
     registrar: string;
     baseToken: string;
@@ -133,54 +129,8 @@ export interface IVaultInterface extends utils.Interface {
     data: BytesLike
   ): Result;
 
-  events: {
-    "Deposit(uint32,address,uint256,uint256)": EventFragment;
-    "Redeem(uint32,address,uint256,uint256)": EventFragment;
-    "VaultConfigUpdated(address,(uint8,bytes4,address,address,address,address,string,string,address))": EventFragment;
-  };
-
-  getEvent(nameOrSignatureOrTopic: "Deposit"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Redeem"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "VaultConfigUpdated"): EventFragment;
+  events: {};
 }
-
-export interface DepositEventObject {
-  endowId: number;
-  vault: string;
-  amount: BigNumber;
-  sharesReceived: BigNumber;
-}
-export type DepositEvent = TypedEvent<
-  [number, string, BigNumber, BigNumber],
-  DepositEventObject
->;
-
-export type DepositEventFilter = TypedEventFilter<DepositEvent>;
-
-export interface RedeemEventObject {
-  endowId: number;
-  vault: string;
-  shares: BigNumber;
-  amountRedeemed: BigNumber;
-}
-export type RedeemEvent = TypedEvent<
-  [number, string, BigNumber, BigNumber],
-  RedeemEventObject
->;
-
-export type RedeemEventFilter = TypedEventFilter<RedeemEvent>;
-
-export interface VaultConfigUpdatedEventObject {
-  vault: string;
-  config: IVault.VaultConfigStructOutput;
-}
-export type VaultConfigUpdatedEvent = TypedEvent<
-  [string, IVault.VaultConfigStructOutput],
-  VaultConfigUpdatedEventObject
->;
-
-export type VaultConfigUpdatedEventFilter =
-  TypedEventFilter<VaultConfigUpdatedEvent>;
 
 export interface IVault extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -308,42 +258,7 @@ export interface IVault extends BaseContract {
     ): Promise<void>;
   };
 
-  filters: {
-    "Deposit(uint32,address,uint256,uint256)"(
-      endowId?: null,
-      vault?: null,
-      amount?: null,
-      sharesReceived?: null
-    ): DepositEventFilter;
-    Deposit(
-      endowId?: null,
-      vault?: null,
-      amount?: null,
-      sharesReceived?: null
-    ): DepositEventFilter;
-
-    "Redeem(uint32,address,uint256,uint256)"(
-      endowId?: null,
-      vault?: null,
-      shares?: null,
-      amountRedeemed?: null
-    ): RedeemEventFilter;
-    Redeem(
-      endowId?: null,
-      vault?: null,
-      shares?: null,
-      amountRedeemed?: null
-    ): RedeemEventFilter;
-
-    "VaultConfigUpdated(address,(uint8,bytes4,address,address,address,address,string,string,address))"(
-      vault?: null,
-      config?: null
-    ): VaultConfigUpdatedEventFilter;
-    VaultConfigUpdated(
-      vault?: null,
-      config?: null
-    ): VaultConfigUpdatedEventFilter;
-  };
+  filters: {};
 
   estimateGas: {
     deposit(

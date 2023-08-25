@@ -46,12 +46,7 @@ const LINK_GROUPS: { [key in Exclude<EndowmentType, "daf">]: LinkGroup[] } = {
     ...COMMON,
     {
       title: "Manage",
-      links: [
-        LINKS.whitelists,
-        LINKS.permissions,
-        LINKS.admin_wallet,
-        LINKS.proposals,
-      ],
+      links: [LINKS.admin_wallet, LINKS.proposals],
     },
   ],
   ast: [
@@ -59,7 +54,7 @@ const LINK_GROUPS: { [key in Exclude<EndowmentType, "daf">]: LinkGroup[] } = {
     {
       title: "Manage",
       links: [
-        LINKS.whitelists,
+        LINKS.whitelists, //endowType === "charity" can't edit whitelist
         LINKS.maturity,
         LINKS.permissions,
         LINKS.admin_wallet,

@@ -17,10 +17,9 @@ export default function Form({
   return (
     <form
       {...props}
-      className="grid content-start gap-y-6 @lg:gap-y-8 @container"
+      className="grid content-start gap-y-6 @lg:gap-y-8 @container rounded border border-prim p-4 @lg:p-8 bg-white dark:bg-blue-d6"
     >
       <fieldset disabled={!!tooltip} className="contents group">
-        <h2 className="text-[2rem]">Maturity</h2>
         {tooltip && <Tooltip tooltip={tooltip} />}
         <Toggle<FV> name="willMature" classes={{ label: "text-sm" }}>
           Set maturity
@@ -33,8 +32,7 @@ export default function Form({
               label="Maturity date"
               placeholder="DD/MM/YYYY"
               classes={{
-                container:
-                  "rounded border border-prim p-4 @lg:p-8 bg-white dark:bg-blue-d6",
+                container: "",
                 input: "date-input uppercase mt-2 field-input-admin",
                 label: "text-xl font-bold",
               }}

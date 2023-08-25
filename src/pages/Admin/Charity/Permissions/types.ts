@@ -14,7 +14,10 @@ export type TPermission = Pick<Delegate, "addr"> & {
 
 export type TPermissions = {
   accountFees: TPermission;
-  allowList: TPermission;
+  contributorAllowlist: TPermission;
+  beneficiaryAllowlist: TPermission;
+  maturityAllowlist: TPermission;
+  maturityTime: TPermission;
   donationSplitParams: TPermission;
   profile: TPermission;
 };

@@ -18,6 +18,7 @@ export function getTagPayloads(type?: TxMeta["id"]): TagPayload[] {
     case "accounts.update-controller":
     case "accounts.update-settings":
     case "accounts.update-fee-settings":
+    case "accounts.update-allowlist":
       _evm.push("accounts.endowment");
       break;
 

@@ -52,7 +52,6 @@ export declare namespace AccountMessages {
     logo: string;
     image: string;
     maturityTime: BigNumberish;
-    rebalance: LocalRegistrarLib.RebalanceParamsStruct;
     proposalLink: BigNumberish;
     multisig: string;
     dao: string;
@@ -82,7 +81,6 @@ export declare namespace AccountMessages {
     string,
     string,
     BigNumber,
-    LocalRegistrarLib.RebalanceParamsStructOutput,
     BigNumber,
     string,
     string,
@@ -110,7 +108,6 @@ export declare namespace AccountMessages {
     logo: string;
     image: string;
     maturityTime: BigNumber;
-    rebalance: LocalRegistrarLib.RebalanceParamsStructOutput;
     proposalLink: BigNumber;
     multisig: string;
     dao: string;
@@ -142,33 +139,6 @@ export declare namespace AccountMessages {
   ] & {
     closingEndowment: boolean;
     closingBeneficiary: LibAccounts.BeneficiaryStructOutput;
-  };
-}
-
-export declare namespace LocalRegistrarLib {
-  export type RebalanceParamsStruct = {
-    rebalanceLiquidProfits: boolean;
-    lockedRebalanceToLiquid: BigNumberish;
-    interestDistribution: BigNumberish;
-    lockedPrincipleToLiquid: boolean;
-    principleDistribution: BigNumberish;
-    basis: BigNumberish;
-  };
-
-  export type RebalanceParamsStructOutput = [
-    boolean,
-    number,
-    number,
-    boolean,
-    number,
-    number
-  ] & {
-    rebalanceLiquidProfits: boolean;
-    lockedRebalanceToLiquid: number;
-    interestDistribution: number;
-    lockedPrincipleToLiquid: boolean;
-    principleDistribution: number;
-    basis: number;
   };
 }
 
