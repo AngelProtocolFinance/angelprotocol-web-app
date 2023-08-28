@@ -35,7 +35,7 @@ type Beneficiary = {
 
 export type EndowmentState = {
   closed: boolean;
-  beneficiary: Beneficiary;
+  closingBeneficiary: Beneficiary;
 };
 
 type CharityResource = Base & {

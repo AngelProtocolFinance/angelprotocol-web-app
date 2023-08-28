@@ -68,7 +68,7 @@ export const customApi = junoApi.injectEndpoints({
         const state: EndowmentState | null = stateRes
           ? {
               closed: stateRes.closingEndowment,
-              beneficiary: (() => {
+              closingBeneficiary: (() => {
                 const {
                   enumData,
                   data: { addr, endowId },
