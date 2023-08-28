@@ -137,7 +137,6 @@ export const useAdminContext = <T extends AdminType = any>(
       switch (op) {
         case "allowlistedBeneficiaries":
         case "allowlistedContributors":
-        case "maturityTime":
         case "maturityAllowlist":
           return maturityTime !== 0 && maturityTime <= blockTime("now");
         default:
