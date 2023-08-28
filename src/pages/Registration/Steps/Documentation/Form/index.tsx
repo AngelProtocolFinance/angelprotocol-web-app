@@ -101,8 +101,14 @@ export default function Form() {
         and issue tax receipts?
       </Label>
       <div className="flex gap-4 mt-4 accent-orange text-sm">
-        <Radio name="isAuthorizedToReceiveTaxDeductibleDonations" value="Yes" />
-        <Radio name="isAuthorizedToReceiveTaxDeductibleDonations" value="No" />
+        <Radio<FV, "isAuthorizedToReceiveTaxDeductibleDonations">
+          name="isAuthorizedToReceiveTaxDeductibleDonations"
+          value="Yes"
+        />
+        <Radio<FV, "isAuthorizedToReceiveTaxDeductibleDonations">
+          name="isAuthorizedToReceiveTaxDeductibleDonations"
+          value="No"
+        />
       </div>
 
       <Label className="mt-6">
@@ -110,8 +116,8 @@ export default function Form() {
         personal information (name and address):
       </Label>
       <div className="flex gap-4 mt-4 accent-orange text-sm">
-        <Radio name="isKYCRequired" value="Yes" />
-        <Radio name="isKYCRequired" value="No" />
+        <Radio<FV, "isKYCRequired"> name="isKYCRequired" value="Yes" />
+        <Radio<FV, "isKYCRequired"> name="isKYCRequired" value="No" />
       </div>
 
       <Separator classes="my-8" />
