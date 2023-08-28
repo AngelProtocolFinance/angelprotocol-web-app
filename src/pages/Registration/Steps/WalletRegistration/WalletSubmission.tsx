@@ -52,7 +52,7 @@ export default function WalletSubmission({
   return (
     <div className="grid justify-self-center md:justify-self-start max-w-[27.31rem]">
       <h3 className="text-center md:text-left text-lg">
-        You are now connected to a wallet: Make a note of this wallet address:
+        You are now connected to a wallet. Make a note of this wallet address:
       </h3>
       <div className="grid grid-cols-[auto_1fr] items-center border border-prim p-4 rounded mt-8">
         <Image src={walletIcon} className="w-10 h-10 row-span-2 mr-4" />
