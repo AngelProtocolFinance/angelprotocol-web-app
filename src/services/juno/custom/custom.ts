@@ -1,10 +1,4 @@
-import {
-  AdminResource,
-  CharityApplication,
-  EndowBalance,
-  IERC20,
-  WithdrawData,
-} from "../../types";
+import { AdminResource, EndowBalance, IERC20, WithdrawData } from "../../types";
 import { BridgeFeesRes } from "types/aws";
 import { AcceptedTokens, AccountType } from "types/contracts";
 import { MultisigOwnersRes, MultisigRes } from "types/subgraph";
@@ -124,31 +118,6 @@ export const customApi = junoApi.injectEndpoints({
         };
       },
     }),
-
-    application: builder.query<
-      CharityApplication,
-      { id: number; user?: string }
-    >({
-      providesTags: [
-        "multisig/review.prop-confirms",
-        "multisig/review.proposal",
-        "multisig/review.is-confirmed",
-      ],
-      async queryFn({ id, user }) {
-        const [confirmations, proposal, userConfirmed] = await Promise.all([
-          queryContract("multisig/review.prop-confirms", { id }),
-          queryContract("multisig/review.proposal", { id }),
-          user
-            ? queryContract("multisig/review.is-confirmed", {
-                id,
-                addr: user,
-              })
-            : false,
-        ]);
-
-        return { data: { ...proposal, confirmations, userConfirmed } };
-      },
-    }),
   }),
 });
 
@@ -180,7 +149,6 @@ export const {
   useAdminResourceQuery,
   useEndowBalanceQuery,
   useWithdrawDataQuery,
-  useApplicationQuery,
 } = customApi;
 
 type Result<T> = { data: T } | { errors: unknown };

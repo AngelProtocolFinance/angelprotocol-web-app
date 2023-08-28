@@ -7,6 +7,8 @@ import {
 import { TransactionsArgs } from "./types";
 import { TransactionStatus } from "types/lists";
 import {
+  ApplicationProposalRes,
+  GraphQLApplicationProposalRes,
   GraphQLTransactionRes,
   GraphQLTransactionsRes,
   Paginated,
@@ -153,6 +155,35 @@ export const subgraph = createApi({
           owners: t.multiSig.owners.map((o) => o.owner.id.toLowerCase()),
           meta: parsed,
         };
+      },
+    }),
+    applicationProposal: builder.query<
+      ApplicationProposalRes,
+      { applicationId: number }
+    >({
+      providesTags: ["application-proposal"],
+      query: ({ applicationId }) => {
+        return {
+          method: "POST",
+          body: {
+            query: `{
+              applicationProposal(id: "${applicationId}") {
+                id
+                confirmations {
+                  id
+                  owner {
+                    id
+                  }
+                }
+                executed
+                expiry
+              }
+            }`,
+          },
+        };
+      },
+      transformResponse(res: GraphQLApplicationProposalRes) {
+        return res.data.applicationProposal;
       },
     }),
   }),

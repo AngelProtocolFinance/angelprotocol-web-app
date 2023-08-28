@@ -5,7 +5,6 @@ import {
   EndowmentProfileUpdate,
 } from "types/aws";
 import { EndowmentDetails } from "types/contracts";
-import { ApplicationProposal } from "types/contracts/multisig";
 import { AccountType } from "types/lists";
 import { SemiPartial } from "types/utils";
 
@@ -70,11 +69,6 @@ export function endow(
 ): profile is EndowmentProfile & { type: "endowment" } {
   return profile.type === "endowment";
 }
-
-export type CharityApplication = ApplicationProposal & {
-  confirmations: number;
-  userConfirmed: boolean;
-};
 
 export type ProfileUpdateMsg = SemiPartial<
   EndowmentProfileUpdate,

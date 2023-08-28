@@ -15,12 +15,10 @@ import {
 } from "types/typechain-types/contracts/core/index-fund/IndexFund";
 import { LibAccounts as RegistrarLibAccounts } from "types/typechain-types/contracts/core/registrar/LocalRegistrar";
 import { RegistrarStorage } from "types/typechain-types/contracts/core/registrar/interfaces/IRegistrar";
-import { DecodedApplicationProposal } from "types/typechain-types/custom";
 import { accounts } from "contracts/evm/Account";
 import { erc20 } from "contracts/evm/ERC20";
 import { giftCard } from "contracts/evm/gift-card";
 import { indexFund } from "contracts/evm/index-fund";
-import { multisig } from "contracts/evm/multisig";
 import { registrar } from "contracts/evm/registrar";
 import { toTuple } from "helpers";
 
@@ -150,42 +148,6 @@ export const queryObjects: {
         result
       )[0];
       return toBalMap(d);
-    },
-  ],
-
-  /** multisig */
-
-  "multisig/review.is-confirmed": [
-    ({ id, addr }) =>
-      multisig.encodeFunctionData("getProposalConfirmationStatus", [id, addr]),
-    (result) =>
-      multisig.decodeFunctionResult("getProposalConfirmationStatus", result)[0],
-  ],
-  "multisig/review.proposal": [
-    ({ id }) => multisig.encodeFunctionData("proposals", [id]),
-    (result) => {
-      const d = multisig.decodeFunctionResult(
-        "proposals",
-        result
-      ) as DecodedApplicationProposal;
-
-      return {
-        //abi is tuple only
-        executed: d[4],
-        expiry: d[3].toNumber(),
-      };
-    },
-  ],
-  "multisig/review.prop-confirms": [
-    ({ id }) =>
-      multisig.encodeFunctionData("getProposalConfirmationCount", [id]),
-    (result) => {
-      const d: BigNumber = multisig.decodeFunctionResult(
-        "getProposalConfirmationCount",
-        result
-      )[0];
-
-      return d.toNumber();
     },
   ],
 

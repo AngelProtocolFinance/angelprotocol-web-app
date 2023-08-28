@@ -41,11 +41,8 @@ export function getTagPayloads(type?: TxMeta["id"]): TagPayload[] {
       break;
 
     case "multisig/review.confirm-prop":
-      _evm.push("multisig/review.prop-confirms");
-      break;
-
     case "multisig/review.execute-prop":
-      _evm.push("multisig/review.proposal");
+      _subgraph.push("application-proposal");
       break;
 
     case "erc20.transfer":
