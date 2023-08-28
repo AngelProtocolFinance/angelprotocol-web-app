@@ -1,4 +1,10 @@
-import { AdminResource, EndowBalance, IERC20, WithdrawData } from "../../types";
+import {
+  AdminResource,
+  EndowBalance,
+  EndowmentState,
+  IERC20,
+  WithdrawData,
+} from "../../types";
 import { BridgeFeesRes } from "types/aws";
 import { AcceptedTokens, AccountType } from "types/contracts";
 import { MultisigOwnersRes, MultisigRes } from "types/subgraph";
@@ -36,7 +42,7 @@ export const customApi = junoApi.injectEndpoints({
       providesTags: ["accounts.endowment", "multisig-subgraph"],
       async queryFn({ endowmentId = "" }) {
         const [recordId, type] = multisigRecordId(endowmentId);
-        const [{ multiSig: m }, endowment] = await Promise.all([
+        const [{ multiSig: m }, endowment, stateRes] = await Promise.all([
           querySubgraph<{ multiSig: MultisigRes }>(`{
             multiSig(id: "${recordId}") {
               id
@@ -53,8 +59,27 @@ export const customApi = junoApi.injectEndpoints({
           }`),
           typeof recordId === "number"
             ? queryContract("accounts.endowment", { id: recordId })
-            : Promise.resolve({}),
+            : null,
+          typeof recordId === "number"
+            ? queryContract("accounts.state", { id: recordId })
+            : null,
         ]);
+
+        const state: EndowmentState | null = stateRes
+          ? {
+              closed: stateRes.closingEndowment,
+              beneficiary: (() => {
+                const {
+                  enumData,
+                  data: { addr, endowId },
+                } = stateRes.closingBeneficiary;
+                return {
+                  type: (["endowment", "wallet"] as const)[enumData],
+                  value: [endowId.toString(), addr][enumData],
+                };
+              })(),
+            }
+          : null;
 
         const resource: AdminResource = {
           type: type as any,
@@ -66,7 +91,8 @@ export const customApi = junoApi.injectEndpoints({
             requireExecution: m.requireExecution,
             duration: +m.transactionExpiry,
           },
-          ...endowment,
+          ...(endowment || {}),
+          ...(state || {}),
         };
         return { data: resource };
       },
