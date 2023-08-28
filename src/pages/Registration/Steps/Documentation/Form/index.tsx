@@ -4,7 +4,7 @@ import ActivityCountries from "components/ActivityCountries";
 import CountrySelector from "components/CountrySelector";
 import ExtLink from "components/ExtLink";
 import { MultiSelector, Selector } from "components/Selector";
-import { CheckField, Field, Label } from "components/form";
+import { CheckField, Field, Label, Radio } from "components/form";
 import { FileDropzone, LoadText } from "components/registration";
 import { ENDOW_DESIGNATIONS } from "constants/common";
 import { APP_NAME } from "constants/env";
@@ -14,7 +14,6 @@ import { steps } from "../../../routes";
 import { useRegState } from "../../StepGuard";
 import { MB_LIMIT } from "../schema";
 // import { CashEligibleCheckbox } from "./CashEligibleCheckbox";
-import { Radio } from "./Radio";
 import useSubmit from "./useSubmit";
 
 export default function Form() {
@@ -101,7 +100,7 @@ export default function Form() {
         Is your organization authorized to receive US tax deductible donations
         and issue tax receipts?
       </Label>
-      <div className="flex gap-4 mt-4 accent-orange">
+      <div className="flex gap-4 mt-4 accent-orange text-sm">
         <Radio name="isAuthorizedToReceiveTaxDeductibleDonations" value="Yes" />
         <Radio name="isAuthorizedToReceiveTaxDeductibleDonations" value="No" />
       </div>
@@ -110,7 +109,7 @@ export default function Form() {
         Do you want to ONLY accept donations from donors who have provided their
         personal information (name and address):
       </Label>
-      <div className="flex gap-4 mt-4 accent-orange">
+      <div className="flex gap-4 mt-4 accent-orange text-sm">
         <Radio name="isKYCRequired" value="Yes" />
         <Radio name="isKYCRequired" value="No" />
       </div>

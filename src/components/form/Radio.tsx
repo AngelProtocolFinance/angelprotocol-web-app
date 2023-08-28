@@ -1,45 +1,38 @@
 import { PropsWithChildren } from "react";
+import { FieldValues, Path, PathValue, useFormContext } from "react-hook-form";
 import { Classes } from "./types";
 import { unpack } from "./helpers";
 
-type Props<Value extends string> = PropsWithChildren<{
-  checked: boolean;
+type Props<T extends FieldValues, K extends Path<T>> = PropsWithChildren<{
+  name: K;
+  value: PathValue<T, K> extends string ? PathValue<T, K> : never;
   classes?: Classes;
-  disabled?: boolean;
-  id?: string;
-  required?: boolean;
-  value: Value;
-  onChange: (value: Value) => void;
 }>;
 
-export function Radio<Value extends string>({
-  checked,
+export function Radio<T extends FieldValues, K extends Path<T>>({
   children,
   classes,
-  disabled,
-  required,
+  name,
   value,
-  id = `__radio-btn-${value}`,
-  onChange,
-}: Props<Value>) {
+}: Props<T, K>) {
+  const id = `__${name}-${value}`;
   const { container, input } = unpack(classes);
+  const {
+    register,
+    formState: { isSubmitting },
+  } = useFormContext<T>();
+
   return (
-    <label
-      data-required={required}
-      className={`radio ${container}`}
-      htmlFor={id}
-    >
+    <label className={`radio ${container}`} htmlFor={id}>
       <input
+        {...register(name)}
         id={id}
         type="radio"
         className={`peer ${input}`}
-        disabled={disabled}
-        checked={checked}
+        disabled={isSubmitting}
         value={value}
-        onChange={(e) => onChange(e.target.value as Value)}
-        required={required}
       />
-      {children}
+      {children || value}
     </label>
   );
 }
