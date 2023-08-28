@@ -23,7 +23,7 @@ export default function NetworkDropdown({ classes = "" }) {
         }}
       >
         {(networks) => (
-          <Selector<FV, "network", string, false>
+          <Selector<FV, "network", string>
             name="network"
             classes={{ button: "dark:bg-blue-d6" }}
             options={networks.map((n) => ({

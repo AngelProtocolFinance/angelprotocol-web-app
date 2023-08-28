@@ -3,7 +3,7 @@ import { FormValues as FV } from "../types";
 import ActivityCountries from "components/ActivityCountries";
 import CountrySelector from "components/CountrySelector";
 import ExtLink from "components/ExtLink";
-import { Selector } from "components/Selector";
+import { MultiSelector, Selector } from "components/Selector";
 import { CheckField, Field, Label } from "components/form";
 import { FileDropzone, LoadText } from "components/registration";
 import { ENDOW_DESIGNATIONS } from "constants/common";
@@ -69,15 +69,11 @@ export default function Form() {
         Select the Sustainable Development Goals your organization is the most
         aligned with
       </Label>
-      <Selector<FV, "sdgs", number, true>
-        multiple
-        name="sdgs"
-        options={sdgOptions}
-      />
+      <MultiSelector<FV, "sdgs", number> name="sdgs" options={sdgOptions} />
       <Label className="mb-2 mt-6" required>
         Endowment Designation
       </Label>
-      <Selector<FV, "endowDesignation", string, false>
+      <Selector<FV, "endowDesignation", string>
         name="endowDesignation"
         options={ENDOW_DESIGNATIONS.map((option) => ({
           label: option.label,

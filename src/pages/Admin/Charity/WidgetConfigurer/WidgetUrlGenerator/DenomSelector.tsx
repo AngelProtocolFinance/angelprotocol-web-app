@@ -1,6 +1,6 @@
 import { useTokensQuery } from "services/apes";
 import QueryLoader from "components/QueryLoader";
-import { Selector } from "components/Selector";
+import { MultiSelector } from "components/Selector";
 import { FormValues } from "../schema";
 
 export default function DenomSelector() {
@@ -17,14 +17,13 @@ export default function DenomSelector() {
       filterFn={(token) => token.approved}
     >
       {(tokens) => (
-        <Selector<FormValues, "availableCurrencies", string, true>
+        <MultiSelector<FormValues, "availableCurrencies", string>
           name="availableCurrencies"
           options={tokens.map((token) => ({
             label: token.symbol,
             value: token.symbol,
           }))}
           classes={{ container: "bg-white dark:bg-blue-d6" }}
-          multiple
         />
       )}
     </QueryLoader>
