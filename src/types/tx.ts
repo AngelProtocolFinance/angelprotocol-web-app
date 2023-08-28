@@ -257,8 +257,3 @@ export type Transaction = {
   owners: string[];
   meta?: TxMeta;
 };
-
-export type ApplicationProposal = Pick<
-  Transaction,
-  "confirmations" | "transactionId" | "status"
->;
