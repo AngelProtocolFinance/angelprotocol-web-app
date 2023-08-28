@@ -34,7 +34,7 @@ export const apes = createApi({
     >({
       providesTags: ["withdraw_logs"],
       query: ({ cw3, ...params }) => ({
-        url: `/${v(2)}/withdraw/${cw3}`,
+        url: `/${v(3)}/withdraw/${cw3}`,
         params,
       }),
     }),
