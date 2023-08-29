@@ -39,7 +39,10 @@ export const chainName = (
 
 const FEE_BASIS = 10_000;
 
-type FeeArgs = Except<FV, "beneficiaryWallet" | "amounts"> & {
+type FeeArgs = Except<
+  FV,
+  "beneficiaryType" | "beneficiaryEndowmentId" | "beneficiaryWallet" | "amounts"
+> & {
   withdrawAmount: number;
 };
 

@@ -48,6 +48,8 @@ export default function WithdrawForm({
     ...meta,
     amounts,
     beneficiaryWallet: wallet?.address || "",
+    beneficiaryEndowmentId: 0,
+    beneficiaryType: "wallet",
     destinationChainId: chainIds.polygon,
   };
 

@@ -7,14 +7,15 @@ const id = "__beneficiary";
 export default function Beneficiary({ classes = "" }) {
   const {
     register,
+    getValues,
     formState: { errors },
   } = useFormContext<FV>();
 
+  const endowmentType = getValues("endowType");
+
   return (
     <div className={`${classes} relative grid gap-3 w-full`}>
-      <label htmlFor={id} className="font-bold font-work">
-        Destination wallet
-      </label>
+      <h5 className="font-bold font-work">Beneficiary</h5>
       <input
         {...register("beneficiaryWallet")}
         id={id}
