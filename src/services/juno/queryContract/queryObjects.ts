@@ -63,14 +63,18 @@ export const queryObjects: {
         switch (type) {
           case "Harvest":
             return 1;
-          case "WithdrawCharity":
+          case "Deposit":
             return 2;
-          case "WithdrawNormal":
+          case "DepositCharity":
             return 3;
-          case "EarlyLockedWithdrawCharity":
+          case "Withdraw":
             return 4;
-          case "EarlyLockedWithdrawNormal":
+          case "WithdrawCharity":
             return 5;
+          case "EarlyLockedWithdraw":
+            return 6;
+          case "EarlyLockedWithdrawCharity":
+            return 7;
           default: //Default
             return 0;
         }
