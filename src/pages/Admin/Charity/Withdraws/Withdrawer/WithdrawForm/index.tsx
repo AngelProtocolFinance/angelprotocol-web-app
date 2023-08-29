@@ -14,6 +14,7 @@ export default function WithdrawForm({
   accountType,
   bridgeFees,
   protocolFeeRates,
+  endowmentState,
 }: WithdrawerProps & { classes?: string }) {
   const { wallet } = useGetWallet();
   const {
@@ -42,13 +43,23 @@ export default function WithdrawForm({
       depositBps: depositFee.bps,
       withdrawBps: withdrawFee.bps,
     },
+    endowmentState,
   };
+
+  const { closed, closingBeneficiary } = endowmentState;
 
   const values: FV = {
     ...meta,
     amounts,
-    beneficiaryWallet: wallet?.address || "",
-    beneficiaryEndowmentId: 0,
+    beneficiaryWallet:
+      closed && closingBeneficiary.type === "wallet"
+        ? closingBeneficiary.value
+        : "",
+    beneficiaryEndowmentId:
+      closed && closingBeneficiary.type === "endowment"
+        ? +closingBeneficiary.value
+        : 0,
+
     beneficiaryType: "wallet",
     destinationChainId: chainIds.polygon,
   };

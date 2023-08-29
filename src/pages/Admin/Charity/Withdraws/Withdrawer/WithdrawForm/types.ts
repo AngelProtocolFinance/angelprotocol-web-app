@@ -1,4 +1,4 @@
-import { IERC20, ProtocolFeeRates } from "services/types";
+import { EndowmentState, IERC20, ProtocolFeeRates } from "services/types";
 import { BridgeFees } from "types/aws";
 import { EndowmentType } from "types/lists";
 import { AccountType } from "types/lists";
@@ -14,6 +14,7 @@ export type WithdrawerProps = {
   accountType: AccountType;
   bridgeFees: BridgeFees;
   protocolFeeRates: ProtocolFeeRates;
+  endowmentState: EndowmentState;
 };
 
 export type EndowFeeRates = {
@@ -29,7 +30,10 @@ export type FormMeta = {
   accountType: AccountType;
   endowFeeRates: EndowFeeRates;
   maturityTime: number;
-} & Pick<WithdrawerProps, "accountType" | "bridgeFees" | "protocolFeeRates">;
+} & Pick<
+  WithdrawerProps,
+  "accountType" | "bridgeFees" | "protocolFeeRates" | "endowmentState"
+>;
 
 export type FV = {
   amounts: Amount[];
