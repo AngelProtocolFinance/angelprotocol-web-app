@@ -23,7 +23,7 @@ export type FeeType =
   | "Withdraw"
   | "WithdrawCharity"
   | "EarlyLockedWithdraw"
-  | "EarlyLockedWidthdrawCharity";
+  | "EarlyLockedWithdrawCharity";
 
 //same with accounts/Fee
 export type FeeSetting = OverrideProperties<

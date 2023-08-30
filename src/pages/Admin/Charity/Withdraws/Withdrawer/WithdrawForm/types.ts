@@ -42,3 +42,11 @@ export type FV = {
   beneficiaryWallet: string;
   beneficiaryEndowmentId: number;
 } & FormMeta;
+
+export type BaseFormMeta = {
+  _amounts: string; //collective amounts error
+};
+
+export type BaseFormValues = {
+  amounts: Amount[];
+};
