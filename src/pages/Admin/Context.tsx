@@ -109,6 +109,8 @@ export const useAdminContext = <T extends AdminType = any>(
     allowlistedBeneficiaries,
     maturityAllowlist,
     maturityTime,
+    closed,
+    closingBeneficiary,
   } = resource as Resource<"charity">; //manual control flow
   const hasOps = operations && operations.length > 0;
 
@@ -158,6 +160,10 @@ export const useAdminContext = <T extends AdminType = any>(
         case "withdraw-liquid":
           return allowlistedBeneficiaries.includes(sender);
         case "withdraw-locked":
+          // if beneficiary is endowment, sender must be multisig
+          if (closed && closingBeneficiary.type === "wallet") {
+            return closingBeneficiary.value === sender;
+          }
           return maturityAllowlist.includes(sender);
         default:
           const { addr, expires } = settingsController[op].delegate;
