@@ -35,6 +35,8 @@ export type FormMeta = {
   "accountType" | "bridgeFees" | "protocolFeeRates" | "endowmentState"
 >;
 
+export type FormProps = {};
+
 export type FV = {
   amounts: Amount[];
   destinationChainId: string;
@@ -50,3 +52,5 @@ export type BaseFormMeta = {
 export type BaseFormValues = {
   amounts: Amount[];
 };
+
+interface ClosedAccountsFormValues extends BaseFormValues {}
