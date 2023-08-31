@@ -33,6 +33,7 @@ export interface ContractQueries {
 
   "accounts.endowment": Query<ID, EndowmentDetails>;
   "accounts.state": Query<ID, EndowmentState>;
+  "accounts.is-daf": Query<ID, boolean>;
   "accounts.token-balance": Query<
     { id: number; accounType: AccountType; token: string },
     string

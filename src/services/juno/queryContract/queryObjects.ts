@@ -246,4 +246,9 @@ export const queryObjects: {
       return d.toString();
     },
   ],
+  "accounts.is-daf": [
+    ({ id }) => accounts.encodeFunctionData("isDafApprovedEndowment", [id]),
+    (result) =>
+      accounts.decodeFunctionResult("isDafApprovedEndowment", result)[0],
+  ],
 };
