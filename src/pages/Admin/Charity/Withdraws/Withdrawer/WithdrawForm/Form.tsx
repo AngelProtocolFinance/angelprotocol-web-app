@@ -29,9 +29,6 @@ export default function Form({ classes = "" }) {
       <fieldset disabled={!!tooltip} className="contents">
         <Amounts />
 
-        {/** endowment beneficiaries are bound to polygon only */}
-        {beneficiaryType === "wallet" && <Network />}
-
         {/** beneficiary is already set on closed accounts */}
         {closed ? (
           <>
@@ -46,6 +43,9 @@ export default function Form({ classes = "" }) {
         ) : (
           <Beneficiary />
         )}
+
+        {/** endowment beneficiaries are bound to polygon only */}
+        {beneficiaryType === "wallet" && <Network />}
 
         {/** fees doesn't apply to DAFs */}
         {endowmentType !== "daf" && <Breakdown />}
