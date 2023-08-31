@@ -109,6 +109,14 @@ export default function useWithdraw() {
         }
 
         if (fv.endowType === "daf") {
+          const isBeneficiaryDAF = await queryContract("accounts.is-daf", {
+            id: fv.beneficiaryEndowmentId,
+          });
+          if (!isBeneficiaryDAF) {
+            return showModal(TxPrompt, {
+              error: "Benefificiary is not approved by this DAF",
+            });
+          }
         }
       } catch (err) {
         return showModal(TxPrompt, {

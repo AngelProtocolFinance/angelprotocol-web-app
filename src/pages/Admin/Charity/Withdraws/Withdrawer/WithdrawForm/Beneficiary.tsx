@@ -11,9 +11,11 @@ export default function Beneficiary({ classes = "" }) {
     watch,
     register,
     trigger,
+    getValues,
     formState: { errors },
   } = useFormContext<FV>();
 
+  const isDAF = getValues("endowType") === "daf";
   const beneficiaryType = watch("beneficiaryType");
   const isBeneficiaryWallet = beneficiaryType === "wallet";
   const fieldName: Path<FV> = isBeneficiaryWallet
@@ -25,27 +27,32 @@ export default function Beneficiary({ classes = "" }) {
       if (beneficiaryType === "wallet") await trigger("beneficiaryWallet");
       else await trigger("beneficiaryEndowmentId");
     })();
-  }, [beneficiaryType]);
+  }, [beneficiaryType, trigger]);
 
   return (
     <div className={`${classes} relative grid gap-3 w-full`}>
-      <h5 className="font-bold font-work">Beneficiary</h5>
-      <div className="grid grid-cols-2 gap-2 text-xs">
-        <Radio<FV, "beneficiaryType">
-          classes="px-3 py-2 border border-prim rounded cursor-pointer"
-          name="beneficiaryType"
-          value="wallet"
-        >
-          Wallet
-        </Radio>
-        <Radio<FV, "beneficiaryType">
-          classes="px-2 py-1 border border-prim rounded cursor-pointer"
-          name="beneficiaryType"
-          value="endowment"
-        >
-          Endowment
-        </Radio>
-      </div>
+      <h5 className="font-bold font-work">
+        {/** DAFs can only send to endowments */}
+        {isDAF ? "Beneficiary endowment" : "Beneficiary"}
+      </h5>
+      {!isDAF && (
+        <div className="grid grid-cols-2 gap-2 text-xs">
+          <Radio<FV, "beneficiaryType">
+            classes="px-3 py-2 border border-prim rounded cursor-pointer"
+            name="beneficiaryType"
+            value="wallet"
+          >
+            Wallet
+          </Radio>
+          <Radio<FV, "beneficiaryType">
+            classes="px-2 py-1 border border-prim rounded cursor-pointer"
+            name="beneficiaryType"
+            value="endowment"
+          >
+            Endowment
+          </Radio>
+        </div>
+      )}
 
       <input
         {...register(fieldName)}
