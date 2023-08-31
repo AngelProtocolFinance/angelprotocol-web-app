@@ -77,7 +77,7 @@ export const schema = object<any, SchemaShape<FV>>({
       return (beneficiaryType as TBeneficiaryType) === "endowment"
         ? schema
             .typeError("invalid number")
-            .positive("can't be negative")
+            .positive("must be greater than 0")
             .integer("must be whole number")
         : string();
     }
