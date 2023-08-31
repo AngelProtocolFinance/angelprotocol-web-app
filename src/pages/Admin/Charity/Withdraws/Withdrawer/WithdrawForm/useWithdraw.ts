@@ -42,11 +42,14 @@ type WithdrawLogPayload = {
 export default function useWithdraw() {
   const { handleSubmit, watch, getValues } = useFormContext<FV>();
   const accountType = watch("accountType");
+  const beneficiaryType = watch("beneficiaryType");
 
   const {
     multisig,
     id: endowmentId,
     txResource,
+    closed,
+    closingBeneficiary,
     ...endow
   } = useAdminContext<"charity">([
     accountType === "liquid" ? "withdraw-liquid" : "withdraw-locked",
@@ -214,7 +217,11 @@ export default function useWithdraw() {
     bridgeFee: bridgeFee(destinationChainId, getValues("bridgeFees")),
     chainName: chainName(destinationChainId),
     tooltip: isTooltip(txResource) ? txResource : undefined,
+    beneficiaryType,
     accountType,
+    endowmentType: getValues("endowType"),
+    closed,
+    closingBeneficiary,
   };
 }
 

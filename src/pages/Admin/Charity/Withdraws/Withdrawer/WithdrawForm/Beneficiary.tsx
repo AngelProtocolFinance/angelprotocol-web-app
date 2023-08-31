@@ -9,11 +9,10 @@ export default function Beneficiary({ classes = "" }) {
   const {
     watch,
     register,
-    getValues,
+
     formState: { errors },
   } = useFormContext<FV>();
 
-  const endowmentType = getValues("endowType");
   const beneficiaryType = watch("beneficiaryType");
   const isBeneficiaryWallet = beneficiaryType === "wallet";
   const fieldName: Path<FV> = isBeneficiaryWallet
@@ -23,25 +22,24 @@ export default function Beneficiary({ classes = "" }) {
   return (
     <div className={`${classes} relative grid gap-3 w-full`}>
       <h5 className="font-bold font-work">Beneficiary</h5>
-      {endowmentType === "ast" && (
-        //only AST have option to send to wallet address
-        <div className="flex flex-col justify-center gap-4 px-8 py-12">
-          <Radio<FV, "beneficiaryType">
-            classes="px-4 py-3 border border-prim rounded cursor-pointer"
-            name="beneficiaryType"
-            value="wallet"
-          >
-            Wallet address
-          </Radio>
-          <Radio<FV, "beneficiaryType">
-            classes="px-4 py-3 border border-prim rounded cursor-pointer"
-            name="beneficiaryType"
-            value="endowment"
-          >
-            Endowment ID
-          </Radio>
-        </div>
-      )}
+
+      <div className="flex flex-col justify-center gap-4 px-8 py-12">
+        <Radio<FV, "beneficiaryType">
+          classes="px-4 py-3 border border-prim rounded cursor-pointer"
+          name="beneficiaryType"
+          value="wallet"
+        >
+          Wallet address
+        </Radio>
+        <Radio<FV, "beneficiaryType">
+          classes="px-4 py-3 border border-prim rounded cursor-pointer"
+          name="beneficiaryType"
+          value="endowment"
+        >
+          Endowment ID
+        </Radio>
+      </div>
+
       <input
         {...register(fieldName)}
         id={id}

@@ -9,7 +9,15 @@ import Warning from "./Warning";
 import useWithdraw from "./useWithdraw";
 
 export default function Form({ classes = "" }) {
-  const { withdraw, chainName, tooltip, accountType } = useWithdraw();
+  const {
+    withdraw,
+    chainName,
+    tooltip,
+    beneficiaryType,
+    endowmentType,
+    closed,
+    closingBeneficiary,
+  } = useWithdraw();
 
   return (
     <form
@@ -21,15 +29,26 @@ export default function Form({ classes = "" }) {
       <fieldset disabled={!!tooltip} className="contents">
         <Amounts />
 
-        {/** locked just goes to liquid */}
-        {accountType === "liquid" && (
+        {/** beneficiary is already set on closed accounts */}
+        {closed ? (
           <>
-            <Network />
-            <Beneficiary />
+            <Warning>This endowment is closed</Warning>
+            <div>
+              <h5 className="font-bold font-work">
+                Beneficiary {closingBeneficiary.type}
+              </h5>
+              <p>{closingBeneficiary.value}</p>
+            </div>
           </>
+        ) : (
+          <Beneficiary />
         )}
 
-        <Breakdown />
+        {/** endowment beneficiaries are bound to polygon only */}
+        {beneficiaryType === "wallet" && <Network />}
+
+        {/** fees doesn't apply to DAFs */}
+        {endowmentType !== "daf" && <Breakdown />}
 
         {chainName !== "Polygon" && (
           <Warning>
@@ -37,6 +56,7 @@ export default function Form({ classes = "" }) {
             cross-chain pipelines.
           </Warning>
         )}
+
         <Warning classes="-mt-3">
           If withdrawing to an exchange, please ensure you’re using the correct
           blockchain network and currency.{" "}
