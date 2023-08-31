@@ -14,10 +14,10 @@ export default function CloseEndowment() {
     reValidateMode: "onChange",
     resolver: yupResolver(schema),
     defaultValues: {
-      beneficiary: {
-        type: "wallet",
-        id: wallet && isEthereumAddress(wallet.address) ? wallet.address : "",
-      },
+      beneficiaryType: "wallet",
+      beneficiaryWallet:
+        wallet && isEthereumAddress(wallet.address) ? wallet.address : "",
+      beneficiaryEndowmentId: 0,
     },
   });
 

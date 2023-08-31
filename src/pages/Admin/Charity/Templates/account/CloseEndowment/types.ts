@@ -1,10 +1,8 @@
 import { ProposalBase } from "../../../../types";
-
-export type Beneficiary = {
-  id: string;
-  type: "endowment" | "wallet";
-};
+import { BeneficiaryType } from "types/lists";
 
 export type FormValues = ProposalBase & {
-  beneficiary: Beneficiary;
+  beneficiaryType: BeneficiaryType | "treasury";
+  beneficiaryWallet: string;
+  beneficiaryEndowmentId: number;
 };

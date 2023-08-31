@@ -1,22 +1,32 @@
-import { ObjectSchema, object, string } from "yup";
-import { Beneficiary, FormValues as FV } from "./types";
+import { ObjectSchema, number, object, string } from "yup";
+import { FormValues as FV } from "./types";
 import { SchemaShape as SS } from "schemas/types";
 import { requiredWalletAddr } from "schemas/string";
+import { chainIds } from "constants/chainIds";
 import { proposalShape } from "../../../../constants";
 
-type BeneficiaryType = Beneficiary["type"];
-const key: keyof Beneficiary = "type";
+type TBeneficiaryType = FV["beneficiaryType"];
+const beneficiaryTypeKey: keyof FV = "beneficiaryType";
 
 export const schema = object<any, SS<FV>>({
   ...proposalShape,
-  beneficiary: object().shape<SS<Beneficiary>>({
-    id: string().required("beneficiary is required"),
-    type: string().when(key, ([type]) => {
-      switch (type as BeneficiaryType) {
-        case "endowment":
-        default: //wallet
-          return requiredWalletAddr();
-      }
-    }),
-  }),
+  beneficiaryWallet: string().when(
+    [beneficiaryTypeKey],
+    ([beneficiaryType], schema) => {
+      return (beneficiaryType as TBeneficiaryType) === "wallet"
+        ? requiredWalletAddr(chainIds.polygon)
+        : schema;
+    }
+  ),
+  beneficiaryEndowmentId: number().when(
+    [beneficiaryTypeKey],
+    ([beneficiaryType], schema) => {
+      return (beneficiaryType as TBeneficiaryType) === "endowment"
+        ? schema
+            .typeError("invalid number")
+            .positive("must be greater than 0")
+            .integer("must be whole number")
+        : string();
+    }
+  ),
 }) as ObjectSchema<FV>;

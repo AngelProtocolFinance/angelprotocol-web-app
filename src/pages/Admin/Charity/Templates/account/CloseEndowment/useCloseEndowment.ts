@@ -16,20 +16,26 @@ export default function useCloseEndowment() {
     if (isTooltip(txResource)) throw new Error(txResource);
 
     const [beneficiary, beneficiaryMeta] = (function (): [Beneficiary, string] {
-      const { id, type } = fv.beneficiary;
-      switch (type) {
+      const { beneficiaryType, beneficiaryWallet, beneficiaryEndowmentId } = fv;
+      switch (beneficiaryType) {
         case "endowment":
           return [
             {
-              data: { endowId: +id, addr: ADDRESS_ZERO },
+              data: { endowId: beneficiaryEndowmentId, addr: ADDRESS_ZERO },
               enumData: 0,
             },
-            `endowment id: ${fv.beneficiary.id}`,
+            `endowment id: ${beneficiaryEndowmentId}`,
           ];
-        default: //wallet
+        case "wallet": {
           return [
-            { data: { endowId: 0, addr: id }, enumData: 1 },
-            `wallet addr: ${fv.beneficiary.id}`,
+            { data: { endowId: 0, addr: beneficiaryWallet }, enumData: 1 },
+            `wallet addr: ${beneficiaryWallet}`,
+          ];
+        }
+        default:
+          return [
+            { data: { endowId: 0, addr: ADDRESS_ZERO }, enumData: 2 },
+            `registrar treasury`,
           ];
       }
     })();
