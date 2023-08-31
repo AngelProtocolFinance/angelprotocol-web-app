@@ -13,11 +13,22 @@ import { isTooltip, useAdminContext } from "../../../../Context";
 export default function useCloseEndowment() {
   const { handleSubmit } = useFormContext<FV>();
   const { showModal } = useModalContext();
-  const { multisig, txResource, id: endowId } = useAdminContext();
+  const {
+    multisig,
+    txResource,
+    id: endowId,
+    closed: isThisEndowmentClosed,
+  } = useAdminContext<"charity">();
   const sendTx = useTxSender();
 
   async function closeEndowment(fv: FV) {
     if (isTooltip(txResource)) throw new Error(txResource);
+
+    if (isThisEndowmentClosed) {
+      return showModal(TxPrompt, {
+        error: "Endowment is already closed",
+      });
+    }
 
     if (fv.beneficiaryType === "endowment") {
       showModal(TxPrompt, { loading: "Validating beneficiary..." });

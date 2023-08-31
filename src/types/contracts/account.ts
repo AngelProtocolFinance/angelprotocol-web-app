@@ -25,6 +25,7 @@ export type AccountsSplitDetails = Mapped<
 /**
  * 0 Endowment
  * 1 Wallet
+ * 2 None (treasury)
  */
 export type Beneficiary = OverrideProperties<
   LibAccounts.BeneficiaryStruct,

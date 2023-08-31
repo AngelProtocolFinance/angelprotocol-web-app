@@ -74,7 +74,9 @@ export const customApi = junoApi.injectEndpoints({
                   data: { addr, endowId },
                 } = stateRes.closingBeneficiary;
                 return {
-                  type: (["endowment", "wallet"] as const)[enumData],
+                  type: (["endowment", "wallet", "treasury"] as const)[
+                    enumData
+                  ],
                   value: [endowId.toString(), addr][enumData],
                 };
               })(),

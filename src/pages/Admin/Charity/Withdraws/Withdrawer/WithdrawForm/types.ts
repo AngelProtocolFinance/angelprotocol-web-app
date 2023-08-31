@@ -1,6 +1,6 @@
 import { EndowmentState, IERC20, ProtocolFeeRates } from "services/types";
 import { BridgeFees } from "types/aws";
-import { EndowmentType } from "types/lists";
+import { BeneficiaryType, EndowmentType } from "types/lists";
 import { AccountType } from "types/lists";
 
 export type Amount = {
@@ -39,7 +39,7 @@ export type FormProps = {};
 export type FV = {
   amounts: Amount[];
   destinationChainId: string;
-  beneficiaryType: "wallet" | "endowment";
+  beneficiaryType: BeneficiaryType;
   beneficiaryWallet: string;
   beneficiaryEndowmentId: number;
 } & FormMeta;

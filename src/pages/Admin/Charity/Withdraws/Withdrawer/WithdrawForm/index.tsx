@@ -53,14 +53,15 @@ export default function WithdrawForm({
     ...meta,
     amounts,
     beneficiaryWallet:
-      closed && closingBeneficiary.type === "wallet"
-        ? closingBeneficiary.value
+      //prettier-ignore
+      closed && (closingBeneficiary.type === "wallet" || closingBeneficiary.type === "treasury")
+        ? closingBeneficiary.value //this value won't be changed as UI is read-only on this cases
         : wallet?.address && isEthereumAddress(wallet.address)
         ? wallet.address
         : "",
     beneficiaryEndowmentId:
       closed && closingBeneficiary.type === "endowment"
-        ? +closingBeneficiary.value
+        ? +closingBeneficiary.value //this value won't be changed as UI is read-only on this cases
         : 0,
 
     beneficiaryType: closed ? closingBeneficiary.type : "wallet",

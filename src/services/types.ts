@@ -29,7 +29,7 @@ type ReviewResource = Base & {
 };
 
 type Beneficiary = {
-  type: "wallet" | "endowment";
+  type: "wallet" | "endowment" | "treasury";
   value: string;
 };
 
