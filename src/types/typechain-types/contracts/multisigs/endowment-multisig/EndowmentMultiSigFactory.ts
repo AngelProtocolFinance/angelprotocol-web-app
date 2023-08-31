@@ -31,9 +31,11 @@ export interface EndowmentMultiSigFactoryInterface extends utils.Interface {
     "create(uint256,address,address[],uint256,uint256)": FunctionFragment;
     "endowmentIdToMultisig(uint256)": FunctionFragment;
     "getInstantiationCount(address)": FunctionFragment;
+    "implementationAddress()": FunctionFragment;
     "instantiations(address,uint256)": FunctionFragment;
     "isInstantiation(address)": FunctionFragment;
     "owner()": FunctionFragment;
+    "proxyAdmin()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
     "updateImplementation(address)": FunctionFragment;
@@ -45,9 +47,11 @@ export interface EndowmentMultiSigFactoryInterface extends utils.Interface {
       | "create"
       | "endowmentIdToMultisig"
       | "getInstantiationCount"
+      | "implementationAddress"
       | "instantiations"
       | "isInstantiation"
       | "owner"
+      | "proxyAdmin"
       | "renounceOwnership"
       | "transferOwnership"
       | "updateImplementation"
@@ -67,6 +71,10 @@ export interface EndowmentMultiSigFactoryInterface extends utils.Interface {
     values: [string]
   ): string;
   encodeFunctionData(
+    functionFragment: "implementationAddress",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "instantiations",
     values: [string, BigNumberish]
   ): string;
@@ -75,6 +83,10 @@ export interface EndowmentMultiSigFactoryInterface extends utils.Interface {
     values: [string]
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "proxyAdmin",
+    values?: undefined
+  ): string;
   encodeFunctionData(
     functionFragment: "renounceOwnership",
     values?: undefined
@@ -102,6 +114,10 @@ export interface EndowmentMultiSigFactoryInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "implementationAddress",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "instantiations",
     data: BytesLike
   ): Result;
@@ -110,6 +126,7 @@ export interface EndowmentMultiSigFactoryInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "proxyAdmin", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "renounceOwnership",
     data: BytesLike
@@ -232,6 +249,8 @@ export interface EndowmentMultiSigFactory extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
+    implementationAddress(overrides?: CallOverrides): Promise<[string]>;
+
     instantiations(
       arg0: string,
       arg1: BigNumberish,
@@ -245,6 +264,8 @@ export interface EndowmentMultiSigFactory extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
+    proxyAdmin(overrides?: CallOverrides): Promise<[string]>;
+
     renounceOwnership(
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
@@ -255,12 +276,12 @@ export interface EndowmentMultiSigFactory extends BaseContract {
     ): Promise<ContractTransaction>;
 
     updateImplementation(
-      implementationAddress: string,
+      _implementationAddress: string,
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     updateProxyAdmin(
-      proxyAdmin: string,
+      _proxyAdmin: string,
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
@@ -284,6 +305,8 @@ export interface EndowmentMultiSigFactory extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
+  implementationAddress(overrides?: CallOverrides): Promise<string>;
+
   instantiations(
     arg0: string,
     arg1: BigNumberish,
@@ -293,6 +316,8 @@ export interface EndowmentMultiSigFactory extends BaseContract {
   isInstantiation(arg0: string, overrides?: CallOverrides): Promise<boolean>;
 
   owner(overrides?: CallOverrides): Promise<string>;
+
+  proxyAdmin(overrides?: CallOverrides): Promise<string>;
 
   renounceOwnership(
     overrides?: Overrides & { from?: string }
@@ -304,12 +329,12 @@ export interface EndowmentMultiSigFactory extends BaseContract {
   ): Promise<ContractTransaction>;
 
   updateImplementation(
-    implementationAddress: string,
+    _implementationAddress: string,
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   updateProxyAdmin(
-    proxyAdmin: string,
+    _proxyAdmin: string,
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
@@ -333,6 +358,8 @@ export interface EndowmentMultiSigFactory extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    implementationAddress(overrides?: CallOverrides): Promise<string>;
+
     instantiations(
       arg0: string,
       arg1: BigNumberish,
@@ -343,6 +370,8 @@ export interface EndowmentMultiSigFactory extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<string>;
 
+    proxyAdmin(overrides?: CallOverrides): Promise<string>;
+
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     transferOwnership(
@@ -351,12 +380,12 @@ export interface EndowmentMultiSigFactory extends BaseContract {
     ): Promise<void>;
 
     updateImplementation(
-      implementationAddress: string,
+      _implementationAddress: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     updateProxyAdmin(
-      proxyAdmin: string,
+      _proxyAdmin: string,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -411,6 +440,8 @@ export interface EndowmentMultiSigFactory extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    implementationAddress(overrides?: CallOverrides): Promise<BigNumber>;
+
     instantiations(
       arg0: string,
       arg1: BigNumberish,
@@ -424,6 +455,8 @@ export interface EndowmentMultiSigFactory extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
+    proxyAdmin(overrides?: CallOverrides): Promise<BigNumber>;
+
     renounceOwnership(
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
@@ -434,12 +467,12 @@ export interface EndowmentMultiSigFactory extends BaseContract {
     ): Promise<BigNumber>;
 
     updateImplementation(
-      implementationAddress: string,
+      _implementationAddress: string,
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     updateProxyAdmin(
-      proxyAdmin: string,
+      _proxyAdmin: string,
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
@@ -464,6 +497,10 @@ export interface EndowmentMultiSigFactory extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    implementationAddress(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     instantiations(
       arg0: string,
       arg1: BigNumberish,
@@ -477,6 +514,8 @@ export interface EndowmentMultiSigFactory extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    proxyAdmin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     renounceOwnership(
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
@@ -487,12 +526,12 @@ export interface EndowmentMultiSigFactory extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     updateImplementation(
-      implementationAddress: string,
+      _implementationAddress: string,
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     updateProxyAdmin(
-      proxyAdmin: string,
+      _proxyAdmin: string,
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
