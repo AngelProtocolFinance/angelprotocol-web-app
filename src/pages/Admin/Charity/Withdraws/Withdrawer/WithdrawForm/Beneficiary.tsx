@@ -1,4 +1,5 @@
 import { ErrorMessage } from "@hookform/error-message";
+import { useEffect } from "react";
 import { Path, useFormContext } from "react-hook-form";
 import { FV } from "./types";
 import { Radio } from "components/form";
@@ -9,7 +10,7 @@ export default function Beneficiary({ classes = "" }) {
   const {
     watch,
     register,
-
+    trigger,
     formState: { errors },
   } = useFormContext<FV>();
 
@@ -18,6 +19,13 @@ export default function Beneficiary({ classes = "" }) {
   const fieldName: Path<FV> = isBeneficiaryWallet
     ? "beneficiaryWallet"
     : "beneficiaryEndowmentId";
+
+  useEffect(() => {
+    (async () => {
+      if (beneficiaryType === "wallet") await trigger("beneficiaryWallet");
+      else await trigger("beneficiaryEndowmentId");
+    })();
+  }, [beneficiaryType]);
 
   return (
     <div className={`${classes} relative grid gap-3 w-full`}>
