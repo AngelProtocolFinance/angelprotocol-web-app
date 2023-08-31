@@ -28,7 +28,7 @@ export type AccountsSplitDetails = Mapped<
  */
 export type Beneficiary = OverrideProperties<
   LibAccounts.BeneficiaryStruct,
-  { data: BeneficiaryData; enumData: 0 | 1 }
+  { data: BeneficiaryData; enumData: 0 | 1 | 2 }
 >;
 
 export type ADDRESS_ZERO = "0x0000000000000000000000000000000000000000" & {
