@@ -19,6 +19,7 @@ export default function WithdrawForm({
 }: WithdrawerProps & { classes?: string }) {
   const { wallet } = useGetWallet();
   const {
+    id,
     endowType,
     earlyLockedWithdrawFee,
     depositFee,
@@ -34,6 +35,7 @@ export default function WithdrawForm({
 
   const meta: FormMeta = {
     _amounts: "",
+    endowId: id,
     endowType,
     maturityTime,
     accountType,
