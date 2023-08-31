@@ -130,8 +130,10 @@ export default function useWithdraw() {
       {
         id: endowmentId,
         type: accType,
-        beneficiaryAddress: isLocked ? ADDRESS_ZERO : beneficiary,
-        beneficiaryEndowId: 0, //TODO: ap-justin UI to set endow id
+        beneficiaryAddress:
+          fv.beneficiaryType === "wallet" ? fv.beneficiaryWallet : ADDRESS_ZERO,
+        beneficiaryEndowId:
+          fv.beneficiaryType !== "wallet" ? fv.beneficiaryEndowmentId : 0,
         tokens: fv.amounts.map((a) => ({
           addr: a.tokenId,
           amnt: scaleToStr(a.value),
