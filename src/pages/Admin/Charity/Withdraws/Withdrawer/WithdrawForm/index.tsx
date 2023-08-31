@@ -4,6 +4,7 @@ import { Amount, FV, FormMeta, WithdrawerProps } from "./types";
 import { useAdminContext } from "pages/Admin/Context";
 import { useGetWallet } from "contexts/WalletContext";
 import { condense, roundDown } from "helpers";
+import { isEthereumAddress } from "schemas/tests";
 import { chainIds } from "constants/chainIds";
 import Form from "./Form";
 import { schema } from "./schema";
@@ -54,13 +55,15 @@ export default function WithdrawForm({
     beneficiaryWallet:
       closed && closingBeneficiary.type === "wallet"
         ? closingBeneficiary.value
+        : wallet?.address && isEthereumAddress(wallet.address)
+        ? wallet.address
         : "",
     beneficiaryEndowmentId:
       closed && closingBeneficiary.type === "endowment"
         ? +closingBeneficiary.value
         : 0,
 
-    beneficiaryType: "wallet",
+    beneficiaryType: closed ? closingBeneficiary.type : "wallet",
     destinationChainId: chainIds.polygon,
   };
 
