@@ -231,7 +231,7 @@ export const queryObjects: {
             endowId: bene.data.endowId,
             addr: bene.data.addr.toLowerCase(),
           },
-          enumData: bene.enumData as any /** 0 | 1 | 2 | 3 */,
+          enumData: bene.enumData as any /** 0 | 1 | 2 */,
         },
       };
     },
