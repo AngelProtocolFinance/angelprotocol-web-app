@@ -12,10 +12,8 @@ export type Amount = {
 export type WithdrawerProps = {
   balances: IERC20[];
   accountType: AccountType;
-  bridgeFees: BridgeFees;
-  protocolFeeRates: ProtocolFeeRates;
   endowmentState: EndowmentState;
-};
+} & Pick<FeeRates, "bridgeFees" | "protocolFeeRates">;
 
 export type EndowFeeRates = {
   earlyLockedWithdrawBps: number;
@@ -23,17 +21,18 @@ export type EndowFeeRates = {
   depositBps: number;
 };
 
+type FeeRates = {
+  endowFeeRates: EndowFeeRates;
+  protocolFeeRates: ProtocolFeeRates;
+  bridgeFees: BridgeFees;
+};
+
 /** data that isn't represented by any form UI */
 export type FormMeta = {
   _amounts: string; //collective amounts error
   endowType: EndowmentType;
-  accountType: AccountType;
-  endowFeeRates: EndowFeeRates;
   maturityTime: number;
-} & Pick<
-  WithdrawerProps,
-  "accountType" | "bridgeFees" | "protocolFeeRates" | "endowmentState"
->;
+} & Pick<WithdrawerProps, "accountType" | "endowmentState">;
 
 export type FormProps = {};
 
@@ -45,6 +44,10 @@ export type FV = {
   beneficiaryEndowmentId: number;
 } & FormMeta;
 
+/** NEW TYPES */
+
+type BeneficiaryType = "wallet" | "endowment";
+
 export type BaseFormMeta = {
   _amounts: string; //collective amounts error
 };
@@ -53,4 +56,28 @@ export type BaseFormValues = {
   amounts: Amount[];
 };
 
-interface ClosedAccountsFormValues extends BaseFormValues {}
+type ClosedAccountFormMeta = BaseFormMeta &
+  FeeRates & {
+    accountType: AccountType;
+    endowmentType: EndowmentType;
+  };
+
+export type ClosedAccountFormValues = BaseFormValues &
+  ClosedAccountFormMeta & {
+    destinationChainId: string;
+  };
+
+type DAFFormValues = BaseFormValues & BaseFormMeta;
+
+type CharityFormMeta = BaseFormMeta & FeeRates & { accountType: AccountType };
+
+type CharityFormValues = BaseFormValues &
+  CharityFormMeta & {
+    destinationChainId: string;
+    beneficiaryType: BeneficiaryType;
+    beneficiaryWallet: string;
+    beneficiaryEndowmentId: number;
+  };
+
+type ASTFormMeta = CharityFormMeta & { maturityTime: number };
+type ASTFormValues = CharityFormValues & ASTFormMeta;
