@@ -8,6 +8,7 @@ import { TxOnSuccess, TxSuccessMeta } from "types/tx";
 import { WithdrawMeta } from "types/tx";
 import { client } from "services/constants";
 import { version as v } from "services/helpers";
+import { queryContract } from "services/juno/queryContract";
 import { useModalContext } from "contexts/ModalContext";
 import { TxPrompt } from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
@@ -78,6 +79,43 @@ export default function useWithdraw() {
         amount: +a.value,
       })),
     };
+
+    // closingBenficiary always has valid value so no need to check
+    if (fv.beneficiaryType === "endowment" && !fv.endowmentState.closed) {
+      try {
+        if (fv.endowType === "charity") {
+          const beneficiaryEndowment = await queryContract(
+            "accounts.endowment",
+            {
+              id: fv.beneficiaryEndowmentId,
+            }
+          );
+          if (beneficiaryEndowment.endowType !== "charity") {
+            return showModal(TxPrompt, {
+              error: "Beneficiary must be charity",
+            });
+          }
+          const beneficiaryEndowmentState = await queryContract(
+            "accounts.state",
+            {
+              id: fv.beneficiaryEndowmentId,
+            }
+          );
+          if (beneficiaryEndowmentState.closingEndowment) {
+            return showModal(TxPrompt, {
+              error: "Beneficiary endowment is closed.",
+            });
+          }
+        }
+
+        if (fv.endowType === "daf") {
+        }
+      } catch (err) {
+        return showModal(TxPrompt, {
+          error: "Error checking beneficiary endowment",
+        });
+      }
+    }
 
     const [data, dest, meta] = encodeTx(
       "accounts.withdraw",
