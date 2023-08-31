@@ -22,21 +22,20 @@ export default function Beneficiary({ classes = "" }) {
   return (
     <div className={`${classes} relative grid gap-3 w-full`}>
       <h5 className="font-bold font-work">Beneficiary</h5>
-
-      <div className="flex flex-col justify-center gap-4 px-8 py-12">
+      <div className="grid grid-cols-2 gap-2 text-xs">
         <Radio<FV, "beneficiaryType">
-          classes="px-4 py-3 border border-prim rounded cursor-pointer"
+          classes="px-3 py-2 border border-prim rounded cursor-pointer"
           name="beneficiaryType"
           value="wallet"
         >
-          Wallet address
+          Wallet
         </Radio>
         <Radio<FV, "beneficiaryType">
-          classes="px-4 py-3 border border-prim rounded cursor-pointer"
+          classes="px-2 py-1 border border-prim rounded cursor-pointer"
           name="beneficiaryType"
           value="endowment"
         >
-          Endowment ID
+          Endowment
         </Radio>
       </div>
 
