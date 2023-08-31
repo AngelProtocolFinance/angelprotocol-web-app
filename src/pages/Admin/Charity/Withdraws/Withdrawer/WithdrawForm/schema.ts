@@ -1,4 +1,4 @@
-import { ObjectSchema, array, lazy, object, string } from "yup";
+import { ObjectSchema, array, lazy, number, object, string } from "yup";
 import { Amount, FV, FormMeta } from "./types";
 import { SchemaShape } from "schemas/types";
 import { tokenConstraint } from "schemas/number";
@@ -8,9 +8,11 @@ import { feeData } from "./helpers";
 type TVal = Amount["value"];
 type TBal = Amount["balance"];
 type TChainId = FV["destinationChainId"];
+type TBeneficiaryType = FV["beneficiaryType"];
 
 const balKey: keyof Amount = "balance";
 const metaKey = "$meta"; //context key
+const beneficiaryTypeKey: keyof FV = "beneficiaryType";
 const destinationChainIdKey: keyof FV = "destinationChainId";
 const amountsKey: keyof FV = "amounts";
 
@@ -57,12 +59,27 @@ export const schema = object<any, SchemaShape<FV>>({
     )
   ),
   beneficiaryWallet: string().when(
-    [destinationChainIdKey, metaKey],
+    [destinationChainIdKey, beneficiaryTypeKey, metaKey],
     (values, schema) => {
-      const [network, meta] = values as [TChainId, FormMeta];
-      return meta.accountType === "liquid"
+      const [network, beneficiaryType] = values as [
+        TChainId,
+        TBeneficiaryType,
+        FormMeta,
+      ];
+      return beneficiaryType === "wallet"
         ? requiredWalletAddr(network)
         : schema;
+    }
+  ),
+  beneficiaryEndowmentId: number().when(
+    [beneficiaryTypeKey],
+    ([beneficiaryType], schema) => {
+      return (beneficiaryType as TBeneficiaryType) === "endowment"
+        ? schema
+            .typeError("invalid number")
+            .positive("can't be negative")
+            .integer("must be whole number")
+        : string();
     }
   ),
 }) as ObjectSchema<FV>;
