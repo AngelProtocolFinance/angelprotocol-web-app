@@ -96,7 +96,7 @@ export default function useCloseEndowment() {
         default:
           return [
             { data: { endowId: 0, addr: ADDRESS_ZERO }, enumData: 2 },
-            `registrar treasury`,
+            "registrar treasury",
           ];
       }
     })();
