@@ -24,7 +24,7 @@ export const referralMethods: { [key in ReferralMethods]: string } = {
   press: "Press",
   "search-engines": "Search engines",
   twitter: "Twitter",
-  referral: "Referral",
+  referral: "Referral Code",
   other: "Other",
 };
 
