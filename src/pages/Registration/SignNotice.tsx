@@ -29,7 +29,6 @@ export default function SignatureNotice({ classes = "" }) {
       setSubmitText(redirectingText);
 
       if (documentation.fiscalSponsorshipAgreementSigningURL) {
-        console.log(documentation);
         window.location.href =
           documentation.fiscalSponsorshipAgreementSigningURL;
         return;
