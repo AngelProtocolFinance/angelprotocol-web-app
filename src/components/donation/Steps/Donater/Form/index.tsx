@@ -70,7 +70,7 @@ export default function Form(props: {
             fieldName="country"
             onReset={() => resetField("country")}
             classes={{
-              container: "px-4 dark:bg-blue-d6",
+              container: "px-4 dark:bg-blue-d6 mb-3",
               input: "py-3.5 placeholder:text-sm",
               error: "field-error",
             }}
