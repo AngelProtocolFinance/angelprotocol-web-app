@@ -82,6 +82,7 @@ export default function useWithdraw() {
 
     // closingBenficiary always has valid value so no need to check
     if (fv.beneficiaryType === "endowment" && !fv.endowmentState.closed) {
+      showModal(TxPrompt, { loading: "Verifying beneficiary endowment.." });
       try {
         if (fv.endowType === "charity") {
           const beneficiaryEndowment = await queryContract(
@@ -114,7 +115,7 @@ export default function useWithdraw() {
           });
           if (!isBeneficiaryDAF) {
             return showModal(TxPrompt, {
-              error: "Benefificiary is not approved by this DAF",
+              error: "Beneficiary is not approved by this DAF",
             });
           }
         }

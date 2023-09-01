@@ -66,7 +66,11 @@ export default function WithdrawForm({
         ? +closingBeneficiary.value //this value won't be changed as UI is read-only on this cases
         : 0,
 
-    beneficiaryType: closed ? closingBeneficiary.type : "wallet",
+    beneficiaryType: closed
+      ? closingBeneficiary.type
+      : endowType === "daf"
+      ? "endowment"
+      : "wallet",
     destinationChainId: chainIds.polygon,
   };
 
