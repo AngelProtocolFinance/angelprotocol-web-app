@@ -5,5 +5,5 @@ export type FormValues = ProposalBase & {
   beneficiaryType: BeneficiaryType;
   beneficiaryWallet: string;
   beneficiaryEndowmentId: number;
-  meta: { endowType: EndowmentType };
+  meta: { endowType: EndowmentType; endowId: number };
 };

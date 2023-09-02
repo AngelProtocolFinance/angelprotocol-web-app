@@ -6,7 +6,9 @@ import { chainIds } from "constants/chainIds";
 import { proposalShape } from "../../../../constants";
 
 type TBeneficiaryType = FV["beneficiaryType"];
+type TMeta = FV["meta"];
 const beneficiaryTypeKey: keyof FV = "beneficiaryType";
+const metaKey: keyof FV = "meta";
 
 export const schema = object<any, SS<FV>>({
   ...proposalShape,
@@ -19,13 +21,15 @@ export const schema = object<any, SS<FV>>({
     }
   ),
   beneficiaryEndowmentId: number().when(
-    [beneficiaryTypeKey],
-    ([beneficiaryType], schema) => {
-      return (beneficiaryType as TBeneficiaryType) === "endowment"
+    [beneficiaryTypeKey, metaKey],
+    (values, schema) => {
+      const [beneficiaryType, meta] = values as [TBeneficiaryType, TMeta];
+      return beneficiaryType === "endowment"
         ? schema
-            .typeError("invalid number")
+            .typeError("invalid ID")
             .positive("must be greater than 0")
             .integer("must be whole number")
+            .notOneOf([meta.endowId], "can't be your endowment")
         : string();
     }
   ),
