@@ -14,7 +14,6 @@ export default function Form({ classes = "" }) {
     chainName,
     tooltip,
     beneficiaryType,
-    endowmentType,
     closed,
     closingBeneficiary,
   } = useWithdraw();
@@ -45,10 +44,12 @@ export default function Form({ classes = "" }) {
         )}
 
         {/** endowment beneficiaries are bound to polygon only */}
-        {beneficiaryType === "wallet" && <Network />}
-
-        {/** fees doesn't apply to DAFs */}
-        {endowmentType !== "daf" && <Breakdown />}
+        {beneficiaryType === "wallet" && (
+          <>
+            <Network />
+            <Breakdown />
+          </>
+        )}
 
         {chainName !== "Polygon" && (
           <Warning>
