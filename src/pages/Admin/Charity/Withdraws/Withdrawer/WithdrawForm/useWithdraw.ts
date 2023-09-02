@@ -80,31 +80,41 @@ export default function useWithdraw() {
       })),
     };
 
-    // closingBenficiary always has valid value so no need to check
-    if (fv.beneficiaryType === "endowment" && !fv.endowmentState.closed) {
+    if (fv.beneficiaryType === "endowment") {
       showModal(TxPrompt, { loading: "Verifying beneficiary endowment.." });
       try {
+        const beneficiaryEndowment = await queryContract("accounts.endowment", {
+          id: +fv.beneficiaryEndowmentId,
+        });
+
+        /** even though not existing,
+         * queryEndowDetails still returns an endowment with placeholder values */
+        if (beneficiaryEndowment.owner === ADDRESS_ZERO) {
+          return showModal(TxPrompt, {
+            error: `Endowment (id: ${fv.beneficiaryEndowmentId}) doesn't exist`,
+          });
+        }
+
+        const beneficiaryEndowmentState = await queryContract(
+          "accounts.state",
+          {
+            id: +fv.beneficiaryEndowmentId,
+          }
+        );
+
+        /** a closingBeneficiary might have been validated on closeEndowment call,
+         *  but it may have been closed prior to withdraw call
+         */
+        if (beneficiaryEndowmentState.closingEndowment) {
+          return showModal(TxPrompt, {
+            error: "Beneficiary endowment is closed.",
+          });
+        }
+
         if (fv.endowType === "charity") {
-          const beneficiaryEndowment = await queryContract(
-            "accounts.endowment",
-            {
-              id: +fv.beneficiaryEndowmentId,
-            }
-          );
           if (beneficiaryEndowment.endowType !== "charity") {
             return showModal(TxPrompt, {
               error: "Beneficiary must be charity",
-            });
-          }
-          const beneficiaryEndowmentState = await queryContract(
-            "accounts.state",
-            {
-              id: +fv.beneficiaryEndowmentId,
-            }
-          );
-          if (beneficiaryEndowmentState.closingEndowment) {
-            return showModal(TxPrompt, {
-              error: "Beneficiary endowment is closed.",
             });
           }
         }

@@ -7,7 +7,7 @@ import { BeneficiaryType } from "types/lists";
 
 const id = "__beneficiary";
 
-const beneficiaryTypes: BeneficiaryType[] = ["endowment", "wallet"];
+const beneficiaryTypes: BeneficiaryType[] = ["wallet", "endowment"];
 
 export default function Beneficiary({ classes = "" }) {
   const {

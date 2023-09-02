@@ -31,41 +31,50 @@ export default function useCloseEndowment() {
     }
 
     if (fv.beneficiaryType === "endowment") {
-      showModal(TxPrompt, { loading: "Validating beneficiary..." });
       const { endowType } = fv.meta;
+      showModal(TxPrompt, { loading: "Verifying beneficiary endowment.." });
       try {
+        const beneficiaryEndowment = await queryContract("accounts.endowment", {
+          id: +fv.beneficiaryEndowmentId,
+        });
+
+        if (beneficiaryEndowment.owner === ADDRESS_ZERO) {
+          return showModal(TxPrompt, {
+            error: `Endowment (id: ${fv.beneficiaryEndowmentId}) doesn't exist`,
+          });
+        }
+
+        const beneficiaryEndowmentState = await queryContract(
+          "accounts.state",
+          {
+            id: +fv.beneficiaryEndowmentId,
+          }
+        );
+
+        /** a closingBeneficiary might have been validated on closeEndowment call,
+         *  but it may have been closed prior to withdraw call
+         */
+        if (beneficiaryEndowmentState.closingEndowment) {
+          return showModal(TxPrompt, {
+            error: "Beneficiary endowment is closed.",
+          });
+        }
+
         if (endowType === "charity") {
-          const beneficiaryEndowment = await queryContract(
-            "accounts.endowment",
-            {
-              id: fv.beneficiaryEndowmentId,
-            }
-          );
           if (beneficiaryEndowment.endowType !== "charity") {
             return showModal(TxPrompt, {
               error: "Beneficiary must be charity",
-            });
-          }
-          const beneficiaryEndowmentState = await queryContract(
-            "accounts.state",
-            {
-              id: fv.beneficiaryEndowmentId,
-            }
-          );
-          if (beneficiaryEndowmentState.closingEndowment) {
-            return showModal(TxPrompt, {
-              error: "Beneficiary endowment is closed.",
             });
           }
         }
 
         if (endowType === "daf") {
           const isBeneficiaryDAF = await queryContract("accounts.is-daf", {
-            id: fv.beneficiaryEndowmentId,
+            id: +fv.beneficiaryEndowmentId,
           });
           if (!isBeneficiaryDAF) {
             return showModal(TxPrompt, {
-              error: "Benefificiary is not approved by this DAF",
+              error: "Beneficiary is not approved by this DAF",
             });
           }
         }
