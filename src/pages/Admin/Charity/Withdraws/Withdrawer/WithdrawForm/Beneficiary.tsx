@@ -38,7 +38,7 @@ export default function Beneficiary({ classes = "" }) {
   }, [beneficiaryType, trigger]);
 
   return (
-    <div className={`${classes} relative grid gap-3 w-full`}>
+    <div className={`${classes} relative grid gap-3 w-full @container`}>
       <h5 className="font-bold font-work">
         {/** DAFs can only send to endowments */}
         {isDAF ? "Beneficiary endowment" : "Beneficiary"}
@@ -47,8 +47,7 @@ export default function Beneficiary({ classes = "" }) {
         <RadioGroup
           value={beneficiaryType}
           onChange={onBeneficiaryTypeChange}
-          name="plan"
-          className="flex -mb-3"
+          className="grid grid-cols-2 @sm:flex -mb-3 @container"
         >
           {beneficiaryTypes.map((b) => (
             <RadioGroup.Option key={b} value={b} as={Fragment}>
@@ -56,7 +55,7 @@ export default function Beneficiary({ classes = "" }) {
                 <span
                   className={`${
                     checked ? "bg-blue/20" : "bg-blue/5"
-                  } text-gray-d2 w-36 cursor-pointer px-2 py-1 text-center text-xs uppercase`}
+                  } text-gray-d2 @sm:w-36 cursor-pointer px-2 py-1 text-center text-xs uppercase`}
                 >
                   {b}
                 </span>
