@@ -107,7 +107,7 @@ export const customApi = junoApi.injectEndpoints({
     withdrawData: builder.query<WithdrawData, { id: number }>({
       providesTags: ["accounts.token-balance"],
       queryFn: async ({ id }) => {
-        const bridgeFees = fetch(
+        const bridgeFeesPromise = fetch(
           APIs.apes + `/${v(2)}/axelar-bridge-fees`
         ).then<BridgeFeesRes>((res) => {
           if (!res.ok) throw new Error("Failed to get fees");
@@ -116,12 +116,12 @@ export const customApi = junoApi.injectEndpoints({
 
         const [
           balances,
-          fees,
+          bridgeFees,
           earlyLockedWithdrawFeeSetting,
           withdrawFeeSetting,
         ] = await Promise.all([
           endowBalance(id),
-          bridgeFees,
+          bridgeFeesPromise,
           queryContract("registrar.fee-setting", {
             type: IS_AST ? "EarlyLockedWithdraw" : "EarlyLockedWithdrawCharity",
           }),
@@ -129,13 +129,14 @@ export const customApi = junoApi.injectEndpoints({
             type: IS_AST ? "Withdraw" : "WithdrawCharity",
           }),
         ]);
+
         return {
           data: {
             balances,
             //juno field not present in /staging - fill for consistent type definition
             bridgeFees: IS_TEST
-              ? { ...fees["withdraw"], juno: 0 }
-              : fees["withdraw"],
+              ? { ...bridgeFees["withdraw"], juno: 0 }
+              : bridgeFees["withdraw"],
             protocolFeeRates: {
               withdrawBps: withdrawFeeSetting.bps,
               earlyLockedWithdrawBps: earlyLockedWithdrawFeeSetting.bps,
