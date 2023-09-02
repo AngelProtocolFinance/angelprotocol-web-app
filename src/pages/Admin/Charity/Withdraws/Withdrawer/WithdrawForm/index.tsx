@@ -63,8 +63,8 @@ export default function WithdrawForm({
         : "",
     beneficiaryEndowmentId:
       closed && closingBeneficiary.type === "endowment"
-        ? +closingBeneficiary.value //this value won't be changed as UI is read-only on this cases
-        : 0,
+        ? closingBeneficiary.value //this value won't be changed as UI is read-only on this cases
+        : "",
 
     beneficiaryType: closed
       ? closingBeneficiary.type

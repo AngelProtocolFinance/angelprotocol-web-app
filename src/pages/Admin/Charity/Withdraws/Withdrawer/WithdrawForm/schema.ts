@@ -77,7 +77,7 @@ export const schema = object<any, SchemaShape<FV>>({
       const [beneficiaryType, meta] = values as [TBeneficiaryType, FormMeta];
       return beneficiaryType === "endowment"
         ? schema
-            .typeError("invalid number")
+            .typeError("invalid ID")
             .positive("must be greater than 0")
             .integer("must be whole number")
             .notOneOf([meta.endowId], "can't transfer to own endowment")

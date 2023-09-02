@@ -42,5 +42,5 @@ export type FV = {
   destinationChainId: string;
   beneficiaryType: BeneficiaryType;
   beneficiaryWallet: string;
-  beneficiaryEndowmentId: number;
+  beneficiaryEndowmentId: string;
 } & FormMeta;
