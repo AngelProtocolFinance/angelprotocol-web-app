@@ -41,7 +41,7 @@ const FEE_BASIS = 10_000;
 
 type FeeArgs = Except<
   FV,
-  "beneficiaryType" | "beneficiaryEndowmentId" | "beneficiaryWallet" | "amounts"
+  "beneficiaryEndowmentId" | "beneficiaryWallet" | "amounts"
 > & {
   withdrawAmount: number;
 };
@@ -54,8 +54,17 @@ export const feeData = ({
   bridgeFees,
   protocolFeeRates,
   maturityTime,
+  beneficiaryType,
   endowType,
 }: FeeArgs) => {
+  /** Protocol and endowment fees does not apply for transfers to other endowments
+   *  bridge fees also doesn't apply as endow to endow transfers are on the same chain
+   */
+
+  console.log(endowFeeRates);
+  if (beneficiaryType === "endowment") {
+    return { items: [], totalFee: 0, toReceive: withdrawAmount };
+  }
   /**
    * //RAW AMOUNT//
    * less withdrawFeeAp

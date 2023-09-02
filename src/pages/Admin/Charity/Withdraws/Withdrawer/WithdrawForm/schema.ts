@@ -17,12 +17,14 @@ const destinationChainIdKey: keyof FV = "destinationChainId";
 const amountsKey: keyof FV = "amounts";
 
 const amount: (
+  beneficiaryType: TBeneficiaryType,
   destinationChainId: TChainId,
   meta: FormMeta
-) => SchemaShape<Amount> = (destinationChainId, meta) => ({
+) => SchemaShape<Amount> = (beneficiaryType, destinationChainId, meta) => ({
   value: lazy((withdrawAmount: TVal) => {
     const { totalFee } = feeData({
       ...meta,
+      beneficiaryType,
       destinationChainId,
       withdrawAmount: withdrawAmount ? +withdrawAmount : 0,
     });
@@ -48,10 +50,17 @@ const amount: (
 });
 
 export const schema = object<any, SchemaShape<FV>>({
-  amounts: array().when([destinationChainIdKey, metaKey], (values, schema) => {
-    const [network, fees] = values as [TChainId, FormMeta];
-    return schema.of(object(amount(network, fees)));
-  }),
+  amounts: array().when(
+    [destinationChainIdKey, metaKey, beneficiaryTypeKey],
+    (values, schema) => {
+      const [network, fees, beneficiaryType] = values as [
+        TChainId,
+        FormMeta,
+        TBeneficiaryType,
+      ];
+      return schema.of(object(amount(beneficiaryType, network, fees)));
+    }
+  ),
   //test if at least one amount is filled
   _amounts: string().when(amountsKey, ([amounts], schema) =>
     schema.test("at least one is filled", "", () =>
