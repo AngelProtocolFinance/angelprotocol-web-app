@@ -1,22 +1,30 @@
+import { RadioGroup } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
-import { useEffect } from "react";
-import { Path, useFormContext } from "react-hook-form";
+import { Fragment, useEffect } from "react";
+import { Path, useController, useFormContext } from "react-hook-form";
 import { FV } from "./types";
-import { Radio } from "components/form";
+import { BeneficiaryType } from "types/lists";
 
 const id = "__beneficiary";
 
+const beneficiaryTypes: BeneficiaryType[] = ["endowment", "wallet"];
+
 export default function Beneficiary({ classes = "" }) {
   const {
-    watch,
     register,
     trigger,
     getValues,
     formState: { errors },
   } = useFormContext<FV>();
 
+  const {
+    field: { value: beneficiaryType, onChange: onBeneficiaryTypeChange },
+  } = useController<Pick<FV, "beneficiaryType">>({
+    name: "beneficiaryType",
+  });
+
   const isDAF = getValues("endowType") === "daf";
-  const beneficiaryType = watch("beneficiaryType");
+  // const beneficiaryType = watch("beneficiaryType");
   const isBeneficiaryWallet = beneficiaryType === "wallet";
   const fieldName: Path<FV> = isBeneficiaryWallet
     ? "beneficiaryWallet"
@@ -36,22 +44,26 @@ export default function Beneficiary({ classes = "" }) {
         {isDAF ? "Beneficiary endowment" : "Beneficiary"}
       </h5>
       {!isDAF && (
-        <div className="grid grid-cols-2 gap-2 text-xs">
-          <Radio<FV, "beneficiaryType">
-            classes="px-3 py-2 border border-prim rounded cursor-pointer"
-            name="beneficiaryType"
-            value="wallet"
-          >
-            Wallet
-          </Radio>
-          <Radio<FV, "beneficiaryType">
-            classes="px-2 py-1 border border-prim rounded cursor-pointer"
-            name="beneficiaryType"
-            value="endowment"
-          >
-            Endowment
-          </Radio>
-        </div>
+        <RadioGroup
+          value={beneficiaryType}
+          onChange={onBeneficiaryTypeChange}
+          name="plan"
+          className="flex -mb-3"
+        >
+          {beneficiaryTypes.map((b) => (
+            <RadioGroup.Option key={b} value={b} as={Fragment}>
+              {({ checked }) => (
+                <span
+                  className={`${
+                    checked ? "bg-blue/20" : "bg-blue/5"
+                  } text-gray-d2 w-36 cursor-pointer px-2 py-1 text-center text-xs uppercase`}
+                >
+                  {b}
+                </span>
+              )}
+            </RadioGroup.Option>
+          ))}
+        </RadioGroup>
       )}
 
       <input
@@ -62,7 +74,7 @@ export default function Beneficiary({ classes = "" }) {
         className={`${
           //for endow id beneficiary, field type is number
           isBeneficiaryWallet ? "" : "text-field"
-        } flex justify-between items-center w-full p-4 border border-prim rounded bg-transparent @max-md:text-sm truncate focus:outline-none`}
+        } -mt-[1px] flex justify-between items-center w-full p-4 border border-prim rounded-b bg-transparent @max-md:text-sm truncate focus:outline-none`}
         placeholder={
           isBeneficiaryWallet ? "Input wallet address" : "Endowment ID:"
         }
