@@ -24,7 +24,8 @@ export const txs: { [T in TxType]: (args: TxArgs<T>) => string } = {
     accounts.encodeFunctionData("depositERC20", toTuple(args)),
   "accounts.withdraw": (args) =>
     accounts.encodeFunctionData("withdraw", toTuple(args)),
-  "accounts.close": () => "",
+  "accounts.close": (args) =>
+    accounts.encodeFunctionData("closeEndowment", toTuple(args)),
   "accounts.invest": () => "", //future
   "accounts.redeem": () => "", //future
 
