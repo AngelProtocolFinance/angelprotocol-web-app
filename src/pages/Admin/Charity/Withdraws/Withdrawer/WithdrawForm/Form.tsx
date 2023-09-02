@@ -30,15 +30,12 @@ export default function Form({ classes = "" }) {
 
         {/** beneficiary is already set on closed accounts */}
         {closed ? (
-          <>
-            <Warning>This endowment is closed</Warning>
-            <div>
-              <h5 className="font-bold font-work">
-                Beneficiary {closingBeneficiary.type}
-              </h5>
-              <p>{closingBeneficiary.value}</p>
-            </div>
-          </>
+          <Warning>
+            This endowment is closed. Withdraws from this account will go to{" "}
+            <span className="contents font-work text-orange">
+              Beneficiary {closingBeneficiary.type}: {closingBeneficiary.value}
+            </span>
+          </Warning>
         ) : (
           <Beneficiary />
         )}
