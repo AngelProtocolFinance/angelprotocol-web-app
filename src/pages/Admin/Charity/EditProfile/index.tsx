@@ -73,7 +73,7 @@ function FormWithContext(props: TProfile) {
   const methods = useForm<FV>({
     defaultValues: defaults,
     resolver: yupResolver(schema),
-    context: { isEndow: props.type === "endowment" },
+    context: { isEndow: props.type === "charity" },
   });
   const tooltip = isTooltip(txResource) ? txResource : undefined;
 

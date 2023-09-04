@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import { endow } from "services/types";
+import { profileIsCharity } from "services/types";
 import { isEmpty } from "helpers";
 import { useProfileContext } from "../../../ProfileContext";
 import DonateButton from "../../DonateButton";
@@ -28,7 +28,7 @@ export default function DetailsColumn({ className = "" }) {
             ? p.hq_country
             : active_in_countries.join(", ")}
         </Detail>
-        {endow(p) && <Tags {...p} />}
+        {profileIsCharity(p) && <Tags {...p} />}
         {p.social_media_urls && (
           <Socials social_media_urls={p.social_media_urls} />
         )}

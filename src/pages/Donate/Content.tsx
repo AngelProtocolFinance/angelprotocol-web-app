@@ -8,7 +8,6 @@ import {
   setRecipient,
 } from "slices/donation";
 import { PAYMENT_WORDS } from "constants/common";
-import { IS_AST } from "constants/env";
 import { appRoutes } from "constants/routes";
 
 function Content(props: DonationRecipient) {
@@ -35,7 +34,7 @@ function Content(props: DonationRecipient) {
       className="justify-self-center grid padded-container max-w-[35rem] py-8 @sm:py-20 scroll-mt-6"
       id={CONTAINER_ID}
     >
-      {!IS_AST && (
+      {props.endowType !== "ast" && (
         <Breadcrumbs
           className="font-body font-normal text-sm justify-self-start sm:justify-self-auto mb-10 sm:mb-12"
           items={[
