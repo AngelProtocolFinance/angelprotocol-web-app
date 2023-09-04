@@ -116,7 +116,7 @@ export const aws = createApi({
           ...r,
           tagline,
           type: IS_AST ? "ast" : "endowment",
-        };
+        } as Profile;
       },
     }),
     program: builder.query<Program, { endowId: number; programId: string }>({
