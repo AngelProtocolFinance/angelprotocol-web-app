@@ -2295,12 +2295,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hookform/resolvers@npm:3.2.0":
-  version: 3.2.0
-  resolution: "@hookform/resolvers@npm:3.2.0"
+"@hookform/resolvers@npm:3.3.1":
+  version: 3.3.1
+  resolution: "@hookform/resolvers@npm:3.3.1"
   peerDependencies:
     react-hook-form: ^7.0.0
-  checksum: 041692117f1915ea23ab48f0eeaa4841ffb45f849b9743315ac4b05ae860a4ceb41adc55cf3c213aefe705b6b63b725d9a128c0ae7d15f5faca162e2a94a63d1
+  checksum: 1ddc250a8d6769fb11b03110b586677b03463276dda1cdfd0225ab94f46d422868f74b01bef85f785010cc3d836f0669d6b6c0ed752cae532d2badf3537b1e72
   languageName: node
   linkType: hard
 
@@ -5279,7 +5279,7 @@ __metadata:
     "@ethersproject/bignumber": ^5.7.0
     "@headlessui/react": ^1.7.4
     "@hookform/error-message": ^2.0.0
-    "@hookform/resolvers": 3.2.0
+    "@hookform/resolvers": 3.3.1
     "@keplr-wallet/proto-types": 0.12.20
     "@keplr-wallet/types": 0.12.20
     "@keplr-wallet/wc-qrcode-modal": 0.12.20
