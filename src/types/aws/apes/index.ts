@@ -21,6 +21,7 @@ export type Token = {
   name: string; // "Stader LunaX Token"
   symbol: string; // DB Partition key ex., "LunaX"
   token_id: string; // "ujuno" | "0xaSD123..." | "ibc/ASH3438hfd..."
+  coingecko_denom: string;
   type: TokenType;
 };
 

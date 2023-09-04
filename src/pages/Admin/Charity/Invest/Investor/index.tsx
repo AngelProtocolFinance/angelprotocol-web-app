@@ -22,6 +22,7 @@ export default function Investor(props: TStrategy) {
     type: "juno-native",
     amount: "0",
     balance: balances.liquid,
+    coingecko_denom: "",
   };
 
   const methods = useForm<FormValues>({
