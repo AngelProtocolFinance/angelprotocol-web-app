@@ -1,16 +1,30 @@
 import { Coin, MsgExecuteContract, MsgSend } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
+import Decimal from "decimal.js";
 import { Asset } from "types/contracts";
 import { SimulContractTx, SimulSendNativeTx } from "types/evm";
-import { Estimate, TxContent } from "types/tx";
+import { EstimatedTx, TxContent } from "types/tx";
 import { WalletState } from "contexts/WalletContext";
 import { FiatWallet, SubmitStep, isFiat } from "slices/donation";
 import createCosmosMsg from "contracts/createCosmosMsg";
 import { createTx } from "contracts/createTx/createTx";
-import { logger, scale, scaleToStr } from "helpers";
+import { humanize, logger, scale, scaleToStr } from "helpers";
+import { usdValue as _usdValue } from "helpers/coin-gecko";
 import { estimateTx } from "helpers/tx";
 import { apWallets } from "constants/ap-wallets";
 import { ADDRESS_ZERO } from "constants/evm";
+
+type EstimateItem = {
+  name: string;
+  cryptoAmount?: { value: string; symbol: string };
+  fiatAmount: number;
+  prettyFiatAmount: string; //$, AUD, ETC
+};
+
+export type DonationEstimate = {
+  tx: EstimatedTx;
+  items: EstimateItem[];
+};
 
 export async function estimateDonation({
   recipient,
@@ -20,13 +34,25 @@ export async function estimateDonation({
 }: SubmitStep & {
   wallet: WalletState | FiatWallet;
   terraWallet?: ConnectedWallet;
-}): Promise<Estimate | null> {
+}): Promise<DonationEstimate | null> {
   let content: TxContent;
   // ///////////// GET TX CONTENT ///////////////
+
+  console.log({ token });
+
   try {
     if (isFiat(wallet) || token.type === "fiat") {
+      const amount: EstimateItem = {
+        name: "Amount",
+        fiatAmount: +token.amount,
+        prettyFiatAmount: `${
+          token.symbol === "USD" ? "$" : `${token.symbol} `
+        }${humanize(token.amount, 4)}`,
+      };
+
       return {
-        fee: { amount: 5, symbol: token.symbol },
+        //amount and total are the same for fiat
+        items: [amount, { ...amount, name: "Estimated proceeds" }],
         tx: {
           /** not used */
         } as any,
@@ -113,7 +139,61 @@ export async function estimateDonation({
       content = { type: "evm", val: tx };
     }
     // ///////////// ESTIMATE TX ///////////////
-    return estimateTx(content, wallet);
+    const txEstimate = await estimateTx(content, wallet);
+    if (!txEstimate) return null;
+
+    // ///////////// Sucessful simulation ///////////////
+    const [tokenUSDValue, feeUSDValue] = await Promise.all([
+      _usdValue(token.coingecko_denom),
+      _usdValue(txEstimate.fee.coinGeckoId),
+    ]);
+
+    const amount: EstimateItem = {
+      name: "Amount",
+      cryptoAmount: {
+        value: token.amount,
+        symbol: token.symbol,
+      },
+      fiatAmount: tokenUSDValue,
+      prettyFiatAmount: `$${humanize(tokenUSDValue, 4)}`,
+    };
+
+    const transactionFee: EstimateItem = {
+      name: "Transaction fee",
+      cryptoAmount: {
+        value: txEstimate.fee.amount.toString(),
+        symbol: txEstimate.fee.symbol,
+      },
+      fiatAmount: feeUSDValue,
+      prettyFiatAmount: `$${humanize(feeUSDValue, 4)}`,
+    };
+
+    const { isFiscalSponsored, endowType } = recipient;
+    const angelGivingFeeRateercent =
+      endowType === "charity" ? (isFiscalSponsored ? 5.8 : 2.9) : 0;
+
+    const angelGivingFeeDec = new Decimal(tokenUSDValue)
+      .mul(angelGivingFeeRateercent)
+      .div(100);
+
+    const angelGivingFee: EstimateItem = {
+      name: "Angel Giving Fee",
+      fiatAmount: angelGivingFeeDec.toNumber(),
+      prettyFiatAmount: `$${humanize(angelGivingFeeDec, 4)}`,
+    };
+
+    //feeUSD is on top of tokenUSD
+    const totalDec = new Decimal(tokenUSDValue).sub(angelGivingFeeDec);
+    const total: EstimateItem = {
+      name: "Estimated proceeds",
+      fiatAmount: totalDec.toNumber(),
+      prettyFiatAmount: `$${humanize(totalDec, 4)}`,
+    };
+
+    return {
+      tx: txEstimate.tx,
+      items: [amount, angelGivingFee, transactionFee, total],
+    };
   } catch (err) {
     logger.error(err);
     return null;
