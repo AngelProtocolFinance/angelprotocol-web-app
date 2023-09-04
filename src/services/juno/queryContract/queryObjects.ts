@@ -63,14 +63,18 @@ export const queryObjects: {
         switch (type) {
           case "Harvest":
             return 1;
-          case "WithdrawCharity":
+          case "Deposit":
             return 2;
-          case "WithdrawNormal":
+          case "DepositCharity":
             return 3;
-          case "EarlyLockedWithdrawCharity":
+          case "Withdraw":
             return 4;
-          case "EarlyLockedWithdrawNormal":
+          case "WithdrawCharity":
             return 5;
+          case "EarlyLockedWithdraw":
+            return 6;
+          case "EarlyLockedWithdrawCharity":
+            return 7;
           default: //Default
             return 0;
         }
@@ -227,7 +231,7 @@ export const queryObjects: {
             endowId: bene.data.endowId,
             addr: bene.data.addr.toLowerCase(),
           },
-          enumData: bene.enumData as any /** 0 | 1 | 2 | 3 */,
+          enumData: bene.enumData as any /** 0 | 1 | 2 */,
         },
       };
     },
@@ -241,5 +245,10 @@ export const queryObjects: {
       )[0];
       return d.toString();
     },
+  ],
+  "accounts.is-daf": [
+    ({ id }) => accounts.encodeFunctionData("isDafApprovedEndowment", [id]),
+    (result) =>
+      accounts.decodeFunctionResult("isDafApprovedEndowment", result)[0],
   ],
 };

@@ -91,7 +91,7 @@ export default function Form() {
           label="Proxy admin"
           name="proxyAdmin"
         />
-        <Field<FV> classes="field-admin-sec" label="USDC" name="usdcAddress" />,
+        <Field<FV> classes="field-admin-sec" label="USDC" name="usdcAddress" />
         <Field<FV>
           classes="field-admin-sec"
           label="WMATIC"

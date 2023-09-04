@@ -12,3 +12,4 @@ export type { storageSol };
 export type { APTeamMultiSig } from "./APTeamMultiSig";
 export type { CharityApplications } from "./CharityApplications";
 export type { MultiSigGeneric } from "./MultiSigGeneric";
+export type { ProxyAdminMultiSig } from "./ProxyAdminMultiSig";

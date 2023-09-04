@@ -109,6 +109,8 @@ export const useAdminContext = <T extends AdminType = any>(
     allowlistedBeneficiaries,
     maturityAllowlist,
     maturityTime,
+    closed,
+    closingBeneficiary,
   } = resource as Resource<"charity">; //manual control flow
   const hasOps = operations && operations.length > 0;
 
@@ -137,7 +139,6 @@ export const useAdminContext = <T extends AdminType = any>(
       switch (op) {
         case "allowlistedBeneficiaries":
         case "allowlistedContributors":
-        case "maturityTime":
         case "maturityAllowlist":
           return maturityTime !== 0 && maturityTime <= blockTime("now");
         default:
@@ -157,8 +158,16 @@ export const useAdminContext = <T extends AdminType = any>(
     operations.every((op) => {
       switch (op) {
         case "withdraw-liquid":
+          // if beneficiary is endowment, sender must be multisig
+          if (closed && closingBeneficiary.type === "wallet") {
+            return closingBeneficiary.value === sender;
+          }
           return allowlistedBeneficiaries.includes(sender);
         case "withdraw-locked":
+          // if beneficiary is endowment, sender must be multisig
+          if (closed && closingBeneficiary.type === "wallet") {
+            return closingBeneficiary.value === sender;
+          }
           return maturityAllowlist.includes(sender);
         default:
           const { addr, expires } = settingsController[op].delegate;

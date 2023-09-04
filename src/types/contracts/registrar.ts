@@ -18,10 +18,12 @@ export type RegistrarConfigUpdate = RegistrarMessages.UpdateConfigRequestStruct;
 export type FeeType =
   | "Default"
   | "Harvest"
+  | "Deposit"
+  | "DepositCharity"
+  | "Withdraw"
   | "WithdrawCharity"
-  | "WithdrawNormal"
-  | "EarlyLockedWithdrawCharity"
-  | "EarlyLockedWithdrawNormal";
+  | "EarlyLockedWithdraw"
+  | "EarlyLockedWithdrawCharity";
 
 //same with accounts/Fee
 export type FeeSetting = OverrideProperties<

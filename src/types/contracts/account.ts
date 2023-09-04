@@ -24,13 +24,12 @@ export type AccountsSplitDetails = Mapped<
 
 /**
  * 0 Endowment
- * 1 IndexFund
- * 2 Wallet
- * 3 None
+ * 1 Wallet
+ * 2 None (treasury)
  */
 export type Beneficiary = OverrideProperties<
   LibAccounts.BeneficiaryStruct,
-  { data: BeneficiaryData; enumData: 0 | 1 | 2 | 3 }
+  { data: BeneficiaryData; enumData: 0 | 1 | 2 }
 >;
 
 export type ADDRESS_ZERO = "0x0000000000000000000000000000000000000000" & {

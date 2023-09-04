@@ -1,6 +1,6 @@
-import { IERC20, ProtocolFeeRates } from "services/types";
+import { EndowmentState, IERC20, ProtocolFeeRates } from "services/types";
 import { BridgeFees } from "types/aws";
-import { EndowmentType } from "types/lists";
+import { BeneficiaryType, EndowmentType } from "types/lists";
 import { AccountType } from "types/lists";
 
 export type Amount = {
@@ -12,6 +12,7 @@ export type Amount = {
 export type WithdrawerProps = {
   balances: IERC20[];
   accountType: AccountType;
+  endowmentState: EndowmentState;
   bridgeFees: BridgeFees;
   protocolFeeRates: ProtocolFeeRates;
 };
@@ -26,14 +27,20 @@ export type EndowFeeRates = {
 export type FormMeta = {
   _amounts: string; //collective amounts error
   endowType: EndowmentType;
-  accountType: AccountType;
-  endowFeeRates: EndowFeeRates;
   maturityTime: number;
-} & Pick<WithdrawerProps, "accountType" | "bridgeFees" | "protocolFeeRates">;
+  endowFeeRates: EndowFeeRates;
+  endowId: number;
+} & Pick<
+  WithdrawerProps,
+  "accountType" | "endowmentState" | "bridgeFees" | "protocolFeeRates"
+>;
+
+export type FormProps = {};
 
 export type FV = {
   amounts: Amount[];
   destinationChainId: string;
-  //FUTURE: support endowement
+  beneficiaryType: BeneficiaryType;
   beneficiaryWallet: string;
+  beneficiaryEndowmentId: string;
 } & FormMeta;

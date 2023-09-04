@@ -27,9 +27,21 @@ type APResource = Base & {
 type ReviewResource = Base & {
   type: "review";
 };
+
+type Beneficiary = {
+  type: "wallet" | "endowment" | "treasury";
+  value: string;
+};
+
+export type EndowmentState = {
+  closed: boolean;
+  closingBeneficiary: Beneficiary;
+};
+
 type CharityResource = Base & {
   type: "charity";
-} & EndowmentDetails;
+} & EndowmentDetails &
+  EndowmentState;
 
 export type AdminResource = APResource | ReviewResource | CharityResource;
 
