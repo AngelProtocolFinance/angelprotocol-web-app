@@ -96,7 +96,11 @@ export async function estimateCosmosFee(
 
   //add fee to estimated Tx
   return {
-    fee: { amount: feeAmount, symbol: native_currency.symbol },
+    fee: {
+      amount: feeAmount,
+      symbol: native_currency.symbol,
+      coinGeckoId: native_currency.coingecko_denom,
+    },
     tx: {
       type: "cosmos",
       val: {

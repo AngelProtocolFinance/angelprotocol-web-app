@@ -64,7 +64,7 @@ export type TxContent =
   | { type: "terra"; val: Msg[]; wallet: ConnectedWallet }
   | { type: "evm"; val: SimulTx; log?: LogProcessor };
 
-type Fee = { amount: number; symbol: string };
+type Fee = { amount: number; symbol: string; coinGeckoId: string | null };
 export type Estimate = { fee: Fee; tx: EstimatedTx };
 
 // //////////// HOOK SENDER & PROMPT ////////////
