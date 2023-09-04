@@ -1,3 +1,5 @@
+import * as Sentry from "@sentry/react";
+import React from "react";
 import { StrictMode, Suspense, lazy } from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
@@ -20,6 +22,10 @@ const LoaderComponent = () => (
 
 const container = document.getElementById("root");
 const root = createRoot(container as Element);
+
+Sentry.init({
+  dsn: process.env.REACT_APP_SENTRY_DSN,
+});
 
 root.render(
   <StrictMode>
