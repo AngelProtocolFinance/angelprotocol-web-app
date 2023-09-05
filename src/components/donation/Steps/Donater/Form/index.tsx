@@ -40,6 +40,7 @@ export default function Form(props: {
   }
 
   const tokenType = watch("token.type");
+  const isStepOneCompleted = !!getValues("token").amount;
 
   return (
     <form
@@ -109,8 +110,11 @@ export default function Form(props: {
         )}
         <button
           className="btn-orange btn-donate w-1/2"
-          //make sure that fields doesn't make form dirty on initial load
-          disabled={!isValid || !isDirty || isSubmitting}
+          // * make sure that fields doesn't make form dirty on initial load
+          // * isStepOneCompleted, when user goes back to step 1 (filled out previously)
+          disabled={
+            !isValid || isSubmitting || !(isDirty || isStepOneCompleted)
+          }
           type="submit"
         >
           Continue
