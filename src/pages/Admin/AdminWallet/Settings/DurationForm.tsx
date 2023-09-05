@@ -1,28 +1,30 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { object } from "yup";
+import { number, object } from "yup";
 import Modal from "components/Modal";
 import { Field } from "components/form";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { fromHours, getTagPayloads } from "helpers/admin";
-import { requiredPositiveNumber } from "schemas/number";
 import { isTooltip, useAdminContext } from "../../Context";
 
 export type Props = {
   initial: string;
 };
 
-type FV = { duration: string };
+type FV = { duration: number };
 
 export default function DurationForm({ initial }: Props) {
   const { txResource, multisig } = useAdminContext();
   const { isSending, sendTx } = useTxSender(true);
   const methods = useForm<FV>({
-    defaultValues: { duration: initial },
+    defaultValues: { duration: +initial },
     resolver: yupResolver(
       object({
-        duration: requiredPositiveNumber,
+        duration: number()
+          .required("required")
+          .typeError("invalid number")
+          .positive("must be greater than 0"),
       })
     ),
   });
@@ -40,12 +42,12 @@ export default function DurationForm({ initial }: Props) {
       "multisig.change-duration",
       {
         multisig,
-        duration: fromHours(+fv.duration),
+        duration: fromHours(fv.duration),
       },
       {
         title: `change duration by member:${wallet.address}`,
         description: `proposer: ${wallet.address}`,
-        content: { curr: initial, new: fv.duration },
+        content: { curr: initial, new: fv.duration.toString() },
       }
     );
 
@@ -71,7 +73,8 @@ export default function DurationForm({ initial }: Props) {
       className="p-6 fixed-center z-10 grid gap-4 text-gray-d2 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded overflow-hidden"
     >
       <FormProvider {...methods}>
-        <Field<FV>
+        <Field<FV, "number">
+          type="number"
           name="duration"
           label="Duration (hours)"
           classes={{ container: "mt-8 mb-4" }}

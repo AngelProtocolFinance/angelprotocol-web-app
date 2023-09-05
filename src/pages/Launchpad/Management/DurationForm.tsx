@@ -1,32 +1,34 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { object } from "yup";
+import { number, object } from "yup";
 import { useModalContext } from "contexts/ModalContext";
 import Modal from "components/Modal";
 import { Field } from "components/form";
-import { requiredPositiveNumber } from "schemas/number";
 
 export type Props = {
   initial: string;
   onChange(duration: string): void;
 };
 
-type FV = { duration: string };
+type FV = { duration: number };
 
 export default function DurationForm({ onChange, initial }: Props) {
   const { closeModal } = useModalContext();
   const methods = useForm<FV>({
-    defaultValues: { duration: initial },
+    defaultValues: { duration: +initial },
     resolver: yupResolver(
       object({
-        duration: requiredPositiveNumber,
+        duration: number()
+          .required()
+          .typeError("invalid number")
+          .positive("must be greater than 0"),
       })
     ),
   });
   const { handleSubmit } = methods;
 
   const submit: SubmitHandler<FV> = ({ duration }) => {
-    onChange(duration);
+    onChange(duration.toString());
     closeModal();
   };
 
@@ -37,7 +39,8 @@ export default function DurationForm({ onChange, initial }: Props) {
       className="p-6 fixed-center z-10 grid gap-4 text-gray-d2 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded overflow-hidden"
     >
       <FormProvider {...methods}>
-        <Field<FV>
+        <Field<FV, "number">
+          type="number"
           name="duration"
           label="Duration (hours)"
           classes={{ container: "mt-8 mb-4" }}
