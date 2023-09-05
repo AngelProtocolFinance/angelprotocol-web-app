@@ -46,7 +46,7 @@ export interface GovInterface extends utils.Interface {
     "getVotesWithParams(address,uint256,bytes)": FunctionFragment;
     "hasVoted(uint256,address)": FunctionFragment;
     "hashProposal(address[],uint256[],bytes[],bytes32)": FunctionFragment;
-    "initialize(address,address,uint256,uint256,uint256,uint256)": FunctionFragment;
+    "initialize(address,address)": FunctionFragment;
     "name()": FunctionFragment;
     "onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)": FunctionFragment;
     "onERC1155Received(address,address,uint256,uint256,bytes)": FunctionFragment;
@@ -204,14 +204,7 @@ export interface GovInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "initialize",
-    values: [
-      string,
-      string,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish
-    ]
+    values: [string, string]
   ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(
@@ -784,12 +777,8 @@ export interface Gov extends BaseContract {
     ): Promise<[BigNumber]>;
 
     initialize(
-      token: string,
-      timelock: string,
-      initialVotingDelay: BigNumberish,
-      initialVotingPeriod: BigNumberish,
-      initialProposalThreshold: BigNumberish,
-      quorumNumeratorValue: BigNumberish,
+      _token: string,
+      _timelock: string,
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
@@ -1046,12 +1035,8 @@ export interface Gov extends BaseContract {
   ): Promise<BigNumber>;
 
   initialize(
-    token: string,
-    timelock: string,
-    initialVotingDelay: BigNumberish,
-    initialVotingPeriod: BigNumberish,
-    initialProposalThreshold: BigNumberish,
-    quorumNumeratorValue: BigNumberish,
+    _token: string,
+    _timelock: string,
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
@@ -1305,12 +1290,8 @@ export interface Gov extends BaseContract {
     ): Promise<BigNumber>;
 
     initialize(
-      token: string,
-      timelock: string,
-      initialVotingDelay: BigNumberish,
-      initialVotingPeriod: BigNumberish,
-      initialProposalThreshold: BigNumberish,
-      quorumNumeratorValue: BigNumberish,
+      _token: string,
+      _timelock: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1673,12 +1654,8 @@ export interface Gov extends BaseContract {
     ): Promise<BigNumber>;
 
     initialize(
-      token: string,
-      timelock: string,
-      initialVotingDelay: BigNumberish,
-      initialVotingPeriod: BigNumberish,
-      initialProposalThreshold: BigNumberish,
-      quorumNumeratorValue: BigNumberish,
+      _token: string,
+      _timelock: string,
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
@@ -1920,12 +1897,8 @@ export interface Gov extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     initialize(
-      token: string,
-      timelock: string,
-      initialVotingDelay: BigNumberish,
-      initialVotingPeriod: BigNumberish,
-      initialProposalThreshold: BigNumberish,
-      quorumNumeratorValue: BigNumberish,
+      _token: string,
+      _timelock: string,
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 

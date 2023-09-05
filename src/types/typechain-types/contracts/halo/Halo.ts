@@ -26,36 +26,100 @@ import type {
   OnEvent,
 } from "../../common";
 
+export declare namespace ERC20Votes {
+  export type CheckpointStruct = {
+    fromBlock: BigNumberish;
+    votes: BigNumberish;
+  };
+
+  export type CheckpointStructOutput = [number, BigNumber] & {
+    fromBlock: number;
+    votes: BigNumber;
+  };
+}
+
 export interface HaloInterface extends utils.Interface {
   functions: {
+    "CLOCK_MODE()": FunctionFragment;
+    "DOMAIN_SEPARATOR()": FunctionFragment;
     "allowance(address,address)": FunctionFragment;
     "approve(address,uint256)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
+    "balanceOfAt(address,uint256)": FunctionFragment;
+    "burn(uint256)": FunctionFragment;
+    "burnFrom(address,uint256)": FunctionFragment;
+    "checkpoints(address,uint32)": FunctionFragment;
+    "clock()": FunctionFragment;
     "decimals()": FunctionFragment;
     "decreaseAllowance(address,uint256)": FunctionFragment;
+    "delegate(address)": FunctionFragment;
+    "delegateBySig(address,uint256,uint256,uint8,bytes32,bytes32)": FunctionFragment;
+    "delegates(address)": FunctionFragment;
+    "eip712Domain()": FunctionFragment;
+    "getPastTotalSupply(uint256)": FunctionFragment;
+    "getPastVotes(address,uint256)": FunctionFragment;
+    "getVotes(address)": FunctionFragment;
     "increaseAllowance(address,uint256)": FunctionFragment;
     "name()": FunctionFragment;
+    "nonces(address)": FunctionFragment;
+    "numCheckpoints(address)": FunctionFragment;
+    "owner()": FunctionFragment;
+    "permit(address,address,uint256,uint256,uint8,bytes32,bytes32)": FunctionFragment;
+    "renounceOwnership()": FunctionFragment;
+    "snapshot()": FunctionFragment;
     "symbol()": FunctionFragment;
     "totalSupply()": FunctionFragment;
+    "totalSupplyAt(uint256)": FunctionFragment;
     "transfer(address,uint256)": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
+    "transferOwnership(address)": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
+      | "CLOCK_MODE"
+      | "DOMAIN_SEPARATOR"
       | "allowance"
       | "approve"
       | "balanceOf"
+      | "balanceOfAt"
+      | "burn"
+      | "burnFrom"
+      | "checkpoints"
+      | "clock"
       | "decimals"
       | "decreaseAllowance"
+      | "delegate"
+      | "delegateBySig"
+      | "delegates"
+      | "eip712Domain"
+      | "getPastTotalSupply"
+      | "getPastVotes"
+      | "getVotes"
       | "increaseAllowance"
       | "name"
+      | "nonces"
+      | "numCheckpoints"
+      | "owner"
+      | "permit"
+      | "renounceOwnership"
+      | "snapshot"
       | "symbol"
       | "totalSupply"
+      | "totalSupplyAt"
       | "transfer"
       | "transferFrom"
+      | "transferOwnership"
   ): FunctionFragment;
 
+  encodeFunctionData(
+    functionFragment: "CLOCK_MODE",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "DOMAIN_SEPARATOR",
+    values?: undefined
+  ): string;
   encodeFunctionData(
     functionFragment: "allowance",
     values: [string, string]
@@ -65,20 +129,87 @@ export interface HaloInterface extends utils.Interface {
     values: [string, BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "balanceOfAt",
+    values: [string, BigNumberish]
+  ): string;
+  encodeFunctionData(functionFragment: "burn", values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: "burnFrom",
+    values: [string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "checkpoints",
+    values: [string, BigNumberish]
+  ): string;
+  encodeFunctionData(functionFragment: "clock", values?: undefined): string;
   encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "decreaseAllowance",
     values: [string, BigNumberish]
   ): string;
+  encodeFunctionData(functionFragment: "delegate", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "delegateBySig",
+    values: [
+      string,
+      BigNumberish,
+      BigNumberish,
+      BigNumberish,
+      BytesLike,
+      BytesLike
+    ]
+  ): string;
+  encodeFunctionData(functionFragment: "delegates", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "eip712Domain",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getPastTotalSupply",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getPastVotes",
+    values: [string, BigNumberish]
+  ): string;
+  encodeFunctionData(functionFragment: "getVotes", values: [string]): string;
   encodeFunctionData(
     functionFragment: "increaseAllowance",
     values: [string, BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
+  encodeFunctionData(functionFragment: "nonces", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "numCheckpoints",
+    values: [string]
+  ): string;
+  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "permit",
+    values: [
+      string,
+      string,
+      BigNumberish,
+      BigNumberish,
+      BigNumberish,
+      BytesLike,
+      BytesLike
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "renounceOwnership",
+    values?: undefined
+  ): string;
+  encodeFunctionData(functionFragment: "snapshot", values?: undefined): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "totalSupply",
     values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "totalSupplyAt",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "transfer",
@@ -88,23 +219,78 @@ export interface HaloInterface extends utils.Interface {
     functionFragment: "transferFrom",
     values: [string, string, BigNumberish]
   ): string;
+  encodeFunctionData(
+    functionFragment: "transferOwnership",
+    values: [string]
+  ): string;
 
+  decodeFunctionResult(functionFragment: "CLOCK_MODE", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "DOMAIN_SEPARATOR",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "balanceOfAt",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "burn", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "burnFrom", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "checkpoints",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "clock", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "decreaseAllowance",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "delegate", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "delegateBySig",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "delegates", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "eip712Domain",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getPastTotalSupply",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getPastVotes",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "getVotes", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "increaseAllowance",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "nonces", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "numCheckpoints",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "permit", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "renounceOwnership",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "snapshot", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "totalSupply",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "totalSupplyAt",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "transfer", data: BytesLike): Result;
@@ -112,13 +298,27 @@ export interface HaloInterface extends utils.Interface {
     functionFragment: "transferFrom",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "transferOwnership",
+    data: BytesLike
+  ): Result;
 
   events: {
     "Approval(address,address,uint256)": EventFragment;
+    "DelegateChanged(address,address,address)": EventFragment;
+    "DelegateVotesChanged(address,uint256,uint256)": EventFragment;
+    "EIP712DomainChanged()": EventFragment;
+    "OwnershipTransferred(address,address)": EventFragment;
+    "Snapshot(uint256)": EventFragment;
     "Transfer(address,address,uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "DelegateChanged"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "DelegateVotesChanged"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "EIP712DomainChanged"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Snapshot"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
 }
 
@@ -133,6 +333,59 @@ export type ApprovalEvent = TypedEvent<
 >;
 
 export type ApprovalEventFilter = TypedEventFilter<ApprovalEvent>;
+
+export interface DelegateChangedEventObject {
+  delegator: string;
+  fromDelegate: string;
+  toDelegate: string;
+}
+export type DelegateChangedEvent = TypedEvent<
+  [string, string, string],
+  DelegateChangedEventObject
+>;
+
+export type DelegateChangedEventFilter = TypedEventFilter<DelegateChangedEvent>;
+
+export interface DelegateVotesChangedEventObject {
+  delegate: string;
+  previousBalance: BigNumber;
+  newBalance: BigNumber;
+}
+export type DelegateVotesChangedEvent = TypedEvent<
+  [string, BigNumber, BigNumber],
+  DelegateVotesChangedEventObject
+>;
+
+export type DelegateVotesChangedEventFilter =
+  TypedEventFilter<DelegateVotesChangedEvent>;
+
+export interface EIP712DomainChangedEventObject {}
+export type EIP712DomainChangedEvent = TypedEvent<
+  [],
+  EIP712DomainChangedEventObject
+>;
+
+export type EIP712DomainChangedEventFilter =
+  TypedEventFilter<EIP712DomainChangedEvent>;
+
+export interface OwnershipTransferredEventObject {
+  previousOwner: string;
+  newOwner: string;
+}
+export type OwnershipTransferredEvent = TypedEvent<
+  [string, string],
+  OwnershipTransferredEventObject
+>;
+
+export type OwnershipTransferredEventFilter =
+  TypedEventFilter<OwnershipTransferredEvent>;
+
+export interface SnapshotEventObject {
+  id: BigNumber;
+}
+export type SnapshotEvent = TypedEvent<[BigNumber], SnapshotEventObject>;
+
+export type SnapshotEventFilter = TypedEventFilter<SnapshotEvent>;
 
 export interface TransferEventObject {
   from: string;
@@ -173,6 +426,10 @@ export interface Halo extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    CLOCK_MODE(overrides?: CallOverrides): Promise<[string]>;
+
+    DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<[string]>;
+
     allowance(
       owner: string,
       spender: string,
@@ -187,6 +444,31 @@ export interface Halo extends BaseContract {
 
     balanceOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    balanceOfAt(
+      account: string,
+      snapshotId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
+    burn(
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
+    ): Promise<ContractTransaction>;
+
+    burnFrom(
+      account: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
+    ): Promise<ContractTransaction>;
+
+    checkpoints(
+      account: string,
+      pos: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[ERC20Votes.CheckpointStructOutput]>;
+
+    clock(overrides?: CallOverrides): Promise<[number]>;
+
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
     decreaseAllowance(
@@ -194,6 +476,50 @@ export interface Halo extends BaseContract {
       subtractedValue: BigNumberish,
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
+
+    delegate(
+      delegatee: string,
+      overrides?: Overrides & { from?: string }
+    ): Promise<ContractTransaction>;
+
+    delegateBySig(
+      delegatee: string,
+      nonce: BigNumberish,
+      expiry: BigNumberish,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: Overrides & { from?: string }
+    ): Promise<ContractTransaction>;
+
+    delegates(account: string, overrides?: CallOverrides): Promise<[string]>;
+
+    eip712Domain(
+      overrides?: CallOverrides
+    ): Promise<
+      [string, string, string, BigNumber, string, string, BigNumber[]] & {
+        fields: string;
+        name: string;
+        version: string;
+        chainId: BigNumber;
+        verifyingContract: string;
+        salt: string;
+        extensions: BigNumber[];
+      }
+    >;
+
+    getPastTotalSupply(
+      timepoint: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
+    getPastVotes(
+      account: string,
+      timepoint: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
+    getVotes(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     increaseAllowance(
       spender: string,
@@ -203,9 +529,42 @@ export interface Halo extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
+    nonces(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    numCheckpoints(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<[number]>;
+
+    owner(overrides?: CallOverrides): Promise<[string]>;
+
+    permit(
+      owner: string,
+      spender: string,
+      value: BigNumberish,
+      deadline: BigNumberish,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: Overrides & { from?: string }
+    ): Promise<ContractTransaction>;
+
+    renounceOwnership(
+      overrides?: Overrides & { from?: string }
+    ): Promise<ContractTransaction>;
+
+    snapshot(
+      overrides?: Overrides & { from?: string }
+    ): Promise<ContractTransaction>;
+
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    totalSupplyAt(
+      snapshotId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
     transfer(
       to: string,
@@ -219,7 +578,16 @@ export interface Halo extends BaseContract {
       amount: BigNumberish,
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
+
+    transferOwnership(
+      newOwner: string,
+      overrides?: Overrides & { from?: string }
+    ): Promise<ContractTransaction>;
   };
+
+  CLOCK_MODE(overrides?: CallOverrides): Promise<string>;
+
+  DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<string>;
 
   allowance(
     owner: string,
@@ -235,6 +603,31 @@ export interface Halo extends BaseContract {
 
   balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
+  balanceOfAt(
+    account: string,
+    snapshotId: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
+  burn(
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string }
+  ): Promise<ContractTransaction>;
+
+  burnFrom(
+    account: string,
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string }
+  ): Promise<ContractTransaction>;
+
+  checkpoints(
+    account: string,
+    pos: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<ERC20Votes.CheckpointStructOutput>;
+
+  clock(overrides?: CallOverrides): Promise<number>;
+
   decimals(overrides?: CallOverrides): Promise<number>;
 
   decreaseAllowance(
@@ -242,6 +635,50 @@ export interface Halo extends BaseContract {
     subtractedValue: BigNumberish,
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
+
+  delegate(
+    delegatee: string,
+    overrides?: Overrides & { from?: string }
+  ): Promise<ContractTransaction>;
+
+  delegateBySig(
+    delegatee: string,
+    nonce: BigNumberish,
+    expiry: BigNumberish,
+    v: BigNumberish,
+    r: BytesLike,
+    s: BytesLike,
+    overrides?: Overrides & { from?: string }
+  ): Promise<ContractTransaction>;
+
+  delegates(account: string, overrides?: CallOverrides): Promise<string>;
+
+  eip712Domain(
+    overrides?: CallOverrides
+  ): Promise<
+    [string, string, string, BigNumber, string, string, BigNumber[]] & {
+      fields: string;
+      name: string;
+      version: string;
+      chainId: BigNumber;
+      verifyingContract: string;
+      salt: string;
+      extensions: BigNumber[];
+    }
+  >;
+
+  getPastTotalSupply(
+    timepoint: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
+  getPastVotes(
+    account: string,
+    timepoint: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
+  getVotes(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
   increaseAllowance(
     spender: string,
@@ -251,9 +688,39 @@ export interface Halo extends BaseContract {
 
   name(overrides?: CallOverrides): Promise<string>;
 
+  nonces(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+  numCheckpoints(account: string, overrides?: CallOverrides): Promise<number>;
+
+  owner(overrides?: CallOverrides): Promise<string>;
+
+  permit(
+    owner: string,
+    spender: string,
+    value: BigNumberish,
+    deadline: BigNumberish,
+    v: BigNumberish,
+    r: BytesLike,
+    s: BytesLike,
+    overrides?: Overrides & { from?: string }
+  ): Promise<ContractTransaction>;
+
+  renounceOwnership(
+    overrides?: Overrides & { from?: string }
+  ): Promise<ContractTransaction>;
+
+  snapshot(
+    overrides?: Overrides & { from?: string }
+  ): Promise<ContractTransaction>;
+
   symbol(overrides?: CallOverrides): Promise<string>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
+
+  totalSupplyAt(
+    snapshotId: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   transfer(
     to: string,
@@ -268,7 +735,16 @@ export interface Halo extends BaseContract {
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
+  transferOwnership(
+    newOwner: string,
+    overrides?: Overrides & { from?: string }
+  ): Promise<ContractTransaction>;
+
   callStatic: {
+    CLOCK_MODE(overrides?: CallOverrides): Promise<string>;
+
+    DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<string>;
+
     allowance(
       owner: string,
       spender: string,
@@ -283,6 +759,28 @@ export interface Halo extends BaseContract {
 
     balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
+    balanceOfAt(
+      account: string,
+      snapshotId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    burn(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+
+    burnFrom(
+      account: string,
+      amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    checkpoints(
+      account: string,
+      pos: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<ERC20Votes.CheckpointStructOutput>;
+
+    clock(overrides?: CallOverrides): Promise<number>;
+
     decimals(overrides?: CallOverrides): Promise<number>;
 
     decreaseAllowance(
@@ -290,6 +788,47 @@ export interface Halo extends BaseContract {
       subtractedValue: BigNumberish,
       overrides?: CallOverrides
     ): Promise<boolean>;
+
+    delegate(delegatee: string, overrides?: CallOverrides): Promise<void>;
+
+    delegateBySig(
+      delegatee: string,
+      nonce: BigNumberish,
+      expiry: BigNumberish,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    delegates(account: string, overrides?: CallOverrides): Promise<string>;
+
+    eip712Domain(
+      overrides?: CallOverrides
+    ): Promise<
+      [string, string, string, BigNumber, string, string, BigNumber[]] & {
+        fields: string;
+        name: string;
+        version: string;
+        chainId: BigNumber;
+        verifyingContract: string;
+        salt: string;
+        extensions: BigNumber[];
+      }
+    >;
+
+    getPastTotalSupply(
+      timepoint: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    getPastVotes(
+      account: string,
+      timepoint: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    getVotes(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     increaseAllowance(
       spender: string,
@@ -299,9 +838,35 @@ export interface Halo extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<string>;
 
+    nonces(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    numCheckpoints(account: string, overrides?: CallOverrides): Promise<number>;
+
+    owner(overrides?: CallOverrides): Promise<string>;
+
+    permit(
+      owner: string,
+      spender: string,
+      value: BigNumberish,
+      deadline: BigNumberish,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    renounceOwnership(overrides?: CallOverrides): Promise<void>;
+
+    snapshot(overrides?: CallOverrides): Promise<void>;
+
     symbol(overrides?: CallOverrides): Promise<string>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
+
+    totalSupplyAt(
+      snapshotId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     transfer(
       to: string,
@@ -315,6 +880,11 @@ export interface Halo extends BaseContract {
       amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<boolean>;
+
+    transferOwnership(
+      newOwner: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
   };
 
   filters: {
@@ -329,6 +899,43 @@ export interface Halo extends BaseContract {
       value?: null
     ): ApprovalEventFilter;
 
+    "DelegateChanged(address,address,address)"(
+      delegator?: string | null,
+      fromDelegate?: string | null,
+      toDelegate?: string | null
+    ): DelegateChangedEventFilter;
+    DelegateChanged(
+      delegator?: string | null,
+      fromDelegate?: string | null,
+      toDelegate?: string | null
+    ): DelegateChangedEventFilter;
+
+    "DelegateVotesChanged(address,uint256,uint256)"(
+      delegate?: string | null,
+      previousBalance?: null,
+      newBalance?: null
+    ): DelegateVotesChangedEventFilter;
+    DelegateVotesChanged(
+      delegate?: string | null,
+      previousBalance?: null,
+      newBalance?: null
+    ): DelegateVotesChangedEventFilter;
+
+    "EIP712DomainChanged()"(): EIP712DomainChangedEventFilter;
+    EIP712DomainChanged(): EIP712DomainChangedEventFilter;
+
+    "OwnershipTransferred(address,address)"(
+      previousOwner?: string | null,
+      newOwner?: string | null
+    ): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: string | null,
+      newOwner?: string | null
+    ): OwnershipTransferredEventFilter;
+
+    "Snapshot(uint256)"(id?: null): SnapshotEventFilter;
+    Snapshot(id?: null): SnapshotEventFilter;
+
     "Transfer(address,address,uint256)"(
       from?: string | null,
       to?: string | null,
@@ -342,6 +949,10 @@ export interface Halo extends BaseContract {
   };
 
   estimateGas: {
+    CLOCK_MODE(overrides?: CallOverrides): Promise<BigNumber>;
+
+    DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<BigNumber>;
+
     allowance(
       owner: string,
       spender: string,
@@ -356,6 +967,31 @@ export interface Halo extends BaseContract {
 
     balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
+    balanceOfAt(
+      account: string,
+      snapshotId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    burn(
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
+    ): Promise<BigNumber>;
+
+    burnFrom(
+      account: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
+    ): Promise<BigNumber>;
+
+    checkpoints(
+      account: string,
+      pos: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    clock(overrides?: CallOverrides): Promise<BigNumber>;
+
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
     decreaseAllowance(
@@ -363,6 +999,38 @@ export interface Halo extends BaseContract {
       subtractedValue: BigNumberish,
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
+
+    delegate(
+      delegatee: string,
+      overrides?: Overrides & { from?: string }
+    ): Promise<BigNumber>;
+
+    delegateBySig(
+      delegatee: string,
+      nonce: BigNumberish,
+      expiry: BigNumberish,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: Overrides & { from?: string }
+    ): Promise<BigNumber>;
+
+    delegates(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    eip712Domain(overrides?: CallOverrides): Promise<BigNumber>;
+
+    getPastTotalSupply(
+      timepoint: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    getPastVotes(
+      account: string,
+      timepoint: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    getVotes(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     increaseAllowance(
       spender: string,
@@ -372,9 +1040,40 @@ export interface Halo extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
+    nonces(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    numCheckpoints(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    owner(overrides?: CallOverrides): Promise<BigNumber>;
+
+    permit(
+      owner: string,
+      spender: string,
+      value: BigNumberish,
+      deadline: BigNumberish,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: Overrides & { from?: string }
+    ): Promise<BigNumber>;
+
+    renounceOwnership(
+      overrides?: Overrides & { from?: string }
+    ): Promise<BigNumber>;
+
+    snapshot(overrides?: Overrides & { from?: string }): Promise<BigNumber>;
+
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
+
+    totalSupplyAt(
+      snapshotId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     transfer(
       to: string,
@@ -388,9 +1087,18 @@ export interface Halo extends BaseContract {
       amount: BigNumberish,
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
+
+    transferOwnership(
+      newOwner: string,
+      overrides?: Overrides & { from?: string }
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
+    CLOCK_MODE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     allowance(
       owner: string,
       spender: string,
@@ -408,12 +1116,75 @@ export interface Halo extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    balanceOfAt(
+      account: string,
+      snapshotId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    burn(
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
+    ): Promise<PopulatedTransaction>;
+
+    burnFrom(
+      account: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
+    ): Promise<PopulatedTransaction>;
+
+    checkpoints(
+      account: string,
+      pos: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    clock(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decreaseAllowance(
       spender: string,
       subtractedValue: BigNumberish,
       overrides?: Overrides & { from?: string }
+    ): Promise<PopulatedTransaction>;
+
+    delegate(
+      delegatee: string,
+      overrides?: Overrides & { from?: string }
+    ): Promise<PopulatedTransaction>;
+
+    delegateBySig(
+      delegatee: string,
+      nonce: BigNumberish,
+      expiry: BigNumberish,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: Overrides & { from?: string }
+    ): Promise<PopulatedTransaction>;
+
+    delegates(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    eip712Domain(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    getPastTotalSupply(
+      timepoint: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getPastVotes(
+      account: string,
+      timepoint: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getVotes(
+      account: string,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     increaseAllowance(
@@ -424,9 +1195,45 @@ export interface Halo extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    nonces(
+      owner: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    numCheckpoints(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    permit(
+      owner: string,
+      spender: string,
+      value: BigNumberish,
+      deadline: BigNumberish,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: Overrides & { from?: string }
+    ): Promise<PopulatedTransaction>;
+
+    renounceOwnership(
+      overrides?: Overrides & { from?: string }
+    ): Promise<PopulatedTransaction>;
+
+    snapshot(
+      overrides?: Overrides & { from?: string }
+    ): Promise<PopulatedTransaction>;
+
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    totalSupplyAt(
+      snapshotId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     transfer(
       to: string,
@@ -438,6 +1245,11 @@ export interface Halo extends BaseContract {
       from: string,
       to: string,
       amount: BigNumberish,
+      overrides?: Overrides & { from?: string }
+    ): Promise<PopulatedTransaction>;
+
+    transferOwnership(
+      newOwner: string,
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };

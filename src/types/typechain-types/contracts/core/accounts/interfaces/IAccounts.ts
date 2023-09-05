@@ -557,6 +557,9 @@ export interface IAccountsInterface extends utils.Interface {
     "createEndowment((bool,uint256,string,uint256[],uint8,uint8,string,string,address[],uint256,uint256,address[],address[],address[],(address,uint256),(address,uint256),(address,uint256),(address,uint256),uint256,((bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256))),uint32,bool,(uint256,uint256,uint256),uint256))": FunctionFragment;
     "depositERC20((uint32,uint256,uint256,address),address,uint256)": FunctionFragment;
     "depositMatic((uint32,uint256,uint256,address))": FunctionFragment;
+    "getEndowmentBeneficiaries(uint32)": FunctionFragment;
+    "getWalletBeneficiaries(address)": FunctionFragment;
+    "isDafApprovedEndowment(uint32)": FunctionFragment;
     "manageAllowances(uint32,address,address,uint256)": FunctionFragment;
     "queryAllowance(uint32,address,address)": FunctionFragment;
     "queryConfig()": FunctionFragment;
@@ -591,6 +594,9 @@ export interface IAccountsInterface extends utils.Interface {
       | "createEndowment"
       | "depositERC20"
       | "depositMatic"
+      | "getEndowmentBeneficiaries"
+      | "getWalletBeneficiaries"
+      | "isDafApprovedEndowment"
       | "manageAllowances"
       | "queryAllowance"
       | "queryConfig"
@@ -637,6 +643,18 @@ export interface IAccountsInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "depositMatic",
     values: [AccountMessages.DepositRequestStruct]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getEndowmentBeneficiaries",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getWalletBeneficiaries",
+    values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "isDafApprovedEndowment",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "manageAllowances",
@@ -767,6 +785,18 @@ export interface IAccountsInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "getEndowmentBeneficiaries",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getWalletBeneficiaries",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "isDafApprovedEndowment",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "manageAllowances",
     data: BytesLike
   ): Result;
@@ -865,7 +895,7 @@ export interface IAccountsInterface extends utils.Interface {
     "DafApprovedEndowmentsUpdated(uint32[],uint32[])": EventFragment;
     "DonationMatchCreated(uint256,address)": EventFragment;
     "EndowmentAllowlistUpdated(uint256,uint8,address[],address[])": EventFragment;
-    "EndowmentClosed(uint256,((uint32,address),uint8))": EventFragment;
+    "EndowmentClosed(uint256,((uint32,address),uint8),uint32[])": EventFragment;
     "EndowmentCreated(uint256,uint8)": EventFragment;
     "EndowmentDeposit(uint256,address,uint256,uint256)": EventFragment;
     "EndowmentInvested(uint256,bytes4,string,address,uint256,uint256)": EventFragment;
@@ -976,9 +1006,10 @@ export type EndowmentAllowlistUpdatedEventFilter =
 export interface EndowmentClosedEventObject {
   endowId: BigNumber;
   beneficiary: LibAccounts.BeneficiaryStructOutput;
+  relinked: number[];
 }
 export type EndowmentClosedEvent = TypedEvent<
-  [BigNumber, LibAccounts.BeneficiaryStructOutput],
+  [BigNumber, LibAccounts.BeneficiaryStructOutput, number[]],
   EndowmentClosedEventObject
 >;
 
@@ -1182,6 +1213,21 @@ export interface IAccounts extends BaseContract {
       overrides?: PayableOverrides & { from?: string }
     ): Promise<ContractTransaction>;
 
+    getEndowmentBeneficiaries(
+      id: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[number[]]>;
+
+    getWalletBeneficiaries(
+      addr: string,
+      overrides?: CallOverrides
+    ): Promise<[number[]]>;
+
+    isDafApprovedEndowment(
+      id: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
+
     manageAllowances(
       endowId: BigNumberish,
       spender: string,
@@ -1382,6 +1428,21 @@ export interface IAccounts extends BaseContract {
     overrides?: PayableOverrides & { from?: string }
   ): Promise<ContractTransaction>;
 
+  getEndowmentBeneficiaries(
+    id: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<number[]>;
+
+  getWalletBeneficiaries(
+    addr: string,
+    overrides?: CallOverrides
+  ): Promise<number[]>;
+
+  isDafApprovedEndowment(
+    id: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
+
   manageAllowances(
     endowId: BigNumberish,
     spender: string,
@@ -1573,6 +1634,21 @@ export interface IAccounts extends BaseContract {
       details: AccountMessages.DepositRequestStruct,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    getEndowmentBeneficiaries(
+      id: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<number[]>;
+
+    getWalletBeneficiaries(
+      addr: string,
+      overrides?: CallOverrides
+    ): Promise<number[]>;
+
+    isDafApprovedEndowment(
+      id: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
     manageAllowances(
       endowId: BigNumberish,
@@ -1797,13 +1873,15 @@ export interface IAccounts extends BaseContract {
       remove?: null
     ): EndowmentAllowlistUpdatedEventFilter;
 
-    "EndowmentClosed(uint256,((uint32,address),uint8))"(
+    "EndowmentClosed(uint256,((uint32,address),uint8),uint32[])"(
       endowId?: null,
-      beneficiary?: null
+      beneficiary?: null,
+      relinked?: null
     ): EndowmentClosedEventFilter;
     EndowmentClosed(
       endowId?: null,
-      beneficiary?: null
+      beneficiary?: null,
+      relinked?: null
     ): EndowmentClosedEventFilter;
 
     "EndowmentCreated(uint256,uint8)"(
@@ -1952,6 +2030,21 @@ export interface IAccounts extends BaseContract {
     depositMatic(
       details: AccountMessages.DepositRequestStruct,
       overrides?: PayableOverrides & { from?: string }
+    ): Promise<BigNumber>;
+
+    getEndowmentBeneficiaries(
+      id: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    getWalletBeneficiaries(
+      addr: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    isDafApprovedEndowment(
+      id: BigNumberish,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     manageAllowances(
@@ -2140,6 +2233,21 @@ export interface IAccounts extends BaseContract {
     depositMatic(
       details: AccountMessages.DepositRequestStruct,
       overrides?: PayableOverrides & { from?: string }
+    ): Promise<PopulatedTransaction>;
+
+    getEndowmentBeneficiaries(
+      id: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getWalletBeneficiaries(
+      addr: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    isDafApprovedEndowment(
+      id: BigNumberish,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     manageAllowances(

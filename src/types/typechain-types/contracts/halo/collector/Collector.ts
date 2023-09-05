@@ -29,67 +29,48 @@ import type {
 export declare namespace CollectorMessage {
   export type InstantiateMsgStruct = {
     registrarContract: string;
-    timelockContract: string;
-    haloToken: string;
-    distributorContract: string;
     rewardFactor: BigNumberish;
+    slippage: BigNumberish;
   };
 
-  export type InstantiateMsgStructOutput = [
-    string,
-    string,
-    string,
-    string,
-    BigNumber
-  ] & {
+  export type InstantiateMsgStructOutput = [string, BigNumber, BigNumber] & {
     registrarContract: string;
-    timelockContract: string;
-    haloToken: string;
-    distributorContract: string;
     rewardFactor: BigNumber;
+    slippage: BigNumber;
   };
 
   export type ConfigResponseStruct = {
-    owner: string;
     registrarContract: string;
-    haloToken: string;
-    timelockContract: string;
-    distributorContract: string;
     rewardFactor: BigNumberish;
+    slippage: BigNumberish;
   };
 
-  export type ConfigResponseStructOutput = [
-    string,
-    string,
-    string,
-    string,
-    string,
-    BigNumber
-  ] & {
-    owner: string;
+  export type ConfigResponseStructOutput = [string, BigNumber, BigNumber] & {
     registrarContract: string;
-    haloToken: string;
-    timelockContract: string;
-    distributorContract: string;
     rewardFactor: BigNumber;
+    slippage: BigNumber;
   };
 }
 
 export interface CollectorInterface extends utils.Interface {
   functions: {
-    "initialize((address,address,address,address,uint256))": FunctionFragment;
+    "initialize((address,uint256,uint256))": FunctionFragment;
+    "owner()": FunctionFragment;
     "queryConfig()": FunctionFragment;
-    "swapRouter()": FunctionFragment;
+    "renounceOwnership()": FunctionFragment;
     "sweep(address)": FunctionFragment;
-    "updateConfig(uint256,address,address)": FunctionFragment;
+    "transferOwnership(address)": FunctionFragment;
+    "updateConfig(uint256,address)": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
       | "initialize"
+      | "owner"
       | "queryConfig"
-      | "swapRouter"
+      | "renounceOwnership"
       | "sweep"
+      | "transferOwnership"
       | "updateConfig"
   ): FunctionFragment;
 
@@ -97,55 +78,69 @@ export interface CollectorInterface extends utils.Interface {
     functionFragment: "initialize",
     values: [CollectorMessage.InstantiateMsgStruct]
   ): string;
+  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "queryConfig",
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "swapRouter",
+    functionFragment: "renounceOwnership",
     values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "sweep", values: [string]): string;
   encodeFunctionData(
+    functionFragment: "transferOwnership",
+    values: [string]
+  ): string;
+  encodeFunctionData(
     functionFragment: "updateConfig",
-    values: [BigNumberish, string, string]
+    values: [BigNumberish, string]
   ): string;
 
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "queryConfig",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "swapRouter", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "renounceOwnership",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "sweep", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "transferOwnership",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "updateConfig",
     data: BytesLike
   ): Result;
 
   events: {
-    "CollectorSweeped(address,uint256,uint256)": EventFragment;
+    "CollectorSwept(address,uint256,uint256)": EventFragment;
     "ConfigUpdated()": EventFragment;
     "Initialized(uint8)": EventFragment;
+    "OwnershipTransferred(address,address)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "CollectorSweeped"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "CollectorSwept"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ConfigUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
 }
 
-export interface CollectorSweepedEventObject {
+export interface CollectorSweptEventObject {
   tokenSwept: string;
   amountSwept: BigNumber;
   haloOut: BigNumber;
 }
-export type CollectorSweepedEvent = TypedEvent<
+export type CollectorSweptEvent = TypedEvent<
   [string, BigNumber, BigNumber],
-  CollectorSweepedEventObject
+  CollectorSweptEventObject
 >;
 
-export type CollectorSweepedEventFilter =
-  TypedEventFilter<CollectorSweepedEvent>;
+export type CollectorSweptEventFilter = TypedEventFilter<CollectorSweptEvent>;
 
 export interface ConfigUpdatedEventObject {}
 export type ConfigUpdatedEvent = TypedEvent<[], ConfigUpdatedEventObject>;
@@ -158,6 +153,18 @@ export interface InitializedEventObject {
 export type InitializedEvent = TypedEvent<[number], InitializedEventObject>;
 
 export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
+
+export interface OwnershipTransferredEventObject {
+  previousOwner: string;
+  newOwner: string;
+}
+export type OwnershipTransferredEvent = TypedEvent<
+  [string, string],
+  OwnershipTransferredEventObject
+>;
+
+export type OwnershipTransferredEventFilter =
+  TypedEventFilter<OwnershipTransferredEvent>;
 
 export interface Collector extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -191,20 +198,28 @@ export interface Collector extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
+    owner(overrides?: CallOverrides): Promise<[string]>;
+
     queryConfig(
       overrides?: CallOverrides
     ): Promise<[CollectorMessage.ConfigResponseStructOutput]>;
 
-    swapRouter(overrides?: CallOverrides): Promise<[string]>;
+    renounceOwnership(
+      overrides?: Overrides & { from?: string }
+    ): Promise<ContractTransaction>;
 
     sweep(
       sweepToken: string,
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
+    transferOwnership(
+      newOwner: string,
+      overrides?: Overrides & { from?: string }
+    ): Promise<ContractTransaction>;
+
     updateConfig(
       rewardFactor: BigNumberish,
-      timelockContract: string,
       registrarContract: string,
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
@@ -215,20 +230,28 @@ export interface Collector extends BaseContract {
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
+  owner(overrides?: CallOverrides): Promise<string>;
+
   queryConfig(
     overrides?: CallOverrides
   ): Promise<CollectorMessage.ConfigResponseStructOutput>;
 
-  swapRouter(overrides?: CallOverrides): Promise<string>;
+  renounceOwnership(
+    overrides?: Overrides & { from?: string }
+  ): Promise<ContractTransaction>;
 
   sweep(
     sweepToken: string,
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
+  transferOwnership(
+    newOwner: string,
+    overrides?: Overrides & { from?: string }
+  ): Promise<ContractTransaction>;
+
   updateConfig(
     rewardFactor: BigNumberish,
-    timelockContract: string,
     registrarContract: string,
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
@@ -239,39 +262,54 @@ export interface Collector extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    owner(overrides?: CallOverrides): Promise<string>;
+
     queryConfig(
       overrides?: CallOverrides
     ): Promise<CollectorMessage.ConfigResponseStructOutput>;
 
-    swapRouter(overrides?: CallOverrides): Promise<string>;
+    renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     sweep(sweepToken: string, overrides?: CallOverrides): Promise<void>;
 
+    transferOwnership(
+      newOwner: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     updateConfig(
       rewardFactor: BigNumberish,
-      timelockContract: string,
       registrarContract: string,
       overrides?: CallOverrides
-    ): Promise<boolean>;
+    ): Promise<void>;
   };
 
   filters: {
-    "CollectorSweeped(address,uint256,uint256)"(
+    "CollectorSwept(address,uint256,uint256)"(
       tokenSwept?: null,
       amountSwept?: null,
       haloOut?: null
-    ): CollectorSweepedEventFilter;
-    CollectorSweeped(
+    ): CollectorSweptEventFilter;
+    CollectorSwept(
       tokenSwept?: null,
       amountSwept?: null,
       haloOut?: null
-    ): CollectorSweepedEventFilter;
+    ): CollectorSweptEventFilter;
 
     "ConfigUpdated()"(): ConfigUpdatedEventFilter;
     ConfigUpdated(): ConfigUpdatedEventFilter;
 
     "Initialized(uint8)"(version?: null): InitializedEventFilter;
     Initialized(version?: null): InitializedEventFilter;
+
+    "OwnershipTransferred(address,address)"(
+      previousOwner?: string | null,
+      newOwner?: string | null
+    ): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: string | null,
+      newOwner?: string | null
+    ): OwnershipTransferredEventFilter;
   };
 
   estimateGas: {
@@ -280,18 +318,26 @@ export interface Collector extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
+    owner(overrides?: CallOverrides): Promise<BigNumber>;
+
     queryConfig(overrides?: CallOverrides): Promise<BigNumber>;
 
-    swapRouter(overrides?: CallOverrides): Promise<BigNumber>;
+    renounceOwnership(
+      overrides?: Overrides & { from?: string }
+    ): Promise<BigNumber>;
 
     sweep(
       sweepToken: string,
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
+    transferOwnership(
+      newOwner: string,
+      overrides?: Overrides & { from?: string }
+    ): Promise<BigNumber>;
+
     updateConfig(
       rewardFactor: BigNumberish,
-      timelockContract: string,
       registrarContract: string,
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
@@ -303,18 +349,26 @@ export interface Collector extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
+    owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     queryConfig(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    swapRouter(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    renounceOwnership(
+      overrides?: Overrides & { from?: string }
+    ): Promise<PopulatedTransaction>;
 
     sweep(
       sweepToken: string,
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
+    transferOwnership(
+      newOwner: string,
+      overrides?: Overrides & { from?: string }
+    ): Promise<PopulatedTransaction>;
+
     updateConfig(
       rewardFactor: BigNumberish,
-      timelockContract: string,
       registrarContract: string,
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
