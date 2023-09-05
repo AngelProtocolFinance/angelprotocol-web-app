@@ -57,11 +57,6 @@ export default function Submit(props: WithWallet<SubmitStep>) {
           <span>{props.wallet.chain.chain_name}</span>
         </Row>
       )}
-      <Row title="Amount:">
-        <span>
-          {token.symbol} {humanize(token.amount, 4)}
-        </span>
-      </Row>
       <Breakdown estimate={estimate} token={token} />
       <div className="mt-14 grid grid-cols-2 gap-5">
         <button
