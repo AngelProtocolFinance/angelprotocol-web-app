@@ -115,7 +115,7 @@ export const aws = createApi({
         return {
           ...r,
           tagline,
-          type: IS_AST ? "ast" : "endowment",
+          type: IS_AST ? "ast" : "charity",
         } as Profile;
       },
     }),
