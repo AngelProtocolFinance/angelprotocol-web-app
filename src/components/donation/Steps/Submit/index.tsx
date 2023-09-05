@@ -147,7 +147,7 @@ function Breakdown({
                     <span className="text-xs"> {item.prettyFiatAmount}</span>
                   </div>
                 ) : (
-                  `~${item.prettyFiatAmount}`
+                  `${item.prettyFiatAmount}`
                 )}
               </Row>
             ))}
