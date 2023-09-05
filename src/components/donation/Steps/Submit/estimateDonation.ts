@@ -26,6 +26,20 @@ export type DonationEstimate = {
   items: EstimateItem[];
 };
 
+const BASE_FEE_RATE_PCT = 1.5;
+const CRYPTO_FEE_RATE_PCT = 1.4;
+const FISCAL_SPONSOR_FEE_RATE_PCT = 2.9;
+
+const _fiscalSponsorShipFeeFn =
+  (isCharity: boolean, isFiscalSponsored: boolean) => (amount: Decimal) =>
+    isCharity && isFiscalSponsored
+      ? amount.mul(FISCAL_SPONSOR_FEE_RATE_PCT).div(100)
+      : new Decimal(0);
+
+const prettyDollar = (amount: Decimal) => `$${humanize(amount, 4)}`;
+const prettyFiat = (amount: Decimal, symbol: string) =>
+  `${symbol} ${humanize(amount, 4)}`;
+
 export async function estimateDonation({
   recipient,
   details: { token, pctLiquidSplit },
@@ -38,19 +52,42 @@ export async function estimateDonation({
   let content: TxContent;
   // ///////////// GET TX CONTENT ///////////////
 
+  const isCharity = recipient.endowType === "charity";
+  const fiscalSponsorShipFeeFn = _fiscalSponsorShipFeeFn(
+    isCharity,
+    recipient.isFiscalSponsored
+  );
+
   try {
     if (isFiat(wallet) || token.type === "fiat") {
+      //denominate fiat items in chosen fiat currency
+      const fiatAmountDec = new Decimal(token.amount);
+      const baseFee = fiatAmountDec.mul(BASE_FEE_RATE_PCT).div(100);
+      const fiscalSponsorShipFee = fiscalSponsorShipFeeFn(fiatAmountDec);
+
       const amount: EstimateItem = {
         name: "Amount",
         fiatAmount: +token.amount,
-        prettyFiatAmount: `${
-          token.symbol === "USD" ? "$" : `${token.symbol} `
-        }${humanize(token.amount, 4)}`,
+        prettyFiatAmount: prettyFiat(fiatAmountDec, token.symbol),
+      };
+
+      const feeTotal = baseFee.add(fiscalSponsorShipFee);
+      const fee: EstimateItem = {
+        name: isCharity ? "Angel Giving Fee" : "Donation fee",
+        fiatAmount: feeTotal.toNumber(),
+        prettyFiatAmount: prettyFiat(feeTotal, token.symbol),
+      };
+
+      const toReceiveDec = fiatAmountDec.sub(feeTotal);
+      const toReceive: EstimateItem = {
+        name: "Estimated proceeds",
+        fiatAmount: fiatAmountDec.sub(feeTotal).toNumber(),
+        prettyFiatAmount: prettyFiat(toReceiveDec, token.symbol),
       };
 
       return {
         //amount and total are the same for fiat
-        items: [amount, { ...amount, name: "Estimated proceeds" }],
+        items: [amount, fee, toReceive],
         tx: {
           /** not used */
         } as any,
@@ -160,6 +197,13 @@ export async function estimateDonation({
     const feeUSDValueAmount = new Decimal(feeUSDValue).mul(
       txEstimate.fee.amount
     );
+
+    const baseFee = tokenUSDAmountDec.mul(BASE_FEE_RATE_PCT).div(100);
+    const cryptoFee = feeUSDValueAmount.mul(CRYPTO_FEE_RATE_PCT).div(100);
+    const fiscalSponsorShipFee = fiscalSponsorShipFeeFn(tokenUSDAmountDec);
+    //feeUSD is on top of tokenAmountUSD
+    const totalFeeDec = baseFee.add(cryptoFee).add(fiscalSponsorShipFee);
+
     const transactionFee: EstimateItem = {
       name: "Transaction fee",
       cryptoAmount: {
@@ -167,34 +211,25 @@ export async function estimateDonation({
         symbol: txEstimate.fee.symbol,
       },
       fiatAmount: feeUSDValueAmount.toNumber(),
-      prettyFiatAmount: `$${humanize(feeUSDValueAmount, 4)}`,
+      prettyFiatAmount: prettyDollar(feeUSDValueAmount),
     };
 
-    const { isFiscalSponsored, endowType } = recipient;
-    const angelGivingFeeRatePCT =
-      endowType === "charity" ? (isFiscalSponsored ? 5.8 : 2.9) : 0;
-
-    const angelGivingFeeDec = tokenUSDAmountDec
-      .mul(angelGivingFeeRatePCT)
-      .div(100);
-
-    const angelGivingFee: EstimateItem = {
-      name: "Angel Giving Fee",
-      fiatAmount: angelGivingFeeDec.toNumber(),
-      prettyFiatAmount: `$${humanize(angelGivingFeeDec, 4)}`,
+    const donationFee: EstimateItem = {
+      name: isCharity ? "Angel Giving Fee" : "Donation fee",
+      fiatAmount: totalFeeDec.toNumber(),
+      prettyFiatAmount: prettyDollar(totalFeeDec),
     };
 
-    //feeUSD is on top of tokenUSD
-    const totalDec = tokenUSDAmountDec.sub(angelGivingFeeDec);
+    const totalDec = tokenUSDAmountDec.sub(totalFeeDec);
     const total: EstimateItem = {
       name: "Estimated proceeds",
       fiatAmount: totalDec.toNumber(),
-      prettyFiatAmount: `$${humanize(totalDec, 4)}`,
+      prettyFiatAmount: prettyDollar(totalDec),
     };
 
     return {
       tx: txEstimate.tx,
-      items: [amount, angelGivingFee, transactionFee, total],
+      items: [amount, donationFee, transactionFee, total],
     };
   } catch (err) {
     logger.error(err);
