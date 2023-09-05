@@ -32,7 +32,7 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
     register,
     setValue,
     resetField,
-    formState: { errors, isSubmitting, isDirty },
+    formState: { errors, isSubmitting },
   } = useFormContext<T>();
   const {
     field: { onChange, value: token },
@@ -43,9 +43,8 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
   const amountField: any = `${name}.${amountKey}`;
 
   useEffect(() => {
-    //don't reset on initial form load
-    if (isDirty) resetField(amountField);
-  }, [token.token_id, amountField, resetField, isDirty]);
+    resetField(amountField);
+  }, [token.token_id, amountField, resetField]);
 
   const onSetAmount: OnSetAmount = (balance) =>
     setValue(amountField, balance as any, {

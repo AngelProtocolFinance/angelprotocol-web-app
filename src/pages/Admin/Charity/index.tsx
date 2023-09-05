@@ -27,7 +27,7 @@ import Withdraws from "./Withdraws";
 
 const COMMON: LinkGroup[] = [
   {
-    links: [LINKS.index, LINKS.deposits, LINKS.withdraws, LINKS.contributions],
+    links: [LINKS.index, LINKS.withdraws, LINKS.contributions],
   },
   {
     title: "Invest",

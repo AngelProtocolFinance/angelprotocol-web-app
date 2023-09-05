@@ -51,6 +51,7 @@ type EndowmentBase = {
 };
 
 export type EndowmentProfile = EndowmentBase & {
+  fiscal_sponsored: boolean;
   contact_email: string;
   logo: string;
   overview?: string;

@@ -25,7 +25,11 @@ export default async function estimateTerraFee(
   const amount = extractFeeAmount(fee, wallet.displayCoin.token_id);
 
   return {
-    fee: { amount, symbol: wallet.displayCoin.symbol },
+    fee: {
+      amount,
+      symbol: wallet.displayCoin.symbol,
+      coinGeckoId: wallet.displayCoin.coingecko_denom,
+    },
     tx: { type: "terra", val: { fee, msgs }, wallet: terraWallet },
   };
 }

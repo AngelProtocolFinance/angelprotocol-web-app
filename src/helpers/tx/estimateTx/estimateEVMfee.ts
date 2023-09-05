@@ -33,7 +33,11 @@ export async function estimateEVMFee(
     .toNumber();
   /** include gas, and gasPrice - in local setup, wallet might give wrong estimation */
   return {
-    fee: { amount: fee, symbol: wallet.displayCoin.symbol },
+    fee: {
+      amount: fee,
+      symbol: wallet.displayCoin.symbol,
+      coinGeckoId: wallet.displayCoin.coingecko_denom,
+    },
     tx: {
       val: { ...tx, nonce, gas: adjusted.toHex(), gasPrice },
       type: "evm",

@@ -109,7 +109,7 @@ export default function Form({
         </Group>
 
         <Group title="Organization">
-          {type === "endowment" && (
+          {type === "charity" && (
             <>
               <Label className="-mb-4" required>
                 Aligned SDG#

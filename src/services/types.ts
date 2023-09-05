@@ -5,7 +5,7 @@ import {
   EndowmentProfileUpdate,
 } from "types/aws";
 import { EndowmentDetails } from "types/contracts";
-import { AccountType } from "types/lists";
+import { AccountType, EndowmentType } from "types/lists";
 import { SemiPartial } from "types/utils";
 
 export type MultisigConfig = {
@@ -71,15 +71,15 @@ export type WithdrawData = {
 
 export type Profile =
   | ({
-      type: "endowment";
+      type: Extract<EndowmentType, "charity">;
     } & EndowmentProfile)
-  | ({ type: "ast" } & ASTProfile);
+  | ({ type: Extract<EndowmentType, "ast"> } & ASTProfile);
 
 //type guard
-export function endow(
+export function profileIsCharity(
   profile: Profile
-): profile is EndowmentProfile & { type: "endowment" } {
-  return profile.type === "endowment";
+): profile is EndowmentProfile & { type: "charity" } {
+  return profile.type === "charity";
 }
 
 export type ProfileUpdateMsg = SemiPartial<

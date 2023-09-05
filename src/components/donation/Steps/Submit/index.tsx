@@ -10,9 +10,9 @@ import { SubmitStep, WithWallet, isFiat, setStep } from "slices/donation";
 import { sendDonation } from "slices/donation/sendDonation";
 import { humanize } from "helpers";
 import { appRoutes } from "constants/routes";
-import { estimateDonation } from "./estimateDonation";
+import { DonationEstimate, estimateDonation } from "./estimateDonation";
 
-type EstimateStatus = Estimate | "loading" | "error";
+type EstimateStatus = DonationEstimate | "loading" | "error";
 
 export default function Submit(props: WithWallet<SubmitStep>) {
   const dispatch = useSetter();
@@ -31,7 +31,7 @@ export default function Submit(props: WithWallet<SubmitStep>) {
     dispatch(setStep(props.kyc ? "kyc-form" : "donate-form"));
   }
 
-  function submit({ tx }: Estimate) {
+  function submit(tx: Estimate["tx"]) {
     const { wallet, ...donation } = props;
     dispatch(sendDonation({ donation: donation, wallet: wallet, tx }));
   }
@@ -57,12 +57,7 @@ export default function Submit(props: WithWallet<SubmitStep>) {
           <span>{props.wallet.chain.chain_name}</span>
         </Row>
       )}
-      <Row title="Amount:">
-        <span>
-          {token.symbol} {humanize(token.amount, 4)}
-        </span>
-      </Row>
-      <TxTotal estimate={estimate} token={token} />
+      <Breakdown estimate={estimate} token={token} />
       <div className="mt-14 grid grid-cols-2 gap-5">
         <button
           className="btn-outline-filled btn-donate"
@@ -77,7 +72,7 @@ export default function Submit(props: WithWallet<SubmitStep>) {
             isNotEstimated
               ? undefined
               : () => {
-                  submit(estimate);
+                  submit(estimate.tx);
                 }
           }
           disabled={isNotEstimated}
@@ -96,7 +91,7 @@ export default function Submit(props: WithWallet<SubmitStep>) {
   );
 }
 
-function TxTotal({
+function Breakdown({
   estimate,
   token,
 }: {
@@ -137,22 +132,25 @@ function TxTotal({
         </>
       );
     default:
-      const { fee } = estimate;
-      const total =
-        fee.symbol === token.symbol
-          ? +token.amount + +fee.amount
-          : +token.amount;
-
       return (
         <>
-          <Row title="Transaction costs:">
-            {fee.symbol} {humanize(fee.amount, 4)}
-          </Row>
-          <Row title="TOTAL">
-            <span>
-              {token.symbol} {humanize(total, 4)}
-            </span>
-          </Row>
+          {estimate.items
+            .filter((i) => i.fiatAmount > 0)
+            .map((item, i) => (
+              <Row key={i} title={item.name}>
+                {item.cryptoAmount ? (
+                  <div className="grid justify-items-end">
+                    <span>
+                      {humanize(item.cryptoAmount.value, 4)}{" "}
+                      {item.cryptoAmount.symbol}
+                    </span>
+                    <span className="text-xs"> {item.prettyFiatAmount}</span>
+                  </div>
+                ) : (
+                  `${item.prettyFiatAmount}`
+                )}
+              </Row>
+            ))}
         </>
       );
   }

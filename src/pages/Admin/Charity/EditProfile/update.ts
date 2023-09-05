@@ -1,6 +1,6 @@
 import { Except } from "type-fest";
 import { FV } from "./types";
-import { Profile, endow } from "services/types";
+import { Profile, profileIsCharity } from "services/types";
 import { EndowmentProfileUpdate } from "types/aws";
 
 type RequiredFields = Pick<EndowmentProfileUpdate, "id" | "owner">;
@@ -27,7 +27,7 @@ export function toProfileUpdate(arg: Arg): EndowmentProfileUpdate {
       contact_email: d.contact_email ?? "",
       contributor_verification_required:
         d.contributor_verification_required ?? false,
-      endow_designation: endow(d) ? d.endow_designation : "",
+      endow_designation: profileIsCharity(d) ? d.endow_designation : "",
       hq_country: d.hq_country ?? "",
       image: d.image ?? "",
       kyc_donors_only: d.kyc_donors_only ?? false,

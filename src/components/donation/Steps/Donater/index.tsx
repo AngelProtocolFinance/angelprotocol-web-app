@@ -29,6 +29,7 @@ export default function Donater({
     token_id: t.symbol,
     balance: Number.MAX_VALUE,
     type: "fiat",
+    coingecko_denom: "",
   }));
 
   const _tokens: TWA[] = isFiat(wallet)

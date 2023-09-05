@@ -1,16 +1,44 @@
 import { Coin, MsgExecuteContract, MsgSend } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
+import Decimal from "decimal.js";
 import { Asset } from "types/contracts";
 import { SimulContractTx, SimulSendNativeTx } from "types/evm";
-import { Estimate, TxContent } from "types/tx";
+import { EstimatedTx, TxContent } from "types/tx";
 import { WalletState } from "contexts/WalletContext";
 import { FiatWallet, SubmitStep, isFiat } from "slices/donation";
 import createCosmosMsg from "contracts/createCosmosMsg";
 import { createTx } from "contracts/createTx/createTx";
-import { logger, scale, scaleToStr } from "helpers";
+import { humanize, logger, scale, scaleToStr } from "helpers";
+import { usdValue as _usdValue } from "helpers/coin-gecko";
 import { estimateTx } from "helpers/tx";
 import { apWallets } from "constants/ap-wallets";
 import { ADDRESS_ZERO } from "constants/evm";
+
+type EstimateItem = {
+  name: string;
+  cryptoAmount?: { value: string; symbol: string };
+  fiatAmount: number;
+  prettyFiatAmount: string; //$, AUD, ETC
+};
+
+export type DonationEstimate = {
+  tx: EstimatedTx;
+  items: EstimateItem[];
+};
+
+const BASE_FEE_RATE_PCT = 1.5;
+const CRYPTO_FEE_RATE_PCT = 1.4;
+const FISCAL_SPONSOR_FEE_RATE_PCT = 2.9;
+
+const _fiscalSponsorShipFeeFn =
+  (isCharity: boolean, isFiscalSponsored: boolean) => (amount: Decimal) =>
+    isCharity && isFiscalSponsored
+      ? amount.mul(FISCAL_SPONSOR_FEE_RATE_PCT).div(100)
+      : new Decimal(0);
+
+const prettyDollar = (amount: Decimal) => `$${humanize(amount, 4)}`;
+const prettyFiat = (amount: Decimal, symbol: string) =>
+  `${symbol} ${humanize(amount, 4)}`;
 
 export async function estimateDonation({
   recipient,
@@ -20,13 +48,46 @@ export async function estimateDonation({
 }: SubmitStep & {
   wallet: WalletState | FiatWallet;
   terraWallet?: ConnectedWallet;
-}): Promise<Estimate | null> {
+}): Promise<DonationEstimate | null> {
   let content: TxContent;
   // ///////////// GET TX CONTENT ///////////////
+
+  const isCharity = recipient.endowType === "charity";
+  const fiscalSponsorShipFeeFn = _fiscalSponsorShipFeeFn(
+    isCharity,
+    recipient.isFiscalSponsored
+  );
+
   try {
     if (isFiat(wallet) || token.type === "fiat") {
+      //denominate fiat items in chosen fiat currency
+      const fiatAmountDec = new Decimal(token.amount);
+      const baseFee = fiatAmountDec.mul(BASE_FEE_RATE_PCT).div(100);
+      const fiscalSponsorShipFee = fiscalSponsorShipFeeFn(fiatAmountDec);
+
+      const amount: EstimateItem = {
+        name: "Amount",
+        fiatAmount: +token.amount,
+        prettyFiatAmount: prettyFiat(fiatAmountDec, token.symbol),
+      };
+
+      const feeTotal = baseFee.add(fiscalSponsorShipFee);
+      const fee: EstimateItem = {
+        name: isCharity ? "Angel Giving Fee" : "Donation fee",
+        fiatAmount: feeTotal.toNumber(),
+        prettyFiatAmount: prettyFiat(feeTotal, token.symbol),
+      };
+
+      const toReceiveDec = fiatAmountDec.sub(feeTotal);
+      const toReceive: EstimateItem = {
+        name: "Estimated proceeds",
+        fiatAmount: fiatAmountDec.sub(feeTotal).toNumber(),
+        prettyFiatAmount: prettyFiat(toReceiveDec, token.symbol),
+      };
+
       return {
-        fee: { amount: 5, symbol: token.symbol },
+        //amount and total are the same for fiat
+        items: [amount, fee, toReceive],
         tx: {
           /** not used */
         } as any,
@@ -113,7 +174,63 @@ export async function estimateDonation({
       content = { type: "evm", val: tx };
     }
     // ///////////// ESTIMATE TX ///////////////
-    return estimateTx(content, wallet);
+    const txEstimate = await estimateTx(content, wallet);
+    if (!txEstimate) return null;
+
+    // ///////////// Sucessful simulation ///////////////
+    const [tokenUSDValue, feeUSDValue] = await Promise.all([
+      _usdValue(token.coingecko_denom),
+      _usdValue(txEstimate.fee.coinGeckoId),
+    ]);
+
+    const tokenUSDAmountDec = new Decimal(tokenUSDValue).mul(token.amount);
+    const amount: EstimateItem = {
+      name: "Amount",
+      cryptoAmount: {
+        value: token.amount,
+        symbol: token.symbol,
+      },
+      fiatAmount: tokenUSDAmountDec.toNumber(),
+      prettyFiatAmount: `$${humanize(tokenUSDAmountDec, 4)}`,
+    };
+
+    const feeUSDValueAmount = new Decimal(feeUSDValue).mul(
+      txEstimate.fee.amount
+    );
+
+    const baseFee = tokenUSDAmountDec.mul(BASE_FEE_RATE_PCT).div(100);
+    const cryptoFee = feeUSDValueAmount.mul(CRYPTO_FEE_RATE_PCT).div(100);
+    const fiscalSponsorShipFee = fiscalSponsorShipFeeFn(tokenUSDAmountDec);
+    //feeUSD is on top of tokenAmountUSD
+    const totalFeeDec = baseFee.add(cryptoFee).add(fiscalSponsorShipFee);
+
+    const transactionFee: EstimateItem = {
+      name: "Transaction fee",
+      cryptoAmount: {
+        value: txEstimate.fee.amount.toString(),
+        symbol: txEstimate.fee.symbol,
+      },
+      fiatAmount: feeUSDValueAmount.toNumber(),
+      prettyFiatAmount: prettyDollar(feeUSDValueAmount),
+    };
+
+    const donationFee: EstimateItem = {
+      name: isCharity ? "Angel Giving Fee" : "Donation fee",
+      fiatAmount: totalFeeDec.toNumber(),
+      prettyFiatAmount: prettyDollar(totalFeeDec),
+    };
+
+    const totalDec = tokenUSDAmountDec.sub(totalFeeDec);
+    const total: EstimateItem = {
+      name: "Estimated proceeds",
+      fiatAmount: totalDec.toNumber(),
+      prettyFiatAmount: prettyDollar(totalDec),
+    };
+
+    return {
+      tx: txEstimate.tx,
+      items: [amount, donationFee, transactionFee, total],
+    };
   } catch (err) {
     logger.error(err);
     return null;
