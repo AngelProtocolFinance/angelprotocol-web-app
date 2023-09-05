@@ -27,7 +27,6 @@ export default function useSubmit() {
     hasAgreedToTerms,
     sdgs,
     isKYCRequired,
-    level,
     hqCountry,
     activeInCountries,
     endowDesignation,
@@ -56,9 +55,7 @@ export default function useSubmit() {
         EndowDesignation: endowDesignation.value,
         ActiveInCountries: activeInCountries.map((opt) => opt.value),
         CashEligible: cashEligible,
-      })
-        .unwrap()
-        .catch(handleError);
+      }).unwrap();
     } catch (err) {
       handleError(err);
     }
