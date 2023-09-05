@@ -138,11 +138,17 @@ function Breakdown({
             .filter((i) => i.fiatAmount > 0)
             .map((item, i) => (
               <Row key={i} title={item.name}>
-                {item.cryptoAmount
-                  ? `${humanize(item.cryptoAmount.value, 4)} ${
-                      item.cryptoAmount.symbol
-                    } (~${item.prettyFiatAmount})`
-                  : `~${item.prettyFiatAmount}`}
+                {item.cryptoAmount ? (
+                  <div className="grid justify-items-end">
+                    <span>
+                      {humanize(item.cryptoAmount.value, 4)}{" "}
+                      {item.cryptoAmount.symbol}
+                    </span>
+                    <span className="text-xs"> {item.prettyFiatAmount}</span>
+                  </div>
+                ) : (
+                  `~${item.prettyFiatAmount}`
+                )}
               </Row>
             ))}
         </>
