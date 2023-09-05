@@ -38,8 +38,6 @@ export async function estimateDonation({
   let content: TxContent;
   // ///////////// GET TX CONTENT ///////////////
 
-  console.log({ token });
-
   try {
     if (isFiat(wallet) || token.type === "fiat") {
       const amount: EstimateItem = {
@@ -148,32 +146,36 @@ export async function estimateDonation({
       _usdValue(txEstimate.fee.coinGeckoId),
     ]);
 
+    const tokenUSDAmountDec = new Decimal(tokenUSDValue).mul(token.amount);
     const amount: EstimateItem = {
       name: "Amount",
       cryptoAmount: {
         value: token.amount,
         symbol: token.symbol,
       },
-      fiatAmount: tokenUSDValue,
-      prettyFiatAmount: `$${humanize(tokenUSDValue, 4)}`,
+      fiatAmount: tokenUSDAmountDec.toNumber(),
+      prettyFiatAmount: `$${humanize(tokenUSDAmountDec, 4)}`,
     };
 
+    const feeUSDValueAmount = new Decimal(feeUSDValue).mul(
+      txEstimate.fee.amount
+    );
     const transactionFee: EstimateItem = {
       name: "Transaction fee",
       cryptoAmount: {
         value: txEstimate.fee.amount.toString(),
         symbol: txEstimate.fee.symbol,
       },
-      fiatAmount: feeUSDValue,
-      prettyFiatAmount: `$${humanize(feeUSDValue, 4)}`,
+      fiatAmount: feeUSDValueAmount.toNumber(),
+      prettyFiatAmount: `$${humanize(feeUSDValueAmount, 4)}`,
     };
 
     const { isFiscalSponsored, endowType } = recipient;
-    const angelGivingFeeRateercent =
+    const angelGivingFeeRatePCT =
       endowType === "charity" ? (isFiscalSponsored ? 5.8 : 2.9) : 0;
 
-    const angelGivingFeeDec = new Decimal(tokenUSDValue)
-      .mul(angelGivingFeeRateercent)
+    const angelGivingFeeDec = tokenUSDAmountDec
+      .mul(angelGivingFeeRatePCT)
       .div(100);
 
     const angelGivingFee: EstimateItem = {
@@ -183,7 +185,7 @@ export async function estimateDonation({
     };
 
     //feeUSD is on top of tokenUSD
-    const totalDec = new Decimal(tokenUSDValue).sub(angelGivingFeeDec);
+    const totalDec = tokenUSDAmountDec.sub(angelGivingFeeDec);
     const total: EstimateItem = {
       name: "Estimated proceeds",
       fiatAmount: totalDec.toNumber(),
