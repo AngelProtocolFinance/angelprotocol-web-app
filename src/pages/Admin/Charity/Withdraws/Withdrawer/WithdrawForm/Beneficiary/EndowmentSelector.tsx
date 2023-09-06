@@ -2,30 +2,30 @@ import { Combobox as HuiCombobox } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import React, { useState } from "react";
 import { useController, useFormContext } from "react-hook-form";
+import { FV } from "../types";
 import { EndowmentSelectorOption } from "types/aws";
 import { useEndowmentSelectorOptionsQuery } from "services/aws/aws";
 import { DrawerIcon } from "components/Icon";
 import QueryLoader from "components/QueryLoader";
 import useDebouncer from "hooks/useDebouncer";
 import { unsdgs } from "constants/unsdgs";
-import { FormValues } from "../../schema";
 
 const containerStyle =
   "absolute top-full mt-2 z-10 w-full bg-white dark:bg-blue-d6 shadow-lg rounded overflow-y-scroll scroller";
 
-export default function Combobox() {
+export default function EndowmentSelector() {
   const {
-    formState: { errors, isSubmitting, defaultValues },
-  } = useFormContext<FormValues>();
+    formState: { errors, isSubmitting },
+  } = useFormContext<FV>();
 
   const {
     field: { value: endowment, onChange: onEndowmentChange, ref },
-  } = useController<Pick<FormValues, "endowment">>({
-    name: "endowment",
+  } = useController<Pick<FV, "beneficiaryEndowmentId">>({
+    name: "beneficiaryEndowmentId",
   });
 
-  const [query, setQuery] = useState(defaultValues?.endowment?.name ?? "");
-  const [debouncedQuery] = useDebouncer(query, 500);
+  const [searchText, setSearchText] = useState("");
+  const [debouncedQuery] = useDebouncer(searchText, 500);
 
   const queryState = useEndowmentSelectorOptionsQuery({
     query: debouncedQuery || "matchall",
@@ -44,12 +44,13 @@ export default function Combobox() {
       value={endowment}
       onChange={onEndowmentChange}
       as="div"
+      by="name"
       className="relative items-center grid grid-cols-[1fr_auto] w-full field-container min-h-[3rem]"
     >
       <HuiCombobox.Input
         ref={ref}
         placeholder="Select an endowment..."
-        onChange={(event) => setQuery(event.target.value)}
+        onChange={(event) => setSearchText(event.target.value)}
         displayValue={(value: EndowmentSelectorOption) => value.name}
         className="pl-4"
       />
@@ -97,7 +98,6 @@ export default function Combobox() {
           </HuiCombobox.Options>
         )}
       </QueryLoader>
-
       <ErrorMessage errors={errors} name="endowment.name" as="span" />
     </HuiCombobox>
   );

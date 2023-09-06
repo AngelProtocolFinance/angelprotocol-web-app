@@ -7,13 +7,8 @@ export default function useLoadDefaultEndowmentName(
   setName: (name: string) => void
 ) {
   const { handleError } = useErrorContext();
-
   const [queryProfile] = useLazyProfileQuery();
 
-  /**
-   * some consumers can only store countryName:string
-   * in this case, get flag for them when this component loads
-   */
   useEffect(() => {
     (async () => {
       if (endowId === 0) {
