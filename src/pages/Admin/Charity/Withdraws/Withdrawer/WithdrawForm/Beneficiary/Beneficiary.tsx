@@ -2,8 +2,9 @@ import { RadioGroup } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import { Fragment, useEffect } from "react";
 import { Path, useController, useFormContext } from "react-hook-form";
-import { FV } from "./types";
+import { FV } from "../types";
 import { BeneficiaryType } from "types/lists";
+import EndowmentSelector from "./EndowmentSelector";
 
 const id = "__beneficiary";
 
@@ -83,6 +84,7 @@ export default function Beneficiary({ classes = "" }) {
           />
         </>
       )}
+      {beneficiaryType === "endowment" && <EndowmentSelector />}
     </div>
   );
 }

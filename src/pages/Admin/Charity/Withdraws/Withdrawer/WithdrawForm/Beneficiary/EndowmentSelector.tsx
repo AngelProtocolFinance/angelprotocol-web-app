@@ -1,4 +1,4 @@
-import { Combobox as HuiCombobox } from "@headlessui/react";
+import { Combobox } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import React, { useState } from "react";
 import { useController, useFormContext } from "react-hook-form";
@@ -39,7 +39,7 @@ export default function EndowmentSelector() {
   });
 
   return (
-    <HuiCombobox
+    <Combobox
       aria-disabled={isSubmitting}
       value={endowment}
       onChange={onEndowmentChange}
@@ -47,7 +47,7 @@ export default function EndowmentSelector() {
       by="name"
       className="relative items-center grid grid-cols-[1fr_auto] w-full field-container min-h-[3rem]"
     >
-      <HuiCombobox.Input
+      <Combobox.Input
         ref={ref}
         placeholder="Select an endowment..."
         onChange={(event) => setSearchText(event.target.value)}
@@ -55,9 +55,9 @@ export default function EndowmentSelector() {
         className="pl-4"
       />
 
-      <HuiCombobox.Button>
+      <Combobox.Button>
         {({ open }) => <DrawerIcon isOpen={open} size={25} className="mx-1" />}
-      </HuiCombobox.Button>
+      </Combobox.Button>
 
       <QueryLoader
         queryState={queryState}
@@ -71,13 +71,13 @@ export default function EndowmentSelector() {
         classes={{ container: containerStyle + " p-2" }}
       >
         {(endowments) => (
-          <HuiCombobox.Options
+          <Combobox.Options
             className={containerStyle}
             style={{ height: endowments.length <= 10 ? "auto" : "10rem" }}
           >
             {(endowments.length > 0 &&
               endowments.map((endowment) => (
-                <HuiCombobox.Option
+                <Combobox.Option
                   as={React.Fragment}
                   key={endowment.name}
                   value={endowment}
@@ -91,14 +91,14 @@ export default function EndowmentSelector() {
                       <span>{endowment.name}</span>
                     </li>
                   )}
-                </HuiCombobox.Option>
+                </Combobox.Option>
               ))) || (
               <div className="p-2 text-sm">{debouncedQuery} not found</div>
             )}
-          </HuiCombobox.Options>
+          </Combobox.Options>
         )}
       </QueryLoader>
       <ErrorMessage errors={errors} name="endowment.name" as="span" />
-    </HuiCombobox>
+    </Combobox>
   );
 }
