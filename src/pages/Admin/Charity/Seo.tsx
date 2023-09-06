@@ -12,7 +12,7 @@ export default function Seo({
   url?: string;
 }) {
   const { id } = useAdminContext();
-  const { data: profile } = useProfileQuery(id);
+  const { data: profile } = useProfileQuery({ endowId: id });
 
   return (
     <CommonSEO

@@ -114,12 +114,14 @@ export const aws = createApi({
       },
       transformResponse: (response: { data: any }) => response,
     }),
-    profile: builder.query<Profile, number>({
+    profile: builder.query<Profile, { endowId: number; isLegacy?: boolean }>({
       providesTags: ["profile"],
-      query: (endowId) =>
-        IS_AST
+      query: ({ endowId, isLegacy = false }) => ({
+        params: { legacy: isLegacy },
+        url: IS_AST
           ? `/${v(1)}/ast/${chainIds.polygon}/${endowId}`
           : `/${v(2)}/profile/${network}/endowment/${endowId}`,
+      }),
       transformResponse(r: EndowmentProfile) {
         //transform cloudsearch placeholders
         const tagline = r.tagline === " " ? "" : r.tagline;

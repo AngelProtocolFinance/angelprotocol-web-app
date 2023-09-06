@@ -44,7 +44,7 @@ export default function App() {
               />
               <Route
                 path={`${appRoutes.profile}/:id/*`}
-                element={<Profile />}
+                element={<Profile legacy />}
               />
               <Route path={`${appRoutes.admin}/:id/*`} element={<Admin />} />
 

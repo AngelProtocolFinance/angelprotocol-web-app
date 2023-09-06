@@ -1,24 +1,39 @@
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { useProfileQuery } from "services/aws/aws";
 import Image from "components/Image";
 import Seo from "components/Seo";
 import { idParamToNum } from "helpers";
 import { APP_NAME, DAPP_URL } from "constants/env";
+import { appRoutes } from "constants/routes";
 import Body from "./Body";
 import PageError from "./PageError";
 import ProfileContext, { useProfileContext } from "./ProfileContext";
 import Skeleton from "./Skeleton";
 import Unpublished from "./Unpublished";
 
-export default function Profile() {
+export default function Profile({ legacy = false }) {
   const { id } = useParams<{ id: string }>();
   const numId = idParamToNum(id);
-  const { isLoading, isError, data } = useProfileQuery(numId, {
-    skip: numId === 0,
-  });
+  const { isLoading, isError, data } = useProfileQuery(
+    { endowId: numId, isLegacy: legacy },
+    {
+      skip: numId === 0,
+    }
+  );
 
   if (isLoading) return <Skeleton />;
   if (isError || !data) return <PageError />;
+
+  if (legacy) {
+    if (data.id === null) {
+      return <Navigate to={appRoutes.marketplace} />;
+    }
+
+    if (data.id !== numId) {
+      return <Navigate to={`${appRoutes.profile}/${data.id}`} />;
+    }
+  }
+
   if (!data.published) return <Unpublished />;
 
   return (

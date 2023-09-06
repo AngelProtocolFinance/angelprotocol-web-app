@@ -10,7 +10,7 @@ type Props = { children(data: Profile): ReactElement };
 export default function EndowmentLoader({ children }: Props) {
   const { id } = useParams<{ id: string }>();
   const endowId = idParamToNum(id);
-  const queryState = useProfileQuery(endowId, { skip: endowId === 0 });
+  const queryState = useProfileQuery({ endowId }, { skip: endowId === 0 });
 
   return (
     <QueryLoader
