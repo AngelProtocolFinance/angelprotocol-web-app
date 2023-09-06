@@ -92,7 +92,7 @@ export type EndowmentCard = EndowmentBase & {
   published: boolean;
 };
 
-export type EndowmentIdName = Pick<EndowmentBase, "id" | "name">;
+export type EndowmentSelectorOption = Pick<EndowmentBase, "id" | "name">;
 
 export type EndowmentProfileUpdate = {
   //required
