@@ -27,19 +27,9 @@ import type {
 } from "../../../common";
 
 export declare namespace AirdropMessage {
-  export type InstantiateMsgStruct = { owner: string; haloToken: string };
+  export type InstantiateMsgStruct = { haloToken: string };
 
-  export type InstantiateMsgStructOutput = [string, string] & {
-    owner: string;
-    haloToken: string;
-  };
-
-  export type ConfigResponseStruct = { owner: string; haloToken: string };
-
-  export type ConfigResponseStructOutput = [string, string] & {
-    owner: string;
-    haloToken: string;
-  };
+  export type InstantiateMsgStructOutput = [string] & { haloToken: string };
 
   export type MerkleRootResponseStruct = {
     stage: BigNumberish;
@@ -55,25 +45,27 @@ export declare namespace AirdropMessage {
 export interface AirdropInterface extends utils.Interface {
   functions: {
     "claim(uint256,bytes32[])": FunctionFragment;
-    "initialize((address,address))": FunctionFragment;
-    "queryConfig()": FunctionFragment;
+    "initialize((address))": FunctionFragment;
+    "owner()": FunctionFragment;
     "queryIsClaimed(uint256,address)": FunctionFragment;
     "queryLatestStage()": FunctionFragment;
     "queryMerkleRoot(uint256)": FunctionFragment;
     "registerMerkleRoot(bytes32)": FunctionFragment;
-    "updateConfig(address)": FunctionFragment;
+    "renounceOwnership()": FunctionFragment;
+    "transferOwnership(address)": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
       | "claim"
       | "initialize"
-      | "queryConfig"
+      | "owner"
       | "queryIsClaimed"
       | "queryLatestStage"
       | "queryMerkleRoot"
       | "registerMerkleRoot"
-      | "updateConfig"
+      | "renounceOwnership"
+      | "transferOwnership"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -84,10 +76,7 @@ export interface AirdropInterface extends utils.Interface {
     functionFragment: "initialize",
     values: [AirdropMessage.InstantiateMsgStruct]
   ): string;
-  encodeFunctionData(
-    functionFragment: "queryConfig",
-    values?: undefined
-  ): string;
+  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "queryIsClaimed",
     values: [BigNumberish, string]
@@ -105,16 +94,17 @@ export interface AirdropInterface extends utils.Interface {
     values: [BytesLike]
   ): string;
   encodeFunctionData(
-    functionFragment: "updateConfig",
+    functionFragment: "renounceOwnership",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "transferOwnership",
     values: [string]
   ): string;
 
   decodeFunctionResult(functionFragment: "claim", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "queryConfig",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "queryIsClaimed",
     data: BytesLike
@@ -132,23 +122,27 @@ export interface AirdropInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "updateConfig",
+    functionFragment: "renounceOwnership",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "transferOwnership",
     data: BytesLike
   ): Result;
 
   events: {
     "AirdropClaimed(uint256,address,uint256)": EventFragment;
-    "AirdropInitialized(address,address)": EventFragment;
-    "ConfigUpdated()": EventFragment;
+    "AirdropInitialized(address)": EventFragment;
     "Initialized(uint8)": EventFragment;
     "MerkleRootRegistered(uint256,bytes32)": EventFragment;
+    "OwnershipTransferred(address,address)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "AirdropClaimed"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "AirdropInitialized"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ConfigUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "MerkleRootRegistered"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
 }
 
 export interface AirdropClaimedEventObject {
@@ -164,21 +158,15 @@ export type AirdropClaimedEvent = TypedEvent<
 export type AirdropClaimedEventFilter = TypedEventFilter<AirdropClaimedEvent>;
 
 export interface AirdropInitializedEventObject {
-  owner: string;
   haloToken: string;
 }
 export type AirdropInitializedEvent = TypedEvent<
-  [string, string],
+  [string],
   AirdropInitializedEventObject
 >;
 
 export type AirdropInitializedEventFilter =
   TypedEventFilter<AirdropInitializedEvent>;
-
-export interface ConfigUpdatedEventObject {}
-export type ConfigUpdatedEvent = TypedEvent<[], ConfigUpdatedEventObject>;
-
-export type ConfigUpdatedEventFilter = TypedEventFilter<ConfigUpdatedEvent>;
 
 export interface InitializedEventObject {
   version: number;
@@ -198,6 +186,18 @@ export type MerkleRootRegisteredEvent = TypedEvent<
 
 export type MerkleRootRegisteredEventFilter =
   TypedEventFilter<MerkleRootRegisteredEvent>;
+
+export interface OwnershipTransferredEventObject {
+  previousOwner: string;
+  newOwner: string;
+}
+export type OwnershipTransferredEvent = TypedEvent<
+  [string, string],
+  OwnershipTransferredEventObject
+>;
+
+export type OwnershipTransferredEventFilter =
+  TypedEventFilter<OwnershipTransferredEvent>;
 
 export interface Airdrop extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -237,9 +237,7 @@ export interface Airdrop extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
-    queryConfig(
-      overrides?: CallOverrides
-    ): Promise<[AirdropMessage.ConfigResponseStructOutput]>;
+    owner(overrides?: CallOverrides): Promise<[string]>;
 
     queryIsClaimed(
       stage: BigNumberish,
@@ -259,8 +257,12 @@ export interface Airdrop extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
-    updateConfig(
-      owner: string,
+    renounceOwnership(
+      overrides?: Overrides & { from?: string }
+    ): Promise<ContractTransaction>;
+
+    transferOwnership(
+      newOwner: string,
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
@@ -276,9 +278,7 @@ export interface Airdrop extends BaseContract {
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
-  queryConfig(
-    overrides?: CallOverrides
-  ): Promise<AirdropMessage.ConfigResponseStructOutput>;
+  owner(overrides?: CallOverrides): Promise<string>;
 
   queryIsClaimed(
     stage: BigNumberish,
@@ -298,8 +298,12 @@ export interface Airdrop extends BaseContract {
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
-  updateConfig(
-    owner: string,
+  renounceOwnership(
+    overrides?: Overrides & { from?: string }
+  ): Promise<ContractTransaction>;
+
+  transferOwnership(
+    newOwner: string,
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
@@ -315,9 +319,7 @@ export interface Airdrop extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    queryConfig(
-      overrides?: CallOverrides
-    ): Promise<AirdropMessage.ConfigResponseStructOutput>;
+    owner(overrides?: CallOverrides): Promise<string>;
 
     queryIsClaimed(
       stage: BigNumberish,
@@ -337,7 +339,12 @@ export interface Airdrop extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    updateConfig(owner: string, overrides?: CallOverrides): Promise<void>;
+    renounceOwnership(overrides?: CallOverrides): Promise<void>;
+
+    transferOwnership(
+      newOwner: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
   };
 
   filters: {
@@ -352,17 +359,10 @@ export interface Airdrop extends BaseContract {
       amount?: null
     ): AirdropClaimedEventFilter;
 
-    "AirdropInitialized(address,address)"(
-      owner?: null,
+    "AirdropInitialized(address)"(
       haloToken?: null
     ): AirdropInitializedEventFilter;
-    AirdropInitialized(
-      owner?: null,
-      haloToken?: null
-    ): AirdropInitializedEventFilter;
-
-    "ConfigUpdated()"(): ConfigUpdatedEventFilter;
-    ConfigUpdated(): ConfigUpdatedEventFilter;
+    AirdropInitialized(haloToken?: null): AirdropInitializedEventFilter;
 
     "Initialized(uint8)"(version?: null): InitializedEventFilter;
     Initialized(version?: null): InitializedEventFilter;
@@ -375,6 +375,15 @@ export interface Airdrop extends BaseContract {
       stage?: null,
       merkleRoot?: null
     ): MerkleRootRegisteredEventFilter;
+
+    "OwnershipTransferred(address,address)"(
+      previousOwner?: string | null,
+      newOwner?: string | null
+    ): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: string | null,
+      newOwner?: string | null
+    ): OwnershipTransferredEventFilter;
   };
 
   estimateGas: {
@@ -389,7 +398,7 @@ export interface Airdrop extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
-    queryConfig(overrides?: CallOverrides): Promise<BigNumber>;
+    owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     queryIsClaimed(
       stage: BigNumberish,
@@ -409,8 +418,12 @@ export interface Airdrop extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
-    updateConfig(
-      owner: string,
+    renounceOwnership(
+      overrides?: Overrides & { from?: string }
+    ): Promise<BigNumber>;
+
+    transferOwnership(
+      newOwner: string,
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
@@ -427,7 +440,7 @@ export interface Airdrop extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
-    queryConfig(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     queryIsClaimed(
       stage: BigNumberish,
@@ -447,8 +460,12 @@ export interface Airdrop extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
-    updateConfig(
-      owner: string,
+    renounceOwnership(
+      overrides?: Overrides & { from?: string }
+    ): Promise<PopulatedTransaction>;
+
+    transferOwnership(
+      newOwner: string,
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };
