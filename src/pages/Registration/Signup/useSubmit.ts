@@ -4,6 +4,7 @@ import { InitReg } from "../types";
 import { FormValues } from "./types";
 import { useNewApplicationMutation } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
+import { storeRegistrationReference } from "helpers";
 import routes from "../routes";
 
 export default function useSubmit() {
@@ -22,6 +23,7 @@ export default function useSubmit() {
         email: res.ContactPerson.Email,
         reference: res.ContactPerson.PK,
       };
+      storeRegistrationReference(state.reference);
       navigate(routes.welcome, { state });
     } catch (err) {
       handleError(err);
