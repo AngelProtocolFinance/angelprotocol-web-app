@@ -3,6 +3,7 @@ import {
   BridgeFees,
   EndowmentProfile,
   EndowmentProfileUpdate,
+  WalletProfile,
 } from "types/aws";
 import { EndowmentDetails } from "types/contracts";
 import { AccountType, EndowmentType } from "types/lists";
@@ -122,3 +123,8 @@ export type FiscalSponsorhipAgreementSigner =
       email: string;
     }
   | string; //signerEID;
+
+export type WalletProfileVersion = "legacy" | "latest";
+export type VersionSpecificWalletProfile = WalletProfile & {
+  version: "legacy" | "latest";
+};

@@ -1,5 +1,10 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
-import { Profile, ProfileUpdatePayload, isDeleteMsg } from "../types";
+import {
+  Profile,
+  ProfileUpdatePayload,
+  VersionSpecificWalletProfile,
+  isDeleteMsg,
+} from "../types";
 import {
   EndowListPaginatedAWSQueryRes,
   EndowmentCard,
@@ -84,9 +89,15 @@ export const aws = createApi({
         };
       },
     }),
-    walletProfile: builder.query<WalletProfile, string>({
+    walletProfile: builder.query<VersionSpecificWalletProfile, string>({
       providesTags: ["walletProfile"],
       query: getWalletProfileQuery,
+      transformResponse(res: WalletProfile, meta, walletAddr) {
+        return {
+          ...res,
+          version: walletAddr.startsWith("juno") ? "legacy" : "latest",
+        };
+      },
     }),
     toggleBookmark: builder.mutation<
       unknown,
