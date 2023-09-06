@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useController, useFormContext } from "react-hook-form";
 import { FV } from "../types";
 import { EndowmentSelectorOption } from "types/aws";
+import { EndowmentType } from "types/lists";
 import { useEndowmentSelectorOptionsQuery } from "services/aws/aws";
 import { DrawerIcon } from "components/Icon";
 import QueryLoader from "components/QueryLoader";
@@ -15,6 +16,7 @@ const containerStyle =
 
 export default function EndowmentSelector() {
   const {
+    getValues,
     formState: { errors, isSubmitting },
   } = useFormContext<FV>();
 
@@ -27,15 +29,19 @@ export default function EndowmentSelector() {
   const [searchText, setSearchText] = useState("");
   const [debouncedQuery] = useDebouncer(searchText, 500);
 
+  const endowType = getValues("endowType");
+  const endowTypes: EndowmentType[] =
+    endowType === "charity" ? ["charity"] : ["charity", "ast"];
+
   const queryState = useEndowmentSelectorOptionsQuery({
     query: debouncedQuery || "matchall",
     sort: "default",
-    endow_types: "charity",
+    endow_types: endowTypes.join(","),
     tiers: "2,3",
     sdgs: Object.keys(unsdgs).join(","),
     kyc_only: "true,false",
     page: 1,
-    published: "true",
+    published: "true,false",
   });
 
   return (
