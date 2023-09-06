@@ -30,7 +30,7 @@ export default function Profile({ legacy = false }) {
     }
 
     if (data.id !== numId) {
-      return <Navigate to={`${appRoutes.profile}/${data.id}`} />;
+      return <Navigate to={`${appRoutes.marketplace}/${data.id}`} />;
     }
   }
 
