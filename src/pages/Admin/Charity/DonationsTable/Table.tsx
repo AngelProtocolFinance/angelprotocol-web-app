@@ -43,14 +43,6 @@ export default function Table({
           >
             Amount
           </HeaderButton>
-          <HeaderButton
-            onClick={handleHeaderClick("amount")}
-            _activeSortKey={sortKey}
-            _sortKey="amount"
-            _sortDirection={sortDirection}
-          >
-            Amount
-          </HeaderButton>
           <>Currency</>
           <HeaderButton
             onClick={handleHeaderClick("date")}
