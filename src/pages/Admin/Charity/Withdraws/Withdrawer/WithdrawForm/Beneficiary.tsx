@@ -65,25 +65,24 @@ export default function Beneficiary({ classes = "" }) {
         </RadioGroup>
       )}
 
-      <input
-        {...register(fieldName)}
-        id={id}
-        type={isBeneficiaryWallet ? "text" : "number"}
-        autoComplete="off"
-        className={`${
-          //for endow id beneficiary, field type is number
-          isBeneficiaryWallet ? "" : "text-field"
-        } -mt-[1px] flex justify-between items-center w-full p-4 border border-prim rounded-b bg-transparent @max-md:text-sm truncate focus:outline-none`}
-        placeholder={
-          isBeneficiaryWallet ? "Input wallet address" : "Endowment ID:"
-        }
-      />
-      <ErrorMessage
-        errors={errors}
-        name={fieldName}
-        as="span"
-        className="text-right text-red dark:text-red-l2 text-xs -mt-2"
-      />
+      {beneficiaryType === "wallet" && (
+        <>
+          <input
+            {...register("beneficiaryWallet")}
+            id={id}
+            type="text"
+            autoComplete="off"
+            className="flex justify-between items-center w-full p-4 border border-prim rounded-b bg-transparent @max-md:text-sm truncate focus:outline-none"
+            placeholder="Input wallet address"
+          />
+          <ErrorMessage
+            errors={errors}
+            name={fieldName}
+            as="span"
+            className="text-right text-red dark:text-red-l2 text-xs -mt-2"
+          />
+        </>
+      )}
     </div>
   );
 }
