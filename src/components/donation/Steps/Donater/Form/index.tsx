@@ -103,7 +103,7 @@ export default function Form(props: {
         {!isInsideWidget && (
           <Link
             className="btn-outline-filled btn-donate w-1/2"
-            to={`${appRoutes.profile}/${endowId}`}
+            to={`${appRoutes.marketplace}/${endowId}`}
           >
             Cancel
           </Link>

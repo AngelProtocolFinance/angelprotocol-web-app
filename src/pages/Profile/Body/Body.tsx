@@ -23,7 +23,7 @@ export default function Body() {
               ? []
               : [
                   { title: "Marketplace", to: appRoutes.marketplace },
-                  { title: p.name, to: `${appRoutes.profile}/${p.id}` },
+                  { title: p.name, to: `${appRoutes.marketplace}/${p.id}` },
                 ]
           }
         />

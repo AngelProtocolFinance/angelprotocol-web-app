@@ -24,7 +24,7 @@ export default function Row({
         className="h-16 aspect-video rounded border border-gray-l3 dark:border-none dark:bg-white p-2"
       />
       <Link
-        to={`../${appRoutes.profile}/${endowment_id}`}
+        to={`../${appRoutes.marketplace}/${endowment_id}`}
         className="hover:text-blue active:text-blue-d1"
       >
         {charity_name}

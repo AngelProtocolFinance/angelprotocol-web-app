@@ -81,7 +81,7 @@ export default function Submit(props: WithWallet<SubmitStep>) {
           Complete
         </button>
         <Link
-          to={appRoutes.profile + `/${endowId}`}
+          to={appRoutes.marketplace + `/${endowId}`}
           className="col-span-full btn-outline btn-donate"
         >
           Cancel
