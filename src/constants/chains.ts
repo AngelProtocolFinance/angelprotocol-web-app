@@ -79,7 +79,8 @@ const _chains: { [key in chainIDs]: Info } = {
 };
 
 export const chains: { [index: string]: Info } = new Proxy(_chains, {
-  get(target, key: chainIDs) {
+  get(target, key: chainIDs | "staging") {
+    if (key === "staging") return target["80001"];
     return (
       target[key] ?? {
         txExplorer: DAPP_URL,
