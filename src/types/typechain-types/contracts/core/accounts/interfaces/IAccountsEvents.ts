@@ -80,7 +80,7 @@ export interface IAccountsEventsInterface extends utils.Interface {
     "DafApprovedEndowmentsUpdated(uint32[],uint32[])": EventFragment;
     "DonationMatchCreated(uint256,address)": EventFragment;
     "EndowmentAllowlistUpdated(uint256,uint8,address[],address[])": EventFragment;
-    "EndowmentClosed(uint256,((uint32,address),uint8))": EventFragment;
+    "EndowmentClosed(uint256,((uint32,address),uint8),uint32[])": EventFragment;
     "EndowmentCreated(uint256,uint8)": EventFragment;
     "EndowmentDeposit(uint256,address,uint256,uint256)": EventFragment;
     "EndowmentInvested(uint256,bytes4,string,address,uint256,uint256)": EventFragment;
@@ -191,9 +191,10 @@ export type EndowmentAllowlistUpdatedEventFilter =
 export interface EndowmentClosedEventObject {
   endowId: BigNumber;
   beneficiary: LibAccounts.BeneficiaryStructOutput;
+  relinked: number[];
 }
 export type EndowmentClosedEvent = TypedEvent<
-  [BigNumber, LibAccounts.BeneficiaryStructOutput],
+  [BigNumber, LibAccounts.BeneficiaryStructOutput, number[]],
   EndowmentClosedEventObject
 >;
 
@@ -434,13 +435,15 @@ export interface IAccountsEvents extends BaseContract {
       remove?: null
     ): EndowmentAllowlistUpdatedEventFilter;
 
-    "EndowmentClosed(uint256,((uint32,address),uint8))"(
+    "EndowmentClosed(uint256,((uint32,address),uint8),uint32[])"(
       endowId?: null,
-      beneficiary?: null
+      beneficiary?: null,
+      relinked?: null
     ): EndowmentClosedEventFilter;
     EndowmentClosed(
       endowId?: null,
-      beneficiary?: null
+      beneficiary?: null,
+      relinked?: null
     ): EndowmentClosedEventFilter;
 
     "EndowmentCreated(uint256,uint8)"(

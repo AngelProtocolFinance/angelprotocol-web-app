@@ -257,6 +257,9 @@ export declare namespace LibAccounts {
 
 export interface IAccountsQueryEndowmentsInterface extends utils.Interface {
   functions: {
+    "getEndowmentBeneficiaries(uint32)": FunctionFragment;
+    "getWalletBeneficiaries(address)": FunctionFragment;
+    "isDafApprovedEndowment(uint32)": FunctionFragment;
     "queryConfig()": FunctionFragment;
     "queryEndowmentDetails(uint32)": FunctionFragment;
     "queryState(uint32)": FunctionFragment;
@@ -265,12 +268,27 @@ export interface IAccountsQueryEndowmentsInterface extends utils.Interface {
 
   getFunction(
     nameOrSignatureOrTopic:
+      | "getEndowmentBeneficiaries"
+      | "getWalletBeneficiaries"
+      | "isDafApprovedEndowment"
       | "queryConfig"
       | "queryEndowmentDetails"
       | "queryState"
       | "queryTokenAmount"
   ): FunctionFragment;
 
+  encodeFunctionData(
+    functionFragment: "getEndowmentBeneficiaries",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getWalletBeneficiaries",
+    values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "isDafApprovedEndowment",
+    values: [BigNumberish]
+  ): string;
   encodeFunctionData(
     functionFragment: "queryConfig",
     values?: undefined
@@ -288,6 +306,18 @@ export interface IAccountsQueryEndowmentsInterface extends utils.Interface {
     values: [BigNumberish, BigNumberish, string]
   ): string;
 
+  decodeFunctionResult(
+    functionFragment: "getEndowmentBeneficiaries",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getWalletBeneficiaries",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "isDafApprovedEndowment",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "queryConfig",
     data: BytesLike
@@ -332,6 +362,21 @@ export interface IAccountsQueryEndowments extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    getEndowmentBeneficiaries(
+      id: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[number[]]>;
+
+    getWalletBeneficiaries(
+      addr: string,
+      overrides?: CallOverrides
+    ): Promise<[number[]]>;
+
+    isDafApprovedEndowment(
+      id: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
+
     queryConfig(
       overrides?: CallOverrides
     ): Promise<
@@ -362,6 +407,21 @@ export interface IAccountsQueryEndowments extends BaseContract {
     ): Promise<[BigNumber] & { tokenAmount: BigNumber }>;
   };
 
+  getEndowmentBeneficiaries(
+    id: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<number[]>;
+
+  getWalletBeneficiaries(
+    addr: string,
+    overrides?: CallOverrides
+  ): Promise<number[]>;
+
+  isDafApprovedEndowment(
+    id: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
+
   queryConfig(
     overrides?: CallOverrides
   ): Promise<AccountMessages.ConfigResponseStructOutput>;
@@ -384,6 +444,21 @@ export interface IAccountsQueryEndowments extends BaseContract {
   ): Promise<BigNumber>;
 
   callStatic: {
+    getEndowmentBeneficiaries(
+      id: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<number[]>;
+
+    getWalletBeneficiaries(
+      addr: string,
+      overrides?: CallOverrides
+    ): Promise<number[]>;
+
+    isDafApprovedEndowment(
+      id: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
     queryConfig(
       overrides?: CallOverrides
     ): Promise<AccountMessages.ConfigResponseStructOutput>;
@@ -409,6 +484,21 @@ export interface IAccountsQueryEndowments extends BaseContract {
   filters: {};
 
   estimateGas: {
+    getEndowmentBeneficiaries(
+      id: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    getWalletBeneficiaries(
+      addr: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    isDafApprovedEndowment(
+      id: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     queryConfig(overrides?: CallOverrides): Promise<BigNumber>;
 
     queryEndowmentDetails(
@@ -427,6 +517,21 @@ export interface IAccountsQueryEndowments extends BaseContract {
   };
 
   populateTransaction: {
+    getEndowmentBeneficiaries(
+      id: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getWalletBeneficiaries(
+      addr: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    isDafApprovedEndowment(
+      id: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     queryConfig(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     queryEndowmentDetails(
