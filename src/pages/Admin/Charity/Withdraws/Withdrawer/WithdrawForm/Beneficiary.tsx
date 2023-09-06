@@ -55,7 +55,7 @@ export default function Beneficiary({ classes = "" }) {
                 <span
                   className={`${
                     checked ? "bg-blue/20" : "bg-blue/5"
-                  } text-gray-d2 @sm:w-36 cursor-pointer px-2 py-1 text-center text-xs uppercase`}
+                  } text-gray-d2 dark:text-white @sm:w-36 cursor-pointer px-2 py-1 text-center text-xs uppercase`}
                 >
                   {b}
                 </span>
