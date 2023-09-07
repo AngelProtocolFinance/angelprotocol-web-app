@@ -2,6 +2,7 @@ import { ContactRoles, ReferralMethods } from "types/aws";
 import { OptionType } from "components/Selector";
 
 export const roles: { [key in ContactRoles]: string } = {
+  "": "Select role",
   president: "Chairperson / President",
   "vice-president": "Vice-chairperson / Vice president",
   secretary: "Secretary",
@@ -16,6 +17,7 @@ export const roles: { [key in ContactRoles]: string } = {
   other: "Other",
 };
 export const referralMethods: { [key in ReferralMethods]: string } = {
+  "": "Select referral method",
   "angel-alliance": "Angel Alliance",
   discord: "Discord",
   facebook: "Facebook",
