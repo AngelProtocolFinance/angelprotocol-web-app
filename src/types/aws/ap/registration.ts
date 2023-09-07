@@ -9,6 +9,7 @@ export type RegistrationStatus =
 export type ApplicationStatus = "approved" | "not-complete" | "under-review";
 
 export type ReferralMethods =
+  | ""
   | "referral"
   | "angel-alliance"
   | "discord"
@@ -21,6 +22,7 @@ export type ReferralMethods =
   | "other";
 
 export type ContactRoles =
+  | ""
   | "board-member"
   | "ceo"
   | "cfo"

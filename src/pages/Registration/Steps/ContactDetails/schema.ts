@@ -22,14 +22,18 @@ const otherReferralMethod = (referralMethod: ReferralMethods) =>
       : schema
   );
 
+const selectorOptionSchema = object<any, SchemaShape<OptionType<string>>>({
+  value: string().required("required"),
+});
+
 export const schema = object<any, SchemaShape<FormValues>>({
   orgName: requiredString,
   firstName: requiredString,
   lastName: requiredString,
   //email: disabled: already validated at signup
   goals: requiredString,
-  //role - preselected
-  //referralMethod - preselected
+  role: selectorOptionSchema,
+  referralMethod: selectorOptionSchema,
   otherReferralMethod: otherReferralMethod("other"),
   referralCode: otherReferralMethod("referral"),
   otherRole: otherRole,

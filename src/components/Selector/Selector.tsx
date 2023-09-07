@@ -4,7 +4,7 @@ import { FieldValues, Path, get, useController } from "react-hook-form";
 import { OptionType, Props, ValKey } from "./types";
 import { DrawerIcon } from "components/Icon";
 import FocusableInput from "./FocusableInput";
-import { labelKey, styles, valueKey } from "./constants";
+import { styles, valueKey } from "./constants";
 
 export function Selector<
   T extends FieldValues,
@@ -17,7 +17,7 @@ export function Selector<
     field: { value: selected, onChange, ref },
   } = useController<{ [index: string]: OptionType<V> }>({ name });
 
-  const labelPath = `${name}.${labelKey}`;
+  const valuePath = `${name}.${valueKey}`;
 
   const isDisabled = isSubmitting || disabled;
   return (
@@ -32,7 +32,7 @@ export function Selector<
       >
         <FocusableInput ref={ref} />
         <Listbox.Button
-          aria-invalid={!!get(errors, labelPath)?.message}
+          aria-invalid={!!get(errors, valuePath)?.message}
           aria-disabled={isDisabled}
           as="button"
           className={`${button} ${styles.selectorButton}`}
@@ -49,20 +49,22 @@ export function Selector<
           )}
         </Listbox.Button>
         <Listbox.Options className={styles.options}>
-          {options.map((o) => (
-            <Listbox.Option
-              key={o.value}
-              value={o}
-              className={({ active, selected }) =>
-                styles.option(selected, active)
-              }
-            >
-              {o.label}
-            </Listbox.Option>
-          ))}
+          {options
+            .filter((o) => !!o.value)
+            .map((o) => (
+              <Listbox.Option
+                key={o.value}
+                value={o}
+                className={({ active, selected }) =>
+                  styles.option(selected, active)
+                }
+              >
+                {o.label}
+              </Listbox.Option>
+            ))}
         </Listbox.Options>
         <ErrorMessage
-          name={labelPath}
+          name={valuePath}
           errors={errors}
           as="p"
           className="absolute -bottom-5 right-0 text-right text-xs text-red dark:text-red-l2"
