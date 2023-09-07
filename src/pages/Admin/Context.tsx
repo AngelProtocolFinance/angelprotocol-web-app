@@ -159,14 +159,20 @@ export const useAdminContext = <T extends AdminType = any>(
       switch (op) {
         case "withdraw-liquid":
           // if beneficiary is endowment, sender must be multisig
-          if (closed && closingBeneficiary.type === "wallet") {
-            return closingBeneficiary.value === sender;
+          if (closed) {
+            return (
+              closingBeneficiary.type === "wallet" &&
+              closingBeneficiary.value === sender
+            );
           }
           return allowlistedBeneficiaries.includes(sender);
         case "withdraw-locked":
           // if beneficiary is endowment, sender must be multisig
-          if (closed && closingBeneficiary.type === "wallet") {
-            return closingBeneficiary.value === sender;
+          if (closed) {
+            return (
+              closingBeneficiary.type === "wallet" &&
+              closingBeneficiary.value === sender
+            );
           }
           return maturityAllowlist.includes(sender);
         default:
