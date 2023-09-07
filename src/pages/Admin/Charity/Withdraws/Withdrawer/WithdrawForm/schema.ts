@@ -1,4 +1,4 @@
-import { ObjectSchema, array, lazy, number, object, string } from "yup";
+import { ObjectSchema, array, lazy, object, string } from "yup";
 import { Amount, FV, FormMeta } from "./types";
 import { SchemaShape } from "schemas/types";
 import { tokenConstraint } from "schemas/number";
@@ -84,10 +84,12 @@ export const schema = object<any, SchemaShape<FV>>({
   beneficiaryEndowment: object().when(
     [beneficiaryTypeKey, metaKey],
     (values, schema) => {
-      const [beneficiaryType, meta] = values as [TBeneficiaryType, FormMeta];
+      const [beneficiaryType] = values as [TBeneficiaryType];
       return schema.shape<SchemaShape<TBeneficiaryEndow>>({
-        //id formatted as option
-        name: string().required("required"),
+        name:
+          beneficiaryType === "endowment"
+            ? string().required("required")
+            : string(),
       });
     }
   ),

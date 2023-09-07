@@ -17,6 +17,7 @@ export default function EndowmentOptions({
   isDebouncing = false,
 }: Props) {
   const { getValues } = useFormContext<FV>();
+  const endowId = getValues("endowId");
   const endowType = getValues("endowType");
   const endowTypes: EndowmentType[] =
     endowType === "charity" ? ["charity"] : ["charity", "ast"];
@@ -48,23 +49,26 @@ export default function EndowmentOptions({
       >
         {(endowments) => (
           <>
-            {endowments.map((endowment) => (
-              <Combobox.Option
-                as={Fragment}
-                key={endowment.name}
-                value={endowment}
-              >
-                {({ active }) => (
-                  <li
-                    className={`${
-                      active ? "bg-blue-l2 dark:bg-blue-d1" : ""
-                    } cursor-pointer flex gap-2 p-2 text-sm`}
-                  >
-                    <span>{endowment.name}</span>
-                  </li>
-                )}
-              </Combobox.Option>
-            ))}
+            {endowments
+              //avoid transferring to own endowment
+              .filter((e) => e.id !== endowId)
+              .map((endowment) => (
+                <Combobox.Option
+                  as={Fragment}
+                  key={endowment.name}
+                  value={endowment}
+                >
+                  {({ active }) => (
+                    <li
+                      className={`${
+                        active ? "bg-blue-l2 dark:bg-blue-d1" : ""
+                      } cursor-pointer flex gap-2 p-2 text-sm`}
+                    >
+                      <span>{endowment.name}</span>
+                    </li>
+                  )}
+                </Combobox.Option>
+              ))}
           </>
         )}
       </QueryLoader>
