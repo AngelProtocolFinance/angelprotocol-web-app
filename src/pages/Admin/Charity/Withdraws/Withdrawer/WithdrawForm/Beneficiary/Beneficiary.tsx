@@ -1,7 +1,7 @@
 import { RadioGroup } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import { Fragment, useEffect } from "react";
-import { Path, useController, useFormContext } from "react-hook-form";
+import { useController, useFormContext } from "react-hook-form";
 import { FV } from "../types";
 import { BeneficiaryType } from "types/lists";
 import EndowmentSelector from "./EndowmentSelector";
