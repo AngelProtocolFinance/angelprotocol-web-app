@@ -45,30 +45,29 @@ export default function EndowmentOptions({
           error: "failed to get endowments",
           empty: searchText ? `${searchText} not found` : "no options found",
         }}
+        //avoid transferring to own endowment
+        filterFn={(option) => option.id !== endowId}
         classes={{ container: "w-full text-sm p-2" }}
       >
         {(endowments) => (
           <>
-            {endowments
-              //avoid transferring to own endowment
-              .filter((e) => e.id !== endowId)
-              .map((endowment) => (
-                <Combobox.Option
-                  as={Fragment}
-                  key={endowment.name}
-                  value={endowment}
-                >
-                  {({ active }) => (
-                    <li
-                      className={`${
-                        active ? "bg-blue-l2 dark:bg-blue-d1" : ""
-                      } cursor-pointer flex gap-2 p-2 text-sm`}
-                    >
-                      <span>{endowment.name}</span>
-                    </li>
-                  )}
-                </Combobox.Option>
-              ))}
+            {endowments.map((endowment) => (
+              <Combobox.Option
+                as={Fragment}
+                key={endowment.name}
+                value={endowment}
+              >
+                {({ active }) => (
+                  <li
+                    className={`${
+                      active ? "bg-blue-l2 dark:bg-blue-d1" : ""
+                    } cursor-pointer flex gap-2 p-2 text-sm`}
+                  >
+                    <span>{endowment.name}</span>
+                  </li>
+                )}
+              </Combobox.Option>
+            ))}
           </>
         )}
       </QueryLoader>
