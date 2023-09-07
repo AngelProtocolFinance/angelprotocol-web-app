@@ -7,7 +7,7 @@ import { Program } from "./Program";
 
 export default function List() {
   const { id } = useAdminContext();
-  const queryState = useProfileQuery(id);
+  const queryState = useProfileQuery({ endowId: id });
 
   return (
     <QueryLoader

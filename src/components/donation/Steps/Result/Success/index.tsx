@@ -60,7 +60,7 @@ export default function Success({
       </div>
 
       <Link
-        to={appRoutes.profile + `/${id}`}
+        to={appRoutes.marketplace + `/${id}`}
         className="w-full sm:w-auto btn-orange btn-donate"
       >
         Back to the platform

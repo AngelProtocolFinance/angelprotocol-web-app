@@ -1,3 +1,4 @@
+import { WalletProfileVersion } from "services/types";
 import { EndowmentBookmark } from "types/aws";
 import QueryLoader from "components/QueryLoader";
 import Favourite from "./Favourite";
@@ -5,12 +6,18 @@ import Favourite from "./Favourite";
 const MAX_ELEMENTS_TO_DISPLAY = 7;
 
 type Props = {
+  version: WalletProfileVersion;
   bookmarks: EndowmentBookmark[] | undefined;
   isError: boolean;
   isLoading: boolean;
 };
 
-export default function Favourites({ bookmarks, isError, isLoading }: Props) {
+export default function Favourites({
+  bookmarks,
+  isError,
+  isLoading,
+  version,
+}: Props) {
   return (
     <div className="flex flex-col gap-3 max-h-[244px] flex-1 p-4 border-b border-prim">
       <h3 className="flex justify-between gap-2">
@@ -39,7 +46,11 @@ export default function Favourites({ bookmarks, isError, isLoading }: Props) {
         {(bookmarks) => (
           <ul className="grid gap-1">
             {bookmarks.slice(0, MAX_ELEMENTS_TO_DISPLAY).map((b) => (
-              <Favourite key={`favourite-${b.endowId}`} {...b} />
+              <Favourite
+                key={`favourite-${b.endowId}`}
+                {...b}
+                version={version}
+              />
             ))}
           </ul>
         )}

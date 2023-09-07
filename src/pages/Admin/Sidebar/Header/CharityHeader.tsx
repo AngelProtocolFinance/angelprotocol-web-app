@@ -9,7 +9,11 @@ import MyEndowments from "./MyEndowments";
 
 export default function CharityHeader() {
   const { id } = useAdminContext();
-  const { data: profile, isLoading, isError } = useProfileQuery(id);
+  const {
+    data: profile,
+    isLoading,
+    isError,
+  } = useProfileQuery({ endowId: id });
   const { wallet } = useGetWallet();
   const { data } = useWalletProfileQuery(wallet?.address!, {
     skip: !wallet,

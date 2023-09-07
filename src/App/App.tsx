@@ -39,8 +39,12 @@ export default function App() {
             />
             <Route element={<Layout />}>
               <Route
-                path={`${appRoutes.profile}/:id/*`}
+                path={`${appRoutes.marketplace}/:id/*`}
                 element={<Profile />}
+              />
+              <Route
+                path={`${appRoutes.profile}/:id/*`}
+                element={<Profile legacy />}
               />
               <Route path={`${appRoutes.admin}/:id/*`} element={<Admin />} />
 

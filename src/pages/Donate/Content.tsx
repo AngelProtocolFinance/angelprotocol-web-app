@@ -41,7 +41,7 @@ function Content(props: DonationRecipient) {
             { title: "Marketplace", to: appRoutes.marketplace },
             {
               title: props.name,
-              to: `${appRoutes.profile}/${props.id}`,
+              to: `${appRoutes.marketplace}/${props.id}`,
             },
             {
               title: "Donate",
