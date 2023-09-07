@@ -57,7 +57,16 @@ const LINK_GROUPS: { [key in EndowmentType]: LinkGroup[] } = {
     },
   ],
   ast: [
-    ...COMMON,
+    {
+      links: [
+        LINKS.index,
+        LINKS.deposits,
+        LINKS.withdraws,
+        LINKS.contributions,
+      ],
+    },
+    COMMON[1],
+    COMMON[2],
     {
       title: "Manage",
       links: [
