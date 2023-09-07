@@ -15,7 +15,10 @@ export default function ChooseWallet() {
         <span className="italic">seedphrase</span> and will enable you to use an
         email address or one of your social media accounts to log in.
       </p>
-      <WalletConnector name="Web3 Auth" label="Socal login or email" />
+      <WalletConnector
+        name="Register with Email (Web3 Auth)"
+        label="Socal login or email"
+      />
       <WalletConnector name="Metamask" label="Metamask" />
       <Link
         to={`../${steps.doc}`}
