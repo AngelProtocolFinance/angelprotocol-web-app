@@ -1,22 +1,15 @@
 import { Combobox } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useController, useFormContext } from "react-hook-form";
 import { FV } from "../types";
 import { EndowmentSelectorOption } from "types/aws";
-import { EndowmentType } from "types/lists";
-import { useEndowmentSelectorOptionsQuery } from "services/aws/aws";
 import { DrawerIcon } from "components/Icon";
-import QueryLoader from "components/QueryLoader";
 import useDebouncer from "hooks/useDebouncer";
-import { unsdgs } from "constants/unsdgs";
-
-const containerStyle =
-  "absolute top-full mt-2 z-10 w-full bg-white dark:bg-blue-d6 shadow-lg rounded overflow-y-scroll scroller";
+import EndowmentOptions from "./EndowmentOptions";
 
 export default function EndowmentSelector() {
   const {
-    getValues,
     formState: { errors, isSubmitting },
   } = useFormContext<FV>();
 
@@ -27,22 +20,7 @@ export default function EndowmentSelector() {
   });
 
   const [searchText, setSearchText] = useState("");
-  const [debouncedQuery] = useDebouncer(searchText, 500);
-
-  const endowType = getValues("endowType");
-  const endowTypes: EndowmentType[] =
-    endowType === "charity" ? ["charity"] : ["charity", "ast"];
-
-  const queryState = useEndowmentSelectorOptionsQuery({
-    query: debouncedQuery || "matchall",
-    sort: "default",
-    endow_types: endowTypes.join(","),
-    tiers: "2,3",
-    sdgs: Object.keys(unsdgs).join(","),
-    kyc_only: "true,false",
-    page: 1,
-    published: "true,false",
-  });
+  const [debouncedQuery, isDebouncing] = useDebouncer(searchText, 500);
 
   return (
     <Combobox
@@ -51,59 +29,26 @@ export default function EndowmentSelector() {
       onChange={onEndowmentChange}
       as="div"
       by="name"
-      className="relative items-center grid grid-cols-[1fr_auto] w-full field-container min-h-[3rem]"
+      className="relative items-center flex w-full field-container min-h-[3rem]"
     >
       <Combobox.Input
         ref={ref}
         placeholder="Select an endowment..."
         onChange={(event) => setSearchText(event.target.value)}
         displayValue={(value: EndowmentSelectorOption) => value.name}
-        className="pl-4"
+        className="pl-4 w-full"
       />
 
       <Combobox.Button>
-        {({ open }) => <DrawerIcon isOpen={open} size={25} className="mx-1" />}
+        {({ open }) => (
+          <DrawerIcon isOpen={open} size={25} className="ml-auto mr-1" />
+        )}
       </Combobox.Button>
 
-      <QueryLoader
-        queryState={queryState}
-        messages={{
-          loading: "loading options..",
-          error: "failed to get endowments",
-          empty: debouncedQuery
-            ? `${debouncedQuery} not found`
-            : "no options found",
-        }}
-        classes={{ container: containerStyle + " p-2" }}
-      >
-        {(endowments) => (
-          <Combobox.Options
-            className={containerStyle}
-            style={{ height: endowments.length <= 10 ? "auto" : "10rem" }}
-          >
-            {(endowments.length > 0 &&
-              endowments.map((endowment) => (
-                <Combobox.Option
-                  as={React.Fragment}
-                  key={endowment.name}
-                  value={endowment}
-                >
-                  {({ active }) => (
-                    <li
-                      className={`${
-                        active ? "bg-blue-l2 dark:bg-blue-d1" : ""
-                      } cursor-pointer flex gap-2 p-2 text-sm`}
-                    >
-                      <span>{endowment.name}</span>
-                    </li>
-                  )}
-                </Combobox.Option>
-              ))) || (
-              <div className="p-2 text-sm">{debouncedQuery} not found</div>
-            )}
-          </Combobox.Options>
-        )}
-      </QueryLoader>
+      <EndowmentOptions
+        searchText={debouncedQuery}
+        isDebouncing={isDebouncing}
+      />
       <ErrorMessage errors={errors} name="endowment.name" as="span" />
     </Combobox>
   );
