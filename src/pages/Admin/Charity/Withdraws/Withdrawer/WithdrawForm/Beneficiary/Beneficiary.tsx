@@ -25,16 +25,11 @@ export default function Beneficiary({ classes = "" }) {
   });
 
   const isDAF = getValues("endowType") === "daf";
-  // const beneficiaryType = watch("beneficiaryType");
-  const isBeneficiaryWallet = beneficiaryType === "wallet";
-  const fieldName: Path<FV> = isBeneficiaryWallet
-    ? "beneficiaryWallet"
-    : "beneficiaryEndowmentId";
 
   useEffect(() => {
     (async () => {
       if (beneficiaryType === "wallet") await trigger("beneficiaryWallet");
-      else await trigger("beneficiaryEndowmentId");
+      else await trigger("beneficiaryEndowment");
     })();
   }, [beneficiaryType, trigger]);
 
@@ -78,7 +73,7 @@ export default function Beneficiary({ classes = "" }) {
           />
           <ErrorMessage
             errors={errors}
-            name={fieldName}
+            name="beneficiaryWallet"
             as="span"
             className="text-right text-red dark:text-red-l2 text-xs -mt-2"
           />

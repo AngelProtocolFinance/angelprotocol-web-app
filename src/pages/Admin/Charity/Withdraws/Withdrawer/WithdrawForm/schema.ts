@@ -9,6 +9,7 @@ type TVal = Amount["value"];
 type TBal = Amount["balance"];
 type TChainId = FV["destinationChainId"];
 type TBeneficiaryType = FV["beneficiaryType"];
+type TBeneficiaryEndow = FV["beneficiaryEndowment"];
 
 const balKey: keyof Amount = "balance";
 const metaKey = "$meta"; //context key
@@ -80,17 +81,14 @@ export const schema = object<any, SchemaShape<FV>>({
         : schema;
     }
   ),
-  beneficiaryEndowmentId: number().when(
+  beneficiaryEndowment: object().when(
     [beneficiaryTypeKey, metaKey],
     (values, schema) => {
       const [beneficiaryType, meta] = values as [TBeneficiaryType, FormMeta];
-      return beneficiaryType === "endowment"
-        ? schema
-            .typeError("invalid ID")
-            .positive("must be greater than 0")
-            .integer("must be whole number")
-            .notOneOf([meta.endowId], "can't transfer to own endowment")
-        : string();
+      return schema.shape<SchemaShape<TBeneficiaryEndow>>({
+        //id formatted as option
+        name: string().required("required"),
+      });
     }
   ),
 }) as ObjectSchema<FV>;

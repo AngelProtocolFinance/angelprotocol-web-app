@@ -61,10 +61,13 @@ export default function WithdrawForm({
         : wallet?.address && isEthereumAddress(wallet.address)
         ? wallet.address
         : "",
-    beneficiaryEndowmentId:
+    beneficiaryEndowment:
       closed && closingBeneficiary.type === "endowment"
-        ? closingBeneficiary.value //this value won't be changed as UI is read-only on this cases
-        : "",
+        ? {
+            id: +closingBeneficiary.value,
+            name: "Closing beneficiary endowment",
+          }
+        : { id: 0, name: "" },
 
     beneficiaryType: closed
       ? closingBeneficiary.type

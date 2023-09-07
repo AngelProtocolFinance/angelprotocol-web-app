@@ -84,21 +84,21 @@ export default function useWithdraw() {
       showModal(TxPrompt, { loading: "Verifying beneficiary endowment.." });
       try {
         const beneficiaryEndowment = await queryContract("accounts.endowment", {
-          id: +fv.beneficiaryEndowmentId,
+          id: fv.beneficiaryEndowment.id,
         });
 
         /** even though not existing,
          * queryEndowDetails still returns an endowment with placeholder values */
         if (beneficiaryEndowment.owner === ADDRESS_ZERO) {
           return showModal(TxPrompt, {
-            error: `Endowment (id: ${fv.beneficiaryEndowmentId}) doesn't exist`,
+            error: `Endowment (id: ${fv.beneficiaryEndowment.id}) doesn't exist`,
           });
         }
 
         const beneficiaryEndowmentState = await queryContract(
           "accounts.state",
           {
-            id: +fv.beneficiaryEndowmentId,
+            id: fv.beneficiaryEndowment.id,
           }
         );
 
@@ -121,7 +121,7 @@ export default function useWithdraw() {
 
         if (fv.endowType === "daf") {
           const isBeneficiaryDAF = await queryContract("accounts.is-daf", {
-            id: +fv.beneficiaryEndowmentId,
+            id: fv.beneficiaryEndowment.id,
           });
           if (!isBeneficiaryDAF) {
             return showModal(TxPrompt, {
@@ -144,7 +144,7 @@ export default function useWithdraw() {
         beneficiaryAddress:
           fv.beneficiaryType === "wallet" ? fv.beneficiaryWallet : ADDRESS_ZERO,
         beneficiaryEndowId:
-          fv.beneficiaryType !== "wallet" ? +fv.beneficiaryEndowmentId : 0,
+          fv.beneficiaryType !== "wallet" ? fv.beneficiaryEndowment.id : 0,
         tokens: fv.amounts.map((a) => ({
           addr: a.tokenId,
           amnt: scaleToStr(a.value),
