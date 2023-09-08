@@ -13,5 +13,5 @@ export const PRIVACY_POLICY = `${BASE_URL}/privacy-policy/`;
 export const TERMS_OF_USE = `${BASE_URL}/terms-of-use-npo/`;
 
 export const POLYGON_RPC = IS_TEST
-  ? `https://polygon-mumbai.infura.io/v3${INFURA_ID}`
-  : `https://polygon-mainnet.infura.io/v3${INFURA_ID}`;
+  ? `https://polygon-mumbai.infura.io/v3/${INFURA_ID}`
+  : `https://polygon-mainnet.infura.io/v3/${INFURA_ID}`;
