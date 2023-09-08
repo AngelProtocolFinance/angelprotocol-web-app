@@ -1,16 +1,14 @@
 import { useErrorContext } from "contexts/ErrorContext";
 import { useSetWallet } from "contexts/WalletContext";
 
-export default function WalletConnector({
-  name,
-  label,
-}: {
-  name: string;
+type Props = {
   label: string;
-}) {
+  connectorName: string;
+};
+export default function WalletConnector({ label, connectorName }: Props) {
   const { connections } = useSetWallet();
   const { handleError } = useErrorContext();
-  const connection = connections.find((c) => c.name === name)!;
+  const connection = connections.find((c) => c.name === connectorName)!;
   async function handleConnect() {
     try {
       //wallet is connected at this point
@@ -31,7 +29,7 @@ export default function WalletConnector({
         alt=""
         className="w-8 h-8 object-contain mr-4"
       />
-      <span className="font-heading font-bold text-lg">{name}</span>
+      <span className="font-heading font-bold text-lg">{label}</span>
     </button>
   );
 }
