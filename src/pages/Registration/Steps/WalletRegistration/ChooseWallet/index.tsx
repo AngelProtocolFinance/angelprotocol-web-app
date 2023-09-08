@@ -16,10 +16,10 @@ export default function ChooseWallet() {
         email address or one of your social media accounts to log in.
       </p>
       <WalletConnector
-        name="Register with Email (Web3 Auth)"
-        label="Socal login or email"
+        label="Register with Email (Web3 Auth)"
+        connectorName="Web3 Auth"
       />
-      <WalletConnector name="Metamask" label="Metamask" />
+      <WalletConnector connectorName="Metamask" label="Metamask" />
       <Link
         to={`../${steps.doc}`}
         state={data.init}
