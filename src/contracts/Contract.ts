@@ -118,14 +118,17 @@ export default class Contract {
       });
 
       const gas = res.gas_info.gas_used;
-      const adjusted = Math.ceil(+gas * GAS_ADJUSTMENT);
-      const feeAmount = condenseToNum(adjusted * +GAS_PRICE);
+      const adjustedGas = Math.ceil(+gas * GAS_ADJUSTMENT);
+      const atomicFeeAmount = Math.ceil(adjustedGas * +GAS_PRICE); //e.g 4253ujuno
+      const condensedFeeAmount = condenseToNum(atomicFeeAmount); //e.g 0.004253juno
 
       const authInfoWithFee: AuthInfo = {
         ...authInfo,
         fee: {
-          amount: [{ amount: GAS_PRICE, denom: native_currency.token_id }],
-          gasLimit: `${adjusted}`,
+          amount: [
+            { amount: `${atomicFeeAmount}`, denom: native_currency.token_id },
+          ],
+          gasLimit: `${adjustedGas}`,
           granter: "",
           payer: this.walletAddress,
         },
@@ -133,7 +136,7 @@ export default class Contract {
 
       //add fee to estimated Tx
       return {
-        feeAmount,
+        feeAmount: condensedFeeAmount,
         doc: {
           authInfoBytes: AuthInfo.encode(authInfoWithFee).finish(),
           bodyBytes,
