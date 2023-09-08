@@ -2721,36 +2721,37 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@keplr-wallet/proto-types@npm:0.12.20":
-  version: 0.12.20
-  resolution: "@keplr-wallet/proto-types@npm:0.12.20"
+"@keplr-wallet/proto-types@npm:0.12.23":
+  version: 0.12.23
+  resolution: "@keplr-wallet/proto-types@npm:0.12.23"
   dependencies:
     long: ^4.0.0
     protobufjs: ^6.11.2
-  checksum: 93a99f92a89d8fbc2a947936b3546468ca82da031aa856c5ce460c7429dacdded1961d555be5d3eae0ae9ba9a7c93e1360f6de88759bafea7e7d9e75af09a50c
+  checksum: 57394d372325670cd1852ddd39ab7de0acd4d76bc78fdd75e02a42b2dfbd31b162298892510f1d18657f36794ed983681b07be16e355f4f82f55d3089bcbdc67
   languageName: node
   linkType: hard
 
-"@keplr-wallet/types@npm:0.12.20":
-  version: 0.12.20
-  resolution: "@keplr-wallet/types@npm:0.12.20"
+"@keplr-wallet/types@npm:0.12.23":
+  version: 0.12.23
+  resolution: "@keplr-wallet/types@npm:0.12.23"
   dependencies:
     long: ^4.0.0
-  checksum: 3b38dfb6c882dab064e1a41c2131f24c7230caefdd246d44be05266479851e89a093948f43072e8dadcd1bf8e7e1163aed711a4a5e3df6faaa52ed88df134730
+  checksum: 9ded4b824358c40ec885de6148c1c9c70461b067cf91ce27411917e7cdc536536e3e4b2e03542f0eb652858e3168639a25c6716259d5f7a5f5ab56878343b3bf
   languageName: node
   linkType: hard
 
-"@keplr-wallet/wc-qrcode-modal@npm:0.12.20":
-  version: 0.12.20
-  resolution: "@keplr-wallet/wc-qrcode-modal@npm:0.12.20"
+"@keplr-wallet/wc-qrcode-modal@npm:0.12.23":
+  version: 0.12.23
+  resolution: "@keplr-wallet/wc-qrcode-modal@npm:0.12.23"
   dependencies:
-    "@walletconnect/browser-utils": ^1.6.5
-    "@walletconnect/types": ^1.6.5
-    qrcode.react: ^1.0.1
+    detect-browser: ^5.3.0
+    qrcode.react: ^3.1.0
   peerDependencies:
+    "@walletconnect/sign-client": ^2
+    "@walletconnect/types": ^2
     react: ^16.8.0 || ^17 || ^18
     react-dom: ^16.8.0 || ^17 || ^18
-  checksum: 6efabd4b811037c23c488c1299546b87ab50d48ce73089875caea1aa83d35f8e4774fb186cb615071898531f07e3a4df05d0679b3538f551ca3f6b81f2ffcb85
+  checksum: 764a56f9b153962889de5af8da85eab18e200900d3ce0a03a209a877d5dc73098b15d6e5a2828633a3763a03150b874ede86852fca9e92fb1d91ea2dbf6d7928
   languageName: node
   linkType: hard
 
@@ -4464,7 +4465,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@walletconnect/browser-utils@npm:^1.6.5, @walletconnect/browser-utils@npm:^1.8.0":
+"@walletconnect/browser-utils@npm:^1.8.0":
   version: 1.8.0
   resolution: "@walletconnect/browser-utils@npm:1.8.0"
   dependencies:
@@ -4808,7 +4809,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@walletconnect/types@npm:^1.6.5, @walletconnect/types@npm:^1.6.6, @walletconnect/types@npm:^1.8.0":
+"@walletconnect/types@npm:^1.6.6, @walletconnect/types@npm:^1.8.0":
   version: 1.8.0
   resolution: "@walletconnect/types@npm:1.8.0"
   checksum: 194d615888068030183489222641332987846aa5c6bcf0a62fa60ca7a282b9f94932c49fcd2b293a859e98624fe3e7a2d3c5fb66545fe30d3391e7ac91a99e34
@@ -5265,9 +5266,9 @@ __metadata:
     "@headlessui/react": ^1.7.4
     "@hookform/error-message": ^2.0.0
     "@hookform/resolvers": 3.3.1
-    "@keplr-wallet/proto-types": 0.12.20
-    "@keplr-wallet/types": 0.12.20
-    "@keplr-wallet/wc-qrcode-modal": 0.12.20
+    "@keplr-wallet/proto-types": 0.12.23
+    "@keplr-wallet/types": 0.12.23
+    "@keplr-wallet/wc-qrcode-modal": 0.12.23
     "@peculiar/webcrypto": ^1.4.0
     "@reduxjs/toolkit": ^1.9.0
     "@sentry/react": 7.66.0
@@ -7566,7 +7567,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"detect-browser@npm:5.3.0":
+"detect-browser@npm:5.3.0, detect-browser@npm:^5.3.0":
   version: 5.3.0
   resolution: "detect-browser@npm:5.3.0"
   checksum: dd6e08d55da1d9e0f22510ac79872078ae03d9dfa13c5e66c96baedc1c86567345a88f96949161f6be8f3e0fafa93bf179bdb1cd311b14f5f163112fcc70ab49
@@ -13932,7 +13933,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.6.0, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
+"prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -14056,23 +14057,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"qr.js@npm:0.0.0":
-  version: 0.0.0
-  resolution: "qr.js@npm:0.0.0"
-  checksum: 5ac6c393967bdeaa660e7fd3a501a25eb538c1f6008a4d30ab2b97bbe520e5c236530090773f1578aa0a523cdaa6923c866615e21143f9e7cd22abd41c789b69
-  languageName: node
-  linkType: hard
-
-"qrcode.react@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "qrcode.react@npm:1.0.1"
-  dependencies:
-    loose-envify: ^1.4.0
-    prop-types: ^15.6.0
-    qr.js: 0.0.0
+"qrcode.react@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "qrcode.react@npm:3.1.0"
   peerDependencies:
-    react: ^15.5.3 || ^16.0.0 || ^17.0.0
-  checksum: 154a9557d103fa776cd99bc0d2600b862be74872ff965052533bc38ea0606c4d0965b4dd6df93e53f1db86699517a25db2718bbbc08c5d535a90c0d335552e9a
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 94a2942ecf83f461d869adb20305ae663c6d1abe93ef2c72442b07d756ce70cf6deb6fd588dc5b382b48c6991cfde1dfd5ac9b814c1461e71d5edb2d945e67fc
   languageName: node
   linkType: hard
 
