@@ -25,7 +25,7 @@ export default function AdminLinks(props: WalletState) {
   const isLoading =
     isApLoading || isApFetching || isReviewLoading || isReviewFetching;
 
-  if (isLoading || !isApMember || !isReviewMember) return null;
+  if (isLoading || (!isApMember && !isReviewMember)) return null;
 
   return (
     <div className="grid p-4 gap-3 border-b border-prim">
