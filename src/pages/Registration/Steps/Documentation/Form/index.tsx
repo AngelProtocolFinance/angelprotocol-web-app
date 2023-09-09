@@ -97,8 +97,9 @@ export default function Form() {
       <ActivityCountries<FV, "activeInCountries"> name="activeInCountries" />
 
       <Label className="mt-6">
-        Is your organization authorized to receive US tax deductible donations
-        and issue tax receipts?
+        Is your organization registered in the United States and recognized by
+        the Internal Revenue Service as a nonprofit organization exempt under
+        IRC 501(c)(3)?
       </Label>
       <div className="flex gap-4 mt-4 accent-orange text-sm">
         <Radio<FV, "isAuthorizedToReceiveTaxDeductibleDonations">
@@ -112,8 +113,8 @@ export default function Form() {
       </div>
 
       <Label className="mt-6">
-        Do you want to ONLY accept donations from donors who have provided their
-        personal information (name and address):
+        Are you happy to accept anonymous donations? If not, ALL donors will be
+        required to provide a name and address.
       </Label>
       <div className="flex gap-4 mt-4 accent-orange text-sm">
         <Radio<FV, "isKYCRequired"> name="isKYCRequired" value="Yes" />
@@ -146,9 +147,8 @@ export default function Form() {
         By checking this box, you declare that you have read and agreed to our{" "}
         <ExtLink className="underline text-orange" href={TERMS_OF_USE}>
           Terms & Conditions
-        </ExtLink>{" "}
-        as well as the Terms & Conditions of our technology partner Seraphim
-        Labs.
+        </ExtLink>
+        .
       </CheckField>
       <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
         <Link
