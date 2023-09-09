@@ -1,18 +1,17 @@
-import { KeplrQRCodeModalV1 } from "@keplr-wallet/wc-qrcode-modal";
-import { useEffect, useState } from "react";
+import { KeplrQRCodeModalV2 } from "@keplr-wallet/wc-qrcode-modal";
+import { useEffect, useRef, useState } from "react";
 import { Connection, ProviderInfo } from "../types";
 import { Connected, WalletState } from "./types";
 import { SessionTypes } from "@walletconnect/types";
 import { _pairing, _session, account } from "helpers/wallet-connect";
 import { WALLET_METADATA } from "../constants";
 
-const QRModal = new KeplrQRCodeModalV1();
-
 /** NOTE: only use this wallet in mainnet */
 export function useKeplrWC() {
   const [state, setState] = useState<WalletState>({
     status: "disconnected",
   });
+  const qrModalRef = useRef<KeplrQRCodeModalV2>();
 
   function onSessionDelete() {
     setState({ status: "disconnected" });
@@ -40,6 +39,9 @@ export function useKeplrWC() {
       setState({ status: "loading" });
 
       const { client, pairing } = await _pairing("Keplr");
+
+      const QRModal = new KeplrQRCodeModalV2(client);
+      qrModalRef.current = QRModal;
 
       const { uri, approval } = await client.connect({
         pairingTopic: pairing?.topic,
@@ -71,7 +73,7 @@ export function useKeplrWC() {
     } catch (err) {
       setState({ status: "disconnected" });
     } finally {
-      QRModal.close();
+      qrModalRef.current?.close();
     }
   }
 
