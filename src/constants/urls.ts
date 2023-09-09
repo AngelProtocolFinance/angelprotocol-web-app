@@ -1,4 +1,4 @@
-import { BASE_URL, IS_TEST } from "./env";
+import { BASE_URL, INFURA_ID, IS_TEST } from "./env";
 
 export const APIs = {
   aws: "https://kpnxz5rzo2.execute-api.us-east-1.amazonaws.com",
