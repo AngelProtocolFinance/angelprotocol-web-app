@@ -17,5 +17,5 @@ export const POLYGON_RPC = IS_TEST
   : `https://polygon-mainnet.infura.io/v3/${INFURA_ID}`;
 
 export const GRAPHQL_ENDPOINT = IS_TEST
-  ? "https://api.studio.thegraph.com/query/49156/angel-giving/v0.0.43"
+  ? "https://api.studio.thegraph.com/query/49156/angel-giving/v0.0.49"
   : `https://gateway-arbitrum.network.thegraph.com/api/${process.env.REACT_APP_SUBGRAPH_API_KEY}/subgraphs/id/Gxn2c4EreorowwD3VZeenNS1RrXATh14P3uyUmvuvPwi`;
