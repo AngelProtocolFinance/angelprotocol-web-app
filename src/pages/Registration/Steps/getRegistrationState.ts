@@ -131,7 +131,7 @@ function formatDocumentation({
     cashEligible: false,
     hasAuthority: true,
     hasAgreedToTerms: true,
-    isKYCRequired: KycDonorsOnly ? "Yes" : "No",
+    isAnonymousDonationsAllowed: KycDonorsOnly ? "No" : "Yes",
   };
 }
 
