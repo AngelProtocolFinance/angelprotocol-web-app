@@ -53,7 +53,7 @@ export type Documentation = {
   signedFiscalSponsorshipAgreement: string;
 
   //others
-  isKYCRequired: "Yes" | "No";
+  isAnonymousDonationsAllowed: "Yes" | "No";
   cashEligible: boolean;
   hasAuthority: boolean;
 };

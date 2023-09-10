@@ -28,13 +28,13 @@ function Documentation() {
           hqCountry: { name: "", flag: "", code: "" },
           endowDesignation: { value: "", label: "" },
           activeInCountries: [],
-          isAuthorizedToReceiveTaxDeductibleDonations: "No",
+          isAuthorizedToReceiveTaxDeductibleDonations: "Yes",
           signedFiscalSponsorshipAgreement: "",
           fiscalSponsorshipAgreementSigningURL: "",
 
           hasAuthority: false,
           hasAgreedToTerms: false,
-          isKYCRequired: "No",
+          isAnonymousDonationsAllowed: "Yes",
         },
   });
 

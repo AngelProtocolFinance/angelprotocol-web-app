@@ -117,8 +117,14 @@ export default function Form() {
         required to provide a name and address.
       </Label>
       <div className="flex gap-4 mt-4 accent-orange text-sm">
-        <Radio<FV, "isKYCRequired"> name="isKYCRequired" value="Yes" />
-        <Radio<FV, "isKYCRequired"> name="isKYCRequired" value="No" />
+        <Radio<FV, "isAnonymousDonationsAllowed">
+          name="isAnonymousDonationsAllowed"
+          value="Yes"
+        />
+        <Radio<FV, "isAnonymousDonationsAllowed">
+          name="isAnonymousDonationsAllowed"
+          value="No"
+        />
       </div>
 
       <Separator classes="my-8" />
