@@ -32,7 +32,7 @@ export default function Nav() {
         Contracts & WASM codes
       </NavLink>
       <NavLink to={routes["registrar.update-owner"]} className={styler}>
-        Update Owner
+        Update Contract Addresses
       </NavLink>
       <NavLink to={routes["registrar.add-token"]} className={styler}>
         Add token
