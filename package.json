@@ -39,9 +39,8 @@
       "last 1 safari version"
     ]
   },
-  "packageManager": "yarn@3.3.0",
   "engines": {
-    "node": "18.16.1"
+    "bun": "1.0.0"
   },
   "dependencies": {
     "@cosmjs/encoding": "0.31.1",
