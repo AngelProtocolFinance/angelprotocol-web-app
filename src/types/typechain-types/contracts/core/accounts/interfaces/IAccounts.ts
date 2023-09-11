@@ -27,49 +27,11 @@ import type {
   OnEvent,
 } from "../../../../common";
 
-export declare namespace IVault {
-  export type VaultActionDataStruct = {
-    destinationChain: string;
-    strategyId: BytesLike;
-    selector: BytesLike;
-    accountIds: BigNumberish[];
-    token: string;
-    lockAmt: BigNumberish;
-    liqAmt: BigNumberish;
-    status: BigNumberish;
-  };
-
-  export type VaultActionDataStructOutput = [
-    string,
-    string,
-    string,
-    number[],
-    string,
-    BigNumber,
-    BigNumber,
-    number
-  ] & {
-    destinationChain: string;
-    strategyId: string;
-    selector: string;
-    accountIds: number[];
-    token: string;
-    lockAmt: BigNumber;
-    liqAmt: BigNumber;
-    status: number;
-  };
-}
-
 export declare namespace LibAccounts {
-  export type BeneficiaryDataStruct = {
-    endowId: BigNumberish;
-    fundId: BigNumberish;
-    addr: string;
-  };
+  export type BeneficiaryDataStruct = { endowId: BigNumberish; addr: string };
 
-  export type BeneficiaryDataStructOutput = [number, BigNumber, string] & {
+  export type BeneficiaryDataStructOutput = [number, string] & {
     endowId: number;
-    fundId: BigNumber;
     addr: string;
   };
 
@@ -178,163 +140,36 @@ export declare namespace LibAccounts {
   };
 }
 
-export declare namespace SubDaoLib {
-  export type VeTypeDataStruct = {
-    value: BigNumberish;
-    scale: BigNumberish;
-    slope: BigNumberish;
-    power: BigNumberish;
+export declare namespace IVault {
+  export type VaultActionDataStruct = {
+    destinationChain: string;
+    strategyId: BytesLike;
+    selector: BytesLike;
+    accountIds: BigNumberish[];
+    token: string;
+    lockAmt: BigNumberish;
+    liqAmt: BigNumberish;
+    status: BigNumberish;
   };
 
-  export type VeTypeDataStructOutput = [
+  export type VaultActionDataStructOutput = [
+    string,
+    string,
+    string,
+    number[],
+    string,
     BigNumber,
     BigNumber,
-    BigNumber,
-    BigNumber
+    number
   ] & {
-    value: BigNumber;
-    scale: BigNumber;
-    slope: BigNumber;
-    power: BigNumber;
-  };
-
-  export type VeTypeStruct = {
-    ve_type: BigNumberish;
-    data: SubDaoLib.VeTypeDataStruct;
-  };
-
-  export type VeTypeStructOutput = [
-    number,
-    SubDaoLib.VeTypeDataStructOutput
-  ] & { ve_type: number; data: SubDaoLib.VeTypeDataStructOutput };
-
-  export type DaoTokenDataStruct = {
-    existingData: string;
-    newInitialSupply: BigNumberish;
-    newName: string;
-    newSymbol: string;
-    veBondingType: SubDaoLib.VeTypeStruct;
-    veBondingName: string;
-    veBondingSymbol: string;
-    veBondingDecimals: BigNumberish;
-    veBondingReserveDenom: string;
-    veBondingReserveDecimals: BigNumberish;
-    veBondingPeriod: BigNumberish;
-  };
-
-  export type DaoTokenDataStructOutput = [
-    string,
-    BigNumber,
-    string,
-    string,
-    SubDaoLib.VeTypeStructOutput,
-    string,
-    string,
-    BigNumber,
-    string,
-    BigNumber,
-    BigNumber
-  ] & {
-    existingData: string;
-    newInitialSupply: BigNumber;
-    newName: string;
-    newSymbol: string;
-    veBondingType: SubDaoLib.VeTypeStructOutput;
-    veBondingName: string;
-    veBondingSymbol: string;
-    veBondingDecimals: BigNumber;
-    veBondingReserveDenom: string;
-    veBondingReserveDecimals: BigNumber;
-    veBondingPeriod: BigNumber;
-  };
-
-  export type DaoTokenStruct = {
-    token: BigNumberish;
-    data: SubDaoLib.DaoTokenDataStruct;
-  };
-
-  export type DaoTokenStructOutput = [
-    number,
-    SubDaoLib.DaoTokenDataStructOutput
-  ] & { token: number; data: SubDaoLib.DaoTokenDataStructOutput };
-
-  export type DaoSetupStruct = {
-    quorum: BigNumberish;
-    threshold: BigNumberish;
-    votingPeriod: BigNumberish;
-    timelockPeriod: BigNumberish;
-    expirationPeriod: BigNumberish;
-    proposalDeposit: BigNumberish;
-    snapshotPeriod: BigNumberish;
-    token: SubDaoLib.DaoTokenStruct;
-  };
-
-  export type DaoSetupStructOutput = [
-    BigNumber,
-    BigNumber,
-    BigNumber,
-    BigNumber,
-    BigNumber,
-    BigNumber,
-    BigNumber,
-    SubDaoLib.DaoTokenStructOutput
-  ] & {
-    quorum: BigNumber;
-    threshold: BigNumber;
-    votingPeriod: BigNumber;
-    timelockPeriod: BigNumber;
-    expirationPeriod: BigNumber;
-    proposalDeposit: BigNumber;
-    snapshotPeriod: BigNumber;
-    token: SubDaoLib.DaoTokenStructOutput;
-  };
-}
-
-export declare namespace SubDaoMessages {
-  export type InstantiateMsgStruct = {
-    id: BigNumberish;
-    owner: string;
-    quorum: BigNumberish;
-    threshold: BigNumberish;
-    votingPeriod: BigNumberish;
-    timelockPeriod: BigNumberish;
-    expirationPeriod: BigNumberish;
-    proposalDeposit: BigNumberish;
-    snapshotPeriod: BigNumberish;
-    token: SubDaoLib.DaoTokenStruct;
-    endowType: BigNumberish;
-    endowOwner: string;
-    registrarContract: string;
-  };
-
-  export type InstantiateMsgStructOutput = [
-    number,
-    string,
-    BigNumber,
-    BigNumber,
-    BigNumber,
-    BigNumber,
-    BigNumber,
-    BigNumber,
-    BigNumber,
-    SubDaoLib.DaoTokenStructOutput,
-    number,
-    string,
-    string
-  ] & {
-    id: number;
-    owner: string;
-    quorum: BigNumber;
-    threshold: BigNumber;
-    votingPeriod: BigNumber;
-    timelockPeriod: BigNumber;
-    expirationPeriod: BigNumber;
-    proposalDeposit: BigNumber;
-    snapshotPeriod: BigNumber;
-    token: SubDaoLib.DaoTokenStructOutput;
-    endowType: number;
-    endowOwner: string;
-    registrarContract: string;
+    destinationChain: string;
+    strategyId: string;
+    selector: string;
+    accountIds: number[];
+    token: string;
+    lockAmt: BigNumber;
+    liqAmt: BigNumber;
+    status: number;
   };
 }
 
@@ -353,6 +188,7 @@ export declare namespace AccountMessages {
     duration: BigNumberish;
     allowlistedBeneficiaries: string[];
     allowlistedContributors: string[];
+    maturityAllowlist: string[];
     earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct;
     withdrawFee: LibAccounts.FeeSettingStruct;
     depositFee: LibAccounts.FeeSettingStruct;
@@ -360,7 +196,6 @@ export declare namespace AccountMessages {
     proposalLink: BigNumberish;
     settingsController: LibAccounts.SettingsControllerStruct;
     parent: BigNumberish;
-    maturityAllowlist: string[];
     ignoreUserSplits: boolean;
     splitToLiquid: LibAccounts.SplitDetailsStruct;
     referralId: BigNumberish;
@@ -380,6 +215,7 @@ export declare namespace AccountMessages {
     BigNumber,
     string[],
     string[],
+    string[],
     LibAccounts.FeeSettingStructOutput,
     LibAccounts.FeeSettingStructOutput,
     LibAccounts.FeeSettingStructOutput,
@@ -387,7 +223,6 @@ export declare namespace AccountMessages {
     BigNumber,
     LibAccounts.SettingsControllerStructOutput,
     number,
-    string[],
     boolean,
     LibAccounts.SplitDetailsStructOutput,
     BigNumber
@@ -405,6 +240,7 @@ export declare namespace AccountMessages {
     duration: BigNumber;
     allowlistedBeneficiaries: string[];
     allowlistedContributors: string[];
+    maturityAllowlist: string[];
     earlyLockedWithdrawFee: LibAccounts.FeeSettingStructOutput;
     withdrawFee: LibAccounts.FeeSettingStructOutput;
     depositFee: LibAccounts.FeeSettingStructOutput;
@@ -412,7 +248,6 @@ export declare namespace AccountMessages {
     proposalLink: BigNumber;
     settingsController: LibAccounts.SettingsControllerStructOutput;
     parent: number;
-    maturityAllowlist: string[];
     ignoreUserSplits: boolean;
     splitToLiquid: LibAccounts.SplitDetailsStructOutput;
     referralId: BigNumber;
@@ -459,6 +294,91 @@ export declare namespace AccountMessages {
     nextAccountId: BigNumber;
   };
 
+  export type EndowmentResponseStruct = {
+    owner: string;
+    name: string;
+    sdgs: BigNumberish[];
+    tier: BigNumberish;
+    endowType: BigNumberish;
+    logo: string;
+    image: string;
+    maturityTime: BigNumberish;
+    proposalLink: BigNumberish;
+    multisig: string;
+    dao: string;
+    donationMatch: string;
+    donationMatchActive: boolean;
+    allowlistedBeneficiaries: string[];
+    allowlistedContributors: string[];
+    maturityAllowlist: string[];
+    earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct;
+    withdrawFee: LibAccounts.FeeSettingStruct;
+    depositFee: LibAccounts.FeeSettingStruct;
+    balanceFee: LibAccounts.FeeSettingStruct;
+    settingsController: LibAccounts.SettingsControllerStruct;
+    parent: BigNumberish;
+    ignoreUserSplits: boolean;
+    splitToLiquid: LibAccounts.SplitDetailsStruct;
+    referralId: BigNumberish;
+    gasFwd: string;
+  };
+
+  export type EndowmentResponseStructOutput = [
+    string,
+    string,
+    BigNumber[],
+    number,
+    number,
+    string,
+    string,
+    BigNumber,
+    BigNumber,
+    string,
+    string,
+    string,
+    boolean,
+    string[],
+    string[],
+    string[],
+    LibAccounts.FeeSettingStructOutput,
+    LibAccounts.FeeSettingStructOutput,
+    LibAccounts.FeeSettingStructOutput,
+    LibAccounts.FeeSettingStructOutput,
+    LibAccounts.SettingsControllerStructOutput,
+    number,
+    boolean,
+    LibAccounts.SplitDetailsStructOutput,
+    BigNumber,
+    string
+  ] & {
+    owner: string;
+    name: string;
+    sdgs: BigNumber[];
+    tier: number;
+    endowType: number;
+    logo: string;
+    image: string;
+    maturityTime: BigNumber;
+    proposalLink: BigNumber;
+    multisig: string;
+    dao: string;
+    donationMatch: string;
+    donationMatchActive: boolean;
+    allowlistedBeneficiaries: string[];
+    allowlistedContributors: string[];
+    maturityAllowlist: string[];
+    earlyLockedWithdrawFee: LibAccounts.FeeSettingStructOutput;
+    withdrawFee: LibAccounts.FeeSettingStructOutput;
+    depositFee: LibAccounts.FeeSettingStructOutput;
+    balanceFee: LibAccounts.FeeSettingStructOutput;
+    settingsController: LibAccounts.SettingsControllerStructOutput;
+    parent: number;
+    ignoreUserSplits: boolean;
+    splitToLiquid: LibAccounts.SplitDetailsStructOutput;
+    referralId: BigNumber;
+    gasFwd: string;
+  };
+
   export type StateResponseStruct = {
     closingEndowment: boolean;
     closingBeneficiary: LibAccounts.BeneficiaryStruct;
@@ -471,28 +391,6 @@ export declare namespace AccountMessages {
     closingEndowment: boolean;
     closingBeneficiary: LibAccounts.BeneficiaryStructOutput;
   };
-
-  export type DonationMatchDataStruct = {
-    reserveToken: string;
-    uniswapFactory: string;
-    poolFee: BigNumberish;
-  };
-
-  export type DonationMatchDataStructOutput = [string, string, number] & {
-    reserveToken: string;
-    uniswapFactory: string;
-    poolFee: number;
-  };
-
-  export type DonationMatchStruct = {
-    enumData: BigNumberish;
-    data: AccountMessages.DonationMatchDataStruct;
-  };
-
-  export type DonationMatchStructOutput = [
-    number,
-    AccountMessages.DonationMatchDataStructOutput
-  ] & { enumData: number; data: AccountMessages.DonationMatchDataStructOutput };
 
   export type InvestRequestStruct = {
     strategy: BytesLike;
@@ -580,7 +478,6 @@ export declare namespace AccountMessages {
     sdgs: BigNumberish[];
     logo: string;
     image: string;
-    rebalance: LocalRegistrarLib.RebalanceParamsStruct;
   };
 
   export type UpdateEndowmentDetailsRequestStructOutput = [
@@ -589,8 +486,7 @@ export declare namespace AccountMessages {
     string,
     BigNumber[],
     string,
-    string,
-    LocalRegistrarLib.RebalanceParamsStructOutput
+    string
   ] & {
     id: number;
     owner: string;
@@ -598,17 +494,12 @@ export declare namespace AccountMessages {
     sdgs: BigNumber[];
     logo: string;
     image: string;
-    rebalance: LocalRegistrarLib.RebalanceParamsStructOutput;
   };
 
   export type UpdateEndowmentSettingsRequestStruct = {
     id: BigNumberish;
     donationMatchActive: boolean;
     maturityTime: BigNumberish;
-    allowlistedBeneficiaries: string[];
-    allowlistedContributors: string[];
-    maturity_allowlist_add: string[];
-    maturity_allowlist_remove: string[];
     splitToLiquid: LibAccounts.SplitDetailsStruct;
     ignoreUserSplits: boolean;
   };
@@ -617,20 +508,12 @@ export declare namespace AccountMessages {
     number,
     boolean,
     BigNumber,
-    string[],
-    string[],
-    string[],
-    string[],
     LibAccounts.SplitDetailsStructOutput,
     boolean
   ] & {
     id: number;
     donationMatchActive: boolean;
     maturityTime: BigNumber;
-    allowlistedBeneficiaries: string[];
-    allowlistedContributors: string[];
-    maturity_allowlist_add: string[];
-    maturity_allowlist_remove: string[];
     splitToLiquid: LibAccounts.SplitDetailsStructOutput;
     ignoreUserSplits: boolean;
   };
@@ -658,126 +541,6 @@ export declare namespace AccountMessages {
   };
 }
 
-export declare namespace LocalRegistrarLib {
-  export type RebalanceParamsStruct = {
-    rebalanceLiquidProfits: boolean;
-    lockedRebalanceToLiquid: BigNumberish;
-    interestDistribution: BigNumberish;
-    lockedPrincipleToLiquid: boolean;
-    principleDistribution: BigNumberish;
-    basis: BigNumberish;
-  };
-
-  export type RebalanceParamsStructOutput = [
-    boolean,
-    number,
-    number,
-    boolean,
-    number,
-    number
-  ] & {
-    rebalanceLiquidProfits: boolean;
-    lockedRebalanceToLiquid: number;
-    interestDistribution: number;
-    lockedPrincipleToLiquid: boolean;
-    principleDistribution: number;
-    basis: number;
-  };
-}
-
-export declare namespace AccountStorage {
-  export type EndowmentStruct = {
-    owner: string;
-    name: string;
-    sdgs: BigNumberish[];
-    tier: BigNumberish;
-    endowType: BigNumberish;
-    logo: string;
-    image: string;
-    maturityTime: BigNumberish;
-    rebalance: LocalRegistrarLib.RebalanceParamsStruct;
-    proposalLink: BigNumberish;
-    multisig: string;
-    dao: string;
-    daoToken: string;
-    donationMatchActive: boolean;
-    donationMatchContract: string;
-    allowlistedBeneficiaries: string[];
-    allowlistedContributors: string[];
-    maturityAllowlist: string[];
-    earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct;
-    withdrawFee: LibAccounts.FeeSettingStruct;
-    depositFee: LibAccounts.FeeSettingStruct;
-    balanceFee: LibAccounts.FeeSettingStruct;
-    settingsController: LibAccounts.SettingsControllerStruct;
-    parent: BigNumberish;
-    ignoreUserSplits: boolean;
-    splitToLiquid: LibAccounts.SplitDetailsStruct;
-    referralId: BigNumberish;
-    gasFwd: string;
-  };
-
-  export type EndowmentStructOutput = [
-    string,
-    string,
-    BigNumber[],
-    number,
-    number,
-    string,
-    string,
-    BigNumber,
-    LocalRegistrarLib.RebalanceParamsStructOutput,
-    BigNumber,
-    string,
-    string,
-    string,
-    boolean,
-    string,
-    string[],
-    string[],
-    string[],
-    LibAccounts.FeeSettingStructOutput,
-    LibAccounts.FeeSettingStructOutput,
-    LibAccounts.FeeSettingStructOutput,
-    LibAccounts.FeeSettingStructOutput,
-    LibAccounts.SettingsControllerStructOutput,
-    number,
-    boolean,
-    LibAccounts.SplitDetailsStructOutput,
-    BigNumber,
-    string
-  ] & {
-    owner: string;
-    name: string;
-    sdgs: BigNumber[];
-    tier: number;
-    endowType: number;
-    logo: string;
-    image: string;
-    maturityTime: BigNumber;
-    rebalance: LocalRegistrarLib.RebalanceParamsStructOutput;
-    proposalLink: BigNumber;
-    multisig: string;
-    dao: string;
-    daoToken: string;
-    donationMatchActive: boolean;
-    donationMatchContract: string;
-    allowlistedBeneficiaries: string[];
-    allowlistedContributors: string[];
-    maturityAllowlist: string[];
-    earlyLockedWithdrawFee: LibAccounts.FeeSettingStructOutput;
-    withdrawFee: LibAccounts.FeeSettingStructOutput;
-    depositFee: LibAccounts.FeeSettingStructOutput;
-    balanceFee: LibAccounts.FeeSettingStructOutput;
-    settingsController: LibAccounts.SettingsControllerStructOutput;
-    parent: number;
-    ignoreUserSplits: boolean;
-    splitToLiquid: LibAccounts.SplitDetailsStructOutput;
-    referralId: BigNumber;
-    gasFwd: string;
-  };
-}
-
 export declare namespace IAccountsDepositWithdrawEndowments {
   export type TokenInfoStruct = { addr: string; amnt: BigNumberish };
 
@@ -790,20 +553,21 @@ export declare namespace IAccountsDepositWithdrawEndowments {
 export interface IAccountsInterface extends utils.Interface {
   functions: {
     "addGas(uint32,uint8,address,uint256)": FunctionFragment;
-    "closeEndowment(uint32,((uint32,uint256,address),uint8))": FunctionFragment;
-    "createDaoContract((uint32,address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,(uint8,(address,uint256,string,string,(uint8,(uint128,uint256,uint128,uint128)),string,string,uint256,address,uint256,uint256)),uint8,address,address))": FunctionFragment;
-    "createEndowment((bool,uint256,string,uint256[],uint8,uint8,string,string,address[],uint256,uint256,address[],address[],(address,uint256),(address,uint256),(address,uint256),(address,uint256),uint256,((bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256))),uint32,address[],bool,(uint256,uint256,uint256),uint256))": FunctionFragment;
-    "depositDonationMatchERC20(uint32,address,uint256)": FunctionFragment;
+    "closeEndowment(uint32,((uint32,address),uint8))": FunctionFragment;
+    "createEndowment((bool,uint256,string,uint256[],uint8,uint8,string,string,address[],uint256,uint256,address[],address[],address[],(address,uint256),(address,uint256),(address,uint256),(address,uint256),uint256,((bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256))),uint32,bool,(uint256,uint256,uint256),uint256))": FunctionFragment;
     "depositERC20((uint32,uint256,uint256,address),address,uint256)": FunctionFragment;
     "depositMatic((uint32,uint256,uint256,address))": FunctionFragment;
+    "getEndowmentBeneficiaries(uint32)": FunctionFragment;
+    "getWalletBeneficiaries(address)": FunctionFragment;
+    "isDafApprovedEndowment(uint32)": FunctionFragment;
     "manageAllowances(uint32,address,address,uint256)": FunctionFragment;
     "queryAllowance(uint32,address,address)": FunctionFragment;
     "queryConfig()": FunctionFragment;
     "queryEndowmentDetails(uint32)": FunctionFragment;
     "queryState(uint32)": FunctionFragment;
     "queryTokenAmount(uint32,uint8,address)": FunctionFragment;
-    "setupDao(uint32,(uint256,uint256,uint256,uint256,uint256,uint128,uint256,(uint8,(address,uint256,string,string,(uint8,(uint128,uint256,uint128,uint128)),string,string,uint256,address,uint256,uint256))))": FunctionFragment;
-    "setupDonationMatch(uint32,(uint8,(address,address,uint24)))": FunctionFragment;
+    "revokeDelegate(uint32,uint8)": FunctionFragment;
+    "setDelegate(uint32,uint8,address,uint256)": FunctionFragment;
     "spendAllowance(uint32,address,uint256,address)": FunctionFragment;
     "strategyInvest(uint32,(bytes4,string,uint256,uint256,uint256))": FunctionFragment;
     "strategyRedeem(uint32,(bytes4,string,uint256,uint256,uint256))": FunctionFragment;
@@ -813,33 +577,34 @@ export interface IAccountsInterface extends utils.Interface {
     "sweepForEndowment(uint32,uint8,address)": FunctionFragment;
     "updateAcceptedToken(uint32,address,address,bool)": FunctionFragment;
     "updateConfig(address)": FunctionFragment;
-    "updateDelegate(uint32,uint8,uint8,address,uint256)": FunctionFragment;
+    "updateDafApprovedEndowments(uint32[],uint32[])": FunctionFragment;
+    "updateEndowmentAllowlist(uint32,uint8,address[],address[])": FunctionFragment;
     "updateEndowmentController((uint32,((bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)))))": FunctionFragment;
-    "updateEndowmentDetails((uint32,address,string,uint256[],string,string,(bool,uint32,uint32,bool,uint32,uint32)))": FunctionFragment;
-    "updateEndowmentSettings((uint32,bool,uint256,address[],address[],address[],address[],(uint256,uint256,uint256),bool))": FunctionFragment;
+    "updateEndowmentDetails((uint32,address,string,uint256[],string,string))": FunctionFragment;
+    "updateEndowmentSettings((uint32,bool,uint256,(uint256,uint256,uint256),bool))": FunctionFragment;
     "updateFeeSettings((uint32,(address,uint256),(address,uint256),(address,uint256),(address,uint256)))": FunctionFragment;
     "updateOwner(address)": FunctionFragment;
     "withdraw(uint32,uint8,address,uint32,(address,uint256)[])": FunctionFragment;
-    "withdrawDonationMatchERC20(uint32,address,uint256)": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
       | "addGas"
       | "closeEndowment"
-      | "createDaoContract"
       | "createEndowment"
-      | "depositDonationMatchERC20"
       | "depositERC20"
       | "depositMatic"
+      | "getEndowmentBeneficiaries"
+      | "getWalletBeneficiaries"
+      | "isDafApprovedEndowment"
       | "manageAllowances"
       | "queryAllowance"
       | "queryConfig"
       | "queryEndowmentDetails"
       | "queryState"
       | "queryTokenAmount"
-      | "setupDao"
-      | "setupDonationMatch"
+      | "revokeDelegate"
+      | "setDelegate"
       | "spendAllowance"
       | "strategyInvest"
       | "strategyRedeem"
@@ -849,14 +614,14 @@ export interface IAccountsInterface extends utils.Interface {
       | "sweepForEndowment"
       | "updateAcceptedToken"
       | "updateConfig"
-      | "updateDelegate"
+      | "updateDafApprovedEndowments"
+      | "updateEndowmentAllowlist"
       | "updateEndowmentController"
       | "updateEndowmentDetails"
       | "updateEndowmentSettings"
       | "updateFeeSettings"
       | "updateOwner"
       | "withdraw"
-      | "withdrawDonationMatchERC20"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -868,16 +633,8 @@ export interface IAccountsInterface extends utils.Interface {
     values: [BigNumberish, LibAccounts.BeneficiaryStruct]
   ): string;
   encodeFunctionData(
-    functionFragment: "createDaoContract",
-    values: [SubDaoMessages.InstantiateMsgStruct]
-  ): string;
-  encodeFunctionData(
     functionFragment: "createEndowment",
     values: [AccountMessages.CreateEndowmentRequestStruct]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "depositDonationMatchERC20",
-    values: [BigNumberish, string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "depositERC20",
@@ -886,6 +643,18 @@ export interface IAccountsInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "depositMatic",
     values: [AccountMessages.DepositRequestStruct]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getEndowmentBeneficiaries",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getWalletBeneficiaries",
+    values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "isDafApprovedEndowment",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "manageAllowances",
@@ -912,12 +681,12 @@ export interface IAccountsInterface extends utils.Interface {
     values: [BigNumberish, BigNumberish, string]
   ): string;
   encodeFunctionData(
-    functionFragment: "setupDao",
-    values: [BigNumberish, SubDaoLib.DaoSetupStruct]
+    functionFragment: "revokeDelegate",
+    values: [BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "setupDonationMatch",
-    values: [BigNumberish, AccountMessages.DonationMatchStruct]
+    functionFragment: "setDelegate",
+    values: [BigNumberish, BigNumberish, string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "spendAllowance",
@@ -963,8 +732,12 @@ export interface IAccountsInterface extends utils.Interface {
     values: [string]
   ): string;
   encodeFunctionData(
-    functionFragment: "updateDelegate",
-    values: [BigNumberish, BigNumberish, BigNumberish, string, BigNumberish]
+    functionFragment: "updateDafApprovedEndowments",
+    values: [BigNumberish[], BigNumberish[]]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "updateEndowmentAllowlist",
+    values: [BigNumberish, BigNumberish, string[], string[]]
   ): string;
   encodeFunctionData(
     functionFragment: "updateEndowmentController",
@@ -993,10 +766,6 @@ export interface IAccountsInterface extends utils.Interface {
       IAccountsDepositWithdrawEndowments.TokenInfoStruct[]
     ]
   ): string;
-  encodeFunctionData(
-    functionFragment: "withdrawDonationMatchERC20",
-    values: [BigNumberish, string, BigNumberish]
-  ): string;
 
   decodeFunctionResult(functionFragment: "addGas", data: BytesLike): Result;
   decodeFunctionResult(
@@ -1004,15 +773,7 @@ export interface IAccountsInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "createDaoContract",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
     functionFragment: "createEndowment",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "depositDonationMatchERC20",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -1021,6 +782,18 @@ export interface IAccountsInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "depositMatic",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getEndowmentBeneficiaries",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getWalletBeneficiaries",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "isDafApprovedEndowment",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -1044,9 +817,12 @@ export interface IAccountsInterface extends utils.Interface {
     functionFragment: "queryTokenAmount",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "setupDao", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "setupDonationMatch",
+    functionFragment: "revokeDelegate",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setDelegate",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -1083,7 +859,11 @@ export interface IAccountsInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "updateDelegate",
+    functionFragment: "updateDafApprovedEndowments",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "updateEndowmentAllowlist",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -1107,24 +887,19 @@ export interface IAccountsInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "withdrawDonationMatchERC20",
-    data: BytesLike
-  ): Result;
 
   events: {
     "AllowanceSpent(uint256,address,address,uint256)": EventFragment;
     "AllowanceUpdated(uint256,address,address,uint256,uint256,uint256)": EventFragment;
     "ConfigUpdated()": EventFragment;
-    "DaoContractCreated(uint32,address)": EventFragment;
-    "DonationDeposited(uint256,address,uint256)": EventFragment;
+    "DafApprovedEndowmentsUpdated(uint32[],uint32[])": EventFragment;
     "DonationMatchCreated(uint256,address)": EventFragment;
-    "DonationWithdrawn(uint256,address,address,uint256)": EventFragment;
-    "EndowmentClosed(uint256)": EventFragment;
+    "EndowmentAllowlistUpdated(uint256,uint8,address[],address[])": EventFragment;
+    "EndowmentClosed(uint256,((uint32,address),uint8),uint32[])": EventFragment;
     "EndowmentCreated(uint256,uint8)": EventFragment;
     "EndowmentDeposit(uint256,address,uint256,uint256)": EventFragment;
-    "EndowmentInvested(uint8)": EventFragment;
-    "EndowmentRedeemed(uint8)": EventFragment;
+    "EndowmentInvested(uint256,bytes4,string,address,uint256,uint256)": EventFragment;
+    "EndowmentRedeemed(uint256,bytes4,string,address,uint256,uint256)": EventFragment;
     "EndowmentSettingUpdated(uint256,string)": EventFragment;
     "EndowmentUpdated(uint256)": EventFragment;
     "EndowmentWithdraw(uint256,address,uint256,uint8,address,uint32)": EventFragment;
@@ -1137,10 +912,11 @@ export interface IAccountsInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: "AllowanceSpent"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "AllowanceUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ConfigUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "DaoContractCreated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "DonationDeposited"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "DafApprovedEndowmentsUpdated"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "DonationMatchCreated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "DonationWithdrawn"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "EndowmentAllowlistUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "EndowmentClosed"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "EndowmentCreated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "EndowmentDeposit"): EventFragment;
@@ -1189,30 +965,17 @@ export type ConfigUpdatedEvent = TypedEvent<[], ConfigUpdatedEventObject>;
 
 export type ConfigUpdatedEventFilter = TypedEventFilter<ConfigUpdatedEvent>;
 
-export interface DaoContractCreatedEventObject {
-  endowId: number;
-  daoAddress: string;
+export interface DafApprovedEndowmentsUpdatedEventObject {
+  add: number[];
+  remove: number[];
 }
-export type DaoContractCreatedEvent = TypedEvent<
-  [number, string],
-  DaoContractCreatedEventObject
+export type DafApprovedEndowmentsUpdatedEvent = TypedEvent<
+  [number[], number[]],
+  DafApprovedEndowmentsUpdatedEventObject
 >;
 
-export type DaoContractCreatedEventFilter =
-  TypedEventFilter<DaoContractCreatedEvent>;
-
-export interface DonationDepositedEventObject {
-  endowId: BigNumber;
-  tokenAddress: string;
-  amount: BigNumber;
-}
-export type DonationDepositedEvent = TypedEvent<
-  [BigNumber, string, BigNumber],
-  DonationDepositedEventObject
->;
-
-export type DonationDepositedEventFilter =
-  TypedEventFilter<DonationDepositedEvent>;
+export type DafApprovedEndowmentsUpdatedEventFilter =
+  TypedEventFilter<DafApprovedEndowmentsUpdatedEvent>;
 
 export interface DonationMatchCreatedEventObject {
   endowId: BigNumber;
@@ -1226,25 +989,27 @@ export type DonationMatchCreatedEvent = TypedEvent<
 export type DonationMatchCreatedEventFilter =
   TypedEventFilter<DonationMatchCreatedEvent>;
 
-export interface DonationWithdrawnEventObject {
+export interface EndowmentAllowlistUpdatedEventObject {
   endowId: BigNumber;
-  recipient: string;
-  tokenAddress: string;
-  amount: BigNumber;
+  allowlistType: number;
+  add: string[];
+  remove: string[];
 }
-export type DonationWithdrawnEvent = TypedEvent<
-  [BigNumber, string, string, BigNumber],
-  DonationWithdrawnEventObject
+export type EndowmentAllowlistUpdatedEvent = TypedEvent<
+  [BigNumber, number, string[], string[]],
+  EndowmentAllowlistUpdatedEventObject
 >;
 
-export type DonationWithdrawnEventFilter =
-  TypedEventFilter<DonationWithdrawnEvent>;
+export type EndowmentAllowlistUpdatedEventFilter =
+  TypedEventFilter<EndowmentAllowlistUpdatedEvent>;
 
 export interface EndowmentClosedEventObject {
   endowId: BigNumber;
+  beneficiary: LibAccounts.BeneficiaryStructOutput;
+  relinked: number[];
 }
 export type EndowmentClosedEvent = TypedEvent<
-  [BigNumber],
+  [BigNumber, LibAccounts.BeneficiaryStructOutput, number[]],
   EndowmentClosedEventObject
 >;
 
@@ -1277,10 +1042,15 @@ export type EndowmentDepositEventFilter =
   TypedEventFilter<EndowmentDepositEvent>;
 
 export interface EndowmentInvestedEventObject {
-  arg0: number;
+  endowId: BigNumber;
+  strategy: string;
+  network: string;
+  token: string;
+  lockAmt: BigNumber;
+  liquidAmt: BigNumber;
 }
 export type EndowmentInvestedEvent = TypedEvent<
-  [number],
+  [BigNumber, string, string, string, BigNumber, BigNumber],
   EndowmentInvestedEventObject
 >;
 
@@ -1288,10 +1058,15 @@ export type EndowmentInvestedEventFilter =
   TypedEventFilter<EndowmentInvestedEvent>;
 
 export interface EndowmentRedeemedEventObject {
-  arg0: number;
+  endowId: BigNumber;
+  strategy: string;
+  network: string;
+  token: string;
+  lockAmt: BigNumber;
+  liquidAmt: BigNumber;
 }
 export type EndowmentRedeemedEvent = TypedEvent<
-  [number],
+  [BigNumber, string, string, string, BigNumber, BigNumber],
   EndowmentRedeemedEventObject
 >;
 
@@ -1421,20 +1196,8 @@ export interface IAccounts extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
-    createDaoContract(
-      createdaomessage: SubDaoMessages.InstantiateMsgStruct,
-      overrides?: Overrides & { from?: string }
-    ): Promise<ContractTransaction>;
-
     createEndowment(
       details: AccountMessages.CreateEndowmentRequestStruct,
-      overrides?: Overrides & { from?: string }
-    ): Promise<ContractTransaction>;
-
-    depositDonationMatchERC20(
-      id: BigNumberish,
-      token: string,
-      amount: BigNumberish,
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
@@ -1449,6 +1212,21 @@ export interface IAccounts extends BaseContract {
       details: AccountMessages.DepositRequestStruct,
       overrides?: PayableOverrides & { from?: string }
     ): Promise<ContractTransaction>;
+
+    getEndowmentBeneficiaries(
+      id: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[number[]]>;
+
+    getWalletBeneficiaries(
+      addr: string,
+      overrides?: CallOverrides
+    ): Promise<[number[]]>;
+
+    isDafApprovedEndowment(
+      id: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
 
     manageAllowances(
       endowId: BigNumberish,
@@ -1476,11 +1254,7 @@ export interface IAccounts extends BaseContract {
     queryEndowmentDetails(
       id: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<
-      [AccountStorage.EndowmentStructOutput] & {
-        endowment: AccountStorage.EndowmentStructOutput;
-      }
-    >;
+    ): Promise<[AccountMessages.EndowmentResponseStructOutput]>;
 
     queryState(
       id: BigNumberish,
@@ -1498,15 +1272,17 @@ export interface IAccounts extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber] & { tokenAmount: BigNumber }>;
 
-    setupDao(
+    revokeDelegate(
       id: BigNumberish,
-      details: SubDaoLib.DaoSetupStruct,
+      setting: BigNumberish,
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
-    setupDonationMatch(
+    setDelegate(
       id: BigNumberish,
-      details: AccountMessages.DonationMatchStruct,
+      setting: BigNumberish,
+      delegateAddress: string,
+      delegateExpiry: BigNumberish,
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
@@ -1572,12 +1348,17 @@ export interface IAccounts extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
-    updateDelegate(
+    updateDafApprovedEndowments(
+      add: BigNumberish[],
+      remove: BigNumberish[],
+      overrides?: Overrides & { from?: string }
+    ): Promise<ContractTransaction>;
+
+    updateEndowmentAllowlist(
       id: BigNumberish,
-      setting: BigNumberish,
-      action: BigNumberish,
-      delegateAddress: string,
-      delegateExpiry: BigNumberish,
+      allowlistType: BigNumberish,
+      add: string[],
+      remove: string[],
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
@@ -1614,13 +1395,6 @@ export interface IAccounts extends BaseContract {
       tokens: IAccountsDepositWithdrawEndowments.TokenInfoStruct[],
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
-
-    withdrawDonationMatchERC20(
-      id: BigNumberish,
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string }
-    ): Promise<ContractTransaction>;
   };
 
   addGas(
@@ -1637,20 +1411,8 @@ export interface IAccounts extends BaseContract {
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
-  createDaoContract(
-    createdaomessage: SubDaoMessages.InstantiateMsgStruct,
-    overrides?: Overrides & { from?: string }
-  ): Promise<ContractTransaction>;
-
   createEndowment(
     details: AccountMessages.CreateEndowmentRequestStruct,
-    overrides?: Overrides & { from?: string }
-  ): Promise<ContractTransaction>;
-
-  depositDonationMatchERC20(
-    id: BigNumberish,
-    token: string,
-    amount: BigNumberish,
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
@@ -1665,6 +1427,21 @@ export interface IAccounts extends BaseContract {
     details: AccountMessages.DepositRequestStruct,
     overrides?: PayableOverrides & { from?: string }
   ): Promise<ContractTransaction>;
+
+  getEndowmentBeneficiaries(
+    id: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<number[]>;
+
+  getWalletBeneficiaries(
+    addr: string,
+    overrides?: CallOverrides
+  ): Promise<number[]>;
+
+  isDafApprovedEndowment(
+    id: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
 
   manageAllowances(
     endowId: BigNumberish,
@@ -1688,7 +1465,7 @@ export interface IAccounts extends BaseContract {
   queryEndowmentDetails(
     id: BigNumberish,
     overrides?: CallOverrides
-  ): Promise<AccountStorage.EndowmentStructOutput>;
+  ): Promise<AccountMessages.EndowmentResponseStructOutput>;
 
   queryState(
     id: BigNumberish,
@@ -1702,15 +1479,17 @@ export interface IAccounts extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  setupDao(
+  revokeDelegate(
     id: BigNumberish,
-    details: SubDaoLib.DaoSetupStruct,
+    setting: BigNumberish,
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
-  setupDonationMatch(
+  setDelegate(
     id: BigNumberish,
-    details: AccountMessages.DonationMatchStruct,
+    setting: BigNumberish,
+    delegateAddress: string,
+    delegateExpiry: BigNumberish,
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
@@ -1776,12 +1555,17 @@ export interface IAccounts extends BaseContract {
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
-  updateDelegate(
+  updateDafApprovedEndowments(
+    add: BigNumberish[],
+    remove: BigNumberish[],
+    overrides?: Overrides & { from?: string }
+  ): Promise<ContractTransaction>;
+
+  updateEndowmentAllowlist(
     id: BigNumberish,
-    setting: BigNumberish,
-    action: BigNumberish,
-    delegateAddress: string,
-    delegateExpiry: BigNumberish,
+    allowlistType: BigNumberish,
+    add: string[],
+    remove: string[],
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
@@ -1819,13 +1603,6 @@ export interface IAccounts extends BaseContract {
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
-  withdrawDonationMatchERC20(
-    id: BigNumberish,
-    recipient: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string }
-  ): Promise<ContractTransaction>;
-
   callStatic: {
     addGas(
       id: BigNumberish,
@@ -1841,22 +1618,10 @@ export interface IAccounts extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    createDaoContract(
-      createdaomessage: SubDaoMessages.InstantiateMsgStruct,
-      overrides?: CallOverrides
-    ): Promise<string>;
-
     createEndowment(
       details: AccountMessages.CreateEndowmentRequestStruct,
       overrides?: CallOverrides
     ): Promise<number>;
-
-    depositDonationMatchERC20(
-      id: BigNumberish,
-      token: string,
-      amount: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<void>;
 
     depositERC20(
       details: AccountMessages.DepositRequestStruct,
@@ -1869,6 +1634,21 @@ export interface IAccounts extends BaseContract {
       details: AccountMessages.DepositRequestStruct,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    getEndowmentBeneficiaries(
+      id: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<number[]>;
+
+    getWalletBeneficiaries(
+      addr: string,
+      overrides?: CallOverrides
+    ): Promise<number[]>;
+
+    isDafApprovedEndowment(
+      id: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
     manageAllowances(
       endowId: BigNumberish,
@@ -1892,7 +1672,7 @@ export interface IAccounts extends BaseContract {
     queryEndowmentDetails(
       id: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<AccountStorage.EndowmentStructOutput>;
+    ): Promise<AccountMessages.EndowmentResponseStructOutput>;
 
     queryState(
       id: BigNumberish,
@@ -1906,15 +1686,17 @@ export interface IAccounts extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    setupDao(
+    revokeDelegate(
       id: BigNumberish,
-      details: SubDaoLib.DaoSetupStruct,
+      setting: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    setupDonationMatch(
+    setDelegate(
       id: BigNumberish,
-      details: AccountMessages.DonationMatchStruct,
+      setting: BigNumberish,
+      delegateAddress: string,
+      delegateExpiry: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1980,12 +1762,17 @@ export interface IAccounts extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    updateDelegate(
+    updateDafApprovedEndowments(
+      add: BigNumberish[],
+      remove: BigNumberish[],
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    updateEndowmentAllowlist(
       id: BigNumberish,
-      setting: BigNumberish,
-      action: BigNumberish,
-      delegateAddress: string,
-      delegateExpiry: BigNumberish,
+      allowlistType: BigNumberish,
+      add: string[],
+      remove: string[],
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -2017,13 +1804,6 @@ export interface IAccounts extends BaseContract {
       beneficiaryAddress: string,
       beneficiaryEndowId: BigNumberish,
       tokens: IAccountsDepositWithdrawEndowments.TokenInfoStruct[],
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    withdrawDonationMatchERC20(
-      id: BigNumberish,
-      recipient: string,
-      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -2062,25 +1842,14 @@ export interface IAccounts extends BaseContract {
     "ConfigUpdated()"(): ConfigUpdatedEventFilter;
     ConfigUpdated(): ConfigUpdatedEventFilter;
 
-    "DaoContractCreated(uint32,address)"(
-      endowId?: null,
-      daoAddress?: null
-    ): DaoContractCreatedEventFilter;
-    DaoContractCreated(
-      endowId?: null,
-      daoAddress?: null
-    ): DaoContractCreatedEventFilter;
-
-    "DonationDeposited(uint256,address,uint256)"(
-      endowId?: null,
-      tokenAddress?: null,
-      amount?: null
-    ): DonationDepositedEventFilter;
-    DonationDeposited(
-      endowId?: null,
-      tokenAddress?: null,
-      amount?: null
-    ): DonationDepositedEventFilter;
+    "DafApprovedEndowmentsUpdated(uint32[],uint32[])"(
+      add?: null,
+      remove?: null
+    ): DafApprovedEndowmentsUpdatedEventFilter;
+    DafApprovedEndowmentsUpdated(
+      add?: null,
+      remove?: null
+    ): DafApprovedEndowmentsUpdatedEventFilter;
 
     "DonationMatchCreated(uint256,address)"(
       endowId?: null,
@@ -2091,21 +1860,29 @@ export interface IAccounts extends BaseContract {
       donationMatchContract?: null
     ): DonationMatchCreatedEventFilter;
 
-    "DonationWithdrawn(uint256,address,address,uint256)"(
+    "EndowmentAllowlistUpdated(uint256,uint8,address[],address[])"(
       endowId?: null,
-      recipient?: null,
-      tokenAddress?: null,
-      amount?: null
-    ): DonationWithdrawnEventFilter;
-    DonationWithdrawn(
+      allowlistType?: null,
+      add?: null,
+      remove?: null
+    ): EndowmentAllowlistUpdatedEventFilter;
+    EndowmentAllowlistUpdated(
       endowId?: null,
-      recipient?: null,
-      tokenAddress?: null,
-      amount?: null
-    ): DonationWithdrawnEventFilter;
+      allowlistType?: null,
+      add?: null,
+      remove?: null
+    ): EndowmentAllowlistUpdatedEventFilter;
 
-    "EndowmentClosed(uint256)"(endowId?: null): EndowmentClosedEventFilter;
-    EndowmentClosed(endowId?: null): EndowmentClosedEventFilter;
+    "EndowmentClosed(uint256,((uint32,address),uint8),uint32[])"(
+      endowId?: null,
+      beneficiary?: null,
+      relinked?: null
+    ): EndowmentClosedEventFilter;
+    EndowmentClosed(
+      endowId?: null,
+      beneficiary?: null,
+      relinked?: null
+    ): EndowmentClosedEventFilter;
 
     "EndowmentCreated(uint256,uint8)"(
       endowId?: null,
@@ -2129,11 +1906,39 @@ export interface IAccounts extends BaseContract {
       amountLiquid?: null
     ): EndowmentDepositEventFilter;
 
-    "EndowmentInvested(uint8)"(arg0?: null): EndowmentInvestedEventFilter;
-    EndowmentInvested(arg0?: null): EndowmentInvestedEventFilter;
+    "EndowmentInvested(uint256,bytes4,string,address,uint256,uint256)"(
+      endowId?: null,
+      strategy?: null,
+      network?: null,
+      token?: null,
+      lockAmt?: null,
+      liquidAmt?: null
+    ): EndowmentInvestedEventFilter;
+    EndowmentInvested(
+      endowId?: null,
+      strategy?: null,
+      network?: null,
+      token?: null,
+      lockAmt?: null,
+      liquidAmt?: null
+    ): EndowmentInvestedEventFilter;
 
-    "EndowmentRedeemed(uint8)"(arg0?: null): EndowmentRedeemedEventFilter;
-    EndowmentRedeemed(arg0?: null): EndowmentRedeemedEventFilter;
+    "EndowmentRedeemed(uint256,bytes4,string,address,uint256,uint256)"(
+      endowId?: null,
+      strategy?: null,
+      network?: null,
+      token?: null,
+      lockAmt?: null,
+      liquidAmt?: null
+    ): EndowmentRedeemedEventFilter;
+    EndowmentRedeemed(
+      endowId?: null,
+      strategy?: null,
+      network?: null,
+      token?: null,
+      lockAmt?: null,
+      liquidAmt?: null
+    ): EndowmentRedeemedEventFilter;
 
     "EndowmentSettingUpdated(uint256,string)"(
       endowId?: null,
@@ -2210,20 +2015,8 @@ export interface IAccounts extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
-    createDaoContract(
-      createdaomessage: SubDaoMessages.InstantiateMsgStruct,
-      overrides?: Overrides & { from?: string }
-    ): Promise<BigNumber>;
-
     createEndowment(
       details: AccountMessages.CreateEndowmentRequestStruct,
-      overrides?: Overrides & { from?: string }
-    ): Promise<BigNumber>;
-
-    depositDonationMatchERC20(
-      id: BigNumberish,
-      token: string,
-      amount: BigNumberish,
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
@@ -2237,6 +2030,21 @@ export interface IAccounts extends BaseContract {
     depositMatic(
       details: AccountMessages.DepositRequestStruct,
       overrides?: PayableOverrides & { from?: string }
+    ): Promise<BigNumber>;
+
+    getEndowmentBeneficiaries(
+      id: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    getWalletBeneficiaries(
+      addr: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    isDafApprovedEndowment(
+      id: BigNumberish,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     manageAllowances(
@@ -2270,15 +2078,17 @@ export interface IAccounts extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    setupDao(
+    revokeDelegate(
       id: BigNumberish,
-      details: SubDaoLib.DaoSetupStruct,
+      setting: BigNumberish,
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
-    setupDonationMatch(
+    setDelegate(
       id: BigNumberish,
-      details: AccountMessages.DonationMatchStruct,
+      setting: BigNumberish,
+      delegateAddress: string,
+      delegateExpiry: BigNumberish,
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
@@ -2344,12 +2154,17 @@ export interface IAccounts extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
-    updateDelegate(
+    updateDafApprovedEndowments(
+      add: BigNumberish[],
+      remove: BigNumberish[],
+      overrides?: Overrides & { from?: string }
+    ): Promise<BigNumber>;
+
+    updateEndowmentAllowlist(
       id: BigNumberish,
-      setting: BigNumberish,
-      action: BigNumberish,
-      delegateAddress: string,
-      delegateExpiry: BigNumberish,
+      allowlistType: BigNumberish,
+      add: string[],
+      remove: string[],
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
@@ -2386,13 +2201,6 @@ export interface IAccounts extends BaseContract {
       tokens: IAccountsDepositWithdrawEndowments.TokenInfoStruct[],
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
-
-    withdrawDonationMatchERC20(
-      id: BigNumberish,
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string }
-    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -2410,20 +2218,8 @@ export interface IAccounts extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
-    createDaoContract(
-      createdaomessage: SubDaoMessages.InstantiateMsgStruct,
-      overrides?: Overrides & { from?: string }
-    ): Promise<PopulatedTransaction>;
-
     createEndowment(
       details: AccountMessages.CreateEndowmentRequestStruct,
-      overrides?: Overrides & { from?: string }
-    ): Promise<PopulatedTransaction>;
-
-    depositDonationMatchERC20(
-      id: BigNumberish,
-      token: string,
-      amount: BigNumberish,
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
@@ -2437,6 +2233,21 @@ export interface IAccounts extends BaseContract {
     depositMatic(
       details: AccountMessages.DepositRequestStruct,
       overrides?: PayableOverrides & { from?: string }
+    ): Promise<PopulatedTransaction>;
+
+    getEndowmentBeneficiaries(
+      id: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getWalletBeneficiaries(
+      addr: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    isDafApprovedEndowment(
+      id: BigNumberish,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     manageAllowances(
@@ -2473,15 +2284,17 @@ export interface IAccounts extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    setupDao(
+    revokeDelegate(
       id: BigNumberish,
-      details: SubDaoLib.DaoSetupStruct,
+      setting: BigNumberish,
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
-    setupDonationMatch(
+    setDelegate(
       id: BigNumberish,
-      details: AccountMessages.DonationMatchStruct,
+      setting: BigNumberish,
+      delegateAddress: string,
+      delegateExpiry: BigNumberish,
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
@@ -2547,12 +2360,17 @@ export interface IAccounts extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
-    updateDelegate(
+    updateDafApprovedEndowments(
+      add: BigNumberish[],
+      remove: BigNumberish[],
+      overrides?: Overrides & { from?: string }
+    ): Promise<PopulatedTransaction>;
+
+    updateEndowmentAllowlist(
       id: BigNumberish,
-      setting: BigNumberish,
-      action: BigNumberish,
-      delegateAddress: string,
-      delegateExpiry: BigNumberish,
+      allowlistType: BigNumberish,
+      add: string[],
+      remove: string[],
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
@@ -2587,13 +2405,6 @@ export interface IAccounts extends BaseContract {
       beneficiaryAddress: string,
       beneficiaryEndowId: BigNumberish,
       tokens: IAccountsDepositWithdrawEndowments.TokenInfoStruct[],
-      overrides?: Overrides & { from?: string }
-    ): Promise<PopulatedTransaction>;
-
-    withdrawDonationMatchERC20(
-      id: BigNumberish,
-      recipient: string,
-      amount: BigNumberish,
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };

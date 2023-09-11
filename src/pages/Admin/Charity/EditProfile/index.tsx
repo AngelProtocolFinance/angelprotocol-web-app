@@ -18,7 +18,12 @@ import { toProfileUpdate } from "./update";
 
 export default function EditProfile() {
   const { id } = useAdminContext(ops);
-  const { data: profile, isLoading, isFetching, isError } = useProfileQuery(id);
+  const {
+    data: profile,
+    isLoading,
+    isFetching,
+    isError,
+  } = useProfileQuery({ endowId: id });
 
   const content =
     isLoading || isFetching ? (
@@ -73,7 +78,7 @@ function FormWithContext(props: TProfile) {
   const methods = useForm<FV>({
     defaultValues: defaults,
     resolver: yupResolver(schema),
-    context: { isEndow: props.type === "endowment" },
+    context: { isEndow: props.type === "charity" },
   });
   const tooltip = isTooltip(txResource) ? txResource : undefined;
 

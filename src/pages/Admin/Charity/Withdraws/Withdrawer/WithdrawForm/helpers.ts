@@ -2,6 +2,7 @@ import Decimal from "decimal.js";
 import { Except } from "type-fest";
 import { FV } from "./types";
 import { BridgeFees } from "types/aws";
+import { AccountType } from "types/lists";
 import { roundDownToNum } from "helpers";
 import { hasElapsed } from "helpers/admin";
 import { chainIds } from "constants/chainIds";
@@ -11,7 +12,7 @@ export const bridgeFee = (
   bridgeFees: BridgeFees
 ): number => {
   switch (destinationChain) {
-    case "binance":
+    case chainIds.binance:
       return Math.ceil(bridgeFees.binance);
     case chainIds.ethereum:
       return Math.ceil(bridgeFees.ethereum);
@@ -39,9 +40,22 @@ export const chainName = (
 
 const FEE_BASIS = 10_000;
 
-type FeeArgs = Except<FV, "beneficiaryWallet" | "amounts"> & {
+type FeeArgs = Except<
+  FV,
+  "beneficiaryEndowmentId" | "beneficiaryWallet" | "amounts"
+> & {
   withdrawAmount: number;
 };
+
+const earlyWithdrawRate =
+  (accountType: AccountType, maturityTime: number) =>
+  (amount: Decimal, bps: number): Decimal =>
+    accountType === "liquid"
+      ? new Decimal(0)
+      : //locked
+      hasElapsed(maturityTime)
+      ? new Decimal(0)
+      : amount.mul(bps).div(FEE_BASIS);
 
 export const feeData = ({
   destinationChainId,
@@ -51,8 +65,15 @@ export const feeData = ({
   bridgeFees,
   protocolFeeRates,
   maturityTime,
-  endowType,
+  beneficiaryType,
 }: FeeArgs) => {
+  /** Protocol and endowment fees does not apply for transfers to other endowments
+   *  bridge fees also doesn't apply as endow to endow transfers are on the same chain
+   */
+
+  if (beneficiaryType === "endowment") {
+    return { items: [], totalFee: 0, toReceive: withdrawAmount };
+  }
   /**
    * //RAW AMOUNT//
    * less withdrawFeeAp
@@ -74,48 +95,35 @@ export const feeData = ({
     .mul(protocolFeeRates.withdrawBps)
     .div(FEE_BASIS);
 
-  const earlyLockedWithdrawFee = (() => {
-    if (accountType === "liquid") return new Decimal(0);
+  const earlyLockedWithdrawFee = earlyWithdrawRate(accountType, maturityTime);
 
-    if (endowType === "normal") {
-      if (hasElapsed(maturityTime)) return new Decimal(0);
-      return withdrawAmountDec
-        .mul(endowFeeRates.earlyLockedWithdrawBps)
-        .div(FEE_BASIS);
-    }
-
-    return withdrawAmountDec
-      .mul(protocolFeeRates.earlyLockedWithdrawBps)
-      .div(FEE_BASIS);
-  })();
+  const earlyLockedWithdrawFeeAp = earlyLockedWithdrawFee(
+    withdrawAmountDec,
+    protocolFeeRates.earlyLockedWithdrawBps
+  );
 
   const amountLessApFees = withdrawAmountDec
     .sub(withdrawFeeAp)
-    .sub(earlyLockedWithdrawFee);
+    .sub(earlyLockedWithdrawFeeAp);
 
   const withdrawFeeEndow = amountLessApFees
     .mul(endowFeeRates.withdrawBps)
     .div(FEE_BASIS);
 
-  const toDepositAmount = amountLessApFees.sub(withdrawFeeEndow);
-
-  /** TODO: factor-in locked withdraw to beneficiary wallet
-   *  e.g fv.BeneficiaryType
-   */
-  const depositFee =
-    accountType === "locked"
-      ? toDepositAmount.mul(endowFeeRates.depositBps).div(FEE_BASIS)
-      : new Decimal(0);
+  const earlyLockedWithdrawFeeEndow = earlyLockedWithdrawFee(
+    amountLessApFees,
+    endowFeeRates.withdrawBps
+  );
 
   const _bridgeFee = bridgeFee(destinationChainId, bridgeFees);
 
   const totalFee = withdrawFeeAp
+    .add(earlyLockedWithdrawFeeAp)
     .add(withdrawFeeEndow)
-    .add(earlyLockedWithdrawFee)
-    .add(depositFee)
+    .add(earlyLockedWithdrawFeeEndow)
     .add(_bridgeFee);
 
-  const toReceive = toDepositAmount.sub(depositFee).sub(_bridgeFee);
+  const toReceive = withdrawAmountDec.sub(totalFee);
 
   type FeeItem = {
     name: string;
@@ -124,20 +132,22 @@ export const feeData = ({
   const items: FeeItem[] = [
     {
       name: "Withdraw Fee",
-      value: roundDownToNum(withdrawFeeAp.add(withdrawFeeEndow), 4),
+      value: roundDownToNum(withdrawFeeAp.add(withdrawFeeEndow), 6),
     },
     {
       name: "Early Withdraw Fee",
-      value: roundDownToNum(earlyLockedWithdrawFee),
+      value: roundDownToNum(
+        earlyLockedWithdrawFeeAp.add(earlyLockedWithdrawFeeEndow),
+        6
+      ),
     },
-    { name: "Transfer Fee", value: roundDownToNum(depositFee, 4) },
-    { name: "Bridge Fee", value: roundDownToNum(_bridgeFee, 4) },
-    { name: "To Receive", value: roundDownToNum(toReceive, 4) },
+    { name: "Bridge Fee", value: roundDownToNum(_bridgeFee, 6) },
+    { name: "To Receive", value: roundDownToNum(toReceive, 6) },
   ];
 
   return {
     items,
-    totalFee: roundDownToNum(totalFee, 4),
-    toReceive: roundDownToNum(toReceive, 4),
+    totalFee: roundDownToNum(totalFee, 6),
+    toReceive: roundDownToNum(toReceive, 6),
   };
 };

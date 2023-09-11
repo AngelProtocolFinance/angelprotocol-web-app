@@ -17,7 +17,7 @@ import MyEndowments from "./MyEndowments";
 
 export default function Details(props: WalletState) {
   const {
-    data: profile,
+    data: walletProfile,
     isLoading,
     isFetching,
     isError,
@@ -37,8 +37,11 @@ export default function Details(props: WalletState) {
             <MobileTitle className="sm:hidden" onClose={close} />
             <AdminLinks {...props} />
 
-            {!!profile?.admin?.length && (
-              <MyEndowments endowments={profile.admin} />
+            {!!walletProfile?.admin?.length && (
+              <MyEndowments
+                endowments={walletProfile.admin}
+                version={walletProfile.version}
+              />
             )}
 
             <div className="grid gap-3 p-4 border-b border-prim">
@@ -48,7 +51,8 @@ export default function Details(props: WalletState) {
             </div>
             <MyDonations address={props.address} />
             <Favourites
-              bookmarks={profile?.bookmarks}
+              version={walletProfile?.version ?? "latest"}
+              bookmarks={walletProfile?.bookmarks}
               isError={isError}
               isLoading={isLoading || isFetching}
             />

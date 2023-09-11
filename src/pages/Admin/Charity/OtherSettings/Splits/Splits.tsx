@@ -18,8 +18,6 @@ export default function Splits() {
     txResource,
     splitToLiquid,
     ignoreUserSplits,
-    allowlistedBeneficiaries,
-    allowlistedContributors,
     id,
     donationMatchActive,
     maturityTime,
@@ -32,10 +30,6 @@ export default function Splits() {
     id,
     donationMatchActive,
     maturityTime,
-    allowlistedBeneficiaries,
-    allowlistedContributors,
-    maturity_allowlist_add: [], //not included in form
-    maturity_allowlist_remove: [], //not included in form
     splitToLiquid,
     ignoreUserSplits,
   };

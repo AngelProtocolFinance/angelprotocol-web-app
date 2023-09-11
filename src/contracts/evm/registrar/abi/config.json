@@ -7,12 +7,12 @@
         "components": [
           {
             "internalType": "address",
-            "name": "indexFundContract",
+            "name": "accountsContract",
             "type": "address"
           },
           {
             "internalType": "address",
-            "name": "accountsContract",
+            "name": "apTeamMultisig",
             "type": "address"
           },
           {
@@ -22,70 +22,8 @@
           },
           {
             "internalType": "address",
-            "name": "subdaoGovContract",
+            "name": "indexFundContract",
             "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "subdaoTokenContract",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "subdaoBondingTokenContract",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "subdaoCw900Contract",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "subdaoDistributorContract",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "subdaoEmitter",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "donationMatchContract",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "donationMatchCharitesContract",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "donationMatchEmitter",
-            "type": "address"
-          },
-          {
-            "components": [
-              {
-                "internalType": "uint256",
-                "name": "max",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "min",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "defaultSplit",
-                "type": "uint256"
-              }
-            ],
-            "internalType": "struct LibAccounts.SplitDetails",
-            "name": "splitToLiquid",
-            "type": "tuple"
           },
           {
             "internalType": "address",
@@ -94,22 +32,7 @@
           },
           {
             "internalType": "address",
-            "name": "haloTokenLpContract",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
             "name": "govContract",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "collectorShare",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address",
-            "name": "charitySharesContract",
             "type": "address"
           },
           {
@@ -144,11 +67,6 @@
           },
           {
             "internalType": "address",
-            "name": "lockedWithdrawal",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
             "name": "proxyAdmin",
             "type": "address"
           },
@@ -160,11 +78,6 @@
           {
             "internalType": "address",
             "name": "wMaticAddress",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "cw900lvAddress",
             "type": "address"
           },
           {

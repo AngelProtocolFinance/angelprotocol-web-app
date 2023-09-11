@@ -26,17 +26,16 @@ import type {
   OnEvent,
 } from "../../../common";
 
+export declare namespace LibAccounts {
+  export type FeeSettingStruct = { payoutAddress: string; bps: BigNumberish };
+
+  export type FeeSettingStructOutput = [string, BigNumber] & {
+    payoutAddress: string;
+    bps: BigNumber;
+  };
+}
+
 export declare namespace LocalRegistrarLib {
-  export type AngelProtocolParamsStruct = {
-    routerAddr: string;
-    refundAddr: string;
-  };
-
-  export type AngelProtocolParamsStructOutput = [string, string] & {
-    routerAddr: string;
-    refundAddr: string;
-  };
-
   export type RebalanceParamsStruct = {
     rebalanceLiquidProfits: boolean;
     lockedRebalanceToLiquid: BigNumberish;
@@ -62,51 +61,26 @@ export declare namespace LocalRegistrarLib {
     basis: number;
   };
 
-  export type VaultParamsStruct = { Type: BigNumberish; vaultAddr: string };
-
-  export type VaultParamsStructOutput = [number, string] & {
-    Type: number;
-    vaultAddr: string;
-  };
-
   export type StrategyParamsStruct = {
     approvalState: BigNumberish;
     network: string;
-    Locked: LocalRegistrarLib.VaultParamsStruct;
-    Liquid: LocalRegistrarLib.VaultParamsStruct;
+    lockedVaultAddr: string;
+    liquidVaultAddr: string;
   };
 
-  export type StrategyParamsStructOutput = [
-    number,
-    string,
-    LocalRegistrarLib.VaultParamsStructOutput,
-    LocalRegistrarLib.VaultParamsStructOutput
-  ] & {
+  export type StrategyParamsStructOutput = [number, string, string, string] & {
     approvalState: number;
     network: string;
-    Locked: LocalRegistrarLib.VaultParamsStructOutput;
-    Liquid: LocalRegistrarLib.VaultParamsStructOutput;
+    lockedVaultAddr: string;
+    liquidVaultAddr: string;
   };
-}
 
-export declare namespace LibAccounts {
-  export type FeeSettingStruct = { payoutAddress: string; bps: BigNumberish };
-
-  export type FeeSettingStructOutput = [string, BigNumber] & {
-    payoutAddress: string;
-    bps: BigNumber;
-  };
-}
-
-export declare namespace IAccountsStrategy {
   export type NetworkInfoStruct = {
     chainId: BigNumberish;
     router: string;
     axelarGateway: string;
-    ibcChannel: string;
-    transferChannel: string;
     gasReceiver: string;
-    gasLimit: BigNumberish;
+    refundAddr: string;
   };
 
   export type NetworkInfoStructOutput = [
@@ -114,24 +88,19 @@ export declare namespace IAccountsStrategy {
     string,
     string,
     string,
-    string,
-    string,
-    BigNumber
+    string
   ] & {
     chainId: BigNumber;
     router: string;
     axelarGateway: string;
-    ibcChannel: string;
-    transferChannel: string;
     gasReceiver: string;
-    gasLimit: BigNumber;
+    refundAddr: string;
   };
 }
 
 export interface LocalRegistrarInterface extends utils.Interface {
   functions: {
     "getAccountsContractAddressByChain(string)": FunctionFragment;
-    "getAngelProtocolParams()": FunctionFragment;
     "getFeeSettingsByFeeType(uint8)": FunctionFragment;
     "getGasByToken(address)": FunctionFragment;
     "getRebalanceParams()": FunctionFragment;
@@ -139,14 +108,14 @@ export interface LocalRegistrarInterface extends utils.Interface {
     "getStrategyParamsById(bytes4)": FunctionFragment;
     "getUniswapFactoryAddress()": FunctionFragment;
     "getUniswapRouterAddress()": FunctionFragment;
+    "getVaultEmitterAddress()": FunctionFragment;
     "getVaultOperatorApproved(address)": FunctionFragment;
-    "initialize()": FunctionFragment;
+    "initialize(string)": FunctionFragment;
     "isTokenAccepted(address)": FunctionFragment;
     "owner()": FunctionFragment;
     "queryNetworkConnection(string)": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "setAccountsContractAddressByChain(string,string)": FunctionFragment;
-    "setAngelProtocolParams((address,address))": FunctionFragment;
     "setFeeSettingsByFeesType(uint8,uint256,address)": FunctionFragment;
     "setGasByToken(address,uint256)": FunctionFragment;
     "setRebalanceParams((bool,uint32,uint32,bool,uint32,uint32))": FunctionFragment;
@@ -154,15 +123,16 @@ export interface LocalRegistrarInterface extends utils.Interface {
     "setStrategyParams(bytes4,string,address,address,uint8)": FunctionFragment;
     "setTokenAccepted(address,bool)": FunctionFragment;
     "setUniswapAddresses(address,address)": FunctionFragment;
+    "setVaultEmitterAddress(address)": FunctionFragment;
     "setVaultOperatorApproved(address,bool)": FunctionFragment;
+    "thisChain()": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
-    "updateNetworkConnections(string,(uint256,address,address,string,string,address,uint256),uint8)": FunctionFragment;
+    "updateNetworkConnections(string,(uint256,address,address,address,address),uint8)": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
       | "getAccountsContractAddressByChain"
-      | "getAngelProtocolParams"
       | "getFeeSettingsByFeeType"
       | "getGasByToken"
       | "getRebalanceParams"
@@ -170,6 +140,7 @@ export interface LocalRegistrarInterface extends utils.Interface {
       | "getStrategyParamsById"
       | "getUniswapFactoryAddress"
       | "getUniswapRouterAddress"
+      | "getVaultEmitterAddress"
       | "getVaultOperatorApproved"
       | "initialize"
       | "isTokenAccepted"
@@ -177,7 +148,6 @@ export interface LocalRegistrarInterface extends utils.Interface {
       | "queryNetworkConnection"
       | "renounceOwnership"
       | "setAccountsContractAddressByChain"
-      | "setAngelProtocolParams"
       | "setFeeSettingsByFeesType"
       | "setGasByToken"
       | "setRebalanceParams"
@@ -185,7 +155,9 @@ export interface LocalRegistrarInterface extends utils.Interface {
       | "setStrategyParams"
       | "setTokenAccepted"
       | "setUniswapAddresses"
+      | "setVaultEmitterAddress"
       | "setVaultOperatorApproved"
+      | "thisChain"
       | "transferOwnership"
       | "updateNetworkConnections"
   ): FunctionFragment;
@@ -193,10 +165,6 @@ export interface LocalRegistrarInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "getAccountsContractAddressByChain",
     values: [string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getAngelProtocolParams",
-    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "getFeeSettingsByFeeType",
@@ -227,13 +195,14 @@ export interface LocalRegistrarInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "getVaultEmitterAddress",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "getVaultOperatorApproved",
     values: [string]
   ): string;
-  encodeFunctionData(
-    functionFragment: "initialize",
-    values?: undefined
-  ): string;
+  encodeFunctionData(functionFragment: "initialize", values: [string]): string;
   encodeFunctionData(
     functionFragment: "isTokenAccepted",
     values: [string]
@@ -250,10 +219,6 @@ export interface LocalRegistrarInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "setAccountsContractAddressByChain",
     values: [string, string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setAngelProtocolParams",
-    values: [LocalRegistrarLib.AngelProtocolParamsStruct]
   ): string;
   encodeFunctionData(
     functionFragment: "setFeeSettingsByFeesType",
@@ -284,24 +249,25 @@ export interface LocalRegistrarInterface extends utils.Interface {
     values: [string, string]
   ): string;
   encodeFunctionData(
+    functionFragment: "setVaultEmitterAddress",
+    values: [string]
+  ): string;
+  encodeFunctionData(
     functionFragment: "setVaultOperatorApproved",
     values: [string, boolean]
   ): string;
+  encodeFunctionData(functionFragment: "thisChain", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "transferOwnership",
     values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "updateNetworkConnections",
-    values: [string, IAccountsStrategy.NetworkInfoStruct, BigNumberish]
+    values: [string, LocalRegistrarLib.NetworkInfoStruct, BigNumberish]
   ): string;
 
   decodeFunctionResult(
     functionFragment: "getAccountsContractAddressByChain",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getAngelProtocolParams",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -333,6 +299,10 @@ export interface LocalRegistrarInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "getVaultEmitterAddress",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "getVaultOperatorApproved",
     data: BytesLike
   ): Result;
@@ -352,10 +322,6 @@ export interface LocalRegistrarInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "setAccountsContractAddressByChain",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setAngelProtocolParams",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -387,9 +353,14 @@ export interface LocalRegistrarInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "setVaultEmitterAddress",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "setVaultOperatorApproved",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "thisChain", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "transferOwnership",
     data: BytesLike
@@ -401,7 +372,6 @@ export interface LocalRegistrarInterface extends utils.Interface {
 
   events: {
     "AccountsContractStorageUpdated(string,string)": EventFragment;
-    "AngelProtocolParamsUpdated()": EventFragment;
     "FeeSettingsUpdated(uint8,uint256,address)": EventFragment;
     "GasFeeUpdated(address,uint256)": EventFragment;
     "Initialized(uint8)": EventFragment;
@@ -417,7 +387,6 @@ export interface LocalRegistrarInterface extends utils.Interface {
   getEvent(
     nameOrSignatureOrTopic: "AccountsContractStorageUpdated"
   ): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "AngelProtocolParamsUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "FeeSettingsUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "GasFeeUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
@@ -441,15 +410,6 @@ export type AccountsContractStorageUpdatedEvent = TypedEvent<
 
 export type AccountsContractStorageUpdatedEventFilter =
   TypedEventFilter<AccountsContractStorageUpdatedEvent>;
-
-export interface AngelProtocolParamsUpdatedEventObject {}
-export type AngelProtocolParamsUpdatedEvent = TypedEvent<
-  [],
-  AngelProtocolParamsUpdatedEventObject
->;
-
-export type AngelProtocolParamsUpdatedEventFilter =
-  TypedEventFilter<AngelProtocolParamsUpdatedEvent>;
 
 export interface FeeSettingsUpdatedEventObject {
   _feeType: number;
@@ -596,10 +556,6 @@ export interface LocalRegistrar extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string]>;
 
-    getAngelProtocolParams(
-      overrides?: CallOverrides
-    ): Promise<[LocalRegistrarLib.AngelProtocolParamsStructOutput]>;
-
     getFeeSettingsByFeeType(
       _feeType: BigNumberish,
       overrides?: CallOverrides
@@ -628,12 +584,15 @@ export interface LocalRegistrar extends BaseContract {
 
     getUniswapRouterAddress(overrides?: CallOverrides): Promise<[string]>;
 
+    getVaultEmitterAddress(overrides?: CallOverrides): Promise<[string]>;
+
     getVaultOperatorApproved(
       _operator: string,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
     initialize(
+      _chain: string,
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
@@ -648,8 +607,8 @@ export interface LocalRegistrar extends BaseContract {
       networkName: string,
       overrides?: CallOverrides
     ): Promise<
-      [IAccountsStrategy.NetworkInfoStructOutput] & {
-        response: IAccountsStrategy.NetworkInfoStructOutput;
+      [LocalRegistrarLib.NetworkInfoStructOutput] & {
+        response: LocalRegistrarLib.NetworkInfoStructOutput;
       }
     >;
 
@@ -660,11 +619,6 @@ export interface LocalRegistrar extends BaseContract {
     setAccountsContractAddressByChain(
       _chainName: string,
       _accountsContractAddress: string,
-      overrides?: Overrides & { from?: string }
-    ): Promise<ContractTransaction>;
-
-    setAngelProtocolParams(
-      _angelProtocolParams: LocalRegistrarLib.AngelProtocolParamsStruct,
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
@@ -713,11 +667,18 @@ export interface LocalRegistrar extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
+    setVaultEmitterAddress(
+      _vaultEmitter: string,
+      overrides?: Overrides & { from?: string }
+    ): Promise<ContractTransaction>;
+
     setVaultOperatorApproved(
       _operator: string,
       _isApproved: boolean,
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
+
+    thisChain(overrides?: CallOverrides): Promise<[string]>;
 
     transferOwnership(
       newOwner: string,
@@ -726,7 +687,7 @@ export interface LocalRegistrar extends BaseContract {
 
     updateNetworkConnections(
       networkName: string,
-      networkInfo: IAccountsStrategy.NetworkInfoStruct,
+      networkInfo: LocalRegistrarLib.NetworkInfoStruct,
       action: BigNumberish,
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
@@ -736,10 +697,6 @@ export interface LocalRegistrar extends BaseContract {
     _targetChain: string,
     overrides?: CallOverrides
   ): Promise<string>;
-
-  getAngelProtocolParams(
-    overrides?: CallOverrides
-  ): Promise<LocalRegistrarLib.AngelProtocolParamsStructOutput>;
 
   getFeeSettingsByFeeType(
     _feeType: BigNumberish,
@@ -769,12 +726,15 @@ export interface LocalRegistrar extends BaseContract {
 
   getUniswapRouterAddress(overrides?: CallOverrides): Promise<string>;
 
+  getVaultEmitterAddress(overrides?: CallOverrides): Promise<string>;
+
   getVaultOperatorApproved(
     _operator: string,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
   initialize(
+    _chain: string,
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
@@ -788,7 +748,7 @@ export interface LocalRegistrar extends BaseContract {
   queryNetworkConnection(
     networkName: string,
     overrides?: CallOverrides
-  ): Promise<IAccountsStrategy.NetworkInfoStructOutput>;
+  ): Promise<LocalRegistrarLib.NetworkInfoStructOutput>;
 
   renounceOwnership(
     overrides?: Overrides & { from?: string }
@@ -797,11 +757,6 @@ export interface LocalRegistrar extends BaseContract {
   setAccountsContractAddressByChain(
     _chainName: string,
     _accountsContractAddress: string,
-    overrides?: Overrides & { from?: string }
-  ): Promise<ContractTransaction>;
-
-  setAngelProtocolParams(
-    _angelProtocolParams: LocalRegistrarLib.AngelProtocolParamsStruct,
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
@@ -850,11 +805,18 @@ export interface LocalRegistrar extends BaseContract {
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
+  setVaultEmitterAddress(
+    _vaultEmitter: string,
+    overrides?: Overrides & { from?: string }
+  ): Promise<ContractTransaction>;
+
   setVaultOperatorApproved(
     _operator: string,
     _isApproved: boolean,
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
+
+  thisChain(overrides?: CallOverrides): Promise<string>;
 
   transferOwnership(
     newOwner: string,
@@ -863,7 +825,7 @@ export interface LocalRegistrar extends BaseContract {
 
   updateNetworkConnections(
     networkName: string,
-    networkInfo: IAccountsStrategy.NetworkInfoStruct,
+    networkInfo: LocalRegistrarLib.NetworkInfoStruct,
     action: BigNumberish,
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
@@ -873,10 +835,6 @@ export interface LocalRegistrar extends BaseContract {
       _targetChain: string,
       overrides?: CallOverrides
     ): Promise<string>;
-
-    getAngelProtocolParams(
-      overrides?: CallOverrides
-    ): Promise<LocalRegistrarLib.AngelProtocolParamsStructOutput>;
 
     getFeeSettingsByFeeType(
       _feeType: BigNumberish,
@@ -906,12 +864,14 @@ export interface LocalRegistrar extends BaseContract {
 
     getUniswapRouterAddress(overrides?: CallOverrides): Promise<string>;
 
+    getVaultEmitterAddress(overrides?: CallOverrides): Promise<string>;
+
     getVaultOperatorApproved(
       _operator: string,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    initialize(overrides?: CallOverrides): Promise<void>;
+    initialize(_chain: string, overrides?: CallOverrides): Promise<void>;
 
     isTokenAccepted(
       _tokenAddr: string,
@@ -923,18 +883,13 @@ export interface LocalRegistrar extends BaseContract {
     queryNetworkConnection(
       networkName: string,
       overrides?: CallOverrides
-    ): Promise<IAccountsStrategy.NetworkInfoStructOutput>;
+    ): Promise<LocalRegistrarLib.NetworkInfoStructOutput>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     setAccountsContractAddressByChain(
       _chainName: string,
       _accountsContractAddress: string,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    setAngelProtocolParams(
-      _angelProtocolParams: LocalRegistrarLib.AngelProtocolParamsStruct,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -983,11 +938,18 @@ export interface LocalRegistrar extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    setVaultEmitterAddress(
+      _vaultEmitter: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     setVaultOperatorApproved(
       _operator: string,
       _isApproved: boolean,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    thisChain(overrides?: CallOverrides): Promise<string>;
 
     transferOwnership(
       newOwner: string,
@@ -996,7 +958,7 @@ export interface LocalRegistrar extends BaseContract {
 
     updateNetworkConnections(
       networkName: string,
-      networkInfo: IAccountsStrategy.NetworkInfoStruct,
+      networkInfo: LocalRegistrarLib.NetworkInfoStruct,
       action: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -1011,9 +973,6 @@ export interface LocalRegistrar extends BaseContract {
       _chainName?: null,
       _accountsContractAddress?: null
     ): AccountsContractStorageUpdatedEventFilter;
-
-    "AngelProtocolParamsUpdated()"(): AngelProtocolParamsUpdatedEventFilter;
-    AngelProtocolParamsUpdated(): AngelProtocolParamsUpdatedEventFilter;
 
     "FeeSettingsUpdated(uint8,uint256,address)"(
       _feeType?: null,
@@ -1099,8 +1058,6 @@ export interface LocalRegistrar extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getAngelProtocolParams(overrides?: CallOverrides): Promise<BigNumber>;
-
     getFeeSettingsByFeeType(
       _feeType: BigNumberish,
       overrides?: CallOverrides
@@ -1127,12 +1084,17 @@ export interface LocalRegistrar extends BaseContract {
 
     getUniswapRouterAddress(overrides?: CallOverrides): Promise<BigNumber>;
 
+    getVaultEmitterAddress(overrides?: CallOverrides): Promise<BigNumber>;
+
     getVaultOperatorApproved(
       _operator: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    initialize(overrides?: Overrides & { from?: string }): Promise<BigNumber>;
+    initialize(
+      _chain: string,
+      overrides?: Overrides & { from?: string }
+    ): Promise<BigNumber>;
 
     isTokenAccepted(
       _tokenAddr: string,
@@ -1153,11 +1115,6 @@ export interface LocalRegistrar extends BaseContract {
     setAccountsContractAddressByChain(
       _chainName: string,
       _accountsContractAddress: string,
-      overrides?: Overrides & { from?: string }
-    ): Promise<BigNumber>;
-
-    setAngelProtocolParams(
-      _angelProtocolParams: LocalRegistrarLib.AngelProtocolParamsStruct,
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
@@ -1206,11 +1163,18 @@ export interface LocalRegistrar extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
+    setVaultEmitterAddress(
+      _vaultEmitter: string,
+      overrides?: Overrides & { from?: string }
+    ): Promise<BigNumber>;
+
     setVaultOperatorApproved(
       _operator: string,
       _isApproved: boolean,
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
+
+    thisChain(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
       newOwner: string,
@@ -1219,7 +1183,7 @@ export interface LocalRegistrar extends BaseContract {
 
     updateNetworkConnections(
       networkName: string,
-      networkInfo: IAccountsStrategy.NetworkInfoStruct,
+      networkInfo: LocalRegistrarLib.NetworkInfoStruct,
       action: BigNumberish,
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
@@ -1228,10 +1192,6 @@ export interface LocalRegistrar extends BaseContract {
   populateTransaction: {
     getAccountsContractAddressByChain(
       _targetChain: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    getAngelProtocolParams(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -1267,12 +1227,17 @@ export interface LocalRegistrar extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    getVaultEmitterAddress(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     getVaultOperatorApproved(
       _operator: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     initialize(
+      _chain: string,
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
@@ -1295,11 +1260,6 @@ export interface LocalRegistrar extends BaseContract {
     setAccountsContractAddressByChain(
       _chainName: string,
       _accountsContractAddress: string,
-      overrides?: Overrides & { from?: string }
-    ): Promise<PopulatedTransaction>;
-
-    setAngelProtocolParams(
-      _angelProtocolParams: LocalRegistrarLib.AngelProtocolParamsStruct,
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
@@ -1348,11 +1308,18 @@ export interface LocalRegistrar extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
+    setVaultEmitterAddress(
+      _vaultEmitter: string,
+      overrides?: Overrides & { from?: string }
+    ): Promise<PopulatedTransaction>;
+
     setVaultOperatorApproved(
       _operator: string,
       _isApproved: boolean,
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
+
+    thisChain(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
       newOwner: string,
@@ -1361,7 +1328,7 @@ export interface LocalRegistrar extends BaseContract {
 
     updateNetworkConnections(
       networkName: string,
-      networkInfo: IAccountsStrategy.NetworkInfoStruct,
+      networkInfo: LocalRegistrarLib.NetworkInfoStruct,
       action: BigNumberish,
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;

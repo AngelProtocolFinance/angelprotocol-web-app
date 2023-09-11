@@ -26,15 +26,27 @@ import type {
   OnEvent,
 } from "../../../../common";
 
-export declare namespace Staking {
+export declare namespace StakingMessages {
+  export type ConfigResponseStruct = {
+    interestRate: BigNumberish;
+    stakePeriod: BigNumberish;
+  };
+
+  export type ConfigResponseStructOutput = [BigNumber, BigNumber] & {
+    interestRate: BigNumber;
+    stakePeriod: BigNumber;
+  };
+
   export type InstantiateMsgStruct = {
     haloToken: string;
     interestRate: BigNumberish;
+    stakePeriod: BigNumberish;
   };
 
-  export type InstantiateMsgStructOutput = [string, BigNumber] & {
+  export type InstantiateMsgStructOutput = [string, BigNumber, BigNumber] & {
     haloToken: string;
     interestRate: BigNumber;
+    stakePeriod: BigNumber;
   };
 }
 
@@ -45,31 +57,26 @@ export interface StakingInterface extends utils.Interface {
     "balanceOf(address)": FunctionFragment;
     "decimals()": FunctionFragment;
     "decreaseAllowance(address,uint256)": FunctionFragment;
-    "haloToken()": FunctionFragment;
+    "getConfig()": FunctionFragment;
     "increaseAllowance(address,uint256)": FunctionFragment;
-    "initialize((address,uint256))": FunctionFragment;
-    "interestRate()": FunctionFragment;
+    "initialize((address,uint256,uint256))": FunctionFragment;
     "name()": FunctionFragment;
     "owner()": FunctionFragment;
     "pause()": FunctionFragment;
     "paused()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
-    "stake(uint256,bytes)": FunctionFragment;
-    "stakeFor(address,uint256,bytes)": FunctionFragment;
-    "stakeInfos(address,uint256)": FunctionFragment;
-    "stakeNumber(address)": FunctionFragment;
+    "stake(uint256)": FunctionFragment;
+    "stakeFor(uint256,address)": FunctionFragment;
     "supportsHistory()": FunctionFragment;
     "symbol()": FunctionFragment;
     "token()": FunctionFragment;
-    "totalStaked()": FunctionFragment;
-    "totalStakedFor(address)": FunctionFragment;
     "totalSupply()": FunctionFragment;
     "transfer(address,uint256)": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
     "unpause()": FunctionFragment;
-    "unstake(uint256,uint256,bytes)": FunctionFragment;
-    "updateInterestRate(uint256)": FunctionFragment;
+    "unstake(uint256,uint256)": FunctionFragment;
+    "updateConfig(uint256,uint256)": FunctionFragment;
   };
 
   getFunction(
@@ -79,10 +86,9 @@ export interface StakingInterface extends utils.Interface {
       | "balanceOf"
       | "decimals"
       | "decreaseAllowance"
-      | "haloToken"
+      | "getConfig"
       | "increaseAllowance"
       | "initialize"
-      | "interestRate"
       | "name"
       | "owner"
       | "pause"
@@ -90,20 +96,16 @@ export interface StakingInterface extends utils.Interface {
       | "renounceOwnership"
       | "stake"
       | "stakeFor"
-      | "stakeInfos"
-      | "stakeNumber"
       | "supportsHistory"
       | "symbol"
       | "token"
-      | "totalStaked"
-      | "totalStakedFor"
       | "totalSupply"
       | "transfer"
       | "transferFrom"
       | "transferOwnership"
       | "unpause"
       | "unstake"
-      | "updateInterestRate"
+      | "updateConfig"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -120,18 +122,14 @@ export interface StakingInterface extends utils.Interface {
     functionFragment: "decreaseAllowance",
     values: [string, BigNumberish]
   ): string;
-  encodeFunctionData(functionFragment: "haloToken", values?: undefined): string;
+  encodeFunctionData(functionFragment: "getConfig", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "increaseAllowance",
     values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "initialize",
-    values: [Staking.InstantiateMsgStruct]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "interestRate",
-    values?: undefined
+    values: [StakingMessages.InstantiateMsgStruct]
   ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
@@ -141,33 +139,17 @@ export interface StakingInterface extends utils.Interface {
     functionFragment: "renounceOwnership",
     values?: undefined
   ): string;
-  encodeFunctionData(
-    functionFragment: "stake",
-    values: [BigNumberish, BytesLike]
-  ): string;
+  encodeFunctionData(functionFragment: "stake", values: [BigNumberish]): string;
   encodeFunctionData(
     functionFragment: "stakeFor",
-    values: [string, BigNumberish, BytesLike]
+    values: [BigNumberish, string]
   ): string;
-  encodeFunctionData(
-    functionFragment: "stakeInfos",
-    values: [string, BigNumberish]
-  ): string;
-  encodeFunctionData(functionFragment: "stakeNumber", values: [string]): string;
   encodeFunctionData(
     functionFragment: "supportsHistory",
     values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
   encodeFunctionData(functionFragment: "token", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "totalStaked",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "totalStakedFor",
-    values: [string]
-  ): string;
   encodeFunctionData(
     functionFragment: "totalSupply",
     values?: undefined
@@ -187,11 +169,11 @@ export interface StakingInterface extends utils.Interface {
   encodeFunctionData(functionFragment: "unpause", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "unstake",
-    values: [BigNumberish, BigNumberish, BytesLike]
+    values: [BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "updateInterestRate",
-    values: [BigNumberish]
+    functionFragment: "updateConfig",
+    values: [BigNumberish, BigNumberish]
   ): string;
 
   decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
@@ -202,16 +184,12 @@ export interface StakingInterface extends utils.Interface {
     functionFragment: "decreaseAllowance",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "haloToken", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "getConfig", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "increaseAllowance",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "interestRate",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "pause", data: BytesLike): Result;
@@ -222,25 +200,12 @@ export interface StakingInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "stake", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "stakeFor", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "stakeInfos", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "stakeNumber",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(
     functionFragment: "supportsHistory",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "token", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "totalStaked",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "totalStakedFor",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(
     functionFragment: "totalSupply",
     data: BytesLike
@@ -257,16 +222,16 @@ export interface StakingInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "unpause", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "unstake", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "updateInterestRate",
+    functionFragment: "updateConfig",
     data: BytesLike
   ): Result;
 
   events: {
     "Approval(address,address,uint256)": EventFragment;
-    "HaloStaked(address,address,uint256,uint256,bytes)": EventFragment;
-    "HaloUnstaked(address,uint256,uint256,bytes)": EventFragment;
+    "ConfigUpdated(uint256,uint256)": EventFragment;
+    "HaloStaked(address,uint256,uint256,uint256)": EventFragment;
+    "HaloUnstaked(address,uint256,uint256)": EventFragment;
     "Initialized(uint8)": EventFragment;
-    "InterestRateUpdated(uint256)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
     "Paused(address)": EventFragment;
     "Transfer(address,address,uint256)": EventFragment;
@@ -274,10 +239,10 @@ export interface StakingInterface extends utils.Interface {
   };
 
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ConfigUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "HaloStaked"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "HaloUnstaked"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "InterestRateUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Paused"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
@@ -296,28 +261,37 @@ export type ApprovalEvent = TypedEvent<
 
 export type ApprovalEventFilter = TypedEventFilter<ApprovalEvent>;
 
+export interface ConfigUpdatedEventObject {
+  interestRate: BigNumber;
+  stakePeriod: BigNumber;
+}
+export type ConfigUpdatedEvent = TypedEvent<
+  [BigNumber, BigNumber],
+  ConfigUpdatedEventObject
+>;
+
+export type ConfigUpdatedEventFilter = TypedEventFilter<ConfigUpdatedEvent>;
+
 export interface HaloStakedEventObject {
-  caller: string;
-  targetUser: string;
+  acct: string;
   amount: BigNumber;
   total: BigNumber;
-  data: string;
+  stakeNumber: BigNumber;
 }
 export type HaloStakedEvent = TypedEvent<
-  [string, string, BigNumber, BigNumber, string],
+  [string, BigNumber, BigNumber, BigNumber],
   HaloStakedEventObject
 >;
 
 export type HaloStakedEventFilter = TypedEventFilter<HaloStakedEvent>;
 
 export interface HaloUnstakedEventObject {
-  user: string;
+  acct: string;
   amount: BigNumber;
   total: BigNumber;
-  data: string;
 }
 export type HaloUnstakedEvent = TypedEvent<
-  [string, BigNumber, BigNumber, string],
+  [string, BigNumber, BigNumber],
   HaloUnstakedEventObject
 >;
 
@@ -329,17 +303,6 @@ export interface InitializedEventObject {
 export type InitializedEvent = TypedEvent<[number], InitializedEventObject>;
 
 export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
-
-export interface InterestRateUpdatedEventObject {
-  interestRate: BigNumber;
-}
-export type InterestRateUpdatedEvent = TypedEvent<
-  [BigNumber],
-  InterestRateUpdatedEventObject
->;
-
-export type InterestRateUpdatedEventFilter =
-  TypedEventFilter<InterestRateUpdatedEvent>;
 
 export interface OwnershipTransferredEventObject {
   previousOwner: string;
@@ -428,7 +391,13 @@ export interface Staking extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
-    haloToken(overrides?: CallOverrides): Promise<[string]>;
+    getConfig(
+      overrides?: CallOverrides
+    ): Promise<
+      [StakingMessages.ConfigResponseStructOutput] & {
+        config: StakingMessages.ConfigResponseStructOutput;
+      }
+    >;
 
     increaseAllowance(
       spender: string,
@@ -437,11 +406,9 @@ export interface Staking extends BaseContract {
     ): Promise<ContractTransaction>;
 
     initialize(
-      details: Staking.InstantiateMsgStruct,
+      details: StakingMessages.InstantiateMsgStruct,
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
-
-    interestRate(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
@@ -459,45 +426,20 @@ export interface Staking extends BaseContract {
 
     stake(
       amount: BigNumberish,
-      data: BytesLike,
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     stakeFor(
-      user: string,
       amount: BigNumberish,
-      data: BytesLike,
+      user: string,
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
-
-    stakeInfos(
-      arg0: string,
-      arg1: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<
-      [boolean, BigNumber, BigNumber, BigNumber, BigNumber] & {
-        started: boolean;
-        startTs: BigNumber;
-        endTs: BigNumber;
-        amount: BigNumber;
-        claimed: BigNumber;
-      }
-    >;
-
-    stakeNumber(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     supportsHistory(overrides?: CallOverrides): Promise<[boolean]>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
     token(overrides?: CallOverrides): Promise<[string]>;
-
-    totalStaked(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    totalStakedFor(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -526,12 +468,12 @@ export interface Staking extends BaseContract {
     unstake(
       amount: BigNumberish,
       stakeId: BigNumberish,
-      data: BytesLike,
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
-    updateInterestRate(
+    updateConfig(
       _interestRate: BigNumberish,
+      _stakePeriod: BigNumberish,
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
@@ -558,7 +500,9 @@ export interface Staking extends BaseContract {
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
-  haloToken(overrides?: CallOverrides): Promise<string>;
+  getConfig(
+    overrides?: CallOverrides
+  ): Promise<StakingMessages.ConfigResponseStructOutput>;
 
   increaseAllowance(
     spender: string,
@@ -567,11 +511,9 @@ export interface Staking extends BaseContract {
   ): Promise<ContractTransaction>;
 
   initialize(
-    details: Staking.InstantiateMsgStruct,
+    details: StakingMessages.InstantiateMsgStruct,
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
-
-  interestRate(overrides?: CallOverrides): Promise<BigNumber>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
@@ -589,42 +531,20 @@ export interface Staking extends BaseContract {
 
   stake(
     amount: BigNumberish,
-    data: BytesLike,
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   stakeFor(
-    user: string,
     amount: BigNumberish,
-    data: BytesLike,
+    user: string,
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
-
-  stakeInfos(
-    arg0: string,
-    arg1: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<
-    [boolean, BigNumber, BigNumber, BigNumber, BigNumber] & {
-      started: boolean;
-      startTs: BigNumber;
-      endTs: BigNumber;
-      amount: BigNumber;
-      claimed: BigNumber;
-    }
-  >;
-
-  stakeNumber(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
   supportsHistory(overrides?: CallOverrides): Promise<boolean>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
   token(overrides?: CallOverrides): Promise<string>;
-
-  totalStaked(overrides?: CallOverrides): Promise<BigNumber>;
-
-  totalStakedFor(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -653,12 +573,12 @@ export interface Staking extends BaseContract {
   unstake(
     amount: BigNumberish,
     stakeId: BigNumberish,
-    data: BytesLike,
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
-  updateInterestRate(
+  updateConfig(
     _interestRate: BigNumberish,
+    _stakePeriod: BigNumberish,
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
@@ -685,7 +605,9 @@ export interface Staking extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    haloToken(overrides?: CallOverrides): Promise<string>;
+    getConfig(
+      overrides?: CallOverrides
+    ): Promise<StakingMessages.ConfigResponseStructOutput>;
 
     increaseAllowance(
       spender: string,
@@ -694,11 +616,9 @@ export interface Staking extends BaseContract {
     ): Promise<boolean>;
 
     initialize(
-      details: Staking.InstantiateMsgStruct,
+      details: StakingMessages.InstantiateMsgStruct,
       overrides?: CallOverrides
     ): Promise<void>;
-
-    interestRate(overrides?: CallOverrides): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
@@ -710,44 +630,19 @@ export interface Staking extends BaseContract {
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    stake(
-      amount: BigNumberish,
-      data: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    stake(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
     stakeFor(
-      user: string,
       amount: BigNumberish,
-      data: BytesLike,
+      user: string,
       overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    stakeInfos(
-      arg0: string,
-      arg1: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<
-      [boolean, BigNumber, BigNumber, BigNumber, BigNumber] & {
-        started: boolean;
-        startTs: BigNumber;
-        endTs: BigNumber;
-        amount: BigNumber;
-        claimed: BigNumber;
-      }
-    >;
-
-    stakeNumber(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    ): Promise<void>;
 
     supportsHistory(overrides?: CallOverrides): Promise<boolean>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
     token(overrides?: CallOverrides): Promise<string>;
-
-    totalStaked(overrides?: CallOverrides): Promise<BigNumber>;
-
-    totalStakedFor(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -774,12 +669,12 @@ export interface Staking extends BaseContract {
     unstake(
       amount: BigNumberish,
       stakeId: BigNumberish,
-      data: BytesLike,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    updateInterestRate(
+    updateConfig(
       _interestRate: BigNumberish,
+      _stakePeriod: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -796,41 +691,41 @@ export interface Staking extends BaseContract {
       value?: null
     ): ApprovalEventFilter;
 
-    "HaloStaked(address,address,uint256,uint256,bytes)"(
-      caller?: null,
-      targetUser?: null,
+    "ConfigUpdated(uint256,uint256)"(
+      interestRate?: null,
+      stakePeriod?: null
+    ): ConfigUpdatedEventFilter;
+    ConfigUpdated(
+      interestRate?: null,
+      stakePeriod?: null
+    ): ConfigUpdatedEventFilter;
+
+    "HaloStaked(address,uint256,uint256,uint256)"(
+      acct?: null,
       amount?: null,
       total?: null,
-      data?: null
+      stakeNumber?: null
     ): HaloStakedEventFilter;
     HaloStaked(
-      caller?: null,
-      targetUser?: null,
+      acct?: null,
       amount?: null,
       total?: null,
-      data?: null
+      stakeNumber?: null
     ): HaloStakedEventFilter;
 
-    "HaloUnstaked(address,uint256,uint256,bytes)"(
-      user?: null,
+    "HaloUnstaked(address,uint256,uint256)"(
+      acct?: null,
       amount?: null,
-      total?: null,
-      data?: null
+      total?: null
     ): HaloUnstakedEventFilter;
     HaloUnstaked(
-      user?: null,
+      acct?: null,
       amount?: null,
-      total?: null,
-      data?: null
+      total?: null
     ): HaloUnstakedEventFilter;
 
     "Initialized(uint8)"(version?: null): InitializedEventFilter;
     Initialized(version?: null): InitializedEventFilter;
-
-    "InterestRateUpdated(uint256)"(
-      interestRate?: null
-    ): InterestRateUpdatedEventFilter;
-    InterestRateUpdated(interestRate?: null): InterestRateUpdatedEventFilter;
 
     "OwnershipTransferred(address,address)"(
       previousOwner?: string | null,
@@ -882,7 +777,7 @@ export interface Staking extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
-    haloToken(overrides?: CallOverrides): Promise<BigNumber>;
+    getConfig(overrides?: CallOverrides): Promise<BigNumber>;
 
     increaseAllowance(
       spender: string,
@@ -891,11 +786,9 @@ export interface Staking extends BaseContract {
     ): Promise<BigNumber>;
 
     initialize(
-      details: Staking.InstantiateMsgStruct,
+      details: StakingMessages.InstantiateMsgStruct,
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
-
-    interestRate(overrides?: CallOverrides): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -911,34 +804,20 @@ export interface Staking extends BaseContract {
 
     stake(
       amount: BigNumberish,
-      data: BytesLike,
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     stakeFor(
-      user: string,
       amount: BigNumberish,
-      data: BytesLike,
+      user: string,
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
-
-    stakeInfos(
-      arg0: string,
-      arg1: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    stakeNumber(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     supportsHistory(overrides?: CallOverrides): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
     token(overrides?: CallOverrides): Promise<BigNumber>;
-
-    totalStaked(overrides?: CallOverrides): Promise<BigNumber>;
-
-    totalStakedFor(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -965,12 +844,12 @@ export interface Staking extends BaseContract {
     unstake(
       amount: BigNumberish,
       stakeId: BigNumberish,
-      data: BytesLike,
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
-    updateInterestRate(
+    updateConfig(
       _interestRate: BigNumberish,
+      _stakePeriod: BigNumberish,
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
@@ -1001,7 +880,7 @@ export interface Staking extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
-    haloToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getConfig(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     increaseAllowance(
       spender: string,
@@ -1010,11 +889,9 @@ export interface Staking extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     initialize(
-      details: Staking.InstantiateMsgStruct,
+      details: StakingMessages.InstantiateMsgStruct,
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
-
-    interestRate(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1032,26 +909,13 @@ export interface Staking extends BaseContract {
 
     stake(
       amount: BigNumberish,
-      data: BytesLike,
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     stakeFor(
-      user: string,
       amount: BigNumberish,
-      data: BytesLike,
+      user: string,
       overrides?: Overrides & { from?: string }
-    ): Promise<PopulatedTransaction>;
-
-    stakeInfos(
-      arg0: string,
-      arg1: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    stakeNumber(
-      arg0: string,
-      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     supportsHistory(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1059,13 +923,6 @@ export interface Staking extends BaseContract {
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     token(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    totalStaked(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    totalStakedFor(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1094,12 +951,12 @@ export interface Staking extends BaseContract {
     unstake(
       amount: BigNumberish,
       stakeId: BigNumberish,
-      data: BytesLike,
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
-    updateInterestRate(
+    updateConfig(
       _interestRate: BigNumberish,
+      _stakePeriod: BigNumberish,
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };

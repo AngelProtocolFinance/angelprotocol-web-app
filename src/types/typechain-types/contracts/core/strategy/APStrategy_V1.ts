@@ -29,14 +29,14 @@ import type {
 
 export declare namespace IStrategy {
   export type StrategyConfigStruct = {
-    strategySelector: BytesLike;
+    strategyId: BytesLike;
     baseToken: string;
     yieldToken: string;
     admin: string;
   };
 
   export type StrategyConfigStructOutput = [string, string, string, string] & {
-    strategySelector: string;
+    strategyId: string;
     baseToken: string;
     yieldToken: string;
     admin: string;
@@ -234,7 +234,7 @@ export interface APStrategy_V1 extends BaseContract {
       overrides?: CallOverrides
     ): Promise<
       [string, string, string, string] & {
-        strategySelector: string;
+        strategyId: string;
         baseToken: string;
         yieldToken: string;
         admin: string;
@@ -285,7 +285,7 @@ export interface APStrategy_V1 extends BaseContract {
     overrides?: CallOverrides
   ): Promise<
     [string, string, string, string] & {
-      strategySelector: string;
+      strategyId: string;
       baseToken: string;
       yieldToken: string;
       admin: string;
@@ -336,7 +336,7 @@ export interface APStrategy_V1 extends BaseContract {
       overrides?: CallOverrides
     ): Promise<
       [string, string, string, string] & {
-        strategySelector: string;
+        strategyId: string;
         baseToken: string;
         yieldToken: string;
         admin: string;

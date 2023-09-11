@@ -12,7 +12,13 @@ export default function Deposits() {
       <Seo title="Deposit to your AST" url={adminRoutes.deposits} />
       <h2 className="text-center font-bold text-3xl -mb-2">Deposit</h2>
       <div className={container}>
-        <Content name={"your AST"} id={id} isKYCRequired={false} />
+        <Content
+          name={"your AST"}
+          id={id}
+          isKYCRequired={false}
+          endowType={"ast"}
+          isFiscalSponsored={false}
+        />
       </div>
     </div>
   );

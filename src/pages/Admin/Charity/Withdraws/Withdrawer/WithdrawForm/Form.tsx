@@ -9,7 +9,14 @@ import Warning from "./Warning";
 import useWithdraw from "./useWithdraw";
 
 export default function Form({ classes = "" }) {
-  const { withdraw, chainName, tooltip, accountType } = useWithdraw();
+  const {
+    withdraw,
+    chainName,
+    tooltip,
+    beneficiaryType,
+    closed,
+    closingBeneficiary,
+  } = useWithdraw();
 
   return (
     <form
@@ -21,15 +28,25 @@ export default function Form({ classes = "" }) {
       <fieldset disabled={!!tooltip} className="contents">
         <Amounts />
 
-        {/** locked just goes to liquid */}
-        {accountType === "liquid" && (
-          <>
-            <Network />
-            <Beneficiary />
-          </>
+        {/** beneficiary is already set on closed accounts */}
+        {closed ? (
+          <Warning>
+            This endowment is closed. Withdraws from this account will go to{" "}
+            <span className="contents font-work text-orange">
+              Beneficiary {closingBeneficiary.type}: {closingBeneficiary.value}
+            </span>
+          </Warning>
+        ) : (
+          <Beneficiary />
         )}
 
-        <Breakdown />
+        {/** endowment beneficiaries are bound to polygon only */}
+        {beneficiaryType === "wallet" && (
+          <>
+            <Network />
+            <Breakdown />
+          </>
+        )}
 
         {chainName !== "Polygon" && (
           <Warning>
@@ -37,16 +54,19 @@ export default function Form({ classes = "" }) {
             cross-chain pipelines.
           </Warning>
         )}
-        <Warning classes="-mt-3">
-          If withdrawing to an exchange, please ensure you’re using the correct
-          blockchain network and currency.{" "}
-          <ExtLink
-            href="https://intercom.help/angel-giving/en/articles/6628134-how-do-i-remove-usdc-funds-from-my-current-account"
-            className="text-blue hover:text-blue-l2 contents"
-          >
-            More information.
-          </ExtLink>
-        </Warning>
+
+        {beneficiaryType === "wallet" && (
+          <Warning classes="-mt-3">
+            If withdrawing to an exchange, please ensure you’re using the
+            correct blockchain network and currency.{" "}
+            <ExtLink
+              href="https://intercom.help/angel-giving/en/articles/6628134-how-do-i-remove-usdc-funds-from-my-current-account"
+              className="text-blue hover:text-blue-l2 contents"
+            >
+              More information.
+            </ExtLink>
+          </Warning>
+        )}
         {tooltip ? <Tooltip tooltip={tooltip} /> : <Submit />}
       </fieldset>
     </form>

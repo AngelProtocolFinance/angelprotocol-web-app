@@ -30,7 +30,7 @@ import type {
 export declare namespace IVault {
   export type VaultConfigStruct = {
     vaultType: BigNumberish;
-    strategySelector: BytesLike;
+    strategyId: BytesLike;
     strategy: string;
     registrar: string;
     baseToken: string;
@@ -52,7 +52,7 @@ export declare namespace IVault {
     string
   ] & {
     vaultType: number;
-    strategySelector: string;
+    strategyId: string;
     strategy: string;
     registrar: string;
     baseToken: string;
@@ -77,6 +77,7 @@ export declare namespace IVault {
 
 export interface APVault_V1Interface extends utils.Interface {
   functions: {
+    "EMITTER_ADDRESS()": FunctionFragment;
     "asset()": FunctionFragment;
     "balanceOf(uint32)": FunctionFragment;
     "convertToAssets(uint256)": FunctionFragment;
@@ -113,6 +114,7 @@ export interface APVault_V1Interface extends utils.Interface {
 
   getFunction(
     nameOrSignatureOrTopic:
+      | "EMITTER_ADDRESS"
       | "asset"
       | "balanceOf"
       | "convertToAssets"
@@ -147,6 +149,10 @@ export interface APVault_V1Interface extends utils.Interface {
       | "withdraw"
   ): FunctionFragment;
 
+  encodeFunctionData(
+    functionFragment: "EMITTER_ADDRESS",
+    values?: undefined
+  ): string;
   encodeFunctionData(functionFragment: "asset", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "balanceOf",
@@ -264,6 +270,10 @@ export interface APVault_V1Interface extends utils.Interface {
     values: [BigNumberish, string, BigNumberish]
   ): string;
 
+  decodeFunctionResult(
+    functionFragment: "EMITTER_ADDRESS",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "asset", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(
@@ -349,34 +359,15 @@ export interface APVault_V1Interface extends utils.Interface {
   decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
 
   events: {
-    "Deposit(uint32,uint8,address,uint256)": EventFragment;
     "DepositERC4626(address,uint32,uint256,uint256)": EventFragment;
-    "Redeem(uint32,uint8,address,uint256)": EventFragment;
-    "RewardsHarvested(uint32[])": EventFragment;
     "Transfer(uint32,uint32,uint256)": EventFragment;
     "WithdrawERC4626(address,address,uint32,uint256,uint256)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "Deposit"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "DepositERC4626"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Redeem"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RewardsHarvested"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "WithdrawERC4626"): EventFragment;
 }
-
-export interface DepositEventObject {
-  accountId: number;
-  vaultType: number;
-  tokenDeposited: string;
-  amtDeposited: BigNumber;
-}
-export type DepositEvent = TypedEvent<
-  [number, number, string, BigNumber],
-  DepositEventObject
->;
-
-export type DepositEventFilter = TypedEventFilter<DepositEvent>;
 
 export interface DepositERC4626EventObject {
   caller: string;
@@ -390,30 +381,6 @@ export type DepositERC4626Event = TypedEvent<
 >;
 
 export type DepositERC4626EventFilter = TypedEventFilter<DepositERC4626Event>;
-
-export interface RedeemEventObject {
-  accountId: number;
-  vaultType: number;
-  tokenRedeemed: string;
-  amtRedeemed: BigNumber;
-}
-export type RedeemEvent = TypedEvent<
-  [number, number, string, BigNumber],
-  RedeemEventObject
->;
-
-export type RedeemEventFilter = TypedEventFilter<RedeemEvent>;
-
-export interface RewardsHarvestedEventObject {
-  accountIds: number[];
-}
-export type RewardsHarvestedEvent = TypedEvent<
-  [number[]],
-  RewardsHarvestedEventObject
->;
-
-export type RewardsHarvestedEventFilter =
-  TypedEventFilter<RewardsHarvestedEvent>;
 
 export interface TransferEventObject {
   from: number;
@@ -468,6 +435,8 @@ export interface APVault_V1 extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    EMITTER_ADDRESS(overrides?: CallOverrides): Promise<[string]>;
+
     asset(overrides?: CallOverrides): Promise<[string]>;
 
     balanceOf(
@@ -572,7 +541,7 @@ export interface APVault_V1 extends BaseContract {
 
     redeem(
       accountId: BigNumberish,
-      amt: BigNumberish,
+      shares: BigNumberish,
       overrides?: PayableOverrides & { from?: string }
     ): Promise<ContractTransaction>;
 
@@ -627,7 +596,7 @@ export interface APVault_V1 extends BaseContract {
         string
       ] & {
         vaultType: number;
-        strategySelector: string;
+        strategyId: string;
         strategy: string;
         registrar: string;
         baseToken: string;
@@ -645,6 +614,8 @@ export interface APVault_V1 extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
+
+  EMITTER_ADDRESS(overrides?: CallOverrides): Promise<string>;
 
   asset(overrides?: CallOverrides): Promise<string>;
 
@@ -741,7 +712,7 @@ export interface APVault_V1 extends BaseContract {
 
   redeem(
     accountId: BigNumberish,
-    amt: BigNumberish,
+    shares: BigNumberish,
     overrides?: PayableOverrides & { from?: string }
   ): Promise<ContractTransaction>;
 
@@ -786,7 +757,7 @@ export interface APVault_V1 extends BaseContract {
   ): Promise<
     [number, string, string, string, string, string, string, string, string] & {
       vaultType: number;
-      strategySelector: string;
+      strategyId: string;
       strategy: string;
       registrar: string;
       baseToken: string;
@@ -805,6 +776,8 @@ export interface APVault_V1 extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
+    EMITTER_ADDRESS(overrides?: CallOverrides): Promise<string>;
+
     asset(overrides?: CallOverrides): Promise<string>;
 
     balanceOf(
@@ -906,7 +879,7 @@ export interface APVault_V1 extends BaseContract {
 
     redeem(
       accountId: BigNumberish,
-      amt: BigNumberish,
+      shares: BigNumberish,
       overrides?: CallOverrides
     ): Promise<IVault.RedemptionResponseStructOutput>;
 
@@ -961,7 +934,7 @@ export interface APVault_V1 extends BaseContract {
         string
       ] & {
         vaultType: number;
-        strategySelector: string;
+        strategyId: string;
         strategy: string;
         registrar: string;
         baseToken: string;
@@ -981,19 +954,6 @@ export interface APVault_V1 extends BaseContract {
   };
 
   filters: {
-    "Deposit(uint32,uint8,address,uint256)"(
-      accountId?: null,
-      vaultType?: null,
-      tokenDeposited?: null,
-      amtDeposited?: null
-    ): DepositEventFilter;
-    Deposit(
-      accountId?: null,
-      vaultType?: null,
-      tokenDeposited?: null,
-      amtDeposited?: null
-    ): DepositEventFilter;
-
     "DepositERC4626(address,uint32,uint256,uint256)"(
       caller?: null,
       owner?: null,
@@ -1006,24 +966,6 @@ export interface APVault_V1 extends BaseContract {
       assets?: null,
       shares?: null
     ): DepositERC4626EventFilter;
-
-    "Redeem(uint32,uint8,address,uint256)"(
-      accountId?: null,
-      vaultType?: null,
-      tokenRedeemed?: null,
-      amtRedeemed?: null
-    ): RedeemEventFilter;
-    Redeem(
-      accountId?: null,
-      vaultType?: null,
-      tokenRedeemed?: null,
-      amtRedeemed?: null
-    ): RedeemEventFilter;
-
-    "RewardsHarvested(uint32[])"(
-      accountIds?: null
-    ): RewardsHarvestedEventFilter;
-    RewardsHarvested(accountIds?: null): RewardsHarvestedEventFilter;
 
     "Transfer(uint32,uint32,uint256)"(
       from?: null,
@@ -1049,6 +991,8 @@ export interface APVault_V1 extends BaseContract {
   };
 
   estimateGas: {
+    EMITTER_ADDRESS(overrides?: CallOverrides): Promise<BigNumber>;
+
     asset(overrides?: CallOverrides): Promise<BigNumber>;
 
     balanceOf(
@@ -1143,7 +1087,7 @@ export interface APVault_V1 extends BaseContract {
 
     redeem(
       accountId: BigNumberish,
-      amt: BigNumberish,
+      shares: BigNumberish,
       overrides?: PayableOverrides & { from?: string }
     ): Promise<BigNumber>;
 
@@ -1194,6 +1138,8 @@ export interface APVault_V1 extends BaseContract {
   };
 
   populateTransaction: {
+    EMITTER_ADDRESS(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     asset(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     balanceOf(
@@ -1293,7 +1239,7 @@ export interface APVault_V1 extends BaseContract {
 
     redeem(
       accountId: BigNumberish,
-      amt: BigNumberish,
+      shares: BigNumberish,
       overrides?: PayableOverrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 

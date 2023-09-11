@@ -29,6 +29,7 @@ export default function Donater({
     token_id: t.symbol,
     balance: Number.MAX_VALUE,
     type: "fiat",
+    coingecko_denom: "",
   }));
 
   const _tokens: TWA[] = isFiat(wallet)
@@ -45,7 +46,7 @@ export default function Donater({
   const methods = useForm<DonateValues>({
     mode: "onChange",
     reValidateMode: "onChange",
-    defaultValues: state.details || {
+    values: state.details || {
       token: initCoin,
       pctLiquidSplit: liquidPct,
 

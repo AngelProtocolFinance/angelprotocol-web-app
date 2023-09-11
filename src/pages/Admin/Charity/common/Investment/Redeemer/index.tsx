@@ -17,6 +17,7 @@ export default function Redeemer() {
     type: "juno-native",
     amount: "0",
     balance: 0,
+    coingecko_denom: "",
   };
 
   const methods = useForm<FormValues>({

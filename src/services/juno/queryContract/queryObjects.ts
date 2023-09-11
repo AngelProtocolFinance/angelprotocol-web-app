@@ -8,10 +8,7 @@ import {
   toSplit,
 } from "./decoded-types";
 import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
-import {
-  AccountMessages,
-  AccountStorage,
-} from "types/typechain-types/contracts/core/accounts/interfaces/IAccounts";
+import { AccountMessages } from "types/typechain-types/contracts/core/accounts/interfaces/IAccounts";
 import {
   IIndexFund,
   IndexFundStorage,
@@ -21,12 +18,10 @@ import {
   LibAccounts as RegistrarLibAccounts,
 } from "types/typechain-types/contracts/core/registrar/LocalRegistrar";
 import { RegistrarStorage } from "types/typechain-types/contracts/core/registrar/interfaces/IRegistrar";
-import { DecodedApplicationProposal } from "types/typechain-types/custom";
 import { accounts } from "contracts/evm/Account";
 import { erc20 } from "contracts/evm/ERC20";
 import { giftCard } from "contracts/evm/gift-card";
 import { indexFund } from "contracts/evm/index-fund";
-import { multisig } from "contracts/evm/multisig";
 import { registrar } from "contracts/evm/registrar";
 import { toTuple } from "helpers";
 
@@ -70,36 +65,21 @@ export const queryObjects: {
       const d: RegistrarStorage.ConfigStructOutput =
         registrar.decodeFunctionResult("queryConfig", result)[0];
       return {
-        indexFundContract: d.indexFundContract.toLowerCase(),
         accountsContract: d.accountsContract.toLowerCase(),
+        apTeamMultisig: d.apTeamMultisig.toLowerCase(),
         treasury: d.treasury.toLowerCase(),
-        subdaoGovContract: d.subdaoGovContract.toLowerCase(),
-        subdaoTokenContract: d.subdaoTokenContract.toLowerCase(),
-        subdaoBondingTokenContract: d.subdaoBondingTokenContract.toLowerCase(),
-        subdaoCw900Contract: d.subdaoCw900Contract.toLowerCase(),
-        subdaoDistributorContract: d.subdaoDistributorContract.toLowerCase(),
-        subdaoEmitter: d.subdaoEmitter.toLowerCase(),
-        donationMatchContract: d.donationMatchContract.toLowerCase(),
-        donationMatchCharitesContract:
-          d.donationMatchCharitesContract.toLowerCase(),
-        donationMatchEmitter: d.donationMatchEmitter.toLowerCase(),
-        splitToLiquid: toSplit(d.splitToLiquid),
+        indexFundContract: d.indexFundContract.toLowerCase(),
         haloToken: d.haloToken.toLowerCase(),
-        haloTokenLpContract: d.haloTokenLpContract.toLowerCase(),
         govContract: d.govContract.toLowerCase(),
-        collectorShare: d.collectorShare.toNumber(),
-        charitySharesContract: d.charitySharesContract.toLowerCase(),
         fundraisingContract: d.fundraisingContract.toLowerCase(),
         uniswapRouter: d.uniswapRouter.toLowerCase(),
-        uniswapFactory: d.uniswapFactory.toLocaleLowerCase(),
+        uniswapFactory: d.uniswapFactory.toLowerCase(),
         multisigFactory: d.multisigFactory.toLowerCase(),
         multisigEmitter: d.multisigEmitter.toLowerCase(),
         charityApplications: d.charityApplications.toLowerCase(),
-        lockedWithdrawal: d.lockedWithdrawal.toLowerCase(),
         proxyAdmin: d.proxyAdmin.toLowerCase(),
         usdcAddress: d.usdcAddress.toLowerCase(),
         wMaticAddress: d.wMaticAddress.toLowerCase(),
-        cw900lvAddress: d.cw900lvAddress.toLowerCase(),
         gasFwdFactory: d.gasFwdFactory.toLowerCase(),
       };
     },
@@ -110,14 +90,18 @@ export const queryObjects: {
         switch (type) {
           case "Harvest":
             return 1;
-          case "WithdrawCharity":
+          case "Deposit":
             return 2;
-          case "WithdrawNormal":
+          case "DepositCharity":
             return 3;
-          case "EarlyLockedWithdrawCharity":
+          case "Withdraw":
             return 4;
-          case "EarlyLockedWithdrawNormal":
+          case "WithdrawCharity":
             return 5;
+          case "EarlyLockedWithdraw":
+            return 6;
+          case "EarlyLockedWithdrawCharity":
+            return 7;
           default: //Default
             return 0;
         }
@@ -198,47 +182,11 @@ export const queryObjects: {
     },
   ],
 
-  /** multisig */
-
-  "multisig/review.is-confirmed": [
-    ({ id, addr }) =>
-      multisig.encodeFunctionData("getProposalConfirmationStatus", [id, addr]),
-    (result) =>
-      multisig.decodeFunctionResult("getProposalConfirmationStatus", result)[0],
-  ],
-  "multisig/review.proposal": [
-    ({ id }) => multisig.encodeFunctionData("proposals", [id]),
-    (result) => {
-      const d = multisig.decodeFunctionResult(
-        "proposals",
-        result
-      ) as DecodedApplicationProposal;
-
-      return {
-        //abi is tuple only
-        executed: d[4],
-        expiry: d[3].toNumber(),
-      };
-    },
-  ],
-  "multisig/review.prop-confirms": [
-    ({ id }) =>
-      multisig.encodeFunctionData("getProposalConfirmationCount", [id]),
-    (result) => {
-      const d: BigNumber = multisig.decodeFunctionResult(
-        "getProposalConfirmationCount",
-        result
-      )[0];
-
-      return d.toNumber();
-    },
-  ],
-
   /** account */
   "accounts.endowment": [
     ({ id }) => accounts.encodeFunctionData("queryEndowmentDetails", [id]),
     (result) => {
-      const d: AccountStorage.EndowmentStructOutput =
+      const d: AccountMessages.EndowmentResponseStructOutput =
         accounts.decodeFunctionResult("queryEndowmentDetails", result)[0];
 
       const controller = d.settingsController;
@@ -308,10 +256,9 @@ export const queryObjects: {
         closingBeneficiary: {
           data: {
             endowId: bene.data.endowId,
-            fundId: bene.data.fundId.toNumber(),
             addr: bene.data.addr.toLowerCase(),
           },
-          enumData: bene.enumData as any /** 0 | 1 | 2 | 3 */,
+          enumData: bene.enumData as any /** 0 | 1 | 2 */,
         },
       };
     },
@@ -325,5 +272,10 @@ export const queryObjects: {
       )[0];
       return d.toString();
     },
+  ],
+  "accounts.is-daf": [
+    ({ id }) => accounts.encodeFunctionData("isDafApprovedEndowment", [id]),
+    (result) =>
+      accounts.decodeFunctionResult("isDafApprovedEndowment", result)[0],
   ],
 };

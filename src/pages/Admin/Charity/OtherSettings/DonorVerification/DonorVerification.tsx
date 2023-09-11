@@ -17,7 +17,7 @@ import ChangeSettingsPrompt from "./Prompt";
 
 export default function DonorVerification() {
   const { id } = useAdminContext<"charity">();
-  const queryState = useProfileQuery(id, { skip: id === 0 });
+  const queryState = useProfileQuery({ endowId: id }, { skip: id === 0 });
 
   return (
     <>

@@ -39,8 +39,15 @@ function Dashboard() {
     );
   };
 
-  const { documentation, status } = data;
+  const { status, documentation } = data;
   const isStepDisabled = isSubmitting || status === "Under Review";
+
+  if (
+    documentation.isAuthorizedToReceiveTaxDeductibleDonations === "No" &&
+    !documentation.signedFiscalSponsorshipAgreement
+  ) {
+    return <Navigate to={`../../${routes.sign_notice}`} state={data} />;
+  }
 
   if (status === "Active") {
     return <Navigate to={`../../${routes.success}`} state={data} />;
@@ -51,15 +58,11 @@ function Dashboard() {
       <h3 className="text-lg mb-2">Summary</h3>
       <p className="text-sm mb-8">
         {status === "Inactive" && //keep bottom margin
-          "Please confirm that each step has been correctly completed so that your organization can be properly registered."}
+          "If you are happy with the details you have submitted, click continue. If you wish to check, click update as required."}
       </p>
 
       <Step num={1} disabled={isStepDisabled} />
-      <Step
-        num={2}
-        disabled={isStepDisabled}
-        status={`Level ${documentation.tier}`}
-      />
+      <Step num={2} disabled={isStepDisabled} />
       <Step num={3} disabled={isStepDisabled} />
 
       <EndowmentStatus

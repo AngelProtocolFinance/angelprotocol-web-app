@@ -10,8 +10,6 @@ import { Asset } from "components/registration";
 export type InitReg = {
   reference: string;
   email: string;
-  isEmailVerified: boolean;
-  lastVerified: string; // ISO string
 };
 
 //STEP 1
@@ -26,6 +24,7 @@ export type ContactPerson = {
   orgName: string;
   role: ContactRoles;
   otherRole: string;
+  referralCode: string;
 
   referralMethod: ReferralMethods;
   otherReferralMethod: string;
@@ -34,29 +33,29 @@ export type ContactPerson = {
 
 //STEP 2
 export type Documentation = {
-  //level1
+  //registrant identity
   proofOfIdentity: Asset;
+
+  //organization details
+  ein: string;
   proofOfRegistration: Asset;
   website: string;
   sdgs: OptionType<UNSDG_NUMS>[];
 
-  //level 2
-  financialStatements: Asset;
-
-  //level3
-  auditedFinancialReports: Asset;
-  isKYCRequired: "Yes" | "No";
-
-  cashEligible: boolean;
-  //so user won't click again on resume
-  hasAuthority: boolean;
   hasAgreedToTerms: boolean;
   tier: EndowmentTierNum;
 
   hqCountry: Country;
   endowDesignation: OptionType<string>;
-  // general info
   activeInCountries: OptionType<string>[];
+  isAuthorizedToReceiveTaxDeductibleDonations: "Yes" | "No";
+  fiscalSponsorshipAgreementSigningURL: string;
+  signedFiscalSponsorshipAgreement: string;
+
+  //others
+  isAnonymousDonationsAllowed: "Yes" | "No";
+  cashEligible: boolean;
+  hasAuthority: boolean;
 };
 
 //STEP 3

@@ -33,7 +33,7 @@ export default function Card({
         <BookmarkBtn endowId={id} />
       </div>
       <Link
-        to={`${appRoutes.profile}/${id}`}
+        to={`${appRoutes.marketplace}/${id}`}
         className="grid grid-rows-[auto_1fr] h-full"
       >
         <Image

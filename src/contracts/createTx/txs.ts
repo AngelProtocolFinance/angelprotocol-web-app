@@ -16,15 +16,18 @@ export const txs: { [T in TxType]: (args: TxArgs<T>) => string } = {
     accounts.encodeFunctionData("updateEndowmentController", [toTuple(update)]),
   "accounts.update-settings": (update) =>
     accounts.encodeFunctionData("updateEndowmentSettings", [toTuple(update)]),
+  "accounts.update-allowlist": (update) =>
+    accounts.encodeFunctionData("updateEndowmentAllowlist", toTuple(update)),
   "accounts.update-fee-settings": (update) =>
     accounts.encodeFunctionData("updateFeeSettings", [toTuple(update)]),
   "accounts.deposit-erc20": (args) =>
     accounts.encodeFunctionData("depositERC20", toTuple(args)),
   "accounts.withdraw": (args) =>
     accounts.encodeFunctionData("withdraw", toTuple(args)),
-  "accounts.close": () => "",
   "accounts.invest-v2": (payload) =>
     accounts.encodeFunctionData("strategyInvest", toTuple(payload)), //future
+  "accounts.close": (args) =>
+    accounts.encodeFunctionData("closeEndowment", toTuple(args)),
   "accounts.invest": () => "", //future
   "accounts.redeem": () => "", //future
 

@@ -1,7 +1,7 @@
 import {
   AdminResource,
-  CharityApplication,
   EndowBalance,
+  EndowmentState,
   IERC20,
   WithdrawData,
 } from "../../types";
@@ -10,8 +10,7 @@ import { AcceptedTokens, AccountType } from "types/contracts";
 import { MultisigOwnersRes, MultisigRes } from "types/subgraph";
 import { version as v } from "services/helpers";
 import { IS_AST, IS_TEST } from "constants/env";
-import { APIs } from "constants/urls";
-import { GRAPHQL_ENDPOINT } from "../../constants";
+import { APIs, GRAPHQL_ENDPOINT } from "constants/urls";
 import { junoApi } from "../index";
 import { queryContract } from "../queryContract";
 import { multisigRecordId } from "./constants";
@@ -42,7 +41,7 @@ export const customApi = junoApi.injectEndpoints({
       providesTags: ["accounts.endowment", "multisig-subgraph"],
       async queryFn({ endowmentId = "" }) {
         const [recordId, type] = multisigRecordId(endowmentId);
-        const [{ multiSig: m }, endowment] = await Promise.all([
+        const [{ multiSig: m }, endowment, stateRes] = await Promise.all([
           querySubgraph<{ multiSig: MultisigRes }>(`{
             multiSig(id: "${recordId}") {
               id
@@ -59,8 +58,29 @@ export const customApi = junoApi.injectEndpoints({
           }`),
           typeof recordId === "number"
             ? queryContract("accounts.endowment", { id: recordId })
-            : Promise.resolve({}),
+            : null,
+          typeof recordId === "number"
+            ? queryContract("accounts.state", { id: recordId })
+            : null,
         ]);
+
+        const state: EndowmentState | null = stateRes
+          ? {
+              closed: stateRes.closingEndowment,
+              closingBeneficiary: (() => {
+                const {
+                  enumData,
+                  data: { addr, endowId },
+                } = stateRes.closingBeneficiary;
+                return {
+                  type: (["endowment", "wallet", "treasury"] as const)[
+                    enumData
+                  ],
+                  value: [endowId.toString(), addr][enumData],
+                };
+              })(),
+            }
+          : null;
 
         const resource: AdminResource = {
           type: type as any,
@@ -72,7 +92,8 @@ export const customApi = junoApi.injectEndpoints({
             requireExecution: m.requireExecution,
             duration: +m.transactionExpiry,
           },
-          ...endowment,
+          ...(endowment || {}),
+          ...(state || {}),
         };
         return { data: resource };
       },
@@ -85,7 +106,7 @@ export const customApi = junoApi.injectEndpoints({
     withdrawData: builder.query<WithdrawData, { id: number }>({
       providesTags: ["accounts.token-balance"],
       queryFn: async ({ id }) => {
-        const bridgeFees = fetch(
+        const bridgeFeesPromise = fetch(
           APIs.apes + `/${v(2)}/axelar-bridge-fees`
         ).then<BridgeFeesRes>((res) => {
           if (!res.ok) throw new Error("Failed to get fees");
@@ -94,59 +115,33 @@ export const customApi = junoApi.injectEndpoints({
 
         const [
           balances,
-          fees,
+          bridgeFees,
           earlyLockedWithdrawFeeSetting,
           withdrawFeeSetting,
         ] = await Promise.all([
           endowBalance(id),
-          bridgeFees,
+          bridgeFeesPromise,
           queryContract("registrar.fee-setting", {
-            type: IS_AST
-              ? "EarlyLockedWithdrawNormal"
-              : "EarlyLockedWithdrawCharity",
+            type: IS_AST ? "EarlyLockedWithdraw" : "EarlyLockedWithdrawCharity",
           }),
           queryContract("registrar.fee-setting", {
-            type: IS_AST ? "WithdrawNormal" : "WithdrawCharity",
+            type: IS_AST ? "Withdraw" : "WithdrawCharity",
           }),
         ]);
+
         return {
           data: {
             balances,
             //juno field not present in /staging - fill for consistent type definition
             bridgeFees: IS_TEST
-              ? { ...fees["withdraw"], juno: 0 }
-              : fees["withdraw"],
+              ? { ...bridgeFees["withdraw"], juno: 0 }
+              : bridgeFees["withdraw"],
             protocolFeeRates: {
               withdrawBps: withdrawFeeSetting.bps,
               earlyLockedWithdrawBps: earlyLockedWithdrawFeeSetting.bps,
             },
           },
         };
-      },
-    }),
-
-    application: builder.query<
-      CharityApplication,
-      { id: number; user?: string }
-    >({
-      providesTags: [
-        "multisig/review.prop-confirms",
-        "multisig/review.proposal",
-        "multisig/review.is-confirmed",
-      ],
-      async queryFn({ id, user }) {
-        const [confirmations, proposal, userConfirmed] = await Promise.all([
-          queryContract("multisig/review.prop-confirms", { id }),
-          queryContract("multisig/review.proposal", { id }),
-          user
-            ? queryContract("multisig/review.is-confirmed", {
-                id,
-                addr: user,
-              })
-            : false,
-        ]);
-
-        return { data: { ...proposal, confirmations, userConfirmed } };
       },
     }),
   }),
@@ -180,7 +175,6 @@ export const {
   useAdminResourceQuery,
   useEndowBalanceQuery,
   useWithdrawDataQuery,
-  useApplicationQuery,
 } = customApi;
 
 type Result<T> = { data: T } | { errors: unknown };

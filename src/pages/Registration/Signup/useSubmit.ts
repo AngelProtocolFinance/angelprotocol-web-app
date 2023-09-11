@@ -4,7 +4,7 @@ import { InitReg } from "../types";
 import { FormValues } from "./types";
 import { useNewApplicationMutation } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
-import { handleMutationResult } from "helpers";
+import { storeRegistrationReference } from "helpers";
 import routes from "../routes";
 
 export default function useSubmit() {
@@ -17,15 +17,17 @@ export default function useSubmit() {
   const navigate = useNavigate();
 
   async function onSubmit({ email }: FormValues) {
-    handleMutationResult(await register({ email }), handleError, (res) => {
+    try {
+      const res = await register({ email }).unwrap();
       const state: InitReg = {
         email: res.ContactPerson.Email,
         reference: res.ContactPerson.PK,
-        isEmailVerified: false,
-        lastVerified: res.ContactPerson.EmailVerificationLastSentDate,
       };
-      navigate(routes.confirmEmail, { state });
-    });
+      storeRegistrationReference(state.reference);
+      navigate(routes.welcome, { state });
+    } catch (err) {
+      handleError(err);
+    }
   }
 
   return { submit: handleSubmit(onSubmit), isSubmitting };

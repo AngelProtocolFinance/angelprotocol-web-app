@@ -22,33 +22,6 @@ import type {
   OnEvent,
 } from "../../../../common";
 
-export declare namespace LocalRegistrarLib {
-  export type RebalanceParamsStruct = {
-    rebalanceLiquidProfits: boolean;
-    lockedRebalanceToLiquid: BigNumberish;
-    interestDistribution: BigNumberish;
-    lockedPrincipleToLiquid: boolean;
-    principleDistribution: BigNumberish;
-    basis: BigNumberish;
-  };
-
-  export type RebalanceParamsStructOutput = [
-    boolean,
-    number,
-    number,
-    boolean,
-    number,
-    number
-  ] & {
-    rebalanceLiquidProfits: boolean;
-    lockedRebalanceToLiquid: number;
-    interestDistribution: number;
-    lockedPrincipleToLiquid: boolean;
-    principleDistribution: number;
-    basis: number;
-  };
-}
-
 export declare namespace AccountMessages {
   export type UpdateEndowmentDetailsRequestStruct = {
     id: BigNumberish;
@@ -57,7 +30,6 @@ export declare namespace AccountMessages {
     sdgs: BigNumberish[];
     logo: string;
     image: string;
-    rebalance: LocalRegistrarLib.RebalanceParamsStruct;
   };
 
   export type UpdateEndowmentDetailsRequestStructOutput = [
@@ -66,8 +38,7 @@ export declare namespace AccountMessages {
     string,
     BigNumber[],
     string,
-    string,
-    LocalRegistrarLib.RebalanceParamsStructOutput
+    string
   ] & {
     id: number;
     owner: string;
@@ -75,31 +46,36 @@ export declare namespace AccountMessages {
     sdgs: BigNumber[];
     logo: string;
     image: string;
-    rebalance: LocalRegistrarLib.RebalanceParamsStructOutput;
   };
 }
 
 export interface IAccountsUpdateEndowmentsInterface extends utils.Interface {
   functions: {
+    "revokeDelegate(uint32,uint8)": FunctionFragment;
+    "setDelegate(uint32,uint8,address,uint256)": FunctionFragment;
     "updateAcceptedToken(uint32,address,address,bool)": FunctionFragment;
-    "updateDelegate(uint32,uint8,uint8,address,uint256)": FunctionFragment;
-    "updateEndowmentDetails((uint32,address,string,uint256[],string,string,(bool,uint32,uint32,bool,uint32,uint32)))": FunctionFragment;
+    "updateEndowmentDetails((uint32,address,string,uint256[],string,string))": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
+      | "revokeDelegate"
+      | "setDelegate"
       | "updateAcceptedToken"
-      | "updateDelegate"
       | "updateEndowmentDetails"
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "updateAcceptedToken",
-    values: [BigNumberish, string, string, boolean]
+    functionFragment: "revokeDelegate",
+    values: [BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "updateDelegate",
-    values: [BigNumberish, BigNumberish, BigNumberish, string, BigNumberish]
+    functionFragment: "setDelegate",
+    values: [BigNumberish, BigNumberish, string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "updateAcceptedToken",
+    values: [BigNumberish, string, string, boolean]
   ): string;
   encodeFunctionData(
     functionFragment: "updateEndowmentDetails",
@@ -107,11 +83,15 @@ export interface IAccountsUpdateEndowmentsInterface extends utils.Interface {
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "updateAcceptedToken",
+    functionFragment: "revokeDelegate",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "updateDelegate",
+    functionFragment: "setDelegate",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "updateAcceptedToken",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -149,20 +129,25 @@ export interface IAccountsUpdateEndowments extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    revokeDelegate(
+      id: BigNumberish,
+      setting: BigNumberish,
+      overrides?: Overrides & { from?: string }
+    ): Promise<ContractTransaction>;
+
+    setDelegate(
+      id: BigNumberish,
+      setting: BigNumberish,
+      delegateAddress: string,
+      delegateExpiry: BigNumberish,
+      overrides?: Overrides & { from?: string }
+    ): Promise<ContractTransaction>;
+
     updateAcceptedToken(
       endowId: BigNumberish,
       tokenAddr: string,
       priceFeedAddr: string,
       tokenStatus: boolean,
-      overrides?: Overrides & { from?: string }
-    ): Promise<ContractTransaction>;
-
-    updateDelegate(
-      id: BigNumberish,
-      setting: BigNumberish,
-      action: BigNumberish,
-      delegateAddress: string,
-      delegateExpiry: BigNumberish,
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
@@ -172,20 +157,25 @@ export interface IAccountsUpdateEndowments extends BaseContract {
     ): Promise<ContractTransaction>;
   };
 
+  revokeDelegate(
+    id: BigNumberish,
+    setting: BigNumberish,
+    overrides?: Overrides & { from?: string }
+  ): Promise<ContractTransaction>;
+
+  setDelegate(
+    id: BigNumberish,
+    setting: BigNumberish,
+    delegateAddress: string,
+    delegateExpiry: BigNumberish,
+    overrides?: Overrides & { from?: string }
+  ): Promise<ContractTransaction>;
+
   updateAcceptedToken(
     endowId: BigNumberish,
     tokenAddr: string,
     priceFeedAddr: string,
     tokenStatus: boolean,
-    overrides?: Overrides & { from?: string }
-  ): Promise<ContractTransaction>;
-
-  updateDelegate(
-    id: BigNumberish,
-    setting: BigNumberish,
-    action: BigNumberish,
-    delegateAddress: string,
-    delegateExpiry: BigNumberish,
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
@@ -195,20 +185,25 @@ export interface IAccountsUpdateEndowments extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
+    revokeDelegate(
+      id: BigNumberish,
+      setting: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setDelegate(
+      id: BigNumberish,
+      setting: BigNumberish,
+      delegateAddress: string,
+      delegateExpiry: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     updateAcceptedToken(
       endowId: BigNumberish,
       tokenAddr: string,
       priceFeedAddr: string,
       tokenStatus: boolean,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    updateDelegate(
-      id: BigNumberish,
-      setting: BigNumberish,
-      action: BigNumberish,
-      delegateAddress: string,
-      delegateExpiry: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -221,20 +216,25 @@ export interface IAccountsUpdateEndowments extends BaseContract {
   filters: {};
 
   estimateGas: {
+    revokeDelegate(
+      id: BigNumberish,
+      setting: BigNumberish,
+      overrides?: Overrides & { from?: string }
+    ): Promise<BigNumber>;
+
+    setDelegate(
+      id: BigNumberish,
+      setting: BigNumberish,
+      delegateAddress: string,
+      delegateExpiry: BigNumberish,
+      overrides?: Overrides & { from?: string }
+    ): Promise<BigNumber>;
+
     updateAcceptedToken(
       endowId: BigNumberish,
       tokenAddr: string,
       priceFeedAddr: string,
       tokenStatus: boolean,
-      overrides?: Overrides & { from?: string }
-    ): Promise<BigNumber>;
-
-    updateDelegate(
-      id: BigNumberish,
-      setting: BigNumberish,
-      action: BigNumberish,
-      delegateAddress: string,
-      delegateExpiry: BigNumberish,
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
@@ -245,20 +245,25 @@ export interface IAccountsUpdateEndowments extends BaseContract {
   };
 
   populateTransaction: {
+    revokeDelegate(
+      id: BigNumberish,
+      setting: BigNumberish,
+      overrides?: Overrides & { from?: string }
+    ): Promise<PopulatedTransaction>;
+
+    setDelegate(
+      id: BigNumberish,
+      setting: BigNumberish,
+      delegateAddress: string,
+      delegateExpiry: BigNumberish,
+      overrides?: Overrides & { from?: string }
+    ): Promise<PopulatedTransaction>;
+
     updateAcceptedToken(
       endowId: BigNumberish,
       tokenAddr: string,
       priceFeedAddr: string,
       tokenStatus: boolean,
-      overrides?: Overrides & { from?: string }
-    ): Promise<PopulatedTransaction>;
-
-    updateDelegate(
-      id: BigNumberish,
-      setting: BigNumberish,
-      action: BigNumberish,
-      delegateAddress: string,
-      delegateExpiry: BigNumberish,
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 

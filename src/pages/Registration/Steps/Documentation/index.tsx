@@ -18,19 +18,23 @@ function Documentation() {
           ...(({ tier, ...doc }) => doc)(doc),
         }
       : {
+          ein: "",
           proofOfIdentity: genFileAsset([]),
           proofOfRegistration: genFileAsset([]),
-          financialStatements: genFileAsset([]),
-          auditedFinancialReports: genFileAsset([]),
           website: "",
-          hasAuthority: false,
-          hasAgreedToTerms: false,
-          isKYCRequired: "No",
+
           sdgs: [],
           cashEligible: false,
           hqCountry: { name: "", flag: "", code: "" },
           endowDesignation: { value: "", label: "" },
           activeInCountries: [],
+          isAuthorizedToReceiveTaxDeductibleDonations: "Yes",
+          signedFiscalSponsorshipAgreement: "",
+          fiscalSponsorshipAgreementSigningURL: "",
+
+          hasAuthority: false,
+          hasAgreedToTerms: false,
+          isAnonymousDonationsAllowed: "Yes",
         },
   });
 

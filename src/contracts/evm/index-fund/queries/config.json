@@ -7,22 +7,12 @@
         "components": [
           {
             "internalType": "address",
-            "name": "owner",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
             "name": "registrarContract",
             "type": "address"
           },
           {
             "internalType": "uint256",
             "name": "fundRotation",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "fundMemberLimit",
             "type": "uint256"
           },
           {

@@ -10,7 +10,7 @@ import Content from "./Content";
 export default function Donate() {
   const { id } = useParams<{ id: string }>();
   const numId = idParamToNum(id);
-  const queryState = useProfileQuery(numId, { skip: numId === 0 });
+  const queryState = useProfileQuery({ endowId: numId }, { skip: numId === 0 });
 
   return (
     <section className="grid content-start w-full font-work min-h-screen sm:min-h-[900px] pb-20">
@@ -49,6 +49,8 @@ export default function Donate() {
                 (profile.type === "ast" && profile.contributor_verification_required) ||
                 (profile.kyc_donors_only ?? false)
               }
+              endowType={profile.type}
+              isFiscalSponsored={profile.fiscal_sponsored ?? false}
             />
           </>
         )}

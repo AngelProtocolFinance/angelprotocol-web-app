@@ -44,4 +44,5 @@ export type Contract =
 
 export type AccountType = "liquid" | "locked";
 export type TransactionStatus = "open" | "approved" | "expired";
-export type EndowmentType = "charity" | "normal";
+export type EndowmentType = "charity" | "ast" | "daf";
+export type BeneficiaryType = "endowment" | "wallet" | "treasury";

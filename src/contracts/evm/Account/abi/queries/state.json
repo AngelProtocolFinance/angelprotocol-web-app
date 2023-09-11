@@ -26,27 +26,22 @@
                     "type": "uint32"
                   },
                   {
-                    "internalType": "uint256",
-                    "name": "fundId",
-                    "type": "uint256"
-                  },
-                  {
                     "internalType": "address",
                     "name": "addr",
                     "type": "address"
                   }
                 ],
-                "internalType": "struct AngelCoreStruct.BeneficiaryData",
+                "internalType": "struct LibAccounts.BeneficiaryData",
                 "name": "data",
                 "type": "tuple"
               },
               {
-                "internalType": "enum AngelCoreStruct.BeneficiaryEnum",
+                "internalType": "enum LibAccounts.BeneficiaryEnum",
                 "name": "enumData",
                 "type": "uint8"
               }
             ],
-            "internalType": "struct AngelCoreStruct.Beneficiary",
+            "internalType": "struct LibAccounts.Beneficiary",
             "name": "closingBeneficiary",
             "type": "tuple"
           }

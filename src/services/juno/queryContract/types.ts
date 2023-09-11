@@ -10,7 +10,6 @@ import {
   RegistrarConfig,
   StrategyParams,
 } from "types/contracts";
-import { ApplicationProposal } from "types/contracts/multisig";
 import { Contract } from "types/lists";
 
 type Addr = { addr: string };
@@ -35,12 +34,9 @@ export interface ContractQueries {
   "erc20.balance": Query<Addr, string>;
   "erc20.allowance": Query<{ owner: string; spender: string }, string>;
 
-  "multisig/review.is-confirmed": Query<ID & Addr, boolean>;
-  "multisig/review.proposal": Query<ID, ApplicationProposal>;
-  "multisig/review.prop-confirms": Query<ID, number>;
-
   "accounts.endowment": Query<ID, EndowmentDetails>;
   "accounts.state": Query<ID, EndowmentState>;
+  "accounts.is-daf": Query<ID, boolean>;
   "accounts.token-balance": Query<
     { id: number; accounType: AccountType; token: string },
     string

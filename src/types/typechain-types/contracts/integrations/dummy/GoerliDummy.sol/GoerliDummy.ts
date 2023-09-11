@@ -29,14 +29,14 @@ import type {
 
 export declare namespace IStrategy {
   export type StrategyConfigStruct = {
-    strategySelector: BytesLike;
+    strategyId: BytesLike;
     baseToken: string;
     yieldToken: string;
     admin: string;
   };
 
   export type StrategyConfigStructOutput = [string, string, string, string] & {
-    strategySelector: string;
+    strategyId: string;
     baseToken: string;
     yieldToken: string;
     admin: string;

@@ -28,25 +28,21 @@ import type {
 
 export declare namespace CommunityMessage {
   export type InstantiateMsgStruct = {
-    timelockContract: string;
     haloToken: string;
     spendLimit: BigNumberish;
   };
 
-  export type InstantiateMsgStructOutput = [string, string, BigNumber] & {
-    timelockContract: string;
+  export type InstantiateMsgStructOutput = [string, BigNumber] & {
     haloToken: string;
     spendLimit: BigNumber;
   };
 
   export type ConfigResponseStruct = {
-    timelockContract: string;
     haloToken: string;
     spendLimit: BigNumberish;
   };
 
-  export type ConfigResponseStructOutput = [string, string, BigNumber] & {
-    timelockContract: string;
+  export type ConfigResponseStructOutput = [string, BigNumber] & {
     haloToken: string;
     spendLimit: BigNumber;
   };
@@ -54,17 +50,23 @@ export declare namespace CommunityMessage {
 
 export interface CommunityInterface extends utils.Interface {
   functions: {
-    "initialize((address,address,uint256))": FunctionFragment;
+    "initialize((address,uint256))": FunctionFragment;
+    "owner()": FunctionFragment;
     "queryConfig()": FunctionFragment;
+    "renounceOwnership()": FunctionFragment;
     "spend(address,uint256)": FunctionFragment;
-    "updateConfig(uint256,address)": FunctionFragment;
+    "transferOwnership(address)": FunctionFragment;
+    "updateConfig(uint256)": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
       | "initialize"
+      | "owner"
       | "queryConfig"
+      | "renounceOwnership"
       | "spend"
+      | "transferOwnership"
       | "updateConfig"
   ): FunctionFragment;
 
@@ -72,8 +74,13 @@ export interface CommunityInterface extends utils.Interface {
     functionFragment: "initialize",
     values: [CommunityMessage.InstantiateMsgStruct]
   ): string;
+  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "queryConfig",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "renounceOwnership",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -81,16 +88,29 @@ export interface CommunityInterface extends utils.Interface {
     values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
+    functionFragment: "transferOwnership",
+    values: [string]
+  ): string;
+  encodeFunctionData(
     functionFragment: "updateConfig",
-    values: [BigNumberish, string]
+    values: [BigNumberish]
   ): string;
 
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "queryConfig",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "renounceOwnership",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "spend", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "transferOwnership",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "updateConfig",
     data: BytesLike
@@ -100,11 +120,13 @@ export interface CommunityInterface extends utils.Interface {
     "ConfigUpdated()": EventFragment;
     "HaloSpent(address,uint256)": EventFragment;
     "Initialized(uint8)": EventFragment;
+    "OwnershipTransferred(address,address)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "ConfigUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "HaloSpent"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
 }
 
 export interface ConfigUpdatedEventObject {}
@@ -129,6 +151,18 @@ export interface InitializedEventObject {
 export type InitializedEvent = TypedEvent<[number], InitializedEventObject>;
 
 export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
+
+export interface OwnershipTransferredEventObject {
+  previousOwner: string;
+  newOwner: string;
+}
+export type OwnershipTransferredEvent = TypedEvent<
+  [string, string],
+  OwnershipTransferredEventObject
+>;
+
+export type OwnershipTransferredEventFilter =
+  TypedEventFilter<OwnershipTransferredEvent>;
 
 export interface Community extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -162,9 +196,15 @@ export interface Community extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
+    owner(overrides?: CallOverrides): Promise<[string]>;
+
     queryConfig(
       overrides?: CallOverrides
     ): Promise<[CommunityMessage.ConfigResponseStructOutput]>;
+
+    renounceOwnership(
+      overrides?: Overrides & { from?: string }
+    ): Promise<ContractTransaction>;
 
     spend(
       recipient: string,
@@ -172,9 +212,13 @@ export interface Community extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
+    transferOwnership(
+      newOwner: string,
+      overrides?: Overrides & { from?: string }
+    ): Promise<ContractTransaction>;
+
     updateConfig(
       spendLimit: BigNumberish,
-      timelockContract: string,
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
@@ -184,9 +228,15 @@ export interface Community extends BaseContract {
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
+  owner(overrides?: CallOverrides): Promise<string>;
+
   queryConfig(
     overrides?: CallOverrides
   ): Promise<CommunityMessage.ConfigResponseStructOutput>;
+
+  renounceOwnership(
+    overrides?: Overrides & { from?: string }
+  ): Promise<ContractTransaction>;
 
   spend(
     recipient: string,
@@ -194,9 +244,13 @@ export interface Community extends BaseContract {
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
+  transferOwnership(
+    newOwner: string,
+    overrides?: Overrides & { from?: string }
+  ): Promise<ContractTransaction>;
+
   updateConfig(
     spendLimit: BigNumberish,
-    timelockContract: string,
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
@@ -206,9 +260,13 @@ export interface Community extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    owner(overrides?: CallOverrides): Promise<string>;
+
     queryConfig(
       overrides?: CallOverrides
     ): Promise<CommunityMessage.ConfigResponseStructOutput>;
+
+    renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     spend(
       recipient: string,
@@ -216,9 +274,13 @@ export interface Community extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    transferOwnership(
+      newOwner: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     updateConfig(
       spendLimit: BigNumberish,
-      timelockContract: string,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -235,6 +297,15 @@ export interface Community extends BaseContract {
 
     "Initialized(uint8)"(version?: null): InitializedEventFilter;
     Initialized(version?: null): InitializedEventFilter;
+
+    "OwnershipTransferred(address,address)"(
+      previousOwner?: string | null,
+      newOwner?: string | null
+    ): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: string | null,
+      newOwner?: string | null
+    ): OwnershipTransferredEventFilter;
   };
 
   estimateGas: {
@@ -243,7 +314,13 @@ export interface Community extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
+    owner(overrides?: CallOverrides): Promise<BigNumber>;
+
     queryConfig(overrides?: CallOverrides): Promise<BigNumber>;
+
+    renounceOwnership(
+      overrides?: Overrides & { from?: string }
+    ): Promise<BigNumber>;
 
     spend(
       recipient: string,
@@ -251,9 +328,13 @@ export interface Community extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
+    transferOwnership(
+      newOwner: string,
+      overrides?: Overrides & { from?: string }
+    ): Promise<BigNumber>;
+
     updateConfig(
       spendLimit: BigNumberish,
-      timelockContract: string,
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
   };
@@ -264,7 +345,13 @@ export interface Community extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
+    owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     queryConfig(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    renounceOwnership(
+      overrides?: Overrides & { from?: string }
+    ): Promise<PopulatedTransaction>;
 
     spend(
       recipient: string,
@@ -272,9 +359,13 @@ export interface Community extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
+    transferOwnership(
+      newOwner: string,
+      overrides?: Overrides & { from?: string }
+    ): Promise<PopulatedTransaction>;
+
     updateConfig(
       spendLimit: BigNumberish,
-      timelockContract: string,
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
   };

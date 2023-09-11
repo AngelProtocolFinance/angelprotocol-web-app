@@ -1,5 +1,5 @@
 import { isTooltip, useAdminContext } from "pages/Admin/Context";
-import { useApplicationQuery } from "services/juno/custom";
+import { useApplicationProposalQuery } from "services/subgraph";
 import { ErrorStatus, Info, LoadingStatus } from "components/Status";
 import { createTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
@@ -11,9 +11,8 @@ export default function Proposal({ txId, classes = "" }: Props) {
   const { txResource, config } = useAdminContext();
   const sendTx = useTxSender();
 
-  const { data, isLoading, isError } = useApplicationQuery({
-    id: txId,
-    user: !isTooltip(txResource) ? txResource.wallet.address : undefined,
+  const { data, isLoading, isError } = useApplicationProposalQuery({
+    applicationId: txId,
   });
 
   if (isLoading) {
@@ -30,7 +29,12 @@ export default function Proposal({ txId, classes = "" }: Props) {
     return <Info classes={classes}>{txResource}</Info>;
   }
 
-  const { expiry, executed, confirmations, userConfirmed } = data;
+  const { expiry, executed, confirmations } = data;
+
+  const user = !isTooltip(txResource) ? txResource.wallet.address : undefined;
+  const userConfirmed = confirmations.some((s) => s.owner.id === user);
+  const numConfirmations = confirmations.length;
+
   if (hasElapsed(expiry) && !executed) {
     return <ErrorStatus classes={classes}>Proposal expired</ErrorStatus>;
   }
@@ -47,8 +51,8 @@ export default function Proposal({ txId, classes = "" }: Props) {
 
   const { wallet } = txResource;
   const { threshold, requireExecution } = config;
-  const passed = confirmations >= threshold;
-  const willExecute = confirmations + 1 >= threshold && !requireExecution;
+  const passed = numConfirmations >= threshold;
+  const willExecute = numConfirmations + 1 >= threshold && !requireExecution;
 
   const approve = async () => {
     await sendTx({

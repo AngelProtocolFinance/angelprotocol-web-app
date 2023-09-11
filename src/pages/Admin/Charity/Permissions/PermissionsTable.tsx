@@ -14,7 +14,10 @@ export default function PermissionsTable({ classes = "" }) {
       screen >= SCREEN_SM
         ? setOpen({
             accountFees: true,
-            allowList: true,
+            contributorAllowlist: true,
+            beneficiaryAllowlist: true,
+            maturityAllowlist: true,
+            maturityTime: true,
             donationSplitParams: true,
             profile: true,
             investments: true,
@@ -65,10 +68,28 @@ export default function PermissionsTable({ classes = "" }) {
           isOpen={!!open.accountFees}
         />
         <Permission
-          title="Changes to beneficiaries and contributors"
-          name="allowList"
+          title="Changes to beneficiary allowlist"
+          name="beneficiaryAllowlist"
           onToggle={handleToggle}
-          isOpen={!!open.allowList}
+          isOpen={!!open.beneficiaryAllowlist}
+        />
+        <Permission
+          title="Changes to contributor allowlist"
+          name="contributorAllowlist"
+          onToggle={handleToggle}
+          isOpen={!!open.contributorAllowlist}
+        />
+        <Permission
+          title="Changes to maturity allowlist"
+          name="maturityAllowlist"
+          onToggle={handleToggle}
+          isOpen={!!open.maturityAllowlist}
+        />
+        <Permission
+          title="Changes to maturity time"
+          name="maturityTime"
+          onToggle={handleToggle}
+          isOpen={!!open.maturityTime}
         />
         <Permission
           title="Changes to donation split parameters"

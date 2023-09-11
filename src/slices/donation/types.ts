@@ -1,5 +1,6 @@
 import { Token } from "types/aws";
 import { Country } from "types/countries";
+import { EndowmentType } from "types/lists";
 import { TokenWithAmount } from "types/slices";
 import { EstimatedTx } from "types/tx";
 import { WalletState } from "contexts/WalletContext";
@@ -9,6 +10,8 @@ export type DonationRecipient = {
   id: number;
   name: string;
   isKYCRequired: boolean;
+  endowType: EndowmentType;
+  isFiscalSponsored: boolean;
 };
 
 export type DonationDetails = {

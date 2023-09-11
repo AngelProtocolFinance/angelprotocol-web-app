@@ -2,16 +2,16 @@ import { RadioGroup } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import { Fragment } from "react";
 import { useController } from "react-hook-form";
-import { FormValues as FV, Beneficiary as TBeneficiary } from "./types";
+import { FormValues as FV } from "./types";
 import { Field, Label } from "components/form";
 
-const types: TBeneficiary["type"][] = ["wallet", "indexfund", "endowment"];
+const types: FV["beneficiaryType"][] = ["wallet", "endowment", "treasury"];
 
 export default function Beneficiary() {
   const {
     formState: { errors },
     field: { value: type, onChange: onTypeChange },
-  } = useController<FV>({ name: "beneficiary.type" });
+  } = useController<Pick<FV, "beneficiaryType">>({ name: "beneficiaryType" });
 
   return (
     <div className="mt-6">
@@ -21,7 +21,7 @@ export default function Beneficiary() {
       <ErrorMessage
         as="p"
         errors={errors}
-        name="beneficiary.type"
+        name="beneficiaryType"
         className="font-mono font-semibold text-left text-red-l1 text-xs mb-2"
       />
       <RadioGroup
@@ -48,28 +48,25 @@ export default function Beneficiary() {
         <Field<FV>
           classes="field-admin"
           label="Wallet address"
-          name="beneficiary.id"
+          name="beneficiaryWallet"
           placeholder="juno123abc..."
           required
         />
       )}
       {type === "endowment" && (
-        <Field<FV>
+        <Field<FV, "number">
+          type="number"
           classes="field-admin"
           label="Endowment id"
-          name="beneficiary.id"
+          name="beneficiaryEndowmentId"
           placeholder="1"
           required
         />
       )}
-      {type === "index fund" && (
-        <Field<FV>
-          classes="field-admin"
-          label="Fund id"
-          name="beneficiary.id"
-          placeholder="1"
-          required
-        />
+      {type === "treasury" && (
+        <p className="text-sm text-gray-d1 dark:text-gray py-1">
+          AP treasury is the beneficiary
+        </p>
       )}
     </div>
   );

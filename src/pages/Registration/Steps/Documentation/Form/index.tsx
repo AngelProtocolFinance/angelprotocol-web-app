@@ -3,8 +3,8 @@ import { FormValues as FV } from "../types";
 import ActivityCountries from "components/ActivityCountries";
 import CountrySelector from "components/CountrySelector";
 import ExtLink from "components/ExtLink";
-import { Selector } from "components/Selector";
-import { CheckField, Field, Label } from "components/form";
+import { MultiSelector, Selector } from "components/Selector";
+import { CheckField, Field, Label, Radio } from "components/form";
 import { FileDropzone, LoadText } from "components/registration";
 import { ENDOW_DESIGNATIONS } from "constants/common";
 import { APP_NAME } from "constants/env";
@@ -14,8 +14,6 @@ import { steps } from "../../../routes";
 import { useRegState } from "../../StepGuard";
 import { MB_LIMIT } from "../schema";
 // import { CashEligibleCheckbox } from "./CashEligibleCheckbox";
-import Level from "./Level";
-import { Radio } from "./Radio";
 import useSubmit from "./useSubmit";
 
 export default function Form() {
@@ -24,29 +22,43 @@ export default function Form() {
 
   return (
     <form className="w-full" onSubmit={submit}>
-      <Level num={1} />
+      <h2 className="text-center sm:text-left text-xl mb-2">Documentation</h2>
       <p className="mt-2 text-sm">
-        {`Your organization is eligible to create its endowment. Donors can donate
-        funds through your organization’s landing page on ${APP_NAME}’s
-        interface. Your organization is not displayed on the marketplace and
-        cannot be found through the search bar.`}
+        This information will be kept private and will be used to validate you
+        are an authorized representative of{" "}
+        <span className="font-semibold">{data.contact.orgName}</span> whose
+        organization is registered and in good standing.
       </p>
-      <Label className="mt-8 mb-2" required>
-        Your proof of identity
+      <h4 className="text-center sm:text-left text-lg mt-8">
+        Government issued ID
+      </h4>
+      <Label required className="mb-2 mt-1">
+        Please provide passport, driver's license, or ID card.
       </Label>
       <FileDropzone<FV, "proofOfIdentity">
         name="proofOfIdentity"
         tooltip={fileTooltip}
       />
+
+      <h2 className="text-center sm:text-left text-lg mt-8">
+        Organizational Details
+      </h2>
       <Field<FV>
         name="website"
         label="Website of your organization"
         required
-        classes={{ container: "my-6" }}
+        classes={{ container: "mb-6 mt-2" }}
+        placeholder="e.g. https://www.example.com"
+      />
+      <Field<FV>
+        name="ein"
+        label="EIN# (or equivalent non-US charity/nonprofit registration number)"
+        required
+        classes={{ container: "mb-6 mt-1" }}
         placeholder="e.g. https://www.example.com"
       />
       <Label className="mb-2" required>
-        Proof of registration as a 501(C)(3) charity or equivalent
+        Proof of registration as a 501(C)(3) nonprofit or equivalent
       </Label>
       <FileDropzone<FV, "proofOfRegistration">
         name="proofOfRegistration"
@@ -56,15 +68,11 @@ export default function Form() {
         Select the Sustainable Development Goals your organization is the most
         aligned with
       </Label>
-      <Selector<FV, "sdgs", number, true>
-        multiple
-        name="sdgs"
-        options={sdgOptions}
-      />
+      <MultiSelector<FV, "sdgs", number> name="sdgs" options={sdgOptions} />
       <Label className="mb-2 mt-6" required>
         Endowment Designation
       </Label>
-      <Selector<FV, "endowDesignation", string, false>
+      <Selector<FV, "endowDesignation", string>
         name="endowDesignation"
         options={ENDOW_DESIGNATIONS.map((option) => ({
           label: option.label,
@@ -88,47 +96,37 @@ export default function Form() {
       </Label>
       <ActivityCountries<FV, "activeInCountries"> name="activeInCountries" />
 
-      <Separator classes="my-8" />
-
-      <Level num={2} />
-      <p className="mt-2 text-sm mb-8">
-        All benefits from Level 1 + your organization will be visible in the
-        marketplace.
-      </p>
-      <Label className="mb-2">
-        At least one of the last 2 year’s financial statements
+      <Label className="mt-6">
+        Is your organization registered in the United States and recognized by
+        the Internal Revenue Service as a nonprofit organization exempt under
+        IRC 501(c)(3)?
       </Label>
-      <FileDropzone<FV, "financialStatements">
-        multiple
-        name="financialStatements"
-        tooltip={fileTooltip}
-      />
-
-      <Separator classes="my-8" />
-
-      <Level num={3} />
-      <p className="mt-2 text-sm mb-8">
-        3rd party audited financial report or published Annual Report
-      </p>
-      <Label className="mb-2">
-        At least one of the last 2 year’s financial statements
-      </Label>
-      <FileDropzone<FV, "auditedFinancialReports">
-        multiple
-        name="auditedFinancialReports"
-        tooltip={fileTooltip}
-      />
-
-      <Separator classes="my-8" />
-
-      <Label>
-        Only accept donations from donors who have provided their personal
-        information (name and address):
-      </Label>
-      <div className="flex gap-4 mt-4">
-        <Radio value="Yes" />
-        <Radio value="No" />
+      <div className="flex gap-4 mt-4 accent-orange text-sm">
+        <Radio<FV, "isAuthorizedToReceiveTaxDeductibleDonations">
+          name="isAuthorizedToReceiveTaxDeductibleDonations"
+          value="Yes"
+        />
+        <Radio<FV, "isAuthorizedToReceiveTaxDeductibleDonations">
+          name="isAuthorizedToReceiveTaxDeductibleDonations"
+          value="No"
+        />
       </div>
+
+      <Label className="mt-6">
+        Are you happy to accept anonymous donations? If not, ALL donors will be
+        required to provide a name and address.
+      </Label>
+      <div className="flex gap-4 mt-4 accent-orange text-sm">
+        <Radio<FV, "isAnonymousDonationsAllowed">
+          name="isAnonymousDonationsAllowed"
+          value="Yes"
+        />
+        <Radio<FV, "isAnonymousDonationsAllowed">
+          name="isAnonymousDonationsAllowed"
+          value="No"
+        />
+      </div>
+
       <Separator classes="my-8" />
       {/*<CashEligibleCheckbox />*/}
       <CheckField<FV>
@@ -137,7 +135,7 @@ export default function Form() {
         classes={{
           container: "check-field-reg text-sm mb-3",
           input: "checkbox-reg self-start sm:self-center",
-          error: "mt-1",
+          error: "mt-t",
         }}
       >
         By checking this box, you declare that you have the authority to create
@@ -156,6 +154,7 @@ export default function Form() {
         <ExtLink className="underline text-orange" href={TERMS_OF_USE}>
           Terms & Conditions
         </ExtLink>
+        .
       </CheckField>
       <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
         <Link

@@ -1,4 +1,8 @@
-export const tags = ["transactions", "transaction"] as const;
+export const tags = [
+  "transactions",
+  "transaction",
+  "application-proposal",
+] as const;
 
 export type SubgraphTag = (typeof tags)[number];
 
@@ -6,4 +10,5 @@ export type SubgraphTag = (typeof tags)[number];
 export const defaultProposalTags: SubgraphTag[] = [
   "transactions",
   "transaction",
+  "application-proposal",
 ];

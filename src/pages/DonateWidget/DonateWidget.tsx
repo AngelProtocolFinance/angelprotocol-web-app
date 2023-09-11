@@ -55,6 +55,8 @@ export default function DonateWidget() {
                 (profile.kyc_donors_only ?? false)
               }
               name={profile.name}
+              endowType={profile.type}
+              isFiscalSponsored={profile.fiscal_sponsored ?? false}
             />
           </>
         )}

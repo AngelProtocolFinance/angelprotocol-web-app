@@ -1,4 +1,4 @@
-import { ObjectSchema, array, lazy, object, string } from "yup";
+import { ObjectSchema, array, lazy, number, object, string } from "yup";
 import { Amount, FV, FormMeta } from "./types";
 import { SchemaShape } from "schemas/types";
 import { tokenConstraint } from "schemas/number";
@@ -8,19 +8,23 @@ import { feeData } from "./helpers";
 type TVal = Amount["value"];
 type TBal = Amount["balance"];
 type TChainId = FV["destinationChainId"];
+type TBeneficiaryType = FV["beneficiaryType"];
 
 const balKey: keyof Amount = "balance";
 const metaKey = "$meta"; //context key
+const beneficiaryTypeKey: keyof FV = "beneficiaryType";
 const destinationChainIdKey: keyof FV = "destinationChainId";
 const amountsKey: keyof FV = "amounts";
 
 const amount: (
+  beneficiaryType: TBeneficiaryType,
   destinationChainId: TChainId,
   meta: FormMeta
-) => SchemaShape<Amount> = (destinationChainId, meta) => ({
+) => SchemaShape<Amount> = (beneficiaryType, destinationChainId, meta) => ({
   value: lazy((withdrawAmount: TVal) => {
     const { totalFee } = feeData({
       ...meta,
+      beneficiaryType,
       destinationChainId,
       withdrawAmount: withdrawAmount ? +withdrawAmount : 0,
     });
@@ -46,10 +50,17 @@ const amount: (
 });
 
 export const schema = object<any, SchemaShape<FV>>({
-  amounts: array().when([destinationChainIdKey, metaKey], (values, schema) => {
-    const [network, fees] = values as [TChainId, FormMeta];
-    return schema.of(object(amount(network, fees)));
-  }),
+  amounts: array().when(
+    [destinationChainIdKey, metaKey, beneficiaryTypeKey],
+    (values, schema) => {
+      const [network, fees, beneficiaryType] = values as [
+        TChainId,
+        FormMeta,
+        TBeneficiaryType,
+      ];
+      return schema.of(object(amount(beneficiaryType, network, fees)));
+    }
+  ),
   //test if at least one amount is filled
   _amounts: string().when(amountsKey, ([amounts], schema) =>
     schema.test("at least one is filled", "", () =>
@@ -57,12 +68,29 @@ export const schema = object<any, SchemaShape<FV>>({
     )
   ),
   beneficiaryWallet: string().when(
-    [destinationChainIdKey, metaKey],
+    [destinationChainIdKey, beneficiaryTypeKey, metaKey],
     (values, schema) => {
-      const [network, meta] = values as [TChainId, FormMeta];
-      return meta.accountType === "liquid"
+      const [network, beneficiaryType] = values as [
+        TChainId,
+        TBeneficiaryType,
+        FormMeta,
+      ];
+      return beneficiaryType === "wallet"
         ? requiredWalletAddr(network)
         : schema;
+    }
+  ),
+  beneficiaryEndowmentId: number().when(
+    [beneficiaryTypeKey, metaKey],
+    (values, schema) => {
+      const [beneficiaryType, meta] = values as [TBeneficiaryType, FormMeta];
+      return beneficiaryType === "endowment"
+        ? schema
+            .typeError("invalid ID")
+            .positive("must be greater than 0")
+            .integer("must be whole number")
+            .notOneOf([meta.endowId], "can't transfer to own endowment")
+        : string();
     }
   ),
 }) as ObjectSchema<FV>;

@@ -18,7 +18,10 @@ export default function Permissions() {
 
   const permissions: TPermissions = {
     accountFees: formPermission(controller.earlyLockedWithdrawFee),
-    allowList: formPermission(controller.allowlistedBeneficiaries),
+    contributorAllowlist: formPermission(controller.allowlistedContributors),
+    beneficiaryAllowlist: formPermission(controller.allowlistedBeneficiaries),
+    maturityAllowlist: formPermission(controller.maturityAllowlist),
+    maturityTime: formPermission(controller.maturityTime),
     donationSplitParams: formPermission(controller.splitToLiquid),
     profile: formPermission(controller.name),
     investments: formPermission(controller.liquidInvestmentManagement),

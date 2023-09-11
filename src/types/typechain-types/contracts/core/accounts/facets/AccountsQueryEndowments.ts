@@ -43,6 +43,91 @@ export declare namespace AccountMessages {
     nextAccountId: BigNumber;
   };
 
+  export type EndowmentResponseStruct = {
+    owner: string;
+    name: string;
+    sdgs: BigNumberish[];
+    tier: BigNumberish;
+    endowType: BigNumberish;
+    logo: string;
+    image: string;
+    maturityTime: BigNumberish;
+    proposalLink: BigNumberish;
+    multisig: string;
+    dao: string;
+    donationMatch: string;
+    donationMatchActive: boolean;
+    allowlistedBeneficiaries: string[];
+    allowlistedContributors: string[];
+    maturityAllowlist: string[];
+    earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct;
+    withdrawFee: LibAccounts.FeeSettingStruct;
+    depositFee: LibAccounts.FeeSettingStruct;
+    balanceFee: LibAccounts.FeeSettingStruct;
+    settingsController: LibAccounts.SettingsControllerStruct;
+    parent: BigNumberish;
+    ignoreUserSplits: boolean;
+    splitToLiquid: LibAccounts.SplitDetailsStruct;
+    referralId: BigNumberish;
+    gasFwd: string;
+  };
+
+  export type EndowmentResponseStructOutput = [
+    string,
+    string,
+    BigNumber[],
+    number,
+    number,
+    string,
+    string,
+    BigNumber,
+    BigNumber,
+    string,
+    string,
+    string,
+    boolean,
+    string[],
+    string[],
+    string[],
+    LibAccounts.FeeSettingStructOutput,
+    LibAccounts.FeeSettingStructOutput,
+    LibAccounts.FeeSettingStructOutput,
+    LibAccounts.FeeSettingStructOutput,
+    LibAccounts.SettingsControllerStructOutput,
+    number,
+    boolean,
+    LibAccounts.SplitDetailsStructOutput,
+    BigNumber,
+    string
+  ] & {
+    owner: string;
+    name: string;
+    sdgs: BigNumber[];
+    tier: number;
+    endowType: number;
+    logo: string;
+    image: string;
+    maturityTime: BigNumber;
+    proposalLink: BigNumber;
+    multisig: string;
+    dao: string;
+    donationMatch: string;
+    donationMatchActive: boolean;
+    allowlistedBeneficiaries: string[];
+    allowlistedContributors: string[];
+    maturityAllowlist: string[];
+    earlyLockedWithdrawFee: LibAccounts.FeeSettingStructOutput;
+    withdrawFee: LibAccounts.FeeSettingStructOutput;
+    depositFee: LibAccounts.FeeSettingStructOutput;
+    balanceFee: LibAccounts.FeeSettingStructOutput;
+    settingsController: LibAccounts.SettingsControllerStructOutput;
+    parent: number;
+    ignoreUserSplits: boolean;
+    splitToLiquid: LibAccounts.SplitDetailsStructOutput;
+    referralId: BigNumber;
+    gasFwd: string;
+  };
+
   export type StateResponseStruct = {
     closingEndowment: boolean;
     closingBeneficiary: LibAccounts.BeneficiaryStruct;
@@ -54,33 +139,6 @@ export declare namespace AccountMessages {
   ] & {
     closingEndowment: boolean;
     closingBeneficiary: LibAccounts.BeneficiaryStructOutput;
-  };
-}
-
-export declare namespace LocalRegistrarLib {
-  export type RebalanceParamsStruct = {
-    rebalanceLiquidProfits: boolean;
-    lockedRebalanceToLiquid: BigNumberish;
-    interestDistribution: BigNumberish;
-    lockedPrincipleToLiquid: boolean;
-    principleDistribution: BigNumberish;
-    basis: BigNumberish;
-  };
-
-  export type RebalanceParamsStructOutput = [
-    boolean,
-    number,
-    number,
-    boolean,
-    number,
-    number
-  ] & {
-    rebalanceLiquidProfits: boolean;
-    lockedRebalanceToLiquid: number;
-    interestDistribution: number;
-    lockedPrincipleToLiquid: boolean;
-    principleDistribution: number;
-    basis: number;
   };
 }
 
@@ -179,15 +237,10 @@ export declare namespace LibAccounts {
     defaultSplit: BigNumber;
   };
 
-  export type BeneficiaryDataStruct = {
-    endowId: BigNumberish;
-    fundId: BigNumberish;
-    addr: string;
-  };
+  export type BeneficiaryDataStruct = { endowId: BigNumberish; addr: string };
 
-  export type BeneficiaryDataStructOutput = [number, BigNumber, string] & {
+  export type BeneficiaryDataStructOutput = [number, string] & {
     endowId: number;
-    fundId: BigNumber;
     addr: string;
   };
 
@@ -202,101 +255,11 @@ export declare namespace LibAccounts {
   ] & { data: LibAccounts.BeneficiaryDataStructOutput; enumData: number };
 }
 
-export declare namespace AccountStorage {
-  export type EndowmentStruct = {
-    owner: string;
-    name: string;
-    sdgs: BigNumberish[];
-    tier: BigNumberish;
-    endowType: BigNumberish;
-    logo: string;
-    image: string;
-    maturityTime: BigNumberish;
-    rebalance: LocalRegistrarLib.RebalanceParamsStruct;
-    proposalLink: BigNumberish;
-    multisig: string;
-    dao: string;
-    daoToken: string;
-    donationMatchActive: boolean;
-    donationMatchContract: string;
-    allowlistedBeneficiaries: string[];
-    allowlistedContributors: string[];
-    maturityAllowlist: string[];
-    earlyLockedWithdrawFee: LibAccounts.FeeSettingStruct;
-    withdrawFee: LibAccounts.FeeSettingStruct;
-    depositFee: LibAccounts.FeeSettingStruct;
-    balanceFee: LibAccounts.FeeSettingStruct;
-    settingsController: LibAccounts.SettingsControllerStruct;
-    parent: BigNumberish;
-    ignoreUserSplits: boolean;
-    splitToLiquid: LibAccounts.SplitDetailsStruct;
-    referralId: BigNumberish;
-    gasFwd: string;
-  };
-
-  export type EndowmentStructOutput = [
-    string,
-    string,
-    BigNumber[],
-    number,
-    number,
-    string,
-    string,
-    BigNumber,
-    LocalRegistrarLib.RebalanceParamsStructOutput,
-    BigNumber,
-    string,
-    string,
-    string,
-    boolean,
-    string,
-    string[],
-    string[],
-    string[],
-    LibAccounts.FeeSettingStructOutput,
-    LibAccounts.FeeSettingStructOutput,
-    LibAccounts.FeeSettingStructOutput,
-    LibAccounts.FeeSettingStructOutput,
-    LibAccounts.SettingsControllerStructOutput,
-    number,
-    boolean,
-    LibAccounts.SplitDetailsStructOutput,
-    BigNumber,
-    string
-  ] & {
-    owner: string;
-    name: string;
-    sdgs: BigNumber[];
-    tier: number;
-    endowType: number;
-    logo: string;
-    image: string;
-    maturityTime: BigNumber;
-    rebalance: LocalRegistrarLib.RebalanceParamsStructOutput;
-    proposalLink: BigNumber;
-    multisig: string;
-    dao: string;
-    daoToken: string;
-    donationMatchActive: boolean;
-    donationMatchContract: string;
-    allowlistedBeneficiaries: string[];
-    allowlistedContributors: string[];
-    maturityAllowlist: string[];
-    earlyLockedWithdrawFee: LibAccounts.FeeSettingStructOutput;
-    withdrawFee: LibAccounts.FeeSettingStructOutput;
-    depositFee: LibAccounts.FeeSettingStructOutput;
-    balanceFee: LibAccounts.FeeSettingStructOutput;
-    settingsController: LibAccounts.SettingsControllerStructOutput;
-    parent: number;
-    ignoreUserSplits: boolean;
-    splitToLiquid: LibAccounts.SplitDetailsStructOutput;
-    referralId: BigNumber;
-    gasFwd: string;
-  };
-}
-
 export interface AccountsQueryEndowmentsInterface extends utils.Interface {
   functions: {
+    "getEndowmentBeneficiaries(uint32)": FunctionFragment;
+    "getWalletBeneficiaries(address)": FunctionFragment;
+    "isDafApprovedEndowment(uint32)": FunctionFragment;
     "queryConfig()": FunctionFragment;
     "queryEndowmentDetails(uint32)": FunctionFragment;
     "queryState(uint32)": FunctionFragment;
@@ -305,12 +268,27 @@ export interface AccountsQueryEndowmentsInterface extends utils.Interface {
 
   getFunction(
     nameOrSignatureOrTopic:
+      | "getEndowmentBeneficiaries"
+      | "getWalletBeneficiaries"
+      | "isDafApprovedEndowment"
       | "queryConfig"
       | "queryEndowmentDetails"
       | "queryState"
       | "queryTokenAmount"
   ): FunctionFragment;
 
+  encodeFunctionData(
+    functionFragment: "getEndowmentBeneficiaries",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getWalletBeneficiaries",
+    values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "isDafApprovedEndowment",
+    values: [BigNumberish]
+  ): string;
   encodeFunctionData(
     functionFragment: "queryConfig",
     values?: undefined
@@ -328,6 +306,18 @@ export interface AccountsQueryEndowmentsInterface extends utils.Interface {
     values: [BigNumberish, BigNumberish, string]
   ): string;
 
+  decodeFunctionResult(
+    functionFragment: "getEndowmentBeneficiaries",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getWalletBeneficiaries",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "isDafApprovedEndowment",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "queryConfig",
     data: BytesLike
@@ -372,6 +362,21 @@ export interface AccountsQueryEndowments extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    getEndowmentBeneficiaries(
+      id: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[number[]]>;
+
+    getWalletBeneficiaries(
+      addr: string,
+      overrides?: CallOverrides
+    ): Promise<[number[]]>;
+
+    isDafApprovedEndowment(
+      id: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
+
     queryConfig(
       overrides?: CallOverrides
     ): Promise<
@@ -383,11 +388,7 @@ export interface AccountsQueryEndowments extends BaseContract {
     queryEndowmentDetails(
       id: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<
-      [AccountStorage.EndowmentStructOutput] & {
-        endowment: AccountStorage.EndowmentStructOutput;
-      }
-    >;
+    ): Promise<[AccountMessages.EndowmentResponseStructOutput]>;
 
     queryState(
       id: BigNumberish,
@@ -406,6 +407,21 @@ export interface AccountsQueryEndowments extends BaseContract {
     ): Promise<[BigNumber] & { tokenAmount: BigNumber }>;
   };
 
+  getEndowmentBeneficiaries(
+    id: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<number[]>;
+
+  getWalletBeneficiaries(
+    addr: string,
+    overrides?: CallOverrides
+  ): Promise<number[]>;
+
+  isDafApprovedEndowment(
+    id: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
+
   queryConfig(
     overrides?: CallOverrides
   ): Promise<AccountMessages.ConfigResponseStructOutput>;
@@ -413,7 +429,7 @@ export interface AccountsQueryEndowments extends BaseContract {
   queryEndowmentDetails(
     id: BigNumberish,
     overrides?: CallOverrides
-  ): Promise<AccountStorage.EndowmentStructOutput>;
+  ): Promise<AccountMessages.EndowmentResponseStructOutput>;
 
   queryState(
     id: BigNumberish,
@@ -428,6 +444,21 @@ export interface AccountsQueryEndowments extends BaseContract {
   ): Promise<BigNumber>;
 
   callStatic: {
+    getEndowmentBeneficiaries(
+      id: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<number[]>;
+
+    getWalletBeneficiaries(
+      addr: string,
+      overrides?: CallOverrides
+    ): Promise<number[]>;
+
+    isDafApprovedEndowment(
+      id: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
     queryConfig(
       overrides?: CallOverrides
     ): Promise<AccountMessages.ConfigResponseStructOutput>;
@@ -435,7 +466,7 @@ export interface AccountsQueryEndowments extends BaseContract {
     queryEndowmentDetails(
       id: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<AccountStorage.EndowmentStructOutput>;
+    ): Promise<AccountMessages.EndowmentResponseStructOutput>;
 
     queryState(
       id: BigNumberish,
@@ -453,6 +484,21 @@ export interface AccountsQueryEndowments extends BaseContract {
   filters: {};
 
   estimateGas: {
+    getEndowmentBeneficiaries(
+      id: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    getWalletBeneficiaries(
+      addr: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    isDafApprovedEndowment(
+      id: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     queryConfig(overrides?: CallOverrides): Promise<BigNumber>;
 
     queryEndowmentDetails(
@@ -471,6 +517,21 @@ export interface AccountsQueryEndowments extends BaseContract {
   };
 
   populateTransaction: {
+    getEndowmentBeneficiaries(
+      id: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getWalletBeneficiaries(
+      addr: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    isDafApprovedEndowment(
+      id: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     queryConfig(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     queryEndowmentDetails(

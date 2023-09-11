@@ -3,11 +3,11 @@ import {
   AccountMessages as AccountDepositWithdrawEndowmentsMessages,
   IAccountsDepositWithdrawEndowments,
 } from "../typechain-types/contracts/core/accounts/facets/AccountsDepositWithdrawEndowments";
+import { AccountMessages as AccountsQueryEndowmentsMessages } from "../typechain-types/contracts/core/accounts/facets/AccountsQueryEndowments";
 import { AccountMessages as AccountsStrategyMessages } from "../typechain-types/contracts/core/accounts/facets/AccountsStrategy";
 import { AccountMessages as AccountsUpdateEndowmentSettingsControllerMessages } from "../typechain-types/contracts/core/accounts/facets/AccountsUpdateEndowmentSettingsController";
 import {
   AccountMessages,
-  AccountStorage,
   LibAccounts,
 } from "../typechain-types/contracts/core/accounts/interfaces/IAccounts";
 import { EndowmentType } from "../lists";
@@ -15,7 +15,7 @@ import { Mapped } from "../utils";
 
 type BeneficiaryData = OverrideProperties<
   LibAccounts.BeneficiaryDataStruct,
-  { endowId: number; fundId: number; addr: string }
+  { endowId: number }
 >;
 
 export type AccountsSplitDetails = Mapped<
@@ -25,13 +25,12 @@ export type AccountsSplitDetails = Mapped<
 
 /**
  * 0 Endowment
- * 1 IndexFund
- * 2 Wallet
- * 3 None
+ * 1 Wallet
+ * 2 None (treasury)
  */
 export type Beneficiary = OverrideProperties<
   LibAccounts.BeneficiaryStruct,
-  { data: BeneficiaryData; enumData: 0 | 1 | 2 | 3 }
+  { data: BeneficiaryData; enumData: 0 | 1 | 2 }
 >;
 
 export type ADDRESS_ZERO = "0x0000000000000000000000000000000000000000" & {
@@ -96,7 +95,7 @@ export type SettingsController = Mapped<
 
 export type EndowmentDetails = OverrideProperties<
   Pick<
-    AccountStorage.EndowmentStruct,
+    AccountsQueryEndowmentsMessages.EndowmentResponseStruct,
     | "owner"
     | "endowType"
     | "maturityTime"
@@ -191,6 +190,21 @@ export type FeeSettingsUpdate = OverrideProperties<
     balanceFee: Fee;
   }
 >;
+
+// function params not exporter separately
+/**
+ * types
+ * 0 - beneficiaries
+ * 1 - contributors
+ * 2 - maturity
+ */
+export type AllowlistUpdate = {
+  id: number;
+
+  allowlistType: number;
+  add: string[];
+  remove: string[];
+};
 
 export type NewAST = OverrideProperties<
   AccountMessages.CreateEndowmentRequestStruct,

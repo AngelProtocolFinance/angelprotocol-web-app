@@ -26,6 +26,25 @@ import type {
   OnEvent,
 } from "../../../../common";
 
+export declare namespace LibAccounts {
+  export type BeneficiaryDataStruct = { endowId: BigNumberish; addr: string };
+
+  export type BeneficiaryDataStructOutput = [number, string] & {
+    endowId: number;
+    addr: string;
+  };
+
+  export type BeneficiaryStruct = {
+    data: LibAccounts.BeneficiaryDataStruct;
+    enumData: BigNumberish;
+  };
+
+  export type BeneficiaryStructOutput = [
+    LibAccounts.BeneficiaryDataStructOutput,
+    number
+  ] & { data: LibAccounts.BeneficiaryDataStructOutput; enumData: number };
+}
+
 export declare namespace IVault {
   export type VaultActionDataStruct = {
     destinationChain: string;
@@ -59,33 +78,6 @@ export declare namespace IVault {
   };
 }
 
-export declare namespace LocalRegistrarLib {
-  export type RebalanceParamsStruct = {
-    rebalanceLiquidProfits: boolean;
-    lockedRebalanceToLiquid: BigNumberish;
-    interestDistribution: BigNumberish;
-    lockedPrincipleToLiquid: boolean;
-    principleDistribution: BigNumberish;
-    basis: BigNumberish;
-  };
-
-  export type RebalanceParamsStructOutput = [
-    boolean,
-    number,
-    number,
-    boolean,
-    number,
-    number
-  ] & {
-    rebalanceLiquidProfits: boolean;
-    lockedRebalanceToLiquid: number;
-    interestDistribution: number;
-    lockedPrincipleToLiquid: boolean;
-    principleDistribution: number;
-    basis: number;
-  };
-}
-
 export declare namespace AccountMessages {
   export type UpdateEndowmentDetailsRequestStruct = {
     id: BigNumberish;
@@ -94,7 +86,6 @@ export declare namespace AccountMessages {
     sdgs: BigNumberish[];
     logo: string;
     image: string;
-    rebalance: LocalRegistrarLib.RebalanceParamsStruct;
   };
 
   export type UpdateEndowmentDetailsRequestStructOutput = [
@@ -103,8 +94,7 @@ export declare namespace AccountMessages {
     string,
     BigNumber[],
     string,
-    string,
-    LocalRegistrarLib.RebalanceParamsStructOutput
+    string
   ] & {
     id: number;
     owner: string;
@@ -112,31 +102,36 @@ export declare namespace AccountMessages {
     sdgs: BigNumber[];
     logo: string;
     image: string;
-    rebalance: LocalRegistrarLib.RebalanceParamsStructOutput;
   };
 }
 
 export interface AccountsUpdateEndowmentsInterface extends utils.Interface {
   functions: {
+    "revokeDelegate(uint32,uint8)": FunctionFragment;
+    "setDelegate(uint32,uint8,address,uint256)": FunctionFragment;
     "updateAcceptedToken(uint32,address,address,bool)": FunctionFragment;
-    "updateDelegate(uint32,uint8,uint8,address,uint256)": FunctionFragment;
-    "updateEndowmentDetails((uint32,address,string,uint256[],string,string,(bool,uint32,uint32,bool,uint32,uint32)))": FunctionFragment;
+    "updateEndowmentDetails((uint32,address,string,uint256[],string,string))": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
+      | "revokeDelegate"
+      | "setDelegate"
       | "updateAcceptedToken"
-      | "updateDelegate"
       | "updateEndowmentDetails"
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "updateAcceptedToken",
-    values: [BigNumberish, string, string, boolean]
+    functionFragment: "revokeDelegate",
+    values: [BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "updateDelegate",
-    values: [BigNumberish, BigNumberish, BigNumberish, string, BigNumberish]
+    functionFragment: "setDelegate",
+    values: [BigNumberish, BigNumberish, string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "updateAcceptedToken",
+    values: [BigNumberish, string, string, boolean]
   ): string;
   encodeFunctionData(
     functionFragment: "updateEndowmentDetails",
@@ -144,11 +139,15 @@ export interface AccountsUpdateEndowmentsInterface extends utils.Interface {
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "updateAcceptedToken",
+    functionFragment: "revokeDelegate",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "updateDelegate",
+    functionFragment: "setDelegate",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "updateAcceptedToken",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -160,15 +159,14 @@ export interface AccountsUpdateEndowmentsInterface extends utils.Interface {
     "AllowanceSpent(uint256,address,address,uint256)": EventFragment;
     "AllowanceUpdated(uint256,address,address,uint256,uint256,uint256)": EventFragment;
     "ConfigUpdated()": EventFragment;
-    "DaoContractCreated(uint32,address)": EventFragment;
-    "DonationDeposited(uint256,address,uint256)": EventFragment;
+    "DafApprovedEndowmentsUpdated(uint32[],uint32[])": EventFragment;
     "DonationMatchCreated(uint256,address)": EventFragment;
-    "DonationWithdrawn(uint256,address,address,uint256)": EventFragment;
-    "EndowmentClosed(uint256)": EventFragment;
+    "EndowmentAllowlistUpdated(uint256,uint8,address[],address[])": EventFragment;
+    "EndowmentClosed(uint256,((uint32,address),uint8),uint32[])": EventFragment;
     "EndowmentCreated(uint256,uint8)": EventFragment;
     "EndowmentDeposit(uint256,address,uint256,uint256)": EventFragment;
-    "EndowmentInvested(uint8)": EventFragment;
-    "EndowmentRedeemed(uint8)": EventFragment;
+    "EndowmentInvested(uint256,bytes4,string,address,uint256,uint256)": EventFragment;
+    "EndowmentRedeemed(uint256,bytes4,string,address,uint256,uint256)": EventFragment;
     "EndowmentSettingUpdated(uint256,string)": EventFragment;
     "EndowmentUpdated(uint256)": EventFragment;
     "EndowmentWithdraw(uint256,address,uint256,uint8,address,uint32)": EventFragment;
@@ -181,10 +179,11 @@ export interface AccountsUpdateEndowmentsInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: "AllowanceSpent"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "AllowanceUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ConfigUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "DaoContractCreated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "DonationDeposited"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "DafApprovedEndowmentsUpdated"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "DonationMatchCreated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "DonationWithdrawn"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "EndowmentAllowlistUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "EndowmentClosed"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "EndowmentCreated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "EndowmentDeposit"): EventFragment;
@@ -233,30 +232,17 @@ export type ConfigUpdatedEvent = TypedEvent<[], ConfigUpdatedEventObject>;
 
 export type ConfigUpdatedEventFilter = TypedEventFilter<ConfigUpdatedEvent>;
 
-export interface DaoContractCreatedEventObject {
-  endowId: number;
-  daoAddress: string;
+export interface DafApprovedEndowmentsUpdatedEventObject {
+  add: number[];
+  remove: number[];
 }
-export type DaoContractCreatedEvent = TypedEvent<
-  [number, string],
-  DaoContractCreatedEventObject
+export type DafApprovedEndowmentsUpdatedEvent = TypedEvent<
+  [number[], number[]],
+  DafApprovedEndowmentsUpdatedEventObject
 >;
 
-export type DaoContractCreatedEventFilter =
-  TypedEventFilter<DaoContractCreatedEvent>;
-
-export interface DonationDepositedEventObject {
-  endowId: BigNumber;
-  tokenAddress: string;
-  amount: BigNumber;
-}
-export type DonationDepositedEvent = TypedEvent<
-  [BigNumber, string, BigNumber],
-  DonationDepositedEventObject
->;
-
-export type DonationDepositedEventFilter =
-  TypedEventFilter<DonationDepositedEvent>;
+export type DafApprovedEndowmentsUpdatedEventFilter =
+  TypedEventFilter<DafApprovedEndowmentsUpdatedEvent>;
 
 export interface DonationMatchCreatedEventObject {
   endowId: BigNumber;
@@ -270,25 +256,27 @@ export type DonationMatchCreatedEvent = TypedEvent<
 export type DonationMatchCreatedEventFilter =
   TypedEventFilter<DonationMatchCreatedEvent>;
 
-export interface DonationWithdrawnEventObject {
+export interface EndowmentAllowlistUpdatedEventObject {
   endowId: BigNumber;
-  recipient: string;
-  tokenAddress: string;
-  amount: BigNumber;
+  allowlistType: number;
+  add: string[];
+  remove: string[];
 }
-export type DonationWithdrawnEvent = TypedEvent<
-  [BigNumber, string, string, BigNumber],
-  DonationWithdrawnEventObject
+export type EndowmentAllowlistUpdatedEvent = TypedEvent<
+  [BigNumber, number, string[], string[]],
+  EndowmentAllowlistUpdatedEventObject
 >;
 
-export type DonationWithdrawnEventFilter =
-  TypedEventFilter<DonationWithdrawnEvent>;
+export type EndowmentAllowlistUpdatedEventFilter =
+  TypedEventFilter<EndowmentAllowlistUpdatedEvent>;
 
 export interface EndowmentClosedEventObject {
   endowId: BigNumber;
+  beneficiary: LibAccounts.BeneficiaryStructOutput;
+  relinked: number[];
 }
 export type EndowmentClosedEvent = TypedEvent<
-  [BigNumber],
+  [BigNumber, LibAccounts.BeneficiaryStructOutput, number[]],
   EndowmentClosedEventObject
 >;
 
@@ -321,10 +309,15 @@ export type EndowmentDepositEventFilter =
   TypedEventFilter<EndowmentDepositEvent>;
 
 export interface EndowmentInvestedEventObject {
-  arg0: number;
+  endowId: BigNumber;
+  strategy: string;
+  network: string;
+  token: string;
+  lockAmt: BigNumber;
+  liquidAmt: BigNumber;
 }
 export type EndowmentInvestedEvent = TypedEvent<
-  [number],
+  [BigNumber, string, string, string, BigNumber, BigNumber],
   EndowmentInvestedEventObject
 >;
 
@@ -332,10 +325,15 @@ export type EndowmentInvestedEventFilter =
   TypedEventFilter<EndowmentInvestedEvent>;
 
 export interface EndowmentRedeemedEventObject {
-  arg0: number;
+  endowId: BigNumber;
+  strategy: string;
+  network: string;
+  token: string;
+  lockAmt: BigNumber;
+  liquidAmt: BigNumber;
 }
 export type EndowmentRedeemedEvent = TypedEvent<
-  [number],
+  [BigNumber, string, string, string, BigNumber, BigNumber],
   EndowmentRedeemedEventObject
 >;
 
@@ -451,20 +449,25 @@ export interface AccountsUpdateEndowments extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    revokeDelegate(
+      id: BigNumberish,
+      setting: BigNumberish,
+      overrides?: Overrides & { from?: string }
+    ): Promise<ContractTransaction>;
+
+    setDelegate(
+      id: BigNumberish,
+      setting: BigNumberish,
+      delegateAddress: string,
+      delegateExpiry: BigNumberish,
+      overrides?: Overrides & { from?: string }
+    ): Promise<ContractTransaction>;
+
     updateAcceptedToken(
       endowId: BigNumberish,
       tokenAddr: string,
       priceFeedAddr: string,
       tokenStatus: boolean,
-      overrides?: Overrides & { from?: string }
-    ): Promise<ContractTransaction>;
-
-    updateDelegate(
-      id: BigNumberish,
-      setting: BigNumberish,
-      action: BigNumberish,
-      delegateAddress: string,
-      delegateExpiry: BigNumberish,
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
@@ -474,20 +477,25 @@ export interface AccountsUpdateEndowments extends BaseContract {
     ): Promise<ContractTransaction>;
   };
 
+  revokeDelegate(
+    id: BigNumberish,
+    setting: BigNumberish,
+    overrides?: Overrides & { from?: string }
+  ): Promise<ContractTransaction>;
+
+  setDelegate(
+    id: BigNumberish,
+    setting: BigNumberish,
+    delegateAddress: string,
+    delegateExpiry: BigNumberish,
+    overrides?: Overrides & { from?: string }
+  ): Promise<ContractTransaction>;
+
   updateAcceptedToken(
     endowId: BigNumberish,
     tokenAddr: string,
     priceFeedAddr: string,
     tokenStatus: boolean,
-    overrides?: Overrides & { from?: string }
-  ): Promise<ContractTransaction>;
-
-  updateDelegate(
-    id: BigNumberish,
-    setting: BigNumberish,
-    action: BigNumberish,
-    delegateAddress: string,
-    delegateExpiry: BigNumberish,
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
@@ -497,20 +505,25 @@ export interface AccountsUpdateEndowments extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
+    revokeDelegate(
+      id: BigNumberish,
+      setting: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setDelegate(
+      id: BigNumberish,
+      setting: BigNumberish,
+      delegateAddress: string,
+      delegateExpiry: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     updateAcceptedToken(
       endowId: BigNumberish,
       tokenAddr: string,
       priceFeedAddr: string,
       tokenStatus: boolean,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    updateDelegate(
-      id: BigNumberish,
-      setting: BigNumberish,
-      action: BigNumberish,
-      delegateAddress: string,
-      delegateExpiry: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -554,25 +567,14 @@ export interface AccountsUpdateEndowments extends BaseContract {
     "ConfigUpdated()"(): ConfigUpdatedEventFilter;
     ConfigUpdated(): ConfigUpdatedEventFilter;
 
-    "DaoContractCreated(uint32,address)"(
-      endowId?: null,
-      daoAddress?: null
-    ): DaoContractCreatedEventFilter;
-    DaoContractCreated(
-      endowId?: null,
-      daoAddress?: null
-    ): DaoContractCreatedEventFilter;
-
-    "DonationDeposited(uint256,address,uint256)"(
-      endowId?: null,
-      tokenAddress?: null,
-      amount?: null
-    ): DonationDepositedEventFilter;
-    DonationDeposited(
-      endowId?: null,
-      tokenAddress?: null,
-      amount?: null
-    ): DonationDepositedEventFilter;
+    "DafApprovedEndowmentsUpdated(uint32[],uint32[])"(
+      add?: null,
+      remove?: null
+    ): DafApprovedEndowmentsUpdatedEventFilter;
+    DafApprovedEndowmentsUpdated(
+      add?: null,
+      remove?: null
+    ): DafApprovedEndowmentsUpdatedEventFilter;
 
     "DonationMatchCreated(uint256,address)"(
       endowId?: null,
@@ -583,21 +585,29 @@ export interface AccountsUpdateEndowments extends BaseContract {
       donationMatchContract?: null
     ): DonationMatchCreatedEventFilter;
 
-    "DonationWithdrawn(uint256,address,address,uint256)"(
+    "EndowmentAllowlistUpdated(uint256,uint8,address[],address[])"(
       endowId?: null,
-      recipient?: null,
-      tokenAddress?: null,
-      amount?: null
-    ): DonationWithdrawnEventFilter;
-    DonationWithdrawn(
+      allowlistType?: null,
+      add?: null,
+      remove?: null
+    ): EndowmentAllowlistUpdatedEventFilter;
+    EndowmentAllowlistUpdated(
       endowId?: null,
-      recipient?: null,
-      tokenAddress?: null,
-      amount?: null
-    ): DonationWithdrawnEventFilter;
+      allowlistType?: null,
+      add?: null,
+      remove?: null
+    ): EndowmentAllowlistUpdatedEventFilter;
 
-    "EndowmentClosed(uint256)"(endowId?: null): EndowmentClosedEventFilter;
-    EndowmentClosed(endowId?: null): EndowmentClosedEventFilter;
+    "EndowmentClosed(uint256,((uint32,address),uint8),uint32[])"(
+      endowId?: null,
+      beneficiary?: null,
+      relinked?: null
+    ): EndowmentClosedEventFilter;
+    EndowmentClosed(
+      endowId?: null,
+      beneficiary?: null,
+      relinked?: null
+    ): EndowmentClosedEventFilter;
 
     "EndowmentCreated(uint256,uint8)"(
       endowId?: null,
@@ -621,11 +631,39 @@ export interface AccountsUpdateEndowments extends BaseContract {
       amountLiquid?: null
     ): EndowmentDepositEventFilter;
 
-    "EndowmentInvested(uint8)"(arg0?: null): EndowmentInvestedEventFilter;
-    EndowmentInvested(arg0?: null): EndowmentInvestedEventFilter;
+    "EndowmentInvested(uint256,bytes4,string,address,uint256,uint256)"(
+      endowId?: null,
+      strategy?: null,
+      network?: null,
+      token?: null,
+      lockAmt?: null,
+      liquidAmt?: null
+    ): EndowmentInvestedEventFilter;
+    EndowmentInvested(
+      endowId?: null,
+      strategy?: null,
+      network?: null,
+      token?: null,
+      lockAmt?: null,
+      liquidAmt?: null
+    ): EndowmentInvestedEventFilter;
 
-    "EndowmentRedeemed(uint8)"(arg0?: null): EndowmentRedeemedEventFilter;
-    EndowmentRedeemed(arg0?: null): EndowmentRedeemedEventFilter;
+    "EndowmentRedeemed(uint256,bytes4,string,address,uint256,uint256)"(
+      endowId?: null,
+      strategy?: null,
+      network?: null,
+      token?: null,
+      lockAmt?: null,
+      liquidAmt?: null
+    ): EndowmentRedeemedEventFilter;
+    EndowmentRedeemed(
+      endowId?: null,
+      strategy?: null,
+      network?: null,
+      token?: null,
+      lockAmt?: null,
+      liquidAmt?: null
+    ): EndowmentRedeemedEventFilter;
 
     "EndowmentSettingUpdated(uint256,string)"(
       endowId?: null,
@@ -688,20 +726,25 @@ export interface AccountsUpdateEndowments extends BaseContract {
   };
 
   estimateGas: {
+    revokeDelegate(
+      id: BigNumberish,
+      setting: BigNumberish,
+      overrides?: Overrides & { from?: string }
+    ): Promise<BigNumber>;
+
+    setDelegate(
+      id: BigNumberish,
+      setting: BigNumberish,
+      delegateAddress: string,
+      delegateExpiry: BigNumberish,
+      overrides?: Overrides & { from?: string }
+    ): Promise<BigNumber>;
+
     updateAcceptedToken(
       endowId: BigNumberish,
       tokenAddr: string,
       priceFeedAddr: string,
       tokenStatus: boolean,
-      overrides?: Overrides & { from?: string }
-    ): Promise<BigNumber>;
-
-    updateDelegate(
-      id: BigNumberish,
-      setting: BigNumberish,
-      action: BigNumberish,
-      delegateAddress: string,
-      delegateExpiry: BigNumberish,
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
@@ -712,20 +755,25 @@ export interface AccountsUpdateEndowments extends BaseContract {
   };
 
   populateTransaction: {
+    revokeDelegate(
+      id: BigNumberish,
+      setting: BigNumberish,
+      overrides?: Overrides & { from?: string }
+    ): Promise<PopulatedTransaction>;
+
+    setDelegate(
+      id: BigNumberish,
+      setting: BigNumberish,
+      delegateAddress: string,
+      delegateExpiry: BigNumberish,
+      overrides?: Overrides & { from?: string }
+    ): Promise<PopulatedTransaction>;
+
     updateAcceptedToken(
       endowId: BigNumberish,
       tokenAddr: string,
       priceFeedAddr: string,
       tokenStatus: boolean,
-      overrides?: Overrides & { from?: string }
-    ): Promise<PopulatedTransaction>;
-
-    updateDelegate(
-      id: BigNumberish,
-      setting: BigNumberish,
-      action: BigNumberish,
-      delegateAddress: string,
-      delegateExpiry: BigNumberish,
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 

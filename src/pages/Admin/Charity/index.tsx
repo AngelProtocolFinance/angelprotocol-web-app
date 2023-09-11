@@ -27,7 +27,7 @@ import Withdraws from "./Withdraws";
 
 const COMMON: LinkGroup[] = [
   {
-    links: [LINKS.index, LINKS.deposits, LINKS.withdraws, LINKS.contributions],
+    links: [LINKS.index, LINKS.withdraws, LINKS.contributions],
   },
   {
     title: "Invest",
@@ -42,24 +42,35 @@ const COMMON: LinkGroup[] = [
 ];
 
 const LINK_GROUPS: { [key in EndowmentType]: LinkGroup[] } = {
+  daf: [
+    ...COMMON,
+    {
+      title: "Manage",
+      links: [LINKS.admin_wallet, LINKS.proposals],
+    },
+  ],
   charity: [
     ...COMMON,
     {
       title: "Manage",
-      links: [
-        LINKS.whitelists,
-        LINKS.permissions,
-        LINKS.admin_wallet,
-        LINKS.proposals,
-      ],
+      links: [LINKS.admin_wallet, LINKS.proposals],
     },
   ],
-  normal: [
-    ...COMMON,
+  ast: [
+    {
+      links: [
+        LINKS.index,
+        LINKS.deposits,
+        LINKS.withdraws,
+        LINKS.contributions,
+      ],
+    },
+    COMMON[1],
+    COMMON[2],
     {
       title: "Manage",
       links: [
-        LINKS.whitelists,
+        LINKS.whitelists, //endowType === "charity" can't edit whitelist
         LINKS.maturity,
         LINKS.permissions,
         LINKS.admin_wallet,

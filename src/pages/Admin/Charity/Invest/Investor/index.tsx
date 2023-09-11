@@ -36,6 +36,7 @@ export default function Investor({ endowId, ...strategy }: Props) {
     type: "erc20",
     amount: "0",
     balance: accountBalances.liquid,
+    coingecko_denom: "",
   };
 
   const methods = useForm<FormValues>({

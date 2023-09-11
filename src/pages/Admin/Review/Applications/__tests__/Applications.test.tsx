@@ -76,16 +76,7 @@ const mockApplications: EndowmentProposal[] = [
     RegistrationDate: "2022-06-30T10:05:45.350Z",
     OrganizationName: "testCharity1",
     Website: "http://google.com",
-    FinancialStatements: [
-      {
-        name: "fs1",
-        publicUrl: "fs1Url",
-      },
-      {
-        name: "fs2",
-        publicUrl: "fs2Url",
-      },
-    ],
+    EIN: "123456789",
     ProofOfRegistration: {
       name: "proofReg",
       publicUrl: "proofRegUrl",
@@ -98,41 +89,19 @@ const mockApplications: EndowmentProposal[] = [
     Tier: 3,
     RegistrationStatus: "Under Review",
     PK: "32e8ed16-ea13-448a-b31c-a0cec547aa7c",
-    AuditedFinancialReports: [
-      {
-        name: "auditedFinReport1",
-        publicUrl: "auditedFinReport1Url",
-      },
-      {
-        name: "auditedFinReport2",
-        publicUrl: "auditedFinReport2Url",
-      },
-      {
-        name: "auditedFinReport3",
-        publicUrl: "auditedFinReport3Url",
-      },
-    ],
     KycDonorsOnly: true,
     application_id: 1,
     ActiveInCountries: [],
     EndowDesignation: "Charity",
     HqCountry: "",
     CashEligible: true,
+    AuthorizedToReceiveTaxDeductibleDonations: false,
   },
   {
     RegistrationDate: "2022-06-30T10:05:45.350Z",
     OrganizationName: "testCharity2",
     Website: "http://google.com",
-    FinancialStatements: [
-      {
-        name: "fs1",
-        publicUrl: "fs1Url",
-      },
-      {
-        name: "fs2",
-        publicUrl: "fs2Url",
-      },
-    ],
+    EIN: "123456789",
     ProofOfRegistration: {
       name: "proofReg",
       publicUrl: "proofRegUrl",
@@ -145,41 +114,19 @@ const mockApplications: EndowmentProposal[] = [
     Tier: 3,
     RegistrationStatus: "Under Review",
     PK: "72e8ed16-ea13-458a-b31c-a0cec547aa7c",
-    AuditedFinancialReports: [
-      {
-        name: "auditedFinReport1",
-        publicUrl: "auditedFinReport1Url",
-      },
-      {
-        name: "auditedFinReport2",
-        publicUrl: "auditedFinReport2Url",
-      },
-      {
-        name: "auditedFinReport3",
-        publicUrl: "auditedFinReport3Url",
-      },
-    ],
     KycDonorsOnly: false,
     application_id: 2,
     ActiveInCountries: [],
     EndowDesignation: "Charity",
     HqCountry: "",
     CashEligible: true,
+    AuthorizedToReceiveTaxDeductibleDonations: false,
   },
   {
     RegistrationDate: "2022-06-30T10:05:45.350Z",
     OrganizationName: "testCharity3",
+    EIN: "123456789",
     Website: "http://google.com",
-    FinancialStatements: [
-      {
-        name: "fs1",
-        publicUrl: "fs1Url",
-      },
-      {
-        name: "fs2",
-        publicUrl: "fs2Url",
-      },
-    ],
     ProofOfRegistration: {
       name: "proofReg",
       publicUrl: "proofRegUrl",
@@ -192,25 +139,12 @@ const mockApplications: EndowmentProposal[] = [
     Tier: 3,
     RegistrationStatus: "Under Review",
     PK: "72e8ed16-ea13-448a-b31c-a0cec547aa9c",
-    AuditedFinancialReports: [
-      {
-        name: "auditedFinReport1",
-        publicUrl: "auditedFinReport1Url",
-      },
-      {
-        name: "auditedFinReport2",
-        publicUrl: "auditedFinReport2Url",
-      },
-      {
-        name: "auditedFinReport3",
-        publicUrl: "auditedFinReport3Url",
-      },
-    ],
     KycDonorsOnly: false,
     application_id: 3,
     ActiveInCountries: [],
     EndowDesignation: "Charity",
     HqCountry: "",
     CashEligible: true,
+    AuthorizedToReceiveTaxDeductibleDonations: false,
   },
 ];

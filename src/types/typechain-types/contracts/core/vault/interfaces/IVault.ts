@@ -14,11 +14,7 @@ import type {
   Signer,
   utils,
 } from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
+import type { FunctionFragment, Result } from "@ethersproject/abi";
 import type { Listener, Provider } from "@ethersproject/providers";
 import type {
   TypedEventFilter,
@@ -30,7 +26,7 @@ import type {
 export declare namespace IVault {
   export type VaultConfigStruct = {
     vaultType: BigNumberish;
-    strategySelector: BytesLike;
+    strategyId: BytesLike;
     strategy: string;
     registrar: string;
     baseToken: string;
@@ -52,7 +48,7 @@ export declare namespace IVault {
     string
   ] & {
     vaultType: number;
-    strategySelector: string;
+    strategyId: string;
     strategy: string;
     registrar: string;
     baseToken: string;
@@ -133,53 +129,8 @@ export interface IVaultInterface extends utils.Interface {
     data: BytesLike
   ): Result;
 
-  events: {
-    "Deposit(uint32,uint8,address,uint256)": EventFragment;
-    "Redeem(uint32,uint8,address,uint256)": EventFragment;
-    "RewardsHarvested(uint32[])": EventFragment;
-  };
-
-  getEvent(nameOrSignatureOrTopic: "Deposit"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Redeem"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RewardsHarvested"): EventFragment;
+  events: {};
 }
-
-export interface DepositEventObject {
-  accountId: number;
-  vaultType: number;
-  tokenDeposited: string;
-  amtDeposited: BigNumber;
-}
-export type DepositEvent = TypedEvent<
-  [number, number, string, BigNumber],
-  DepositEventObject
->;
-
-export type DepositEventFilter = TypedEventFilter<DepositEvent>;
-
-export interface RedeemEventObject {
-  accountId: number;
-  vaultType: number;
-  tokenRedeemed: string;
-  amtRedeemed: BigNumber;
-}
-export type RedeemEvent = TypedEvent<
-  [number, number, string, BigNumber],
-  RedeemEventObject
->;
-
-export type RedeemEventFilter = TypedEventFilter<RedeemEvent>;
-
-export interface RewardsHarvestedEventObject {
-  accountIds: number[];
-}
-export type RewardsHarvestedEvent = TypedEvent<
-  [number[]],
-  RewardsHarvestedEventObject
->;
-
-export type RewardsHarvestedEventFilter =
-  TypedEventFilter<RewardsHarvestedEvent>;
 
 export interface IVault extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -307,38 +258,7 @@ export interface IVault extends BaseContract {
     ): Promise<void>;
   };
 
-  filters: {
-    "Deposit(uint32,uint8,address,uint256)"(
-      accountId?: null,
-      vaultType?: null,
-      tokenDeposited?: null,
-      amtDeposited?: null
-    ): DepositEventFilter;
-    Deposit(
-      accountId?: null,
-      vaultType?: null,
-      tokenDeposited?: null,
-      amtDeposited?: null
-    ): DepositEventFilter;
-
-    "Redeem(uint32,uint8,address,uint256)"(
-      accountId?: null,
-      vaultType?: null,
-      tokenRedeemed?: null,
-      amtRedeemed?: null
-    ): RedeemEventFilter;
-    Redeem(
-      accountId?: null,
-      vaultType?: null,
-      tokenRedeemed?: null,
-      amtRedeemed?: null
-    ): RedeemEventFilter;
-
-    "RewardsHarvested(uint32[])"(
-      accountIds?: null
-    ): RewardsHarvestedEventFilter;
-    RewardsHarvested(accountIds?: null): RewardsHarvestedEventFilter;
-  };
+  filters: {};
 
   estimateGas: {
     deposit(

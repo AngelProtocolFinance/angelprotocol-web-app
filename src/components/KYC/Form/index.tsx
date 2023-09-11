@@ -10,8 +10,7 @@ import Tooltip from "./Tooltip";
 import { states } from "./us-states";
 import useSubmit from "./useSubmit";
 
-export const formStyle =
-  "w-full bg-gray-l6 dark:bg-blue-d5 text-gray-d2 dark:text-white font-work p-3";
+export const formStyle = "w-full text-gray-d2 dark:text-white font-work p-3";
 
 export default function Form({ classes = "", ...props }: Props) {
   const {
@@ -95,7 +94,7 @@ export default function Form({ classes = "", ...props }: Props) {
           <Label htmlFor="usState" className="mb-2" required={false}>
             State
           </Label>
-          <Selector<FV, "usState", string, false>
+          <Selector<FV, "usState", string>
             name="usState"
             options={states}
             classes={{ container: "bg-white dark:bg-blue-d6" }}

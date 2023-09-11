@@ -20,7 +20,6 @@ type Props<T extends FieldValues, K extends Path<T>> = {
 };
 
 export default function Addresses<T extends FieldValues, K extends Path<T>>({
-  title,
   name,
   memberName,
   emptyMsg,
@@ -40,8 +39,7 @@ export default function Addresses<T extends FieldValues, K extends Path<T>>({
   }
 
   return (
-    <div className={`${classes} grid content-start border border-prim rounded`}>
-      <h4 className="text-xl font-bold mb-8">{title}</h4>
+    <div className={`${classes} grid content-start`}>
       <button
         type="button"
         onClick={() =>

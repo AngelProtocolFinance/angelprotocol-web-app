@@ -3,16 +3,12 @@ import Image from "components/Image";
 import WalletSuite from "components/WalletSuite";
 import { Steps } from "components/donation";
 import { useSetter } from "store/accessors";
-import { setRecipient } from "slices/donation";
+import { DonationRecipient, setRecipient } from "slices/donation";
 import { getPossessiveForm } from "helpers";
 import { LOGO_DARK, PAYMENT_WORDS, titleCase } from "constants/common";
 import useWidgetParams from "./useWidgetParams";
 
-export default function InnerComponent(props: {
-  id: number;
-  name: string;
-  isKYCRequired: boolean;
-}) {
+export default function InnerComponent(props: DonationRecipient) {
   const { hideText, ...rest } = useWidgetParams();
 
   const dispatch = useSetter();

@@ -1,55 +1,55 @@
 import { SubmitHandler, useFormContext } from "react-hook-form";
 import { FormValues } from "./types";
-import { EndowmentSettingsUpdate } from "types/contracts";
+import { AllowlistUpdate } from "types/contracts";
 import { SimulContractTx } from "types/evm";
 import { useModalContext } from "contexts/ModalContext";
 import { TxPrompt } from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { isEmpty } from "helpers";
-import { getPayloadDiff, getTagPayloads } from "helpers/admin";
-import { isTooltip, useAdminContext } from "../../Context";
-import { ops } from "./constants";
+import { getTagPayloads } from "helpers/admin";
+import { Operation, isTooltip, useAdminContext } from "../../../Context";
 
-export default function useEditWhitelists() {
-  const { id, multisig, txResource } = useAdminContext<"charity">(ops);
+export default function useSubmit(op: Operation) {
+  const { id, multisig, txResource } = useAdminContext<"charity">([op]);
   const {
     reset,
     handleSubmit,
-    formState: { isSubmitting },
+    formState: { isSubmitting, isDirty },
   } = useFormContext<FormValues>();
 
   const { showModal } = useModalContext();
   const sendTx = useTxSender();
   const tooltip = isTooltip(txResource) ? txResource : undefined;
 
-  const editWhitelists: SubmitHandler<FormValues> = async ({
+  const submit: SubmitHandler<FormValues> = async ({
+    type,
     initial,
-    contributors,
-    beneficiaries,
+    addresses,
   }) => {
     try {
       if (isTooltip(txResource)) throw new Error(txResource);
 
-      const update: EndowmentSettingsUpdate = {
-        ...initial,
-        allowlistedBeneficiaries: isEmpty(beneficiaries)
-          ? [multisig]
-          : beneficiaries,
-        allowlistedContributors: contributors,
-      };
+      const toAdd = addresses.filter((a) => !initial.includes(a));
+      const toRemove = initial.filter((a) => !addresses.includes(a));
 
-      const diff = getPayloadDiff(initial, update);
-
-      if (isEmpty(diff)) {
+      if (isEmpty(toAdd) && isEmpty(toRemove)) {
         return showModal(TxPrompt, { error: "No changes detected" });
       }
 
+      const update: AllowlistUpdate = {
+        id,
+        allowlistType:
+          type === "beneficiary" ? 0 : type === "contributor" ? 1 : 2,
+        add: toAdd,
+        remove: toRemove,
+      };
+
       const { wallet, txMeta, isDelegated } = txResource;
-      const [data, dest, meta] = encodeTx("accounts.update-settings", update, {
-        title: `Update whitelists settings`,
-        description: `Update whitelists settings for endowment id:${id} by member:${wallet.address}`,
-        content: diff,
+      const [data, dest, meta] = encodeTx("accounts.update-allowlist", update, {
+        title: `Update ${type} allowlist`,
+        description: `Update ${type} allowlist for endowment id:${id} by member:${wallet.address}`,
+        content: { add: toAdd, remove: toRemove },
       });
 
       const tx: SimulContractTx = isDelegated
@@ -77,8 +77,9 @@ export default function useEditWhitelists() {
 
   return {
     reset,
-    editWhitelists: handleSubmit(editWhitelists),
+    submit: handleSubmit(submit),
     isSubmitting,
     tooltip,
+    isDirty,
   };
 }

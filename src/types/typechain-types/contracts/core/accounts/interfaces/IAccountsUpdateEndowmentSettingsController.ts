@@ -136,10 +136,6 @@ export declare namespace AccountMessages {
     id: BigNumberish;
     donationMatchActive: boolean;
     maturityTime: BigNumberish;
-    allowlistedBeneficiaries: string[];
-    allowlistedContributors: string[];
-    maturity_allowlist_add: string[];
-    maturity_allowlist_remove: string[];
     splitToLiquid: LibAccounts.SplitDetailsStruct;
     ignoreUserSplits: boolean;
   };
@@ -148,20 +144,12 @@ export declare namespace AccountMessages {
     number,
     boolean,
     BigNumber,
-    string[],
-    string[],
-    string[],
-    string[],
     LibAccounts.SplitDetailsStructOutput,
     boolean
   ] & {
     id: number;
     donationMatchActive: boolean;
     maturityTime: BigNumber;
-    allowlistedBeneficiaries: string[];
-    allowlistedContributors: string[];
-    maturity_allowlist_add: string[];
-    maturity_allowlist_remove: string[];
     splitToLiquid: LibAccounts.SplitDetailsStructOutput;
     ignoreUserSplits: boolean;
   };
@@ -192,18 +180,24 @@ export declare namespace AccountMessages {
 export interface IAccountsUpdateEndowmentSettingsControllerInterface
   extends utils.Interface {
   functions: {
+    "updateEndowmentAllowlist(uint32,uint8,address[],address[])": FunctionFragment;
     "updateEndowmentController((uint32,((bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)),(bool,(address,uint256)))))": FunctionFragment;
-    "updateEndowmentSettings((uint32,bool,uint256,address[],address[],address[],address[],(uint256,uint256,uint256),bool))": FunctionFragment;
+    "updateEndowmentSettings((uint32,bool,uint256,(uint256,uint256,uint256),bool))": FunctionFragment;
     "updateFeeSettings((uint32,(address,uint256),(address,uint256),(address,uint256),(address,uint256)))": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
+      | "updateEndowmentAllowlist"
       | "updateEndowmentController"
       | "updateEndowmentSettings"
       | "updateFeeSettings"
   ): FunctionFragment;
 
+  encodeFunctionData(
+    functionFragment: "updateEndowmentAllowlist",
+    values: [BigNumberish, BigNumberish, string[], string[]]
+  ): string;
   encodeFunctionData(
     functionFragment: "updateEndowmentController",
     values: [AccountMessages.UpdateEndowmentControllerRequestStruct]
@@ -217,6 +211,10 @@ export interface IAccountsUpdateEndowmentSettingsControllerInterface
     values: [AccountMessages.UpdateFeeSettingRequestStruct]
   ): string;
 
+  decodeFunctionResult(
+    functionFragment: "updateEndowmentAllowlist",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "updateEndowmentController",
     data: BytesLike
@@ -261,6 +259,14 @@ export interface IAccountsUpdateEndowmentSettingsController
   removeListener: OnEvent<this>;
 
   functions: {
+    updateEndowmentAllowlist(
+      id: BigNumberish,
+      allowlistType: BigNumberish,
+      add: string[],
+      remove: string[],
+      overrides?: Overrides & { from?: string }
+    ): Promise<ContractTransaction>;
+
     updateEndowmentController(
       details: AccountMessages.UpdateEndowmentControllerRequestStruct,
       overrides?: Overrides & { from?: string }
@@ -276,6 +282,14 @@ export interface IAccountsUpdateEndowmentSettingsController
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
+
+  updateEndowmentAllowlist(
+    id: BigNumberish,
+    allowlistType: BigNumberish,
+    add: string[],
+    remove: string[],
+    overrides?: Overrides & { from?: string }
+  ): Promise<ContractTransaction>;
 
   updateEndowmentController(
     details: AccountMessages.UpdateEndowmentControllerRequestStruct,
@@ -293,6 +307,14 @@ export interface IAccountsUpdateEndowmentSettingsController
   ): Promise<ContractTransaction>;
 
   callStatic: {
+    updateEndowmentAllowlist(
+      id: BigNumberish,
+      allowlistType: BigNumberish,
+      add: string[],
+      remove: string[],
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     updateEndowmentController(
       details: AccountMessages.UpdateEndowmentControllerRequestStruct,
       overrides?: CallOverrides
@@ -312,6 +334,14 @@ export interface IAccountsUpdateEndowmentSettingsController
   filters: {};
 
   estimateGas: {
+    updateEndowmentAllowlist(
+      id: BigNumberish,
+      allowlistType: BigNumberish,
+      add: string[],
+      remove: string[],
+      overrides?: Overrides & { from?: string }
+    ): Promise<BigNumber>;
+
     updateEndowmentController(
       details: AccountMessages.UpdateEndowmentControllerRequestStruct,
       overrides?: Overrides & { from?: string }
@@ -329,6 +359,14 @@ export interface IAccountsUpdateEndowmentSettingsController
   };
 
   populateTransaction: {
+    updateEndowmentAllowlist(
+      id: BigNumberish,
+      allowlistType: BigNumberish,
+      add: string[],
+      remove: string[],
+      overrides?: Overrides & { from?: string }
+    ): Promise<PopulatedTransaction>;
+
     updateEndowmentController(
       details: AccountMessages.UpdateEndowmentControllerRequestStruct,
       overrides?: Overrides & { from?: string }

@@ -52,43 +52,6 @@
             "type": "uint256"
           },
           {
-            "components": [
-              {
-                "internalType": "bool",
-                "name": "rebalanceLiquidProfits",
-                "type": "bool"
-              },
-              {
-                "internalType": "uint32",
-                "name": "lockedRebalanceToLiquid",
-                "type": "uint32"
-              },
-              {
-                "internalType": "uint32",
-                "name": "interestDistribution",
-                "type": "uint32"
-              },
-              {
-                "internalType": "bool",
-                "name": "lockedPrincipleToLiquid",
-                "type": "bool"
-              },
-              {
-                "internalType": "uint32",
-                "name": "principleDistribution",
-                "type": "uint32"
-              },
-              {
-                "internalType": "uint32",
-                "name": "basis",
-                "type": "uint32"
-              }
-            ],
-            "internalType": "struct LocalRegistrarLib.RebalanceParams",
-            "name": "rebalance",
-            "type": "tuple"
-          },
-          {
             "internalType": "uint256",
             "name": "proposalLink",
             "type": "uint256"
@@ -105,18 +68,13 @@
           },
           {
             "internalType": "address",
-            "name": "daoToken",
+            "name": "donationMatch",
             "type": "address"
           },
           {
             "internalType": "bool",
             "name": "donationMatchActive",
             "type": "bool"
-          },
-          {
-            "internalType": "address",
-            "name": "donationMatchContract",
-            "type": "address"
           },
           {
             "internalType": "address[]",
@@ -744,8 +702,8 @@
             "type": "address"
           }
         ],
-        "internalType": "struct AccountStorage.Endowment",
-        "name": "endowment",
+        "internalType": "struct AccountMessages.EndowmentResponse",
+        "name": "",
         "type": "tuple"
       }
     ],

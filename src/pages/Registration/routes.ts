@@ -2,9 +2,10 @@ enum routes {
   index = "",
   resume = "resume",
   success = "success",
-  confirmEmail = "confirm-email",
-  verifyEmail = "verify/:token",
+  welcome = "welcome",
   steps = "steps",
+  sign_notice = "sign-notice",
+  sign_result = "sign-result",
 }
 
 export enum steps {

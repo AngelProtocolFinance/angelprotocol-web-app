@@ -7,6 +7,7 @@ import { FetchedChain, Token, TokenType } from "./aws";
 import {
   Token as AccountToken,
   AccountType,
+  AllowlistUpdate,
   CloseEndowmentRequest,
   ERC20Deposit,
   EndowmentSettingsUpdate,
@@ -64,7 +65,7 @@ export type TxContent =
   | { type: "terra"; val: Msg[]; wallet: ConnectedWallet }
   | { type: "evm"; val: SimulTx; log?: LogProcessor };
 
-type Fee = { amount: number; symbol: string };
+type Fee = { amount: number; symbol: string; coinGeckoId: string };
 export type Estimate = { fee: Fee; tx: EstimatedTx };
 
 // //////////// HOOK SENDER & PROMPT ////////////
@@ -152,6 +153,10 @@ type Txs = {
   "accounts.update-settings": Tx<EndowmentSettingsUpdate, Diff[]>;
   "accounts.update-fee-settings": Tx<FeeSettingsUpdate, Diff[]>;
   "accounts.deposit-erc20": Tx<ERC20Deposit, never>; //not multisig tx
+  "accounts.update-allowlist": Tx<
+    AllowlistUpdate,
+    Pick<AllowlistUpdate, "add" | "remove">
+  >;
   "accounts.withdraw": Tx<
     {
       id: number;

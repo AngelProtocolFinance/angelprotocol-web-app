@@ -40,6 +40,7 @@ export default function Form(props: {
   }
 
   const tokenType = watch("token.type");
+  const isStepOneCompleted = !!getValues("token").amount;
 
   return (
     <form
@@ -70,7 +71,7 @@ export default function Form(props: {
             fieldName="country"
             onReset={() => resetField("country")}
             classes={{
-              container: "px-4 dark:bg-blue-d6",
+              container: "px-4 dark:bg-blue-d6 mb-3",
               input: "py-3.5 placeholder:text-sm",
               error: "field-error",
             }}
@@ -102,15 +103,18 @@ export default function Form(props: {
         {!isInsideWidget && (
           <Link
             className="btn-outline-filled btn-donate w-1/2"
-            to={`${appRoutes.profile}/${endowId}`}
+            to={`${appRoutes.marketplace}/${endowId}`}
           >
             Cancel
           </Link>
         )}
         <button
           className="btn-orange btn-donate w-1/2"
-          //make sure that fields doesn't make form dirty on initial load
-          disabled={!isValid || !isDirty || isSubmitting}
+          // * make sure that fields doesn't make form dirty on initial load
+          // * isStepOneCompleted, when user goes back to step 1 (filled out previously)
+          disabled={
+            !isValid || isSubmitting || !(isDirty || isStepOneCompleted)
+          }
           type="submit"
         >
           Continue

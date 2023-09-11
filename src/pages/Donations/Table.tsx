@@ -7,6 +7,7 @@ import useKYC from "components/KYC/useKYC";
 import TableSection, { Cells } from "components/TableSection";
 import useSort from "hooks/useSort";
 import { getTxUrl, humanize } from "helpers";
+import { chainIds } from "constants/chainIds";
 import { appRoutes } from "constants/routes";
 import LoadMoreBtn from "./LoadMoreBtn";
 
@@ -98,7 +99,11 @@ export default function Table({
               }`}
             >
               <Link
-                to={`${appRoutes.profile}/${row.id}`}
+                to={`${
+                  appRoutes[
+                    row.chainId === chainIds.juno ? "profile" : "marketplace"
+                  ]
+                }/${row.id}`}
                 className="flex items-center justify-between gap-1 cursor-pointer text-sm hover:underline"
               >
                 <span className="truncate max-w-[12rem]">

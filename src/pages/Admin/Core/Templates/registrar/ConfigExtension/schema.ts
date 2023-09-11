@@ -9,23 +9,20 @@ const contract = walletAddr(chainIds.polygon);
 
 export const schema = object<any, SchemaShape<FormValues>>({
   ...proposalShape,
-
   accountsContract: contract,
-  charitySharesContract: contract,
-  donationMatchCharitesContract: contract,
-  fundraisingContract: contract,
-  govContract: contract,
-  haloTokenLpContract: contract,
-  haloToken: contract,
+  apTeamMultisig: contract,
+  treasury: contract,
   indexFundContract: contract,
+  haloToken: contract,
+  govContract: contract,
+  fundraisingContract: contract,
   uniswapRouter: contract,
-  charityApplications: contract,
-
-  //wasm codes
+  uniswapFactory: contract,
   multisigFactory: contract,
-  subdaoBondingTokenContract: contract,
-  subdaoTokenContract: contract,
-  subdaoCw900Contract: contract,
-  subdaoDistributorContract: contract,
-  subdaoGovContract: contract,
+  multisigEmitter: contract,
+  charityApplications: contract,
+  proxyAdmin: contract,
+  usdcAddress: contract,
+  wMaticAddress: contract,
+  gasFwdFactory: contract,
 }) as ObjectSchema<FormValues>;

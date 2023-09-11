@@ -3,10 +3,10 @@ import {
   BridgeFees,
   EndowmentProfile,
   EndowmentProfileUpdate,
+  WalletProfile,
 } from "types/aws";
 import { EndowmentDetails } from "types/contracts";
-import { ApplicationProposal } from "types/contracts/multisig";
-import { AccountType } from "types/lists";
+import { AccountType, EndowmentType } from "types/lists";
 import { SemiPartial } from "types/utils";
 
 export type MultisigConfig = {
@@ -28,9 +28,21 @@ type APResource = Base & {
 type ReviewResource = Base & {
   type: "review";
 };
+
+type Beneficiary = {
+  type: "wallet" | "endowment" | "treasury";
+  value: string;
+};
+
+export type EndowmentState = {
+  closed: boolean;
+  closingBeneficiary: Beneficiary;
+};
+
 type CharityResource = Base & {
   type: "charity";
-} & EndowmentDetails;
+} & EndowmentDetails &
+  EndowmentState;
 
 export type AdminResource = APResource | ReviewResource | CharityResource;
 
@@ -60,21 +72,16 @@ export type WithdrawData = {
 
 export type Profile =
   | ({
-      type: "endowment";
+      type: Extract<EndowmentType, "charity">;
     } & EndowmentProfile)
-  | ({ type: "ast" } & ASTProfile);
+  | ({ type: Extract<EndowmentType, "ast"> } & ASTProfile);
 
 //type guard
-export function endow(
+export function profileIsCharity(
   profile: Profile
-): profile is EndowmentProfile & { type: "endowment" } {
-  return profile.type === "endowment";
+): profile is EndowmentProfile & { type: "charity" } {
+  return profile.type === "charity";
 }
-
-export type CharityApplication = ApplicationProposal & {
-  confirmations: number;
-  userConfirmed: boolean;
-};
 
 export type ProfileUpdateMsg = SemiPartial<
   EndowmentProfileUpdate,
@@ -107,4 +114,17 @@ export type Multisig = {
   approvalsRequired: number;
   requireExecution: boolean;
   transactionExpiry: number;
+};
+
+export type FiscalSponsorhipAgreementSigner =
+  | {
+      id: string;
+      name: string;
+      email: string;
+    }
+  | string; //signerEID;
+
+export type WalletProfileVersion = "legacy" | "latest";
+export type VersionSpecificWalletProfile = WalletProfile & {
+  version: "legacy" | "latest";
 };

@@ -54,6 +54,9 @@ export default function ErrorContext(props: PropsWithChildren<{}>) {
         handleError(error.data);
       } else if ("message" in error) {
         handleError(error.message);
+        //TODO: specify controlled error shapes
+      } else if (error.data && typeof error.data === "string") {
+        handleError(error.data);
       } else if (error.data && "message" in error.data) {
         handleError(error.data.message);
       } else if ("error" in error) {

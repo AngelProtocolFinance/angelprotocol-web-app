@@ -10,9 +10,6 @@ const contractTags: ContractQueryTypes[] = [
 
   "erc20.balance",
 
-  "multisig/review.prop-confirms",
-  "multisig/review.proposal",
-
   "accounts.endowment",
   "accounts.state",
   "accounts.token-balance",

@@ -58,7 +58,7 @@ export default function useUpdateEndowmentProfile() {
           message: "Profile successfully updated",
           link: {
             description: "View changes",
-            url: `${appRoutes.profile}/${cleanUpdates.id}`,
+            url: `${appRoutes.marketplace}/${cleanUpdates.id}`,
           },
         },
       });

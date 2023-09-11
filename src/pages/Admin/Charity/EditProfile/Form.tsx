@@ -7,7 +7,7 @@ import CountrySelector from "components/CountrySelector";
 import Icon from "components/Icon";
 import ImgEditor from "components/ImgEditor";
 import { RichTextEditor } from "components/RichText";
-import { Selector } from "components/Selector";
+import { MultiSelector, Selector } from "components/Selector";
 import Toggle from "components/Toggle";
 import { Tooltip } from "components/admin";
 import { Field, Label } from "components/form";
@@ -38,7 +38,7 @@ export default function Form({
     >
       <fieldset disabled={!!tooltip} className="group contents">
         <Link
-          to={`${appRoutes.profile}/${id}`}
+          to={`${appRoutes.marketplace}/${id}`}
           className="text-blue hover:text-orange text-sm flex items-center gap-1"
         >
           <Icon type="Back" />
@@ -109,13 +109,12 @@ export default function Form({
         </Group>
 
         <Group title="Organization">
-          {type === "endowment" && (
+          {type === "charity" && (
             <>
               <Label className="-mb-4" required>
                 Aligned SDG#
               </Label>
-              <Selector<FV, "sdgs", UNSDG_NUMS, true>
-                multiple
+              <MultiSelector<FV, "sdgs", UNSDG_NUMS>
                 name="sdgs"
                 options={sdgOptions}
                 classes={{ button: "field-input-admin" }}
@@ -123,7 +122,7 @@ export default function Form({
               <Label className="-mb-4" required>
                 Endowment Designation
               </Label>
-              <Selector<FV, "endow_designation", string, false>
+              <Selector<FV, "endow_designation", string>
                 name="endow_designation"
                 options={ENDOW_DESIGNATIONS.map((option) => ({
                   label: option.label,

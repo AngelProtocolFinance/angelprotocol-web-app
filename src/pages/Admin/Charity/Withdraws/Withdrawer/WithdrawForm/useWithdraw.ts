@@ -8,6 +8,7 @@ import { TxOnSuccess, TxSuccessMeta } from "types/tx";
 import { WithdrawMeta } from "types/tx";
 import { client } from "services/constants";
 import { version as v } from "services/helpers";
+import { queryContract } from "services/juno/queryContract";
 import { useModalContext } from "contexts/ModalContext";
 import { TxPrompt } from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
@@ -42,11 +43,14 @@ type WithdrawLogPayload = {
 export default function useWithdraw() {
   const { handleSubmit, watch, getValues } = useFormContext<FV>();
   const accountType = watch("accountType");
+  const beneficiaryType = watch("beneficiaryType");
 
   const {
     multisig,
     id: endowmentId,
     txResource,
+    closed,
+    closingBeneficiary,
     ...endow
   } = useAdminContext<"charity">([
     accountType === "liquid" ? "withdraw-liquid" : "withdraw-locked",
@@ -76,13 +80,71 @@ export default function useWithdraw() {
       })),
     };
 
+    if (fv.beneficiaryType === "endowment") {
+      showModal(TxPrompt, { loading: "Verifying beneficiary endowment.." });
+      try {
+        const beneficiaryEndowment = await queryContract("accounts.endowment", {
+          id: +fv.beneficiaryEndowmentId,
+        });
+
+        /** even though not existing,
+         * queryEndowDetails still returns an endowment with placeholder values */
+        if (beneficiaryEndowment.owner === ADDRESS_ZERO) {
+          return showModal(TxPrompt, {
+            error: `Endowment (id: ${fv.beneficiaryEndowmentId}) doesn't exist`,
+          });
+        }
+
+        const beneficiaryEndowmentState = await queryContract(
+          "accounts.state",
+          {
+            id: +fv.beneficiaryEndowmentId,
+          }
+        );
+
+        /** a closingBeneficiary might have been validated on closeEndowment call,
+         *  but it may have been closed prior to withdraw call
+         */
+        if (beneficiaryEndowmentState.closingEndowment) {
+          return showModal(TxPrompt, {
+            error: "Beneficiary endowment is closed.",
+          });
+        }
+
+        if (fv.endowType === "charity") {
+          if (beneficiaryEndowment.endowType !== "charity") {
+            return showModal(TxPrompt, {
+              error: "Beneficiary must be charity",
+            });
+          }
+        }
+
+        if (fv.endowType === "daf") {
+          const isBeneficiaryDAF = await queryContract("accounts.is-daf", {
+            id: +fv.beneficiaryEndowmentId,
+          });
+          if (!isBeneficiaryDAF) {
+            return showModal(TxPrompt, {
+              error: "Beneficiary is not approved by this DAF",
+            });
+          }
+        }
+      } catch (err) {
+        return showModal(TxPrompt, {
+          error: "Error checking beneficiary endowment",
+        });
+      }
+    }
+
     const [data, dest, meta] = encodeTx(
       "accounts.withdraw",
       {
         id: endowmentId,
         type: accType,
-        beneficiaryAddress: isLocked ? ADDRESS_ZERO : beneficiary,
-        beneficiaryEndowId: 0, //TODO: ap-justin UI to set endow id
+        beneficiaryAddress:
+          fv.beneficiaryType === "wallet" ? fv.beneficiaryWallet : ADDRESS_ZERO,
+        beneficiaryEndowId:
+          fv.beneficiaryType !== "wallet" ? +fv.beneficiaryEndowmentId : 0,
         tokens: fv.amounts.map((a) => ({
           addr: a.tokenId,
           amnt: scaleToStr(a.value),
@@ -214,7 +276,11 @@ export default function useWithdraw() {
     bridgeFee: bridgeFee(destinationChainId, getValues("bridgeFees")),
     chainName: chainName(destinationChainId),
     tooltip: isTooltip(txResource) ? txResource : undefined,
+    beneficiaryType,
     accountType,
+    endowmentType: getValues("endowType"),
+    closed,
+    closingBeneficiary,
   };
 }
 
