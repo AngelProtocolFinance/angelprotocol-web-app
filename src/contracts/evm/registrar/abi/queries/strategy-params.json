@@ -22,38 +22,14 @@
             "type": "string"
           },
           {
-            "components": [
-              {
-                "internalType": "enum IVault.VaultType",
-                "name": "Type",
-                "type": "uint8"
-              },
-              {
-                "internalType": "address",
-                "name": "vaultAddr",
-                "type": "address"
-              }
-            ],
-            "internalType": "struct LocalRegistrarLib.VaultParams",
-            "name": "Locked",
-            "type": "tuple"
+            "internalType": "address",
+            "name": "lockedVaultAddr",
+            "type": "address"
           },
           {
-            "components": [
-              {
-                "internalType": "enum IVault.VaultType",
-                "name": "Type",
-                "type": "uint8"
-              },
-              {
-                "internalType": "address",
-                "name": "vaultAddr",
-                "type": "address"
-              }
-            ],
-            "internalType": "struct LocalRegistrarLib.VaultParams",
-            "name": "Liquid",
-            "type": "tuple"
+            "internalType": "address",
+            "name": "liquidVaultAddr",
+            "type": "address"
           }
         ],
         "internalType": "struct LocalRegistrarLib.StrategyParams",
