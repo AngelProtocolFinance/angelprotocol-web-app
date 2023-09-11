@@ -6,6 +6,7 @@ export default function WalletConnector({ name, logo, connect }: Connection) {
 
   return (
     <button
+      type="button"
       onClick={() => connect().catch(handleError)}
       className="flex items-center border border-prim w-full p-4 mb-2 rounded"
     >
