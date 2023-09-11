@@ -33,17 +33,6 @@ export type FeeSetting = OverrideProperties<
 >;
 
 /**
- * 0 - locked
- * 1 - liquid
- */
-type VaultParams = OverrideProperties<
-  LocalRegistrarLib.VaultParamsStruct,
-  {
-    Type: number;
-    vaultAddr: string;
-  }
->;
-/**
  * 0 - not approved
  * 1 - approved
  * 2 - withdraw only
@@ -53,8 +42,5 @@ export type StrategyParams = OverrideProperties<
   LocalRegistrarLib.StrategyParamsStruct,
   {
     approvalState: number;
-    network: string;
-    Locked: VaultParams;
-    Liquid: VaultParams;
   }
 >;

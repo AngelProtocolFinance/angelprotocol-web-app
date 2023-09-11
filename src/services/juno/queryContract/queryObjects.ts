@@ -48,14 +48,8 @@ export const queryObjects: {
       return {
         approvalState: d.approvalState,
         network: d.network,
-        Locked: {
-          Type: d.Locked.Type,
-          vaultAddr: d.Locked.vaultAddr.toLowerCase(),
-        },
-        Liquid: {
-          Type: d.Liquid.Type,
-          vaultAddr: d.Liquid.vaultAddr.toLowerCase(),
-        },
+        lockedVaultAddr: d.lockedVaultAddr.toLowerCase(),
+        liquidVaultAddr: d.liquidVaultAddr.toLowerCase(),
       };
     },
   ],
