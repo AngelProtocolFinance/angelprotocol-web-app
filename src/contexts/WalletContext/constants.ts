@@ -104,5 +104,5 @@ export const EVM_SUPPORTED_CHAINS: BaseChain[] = IS_TEST
   : [
       { chain_id: chainIDs.ethMain, chain_name: "Ethereum Mainnet" },
       { chain_id: chainIDs.polygonMain, chain_name: "Polygon Mainnet" },
-      // {chain_id: chainIDs.binanceMain, chain_name: "BNB Smart Chain Mainnet"},
+      { chain_id: chainIDs.binanceMain, chain_name: "BNB Smart Chain Mainnet" },
     ];
