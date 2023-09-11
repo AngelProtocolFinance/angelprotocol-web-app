@@ -15,10 +15,6 @@ export default function ChooseWallet() {
   const { data } = useRegState<3>();
   const { connections } = useSetWallet();
 
-  const supportedConnections = connections.filter((c) =>
-    supportedProviderIds.includes(c.providerId)
-  );
-
   return (
     <div className="w-full grid">
       <h3 className="text-lg">Choose a wallet</h3>
@@ -29,9 +25,11 @@ export default function ChooseWallet() {
         <span className="italic">seedphrase</span> and will enable you to use an
         email address or one of your social media accounts to log in.
       </p>
-      {supportedConnections.map((connection) => (
-        <WalletConnector key={connection.providerId} {...connection} />
-      ))}
+      {connections
+        .filter((c) => supportedProviderIds.includes(c.providerId))
+        .map((connection) => (
+          <WalletConnector key={connection.providerId} {...connection} />
+        ))}
       <Link
         to={`../${steps.doc}`}
         state={data.init}
