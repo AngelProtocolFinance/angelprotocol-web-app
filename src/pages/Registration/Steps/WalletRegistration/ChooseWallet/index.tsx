@@ -1,10 +1,24 @@
 import { Link } from "react-router-dom";
+import { ProviderId } from "types/lists";
+import { useSetWallet } from "contexts/WalletContext";
 import { steps } from "../../../routes";
 import { useRegState } from "../../StepGuard";
 import WalletConnector from "./WalletConnector";
 
+const supportedProviderIds: ProviderId[] = [
+  "web3auth-torus",
+  "metamask",
+  "evm-wc",
+];
+
 export default function ChooseWallet() {
   const { data } = useRegState<3>();
+  const { connections } = useSetWallet();
+
+  const supportedConnections = connections.filter((c) =>
+    supportedProviderIds.includes(c.providerId)
+  );
+
   return (
     <div className="w-full grid">
       <h3 className="text-lg">Choose a wallet</h3>
@@ -15,11 +29,9 @@ export default function ChooseWallet() {
         <span className="italic">seedphrase</span> and will enable you to use an
         email address or one of your social media accounts to log in.
       </p>
-      <WalletConnector
-        label="Register with Email (Web3 Auth)"
-        connectorName="Web3 Auth"
-      />
-      <WalletConnector connectorName="Metamask" label="Metamask" />
+      {supportedConnections.map((connection) => (
+        <WalletConnector key={connection.providerId} {...connection} />
+      ))}
       <Link
         to={`../${steps.doc}`}
         state={data.init}
