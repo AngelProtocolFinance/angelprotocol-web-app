@@ -231,6 +231,7 @@ export default function useInjectedProvider(
 
   //connection object to render <Connector/>
   const connection: Connection = {
+    providerId,
     name: connectorName,
     logo: WALLET_METADATA[providerId].logo,
     installUrl: WALLET_METADATA[providerId].installUrl,

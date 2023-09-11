@@ -2,6 +2,7 @@ import type { Maybe, SafeEventEmitterProvider } from "@web3auth/base";
 import Decimal from "decimal.js";
 import { useEffect, useState } from "react";
 import { ProviderInfo } from "../types";
+import { Connection } from "../types";
 import { BaseChain } from "types/aws";
 import { AccountChangeHandler, ChainChangeHandler } from "types/evm";
 import { isEmpty, logger } from "helpers";
@@ -140,13 +141,16 @@ export default function useWeb3Auth() {
         }
       : undefined;
 
+  const connection: Connection = {
+    providerId: "web3auth-torus",
+    connect: login,
+    logo: "https://web3auth.io/images/w3a-L-Favicon-1.svg",
+    name: "Web3 Auth",
+  };
+
   return {
     isLoading: state.status === "loading",
-    connection: {
-      connect: login,
-      logo: "https://web3auth.io/images/w3a-L-Favicon-1.svg",
-      name: "Web3 Auth",
-    },
+    connection,
     providerInfo,
     disconnect: logout,
     switchChain,
