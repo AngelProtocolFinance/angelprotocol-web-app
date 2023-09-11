@@ -47,8 +47,11 @@ export default function useTerra() {
       : undefined;
 
   const terraConnections: Connection[] = availableConnections
+
     .filter(_filter)
     .map((connection) => ({
+      //provider IDs for terra wallets are simply from their identifiers
+      providerId: connection.identifier as ProviderId,
       logo: connection.icon,
       name: connection.name,
       connect: async () => {
@@ -56,16 +59,20 @@ export default function useTerra() {
       },
     }))
     .concat(
-      availableInstallations.filter(_filter).map(({ name, icon, url }) => ({
-        logo: icon,
-        name,
-        connect: async () => {
-          window.open(url, "_blank", "noopener noreferrer");
-        },
-      }))
+      availableInstallations
+        .filter(_filter)
+        .map(({ name, icon, url, identifier }) => ({
+          providerId: identifier as ProviderId,
+          logo: icon,
+          name,
+          connect: async () => {
+            window.open(url, "_blank", "noopener noreferrer");
+          },
+        }))
     );
 
   const wcConnection: Connection = {
+    providerId: "walletconnect",
     name: "Terra Station Mobile",
     logo: "/icons/wallets/terra-extension.jpg",
     async connect() {
