@@ -11,6 +11,7 @@ export type WithoutInstallers = Exclude<
 >;
 
 export type Connection = {
+  providerId: ProviderId;
   logo: string;
   installUrl?: string;
   name: string;
