@@ -9,20 +9,19 @@ jobs:
     steps:
       - name: Check out repo
         uses: actions/checkout@v3
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
         with:
-          node-version: "18"
-          cache: "yarn"
+          bun-version: "1.0.0"
       - name: Install dependencies
-        run: yarn install
+        run: bun run install
       - name: Lint codebase
-        run: yarn run lint
+        run: bun run lint
       - name: Test codebase
-        run: yarn run test --watchAll=false --coverage --json --outputFile ./codecov-report.json
+        run: bun run test --watchAll=false --coverage --json --outputFile ./codecov-report.json
         env:
           REACT_APP_JUNO_LCD_NODE: ${{ secrets.REACT_APP_JUNO_LCD_NODE }}
       - name: Build codebase
-        run: yarn build
+        run: bun run build
         env:
           REACT_APP_JUNO_LCD_NODE: ${{ secrets.REACT_APP_JUNO_LCD_NODE }}
