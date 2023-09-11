@@ -282,7 +282,8 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       <setContext.Provider
         value={{
           connections: IS_MOBILE
-            ? wcConnections.concat(web3AuthConnection) //web3 auth should also work on mobile
+            ? //web3 auth should also work on mobile
+              [web3AuthConnection].concat(wcConnections)
             : [
                 web3AuthConnection,
                 metamaskConnection,
