@@ -44,7 +44,7 @@ export default function useSubmit() {
     ...documents
   }) => {
     try {
-      if (documentation && !isDirty) {
+      if (!isDirty && documentation) {
         return navigate(`../${step}`, { state: init });
       }
       const previews = await getFilePreviews({ ...documents });
