@@ -43,7 +43,7 @@ export default function SignatureNotice({ classes = "" }) {
         role: contact.role === "other" ? contact.otherRole : contact.role,
         org: {
           name: contact.orgName,
-          legalEntityType: documentation.legalEntityType.value,
+          legalEntityType: documentation.legalEntityType,
           hq: documentation.hqCountry.name,
           projectDescription: documentation.projectDescription,
         },

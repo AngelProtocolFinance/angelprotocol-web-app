@@ -127,7 +127,7 @@ function formatDocumentation({
       AuthorizedToReceiveTaxDeductibleDonations ? "Yes" : "No",
     fiscalSponsorshipAgreementSigningURL: FiscalSponsorshipAgreementSigningURL,
     signedFiscalSponsorshipAgreement: SignedFiscalSponsorshipAgreement,
-    legalEntityType: { value: LegalEntityType, label: LegalEntityType },
+    legalEntityType: LegalEntityType,
     projectDescription: ProjectDescription,
 
     //meta
