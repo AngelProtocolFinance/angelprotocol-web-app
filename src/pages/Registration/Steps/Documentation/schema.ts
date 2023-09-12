@@ -58,7 +58,8 @@ export const schema = object<any, SchemaShape<FormValues>>({
   projectDescription: string().when(
     authorizedToReceiveTaxDeductibleDonationsKey,
     ([isAuthorizedToReceiveTaxDeductibleDonations], schema) => {
-      return (isAuthorizedToReceiveTaxDeductibleDonations as TAuthorizedToReceiveTaxDeductibleDonations)
+      return (isAuthorizedToReceiveTaxDeductibleDonations as TAuthorizedToReceiveTaxDeductibleDonations) ===
+        "Yes"
         ? schema
         : schema
             .required("required")
