@@ -88,7 +88,7 @@ export default function Form() {
         }))}
       />
       <Label className="mt-6 mb-2" required>
-        Select the country your organization is headquartered in
+        In what country is your organization registered in?
       </Label>
       <CountrySelector<FV, "hqCountry">
         fieldName="hqCountry"
