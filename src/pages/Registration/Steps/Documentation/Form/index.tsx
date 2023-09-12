@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "../types";
+import { LegalEntityType } from "types/aws";
 import ActivityCountries from "components/ActivityCountries";
 import CountrySelector from "components/CountrySelector";
 import ExtLink from "components/ExtLink";
@@ -16,9 +17,16 @@ import { MB_LIMIT } from "../schema";
 // import { CashEligibleCheckbox } from "./CashEligibleCheckbox";
 import useSubmit from "./useSubmit";
 
+const legalEntityTypes: { [K in LegalEntityType]: string } = {
+  "": "Select type",
+  corporation: "corporation",
+  organization: "organization",
+};
+
 export default function Form() {
   const { data } = useRegState<2>();
-  const { submit, isSubmitting } = useSubmit();
+  const { submit, isSubmitting, isAuthorizedToReceiveTaxDeductibleDonations } =
+    useSubmit();
 
   return (
     <form className="w-full" onSubmit={submit}>
@@ -80,7 +88,7 @@ export default function Form() {
         }))}
       />
       <Label className="mt-6 mb-2" required>
-        Select the country your organization is headquartered in
+        In what country is your organization registered in?
       </Label>
       <CountrySelector<FV, "hqCountry">
         fieldName="hqCountry"
@@ -91,6 +99,18 @@ export default function Form() {
           error: "field-error",
         }}
       />
+      <Label className="mb-2 mt-6" required>
+        What type of legal entity is your organization registered as? This can
+        usually be found in your registration/organizing document
+      </Label>
+      <Selector<FV, "legalEntityType", string>
+        name="legalEntityType"
+        options={Object.entries(legalEntityTypes).map(([value, label]) => ({
+          label,
+          value,
+        }))}
+      />
+
       <Label className="mt-6 mb-2">
         Select the countries your organization is active in
       </Label>
@@ -111,6 +131,17 @@ export default function Form() {
           value="No"
         />
       </div>
+
+      {isAuthorizedToReceiveTaxDeductibleDonations === "No" && (
+        <Field<FV, "textarea">
+          type="textarea"
+          name="projectDescription"
+          label="Please provide a thorough description of your organization's charitable activities as well as your charitable mission."
+          required
+          classes={{ container: "mb-6 mt-4" }}
+          placeholder=""
+        />
+      )}
 
       <Label className="mt-6">
         Are you happy to accept anonymous donations? If not, ALL donors will be

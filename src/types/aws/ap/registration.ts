@@ -8,6 +8,8 @@ export type RegistrationStatus =
 
 export type ApplicationStatus = "approved" | "not-complete" | "under-review";
 
+export type LegalEntityType = "" | "organization" | "corporation";
+
 export type ReferralMethods =
   | ""
   | "referral"
@@ -79,6 +81,8 @@ export type TDocumentation = {
   HqCountry: string;
   EndowDesignation: string;
   ActiveInCountries: string[];
+  LegalEntityType: LegalEntityType;
+  ProjectDescription: string;
 
   //fiscal sponsorship
   AuthorizedToReceiveTaxDeductibleDonations: boolean;
