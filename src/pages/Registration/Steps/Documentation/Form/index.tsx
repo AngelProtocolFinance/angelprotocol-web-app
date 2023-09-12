@@ -19,12 +19,12 @@ import useSubmit from "./useSubmit";
 
 const legalEntityTypes: { [K in LegalEntityType]: K } = {
   "": "",
-  Corporation: "Corporation",
-  "Limited Liability Company (LLC)": "Limited Liability Company (LLC)",
-  Partnership: "Partnership",
-  "Sole Proprietorship": "Sole Proprietorship",
   "Nonprofit Organization": "Nonprofit Organization",
+  "Limited Liability Company (LLC)": "Limited Liability Company (LLC)",
+  "Sole Proprietorship": "Sole Proprietorship",
   "Government Agency": "Government Agency",
+  Corporation: "Corporation",
+  Partnership: "Partnership",
   Other: "Other",
 };
 
