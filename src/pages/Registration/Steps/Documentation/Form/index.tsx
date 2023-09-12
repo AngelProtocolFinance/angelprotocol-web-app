@@ -25,7 +25,8 @@ const legalEntityTypes: { [K in LegalEntityType]: string } = {
 
 export default function Form() {
   const { data } = useRegState<2>();
-  const { submit, isSubmitting } = useSubmit();
+  const { submit, isSubmitting, isAuthorizedToReceiveTaxDeductibleDonations } =
+    useSubmit();
 
   return (
     <form className="w-full" onSubmit={submit}>
@@ -130,6 +131,16 @@ export default function Form() {
           value="No"
         />
       </div>
+
+      {isAuthorizedToReceiveTaxDeductibleDonations === "No" && (
+        <Field<FV>
+          name="projectDescription"
+          label="Please provide a thorough description of your organization's charitable activities as well as your charitable mission."
+          required
+          classes={{ container: "mb-6 mt-4" }}
+          placeholder=""
+        />
+      )}
 
       <Label className="mt-6">
         Are you happy to accept anonymous donations? If not, ALL donors will be

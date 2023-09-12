@@ -1,4 +1,4 @@
-import { useFormContext } from "react-hook-form";
+import { SubmitHandler, useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { FormValues } from "../types";
 import { useUpdateRegMutation } from "services/aws/registration";
@@ -8,6 +8,7 @@ import { getFilePreviews } from "./getFilePreviews";
 
 export default function useSubmit() {
   const {
+    watch,
     handleSubmit,
     formState: { isDirty, isSubmitting },
   } = useFormContext<FormValues>();
@@ -20,8 +21,11 @@ export default function useSubmit() {
   const [updateReg] = useUpdateRegMutation();
   const { handleError } = useErrorContext();
   const navigate = useNavigate();
+  const isAuthorizedToReceiveTaxDeductibleDonations = watch(
+    "isAuthorizedToReceiveTaxDeductibleDonations"
+  );
 
-  const submit = async ({
+  const submit: SubmitHandler<FormValues> = async ({
     website,
     hasAuthority,
     hasAgreedToTerms,
@@ -38,7 +42,7 @@ export default function useSubmit() {
     legalEntityType,
     projectDescription,
     ...documents
-  }: FormValues) => {
+  }) => {
     try {
       if (documentation && !isDirty) {
         return navigate(`../${step}`, { state: init });
@@ -69,5 +73,9 @@ export default function useSubmit() {
       handleError(err);
     }
   };
-  return { submit: handleSubmit(submit), isSubmitting };
+  return {
+    submit: handleSubmit(submit),
+    isSubmitting,
+    isAuthorizedToReceiveTaxDeductibleDonations,
+  };
 }
