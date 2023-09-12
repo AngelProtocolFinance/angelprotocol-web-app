@@ -53,7 +53,7 @@ export const schema = object<any, SchemaShape<FormValues>>({
     name: requiredString,
   }),
   endowDesignation: optionSchema,
-  legalEntityType: optionSchema,
+  legalEntityType: requiredString,
   //isKYCRequired defaulted to No on default value
   projectDescription: string().when(
     authorizedToReceiveTaxDeductibleDonationsKey,

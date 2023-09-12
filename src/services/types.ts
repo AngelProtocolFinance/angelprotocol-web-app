@@ -119,8 +119,16 @@ export type Multisig = {
 export type FiscalSponsorhipAgreementSigner =
   | {
       id: string;
-      name: string;
+      firstName: string;
+      lastName: string;
       email: string;
+      role: string;
+      org: {
+        name: string;
+        legalEntityType: string;
+        hq: string;
+        projectDescription: string;
+      };
     }
   | string; //signerEID;
 
