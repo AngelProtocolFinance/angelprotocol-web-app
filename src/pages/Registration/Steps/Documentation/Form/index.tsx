@@ -125,7 +125,7 @@ export default function Form() {
         <Field<FV, "textarea">
           type="textarea"
           name="projectDescription"
-          label="Please provide a thorough description of your organization's charitable activities as well as your charitable mission."
+          label="Please provide a description of your organization's charitable activities as well as your charitable mission."
           required
           classes={{ container: "mb-6 mt-4" }}
           placeholder=""
