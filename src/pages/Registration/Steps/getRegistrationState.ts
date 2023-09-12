@@ -103,6 +103,8 @@ function formatDocumentation({
   FiscalSponsorshipAgreementSigningURL = "",
   SignedFiscalSponsorshipAgreement = "",
   EIN,
+  LegalEntityType,
+  ProjectDescription,
 }: DoneDocs["Registration"]): Documentation {
   return {
     //level 1
@@ -125,6 +127,8 @@ function formatDocumentation({
       AuthorizedToReceiveTaxDeductibleDonations ? "Yes" : "No",
     fiscalSponsorshipAgreementSigningURL: FiscalSponsorshipAgreementSigningURL,
     signedFiscalSponsorshipAgreement: SignedFiscalSponsorshipAgreement,
+    legalEntityType: { value: LegalEntityType, label: LegalEntityType },
+    projectDescription: ProjectDescription,
 
     //meta
     tier: Tier,
