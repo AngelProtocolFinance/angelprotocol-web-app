@@ -35,6 +35,8 @@ export default function useSubmit() {
     isAuthorizedToReceiveTaxDeductibleDonations,
     signedFiscalSponsorshipAgreement,
     fiscalSponsorshipAgreementSigningURL,
+    legalEntityType,
+    projectDescription,
     ...documents
   }: FormValues) => {
     try {
@@ -60,6 +62,8 @@ export default function useSubmit() {
         EIN: ein,
         AuthorizedToReceiveTaxDeductibleDonations:
           isAuthorizedToReceiveTaxDeductibleDonations === "Yes" ? true : false,
+        LegalEntityType: legalEntityType.value,
+        ProjectDescription: projectDescription,
       });
     } catch (err) {
       handleError(err);
