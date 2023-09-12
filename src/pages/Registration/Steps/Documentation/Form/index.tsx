@@ -133,7 +133,8 @@ export default function Form() {
       </div>
 
       {isAuthorizedToReceiveTaxDeductibleDonations === "No" && (
-        <Field<FV>
+        <Field<FV, "textarea">
+          type="textarea"
           name="projectDescription"
           label="Please provide a thorough description of your organization's charitable activities as well as your charitable mission."
           required
