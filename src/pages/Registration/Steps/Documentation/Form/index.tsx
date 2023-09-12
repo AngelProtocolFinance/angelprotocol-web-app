@@ -17,10 +17,15 @@ import { MB_LIMIT } from "../schema";
 // import { CashEligibleCheckbox } from "./CashEligibleCheckbox";
 import useSubmit from "./useSubmit";
 
-const legalEntityTypes: { [K in LegalEntityType]: string } = {
-  "": "Select type",
-  corporation: "corporation",
-  organization: "organization",
+const legalEntityTypes: { [K in LegalEntityType]: K } = {
+  "": "",
+  Corporation: "Corporation",
+  "Limited Liability Company (LLC)": "Limited Liability Company (LLC)",
+  Partnership: "Partnership",
+  "Sole Proprietorship": "Sole Proprietorship",
+  "Nonprofit Organization": "Nonprofit Organization",
+  "Government Agency": "Government Agency",
+  Other: "Other",
 };
 
 export default function Form() {

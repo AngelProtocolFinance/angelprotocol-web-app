@@ -8,7 +8,15 @@ export type RegistrationStatus =
 
 export type ApplicationStatus = "approved" | "not-complete" | "under-review";
 
-export type LegalEntityType = "" | "organization" | "corporation";
+export type LegalEntityType =
+  | ""
+  | "Corporation"
+  | "Limited Liability Company (LLC)"
+  | "Partnership"
+  | "Sole Proprietorship"
+  | "Nonprofit Organization"
+  | "Government Agency"
+  | "Other";
 
 export type ReferralMethods =
   | ""
