@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "../types";
+import { LegalEntityType } from "types/aws";
 import ActivityCountries from "components/ActivityCountries";
 import CountrySelector from "components/CountrySelector";
 import ExtLink from "components/ExtLink";
@@ -15,6 +16,12 @@ import { useRegState } from "../../StepGuard";
 import { MB_LIMIT } from "../schema";
 // import { CashEligibleCheckbox } from "./CashEligibleCheckbox";
 import useSubmit from "./useSubmit";
+
+const legalEntityTypes: { [K in LegalEntityType]: string } = {
+  "": "Select type",
+  corporation: "corporation",
+  organization: "organization",
+};
 
 export default function Form() {
   const { data } = useRegState<2>();
@@ -91,6 +98,18 @@ export default function Form() {
           error: "field-error",
         }}
       />
+      <Label className="mb-2 mt-6" required>
+        What type of legal entity is your organization registered as? This can
+        usually be found in your registration/organizing document
+      </Label>
+      <Selector<FV, "legalEntityType", string>
+        name="legalEntityType"
+        options={Object.entries(legalEntityTypes).map(([value, label]) => ({
+          label,
+          value,
+        }))}
+      />
+
       <Label className="mt-6 mb-2">
         Select the countries your organization is active in
       </Label>
