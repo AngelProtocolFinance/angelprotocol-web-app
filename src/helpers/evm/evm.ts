@@ -3,7 +3,6 @@ import { ProviderId } from "types/lists";
 import { Dwindow } from "types/window";
 import web3Auth from "contexts/WalletContext/useWeb3Auth/web3AuthSetup";
 import { _session, account } from "helpers/wallet-connect";
-import { POLYGON_RPC } from "constants/urls";
 
 export async function wcProvider(): Promise<Partial<InjectedProvider>> {
   //FUTURE: pass peer name in wcProvider call
