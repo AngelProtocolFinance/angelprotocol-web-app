@@ -1,9 +1,4 @@
-import {
-  ContactRoles,
-  LegalEntityType,
-  ReferralMethods,
-  RegistrationStatus,
-} from "types/aws";
+import { ContactRoles, ReferralMethods, RegistrationStatus } from "types/aws";
 import { EndowmentTierNum } from "types/contracts";
 import { Country } from "types/countries";
 import { UNSDG_NUMS } from "types/lists";
@@ -56,7 +51,7 @@ export type Documentation = {
   isAuthorizedToReceiveTaxDeductibleDonations: "Yes" | "No";
   fiscalSponsorshipAgreementSigningURL: string;
   signedFiscalSponsorshipAgreement: string;
-  legalEntityType: OptionType<LegalEntityType>;
+  legalEntityType: string;
   projectDescription: string;
 
   //others
