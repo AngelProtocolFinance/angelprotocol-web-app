@@ -45,14 +45,7 @@ const optionSchema = object<any, SchemaShape<OptionType<string>>>({
 export const schema = object<any, SchemaShape<FormValues>>({
   proofOfIdentity: object(genAssetShape(true)),
   proofOfRegistration: object(genAssetShape(true)),
-  website: string()
-    .required("required")
-    .matches(
-      //https://regexr.com/39nr7
-      //eslint-disable-next-line
-      /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi,
-      "invalid url"
-    ),
+  website: string().required("required").url("invalid url"),
   sdgs: array()
     .min(1, "required")
     .max(MAX_SDGS, `maximum ${MAX_SDGS} selections allowed`),
