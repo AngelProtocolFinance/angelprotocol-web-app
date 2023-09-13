@@ -21,11 +21,15 @@ export async function estimateTx({
     const scaled = scale(token.amount, token.decimals);
 
     if (token.type === "erc20") {
-      const allowance = await queryContract("erc20.allowance", {
-        erc20: token.token_id,
-        owner: wallet.address,
-        spender: contracts["gift-card"],
-      });
+      const allowance = await queryContract(
+        "erc20.allowance",
+        {
+          erc20: token.token_id,
+          owner: wallet.address,
+          spender: contracts["gift-card"],
+        },
+        wallet.chain.rpc_url
+      );
       if (scaled.gt(allowance)) {
         return "for-approval";
       }

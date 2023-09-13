@@ -16,13 +16,16 @@ export async function estimateEVMFee(
     request({
       method: EIPMethods.eth_getTransactionCount,
       params: [wallet.address, "latest"],
+      rpcURL: wallet.chain.rpc_url,
     }),
     request({
       method: EIPMethods.eth_estimateGas,
       params: [tx],
+      rpcURL: wallet.chain.rpc_url,
     }),
     request({
       method: EIPMethods.eth_gasPrice,
+      rpcURL: wallet.chain.rpc_url,
     }),
   ]);
 

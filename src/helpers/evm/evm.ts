@@ -44,8 +44,12 @@ export async function getProvider(
 }
 
 type Result = { result: string } | { error: { code: number; message: string } };
-export async function request({ method, params }: RequestArguments) {
-  const result = await fetch(POLYGON_RPC, {
+export async function request({
+  method,
+  params,
+  rpcURL,
+}: RequestArguments & { rpcURL: string }) {
+  const result = await fetch(rpcURL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
