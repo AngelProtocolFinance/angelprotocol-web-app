@@ -81,8 +81,10 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
 
   const {
     isTerraLoading,
-    terraConnections,
-    wcConnection: terraWCConnection,
+    stationConnection,
+    stationMobileConnection,
+    xdefiTerraConnection,
+    leapConnection,
     disconnectTerra,
     terraInfo,
     supportedChains: terraSupportedChains,
@@ -262,13 +264,6 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     }
   }, [activeProvider, chain]);
 
-  const wcConnections = [
-    /** keplr wc client doesn't support has suggestChain so testnet info can't be integrated */
-    ...(IS_TEST ? [] : [keplrWCConnection]),
-    evmWCConnection,
-    terraWCConnection,
-  ];
-
   return (
     <getContext.Provider
       value={{
@@ -283,15 +278,31 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         value={{
           connections: IS_MOBILE
             ? //web3 auth should also work on mobile
-              [web3AuthConnection].concat(wcConnections)
+              [
+                web3AuthConnection,
+                evmWCConnection,
+                ...(IS_TEST ? [] : [keplrWCConnection]),
+                stationMobileConnection,
+              ]
             : [
                 web3AuthConnection,
-                metamaskConnection,
-                xdefiConnection,
-                binanceWalletConnection,
                 keplrConnection,
-                ...terraConnections,
-                ...wcConnections,
+                metamaskConnection,
+                evmWCConnection,
+                ...(IS_TEST ? [] : [keplrWCConnection]),
+                binanceWalletConnection,
+                /**
+                 * NOTE: we can't possibly know beforehand if user
+                 * wants to use terra wallet or xdefi wallet.
+                 *
+                 * Solution: collapse these two connections to one,
+                 * and add selection/expansion step.
+                 */
+                xdefiConnection,
+                xdefiTerraConnection,
+                leapConnection,
+                stationConnection,
+                stationMobileConnection,
               ],
           disconnect,
           switchChain,

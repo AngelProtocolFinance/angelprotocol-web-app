@@ -53,17 +53,23 @@ export async function fetchBalances(
     /**fetch balances for ethereum */
     const native = tokens.natives[0]; //evm chains have only one gas token
 
+    console.log({ chain });
     const [nativeBal, gift, ...erc20s] = await Promise.allSettled([
       request({
         method: "eth_getBalance",
         params: [address, "latest"],
+        rpcURL: chain.rpc_url,
       }),
       queryContract("gift-card.balance", { addr: address }),
       ...tokens.alts.map((t) =>
-        queryContract("erc20.balance", {
-          erc20: t.token_id,
-          addr: address,
-        }).then<Coin>((result) => ({
+        queryContract(
+          "erc20.balance",
+          {
+            erc20: t.token_id,
+            addr: address,
+          },
+          chain.rpc_url
+        ).then<Coin>((result) => ({
           amount: result,
           denom: t.token_id,
         }))
