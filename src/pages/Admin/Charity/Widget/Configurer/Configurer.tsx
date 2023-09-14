@@ -5,7 +5,7 @@ import { useSetter } from "store/accessors";
 import { updateWidgetConfig } from "slices/widget";
 import Form from "./Form";
 
-export default function WidgetUrlGenerator() {
+export default function Configurer() {
   const dispatch = useSetter();
   const methods = useForm<FormValues>({
     defaultValues: {
