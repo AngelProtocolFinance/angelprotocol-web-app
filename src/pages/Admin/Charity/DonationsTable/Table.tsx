@@ -36,7 +36,17 @@ export default function Table({
         data={donations}
         filename="received_donations.csv"
       >
-        Save to CSV <Icon type="FileDownload" className="text-2xl" />
+        Save Donation Records to CSV{" "}
+        <Icon type="FileDownload" className="text-2xl" />
+      </CsvExporter>
+      <CsvExporter
+        classes="hover:text-blue mb-5"
+        headers={csvHeadersReceipts}
+        data={donations.filter((x) => !!x.kycData).map((x) => x.kycData!)}
+        filename="receipts.csv"
+      >
+        Save Donor Information to CSV
+        <Icon type="FileDownload" className="text-2xl" />
       </CsvExporter>
       <table className="w-full border-collapse self-start">
         <TableSection type="thead" rowClass="border-b-2 border-prim">
