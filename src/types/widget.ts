@@ -7,5 +7,5 @@ export type WidgetConfig = {
     display: "hidden" | "collapsed" | "expanded";
     liquidSplitPct: number;
   };
-  tokens: Token[];
+  tokenWhiteList: Token[];
 };

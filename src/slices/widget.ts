@@ -7,10 +7,10 @@ const initialState: State = {
   endowment: { id: 0, name: "Select endowment" },
   isDescriptionTextShown: true,
   advancedOptions: {
-    display: "collapsed",
+    display: "expanded",
     liquidSplitPct: 50,
   },
-  tokens: [],
+  tokenWhiteList: [],
 };
 
 const widget = createSlice({
