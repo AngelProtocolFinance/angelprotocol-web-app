@@ -2,6 +2,7 @@ import Image from "components/Image";
 import { useGetter } from "store/accessors";
 import { getPossessiveForm } from "helpers";
 import { LOGO_DARK, PAYMENT_WORDS, titleCase } from "constants/common";
+import { TITLE_STYLE } from "../constants";
 import DonaterSample from "./DonaterSample";
 
 export default function WidgetPreview() {

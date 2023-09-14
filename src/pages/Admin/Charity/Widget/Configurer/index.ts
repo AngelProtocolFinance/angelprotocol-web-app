@@ -1,1 +1,1 @@
-export { default } from "./WidgetUrlGenerator";
+export { default } from "./Configurer";
