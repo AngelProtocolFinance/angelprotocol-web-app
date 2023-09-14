@@ -5,20 +5,13 @@ import { FormValues } from "../schema";
 import DenomSelector from "./DenomSelector";
 import EndowmentCombobox from "./EndowmentCombobox";
 
-type Props = {
-  onChange(formValues: FormValues): void;
-};
-
-export default function WidgetUrlGenerator({ onChange }: Props) {
+export default function WidgetUrlGenerator() {
   const { handleSubmit, watch, reset } = useFormContext<FormValues>();
 
   const hideAdvancedOptions = watch("hideAdvancedOptions");
 
   return (
-    <form
-      className="flex flex-col gap-2 xl:w-full xl:max-w-md text-sm font-normal font-body"
-      onSubmit={handleSubmit(onChange)}
-    >
+    <form className="flex flex-col gap-2 xl:w-full xl:max-w-md text-sm font-normal font-body">
       <label>Endowment name:</label>
       <EndowmentCombobox />
 
