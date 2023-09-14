@@ -79,14 +79,7 @@ export default function Table({
               Date
             </HeaderButton>
             <>Transaction</>
-            <HeaderButton
-              onClick={handleHeaderClick("kycData")}
-              _activeSortKey={sortKey}
-              _sortKey="kycData"
-              _sortDirection={sortDirection}
-            >
-              Receipt provided
-            </HeaderButton>
+            <>Receipt provided</>
           </Cells>
         </TableSection>
         <TableSection
