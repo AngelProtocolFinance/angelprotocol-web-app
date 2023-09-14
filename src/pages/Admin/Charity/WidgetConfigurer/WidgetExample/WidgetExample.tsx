@@ -24,7 +24,7 @@ export default function WidgetExample({ trigger }: { trigger: boolean }) {
               {getPossessiveForm(endowName)} endowment
             </h1>
             <button className="btn btn-orange px-3 h-10 rounded-lg text-xs normal-case">
-              juno1k...pqc6y5
+              0x1...ad4
             </button>
           </header>
           <section className="flex flex-col items-center gap-5 h-full">
@@ -50,12 +50,6 @@ export default function WidgetExample({ trigger }: { trigger: boolean }) {
                 Continue below to {PAYMENT_WORDS.verb} fiat (Dollars, GBP, AUD,
                 Euro)
               </span>
-              <div className="my-12 text-sm mb-10 grid grid-cols-3 justify-items-center gap-2">
-                <p className="text-center">Donation method</p>
-                <p className="text-center">Donor details</p>
-                <p className="text-center">Finalize payment</p>
-                <div className="mt-3 h-2 w-full col-span-full bg-gray-l2 rounded-full overflow-hidden" />
-              </div>
               <Donater {...formValues} />
             </div>
           </section>
