@@ -17,7 +17,7 @@ export default function useWidgetConfigurer() {
   const methods = useForm<FormValues>({
     defaultValues: {
       availableCurrencies: [],
-      endowIdName: { id: endowId, name: "" },
+      endowment: { id: endowId, name: "" },
       hideText: false,
       hideAdvancedOptions: false,
       unfoldAdvancedOptions: false,
@@ -30,7 +30,7 @@ export default function useWidgetConfigurer() {
   );
 
   useLoadDefaultEndowmentName(endowId, (name) =>
-    methods.setValue("endowIdName.name", name)
+    methods.setValue("endowment.name", name)
   );
 
   const handleUpdateSnippet = useCallback((updatedValues: FormValues) => {
@@ -48,7 +48,7 @@ export default function useWidgetConfigurer() {
 }
 
 function getWidgetSnippet(formValues: FormValues) {
-  if (!formValues.endowIdName.id) {
+  if (!formValues.endowment.id) {
     return NO_ID_MESSAGE;
   } else {
     const widgetUrl = createWidgerUrl(formValues);

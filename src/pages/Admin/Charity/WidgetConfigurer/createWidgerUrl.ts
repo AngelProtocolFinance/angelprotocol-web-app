@@ -7,7 +7,7 @@ import { FormValues } from "./schema";
 const APP_URL = IS_TEST ? "http://localhost:4200" : `${DAPP_URL}`;
 
 export default function createWidgetUrl(formValues: FormValues) {
-  const rootUrl = `${APP_URL}${appRoutes.donate_widget}/${formValues.endowIdName.id}?apiKey=API_KEY`;
+  const rootUrl = `${APP_URL}${appRoutes.donate_widget}/${formValues.endowment.id}?apiKey=API_KEY`;
 
   const param1 = append(formValues.hideText, URL_PARAMS.hideText);
   const param2 = append(

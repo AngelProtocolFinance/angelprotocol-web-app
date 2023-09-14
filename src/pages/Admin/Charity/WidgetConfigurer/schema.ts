@@ -1,8 +1,8 @@
-import { EndowmentIdName } from "types/aws";
+import { EndowmentOption } from "types/aws";
 import { OptionType } from "components/Selector";
 
 export type FormValues = {
-  endowIdName: EndowmentIdName;
+  endowment: EndowmentOption;
   hideText: boolean;
   hideAdvancedOptions: boolean;
   unfoldAdvancedOptions: boolean;

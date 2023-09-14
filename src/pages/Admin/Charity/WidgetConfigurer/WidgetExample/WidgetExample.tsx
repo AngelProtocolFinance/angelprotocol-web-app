@@ -13,7 +13,7 @@ export default function WidgetExample({ trigger }: { trigger: boolean }) {
 
   useEffect(() => setFormValues(getValues()), [trigger, getValues]);
 
-  const endowName = formValues.endowIdName.name || "ENDOWMENT_NAME";
+  const endowName = formValues.endowment.name || "ENDOWMENT_NAME";
 
   return (
     <div className="h-full overflow-y-auto scroller w-full max-h-[800px] border border-gray-l2 rounded text-gray-d2 bg-white">
