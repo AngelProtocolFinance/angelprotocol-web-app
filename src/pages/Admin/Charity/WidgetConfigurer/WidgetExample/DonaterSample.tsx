@@ -1,17 +1,10 @@
+import { WidgetConfig } from "types/widget";
 import { placeholderChain } from "contexts/WalletContext/constants";
-import { humanize } from "helpers";
-import { FormValues } from "../schema";
 import AdvancedOptions from "./AdvancedOptions";
 
 const TOKEN = placeholderChain.tokens[0];
 
-type Props = FormValues;
-
-export default function Donater({
-  hideAdvancedOptions,
-  liquidPercentage,
-  unfoldAdvancedOptions,
-}: Props) {
+export default function DonaterSample({ advancedOptions }: WidgetConfig) {
   return (
     <div className="grid rounded-md w-full">
       <div className="grid">
@@ -24,7 +17,7 @@ export default function Donater({
           </label>
           <div className="flex items-center gap-2">
             <button type="button" className="text-right text-xs flex">
-              BAL: {humanize(+TOKEN.balance, 3)} {TOKEN.symbol}
+              BAL: 0.0000 TOKEN
             </button>
           </div>
         </div>
@@ -44,10 +37,10 @@ export default function Donater({
           Minimal amount: {TOKEN.symbol} {TOKEN.min_donation_amnt}
         </p>
       </div>
-      {!hideAdvancedOptions && (
+      {advancedOptions.display !== "hidden" && (
         <AdvancedOptions
-          liquidPercentage={liquidPercentage}
-          unfold={unfoldAdvancedOptions}
+          liquidPercentage={advancedOptions.liquidSplitPct}
+          expanded={advancedOptions.display === "expanded"}
         />
       )}
       <button
