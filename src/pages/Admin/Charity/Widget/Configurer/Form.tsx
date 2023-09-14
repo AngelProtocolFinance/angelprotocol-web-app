@@ -4,7 +4,7 @@ import { FormValues as FV } from "./types";
 import Split from "components/Split";
 import { CheckField } from "components/form";
 import DenomSelector from "./DenomSelector";
-import EndowmentCombobox from "./EndowmentCombobox";
+import EndowmentSelector from "./EndowmentSelector";
 
 export default function Form({
   onSubmit,
@@ -18,7 +18,7 @@ export default function Form({
       className="flex flex-col gap-2 xl:w-full xl:max-w-md text-sm font-normal font-body"
     >
       <label>Endowment name:</label>
-      <EndowmentCombobox />
+      <EndowmentSelector />
 
       <CheckField<FV> name="isDescriptionTextShown">Hide text</CheckField>
 

@@ -2,25 +2,25 @@ import { Combobox as HuiCombobox } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import React, { useState } from "react";
 import { useController, useFormContext } from "react-hook-form";
+import { FormValues as FV } from "./types";
 import { EndowmentOption } from "types/aws";
 import { useEndowmentOptionsQuery } from "services/aws/aws";
 import { DrawerIcon } from "components/Icon";
 import QueryLoader from "components/QueryLoader";
 import useDebouncer from "hooks/useDebouncer";
 import { unsdgs } from "constants/unsdgs";
-import { FormValues } from "../../schema";
 
 const containerStyle =
   "absolute top-full mt-2 z-10 w-full bg-white dark:bg-blue-d6 shadow-lg rounded overflow-y-scroll scroller";
 
-export default function Combobox() {
+export default function EndowmentSelector() {
   const {
     formState: { errors, isSubmitting, defaultValues },
-  } = useFormContext<FormValues>();
+  } = useFormContext<FV>();
 
   const {
     field: { value: endowment, onChange: onEndowmentChange, ref },
-  } = useController<Pick<FormValues, "endowment">>({
+  } = useController<Pick<FV, "endowment">>({
     name: "endowment",
   });
 
