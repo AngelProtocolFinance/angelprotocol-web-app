@@ -1,20 +1,13 @@
-import { useEffect, useState } from "react";
-import { useFormContext } from "react-hook-form";
 import Image from "components/Image";
+import { useGetter } from "store/accessors";
 import { getPossessiveForm } from "helpers";
 import { LOGO_DARK, PAYMENT_WORDS, titleCase } from "constants/common";
-import { FormValues } from "../schema";
-import Donater from "./Donater";
+import DonaterSample from "./DonaterSample";
 
-export default function WidgetExample({ trigger }: { trigger: boolean }) {
-  const { getValues } = useFormContext<FormValues>();
-
-  const [formValues, setFormValues] = useState<FormValues>(getValues());
-
-  useEffect(() => setFormValues(getValues()), [trigger, getValues]);
-
-  const endowName = formValues.endowment.name || "ENDOWMENT_NAME";
-
+export default function WidgetExample() {
+  const widgetConfig = useGetter((state) => state.widget);
+  const { endowment, isDescriptionTextShown } = widgetConfig;
+  const endowName = endowment.name ?? "Endowment name";
   return (
     <div className="h-full overflow-y-auto scroller w-full max-h-[800px] border border-gray-l2 rounded text-gray-d2 bg-white">
       <div className="grid grid-rows-[1fr_auto] gap-10 h-full">
@@ -28,7 +21,7 @@ export default function WidgetExample({ trigger }: { trigger: boolean }) {
             </button>
           </header>
           <section className="flex flex-col items-center gap-5 h-full">
-            {!formValues.hideText && (
+            {isDescriptionTextShown && (
               <>
                 <p className="font-body text-xs">
                   {titleCase(PAYMENT_WORDS.verb)} today to{" "}
@@ -50,7 +43,7 @@ export default function WidgetExample({ trigger }: { trigger: boolean }) {
                 Continue below to {PAYMENT_WORDS.verb} fiat (Dollars, GBP, AUD,
                 Euro)
               </span>
-              <Donater {...formValues} />
+              <DonaterSample {...widgetConfig} />
             </div>
           </section>
         </div>

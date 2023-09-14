@@ -5,16 +5,12 @@ import { humanize } from "helpers";
 
 const SPLIT_AMOUNT = `${placeholderChain.tokens[0].symbol} ${humanize(0, 5)}`;
 
-type Props = { liquidPercentage: number; unfold: boolean };
+type Props = { liquidPercentage: number; expanded: boolean };
 
-export default function AdvancedOptions({ unfold, liquidPercentage }: Props) {
-  const [isOpen, setIsOpen] = useState(unfold);
-
-  function toggle() {
-    setIsOpen((prev) => !prev);
-  }
-
-  useEffect(() => setIsOpen(unfold), [unfold]);
+export default function AdvancedOptions({ expanded, liquidPercentage }: Props) {
+  const [isOpen, setIsOpen] = useState(expanded);
+  const toggle = () => setIsOpen((p) => !p);
+  useEffect(() => setIsOpen(expanded), [expanded]);
 
   return (
     <div className="grid mt-10 border border-gray-l2 rounded overflow-clip">

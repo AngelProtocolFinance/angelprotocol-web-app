@@ -8,7 +8,7 @@ const initialState: State = {
   isDescriptionTextShown: true,
   advancedOptions: {
     display: "collapsed",
-    liquidSplitPCT: 50,
+    liquidSplitPct: 50,
   },
   tokens: [],
 };

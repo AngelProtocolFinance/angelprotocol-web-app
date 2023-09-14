@@ -5,7 +5,7 @@ export type WidgetConfig = {
   isDescriptionTextShown: boolean;
   advancedOptions: {
     display: "hidden" | "collapsed" | "expanded";
-    liquidSplitPCT: number;
+    liquidSplitPct: number;
   };
   tokens: Token[];
 };
