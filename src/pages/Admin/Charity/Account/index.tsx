@@ -1,5 +1,5 @@
 import { AccountType } from "types/lists";
-import { titleCase } from "constants/common";
+import { PAYMENT_WORDS, titleCase } from "constants/common";
 import { adminRoutes } from "constants/routes";
 import Seo from "../Seo";
 import Balances from "./Balances";
@@ -13,11 +13,11 @@ export default function Account({ type }: { type: AccountType }) {
         url={`${adminRoutes.account}/${type}`}
       />
       <h2 className="font-bold text-[2rem] capitalize mb-8 max-sm:text-center">
-        {type} Account
+        {PAYMENT_WORDS.accounts[type]} Account
       </h2>
       <h5 className="text-2xl font-bold mb-8 max-sm:text-center">Overview</h5>
       <Balances type={type} />
-      <h5 className="text-2xl font-bold my-8 capitalize">{type} Positions</h5>
+      <h5 className="text-2xl font-bold my-8 capitalize">Positions</h5>
       <Positions type={type} />
     </div>
   );
