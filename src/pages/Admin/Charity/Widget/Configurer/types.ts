@@ -1,5 +1,4 @@
 import { EndowmentOption, Token } from "types/aws";
-import { OptionType } from "components/Selector";
 
 export type FormValues = {
   endowment: EndowmentOption;
@@ -7,5 +6,5 @@ export type FormValues = {
   isAdvancedOptionsHidden: boolean;
   isAdvancedOptionsExpanded: boolean;
   liquidPercentage: number;
-  tokenWhitelist: OptionType<Token>[];
+  tokenWhitelist: Token[];
 };

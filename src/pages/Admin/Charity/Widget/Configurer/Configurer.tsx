@@ -30,7 +30,7 @@ export default function Configurer() {
           ? "expanded"
           : "collapsed",
       },
-      tokenWhiteList: fv.tokenWhitelist.map((option) => option.value),
+      tokenWhiteList: fv.tokenWhitelist,
     };
     dispatch(updateWidgetConfig(newConfig));
   };
