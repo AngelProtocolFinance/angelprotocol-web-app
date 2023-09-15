@@ -1,10 +1,9 @@
 import Copier from "components/Copier";
-import { TITLE_STYLE } from "../constants";
 
-export default function Snippet() {
+export default function Snippet({ classes = "" }) {
   return (
-    <div>
-      <h2 className={`${TITLE_STYLE} mt-10`}>
+    <div className={classes}>
+      <h2 className="text-lg @4xl/widget:text-2xl text-center @4xl/widget:text-left mb-3">
         Copy / paste this code snippet:
       </h2>
       <div className="flex items-center justify-center gap-4 h-32 w-full max-w-xl px-10 rounded bg-gray-l3 dark:bg-blue-d4">

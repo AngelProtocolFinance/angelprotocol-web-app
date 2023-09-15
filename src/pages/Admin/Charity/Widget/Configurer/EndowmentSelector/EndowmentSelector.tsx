@@ -29,7 +29,7 @@ export default function EndowmentSelector() {
       onChange={onEndowmentChange}
       as="div"
       by="name"
-      className="relative items-center flex w-full field-container min-h-[3rem]"
+      className="relative items-center flex w-full field-container min-h-[3rem] bg-white dark:bg-blue-d6"
     >
       <Combobox.Input
         ref={ref}
@@ -46,7 +46,12 @@ export default function EndowmentSelector() {
       </Combobox.Button>
 
       <Options searchText={debouncedQuery} isDebouncing={isDebouncing} />
-      <ErrorMessage errors={errors} name="endowment.name" as="span" />
+      <ErrorMessage
+        errors={errors}
+        name="endowment.id"
+        as="span"
+        className="absolute -bottom-5 right-0 text-right text-xs text-red dark:text-red-l2"
+      />
     </Combobox>
   );
 }

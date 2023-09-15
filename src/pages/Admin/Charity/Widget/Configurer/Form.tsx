@@ -7,6 +7,7 @@ import DenomSelector from "./DenomSelector";
 import EndowmentSelector from "./EndowmentSelector";
 
 export default function Form({
+  className = "",
   onSubmit,
 }: FormHTMLAttributes<HTMLFormElement>) {
   const { watch } = useFormContext<FV>();
@@ -15,14 +16,14 @@ export default function Form({
   return (
     <form
       onSubmit={onSubmit}
-      className="flex flex-col gap-2 xl:w-full xl:max-w-md text-sm font-normal font-body"
+      className={`${className} grid content-start gap-6 text-sm font-body`}
     >
-      <label>Endowment name:</label>
+      <label className="-mb-4">Endowment name:</label>
       <EndowmentSelector />
 
-      <CheckField<FV> name="isDescriptionTextShown">Hide text</CheckField>
+      <CheckField<FV> name="isDescriptionTextHidden">Hide text</CheckField>
 
-      <label>Available currencies:</label>
+      <label className="-mb-4">Available currencies:</label>
       <DenomSelector />
 
       <CheckField<FV> name="isAdvancedOptionsHidden">
@@ -37,13 +38,13 @@ export default function Form({
         Unfold "advanced options" by default
       </CheckField>
 
-      <span>Define split value by default:</span>
+      <span className="-mb-4">Define split value by default:</span>
       <Split<FV, "liquidPercentage", never>
         className="mb-6 xl:w-96"
         liqPctField="liquidPercentage"
       />
 
-      <div className="flex gap-3 w-full max-xl:justify-center mt-8">
+      <div className="flex gap-3 w-full max-xl:justify-center -mt-4">
         <button
           type="reset"
           className="btn-outline-filled btn-donate max-sm:mx-auto w-40"

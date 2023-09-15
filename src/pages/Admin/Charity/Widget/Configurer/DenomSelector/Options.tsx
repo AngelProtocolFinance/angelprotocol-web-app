@@ -12,7 +12,7 @@ type Props = {
 };
 
 export default function Options({ selected, onSelectedChange }: Props) {
-  const { resetField, watch } = useFormContext<FormValues>();
+  const { resetField } = useFormContext<FormValues>();
   const queryState = useTokensQuery({});
 
   return (

@@ -2,7 +2,7 @@ import { EndowmentOption, Token } from "types/aws";
 
 export type FormValues = {
   endowment: EndowmentOption;
-  isDescriptionTextShown: boolean;
+  isDescriptionTextHidden: boolean;
   isAdvancedOptionsHidden: boolean;
   isAdvancedOptionsExpanded: boolean;
   liquidPercentage: number;
