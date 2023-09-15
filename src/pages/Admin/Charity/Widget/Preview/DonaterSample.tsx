@@ -4,41 +4,27 @@ import AdvancedOptions from "./AdvancedOptions";
 
 const TOKEN = placeholderChain.tokens[0];
 
-export default function DonaterSample({ advancedOptions }: WidgetConfig) {
+export default function DonaterSample({
+  advancedOptions,
+  classes = "",
+}: WidgetConfig & { classes?: string }) {
   return (
-    <div className="grid rounded-md w-full">
-      <div className="grid">
-        <div className="flex max-sm:flex-col max-sm:items-start items-center mb-1">
-          <label
-            htmlFor="amount"
-            className="text-lg font-bold mr-auto max-sm:mb-2"
-          >
-            Enter the donation amount:
-          </label>
-          <div className="flex items-center gap-2">
-            <button type="button" className="text-right text-xs flex">
-              BAL: 0.0000 TOKEN
-            </button>
-          </div>
-        </div>
-
-        <div className="relative grid grid-cols-[1fr_auto] items-center gap-2 py-3 px-4 border border-gray-l2 rounded">
-          <input
-            disabled
-            type="text"
-            placeholder="0.0000"
-            className="w-full text-sm bg-transparent focus:outline-none"
-          />
-          <div className="flex items-center gap-1 w-full">
-            <span className="text-sm">{TOKEN.symbol}</span>
-          </div>
-        </div>
-        <p className="text-xs">
-          Minimal amount: {TOKEN.symbol} {TOKEN.min_donation_amnt}
-        </p>
+    <div className={`${classes} grid rounded-md w-full @container`}>
+      <div className="flex flex-col @xl:flex-row items-start @xl:items-center mb-1">
+        <p className="text-lg font-bold mr-auto">Enter the donation amount:</p>
+        <div className="text-right text-xs">BAL: 0.0000 TOKEN</div>
       </div>
+
+      <div className="flex items-center gap-2 py-3 px-4 border border-gray-l2 rounded mb-1">
+        <span className="text-gray-d1 dark:text-gray">0.00000</span>
+        <span className="text-sm ml-auto">TOKEN</span>
+      </div>
+      <p className="text-xs mt-1">
+        Minimal amount: {TOKEN.symbol} {TOKEN.min_donation_amnt}
+      </p>
       {advancedOptions.display !== "hidden" && (
         <AdvancedOptions
+          classes="mt-10"
           liquidPercentage={advancedOptions.liquidSplitPct}
           expanded={advancedOptions.display === "expanded"}
         />
