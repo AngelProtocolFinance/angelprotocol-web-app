@@ -1,4 +1,4 @@
-import { EndowmentOption, Token } from "types/aws";
+import { EndowmentOption, TokenWithChainID } from "types/aws";
 
 export type FormValues = {
   endowment: EndowmentOption;
@@ -6,5 +6,5 @@ export type FormValues = {
   isAdvancedOptionsHidden: boolean;
   isAdvancedOptionsExpanded: boolean;
   liquidPercentage: number;
-  tokenWhitelist: Token[];
+  tokenWhitelist: TokenWithChainID[];
 };

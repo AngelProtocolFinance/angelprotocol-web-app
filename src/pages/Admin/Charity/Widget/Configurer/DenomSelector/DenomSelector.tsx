@@ -35,7 +35,7 @@ export default function DenomSelector() {
               <span className="flex flex-wrap gap-2 h-full">
                 {selected.map((opt) => (
                   <SelectedOption
-                    key={opt.token_id}
+                    key={opt.token_id + opt.chain_id}
                     option={opt}
                     selected={selected}
                     onChange={onSelectedChange}

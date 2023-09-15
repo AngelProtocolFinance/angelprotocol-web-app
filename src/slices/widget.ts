@@ -18,8 +18,10 @@ const widget = createSlice({
   initialState,
   reducers: {
     update: (state, { payload }: PayloadAction<State>) => payload,
+    reset: () => initialState,
   },
 });
 
 export default widget.reducer;
-export const { update: updateWidgetConfig } = widget.actions;
+export const { update: updateWidgetConfig, reset: resetWidgetConfig } =
+  widget.actions;

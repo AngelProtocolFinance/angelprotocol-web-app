@@ -2,13 +2,13 @@ import { Combobox } from "@headlessui/react";
 import { ReactNode } from "react";
 import { useFormContext } from "react-hook-form";
 import { FormValues } from "../types";
-import { Token } from "types/aws";
+import { TokenWithChainID } from "types/aws";
 import { useTokensQuery } from "services/apes";
 import QueryLoader from "components/QueryLoader";
 
 type Props = {
-  selected: Token[];
-  onSelectedChange(values: Token[]): void;
+  selected: TokenWithChainID[];
+  onSelectedChange(values: TokenWithChainID[]): void;
 };
 
 export default function Options({ selected, onSelectedChange }: Props) {
@@ -48,7 +48,7 @@ export default function Options({ selected, onSelectedChange }: Props) {
 
               {tokens.map((o) => (
                 <Combobox.Option
-                  key={o.token_id}
+                  key={o.token_id + o.chain_id}
                   value={o}
                   className={({ active, selected }) =>
                     optionStyle(selected, active)

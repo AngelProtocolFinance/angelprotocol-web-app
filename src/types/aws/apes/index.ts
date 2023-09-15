@@ -25,6 +25,8 @@ export type Token = {
   type: TokenType;
 };
 
+export type TokenWithChainID = Token & { chain_id: string };
+
 export type BaseChain = {
   chain_id: string;
   chain_name: string; // Avalanche Fuji Testnet

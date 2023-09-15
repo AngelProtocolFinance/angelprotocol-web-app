@@ -3,12 +3,13 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { FormValues } from "./types";
 import { WidgetConfig } from "types/widget";
 import { useSetter } from "store/accessors";
-import { updateWidgetConfig } from "slices/widget";
+import { resetWidgetConfig, updateWidgetConfig } from "slices/widget";
 import Form from "./Form";
 import { schema } from "./schema";
 
 export default function Configurer({ classes = "" }) {
   const dispatch = useSetter();
+
   const methods = useForm<FormValues>({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -51,6 +52,7 @@ export default function Configurer({ classes = "" }) {
           onSubmit={handleSubmit(submit)}
           onReset={(e) => {
             e.preventDefault();
+            dispatch(resetWidgetConfig());
             hookFormReset();
           }}
         />

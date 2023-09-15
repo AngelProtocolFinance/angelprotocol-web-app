@@ -9,6 +9,7 @@ import EndowmentSelector from "./EndowmentSelector";
 export default function Form({
   className = "",
   onSubmit,
+  onReset,
 }: FormHTMLAttributes<HTMLFormElement>) {
   const { watch } = useFormContext<FV>();
   const isAdvancedOptionsHidden = watch("isAdvancedOptionsHidden");
@@ -16,6 +17,7 @@ export default function Form({
   return (
     <form
       onSubmit={onSubmit}
+      onReset={onReset}
       className={`${className} grid content-start gap-6 text-sm font-body`}
     >
       <label className="-mb-4">Endowment name:</label>
@@ -51,7 +53,10 @@ export default function Form({
         >
           Reset Changes
         </button>
-        <button className="btn-orange btn-donate max-sm:mx-auto w-40">
+        <button
+          type="submit"
+          className="btn-orange btn-donate max-sm:mx-auto w-40"
+        >
           Update Snippet
         </button>
       </div>
