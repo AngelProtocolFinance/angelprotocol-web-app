@@ -35,7 +35,7 @@ const widgetURLfn = (config: WidgetConfig) => {
   const tokensRecord: TokensRecord = config.tokenWhiteList.reduce(
     (result, token) => {
       result[token.chain_id] ||= {};
-      result[token.chain_id][token.token_id] = token.symbol;
+      result[token.chain_id][token.symbol] = token.symbol;
       return result;
     },
     {} as TokensRecord

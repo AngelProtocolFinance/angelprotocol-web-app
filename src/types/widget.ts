@@ -14,7 +14,7 @@ export type WidgetConfig = {
 
 export type TokensRecord = Record<
   string /** chain id */,
-  Record<string, string> /** token_id map */
+  Record<string, string> /** symbol map */
 >;
 
 export type WidgetURLSearchParams = {
