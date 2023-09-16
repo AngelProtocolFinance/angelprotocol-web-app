@@ -2,9 +2,11 @@ import { Combobox } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import { useController } from "react-hook-form";
 import { FormValues } from "../types";
-import { Token } from "types/aws";
+import { TokenWithChainID } from "types/aws";
 import Icon, { DrawerIcon } from "components/Icon";
+import Image from "components/Image";
 import { FocusableInput } from "components/Selector";
+import { chains } from "constants/chains";
 import Options from "./Options";
 
 export default function DenomSelector() {
@@ -65,16 +67,22 @@ export default function DenomSelector() {
 }
 
 type SelectedProps = {
-  option: Token;
-  selected: Token[];
-  onChange(value: Token[]): void;
+  option: TokenWithChainID;
+  selected: TokenWithChainID[];
+  onChange(value: TokenWithChainID[]): void;
 };
 
 function SelectedOption({ selected, onChange, option }: SelectedProps) {
   return (
-    <div className="flex items-center px-3 gap-2 h-10 bg-blue-l4 dark:bg-blue-d4 border border-prim rounded font-semibold text-gray-d1 dark:text-gray uppercase">
-      <span className="max-w-[200px] truncate">{option.symbol}</span>
+    <div className="grid grid-cols-[auto_1fr_auto] justify-items-start items-center p-1 gap-2 bg-blue-l4 dark:bg-blue-d4 border border-prim rounded text-gray-d1 dark:text-gray">
+      <Image
+        src={option.logo}
+        className="w-4 h-4 rounded-full"
+        alt="token logo"
+      />
+      <span className="max-w-[200px] truncate text-sm">{option.symbol}</span>
       <button
+        className="col-start-3 row-span-2"
         type="button"
         onClick={(e) => {
           e.preventDefault();
@@ -83,6 +91,9 @@ function SelectedOption({ selected, onChange, option }: SelectedProps) {
       >
         <Icon type="Close" size={20} />
       </button>
+      <span className="text-2xs font-work px-2 bg-orange/20 col-span-2 uppercase">
+        {chains[option.chain_id].name}
+      </span>
     </div>
   );
 }

@@ -42,7 +42,6 @@ const widgetURLfn = (config: WidgetConfig) => {
   );
 
   const params: WidgetURLSearchParams = {
-    endowId: config.endowment.id.toString(),
     isDescriptionTextShown: config.isDescriptionTextShown ? "true" : "false",
     advancedOptionsDisplay: config.advancedOptions.display,
     liquidSplitPct: config.advancedOptions.liquidSplitPct.toString(),

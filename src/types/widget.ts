@@ -18,7 +18,6 @@ export type TokensRecord = Record<
 >;
 
 export type WidgetURLSearchParams = {
-  endowId: string;
   isDescriptionTextShown: "true" | "false";
   advancedOptionsDisplay: AdvanceOptionsDisplay;
   liquidSplitPct: string;
