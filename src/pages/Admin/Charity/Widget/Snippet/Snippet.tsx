@@ -1,8 +1,4 @@
-import {
-  TokensRecord,
-  WidgetConfig,
-  WidgetURLSearchParams,
-} from "types/widget";
+import { WidgetConfig, WidgetURLSearchParams } from "types/widget";
 import Copier from "components/Copier";
 import { useGetter } from "store/accessors";
 import { appRoutes } from "constants/routes";
@@ -32,20 +28,13 @@ export default function Snippet({ classes = "" }) {
 
 //create URLSearchParams from config
 const widgetURLfn = (config: WidgetConfig) => {
-  const tokensRecord: TokensRecord = config.tokenWhiteList.reduce(
-    (result, token) => {
-      result[token.chain_id] ||= {};
-      result[token.chain_id][token.symbol] = token.symbol;
-      return result;
-    },
-    {} as TokensRecord
-  );
-
   const params: WidgetURLSearchParams = {
     isDescriptionTextShown: config.isDescriptionTextShown ? "true" : "false",
     advancedOptionsDisplay: config.advancedOptions.display,
     liquidSplitPct: config.advancedOptions.liquidSplitPct.toString(),
-    tokenWhiteList: window.btoa(JSON.stringify(tokensRecord)),
+    tokenWhiteList: config.tokenWhiteList
+      .map((token) => `${token.chain_id}+${token.symbol}`)
+      .join(","),
   };
   return (
     window.location.origin +

@@ -1,6 +1,6 @@
 import Image from "components/Image";
 import { useGetter } from "store/accessors";
-import { getPossessiveForm } from "helpers";
+import { possesiveForm } from "helpers";
 import { LOGO_DARK, PAYMENT_WORDS, titleCase } from "constants/common";
 import DonaterSample from "./DonaterSample";
 
@@ -24,7 +24,7 @@ export default function Preview({ classes = "" }) {
           <>
             <p className="px-6 @xl/preview:px-10 font-body text-sm mb-4 text-center @xl/preview:text-left">
               {titleCase(PAYMENT_WORDS.verb)} today to{" "}
-              {getPossessiveForm(endowName)} endowment. Your donation will be
+              {possesiveForm(endowName)} endowment. Your donation will be
               protected and compounded in perpetuity to provide {endowName} with
               a long-term, sustainable runway. Give once, give forever!
             </p>

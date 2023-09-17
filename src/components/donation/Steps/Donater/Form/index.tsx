@@ -1,9 +1,11 @@
 import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { matchRoutes, useLocation } from "react-router-dom";
 import { DonateValues } from "../types";
+import { TokenWithAmount } from "types/slices";
+import { DonaterConfigFromWidget } from "types/widget";
 import CountrySelector from "components/CountrySelector";
+import { ErrorStatus, Info } from "components/Status";
 import TokenField from "components/TokenField";
 import { CheckField, Label } from "components/form";
 import { useGetter } from "store/accessors";
@@ -12,10 +14,12 @@ import { PAYMENT_WORDS } from "constants/common";
 import { appRoutes } from "constants/routes";
 import AdvancedOptions from "./AdvancedOptions";
 
-export default function Form(props: {
-  hideAdvOpts: boolean;
-  unfoldAdvOpts: boolean;
-}) {
+type Props = {
+  configFromWidget: DonaterConfigFromWidget | null;
+  tokens: TokenWithAmount[];
+};
+
+export default function Form({ configFromWidget, tokens }: Props) {
   const {
     reset,
     resetField,
@@ -24,9 +28,6 @@ export default function Form(props: {
     watch,
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<DonateValues>();
-
-  const isInsideWidget = useIsInsideWidget();
-
   const endowId = useGetter((state) => state.donation.recipient?.id);
   const isKYCRequired = useGetter(
     (state) => state.donation.recipient?.isKYCRequired
@@ -40,7 +41,8 @@ export default function Form(props: {
   }
 
   const tokenType = watch("token.type");
-  const isStepOneCompleted = !!getValues("token").amount;
+  const isStepOneCompleted = !!getValues("token.amount");
+  const isInsideWidget = configFromWidget !== null;
 
   return (
     <form
@@ -48,15 +50,21 @@ export default function Form(props: {
       className="grid rounded-md w-full"
       autoComplete="off"
     >
-      <TokenField<DonateValues, "token">
-        name="token"
-        tokens={getValues("tokens")}
-        withGiftcard
-        withBalance
-        label={`Enter the ${PAYMENT_WORDS.noun.singular} amount:`}
-        classes={{ label: "text-lg", inputContainer: "dark:bg-blue-d6" }}
-        withMininum
-      />
+      {tokens.length > 0 ? (
+        <TokenField<DonateValues, "token">
+          name="token"
+          tokens={tokens}
+          withGiftcard
+          withBalance
+          label={`Enter the ${PAYMENT_WORDS.noun.singular} amount:`}
+          classes={{ label: "text-lg", inputContainer: "dark:bg-blue-d6" }}
+          withMininum
+        />
+      ) : (
+        <Info classes="text-sm">
+          Endowment doesn't accept donations on this network
+        </Info>
+      )}
 
       {tokenType === "fiat" && (
         <>
@@ -91,9 +99,12 @@ export default function Form(props: {
           Please send me a tax receipt
         </CheckField>
       )}
-      {!props.hideAdvOpts && (
-        <AdvancedOptions classes="mt-10" unfold={props.unfoldAdvOpts} />
-      )}
+
+      <AdvancedOptions
+        classes="mt-10"
+        display={configFromWidget?.advancedOptionsDisplay ?? "expanded"}
+        fixLiquidSplitPct={configFromWidget?.liquidSplitPct ?? null}
+      />
 
       <div
         className={`flex gap-3 md:gap-5 ${
@@ -124,13 +135,24 @@ export default function Form(props: {
   );
 }
 
-function useIsInsideWidget() {
-  const location = useLocation();
+/**
+//regex to match pattern
+// "(1337 or juno-1 or uni-6)+tokenSymbol1
 
-  const isInsideWidget = !!matchRoutes(
-    [{ path: appRoutes.donate_widget + "/:id" }],
-    location
-  );
+where chainId can be 1337,
+  junoMain = "juno-1",
+  junoTest = "uni-6",
+  polygonMain = "137",
+  polygonTest = "80001",
+  polygonLocal = "1337",
+  binanceMain = "56",
+  binanceTest = "97",
+  ethMain = "1",
+  ethTest = "5",
+  terraMain = "phoenix-1",
+  terraTest = "pisco-1",
 
-  return isInsideWidget;
-}
+test juno-1+axlUSDC - true
+test phoenix-1+axlUSDC - true
+
+ */

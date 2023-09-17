@@ -12,10 +12,10 @@ export type WidgetConfig = {
   tokenWhiteList: TokenWithChainID[];
 };
 
-export type TokensRecord = Record<
-  string /** chain id */,
-  Record<string, string> /** symbol map */
->;
+type ChainID = string;
+type Symbol = string;
+export type TokensWhitelist = [ChainID, Symbol][];
+export type TokensLookup = Record<ChainID, Record<Symbol, true>>;
 
 export type WidgetURLSearchParams = {
   isDescriptionTextShown: "true" | "false";
@@ -23,3 +23,23 @@ export type WidgetURLSearchParams = {
   liquidSplitPct: string;
   tokenWhiteList: string; //base64 encoded TokensRecord
 };
+
+type ValidConfig = {
+  isDescriptionTextShown: boolean;
+  advancedOptionsDisplay: AdvanceOptionsDisplay;
+  liquidSplitPct: number;
+  tokensLookup: TokensLookup;
+};
+
+type FallbackConfig = {
+  isDescriptionTextShown: true;
+  advancedOptionsDisplay: Extract<AdvanceOptionsDisplay, "expanded">;
+  liquidSplitPct: 50;
+  tokensLookup: "all";
+};
+
+export type DonaterConfigFromWidget = ValidConfig | FallbackConfig;
+
+export const configIsFallback = (
+  config: DonaterConfigFromWidget
+): config is FallbackConfig => config.tokensLookup === "all";

@@ -1,4 +1,4 @@
-import { FieldValues, Path } from "react-hook-form";
+import { FieldValues, Path, PathValue } from "react-hook-form";
 import { TokenWithAmount } from "types/slices";
 
 export type OnSetAmount = (balance: TokenWithAmount["balance"]) => void;
@@ -17,7 +17,7 @@ type Classes = {
 };
 
 export type Props<T extends FieldValues, K extends Path<T>> = {
-  name: T[K] extends TokenWithAmount ? K : never;
+  name: PathValue<T, K> extends TokenWithAmount ? K : never;
   label: string;
   tokens: TokenWithAmount[];
   scale?: Scale;

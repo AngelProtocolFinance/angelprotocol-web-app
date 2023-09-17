@@ -1,16 +1,18 @@
 import { useEffect } from "react";
+import { DonaterConfigFromWidget } from "types/widget";
 import { useGetWallet } from "contexts/WalletContext";
 import KYC from "components/KYC";
 import Status, { LoadingStatus } from "components/Status";
 import { useGetter, useSetter } from "store/accessors";
 import { fiatWallet, resetDetails } from "slices/donation";
 import { IS_AST } from "constants/env";
-import { ConfigParams } from "..";
 import Donater from "./Donater";
 import Result from "./Result";
 import Submit from "./Submit";
 
-export default function CurrentStep(props: ConfigParams) {
+type Props = { config: DonaterConfigFromWidget | null };
+
+export default function CurrentStep({ config }: Props) {
   const state = useGetter((state) => state.donation);
   const dispatch = useSetter();
   const { wallet = IS_AST ? fiatWallet : undefined, isLoading } =
@@ -55,7 +57,7 @@ export default function CurrentStep(props: ConfigParams) {
       );
     }
     case "donate-form": {
-      return <Donater {...state} config={props} wallet={wallet} />;
+      return <Donater {...state} config={config} wallet={wallet} />;
     }
 
     //init

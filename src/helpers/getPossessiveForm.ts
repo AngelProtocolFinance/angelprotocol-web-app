@@ -1,6 +1,2 @@
-export function getPossessiveForm(name: string) {
-  if (name.endsWith("s")) {
-    return `${name}'`;
-  }
-  return `${name}'s`;
-}
+export const possesiveForm = (name: string) =>
+  name.endsWith("s") ? `${name}'` : `${name}'s`;

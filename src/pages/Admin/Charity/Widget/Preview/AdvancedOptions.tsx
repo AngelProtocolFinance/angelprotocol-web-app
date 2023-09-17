@@ -1,9 +1,5 @@
 import { PropsWithChildren, useEffect, useState } from "react";
-import { placeholderChain } from "contexts/WalletContext/constants";
 import Icon from "components/Icon";
-import { humanize } from "helpers";
-
-const SPLIT_AMOUNT = `${placeholderChain.tokens[0].symbol} ${humanize(0, 5)}`;
 
 type Props = { liquidPercentage: number; expanded: boolean; classes?: string };
 
@@ -83,7 +79,7 @@ function Portion(
       <p className="text-xs mb-2 font-bold">{props.percentage}%</p>
       <p className="uppercase text-xs text-center font-body">{props.action}</p>
       {props.children}
-      <p className="mt-auto font-bold text-center">{SPLIT_AMOUNT}</p>
+      <p className="mt-auto font-bold text-center">TOKEN 0.00000</p>
     </div>
   );
 }

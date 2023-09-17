@@ -1,28 +1,16 @@
 import { useEffect } from "react";
-import Seo from "components/Seo";
-import { isPrevDark, setToDarkMode, setToLightMode } from "helpers";
-import { PAYMENT_WORDS, titleCase } from "constants/common";
-import { APP_NAME, DAPP_URL } from "constants/env";
-import ApiKeyChecker from "./ApiKeyChecker";
-import EndowmentLoader from "./EndowmentLoader";
-import InnerComponent from "./InnerComponent";
-
-const isPrevThemeDark = isPrevDark();
+import { useParams, useSearchParams } from "react-router-dom";
+import { useProfileQuery } from "services/aws/aws";
+import QueryLoader from "components/QueryLoader";
+import { idParamToNum } from "helpers";
+import LoadedPage from "./LoadedPage";
+import { styles } from "./constants";
 
 export default function DonateWidget() {
-  /**
-   * Need to set the theme to light, but after widget is closed we need to
-   * reverse the user selected theme on the main webapp to the previous theme
-   */
-  useEffect(() => {
-    if (isPrevThemeDark) {
-      setToLightMode();
-    }
-
-    return () => {
-      isPrevThemeDark && setToDarkMode();
-    };
-  }, []);
+  const routeParams = useParams();
+  const [searchParams] = useSearchParams();
+  const endowId = idParamToNum(routeParams.id);
+  const queryState = useProfileQuery({ endowId }, { skip: endowId === 0 });
 
   /** Hide the Intercom chatbot */
   useEffect(() => {
@@ -34,33 +22,17 @@ export default function DonateWidget() {
   }, []);
 
   return (
-    <ApiKeyChecker>
-      <EndowmentLoader>
-        {(profile) => (
-          <>
-            <Seo
-              title={`${titleCase(PAYMENT_WORDS.verb)} to ${
-                profile.name
-              } - ${APP_NAME}`}
-              description={(profile.overview ?? "").slice(0, 140)}
-              name={profile.name}
-              image={`${profile.logo}`}
-              url={`${DAPP_URL}/donate_widget/${profile.id}`}
-            />
-            <InnerComponent
-              id={profile.id}
-              isKYCRequired={
-                //prettier-ignore
-                (profile.type === "ast" && profile.contributor_verification_required) ||
-                (profile.kyc_donors_only ?? false)
-              }
-              name={profile.name}
-              endowType={profile.type}
-              isFiscalSponsored={profile.fiscal_sponsored ?? false}
-            />
-          </>
-        )}
-      </EndowmentLoader>
-    </ApiKeyChecker>
+    <QueryLoader
+      queryState={queryState}
+      messages={{
+        loading: "Getting endowment info..",
+        error: "Failed to get endowment info",
+      }}
+      classes={{ container: styles.page }}
+    >
+      {(profile) => (
+        <LoadedPage profile={profile} searchParams={searchParams} />
+      )}
+    </QueryLoader>
   );
 }

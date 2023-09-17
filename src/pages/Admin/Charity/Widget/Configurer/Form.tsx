@@ -41,9 +41,11 @@ export default function Form({
       </CheckField>
 
       <span className="-mb-4">Define split value by default:</span>
-      <Split<FV, "liquidPercentage", never>
+      <Split<FV, "liquidPercentage">
         className="mb-6 xl:w-96"
         liqPctField="liquidPercentage"
+        token={{ amount: 0, symbol: "TOKEN" }}
+        fixLiquidSplitPct={null}
       />
 
       <div className="flex gap-3 w-full max-xl:justify-center -mt-4">

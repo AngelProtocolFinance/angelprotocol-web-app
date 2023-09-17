@@ -2,24 +2,16 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { DonateValues } from "./types";
 import { TokenWithAmount as TWA } from "types/slices";
+import { DonaterConfigFromWidget, configIsFallback } from "types/widget";
 import { FormStep, WithWallet, fiatWallet, isFiat } from "slices/donation";
-import { isEmpty } from "helpers";
-import { IS_AST } from "constants/env";
-// import { fiatTokens } from "constants/tokens";
-import { ConfigParams } from "..";
 import Form from "./Form";
 import { schema } from "./schema";
 
-export default function Donater({
-  wallet,
-  config: {
-    availCurrs = [],
-    hideAdvOpts = false,
-    liquidPct = IS_AST ? 100 : 0,
-    unfoldAdvOpts = false,
-  },
-  ...state
-}: WithWallet<FormStep> & { config: ConfigParams }) {
+type Props = WithWallet<FormStep> & {
+  config: DonaterConfigFromWidget | null;
+};
+
+export default function Donater({ wallet, config, ...state }: Props) {
   const fiats: TWA[] = fiatWallet.tokens.map((t) => ({
     ...t,
     amount: "0",
@@ -35,11 +27,16 @@ export default function Donater({
   const _tokens: TWA[] = isFiat(wallet)
     ? fiats
     : wallet.coins
+        .filter((coin) =>
+          !config || configIsFallback(config)
+            ? true
+            : //check if token is whitelisted
+              config.tokensLookup[wallet.chain.chain_id][coin.token_id]
+        )
         .map<TWA>((t) => ({
           ...t,
           amount: "0",
-        }))
-        .concat(fiats);
+        }));
 
   const initCoin = _tokens[0];
 
@@ -48,8 +45,7 @@ export default function Donater({
     reValidateMode: "onChange",
     values: state.details || {
       token: initCoin,
-      pctLiquidSplit: liquidPct,
-
+      pctLiquidSplit: config?.liquidSplitPct ?? 50,
       country: {
         name: "",
         flag: "",
@@ -59,13 +55,6 @@ export default function Donater({
       //meta
       // if availCurrs array was not set, include all
       // otherwise, include only tokens in the availCurrs array + the fee-paying coin
-      tokens: isEmpty(availCurrs)
-        ? _tokens
-        : _tokens.filter(
-            (token) =>
-              availCurrs.includes(token.symbol) ||
-              initCoin.symbol === token.symbol
-          ),
       chainName: isFiat(wallet) ? "" : wallet.chain.chain_name,
       chainId: isFiat(wallet) ? "" : wallet.chain.chain_id,
       userOptForKYC: false,
@@ -74,7 +63,7 @@ export default function Donater({
   });
   return (
     <FormProvider {...methods}>
-      <Form hideAdvOpts={hideAdvOpts} unfoldAdvOpts={unfoldAdvOpts} />
+      <Form configFromWidget={config} tokens={_tokens} />
     </FormProvider>
   );
 }
