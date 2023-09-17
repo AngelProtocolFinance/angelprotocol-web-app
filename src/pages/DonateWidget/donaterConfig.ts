@@ -7,13 +7,18 @@ import {
   WidgetURLSearchParams,
 } from "types/widget";
 
-const schema = object<any, SchemaShape<DonaterConfigFromWidget>>({
+const schema = object<any, SchemaShape<WidgetURLSearchParams>>({
   advancedOptionsDisplay: string()
     .required()
     .oneOf(["hidden", "collapsed", "expanded"]),
   isDescriptionTextShown: string().required().oneOf(["true", "false"]),
   liquidSplitPct: number().required().min(0).max(100),
-  tokensLookup: string().required(),
+  tokenWhiteList: string()
+    .required()
+    .matches(
+      //TODO: update this regex when adding new chains
+      /^(juno-1|uni-6|137|80001|1337|56|97|1|5|phoenix-1|pisco-1)\+[A-Za-z0-9]+(,(juno-1|uni-6|137|80001|1337|56|97|1|5|phoenix-1|pisco-1)\+[A-Za-z0-9]+)*$/
+    ),
 });
 
 const fallbackConfig: DonaterConfigFromWidget = {
