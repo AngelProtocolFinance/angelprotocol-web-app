@@ -21,7 +21,7 @@ export type WidgetURLSearchParams = {
   isDescriptionTextShown: "true" | "false";
   advancedOptionsDisplay: AdvanceOptionsDisplay;
   liquidSplitPct: string;
-  tokenWhiteList: string; //base64 encoded TokensRecord
+  tokenWhiteList: string;
 };
 
 type ValidConfig = {
