@@ -61,7 +61,7 @@ export default function Form({ configFromWidget, tokens }: Props) {
           withMininum
         />
       ) : (
-        <Info classes="text-sm">
+        <Info classes="mb-6">
           Endowment doesn't accept donations on this network
         </Info>
       )}

@@ -27,11 +27,11 @@ export default function Donater({ wallet, config, ...state }: Props) {
   const _tokens: TWA[] = isFiat(wallet)
     ? fiats
     : wallet.coins
-        .filter((coin) =>
-          !config || configIsFallback(config)
-            ? true
-            : //check if token is whitelisted
-              config.tokensLookup[wallet.chain.chain_id][coin.token_id]
+        .filter(
+          (coin) =>
+            !config ||
+            configIsFallback(config) ||
+            config.tokensLookup[wallet.chain.chain_id]?.[coin.token_id]
         )
         .map<TWA>((t) => ({
           ...t,

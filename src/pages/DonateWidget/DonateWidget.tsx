@@ -1,10 +1,12 @@
 import { useEffect } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import { useProfileQuery } from "services/aws/aws";
+import Image from "components/Image";
+import LoaderRing from "components/LoaderRing";
 import QueryLoader from "components/QueryLoader";
 import { idParamToNum } from "helpers";
-import LoadedPage from "./LoadedPage";
-import { styles } from "./constants";
+import { LOGO_DARK } from "constants/common";
+import Content from "./Content";
 
 export default function DonateWidget() {
   const routeParams = useParams();
@@ -22,17 +24,22 @@ export default function DonateWidget() {
   }, []);
 
   return (
-    <QueryLoader
-      queryState={queryState}
-      messages={{
-        loading: "Getting endowment info..",
-        error: "Failed to get endowment info",
-      }}
-      classes={{ container: styles.page }}
-    >
-      {(profile) => (
-        <LoadedPage profile={profile} searchParams={searchParams} />
-      )}
-    </QueryLoader>
+    <div className="grid grid-rows-[1fr_auto] justify-items-center gap-10">
+      <QueryLoader
+        queryState={queryState}
+        messages={{
+          loading: (
+            <LoaderRing thickness={12} classes="w-28 place-self-center" />
+          ),
+          error: "Failed to get endowment info",
+        }}
+        classes={{ container: "grid place-items-center h-full w-full" }}
+      >
+        {(profile) => <Content profile={profile} searchParams={searchParams} />}
+      </QueryLoader>{" "}
+      <footer className="grid place-items-center h-20 w-full bg-blue dark:bg-blue-d3">
+        <Image className="w-20" {...LOGO_DARK} />
+      </footer>
+    </div>
   );
 }
