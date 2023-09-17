@@ -31,7 +31,7 @@ export default function Donater({ wallet, config, ...state }: Props) {
           (coin) =>
             !config ||
             configIsFallback(config) ||
-            config.tokensLookup[wallet.chain.chain_id]?.[coin.token_id]
+            config.tokensLookup[wallet.chain.chain_id]?.[coin.symbol]
         )
         .map<TWA>((t) => ({
           ...t,
