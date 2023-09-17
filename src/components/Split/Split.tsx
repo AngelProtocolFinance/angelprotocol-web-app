@@ -5,10 +5,10 @@ import Portion from "./Portion";
 import Slider from "./Slider";
 
 type Props<FV extends FieldValues, P extends Path<FV>> = {
-  token: Token;
   className?: string;
   liqPctField: FV[P] extends number ? P : never;
-  fixLiquidSplitPct: number | null;
+  fixLiquidSplitPct?: number;
+  token?: Token;
 };
 
 export default function Split<FV extends FieldValues, P extends Path<FV>>(

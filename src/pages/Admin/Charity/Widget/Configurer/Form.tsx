@@ -44,8 +44,6 @@ export default function Form({
       <Split<FV, "liquidPercentage">
         className="mb-6 xl:w-96"
         liqPctField="liquidPercentage"
-        token={{ amount: 0, symbol: "TOKEN" }}
-        fixLiquidSplitPct={null}
       />
 
       <div className="flex gap-3 w-full max-xl:justify-center -mt-4">

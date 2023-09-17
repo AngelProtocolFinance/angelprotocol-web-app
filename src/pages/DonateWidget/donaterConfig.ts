@@ -23,7 +23,9 @@ const fallbackConfig: DonaterConfigFromWidget = {
   tokensLookup: "all",
 };
 
-export default (searchParams: URLSearchParams): DonaterConfigFromWidget => {
+export default function donaterConfig(
+  searchParams: URLSearchParams
+): DonaterConfigFromWidget {
   try {
     const parsedConfig = Object.fromEntries(
       searchParams.entries()
@@ -57,4 +59,4 @@ export default (searchParams: URLSearchParams): DonaterConfigFromWidget => {
     console.error(err);
     return fallbackConfig;
   }
-};
+}

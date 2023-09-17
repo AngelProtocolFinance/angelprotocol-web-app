@@ -5,7 +5,7 @@ import { DonateValues } from "../types";
 import { TokenWithAmount } from "types/slices";
 import { DonaterConfigFromWidget } from "types/widget";
 import CountrySelector from "components/CountrySelector";
-import { ErrorStatus, Info } from "components/Status";
+import { Info } from "components/Status";
 import TokenField from "components/TokenField";
 import { CheckField, Label } from "components/form";
 import { useGetter } from "store/accessors";
@@ -103,7 +103,7 @@ export default function Form({ configFromWidget, tokens }: Props) {
       <AdvancedOptions
         classes="mt-10"
         display={configFromWidget?.advancedOptionsDisplay ?? "expanded"}
-        fixLiquidSplitPct={configFromWidget?.liquidSplitPct ?? null}
+        fixLiquidSplitPct={configFromWidget?.liquidSplitPct}
       />
 
       <div

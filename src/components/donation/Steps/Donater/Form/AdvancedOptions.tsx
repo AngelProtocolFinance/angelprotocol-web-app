@@ -8,7 +8,7 @@ import { IS_AST } from "constants/env";
 
 type Props = {
   display: "hidden" | "expanded" | "collapsed";
-  fixLiquidSplitPct: number | null;
+  fixLiquidSplitPct?: number;
   classes?: string;
 };
 

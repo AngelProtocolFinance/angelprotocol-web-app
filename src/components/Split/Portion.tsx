@@ -6,7 +6,7 @@ type Props = PropsWithChildren<{
   action: string;
   title: string;
   percentage: number;
-  token: Token;
+  token?: Token;
 }>;
 
 export default function Portion({
@@ -16,9 +16,6 @@ export default function Portion({
   title,
   children,
 }: Props) {
-  const portionAmount = token.amount * (percentage / 100);
-  const prettyPortionAmount = `${token.symbol} ${humanize(portionAmount, 5)}`;
-
   return (
     <div className="flex flex-col items-center p-6 bg-orange-l6 dark:bg-blue-d6 border border-prim rounded">
       <p className="uppercase font-bold text-sm sm:text-base">{title}</p>
@@ -27,9 +24,9 @@ export default function Portion({
         {action}
       </p>
       {children}
-      {portionAmount && (
+      {token && (
         <p className="mt-auto font-bold md:text-lg text-center">
-          {prettyPortionAmount}
+          {token.symbol} ${humanize(token.amount * (percentage / 100), 5)}
         </p>
       )}
     </div>
