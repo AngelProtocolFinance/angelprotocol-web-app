@@ -34,7 +34,7 @@ export default function Split<FV extends FieldValues, P extends Path<FV>>(
         <Slider
           className="my-2.5"
           liqPctField={props.liqPctField}
-          disabled={props.fixLiquidSplitPct !== null}
+          disabled={props.fixLiquidSplitPct !== undefined}
         />
       </Portion>
     </div>

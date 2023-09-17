@@ -26,7 +26,7 @@ export default function Portion({
       {children}
       {token && (
         <p className="mt-auto font-bold md:text-lg text-center">
-          {token.symbol} ${humanize(token.amount * (percentage / 100), 5)}
+          {token.symbol} {humanize(token.amount * (percentage / 100), 5)}
         </p>
       )}
     </div>
