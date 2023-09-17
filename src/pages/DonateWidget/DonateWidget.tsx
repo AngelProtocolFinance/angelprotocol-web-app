@@ -4,9 +4,12 @@ import { useProfileQuery } from "services/aws/aws";
 import Image from "components/Image";
 import LoaderRing from "components/LoaderRing";
 import QueryLoader from "components/QueryLoader";
-import { idParamToNum } from "helpers";
+import { idParamToNum, setToLightMode } from "helpers";
 import { LOGO_DARK } from "constants/common";
 import Content from "./Content";
+
+//light mode by default
+setToLightMode();
 
 export default function DonateWidget() {
   const routeParams = useParams();
