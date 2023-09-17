@@ -134,25 +134,3 @@ export default function Form({ configFromWidget, tokens }: Props) {
     </form>
   );
 }
-
-/**
-//regex to match pattern
-// "(1337 or juno-1 or uni-6)+tokenSymbol1
-
-where chainId can be 1337,
-  junoMain = "juno-1",
-  junoTest = "uni-6",
-  polygonMain = "137",
-  polygonTest = "80001",
-  polygonLocal = "1337",
-  binanceMain = "56",
-  binanceTest = "97",
-  ethMain = "1",
-  ethTest = "5",
-  terraMain = "phoenix-1",
-  terraTest = "pisco-1",
-
-test juno-1+axlUSDC - true
-test phoenix-1+axlUSDC - true
-
- */
