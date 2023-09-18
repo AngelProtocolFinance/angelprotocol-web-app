@@ -1,0 +1,22 @@
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading font-bold;
+  }
+
+  body {
+    @apply font-body bg-gray-l6 dark:bg-blue-d5 text-gray-d2 dark:text-white;
+  }
+
+  a {
+    @apply cursor-pointer aria-disabled:pointer-events-none aria-disabled:cursor-default;
+  }
+
+  button {
+    @apply cursor-pointer disabled:cursor-default;
+  }
+}
