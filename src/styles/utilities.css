@@ -14,7 +14,7 @@
     @apply outline-gray-l3 dark:outline-bluegray;
   }
 
-  .border-primary {
+  .border-prime {
     @apply border-gray-l3 dark:border-bluegray;
   }
 

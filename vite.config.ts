@@ -9,6 +9,9 @@ const esbuildShim = require.resolve("node-stdlib-browser/helpers/esbuild/shim");
 export default defineConfig(async () => {
   const { default: stdLibBrowser } = await import("node-stdlib-browser");
   return {
+    server: {
+      port: 4200,
+    },
     build: {
       outDir: "build",
     },

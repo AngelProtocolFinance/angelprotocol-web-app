@@ -25,7 +25,7 @@ export function createAuthToken(userType: UserTypes) {
     expiresIn = 3600;
   }
 
-  if (process.env.NODE_ENV === "test" && !secret) {
+  if (import.meta.env.NODE_ENV === "test" && !secret) {
     secret = "secret";
   }
 
