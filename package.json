@@ -86,11 +86,7 @@
     "loader-utils@^3.2.0": "^3.2.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.22.1",
     "@babel/plugin-proposal-private-property-in-object": "7.21.11",
-    "@babel/plugin-syntax-flow": "7.18.6",
-    "@babel/plugin-transform-react-jsx": "7.22.3",
-    "@babel/runtime": "^7.x",
     "@keplr-wallet/types": "0.12.23",
     "@peculiar/webcrypto": "1.4.0",
     "@tailwindcss/container-queries": "^0.1.0",
