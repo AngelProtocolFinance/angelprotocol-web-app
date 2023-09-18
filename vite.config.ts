@@ -16,6 +16,8 @@ export default defineConfig(async () => {
       include: ["buffer", "process"],
     },
     plugins: [
+      react(),
+      tsconfigPaths(),
       {
         ...inject({
           global: [esbuildShim, "global"],
@@ -24,8 +26,6 @@ export default defineConfig(async () => {
         }),
         enforce: "post",
       },
-      react(),
-      tsconfigPaths(),
     ],
   };
 });
