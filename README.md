@@ -3,27 +3,24 @@
 ## GETTING STARTED
 
 ### Requirements
-- `Node.js` (v16.x) - https://github.com/nvm-sh/nvm#installing-and-updating
-- `yarn` (v1.22.x) - https://yarnpkg.com/getting-started/install/
 
-We recommend using a version manager like `nvm`. Assuming you are using nvm, you can install and use Node v18 with the following two commands:
-```shell
-nvm install v16
-nvm use v16
-```
+- `bun` (1.x) - https://bun.sh/
 
-We use `yarn` as a package manager. After installing yarn, simply run the package installer:
+Install dependencies
+
 ```shell
-yarn install
+bun install
 ```
 
 Lastly, we have provided an example `.env` file as `.env.template`.
 You'll need to copy this file to `.env` and then modify/add your relevant app's settings, API Keys and the like:
+
 ```shell
 cp .env.template .env
 ```
 
-To run the web app server locally, simply execute: 
+To run the web app server locally, simply execute:
+
 ```shell
-yarn start
+bun start
 ```
