@@ -6,7 +6,7 @@
   "scripts": {
     "build": "react-app-rewired --max_old_space_size=4096 build",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
-    "start": "vite",
+    "start": "bunx --bun vite",
     "test": "react-app-rewired test --colors",
     "lint": "eslint 'src/**/*.{ts,tsx}'",
     "lint-staged": "lint-staged --config lint-staged.js",
@@ -93,7 +93,7 @@
     "react-test-renderer": "18.2.0",
     "source-map-explorer": "2.5.2",
     "tsc-files": "1.1.3",
-    "typescript": "4.7.4",
+    "typescript": "5.2.2",
     "vite": "4.4.9"
   }
 }
