@@ -111,7 +111,6 @@
     "eslint-config-prettier": "9.0.0",
     "eslint-plugin-prettier": "5.0.0",
     "ethers": "5.7.2",
-    "https-browserify": "1.0.0",
     "husky": "8.0.3",
     "lint-staged": "13.2.0",
     "node-stdlib-browser": "1.2.0",
