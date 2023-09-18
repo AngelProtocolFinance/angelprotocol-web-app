@@ -7,7 +7,7 @@ export default function Header() {
   const { type } = useAdminContext();
   return (
     <div
-      className={`flex flex-col gap-1 w-full py-6 px-5 border-b border-prim ${
+      className={`flex flex-col gap-1 w-full py-6 px-5 border-b border-gray-l3 dark:border-bluegray ${
         type === "ap"
           ? "dark:bg-blue-d4"
           : type === "review"

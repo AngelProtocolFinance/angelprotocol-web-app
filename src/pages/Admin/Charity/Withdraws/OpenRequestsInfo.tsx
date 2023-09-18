@@ -25,7 +25,7 @@ export default function OpenRequestsInfo() {
       }}
     >
       {() => (
-        <div className="flex justify-center items-center gap-3 py-2 px-4 w-full dark:bg-blue-d6 border border-prim rounded">
+        <div className="flex justify-center items-center gap-3 py-2 px-4 w-full dark:bg-blue-d6 border border-gray-l3 dark:border-bluegray rounded">
           <Icon type="Info" className="w-6 h-6 shrink-0" />
           <span className="text-sm">
             There are open requests that need your attention.{" "}

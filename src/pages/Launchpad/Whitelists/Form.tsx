@@ -12,7 +12,7 @@ export default function WhitelistsForm(props: FormProps) {
         (beneficiaries) from your AST. You will be able to make changes to those
         lists in the future.
       </Desc>
-      <div className="mb-8 p-4 md:p-8 border border-prim rounded">
+      <div className="mb-8 p-4 md:p-8 border border-gray-l3 dark:border-bluegray rounded">
         <h4 className="text-xl font-bold mb-8">Contributors</h4>
         <Addresses<FV, "contributors">
           memberName="contributor"
@@ -21,7 +21,7 @@ export default function WhitelistsForm(props: FormProps) {
           emptyMsg="Anyone can contribute to your AST."
         />
       </div>
-      <div className="mb-8 p-4 md:p-8 border border-prim rounded">
+      <div className="mb-8 p-4 md:p-8 border border-gray-l3 dark:border-bluegray rounded">
         <h4 className="text-xl font-bold mb-8">Beneficiaries</h4>
         <Addresses<FV, "beneficiaries">
           memberName="beneficiary"

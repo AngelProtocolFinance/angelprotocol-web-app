@@ -57,7 +57,7 @@ export default function Summary() {
       />
       <Fees fees={fees} title="Fees" step={6} disabled={false} />
       <Message {...completed} />
-      <div className="grid grid-cols-2 sm:flex gap-2 border-t border-prim pt-8">
+      <div className="grid grid-cols-2 sm:flex gap-2 border-t border-gray-l3 dark:border-bluegray pt-8">
         <Link to={`../${steps[7]}`} className="text-sm px-8 btn-outline-filled">
           Back
         </Link>

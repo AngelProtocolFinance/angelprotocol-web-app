@@ -83,7 +83,7 @@ function Percent({
 }: PropsWithChildren<{ disabled?: boolean }>) {
   return (
     <span
-      className={`py-2 text-center w-16 border border-prim rounded ${
+      className={`py-2 text-center w-16 border border-gray-l3 dark:border-bluegray rounded ${
         disabled ? "bg-[#F5F5F5] dark:bg-bluegray-d1" : ""
       }`}
     >

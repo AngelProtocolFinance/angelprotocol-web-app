@@ -47,7 +47,7 @@ export default function Form() {
       <Slider />
       <CheckField<FV>
         name="rotatingFund"
-        classes="p-3 text-sm rounded bg-gray-l6 dark:bg-blue-d5 border border-prim"
+        classes="p-3 text-sm rounded bg-gray-l6 dark:bg-blue-d5 border border-gray-l3 dark:border-bluegray"
       >
         Included on fund rotation
       </CheckField>
@@ -80,7 +80,7 @@ function Slider() {
           reset
         </button>
       </Label>
-      <div className="rounded bg-gray-l5 dark:bg-blue-d5 grid items-center px-4 py-6 border border-prim">
+      <div className="rounded bg-gray-l5 dark:bg-blue-d5 grid items-center px-4 py-6 border border-gray-l3 dark:border-bluegray">
         <input
           {...register("splitToLiquid")}
           type="range"

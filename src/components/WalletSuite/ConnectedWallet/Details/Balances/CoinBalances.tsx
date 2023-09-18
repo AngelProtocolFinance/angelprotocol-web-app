@@ -43,7 +43,7 @@ export default function CoinBalances({ smallAmountsHidden, tokens }: Props) {
           <span className="ml-1">{humanize(t.balance, 3, true)}</span>
         </div>
       ))}
-      <div className="border-t border-prim" />
+      <div className="border-t border-gray-l3 dark:border-bluegray" />
     </>
   );
 }

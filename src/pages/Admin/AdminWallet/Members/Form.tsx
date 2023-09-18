@@ -41,7 +41,7 @@ export default function Form(props: FormHTMLAttributes<HTMLFormElement>) {
   return (
     <form
       {...props}
-      className="grid content-start border border-prim rounded p-4 @lg:p-8"
+      className="grid content-start border border-gray-l3 dark:border-bluegray rounded p-4 @lg:p-8"
     >
       <h4 className="text-2xl font-body mb-8">Members</h4>
       {action !== "initial" && (
@@ -69,7 +69,7 @@ export default function Form(props: FormHTMLAttributes<HTMLFormElement>) {
       <table className="table-fixed rounded outline outline-1 outline-prim">
         <TableSection
           type="thead"
-          rowClass="border-b border-prim bg-orange-l6 dark:bg-blue-d7 rounded"
+          rowClass="border-b border-gray-l3 dark:border-bluegray bg-orange-l6 dark:bg-blue-d7 rounded"
         >
           <Cells type="th" cellClass="text-xs uppercase text-left py-3 px-4">
             <>member</>
@@ -78,7 +78,7 @@ export default function Form(props: FormHTMLAttributes<HTMLFormElement>) {
         </TableSection>
         <TableSection
           type="tbody"
-          rowClass="border-b border-prim last:border-none even:bg-orange-l6 even:dark:bg-blue-d7"
+          rowClass="border-b border-gray-l3 dark:border-bluegray last:border-none even:bg-orange-l6 even:dark:bg-blue-d7"
         >
           {fields.map((field, idx, array) => (
             <Row

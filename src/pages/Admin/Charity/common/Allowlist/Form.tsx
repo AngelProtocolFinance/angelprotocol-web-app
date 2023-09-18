@@ -15,7 +15,7 @@ export default function Form(props: Props) {
         e.preventDefault();
         reset();
       }}
-      className={`${props.classes} w-full border border-prim rounded p-4 md:p-8 bg-white dark:bg-blue-d6`}
+      className={`${props.classes} w-full border border-gray-l3 dark:border-bluegray rounded p-4 md:p-8 bg-white dark:bg-blue-d6`}
     >
       <h4 className="text-xl font-bold mb-8">{props.title}</h4>
       {tooltip && <Tooltip tooltip={tooltip} classes="mb-8" />}

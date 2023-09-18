@@ -19,19 +19,19 @@ export default function Form({ name, description, rating }: TStrategy) {
         alert("show summary");
       })}
       as="form"
-      className="max-h-[95vh] overflow-y-auto max-w-[37.5rem] w-[95vw] sm:w-full fixed-center z-20 bg-gray-l6 dark:bg-blue-d6 border border-prim rounded"
+      className="max-h-[95vh] overflow-y-auto max-w-[37.5rem] w-[95vw] sm:w-full fixed-center z-20 bg-gray-l6 dark:bg-blue-d6 border border-gray-l3 dark:border-bluegray rounded"
     >
-      <div className="relative border-b border-prim py-5 text-center bg-orange-l6 dark:bg-blue-d7">
+      <div className="relative border-b border-gray-l3 dark:border-bluegray py-5 text-center bg-orange-l6 dark:bg-blue-d7">
         <span className="font-bold font-heading text-lg">Invest</span>
         <button
           onClick={closeModal}
           type="button"
-          className="absolute right-4 top-1/2 -translate-y-1/2 border border-prim rounded p-2"
+          className="absolute right-4 top-1/2 -translate-y-1/2 border border-gray-l3 dark:border-bluegray rounded p-2"
         >
           <Icon type="Close" size={26.5} />
         </button>
       </div>
-      <div className="mx-8 p-4 border border-prim rounded my-6 bg-white dark:bg-blue-d7">
+      <div className="mx-8 p-4 border border-gray-l3 dark:border-bluegray rounded my-6 bg-white dark:bg-blue-d7">
         <h4 className="text-xl font-bold mb-2">{name}</h4>
         <p className="text-gray-d1 dark:text-gray text-sm mb-4">
           {description}
@@ -40,7 +40,7 @@ export default function Form({ name, description, rating }: TStrategy) {
           title="Risk rating"
           tooltip="lorem ipsum"
           value={rating}
-          classes="border-b border-prim"
+          classes="border-b border-gray-l3 dark:border-bluegray"
         />
         <KeyValue title="Accepted Currency" value="USDC" />
       </div>
@@ -57,7 +57,7 @@ export default function Form({ name, description, rating }: TStrategy) {
         }}
         withMininum
       />
-      <div className="mt-8 px-8 py-4 gap-x-3 border-t border-prim flex justify-end">
+      <div className="mt-8 px-8 py-4 gap-x-3 border-t border-gray-l3 dark:border-bluegray flex justify-end">
         <button
           disabled={isSending}
           onClick={closeModal}

@@ -60,7 +60,7 @@ export default function Addresses<T extends FieldValues, K extends Path<T>>({
         <table className="table-fixed rounded outline outline-1 outline-prim">
           <TableSection
             type="tbody"
-            rowClass="border-b border-prim divide-x divide-prim last:border-none odd:bg-orange-l6 odd:dark:bg-blue-d7"
+            rowClass="border-b border-gray-l3 dark:border-bluegray divide-x divide-prim last:border-none odd:bg-orange-l6 odd:dark:bg-blue-d7"
           >
             {fields.map((field, idx) => (
               <Row

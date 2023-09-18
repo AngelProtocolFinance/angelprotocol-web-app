@@ -49,7 +49,10 @@ export default function Table({
         <Icon type="FileDownload" className="text-2xl" />
       </CsvExporter>
       <table className="w-full border-collapse self-start">
-        <TableSection type="thead" rowClass="border-b-2 border-prim">
+        <TableSection
+          type="thead"
+          rowClass="border-b-2 border-gray-l3 dark:border-bluegray"
+        >
           <Cells
             type="th"
             cellClass="text-left uppercase font-heading font-semibold text-sm p-2 first:pl-0 last:pr-0"
@@ -84,7 +87,7 @@ export default function Table({
         </TableSection>
         <TableSection
           type="tbody"
-          rowClass="border-b border-prim hover:bg-blue-l4 hover:dark:bg-blue-d4"
+          rowClass="border-b border-gray-l3 dark:border-bluegray hover:bg-blue-l4 hover:dark:bg-blue-d4"
         >
           {sorted
             .map(({ hash, amount, symbol, chainId, date, kycData }) => (
@@ -116,7 +119,7 @@ export default function Table({
                 <td
                   colSpan={9}
                   key="load-more-btn"
-                  className="border-t border-prim rounded-b"
+                  className="border-t border-gray-l3 dark:border-bluegray rounded-b"
                 >
                   <button
                     type="button"

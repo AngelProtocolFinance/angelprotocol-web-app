@@ -17,7 +17,7 @@ export default function Programs() {
 
 function Program(props: TProgram) {
   return (
-    <div className="border border-prim rounded relative group overflow-hidden">
+    <div className="border border-gray-l3 dark:border-bluegray rounded relative group overflow-hidden">
       <Link
         to={`program/${props.program_id}`}
         className="absolute inset-0 group-hover:border group-hover:border-orange dark:group-hover:border-blue"

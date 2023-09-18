@@ -30,7 +30,7 @@ export default function Details(props: WalletState) {
   }, [isLoading, isFetching, isError, error]);
 
   return (
-    <Popover.Panel className="fixed sm:absolute inset-0 sm:inset-auto sm:origin-top-right sm:mt-2 sm:right-0 flex flex-col w-full sm:w-80 bg-white dark:bg-blue-d6 sm:rounded-lg border border-prim shadow-[0_0_16px_rgba(15,46,67,0.25)] text-gray-d2 dark:text-white overflow-y-auto">
+    <Popover.Panel className="fixed sm:absolute inset-0 sm:inset-auto sm:origin-top-right sm:mt-2 sm:right-0 flex flex-col w-full sm:w-80 bg-white dark:bg-blue-d6 sm:rounded-lg border border-gray-l3 dark:border-bluegray shadow-[0_0_16px_rgba(15,46,67,0.25)] text-gray-d2 dark:text-white overflow-y-auto">
       {({ close }) => {
         return (
           <>
@@ -44,7 +44,7 @@ export default function Details(props: WalletState) {
               />
             )}
 
-            <div className="grid gap-3 p-4 border-b border-prim">
+            <div className="grid gap-3 p-4 border-b border-gray-l3 dark:border-bluegray">
               <Balances {...props} />
               <Address value={props.address} />
               <ChainSelector {...props} />
@@ -66,7 +66,7 @@ export default function Details(props: WalletState) {
 
 function MyDonations({ address }: { address: string }) {
   return (
-    <div className="flex items-center p-4 border-b border-prim">
+    <div className="flex items-center p-4 border-b border-gray-l3 dark:border-bluegray">
       <Link
         to={`${appRoutes.donations}/${address}`}
         className="font-heading font-bold text-sm uppercase hover:text-orange"

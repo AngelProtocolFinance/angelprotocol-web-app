@@ -35,7 +35,7 @@ export function MinmaxSlider<T extends FieldValues>(props: {
 
   return (
     <div>
-      <div className="relative my-6 h-4 border border-prim rounded-full">
+      <div className="relative my-6 h-4 border border-gray-l3 dark:border-bluegray rounded-full">
         {props.hidden !== "min" && (
           <>
             {!props.hideLabels && !isClose && (

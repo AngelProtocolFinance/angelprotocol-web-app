@@ -19,7 +19,7 @@ export default function Balance({ type }: Props) {
   const link = `${appRoutes.admin}/${id}/${adminRoutes.account}/${type}`;
 
   return (
-    <div className="@container rounded border border-prim bg-orange-l6 dark:bg-blue-d6">
+    <div className="@container rounded border border-gray-l3 dark:border-bluegray bg-orange-l6 dark:bg-blue-d6">
       <h4 className="uppercase text-xl font-bold mb-5 pt-5 px-4">
         {PAYMENT_WORDS.accounts[type]} account
       </h4>
@@ -60,7 +60,7 @@ export default function Balance({ type }: Props) {
       </QueryLoader>
       <Link
         to={link}
-        className="block text-center py-3 text-sm font-bold uppercase border-t border-prim mt-4 bg-orange-l5 dark:bg-blue-d6 "
+        className="block text-center py-3 text-sm font-bold uppercase border-t border-gray-l3 dark:border-bluegray mt-4 bg-orange-l5 dark:bg-blue-d6 "
       >
         See details
       </Link>

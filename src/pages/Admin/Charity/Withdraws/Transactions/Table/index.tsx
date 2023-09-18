@@ -19,7 +19,7 @@ export default function Table({
 
   return (
     <table
-      className={`${classes} w-full text-sm rounded border border-separate border-spacing-0 border-prim`}
+      className={`${classes} w-full text-sm rounded border border-separate border-spacing-0 border-gray-l3 dark:border-bluegray`}
     >
       <TableSection
         type="thead"
@@ -86,7 +86,7 @@ export default function Table({
               <td
                 colSpan={9}
                 key="load-more-btn"
-                className="border-t border-prim rounded-b"
+                className="border-t border-gray-l3 dark:border-bluegray rounded-b"
               >
                 <LoadMoreBtn
                   onClick={onLoadMore}

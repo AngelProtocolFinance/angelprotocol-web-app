@@ -5,7 +5,8 @@ import Seo from "../Seo";
 
 export default function Deposits() {
   const { id } = useAdminContext<"charity">();
-  const container = "dark:bg-blue-d6 border border-prim rounded max-w-lg  p-8";
+  const container =
+    "dark:bg-blue-d6 border border-gray-l3 dark:border-bluegray rounded max-w-lg  p-8";
 
   return (
     <div className="grid gap-8 justify-items-center">

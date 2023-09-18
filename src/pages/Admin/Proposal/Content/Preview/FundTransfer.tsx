@@ -9,7 +9,10 @@ export default function FundTransfer({ to, token }: TransferMeta) {
       <KeyValue _key="from">
         <span className="uppercase text-xs font-heading">multisig wallet</span>
       </KeyValue>
-      <KeyValue _key="total amount" _classes="border-t border-prim mt-2">
+      <KeyValue
+        _key="total amount"
+        _classes="border-t border-gray-l3 dark:border-bluegray mt-2"
+      >
         <span>
           {humanize(token.amount, 3)} {token.symbol}
         </span>

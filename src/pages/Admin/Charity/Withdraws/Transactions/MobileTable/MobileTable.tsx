@@ -18,11 +18,11 @@ export default function MobileTable({
 
   return (
     <div
-      className={`${classes} w-full @max-md:max-w-lg border border-prim ${
+      className={`${classes} w-full @max-md:max-w-lg border border-gray-l3 dark:border-bluegray ${
         hasMore ? "rounded-t" : "rounded"
       }`}
     >
-      <div className="grid grid-cols-6 h-10 uppercase text-xs font-bold bg-orange-l6 dark:bg-blue-d7 border-b border-prim divide-x divide-prim rounded-t">
+      <div className="grid grid-cols-6 h-10 uppercase text-xs font-bold bg-orange-l6 dark:bg-blue-d7 border-b border-gray-l3 dark:border-bluegray divide-x divide-prim rounded-t">
         <div />
         <div className="py-3 px-4 col-span-3">
           <HeaderButton

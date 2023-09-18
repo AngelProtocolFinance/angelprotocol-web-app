@@ -18,7 +18,7 @@ export default function TableRow({ log, isLastBotBorderFlat }: Props) {
   return (
     <Disclosure
       as="div"
-      className={`text-sm odd:bg-orange-l6 dark:even:bg-blue-d6 dark:odd:bg-blue-d7 w-full border-b last:border-0 border-prim ${
+      className={`text-sm odd:bg-orange-l6 dark:even:bg-blue-d6 dark:odd:bg-blue-d7 w-full border-b last:border-0 border-gray-l3 dark:border-bluegray ${
         isLastBotBorderFlat ? "" : "last:rounded-b"
       }`}
     >
@@ -26,7 +26,9 @@ export default function TableRow({ log, isLastBotBorderFlat }: Props) {
         <>
           <Disclosure.Button
             className={`${
-              open ? "bg-orange-l5 dark:bg-blue-d4 border-b border-prim" : ""
+              open
+                ? "bg-orange-l5 dark:bg-blue-d4 border-b border-gray-l3 dark:border-bluegray"
+                : ""
             } w-full grid grid-cols-6 divide-x divide-prim`}
           >
             <DrawerIcon

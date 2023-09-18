@@ -30,7 +30,7 @@ export default function Amounts() {
 
         return (
           <div
-            className="relative grid grid-cols-[auto_1fr_auto] items-center gap-2 @md:gap-4 w-full p-4 border border-prim rounded"
+            className="relative grid grid-cols-[auto_1fr_auto] items-center gap-2 @md:gap-4 w-full p-4 border border-gray-l3 dark:border-bluegray rounded"
             key={field.id}
           >
             <label

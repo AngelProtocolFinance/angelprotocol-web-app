@@ -15,7 +15,7 @@ export default function Summary({
   const { id } = useAdminContext();
 
   return (
-    <div className="w-full p-6 grid content-start gap-2 rounded bg-white dark:bg-blue-d6 border border-prim">
+    <div className="w-full p-6 grid content-start gap-2 rounded bg-white dark:bg-blue-d6 border border-gray-l3 dark:border-bluegray">
       <Seo
         title={`Summary - ${APP_NAME}`}
         description={`Application Summary for ${r.OrganizationName}`}

@@ -50,7 +50,7 @@ export default function Beneficiaries({ classes = "" }) {
         <table className="rounded outline outline-1 outline-prim">
           <TableSection
             type="thead"
-            rowClass="border-b border-prim bg-orange-l6 dark:bg-blue-d7 rounded"
+            rowClass="border-b border-gray-l3 dark:border-bluegray bg-orange-l6 dark:bg-blue-d7 rounded"
           >
             <Cells type="th" cellClass="text-xs uppercase text-left py-3 px-4">
               <>Member</>
@@ -59,7 +59,7 @@ export default function Beneficiaries({ classes = "" }) {
           </TableSection>
           <TableSection
             type="tbody"
-            rowClass="border-b border-prim last:border-none even:bg-orange-l6 even:dark:bg-blue-d7"
+            rowClass="border-b border-gray-l3 dark:border-bluegray last:border-none even:bg-orange-l6 even:dark:bg-blue-d7"
           >
             {fields.map((field, idx) => (
               <Row key={field.id} idx={idx} onRemove={handleRemove} />

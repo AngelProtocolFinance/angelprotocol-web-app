@@ -27,7 +27,7 @@ export default function Proposal() {
         }}
       >
         {(proposal) => (
-          <div className="rounded p-4 border border-prim dark:bg-blue-d6 bg-white">
+          <div className="rounded p-4 border border-gray-l3 dark:border-bluegray dark:bg-blue-d6 bg-white">
             <Seo
               title={`Proposal ${proposal.recordId} - ${APP_NAME}`}
               description={proposal.meta?.description?.slice(0, 140)}
@@ -41,7 +41,7 @@ export default function Proposal() {
               <p>ID : {proposal.transactionId}</p>
               <Status status={proposal.status} />
             </div>
-            <div className="mt-8 mb-6 flex justify-between items-center border-b-2 border-prim pb-2">
+            <div className="mt-8 mb-6 flex justify-between items-center border-b-2 border-gray-l3 dark:border-bluegray pb-2">
               <h4 className="text-lg">
                 {proposal.meta?.title ?? "Multisig transaction"}
               </h4>
@@ -52,7 +52,7 @@ export default function Proposal() {
               {proposal.meta?.description ?? "No description provided"}
             </p>
             <Content {...proposal} />
-            <h4 className="mt-6 uppercase text-lg py-2 border-b-2 border-prim">
+            <h4 className="mt-6 uppercase text-lg py-2 border-b-2 border-gray-l3 dark:border-bluegray">
               Votes
             </h4>
             <Stats {...proposal} />

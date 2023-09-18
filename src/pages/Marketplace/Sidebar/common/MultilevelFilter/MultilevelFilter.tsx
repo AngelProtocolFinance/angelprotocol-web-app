@@ -19,7 +19,9 @@ export function MultilevelFilter<T>(props: MultiLevelFilterProps<T>) {
   return (
     <div
       className={`grid gap-6 px-2 py-4 ${
-        props.hideBottomBorder ? "" : "border-b border-prim"
+        props.hideBottomBorder
+          ? ""
+          : "border-b border-gray-l3 dark:border-bluegray"
       }`}
     >
       <Drawer isOpen={isOpen} toggle={toggle}>

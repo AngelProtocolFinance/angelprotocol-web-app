@@ -19,7 +19,7 @@ export default function Favourites({
   version,
 }: Props) {
   return (
-    <div className="flex flex-col gap-3 max-h-[244px] flex-1 p-4 border-b border-prim">
+    <div className="flex flex-col gap-3 max-h-[244px] flex-1 p-4 border-b border-gray-l3 dark:border-bluegray">
       <h3 className="flex justify-between gap-2">
         <span className="font-bold text-sm text-gray-d1 dark:text-gray">
           Favourites

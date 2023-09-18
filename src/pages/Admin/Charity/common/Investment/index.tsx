@@ -16,9 +16,9 @@ export default function Investment() {
   const { showModal } = useModalContext();
 
   return (
-    <div className="@container border border-prim rounded bg-orange-l6 dark:bg-blue-d6">
+    <div className="@container border border-gray-l3 dark:border-bluegray rounded bg-orange-l6 dark:bg-blue-d6">
       <p className="p-6 font-work">{maskAddress(address)}</p>
-      <div className="border-t border-prim grid @md:flex @md:justify-between p-6">
+      <div className="border-t border-gray-l3 dark:border-bluegray grid @md:flex @md:justify-between p-6">
         <div>
           <p className="text-xs uppercase text-gray-d1 dark:text-gray mb-1">
             Current balance

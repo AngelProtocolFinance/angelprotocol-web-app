@@ -17,7 +17,7 @@ export default function Table({ txs, classes = "", more }: Props) {
       }
     >
       <TableSection
-        rowClass="border-b border-prim divide-x divide-prim"
+        rowClass="border-b border-gray-l3 dark:border-bluegray divide-x divide-prim"
         type="thead"
       >
         <Cells
@@ -29,7 +29,7 @@ export default function Table({ txs, classes = "", more }: Props) {
         </Cells>
       </TableSection>
       <TableSection
-        rowClass="last:border-none border-b border-prim divide-x divide-prim hover:bg-orange-l5 hover:dark:bg-bluegray"
+        rowClass="last:border-none border-b border-gray-l3 dark:border-bluegray divide-x divide-prim hover:bg-orange-l5 hover:dark:bg-bluegray"
         type="tbody"
       >
         {txs
@@ -59,7 +59,7 @@ export default function Table({ txs, classes = "", more }: Props) {
               <td
                 colSpan={9}
                 key="load-more-btn"
-                className="border-t border-prim rounded-b h-12 text-center"
+                className="border-t border-gray-l3 dark:border-bluegray rounded-b h-12 text-center"
               >
                 {more === "loading" ? (
                   <span className="text-gray-d1 dark:text-gray">

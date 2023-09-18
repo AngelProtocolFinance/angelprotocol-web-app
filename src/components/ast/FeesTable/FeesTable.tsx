@@ -36,12 +36,12 @@ export default function FeesTable({ classes = "" }) {
     >
       <TableSection
         type="thead"
-        classes="max-sm:grid max-sm:grid-cols-[3rem_1fr_5.5rem] max-sm:border-b border-prim bg-orange-l6 dark:bg-blue-d7"
-        rowClass="max-sm:contents uppercase text-xs font-bold border-b border-prim bg-orange-l6 dark:bg-blue-d7"
+        classes="max-sm:grid max-sm:grid-cols-[3rem_1fr_5.5rem] max-sm:border-b border-gray-l3 dark:border-bluegray bg-orange-l6 dark:bg-blue-d7"
+        rowClass="max-sm:contents uppercase text-xs font-bold border-b border-gray-l3 dark:border-bluegray bg-orange-l6 dark:bg-blue-d7"
       >
         <Cells
           type="th"
-          cellClass="px-4 py-4 border-r border-prim last:border-r-0"
+          cellClass="px-4 py-4 border-r border-gray-l3 dark:border-bluegray last:border-r-0"
         >
           <th className="" />
           <th className="sm:hidden" />
@@ -53,7 +53,7 @@ export default function FeesTable({ classes = "" }) {
       <TableSection
         classes="max-sm:contents"
         type="tbody"
-        rowClass="max-sm:grid max-sm:grid-cols-[3rem_1fr_5.5rem] border-b border-prim last:border-0 even:bg-orange-l6 even:dark:bg-blue-d7"
+        rowClass="max-sm:grid max-sm:grid-cols-[3rem_1fr_5.5rem] border-b border-gray-l3 dark:border-bluegray last:border-0 even:bg-orange-l6 even:dark:bg-blue-d7"
       >
         <Fee
           title="early widthdraw fee"

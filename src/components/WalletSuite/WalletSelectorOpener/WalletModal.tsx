@@ -9,14 +9,14 @@ export default function WalletModal() {
   const { connections } = useSetWallet();
 
   return (
-    <Modal className="fixed inset-0 sm:fixed-center z-20 grid sm:items-center w-full sm:max-w-lg h-full sm:h-fit sm:border border-prim sm:rounded bg-gray-l6 text-gray-d2 dark:bg-blue-d6  dark:text-white shadow-[0_0_60px_rgba(0,0,0,0.3)]">
+    <Modal className="fixed inset-0 sm:fixed-center z-20 grid sm:items-center w-full sm:max-w-lg h-full sm:h-fit sm:border border-gray-l3 dark:border-bluegray sm:rounded bg-gray-l6 text-gray-d2 dark:bg-blue-d6  dark:text-white shadow-[0_0_60px_rgba(0,0,0,0.3)]">
       <Modal.Title
         as="h3"
-        className="relative rounded-t w-full pl-4 px-4 sm:px-0 py-4 sm:py-6 bg-orange-l6 border-b border-prim font-black sm:font-bold sm:text-center text-xl text-orange sm:text-inherit uppercase sm:capitalize dark:bg-blue-d7 "
+        className="relative rounded-t w-full pl-4 px-4 sm:px-0 py-4 sm:py-6 bg-orange-l6 border-b border-gray-l3 dark:border-bluegray font-black sm:font-bold sm:text-center text-xl text-orange sm:text-inherit uppercase sm:capitalize dark:bg-blue-d7 "
       >
         Connect Wallet
         <button
-          className="absolute right-1 top-1/2 -translate-y-1/2 flex items-center justify-center w-10 h-10 mr-4 sm:border border-prim hover:border-gray sm:rounded  dark:hover:border-bluegray-d1 text-gray-d2 hover:text-black dark:text-white dark:hover:text-gray"
+          className="absolute right-1 top-1/2 -translate-y-1/2 flex items-center justify-center w-10 h-10 mr-4 sm:border border-gray-l3 dark:border-bluegray hover:border-gray sm:rounded  dark:hover:border-bluegray-d1 text-gray-d2 hover:text-black dark:text-white dark:hover:text-gray"
           onClick={closeModal}
         >
           <Icon type="Close" className="w-8 sm:w-7 h-8 sm:h-7" />

@@ -39,12 +39,12 @@ export default function PermissionsTable({ classes = "" }) {
     >
       <TableSection
         type="thead"
-        classes="max-sm:grid max-sm:grid-cols-12 max-sm:border-b border-prim bg-orange-l6 dark:bg-blue-d7 text-left"
-        rowClass="max-sm:contents uppercase text-xs font-bold border-b border-prim bg-orange-l6 dark:bg-blue-d7"
+        classes="max-sm:grid max-sm:grid-cols-12 max-sm:border-b border-gray-l3 dark:border-bluegray bg-orange-l6 dark:bg-blue-d7 text-left"
+        rowClass="max-sm:contents uppercase text-xs font-bold border-b border-gray-l3 dark:border-bluegray bg-orange-l6 dark:bg-blue-d7"
       >
         <Cells
           type="th"
-          cellClass="px-4 py-4 border-r border-prim last:border-r-0"
+          cellClass="px-4 py-4 border-r border-gray-l3 dark:border-bluegray last:border-r-0"
         >
           <th className="sm:hidden" />
           <th className="max-sm:col-start-2 max-sm:border-r-0">action</th>
@@ -58,7 +58,7 @@ export default function PermissionsTable({ classes = "" }) {
       <TableSection
         classes="max-sm:contents"
         type="tbody"
-        rowClass="max-sm:grid max-sm:grid-cols-12 border-b border-prim last:border-0"
+        rowClass="max-sm:grid max-sm:grid-cols-12 border-b border-gray-l3 dark:border-bluegray last:border-0"
       >
         <Permission
           title="Changes to account fees"

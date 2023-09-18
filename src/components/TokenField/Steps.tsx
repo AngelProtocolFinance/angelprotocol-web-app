@@ -24,7 +24,7 @@ export default function Steps({
           className={`${
             step === Number(token.amount)
               ? "bg-blue-l3 border-blue-l3 dark:bg-blue-d2 dark:border-blue-d2"
-              : "bg-blue-l4 dark:bg-blue-d4 border-prim"
+              : "bg-blue-l4 dark:bg-blue-d4 border-gray-l3 dark:border-bluegray"
           }  rounded-full py-1.5 border`}
         >
           {humanize(step, precision)}

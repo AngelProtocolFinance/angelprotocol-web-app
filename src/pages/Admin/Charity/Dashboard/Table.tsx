@@ -8,7 +8,10 @@ type Props = { proposals: Transaction[] };
 export default function Table({ proposals }: Props) {
   return (
     <table>
-      <TableSection rowClass="border-b border-prim" type="thead">
+      <TableSection
+        rowClass="border-b border-gray-l3 dark:border-bluegray"
+        type="thead"
+      >
         <Cells type="th" cellClass="p-1.5 uppercase text-left font-heading">
           <>title</>
           <>status</>
@@ -16,7 +19,7 @@ export default function Table({ proposals }: Props) {
         </Cells>
       </TableSection>
       <TableSection
-        rowClass="last:border-none border-b border-prim hover:bg-blue-l4 hover:dark:bg-blue-d4"
+        rowClass="last:border-none border-b border-gray-l3 dark:border-bluegray hover:bg-blue-l4 hover:dark:bg-blue-d4"
         type="tbody"
       >
         {proposals.map(({ meta, status, transactionId, recordId }) => (

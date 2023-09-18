@@ -19,7 +19,7 @@ export default function StatusSelector({ classes = "" }) {
           <RadioGroup.Option
             key={optionValue}
             value={optionValue}
-            className="px-4 py-2 border border-prim rounded capitalize font-bold text-sm aria-checked:bg-orange/25 aria-checked:border-orange"
+            className="px-4 py-2 border border-gray-l3 dark:border-bluegray rounded capitalize font-bold text-sm aria-checked:bg-orange/25 aria-checked:border-orange"
           >
             {optionDescription}
           </RadioGroup.Option>

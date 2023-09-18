@@ -12,9 +12,9 @@ export default function Settings() {
 
   const hours = toHours(config.duration);
   return (
-    <div className="grid content-start border border-prim p-4 @lg:p-8 rounded">
+    <div className="grid content-start border border-gray-l3 dark:border-bluegray p-4 @lg:p-8 rounded">
       <h2 className="font-bold text-2xl mb-8">Settings</h2>
-      <div className="@container border border-prim rounded divide-y divide-prim">
+      <div className="@container border border-gray-l3 dark:border-bluegray rounded divide-y divide-prim">
         <Container
           onBtnClick={() =>
             showModal(ThresholdForm, {

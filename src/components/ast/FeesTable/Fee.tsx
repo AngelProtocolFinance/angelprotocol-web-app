@@ -43,7 +43,10 @@ export default function Fee({ name, title, isOpen, onToggle }: Props) {
   }, [isActive, name, setValue]);
 
   return (
-    <Cells type="td" cellClass="py-4 px-4 border-r border-prim last:border-r-0">
+    <Cells
+      type="td"
+      cellClass="py-4 px-4 border-r border-gray-l3 dark:border-bluegray last:border-r-0"
+    >
       <td className="sm:hidden">
         <button
           type="button"

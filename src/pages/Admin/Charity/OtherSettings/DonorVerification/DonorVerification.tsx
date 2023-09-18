@@ -77,7 +77,7 @@ function Content({ profile }: { profile: Profile }) {
     >
       <SubHeading>{titleCase(PAYMENT_WORDS.payer)} Verification</SubHeading>
       {tooltip && <Tooltip tooltip={tooltip} />}
-      <div className="flex flex-col md:flex-row md:justify-between items-center gap-4 w-full px-4 py-3 border border-prim rounded bg-gray-l6 dark:bg-blue-d5">
+      <div className="flex flex-col md:flex-row md:justify-between items-center gap-4 w-full px-4 py-3 border border-gray-l3 dark:border-bluegray rounded bg-gray-l6 dark:bg-blue-d5">
         <Message verificationRequired={verificationRequired} />
         <button
           type="button"

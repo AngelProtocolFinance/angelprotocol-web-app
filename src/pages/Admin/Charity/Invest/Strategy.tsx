@@ -20,7 +20,7 @@ export default function Strategy(props: TStrategy) {
   const { showModal } = useModalContext();
 
   return (
-    <div className="@container border border-prim rounded bg-orange-l6 dark:bg-blue-d6">
+    <div className="@container border border-gray-l3 dark:border-bluegray rounded bg-orange-l6 dark:bg-blue-d6">
       <p className="mx-6 mt-6 font-heading text-xl font-bold mb-2">{name}</p>
       <p className="text-sm text-gray-d1 dark:text-gray mx-6 mb-2 @lg:mb-3 line-clamp-3 @lg:line-clamp-none">
         {description}
@@ -32,11 +32,11 @@ export default function Strategy(props: TStrategy) {
         >
           {provider.name}
         </ExtLink>
-        <span className="rounded-full bg-blue-l4 dark:bg-blue-d4 text-[0.6875rem] py-1 px-2 font-bold border border-prim">
+        <span className="rounded-full bg-blue-l4 dark:bg-blue-d4 text-[0.6875rem] py-1 px-2 font-bold border border-gray-l3 dark:border-bluegray">
           {type}
         </span>
       </div>
-      <div className="border-t border-prim grid grid-cols-[repeat(3,auto)] @lg:flex gap-x-8 items-center p-6">
+      <div className="border-t border-gray-l3 dark:border-bluegray grid grid-cols-[repeat(3,auto)] @lg:flex gap-x-8 items-center p-6">
         <KeyVal title="Risk" tooltip="some tooltip">
           {rating}
         </KeyVal>

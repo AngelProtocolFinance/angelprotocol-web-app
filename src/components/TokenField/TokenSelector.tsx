@@ -33,8 +33,8 @@ export default function TokenSelector({
         </Combobox.Button>
       )}
 
-      <Combobox.Options className="absolute right-0 top-2 z-10 border border-prim p-1 mt-10 max-h-60 w-max overflow-y-auto rounded-md bg-gray-l5 dark:bg-blue-d7 shadow-lg focus:outline-none">
-        <div className="flex p-2 gap-2 border border-prim rounded mb-1">
+      <Combobox.Options className="absolute right-0 top-2 z-10 border border-gray-l3 dark:border-bluegray p-1 mt-10 max-h-60 w-max overflow-y-auto rounded-md bg-gray-l5 dark:bg-blue-d7 shadow-lg focus:outline-none">
+        <div className="flex p-2 gap-2 border border-gray-l3 dark:border-bluegray rounded mb-1">
           <Icon type="Search" size={20} />
           <Combobox.Input
             placeholder="Search..."

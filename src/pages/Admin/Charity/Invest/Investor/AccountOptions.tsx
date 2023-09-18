@@ -56,7 +56,7 @@ type OptionProps = {
 function AccountOption({ register, value, balance }: OptionProps) {
   const id = register.name + value;
   return (
-    <div className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-0.5 items-center py-3 px-[1.1125rem] rounded border border-prim">
+    <div className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-0.5 items-center py-3 px-[1.1125rem] rounded border border-gray-l3 dark:border-bluegray">
       <input
         {...register}
         id={id}

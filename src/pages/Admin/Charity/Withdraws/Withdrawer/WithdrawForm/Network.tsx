@@ -48,7 +48,7 @@ export default function Network({ classes = "" }) {
         as="div"
         className="relative"
       >
-        <Listbox.Button className="grid grid-cols-[1fr_auto] items-center text-left gap-2 w-full @md:w-52 p-4 border border-prim rounded">
+        <Listbox.Button className="grid grid-cols-[1fr_auto] items-center text-left gap-2 w-full @md:w-52 p-4 border border-gray-l3 dark:border-bluegray rounded">
           {({ open }) => (
             <>
               <span className="uppercase truncate @max-md:text-sm">
@@ -65,7 +65,7 @@ export default function Network({ classes = "" }) {
           )}
         </Listbox.Button>
 
-        <Listbox.Options className="absolute mt-1 z-10 flex flex-col gap-1 w-full p-1 border border-prim rounded bg-white dark:bg-blue-d6 shadow-lg">
+        <Listbox.Options className="absolute mt-1 z-10 flex flex-col gap-1 w-full p-1 border border-gray-l3 dark:border-bluegray rounded bg-white dark:bg-blue-d6 shadow-lg">
           <>
             {(isClosed ? EVM_CHAINS : AVAILABLE_CHAINS).map((chain) => (
               <Listbox.Option

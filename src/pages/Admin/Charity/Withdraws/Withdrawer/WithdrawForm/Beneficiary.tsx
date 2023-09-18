@@ -73,7 +73,7 @@ export default function Beneficiary({ classes = "" }) {
         className={`${
           //for endow id beneficiary, field type is number
           isBeneficiaryWallet ? "" : "text-field"
-        } -mt-[1px] flex justify-between items-center w-full p-4 border border-prim rounded-b bg-transparent @max-md:text-sm truncate focus:outline-none`}
+        } -mt-[1px] flex justify-between items-center w-full p-4 border border-gray-l3 dark:border-bluegray rounded-b bg-transparent @max-md:text-sm truncate focus:outline-none`}
         placeholder={
           isBeneficiaryWallet ? "Input wallet address" : "Endowment ID:"
         }

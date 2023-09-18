@@ -33,7 +33,7 @@ const Desc: FC<Props> = ({ className = "", children }) => {
 const Group: FC<Props> = ({ className = "", children }) => {
   return (
     <div
-      className={`${className} grid content-start border border-prim p-4 md:p-8 rounded`}
+      className={`${className} grid content-start border border-gray-l3 dark:border-bluegray p-4 md:p-8 rounded`}
     >
       {children}
     </div>

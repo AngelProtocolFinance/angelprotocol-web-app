@@ -54,7 +54,7 @@ export default function WalletSubmission({
       <h3 className="text-center md:text-left text-lg">
         You are now connected to a wallet. Make a note of this wallet address:
       </h3>
-      <div className="grid grid-cols-[auto_1fr] items-center border border-prim p-4 rounded mt-8">
+      <div className="grid grid-cols-[auto_1fr] items-center border border-gray-l3 dark:border-bluegray p-4 rounded mt-8">
         <Image src={walletIcon} className="w-10 h-10 row-span-2 mr-4" />
         <h6 className="capitalize text-lg mb-1">{providerId}</h6>
         <span className="text-sm truncate">{address}</span>

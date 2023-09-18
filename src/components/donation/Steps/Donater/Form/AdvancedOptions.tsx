@@ -16,7 +16,7 @@ export default function AdvancedOptions({ classes = "", unfold }: Props) {
 
   return (
     <div
-      className={`grid ${classes} border border-prim  rounded overflow-clip`}
+      className={`grid ${classes} border border-gray-l3 dark:border-bluegray  rounded overflow-clip`}
     >
       <div className="flex items-center justify-between px-4 py-2 bg-orange-l6 dark:bg-blue-d7">
         <span className="font-bold py-2">
@@ -25,13 +25,13 @@ export default function AdvancedOptions({ classes = "", unfold }: Props) {
         <button
           type="button"
           onClick={toggle}
-          className="border border-prim h-full aspect-square rounded grid place-items-center"
+          className="border border-gray-l3 dark:border-bluegray h-full aspect-square rounded grid place-items-center"
         >
           <Icon type={isOpen ? "Dash" : "Plus"} size={15} />
         </button>
       </div>
       {isOpen && (
-        <div className="grid p-6 pt-4 font-heading border-t border-prim">
+        <div className="grid p-6 pt-4 font-heading border-t border-gray-l3 dark:border-bluegray">
           <p className="text-xs uppercase font-bold mb-2">Split</p>
           <Split<DonateValues, "pctLiquidSplit", "token">
             className="mb-6"
@@ -39,7 +39,7 @@ export default function AdvancedOptions({ classes = "", unfold }: Props) {
             tokenField="token"
           />
           {!IS_AST ? (
-            <div className="flex items-center gap-4 px-4 py-3 text-center dark:bg-blue-d6 border border-prim rounded">
+            <div className="flex items-center gap-4 px-4 py-3 text-center dark:bg-blue-d6 border border-gray-l3 dark:border-bluegray rounded">
               <Icon type="Info" size={44} />
               <p className="text-sm leading-normal text-left">
                 {titleCase(PAYMENT_WORDS.noun.plural)} into the Endowment

@@ -11,7 +11,10 @@ export default function Table(props: { applications: EndowmentProposal[] }) {
 
   return (
     <table className="w-full self-start font-work">
-      <TableSection type="thead" rowClass="border-b-2 border-prim">
+      <TableSection
+        type="thead"
+        rowClass="border-b-2 border-gray-l3 dark:border-bluegray"
+      >
         <Cells type="th" cellClass="p-2">
           <Header
             sortDirection={sortDirection}
@@ -41,7 +44,10 @@ export default function Table(props: { applications: EndowmentProposal[] }) {
           <></>
         </Cells>
       </TableSection>
-      <TableSection type="tbody" rowClass="border-b border-prim">
+      <TableSection
+        type="tbody"
+        rowClass="border-b border-gray-l3 dark:border-bluegray"
+      >
         {sortedApplications.map((app) => (
           <AppRow key={app.PK} {...app} />
         ))}

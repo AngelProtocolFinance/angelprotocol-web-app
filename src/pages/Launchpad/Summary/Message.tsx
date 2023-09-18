@@ -12,7 +12,7 @@ export default function Message(props: Completed) {
   const codeStr = JSON.stringify(toEVMAST(props, "<msg sender>"), null, 2);
 
   return (
-    <div className="py-4 border-t border-prim text-sm">
+    <div className="py-4 border-t border-gray-l3 dark:border-bluegray text-sm">
       <div className="flex items-center justify-between">
         <h3 className="font-bold text-base font-sans">Message</h3>
         <button type="button" onClick={toggle}>
@@ -35,7 +35,7 @@ export default function Message(props: Completed) {
             </ExtLink>
             .
           </p>
-          <div className="relative grid rounded text-gray-d1 dark:text-gray border border-prim bg-orange-l6 dark:bg-blue-d7 p-3 mb-6 text-sm">
+          <div className="relative grid rounded text-gray-d1 dark:text-gray border border-gray-l3 dark:border-bluegray bg-orange-l6 dark:bg-blue-d7 p-3 mb-6 text-sm">
             <Copier
               classes="absolute top-4 right-4"
               text={codeStr}

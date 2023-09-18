@@ -93,7 +93,7 @@ function Percent({
 }: PropsWithChildren<{ disabled?: boolean }>) {
   return (
     <span
-      className={`py-2 text-center w-16 border border-prim rounded ${
+      className={`py-2 text-center w-16 border border-gray-l3 dark:border-bluegray rounded ${
         disabled ? "bg-[#F5F5F5] dark:bg-bluegray-d1" : ""
       }`}
     >
@@ -106,7 +106,7 @@ type Props = PropsWithChildren<{ className?: string }>;
 const Group: FC<Props> = ({ className = "", children }) => {
   return (
     <div
-      className={`${className} grid content-start border border-prim p-4 md:p-8 rounded`}
+      className={`${className} grid content-start border border-gray-l3 dark:border-bluegray p-4 md:p-8 rounded`}
     >
       {children}
     </div>

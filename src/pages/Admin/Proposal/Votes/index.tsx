@@ -35,7 +35,8 @@ export default function Votes({
   return (
     <ul
       className={
-        classes + " grid rounded border border-prim divide-y divide-prim"
+        classes +
+        " grid rounded border border-gray-l3 dark:border-bluegray divide-y divide-prim"
       }
     >
       {owners.map((o) => {

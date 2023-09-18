@@ -22,20 +22,20 @@ export default function TxModal({
     <Dialog.Panel
       {...props}
       as="form"
-      className="max-w-[37.5rem] w-[95vw] sm:w-full fixed-center z-20 bg-white dark:bg-blue-d6 border border-prim rounded"
+      className="max-w-[37.5rem] w-[95vw] sm:w-full fixed-center z-20 bg-white dark:bg-blue-d6 border border-gray-l3 dark:border-bluegray rounded"
     >
-      <div className="relative border-b border-prim py-5 text-center">
+      <div className="relative border-b border-gray-l3 dark:border-bluegray py-5 text-center">
         <span className="font-bold font-heading text-lg">{title}</span>
         <button
           onClick={closeModal}
           type="button"
-          className="absolute right-4 top-1/2 -translate-y-1/2 border border-prim rounded p-2"
+          className="absolute right-4 top-1/2 -translate-y-1/2 border border-gray-l3 dark:border-bluegray rounded p-2"
         >
           <Icon type="Close" size={26.5} />
         </button>
       </div>
       {children}
-      <div className="mt-8 px-8 py-4 gap-x-3 border-t border-prim flex justify-end">
+      <div className="mt-8 px-8 py-4 gap-x-3 border-t border-gray-l3 dark:border-bluegray flex justify-end">
         <button
           disabled={isSending}
           onClick={closeModal}

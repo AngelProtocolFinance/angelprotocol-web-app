@@ -17,7 +17,7 @@ export default function Form({
   return (
     <form
       {...props}
-      className="grid content-start gap-y-6 @lg:gap-y-8 @container rounded border border-prim p-4 @lg:p-8 bg-white dark:bg-blue-d6"
+      className="grid content-start gap-y-6 @lg:gap-y-8 @container rounded border border-gray-l3 dark:border-bluegray p-4 @lg:p-8 bg-white dark:bg-blue-d6"
     >
       <fieldset disabled={!!tooltip} className="contents group">
         {tooltip && <Tooltip tooltip={tooltip} />}

@@ -34,11 +34,11 @@ export default function ManageForm(props: FormProps) {
 
       <Members classes="mb-8" />
 
-      <div className="content-start border border-prim p-4 md:p-8 rounded">
+      <div className="content-start border border-gray-l3 dark:border-bluegray p-4 md:p-8 rounded">
         <h2 className="font-bold text-center sm:text-left text-xl mb-8">
           Settings
         </h2>
-        <div className="@container border border-prim rounded divide-y divide-prim">
+        <div className="@container border border-gray-l3 dark:border-bluegray rounded divide-y divide-prim">
           <Container
             onBtnClick={() =>
               showModal(ThresholdForm, {

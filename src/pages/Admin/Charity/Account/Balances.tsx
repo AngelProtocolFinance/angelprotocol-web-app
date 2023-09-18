@@ -45,7 +45,7 @@ function Amount({ classes = "", ...props }: Props) {
     <div
       className={
         classes +
-        " border border-prim py-4 px-5 rounded bg-orange-l6 dark:bg-blue-d6"
+        " border border-gray-l3 dark:border-bluegray py-4 px-5 rounded bg-orange-l6 dark:bg-blue-d6"
       }
     >
       <p className="text-xs text-gray-d1 dark:text-gray mb-2 uppercase">

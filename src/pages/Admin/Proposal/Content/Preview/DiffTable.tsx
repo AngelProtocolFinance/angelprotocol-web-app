@@ -11,7 +11,7 @@ export default function DiffTable(props: { diffs: Diff[] }) {
         <TableSection type="thead" rowClass="">
           <Cells
             type="th"
-            cellClass="text-right p-2 uppercase text-xs font-heading border-r border-prim"
+            cellClass="text-right p-2 uppercase text-xs font-heading border-r border-gray-l3 dark:border-bluegray"
             dual
           >
             <></>
@@ -19,14 +19,17 @@ export default function DiffTable(props: { diffs: Diff[] }) {
             <>to</>
           </Cells>
         </TableSection>
-        <TableSection type="tbody" rowClass="border-b border-prim">
+        <TableSection
+          type="tbody"
+          rowClass="border-b border-gray-l3 dark:border-bluegray"
+        >
           {props.diffs.map(([key, prev, next]) => (
             <Cells
               type="td"
-              cellClass="text-right p-2 border-r border-prim break-all max-w-2xl"
+              cellClass="text-right p-2 border-r border-gray-l3 dark:border-bluegray break-all max-w-2xl"
               dual
               key={key as string} //T is a normal object with string keys
-              verticalHeaderClass="text-xs text-left p-2 pl-0 font-normal border-r border-prim max-w-2xl break-all"
+              verticalHeaderClass="text-xs text-left p-2 pl-0 font-normal border-r border-gray-l3 dark:border-bluegray max-w-2xl break-all"
             >
               <>{(key as string).replace(/_/g, " ")}</>
               {createColumn(prev)}
