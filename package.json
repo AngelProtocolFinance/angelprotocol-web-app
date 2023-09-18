@@ -14,19 +14,6 @@
     "format": "yarn run prettier --write 'src/**/*.{ts,tsx}'",
     "prepare": "husky install"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest",
-      "prettier"
-    ],
-    "plugins": [
-      "prettier"
-    ],
-    "rules": {
-      "prettier/prettier": "error"
-    }
-  },
   "browserslist": {
     "production": [
       ">0.2%",
