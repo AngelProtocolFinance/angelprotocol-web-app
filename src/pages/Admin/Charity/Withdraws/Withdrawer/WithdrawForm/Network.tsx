@@ -1,9 +1,9 @@
 import { Listbox } from "@headlessui/react";
+import { chainIds } from "constant/chainIds";
 import { useEffect } from "react";
 import { useController, useFormContext } from "react-hook-form";
 import { FV } from "./types";
 import Icon, { DrawerIcon } from "components/Icon";
-import { chainIds } from "constants/chainIds";
 
 type Chain = { chainId: string; name: string };
 

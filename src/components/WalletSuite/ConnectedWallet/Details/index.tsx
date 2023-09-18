@@ -1,12 +1,12 @@
 import { Popover } from "@headlessui/react";
+import { GENERIC_ERROR_MESSAGE, PAYMENT_WORDS } from "constant/common";
+import { appRoutes } from "constant/routes";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useWalletProfileQuery } from "services/aws/aws";
 import { useErrorContext } from "contexts/ErrorContext";
 import { WalletState, useSetWallet } from "contexts/WalletContext";
 import { logger } from "helpers";
-import { GENERIC_ERROR_MESSAGE, PAYMENT_WORDS } from "constants/common";
-import { appRoutes } from "constants/routes";
 import Address from "./Address";
 import AdminLinks from "./AdminLinks";
 import Balances from "./Balances";

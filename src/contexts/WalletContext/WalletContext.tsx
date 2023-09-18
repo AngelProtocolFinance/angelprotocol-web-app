@@ -1,3 +1,5 @@
+import { chainIDs } from "constant/chains";
+import { IS_MOBILE, IS_TEST } from "constant/env";
 import {
   PropsWithChildren,
   createContext,
@@ -11,8 +13,6 @@ import { ProviderId } from "types/lists";
 import { Chain, TokenWithBalance } from "types/tx";
 import { useChainQuery } from "services/apes";
 import { WalletDisconnectedError } from "errors/errors";
-import { chainIDs } from "constants/chains";
-import { IS_MOBILE, IS_TEST } from "constants/env";
 import {
   BNB_WALLET_SUPPORTED_CHAINS,
   EVM_SUPPORTED_CHAINS,

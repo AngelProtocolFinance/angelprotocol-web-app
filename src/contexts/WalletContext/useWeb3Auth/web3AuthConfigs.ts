@@ -1,5 +1,5 @@
 import { CustomChainConfig } from "@web3auth/base";
-import { chainIDs } from "constants/chains";
+import { chainIDs } from "constant/chains";
 
 export const chainConfig: { [key: string]: CustomChainConfig } = {
   [chainIDs.polygonTest]: {

@@ -1,10 +1,10 @@
+import { APP_NAME } from "constant/env";
+import { PRIVACY_POLICY } from "constant/urls";
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "./types";
 import ExtLink from "components/ExtLink";
 import { CheckField, Field } from "components/form";
 import { Separator } from "components/registration";
-import { APP_NAME } from "constants/env";
-import { PRIVACY_POLICY } from "constants/urls";
 import routes from "../routes";
 import useSubmit from "./useSubmit";
 

@@ -1,6 +1,6 @@
+import { IS_AST } from "constant/env";
 import { useProposalsQuery } from "services/subgraph";
 import QueryLoader from "components/QueryLoader";
-import { IS_AST } from "constants/env";
 import { useAdminContext } from "../../Context";
 import Seo from "../Seo";
 import Balances from "../common/Balances";

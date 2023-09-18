@@ -1,8 +1,8 @@
+import { appRoutes } from "constant/routes";
 import { useNavigate } from "react-router-dom";
 import { useLazyRegQuery } from "services/aws/registration";
 import Icon from "components/Icon";
 import { getSavedRegistrationReference } from "helpers";
-import { appRoutes } from "constants/routes";
 import { getRegistrationState } from "../Steps/getRegistrationState";
 import routes from "../routes";
 

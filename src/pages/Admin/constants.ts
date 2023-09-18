@@ -1,9 +1,9 @@
+import { PAYMENT_WORDS, titleCase } from "constant/common";
+import { adminRoutes } from "constant/routes";
 import { Link } from "./Sidebar/types";
 import { ProposalBase, Templates } from "./types";
 import { SchemaShape } from "schemas/types";
 import { stringByteSchema } from "schemas/string";
-import { PAYMENT_WORDS, titleCase } from "constants/common";
-import { adminRoutes } from "constants/routes";
 
 export const templates: {
   [K in Templates]: K extends `${infer Contract}.${infer Method}`

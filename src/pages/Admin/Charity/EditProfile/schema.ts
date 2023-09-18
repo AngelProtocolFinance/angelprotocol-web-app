@@ -1,3 +1,4 @@
+import { MAX_SDGS } from "constant/unsdgs";
 import { ObjectSchema, array, object, string } from "yup";
 import { FV } from "./types";
 import { SchemaShape } from "schemas/types";
@@ -5,7 +6,6 @@ import { ImgLink } from "components/ImgEditor";
 import { OptionType } from "components/Selector";
 import { genFileSchema } from "schemas/file";
 import { requiredString, url } from "schemas/string";
-import { MAX_SDGS } from "constants/unsdgs";
 
 export const VALID_MIME_TYPES = [
   "image/jpeg",

@@ -1,5 +1,5 @@
+import { PAYMENT_WORDS } from "constant/common";
 import Image from "components/Image";
-import { PAYMENT_WORDS } from "constants/common";
 
 export default function NoDonations({ classes = "" }) {
   return (

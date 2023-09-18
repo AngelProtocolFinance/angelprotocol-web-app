@@ -1,8 +1,8 @@
+import { ADDRESS_ZERO } from "constant/evm";
 import { TPermission } from "../types";
 import { SettingsPermission } from "types/contracts";
 import { dateToFormFormat } from "components/form";
 import { fromBlockTime } from "helpers/admin";
-import { ADDRESS_ZERO } from "constants/evm";
 
 export const formPermission = (setting: SettingsPermission): TPermission => {
   const delegate = setting.delegate;

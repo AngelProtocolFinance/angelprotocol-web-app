@@ -1,8 +1,8 @@
+import { chainIds } from "constant/chainIds";
 import { ObjectSchema, number, object, string } from "yup";
 import { FormValues as FV } from "./types";
 import { SchemaShape as SS } from "schemas/types";
 import { requiredWalletAddr } from "schemas/string";
-import { chainIds } from "constants/chainIds";
 import { proposalShape } from "../../../../constants";
 
 type TBeneficiaryType = FV["beneficiaryType"];

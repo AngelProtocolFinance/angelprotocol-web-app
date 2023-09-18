@@ -1,3 +1,5 @@
+import { PAYMENT_WORDS } from "constant/common";
+import { appRoutes } from "constant/routes";
 import { memo, useEffect, useRef } from "react";
 import Breadcrumbs from "components/Breadcrumbs";
 import { Steps } from "components/donation";
@@ -7,8 +9,6 @@ import {
   DonationState,
   setRecipient,
 } from "slices/donation";
-import { PAYMENT_WORDS } from "constants/common";
-import { appRoutes } from "constants/routes";
 
 function Content(props: DonationRecipient) {
   const dispatch = useSetter();

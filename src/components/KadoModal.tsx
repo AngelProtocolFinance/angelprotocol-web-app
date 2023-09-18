@@ -1,3 +1,5 @@
+import { chainIDs } from "constant/chains";
+import { KADO_API_KEY } from "constant/env";
 import { useCallback } from "react";
 import { invalidateApesTags } from "services/apes";
 import { useModalContext } from "contexts/ModalContext";
@@ -5,8 +7,6 @@ import { useGetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import { useSetter } from "store/accessors";
 import { logger } from "helpers";
-import { chainIDs } from "constants/chains";
-import { KADO_API_KEY } from "constants/env";
 import IFrame from "./IFrame";
 import Modal from "./Modal";
 

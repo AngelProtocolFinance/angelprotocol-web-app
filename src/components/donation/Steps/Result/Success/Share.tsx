@@ -1,11 +1,11 @@
+import { PAYMENT_WORDS } from "constant/common";
+import { DAPP_URL } from "constant/env";
 import { useCallback, useState } from "react";
 import { useModalContext } from "contexts/ModalContext";
 import ExtLink from "components/ExtLink";
 import Icon, { IconType } from "components/Icon";
 import Modal from "components/Modal";
 import { DonationRecipient } from "slices/donation";
-import { PAYMENT_WORDS } from "constants/common";
-import { DAPP_URL } from "constants/env";
 
 export type SocialMedia = Extract<
   IconType,

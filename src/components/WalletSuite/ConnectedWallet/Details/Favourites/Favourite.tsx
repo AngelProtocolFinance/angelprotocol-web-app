@@ -1,8 +1,8 @@
+import { appRoutes } from "constant/routes";
 import { Link } from "react-router-dom";
 import { WalletProfileVersion } from "services/types";
 import { EndowmentBookmark } from "types/aws";
 import Image from "components/Image";
-import { appRoutes } from "constants/routes";
 
 export default function Favourite({
   name,

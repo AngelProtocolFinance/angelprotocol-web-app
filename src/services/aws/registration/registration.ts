@@ -1,3 +1,4 @@
+import { EMAIL_SUPPORT } from "constant/env";
 import { FiscalSponsorhipAgreementSigner } from "services/types";
 import { ApplicationStatusOptions } from "slices/admin/types";
 import {
@@ -13,7 +14,6 @@ import {
 } from "types/aws";
 import { adminTags } from "services/aws/tags";
 import { logger } from "helpers";
-import { EMAIL_SUPPORT } from "constants/env";
 import { version as v } from "../../helpers";
 import { aws } from "../aws";
 

@@ -1,11 +1,11 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { chainIds } from "constant/chainIds";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { object } from "yup";
 import { useModalContext } from "contexts/ModalContext";
 import Modal from "components/Modal";
 import { Field } from "components/form";
 import { requiredWalletAddr } from "schemas/string";
-import { chainIds } from "constants/chainIds";
 
 export type Props = {
   initial?: string;

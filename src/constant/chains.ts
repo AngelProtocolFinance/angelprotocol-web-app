@@ -1,4 +1,4 @@
-import { DAPP_URL } from "constants/env";
+import { DAPP_URL } from "constant/env";
 
 export enum chainIDs {
   junoMain = "juno-1",

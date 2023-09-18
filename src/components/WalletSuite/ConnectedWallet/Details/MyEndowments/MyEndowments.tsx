@@ -1,7 +1,7 @@
+import { IS_AST } from "constant/env";
 import { WalletProfileVersion } from "services/types";
 import { EndowmentBookmark } from "types/aws";
 import Image from "components/Image";
-import { IS_AST } from "constants/env";
 import Links from "./Links";
 
 type Props = { endowments: EndowmentBookmark[]; version: WalletProfileVersion };

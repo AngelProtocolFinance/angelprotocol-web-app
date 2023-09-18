@@ -1,9 +1,9 @@
+import { PAYMENT_WORDS, titleCase } from "constant/common";
+import { IS_AST } from "constant/env";
 import { useState } from "react";
 import { DonateValues } from "../types";
 import Icon from "components/Icon";
 import Split from "components/Split";
-import { PAYMENT_WORDS, titleCase } from "constants/common";
-import { IS_AST } from "constants/env";
 
 type Props = { classes?: string; unfold?: boolean };
 

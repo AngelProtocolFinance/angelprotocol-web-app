@@ -1,6 +1,6 @@
+import { IS_AST } from "constant/env";
 import { FieldValues, Path, useFormContext } from "react-hook-form";
 import { TokenWithAmount } from "types/slices";
-import { IS_AST } from "constants/env";
 import Portion from "./Portion";
 import Slider from "./Slider";
 

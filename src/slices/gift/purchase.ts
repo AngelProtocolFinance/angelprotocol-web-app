@@ -1,12 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { GENERIC_ERROR_MESSAGE } from "constant/common";
+import { EMAIL_SUPPORT } from "constant/env";
+import { APIs } from "constant/urls";
 import { EstimatedTx, isTxResultError } from "types/tx";
 import { invalidateApesTags } from "services/apes";
 import { WalletState } from "contexts/WalletContext";
 import { createAuthToken, logger } from "helpers";
 import { sendTx } from "helpers/tx";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
-import { EMAIL_SUPPORT } from "constants/env";
-import { APIs } from "constants/urls";
 import gift, { GiftDetails, TxStatus, setTxStatus } from "./index";
 
 type Args = {

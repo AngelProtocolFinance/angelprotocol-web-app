@@ -1,4 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { chainIds } from "constant/chainIds";
+import { IS_TEST, JUNO_LCD_OVERRIDE, JUNO_RPC_OVERRIDE } from "constant/env";
+import { APIs } from "constant/urls";
 import { ChainQueryArgs } from "../types";
 import {
   BaseChain,
@@ -10,9 +13,6 @@ import {
 } from "types/aws";
 import { Chain } from "types/tx";
 import { UnsupportedChainError } from "errors/errors";
-import { chainIds } from "constants/chainIds";
-import { IS_TEST, JUNO_LCD_OVERRIDE, JUNO_RPC_OVERRIDE } from "constants/env";
-import { APIs } from "constants/urls";
 import { version as v } from "../helpers";
 import { fetchBalances } from "./helpers/fetchBalances";
 import { tags } from "./tags";

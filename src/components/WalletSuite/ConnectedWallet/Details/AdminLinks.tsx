@@ -1,8 +1,8 @@
+import { appRoutes } from "constant/routes";
 import { Link } from "react-router-dom";
 import { AP_ID, REVIEWER_ID, useIsMemberQuery } from "services/juno/custom";
 import { WalletState } from "contexts/WalletContext";
 import { isEthereumAddress } from "schemas/tests";
-import { appRoutes } from "constants/routes";
 
 export default function AdminLinks(props: WalletState) {
   const {

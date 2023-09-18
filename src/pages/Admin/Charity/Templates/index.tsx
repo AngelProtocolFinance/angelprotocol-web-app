@@ -1,5 +1,5 @@
+import { adminRoutes } from "constant/routes";
 import { Route, Routes } from "react-router-dom";
-import { adminRoutes } from "constants/routes";
 import { templateRoutes as routes } from "../../constants";
 import FundSender from "../../templates/cw3/FundSender";
 import Seo from "../Seo";

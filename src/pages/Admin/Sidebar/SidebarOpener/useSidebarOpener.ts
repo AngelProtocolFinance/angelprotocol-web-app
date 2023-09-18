@@ -1,8 +1,8 @@
+import { appRoutes } from "constant/routes";
 import { matchPath, useLocation } from "react-router-dom";
 import { Link, LinkGroup } from "../types";
 import { useModalContext } from "contexts/ModalContext";
 import useHandleScreenResize, { SCREEN_MD } from "hooks/useHandleScreenResize";
-import { appRoutes } from "constants/routes";
 import ToggleableSidebar from "./ToggleableSidebar";
 
 const ADMIN_ROUTE = `${appRoutes.admin}/:id/`;

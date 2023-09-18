@@ -1,3 +1,7 @@
+import { ENDOW_DESIGNATIONS } from "constant/common";
+import { APP_NAME } from "constant/env";
+import { unsdgs } from "constant/unsdgs";
+import { TERMS_OF_USE } from "constant/urls";
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "../types";
 import ActivityCountries from "components/ActivityCountries";
@@ -6,10 +10,6 @@ import ExtLink from "components/ExtLink";
 import { MultiSelector, Selector } from "components/Selector";
 import { CheckField, Field, Label, Radio } from "components/form";
 import { FileDropzone, LoadText } from "components/registration";
-import { ENDOW_DESIGNATIONS } from "constants/common";
-import { APP_NAME } from "constants/env";
-import { unsdgs } from "constants/unsdgs";
-import { TERMS_OF_USE } from "constants/urls";
 import { steps } from "../../../routes";
 import { useRegState } from "../../StepGuard";
 import { MB_LIMIT } from "../schema";

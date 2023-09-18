@@ -1,6 +1,6 @@
+import { chainIds } from "constant/chainIds";
 import * as Yup from "yup";
 import { logger } from "helpers";
-import { chainIds } from "constants/chainIds";
 
 export const junoAddrPattern = /^juno1[a-z0-9]{38,58}$/i;
 export const terraAddrPattern = /^terra1[a-z0-9]{38}$/i;

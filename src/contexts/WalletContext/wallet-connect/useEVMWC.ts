@@ -1,10 +1,10 @@
 import { WalletConnectModal } from "@walletconnect/modal";
+import { EIPMethods } from "constant/evm";
 import { useEffect, useRef, useState } from "react";
 import { Connection, ProviderInfo } from "../types";
 import { Connected, WalletState } from "./types";
 import { SessionTypes, SignClientTypes } from "@walletconnect/types";
 import { _pairing, _session, account } from "helpers/wallet-connect";
-import { EIPMethods } from "constants/evm";
 import { WALLET_METADATA } from "../constants";
 
 const wcModal = new WalletConnectModal({

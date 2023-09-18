@@ -1,8 +1,8 @@
+import { EIPMethods } from "constant/evm";
 import Decimal from "decimal.js";
 import { LogProcessor, SimulTx } from "types/evm";
 import { Estimate } from "types/tx";
 import { WalletState } from "contexts/WalletContext";
-import { EIPMethods } from "constants/evm";
 import { condense } from "../../decimal";
 import { request } from "../../evm";
 

@@ -1,8 +1,8 @@
+import { chainIds } from "constant/chainIds";
 import { ObjectSchema, object } from "yup";
 import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
 import { walletAddr } from "schemas/string";
-import { chainIds } from "constants/chainIds";
 import { proposalShape } from "../../../../constants";
 
 const contract = walletAddr(chainIds.polygon);

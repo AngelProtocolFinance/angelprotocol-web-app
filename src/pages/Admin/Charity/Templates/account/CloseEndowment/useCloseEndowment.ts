@@ -1,3 +1,4 @@
+import { ADDRESS_ZERO } from "constant/evm";
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
 import { Beneficiary } from "types/contracts";
@@ -7,7 +8,6 @@ import { TxPrompt } from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { getTagPayloads } from "helpers/admin";
-import { ADDRESS_ZERO } from "constants/evm";
 import { isTooltip, useAdminContext } from "../../../../Context";
 
 export default function useCloseEndowment() {

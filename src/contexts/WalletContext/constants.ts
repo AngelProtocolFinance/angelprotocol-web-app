@@ -1,8 +1,8 @@
+import { chainIDs } from "constant/chains";
+import { EXPECTED_NETWORK_TYPE, IS_TEST } from "constant/env";
 import { WithoutInstallers } from "./types";
 import { BaseChain } from "types/aws";
 import { Chain } from "types/tx";
-import { chainIDs } from "constants/chains";
-import { EXPECTED_NETWORK_TYPE, IS_TEST } from "constants/env";
 
 const tokenLogo = "/icons/currencies/token.svg";
 const binanceWalletIcon = "/icons/wallets/binance.png";

@@ -1,10 +1,10 @@
+import { IS_AST } from "constant/env";
+import { appRoutes } from "constant/routes";
 import { Route, Routes } from "react-router-dom";
 import BookmarkBtn from "components/BookmarkBtn";
 import Breadcrumbs from "components/Breadcrumbs";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
-import { IS_AST } from "constants/env";
-import { appRoutes } from "constants/routes";
 import { useProfileContext } from "../ProfileContext";
 import DonateButton from "./DonateButton";
 import GeneralInfo from "./GeneralInfo";

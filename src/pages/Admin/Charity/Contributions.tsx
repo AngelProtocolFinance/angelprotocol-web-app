@@ -1,5 +1,5 @@
-import { PAYMENT_WORDS, titleCase } from "constants/common";
-import { adminRoutes } from "constants/routes";
+import { PAYMENT_WORDS, titleCase } from "constant/common";
+import { adminRoutes } from "constant/routes";
 import DonationsTable from "./DonationsTable";
 import Seo from "./Seo";
 

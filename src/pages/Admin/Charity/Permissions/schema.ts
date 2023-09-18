@@ -1,8 +1,8 @@
+import { chainIds } from "constant/chainIds";
 import { ObjectSchema, date, mixed, object, string } from "yup";
 import { FV, TPermission } from "./types";
 import { SchemaShape } from "schemas/types";
 import { requiredWalletAddr } from "schemas/string";
-import { chainIds } from "constants/chainIds";
 
 const _delegated: keyof TPermission = "delegated";
 const _expires: keyof TPermission = "expires";

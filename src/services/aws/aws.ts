@@ -1,4 +1,7 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
+import { chainIds } from "constant/chainIds";
+import { IS_AST } from "constant/env";
+import { APIs } from "constant/urls";
 import {
   Profile,
   ProfileUpdatePayload,
@@ -18,9 +21,6 @@ import {
 } from "types/aws";
 import { network } from "services/constants";
 import { createAuthToken } from "helpers";
-import { chainIds } from "constants/chainIds";
-import { IS_AST } from "constants/env";
-import { APIs } from "constants/urls";
 import { version as v } from "../helpers";
 
 const getWalletProfileQuery = (walletAddr: string) =>

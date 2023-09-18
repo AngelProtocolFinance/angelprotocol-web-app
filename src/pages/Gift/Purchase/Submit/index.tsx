@@ -1,3 +1,4 @@
+import { appRoutes } from "constant/routes";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { EstimateStatus } from "./types";
@@ -8,7 +9,6 @@ import { ErrorStatus, LoadingStatus } from "components/Status";
 import { useSetter } from "store/accessors";
 import { SubmitStep, setStep } from "slices/gift";
 import { humanize } from "helpers";
-import { appRoutes } from "constants/routes";
 import CompleteBtn from "./CompleteBtn";
 import { estimateTx } from "./estimateTx";
 

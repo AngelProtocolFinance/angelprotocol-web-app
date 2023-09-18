@@ -1,4 +1,4 @@
-import { adminRoutes } from "constants/routes";
+import { adminRoutes } from "constant/routes";
 import Seo from "../Seo";
 import Balances from "../common/Balances";
 import Strategies from "./Strategies";

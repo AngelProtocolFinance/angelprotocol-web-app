@@ -1,12 +1,12 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { adminRoutes } from "constant/routes";
+import { unsdgs } from "constant/unsdgs";
 import { FormProvider, useForm } from "react-hook-form";
 import { FV } from "./types";
 import { Profile as TProfile } from "services/types";
 import { EndowDesignation, EndowmentProfileUpdate } from "types/aws";
 import { useProfileQuery } from "services/aws/aws";
 import { FormError, FormSkeleton } from "components/admin";
-import { adminRoutes } from "constants/routes";
-import { unsdgs } from "constants/unsdgs";
 import { isTooltip, useAdminContext } from "../../Context";
 import Seo from "../Seo";
 import Form from "./Form";

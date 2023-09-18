@@ -1,7 +1,7 @@
+import { APP_NAME, DAPP_URL } from "constant/env";
 import { Suspense, lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Seo from "components/Seo";
-import { APP_NAME, DAPP_URL } from "constants/env";
 import SignNotice from "./SignNotice";
 import SignResult from "./SigningResult";
 import Signup from "./Signup";

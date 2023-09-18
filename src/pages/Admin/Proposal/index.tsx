@@ -1,11 +1,11 @@
+import { APP_NAME, DAPP_URL } from "constant/env";
+import { adminRoutes } from "constant/routes";
 import { useParams } from "react-router-dom";
 import { ProposalParams } from "../types";
 import { useProposalQuery } from "services/subgraph";
 import QueryLoader from "components/QueryLoader";
 import Seo from "components/Seo";
 import { DetailLabel, Status, Tooltip } from "components/admin";
-import { APP_NAME, DAPP_URL } from "constants/env";
-import { adminRoutes } from "constants/routes";
 import { isTooltip, useAdminContext } from "../Context";
 import Content from "./Content";
 import PollAction from "./PollAction";

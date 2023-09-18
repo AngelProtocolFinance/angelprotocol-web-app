@@ -1,3 +1,4 @@
+import { EMPTY_DATA } from "constant/evm";
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "../types";
 import { TransferMeta, TxMeta } from "types/tx";
@@ -5,7 +6,6 @@ import { createTx, encodeTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { scale, toAbiStr } from "helpers";
 import { getTagPayloads } from "helpers/admin";
-import { EMPTY_DATA } from "constants/evm";
 import { isTooltip, useAdminContext } from "../../../../Context";
 
 export default function useTransferFunds() {

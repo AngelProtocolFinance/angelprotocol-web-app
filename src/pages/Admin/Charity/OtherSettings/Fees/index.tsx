@@ -1,4 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { chainIds } from "constant/chainIds";
+import { ADDRESS_ZERO } from "constant/evm";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { ObjectSchema, object, string } from "yup";
 import { FV } from "./types";
@@ -14,8 +16,6 @@ import useTxSender from "hooks/useTxSender";
 import { getPayloadDiff, getTagPayloads } from "helpers/admin";
 import { requiredPercent } from "schemas/number";
 import { requiredWalletAddr } from "schemas/string";
-import { chainIds } from "constants/chainIds";
-import { ADDRESS_ZERO } from "constants/evm";
 import { isTooltip, useAdminContext } from "../../../Context";
 import Form from "./Form";
 

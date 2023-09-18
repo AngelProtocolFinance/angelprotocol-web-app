@@ -1,4 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { chainIds } from "constant/chainIds";
+import { APIs } from "constant/urls";
 import { DonateArgs, TxStatus, isFiat } from "../types";
 import { KYCData, TxLogPayload } from "types/aws";
 import { isTxResultError } from "types/tx";
@@ -8,9 +10,7 @@ import { version as v } from "services/helpers";
 import { createAuthToken, logger } from "helpers";
 import { sendTx } from "helpers/tx";
 import { LogDonationFail } from "errors/errors";
-import { chainIds } from "constants/chainIds";
-import { APIs } from "constants/urls";
-// import { SERVICE_PROVIDER } from "constants/fiatTransactions";
+// import { SERVICE_PROVIDER } from "constant/fiatTransactions";
 import donation, { setTxStatus } from "../donation";
 
 export const sendDonation = createAsyncThunk<void, DonateArgs>(

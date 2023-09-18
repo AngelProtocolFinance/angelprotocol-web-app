@@ -1,7 +1,7 @@
+import { EIPMethods } from "constant/evm";
 import { EVMTx, InjectedProvider, LogProcessor, TxReceipt } from "types/evm";
 import { TxResult } from "types/tx";
 import { WalletState } from "contexts/WalletContext";
-import { EIPMethods } from "constants/evm";
 import { getProvider } from "../../evm";
 import { logger } from "../../logger";
 

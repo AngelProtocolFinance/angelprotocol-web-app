@@ -1,7 +1,7 @@
+import { IS_AST } from "constant/env";
+import { appRoutes } from "constant/routes";
 import { Link } from "react-router-dom";
 import Icon from "components/Icon";
-import { IS_AST } from "constants/env";
-import { appRoutes } from "constants/routes";
 
 export default function Unpublished() {
   return (

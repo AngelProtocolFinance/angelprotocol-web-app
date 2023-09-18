@@ -1,9 +1,9 @@
+import { contracts } from "constant/contracts";
+import { EMPTY_DATA } from "constant/evm";
 import { SimulContractTx } from "types/evm";
 import { Contract } from "types/lists";
 import { Metadata, TxMeta, TxOptions, TxType } from "types/tx";
 import { toAbiStr } from "helpers";
-import { contracts } from "constants/contracts";
-import { EMPTY_DATA } from "constants/evm";
 import { txs } from "./txs";
 
 export function createTx<T extends TxType>(

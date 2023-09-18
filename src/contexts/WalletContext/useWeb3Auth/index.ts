@@ -1,4 +1,7 @@
 import type { Maybe, SafeEventEmitterProvider } from "@web3auth/base";
+import { chainIDs } from "constant/chains";
+import { IS_TEST } from "constant/env";
+import { EIPMethods } from "constant/evm";
 import Decimal from "decimal.js";
 import { useEffect, useState } from "react";
 import { ProviderInfo } from "../types";
@@ -6,9 +9,6 @@ import { Connection } from "../types";
 import { BaseChain } from "types/aws";
 import { AccountChangeHandler, ChainChangeHandler } from "types/evm";
 import { isEmpty, logger } from "helpers";
-import { chainIDs } from "constants/chains";
-import { IS_TEST } from "constants/env";
-import { EIPMethods } from "constants/evm";
 import { WEB3AUTH_LOGO, chainConfig } from "./web3AuthConfigs";
 import web3Auth from "./web3AuthSetup";
 

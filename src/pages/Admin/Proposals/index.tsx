@@ -1,3 +1,5 @@
+import { APP_NAME, DAPP_URL } from "constant/env";
+import { adminRoutes } from "constant/routes";
 import {
   updateSubgraphQueryData,
   useLazyProposalsQuery,
@@ -5,8 +7,6 @@ import {
 } from "services/subgraph";
 import Seo from "components/Seo";
 import { useGetter, useSetter } from "store/accessors";
-import { APP_NAME, DAPP_URL } from "constants/env";
-import { adminRoutes } from "constants/routes";
 import { useAdminContext } from "../Context";
 import Table from "./Table";
 import Toolbar from "./Toolbar";

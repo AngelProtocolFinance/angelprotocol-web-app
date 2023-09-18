@@ -1,7 +1,7 @@
+import { APP_NAME } from "constant/env";
 import { Link } from "react-router-dom";
 import { steps } from "pages/Registration/routes";
 import Copier from "components/Copier";
-import { APP_NAME } from "constants/env";
 import { useRegState } from "../StepGuard";
 
 export default function RegisteredWallet(props: {

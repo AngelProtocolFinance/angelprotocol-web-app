@@ -1,11 +1,11 @@
+import { PAYMENT_WORDS } from "constant/common";
+import { adminRoutes, appRoutes } from "constant/routes";
 import { PropsWithChildren } from "react";
 import { Link } from "react-router-dom";
 import { AccountType } from "types/lists";
 import { useEndowBalanceQuery } from "services/juno/custom";
 import QueryLoader from "components/QueryLoader";
 import { condense, humanize } from "helpers";
-import { PAYMENT_WORDS } from "constants/common";
-import { adminRoutes, appRoutes } from "constants/routes";
 import { useAdminContext } from "../../../Context";
 
 type Props = { type: AccountType };

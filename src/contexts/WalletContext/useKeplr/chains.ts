@@ -1,5 +1,5 @@
+import { JUNO_LCD_OVERRIDE, JUNO_RPC_OVERRIDE } from "constant/env";
 import { ChainInfo } from "@keplr-wallet/types";
-import { JUNO_LCD_OVERRIDE, JUNO_RPC_OVERRIDE } from "constants/env";
 
 // is used only when running on Juno Testnet
 export const juno_test_chain_info: ChainInfo = {

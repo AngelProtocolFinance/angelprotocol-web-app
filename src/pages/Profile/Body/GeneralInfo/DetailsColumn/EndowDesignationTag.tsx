@@ -1,7 +1,7 @@
+import { ENDOW_DESIGNATIONS } from "constant/common";
 import { PropsWithChildren } from "react";
 import { EndowmentProfile } from "types/aws";
 import Icon from "components/Icon";
-import { ENDOW_DESIGNATIONS } from "constants/common";
 
 export default function EndowDesignationTag(
   props: Pick<EndowmentProfile, "endow_designation">

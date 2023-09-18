@@ -1,8 +1,8 @@
+import { LOGO_DARK, PAYMENT_WORDS, titleCase } from "constant/common";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import Image from "components/Image";
 import { getPossessiveForm } from "helpers";
-import { LOGO_DARK, PAYMENT_WORDS, titleCase } from "constants/common";
 import { FormValues } from "../schema";
 import Donater from "./Donater";
 

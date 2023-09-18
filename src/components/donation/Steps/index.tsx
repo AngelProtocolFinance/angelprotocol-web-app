@@ -1,7 +1,7 @@
+import { PAYMENT_WORDS } from "constant/common";
+import { IS_AST } from "constant/env";
 import { useGetter } from "store/accessors";
 import { DonationState } from "slices/donation";
-import { PAYMENT_WORDS } from "constants/common";
-import { IS_AST } from "constants/env";
 import CurrentStep from "./CurrentStep";
 
 export type ConfigParams = {

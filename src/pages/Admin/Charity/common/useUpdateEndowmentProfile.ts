@@ -1,12 +1,12 @@
 import { toUtf8 } from "@cosmjs/encoding";
 import { hexlify } from "@ethersproject/bytes";
+import { appRoutes } from "constant/routes";
 import { ProfileUpdateMsg, ProgramDeleteMsg } from "services/types";
 import { useEditProfileMutation } from "services/aws/aws";
 import { useModalContext } from "contexts/ModalContext";
 import { TxPrompt } from "components/Prompt";
 import { getProvider } from "helpers";
 import { cleanObject } from "helpers/cleanObject";
-import { appRoutes } from "constants/routes";
 import { isTooltip, useAdminContext } from "../../Context";
 
 // import optimizeImage from "./optimizeImage";

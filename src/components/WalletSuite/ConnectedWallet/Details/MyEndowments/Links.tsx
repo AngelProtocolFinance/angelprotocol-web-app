@@ -1,6 +1,6 @@
+import { appRoutes } from "constant/routes";
 import { Link } from "react-router-dom";
 import { WalletProfileVersion } from "services/types";
-import { appRoutes } from "constants/routes";
 
 type Props = {
   endowmentId: number;

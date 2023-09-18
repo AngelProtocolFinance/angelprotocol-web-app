@@ -1,8 +1,8 @@
+import { PAYMENT_WORDS, titleCase } from "constant/common";
+import { APP_NAME, DAPP_URL } from "constant/env";
 import { useEffect } from "react";
 import Seo from "components/Seo";
 import { isPrevDark, setToDarkMode, setToLightMode } from "helpers";
-import { PAYMENT_WORDS, titleCase } from "constants/common";
-import { APP_NAME, DAPP_URL } from "constants/env";
 import ApiKeyChecker from "./ApiKeyChecker";
 import EndowmentLoader from "./EndowmentLoader";
 import InnerComponent from "./InnerComponent";

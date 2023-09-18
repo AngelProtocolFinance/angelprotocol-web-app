@@ -1,4 +1,4 @@
-import { BASE_URL } from "constants/env";
+import { BASE_URL } from "constant/env";
 import SubscriptionForm from "./SubscriptionForm";
 
 export default function Newsletter() {

@@ -1,3 +1,5 @@
+import { PAYMENT_WORDS, titleCase } from "constant/common";
+import { adminRoutes } from "constant/routes";
 import { useState } from "react";
 import { VerificationRequired } from "./types";
 import { Profile } from "services/types";
@@ -5,8 +7,6 @@ import { useProfileQuery } from "services/aws/aws";
 import { useModalContext } from "contexts/ModalContext";
 import QueryLoader from "components/QueryLoader";
 import { Reset, Submit, Tooltip } from "components/admin";
-import { PAYMENT_WORDS, titleCase } from "constants/common";
-import { adminRoutes } from "constants/routes";
 import { isTooltip, useAdminContext } from "../../../Context";
 import Seo from "../../Seo";
 import useUpdateEndowmentProfile from "../../common/useUpdateEndowmentProfile";

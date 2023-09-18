@@ -1,6 +1,6 @@
+import { ENDOW_DESIGNATIONS } from "constant/common";
 import { EndowDesignation } from "types/aws";
 import { OptionType } from "components/Selector";
-import { ENDOW_DESIGNATIONS } from "constants/common";
 
 export const getEndowDesignationLabelValuePair = (
   value: EndowDesignation

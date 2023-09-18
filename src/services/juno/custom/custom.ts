@@ -1,3 +1,5 @@
+import { IS_AST, IS_TEST } from "constant/env";
+import { APIs, GRAPHQL_ENDPOINT } from "constant/urls";
 import {
   AdminResource,
   EndowBalance,
@@ -9,8 +11,6 @@ import { BridgeFeesRes } from "types/aws";
 import { AcceptedTokens, AccountType } from "types/contracts";
 import { MultisigOwnersRes, MultisigRes } from "types/subgraph";
 import { version as v } from "services/helpers";
-import { IS_AST, IS_TEST } from "constants/env";
-import { APIs, GRAPHQL_ENDPOINT } from "constants/urls";
 import { junoApi } from "../index";
 import { queryContract } from "../queryContract";
 import { multisigRecordId } from "./constants";

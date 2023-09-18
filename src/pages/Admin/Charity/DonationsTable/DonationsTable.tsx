@@ -1,6 +1,6 @@
+import { PAYMENT_WORDS } from "constant/common";
 import { usePaginatedDonationRecords } from "services/apes";
 import QueryLoader from "components/QueryLoader";
-import { PAYMENT_WORDS } from "constants/common";
 import { useAdminContext } from "../../Context";
 import Table from "./Table";
 

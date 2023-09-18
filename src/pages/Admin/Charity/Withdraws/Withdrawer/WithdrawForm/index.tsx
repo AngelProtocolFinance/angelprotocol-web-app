@@ -1,11 +1,11 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { chainIds } from "constant/chainIds";
 import { FormProvider, useForm } from "react-hook-form";
 import { Amount, FV, FormMeta, WithdrawerProps } from "./types";
 import { useAdminContext } from "pages/Admin/Context";
 import { useGetWallet } from "contexts/WalletContext";
 import { condense, roundDown } from "helpers";
 import { isEthereumAddress } from "schemas/tests";
-import { chainIds } from "constants/chainIds";
 import Form from "./Form";
 import { schema } from "./schema";
 

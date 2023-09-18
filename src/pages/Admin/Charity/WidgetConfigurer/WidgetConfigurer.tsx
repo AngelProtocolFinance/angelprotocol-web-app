@@ -1,7 +1,7 @@
+import { PAYMENT_WORDS } from "constant/common";
+import { adminRoutes } from "constant/routes";
 import { FormProvider } from "react-hook-form";
 import Copier from "components/Copier";
-import { PAYMENT_WORDS } from "constants/common";
-import { adminRoutes } from "constants/routes";
 import Seo from "../Seo";
 import WidgetExample from "./WidgetExample";
 import WidgetUrlGenerator from "./WidgetUrlGenerator";

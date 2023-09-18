@@ -1,4 +1,4 @@
-import { adminRoutes } from "constants/routes";
+import { adminRoutes } from "constant/routes";
 import Content from "../../../Donate/Content";
 import { useAdminContext } from "../../Context";
 import Seo from "../Seo";

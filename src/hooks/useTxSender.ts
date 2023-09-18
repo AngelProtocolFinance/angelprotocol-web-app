@@ -1,3 +1,4 @@
+import { GENERIC_ERROR_MESSAGE } from "constant/common";
 import { useState } from "react";
 import { SenderArgs, isTxResultError } from "types/tx";
 import { useModalContext } from "contexts/ModalContext";
@@ -6,7 +7,6 @@ import { TxPrompt } from "components/Prompt";
 import { useSetter } from "store/accessors";
 import { logger } from "helpers";
 import { estimateTx, sendTx } from "helpers/tx";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
 
 type Sender = (args: SenderArgs) => Promise<void>;
 

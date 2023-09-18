@@ -1,8 +1,8 @@
+import { appRoutes } from "constant/routes";
 import { Link } from "react-router-dom";
 import Icon from "components/Icon";
 import { useSetter } from "store/accessors";
 import { setStep } from "slices/donation";
-import { appRoutes } from "constants/routes";
 
 export default function Err({
   classes = "",

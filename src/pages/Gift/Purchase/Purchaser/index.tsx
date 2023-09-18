@@ -1,11 +1,11 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { IS_TEST } from "constant/env";
+import { denoms } from "constant/tokens";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues } from "./types";
 import { TokenWithAmount } from "types/slices";
 import { WithWallet } from "contexts/WalletContext";
 import { FormStep } from "slices/gift";
-import { IS_TEST } from "constants/env";
-import { denoms } from "constants/tokens";
 import Form from "./Form";
 import { schema } from "./schema";
 
