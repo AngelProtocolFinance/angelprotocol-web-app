@@ -1,5 +1,4 @@
 import * as Sentry from "@sentry/react";
-import React from "react";
 import { StrictMode, Suspense, lazy } from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
@@ -9,7 +8,6 @@ import { store } from "store/store";
 import { initTheme } from "helpers";
 import ErrorBoundary from "errors/ErrorBoundary";
 import "./index.css";
-import reportWebVitals from "./reportWebVitals";
 
 //set theme immediately, so even suspense loaders and can use it
 initTheme();
@@ -40,8 +38,3 @@ root.render(
     </ErrorBoundary>
   </StrictMode>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(logger.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
