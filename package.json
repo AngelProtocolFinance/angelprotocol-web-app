@@ -26,7 +26,6 @@
       "last 1 safari version"
     ]
   },
-  "packageManager": "yarn@3.3.0",
   "engines": {
     "bun": "1.0.2"
   },
