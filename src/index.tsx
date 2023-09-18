@@ -22,7 +22,7 @@ const container = document.getElementById("root");
 const root = createRoot(container as Element);
 
 Sentry.init({
-  dsn: process.env.REACT_APP_SENTRY_DSN,
+  dsn: process.env.VITE_SENTRY_DSN,
 });
 
 root.render(

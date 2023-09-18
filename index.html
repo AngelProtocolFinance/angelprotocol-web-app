@@ -112,7 +112,7 @@
     <!-- End Meta Pixel Code -->
     <!-- START SmartLook script -->
     <script type="text/javascript">
-      if ("%REACT_APP_APP_TYPE%" === "AST") {
+      if ("%VITE_APP_TYPE%" === "AST") {
         window.smartlook ||
           (function (d) {
             var o = (smartlook = function () {
@@ -175,7 +175,7 @@
     </script>
     <script>
       (function () {
-        if ("%REACT_APP_APP_TYPE%" !== "AST") {
+        if ("%VITE_APP_TYPE%" !== "AST") {
           var w = window;
           var ic = w.Intercom;
           if (typeof ic === "function") {
@@ -258,7 +258,7 @@
         dataLayer.push(arguments);
       }
       gtag("js", new Date());
-      "%REACT_APP_APP_TYPE%" === "AST"
+      "%VITE_APP_TYPE%" === "AST"
         ? gtag("config", "G-PWW5LK3ZN7")
         : gtag("config", "G-Z2YP33XHHD");
     </script>

@@ -21,8 +21,8 @@ jobs:
       - name: Test codebase
         run: yarn run test --watchAll=false --coverage --json --outputFile ./codecov-report.json
         env:
-          REACT_APP_JUNO_LCD_NODE: ${{ secrets.REACT_APP_JUNO_LCD_NODE }}
+          VITE_JUNO_LCD_NODE: ${{ secrets.VITE_JUNO_LCD_NODE }}
       - name: Build codebase
         run: yarn build
         env:
-          REACT_APP_JUNO_LCD_NODE: ${{ secrets.REACT_APP_JUNO_LCD_NODE }}
+          VITE_JUNO_LCD_NODE: ${{ secrets.VITE_JUNO_LCD_NODE }}
