@@ -4,7 +4,6 @@ import { aws } from "services/aws/aws";
 import { junoApi } from "services/juno";
 import subgraph from "services/subgraph";
 import { adminReducer } from "slices/admin";
-import authReducer from "slices/authSlice";
 import { componentReducer } from "slices/components";
 import { donation } from "slices/donation";
 import gift from "slices/gift";
@@ -16,7 +15,6 @@ export const store = configureStore({
     donation,
     gift,
     launchpad,
-    auth: authReducer,
     component: componentReducer,
     [aws.reducerPath]: aws.reducer,
     [apes.reducerPath]: apes.reducer,
