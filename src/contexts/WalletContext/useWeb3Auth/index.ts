@@ -97,7 +97,7 @@ export default function useWeb3Auth() {
 
       setState({
         status: "connected",
-        address: accounts[0],
+        address: accounts[0]!,
         chainId: new Decimal(hexChainId).toString(),
         provider: provider,
       });
