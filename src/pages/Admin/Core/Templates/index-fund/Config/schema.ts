@@ -1,12 +1,11 @@
 import { ObjectSchema, object } from "yup";
-import { FundConfigValues } from "pages/Admin/types";
+import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
-import { positiveNumber, tokenAmountString } from "schemas/number";
+import { requiredPositiveNumber, requiredTokenAmount } from "schemas/number";
 import { proposalShape } from "../../../../constants";
 
-export const schema = object<any, SchemaShape<FundConfigValues>>({
+export const schema = object<any, SchemaShape<FormValues>>({
   ...proposalShape,
-  funding_goal: tokenAmountString,
-  fund_member_limit: positiveNumber,
-  fund_rotation: positiveNumber,
-}) as ObjectSchema<FundConfigValues>;
+  fundingGoal: requiredTokenAmount,
+  fundRotation: requiredPositiveNumber,
+}) as ObjectSchema<FormValues>;

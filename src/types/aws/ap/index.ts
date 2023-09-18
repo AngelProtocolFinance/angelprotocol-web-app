@@ -1,24 +1,60 @@
-import { Keplr } from "@keplr-wallet/types";
-import { CapitalizedEndowmentType } from "../../contracts";
-import { NetworkType, UNSDG_NUMS } from "../../lists";
+import { EndowmentTierNum } from "../../contracts";
+import { EndowmentType, NetworkType, UNSDG_NUMS } from "../../lists";
+
+type EndowmentBalances = {
+  // represents total cumulative balances
+  total_liq: number;
+  total_lock: number;
+  overall: number;
+
+  // represents tokens on hand balances (takes into account withdrawn funds)
+  on_hand_liq: number;
+  on_hand_lock: number;
+  on_hand_overall: number;
+};
+
+export type MileStone = {
+  milestone_date: string; //isoDate
+  milestone_description: string;
+  milestone_media: string;
+  milestone_title: string;
+};
+
+export type Program = {
+  program_banner: string;
+  program_description: string;
+  program_id: string;
+  program_title: string;
+  program_milestones: MileStone[];
+};
+
+export type EndowDesignation =
+  | "Charity"
+  | "Religious Organization"
+  | "University"
+  | "Hospital"
+  | "Other";
 
 type EndowmentBase = {
-  hq_country: string;
+  hq_country?: string;
   endow_designation: EndowDesignation;
   active_in_countries?: string[];
-  categories: { sdgs: UNSDG_NUMS[] };
+  sdgs: UNSDG_NUMS[];
   id: number;
   image: string;
   kyc_donors_only: boolean;
+  contributor_verification_required: boolean;
+  program: Program[];
 
   name: string;
   tagline: string;
 };
 
 export type EndowmentProfile = EndowmentBase & {
+  fiscal_sponsored: boolean;
   contact_email: string;
   logo: string;
-  overview: string;
+  overview?: string;
   published: boolean;
   registration_number?: string;
   social_media_urls: {
@@ -32,21 +68,27 @@ export type EndowmentProfile = EndowmentBase & {
   };
   street_address?: string;
 
-  // represents total cumulative balances
-  total_liq: number;
-  total_lock: number;
-  overall: number;
-
-  // represents tokens on hand balances (takes into account withdrawn funds)
-  on_hand_liq: number;
-  on_hand_lock: number;
-  on_hand_overall: number;
-
   url?: string;
-};
+} & EndowmentBalances;
+
+const _npo_type: keyof EndowmentBase = "endow_designation";
+//prettier-ignore
+export type ASTProfile = Pick<EndowmentProfile, 
+    "id" 
+  | "name" 
+  | "tagline"
+  | "program"
+  > 
+  & Partial<Omit<EndowmentProfile,
+   "id"
+  |"name"
+  |"tagline"
+  | typeof _npo_type 
+  >>
+  & Partial<EndowmentBalances>
 
 export type EndowmentCard = EndowmentBase & {
-  endow_type: CapitalizedEndowmentType;
+  endow_type: EndowmentType;
   published: boolean;
 };
 
@@ -59,53 +101,59 @@ export type EndowmentProfileUpdate = {
 
   /** optional, though set as required in this type
   to force setting of default values - "", [], etc ..*/
+
   active_in_countries: string[];
-  categories_general: string[];
-  categories_sdgs: UNSDG_NUMS[];
-  hq_country: string;
+  categories: {
+    general: string[];
+    sdgs: UNSDG_NUMS[];
+  };
+  charity_navigator_rating: string;
+  contact_email: string;
+  // categories_sdgs: UNSDG_NUMS[];
+  contributor_verification_required: boolean;
   endow_designation: string;
+  hq_country: string;
   image: string;
   kyc_donors_only: boolean;
   logo: string;
   name: string;
-  published: boolean;
+
   overview: string;
+  program: Program[];
+  program_id: string;
+  published: boolean;
   registration_number: string;
-  social_media_url_facebook: string;
-  social_media_url_linkedin: string;
-  social_media_url_twitter: string;
-  social_media_url_discord: string;
-  social_media_url_instagram: string;
-  social_media_url_youtube: string;
-  social_media_url_tiktok: string;
+  sdgs: UNSDG_NUMS[];
+  social_media_urls: {
+    facebook: string;
+    linkedin: string;
+    twitter: string;
+    discord: string;
+    instagram: string;
+    youtube: string;
+    tiktok: string;
+  };
   street_address: string;
   tagline: string;
-  tier: number /** 1 - 3  */;
+  tier: EndowmentTierNum /** 1 - 3  */;
   url: string | null;
 };
 
 export type SortDirection = "asc" | "desc";
 export type EndowmentsSortKey = "name_internal" | "overall";
 
-export type EndowDesignation =
-  | "Charity"
-  | "Religious Organization"
-  | "University"
-  | "Hospital"
-  | "Other";
-
 export type EndowmentsQueryParams = {
   query: string; //set to "matchAll" if no search query
   sort: "default" | `${EndowmentsSortKey}+${SortDirection}`;
-  start?: number; //to load next page, set start to ItemCutOff + 1
-  endow_types: string | null; // comma separated CapitalizedEndowmentType values
+  page?: number; //to load next page, set to Page + 1
+  endow_types: string | null; // comma separated EndowmentType values
   endow_designation?: string; // comma separated EndowDesignation values
   sdgs: string | 0; // comma separated sdg values. The backend recognizes "0" as "no SDG was selected"
   tiers: string | null; // comma separated Exclude<EndowmentTier, "Level1"> values ("Level1" excluded for now)
   kyc_only: string | null; // comma separated boolean values
   hq_country?: string; //comma separated values
   active_in_countries?: string; //comma separated values
-  limit?: number; // Number of items to be returned per request. If not provided, API defaults to return all
+  hits?: number; // Number of items to be returned per request. If not provided, API defaults to return all
   published: string;
 };
 
@@ -120,6 +168,22 @@ export interface LeaderboardEntry {
   //tier: EndowmentTier
   //charity_owner:string
 }
+
+export type TStrategy = {
+  strategy_key: string;
+  chain_id: string;
+  apy: number; // 5.2
+  contract: string;
+  description: string;
+  icon: string;
+  market_cap: number; // 100,024,000 USD
+  name: string;
+  provider: { name: string; url: string; icon: string };
+  rating: string; // "AAA";
+  type: string; // "Uncollateralized Lending";
+  vaults: { locked: string; liquid: string };
+  website: string;
+};
 
 export interface Update {
   endowments: LeaderboardEntry[];
@@ -159,10 +223,12 @@ export interface DonationsMetricList {
   donations_total_amount: number;
 }
 
-type AminoSignRes = Awaited<ReturnType<Keplr["signAmino"]>>;
-type Signed = AminoSignRes["signed"];
-type Signature = AminoSignRes["signature"];
-export type ADR36Payload = Pick<Signed, "chain_id" | "fee" | "memo"> & {
-  msg: Signed["msgs"];
-  signatures: Signature[];
+export type NewAST = {
+  chainId: string;
+  id: number;
+  registrant: string;
+  tagline: string;
+  /** not in registration steps */
+  // banner
+  // logo
 };

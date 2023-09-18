@@ -1,64 +1,74 @@
-import { useState } from "react";
-import Icon from "components/Icon";
-import { useGetter } from "store/accessors";
-import ProposalCard from "./ProposalCard";
-import Toolbar from "./Toolbar";
 import {
-  NUM_PROPOSALS_PER_PAGE,
-  useFilteredProposals,
-} from "./useFilteredProposals";
+  updateSubgraphQueryData,
+  useLazyProposalsQuery,
+  useProposalsQuery,
+} from "services/subgraph";
+import Seo from "components/Seo";
+import { useGetter, useSetter } from "store/accessors";
+import { APP_NAME, DAPP_URL } from "constants/env";
+import { adminRoutes } from "constants/routes";
+import { useAdminContext } from "../Context";
+import Table from "./Table";
+import Toolbar from "./Toolbar";
 
 export default function Proposals() {
-  const [pageNum, setPageNum] = useState(1);
+  const { multisig, type, id } = useAdminContext();
+  const dispatch = useSetter();
+  const { activeStatus } = useGetter((state) => state.admin.proposals);
 
-  const { activeGroup, activeStatus } = useGetter(
-    (state) => state.admin.proposals
-  );
-  const { filteredProposals, isFilteredProposalsLoading } =
-    useFilteredProposals(activeGroup, activeStatus, pageNum);
+  const {
+    data: { items, next } = { items: [], next: undefined },
+    isFetching,
+    isLoading,
+    originalArgs,
+  } = useProposalsQuery({
+    multisigId: type === "charity" ? `${id}` : multisig,
+    page: 1,
+    status: activeStatus === "all" ? undefined : activeStatus,
+  });
 
-  function loadMoreProposals() {
-    //no way to know when to stop
-    //based on id: existing doesn't start in 1
-    //based on max length, would need to query all to know how large the set is
-    setPageNum((prev) => prev + 1);
+  const [loadMore] = useLazyProposalsQuery();
+
+  async function more() {
+    if (
+      next &&
+      originalArgs /** txs won't show if no initial query is made */
+    ) {
+      const { data: newPage } = await loadMore({
+        ...originalArgs,
+        page: next,
+      });
+
+      if (newPage) {
+        //pessimistic update to original cache data
+        dispatch(
+          updateSubgraphQueryData("proposals", originalArgs, (prevResult) => {
+            prevResult.items.push(...newPage.items);
+            prevResult.next = newPage.next;
+          })
+        );
+      }
+    }
   }
 
-  const isLoadMoreShown =
-    //don't show load more if num proposals doesn't even reach min
-    filteredProposals.length >= NUM_PROPOSALS_PER_PAGE &&
-    activeStatus === "all" &&
-    activeGroup === "all";
-
   return (
-    <div className="p-3 grid content-start rounded font-work">
-      <Toolbar classes="mb-6" />
+    <div className="grid content-start rounded">
+      <Seo
+        title={`Decision Center - ${APP_NAME}`}
+        url={`${DAPP_URL}/${adminRoutes.proposals}`}
+      />
 
-      {(filteredProposals.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 content-start">
-          {filteredProposals.map((proposal) => (
-            <ProposalCard key={proposal.id} {...proposal} />
-          ))}
-        </div>
+      <Toolbar classes="@xl:mb-6" />
+
+      {(items.length > 0 && (
+        <Table
+          txs={items}
+          more={isFetching ? "loading" : next ? more : undefined}
+        />
       )) || (
         <p className="place-self-start">
-          {isFilteredProposalsLoading
-            ? "loading proposals.."
-            : "no proposals found"}
+          {isLoading ? "loading decisions.." : "No decisions found"}
         </p>
-      )}
-      {isLoadMoreShown && (
-        <button
-          disabled={isFilteredProposalsLoading}
-          className="mt-3 px-3 py-1 justify-self-center text-xs bg-blue disabled:bg-gray uppecase font-heading uppercase rounded-sm"
-          onClick={loadMoreProposals}
-        >
-          {isFilteredProposalsLoading ? (
-            <Icon type="Loading" className="animate-spin" size={18} />
-          ) : (
-            "more"
-          )}
-        </button>
       )}
     </div>
   );

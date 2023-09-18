@@ -1,0 +1,4 @@
+[
+  "function queryTokenAmount(uint32,uint8,address) view returns (uint256)",
+  "function isDafApprovedEndowment(uint32) view returns (bool)"
+]

@@ -7,6 +7,7 @@ import {
 } from "types/aws";
 import { createAuthToken } from "helpers";
 import { IS_TEST } from "constants/env";
+import { version as v } from "../../helpers";
 import { apes } from "../apes";
 
 export const donations_api = apes.injectEndpoints({
@@ -17,7 +18,7 @@ export const donations_api = apes.injectEndpoints({
         const generatedToken = createAuthToken("angelprotocol-web-app");
         const { transactionId, ...restOfPayload } = receiptPayload;
         return {
-          url: `v2/donation`,
+          url: `${v(3)}/donation`,
           params: { transactionId },
           method: "PUT",
           headers: { authorization: generatedToken },
@@ -30,9 +31,9 @@ export const donations_api = apes.injectEndpoints({
       DonationsQueryParams
     >({
       providesTags: ["donations"],
-      query: ({ id, ...rest }) => {
+      query: ({ id, chain_id, ...rest }) => {
         return {
-          url: `v3/donation/${id}${IS_TEST ? "/testnet" : ""}`,
+          url: `${v(3)}/donation/${chain_id}/${id}`,
           params: rest,
         };
       },

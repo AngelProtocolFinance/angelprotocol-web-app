@@ -26,11 +26,11 @@ export default function Combobox() {
   const { data, isLoading, isError } = useEndowmentIdNamesQuery({
     query: debouncedQuery || "matchall",
     sort: "default",
-    endow_types: "Charity",
-    tiers: "Level1,Level2,Level3",
+    endow_types: "charity",
+    tiers: "2,3",
     sdgs: Object.keys(unsdgs).join(","),
     kyc_only: "true,false",
-    start: 0,
+    page: 1,
     published: "true",
   });
 

@@ -2,6 +2,7 @@ import {
   AiFillCaretLeft,
   AiFillCheckCircle,
   AiFillHeart,
+  AiFillSecurityScan,
   AiFillYoutube,
   AiOutlineDislike,
   AiOutlineEdit,
@@ -16,10 +17,10 @@ import {
   AiOutlineUpload,
 } from "react-icons/ai";
 import {
-  BiArrowBack,
   BiBold,
   BiCheck,
   BiChevronDown,
+  BiChevronRight,
   BiChevronUp,
   BiGlobe,
   BiItalic,
@@ -28,6 +29,7 @@ import {
   BiSun,
 } from "react-icons/bi";
 import {
+  BsCircle,
   BsExclamationCircle,
   BsExclamationCircleFill,
   BsFilterLeft,
@@ -37,6 +39,7 @@ import {
 import { CgArrowsExchangeAltV, CgUndo } from "react-icons/cg";
 import {
   FaChurch,
+  FaClipboardCheck,
   FaClock,
   FaCog,
   FaDiscord,
@@ -61,10 +64,17 @@ import {
 import { FcSafe } from "react-icons/fc";
 import { FiMenu, FiMoon } from "react-icons/fi";
 import { GiPieChart, GiTwoCoins } from "react-icons/gi";
-import { GoDash, GoLinkExternal } from "react-icons/go";
+import { GoDash, GoLinkExternal, GoSync } from "react-icons/go";
 import { GrFacebookOption } from "react-icons/gr";
-import { ImFilePicture } from "react-icons/im";
-import { IoMdDownload, IoMdSettings } from "react-icons/io";
+import { ImDroplet, ImFilePicture } from "react-icons/im";
+import {
+  IoMdCalendar,
+  IoMdClipboard,
+  IoMdDownload,
+  IoMdListBox,
+  IoMdLock,
+  IoMdSettings,
+} from "react-icons/io";
 import {
   IoClose,
   IoCloseCircle,
@@ -73,7 +83,11 @@ import {
   IoWarning,
 } from "react-icons/io5";
 import {
+  MdAccountBalanceWallet,
+  MdAnalytics,
   MdCardGiftcard,
+  MdFactCheck,
+  MdImage,
   MdOutlineAdminPanelSettings,
   MdOutlineArrowBackIosNew,
   MdOutlineArrowForwardIos,
@@ -82,24 +96,40 @@ import {
   MdOutlineFileDownload,
   MdOutlineFilterAlt,
   MdOutlineUploadFile,
+  MdPermDataSetting,
+  MdSpaceDashboard,
+  MdWarningAmber,
+  MdWaterDrop,
+  MdWidgets,
 } from "react-icons/md";
-import { RiMapPin2Line } from "react-icons/ri";
+import {
+  RiFileSearchFill,
+  RiMapPin2Line,
+  RiMoneyDollarCircleFill,
+} from "react-icons/ri";
 import { SiHiveBlockchain } from "react-icons/si";
+import { TbPigMoney } from "react-icons/tb";
 import { TiArrowUnsorted } from "react-icons/ti";
 import { VscLoading, VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
 
 export const icons = {
+  AccountBalanceWallet: MdAccountBalanceWallet,
   Admin: FaUsersCog,
   AdminPanel: MdOutlineAdminPanelSettings,
-  ArrowBack: BiArrowBack,
+  Analytics: MdAnalytics,
+  ArrowRight: BiChevronRight,
   ArrowDown: BiChevronDown,
   ArrowUp: BiChevronUp,
   Back: MdOutlineArrowBackIosNew,
   Blockchain: SiHiveBlockchain,
   Bold: BiBold,
+  Calendar: IoMdCalendar,
   CaretLeft: AiFillCaretLeft,
   Check: BiCheck,
   CheckCircle: AiFillCheckCircle,
+  Circle: BsCircle,
+  Clipboard: IoMdClipboard,
+  ClipboardCheck: FaClipboardCheck,
   Clock: FaClock,
   Close: IoClose,
   CloseCircle: IoCloseCircle,
@@ -108,8 +138,11 @@ export const icons = {
   Copy: MdOutlineContentCopy,
   Crop: IoCrop,
   Dash: GoDash,
+  Dashboard: MdSpaceDashboard,
+  Deposit: TbPigMoney,
   Discord: FaDiscord,
   Dislike: AiOutlineDislike,
+  DollarCircle: RiMoneyDollarCircleFill,
   Down: VscTriangleDown,
   Edit: AiOutlineEdit,
   Email: MdOutlineEmail,
@@ -122,9 +155,11 @@ export const icons = {
   EyeInvisible: AiOutlineEyeInvisible,
   Facebook: GrFacebookOption,
   FacebookCircle: FaFacebook,
+  FactCheck: MdFactCheck,
   FatArrowDownload: IoMdDownload,
   FileDownload: MdOutlineFileDownload,
   FileUpload: MdOutlineUploadFile,
+  FileSearch: RiFileSearchFill,
   Filter: MdOutlineFilterAlt,
   FilterLeft: BsFilterLeft,
   Forward: MdOutlineArrowForwardIos,
@@ -133,21 +168,26 @@ export const icons = {
   HeartFill: AiFillHeart,
   HeartOutline: AiOutlineHeart,
   HourglassSplit: BsHourglassSplit,
+  Image: MdImage,
   Info: AiOutlineInfoCircle,
   Instagram: FaInstagram,
   Italic: BiItalic,
   Like: AiOutlineLike,
   Linkedin: FaLinkedin,
   LinkedinIn: FaLinkedinIn,
+  Liquid: ImDroplet,
+  ListBox: IoMdListBox,
   ListOl: FaListOl,
   ListUl: FaListUl,
   Loading: VscLoading,
+  Lock: IoMdLock,
   MapPin: RiMapPin2Line,
   Medium: AiOutlineMedium,
   Menu: FiMenu,
   MoneyBill: FaMoneyBillWave,
   Moon: FiMoon,
   Parachute: FaParachuteBox,
+  PermDataSettings: MdPermDataSetting,
   Picture: ImFilePicture,
   PieChart: GiPieChart,
   Plus: AiOutlinePlus,
@@ -155,9 +195,11 @@ export const icons = {
   Safe: FcSafe,
   Save: BiSave,
   Search: BiSearchAlt2,
+  SecurityScan: AiFillSecurityScan,
   Settings: IoMdSettings,
   StopWatch: FaStopwatch,
   Sun: BiSun,
+  Sync: GoSync,
   Telegram: FaTelegramPlane,
   Tiktok: FaTiktok,
   Twitter: BsTwitter,
@@ -168,6 +210,9 @@ export const icons = {
   User: FaUserCircle,
   Wallet: IoWalletSharp,
   Warning: IoWarning,
+  WarningOutline: MdWarningAmber,
+  WaterDrop: MdWaterDrop,
+  Widget: MdWidgets,
   Youtube: AiFillYoutube,
   Hospital: FaHospital,
   Charity: FaDonate,

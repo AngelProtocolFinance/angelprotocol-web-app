@@ -1,10 +1,21 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { BaseChain, Chain, FetchedChain, Token, WithdrawLog } from "types/aws";
+import { ChainQueryArgs } from "../types";
+import {
+  BaseChain,
+  FetchedChain,
+  PaginatedAWSQueryRes,
+  Token,
+  WithdrawLog,
+  WithdrawLogQueryParams,
+} from "types/aws";
+import { Chain } from "types/tx";
 import { UnsupportedChainError } from "errors/errors";
 import { chainIds } from "constants/chainIds";
 import { IS_TEST, JUNO_LCD_OVERRIDE, JUNO_RPC_OVERRIDE } from "constants/env";
 import { APIs } from "constants/urls";
+import { version as v } from "../helpers";
 import { fetchBalances } from "./helpers/fetchBalances";
+import { tags } from "./tags";
 
 export const apes = createApi({
   reducerPath: "apes",
@@ -12,30 +23,38 @@ export const apes = createApi({
     baseUrl: APIs.apes,
     mode: "cors",
   }),
-  tagTypes: ["chain", "withdraw_logs", "donations", "tokens"],
+  tagTypes: tags,
   endpoints: (builder) => ({
     chains: builder.query<BaseChain[], unknown>({
       query: () => `v1/chains${IS_TEST ? "/test" : ""}`,
     }),
-    withdrawLogs: builder.query<WithdrawLog[], string>({
+    withdrawLogs: builder.query<
+      PaginatedAWSQueryRes<WithdrawLog[]>,
+      WithdrawLogQueryParams
+    >({
       providesTags: ["withdraw_logs"],
-      query: (cw3) => `v1/withdraw/${cw3}`,
+      query: ({ cw3, ...params }) => ({
+        url: `/${v(3)}/withdraw/${cw3}`,
+        params,
+      }),
     }),
-    chain: builder.query<Chain, { address?: string; chainId?: string }>({
+    chain: builder.query<Chain, ChainQueryArgs>({
       providesTags: ["chain"],
       async queryFn({ address, chainId }, api, options, baseQuery) {
         try {
-          if (!chainId) {
-            throw new Error("Argument 'chainId' missing");
-          }
-          if (!address) {
-            throw new Error("Argument 'address' missing");
-          }
-
           const { data } = await baseQuery(`v1/chain/${chainId}`);
-          const chain = overrideURLs(data as FetchedChain);
+          const chain = overrides(data as FetchedChain);
 
-          const [native, ...tokens] = await fetchBalances(chain, address);
+          const [native, ...tokens] = await fetchBalances(
+            {
+              ...chain,
+              tokens: chain.tokens.map((t) => ({
+                ...t,
+                token_id: t.token_id.toLowerCase(),
+              })),
+            },
+            address
+          );
 
           return { data: { ...chain, native_currency: native, tokens } };
         } catch (error) {
@@ -59,7 +78,7 @@ export const apes = createApi({
   }),
 });
 
-function overrideURLs(chain: FetchedChain): FetchedChain {
+function overrides(chain: FetchedChain): FetchedChain {
   if (chain.chain_id === chainIds.juno) {
     return {
       ...chain,
@@ -76,5 +95,9 @@ export const {
   useLazyChainQuery,
   useTokensQuery,
   useWithdrawLogsQuery,
-  util: { invalidateTags: invalidateApesTags },
+  useLazyWithdrawLogsQuery,
+  util: {
+    invalidateTags: invalidateApesTags,
+    updateQueryData: updateApesQueryData,
+  },
 } = apes;

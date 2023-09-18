@@ -1,10 +1,4 @@
-import {
-  ContactRoles,
-  EndowDesignation,
-  FileObject,
-  ReferralMethods,
-  RegistrationStatus,
-} from "types/aws";
+import { ContactRoles, ReferralMethods, RegistrationStatus } from "types/aws";
 import { EndowmentTierNum } from "types/contracts";
 import { Country } from "types/countries";
 import { UNSDG_NUMS } from "types/lists";
@@ -16,8 +10,6 @@ import { Asset } from "components/registration";
 export type InitReg = {
   reference: string;
   email: string;
-  isEmailVerified: boolean;
-  lastVerified: string; // ISO string
 };
 
 //STEP 1
@@ -32,6 +24,7 @@ export type ContactPerson = {
   orgName: string;
   role: ContactRoles;
   otherRole: string;
+  referralCode: string;
 
   referralMethod: ReferralMethods;
   otherReferralMethod: string;
@@ -40,39 +33,34 @@ export type ContactPerson = {
 
 //STEP 2
 export type Documentation = {
-  //level1
+  //registrant identity
   proofOfIdentity: Asset;
+
+  //organization details
+  ein: string;
   proofOfRegistration: Asset;
   website: string;
   sdgs: OptionType<UNSDG_NUMS>[];
 
-  //level 2
-  financialStatements: Asset;
-
-  //level3
-  auditedFinancialReports: Asset;
-  isKYCRequired: "Yes" | "No";
-
-  cashEligible: boolean;
-  //so user won't click again on resume
-  hasAuthority: boolean;
   hasAgreedToTerms: boolean;
-  level: EndowmentTierNum;
+  tier: EndowmentTierNum;
 
   hqCountry: Country;
-  endowDesignation: OptionType<EndowDesignation> | OptionType<"">;
-  // general info
+  endowDesignation: OptionType<string>;
   activeInCountries: OptionType<string>[];
+  isAuthorizedToReceiveTaxDeductibleDonations: "Yes" | "No";
+  fiscalSponsorshipAgreementSigningURL: string;
+  signedFiscalSponsorshipAgreement: string;
+  legalEntityType: string;
+  projectDescription: string;
+
+  //others
+  isAnonymousDonationsAllowed: "Yes" | "No";
+  cashEligible: boolean;
+  hasAuthority: boolean;
 };
 
 //STEP 3
-export type Profile = {
-  banner: FileObject;
-  logo: FileObject;
-  overview: string;
-};
-
-//STEP 4
 type WalletDetails = {
   //keplr only
   address: string;
@@ -97,8 +85,6 @@ type Step2Data = Optional<
 >;
 
 type Step3Data = Optional<CompleteRegistration, "wallet">;
-
-export type RegistrationData = Step1Data | Step2Data | Step3Data;
 
 type RegStep1 = {
   step: 1;

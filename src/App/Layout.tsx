@@ -2,18 +2,29 @@ import { Suspense } from "react";
 import { Outlet } from "react-router-dom";
 import Loader from "components/Loader";
 import Seo from "components/Seo";
+import { LOGO_DARK } from "constants/common";
+import { IS_AST } from "constants/env";
 import Footer from "./Footer";
 import Header from "./Header";
+import { AST_LINKS, CHARITY_LINKS } from "./constants";
+
+const { HEADER_LINKS, GROUPS_DATA, SOCIAL_MEDIA_LINKS } = IS_AST
+  ? AST_LINKS
+  : CHARITY_LINKS;
 
 export default function Layout() {
   return (
     <div className="grid grid-rows-[auto_1fr_auto]">
       <Seo /> {/* Load all defaults for SEO meta tags */}
-      <Header classes="sticky top-0 z-20" />
+      <Header
+        classes="sticky top-0 z-20"
+        links={HEADER_LINKS}
+        logo={LOGO_DARK}
+      />
       <Suspense fallback={<LoaderComponent />}>
         <Outlet />
       </Suspense>
-      <Footer />
+      <Footer linkGroups={GROUPS_DATA} socials={SOCIAL_MEDIA_LINKS} />
     </div>
   );
 }

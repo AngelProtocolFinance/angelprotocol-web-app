@@ -10,8 +10,7 @@ import Tooltip from "./Tooltip";
 import { states } from "./us-states";
 import useSubmit from "./useSubmit";
 
-export const formStyle =
-  "w-full bg-gray-l5 dark:bg-blue-d5 text-gray-d2 dark:text-white font-work";
+export const formStyle = "w-full text-gray-d2 dark:text-white font-work p-3";
 
 export default function Form({ classes = "", ...props }: Props) {
   const {
@@ -58,8 +57,8 @@ export default function Form({ classes = "", ...props }: Props) {
       <Field<FV>
         classes="field-kyc"
         name="address.complement"
-        label="Address complement"
-        placeholder="e.g. Street Rd 9920"
+        label="Address Line 2"
+        placeholder="e.g. PO Box 1234"
         required={false}
       />
       <Field<FV>
@@ -84,8 +83,8 @@ export default function Form({ classes = "", ...props }: Props) {
           fieldName="country"
           onReset={() => resetField("usState")}
           classes={{
-            container: "px-4 bg-gray-l5 dark:bg-blue-d6",
-            input: "py-3.5 placeholder:text-sm",
+            container: "px-4 bg-gray-l6 dark:bg-blue-d6",
+            input: "py-3 placeholder:text-sm",
             error: "field-error",
           }}
         />
@@ -95,7 +94,7 @@ export default function Form({ classes = "", ...props }: Props) {
           <Label htmlFor="usState" className="mb-2" required={false}>
             State
           </Label>
-          <Selector<FV, "usState", string, false>
+          <Selector<FV, "usState", string>
             name="usState"
             options={states}
             classes={{ container: "bg-white dark:bg-blue-d6" }}

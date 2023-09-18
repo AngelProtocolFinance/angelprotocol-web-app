@@ -1,12 +1,10 @@
-import { DiffSet } from "types/utils";
-import ImageWrapper from "components/ImageWrapper";
+import { Diff, PrimitiveValue } from "types/utils";
+import Image from "components/Image";
 import TableSection, { Cells } from "components/TableSection";
 import { bucketURL } from "helpers/uploadFiles";
 import PreviewContainer from "./common/PreviewContainer";
 
-export default function DiffTable<T extends object>(props: {
-  diffSet: DiffSet<T>;
-}) {
+export default function DiffTable(props: { diffs: Diff[] }) {
   return (
     <PreviewContainer>
       <table>
@@ -22,13 +20,13 @@ export default function DiffTable<T extends object>(props: {
           </Cells>
         </TableSection>
         <TableSection type="tbody" rowClass="border-b border-prim">
-          {props.diffSet.map(([key, prev, next]) => (
+          {props.diffs.map(([key, prev, next]) => (
             <Cells
               type="td"
-              cellClass="text-right p-2 border-r border-prim truncate max-w-2xl"
+              cellClass="text-right p-2 border-r border-prim break-all max-w-2xl"
               dual
               key={key as string} //T is a normal object with string keys
-              verticalHeaderClass="uppercase text-xs text-left p-2 pl-0 font-heading border-r border-prim"
+              verticalHeaderClass="text-xs text-left p-2 pl-0 font-normal border-r border-prim max-w-2xl break-all"
             >
               <>{(key as string).replace(/_/g, " ")}</>
               {createColumn(prev)}
@@ -41,21 +39,24 @@ export default function DiffTable<T extends object>(props: {
   );
 }
 
-function createColumn<T extends object>(value: T[keyof T]): JSX.Element {
-  if (!value) {
-    return <>not set</>;
-  }
-
+function createColumn(value: PrimitiveValue): JSX.Element {
   // if the string value starts with the IPFS gateway URL value, this is surely a file
   // the user has uploaded and a preview should be displayed
   if (typeof value === "string" && value.startsWith(bucketURL)) {
     return (
-      <ImageWrapper
+      <Image
         src={value}
-        alt=""
-        className="w-40 lg:w-[40rem] lg:min-h-[5rem] max-w-2xl object-contain"
+        className="w-40 lg:w-[40rem] lg:min-h-[5rem] max-w-2xl"
+        onError={(e) =>
+          e.currentTarget.setAttribute("src", "/images/home-banner.jpg")
+        }
       />
     );
+  }
+
+  //convert bool to string to be rendered
+  if (typeof value === "boolean") {
+    return <>{value ? "true" : "false"}</>;
   }
 
   return <>{value}</>;

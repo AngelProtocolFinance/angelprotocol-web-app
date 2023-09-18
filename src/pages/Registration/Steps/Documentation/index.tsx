@@ -15,22 +15,28 @@ function Documentation() {
     resolver: yupResolver(schema),
     defaultValues: doc
       ? {
-          ...(({ level, ...doc }) => doc)(doc),
+          ...(({ tier, ...doc }) => doc)(doc),
         }
       : {
+          ein: "",
           proofOfIdentity: genFileAsset([]),
           proofOfRegistration: genFileAsset([]),
-          financialStatements: genFileAsset([]),
-          auditedFinancialReports: genFileAsset([]),
           website: "",
-          hasAuthority: false,
-          hasAgreedToTerms: false,
-          isKYCRequired: "No",
+
           sdgs: [],
           cashEligible: false,
-          hqCountry: { name: "", flag: "" },
+          hqCountry: { name: "", flag: "", code: "" },
           endowDesignation: { value: "", label: "" },
           activeInCountries: [],
+          isAuthorizedToReceiveTaxDeductibleDonations: "Yes",
+          signedFiscalSponsorshipAgreement: "",
+          fiscalSponsorshipAgreementSigningURL: "",
+          legalEntityType: "",
+          projectDescription: "",
+
+          hasAuthority: false,
+          hasAgreedToTerms: false,
+          isAnonymousDonationsAllowed: "Yes",
         },
   });
 

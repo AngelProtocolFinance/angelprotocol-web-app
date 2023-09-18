@@ -1,19 +1,18 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Estimate } from "./types";
 import { TokenWithAmount } from "types/slices";
-import { WithWallet } from "contexts/WalletContext";
+import { Estimate } from "types/tx";
+import Image from "components/Image";
 import { ErrorStatus, LoadingStatus } from "components/Status";
 import { useSetter } from "store/accessors";
-import { SubmitStep, setStep } from "slices/donation";
+import { SubmitStep, WithWallet, isFiat, setStep } from "slices/donation";
 import { sendDonation } from "slices/donation/sendDonation";
 import { humanize } from "helpers";
 import { appRoutes } from "constants/routes";
-import { estimateDonation } from "./estimateDonation";
-import getBreakdown from "./getBreakdown";
+import { DonationEstimate, estimateDonation } from "./estimateDonation";
 
-type EstimateStatus = Estimate | "loading" | "error";
+type EstimateStatus = DonationEstimate | "loading" | "error";
 
 export default function Submit(props: WithWallet<SubmitStep>) {
   const dispatch = useSetter();
@@ -32,43 +31,33 @@ export default function Submit(props: WithWallet<SubmitStep>) {
     dispatch(setStep(props.kyc ? "kyc-form" : "donate-form"));
   }
 
-  function submit({ tx }: Estimate) {
+  function submit(tx: Estimate["tx"]) {
     const { wallet, ...donation } = props;
-    dispatch(sendDonation({ donation, wallet, tx }));
+    dispatch(sendDonation({ donation: donation, wallet: wallet, tx }));
   }
 
   const { token } = props.details;
-  const { chain } = props.wallet;
   const { id: endowId } = props.recipient;
 
   const isNotEstimated = estimate === "error" || estimate === "loading";
 
-  const { fromBal, fromGift } = getBreakdown(token);
-
   return (
     <div className="grid content-start">
       <Row title="Currency:">
-        <img
-          alt=""
+        <Image
           className="ml-auto object-cover h-4 w-4 rounded-full mr-1"
           src={token.logo}
         />
         <span>{token.symbol}</span>
       </Row>
-      <Row title="Blockchain:">
-        <span>{chain.chain_name}</span>
-      </Row>
-      <Row title="Amount:">
-        <span>
-          {token.symbol} {humanize(fromBal, 4)}
-        </span>
-      </Row>
-      {fromGift ? (
-        <Row title="Giftcard:">
-          {token.symbol} {humanize(fromGift, 4)}
+      {isFiat(props.wallet) || token.type === "fiat" ? (
+        <></>
+      ) : (
+        <Row title="Blockchain:">
+          <span>{props.wallet.chain.chain_name}</span>
         </Row>
-      ) : null}
-      <TxTotal estimate={estimate} token={token} />
+      )}
+      <Breakdown estimate={estimate} token={token} />
       <div className="mt-14 grid grid-cols-2 gap-5">
         <button
           className="btn-outline-filled btn-donate"
@@ -83,7 +72,7 @@ export default function Submit(props: WithWallet<SubmitStep>) {
             isNotEstimated
               ? undefined
               : () => {
-                  submit(estimate);
+                  submit(estimate.tx);
                 }
           }
           disabled={isNotEstimated}
@@ -92,7 +81,7 @@ export default function Submit(props: WithWallet<SubmitStep>) {
           Complete
         </button>
         <Link
-          to={appRoutes.profile + `/${endowId}`}
+          to={appRoutes.marketplace + `/${endowId}`}
           className="col-span-full btn-outline btn-donate"
         >
           Cancel
@@ -102,7 +91,7 @@ export default function Submit(props: WithWallet<SubmitStep>) {
   );
 }
 
-function TxTotal({
+function Breakdown({
   estimate,
   token,
 }: {
@@ -143,22 +132,25 @@ function TxTotal({
         </>
       );
     default:
-      const { fee } = estimate;
-      const total =
-        fee.symbol === token.symbol
-          ? +token.amount + +fee.amount
-          : +token.amount;
-
       return (
         <>
-          <Row title="Transaction costs:">
-            {fee.symbol} {humanize(fee.amount, 4)}
-          </Row>
-          <Row title="TOTAL">
-            <span>
-              {token.symbol} {humanize(total, 4)}
-            </span>
-          </Row>
+          {estimate.items
+            .filter((i) => i.fiatAmount > 0)
+            .map((item, i) => (
+              <Row key={i} title={item.name}>
+                {item.cryptoAmount ? (
+                  <div className="grid justify-items-end">
+                    <span>
+                      {humanize(item.cryptoAmount.value, 4)}{" "}
+                      {item.cryptoAmount.symbol}
+                    </span>
+                    <span className="text-xs"> {item.prettyFiatAmount}</span>
+                  </div>
+                ) : (
+                  `${item.prettyFiatAmount}`
+                )}
+              </Row>
+            ))}
         </>
       );
   }

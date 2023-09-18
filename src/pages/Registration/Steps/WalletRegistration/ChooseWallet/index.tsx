@@ -1,17 +1,35 @@
 import { Link } from "react-router-dom";
+import { ProviderId } from "types/lists";
+import { useSetWallet } from "contexts/WalletContext";
 import { steps } from "../../../routes";
 import { useRegState } from "../../StepGuard";
-import KeplrConnector from "./KeplrConnector";
+import WalletConnector from "./WalletConnector";
+
+const supportedProviderIds: ProviderId[] = [
+  "web3auth-torus",
+  "metamask",
+  "evm-wc",
+];
 
 export default function ChooseWallet() {
   const { data } = useRegState<3>();
+  const { connections } = useSetWallet();
+
   return (
     <div className="w-full grid">
       <h3 className="text-lg">Choose a wallet</h3>
       <p className="mb-8 text-sm text-gray-d1 dark:text-gray mt-2">
-        We recommend using a new wallet.
+        We recommend using a new wallet to access your Angel Giving account. If
+        you have not had a Polygon wallet before, we recommend using Web3 Auth.
+        This simple method does not use a{" "}
+        <span className="italic">seedphrase</span> and will enable you to use an
+        email address or one of your social media accounts to log in.
       </p>
-      <KeplrConnector />
+      {connections
+        .filter((c) => supportedProviderIds.includes(c.providerId))
+        .map((connection) => (
+          <WalletConnector key={connection.providerId} {...connection} />
+        ))}
       <Link
         to={`../${steps.doc}`}
         state={data.init}

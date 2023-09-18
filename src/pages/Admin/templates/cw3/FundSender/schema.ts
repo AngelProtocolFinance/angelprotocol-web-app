@@ -1,12 +1,13 @@
 import { ObjectSchema, object } from "yup";
-import { FundSendValues } from "pages/Admin/types";
+import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
-import { requiredTokenAmount } from "schemas/number";
+import { tokenShape } from "schemas/shape";
 import { requiredWalletAddr } from "schemas/string";
+import { chainIds } from "constants/chainIds";
 import { proposalShape } from "../../../constants";
 
-export const schema = object<any, SchemaShape<FundSendValues>>({
+export const schema = object<any, SchemaShape<FormValues>>({
   ...proposalShape,
-  amount: requiredTokenAmount,
-  recipient: requiredWalletAddr(),
-}) as ObjectSchema<FundSendValues>;
+  token: object(tokenShape(false)),
+  recipient: requiredWalletAddr(chainIds.polygon),
+}) as ObjectSchema<FormValues>;

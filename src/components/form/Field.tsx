@@ -1,7 +1,6 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { createElement } from "react";
-import { useFormContext } from "react-hook-form";
-import { FieldValues, Path } from "react-hook-form";
+import { FieldValues, Path, get, useFormContext } from "react-hook-form";
 import { Classes } from "./types";
 import { Label } from ".";
 import { unpack } from "./helpers";
@@ -10,7 +9,7 @@ const textarea = "textarea" as const;
 type TextArea = typeof textarea;
 type InputType = HTMLInputElement["type"] | TextArea;
 
-export type FieldProps<T extends FieldValues, K extends InputType> = Omit<
+type FieldProps<T extends FieldValues, K extends InputType> = Omit<
   K extends TextArea
     ? React.TextareaHTMLAttributes<HTMLTextAreaElement>
     : React.InputHTMLAttributes<HTMLInputElement>,
@@ -18,6 +17,7 @@ export type FieldProps<T extends FieldValues, K extends InputType> = Omit<
 > & {
   name: Path<T>;
   classes?: Classes | string;
+  tooltip?: string;
   label: string;
   type?: K;
 };
@@ -27,6 +27,7 @@ export function Field<T extends FieldValues, K extends InputType = "text">({
   label,
   name,
   classes,
+  tooltip,
   required,
   disabled,
   ...props
@@ -50,19 +51,32 @@ export function Field<T extends FieldValues, K extends InputType = "text">({
         ...register(name, { valueAsNumber: type === "number" }),
         ...(type === textarea ? {} : { type }),
         id,
+        "aria-invalid": !!get(errors, name)?.message,
         disabled: isSubmitting || disabled,
-        className: input,
+        className: `${input}`,
         autoComplete: "off",
         spellCheck: false,
       })}
 
-      <ErrorMessage
-        data-error
-        errors={errors}
-        name={name}
-        as="span"
-        className={error}
-      />
+      {(tooltip && ( //tooltip in normal flow
+        <p className={error + " text-left mt-2 left-0 text-xs"}>
+          <span className="text-gray-d1 dark:text-gray">{tooltip}</span>{" "}
+          <ErrorMessage
+            errors={errors}
+            name={name}
+            as="span"
+            className="text-red dark:text-red-l2 text-xs before:content-['('] before:mr-0.5 after:content-[')'] after:ml-0.5 empty:before:hidden empty:after:hidden"
+          />
+        </p>
+      )) || (
+        <ErrorMessage
+          data-error
+          errors={errors}
+          name={name}
+          as="span"
+          className={error}
+        />
+      )}
     </div>
   );
 }

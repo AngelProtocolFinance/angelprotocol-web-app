@@ -46,10 +46,10 @@ export const initialState: FilterState = {
   region: { activities: {}, headquarters: {} },
   isOpen: false,
   searchText: "",
-  endow_types: ["Charity"],
+  endow_types: ["charity"],
   endow_designation: ["Religious Organization", "Charity"],
   kyc_only: [true, false],
-  tiers: ["Level2", "Level3"],
+  tiers: [2, 3],
 };
 
 export const clearedState: FilterState = {
@@ -60,8 +60,8 @@ export const clearedState: FilterState = {
   region: { activities: {}, headquarters: {} },
   isOpen: false,
   searchText: "",
-  endow_types: ["Charity"],
+  endow_types: ["charity"],
   endow_designation: [],
   kyc_only: [],
-  tiers: ["Level2", "Level3"],
+  tiers: [2, 3],
 };

@@ -1,10 +1,5 @@
 import React from "react";
 
-export type ExtLinkProps = Omit<
-  React.AnchorHTMLAttributes<HTMLAnchorElement>,
-  "target" | "rel"
->;
-
 export default function ExtLink({
   children,
   ...props

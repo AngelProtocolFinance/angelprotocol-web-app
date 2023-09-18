@@ -4,19 +4,9 @@ import { chainIds } from "constants/chainIds";
 
 export const junoAddrPattern = /^juno1[a-z0-9]{38,58}$/i;
 export const terraAddrPattern = /^terra1[a-z0-9]{38}$/i;
-export const junoContractAddrPattern = /^juno1[a-z0-9]{58}$/i;
-export const evmAddrPattern = /^0x[a-fA-F0-9]{40}$/;
+const evmAddrPattern = /^0x[a-fA-F0-9]{40}$/;
 
 export const requiredString = Yup.string().required("required");
-
-export const contractAddr = Yup.string().matches(
-  junoContractAddrPattern,
-  "contract address not valid"
-);
-export const requiredContractAddr = requiredString.matches(
-  junoContractAddrPattern,
-  "address format is not valid"
-);
 
 export const walletAddr = (network: string = chainIds.juno) =>
   Yup.lazy((val) =>
@@ -31,7 +21,7 @@ export const walletAddr = (network: string = chainIds.juno) =>
 export const requiredWalletAddr = (network: string = chainIds.juno) => {
   return requiredString.matches(
     getWalletAddrPattern(network),
-    `wallet address not valid`
+    `invalid address`
   );
 };
 
@@ -94,7 +84,10 @@ function getWalletAddrPattern(network: string) {
   switch (network) {
     case chainIds.binance:
     case chainIds.ethereum:
+    case chainIds.polygon:
       return evmAddrPattern;
+    case chainIds.terra:
+      return terraAddrPattern;
     default:
       return junoAddrPattern;
   }

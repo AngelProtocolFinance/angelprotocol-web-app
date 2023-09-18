@@ -3,12 +3,13 @@ import { useEffect } from "react";
 import {
   FieldValues,
   Path,
+  get,
   useController,
   useFormContext,
 } from "react-hook-form";
 import { OnSetAmount, Props } from "./types";
 import { TokenWithAmount } from "types/slices";
-import Balance from "./Balance";
+import { humanize } from "helpers";
 import Steps from "./Steps";
 import TokenSelector from "./TokenSelector";
 
@@ -19,14 +20,19 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
   label,
   tokens,
   name,
-  withGiftcard,
+  classes,
   scale,
+
+  //flags
+  withGiftcard,
+  withBalance,
+  withMininum,
 }: Props<T, K>) {
   const {
     register,
     setValue,
     resetField,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useFormContext<T>();
   const {
     field: { onChange, value: token },
@@ -47,22 +53,32 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
     });
 
   return (
-    <div className="grid">
+    <div className={`grid ${classes?.container ?? ""}`}>
       <div className="flex max-sm:flex-col max-sm:items-start items-center mb-1">
         <label
           htmlFor="amount"
-          className="text-lg font-bold mr-auto max-sm:mb-2"
+          className={`font-bold mr-auto max-sm:mb-2 ${classes?.label ?? ""}`}
         >
           {label}
         </label>
-        <Balance
-          token={token}
-          onSetAmount={onSetAmount}
-          isGiftEnabled={!!withGiftcard}
-        />
+        {withBalance && token.type !== "fiat" && (
+          <button
+            type="button"
+            onClick={() => onSetAmount(token.balance)}
+            className="text-right hover:text-blue text-xs flex"
+          >
+            BAL: {humanize(+token.balance, 3)} {token.symbol}
+          </button>
+        )}
       </div>
 
-      <div className="relative grid grid-cols-[1fr_auto] items-center gap-2 px-4 dark:bg-blue-d6 field-container">
+      <div
+        aria-invalid={!!get(errors[name], "amount")?.message}
+        aria-disabled={isSubmitting}
+        className={`${
+          classes?.inputContainer ?? ""
+        } relative grid grid-cols-[1fr_auto] items-center gap-2 px-4 field-container`}
+      >
         <input
           {...register(amountField)}
           autoComplete="off"
@@ -71,7 +87,15 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
           placeholder="0.0000"
           className="text-sm py-3 dark:text-gray"
         />
-        <TokenSelector tokens={tokens} token={token} onChange={onChange} />
+        <TokenSelector
+          tokens={tokens.filter(
+            (t) =>
+              withGiftcard ||
+              !(t.type === "evm-native-gift" || t.type === "erc20-gift")
+          )}
+          token={token}
+          onChange={onChange}
+        />
       </div>
       <div className="empty:mb-2">
         <ErrorMessage
@@ -82,9 +106,11 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
           className="static field-error text-left my-1"
         />
       </div>
-      <p className="text-xs mb-3">
-        Minimal amount: {token.symbol} {token.min_donation_amnt}
-      </p>
+      {withMininum && (
+        <p className="text-xs mb-3">
+          Minimal amount: {token.symbol} {token.min_donation_amnt}
+        </p>
+      )}
       {scale && <Steps scale={scale} token={token} onSetAmount={onSetAmount} />}
     </div>
   );

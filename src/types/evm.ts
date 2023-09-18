@@ -20,6 +20,8 @@ export type SimulContractTx = Pick<
 
 export type SimulTx = SimulContractTx | SimulSendNativeTx;
 
+export type LogProcessor = (logs: TxLog[]) => any;
+
 /*** EIP1193 spec https://eips.ethereum.org/EIPS/eip-1193*/
 export interface RequestArguments {
   readonly method: string;
@@ -52,3 +54,16 @@ export type InjectedProvider = {
   removeListener?(ev: "accountsChanged", listener: AccountChangeHandler): any;
   removeAllListeners?: any;
 };
+
+export type Primitive = number | string | boolean;
+export type Tupleable = {
+  [index: string]:
+    | Primitive
+    | Primitive[]
+    | Tupleable
+    | Tupleable[]
+    | (Primitive | Tupleable)[];
+  // | add future combination here
+};
+
+export type Tuple = (Primitive | Tuple)[];

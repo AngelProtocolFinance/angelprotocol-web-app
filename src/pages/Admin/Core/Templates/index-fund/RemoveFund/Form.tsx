@@ -1,30 +1,27 @@
-import { FundDestroyValues as FD } from "pages/Admin/types";
-import { FormContainer, Submitter } from "components/admin";
-import { Field, Label } from "components/form";
-import FundSelection from "../FundSelection";
+import { FormValues as FV } from "./types";
+import { FormContainer, Submitter, Tooltip } from "components/admin";
+import { Field } from "components/form";
 import useDestroyFund from "./useDestroyFund";
 
 export default function Form() {
-  const { destroyFund, isSubmitDisabled } = useDestroyFund();
+  const { destroyFund, isSubmitDisabled, tooltip } = useDestroyFund();
   return (
-    <FormContainer onSubmit={destroyFund}>
-      <Field<FD>
+    <FormContainer onSubmit={destroyFund} aria-disabled={!!tooltip}>
+      {tooltip && <Tooltip tooltip={tooltip} />}
+      <Field<FV>
         classes="field-admin"
         label="Proposal title"
         name="title"
         required
       />
-      <Field<FD, "textarea">
+      <Field<FV, "textarea">
         type="textarea"
         classes="field-admin"
         label="Proposal description"
         name="description"
         required
       />
-      <Label required className="-mb-4">
-        Fund to remove
-      </Label>
-      <FundSelection<FD> fieldName="fundId" />
+      <Field<FV> classes="field-admin" label="Fund ID" name="fundId" required />
       <Submitter type="submit" _classes="mt-4" disabled={isSubmitDisabled}>
         Submit
       </Submitter>

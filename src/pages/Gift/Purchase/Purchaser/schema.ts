@@ -3,8 +3,9 @@ import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
 import { tokenShape } from "schemas/shape";
 import { walletAddr } from "schemas/string";
+import { chainIds } from "constants/chainIds";
 
-export const schema = object<any, SchemaShape<FormValues>>({
-  token: object(tokenShape),
-  recipient: walletAddr(),
+export const schema = object().shape<SchemaShape<FormValues>>({
+  token: object(tokenShape(false)),
+  recipient: walletAddr(chainIds.polygon),
 }) as ObjectSchema<FormValues>;

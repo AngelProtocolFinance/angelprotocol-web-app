@@ -1,8 +1,7 @@
-import haloIcon from "assets/icons/currencies/halo_outline.png";
-import junoIcon from "assets/icons/currencies/juno.svg";
-import unknownTokenIcon from "assets/icons/currencies/token.svg";
-import usdcIcon from "assets/icons/currencies/usdc.svg";
-import { IS_TEST } from "./env";
+const haloIcon = "/icons/currencies/halo_outline.png";
+const junoIcon = "/icons/currencies/juno.svg";
+const unknownTokenIcon = "/icons/currencies/token.svg";
+const usdcIcon = "/icons/currencies/usdc.svg";
 
 export enum denoms {
   uusdx = "uusdx",
@@ -10,10 +9,8 @@ export enum denoms {
   halo = "halo_contract_addr", //replace with halo contract addr
   ujuno = "ujuno",
   ujunox = "ujunox",
+  ausdc = "0x2c852e740B62308c46DD29B982FBb650D063Bd07",
 }
-
-export const junoDenom = IS_TEST ? denoms.ujunox : denoms.ujuno;
-export const axlUSDCDenom = IS_TEST ? denoms.uusdx : denoms.axlusdc;
 
 const _symbols: { [key in denoms]: string } = {
   [denoms.uusdx]: "USDC",
@@ -21,6 +18,7 @@ const _symbols: { [key in denoms]: string } = {
   [denoms.halo]: "HALO",
   [denoms.ujuno]: "JUNO",
   [denoms.ujunox]: "JUNOX",
+  [denoms.ausdc]: "aUSDC",
 };
 
 export const symbols: { [index: string]: string } = new Proxy(_symbols, {
@@ -33,6 +31,7 @@ type CoinAsset = { symbol: string; icon: string };
 const _tokens: { [key in denoms]: CoinAsset } = {
   [denoms.uusdx]: { icon: usdcIcon, symbol: _symbols.uusdx },
   [denoms.axlusdc]: { icon: usdcIcon, symbol: _symbols[denoms.axlusdc] },
+  [denoms.ausdc]: { icon: usdcIcon, symbol: _symbols[denoms.ausdc] },
   [denoms.halo]: { icon: haloIcon, symbol: _symbols[denoms.halo] },
   [denoms.ujuno]: { icon: junoIcon, symbol: _symbols.ujuno },
   [denoms.ujunox]: { icon: junoIcon, symbol: _symbols.ujunox },

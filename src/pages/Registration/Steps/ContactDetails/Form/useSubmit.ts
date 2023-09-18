@@ -37,6 +37,7 @@ export default function useSubmit() {
           PhoneNumber: fv.phone,
           ReferralMethod: fv.referralMethod.value,
           OtherReferralMethod: fv.referralMethod.value,
+          ReferralCode: fv.referralCode,
           Role: fv.role.value,
           OtherRole: fv.otherRole,
         },

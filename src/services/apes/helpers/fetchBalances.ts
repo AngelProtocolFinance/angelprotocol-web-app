@@ -1,15 +1,11 @@
-import { Interface } from "@ethersproject/abi";
-import type { BigNumber } from "@ethersproject/bignumber";
-import ERC20Abi from "abi/ERC20.json";
-import { BalMap } from "./types";
-import { FetchedChain, Token, TokenWithBalance } from "types/aws";
+import { FetchedChain, Token } from "types/aws";
+import { CW20Balance } from "types/contracts";
 import { Coin } from "types/cosmos";
-import { RequestArguments } from "types/evm";
+import { TokenWithBalance } from "types/tx";
 import { queryContract } from "services/juno/queryContract";
-import { condenseToNum } from "helpers";
-import { contracts } from "constants/contracts";
-import { EIPMethods } from "constants/evm";
+import { condenseToNum, objToBase64, request } from "helpers";
 
+type BalMap = { [index: string]: string | undefined | number };
 type CosmosBalances = { balances: Coin[] };
 type TokenType = "natives" | "alts";
 
@@ -19,7 +15,7 @@ export async function fetchBalances(
 ): Promise<TokenWithBalance[]> {
   const tokens = segragate([chain.native_currency, ...chain.tokens]); //n,s
   if (chain.type === "juno-native" || chain.type === "terra-native") {
-    const [natives, gifts, ...cw20s] = await Promise.allSettled([
+    const [natives, ...cw20s] = await Promise.allSettled([
       fetch(chain.lcd_url + `/cosmos/bank/v1beta1/balances/${address}`)
         .then<CosmosBalances>((res) => {
           if (!res.ok) throw new Error("failed to get native balances");
@@ -27,31 +23,12 @@ export async function fetchBalances(
         })
         //transform for easy access
         .then(({ balances }) => toMap(balances)),
-      queryContract(
-        "giftcardBalance",
-        contracts.gift_cards,
-        {
-          addr: address,
-        },
-        chain.lcd_url
-      ).then(({ native, cw20 }) =>
-        toMap([
-          ...native,
-          ...cw20.map<Coin>(({ address, amount }) => ({
-            denom: address,
-            amount: amount,
-          })),
-        ])
-      ),
+
       ...tokens.alts.map((x) =>
-        queryContract(
-          "cw20Balance",
-          x.token_id,
-          {
-            addr: address,
-          },
-          chain.lcd_url
-        ).then<Coin>((res) => ({ amount: res.balance, denom: x.token_id }))
+        cw20Balance(x.token_id, address, chain.lcd_url).then<Coin>((res) => ({
+          amount: res,
+          denom: x.token_id,
+        }))
       ),
     ]);
 
@@ -65,27 +42,35 @@ export async function fetchBalances(
       .map((t) => ({
         ...t,
         balance: getBal(natives, t),
-        gift: getBal(gifts, t),
       }))
       .concat(
         tokens.alts.map((t) => ({
           ...t,
           balance: getBal(cw20map, t),
-          gift: getBal(gifts, t),
         }))
       );
   } else {
     /**fetch balances for ethereum */
     const native = tokens.natives[0]; //evm chains have only one gas token
 
-    const [nativeBal, ...erc20s] = await Promise.allSettled([
-      request(chain, {
-        method: EIPMethods.eth_getBalance,
+    console.log({ chain });
+    const [nativeBal, gift, ...erc20s] = await Promise.allSettled([
+      request({
+        method: "eth_getBalance",
         params: [address, "latest"],
+        rpcURL: chain.rpc_url,
       }),
+      queryContract("gift-card.balance", { addr: address }),
       ...tokens.alts.map((t) =>
-        _erc20Balance(t, address, chain).then<Coin>((bal) => ({
-          amount: bal,
+        queryContract(
+          "erc20.balance",
+          {
+            erc20: t.token_id,
+            addr: address,
+          },
+          chain.rpc_url
+        ).then<Coin>((result) => ({
+          amount: result,
           denom: t.token_id,
         }))
       ),
@@ -97,6 +82,19 @@ export async function fetchBalances(
       )
     );
 
+    let gifts: TokenWithBalance[] = [];
+    if (gift.status === "fulfilled") {
+      const { native, ...erc20s } = gift.value;
+      if (native !== "0") {
+        gifts.push(toGift(chain.native_currency, native));
+      }
+      for (const t of chain.tokens) {
+        if (t.token_id in erc20s) {
+          gifts.push(toGift(t, erc20s[t.token_id]));
+        }
+      }
+    }
+
     return [
       {
         ...native,
@@ -105,13 +103,25 @@ export async function fetchBalances(
           native.decimals
         ),
       },
-    ].concat(
-      tokens.alts.map((t) => ({
+      ...tokens.alts.map((t) => ({
         ...t,
         balance: getBal(erc20map, t),
-      }))
-    );
+      })),
+      ...gifts,
+    ];
   }
+}
+
+function toGift(token: Token, bal: string): TokenWithBalance {
+  const t = token.type;
+  return {
+    ...token,
+    balance: condenseToNum(bal, token.decimals),
+    type:
+      t === "erc20" ? "erc20-gift" : t === "evm-native" ? "evm-native-gift" : t,
+    logo: "/icons/currencies/gift.svg",
+    min_donation_amnt: 0,
+  };
 }
 
 function segragate(tokens: Token[]): { [key in TokenType]: Token[] } {
@@ -156,51 +166,19 @@ function isPromise<T>(val: any): val is PromiseSettledResult<T> {
   return key in val;
 }
 
-type Result = { result: string } | { error: { code: number; message: string } };
-
-async function request(
-  chain: FetchedChain,
-  { method, params }: RequestArguments
-) {
-  const result = await fetch(chain.rpc_url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      jsonrpc: "2.0",
-      id: 1,
-      method,
-      params,
-    }),
-  }).then<Result>((res) => {
-    if (!res.ok) throw new Error(`Failed request ${method}`);
-    return res.json();
-  });
-
-  if ("error" in result) throw new Error(result.error.message);
-
-  return result.result;
-}
-
-async function _erc20Balance(
-  token: Token,
+async function cw20Balance(
+  contract: string,
   address: string,
-  chain: FetchedChain
-) {
-  const erc20 = new Interface(ERC20Abi);
-  const data = erc20.encodeFunctionData("balanceOf", [address]);
-
-  const result = await request(chain, {
-    method: EIPMethods.eth_call,
-    params: [
-      {
-        to: token.token_id,
-        data,
-      },
-      "latest",
-    ],
-  });
-
-  const decoded: BigNumber = erc20.decodeFunctionResult("balanceOf", result)[0];
-
-  return decoded.toString();
+  lcd: string
+): Promise<string> {
+  return fetch(
+    `${lcd}/cosmwasm/wasm/v1/contract/${contract}/smart/${objToBase64({
+      balance: { address },
+    })}`
+  )
+    .then<{ data: CW20Balance }>((res) => {
+      if (!res.ok) throw new Error("failed to get cw20 balance");
+      return res.json();
+    })
+    .then((result) => result.data.balance);
 }

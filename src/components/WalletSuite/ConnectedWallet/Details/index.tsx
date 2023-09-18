@@ -2,8 +2,10 @@ import { Popover } from "@headlessui/react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useWalletProfileQuery } from "services/aws/aws";
+import { useErrorContext } from "contexts/ErrorContext";
 import { WalletState, useSetWallet } from "contexts/WalletContext";
 import { logger } from "helpers";
+import { GENERIC_ERROR_MESSAGE, PAYMENT_WORDS } from "constants/common";
 import { appRoutes } from "constants/routes";
 import Address from "./Address";
 import AdminLinks from "./AdminLinks";
@@ -15,13 +17,12 @@ import MyEndowments from "./MyEndowments";
 
 export default function Details(props: WalletState) {
   const {
-    data: profile,
+    data: walletProfile,
     isLoading,
     isFetching,
     isError,
     error,
   } = useWalletProfileQuery(props.address);
-
   useEffect(() => {
     if (!isLoading && !isFetching && isError) {
       logger.error(error);
@@ -36,8 +37,11 @@ export default function Details(props: WalletState) {
             <MobileTitle className="sm:hidden" onClose={close} />
             <AdminLinks {...props} />
 
-            {!!profile?.admin?.length && (
-              <MyEndowments endowments={profile.admin} />
+            {!!walletProfile?.admin?.length && (
+              <MyEndowments
+                endowments={walletProfile.admin}
+                version={walletProfile.version}
+              />
             )}
 
             <div className="grid gap-3 p-4 border-b border-prim">
@@ -47,7 +51,8 @@ export default function Details(props: WalletState) {
             </div>
             <MyDonations address={props.address} />
             <Favourites
-              bookmarks={profile?.bookmarks}
+              version={walletProfile?.version ?? "latest"}
+              bookmarks={walletProfile?.bookmarks}
               isError={isError}
               isLoading={isLoading || isFetching}
             />
@@ -66,7 +71,7 @@ function MyDonations({ address }: { address: string }) {
         to={`${appRoutes.donations}/${address}`}
         className="font-heading font-bold text-sm uppercase hover:text-orange"
       >
-        My Donations
+        My {PAYMENT_WORDS.noun.plural}
       </Link>
     </div>
   );
@@ -74,9 +79,20 @@ function MyDonations({ address }: { address: string }) {
 
 function DisconnectBtn() {
   const { disconnect } = useSetWallet();
+  const { handleError } = useErrorContext();
+
+  const handle = () => {
+    try {
+      disconnect();
+    } catch (error) {
+      logger.error(error);
+      handleError(error, GENERIC_ERROR_MESSAGE);
+    }
+  };
+
   return (
     <button
-      onClick={disconnect}
+      onClick={handle}
       className="btn h-12 flex-none bg-orange-l5 dark:bg-blue-d5 hover:bg-orange-l3 hover:dark:bg-blue-d7 uppercase font-body font-bold text-base sm:rounded-b-lg "
     >
       disconnect

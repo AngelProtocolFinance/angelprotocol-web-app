@@ -1,57 +1,22 @@
-import { FullTagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
+import { ContractQueryTypes } from "./queryContract/types";
 
-export const rootTags = [
-  "gov",
-  "admin",
-  "indexfund",
-  "account",
-  "registrar",
-  "custom",
-] as const;
+const contractTags: ContractQueryTypes[] = [
+  "registrar.config",
 
-type JunoTag = (typeof rootTags)[number];
+  "index-fund.config",
+  "index-fund.fund",
 
-export enum adminTags {
-  proposals = "proposals",
-  proposal = "proposal",
-  members = "members",
-  member = "member",
-  config = "config",
-  votes = "votes",
-  voter = "voter",
-  voters = "voters",
-  applications = "applications",
-}
+  "gift-card.balance",
 
-export enum govTags {
-  polls = "polls",
-  state = "state",
-  staker = "staker",
-  config = "config",
-  halo_balance = "halo_balance",
-  halo_info = "halo_info",
-}
+  "erc20.balance",
 
-export enum indexfundTags {
-  alliance_members = "alliance_members",
-  fund_list = "fund_list",
-  config = "config",
-}
-
-export enum registrarTags {
-  config = "config",
-  vault_list = "vault-list",
-}
-
-export enum accountTags {
-  endowment = "endowment",
-  endowments = "endowments",
-  profile = "profile",
-  state = "state",
-}
-
-export const defaultProposalTags: FullTagDescription<JunoTag>[] = [
-  //basic tags to invalidate
-  { type: "admin", id: adminTags.proposals },
-  { type: "admin", id: adminTags.proposal },
+  "accounts.endowment",
+  "accounts.state",
+  "accounts.token-balance",
 ];
+
+const customTags = ["multisig-subgraph"] as const;
+
+export const tags = [...contractTags, ...customTags];
+
+export type EVMTag = (typeof tags)[number];

@@ -5,7 +5,7 @@ import Status, { ErrorStatus, LoadingStatus } from "components/Status";
 import { isEmpty } from "helpers";
 
 type Base = BaseQueryFn<any, unknown, unknown, {}, {}>;
-export type QueryState<T> = Pick<
+type QueryState<T> = Pick<
   TypedUseQueryHookResult<T, any, Base>,
   "isLoading" | "isError" | "data"
 >;
@@ -60,7 +60,7 @@ export default function QueryLoader<T>({
 
     if (filterFn) {
       const filtered = data.filter(filterFn);
-      if (isEmpty(data)) {
+      if (isEmpty(filtered)) {
         return renderMessage(
           (msg) => <Status icon="Info">{msg || "No data"}</Status>,
           messages.empty,

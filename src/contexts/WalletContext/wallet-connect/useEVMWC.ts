@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from "react";
 import { Connection, ProviderInfo } from "../types";
 import { Connected, WalletState } from "./types";
 import { SessionTypes, SignClientTypes } from "@walletconnect/types";
-import metamaskIcon from "assets/icons/wallets/metamask.png";
 import { _pairing, _session, account } from "helpers/wallet-connect";
 import { EIPMethods } from "constants/evm";
 import { WALLET_METADATA } from "../constants";
@@ -14,7 +13,7 @@ const wcModal = new WalletConnectModal({
   chains: ["eip155:137"],
   mobileWallets: [
     {
-      id: "metamaskid",
+      id: "metamask",
       name: "MetaMask",
       links: {
         native: "metamask://",
@@ -23,7 +22,7 @@ const wcModal = new WalletConnectModal({
     },
   ],
   walletImages: {
-    metamaskid: metamaskIcon,
+    metamask: "/icons/wallets/metamask.png",
   },
 });
 
@@ -142,6 +141,7 @@ export function useEVMWC() {
       : undefined;
 
   const connection: Connection = {
+    providerId: "evm-wc",
     name: "Metamask mobile",
     logo: WALLET_METADATA["evm-wc"].logo,
     installUrl: WALLET_METADATA["evm-wc"].logo,

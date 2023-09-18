@@ -1,7 +1,8 @@
-import { ProviderId } from "contexts/WalletContext/types";
 import { InjectedProvider, RequestArguments } from "types/evm";
+import { ProviderId } from "types/lists";
 import { Dwindow } from "types/window";
-import { _session, account } from "../wallet-connect";
+import web3Auth from "contexts/WalletContext/useWeb3Auth/web3AuthSetup";
+import { _session, account } from "helpers/wallet-connect";
 
 export async function wcProvider(): Promise<Partial<InjectedProvider>> {
   //FUTURE: pass peer name in wcProvider call
@@ -20,7 +21,6 @@ export async function wcProvider(): Promise<Partial<InjectedProvider>> {
     },
   };
 }
-
 export async function getProvider(
   providerId: ProviderId
 ): Promise<InjectedProvider | undefined> {
@@ -30,12 +30,39 @@ export async function getProvider(
       return dwindow.BinanceChain;
     case "metamask":
       return dwindow.ethereum;
+    case "web3auth-torus":
+      return web3Auth.provider as InjectedProvider;
     /** only used in sendTx */
     case "evm-wc":
       return wcProvider() as Promise<InjectedProvider>;
     case "xdefi-evm":
-      return dwindow.xfi?.ethereum as Promise<InjectedProvider>;
+      return dwindow.xfi?.ethereum as InjectedProvider;
     default:
       return undefined;
   }
+}
+
+type Result = { result: string } | { error: { code: number; message: string } };
+export async function request({
+  method,
+  params,
+  rpcURL,
+}: RequestArguments & { rpcURL: string }) {
+  const result = await fetch(rpcURL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      jsonrpc: "2.0",
+      id: 1,
+      method,
+      params,
+    }),
+  }).then<Result>((res) => {
+    if (!res.ok) throw new Error(`Failed request ${method}`);
+    return res.json();
+  });
+
+  if ("error" in result) throw new Error(result.error.message);
+
+  return result.result;
 }

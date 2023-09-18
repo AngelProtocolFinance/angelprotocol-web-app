@@ -28,9 +28,12 @@ export default function ProgressIndicator({ step, classes = "" }: Props) {
         ref.isOpen = shouldOpen;
       }
     },
-    150,
-    { isOpen: true },
-    { shouldAttachListener: true, shouldCallOnResizeOnLoad: true }
+    {
+      shouldAttachListener: true,
+      shouldCallOnResizeOnLoad: true,
+      debounceTime: 150,
+      ref: { isOpen: isOtherStepsShown },
+    }
   );
 
   return (
@@ -89,7 +92,7 @@ function Step({
         {/** circle */}
         <div
           className={`w-4 aspect-square ${
-            isDone ? "bg-orange" : "bg-gray-l2 dark:bg-bluegray"
+            isDone ? "bg-orange" : "bg-gray-l3 dark:bg-bluegray"
           } rounded-full transform -translate-x-1/2`}
         />
         <span

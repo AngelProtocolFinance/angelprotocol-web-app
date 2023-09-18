@@ -1,17 +1,14 @@
 import { useEffect } from "react";
-import APLogo from "components/APLogo";
+import Image from "components/Image";
 import WalletSuite from "components/WalletSuite";
 import { Steps } from "components/donation";
 import { useSetter } from "store/accessors";
-import { setRecipient } from "slices/donation";
+import { DonationRecipient, setRecipient } from "slices/donation";
 import { getPossessiveForm } from "helpers";
+import { LOGO_DARK, PAYMENT_WORDS, titleCase } from "constants/common";
 import useWidgetParams from "./useWidgetParams";
 
-export default function InnerComponent(props: {
-  id: number;
-  name: string;
-  isKYCRequired: boolean;
-}) {
+export default function InnerComponent(props: DonationRecipient) {
   const { hideText, ...rest } = useWidgetParams();
 
   const dispatch = useSetter();
@@ -33,10 +30,10 @@ export default function InnerComponent(props: {
           {!hideText && (
             <>
               <p className="font-body text-xs sm:text-base">
-                Donate today to {getPossessiveForm(props.name)} endowment. Your
-                donation will be protected and compounded in perpetuity to
-                provide {props.name} with a long-term, sustainable runway. Give
-                once, give forever!
+                {titleCase(PAYMENT_WORDS.verb)} today to{" "}
+                {getPossessiveForm(props.name)} endowment. Your donation will be
+                protected and compounded in perpetuity to provide {props.name}{" "}
+                with a long-term, sustainable runway. Give once, give forever!
               </p>
               <p className="font-body text-xs sm:text-base">
                 Make sure to check out the many crypto and fiat donation
@@ -50,7 +47,7 @@ export default function InnerComponent(props: {
         </section>
       </div>
       <footer className="flex justify-center items-center h-20 w-full bg-blue dark:bg-blue-d3">
-        <APLogo className="w-20" />
+        <Image className="w-20" {...LOGO_DARK} />
       </footer>
     </div>
   );

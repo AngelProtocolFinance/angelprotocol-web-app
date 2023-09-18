@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
 import { TableProps } from "./types";
-import { useSortDonations } from "services/apes";
 import ExtLink from "components/ExtLink";
 import { HeaderButton } from "components/HeaderButton";
 import Icon from "components/Icon";
 import useKYC from "components/KYC/useKYC";
 import TableSection, { Cells } from "components/TableSection";
+import useSort from "hooks/useSort";
 import { getTxUrl, humanize } from "helpers";
+import { chainIds } from "constants/chainIds";
 import { appRoutes } from "constants/routes";
 import LoadMoreBtn from "./LoadMoreBtn";
 
@@ -18,8 +19,10 @@ export default function Table({
   hasMore,
   onLoadMore,
 }: TableProps) {
-  const { handleHeaderClick, sorted, sortDirection, sortKey } =
-    useSortDonations(donations);
+  const { handleHeaderClick, sorted, sortDirection, sortKey } = useSort(
+    donations,
+    "date"
+  );
 
   const showKYCForm = useKYC();
 
@@ -96,7 +99,11 @@ export default function Table({
               }`}
             >
               <Link
-                to={`${appRoutes.profile}/${row.id}`}
+                to={`${
+                  appRoutes[
+                    row.chainId === chainIds.juno ? "profile" : "marketplace"
+                  ]
+                }/${row.id}`}
                 className="flex items-center justify-between gap-1 cursor-pointer text-sm hover:underline"
               >
                 <span className="truncate max-w-[12rem]">

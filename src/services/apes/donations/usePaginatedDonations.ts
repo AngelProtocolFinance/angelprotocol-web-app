@@ -5,13 +5,14 @@ import {
   DonationsQueryParams,
   PaginatedAWSQueryRes,
 } from "types/aws";
-import { useSetter } from "store/accessors";
-import useDebouncer from "hooks/useDebouncer";
 import {
   updateDonationsQueryData,
   useDonationsQuery,
   useLazyDonationsQuery,
-} from "./index";
+} from "services/apes";
+import { useSetter } from "store/accessors";
+import useDebouncer from "hooks/useDebouncer";
+import { chainIds } from "constants/chainIds";
 
 type DonorOwner = { donorAddress: string };
 type EndowmentOwner = { endowmentId: string };
@@ -31,6 +32,7 @@ export default function usePaginatedDonationRecords<T extends RecordOwner>(
 
   const [params, setParams] = useState<DonationsQueryParams>({
     id,
+    chain_id: chainIds.polygon,
   });
 
   const queryState = useDonationsQuery(params, {

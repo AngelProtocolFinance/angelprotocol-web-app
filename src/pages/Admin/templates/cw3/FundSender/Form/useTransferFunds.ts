@@ -1,85 +1,85 @@
 import { useFormContext } from "react-hook-form";
-import { FundSendMeta } from "pages/Admin/types";
-import { FundSendValues } from "pages/Admin/types";
-import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/contracts";
-import { useAdminResources } from "pages/Admin/Guard";
-import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
-import Popup from "components/Popup";
-import CW3 from "contracts/CW3";
-import CW20 from "contracts/CW20";
-import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
-import { scaleToStr } from "helpers";
+import { FormValues as FV } from "../types";
+import { TransferMeta, TxMeta } from "types/tx";
+import { createTx, encodeTx } from "contracts/createTx/createTx";
+import useTxSender from "hooks/useTxSender";
+import { scale, toAbiStr } from "helpers";
 import { getTagPayloads } from "helpers/admin";
-import { contracts } from "constants/contracts";
-import { axlUSDCDenom, denoms, tokens } from "constants/tokens";
+import { EMPTY_DATA } from "constants/evm";
+import { isTooltip, useAdminContext } from "../../../../Context";
 
 export default function useTransferFunds() {
   const {
     handleSubmit,
     formState: { isSubmitting, isValid, isDirty },
-  } = useFormContext<FundSendValues>();
-  const { cw3, propMeta } = useAdminResources();
-  //TODO: use wallet token[] to list amounts to transfer
-  const { wallet } = useGetWallet();
-  const { showModal } = useModalContext();
-  const sendTx = useCosmosTxSender();
+  } = useFormContext<FV>();
+  const { multisig, txResource } = useAdminContext();
+  const sendTx = useTxSender();
 
-  async function transferFunds(data: FundSendValues) {
-    const balance =
-      data.denom === axlUSDCDenom ? data.usdBalance : data.haloBalance;
-    if (data.amount > balance) {
-      showModal(Popup, {
-        message: `not enough ${tokens[data.denom]} balance`,
-      });
-      return;
-    }
+  async function transferFunds(fv: FV) {
+    if (isTooltip(txResource)) throw new Error(txResource);
+    const { token, recipient } = fv;
+    const scaledAmount = scale(token.amount, token.decimals).toHex();
 
-    let embeddedMsg: EmbeddedWasmMsg | EmbeddedBankMsg;
-    //this wallet is not even rendered when wallet is disconnected
-    const cw20Contract = new CW20(wallet, contracts.halo_token);
-    if (data.denom === denoms.halo) {
-      embeddedMsg = cw20Contract.createEmbeddedTransferMsg(
-        scaleToStr(data.amount), //halo decimals:6
-        data.recipient
-      );
-    } else {
-      embeddedMsg = cw20Contract.createEmbeddedBankMsg(
-        [
-          {
-            amount: scaleToStr(data.amount),
-            denom: denoms.axlusdc,
-          },
-        ],
-        data.recipient
-      );
-    }
-
-    const contract = new CW3(wallet, cw3);
-    const fundTransferMeta: FundSendMeta = {
-      type: "cw3_transfer",
-      data: {
-        amount: data.amount,
-        denom: data.denom,
-        recipient: data.recipient,
+    const metadata: TransferMeta = {
+      to: recipient,
+      token: {
+        symbol: token.symbol,
+        amount: +token.amount,
+        logo: token.logo,
       },
     };
-    const proposalMsg = contract.createProposalMsg(
-      data.title,
-      data.description,
-      [embeddedMsg],
-      JSON.stringify(fundTransferMeta)
-    );
+    const toEncode: TxMeta = {
+      id: "erc20.transfer",
+      data: metadata,
+      title: fv.title,
+      description: fv.description,
+    };
+
+    const native: ReturnType<typeof encodeTx> = [
+      EMPTY_DATA,
+      recipient,
+      { id: "erc20.transfer", encoded: toAbiStr(toEncode) },
+    ];
+    const [data, dest, meta, value] =
+      token.type === "erc20"
+        ? [
+            ...encodeTx(
+              "erc20.transfer",
+              {
+                erc20: token.token_id,
+                to: recipient,
+                amount: scaledAmount,
+              },
+              {
+                content: metadata,
+                title: fv.title,
+                description: fv.description,
+              }
+            ),
+            "0" /** value for non payable */,
+          ]
+        : [...native, scaledAmount];
+
+    const { wallet, txMeta } = txResource;
+    const tx = createTx(wallet.address, "multisig.submit-transaction", {
+      multisig,
+      destination: dest,
+      value,
+      data,
+      meta: meta.encoded,
+    });
 
     await sendTx({
-      msgs: [proposalMsg],
-      ...propMeta,
-      tagPayloads: getTagPayloads(propMeta.willExecute && "cw3_transfer"),
+      content: { type: "evm", val: tx },
+      ...txMeta,
+      tagPayloads: getTagPayloads(txMeta.willExecute && meta.id),
     });
   }
 
   return {
     transferFunds: handleSubmit(transferFunds),
     isSubmitDisabled: isSubmitting || !isValid || !isDirty,
+    tooltip: isTooltip(txResource) ? txResource : undefined,
   };
 }

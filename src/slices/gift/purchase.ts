@@ -1,77 +1,77 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { SignDoc } from "types/cosmos";
+import { EstimatedTx, isTxResultError } from "types/tx";
 import { invalidateApesTags } from "services/apes";
 import { WalletState } from "contexts/WalletContext";
-import Contract from "contracts/Contract";
-import { createAuthToken, getWasmAttribute, logger } from "helpers";
-import { EMAIL_SUPPORT } from "constants/common";
+import { createAuthToken, logger } from "helpers";
+import { sendTx } from "helpers/tx";
+import { GENERIC_ERROR_MESSAGE } from "constants/common";
+import { EMAIL_SUPPORT } from "constants/env";
 import { APIs } from "constants/urls";
 import gift, { GiftDetails, TxStatus, setTxStatus } from "./index";
 
 type Args = {
   wallet: WalletState;
-  doc: SignDoc;
+  tx: EstimatedTx;
   details: GiftDetails;
 };
 
 export const purchase = createAsyncThunk<void, Args>(
   `${gift.name}/purchase`,
-  async ({ wallet, doc, details }, { dispatch }) => {
+  async ({ wallet, tx, details }, { dispatch }) => {
     const updateTx = (status: TxStatus) => {
       dispatch(setTxStatus(status));
     };
 
     try {
       updateTx({ msg: "Payment is being processed..." });
-      const contract = new Contract(wallet);
-      const result = await contract.signAndBroadcast(doc);
+      const result = await sendTx(wallet, tx);
 
-      if (!result.code) {
-        /** recipient is specified, show tx link to purchaser */
-        if (details.recipient) {
-          return updateTx({ hash: result.txhash });
-        }
+      if (isTxResultError(result)) {
+        return updateTx({ error: result.error });
+      }
 
-        /**if no recipient is provided */
-        /** extract deposit id */
-        const id = getWasmAttribute("deposit_id", result.logs);
-        /** generate secret */
-        let randNums = window.crypto.getRandomValues(new BigUint64Array(62));
-        let preImage = `${randNums[0]}${randNums[1]}`;
-        let secret = `ap-${details.chainId}-${preImage}`;
+      const { hash, data } = result;
+      const depositID = data as null | string;
+      if (details.recipient) {
+        return updateTx({ hash: result.hash });
+      }
 
-        updateTx({ msg: "Processing giftcard code..." });
-        const res = await fetch(APIs.aws + "/v1/giftcard/deposit", {
-          headers: {
-            authorization: createAuthToken("angelprotocol-web-app"),
-          },
-          method: "POST",
-          body: JSON.stringify({
-            secret,
-            depositId: Number(id!),
-            chain: details.chainId,
-          }),
-        });
-
-        if (!res.ok) {
-          return updateTx({
-            error: `Failed to save gift card code. Kindly contact ${EMAIL_SUPPORT}.`,
-            hash: result.txhash,
-          });
-        }
-        /** no problems, save giftcard code on user's computer */
-        saveCode(secret);
-        /** show gift card code to user */
-        updateTx({ secret });
-      } else {
-        updateTx({
-          error:
-            "The payment wasn’t processed. Please double check your payment details or change your payment method and try again.",
+      if (!depositID) {
+        return updateTx({
+          error: `Failed to save gift card code. Kindly contact ${EMAIL_SUPPORT}. Transaction: ${hash}`,
         });
       }
+
+      let randNums = window.crypto.getRandomValues(new BigUint64Array(62));
+      let preImage = `${randNums[0]}${randNums[1]}`;
+      let secret = `ap-${details.chainId}-${preImage}`;
+
+      updateTx({ msg: "Processing giftcard code..." });
+      const res = await fetch(APIs.aws + "/v1/giftcard/deposit", {
+        headers: {
+          authorization: createAuthToken("angelprotocol-web-app"),
+        },
+        method: "POST",
+        body: JSON.stringify({
+          secret,
+          depositId: Number(depositID),
+          chain: details.chainId,
+        }),
+      });
+
+      if (!res.ok) {
+        return updateTx({
+          error: `Failed to save gift card code. Kindly contact ${EMAIL_SUPPORT}. Transaction: ${hash}`,
+        });
+      }
+
+      /** no problems, save giftcard code on user's computer */
+      saveCode(secret);
+      /** show gift card code to user */
+      updateTx({ secret });
     } catch (err) {
       logger.error(err);
-      updateTx({ error: "Unexpected error occured. Please try again later." });
+      updateTx({ error: GENERIC_ERROR_MESSAGE });
     } finally {
       /** invalidate user balance */
       dispatch(invalidateApesTags(["chain"]));

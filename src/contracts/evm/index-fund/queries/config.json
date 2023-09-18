@@ -1,0 +1,32 @@
+[
+  {
+    "inputs": [],
+    "name": "queryConfig",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "registrarContract",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "fundRotation",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "fundingGoal",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct IndexFundStorage.Config",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

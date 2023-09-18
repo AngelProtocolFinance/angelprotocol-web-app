@@ -29,7 +29,7 @@ export function getRegistrationState(
         init: getInit(c),
         contact: formatContactPerson(c, r),
         documentation: formatDocumentation(r),
-        wallet: { address: m.JunoWallet },
+        wallet: { address: m.Wallet },
         status: r.RegistrationStatus,
         endowId: m.EndowmentId,
       },
@@ -67,8 +67,6 @@ function getInit(i: InitContact): InitReg {
   return {
     email: i.Email,
     reference: i.PK,
-    isEmailVerified: i.EmailVerified,
-    lastVerified: i.EmailVerificationLastSentDate,
   };
 }
 
@@ -86,6 +84,7 @@ function formatContactPerson(
     otherRole: c.OtherRole,
     referralMethod: c.ReferralMethod,
     otherReferralMethod: c.OtherReferralMethod,
+    referralCode: c.ReferralCode,
     goals: c.Goals,
   };
 }
@@ -94,42 +93,49 @@ function formatDocumentation({
   Tier,
   ProofOfIdentity: poi,
   ProofOfRegistration: por,
-  FinancialStatements: fs,
-  AuditedFinancialReports: afr,
   Website,
   UN_SDG,
   KycDonorsOnly,
   HqCountry,
   EndowDesignation,
   ActiveInCountries,
+  AuthorizedToReceiveTaxDeductibleDonations,
+  FiscalSponsorshipAgreementSigningURL = "",
+  SignedFiscalSponsorshipAgreement = "",
+  EIN,
+  LegalEntityType,
+  ProjectDescription,
 }: DoneDocs["Registration"]): Documentation {
   return {
     //level 1
     proofOfIdentity: genFileAsset([poi]),
     proofOfRegistration: genFileAsset([por]),
+    ein: EIN,
+
     website: Website,
     sdgs: UN_SDG.map((sdg) => ({
       value: sdg,
       label: `${sdg} - ${unsdgs[sdg].title}`,
     })),
-    hqCountry: { name: HqCountry, flag: "" },
+    hqCountry: { name: HqCountry, flag: "", code: "" },
     endowDesignation: { value: EndowDesignation, label: EndowDesignation },
-    //level 2
-    financialStatements: genFileAsset(fs || []),
-
-    //level 3
-    auditedFinancialReports: genFileAsset(afr || []),
     /**TODO: must be part of Registration not Metadata */
-    isKYCRequired: KycDonorsOnly ? "Yes" : "No",
 
     //general
     activeInCountries: ActiveInCountries.map((c) => ({ label: c, value: c })),
+    isAuthorizedToReceiveTaxDeductibleDonations:
+      AuthorizedToReceiveTaxDeductibleDonations ? "Yes" : "No",
+    fiscalSponsorshipAgreementSigningURL: FiscalSponsorshipAgreementSigningURL,
+    signedFiscalSponsorshipAgreement: SignedFiscalSponsorshipAgreement,
+    legalEntityType: LegalEntityType,
+    projectDescription: ProjectDescription,
 
     //meta
-    level: Tier,
+    tier: Tier,
     cashEligible: false,
     hasAuthority: true,
     hasAgreedToTerms: true,
+    isAnonymousDonationsAllowed: KycDonorsOnly ? "No" : "Yes",
   };
 }
 
@@ -138,7 +144,7 @@ export function genFileAsset(previews: FileObject[]): Asset {
 }
 
 function isDoneWallet(data: SavedRegistration): data is DoneWallet {
-  const key: keyof WalletData = "JunoWallet";
+  const key: keyof WalletData = "Wallet";
   return key in data.Metadata;
 }
 

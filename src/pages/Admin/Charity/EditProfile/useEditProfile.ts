@@ -1,44 +1,36 @@
 import { SubmitHandler, useFormContext } from "react-hook-form";
-import { FormValues as FV, FlatFormValues } from "./types";
-import { EndowmentProfileUpdate } from "types/aws";
-import { useAdminResources } from "pages/Admin/Guard";
-import { useEditProfileMutation } from "services/aws/aws";
+import { FV } from "./types";
+import { ProfileUpdateMsg } from "services/types";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
 import { ImgLink } from "components/ImgEditor";
 import { TxPrompt } from "components/Prompt";
 import { isEmpty } from "helpers";
 import { getPayloadDiff } from "helpers/admin";
 import { getFullURL, uploadFiles } from "helpers/uploadFiles";
-import { appRoutes } from "constants/routes";
-import { createADR36Payload } from "./createADR36Payload";
-
-// import optimizeImage from "./optimizeImage";
+import { useAdminContext } from "../../Context";
+import useUpdateEndowmentProfile from "../common/useUpdateEndowmentProfile";
+import { ops } from "./ops";
+import { toProfileUpdate } from "./update";
 
 export default function useEditProfile() {
-  const { endowmentId, endowment } = useAdminResources();
+  const { id, owner } = useAdminContext<"charity">(ops);
   const {
     reset,
     handleSubmit,
+    getValues,
     formState: { isSubmitting },
   } = useFormContext<FV>();
 
   const { showModal } = useModalContext();
-  const { wallet } = useGetWallet();
-  const [submit] = useEditProfileMutation();
+  const updateProfile = useUpdateEndowmentProfile();
 
-  const editProfile: SubmitHandler<FV> = async ({
-    initial,
-    image,
-    logo,
-    hq_country,
-    categories_sdgs,
-    active_in_countries,
-    endow_designation,
-    ...newData
-  }) => {
+  const editProfile: SubmitHandler<FV> = async ({ initial, type, ...fv }) => {
     try {
-      const [bannerUrl, logoUrl] = await uploadImgs([image, logo], () => {
+      /** special case for edit profile: since upload happens prior
+       * to tx submission. Other users of useTxSender
+       */
+
+      const [bannerUrl, logoUrl] = await uploadImgs([fv.image, fv.logo], () => {
         showModal(
           TxPrompt,
           { loading: "Uploading images.." },
@@ -46,52 +38,26 @@ export default function useEditProfile() {
         );
       });
 
-      const changes: FlatFormValues = {
-        image: bannerUrl,
-        logo: logoUrl,
-        hq_country: hq_country.name,
-        endow_designation: endow_designation.value,
-        categories_sdgs: categories_sdgs.map((opt) => opt.value),
-        active_in_countries: active_in_countries.map((opt) => opt.value),
-        ...newData,
-      };
+      const update = toProfileUpdate({
+        type: "final",
+        data: { ...fv, id, owner },
+        urls: { image: bannerUrl, logo: logoUrl },
+      });
 
-      const diff = getPayloadDiff(initial, changes);
+      const diffs = getPayloadDiff(initial, update);
 
-      if (Object.entries(diff).length <= 0) {
+      if (Object.entries(diffs).length <= 0) {
         return showModal(TxPrompt, { error: "No changes detected" });
       }
 
-      /** already clean - no need to futher clean "": to unset values { field: val }, field must have a value 
-     like ""; unlike contracts where if fields is not present, val is set to null.
-    */
-      const updates: Partial<EndowmentProfileUpdate> = {
-        ...diff,
-        id: endowmentId,
-        owner: endowment.owner,
-      };
-
-      showModal(
-        TxPrompt,
-        { loading: "Signing changes" },
-        { isDismissible: false }
-      );
-      const payload = await createADR36Payload(updates, wallet!);
-
-      const result = await submit(payload); //wallet is asserted in admin guard
-      if ("error" in result) {
-        return showModal(TxPrompt, { error: "Failed to update profile" });
+      //only include top level keys that appeared on diff
+      const cleanUpdate: ProfileUpdateMsg = { id, owner };
+      for (const [path] of diffs) {
+        const key = path.split(".")[0] as keyof ProfileUpdateMsg;
+        (cleanUpdate as any)[key] = update[key];
       }
 
-      return showModal(TxPrompt, {
-        success: {
-          message: "Profile successfully updated",
-          link: {
-            description: "View changes",
-            url: `${appRoutes.profile}/${endowmentId}`,
-          },
-        },
-      });
+      await updateProfile(cleanUpdate);
     } catch (err) {
       showModal(TxPrompt, {
         error: err instanceof Error ? err.message : "Unknown error occured",
@@ -103,7 +69,8 @@ export default function useEditProfile() {
     reset,
     editProfile: handleSubmit(editProfile),
     isSubmitting,
-    id: endowmentId,
+    id,
+    type: getValues("type"),
   };
 }
 

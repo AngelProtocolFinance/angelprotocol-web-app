@@ -1,10 +1,8 @@
-import { DonationRecord } from "types/aws";
-import { SortDirection } from "services/apes";
 import Icon from "components/Icon";
 
-export function HeaderButton<T extends DonationRecord>(
+export function HeaderButton<T>(
   props: React.ButtonHTMLAttributes<HTMLButtonElement> & {
-    _sortDirection: SortDirection;
+    _sortDirection: "asc" | "desc";
     _sortKey: keyof T;
     _activeSortKey: keyof T;
   }
@@ -14,12 +12,11 @@ export function HeaderButton<T extends DonationRecord>(
   return (
     <button
       {...restProps}
-      className="flex items-center justify-start gap-1 uppercase relative"
+      className="flex items-center justify-between gap-1 uppercase"
     >
       <span>{children}</span>
 
       <Icon
-        size={15}
         type={
           _activeSortKey === _sortKey
             ? _sortDirection === "asc"
@@ -27,7 +24,7 @@ export function HeaderButton<T extends DonationRecord>(
               : "Down"
             : "Unsorted"
         }
-        className={`absolute -right-6 ${
+        className={`w-4 h-4 shrink-0 ${
           _activeSortKey === _sortKey
             ? "text-gray-d2 dark:text-white"
             : "text-gray dark:text-white"

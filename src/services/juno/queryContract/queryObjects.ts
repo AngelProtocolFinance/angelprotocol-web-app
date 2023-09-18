@@ -1,98 +1,254 @@
+import { BigNumber } from "@ethersproject/bignumber";
+import {
+  DGenericBalance,
+  toBalMap,
+  toEndowType,
+  toFee,
+  toPermission,
+  toSplit,
+} from "./decoded-types";
 import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
+import { AccountMessages } from "types/typechain-types/contracts/core/accounts/interfaces/IAccounts";
+import {
+  IIndexFund,
+  IndexFundStorage,
+} from "types/typechain-types/contracts/core/index-fund/IndexFund";
+import { LibAccounts as RegistrarLibAccounts } from "types/typechain-types/contracts/core/registrar/LocalRegistrar";
+import { RegistrarStorage } from "types/typechain-types/contracts/core/registrar/interfaces/IRegistrar";
+import { accounts } from "contracts/evm/Account";
+import { erc20 } from "contracts/evm/ERC20";
+import { giftCard } from "contracts/evm/gift-card";
+import { indexFund } from "contracts/evm/index-fund";
+import { registrar } from "contracts/evm/registrar";
+import { toTuple } from "helpers";
 
-export const queryObject: {
+export const queryObjects: {
   [K in QT]: Q[K]["args"] extends null
-    ? object
-    : (args: Q[K]["args"]) => object;
+    ? [string, Q[K]["transform"]]
+    : [(args: Q[K]["args"]) => string, Q[K]["transform"]];
 } = {
   /** registrar */
-  regVaultRates: { approved_vault_rate_list: {} },
-  regConfig: { config: {} },
-  regVaultList(options) {
-    return { vault_list: options };
-  },
+  "registrar.owner": [
+    registrar.encodeFunctionData("owner", []),
+    (result) => registrar.decodeFunctionResult("owner", result)[0],
+  ],
+  "registrar.config": [
+    registrar.encodeFunctionData("queryConfig", []),
+    (result) => {
+      const d: RegistrarStorage.ConfigStructOutput =
+        registrar.decodeFunctionResult("queryConfig", result)[0];
+      return {
+        accountsContract: d.accountsContract.toLowerCase(),
+        apTeamMultisig: d.apTeamMultisig.toLowerCase(),
+        treasury: d.treasury.toLowerCase(),
+        indexFundContract: d.indexFundContract.toLowerCase(),
+        haloToken: d.haloToken.toLowerCase(),
+        govContract: d.govContract.toLowerCase(),
+        fundraisingContract: d.fundraisingContract.toLowerCase(),
+        uniswapRouter: d.uniswapRouter.toLowerCase(),
+        uniswapFactory: d.uniswapFactory.toLowerCase(),
+        multisigFactory: d.multisigFactory.toLowerCase(),
+        multisigEmitter: d.multisigEmitter.toLowerCase(),
+        charityApplications: d.charityApplications.toLowerCase(),
+        proxyAdmin: d.proxyAdmin.toLowerCase(),
+        usdcAddress: d.usdcAddress.toLowerCase(),
+        wMaticAddress: d.wMaticAddress.toLowerCase(),
+        gasFwdFactory: d.gasFwdFactory.toLowerCase(),
+      };
+    },
+  ],
+  "registrar.fee-setting": [
+    ({ type }) => {
+      const feeType = (() => {
+        switch (type) {
+          case "Harvest":
+            return 1;
+          case "Deposit":
+            return 2;
+          case "DepositCharity":
+            return 3;
+          case "Withdraw":
+            return 4;
+          case "WithdrawCharity":
+            return 5;
+          case "EarlyLockedWithdraw":
+            return 6;
+          case "EarlyLockedWithdrawCharity":
+            return 7;
+          default: //Default
+            return 0;
+        }
+      })();
+      return registrar.encodeFunctionData("getFeeSettingsByFeeType", [feeType]);
+    },
+    (result) => {
+      const d: RegistrarLibAccounts.FeeSettingStructOutput =
+        registrar.decodeFunctionResult("getFeeSettingsByFeeType", result)[0];
+      return {
+        payoutAddress: d.payoutAddress.toLowerCase(),
+        bps: d.bps.toNumber(),
+      };
+    },
+  ],
 
-  /** index fund */
-  ifFunds: { funds_list: {} },
-  ifFund({ id }) {
-    return {
-      fund_details: { fund_id: id },
-    };
-  },
-  ifAlliance: { alliance_members: {} },
-  ifConfig: { config: {} },
+  "index-fund.config": [
+    indexFund.encodeFunctionData("queryConfig", []),
+    (result) => {
+      const d: IndexFundStorage.ConfigStructOutput =
+        indexFund.decodeFunctionResult("queryConfig", result)[0];
 
-  /** gov */
-  govStaker({ addr }) {
-    return { staker: { address: addr } };
-  },
-  govState: { state: {} },
-  govConfig: { config: {} },
-  govPolls: { polls: {} },
+      return {
+        registrarContract: d.registrarContract.toLowerCase(),
+        fundRotation: d.fundRotation.toNumber(),
+        fundingGoal: d.fundingGoal.toNumber(),
+      };
+    },
+  ],
+  "index-fund.fund": [
+    ({ id }) => indexFund.encodeFunctionData("queryFundDetails", [id]),
+    (result) => {
+      const d: IIndexFund.FundResponseStructOutput =
+        indexFund.decodeFunctionResult("queryFundDetails", result)[0];
 
-  /** cw20 */
-  cw20Info: {},
-  cw20Balance({ addr }) {
-    return { balance: { address: addr } };
-  },
+      return {
+        id: d.id.toNumber(),
+        name: d.name,
+        description: d.description,
+        endowments: d.endowments.map((m) => m),
+        splitToLiquid: d.splitToLiquid.toNumber(),
+        expiryTime: d.expiryTime.toNumber(),
+      };
+    },
+  ],
+
+  /** erc20 */
+  "erc20.balance": [
+    ({ addr }) => erc20.encodeFunctionData("balanceOf", [addr]),
+    (result) => {
+      const decoded: BigNumber = erc20.decodeFunctionResult(
+        "balanceOf",
+        result
+      )[0];
+      return decoded.toString();
+    },
+  ],
+  "erc20.allowance": [
+    (args) => erc20.encodeFunctionData("allowance", toTuple(args)),
+    (result) => {
+      const decoded: BigNumber = erc20.decodeFunctionResult(
+        "allowance",
+        result
+      )[0];
+      return decoded.toString();
+    },
+  ],
 
   /** giftcard */
-  giftcardBalance({ addr }) {
-    return { Balance: { address: addr } };
-  },
-
-  /** cw4 member */
-  cw4Members: { list_members: {} },
-  cw4Member({ addr }) {
-    return { member: { addr } };
-  },
-
-  /** cw3 voter */
-  cw3Voter({ addr }) {
-    return { voter: { address: addr } };
-  },
-  cw3ListVoters: { list_voters: {} },
-  cw3Config: { config: {} },
-  reviewCw3Config: { config: {} },
-  cw3Proposals(options) {
-    return { reverse_proposals: options };
-  },
-  cw3Proposal({ id }) {
-    return { proposal: { proposal_id: id } };
-  },
-  cw3Votes(options) {
-    return { list_votes: options };
-  },
-
-  /** airdrop */
-  airdropIsClaimed({ stage, addr }) {
-    return { is_claimed: { stage, address: addr } };
-  },
-
-  /** lp */
-  lpSimul: {
-    simulation: {
-      offer_asset: {
-        info: {
-          native_token: {
-            denom: "juno", //FUTURE: get from args
-          },
-        },
-        amount: "1000000", //FUTURE: get from args
-      },
-      block_time: Math.round(new Date().getTime() / 1000 + 10),
+  "gift-card.balance": [
+    ({ addr }) => giftCard.encodeFunctionData("queryBalance", [addr]),
+    (result) => {
+      const d: DGenericBalance = giftCard.decodeFunctionResult(
+        "queryBalance",
+        result
+      )[0];
+      return toBalMap(d);
     },
-  },
+  ],
 
   /** account */
-  accEndowList(options) {
-    return { endowment_list: options };
-  },
+  "accounts.endowment": [
+    ({ id }) => accounts.encodeFunctionData("queryEndowmentDetails", [id]),
+    (result) => {
+      const d: AccountMessages.EndowmentResponseStructOutput =
+        accounts.decodeFunctionResult("queryEndowmentDetails", result)[0];
 
-  accEndowment({ id }) {
-    return { endowment: { id } };
-  },
-  accState({ id }) {
-    return { state: { id } };
-  },
+      const controller = d.settingsController;
+      return {
+        owner: d.owner.toLowerCase(),
+        sdgs: d.sdgs.map((s) => s.toNumber()),
+        endowType: toEndowType(d.endowType),
+        maturityTime: d.maturityTime.toNumber(),
+        allowlistedBeneficiaries: d.allowlistedBeneficiaries.map((w) =>
+          w.toLowerCase()
+        ),
+        allowlistedContributors: d.allowlistedContributors.map((w) =>
+          w.toLowerCase()
+        ),
+        maturityAllowlist: d.maturityAllowlist.map((w) => w.toLowerCase()),
+        donationMatchActive: d.donationMatchActive,
+
+        earlyLockedWithdrawFee: toFee(d.earlyLockedWithdrawFee),
+        depositFee: toFee(d.depositFee),
+        withdrawFee: toFee(d.withdrawFee),
+        balanceFee: toFee(d.balanceFee),
+
+        settingsController: {
+          acceptedTokens: toPermission(controller.acceptedTokens),
+          lockedInvestmentManagement: toPermission(
+            controller.lockedInvestmentManagement
+          ),
+          liquidInvestmentManagement: toPermission(
+            controller.liquidInvestmentManagement
+          ),
+          allowlistedBeneficiaries: toPermission(
+            controller.allowlistedBeneficiaries
+          ),
+          allowlistedContributors: toPermission(
+            controller.allowlistedContributors
+          ),
+          maturityAllowlist: toPermission(controller.maturityAllowlist),
+          maturityTime: toPermission(controller.maturityTime),
+          earlyLockedWithdrawFee: toPermission(
+            controller.earlyLockedWithdrawFee
+          ),
+          withdrawFee: toPermission(controller.withdrawFee),
+          depositFee: toPermission(controller.depositFee),
+          balanceFee: toPermission(controller.balanceFee),
+          name: toPermission(controller.name),
+          image: toPermission(controller.image),
+          logo: toPermission(controller.logo),
+          sdgs: toPermission(controller.sdgs),
+          splitToLiquid: toPermission(controller.splitToLiquid),
+          ignoreUserSplits: toPermission(controller.ignoreUserSplits),
+        },
+        ignoreUserSplits: d.ignoreUserSplits,
+        splitToLiquid: toSplit(d.splitToLiquid),
+      };
+    },
+  ],
+  "accounts.state": [
+    ({ id }) => accounts.encodeFunctionData("queryState", [id]),
+    (result) => {
+      const d: AccountMessages.StateResponseStructOutput =
+        accounts.decodeFunctionResult("queryState", result)[0];
+      const bene = d.closingBeneficiary;
+
+      return {
+        closingEndowment: d.closingEndowment,
+        //FUTURE: index-fund can also be beneficiary
+        closingBeneficiary: {
+          data: {
+            endowId: bene.data.endowId,
+            addr: bene.data.addr.toLowerCase(),
+          },
+          enumData: bene.enumData as any /** 0 | 1 | 2 */,
+        },
+      };
+    },
+  ],
+  "accounts.token-balance": [
+    (args) => accounts.encodeFunctionData("queryTokenAmount", toTuple(args)),
+    (result) => {
+      const d: BigNumber = accounts.decodeFunctionResult(
+        "queryTokenAmount",
+        result
+      )[0];
+      return d.toString();
+    },
+  ],
+  "accounts.is-daf": [
+    ({ id }) => accounts.encodeFunctionData("isDafApprovedEndowment", [id]),
+    (result) =>
+      accounts.decodeFunctionResult("isDafApprovedEndowment", result)[0],
+  ],
 };

@@ -5,8 +5,10 @@ import {
   useContext,
   useMemo,
 } from "react";
-import { Connection, ProviderId, ProviderStatus } from "./types";
-import { BaseChain, Chain, TokenWithBalance } from "types/aws";
+import { Connection, ProviderStatus } from "./types";
+import { BaseChain } from "types/aws";
+import { ProviderId } from "types/lists";
+import { Chain, TokenWithBalance } from "types/tx";
 import { useChainQuery } from "services/apes";
 import { WalletDisconnectedError } from "errors/errors";
 import { chainIDs } from "constants/chains";
@@ -20,6 +22,7 @@ import { useVerifyChain } from "./hooks";
 import useInjectedProvider from "./useInjectedProvider";
 import useKeplr from "./useKeplr";
 import useTerra from "./useTerra";
+import useWeb3Auth from "./useWeb3Auth";
 import { useEVMWC, useKeplrWC } from "./wallet-connect";
 
 export type WalletState = {
@@ -78,8 +81,10 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
 
   const {
     isTerraLoading,
-    terraConnections,
-    wcConnection: terraWCConnection,
+    stationConnection,
+    stationMobileConnection,
+    xdefiTerraConnection,
+    leapConnection,
     disconnectTerra,
     terraInfo,
     supportedChains: terraSupportedChains,
@@ -109,7 +114,22 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     providerInfo: evmWCInfo,
   } = useEVMWC();
 
+  const {
+    isLoading: isWeb3AuthLoading,
+    supportedChains: web3AuthSupportedChains,
+    connection: web3AuthConnection,
+    disconnect: disconnectWeb3Auth,
+    switchChain: switchWeb3AuthChain,
+    providerInfo: web3AuthInfo,
+  } = useWeb3Auth();
+
   const providerStatuses: ProviderStatus[] = [
+    {
+      providerInfo: web3AuthInfo,
+      isLoading: isWeb3AuthLoading,
+      supportedChains: web3AuthSupportedChains,
+      switchChain: switchWeb3AuthChain,
+    },
     {
       providerInfo: binanceWalletInfo,
       isLoading: isBinanceWalletLoading,
@@ -168,6 +188,9 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       case "metamask":
         disconnectMetamask();
         break;
+      case "web3auth-torus":
+        disconnectWeb3Auth();
+        break;
       case "evm-wc":
         disconnectEVMWC();
         break;
@@ -195,6 +218,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   }, [
     activeProvider?.providerInfo,
     disconnectMetamask,
+    disconnectWeb3Auth,
     disconnectEVMWC,
     disconnectBinanceWallet,
     disconnectXdefi,
@@ -219,13 +243,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     isLoading: isChainLoading,
     isFetching: isChainFetching,
     error,
-  } = useChainQuery(
-    {
-      chainId: activeProvider?.providerInfo?.chainId,
-      address: activeProvider?.providerInfo?.address,
-    },
-    { skip: !activeProvider }
-  );
+  } = useChainQuery(activeProvider?.providerInfo!, { skip: !activeProvider });
 
   useVerifyChain(chain, error, disconnect);
 
@@ -246,13 +264,6 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     }
   }, [activeProvider, chain]);
 
-  const wcConnections = [
-    /** keplr wc client doesn't support has suggestChain so testnet info can't be integrated */
-    ...(IS_TEST ? [] : [keplrWCConnection]),
-    evmWCConnection,
-    terraWCConnection,
-  ];
-
   return (
     <getContext.Provider
       value={{
@@ -266,14 +277,32 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       <setContext.Provider
         value={{
           connections: IS_MOBILE
-            ? wcConnections
+            ? //web3 auth should also work on mobile
+              [
+                web3AuthConnection,
+                evmWCConnection,
+                ...(IS_TEST ? [] : [keplrWCConnection]),
+                stationMobileConnection,
+              ]
             : [
+                web3AuthConnection,
                 keplrConnection,
                 metamaskConnection,
+                evmWCConnection,
+                ...(IS_TEST ? [] : [keplrWCConnection]),
                 binanceWalletConnection,
+                /**
+                 * NOTE: we can't possibly know beforehand if user
+                 * wants to use terra wallet or xdefi wallet.
+                 *
+                 * Solution: collapse these two connections to one,
+                 * and add selection/expansion step.
+                 */
                 xdefiConnection,
-                ...terraConnections,
-                ...wcConnections,
+                xdefiTerraConnection,
+                leapConnection,
+                stationConnection,
+                stationMobileConnection,
               ],
           disconnect,
           switchChain,

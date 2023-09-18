@@ -1,82 +1,70 @@
-import React, { ReactNode, useMemo } from "react";
-import { ProposalMeta } from "pages/Admin/types";
-import { ProposalDetails, TagPayload } from "services/types";
-import { invalidateJunoTags, useLatestBlockQuery } from "services/juno";
-import { defaultProposalTags } from "services/juno/tags";
-import { useModalContext } from "contexts/ModalContext";
+import React, { ReactNode } from "react";
+import { TagPayload } from "types/third-party/redux";
+import { Transaction } from "types/tx";
+import { invalidateJunoTags } from "services/juno";
+import { defaultProposalTags, invalidateSubgraphTags } from "services/subgraph";
 import { useGetWallet } from "contexts/WalletContext";
-import CW3 from "contracts/CW3";
-import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
-import { getTagPayloads } from "helpers/admin";
-import { useAdminResources } from "../Guard";
-import Voter from "./Voter";
+import { createTx } from "contracts/createTx/createTx";
+import useTxSender from "hooks/useTxSender";
+import { getTagPayloads, hasElapsed } from "helpers/admin";
+import { isTooltip, useAdminContext } from "../Context";
 
-export default function PollAction(props: ProposalDetails) {
-  const { data: latestBlock = "0" } = useLatestBlockQuery(null);
+export default function PollAction(props: Transaction) {
   const { wallet } = useGetWallet();
-  const sendTx = useCosmosTxSender();
-  const { cw3 } = useAdminResources();
-  const { showModal } = useModalContext();
+  const sendTx = useTxSender();
+  const { multisig, config, txResource } = useAdminContext();
+
+  const numSigned = props.confirmations.length;
+  const willExecute =
+    numSigned + 1 >= config.threshold && !config.requireExecution;
 
   async function executeProposal() {
-    const contract = new CW3(wallet, cw3);
-    const execMsg = contract.createExecProposalMsg(props.id);
+    if (isTooltip(txResource)) throw new Error(txResource);
 
+    const { wallet } = txResource;
     await sendTx({
-      msgs: [execMsg],
+      content: {
+        type: "evm",
+        val: createTx(wallet.address, "multisig.execute-tx", {
+          multisig,
+          id: props.transactionId,
+        }),
+      },
       tagPayloads: extractTagFromMeta(props.meta),
     });
   }
 
-  const isExpired =
-    "at_time" in props.expires
-      ? new Date() > new Date(props.expires.at_time / 1e6)
-      : +latestBlock > props.expires.at_height;
+  async function sign() {
+    if (isTooltip(txResource)) throw new Error(txResource);
 
-  const userVote = useMemo(
-    () => props.votes.find((vote) => vote.voter === wallet?.address),
-    [props.votes, wallet?.address]
-  );
-
-  const EXED = props.status === "executed";
-  const EX =
-    props.status === "passed" &&
-    /** proposal has embedded execute message*/ props.msgs &&
-    props.msgs.length > 0;
-  const VE = props.status !== "open" || isExpired;
-  const V = userVote !== undefined;
-
-  let node: ReactNode = null;
-  //poll is executed
-  if (EXED) {
-    node = <Text>poll has ended</Text>;
-    //voting period ended and poll is passed waiting to be executed
-  } else if (EX) {
-    node = node = <Button onClick={executeProposal}>Execute Poll</Button>;
-    //voting period ended, but poll is not passed
-  } else if (VE) {
-    node = <Text>voting period has ended</Text>;
-  } else {
-    //voting ongoing
-    if (V) {
-      node = <Text>you voted {userVote.vote}</Text>;
-    } else {
-      node = (
-        <Button
-          onClick={() => {
-            showModal(Voter, {
-              type: props.proposal_type,
-              proposalId: props.id,
-              existingReason: props.description,
-            });
-          }}
-        >
-          Vote
-        </Button>
-      );
-    }
+    const { wallet } = txResource;
+    await sendTx({
+      content: {
+        type: "evm",
+        val: createTx(wallet.address, "multisig.confirm-tx", {
+          multisig,
+          id: props.transactionId,
+        }),
+      },
+      tagPayloads: willExecute
+        ? extractTagFromMeta(props.meta)
+        : [invalidateJunoTags(["multisig-subgraph"])],
+    });
   }
-  return <>{node}</>;
+
+  if (props.status === "approved" || hasElapsed(props.expiry)) return <></>;
+
+  if (props.status === "open" && numSigned >= config.threshold) {
+    return <Button onClick={executeProposal}>Execute Poll</Button>;
+  }
+  //vote is ongoing
+  if (props.confirmations.some((s) => s === wallet?.address)) {
+    return <Text>Signed</Text>;
+  }
+
+  return (
+    <Button onClick={sign}>{willExecute ? "Sign and execute" : "Sign"}</Button>
+  );
 }
 
 function Text(props: { children: ReactNode }) {
@@ -87,12 +75,10 @@ function Button(props: React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return <button {...props} className="text-sm px-6 py-1.5 btn-orange" />;
 }
 
-function extractTagFromMeta(
-  proposalMeta: ProposalDetails["meta"]
-): TagPayload[] {
+function extractTagFromMeta(proposalMeta: Transaction["meta"]): TagPayload[] {
   if (!proposalMeta) {
-    return [invalidateJunoTags(defaultProposalTags)];
+    return [invalidateSubgraphTags(defaultProposalTags)];
   }
-  const parsedProposalMeta: ProposalMeta = JSON.parse(proposalMeta);
-  return getTagPayloads(parsedProposalMeta.type);
+
+  return getTagPayloads(proposalMeta.id);
 }

@@ -1,9 +1,13 @@
+import { Link } from "../../types";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
+import { ImageProps } from "components/Image";
 import useHandleScreenResize, { SCREEN_LG } from "hooks/useHandleScreenResize";
 import Menu from "./Menu";
 
-export function Opener({ classes = "" }: { classes?: string }) {
+type Props = { classes: string; links: Link[]; logo: ImageProps };
+
+export function Opener({ classes, links, logo }: Props) {
   const { showModal, closeModal, isModalOpen } = useModalContext();
 
   useHandleScreenResize(
@@ -12,14 +16,12 @@ export function Opener({ classes = "" }: { classes?: string }) {
         closeModal();
       }
     },
-    50,
-    {},
-    { shouldAttachListener: isModalOpen }
+    { shouldAttachListener: isModalOpen, debounceTime: 50 }
   );
 
   return (
     <button
-      onClick={() => showModal(Menu, {})}
+      onClick={() => showModal(Menu, { links, logo })}
       className={`${classes} items-center text-white justify-center`}
     >
       <Icon type="Menu" size={24} />

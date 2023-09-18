@@ -7,8 +7,9 @@ import {
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
-import Popup from "components/Popup";
 import Tooltip from "components/Tooltip";
+import { GENERIC_ERROR_MESSAGE } from "constants/common";
+import Prompt from "./Prompt";
 
 type Props = PropsWithChildren<Pick<EndowmentBookmark, "endowId">>;
 
@@ -35,8 +36,12 @@ export default function BookmarkBtn({ endowId, children }: Props) {
 
   async function toogleBookmark() {
     if (!wallet) {
-      showModal(Popup, { message: "Connect wallet to edit bookmark" });
-      return;
+      return showModal(Prompt, {
+        type: "error",
+        headline: "Bookmark",
+        title: "Wallet Disconnected",
+        children: "Connect wallet to edit bookmark",
+      });
     }
 
     const res = await toggle({
@@ -46,7 +51,12 @@ export default function BookmarkBtn({ endowId, children }: Props) {
     });
 
     if ("error" in res) {
-      showModal(Popup, { message: "Failed to save bookmark" });
+      showModal(Prompt, {
+        type: "error",
+        headline: "Bookmark",
+        title: "Failed to save bookmark",
+        children: GENERIC_ERROR_MESSAGE,
+      });
     }
   }
 
@@ -60,7 +70,7 @@ export default function BookmarkBtn({ endowId, children }: Props) {
         onClick={toogleBookmark}
         disabled={isLoading}
         className={`flex items-center gap-1 ${
-          isBookmarked || isHovered ? "text-red" : "text-white"
+          isBookmarked || isHovered ? "text-red" : ""
         }`}
         onMouseOver={(e) => {
           e.preventDefault();

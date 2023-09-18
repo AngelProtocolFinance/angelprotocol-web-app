@@ -1,13 +1,17 @@
+import { WalletProfileVersion } from "services/types";
 import { EndowmentBookmark } from "types/aws";
 import Image from "components/Image";
+import { IS_AST } from "constants/env";
 import Links from "./Links";
 
-type Props = { endowments: EndowmentBookmark[] };
+type Props = { endowments: EndowmentBookmark[]; version: WalletProfileVersion };
 
-export default function MyEndowments({ endowments }: Props) {
+export default function MyEndowments({ endowments, version }: Props) {
   return (
     <div className="grid p-4 gap-3 border-b border-prim">
-      <h3 className="text-sm text-gray-d1 dark:text-gray">My Endowments</h3>
+      <h3 className="text-sm text-gray-d1 dark:text-gray">
+        My {IS_AST ? "Angel Smart Treasuries" : "Endowments"}
+      </h3>
       <div className="overflow-y-auto max-h-40 scroller grid gap-3">
         {endowments.map((endowment) => (
           <div
@@ -21,7 +25,7 @@ export default function MyEndowments({ endowments }: Props) {
 
             <div className="grid items-center">
               <Name value={endowment.name} />
-              <Links endowmentId={endowment.endowId} />
+              <Links endowmentId={endowment.endowId} version={version} />
             </div>
           </div>
         ))}

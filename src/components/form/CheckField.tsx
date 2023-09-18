@@ -18,7 +18,7 @@ export function CheckField<T extends FieldValues>({
 }>) {
   const {
     register,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting, errors },
   } = useFormContext<T>();
 
   const id = `__${name}`;
@@ -27,15 +27,17 @@ export function CheckField<T extends FieldValues>({
   return (
     <div className={`check-field ${container}`}>
       <input
+        {...register(name)}
         className={int + " peer"}
         type="checkbox"
-        {...register(name)}
         id={id}
         disabled={isSubmitting || disabled}
       />
-      <label data-required={required} className={lbl} htmlFor={id}>
-        {children}
-      </label>
+      {!!children && (
+        <label data-required={required} className={lbl} htmlFor={id}>
+          {children}
+        </label>
+      )}
 
       <ErrorMessage
         data-error

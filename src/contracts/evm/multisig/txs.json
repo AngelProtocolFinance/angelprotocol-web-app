@@ -1,0 +1,14 @@
+[
+  "function submitTransaction(address,uint256,bytes,bytes) returns (uint256)",
+  "function addOwners(address[])",
+  "function removeOwners(address[])",
+  "function confirmTransaction(uint256)",
+  "function revokeConfirmation(uint256)",
+  "function executeTransaction(uint256)",
+  "function changeApprovalsRequirement(uint256)",
+  "function changeRequireExecution(bool)",
+  "function changeTransactionExpiry(uint256)",
+
+  "function executeProposal(uint256) returns (uint32)",
+  "function confirmProposal(uint256)"
+]

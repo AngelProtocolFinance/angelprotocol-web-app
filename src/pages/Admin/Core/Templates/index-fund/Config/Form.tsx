@@ -1,12 +1,13 @@
-import { FundConfigValues as FV } from "pages/Admin/types";
-import { FormContainer, Submitter } from "components/admin";
+import { FormValues as FV } from "./types";
+import { FormContainer, Submitter, Tooltip } from "components/admin";
 import { Field } from "components/form";
 import useConfigureFund from "./useConfigureFund";
 
 export default function Form() {
-  const { configureFund, isSubmitDisabled } = useConfigureFund();
+  const { configureFund, isSubmitDisabled, tooltip } = useConfigureFund();
   return (
-    <FormContainer onSubmit={configureFund}>
+    <FormContainer onSubmit={configureFund} aria-disabled={!!tooltip}>
+      {tooltip && <Tooltip tooltip={tooltip} />}
       <Field<FV>
         classes="field-admin"
         label="Proposal title"
@@ -20,21 +21,18 @@ export default function Form() {
         name="description"
         required
       />
-      <Field<FV>
+      <Field<FV, "number">
+        type="number"
         classes="field-admin"
         label="Funding goal ($)"
-        name="funding_goal"
+        name="fundingGoal"
         placeholder="$10,000"
       />
-      <Field<FV>
-        classes="field-admin"
-        label="Fund member limit"
-        name="fund_member_limit"
-      />
-      <Field<FV>
+      <Field<FV, "number">
+        type="number"
         classes="field-admin"
         label="Fund rotation"
-        name="fund_rotation"
+        name="fundRotation"
       />
 
       <Submitter type="submit" _classes="mt-4" disabled={isSubmitDisabled}>

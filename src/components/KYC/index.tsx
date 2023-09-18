@@ -9,18 +9,17 @@ import { schema } from "./schema";
 export default function KYC(props: Props) {
   const isOnDonation = props.type === "on-donation";
 
-  const defaultValues: Partial<FormValues> =
-    isOnDonation && props.state.kyc
-      ? props.state.kyc
-      : {
-          country: placeHolderCountryOption,
-          usState: { label: "", value: "" },
-        };
-
   const methods = useForm<FormValues>({
     mode: "onSubmit",
     reValidateMode: "onChange",
-    defaultValues,
+    defaultValues:
+      isOnDonation && props.state.kyc
+        ? props.state.kyc
+        : {
+            hasAgreedToTerms: false,
+            country: placeHolderCountryOption,
+            usState: { label: "", value: "" },
+          },
     resolver: yupResolver(schema),
   });
 

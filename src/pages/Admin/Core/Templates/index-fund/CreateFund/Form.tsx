@@ -1,57 +1,53 @@
 import { useFormContext } from "react-hook-form";
-import { FundCreatorValues as V } from "pages/Admin/types";
-import { DivContainer, Submitter } from "components/admin";
+import { FormValues as FV } from "./types";
+import { DivContainer, Submitter, Tooltip } from "components/admin";
 import { CheckField, Field, Label } from "components/form";
 import { INIT_SPLIT } from ".";
 import MemberAdder from "./MemberAdder";
 import useCreateFund from "./useCreateFund";
 
 export default function Form() {
-  const { createFund } = useCreateFund();
+  const { createFund, tooltip } = useCreateFund();
   return (
-    <DivContainer>
-      <Field<V>
+    <DivContainer disabled={!!tooltip}>
+      {tooltip && <Tooltip tooltip={tooltip} />}
+      <Field<FV>
         classes="field-admin"
         label="Proposal title"
         name="title"
         required
       />
-      <Field<V, "textarea">
+      <Field<FV, "textarea">
         type="textarea"
         classes="field-admin"
         label="Proposal description"
         name="description"
         required
       />
-      <Field<V>
-        classes="field-admin"
-        label="Fund name"
-        name="fundName"
-        required
-      />
-      <Field<V, "textarea">
+      <Field<FV> classes="field-admin" label="Fund name" name="name" required />
+      <Field<FV, "textarea">
         type="textarea"
         classes="field-admin"
         label="Fund description"
-        name="fundDescription"
+        name="about"
         required
       />
-      <Field<V>
+      <Field<FV>
         classes="field-admin"
         label="Expiry height"
         name="expiryHeight"
         placeholder="700992312"
       />
-      <Field<V, "datetime-local">
-        classes="field-admin"
+      <Field<FV, "datetime-local">
+        classes="field-admin date-input"
         type="datetime-local"
         label="Expiry time"
-        name="expiryHeight"
+        name="expiryTime"
       />
       <Slider />
-      <CheckField<V>
-        name="isFundRotating"
-        classes="p-3 text-sm rounded bg-orange-l6 dark:bg-blue-d7 border border-prim"
+      <CheckField<FV>
+        name="rotatingFund"
+        classes="p-3 text-sm rounded bg-gray-l6 dark:bg-blue-d5 border border-prim"
       >
         Included on fund rotation
       </CheckField>
@@ -66,7 +62,7 @@ export default function Form() {
 }
 
 function Slider() {
-  const { register, watch, setValue } = useFormContext<V>();
+  const { register, watch, setValue } = useFormContext<FV>();
   const splitToLiq = watch("splitToLiquid");
 
   function unspecifySplit() {
@@ -84,7 +80,7 @@ function Slider() {
           reset
         </button>
       </Label>
-      <div className="rounded bg-orange-l6 dark:bg-blue-d7 grid items-center px-4 py-6 border border-prim">
+      <div className="rounded bg-gray-l5 dark:bg-blue-d5 grid items-center px-4 py-6 border border-prim">
         <input
           {...register("splitToLiquid")}
           type="range"

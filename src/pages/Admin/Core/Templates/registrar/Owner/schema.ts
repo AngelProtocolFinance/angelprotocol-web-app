@@ -1,10 +1,11 @@
 import { ObjectSchema, object } from "yup";
-import { RegistrarOwnerValues } from "pages/Admin/types";
+import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
-import { requiredContractAddr } from "schemas/string";
+import { requiredWalletAddr } from "schemas/string";
+import { chainIds } from "constants/chainIds";
 import { proposalShape } from "../../../../constants";
 
-export const schema = object<any, SchemaShape<RegistrarOwnerValues>>({
+export const schema = object<any, SchemaShape<FormValues>>({
   ...proposalShape,
-  new_owner: requiredContractAddr,
-}) as ObjectSchema<RegistrarOwnerValues>;
+  newOwner: requiredWalletAddr(chainIds.polygon),
+}) as ObjectSchema<FormValues>;

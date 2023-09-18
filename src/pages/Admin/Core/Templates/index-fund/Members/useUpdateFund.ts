@@ -1,23 +1,20 @@
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { FundMemberUpdateMeta } from "pages/Admin/types";
-import { FundUpdateValues } from "pages/Admin/types";
-import { useAdminResources } from "pages/Admin/Guard";
+import { FormValues } from "./types";
+import { FundMemberUpdate } from "types/contracts";
 import { useErrorContext } from "contexts/ErrorContext";
-import { useGetWallet } from "contexts/WalletContext";
 import { useGetter } from "store/accessors";
-import CW3 from "contracts/CW3";
-import IndexFund from "contracts/IndexFund";
-import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
+import { createTx, encodeTx } from "contracts/createTx/createTx";
+import useTxSender from "hooks/useTxSender";
+import { isTooltip, useAdminContext } from "../../../../Context";
 
 export default function useUpdateFund() {
-  const { trigger, reset, getValues } = useFormContext<FundUpdateValues>();
-  const { cw3, propMeta } = useAdminResources();
-  const { wallet } = useGetWallet();
+  const { trigger, reset, getValues } = useFormContext<FormValues>();
+  const { multisig, txResource } = useAdminContext();
   const [isLoading, setIsLoading] = useState(false);
   const fundMembers = useGetter((state) => state.admin.fundMembers);
   const { handleError } = useErrorContext();
-  const sendTx = useCosmosTxSender();
+  const sendTx = useTxSender();
 
   async function updateFund() {
     try {
@@ -36,10 +33,10 @@ export default function useUpdateFund() {
       const [toAdd, toRemove]: Diffs = fundMembers.reduce(
         ([toAdd, toRemove]: Diffs, fundMember) => {
           if (fundMember.isAdded) {
-            toAdd.push(fundMember.addr);
+            toAdd.push(fundMember.id);
           }
           if (fundMember.isDeleted) {
-            toRemove.push(fundMember.addr);
+            toRemove.push(fundMember.id);
           }
           return [toAdd, toRemove];
         },
@@ -49,46 +46,47 @@ export default function useUpdateFund() {
       if (toRemove.length <= 0 && toAdd.length <= 0) {
         throw new Error("No fund member changes");
       }
-      const indexFundContract = new IndexFund(wallet);
-      const embeddedExecuteMsg =
-        indexFundContract.createEmbeddedUpdateMembersMsg(
-          +fundId,
-          toAdd,
-          toRemove
-        );
+      if (isTooltip(txResource)) throw new Error(txResource);
 
-      const fundDetails = await indexFundContract.getFundDetails(+fundId);
+      const modified = new Set([...fundMembers.map((f) => f.id), ...toAdd]);
+      toRemove.forEach((id) => modified.delete(id));
 
-      const fundUpdateMembersMeta: FundMemberUpdateMeta = {
-        type: "if_members",
-        data: { fundId: fundId, fundName: fundDetails.name, toRemove, toAdd },
+      const update: FundMemberUpdate = {
+        fundId: +fundId,
+        members: Array.from(modified),
       };
 
-      const adminContract = new CW3(wallet, cw3);
-      const proposalTitle = getValues("title");
-      const proposalDescription = getValues("description");
+      const [data, dest, meta] = encodeTx("index-fund.update-members", update, {
+        title: getValues("title"),
+        description: getValues("description"),
+        content: update,
+      });
 
-      const proposalMsg = adminContract.createProposalMsg(
-        proposalTitle,
-        proposalDescription,
-        [embeddedExecuteMsg],
-        JSON.stringify(fundUpdateMembersMeta)
-      );
+      const { wallet, txMeta } = txResource;
+      const tx = createTx(wallet.address, "multisig.submit-transaction", {
+        multisig,
+
+        destination: dest,
+        value: "0",
+        data,
+        meta: meta.encoded,
+      });
 
       await sendTx({
-        msgs: [proposalMsg],
-        ...propMeta,
+        content: { type: "evm", val: tx },
+        ...txMeta,
       });
-      setIsLoading(false);
       reset();
     } catch (err) {
-      setIsLoading(false);
       handleError(err);
+    } finally {
+      setIsLoading(false);
     }
   }
 
   return {
     updateFund,
     isSubmitDisabled: isLoading,
+    tooltip: isTooltip(txResource) ? txResource : undefined,
   };
 }

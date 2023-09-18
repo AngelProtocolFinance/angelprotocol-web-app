@@ -1,11 +1,12 @@
-import { FundPreview } from "pages/Admin/types";
+import { NewFund } from "types/contracts";
 import { humanize } from "helpers";
+import { fromBlockTime } from "helpers/admin";
 import Header from "./common/Header";
 import KeyValue from "./common/KeyValue";
 import MemberItem from "./common/MemberItem";
 import PreviewContainer from "./common/PreviewContainer";
 
-export default function Fund(props: FundPreview) {
+export default function Fund(props: NewFund) {
   return (
     <PreviewContainer>
       <KeyValue _key="fund name">
@@ -20,17 +21,17 @@ export default function Fund(props: FundPreview) {
             true ? "text-blue" : "text-red-l1"
           } font-bold uppercase`}
         >
-          {props.rotating_fund ? "yes" : "no"}
+          {props.rotatingFund ? "yes" : "no"}
         </span>
       </KeyValue>
-      {props.split_to_liquid && (
-        <KeyValue _key="max split to liquid">
-          <span>{(+props.split_to_liquid * 100).toFixed(2)} %</span>
-        </KeyValue>
-      )}
+
+      <KeyValue _key="max split to liquid">
+        <span>{props.splitToLiquid} %</span>
+      </KeyValue>
+
       <KeyValue _key="expiry">
         <span className="text-sm">
-          {getExpiry(props.expiry_time, props.expiry_height)}
+          {getExpiry(props.expiryTime, props.expiryHeight)}
         </span>
       </KeyValue>
       {props.members.length > 0 && (
@@ -45,20 +46,19 @@ export default function Fund(props: FundPreview) {
   );
 }
 
-const secToMillisFactor = 1000;
 function getExpiry(
-  time: FundPreview["expiry_time"],
-  height: FundPreview["expiry_height"]
+  time: NewFund["expiryTime"],
+  height: NewFund["expiryHeight"]
 ) {
   let expiry: string = "no expiry";
 
-  if (time && height) {
-    expiry = `at block ${humanize(height, 0)} or ${new Date(
-      time * secToMillisFactor
+  if (time !== "0" && height !== "0") {
+    expiry = `at block ${humanize(height, 0)} or ${fromBlockTime(
+      time
     ).toLocaleString()}`;
-  } else if (time) {
-    expiry = new Date(time * secToMillisFactor).toLocaleString();
-  } else if (height) {
+  } else if (time !== "0") {
+    expiry = fromBlockTime(time).toLocaleString();
+  } else if (height !== "0") {
     expiry = `at block ${humanize(height, 0)}`;
   }
   return expiry;

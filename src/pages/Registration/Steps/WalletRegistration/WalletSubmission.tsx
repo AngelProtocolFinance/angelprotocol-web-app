@@ -1,23 +1,24 @@
 import { Link } from "react-router-dom";
 import { steps } from "pages/Registration/routes";
+import { useErrorContext } from "contexts/ErrorContext";
 import { WalletState, useSetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
+import Image from "components/Image";
 import { LoadText, Separator } from "components/registration";
 import { useRegState } from "../StepGuard";
 import useRegisterWallet from "./useRegisterWallet";
-
-export type Wallet = { address: string };
 
 export default function WalletSubmission({
   address,
   providerId,
   walletIcon,
 }: WalletState) {
+  const { handleError } = useErrorContext();
   const { disconnect } = useSetWallet();
   const { isSubmitting, registerWallet } = useRegisterWallet();
   const { data } = useRegState<3>();
 
-  if (!(providerId === "keplr" || providerId === "keplr-wc")) {
+  if (!(providerId === "web3auth-torus" || providerId === "metamask")) {
     return (
       <div className="text-center md:text-left">
         <h3 className="text-lg mb-4 flex items-center justify-center md:justify-start gap-3">
@@ -34,7 +35,13 @@ export default function WalletSubmission({
           type="button"
           className="mt-8 btn-outline-filled btn-reg"
           disabled={isSubmitting}
-          onClick={disconnect}
+          onClick={() => {
+            try {
+              disconnect();
+            } catch (err) {
+              handleError(err);
+            }
+          }}
         >
           Change wallet
         </button>
@@ -45,14 +52,10 @@ export default function WalletSubmission({
   return (
     <div className="grid justify-self-center md:justify-self-start max-w-[27.31rem]">
       <h3 className="text-center md:text-left text-lg">
-        You are already connected to a Wallet:
+        You are now connected to a wallet. Make a note of this wallet address:
       </h3>
       <div className="grid grid-cols-[auto_1fr] items-center border border-prim p-4 rounded mt-8">
-        <img
-          src={walletIcon}
-          alt=""
-          className="w-10 h-10 object-contain row-span-2 mr-4"
-        />
+        <Image src={walletIcon} className="w-10 h-10 row-span-2 mr-4" />
         <h6 className="capitalize text-lg mb-1">{providerId}</h6>
         <span className="text-sm truncate">{address}</span>
       </div>

@@ -1,13 +1,23 @@
+import { Primitive } from "type-fest";
+import { Diff, PrimitiveValue } from "types/utils";
+import { Obj, flatten } from "./flatten";
+
+export const NOT_SET = "not-set";
 //NOTE: intended for shallow form objects only atm
-export function getPayloadDiff<T extends object>(prev: T, next: T): Partial<T> {
-  const diff: any = {};
+export function getPayloadDiff<T extends object>(prev: T, next: T): Diff[] {
+  const flatPrev = flatten(prev as Obj);
+  const flatNext = flatten(next as Obj);
+
+  const diffs: Diff[] = [];
+  const keys: { [k: string]: true } = {};
   /** include attr in next different from prev,
    *  given that next is truthy (including 0, and false) */
-  for (const key in prev) {
-    const n = next[key];
-    const p = prev[key];
-    if (areDiff(p, n) && hasValue(n, [""])) {
-      diff[key] = n;
+  for (const key in flatPrev) {
+    const n = flatNext[key];
+    const p = flatPrev[key];
+    if (areDiff(p, n) && some(n, [""])) {
+      keys[key] = true;
+      diffs.push([key, some(p) ? p : NOT_SET, n]);
     }
   }
 
@@ -15,21 +25,22 @@ export function getPayloadDiff<T extends object>(prev: T, next: T): Partial<T> {
    * if prev is falsy (excluding 0, [] and false),
    * include next value if it's truthy (including 0, [], and false)
    */
-  for (const key in next) {
-    const n = next[key];
-    const p = prev[key];
+  for (const key in flatNext) {
+    const n = flatNext[key];
+    const p = flatPrev[key];
     //dont consider "" if prev has no value
-    if (hasNoValue(p) && hasValue(n)) {
-      diff[key] = n;
+    if (none(p) && some(n) && !keys[key]) {
+      diffs.push([key, NOT_SET, n]);
     }
   }
 
-  return diff;
+  return diffs;
 }
 
-function areDiff(val1: any, val2: any): boolean {
-  if (Array.isArray(val1) && Array.isArray(val2)) {
-    return val1.length !== val2.length || val1.some((v) => !val2.includes(v));
+function areDiff(val1: Primitive, val2: Primitive): boolean {
+  if (Number.isNaN(val1) && Number.isNaN(val2)) {
+    //two NaNs treated as they are the same
+    return /** areDiff? */ false;
   }
 
   return val1 !== val2;
@@ -38,11 +49,9 @@ function areDiff(val1: any, val2: any): boolean {
 const isZero = (val: any) => val === 0;
 
 //anything truthy, plus 0 and false
-function hasValue(val: any, exempts: any[] = []): boolean {
-  return !!val || isZero(val) || val === false || exempts.includes(val);
-}
+const some = (v: Primitive, exempts: Primitive[] = []): v is PrimitiveValue =>
+  !!v || isZero(v) || v === false || exempts.includes(v);
 
-// undefined | null || "" are treated as noValue
-function hasNoValue(val: any): boolean {
-  return val == null || val === "";
-}
+// NaN | undefined | null | "" are treated as noValue
+const none = (v: Primitive): boolean =>
+  v == null || v === "" || Number.isNaN(v);

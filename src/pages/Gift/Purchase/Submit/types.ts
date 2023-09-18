@@ -1,4 +1,3 @@
-import { SignDoc } from "types/cosmos";
+import { Estimate } from "types/tx";
 
-export type Fee = { amount: number; symbol: string };
-export type Estimate = { fee: Fee; doc: SignDoc };
+export type EstimateStatus = Estimate | "loading" | "error" | "for-approval";

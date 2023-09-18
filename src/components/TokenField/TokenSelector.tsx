@@ -1,6 +1,7 @@
 import { Combobox } from "@headlessui/react";
 import { useState } from "react";
 import { SelectorProps } from "./types";
+import Image from "components/Image";
 import Icon, { DrawerIcon } from "../Icon";
 
 export default function TokenSelector({
@@ -37,7 +38,7 @@ export default function TokenSelector({
           <Icon type="Search" size={20} />
           <Combobox.Input
             placeholder="Search..."
-            disabled={tokens.length <= 1}
+            aria-disabled={tokens.length <= 1}
             className="text-left text-sm focus:outline-none bg-transparent w-20"
             onChange={(event) => setSymbol(event.target.value)}
           />
@@ -49,13 +50,13 @@ export default function TokenSelector({
         ) : (
           filtered.map((token) => (
             <Combobox.Option
-              key={token.token_id}
+              key={token.token_id + token.type}
               className={
                 "flex items-center gap-2 p-3 hover:bg-blue-l4 dark:hover:bg-blue-d5 cursor-pointer"
               }
               value={token}
             >
-              <img alt="" src={token.logo} className="w-6 h-6 object-contain" />
+              <Image src={token.logo} className="w-6 h-6" />
               <span className="text-sm">{token.symbol}</span>
             </Combobox.Option>
           ))

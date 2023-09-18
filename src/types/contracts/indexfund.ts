@@ -1,39 +1,37 @@
-export type AllianceMember = {
-  wallet: string;
-  name: string;
-  logo?: string;
-  website?: string;
-};
+import { OverrideProperties } from "type-fest";
+import {
+  IIndexFund,
+  IndexFundStorage,
+} from "../typechain-types/contracts/core/index-fund/IndexFund";
 
-export type IndexFundConfig = {
-  owner: string; //"juno123abc.."
-  registrar_contract: string; //"juno123abc..";
-  fund_rotation?: number; //10
-  fund_member_limit: number; //10
-  funding_goal?: string; //"50000000"
-  accepted_tokens: {
-    native: string[]; //["ujuno"]
-    cw20: string[]; //
-  };
-};
+export type IndexFundConfig = OverrideProperties<
+  IndexFundStorage.ConfigStruct,
+  { fundRotation: number; fundingGoal: number }
+>;
 
-export type FundDetails = {
-  id: number;
+export type FundDetails = OverrideProperties<
+  IIndexFund.FundResponseStruct,
+  {
+    id: number;
+    endowments: number[];
+    expiryTime: number;
+    splitToLiquid: number;
+  }
+>;
+
+export type NewFund = {
   name: string;
   description: string;
-  members: string[];
-  rotating_fund?: boolean;
-  split_to_liquid?: string; //"0.63"
-  expiry_time?: number; //unix time on seconds
-  expiry_height?: number; //block height
+  members: string[]; //uint256[]
+  rotatingFund: boolean;
+  splitToLiquid: string; // "1-100"
+  expiryTime: string; // uint256
+  expiryHeight: string; // uint256
 };
 
-export type IndexFundOwnerPayload = {
-  new_owner: string;
-};
+export type IndexFundConfigUpdate = IndexFundConfig;
 
-export interface FundConfig {
-  fund_rotation?: number;
-  fund_member_limit?: number;
-  funding_goal?: string;
-}
+export type FundMemberUpdate = {
+  fundId: number;
+  members: string[]; //uint256[]
+};

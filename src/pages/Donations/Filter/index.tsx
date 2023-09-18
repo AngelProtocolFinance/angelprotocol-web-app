@@ -5,6 +5,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { FormValues as FV } from "./types";
 import { DonationsQueryParams } from "types/aws";
 import Icon, { DrawerIcon } from "components/Icon";
+import { dateToFormFormat } from "components/form";
 import { cleanObject } from "helpers/cleanObject";
 import Form from "./Form";
 import { schema } from "./schema";
@@ -30,8 +31,8 @@ export default function Filter({
     resolver: yupResolver(schema),
     defaultValues: {
       //set default value so empty can be tagged as invalid
-      startDate: format(getYearAgo()),
-      endDate: format(new Date()),
+      startDate: dateToFormFormat(getYearAgo()),
+      endDate: dateToFormFormat(new Date()),
       network: { label: "Select network...", value: "" },
       currency: { label: "Select currency...", value: "" },
       donorAddress: donorAddress,
@@ -44,6 +45,7 @@ export default function Filter({
   async function submit(data: FV) {
     setParams((prev) => ({
       id: prev.id,
+      chain_id: prev.chain_id,
       ...cleanObject({
         afterDate: data.startDate ? new Date(data.startDate).toISOString() : "",
         beforeDate: data.endDate ? new Date(data.endDate).toISOString() : "",
@@ -57,7 +59,7 @@ export default function Filter({
 
   const onReset: FormEventHandler<HTMLFormElement> = () => {
     reset();
-    setParams((prev) => ({ id: prev.id }));
+    setParams((prev) => ({ id: prev.id, chain_id: prev.chain_id }));
     buttonRef.current?.click();
   };
   return (
@@ -65,7 +67,7 @@ export default function Filter({
       <Popover.Button
         ref={buttonRef}
         disabled={isDisabled}
-        className="w-full lg:w-[22.3rem] flex justify-center items-center p-3 rounded bg-orange text-white lg:dark:text-gray lg:text-gray-d1 lg:bg-white lg:dark:bg-blue-d6 lg:justify-between disabled:bg-gray lg:disabled:bg-gray-l2 lg:dark:disabled:bg-bluegray-d1 lg:border lg:border-prim"
+        className="w-full lg:w-[22.3rem] flex justify-center items-center p-3 rounded bg-orange text-white lg:dark:text-gray lg:text-gray-d1 lg:bg-white lg:dark:bg-blue-d6 lg:justify-between disabled:bg-gray lg:disabled:bg-gray-l3 lg:dark:disabled:bg-bluegray-d1 lg:border lg:border-prim"
       >
         {({ open }) => (
           <>
@@ -94,13 +96,4 @@ function getYearAgo() {
   const currYear = date.getFullYear();
   date.setFullYear(currYear - 1);
   return date;
-}
-
-function format(date: Date) {
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-  return `${year}-${month < 10 ? `0${month}` : month}-${
-    day < 10 ? `0${day}` : day
-  }`;
 }

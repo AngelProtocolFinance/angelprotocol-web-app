@@ -1,9 +1,8 @@
-import { CreateTxOptions } from "@terra-money/terra.js";
-import { ConnectedWallet } from "@terra-money/wallet-provider";
-import { SignDoc } from "types/cosmos";
+import { Token } from "types/aws";
 import { Country } from "types/countries";
-import { EVMTx } from "types/evm";
+import { EndowmentType } from "types/lists";
 import { TokenWithAmount } from "types/slices";
+import { EstimatedTx } from "types/tx";
 import { WalletState } from "contexts/WalletContext";
 import { OptionType } from "components/Selector";
 
@@ -11,11 +10,16 @@ export type DonationRecipient = {
   id: number;
   name: string;
   isKYCRequired: boolean;
+  endowType: EndowmentType;
+  isFiscalSponsored: boolean;
 };
 
 export type DonationDetails = {
   token: TokenWithAmount;
   pctLiquidSplit: number; // <input range value transformed to number via onChange
+
+  //for fiat donations
+  country: Country;
 
   //meta
   chainId: string;
@@ -65,15 +69,20 @@ export type TxStep = {
   status: TxStatus;
 } & Omit<SubmitStep, "step">;
 
-export type EstimatedTx =
-  | { type: "cosmos"; val: { doc: SignDoc } }
-  | { type: "terra"; val: CreateTxOptions; wallet: ConnectedWallet }
-  | { type: "evm"; val: EVMTx };
-
-export type DonateArgs = {
-  wallet: WalletState;
-  tx: EstimatedTx;
-  donation: SubmitStep;
+export type FiatWallet = {
+  tokens: FiatToken[];
 };
 
+export type DonateArgs = { donation: SubmitStep } & {
+  wallet: WalletState | FiatWallet;
+  tx: EstimatedTx;
+};
+
+export type FiatToken = Pick<Token, "symbol" | "min_donation_amnt" | "logo">;
+export type WithWallet<T> = T & { wallet: WalletState | FiatWallet };
+
+//isFiatWallet
+export function isFiat(wallet: WalletState | FiatWallet): wallet is FiatWallet {
+  return !!(wallet as FiatWallet).tokens;
+}
 export type DonationStep = DonationState["step"];

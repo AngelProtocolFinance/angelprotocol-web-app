@@ -1,56 +1,62 @@
 import { useFormContext } from "react-hook-form";
-import { FundDestroyValues, RemoveFundMeta } from "pages/Admin/types";
-import { useAdminResources } from "pages/Admin/Guard";
+import { FormValues as FV } from "./types";
+import { ID } from "types/tx";
+import { queryContract } from "services/juno/queryContract";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
-import Popup from "components/Popup";
-import CW3 from "contracts/CW3";
-import IndexFund from "contracts/IndexFund";
-import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
+import { TxPrompt } from "components/Prompt";
+import { createTx, encodeTx } from "contracts/createTx/createTx";
+import useTxSender from "hooks/useTxSender";
+import { hasElapsed } from "helpers/admin";
+import { isTooltip, useAdminContext } from "../../../../Context";
 
 export default function useDestroyFund() {
   const {
     handleSubmit,
     formState: { isSubmitting },
-  } = useFormContext<FundDestroyValues>();
+  } = useFormContext<FV>();
+  const sendTx = useTxSender();
   const { showModal } = useModalContext();
-  const sendTx = useCosmosTxSender();
-  const { cw3, propMeta } = useAdminResources();
-  const { wallet } = useGetWallet();
+  const { multisig, txResource } = useAdminContext();
 
-  async function destroyFund(data: FundDestroyValues) {
-    if (data.fundId === "") {
-      showModal(Popup, { message: "Please select fund to remove" });
-      return;
+  async function destroyFund(fv: FV) {
+    try {
+      const fund = await queryContract("index-fund.fund", { id: +fv.fundId });
+      if (fund.expiryTime !== 0 && hasElapsed(fund.expiryTime)) {
+        return showModal(TxPrompt, { error: "Fund is already closed" });
+      }
+    } catch (err) {
+      return showModal(TxPrompt, { error: "Fund not found" });
     }
-    const indexFundContract = new IndexFund(wallet);
-    const embeddedRemoveFundMsg = indexFundContract.createEmbeddedRemoveFundMsg(
-      +data.fundId
-    );
 
-    //get fund details for proposal preview
-    const fundDetails = await indexFundContract.getFundDetails(+data.fundId);
-    const removeFundMeta: RemoveFundMeta = {
-      type: "if_remove",
-      data: fundDetails,
-    };
+    if (isTooltip(txResource)) throw new Error(txResource);
 
-    const adminContract = new CW3(wallet, cw3);
-    const proposalMsg = adminContract.createProposalMsg(
-      data.title,
-      data.description,
-      [embeddedRemoveFundMsg],
-      JSON.stringify(removeFundMeta)
-    );
+    const id: ID = { id: +fv.fundId };
+    const [data, dest, meta] = encodeTx("index-fund.remove-fund", id, {
+      title: fv.title,
+      description: fv.description,
+      content: id,
+    });
 
+    const { wallet, txMeta } = txResource;
     await sendTx({
-      msgs: [proposalMsg],
-      ...propMeta,
+      content: {
+        type: "evm",
+        val: createTx(wallet.address, "multisig.submit-transaction", {
+          multisig,
+
+          destination: dest,
+          value: "0",
+          data,
+          meta: meta.encoded,
+        }),
+      },
+      ...txMeta,
     });
   }
 
   return {
     destroyFund: handleSubmit(destroyFund),
     isSubmitDisabled: isSubmitting,
+    tooltip: isTooltip(txResource) ? txResource : undefined,
   };
 }

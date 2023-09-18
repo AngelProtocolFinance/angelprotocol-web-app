@@ -1,10 +1,10 @@
 import { ObjectSchema, object } from "yup";
-import { FundUpdateValues } from "pages/Admin/types";
+import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
-import { requiredContractAddr } from "schemas/string";
+import { requiredPositiveNumber } from "schemas/number";
 import { proposalShape } from "../../../../constants";
 
-export const schema = object<any, SchemaShape<FundUpdateValues>>({
+export const schema = object<any, SchemaShape<FormValues>>({
   ...proposalShape,
-  newMemberAddr: requiredContractAddr,
-}) as ObjectSchema<FundUpdateValues>;
+  newMemberId: requiredPositiveNumber,
+}) as ObjectSchema<FormValues>;

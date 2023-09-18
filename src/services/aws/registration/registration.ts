@@ -1,3 +1,4 @@
+import { FiscalSponsorhipAgreementSigner } from "services/types";
 import { ApplicationStatusOptions } from "slices/admin/types";
 import {
   AWSQueryRes,
@@ -12,7 +13,8 @@ import {
 } from "types/aws";
 import { adminTags } from "services/aws/tags";
 import { logger } from "helpers";
-import { EMAIL_SUPPORT } from "constants/common";
+import { EMAIL_SUPPORT } from "constants/env";
+import { version as v } from "../../helpers";
 import { aws } from "../aws";
 
 const registration_api = aws.injectEndpoints({
@@ -23,7 +25,7 @@ const registration_api = aws.injectEndpoints({
     >({
       invalidatesTags: [{ type: "admin", id: adminTags.registration }],
       query: ({ email }) => ({
-        url: "v2/registration",
+        url: "v3/registration",
         method: "POST",
         body: { Email: email },
       }),
@@ -40,13 +42,25 @@ const registration_api = aws.injectEndpoints({
         return { ...res, reqId: 0 };
       },
     }),
-    updateReg: builder.mutation<
-      any,
-      RegistrationUpdate & { reference: string }
+    fiscalSponsorshipAgreementSigningURL: builder.mutation<
+      { url: string },
+      FiscalSponsorhipAgreementSigner
     >({
+      query: (signer) => {
+        return {
+          url: `${v(1)}/registration/fiscal-sponsorship-agreement`,
+          method: "POST",
+          body: {
+            signer,
+            redirectURL: `${window.location.origin}/register/sign-result`,
+          },
+        };
+      },
+    }),
+    updateReg: builder.mutation<any, RegistrationUpdate>({
       query: ({ type, reference, ...payload }) => {
         return {
-          url: "v2/registration",
+          url: "v3/registration",
           method: "PUT",
           params: { uuid: reference },
           body: payload,
@@ -55,7 +69,7 @@ const registration_api = aws.injectEndpoints({
       transformErrorResponse(res, meta, { type }) {
         return {
           status: res.status,
-          message: `${res.status}: Failed to update ${type}. Please try again later.`,
+          data: `Failed to update ${type}. Please try again later.`,
         };
       },
       /** pessimistic manual cache update so not to GET fresh data */
@@ -91,6 +105,7 @@ const registration_api = aws.injectEndpoints({
                     draft.Metadata,
                     data as WalletUpdateResult
                   );
+                  break;
                 }
               }
               draft.reqId = draft.reqId + 1;
@@ -112,7 +127,6 @@ const registration_api = aws.injectEndpoints({
           url: `v2/registration/list${
             status !== "all" ? `?regStatus=${status}` : ""
           }`,
-          method: "Get",
         };
       },
       transformResponse: (response: AWSQueryRes<EndowmentProposal[]>) =>
@@ -126,7 +140,7 @@ const registration_api = aws.injectEndpoints({
       invalidatesTags: [{ type: "admin", id: adminTags.registration }],
       query: ({ uuid, email }) => {
         return {
-          url: "v2/registration/build-email",
+          url: "v3/registration/build-email",
           method: "POST",
           params: { uuid, type: "verify-email" },
           body: { Email: email },
@@ -137,7 +151,7 @@ const registration_api = aws.injectEndpoints({
     submit: builder.mutation<SubmitResult, { ref: string; chain_id: string }>({
       invalidatesTags: [{ type: "admin", id: adminTags.registration }],
       query: ({ ref, chain_id }) => ({
-        url: `v3/registration/${ref}/submit`,
+        url: `${v(3)}/registration/${ref}/submit`,
         method: "POST",
         body: { chain_id },
       }),
@@ -155,11 +169,11 @@ export const {
   useRegQuery,
   useLazyRegQuery,
   useEndowmentApplicationsQuery,
+  useFiscalSponsorshipAgreementSigningURLMutation,
 
   //mutations
   useUpdateRegMutation,
   useNewApplicationMutation,
   useRequestEmailMutation,
   useSubmitMutation,
-  util: { updateQueryData: updateRegQueryData },
 } = registration_api;

@@ -1,5 +1,8 @@
 import { FormProvider } from "react-hook-form";
 import Copier from "components/Copier";
+import { PAYMENT_WORDS } from "constants/common";
+import { adminRoutes } from "constants/routes";
+import Seo from "../Seo";
 import WidgetExample from "./WidgetExample";
 import WidgetUrlGenerator from "./WidgetUrlGenerator";
 import useWidgetConfigurer from "./useWidgetConfigurer";
@@ -7,15 +10,29 @@ import useWidgetConfigurer from "./useWidgetConfigurer";
 const TITLE_STYLE = "text-lg sm:text-2xl";
 
 export default function WidgetConfigurer() {
-  const { updateTriggered, widgetSnippet, methods, handleUpdateSnippet } =
-    useWidgetConfigurer();
+  const {
+    endowId,
+    updateTriggered,
+    widgetSnippet,
+    methods,
+    handleUpdateSnippet,
+  } = useWidgetConfigurer();
 
   return (
     <FormProvider {...methods}>
-      <div className="padded-container py-10 grid grid-rows-[auto_1fr] gap-10 w-full h-full py-5">
+      <Seo
+        title={`Widget Configuration${
+          endowId === 0 ? "" : ` for Endowment ${endowId}`
+        }`}
+        url={`${adminRoutes.other_settings}${
+          endowId === 0 ? "" : `/${endowId}`
+        }`}
+      />
+
+      <div className="padded-container grid grid-rows-[auto_1fr] gap-10 w-full h-full py-5">
         <section className="flex flex-col gap-3 items-center text-center xl:items-start xl:text-left w-full">
           <h1 className={TITLE_STYLE}>
-            Accept donations from your website today!
+            Accept {PAYMENT_WORDS.noun.plural} from your website today!
           </h1>
           <div className="font-body text-sm sm:text-base">
             <p>
@@ -23,8 +40,8 @@ export default function WidgetConfigurer() {
               website and you're ready to go!
             </p>
             <p>
-              Your donors will be able to connect their crypto wallets and use
-              them to donate directly.
+              Your {PAYMENT_WORDS.payer}s will be able to connect their crypto
+              wallets and use them to {PAYMENT_WORDS.verb} directly.
             </p>
           </div>
         </section>

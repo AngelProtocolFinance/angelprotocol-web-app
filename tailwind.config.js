@@ -52,6 +52,7 @@ module.exports = {
       },
 
       bluegray: {
+        d2: "#243845",
         d1: "#283E4D",
         DEFAULT: "#3D5F76",
       },
@@ -75,11 +76,12 @@ module.exports = {
         d2: "#44413C",
         d1: "#6C6760",
         DEFAULT: "#A2A3A3",
-        l1: "#C4C0BB",
-        l2: "#D6D6D6",
-        l3: "#ECEDED",
-        l4: "#F3F3F2",
-        l5: "#FDFDFC",
+        l1: "#B2AFA9",
+        l2: "#C4C0BB",
+        l3: "#D6D6D6",
+        l4: "#ECEDED",
+        l5: "#F3F3F2",
+        l6: "#FDFDFC",
       },
       white: "#FFFFFF",
 
@@ -119,4 +121,5 @@ module.exports = {
       },
     },
   },
+  plugins: [require("@tailwindcss/container-queries")],
 };

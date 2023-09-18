@@ -8,7 +8,7 @@ import Icon from "components/Icon";
 import Prompt from "components/Prompt";
 import { createAuthToken } from "helpers";
 import { chainIds } from "constants/chainIds";
-import { APP_NAME } from "constants/common";
+import { APP_NAME } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { APIs } from "constants/urls";
 
@@ -74,7 +74,7 @@ export default function Form({ classes = "" }) {
           style={{ resize: "none" }}
           placeholder="e.g. ap-uni-6-821438429620466130011364269412975309697"
           {...register("secret")}
-          className="text-lg bg-orange-l6 dark:bg-blue-d6 disabled:bg-gray-l4 disabled:dark:bg-bluegray-d1 focus:outline-none text-center p-6 pb-4 break-all overflow-hidden font-work"
+          className="text-lg bg-orange-l6 dark:bg-blue-d6 disabled:bg-gray-l5 disabled:dark:bg-bluegray-d1 focus:outline-none text-center p-6 pb-4 break-all overflow-hidden font-work"
         />
         <ErrorMessage
           name="secret"

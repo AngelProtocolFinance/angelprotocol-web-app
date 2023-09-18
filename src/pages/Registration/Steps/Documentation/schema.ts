@@ -9,7 +9,7 @@ import { genFileSchema } from "schemas/file";
 import { requiredString } from "schemas/string";
 import { MAX_SDGS } from "constants/unsdgs";
 
-export const MB_LIMIT = 6;
+export const MB_LIMIT = 25;
 const BYTES_IN_MB = 1e6;
 
 const VALID_MIME_TYPES = [
@@ -20,6 +20,10 @@ const VALID_MIME_TYPES = [
 ];
 
 const previewsKey: keyof Asset = "previews";
+const authorizedToReceiveTaxDeductibleDonationsKey: keyof FormValues =
+  "isAuthorizedToReceiveTaxDeductibleDonations";
+type TAuthorizedToReceiveTaxDeductibleDonations =
+  FormValues["isAuthorizedToReceiveTaxDeductibleDonations"];
 
 function genAssetShape(isRequired: boolean = false): SchemaShape<Asset> {
   return {
@@ -33,6 +37,11 @@ function genAssetShape(isRequired: boolean = false): SchemaShape<Asset> {
   };
 }
 
+const optionSchema = object<any, SchemaShape<OptionType<string>>>({
+  label: requiredString,
+  value: requiredString,
+});
+
 export const schema = object<any, SchemaShape<FormValues>>({
   proofOfIdentity: object(genAssetShape(true)),
   proofOfRegistration: object(genAssetShape(true)),
@@ -43,14 +52,20 @@ export const schema = object<any, SchemaShape<FormValues>>({
   hqCountry: object<any, SchemaShape<Country>>({
     name: requiredString,
   }),
-  endowDesignation: object<any, SchemaShape<OptionType<string>>>({
-    label: requiredString,
-    value: requiredString,
-  }),
-  //level 2-3 fields not required
-  financialStatements: object(genAssetShape()),
-  auditedFinancialReports: object(genAssetShape()),
+  endowDesignation: optionSchema,
+  legalEntityType: requiredString,
   //isKYCRequired defaulted to No on default value
+  projectDescription: string().when(
+    authorizedToReceiveTaxDeductibleDonationsKey,
+    ([isAuthorizedToReceiveTaxDeductibleDonations], schema) => {
+      return (isAuthorizedToReceiveTaxDeductibleDonations as TAuthorizedToReceiveTaxDeductibleDonations) ===
+        "Yes"
+        ? schema
+        : schema
+            .required("required")
+            .max(4000, "maximum 4000 characters allowed");
+    }
+  ),
 
   hasAuthority: bool().isTrue(
     "Please confirm that you have the authority to create this endowment"

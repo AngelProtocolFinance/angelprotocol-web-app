@@ -13,12 +13,12 @@ import { unsdgs } from "constants/unsdgs";
 const PLACEHOLDER_TAGLINE = " ";
 
 export default function Card({
-  active_in_countries,
+  active_in_countries = [],
   name,
   image,
   id,
   endow_designation,
-  categories: { sdgs },
+  sdgs,
   tagline,
   hq_country,
   kyc_donors_only,
@@ -33,12 +33,14 @@ export default function Card({
         <BookmarkBtn endowId={id} />
       </div>
       <Link
-        to={`${appRoutes.profile}/${id}`}
+        to={`${appRoutes.marketplace}/${id}`}
         className="grid grid-rows-[auto_1fr] h-full"
       >
         <Image
+          loading="lazy"
           src={image}
           className="h-40 w-full object-cover bg-blue-l4 dark:bg-blue-d2"
+          onError={(e) => e.currentTarget.classList.add("bg-blue-l3")}
         />
         <div className="flex flex-col p-3 pb-4 gap-3">
           {/* ENDOWMENT NAME */}
@@ -56,7 +58,7 @@ export default function Card({
             </p>
             <p className="line-clamp-2">
               <span className="font-semibold">Active in:</span>{" "}
-              {!active_in_countries || isEmpty(active_in_countries)
+              {isEmpty(active_in_countries)
                 ? hq_country
                 : active_in_countries.join(" ,")}
             </p>

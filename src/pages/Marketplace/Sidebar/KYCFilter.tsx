@@ -1,5 +1,6 @@
 import { useGetter, useSetter } from "store/accessors";
 import { setKYCOnly } from "slices/components/marketFilter";
+import { PAYMENT_WORDS, titleCase } from "constants/common";
 import { FilterOption, FlatFilter } from "./common";
 
 const options: FilterOption<boolean>[] = [
@@ -13,7 +14,7 @@ export default function KYCFilter() {
 
   return (
     <FlatFilter
-      label="Donor verification"
+      label={`${titleCase(PAYMENT_WORDS.payer)} verification`}
       selectedValues={kycOnly}
       options={options}
       onChange={(options) => dispatch(setKYCOnly(options))}

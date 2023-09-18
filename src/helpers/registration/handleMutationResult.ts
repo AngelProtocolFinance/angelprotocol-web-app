@@ -1,6 +1,6 @@
 import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
-import { EMAIL_SUPPORT } from "constants/common";
+import { EMAIL_SUPPORT } from "constants/env";
 
 export function handleMutationResult<T extends any>(
   result:
@@ -22,7 +22,7 @@ export function handleMutationResult<T extends any>(
       const d: any = result.error.data;
       if (typeof d === "string") {
         onError(d);
-      } else if (withMsg(d)) {
+      } else if ("message" in d) {
         onError(d.message);
 
         /** update with other aws error formats */
@@ -43,8 +43,4 @@ function isServerError(
   error: FetchBaseQueryError
 ): error is { data: any; status: number } {
   return "status" in error && typeof error.status === "number" && !!error.data;
-}
-
-function withMsg(val: unknown): val is { message: string } {
-  return typeof val === "object" && val !== null && "message" in val;
 }

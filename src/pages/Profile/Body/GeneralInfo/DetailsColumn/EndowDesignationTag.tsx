@@ -1,15 +1,15 @@
 import { PropsWithChildren } from "react";
-import { useProfileContext } from "pages/Profile/ProfileContext";
+import { EndowmentProfile } from "types/aws";
 import Icon from "components/Icon";
 import { ENDOW_DESIGNATIONS } from "constants/common";
 
-export default function EndowDesignationTag() {
-  const profile = useProfileContext();
-
+export default function EndowDesignationTag(
+  props: Pick<EndowmentProfile, "endow_designation">
+) {
   const endowDesignation = ENDOW_DESIGNATIONS.find(
-    (option) => option.value === profile.endow_designation
+    (option) => option.value === props.endow_designation
   );
-  return endowDesignation && profile.endow_designation !== "Other" ? (
+  return endowDesignation && props.endow_designation !== "Other" ? (
     <div className="flex flex-col items-start gap-3">
       <Tag>
         <Icon type={endowDesignation.icon} size={24} /> {endowDesignation.label}

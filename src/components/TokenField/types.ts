@@ -10,24 +10,29 @@ export type OnSetAmount = (balance: TokenWithAmount["balance"]) => void;
   */
 type Scale = [number, number, number, number, number];
 
+type Classes = {
+  container?: string;
+  label?: string;
+  inputContainer?: string;
+};
+
 export type Props<T extends FieldValues, K extends Path<T>> = {
   name: T[K] extends TokenWithAmount ? K : never;
   label: string;
   tokens: TokenWithAmount[];
-  withGiftcard?: true;
   scale?: Scale;
+  classes?: Classes;
+
+  //flags
+  withGiftcard?: true;
+  withBalance?: true;
+  withMininum?: true;
 };
 
 export type SelectorProps = {
   token: TokenWithAmount;
   tokens: TokenWithAmount[];
   onChange(token: TokenWithAmount): void;
-};
-
-export type BalanceProps = {
-  token: TokenWithAmount;
-  onSetAmount: OnSetAmount;
-  isGiftEnabled: boolean;
 };
 
 export type AmountOptionsProps = {

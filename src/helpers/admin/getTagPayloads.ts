@@ -1,78 +1,72 @@
-import { ProposalMeta } from "pages/Admin/types";
-import { TagPayload } from "services/types";
+import { TagPayload } from "types/third-party/redux";
+import { TxMeta } from "types/tx";
+import { ApesTag, invalidateApesTags } from "services/apes";
 import { invalidateJunoTags } from "services/juno";
+import { EVMTag } from "services/juno/tags";
 import {
-  accountTags,
-  adminTags,
+  SubgraphTag,
   defaultProposalTags,
-  indexfundTags,
-  registrarTags,
-} from "services/juno/tags";
+  invalidateSubgraphTags,
+} from "services/subgraph";
 
-export function getTagPayloads(type?: ProposalMeta["type"]): TagPayload[] {
-  const _tags = [...defaultProposalTags];
+export function getTagPayloads(type?: TxMeta["id"]): TagPayload[] {
+  const _evm: EVMTag[] = [];
+  const _apes: ApesTag[] = [];
+  const _subgraph: SubgraphTag[] = defaultProposalTags;
 
   switch (type) {
-    case "if_alliance":
-      _tags.push({
-        type: "indexfund",
-        id: indexfundTags.alliance_members,
-      });
-      break;
-    case "if_remove":
-    case "if_create":
-    case "if_members": //fund members shown via selecFromResult (fund_list)
-      _tags.push({
-        type: "indexfund",
-        id: indexfundTags.fund_list,
-      });
+    case "accounts.update-controller":
+    case "accounts.update-settings":
+    case "accounts.update-fee-settings":
+    case "accounts.update-allowlist":
+      _evm.push("accounts.endowment");
       break;
 
-    case "if_config":
-    case "if_owner":
-      _tags.push({
-        type: "indexfund",
-        id: indexfundTags.config,
-      });
+    case "accounts.withdraw":
+      _evm.push("accounts.token-balance");
       break;
 
-    case "cw4_members":
-      _tags.push({
-        type: "admin",
-        id: adminTags.members,
-      });
+    case "index-fund.remove-fund":
+    case "index-fund.create-fund":
+    case "index-fund.config":
+      _evm.push("index-fund.fund");
       break;
 
-    case "review_cw3_config":
-    case "cw3_config":
-      _tags.push({
-        type: "admin",
-        id: adminTags.config,
-      });
+    case "multisig.add-owners":
+    case "multisig.remove-owners":
+    case "multisig.change-threshold":
+    case "multisig.change-auto-execute":
+    case "multisig.change-duration":
+      _evm.push("multisig-subgraph");
       break;
 
-    case "acc_withdraw":
-      _tags.push({
-        type: "account",
-        id: accountTags.state,
-      });
+    case "multisig/review.confirm-prop":
+    case "multisig/review.execute-prop":
+      _subgraph.push("application-proposal");
       break;
 
-    case "acc_endow_status":
-      _tags.push({
-        type: "account",
-        id: accountTags.endowments,
-      });
+    case "erc20.transfer":
+      _apes.push("chain"); //assuming user wallet is beneficiary
       break;
 
-    case "reg_owner":
-    case "reg_config":
-      _tags.push({
-        type: "registrar",
-        id: registrarTags.config,
-      });
+    case "accounts.invest":
+    case "accounts.redeem":
+      _evm.push("accounts.state");
+      break;
+
+    case "accounts.close":
+      _evm.push("accounts.endowment");
+      break;
+
+    case "registrar.update-config":
+    case "registrar.update-owner":
+      _evm.push("registrar.config");
       break;
   }
 
-  return [invalidateJunoTags(_tags)];
+  return [
+    invalidateJunoTags(_evm),
+    invalidateApesTags(_apes),
+    invalidateSubgraphTags(_subgraph),
+  ];
 }

@@ -1,55 +1,41 @@
-import { useMemo } from "react";
-import { ProposalDetails } from "services/types";
+import { Transaction } from "types/tx";
 import { roundDownToNum } from "helpers";
+import { useAdminContext } from "../Context";
 
-export default function Stats({ votes, threshold }: ProposalDetails) {
-  const [numYes, numNo] = useMemo(
-    () =>
-      votes.reduce(
-        (tally, info) => {
-          switch (info.vote) {
-            case "yes":
-              tally[0]++;
-              break;
-            case "no":
-              tally[1]++;
-              break;
-          }
-          return tally;
-        },
-        [0, 0, 0, 0]
-      ),
-    [votes]
-  );
+export default function Stats({ confirmations, owners }: Transaction) {
+  const {
+    config: { threshold },
+  } = useAdminContext();
+  const numSigned = confirmations.length;
+  const numSigners = owners.length;
 
-  const numVoted = numYes + numNo;
-  const total = +threshold.absolute_percentage.total_weight;
-
-  const pctYes = getPct(numYes, total);
-  const pctNo = getPct(numNo, total);
-
-  const pctTarget = +threshold.absolute_percentage.percentage * 100;
-  const pctVoted = getPct(numVoted, total);
+  const pctSigned = pct(numSigned, numSigners);
+  const pctPending = 100 - pctSigned;
+  const pctTarget = pct(threshold, numSigners);
 
   return (
     <div>
       <div className="flex gap-4 text-lg py-4">
         <Stat
-          title="yes"
-          value={numYes}
-          pct={pctYes}
+          title="signed"
+          value={numSigned}
+          pct={pctSigned}
           textColor="text-green-l1"
         />
-        <Stat title="no" value={numNo} pct={pctNo} textColor="text-red-l1" />
+        <Stat
+          title="pending"
+          value={numSigners - numSigned}
+          pct={pctPending}
+          textColor="text-red-l1"
+        />
       </div>
       <div
-        className="relative mb-8 mt-10 h-4 border border-gray-l2 dark:border-none"
+        className="relative mb-8 mt-10 h-4 border border-gray-l3 dark:border-none"
         style={{
           //prettier-ignore
           background: `linear-gradient(to right, 
-            #34d39990 ${pctYes}%, 
-            #f43f5e90 ${pctYes}%, #f43f5e90 ${pctYes + pctNo}%, 
-            #fafafa30 ${pctYes + pctNo}%, #fafafa30 ${100}%, 
+            #34d39990 ${pctSigned}%, 
+            #f43f5e90 ${pctSigned}%, #fafafa30 ${pctSigned}%, 
             #fafafa30 ${100}%)`,
         }}
       >
@@ -63,9 +49,11 @@ export default function Stats({ votes, threshold }: ProposalDetails) {
         </p>
       </div>
       <p className="mt-2 flex items-baseline gap-2">
-        <span className="text-sm uppercase">total voted</span>
-        <span className="font-bold">{numVoted}</span>
-        <span className="text-sm text-gray-d1 dark:text-gray">{pctVoted}%</span>
+        <span className="text-sm uppercase">total signed</span>
+        <span className="font-bold">{numSigned}</span>
+        <span className="text-sm text-gray-d1 dark:text-gray">
+          {pctSigned}%
+        </span>
       </p>
     </div>
   );
@@ -88,6 +76,6 @@ function Stat(props: {
   );
 }
 
-function getPct(numerator: number, denominator: number) {
+function pct(numerator: number, denominator: number) {
   return roundDownToNum((numerator / denominator) * 100);
 }

@@ -1,12 +1,12 @@
 import { TxRaw } from "@keplr-wallet/proto-types/cosmos/tx/v1beta1/tx";
 import { Keplr } from "@keplr-wallet/types";
-import { ProviderId } from "contexts/WalletContext/types";
 import {
   KeplrWC,
   SignDoc,
   WCSignAminoRes,
   WCSignDirectRes,
 } from "types/cosmos";
+import { ProviderId } from "types/lists";
 import { Dwindow } from "types/window";
 import { _session } from "./wallet-connect";
 

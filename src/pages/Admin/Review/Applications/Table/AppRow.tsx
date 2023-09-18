@@ -3,7 +3,7 @@ import { EndowmentProposal } from "types/aws";
 import Icon from "components/Icon";
 import { Cells } from "components/TableSection";
 import { adminRoutes } from "constants/routes";
-import { statusColors } from "../constants";
+import { statusColors } from "../../constants";
 
 export default function AppRow(props: EndowmentProposal) {
   return (
@@ -20,7 +20,7 @@ export default function AppRow(props: EndowmentProposal) {
       </span>
 
       <Link
-        to={`${adminRoutes.proposal}/${props.poll_id}`}
+        to={`${adminRoutes.application}/${props.PK}`}
         className="uppercase text-sm hover:text-blue active:text-orange flex gap-1 items-center"
       >
         <span>Review</span>

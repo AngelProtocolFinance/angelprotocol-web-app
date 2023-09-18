@@ -3,10 +3,12 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { matchRoutes, useLocation } from "react-router-dom";
 import { DonateValues } from "../types";
+import CountrySelector from "components/CountrySelector";
 import TokenField from "components/TokenField";
-import { CheckField } from "components/form";
+import { CheckField, Label } from "components/form";
 import { useGetter } from "store/accessors";
 import { setDetails } from "slices/donation";
+import { PAYMENT_WORDS } from "constants/common";
 import { appRoutes } from "constants/routes";
 import AdvancedOptions from "./AdvancedOptions";
 
@@ -16,8 +18,10 @@ export default function Form(props: {
 }) {
   const {
     reset,
+    resetField,
     handleSubmit,
     getValues,
+    watch,
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<DonateValues>();
 
@@ -35,6 +39,9 @@ export default function Form(props: {
     reset();
   }
 
+  const tokenType = watch("token.type");
+  const isStepOneCompleted = !!getValues("token").amount;
+
   return (
     <form
       onSubmit={handleSubmit(submit)}
@@ -45,8 +52,32 @@ export default function Form(props: {
         name="token"
         tokens={getValues("tokens")}
         withGiftcard
-        label="Enter the donation amount:"
+        withBalance
+        label={`Enter the ${PAYMENT_WORDS.noun.singular} amount:`}
+        classes={{ label: "text-lg", inputContainer: "dark:bg-blue-d6" }}
+        withMininum
       />
+
+      {tokenType === "fiat" && (
+        <>
+          <h4 className="font-bold text-sm mb-2 mt-4">
+            Enter your payment details:
+          </h4>
+          <Label className="mb-2" htmlFor="country">
+            Country of Residence *
+          </Label>
+          <CountrySelector<DonateValues, "country">
+            placeholder="Select a country"
+            fieldName="country"
+            onReset={() => resetField("country")}
+            classes={{
+              container: "px-4 dark:bg-blue-d6 mb-3",
+              input: "py-3.5 placeholder:text-sm",
+              error: "field-error",
+            }}
+          />
+        </>
+      )}
 
       {!isKYCRequired && (
         // if KYC is required, KYC form is automatically shown on next step
@@ -72,15 +103,18 @@ export default function Form(props: {
         {!isInsideWidget && (
           <Link
             className="btn-outline-filled btn-donate w-1/2"
-            to={`${appRoutes.profile}/${endowId}`}
+            to={`${appRoutes.marketplace}/${endowId}`}
           >
             Cancel
           </Link>
         )}
         <button
           className="btn-orange btn-donate w-1/2"
-          //make sure that fields doesn't make form dirty on initial load
-          disabled={!isValid || !isDirty || isSubmitting}
+          // * make sure that fields doesn't make form dirty on initial load
+          // * isStepOneCompleted, when user goes back to step 1 (filled out previously)
+          disabled={
+            !isValid || isSubmitting || !(isDirty || isStepOneCompleted)
+          }
           type="submit"
         >
           Continue

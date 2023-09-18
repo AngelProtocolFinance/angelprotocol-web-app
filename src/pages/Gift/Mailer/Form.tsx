@@ -9,7 +9,8 @@ import { RichTextEditor } from "components/RichText";
 import { Field, Label } from "components/form";
 import { createAuthToken } from "helpers";
 import { richTextToHTML } from "helpers/richTextToHtml";
-import { APP_NAME, GENERIC_ERROR_MESSAGE } from "constants/common";
+import { GENERIC_ERROR_MESSAGE } from "constants/common";
+import { APP_NAME } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { APIs } from "constants/urls";
 import Success from "./Success";
@@ -79,7 +80,7 @@ export default function Form({ classes = "" }) {
         fieldName="message"
         classes={{
           container:
-            "rich-text-toolbar border border-prim text-sm grid grid-rows-[auto_10rem] rounded bg-white dark:bg-blue-d6 aria-disabled:bg-gray-l4 aria-disabled:dark:bg-bluegray-d1 p-3 break-words",
+            "rich-text-toolbar border border-prim text-sm grid grid-rows-[auto_10rem] rounded bg-white dark:bg-blue-d6 aria-disabled:bg-gray-l5 aria-disabled:dark:bg-bluegray-d1 p-3 break-words",
           error: "text-right text-red dark:text-red-l1 text-xs -mt-4",
           charCounter: "text-gray-d1 dark:text-gray",
         }}

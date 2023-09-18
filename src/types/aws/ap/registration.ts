@@ -1,17 +1,16 @@
 import { UNSDG_NUMS } from "types/lists";
 import { EndowmentTierNum } from "../../contracts";
 import { FileObject } from "../common";
-import { EndowDesignation } from "./index";
 
 export type RegistrationStatus =
-  | "Inactive"
-  | "Under Review"
-  | "Active"
-  | "Rejected";
+  //| "Pending Signature"
+  "Inactive" | "Under Review" | "Active" | "Rejected";
 
 export type ApplicationStatus = "approved" | "not-complete" | "under-review";
 
 export type ReferralMethods =
+  | ""
+  | "referral"
   | "angel-alliance"
   | "discord"
   | "facebook"
@@ -23,6 +22,7 @@ export type ReferralMethods =
   | "other";
 
 export type ContactRoles =
+  | ""
   | "board-member"
   | "ceo"
   | "cfo"
@@ -48,8 +48,6 @@ export type InitContact = {
   PK: string;
   SK: "ContactPerson";
   Email: string;
-  EmailVerified: boolean;
-  EmailVerificationLastSentDate: string /** ISO string */;
 };
 
 type InitMeta = {
@@ -65,23 +63,34 @@ export type ContactDetails = {
   Role: ContactRoles;
   OtherRole: string;
   ReferralMethod: ReferralMethods;
-  OtherReferralMethod: string;
+  ReferralCode: string; //when ReferralMethod is "referral"
+  OtherReferralMethod: string; //when ReferralMethod is "other"
 };
 
 export type TDocumentation = {
+  //user identity
   ProofOfIdentity: FileObject;
+
+  //organization details
+  EIN: string;
   ProofOfRegistration: FileObject;
   Website: string;
   Tier: EndowmentTierNum;
-  //based on tier
-  FinancialStatements?: FileObject[];
-  AuditedFinancialReports?: FileObject[];
+  HqCountry: string;
+  EndowDesignation: string;
+  ActiveInCountries: string[];
+  LegalEntityType: string;
+  ProjectDescription: string;
+
+  //fiscal sponsorship
+  AuthorizedToReceiveTaxDeductibleDonations: boolean;
+  //only exists if AuthorizedToReceiveTaxDeductibleDonations is false
+  FiscalSponsorshipAgreementSigningURL?: string;
+  SignedFiscalSponsorshipAgreement?: string;
+
+  //others
   KycDonorsOnly: boolean;
   CashEligible: boolean;
-  HqCountry: string;
-  EndowDesignation: EndowDesignation | "";
-  // general
-  ActiveInCountries: string[];
 };
 
 //INIT STEP
@@ -92,38 +101,37 @@ export type InitApplication = {
 };
 
 export type OrgData = { OrganizationName: string };
-export type WalletData = { JunoWallet: string };
+export type WalletData = { Wallet: string };
 
-export type DoneContact = {
-  Registration: InitReg & OrgData;
-  ContactPerson: InitContact & ContactDetails;
-  Metadata: InitMeta;
+type Append<Reg extends InitApplication, T, U, V> = {
+  Registration: Reg["Registration"] & T;
+  ContactPerson: Reg["ContactPerson"] & U;
+  Metadata: Reg["Metadata"] & V;
 };
 
-export type DoneDocs = {
-  Registration: InitReg & OrgData & TDocumentation;
-  ContactPerson: InitContact & ContactDetails;
-  Metadata: InitMeta;
-};
+export type DoneContact = Append<InitApplication, OrgData, ContactDetails, {}>;
+export type DoneDocs = Append<DoneContact, TDocumentation, {}, {}>;
 
-export type DoneWallet = {
-  Registration: InitReg & OrgData & TDocumentation;
-  ContactPerson: InitContact & ContactDetails;
-  Metadata: InitMeta &
-    WalletData & {
-      EndowmentId?: number;
-      /** when created 
-      TODO: should be part of Registration status
-      Inactive | Rejected | {id: number}
-      */
-    };
+type NewEndow = {
+  EndowmentId?: number;
+  /** when created 
+TODO: should be part of Registration status
+Inactive | Rejected | {id: number}
+*/
 };
+export type DoneWallet = Append<DoneDocs, {}, {}, WalletData & NewEndow>;
+
+type Proposal = {
+  application_id: number;
+};
+export type InReview = Append<DoneWallet, Proposal, {}, {}>;
 
 export type SavedRegistration =
   | InitApplication
   | DoneContact
   | DoneDocs
-  | DoneWallet;
+  | DoneWallet
+  | InReview;
 
 type ContactUpdate = {
   type: "contact details";
@@ -140,12 +148,15 @@ type WalletUpdate = {
   type: "wallet";
 } & WalletData;
 
-export type RegistrationUpdate = ContactUpdate | DocsUpdate | WalletUpdate;
+export type RegistrationUpdate = (ContactUpdate | DocsUpdate | WalletUpdate) & {
+  reference: string;
+};
 
 export type ContactUpdateResult = {
   ContactPerson: ContactDetails;
   Registration: OrgData;
 };
+
 export type DocsUpdateResult = InitReg & TDocumentation;
 export type WalletUpdateResult = WalletData;
 
@@ -154,17 +165,17 @@ export type Application = DoneWallet;
 
 /** shape used in Review proposals table */
 export type EndowmentProposal = Pick<
-  InitReg,
+  InitReg & Proposal,
   "PK" | "RegistrationDate" | "RegistrationStatus"
 > &
   OrgData &
   TDocumentation &
-  Pick<InitContact, "Email"> & {
-    poll_id: number;
-  };
+  Pick<InitContact, "Email"> &
+  Proposal;
 
 export type SubmitResult = {
   RegistrationStatus: RegistrationStatus;
   chain_id: string;
-  poll_id: number;
+  application_id: number;
+  Email: string;
 };

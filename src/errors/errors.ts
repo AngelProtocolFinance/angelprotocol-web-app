@@ -1,9 +1,8 @@
 import { WithoutInstallers } from "contexts/WalletContext/types";
-import { Chain } from "types/aws";
+import { Chain } from "types/tx";
 import { WALLET_METADATA } from "contexts/WalletContext/constants";
 import { chainIds } from "constants/chainIds";
-import { EMAIL_SUPPORT } from "constants/common";
-import { EXPECTED_NETWORK_TYPE } from "constants/env";
+import { EMAIL_SUPPORT, EXPECTED_NETWORK_TYPE } from "constants/env";
 
 export const AP_ERROR_DISCRIMINATOR = "AP_ERROR_DISCRIMINATOR";
 
@@ -27,17 +26,6 @@ export abstract class APError extends Error implements IAPError {
       cause: this.cause,
       discriminator: this.discriminator,
     };
-  }
-}
-
-export class LogApplicationUpdateError extends Error {
-  chainId: string;
-  pollId: string;
-  constructor(chainId: string, pollId: string) {
-    super("Failed to log the Poll ID of your proposal");
-    this.chainId = chainId;
-    this.pollId = pollId;
-    this.name = "ApplicationReviewPollUpdateError";
   }
 }
 
@@ -114,35 +102,15 @@ export class CosmosTxSimulationFail extends APError {
   }
 }
 
-export class BroadcastError extends APError {
-  constructor(message = "Failed to broadcast transaction") {
-    super("BroadcastError", message);
-  }
-}
-
 export class TxResultFail extends Error {
   chain: Chain;
   txHash: string;
   constructor(chain: Chain, txHash: string) {
     //No need to dump to user technical details of why result failed, a link to failed tx is sufficient
-    super(
-      "Failed to broadcast transaction. Please try transaction again later"
-    );
+    super("Failed to broadcast transaction");
     this.chain = chain;
     this.txHash = txHash;
     this.name = "TxResultFail";
-  }
-}
-
-export class TxTimeout extends Error {
-  chain: Chain;
-  txHash: string;
-  constructor(chain: Chain, txHash: string) {
-    //No need to dump to user technical details of why result failed, a link to failed tx is sufficient
-    super("Timeout: kindly check transaction status manually");
-    this.chain = chain;
-    this.txHash = txHash;
-    this.name = "TxTimeout";
   }
 }
 

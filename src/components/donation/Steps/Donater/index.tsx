@@ -1,10 +1,11 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { DonateValues } from "./types";
-import { TokenWithAmount } from "types/slices";
-import { WithWallet } from "contexts/WalletContext";
-import { FormStep } from "slices/donation";
+import { TokenWithAmount as TWA } from "types/slices";
+import { FormStep, WithWallet, fiatWallet, isFiat } from "slices/donation";
 import { isEmpty } from "helpers";
+import { IS_AST } from "constants/env";
+// import { fiatTokens } from "constants/tokens";
 import { ConfigParams } from "..";
 import Form from "./Form";
 import { schema } from "./schema";
@@ -14,22 +15,46 @@ export default function Donater({
   config: {
     availCurrs = [],
     hideAdvOpts = false,
-    liquidPct = 0,
+    liquidPct = IS_AST ? 100 : 0,
     unfoldAdvOpts = false,
   },
   ...state
 }: WithWallet<FormStep> & { config: ConfigParams }) {
-  const _tokens: TokenWithAmount[] = wallet.coins.map((t) => ({
+  const fiats: TWA[] = fiatWallet.tokens.map((t) => ({
     ...t,
     amount: "0",
+    approved: true,
+    decimals: 0,
+    name: "",
+    token_id: t.symbol,
+    balance: Number.MAX_VALUE,
+    type: "fiat",
+    coingecko_denom: "",
   }));
+
+  const _tokens: TWA[] = isFiat(wallet)
+    ? fiats
+    : wallet.coins
+        .map<TWA>((t) => ({
+          ...t,
+          amount: "0",
+        }))
+        .concat(fiats);
+
+  const initCoin = _tokens[0];
 
   const methods = useForm<DonateValues>({
     mode: "onChange",
     reValidateMode: "onChange",
-    defaultValues: state.details || {
-      token: _tokens[0],
+    values: state.details || {
+      token: initCoin,
       pctLiquidSplit: liquidPct,
+
+      country: {
+        name: "",
+        flag: "",
+        code: "",
+      },
 
       //meta
       // if availCurrs array was not set, include all
@@ -39,10 +64,10 @@ export default function Donater({
         : _tokens.filter(
             (token) =>
               availCurrs.includes(token.symbol) ||
-              wallet.displayCoin.symbol === token.symbol
+              initCoin.symbol === token.symbol
           ),
-      chainName: wallet.chain.chain_name,
-      chainId: wallet.chain.chain_id,
+      chainName: isFiat(wallet) ? "" : wallet.chain.chain_name,
+      chainId: isFiat(wallet) ? "" : wallet.chain.chain_id,
       userOptForKYC: false,
     },
     resolver: yupResolver(schema),

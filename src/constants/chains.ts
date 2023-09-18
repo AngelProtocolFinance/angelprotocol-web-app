@@ -1,10 +1,11 @@
-import { DAPP_DOMAIN } from "constants/common";
+import { DAPP_URL } from "constants/env";
 
 export enum chainIDs {
   junoMain = "juno-1",
   junoTest = "uni-6",
   polygonMain = "137",
   polygonTest = "80001",
+  polygonLocal = "1337",
   binanceMain = "56",
   binanceTest = "97",
   ethMain = "1",
@@ -23,6 +24,7 @@ const explorers: { [key in chainIDs]: string } = {
   56: "https://bscscan.com",
   137: "https://polygonscan.com",
   80001: "https://mumbai.polygonscan.com",
+  1337: "",
   "juno-1": "https://www.mintscan.io/juno",
   "uni-6": "https://testnet.mintscan.io/juno-testnet",
   "phoenix-1": "https://finder.terra.money/mainnet",
@@ -54,6 +56,10 @@ const _chains: { [key in chainIDs]: Info } = {
     txExplorer: `${explorers[chainIDs.polygonTest]}/tx`,
     addressExplorer: `${explorers[chainIDs.polygonTest]}/address`,
   },
+  [chainIDs.polygonLocal]: {
+    txExplorer: "",
+    addressExplorer: "",
+  },
   [chainIDs.junoMain]: {
     txExplorer: `${explorers[chainIDs.junoMain]}/txs`,
     addressExplorer: `${explorers[chainIDs.junoMain]}/account`,
@@ -73,11 +79,12 @@ const _chains: { [key in chainIDs]: Info } = {
 };
 
 export const chains: { [index: string]: Info } = new Proxy(_chains, {
-  get(target, key: chainIDs) {
+  get(target, key: chainIDs | "staging") {
+    if (key === "staging") return target["80001"];
     return (
       target[key] ?? {
-        txExplorer: DAPP_DOMAIN,
-        addressExplorer: DAPP_DOMAIN,
+        txExplorer: DAPP_URL,
+        addressExplorer: DAPP_URL,
       }
     ); //TODO: what's good fallback link
   },

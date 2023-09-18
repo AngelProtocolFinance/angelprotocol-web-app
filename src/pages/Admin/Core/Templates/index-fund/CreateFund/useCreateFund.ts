@@ -1,22 +1,21 @@
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { CreateFundMeta, FundCreatorValues } from "pages/Admin/types";
-import { FundDetails } from "types/contracts";
-import { useAdminResources } from "pages/Admin/Guard";
-import { useGetWallet } from "contexts/WalletContext";
+import { FormValues } from "./types";
+import { NewFund } from "types/contracts";
+import { useModalContext } from "contexts/ModalContext";
+import { TxPrompt } from "components/Prompt";
 import { useGetter } from "store/accessors";
-import CW3 from "contracts/CW3";
-import IndexFund from "contracts/IndexFund";
-import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
-import { condense, roundDown } from "helpers";
-import { cleanObject } from "helpers/cleanObject";
-import { INIT_SPLIT } from ".";
+import { createTx, encodeTx } from "contracts/createTx/createTx";
+import useTxSender from "hooks/useTxSender";
+import { blockTime } from "helpers/admin";
+import { isTooltip, useAdminContext } from "../../../../Context";
+import { INIT_SPLIT } from "./index";
 
 export default function useCreateFund() {
-  const { cw3, propMeta } = useAdminResources();
-  const { wallet } = useGetWallet();
-  const sendTx = useCosmosTxSender();
-  const { trigger, getValues } = useFormContext<FundCreatorValues>();
+  const { multisig, txResource } = useAdminContext();
+  const sendTx = useTxSender();
+  const { showModal } = useModalContext();
+  const { trigger, getValues } = useFormContext<FormValues>();
   const newFundMembers = useGetter((state) => state.admin.newFundMembers);
 
   const [isSubmitting, setSubmitting] = useState(false);
@@ -27,68 +26,64 @@ export default function useCreateFund() {
     const isValid = await trigger([
       "title",
       "description",
-      "fundName",
-      "fundDescription",
+      "name",
+      "about",
       "expiryHeight",
       "expiryTime",
     ]);
 
     if (!isValid) return;
+    if (isTooltip(txResource)) throw new Error(txResource);
 
-    const title = getValues("title");
-    const description = getValues("description");
-    const fundName = getValues("fundName");
-    const fundDescription = getValues("fundDescription");
-    const expiryHeight = getValues("expiryHeight");
+    const currHeight = getValues("height");
+    let expiryHeight = getValues("expiryHeight");
+
+    if (+expiryHeight < +currHeight) {
+      return showModal(TxPrompt, {
+        error: `Expiry height must be greater than current block height ${currHeight}`,
+      });
+    }
+
     const expiryTime = getValues("expiryTime");
-    const splitToLiquid = getValues("splitToLiquid");
-    const isFundRotating = getValues("isFundRotating");
+    const split = getValues("splitToLiquid");
 
-    //create embedded execute msg
-    const indexFundContract = new IndexFund(wallet);
-
-    const newFundDetails: Omit<FundDetails, "id"> = {
-      name: fundName,
-      description: fundDescription,
-      members: newFundMembers,
-      rotating_fund: isFundRotating || undefined,
-      split_to_liquid:
-        splitToLiquid === INIT_SPLIT
-          ? undefined
-          : roundDown(condense(splitToLiquid)),
-      expiry_time:
-        expiryTime === "" ? undefined : new Date(expiryTime).getTime() / 1000,
-      expiry_height: expiryHeight === "" ? undefined : +expiryHeight,
+    const newFund: NewFund = {
+      name: getValues("name"),
+      description: getValues("about"),
+      members: newFundMembers.map((m) => m.toString()),
+      rotatingFund: getValues("rotatingFund"),
+      splitToLiquid: split === INIT_SPLIT ? "0" : split,
+      expiryTime: expiryTime === "" ? "0" : blockTime(expiryTime).toString(),
+      expiryHeight: expiryHeight === "" ? "0" : expiryHeight,
     };
 
-    //remove undefined fields
-    const cleanedNewFundDetails = cleanObject(newFundDetails);
+    const [data, dest, meta] = encodeTx("index-fund.create-fund", newFund, {
+      title: getValues("title"),
+      description: getValues("description"),
+      content: newFund,
+    });
 
-    const embeddedExecuteMsg = indexFundContract.createEmbeddedCreateFundMsg(
-      cleanedNewFundDetails
-    );
+    const { wallet, txMeta } = txResource;
+    const tx = createTx(wallet.address, "multisig.submit-transaction", {
+      multisig,
 
-    //create proposal meta
-    const createFundMeta: CreateFundMeta = {
-      type: "if_create",
-      data: newFundDetails,
-    };
-    //create proposal msg
-    const adminContract = new CW3(wallet, cw3);
-    const proposalMsg = adminContract.createProposalMsg(
-      title,
-      description,
-      [embeddedExecuteMsg],
-      JSON.stringify(createFundMeta)
-    );
+      destination: dest,
+      value: "0",
+      data,
+      meta: meta.encoded,
+    });
 
     await sendTx({
-      msgs: [proposalMsg],
-      ...propMeta,
+      content: { type: "evm", val: tx },
+      ...txMeta,
     });
 
     setSubmitting(false);
   }
 
-  return { createFund, isSubmitting };
+  return {
+    createFund,
+    isSubmitting,
+    tooltip: isTooltip(txResource) ? txResource : undefined,
+  };
 }

@@ -1,55 +1,138 @@
-import { PayloadAction } from "@reduxjs/toolkit";
-import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
-import { AxelarBridgeFees } from "types/aws";
 import {
-  AdminVoteInfo,
-  CW3Config,
-  EndowmentDetails,
-  EndowmentState,
-  Proposal,
-} from "types/contracts";
-import { TxArgs } from "hooks/useCosmosTxSender";
+  ASTProfile,
+  BridgeFees,
+  EndowmentProfile,
+  EndowmentProfileUpdate,
+  WalletProfile,
+} from "types/aws";
+import { EndowmentDetails } from "types/contracts";
+import { AccountType, EndowmentType } from "types/lists";
+import { SemiPartial } from "types/utils";
 
-export type Tag = TagDescription<string>;
-export type TagPayload = PayloadAction<Tag[], string>;
+export type MultisigConfig = {
+  threshold: number;
+  requireExecution: boolean;
+  duration: number;
+};
 
-export type ContractQueryArgs<T = object> = {
+type Base = {
+  multisig: string;
+  members: string[];
+  id: number;
+  config: MultisigConfig;
+};
+
+type APResource = Base & {
+  type: "ap";
+};
+type ReviewResource = Base & {
+  type: "review";
+};
+
+type Beneficiary = {
+  type: "wallet" | "endowment" | "treasury";
+  value: string;
+};
+
+export type EndowmentState = {
+  closed: boolean;
+  closingBeneficiary: Beneficiary;
+};
+
+type CharityResource = Base & {
+  type: "charity";
+} & EndowmentDetails &
+  EndowmentState;
+
+export type AdminResource = APResource | ReviewResource | CharityResource;
+
+export type ChainQueryArgs = {
   address: string;
-  msg: T;
+  chainId: string;
 };
 
-export type MultiContractQueryArgs = ContractQueryArgs<AggregatedQuery>;
-export type AggregatedQuery = {
-  aggregate: { queries: EncodedQueryMember[] };
-};
-export type EncodedQueryMember = {
+export interface IERC20 {
+  amount: string;
   address: string;
-  data: string; //base64 encoded msg
+}
+
+export type EndowBalance = { [key in AccountType]: IERC20[] };
+
+export type ProtocolFeeRates = {
+  withdrawBps: number;
+  //applied to charities only
+  earlyLockedWithdrawBps: number;
 };
 
-export type AdminRoles = "ap" | "reviewer" | "charity";
-export type AdminResources = {
-  cw3: string;
-  cw4: string;
-  endowmentId: number;
-  endowment: EndowmentDetails;
-  cw3config: CW3Config;
-  role: AdminRoles;
-  propMeta: Required<Pick<TxArgs, "successMeta" | "tagPayloads">> & {
-    willExecute?: true;
-  };
+export type WithdrawData = {
+  balances: EndowBalance;
+  bridgeFees: BridgeFees;
+  protocolFeeRates: ProtocolFeeRates;
 };
 
-export type ProposalDetails = Proposal & {
-  votes: AdminVoteInfo[];
+export type Profile =
+  | ({
+      type: Extract<EndowmentType, "charity">;
+    } & EndowmentProfile)
+  | ({ type: Extract<EndowmentType, "ast"> } & ASTProfile);
+
+//type guard
+export function profileIsCharity(
+  profile: Profile
+): profile is EndowmentProfile & { type: "charity" } {
+  return profile.type === "charity";
+}
+
+export type ProfileUpdateMsg = SemiPartial<
+  EndowmentProfileUpdate,
+  "id" | "owner"
+>;
+
+export type ProgramDeleteMsg = Pick<
+  EndowmentProfileUpdate,
+  "id" | "owner" | "program_id"
+>;
+
+export type ProfileUpdatePayload = {
+  unsignedMsg: ProfileUpdateMsg | ProgramDeleteMsg;
+  rawSignature: string;
 };
 
-export type JunoTags =
-  | "gov"
-  | "indexfund"
-  | "admin"
-  | "account"
-  | "registrar"
-  | "custom";
+export function isDeleteMsg(
+  msg: ProfileUpdateMsg | ProgramDeleteMsg
+): msg is ProgramDeleteMsg {
+  return (
+    //for edits, program_id is accompanied by program:[]
+    Object.keys(msg).length === 3 && !!(msg as ProgramDeleteMsg).program_id
+  );
+}
 
-export type WithdrawInfo = EndowmentState & AxelarBridgeFees;
+export type Multisig = {
+  recordId: string;
+  address: string;
+  owners: string[];
+  approvalsRequired: number;
+  requireExecution: boolean;
+  transactionExpiry: number;
+};
+
+export type FiscalSponsorhipAgreementSigner =
+  | {
+      id: string;
+      firstName: string;
+      lastName: string;
+      email: string;
+      role: string;
+      org: {
+        name: string;
+        legalEntityType: string;
+        hq: string;
+        projectDescription: string;
+      };
+    }
+  | string; //signerEID;
+
+export type WalletProfileVersion = "legacy" | "latest";
+export type VersionSpecificWalletProfile = WalletProfile & {
+  version: "legacy" | "latest";
+};

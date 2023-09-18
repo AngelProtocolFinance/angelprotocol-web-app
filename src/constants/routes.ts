@@ -1,5 +1,4 @@
 export enum appRoutes {
-  index = "/",
   dashboard = "/dashboard",
   marketplace = "/marketplace",
   leaderboard = "/leaderboard",
@@ -14,33 +13,34 @@ export enum appRoutes {
   endowment_admin = "/endowment-admin",
   donations = "/donations",
   donate = "/donate",
+  donate_fiat_thanks = "/donate-fiat-thanks",
   donate_widget = "/donate-widget",
   gift = "/gift",
 }
 
-export enum governRoutes {
-  index = "",
-  pollDetails = "pollDetails",
-}
-
-export enum profileRoutes {
-  overview = "overview",
-  endowment = "endowment",
-  programs = "programs",
-  media = "media",
-  governance = "governance",
-}
-
-export enum adminRoutes {
+export const adminRoutes = {
   //base routes
-  index = "",
-  proposal = "proposal",
-  proposals = "proposals",
-  templates = "templates",
-  widget_config = "widget-config",
-
+  index_review: "",
+  index: "",
+  proposal: "proposal",
+  proposals: "proposals",
+  templates: "templates",
+  widget_config: "widget-config",
+  contributions: "contributions",
+  other_settings: "other-settings",
+  permissions: "permissions",
+  whitelists: "whitelists",
+  maturity: "maturity",
+  admin_wallet: "admin-wallet",
   //charity
-  edit_profile = "edit-profile",
-  withdraws = "withdraws",
-  investments = "investments",
-}
+  edit_profile: "edit-profile",
+  programs: "programs",
+  program_editor: "program-editor",
+  withdraws: "withdraws",
+  deposits: "deposits",
+  // settings: "settings",
+  invest: "invest-dashboard",
+  account: "account",
+
+  application: "application",
+} as const;

@@ -1,43 +1,63 @@
-import { Coin } from "types/cosmos";
+import { OverrideProperties } from "type-fest";
 import {
-  Asset,
-  CapitalizedEndowmentType,
-  Categories,
-  EndowmentStatus,
-  EndowmentTier,
-  EndowmentType,
-} from "./common";
-import { CW20 } from "./cw20";
+  AccountMessages as AccountDepositWithdrawEndowmentsMessages,
+  IAccountsDepositWithdrawEndowments,
+} from "../typechain-types/contracts/core/accounts/facets/AccountsDepositWithdrawEndowments";
+import { AccountMessages as AccountsQueryEndowmentsMessages } from "../typechain-types/contracts/core/accounts/facets/AccountsQueryEndowments";
+import { AccountMessages as AccountsUpdateEndowmentSettingsControllerMessages } from "../typechain-types/contracts/core/accounts/facets/AccountsUpdateEndowmentSettingsController";
+import {
+  AccountMessages,
+  LibAccounts,
+} from "../typechain-types/contracts/core/accounts/interfaces/IAccounts";
+import { EndowmentType } from "../lists";
+import { Mapped } from "../utils";
 
-export interface GenericBalance {
-  native: Coin[];
-  cw20: CW20[];
-}
+type BeneficiaryData = OverrideProperties<
+  LibAccounts.BeneficiaryDataStruct,
+  { endowId: number }
+>;
+
+export type AccountsSplitDetails = Mapped<
+  LibAccounts.SplitDetailsStruct,
+  number
+>;
+
+/**
+ * 0 Endowment
+ * 1 Wallet
+ * 2 None (treasury)
+ */
+export type Beneficiary = OverrideProperties<
+  LibAccounts.BeneficiaryStruct,
+  { data: BeneficiaryData; enumData: 0 | 1 | 2 }
+>;
+
+export type ADDRESS_ZERO = "0x0000000000000000000000000000000000000000" & {
+  __type: "address_zero";
+};
+
+//transformed GenericBalance
+export type GenericBalMap = { native: string } & { [index: string]: string }; //erc20s
 
 export interface BalanceInfo {
-  locked: GenericBalance;
-  liquid: GenericBalance;
+  locked: GenericBalMap;
+  liquid: GenericBalMap;
 }
 
-export interface DonationsReceived {
-  locked: number;
-  liquid: number;
-}
+/**
+ * 0 - locked
+ * 1 - liquid
+ * 2 - none
+ */
+export type AccountType = 0 | 1 | 2;
 
-export interface EndowmentState {
-  tokens_on_hand: BalanceInfo;
-  donations_received: DonationsReceived;
-  closing_endowment: boolean;
-  closing_beneficiary?: string;
-}
-
-interface RebalanceDetails {
-  rebalance_liquid_invested_profits: boolean; // should invested portions of the liquid account be rebalanced?
-  locked_interests_to_liquid: boolean; // should Locked acct interest earned be distributed to the Liquid Acct?
-  interest_distribution: string; // % of Locked acct interest earned to be distributed to the Liquid Acct
-  locked_principle_to_liquid: boolean; // should Locked acct principle be distributed to the Liquid Acct?
-  principle_distribution: string; // % of Locked acct principle to be distributed to the Liquid Acct
-}
+export type EndowmentState = OverrideProperties<
+  AccountMessages.StateResponseStruct,
+  {
+    closingEndowment: boolean;
+    closingBeneficiary: Beneficiary;
+  }
+>;
 
 export interface Strategy {
   vault: string; // Vault SC Address
@@ -50,30 +70,57 @@ type Vaults<T> = {
 };
 
 export type AccountStrategies = Vaults<Strategy[]>;
-type OneOffVaults = Vaults<string[]>;
 
-export interface EndowmentDetails {
-  owner: string;
-  status: EndowmentStatus;
-  endow_type: CapitalizedEndowmentType;
-  withdraw_before_maturity: boolean;
-  maturity_time?: number;
-  maturity_height?: number;
-  strategies: AccountStrategies;
-  oneoff_vaults: OneOffVaults;
-  rebalance: RebalanceDetails;
-  kyc_donors_only: boolean;
-  deposit_approved: boolean;
-  withdraw_approved: boolean;
-  pending_redemptions: number;
-  logo?: string;
-  image?: string;
-  name: string;
-  categories: Categories;
-  tier?: number;
-  copycat_strategy?: number;
-  proposal_link?: number;
-}
+export type Delegate = OverrideProperties<
+  LibAccounts.DelegateStruct,
+  {
+    addr: string | ADDRESS_ZERO;
+    expires: number; // datetime int of delegation expiry: 0 if no expiry
+  }
+>;
+
+export type SettingsPermission = OverrideProperties<
+  LibAccounts.SettingsPermissionStruct,
+  {
+    locked: boolean;
+    delegate: Delegate;
+  }
+>;
+
+export type SettingsController = Mapped<
+  LibAccounts.SettingsControllerStruct,
+  SettingsPermission
+>;
+
+export type EndowmentDetails = OverrideProperties<
+  Pick<
+    AccountsQueryEndowmentsMessages.EndowmentResponseStruct,
+    | "owner"
+    | "endowType"
+    | "maturityTime"
+    | "allowlistedBeneficiaries"
+    | "allowlistedContributors"
+    | "maturityAllowlist"
+    | "donationMatchActive"
+    | "settingsController"
+    | "ignoreUserSplits"
+    | "splitToLiquid"
+    | "earlyLockedWithdrawFee"
+    | "withdrawFee"
+    | "depositFee"
+    | "balanceFee"
+  >,
+  {
+    endowType: EndowmentType;
+    maturityTime: number;
+    settingsController: SettingsController;
+    splitToLiquid: AccountsSplitDetails;
+    earlyLockedWithdrawFee: Fee;
+    withdrawFee: Fee;
+    depositFee: Fee;
+    balanceFee: Fee;
+  }
+>;
 
 export type Holding = { address: string; amount: string };
 export interface Holdings {
@@ -90,64 +137,110 @@ export interface Source {
   vault: string; //"juno123addr.."
 }
 
-export type EndowmentQueryOptions = {
-  proposal_link?: number;
-  start_after?: number;
-  limit?: number;
-};
-
-export type EndowmentEntry = {
-  id: number; //int
-  owner: String;
-  status: keyof EndowmentStatus;
-  endow_type: CapitalizedEndowmentType;
-  name: string;
-  logo: string;
-  image: string;
-  tier: EndowmentTier;
-  categories: Categories;
-};
-
-export interface EndowmentSettingsPayload {
-  id: number;
-  owner?: string;
-  kyc_donors_only?: boolean;
-  endow_type?: EndowmentType; //editable by config.owner
-  name?: string;
-  categories?: Categories;
-  tier?: number; //editable by config.owner
-  logo?: string;
-  image?: string;
-}
-
-export interface DepositPayload {
-  id: number;
-  locked_percentage: string; //"0.7"
-  liquid_percentage: string; //"0.3"
-}
-
-export type AccountType = "locked" | "liquid";
-
-export interface WithdrawPayload {
-  id: number;
-  acct_type: AccountType;
-  beneficiary: string;
-  assets: Asset[];
-}
-
-export type Beneficiary =
-  | { endowment: { id: number } }
-  | { indexfund: { id: number } }
-  | { wallet: { address: string } };
-
-export type StatusChangePayload = {
-  endowment_id: number;
-  status: EndowmentStatus[keyof EndowmentStatus];
-  beneficiary?: Beneficiary;
-};
-
 export type UpdateStategyPayload = {
   id: number;
   acct_type: AccountType;
   strategies: Strategy[];
 };
+
+export type SettingsControllerUpdate = OverrideProperties<
+  AccountsUpdateEndowmentSettingsControllerMessages.UpdateEndowmentControllerRequestStruct,
+  { id: number; settingsController: SettingsController }
+>;
+
+export type EndowmentSettingsUpdate = OverrideProperties<
+  AccountsUpdateEndowmentSettingsControllerMessages.UpdateEndowmentSettingsRequestStruct,
+  { id: number; splitToLiquid: AccountsSplitDetails; maturityTime: number }
+>;
+
+export type CloseEndowmentRequest = {
+  id: number;
+  beneficiary: Beneficiary;
+};
+
+type DepositRequest = OverrideProperties<
+  AccountDepositWithdrawEndowmentsMessages.DepositRequestStruct,
+  {
+    id: number;
+    lockedPercentage: number;
+    liquidPercentage: number;
+    donationMatch: string;
+  }
+>;
+
+export type ERC20Deposit = {
+  details: DepositRequest;
+  tokenAddress: string;
+  amount: string;
+};
+
+export type Fee = OverrideProperties<
+  LibAccounts.FeeSettingStruct,
+  { bps: number }
+>;
+
+export type FeeSettingsUpdate = OverrideProperties<
+  AccountsUpdateEndowmentSettingsControllerMessages.UpdateFeeSettingRequestStruct,
+  {
+    id: number;
+    earlyLockedWithdrawFee: Fee;
+    depositFee: Fee;
+    withdrawFee: Fee;
+    balanceFee: Fee;
+  }
+>;
+
+// function params not exporter separately
+/**
+ * types
+ * 0 - beneficiaries
+ * 1 - contributors
+ * 2 - maturity
+ */
+export type AllowlistUpdate = {
+  id: number;
+
+  allowlistType: number;
+  add: string[];
+  remove: string[];
+};
+
+export type NewAST = OverrideProperties<
+  AccountMessages.CreateEndowmentRequestStruct,
+  {
+    maturityTime: number;
+    sdgs: number[];
+    /**
+     * 0 - none
+     * 1 - Level 1
+     * 2 - Level 2
+     * 3 - Level 3
+     */
+    tier: 0 | 1 | 2 | 3;
+    /**
+     * 0 - charity
+     * 1 - normal
+     * 2 - none
+     */
+    endowType: 0 | 1 | 2;
+    threshold: number;
+    duration: number;
+    earlyLockedWithdrawFee: Fee;
+    withdrawFee: Fee;
+    depositFee: Fee;
+    balanceFee: Fee;
+    proposalLink: number;
+    settingsController: SettingsController;
+    parent: number;
+    splitToLiquid: AccountsSplitDetails;
+    referralId: number;
+  }
+>;
+
+export type Token = OverrideProperties<
+  IAccountsDepositWithdrawEndowments.TokenInfoStruct,
+  {
+    addr: string;
+    amnt: string;
+  }
+>;

@@ -1,12 +1,14 @@
 import { WithoutInstallers } from "./types";
-import { BaseChain, Chain } from "types/aws";
-import tokenLogo from "assets/icons/currencies/token.svg";
-import binanceWalletIcon from "assets/icons/wallets/binance.png";
-import keplrIcon from "assets/icons/wallets/keplr.png";
-import metamaskIcon from "assets/icons/wallets/metamask.png";
-import xdefiIcon from "assets/icons/wallets/xdefi.jpg";
+import { BaseChain } from "types/aws";
+import { Chain } from "types/tx";
 import { chainIDs } from "constants/chains";
 import { EXPECTED_NETWORK_TYPE, IS_TEST } from "constants/env";
+
+const tokenLogo = "/icons/currencies/token.svg";
+const binanceWalletIcon = "/icons/wallets/binance.png";
+const keplrIcon = "/icons/wallets/keplr.png";
+const metamaskIcon = "/icons/wallets/metamask.png";
+const xdefiIcon = "/icons/wallets/xdefi.jpg";
 
 export const WALLET_METADATA: {
   [key in WithoutInstallers]: {
@@ -57,7 +59,7 @@ export const placeholderChain: Chain = {
   chain_id: "placeholder",
   chain_name: "placeholder",
   native_currency: {
-    type: "placeholder",
+    type: "evm-native",
     symbol: "NATIVE",
     logo: tokenLogo,
     decimals: 18,
@@ -66,13 +68,14 @@ export const placeholderChain: Chain = {
     name: "Native",
     token_id: "unative",
     min_donation_amnt: 0.01,
+    coingecko_denom: "",
   },
   network_type: EXPECTED_NETWORK_TYPE,
   rpc_url: "https://rpc-token.placeholder.com",
   lcd_url: "https://lcd-token.placeholder.com",
   tokens: [
     {
-      type: "placeholder",
+      type: "erc20",
       symbol: "TOKEN",
       logo: tokenLogo,
       decimals: 18,
@@ -81,6 +84,7 @@ export const placeholderChain: Chain = {
       name: "Token",
       token_id: "utoken",
       min_donation_amnt: 0.01,
+      coingecko_denom: "",
     },
   ],
   type: "placeholder",
@@ -95,9 +99,10 @@ export const EVM_SUPPORTED_CHAINS: BaseChain[] = IS_TEST
       { chain_id: chainIDs.ethTest, chain_name: "Ethereum Testnet" },
       { chain_id: chainIDs.binanceTest, chain_name: "BNB Smart Chain Testnet" },
       { chain_id: chainIDs.polygonTest, chain_name: "Polygon Testnet" },
+      { chain_id: chainIDs.polygonLocal, chain_name: "Polygon Local" },
     ]
   : [
       { chain_id: chainIDs.ethMain, chain_name: "Ethereum Mainnet" },
       { chain_id: chainIDs.polygonMain, chain_name: "Polygon Mainnet" },
-      // {chain_id: chainIDs.binanceMain, chain_name: "BNB Smart Chain Mainnet"},
+      { chain_id: chainIDs.binanceMain, chain_name: "BNB Smart Chain Mainnet" },
     ];

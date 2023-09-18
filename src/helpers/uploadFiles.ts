@@ -26,8 +26,6 @@ export async function uploadFiles(
           fileName: `${timeStamp}-${f.name.replace(SPACES, "_")}`,
         }),
         headers: { authorization },
-      }).then((res) => {
-        if (!res.ok) throw new Error(`Failed to upload file: ${f.name}`);
       })
     )
   );

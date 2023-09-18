@@ -1,0 +1,57 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "uint32",
+        "name": "id",
+        "type": "uint32"
+      }
+    ],
+    "name": "queryState",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "bool",
+            "name": "closingEndowment",
+            "type": "bool"
+          },
+          {
+            "components": [
+              {
+                "components": [
+                  {
+                    "internalType": "uint32",
+                    "name": "endowId",
+                    "type": "uint32"
+                  },
+                  {
+                    "internalType": "address",
+                    "name": "addr",
+                    "type": "address"
+                  }
+                ],
+                "internalType": "struct LibAccounts.BeneficiaryData",
+                "name": "data",
+                "type": "tuple"
+              },
+              {
+                "internalType": "enum LibAccounts.BeneficiaryEnum",
+                "name": "enumData",
+                "type": "uint8"
+              }
+            ],
+            "internalType": "struct LibAccounts.Beneficiary",
+            "name": "closingBeneficiary",
+            "type": "tuple"
+          }
+        ],
+        "internalType": "struct AccountMessages.StateResponse",
+        "name": "stateResponse",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

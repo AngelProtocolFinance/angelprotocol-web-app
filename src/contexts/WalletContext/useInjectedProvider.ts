@@ -1,12 +1,13 @@
 import Decimal from "decimal.js";
 import { useCallback, useEffect, useState } from "react";
-import { Connection, ProviderId, ProviderInfo } from "./types";
+import { Connection, ProviderInfo } from "./types";
 import { BaseChain } from "types/aws";
 import {
   AccountChangeHandler,
   ChainChangeHandler,
   InjectedProvider,
 } from "types/evm";
+import { ProviderId } from "types/lists";
 import { Dwindow } from "types/window";
 import { getProvider } from "helpers";
 import {
@@ -134,9 +135,9 @@ export default function useInjectedProvider(
     }
   };
 
-  function disconnect() {
+  async function disconnect() {
     if (!address) return;
-    const injectedProvider = getProvider(providerId);
+    const injectedProvider = await getProvider(providerId);
     if (!injectedProvider) return;
     setAddress("");
     setChainId(undefined);
@@ -224,12 +225,13 @@ export default function useInjectedProvider(
           logo: WALLET_METADATA[providerId].logo,
           providerId,
           chainId,
-          address,
+          address: address.toLowerCase(),
         }
       : undefined;
 
   //connection object to render <Connector/>
   const connection: Connection = {
+    providerId,
     name: connectorName,
     logo: WALLET_METADATA[providerId].logo,
     installUrl: WALLET_METADATA[providerId].installUrl,

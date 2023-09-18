@@ -1,0 +1,97 @@
+[
+  {
+    "inputs": [],
+    "name": "queryConfig",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "accountsContract",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "apTeamMultisig",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "treasury",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "indexFundContract",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "haloToken",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "govContract",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "fundraisingContract",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "uniswapRouter",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "uniswapFactory",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "multisigFactory",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "multisigEmitter",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "charityApplications",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "proxyAdmin",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "usdcAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "wMaticAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "gasFwdFactory",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct RegistrarStorage.Config",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

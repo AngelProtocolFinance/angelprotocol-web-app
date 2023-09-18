@@ -28,12 +28,7 @@ const result3: FileObject = {
 };
 
 const uploadFiles = jest.fn();
-const mockFetch: typeof fetch = () =>
-  Promise.resolve(new Response(undefined, { status: 200 }));
-
-beforeEach(() => {
-  global.fetch = jest.fn(mockFetch);
-});
+global.fetch = jest.fn();
 
 describe("get documentation file previews", () => {
   test("correct preview mapping for new uploads", async () => {
@@ -44,7 +39,6 @@ describe("get documentation file previews", () => {
     };
     Date.now = jest.fn(() => timeStamp);
     uploadFiles.mockResolvedValue(baseURL);
-
     const previews = await getFilePreviews(documentationVals);
     expect(previews).toStrictEqual({
       a: [result1],
@@ -55,7 +49,6 @@ describe("get documentation file previews", () => {
   test("previous upload is used when no new files", async () => {
     Date.now = jest.fn(() => timeStamp);
     uploadFiles.mockResolvedValue(baseURL);
-
     const documentationVals: Parameters<typeof getFilePreviews>[0] = {
       a: { files: [file1], previews: [preview1, preview2] },
       b: { files: [], previews: [preview3, preview2] },
@@ -70,7 +63,6 @@ describe("get documentation file previews", () => {
   });
   test("return empty arrays when no new files and previews are empty", async () => {
     uploadFiles.mockResolvedValue(null);
-
     const documentationVals: Parameters<typeof getFilePreviews>[0] = {
       a: { files: [], previews: [preview1] },
       b: { files: [], previews: [] },

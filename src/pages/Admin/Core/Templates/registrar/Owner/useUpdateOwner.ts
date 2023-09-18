@@ -1,57 +1,66 @@
 import { useFormContext } from "react-hook-form";
-import { OwnerUpdateMeta, RegistrarOwnerValues } from "pages/Admin/types";
-import { useAdminResources } from "pages/Admin/Guard";
+import { FormValues as FV } from "./types";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
-import Popup from "components/Popup";
-import CW3 from "contracts/CW3";
-import Registrar from "contracts/Registrar";
-import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
+import Prompt from "components/Prompt";
+import { createTx, encodeTx } from "contracts/createTx/createTx";
+import useTxSender from "hooks/useTxSender";
+import { isTooltip, useAdminContext } from "../../../../Context";
 
 export default function useUpdateOwner() {
-  const { cw3, propMeta } = useAdminResources();
-  const { wallet } = useGetWallet();
+  const { multisig, txResource } = useAdminContext();
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },
-  } = useFormContext<RegistrarOwnerValues>();
+  } = useFormContext<FV>();
 
   const { showModal } = useModalContext();
-  const sendTx = useCosmosTxSender();
+  const sendTx = useTxSender();
 
-  async function updateOwner(data: RegistrarOwnerValues) {
+  async function updateOwner(fv: FV) {
     //check for changes
-    if (data.initialOwner === data.new_owner) {
-      showModal(Popup, { message: "no changes detected" });
-      return;
+    if (fv.initialOwner === fv.newOwner) {
+      return showModal(Prompt, {
+        type: "error",
+        title: "Update Owner",
+        headline: "No Changes Detected",
+        children: "Nothing to submit, no changes detected",
+      });
     }
 
-    const registrarContract = new Registrar(wallet);
-    const configUpdateMsg = registrarContract.createEmbeddedOwnerUpdateMsg({
-      new_owner: data.new_owner,
-    });
+    if (isTooltip(txResource)) throw new Error(txResource);
 
-    const ownerUpdateMeta: OwnerUpdateMeta = {
-      type: "reg_owner",
-      data: { owner: data.initialOwner, newOwner: data.new_owner },
-    };
-
-    const adminContract = new CW3(wallet, cw3);
-    const proposalMsg = adminContract.createProposalMsg(
-      data.title,
-      data.description,
-      [configUpdateMsg],
-      JSON.stringify(ownerUpdateMeta)
+    const [data, dest, meta] = encodeTx(
+      "registrar.update-owner",
+      {
+        newOwner: fv.newOwner,
+      },
+      {
+        title: fv.title,
+        description: fv.description,
+        content: { curr: fv.initialOwner, new: fv.newOwner },
+      }
     );
 
+    const { wallet, txMeta } = txResource;
     await sendTx({
-      msgs: [proposalMsg],
-      ...propMeta,
+      content: {
+        type: "evm",
+        val: createTx(wallet.address, "multisig.submit-transaction", {
+          multisig,
+
+          destination: dest,
+          value: "0",
+          data,
+          meta: meta.encoded,
+        }),
+      },
+      ...txMeta,
     });
   }
 
   return {
     updateOwner: handleSubmit(updateOwner),
     isSubmitDisabled: !isDirty || isSubmitting,
+    tooltip: isTooltip(txResource) ? txResource : undefined,
   };
 }

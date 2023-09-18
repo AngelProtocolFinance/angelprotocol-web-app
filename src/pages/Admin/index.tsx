@@ -1,20 +1,20 @@
 import ModalContext from "contexts/ModalContext";
 import Charity from "./Charity";
+import { Context } from "./Context";
 import Core from "./Core";
-import { Guard } from "./Guard";
 import Review from "./Review";
 
 export default function Admin() {
   return (
-    <Guard>
+    <Context>
       {(resources) => (
         /**modals in this scope can access AdminGuard context value */
         <ModalContext>
           {(() => {
-            switch (resources.role) {
+            switch (resources.type) {
               case "charity":
                 return <Charity />;
-              case "reviewer":
+              case "review":
                 return <Review />;
               default:
                 return <Core />;
@@ -22,6 +22,6 @@ export default function Admin() {
           })()}
         </ModalContext>
       )}
-    </Guard>
+    </Context>
   );
 }

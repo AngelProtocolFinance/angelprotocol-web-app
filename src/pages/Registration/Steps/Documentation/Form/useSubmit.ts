@@ -1,4 +1,4 @@
-import { useFormContext } from "react-hook-form";
+import { SubmitHandler, useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { FormValues } from "../types";
 import { useUpdateRegMutation } from "services/aws/registration";
@@ -8,6 +8,7 @@ import { getFilePreviews } from "./getFilePreviews";
 
 export default function useSubmit() {
   const {
+    watch,
     handleSubmit,
     formState: { isDirty, isSubmitting },
   } = useFormContext<FormValues>();
@@ -20,24 +21,32 @@ export default function useSubmit() {
   const [updateReg] = useUpdateRegMutation();
   const { handleError } = useErrorContext();
   const navigate = useNavigate();
+  const isAuthorizedToReceiveTaxDeductibleDonations = watch(
+    "isAuthorizedToReceiveTaxDeductibleDonations"
+  );
 
-  const submit = async ({
+  const submit: SubmitHandler<FormValues> = async ({
     website,
     hasAuthority,
     hasAgreedToTerms,
     sdgs,
-    isKYCRequired,
-    level,
+    isAnonymousDonationsAllowed,
     hqCountry,
     activeInCountries,
     endowDesignation,
     cashEligible,
+    ein,
+    isAuthorizedToReceiveTaxDeductibleDonations,
+    signedFiscalSponsorshipAgreement,
+    fiscalSponsorshipAgreementSigningURL,
+    legalEntityType,
+    projectDescription,
     ...documents
-  }: FormValues) => {
-    if (documentation && !isDirty) {
-      return navigate(`../${step}`, { state: init });
-    }
+  }) => {
     try {
+      if (!isDirty && documentation) {
+        return navigate(`../${step}`, { state: init });
+      }
       const previews = await getFilePreviews({ ...documents });
       await updateReg({
         type: "documentation",
@@ -49,16 +58,17 @@ export default function useSubmit() {
         ) /**TODO: AWS update to accept number[] */,
         ProofOfIdentity: previews.proofOfIdentity[0], //poi is level1 and required
         ProofOfRegistration: previews.proofOfRegistration[0], //por is level1 and required,
-        FinancialStatements: previews.financialStatements,
-        AuditedFinancialReports: previews.auditedFinancialReports,
-        KycDonorsOnly: isKYCRequired === "Yes",
+        KycDonorsOnly: isAnonymousDonationsAllowed === "No",
         HqCountry: hqCountry.name,
         EndowDesignation: endowDesignation.value,
         ActiveInCountries: activeInCountries.map((opt) => opt.value),
         CashEligible: cashEligible,
-      })
-        .unwrap()
-        .catch(handleError);
+        EIN: ein,
+        AuthorizedToReceiveTaxDeductibleDonations:
+          isAuthorizedToReceiveTaxDeductibleDonations === "Yes" ? true : false,
+        LegalEntityType: legalEntityType,
+        ProjectDescription: projectDescription,
+      });
     } catch (err) {
       handleError(err);
     }
@@ -66,5 +76,6 @@ export default function useSubmit() {
   return {
     submit: handleSubmit(submit),
     isSubmitting,
+    isAuthorizedToReceiveTaxDeductibleDonations,
   };
 }

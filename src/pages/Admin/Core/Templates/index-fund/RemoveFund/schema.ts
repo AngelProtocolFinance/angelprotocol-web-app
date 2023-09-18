@@ -1,8 +1,8 @@
 import { ObjectSchema, object } from "yup";
-import { FundDestroyValues } from "pages/Admin/types";
+import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
 import { proposalShape } from "../../../../constants";
 
-export const schema = object<any, SchemaShape<FundDestroyValues>>({
+export const schema = object<any, SchemaShape<FormValues>>({
   ...proposalShape,
-}) as ObjectSchema<FundDestroyValues>;
+}) as ObjectSchema<FormValues>;

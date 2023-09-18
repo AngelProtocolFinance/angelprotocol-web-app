@@ -3,7 +3,7 @@ import { FormValues as FV } from "./types";
 import ExtLink from "components/ExtLink";
 import { CheckField, Field } from "components/form";
 import { Separator } from "components/registration";
-import { APP_NAME } from "constants/common";
+import { APP_NAME } from "constants/env";
 import { PRIVACY_POLICY } from "constants/urls";
 import routes from "../routes";
 import useSubmit from "./useSubmit";
@@ -36,7 +36,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
         required
         name="hasAgreedToPrivacyPolicy"
         classes={{
-          container: "check-field-reg justify-self-center -mt-2 text-xs",
+          container: "check-field-reg justify-self-center -mt-4 text-xs",
           error: "mt-2",
         }}
       >

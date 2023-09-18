@@ -1,6 +1,6 @@
 import { useMemo } from "react";
-import { TokenWithBalance } from "types/aws";
-import Icon from "components/Icon";
+import { TokenWithBalance } from "types/tx";
+import Image from "components/Image";
 import { humanize, isEmpty } from "helpers";
 import KadoOpener from "./KadoOpener";
 
@@ -18,8 +18,7 @@ export default function CoinBalances({ smallAmountsHidden, tokens }: Props) {
         (token) =>
           //show atleast native
           (token.balance > 0 && !smallAmountsHidden) ||
-          token.balance > MIN_AMOUNT ||
-          (token.gift || 0) > 0
+          token.balance > MIN_AMOUNT
       ),
     [tokens, smallAmountsHidden]
   );
@@ -36,23 +35,11 @@ export default function CoinBalances({ smallAmountsHidden, tokens }: Props) {
     <>
       {filtered.map((t) => (
         <div
-          key={t.token_id}
+          key={t.token_id + t.type}
           className="flex items-center font-heading font-bold text-sm"
         >
-          <img src={t.logo} className="w-6 h-6 object-contain" alt="" />
+          <Image src={t.logo} className="w-6 h-6" />
           <span className="mr-auto ml-2">{t.symbol}</span>
-
-          {!!t.gift && (
-            <>
-              <Icon
-                type="Giftcard"
-                className="text-green w-4 h-4 inline-block mr-0.5 relative bottom-px"
-              />
-              <span className="font-normal text-xs border-r border-prim pr-1">
-                {humanize(t.gift, 3, true)}
-              </span>
-            </>
-          )}
           <span className="ml-1">{humanize(t.balance, 3, true)}</span>
         </div>
       ))}

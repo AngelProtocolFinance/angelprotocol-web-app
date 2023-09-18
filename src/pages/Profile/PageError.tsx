@@ -8,7 +8,7 @@ export default function PageError() {
       <Icon type="Warning" size={30} />
       <p className="text-lg text-center">Failed to load endowment profile</p>
       <Link
-        to={`${appRoutes.index}`}
+        to={`${appRoutes.marketplace}`}
         className="text-blue-l5 hover:text-blue text-sm"
       >
         back to Marketplace

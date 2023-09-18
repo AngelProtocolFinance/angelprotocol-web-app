@@ -1,4 +1,3 @@
-// import banner from "assets/images/bhm-banner.jpg";
 import { useGetter } from "store/accessors";
 import Cards from "./Cards";
 import Hero from "./Hero";
@@ -9,12 +8,10 @@ export default function Marketplace() {
   const isFilterOpen = useGetter(
     (state) => state.component.marketFilter.isOpen
   );
+
   return (
     <div className="w-full grid content-start pb-16">
-      <div
-        // style={{ backgroundImage: `url('${banner}')` }}
-        className="relative overlay bg-cover bg-left-top"
-      >
+      <div className="relative overlay bg-cover bg-left-top">
         <Hero classes="grid isolate mt-28 mb-16" />
       </div>
 

@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { FundUpdateValues } from "pages/Admin/types";
+import { FormValues } from "../types";
 import { useGetter, useSetter } from "store/accessors";
 import { addMember as _addMember } from "slices/admin/fundMembers";
 
@@ -7,24 +7,24 @@ export default function useAddMember() {
   const dispatch = useSetter();
   const fundMembers = useGetter((state) => state.admin.fundMembers);
   const { trigger, getValues, setError, resetField } =
-    useFormContext<FundUpdateValues>();
+    useFormContext<FormValues>();
 
   async function addMember() {
-    const isValid = await trigger(["newMemberAddr"], { shouldFocus: true });
+    const isValid = await trigger(["newMemberId"], { shouldFocus: true });
     if (!isValid) return;
 
-    const newMemberAddr = getValues("newMemberAddr");
+    const newMemberId = getValues("newMemberId");
     const existingMember = fundMembers.find(
-      (member) => member.addr === newMemberAddr
+      (member) => member.id === newMemberId
     );
 
     if (existingMember) {
-      setError("newMemberAddr", {
-        message: "address already added or existing",
+      setError("newMemberId", {
+        message: "id already added or existing",
       });
     } else {
-      dispatch(_addMember(newMemberAddr));
-      resetField("newMemberAddr");
+      dispatch(_addMember(newMemberId));
+      resetField("newMemberId");
     }
   }
 
