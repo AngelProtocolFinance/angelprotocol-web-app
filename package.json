@@ -59,7 +59,7 @@
     "@types/react-helmet": "^6.1.6",
     "@walletconnect/modal": "2.6.0",
     "@walletconnect/sign-client": "2.9.0",
-    "@web3auth/base": "^5.1.0",
+    "@web3auth/base": "^7.0.1",
     "@web3auth/no-modal": "^5.1.0",
     "@web3auth/torus-evm-adapter": "^5.1.0",
     "compress.js": "^1.2.2",
