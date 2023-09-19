@@ -9,22 +9,23 @@ import { useGetter, useSetter } from "store/accessors";
 export default function useCards() {
   const dispatch = useSetter();
   const {
-    sdgGroups,
+    sdgs,
     endow_types,
     endow_designation,
     sort,
     searchText,
     kyc_only,
     tiers,
-    region,
+    countries,
   } = useGetter((state) => state.component.marketFilter);
 
   const selectedSDGs = useMemo(
-    () => Object.entries(sdgGroups).flatMap(([, members]) => members),
-    [sdgGroups]
+    () => Object.entries(sdgs).flatMap(([, members]) => members),
+    [sdgs]
   );
 
-  const { activities, headquarters } = region;
+  const activities = countries;
+  const headquarters = countries;
   const hqCountries = useMemo(
     () =>
       encodeURI(
