@@ -29,7 +29,7 @@ export default function ImgCropper({
         cropperRef.current = new Cropper(node, {
           aspectRatio: x / y,
           viewMode: 1,
-          zoomable: false,
+          zoomable: true,
           scalable: false,
         });
       }
