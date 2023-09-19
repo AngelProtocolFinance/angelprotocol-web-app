@@ -1,8 +1,9 @@
-import { FieldValues, Path, useFormContext } from "react-hook-form";
+import { FieldValues, Path, PathValue, useFormContext } from "react-hook-form";
 
 type Props<FV extends FieldValues, P extends Path<FV>> = {
   className?: string;
-  liqPctField: FV[P] extends number ? P : never;
+  liqPctField: PathValue<FV, P> extends number ? P : never;
+  disabled?: boolean;
 };
 
 export default function Slider<FV extends FieldValues, P extends Path<FV>>(
@@ -17,7 +18,7 @@ export default function Slider<FV extends FieldValues, P extends Path<FV>>(
     <div className={`${props.className || ""} select-none`}>
       <input
         className="range"
-        disabled={!isValid}
+        disabled={!isValid || props.disabled}
         {...register(props.liqPctField)}
         type="range"
       />

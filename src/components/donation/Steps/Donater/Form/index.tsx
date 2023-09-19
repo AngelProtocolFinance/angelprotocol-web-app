@@ -1,8 +1,9 @@
 import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { matchRoutes, useLocation } from "react-router-dom";
 import { DonateValues } from "../types";
+import { TokenWithAmount } from "types/slices";
+import { DonaterConfigFromWidget } from "types/widget";
 import CountrySelector from "components/CountrySelector";
 import TokenField from "components/TokenField";
 import { CheckField, Label } from "components/form";
@@ -12,10 +13,12 @@ import { PAYMENT_WORDS } from "constant/common";
 import { appRoutes } from "constant/routes";
 import AdvancedOptions from "./AdvancedOptions";
 
-export default function Form(props: {
-  hideAdvOpts: boolean;
-  unfoldAdvOpts: boolean;
-}) {
+type Props = {
+  configFromWidget: DonaterConfigFromWidget | null;
+  tokens: TokenWithAmount[];
+};
+
+export default function Form({ configFromWidget, tokens }: Props) {
   const {
     reset,
     resetField,
@@ -24,9 +27,6 @@ export default function Form(props: {
     watch,
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<DonateValues>();
-
-  const isInsideWidget = useIsInsideWidget();
-
   const endowId = useGetter((state) => state.donation.recipient?.id);
   const isKYCRequired = useGetter(
     (state) => state.donation.recipient?.isKYCRequired
@@ -40,7 +40,8 @@ export default function Form(props: {
   }
 
   const tokenType = watch("token.type");
-  const isStepOneCompleted = !!getValues("token").amount;
+  const isStepOneCompleted = !!getValues("token.amount");
+  const isInsideWidget = configFromWidget !== null;
 
   return (
     <form
@@ -50,7 +51,7 @@ export default function Form(props: {
     >
       <TokenField<DonateValues, "token">
         name="token"
-        tokens={getValues("tokens")}
+        tokens={tokens}
         withGiftcard
         withBalance
         label={`Enter the ${PAYMENT_WORDS.noun.singular} amount:`}
@@ -91,9 +92,12 @@ export default function Form(props: {
           Please send me a tax receipt
         </CheckField>
       )}
-      {!props.hideAdvOpts && (
-        <AdvancedOptions classes="mt-10" unfold={props.unfoldAdvOpts} />
-      )}
+
+      <AdvancedOptions
+        classes="mt-10"
+        display={configFromWidget?.advancedOptionsDisplay ?? "expanded"}
+        fixLiquidSplitPct={configFromWidget?.liquidSplitPct}
+      />
 
       <div
         className={`flex gap-3 md:gap-5 ${
@@ -122,15 +126,4 @@ export default function Form(props: {
       </div>
     </form>
   );
-}
-
-function useIsInsideWidget() {
-  const location = useLocation();
-
-  const isInsideWidget = !!matchRoutes(
-    [{ path: appRoutes.donate_widget + "/:id" }],
-    location
-  );
-
-  return isInsideWidget;
 }

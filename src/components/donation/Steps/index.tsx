@@ -1,23 +1,20 @@
+import { DonaterConfigFromWidget } from "types/widget";
 import { useGetter } from "store/accessors";
 import { DonationState } from "slices/donation";
 import { PAYMENT_WORDS } from "constant/common";
 import { IS_AST } from "constant/env";
 import CurrentStep from "./CurrentStep";
 
-export type ConfigParams = {
-  hideAdvOpts?: boolean;
-  unfoldAdvOpts?: boolean;
-  liquidPct?: number;
-  availCurrs?: string[];
+type Props = {
+  className?: string;
+  donaterConfig: DonaterConfigFromWidget | null;
 };
 
-type Props = { className?: string } & ConfigParams;
-
-export function Steps({ className = "", ...params }: Props) {
+export function Steps({ className = "", donaterConfig }: Props) {
   const state = useGetter((state) => state.donation);
 
   return (
-    <div className={`justify-self-center grid ${className}`}>
+    <div className={`grid ${className}`}>
       {!isFinalized(state) && (
         <span className="text-center font-normal text-xs sm:text-sm mb-12">
           Connect the wallet of your choice to donate crypto. <br />
@@ -27,7 +24,7 @@ export function Steps({ className = "", ...params }: Props) {
         </span>
       )}
 
-      <CurrentStep {...params} />
+      <CurrentStep config={donaterConfig} />
     </div>
   );
 }

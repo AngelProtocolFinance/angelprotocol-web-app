@@ -12,6 +12,9 @@ import "./index.css";
 //set theme immediately, so even suspense loaders and can use it
 initTheme();
 
+//set theme immediately, so even suspense loaders and can use it
+initTheme();
+
 const App = lazy(() => import("./App/App"));
 
 const LoaderComponent = () => (

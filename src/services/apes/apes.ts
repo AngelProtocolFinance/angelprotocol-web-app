@@ -4,7 +4,7 @@ import {
   BaseChain,
   FetchedChain,
   PaginatedAWSQueryRes,
-  Token,
+  TokenWithChainID,
   WithdrawLog,
   WithdrawLogQueryParams,
 } from "types/aws";
@@ -71,9 +71,14 @@ export const apes = createApi({
         }
       },
     }),
-    tokens: builder.query<Token[], unknown>({
+    tokens: builder.query<TokenWithChainID[], unknown>({
       providesTags: ["tokens"],
       query: () => `v1/tokens/list${IS_TEST ? "/test" : ""}`,
+      transformResponse(res: TokenWithChainID[]) {
+        //TODO: AWS sort by chain_id
+        res.sort((a, b) => a.chain_id.localeCompare(b.chain_id));
+        return res;
+      },
     }),
   }),
 });

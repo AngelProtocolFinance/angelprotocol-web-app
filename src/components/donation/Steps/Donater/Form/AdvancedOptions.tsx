@@ -1,18 +1,30 @@
 import { useState } from "react";
+import { useFormContext } from "react-hook-form";
 import { DonateValues } from "../types";
 import Icon from "components/Icon";
 import Split from "components/Split";
 import { PAYMENT_WORDS, titleCase } from "constant/common";
 import { IS_AST } from "constant/env";
 
-type Props = { classes?: string; unfold?: boolean };
+type Props = {
+  display: "hidden" | "expanded" | "collapsed";
+  fixLiquidSplitPct?: number;
+  classes?: string;
+};
 
-export default function AdvancedOptions({ classes = "", unfold }: Props) {
-  const [isOpen, setIsOpen] = useState(unfold);
+export default function AdvancedOptions({
+  classes = "",
+  display,
+  fixLiquidSplitPct,
+}: Props) {
+  const { watch } = useFormContext<DonateValues>();
+  const tokenAmount = watch("token.amount");
+  const tokenSymbol = watch("token.symbol");
 
-  function toggle() {
-    setIsOpen((prev) => !prev);
-  }
+  const [isOpen, setIsOpen] = useState(display === "expanded");
+  const toggle = () => setIsOpen((prev) => !prev);
+
+  if (display === "hidden") return null;
 
   return (
     <div
@@ -33,10 +45,11 @@ export default function AdvancedOptions({ classes = "", unfold }: Props) {
       {isOpen && (
         <div className="grid p-6 pt-4 font-heading border-t border-gray-l3 dark:border-bluegray">
           <p className="text-xs uppercase font-bold mb-2">Split</p>
-          <Split<DonateValues, "pctLiquidSplit", "token">
+          <Split<DonateValues, "pctLiquidSplit">
             className="mb-6"
             liqPctField="pctLiquidSplit"
-            tokenField="token"
+            token={{ amount: toNumber(tokenAmount), symbol: tokenSymbol }}
+            fixLiquidSplitPct={fixLiquidSplitPct}
           />
           {!IS_AST ? (
             <div className="flex items-center gap-4 px-4 py-3 text-center dark:bg-blue-d6 border border-gray-l3 dark:border-bluegray rounded">
@@ -53,3 +66,8 @@ export default function AdvancedOptions({ classes = "", unfold }: Props) {
     </div>
   );
 }
+
+const toNumber = (input: string) => {
+  const num = Number(input);
+  return isNaN(num) ? 0 : num;
+};

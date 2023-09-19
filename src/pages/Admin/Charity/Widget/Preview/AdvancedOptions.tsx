@@ -1,23 +1,21 @@
 import { PropsWithChildren, useEffect, useState } from "react";
-import { placeholderChain } from "contexts/WalletContext/constants";
 import Icon from "components/Icon";
-import { humanize } from "helpers";
 
-const SPLIT_AMOUNT = `${placeholderChain.tokens[0].symbol} ${humanize(0, 5)}`;
+type Props = { liquidPercentage: number; expanded: boolean; classes?: string };
 
-type Props = { liquidPercentage: number; unfold: boolean };
-
-export default function AdvancedOptions({ unfold, liquidPercentage }: Props) {
-  const [isOpen, setIsOpen] = useState(unfold);
-
-  function toggle() {
-    setIsOpen((prev) => !prev);
-  }
-
-  useEffect(() => setIsOpen(unfold), [unfold]);
+export default function AdvancedOptions({
+  expanded,
+  liquidPercentage,
+  classes = "",
+}: Props) {
+  const [isOpen, setIsOpen] = useState(expanded);
+  const toggle = () => setIsOpen((p) => !p);
+  useEffect(() => setIsOpen(expanded), [expanded]);
 
   return (
-    <div className="grid mt-10 border border-gray-l2 rounded overflow-clip">
+    <div
+      className={`${classes} grid border border-gray-l2 rounded overflow-clip`}
+    >
       <div className="flex items-center justify-between px-4 py-2 bg-orange-l6">
         <span className="font-bold py-2">
           {isOpen && "Hide"} Advanced Options
@@ -81,7 +79,7 @@ function Portion(
       <p className="text-xs mb-2 font-bold">{props.percentage}%</p>
       <p className="uppercase text-xs text-center font-body">{props.action}</p>
       {props.children}
-      <p className="mt-auto font-bold text-center">{SPLIT_AMOUNT}</p>
+      <p className="mt-auto font-bold text-center">TOKEN 0.00000</p>
     </div>
   );
 }

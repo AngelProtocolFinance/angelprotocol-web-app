@@ -8,6 +8,7 @@ import {
 import {
   EndowListPaginatedAWSQueryRes,
   EndowmentCard,
+  EndowmentOption,
   EndowmentProfile,
   EndowmentProfileUpdate,
   EndowmentsQueryParams,
@@ -77,16 +78,16 @@ export const aws = createApi({
         };
       },
     }),
-    endowmentIdNames: builder.query<
-      EndowListPaginatedAWSQueryRes<Pick<EndowmentCard, "id" | "name">[]>,
-      EndowmentsQueryParams
-    >({
+    endowmentOptions: builder.query<EndowmentOption[], EndowmentsQueryParams>({
       providesTags: ["endowments"],
       query: (params) => {
         return {
           url: `/${v(5)}/endowments/${network}`,
           params: { ...params, return: ENDOW_ID_NAME_FIELDS },
         };
+      },
+      transformResponse(res: EndowListPaginatedAWSQueryRes<EndowmentOption[]>) {
+        return res.Items;
       },
     }),
     walletProfile: builder.query<VersionSpecificWalletProfile, string>({
@@ -170,14 +171,14 @@ export const {
   useSaveASTMutation,
   useEndowmentCardsQuery,
   useStrategyCardsQuery,
-  useEndowmentIdNamesQuery,
+  useEndowmentOptionsQuery,
   useProfileQuery,
   useProgramQuery,
   useEditProfileMutation,
 
   endpoints: {
     endowmentCards: { useLazyQuery: useLazyEndowmentCardsQuery },
-    endowmentIdNames: { useLazyQuery: useLazyEndowmentIdNamesQuery },
+    endowmentOptions: { useLazyQuery: useLazyEndowmentOptionsQuery },
     profile: { useLazyQuery: useLazyProfileQuery },
   },
   util: {

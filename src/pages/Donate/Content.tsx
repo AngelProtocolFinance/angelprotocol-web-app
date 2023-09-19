@@ -58,7 +58,7 @@ function Content(props: DonationRecipient) {
         </h3>
       )}
 
-      <Steps />
+      <Steps className="justify-self-center" donaterConfig={null} />
     </div>
   );
 }
