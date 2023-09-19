@@ -37,7 +37,7 @@ const loaderTestId = "loader";
 describe("App.tsx tests", () => {
   // const governanceLinkText = /governance/i;
 
-  window.scrollTo = vi.fn();
+  window.scrollTo = vi.fn() as any;
 
   test("Visit top level pages", async () => {
     render(
