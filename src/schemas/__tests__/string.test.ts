@@ -1,3 +1,4 @@
+import { describe, expect, test } from "vitest";
 import { url } from "../string";
 
 //NOTE: intended for shallow form objects only atm

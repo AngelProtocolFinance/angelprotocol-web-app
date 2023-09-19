@@ -1,6 +1,5 @@
 import { chainIds } from "constant/chainIds";
 import * as Yup from "yup";
-import { logger } from "helpers";
 
 export const junoAddrPattern = /^juno1[a-z0-9]{38,58}$/i;
 export const terraAddrPattern = /^terra1[a-z0-9]{38}$/i;
@@ -51,12 +50,12 @@ export const url = Yup.string()
         // first check if this is a valid URL at all using any schema
         givenURL = new URL(str);
       } catch (error) {
-        logger.info("Original URL is ", str);
+        console.info("Original URL is ", str);
         try {
           // check if prepending http would result in a valid URL
           givenURL = new URL(`http://${str}`);
         } catch (error) {
-          logger.error("Error is", error);
+          console.error("Error is", error);
           return false;
         }
       }
