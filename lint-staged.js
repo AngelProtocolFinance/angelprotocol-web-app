@@ -1,7 +1,7 @@
 module.exports = {
   "*.{js,jsx,ts,tsx}": [
     "eslint --max-warnings=0",
-    // "react-app-rewired test --bail --watchAll=false --findRelatedTests --passWithNoTests",
+    "bun vitest --bail=0 --watch=false --passWithNoTests",
     () => "tsc-files --noEmit",
   ],
   "*.{js,jsx,ts,tsx,json,css,js}": ["prettier --write"],
