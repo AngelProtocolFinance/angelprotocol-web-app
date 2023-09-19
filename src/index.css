@@ -1,3 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind variants;
+
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading font-bold;
+  }
+
+  body {
+    @apply font-body bg-gray-l6 dark:bg-blue-d5 text-gray-d2 dark:text-white;
+  }
+
+  a {
+    @apply cursor-pointer aria-disabled:pointer-events-none aria-disabled:cursor-default;
+  }
+
+  button {
+    @apply cursor-pointer disabled:cursor-default;
+  }
+}
+
+/** Layer 1 components */
 @layer components {
   .rich-text-toolbar .ql-toolbar .ql-stroke {
     @apply fill-none stroke-gray-d2 dark:stroke-white;
@@ -64,7 +93,7 @@
     @apply flex items-center gap-4 cursor-pointer peer-disabled:cursor-default data-[required=true]:after:ml-1 data-[required=true]:after:content-['*'] data-[required=true]:after:text-red;
   }
   .radio > input {
-    @apply cursor-pointer appearance-none h-4 relative aspect-square border rounded-full before:content-[''] before:h-2.5 before:aspect-square before:absolute before:top-1/2 before:left-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full checked:before:bg-orange disabled:checked:before:bg-gray-l5 disabled:checked:before:dark:bg-bluegray focus:outline-none focus:ring-1 focus:ring-orange;
+    @apply cursor-pointer appearance-none h-4 relative aspect-square border rounded-full before:content-[''] before:h-2.5 before:aspect-square before:absolute-center before:rounded-full checked:before:bg-orange disabled:checked:before:bg-gray-l5 disabled:checked:before:dark:bg-bluegray focus:outline-none focus:ring-1 focus:ring-orange;
   }
 
   .checkbox {
@@ -235,5 +264,36 @@
   }
   .range-max:disabled::-moz-range-thumb {
     @apply bg-gray;
+  }
+}
+
+@layer utilities {
+  .fixed-center {
+    @apply fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+  }
+  .absolute-center {
+    @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+  }
+
+  .divide-prim {
+    @apply divide-gray-l3 dark:divide-bluegray;
+  }
+
+  .outline-prim {
+    @apply outline-gray-l3 dark:outline-bluegray;
+  }
+
+  /** remove arrows from input type=number*/
+  .text-field {
+    -moz-appearance: textfield;
+  }
+  .text-field:hover,
+  .text-field:focus {
+    -moz-appearance: number-input;
+  }
+  .text-field::-webkit-inner-spin-button,
+  .text-field::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
   }
 }

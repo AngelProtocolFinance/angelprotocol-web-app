@@ -7,7 +7,7 @@ import Loader from "components/Loader";
 import { store } from "store/store";
 import { initTheme } from "helpers";
 import ErrorBoundary from "errors/ErrorBoundary";
-import "./styles/index.css";
+import "./index.css";
 
 //set theme immediately, so even suspense loaders and can use it
 initTheme();
