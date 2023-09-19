@@ -3,11 +3,9 @@ import "@testing-library/jest-dom";
 import { vi } from "vitest";
 
 vi.mock("@walletconnect/modal", () => ({
-  __esModule: true,
   WalletConnectModal: vi.fn(),
 }));
 vi.mock("@walletconnect/sign-client", () => ({
-  __esModule: true,
   SignClient: {
     init: vi.fn(async () => ({
       session: {

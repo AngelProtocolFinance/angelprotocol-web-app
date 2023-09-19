@@ -1,6 +1,5 @@
-// @vitest-environment jsdom
 import { APIs } from "constant/urls";
-import { afterAll, beforeEach, describe, expect, test, vi } from "vitest";
+import { vi } from "vitest";
 import { Bucket, bucketURL, uploadFiles } from "./uploadFiles";
 
 const TIME_STAMP = 123456789;

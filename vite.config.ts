@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import react from "@vitejs/plugin-react-swc";
 import autoprefixer from "autoprefixer";
 import postcssImport from "postcss-import";
@@ -12,6 +13,11 @@ const esbuildShim = require.resolve("node-stdlib-browser/helpers/esbuild/shim");
 export default defineConfig(async () => {
   const { default: stdLibBrowser } = await import("node-stdlib-browser");
   return {
+    test: {
+      setupFiles: ["./src/setupTests.ts"],
+      environment: "jsdom",
+      globals: true,
+    },
     css: {
       postcss: {
         plugins: [tailwind(), autoprefixer(), postcssImport()],

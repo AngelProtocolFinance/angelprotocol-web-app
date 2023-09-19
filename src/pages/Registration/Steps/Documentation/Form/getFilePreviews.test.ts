@@ -1,5 +1,4 @@
-// @vitest-environment jsdom
-import { describe, expect, test, vi } from "vitest";
+import { vi } from "vitest";
 import { FileObject } from "types/aws";
 import { Bucket, bucketURL } from "helpers/uploadFiles";
 import { getFilePreviews } from "./getFilePreviews";

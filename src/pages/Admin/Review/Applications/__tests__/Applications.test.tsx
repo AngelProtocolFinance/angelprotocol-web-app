@@ -1,19 +1,24 @@
 import { render, screen } from "@testing-library/react";
+import { vi } from "vitest";
 import { EndowmentProposal } from "types/aws";
 import AppWrapper from "test/AppWrapper";
 import Applications from "../index";
 
-const mockEndowmentApplicationsQuery = jest.fn();
-const mockAdminContext = jest.fn();
+const mockEndowmentApplicationsQuery = vi.fn();
+const mockAdminContext = vi.fn();
 
-jest.mock("services/aws/registration", () => ({
-  __esModule: true,
-  useEndowmentApplicationsQuery: () => mockEndowmentApplicationsQuery(),
-}));
-jest.mock("../../../Context", () => ({
-  __esModule: true,
-  useAdminResources: () => mockAdminContext(),
-}));
+beforeEach(() => {
+  vi.mock("services/aws/registration", () => ({
+    useEndowmentApplicationsQuery: () => mockEndowmentApplicationsQuery(),
+  }));
+  vi.mock("../../../Context", () => ({
+    useAdminResources: () => mockAdminContext(),
+  }));
+});
+
+afterEach(() => {
+  vi.clearAllMocks();
+});
 
 describe("Applications", () => {
   test("Loading applications", () => {

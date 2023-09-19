@@ -2,6 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { APP_NAME } from "constant/env";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
+import { vi } from "vitest";
 import { DonationsMetricList, Update } from "types/aws";
 import { store } from "store/store";
 import App from "../App";
@@ -12,16 +13,14 @@ const mockMetrics: DonationsMetricList = {
   donations_total_amount: 0,
 };
 
-jest.mock("services/aws/business_metrics", () => ({
-  __esModule: true,
+vi.mock("services/aws/business_metrics", () => ({
   useMetricsListQuery: () => ({
     data: mockMetrics,
   }),
 }));
 
 const mockUpdate: Update = { last_update: "", endowments: [] };
-jest.mock("services/aws/leaderboard", () => ({
-  __esModule: true,
+vi.mock("services/aws/leaderboard", () => ({
   useLeaderboardsQuery: () => ({
     data: mockUpdate,
   }),
@@ -38,7 +37,7 @@ const loaderTestId = "loader";
 describe("App.tsx tests", () => {
   // const governanceLinkText = /governance/i;
 
-  window.scrollTo = jest.fn();
+  window.scrollTo = vi.fn();
 
   test("Visit top level pages", async () => {
     render(

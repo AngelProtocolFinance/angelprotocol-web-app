@@ -1,4 +1,3 @@
-import { describe, expect, test } from "vitest";
 import { idParamToNum } from "../idParamToNum";
 
 describe("id param to number", () => {

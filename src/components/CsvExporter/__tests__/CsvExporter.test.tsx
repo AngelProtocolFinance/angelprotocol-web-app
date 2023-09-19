@@ -1,6 +1,5 @@
-// @vitest-environment jsdom
 import { render } from "@testing-library/react";
-import { describe, expect, test, vi } from "vitest";
+import { vi } from "vitest";
 import CsvExporter from "../CsvExporter";
 
 const mockChildComponent = vi.fn();

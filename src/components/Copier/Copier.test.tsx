@@ -1,7 +1,6 @@
-// @vitest-environment jsdom
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, test, vi } from "vitest";
+import { vi } from "vitest";
 import Copier from "./Copier";
 
 // Mock copy button
@@ -37,9 +36,9 @@ describe("Copier component test:", () => {
     });
 
     // Expects the button to change appearance once clicked
-    expect(await screen.findByTitle("Copied!")).toBeDefined();
+    expect(await screen.findByTitle("Copied!")).toBeInTheDocument();
 
     // Expects the button to revert back to it's original appearance
-    expect(await screen.findByTitle("Copy Address")).toBeDefined();
+    expect(await screen.findByTitle("Copy Address")).toBeInTheDocument();
   });
 });
