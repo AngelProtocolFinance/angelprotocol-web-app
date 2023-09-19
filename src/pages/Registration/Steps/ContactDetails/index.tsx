@@ -25,10 +25,10 @@ function ContactDetails() {
       : {
           ref: init.reference,
           email: init.email,
-          role: { value: "ceo", label: roles["ceo"] },
+          role: { value: "", label: roles[""] },
           referralMethod: {
-            value: "angel-alliance",
-            label: referralMethods["angel-alliance"],
+            value: "",
+            label: referralMethods[""],
           },
         },
   });

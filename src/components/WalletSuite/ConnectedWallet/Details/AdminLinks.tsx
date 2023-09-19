@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { AP_ID, REVIEWER_ID, useIsMemberQuery } from "services/juno/custom";
 import { WalletState } from "contexts/WalletContext";
-import { chainIds } from "constants/chainIds";
+import { isEthereumAddress } from "schemas/tests";
 import { appRoutes } from "constants/routes";
 
 export default function AdminLinks(props: WalletState) {
@@ -11,7 +11,8 @@ export default function AdminLinks(props: WalletState) {
     isFetching: isApFetching,
   } = useIsMemberQuery(
     { user: props.address, endowmentId: `${AP_ID}` },
-    { skip: props.chain.chain_id !== chainIds.polygon }
+    // same address for different evm chains
+    { skip: !isEthereumAddress(props.address) }
   );
   const {
     data: isReviewMember = false,
@@ -19,13 +20,13 @@ export default function AdminLinks(props: WalletState) {
     isFetching: isReviewFetching,
   } = useIsMemberQuery(
     { user: props.address, endowmentId: `${REVIEWER_ID}` },
-    { skip: props.chain.chain_id !== chainIds.polygon }
+    { skip: !isEthereumAddress(props.address) }
   );
 
   const isLoading =
     isApLoading || isApFetching || isReviewLoading || isReviewFetching;
 
-  if (isLoading || !isApMember || !isReviewMember) return null;
+  if (isLoading || (!isApMember && !isReviewMember)) return null;
 
   return (
     <div className="grid p-4 gap-3 border-b border-prim">

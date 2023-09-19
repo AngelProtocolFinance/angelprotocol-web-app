@@ -28,13 +28,15 @@ function Documentation() {
           hqCountry: { name: "", flag: "", code: "" },
           endowDesignation: { value: "", label: "" },
           activeInCountries: [],
-          isAuthorizedToReceiveTaxDeductibleDonations: "No",
+          isAuthorizedToReceiveTaxDeductibleDonations: "Yes",
           signedFiscalSponsorshipAgreement: "",
           fiscalSponsorshipAgreementSigningURL: "",
+          legalEntityType: "",
+          projectDescription: "",
 
           hasAuthority: false,
           hasAgreedToTerms: false,
-          isKYCRequired: "No",
+          isAnonymousDonationsAllowed: "Yes",
         },
   });
 

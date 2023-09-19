@@ -3,6 +3,7 @@ import {
   BridgeFees,
   EndowmentProfile,
   EndowmentProfileUpdate,
+  WalletProfile,
 } from "types/aws";
 import { EndowmentDetails } from "types/contracts";
 import { AccountType, EndowmentType } from "types/lists";
@@ -118,7 +119,20 @@ export type Multisig = {
 export type FiscalSponsorhipAgreementSigner =
   | {
       id: string;
-      name: string;
+      firstName: string;
+      lastName: string;
       email: string;
+      role: string;
+      org: {
+        name: string;
+        legalEntityType: string;
+        hq: string;
+        projectDescription: string;
+      };
     }
   | string; //signerEID;
+
+export type WalletProfileVersion = "legacy" | "latest";
+export type VersionSpecificWalletProfile = WalletProfile & {
+  version: "legacy" | "latest";
+};

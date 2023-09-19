@@ -17,6 +17,8 @@ export const DAPP_URL = `https://${process.env.REACT_APP_DAPP_DOMAIN}`;
 export const SUBDOMAIN_BUILDER = (subdomain: string) =>
   `https://${subdomain}.${process.env.REACT_APP_BASE_DOMAIN}`;
 
+export const INFURA_ID = process.env.REACT_APP_INFURA_ID;
+
 // NETWORK TYPE
 export const NETWORK:
   | "TESTNET"
@@ -32,6 +34,9 @@ export const EXPECTED_NETWORK_TYPE: NetworkType = IS_TEST
 export const KADO_API_KEY = process.env.REACT_APP_KADO_API_KEY;
 export const APES_SECRECT = process.env.REACT_APP_APES_AUTH_SECRET_KEY;
 export const ANGEL_SECRECT = process.env.REACT_APP_ANGEL_AUTH_SECRET_KEY;
+export const WEB3AUTH_CLIENT_ID =
+  process.env.REACT_APP_WEB3AUTH_CLIENT_ID ||
+  "BEglQSgt4cUWcj6SKRdu5QkOXTsePmMcusG5EAoyjyOYKlVRjIF1iCNnMOTfpzCiunHRrMui8TIwQPXdkQ8Yxuk";
 
 // BLOCKCHAIN NODES
 export const JUNO_LCD_OVERRIDE = process.env.REACT_APP_JUNO_LCD_OVERRIDE;

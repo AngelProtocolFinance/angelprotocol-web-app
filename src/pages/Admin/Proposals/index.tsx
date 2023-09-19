@@ -67,7 +67,7 @@ export default function Proposals() {
         />
       )) || (
         <p className="place-self-start">
-          {isLoading ? "loading decisions.." : "no decisions found"}
+          {isLoading ? "loading decisions.." : "No decisions found"}
         </p>
       )}
     </div>

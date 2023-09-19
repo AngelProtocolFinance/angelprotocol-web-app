@@ -38,7 +38,7 @@ export default function Form({
     >
       <fieldset disabled={!!tooltip} className="group contents">
         <Link
-          to={`${appRoutes.profile}/${id}`}
+          to={`${appRoutes.marketplace}/${id}`}
           className="text-blue hover:text-orange text-sm flex items-center gap-1"
         >
           <Icon type="Back" />

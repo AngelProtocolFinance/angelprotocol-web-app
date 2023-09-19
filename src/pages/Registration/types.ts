@@ -51,9 +51,11 @@ export type Documentation = {
   isAuthorizedToReceiveTaxDeductibleDonations: "Yes" | "No";
   fiscalSponsorshipAgreementSigningURL: string;
   signedFiscalSponsorshipAgreement: string;
+  legalEntityType: string;
+  projectDescription: string;
 
   //others
-  isKYCRequired: "Yes" | "No";
+  isAnonymousDonationsAllowed: "Yes" | "No";
   cashEligible: boolean;
   hasAuthority: boolean;
 };

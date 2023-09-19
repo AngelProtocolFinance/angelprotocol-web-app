@@ -96,6 +96,8 @@ const mockApplications: EndowmentProposal[] = [
     HqCountry: "",
     CashEligible: true,
     AuthorizedToReceiveTaxDeductibleDonations: false,
+    LegalEntityType: "Corporation",
+    ProjectDescription: "",
   },
   {
     RegistrationDate: "2022-06-30T10:05:45.350Z",
@@ -121,6 +123,8 @@ const mockApplications: EndowmentProposal[] = [
     HqCountry: "",
     CashEligible: true,
     AuthorizedToReceiveTaxDeductibleDonations: false,
+    LegalEntityType: "Corporation",
+    ProjectDescription: "",
   },
   {
     RegistrationDate: "2022-06-30T10:05:45.350Z",
@@ -146,5 +150,7 @@ const mockApplications: EndowmentProposal[] = [
     HqCountry: "",
     CashEligible: true,
     AuthorizedToReceiveTaxDeductibleDonations: false,
+    LegalEntityType: "Corporation",
+    ProjectDescription: "",
   },
 ];

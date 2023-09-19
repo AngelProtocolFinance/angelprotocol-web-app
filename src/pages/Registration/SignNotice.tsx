@@ -38,7 +38,15 @@ export default function SignatureNotice({ classes = "" }) {
       const { url } = await generateSigningURL({
         id: reference,
         email: init.email,
-        name: contact.firstName + " " + contact.lastName,
+        firstName: contact.firstName,
+        lastName: contact.lastName,
+        role: contact.role === "other" ? contact.otherRole : contact.role,
+        org: {
+          name: contact.orgName,
+          legalEntityType: documentation.legalEntityType,
+          hq: documentation.hqCountry.name,
+          projectDescription: documentation.projectDescription,
+        },
       }).unwrap();
 
       window.location.href = url;

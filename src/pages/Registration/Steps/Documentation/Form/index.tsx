@@ -18,7 +18,8 @@ import useSubmit from "./useSubmit";
 
 export default function Form() {
   const { data } = useRegState<2>();
-  const { submit, isSubmitting } = useSubmit();
+  const { submit, isSubmitting, isAuthorizedToReceiveTaxDeductibleDonations } =
+    useSubmit();
 
   return (
     <form className="w-full" onSubmit={submit}>
@@ -80,7 +81,7 @@ export default function Form() {
         }))}
       />
       <Label className="mt-6 mb-2" required>
-        Select the country your organization is headquartered in
+        In what country is your organization registered in?
       </Label>
       <CountrySelector<FV, "hqCountry">
         fieldName="hqCountry"
@@ -91,14 +92,23 @@ export default function Form() {
           error: "field-error",
         }}
       />
+      <Field<FV>
+        name="legalEntityType"
+        label="What type of legal entity is your organization registered as? This can
+        usually be found in your registration/organizing document"
+        required
+        classes={{ container: "mb-2 mt-6" }}
+        placeholder="e.g. Nonprofit Organization"
+      />
       <Label className="mt-6 mb-2">
         Select the countries your organization is active in
       </Label>
       <ActivityCountries<FV, "activeInCountries"> name="activeInCountries" />
 
       <Label className="mt-6">
-        Is your organization authorized to receive US tax deductible donations
-        and issue tax receipts?
+        Is your organization registered in the United States and recognized by
+        the Internal Revenue Service as a nonprofit organization exempt under
+        IRC 501(c)(3)?
       </Label>
       <div className="flex gap-4 mt-4 accent-orange text-sm">
         <Radio<FV, "isAuthorizedToReceiveTaxDeductibleDonations">
@@ -111,13 +121,30 @@ export default function Form() {
         />
       </div>
 
+      {isAuthorizedToReceiveTaxDeductibleDonations === "No" && (
+        <Field<FV, "textarea">
+          type="textarea"
+          name="projectDescription"
+          label="Please provide a description of your organization's charitable activities as well as your charitable mission."
+          required
+          classes={{ container: "mb-6 mt-4" }}
+          placeholder=""
+        />
+      )}
+
       <Label className="mt-6">
-        Do you want to ONLY accept donations from donors who have provided their
-        personal information (name and address):
+        Are you happy to accept anonymous donations? If not, ALL donors will be
+        required to provide a name and address.
       </Label>
       <div className="flex gap-4 mt-4 accent-orange text-sm">
-        <Radio<FV, "isKYCRequired"> name="isKYCRequired" value="Yes" />
-        <Radio<FV, "isKYCRequired"> name="isKYCRequired" value="No" />
+        <Radio<FV, "isAnonymousDonationsAllowed">
+          name="isAnonymousDonationsAllowed"
+          value="Yes"
+        />
+        <Radio<FV, "isAnonymousDonationsAllowed">
+          name="isAnonymousDonationsAllowed"
+          value="No"
+        />
       </div>
 
       <Separator classes="my-8" />
@@ -146,9 +173,8 @@ export default function Form() {
         By checking this box, you declare that you have read and agreed to our{" "}
         <ExtLink className="underline text-orange" href={TERMS_OF_USE}>
           Terms & Conditions
-        </ExtLink>{" "}
-        as well as the Terms & Conditions of our technology partner Seraphim
-        Labs.
+        </ExtLink>
+        .
       </CheckField>
       <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
         <Link

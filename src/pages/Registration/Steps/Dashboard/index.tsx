@@ -33,7 +33,11 @@ function Dashboard() {
           type: "success",
           headline: "Submission",
           title: "Submitted for review",
-          children: <>Your application has been submitted</>,
+          children: (
+            <>
+              Your application has been submitted. We will get back to you soon!
+            </>
+          ),
         });
       }
     );

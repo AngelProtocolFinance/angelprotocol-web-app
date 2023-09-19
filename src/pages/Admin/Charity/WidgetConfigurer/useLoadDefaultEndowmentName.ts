@@ -16,7 +16,7 @@ export default function useLoadDefaultEndowmentName(
       }
 
       try {
-        const { data, isError, error } = await queryProfile(endowId);
+        const { data, isError, error } = await queryProfile({ endowId });
 
         if (isError) {
           return handleError(error);

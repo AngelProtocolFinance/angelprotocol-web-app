@@ -17,7 +17,7 @@ import { Transaction, TxMeta } from "types/tx";
 import { fromAbiStr } from "helpers";
 import { blockTime, hasElapsed } from "helpers/admin";
 import { EMPTY_DATA } from "constants/evm";
-import { GRAPHQL_ENDPOINT } from "../constants";
+import { GRAPHQL_ENDPOINT } from "constants/urls";
 import { tags } from "./tags";
 
 const customBaseQuery: BaseQueryFn = retry(

@@ -1,4 +1,4 @@
-import { useFormContext } from "react-hook-form";
+import { SubmitHandler, useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { FormValues } from "../types";
 import { useUpdateRegMutation } from "services/aws/registration";
@@ -8,6 +8,7 @@ import { getFilePreviews } from "./getFilePreviews";
 
 export default function useSubmit() {
   const {
+    watch,
     handleSubmit,
     formState: { isDirty, isSubmitting },
   } = useFormContext<FormValues>();
@@ -20,13 +21,16 @@ export default function useSubmit() {
   const [updateReg] = useUpdateRegMutation();
   const { handleError } = useErrorContext();
   const navigate = useNavigate();
+  const isAuthorizedToReceiveTaxDeductibleDonations = watch(
+    "isAuthorizedToReceiveTaxDeductibleDonations"
+  );
 
-  const submit = async ({
+  const submit: SubmitHandler<FormValues> = async ({
     website,
     hasAuthority,
     hasAgreedToTerms,
     sdgs,
-    isKYCRequired,
+    isAnonymousDonationsAllowed,
     hqCountry,
     activeInCountries,
     endowDesignation,
@@ -35,10 +39,12 @@ export default function useSubmit() {
     isAuthorizedToReceiveTaxDeductibleDonations,
     signedFiscalSponsorshipAgreement,
     fiscalSponsorshipAgreementSigningURL,
+    legalEntityType,
+    projectDescription,
     ...documents
-  }: FormValues) => {
+  }) => {
     try {
-      if (documentation && !isDirty) {
+      if (!isDirty && documentation) {
         return navigate(`../${step}`, { state: init });
       }
       const previews = await getFilePreviews({ ...documents });
@@ -52,7 +58,7 @@ export default function useSubmit() {
         ) /**TODO: AWS update to accept number[] */,
         ProofOfIdentity: previews.proofOfIdentity[0], //poi is level1 and required
         ProofOfRegistration: previews.proofOfRegistration[0], //por is level1 and required,
-        KycDonorsOnly: isKYCRequired === "Yes",
+        KycDonorsOnly: isAnonymousDonationsAllowed === "No",
         HqCountry: hqCountry.name,
         EndowDesignation: endowDesignation.value,
         ActiveInCountries: activeInCountries.map((opt) => opt.value),
@@ -60,10 +66,16 @@ export default function useSubmit() {
         EIN: ein,
         AuthorizedToReceiveTaxDeductibleDonations:
           isAuthorizedToReceiveTaxDeductibleDonations === "Yes" ? true : false,
+        LegalEntityType: legalEntityType,
+        ProjectDescription: projectDescription,
       });
     } catch (err) {
       handleError(err);
     }
   };
-  return { submit: handleSubmit(submit), isSubmitting };
+  return {
+    submit: handleSubmit(submit),
+    isSubmitting,
+    isAuthorizedToReceiveTaxDeductibleDonations,
+  };
 }

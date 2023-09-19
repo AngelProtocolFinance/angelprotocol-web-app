@@ -1,5 +1,10 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
-import { Profile, ProfileUpdatePayload, isDeleteMsg } from "../types";
+import {
+  Profile,
+  ProfileUpdatePayload,
+  VersionSpecificWalletProfile,
+  isDeleteMsg,
+} from "../types";
 import {
   EndowListPaginatedAWSQueryRes,
   EndowmentCard,
@@ -90,9 +95,15 @@ export const aws = createApi({
         return res.Items;
       },
     }),
-    walletProfile: builder.query<WalletProfile, string>({
+    walletProfile: builder.query<VersionSpecificWalletProfile, string>({
       providesTags: ["walletProfile"],
       query: getWalletProfileQuery,
+      transformResponse(res: WalletProfile, meta, walletAddr) {
+        return {
+          ...res,
+          version: walletAddr.startsWith("juno") ? "legacy" : "latest",
+        };
+      },
     }),
     toggleBookmark: builder.mutation<
       unknown,
@@ -109,12 +120,14 @@ export const aws = createApi({
       },
       transformResponse: (response: { data: any }) => response,
     }),
-    profile: builder.query<Profile, number>({
+    profile: builder.query<Profile, { endowId: number; isLegacy?: boolean }>({
       providesTags: ["profile"],
-      query: (endowId) =>
-        IS_AST
+      query: ({ endowId, isLegacy = false }) => ({
+        params: { legacy: isLegacy },
+        url: IS_AST
           ? `/${v(1)}/ast/${chainIds.polygon}/${endowId}`
           : `/${v(2)}/profile/${network}/endowment/${endowId}`,
+      }),
       transformResponse(r: EndowmentProfile) {
         //transform cloudsearch placeholders
         const tagline = r.tagline === " " ? "" : r.tagline;
