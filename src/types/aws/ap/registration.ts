@@ -3,10 +3,12 @@ import { EndowmentTierNum } from "../../contracts";
 import { FileObject } from "../common";
 
 export type RegistrationStatus =
-  //| "Pending Signature"
-  "Inactive" | "Under Review" | "Active" | "Rejected";
+  | "Inactive"
+  | "Under Review"
+  | "Active"
+  | "Rejected";
 
-export type ApplicationStatus = "approved" | "not-complete" | "under-review";
+export type ApplicationStatus = "inactive" | "under-review" | "active";
 
 export type ReferralMethods =
   | ""
