@@ -6,16 +6,18 @@ import { useGetter, useSetter } from "store/accessors";
 import { changeSelectedStatus } from "slices/admin/applications";
 
 const options: ApplicationStatusOptions[] = [
-  "all",
+  "active",
   "approved",
-  "not-complete",
   "under-review",
+  "pending",
+  "inactive",
 ];
 const texts: { [key in ApplicationStatusOptions]: string } = {
-  all: "all",
+  active: "active",
   approved: "approved",
-  "not-complete": "not complete",
   "under-review": "under review",
+  pending: "pending",
+  inactive: "inactive",
 };
 
 export default function StatusSelector() {
@@ -31,21 +33,20 @@ export default function StatusSelector() {
         <Listbox.Button
           className={`flex items-center gap-1 text-sm uppercase cursor-pointer font-heading`}
         >
-          <span>{activeStatus === "all" ? "status" : texts[activeStatus]}</span>
+          <span>status</span>
           <Icon type="FilterLeft" size={20} />
         </Listbox.Button>
-        <Listbox.Options className="absolute w-max rounded bg-white dark:bg-blue-d7 p-3 border border-prim">
+        <Listbox.Options className="absolute w-max rounded bg-white dark:bg-blue-d7 border border-prim">
           {options.map((status) => (
             <Listbox.Option key={status} value={status} as={Fragment}>
-              {({ selected }) =>
-                (!selected && (
-                  <li
-                    className={`font-normal px-2 py-0.5 text-sm uppercase hover:bg-blue-l2/30 text-left cursor-pointer`}
-                  >
-                    {texts[status]}
-                  </li>
-                )) || <></>
-              }
+              {({ selected }) => (
+                <li
+                  className={`font-normal p-2 text-sm uppercase hover:bg-blue-l2/30 flex items-center justify-between cursor-pointer`}
+                >
+                  <span>{texts[status]}</span>
+                  {selected && <Icon type="Check" className="text-green" />}
+                </li>
+              )}
             </Listbox.Option>
           ))}
         </Listbox.Options>
