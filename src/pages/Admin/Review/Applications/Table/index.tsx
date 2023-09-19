@@ -52,13 +52,13 @@ export default function Table() {
 
       {isLoading || isFetching ? (
         <TableSection type="tbody" rowClass="border-b border-prim">
-          <td colSpan={4} className="h-24">
+          <td colSpan={5} className="h-24">
             <LoadingStatus>Loading...</LoadingStatus>
           </td>
         </TableSection>
       ) : sortedApplications.length < 1 ? (
         <TableSection type="tbody" rowClass="border-b border-prim">
-          <td colSpan={4} className="h-24">
+          <td colSpan={5} className="h-24">
             <Info>No applications found</Info>
           </td>
         </TableSection>
