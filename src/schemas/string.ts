@@ -50,7 +50,7 @@ export const url = Yup.string()
         // first check if this is a valid URL at all using any schema
         givenURL = new URL(str);
       } catch (error) {
-        console.info("Original URL is ", str);
+        console.error("Original URL is ", str);
         try {
           // check if prepending http would result in a valid URL
           givenURL = new URL(`http://${str}`);

@@ -1,5 +1,5 @@
-// @vitest-environment happy-dom
-import { renderIntoDocument } from "react-dom/test-utils";
+// @vitest-environment jsdom
+import { render } from "@testing-library/react";
 import { describe, expect, test, vi } from "vitest";
 import CsvExporter from "../CsvExporter";
 
@@ -22,7 +22,7 @@ describe("CsvExporter tests", () => {
       { key1: "value21", key2: "value22" },
     ];
     const filename = "testfile.csv";
-    renderIntoDocument(
+    render(
       <CsvExporter data={data} headers={headers} filename={filename}>
         Save
       </CsvExporter>

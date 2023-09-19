@@ -1,4 +1,4 @@
-// @vitest-environment happy-dom
+// @vitest-environment jsdom
 import { APIs } from "constant/urls";
 import { afterAll, beforeEach, describe, expect, test, vi } from "vitest";
 import { Bucket, bucketURL, uploadFiles } from "./uploadFiles";
