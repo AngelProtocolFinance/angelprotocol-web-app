@@ -1,9 +1,10 @@
-import { render } from "@testing-library/react";
+// @vitest-environment happy-dom
+import { renderIntoDocument } from "react-dom/test-utils";
+import { describe, expect, test, vi } from "vitest";
 import CsvExporter from "../CsvExporter";
 
-const mockChildComponent = jest.fn();
-jest.mock("react-csv", () => ({
-  __esModule: true,
+const mockChildComponent = vi.fn();
+vi.mock("react-csv", () => ({
   CSVLink: (props: any) => {
     mockChildComponent(props);
     return <div>mock</div>;
@@ -11,7 +12,7 @@ jest.mock("react-csv", () => ({
 }));
 
 describe("CsvExporter tests", () => {
-  it("downloads the file with provided name", async () => {
+  test("downloads the file with provided name", async () => {
     const headers = [
       { key: "key1", label: "Key1" },
       { key: "key2", label: "Key2" },
@@ -21,7 +22,7 @@ describe("CsvExporter tests", () => {
       { key1: "value21", key2: "value22" },
     ];
     const filename = "testfile.csv";
-    render(
+    renderIntoDocument(
       <CsvExporter data={data} headers={headers} filename={filename}>
         Save
       </CsvExporter>
