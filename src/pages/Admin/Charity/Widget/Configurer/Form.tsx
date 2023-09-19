@@ -3,7 +3,6 @@ import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
 import Split from "components/Split";
 import { CheckField } from "components/form";
-import DenomSelector from "./DenomSelector";
 import EndowmentSelector from "./EndowmentSelector";
 
 export default function Form({
@@ -24,9 +23,6 @@ export default function Form({
       <EndowmentSelector />
 
       <CheckField<FV> name="isDescriptionTextHidden">Hide text</CheckField>
-
-      <label className="-mb-4">Available currencies:</label>
-      <DenomSelector />
 
       <CheckField<FV> name="isAdvancedOptionsHidden">
         Hide "advanced options"

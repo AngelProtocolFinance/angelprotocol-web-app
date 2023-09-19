@@ -32,9 +32,6 @@ const widgetURLfn = (config: WidgetConfig) => {
     isDescriptionTextShown: config.isDescriptionTextShown ? "true" : "false",
     advancedOptionsDisplay: config.advancedOptions.display,
     liquidSplitPct: config.advancedOptions.liquidSplitPct.toString(),
-    tokenWhiteList: config.tokenWhiteList
-      .map((token) => `${token.chain_id}+${token.symbol}`)
-      .join(","),
   };
   return (
     window.location.origin +

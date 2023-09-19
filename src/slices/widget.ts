@@ -10,7 +10,6 @@ const initialState: State = {
     display: "expanded",
     liquidSplitPct: 50,
   },
-  tokenWhiteList: [],
 };
 
 const widget = createSlice({

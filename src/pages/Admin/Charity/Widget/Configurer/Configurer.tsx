@@ -13,7 +13,6 @@ export default function Configurer({ classes = "" }) {
   const methods = useForm<FormValues>({
     resolver: yupResolver(schema),
     defaultValues: {
-      tokenWhitelist: [],
       endowment: { id: 0, name: "" },
       isDescriptionTextHidden: false,
       isAdvancedOptionsHidden: false,
@@ -34,7 +33,6 @@ export default function Configurer({ classes = "" }) {
           ? "expanded"
           : "collapsed",
       },
-      tokenWhiteList: fv.tokenWhitelist,
     };
     dispatch(updateWidgetConfig(newConfig));
   };

@@ -1,4 +1,4 @@
-import { EndowmentOption, TokenWithChainID } from "./aws";
+import { EndowmentOption } from "./aws";
 
 type AdvanceOptionsDisplay = "hidden" | "collapsed" | "expanded";
 
@@ -9,37 +9,30 @@ export type WidgetConfig = {
     display: AdvanceOptionsDisplay;
     liquidSplitPct: number;
   };
-  tokenWhiteList: TokenWithChainID[];
 };
-
-type ChainID = string;
-type Symbol = string;
-export type TokensWhitelist = [ChainID, Symbol][];
-export type TokensLookup = Record<ChainID, Record<Symbol, true>>;
 
 export type WidgetURLSearchParams = {
   isDescriptionTextShown: "true" | "false";
   advancedOptionsDisplay: AdvanceOptionsDisplay;
   liquidSplitPct: string;
-  tokenWhiteList: string;
 };
 
 type ValidConfig = {
+  isFallback: false;
   isDescriptionTextShown: boolean;
   advancedOptionsDisplay: AdvanceOptionsDisplay;
   liquidSplitPct: number;
-  tokensLookup: TokensLookup;
 };
 
 type FallbackConfig = {
+  isFallback: true;
   isDescriptionTextShown: true;
   advancedOptionsDisplay: Extract<AdvanceOptionsDisplay, "expanded">;
   liquidSplitPct: 50;
-  tokensLookup: "all";
 };
 
 export type DonaterConfigFromWidget = ValidConfig | FallbackConfig;
 
 export const configIsFallback = (
   config: DonaterConfigFromWidget
-): config is FallbackConfig => config.tokensLookup === "all";
+): config is FallbackConfig => config.isFallback;

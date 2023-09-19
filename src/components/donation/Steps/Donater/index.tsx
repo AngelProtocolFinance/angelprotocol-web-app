@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { DonateValues } from "./types";
 import { TokenWithAmount as TWA } from "types/slices";
-import { DonaterConfigFromWidget, configIsFallback } from "types/widget";
+import { DonaterConfigFromWidget } from "types/widget";
 import { FormStep, WithWallet, fiatWallet, isFiat } from "slices/donation";
 import Form from "./Form";
 import { schema } from "./schema";
@@ -26,17 +26,10 @@ export default function Donater({ wallet, config, ...state }: Props) {
 
   const _tokens: TWA[] = isFiat(wallet)
     ? fiats
-    : wallet.coins
-        .filter(
-          (coin) =>
-            !config ||
-            configIsFallback(config) ||
-            config.tokensLookup[wallet.chain.chain_id]?.[coin.symbol]
-        )
-        .map<TWA>((t) => ({
-          ...t,
-          amount: "0",
-        }));
+    : wallet.coins.map<TWA>((t) => ({
+        ...t,
+        amount: "0",
+      }));
 
   const initCoin = _tokens[0];
 
