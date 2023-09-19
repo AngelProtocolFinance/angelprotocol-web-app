@@ -6,7 +6,12 @@ export type RegistrationStatus =
   //| "Pending Signature"
   "Inactive" | "Under Review" | "Active" | "Rejected";
 
-export type ApplicationStatus = "approved" | "not-complete" | "under-review";
+export type ApplicationStatus =
+  | "inactive"
+  | "pending"
+  | "under-review"
+  | "approved"
+  | "active";
 
 export type ReferralMethods =
   | ""
