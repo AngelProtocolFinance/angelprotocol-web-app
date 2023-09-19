@@ -1,3 +1,5 @@
+// @vitest-environment happy-dom
+import { describe, expect, test, vi } from "vitest";
 import { FileObject } from "types/aws";
 import { Bucket, bucketURL } from "helpers/uploadFiles";
 import { getFilePreviews } from "./getFilePreviews";
@@ -27,8 +29,8 @@ const result3: FileObject = {
   publicUrl: `${baseURL}-${file3.name}`,
 };
 
-const uploadFiles = jest.fn();
-global.fetch = jest.fn();
+const uploadFiles = vi.fn();
+global.fetch = vi.fn();
 
 describe("get documentation file previews", () => {
   test("correct preview mapping for new uploads", async () => {
@@ -37,7 +39,7 @@ describe("get documentation file previews", () => {
       b: { files: [file1, file3], previews: [] },
       c: { files: [file2, file1, file3], previews: [] },
     };
-    Date.now = jest.fn(() => timeStamp);
+    Date.now = vi.fn(() => timeStamp);
     uploadFiles.mockResolvedValue(baseURL);
     const previews = await getFilePreviews(documentationVals);
     expect(previews).toStrictEqual({
@@ -47,7 +49,7 @@ describe("get documentation file previews", () => {
     });
   });
   test("previous upload is used when no new files", async () => {
-    Date.now = jest.fn(() => timeStamp);
+    Date.now = vi.fn(() => timeStamp);
     uploadFiles.mockResolvedValue(baseURL);
     const documentationVals: Parameters<typeof getFilePreviews>[0] = {
       a: { files: [file1], previews: [preview1, preview2] },
