@@ -6,7 +6,7 @@ interface State {
 }
 
 const initialState: State = {
-  activeStatus: "all",
+  activeStatus: "under-review",
 };
 
 const proposalsSlice = createSlice({
