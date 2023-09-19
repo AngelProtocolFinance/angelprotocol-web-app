@@ -6,8 +6,6 @@ import {
   WalletStatus,
   useWallet,
 } from "@terra-money/wallet-provider";
-import { chainIDs } from "constant/chains";
-import { IS_TEST } from "constant/env";
 import { Connection, ProviderInfo } from "./types";
 import { BaseChain } from "types/aws";
 import { ProviderId } from "types/lists";
@@ -16,6 +14,8 @@ import {
   UnsupportedChainError,
   WalletDisconnectedError,
 } from "errors/errors";
+import { chainIDs } from "constant/chains";
+import { IS_TEST } from "constant/env";
 
 const SUPPORTED_CHAINS: BaseChain[] = IS_TEST
   ? [{ chain_id: chainIDs.terraTest, chain_name: "Terra Testnet" }]

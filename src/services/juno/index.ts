@@ -5,13 +5,13 @@ import {
   fetchBaseQuery,
   retry,
 } from "@reduxjs/toolkit/query/react";
-import { POLYGON_RPC } from "constant/urls";
 import Decimal from "decimal.js";
 import {
   ContractQueries as Q,
   ContractQueryTypes as QT,
   QueryOptions,
 } from "./queryContract/types";
+import { POLYGON_RPC } from "constant/urls";
 import { queryContract } from "./queryContract";
 import { tags } from "./tags";
 

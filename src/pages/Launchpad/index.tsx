@@ -1,6 +1,6 @@
-import { APP_NAME, DAPP_URL } from "constant/env";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Seo from "components/Seo";
+import { APP_NAME, DAPP_URL } from "constant/env";
 import About from "./About";
 import ConnectWallet from "./ConnectWallet";
 import Fees from "./Fees";

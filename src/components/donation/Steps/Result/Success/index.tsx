@@ -1,11 +1,11 @@
-import { PAYMENT_WORDS } from "constant/common";
-import { IS_AST } from "constant/env";
-import { appRoutes } from "constant/routes";
 import { Link } from "react-router-dom";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import { TxStep } from "slices/donation";
 import { getTxUrl, humanize } from "helpers";
+import { PAYMENT_WORDS } from "constant/common";
+import { IS_AST } from "constant/env";
+import { appRoutes } from "constant/routes";
 import Share, { SocialMedia } from "./Share";
 
 export default function Success({

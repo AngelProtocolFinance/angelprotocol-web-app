@@ -1,10 +1,10 @@
 import { ErrorMessage } from "@hookform/error-message";
-import { tokens } from "constant/tokens";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { FV } from "./types";
 import Icon from "components/Icon";
 import Image from "components/Image";
 import { humanize } from "helpers";
+import { tokens } from "constant/tokens";
 
 export default function Amounts() {
   const {

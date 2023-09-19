@@ -1,10 +1,10 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { APP_NAME } from "constant/env";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
 import { vi } from "vitest";
 import { DonationsMetricList, Update } from "types/aws";
 import { store } from "store/store";
+import { APP_NAME } from "constant/env";
 import App from "../App";
 
 const mockMetrics: DonationsMetricList = {

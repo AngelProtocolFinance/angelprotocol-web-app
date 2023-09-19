@@ -1,10 +1,10 @@
-import { IS_AST } from "constant/env";
 import { useEffect } from "react";
 import { useGetWallet } from "contexts/WalletContext";
 import KYC from "components/KYC";
 import Status, { LoadingStatus } from "components/Status";
 import { useGetter, useSetter } from "store/accessors";
 import { fiatWallet, resetDetails } from "slices/donation";
+import { IS_AST } from "constant/env";
 import { ConfigParams } from "..";
 import Donater from "./Donater";
 import Result from "./Result";

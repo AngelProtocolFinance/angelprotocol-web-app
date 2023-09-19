@@ -1,8 +1,8 @@
-import { unsdgs } from "constant/unsdgs";
 import { useMemo } from "react";
 import { UNSDG_NUMS } from "types/lists";
 import { useGetter, useSetter } from "store/accessors";
 import { SDG_GROUPS, setSdgs } from "slices/components/marketFilter";
+import { unsdgs } from "constant/unsdgs";
 import { GroupProps, MultilevelFilter } from "./common";
 
 export default function SDGGroups() {

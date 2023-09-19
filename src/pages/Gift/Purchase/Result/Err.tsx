@@ -1,11 +1,11 @@
-import { chainIds } from "constant/chainIds";
-import { appRoutes } from "constant/routes";
 import { Link } from "react-router-dom";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import { useSetter } from "store/accessors";
 import { TError, setStep } from "slices/gift";
 import { getTxUrl } from "helpers";
+import { chainIds } from "constant/chainIds";
+import { appRoutes } from "constant/routes";
 
 export default function Err({ error, hash }: TError) {
   const dispatch = useSetter();

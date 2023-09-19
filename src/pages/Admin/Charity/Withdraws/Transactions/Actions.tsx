@@ -1,6 +1,6 @@
-import { adminRoutes } from "constant/routes";
 import { Link } from "react-router-dom";
 import Icon from "components/Icon";
+import { adminRoutes } from "constant/routes";
 
 export default function Actions({ proposalId }: { proposalId: number }) {
   return (

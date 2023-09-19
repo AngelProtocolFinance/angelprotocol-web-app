@@ -1,5 +1,5 @@
-import { PAYMENT_WORDS, titleCase } from "constant/common";
 import { VerificationRequired } from "./types";
+import { PAYMENT_WORDS, titleCase } from "constant/common";
 
 type Props = { verificationRequired: VerificationRequired };
 

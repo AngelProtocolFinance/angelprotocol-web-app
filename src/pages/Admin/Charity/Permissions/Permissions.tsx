@@ -1,8 +1,8 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { adminRoutes } from "constant/routes";
 import { FormProvider, useForm } from "react-hook-form";
 import { FV, TPermissions } from "./types";
 import { Tooltip } from "components/admin";
+import { adminRoutes } from "constant/routes";
 import { isTooltip, useAdminContext } from "../../Context";
 import Seo from "../Seo";
 import Form from "./Form";

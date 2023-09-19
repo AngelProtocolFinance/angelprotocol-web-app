@@ -1,6 +1,6 @@
+import { AccountType } from "types/lists";
 import { PAYMENT_WORDS, titleCase } from "constant/common";
 import { adminRoutes } from "constant/routes";
-import { AccountType } from "types/lists";
 import Seo from "../Seo";
 import Balances from "./Balances";
 import Positions from "./Positions";

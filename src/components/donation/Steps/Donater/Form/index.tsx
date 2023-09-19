@@ -1,5 +1,3 @@
-import { PAYMENT_WORDS } from "constant/common";
-import { appRoutes } from "constant/routes";
 import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
@@ -10,6 +8,8 @@ import TokenField from "components/TokenField";
 import { CheckField, Label } from "components/form";
 import { useGetter } from "store/accessors";
 import { setDetails } from "slices/donation";
+import { PAYMENT_WORDS } from "constant/common";
+import { appRoutes } from "constant/routes";
 import AdvancedOptions from "./AdvancedOptions";
 
 export default function Form(props: {

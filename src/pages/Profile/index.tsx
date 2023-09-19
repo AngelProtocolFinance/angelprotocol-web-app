@@ -1,10 +1,10 @@
-import { APP_NAME, DAPP_URL } from "constant/env";
-import { appRoutes } from "constant/routes";
 import { Navigate, useParams } from "react-router-dom";
 import { useProfileQuery } from "services/aws/aws";
 import Image from "components/Image";
 import Seo from "components/Seo";
 import { idParamToNum } from "helpers";
+import { APP_NAME, DAPP_URL } from "constant/env";
+import { appRoutes } from "constant/routes";
 import Body from "./Body";
 import PageError from "./PageError";
 import ProfileContext, { useProfileContext } from "./ProfileContext";

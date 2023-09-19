@@ -4,8 +4,6 @@ import {
   fetchBaseQuery,
   retry,
 } from "@reduxjs/toolkit/query/react";
-import { EMPTY_DATA } from "constant/evm";
-import { GRAPHQL_ENDPOINT } from "constant/urls";
 import { TransactionsArgs } from "./types";
 import { TransactionStatus } from "types/lists";
 import {
@@ -18,6 +16,8 @@ import {
 import { Transaction, TxMeta } from "types/tx";
 import { fromAbiStr } from "helpers";
 import { blockTime, hasElapsed } from "helpers/admin";
+import { EMPTY_DATA } from "constant/evm";
+import { GRAPHQL_ENDPOINT } from "constant/urls";
 import { tags } from "./tags";
 
 const customBaseQuery: BaseQueryFn = retry(

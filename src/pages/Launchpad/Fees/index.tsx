@@ -1,5 +1,4 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { chainIds } from "constant/chainIds";
 import { FormProvider, useForm } from "react-hook-form";
 import { ObjectSchema, object, string } from "yup";
 import { FV } from "./types";
@@ -9,6 +8,7 @@ import { feeKeys } from "components/ast";
 import { useLaunchpad } from "slices/launchpad";
 import { positiveNumber, requiredPercent } from "schemas/number";
 import { requiredWalletAddr } from "schemas/string";
+import { chainIds } from "constant/chainIds";
 import { withStepGuard } from "../withStepGuard";
 import Form from "./Form";
 

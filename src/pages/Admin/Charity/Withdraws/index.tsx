@@ -1,5 +1,5 @@
-import { adminRoutes } from "constant/routes";
 import QueryLoader from "components/QueryLoader";
+import { adminRoutes } from "constant/routes";
 import Seo from "../Seo";
 import OpenRequestsInfo from "./OpenRequestsInfo";
 import Transactions from "./Transactions";

@@ -1,11 +1,11 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { chainIds } from "constant/chainIds";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues } from "./types";
 import { Chain } from "types/tx";
 import { useChainQuery } from "services/apes";
 import QueryLoader from "components/QueryLoader";
 import { FormError, FormSkeleton } from "components/admin";
+import { chainIds } from "constant/chainIds";
 import { useAdminContext } from "../../../Context";
 import Form from "./Form";
 import { schema } from "./schema";

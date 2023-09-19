@@ -1,10 +1,10 @@
-import { chainIds } from "constant/chainIds";
-import { APP_NAME, IS_TEST } from "constant/env";
 import { useEffect } from "react";
 import { useGetWallet } from "contexts/WalletContext";
 import { ErrorStatus, LoadingStatus } from "components/Status";
 import { useGetter, useSetter } from "store/accessors";
 import { GiftState, resetDetails } from "slices/gift";
+import { chainIds } from "constant/chainIds";
+import { APP_NAME, IS_TEST } from "constant/env";
 import Progress from "./Progress";
 import Purchaser from "./Purchaser";
 import Result from "./Result";

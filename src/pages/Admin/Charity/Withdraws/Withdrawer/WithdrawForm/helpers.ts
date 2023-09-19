@@ -1,4 +1,3 @@
-import { chainIds } from "constant/chainIds";
 import Decimal from "decimal.js";
 import { Except } from "type-fest";
 import { FV } from "./types";
@@ -6,6 +5,7 @@ import { BridgeFees } from "types/aws";
 import { AccountType } from "types/lists";
 import { roundDownToNum } from "helpers";
 import { hasElapsed } from "helpers/admin";
+import { chainIds } from "constant/chainIds";
 
 export const bridgeFee = (
   destinationChain: string,

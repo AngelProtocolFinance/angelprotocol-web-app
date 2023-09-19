@@ -1,7 +1,7 @@
+import { Link, LinkGroup, SocialMediaLink } from "./types";
 import { BASE_URL, DAPP_URL, SUBDOMAIN_BUILDER } from "constant/env";
 import { appRoutes } from "constant/routes";
 import { LITEPAPER } from "constant/urls";
-import { Link, LinkGroup, SocialMediaLink } from "./types";
 
 type LINKS = {
   HEADER_LINKS: Link[];

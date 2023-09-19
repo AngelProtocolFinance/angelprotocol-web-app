@@ -1,7 +1,7 @@
-import { APP_NAME, DAPP_URL } from "constant/env";
-import { appRoutes } from "constant/routes";
 import { useProfileQuery } from "services/aws/aws";
 import CommonSEO from "components/Seo";
+import { APP_NAME, DAPP_URL } from "constant/env";
+import { appRoutes } from "constant/routes";
 import { useAdminContext } from "../Context";
 
 export default function Seo({

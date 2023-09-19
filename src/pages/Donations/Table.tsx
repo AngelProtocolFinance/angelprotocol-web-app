@@ -1,5 +1,3 @@
-import { chainIds } from "constant/chainIds";
-import { appRoutes } from "constant/routes";
 import { Link } from "react-router-dom";
 import { TableProps } from "./types";
 import ExtLink from "components/ExtLink";
@@ -9,6 +7,8 @@ import useKYC from "components/KYC/useKYC";
 import TableSection, { Cells } from "components/TableSection";
 import useSort from "hooks/useSort";
 import { getTxUrl, humanize } from "helpers";
+import { chainIds } from "constant/chainIds";
+import { appRoutes } from "constant/routes";
 import LoadMoreBtn from "./LoadMoreBtn";
 
 export default function Table({

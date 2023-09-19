@@ -1,8 +1,8 @@
 import { Web3AuthNoModal } from "@web3auth/no-modal";
 import { TorusWalletAdapter } from "@web3auth/torus-evm-adapter";
+import { BaseChain } from "types/aws";
 import { chainIDs } from "constant/chains";
 import { IS_TEST, WEB3AUTH_CLIENT_ID } from "constant/env";
-import { BaseChain } from "types/aws";
 import { chainConfig } from "./web3AuthConfigs";
 
 const DEFAULT_CHAIN: BaseChain = IS_TEST

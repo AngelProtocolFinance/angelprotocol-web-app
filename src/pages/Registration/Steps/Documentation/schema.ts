@@ -1,4 +1,3 @@
-import { MAX_SDGS } from "constant/unsdgs";
 import { ObjectSchema, array, bool, object, string } from "yup";
 import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
@@ -8,6 +7,7 @@ import { OptionType } from "components/Selector";
 import { Asset } from "components/registration";
 import { genFileSchema } from "schemas/file";
 import { requiredString } from "schemas/string";
+import { MAX_SDGS } from "constant/unsdgs";
 
 export const MB_LIMIT = 25;
 const BYTES_IN_MB = 1e6;

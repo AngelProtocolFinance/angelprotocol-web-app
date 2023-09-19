@@ -1,4 +1,3 @@
-import { contracts } from "constant/contracts";
 import { EstimateStatus } from "./types";
 import { Estimate } from "types/tx";
 import { WithWallet } from "contexts/WalletContext";
@@ -8,6 +7,7 @@ import { purchase } from "slices/gift/purchase";
 import { createTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { scaleToStr } from "helpers";
+import { contracts } from "constant/contracts";
 
 type Props = {
   estimate: EstimateStatus;

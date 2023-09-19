@@ -1,4 +1,3 @@
-import { chainIds } from "constant/chainIds";
 import { useState } from "react";
 import {
   DonationMadeByDonor,
@@ -13,6 +12,7 @@ import {
 } from "services/apes";
 import { useSetter } from "store/accessors";
 import useDebouncer from "hooks/useDebouncer";
+import { chainIds } from "constant/chainIds";
 
 type DonorOwner = { donorAddress: string };
 type EndowmentOwner = { endowmentId: string };

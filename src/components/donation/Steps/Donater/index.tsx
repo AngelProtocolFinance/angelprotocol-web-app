@@ -1,10 +1,10 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { IS_AST } from "constant/env";
 import { FormProvider, useForm } from "react-hook-form";
 import { DonateValues } from "./types";
 import { TokenWithAmount as TWA } from "types/slices";
 import { FormStep, WithWallet, fiatWallet, isFiat } from "slices/donation";
 import { isEmpty } from "helpers";
+import { IS_AST } from "constant/env";
 // import { fiatTokens } from "constant/tokens";
 import { ConfigParams } from "..";
 import Form from "./Form";

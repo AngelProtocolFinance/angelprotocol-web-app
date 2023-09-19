@@ -1,8 +1,8 @@
-import { APP_NAME } from "constant/env";
-import { appRoutes } from "constant/routes";
 import { Link, Navigate, useLocation } from "react-router-dom";
 import { InitReg } from "./types";
 import Icon from "components/Icon";
+import { APP_NAME } from "constant/env";
+import { appRoutes } from "constant/routes";
 import routes, { steps } from "./routes";
 
 export default function Welcome({ classes = "" }: { classes?: string }) {

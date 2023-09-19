@@ -1,4 +1,3 @@
-import { PAYMENT_WORDS } from "constant/common";
 import { useParams } from "react-router-dom";
 import { DonationMadeByDonor } from "types/aws";
 import { usePaginatedDonationRecords } from "services/apes";
@@ -6,6 +5,7 @@ import CsvExporter from "components/CsvExporter";
 import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
 import { isEmpty } from "helpers";
+import { PAYMENT_WORDS } from "constant/common";
 import Filter from "./Filter";
 import MobileTable from "./MobileTable";
 import NoDonations from "./NoDonations";

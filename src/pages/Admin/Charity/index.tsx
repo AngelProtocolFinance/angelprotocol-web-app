@@ -1,7 +1,7 @@
-import { adminRoutes } from "constant/routes";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { LinkGroup } from "../Sidebar/types";
 import { EndowmentType } from "types/lists";
+import { adminRoutes } from "constant/routes";
 import AdminWallet from "../AdminWallet";
 import { useAdminContext } from "../Context";
 import Layout from "../Layout";

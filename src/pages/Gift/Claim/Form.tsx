@@ -1,8 +1,4 @@
 import { ErrorMessage } from "@hookform/error-message";
-import { chainIds } from "constant/chainIds";
-import { APP_NAME } from "constant/env";
-import { appRoutes } from "constant/routes";
-import { APIs } from "constant/urls";
 import { useFormContext } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "./types";
@@ -11,6 +7,10 @@ import { useGetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import Prompt from "components/Prompt";
 import { createAuthToken } from "helpers";
+import { chainIds } from "constant/chainIds";
+import { APP_NAME } from "constant/env";
+import { appRoutes } from "constant/routes";
+import { APIs } from "constant/urls";
 
 export default function Form({ classes = "" }) {
   const {

@@ -1,8 +1,8 @@
-import { EXPECTED_NETWORK_TYPE } from "constant/env";
 import { useCallback, useEffect } from "react";
 import { Chain } from "types/tx";
 import { useErrorContext } from "contexts/ErrorContext";
 import { WalletDisconnectedError, WrongNetworkError } from "errors/errors";
+import { EXPECTED_NETWORK_TYPE } from "constant/env";
 
 export function useVerifyChain(
   chain: Chain | undefined,

@@ -1,4 +1,3 @@
-import { LOGO_DARK, PAYMENT_WORDS, titleCase } from "constant/common";
 import { useEffect } from "react";
 import Image from "components/Image";
 import WalletSuite from "components/WalletSuite";
@@ -6,6 +5,7 @@ import { Steps } from "components/donation";
 import { useSetter } from "store/accessors";
 import { DonationRecipient, setRecipient } from "slices/donation";
 import { getPossessiveForm } from "helpers";
+import { LOGO_DARK, PAYMENT_WORDS, titleCase } from "constant/common";
 import useWidgetParams from "./useWidgetParams";
 
 export default function InnerComponent(props: DonationRecipient) {

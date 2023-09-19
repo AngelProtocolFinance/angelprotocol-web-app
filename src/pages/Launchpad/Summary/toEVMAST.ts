@@ -1,9 +1,9 @@
-import { ADDRESS_ZERO } from "constant/evm";
 import { Completed, TFee } from "slices/launchpad/types";
 import { Fee, NewAST, SettingsPermission } from "types/contracts";
 import { isEmpty } from "helpers";
 import { blockTime, fromHours } from "helpers/admin";
 import { toContractSplit } from "helpers/ast";
+import { ADDRESS_ZERO } from "constant/evm";
 
 export default function toEVMAST(
   {

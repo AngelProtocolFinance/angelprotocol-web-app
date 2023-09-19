@@ -1,10 +1,10 @@
-import { appRoutes } from "constant/routes";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ErrorQueryParams } from "./types";
 import { useFiscalSponsorshipAgreementSigningURLMutation } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import Icon from "components/Icon";
+import { appRoutes } from "constant/routes";
 import routes from "../routes";
 
 const initialText = "Retry";

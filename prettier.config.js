@@ -32,7 +32,7 @@ const config = {
     "^helpers.*",
     "^schemas.*",
     "^errors.*",
-    "^constants.*",
+    "^constant.*",
     "^[../]",
     "^[./]",
   ],

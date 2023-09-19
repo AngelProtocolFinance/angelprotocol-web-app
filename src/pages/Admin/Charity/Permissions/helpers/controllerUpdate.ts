@@ -1,4 +1,3 @@
-import { ADDRESS_ZERO } from "constant/evm";
 import { TPermissions } from "../types";
 import {
   SettingsController,
@@ -6,6 +5,7 @@ import {
   SettingsPermission,
 } from "types/contracts";
 import { blockTime } from "helpers/admin";
+import { ADDRESS_ZERO } from "constant/evm";
 
 export function controllerUpdate(
   endowId: number,

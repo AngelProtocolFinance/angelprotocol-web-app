@@ -1,5 +1,4 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { appRoutes } from "constant/routes";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { TokenWithAmount } from "types/slices";
@@ -10,6 +9,7 @@ import { useSetter } from "store/accessors";
 import { SubmitStep, WithWallet, isFiat, setStep } from "slices/donation";
 import { sendDonation } from "slices/donation/sendDonation";
 import { humanize } from "helpers";
+import { appRoutes } from "constant/routes";
 import { DonationEstimate, estimateDonation } from "./estimateDonation";
 
 type EstimateStatus = DonationEstimate | "loading" | "error";

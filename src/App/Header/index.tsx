@@ -1,9 +1,9 @@
-import { appRoutes } from "constant/routes";
 import { useEffect, useRef, useState } from "react";
 import { Location, matchRoutes, useLocation } from "react-router-dom";
 import { Link } from "../types";
 import Image, { ImageProps } from "components/Image";
 import WalletSuite from "components/WalletSuite";
+import { appRoutes } from "constant/routes";
 import DesktopNav from "./DesktopNav";
 import { Opener as MobileNavOpener } from "./MobileNav";
 import ThemeToggle from "./ThemeToggle";

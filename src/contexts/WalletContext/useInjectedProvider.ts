@@ -1,6 +1,3 @@
-import { chainIDs } from "constant/chains";
-import { GENERIC_ERROR_MESSAGE } from "constant/common";
-import { EIPMethods } from "constant/evm";
 import Decimal from "decimal.js";
 import { useCallback, useEffect, useState } from "react";
 import { Connection, ProviderInfo } from "./types";
@@ -20,6 +17,9 @@ import {
   WalletError,
   WalletNotInstalledError,
 } from "errors/errors";
+import { chainIDs } from "constant/chains";
+import { GENERIC_ERROR_MESSAGE } from "constant/common";
+import { EIPMethods } from "constant/evm";
 import { WALLET_METADATA } from "./constants";
 import {
   checkXdefiPriority,

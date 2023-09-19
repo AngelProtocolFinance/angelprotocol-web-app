@@ -1,7 +1,3 @@
-import { GENERIC_ERROR_MESSAGE } from "constant/common";
-import { APP_NAME } from "constant/env";
-import { appRoutes } from "constant/routes";
-import { APIs } from "constant/urls";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { Link } from "react-router-dom";
@@ -13,6 +9,10 @@ import { RichTextEditor } from "components/RichText";
 import { Field, Label } from "components/form";
 import { createAuthToken } from "helpers";
 import { richTextToHTML } from "helpers/richTextToHtml";
+import { GENERIC_ERROR_MESSAGE } from "constant/common";
+import { APP_NAME } from "constant/env";
+import { appRoutes } from "constant/routes";
+import { APIs } from "constant/urls";
 import Success from "./Success";
 
 export default function Form({ classes = "" }) {

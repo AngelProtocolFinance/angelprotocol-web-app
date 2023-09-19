@@ -1,8 +1,8 @@
-import { adminRoutes } from "constant/routes";
 import { Link } from "react-router-dom";
 import { Transaction } from "types/tx";
 import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
+import { adminRoutes } from "constant/routes";
 
 type Props = { proposals: Transaction[] };
 export default function Table({ proposals }: Props) {

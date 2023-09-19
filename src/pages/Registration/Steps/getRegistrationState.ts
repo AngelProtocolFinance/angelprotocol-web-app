@@ -1,4 +1,3 @@
-import { unsdgs } from "constant/unsdgs";
 import {
   ContactPerson,
   Documentation,
@@ -17,6 +16,7 @@ import {
   WalletData,
 } from "types/aws";
 import { Asset } from "components/registration";
+import { unsdgs } from "constant/unsdgs";
 
 export function getRegistrationState(
   reg: SavedRegistration

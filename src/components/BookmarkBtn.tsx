@@ -1,4 +1,3 @@
-import { GENERIC_ERROR_MESSAGE } from "constant/common";
 import { PropsWithChildren, useRef, useState } from "react";
 import { EndowmentBookmark } from "types/aws";
 import {
@@ -9,6 +8,7 @@ import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import Tooltip from "components/Tooltip";
+import { GENERIC_ERROR_MESSAGE } from "constant/common";
 import Prompt from "./Prompt";
 
 type Props = PropsWithChildren<Pick<EndowmentBookmark, "endowId">>;

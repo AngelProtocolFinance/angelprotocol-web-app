@@ -1,11 +1,11 @@
 import { Dialog } from "@headlessui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { chainIds } from "constant/chainIds";
 import { FormProvider, useForm } from "react-hook-form";
 import { object } from "yup";
 import { useModalContext } from "contexts/ModalContext";
 import { Field } from "components/form";
 import { requiredWalletAddr } from "schemas/string";
+import { chainIds } from "constant/chainIds";
 
 type Props = {
   added: string[];

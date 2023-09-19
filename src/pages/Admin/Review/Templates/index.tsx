@@ -1,7 +1,7 @@
-import { APP_NAME, DAPP_URL } from "constant/env";
-import { adminRoutes } from "constant/routes";
 import { Route, Routes } from "react-router-dom";
 import Seo from "components/Seo";
+import { APP_NAME, DAPP_URL } from "constant/env";
+import { adminRoutes } from "constant/routes";
 import { templateRoutes as routes } from "../../constants";
 import FundSender from "../../templates/cw3/FundSender";
 import Nav from "./Nav";

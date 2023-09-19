@@ -1,8 +1,8 @@
-import { IS_AST } from "constant/env";
-import { appRoutes } from "constant/routes";
 import { Link } from "react-router-dom";
 import { EndowmentBookmark } from "types/aws";
 import Image from "components/Image";
+import { IS_AST } from "constant/env";
+import { appRoutes } from "constant/routes";
 
 type Props = { endowments: EndowmentBookmark[]; showEndowments: boolean };
 

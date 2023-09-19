@@ -1,6 +1,3 @@
-import { ENDOW_DESIGNATIONS } from "constant/common";
-import { appRoutes } from "constant/routes";
-import { unsdgs } from "constant/unsdgs";
 import { FormHTMLAttributes } from "react";
 import { Link } from "react-router-dom";
 import { FV } from "./types";
@@ -14,6 +11,9 @@ import { MultiSelector, Selector } from "components/Selector";
 import Toggle from "components/Toggle";
 import { Tooltip } from "components/admin";
 import { Field, Label } from "components/form";
+import { ENDOW_DESIGNATIONS } from "constant/common";
+import { appRoutes } from "constant/routes";
+import { unsdgs } from "constant/unsdgs";
 import Group from "./common/Group";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import { MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "./schema";

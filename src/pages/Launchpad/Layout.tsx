@@ -1,5 +1,5 @@
-import { appRoutes } from "constant/routes";
 import { Outlet, useMatch } from "react-router-dom";
+import { appRoutes } from "constant/routes";
 import Progress from "./Progress";
 
 export default function Layout({ classes = "" }) {

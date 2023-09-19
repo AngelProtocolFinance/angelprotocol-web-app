@@ -1,7 +1,7 @@
-import { DAPP_URL, IS_TEST } from "constant/env";
-import { appRoutes } from "constant/routes";
 import { URL_PARAMS, UrlParamValues } from "pages/DonateWidget";
 import { isEmpty } from "helpers";
+import { DAPP_URL, IS_TEST } from "constant/env";
+import { appRoutes } from "constant/routes";
 import { FormValues } from "./schema";
 
 const APP_URL = IS_TEST ? "http://localhost:4200" : `${DAPP_URL}`;

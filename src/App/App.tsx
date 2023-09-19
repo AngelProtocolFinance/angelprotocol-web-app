@@ -1,13 +1,13 @@
 import * as Sentry from "@sentry/react";
 import { WalletProvider } from "@terra-money/wallet-provider";
-import { chainOptions } from "constant/chainOptions";
-import { IS_AST } from "constant/env";
-import { appRoutes } from "constant/routes";
 import { lazy } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import ModalContext from "contexts/ModalContext";
 import WalletContext from "contexts/WalletContext";
 import useScrollTop from "hooks/useScrollTop";
+import { chainOptions } from "constant/chainOptions";
+import { IS_AST } from "constant/env";
+import { appRoutes } from "constant/routes";
 import Layout from "./Layout";
 
 const Admin = lazy(() => import("pages/Admin"));

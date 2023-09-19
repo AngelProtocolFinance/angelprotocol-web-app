@@ -1,6 +1,6 @@
-import { chainIDs } from "constant/chains";
 import { BaseChain } from "types/aws";
 import { ProviderId } from "types/lists";
+import { chainIDs } from "constant/chains";
 import { WalletState } from "./WalletContext";
 
 export type WithWallet<T> = T & { wallet: WalletState };

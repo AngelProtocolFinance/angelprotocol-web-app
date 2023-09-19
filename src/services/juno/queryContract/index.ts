@@ -1,6 +1,3 @@
-import { contracts } from "constant/contracts";
-import { EIPMethods } from "constant/evm";
-import { POLYGON_RPC } from "constant/urls";
 import {
   ContractQueries as Q,
   ContractQueryTypes as QT,
@@ -8,6 +5,9 @@ import {
 } from "./types";
 import { Contract } from "types/lists";
 import { request } from "helpers";
+import { contracts } from "constant/contracts";
+import { EIPMethods } from "constant/evm";
+import { POLYGON_RPC } from "constant/urls";
 import { queryObjects } from "./queryObjects";
 
 export async function queryContract<T extends QT>(

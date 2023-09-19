@@ -1,6 +1,6 @@
-import { APP_NAME, DAPP_URL, SEO_IMAGE } from "constant/env";
 import React from "react";
 import { Helmet } from "react-helmet";
+import { APP_NAME, DAPP_URL, SEO_IMAGE } from "constant/env";
 
 type Props = {
   title?: string;

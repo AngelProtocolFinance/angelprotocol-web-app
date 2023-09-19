@@ -1,6 +1,6 @@
-import { contracts } from "constant/contracts";
 import { AdminResource } from "../../types";
 import { idParamToNum } from "helpers";
+import { contracts } from "constant/contracts";
 
 export const AP_ID = "ap";
 export const REVIEWER_ID = "reviewer";

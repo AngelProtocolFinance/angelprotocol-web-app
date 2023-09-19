@@ -1,9 +1,9 @@
-import { adminRoutes } from "constant/routes";
 import { Link } from "react-router-dom";
 import { TransactionStatus } from "types/lists";
 import { useWithdrawLogsQuery } from "services/apes";
 import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
+import { adminRoutes } from "constant/routes";
 import { useAdminContext } from "../../Context";
 
 const proposal_status: TransactionStatus = "open";

@@ -1,10 +1,10 @@
-import { PAYMENT_WORDS, titleCase } from "constant/common";
-import { APP_NAME, DAPP_URL } from "constant/env";
 import { useParams } from "react-router-dom";
 import { useProfileQuery } from "services/aws/aws";
 import QueryLoader from "components/QueryLoader";
 import Seo from "components/Seo";
 import { idParamToNum } from "helpers";
+import { PAYMENT_WORDS, titleCase } from "constant/common";
+import { APP_NAME, DAPP_URL } from "constant/env";
 import Content from "./Content";
 
 export default function Donate() {

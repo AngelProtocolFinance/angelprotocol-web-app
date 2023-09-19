@@ -1,4 +1,3 @@
-import { IS_TEST } from "constant/env";
 import {
   DonationRecord,
   DonationsQueryParams,
@@ -7,6 +6,7 @@ import {
   Token,
 } from "types/aws";
 import { createAuthToken } from "helpers";
+import { IS_TEST } from "constant/env";
 import { version as v } from "../../helpers";
 import { apes } from "../apes";
 
