@@ -1,5 +1,5 @@
 import { useEndowmentApplicationsQuery } from "services/aws/registration";
-import { Info, LoadingStatus } from "components/Status";
+import { ErrorStatus, Info, LoadingStatus } from "components/Status";
 import TableSection, { Cells } from "components/TableSection";
 import { useGetter } from "store/accessors";
 import AppRow from "./AppRow";
@@ -13,6 +13,7 @@ export default function Table() {
     data = [],
     isLoading,
     isFetching,
+    isError,
   } = useEndowmentApplicationsQuery(activeStatus);
 
   const { sortedApplications, handleHeaderClick, sortDirection, sortKey } =
@@ -53,13 +54,17 @@ export default function Table() {
       {isLoading || isFetching ? (
         <TableSection type="tbody" rowClass="border-b border-prim">
           <td colSpan={5} className="h-24">
-            <LoadingStatus>Loading...</LoadingStatus>
+            <LoadingStatus>Loading applications...</LoadingStatus>
           </td>
         </TableSection>
       ) : sortedApplications.length < 1 ? (
         <TableSection type="tbody" rowClass="border-b border-prim">
           <td colSpan={5} className="h-24">
-            <Info>No applications found</Info>
+            {isError ? (
+              <ErrorStatus>Failed to get applications</ErrorStatus>
+            ) : (
+              <Info>No applications found</Info>
+            )}
           </td>
         </TableSection>
       ) : (
