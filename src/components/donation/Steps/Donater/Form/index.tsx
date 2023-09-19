@@ -5,7 +5,6 @@ import { DonateValues } from "../types";
 import { TokenWithAmount } from "types/slices";
 import { DonaterConfigFromWidget } from "types/widget";
 import CountrySelector from "components/CountrySelector";
-import { Info } from "components/Status";
 import TokenField from "components/TokenField";
 import { CheckField, Label } from "components/form";
 import { useGetter } from "store/accessors";
@@ -50,21 +49,15 @@ export default function Form({ configFromWidget, tokens }: Props) {
       className="grid rounded-md w-full"
       autoComplete="off"
     >
-      {tokens.length > 0 ? (
-        <TokenField<DonateValues, "token">
-          name="token"
-          tokens={tokens}
-          withGiftcard
-          withBalance
-          label={`Enter the ${PAYMENT_WORDS.noun.singular} amount:`}
-          classes={{ label: "text-lg", inputContainer: "dark:bg-blue-d6" }}
-          withMininum
-        />
-      ) : (
-        <Info classes="mb-6">
-          Endowment doesn't accept donations on this network
-        </Info>
-      )}
+      <TokenField<DonateValues, "token">
+        name="token"
+        tokens={tokens}
+        withGiftcard
+        withBalance
+        label={`Enter the ${PAYMENT_WORDS.noun.singular} amount:`}
+        classes={{ label: "text-lg", inputContainer: "dark:bg-blue-d6" }}
+        withMininum
+      />
 
       {tokenType === "fiat" && (
         <>
