@@ -5,19 +5,10 @@ import Icon from "components/Icon";
 import { useGetter, useSetter } from "store/accessors";
 import { changeSelectedStatus } from "slices/admin/applications";
 
-const options: ApplicationStatusOptions[] = [
-  "active",
-  "approved",
-  "under-review",
-  "pending",
-  "inactive",
-];
+const options: ApplicationStatusOptions[] = ["active", "under-review"];
 const texts: { [key in ApplicationStatusOptions]: string } = {
   active: "active",
-  approved: "approved",
   "under-review": "under review",
-  pending: "pending",
-  inactive: "inactive",
 };
 
 export default function StatusSelector() {
