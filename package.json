@@ -61,7 +61,6 @@
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "7.21.11",
     "@keplr-wallet/types": "0.12.23",
-    "@peculiar/webcrypto": "1.4.0",
     "@rollup/plugin-inject": "5.0.3",
     "@tailwindcss/container-queries": "^0.1.0",
     "@testing-library/dom": "9.3.1",
