@@ -17,7 +17,7 @@ export default function Layout() {
   return (
     <div className="grid grid-rows-[auto_auto_1fr_auto]">
       <Seo /> {/* Load all defaults for SEO meta tags */}
-      <div className="top-0 text-center dark:bg-blue bg-blue-d3">
+      <div className="text-center dark:bg-blue bg-blue-d3">
         <span className="md:text-sm md:uppercase text-white">
           Looking for the old site? It has moved to{" "}
           <ExtLink
@@ -30,7 +30,7 @@ export default function Layout() {
           and will be sunset on Oct 13, 2023. Migrate to Polygon today!
         </span>
       </div>
-      <Header classes="sticky z-20" links={HEADER_LINKS} logo={LOGO_DARK} />
+      <Header classes="top-0 sticky z-20" links={HEADER_LINKS} logo={LOGO_DARK} />
       <Suspense fallback={<LoaderComponent />}>
         <Outlet />
       </Suspense>
