@@ -15,7 +15,7 @@ const PLACEHOLDER_TAGLINE = " ";
 export default function Card({
   active_in_countries = [],
   name,
-  image,
+  logo,
   id,
   endow_designation,
   sdgs,
@@ -38,7 +38,7 @@ export default function Card({
       >
         <Image
           loading="lazy"
-          src={image}
+          src={logo}
           className="h-40 w-full object-cover bg-blue-l4 dark:bg-blue-d2"
           onError={(e) => e.currentTarget.classList.add("bg-blue-l3")}
         />
