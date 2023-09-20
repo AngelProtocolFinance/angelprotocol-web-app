@@ -30,7 +30,11 @@ export default function Layout() {
           and will be sunset on Oct 13, 2023. Migrate to Polygon today!
         </span>
       </div>
-      <Header classes="top-0 sticky z-20" links={HEADER_LINKS} logo={LOGO_DARK} />
+      <Header
+        classes="top-0 sticky z-20"
+        links={HEADER_LINKS}
+        logo={LOGO_DARK}
+      />
       <Suspense fallback={<LoaderComponent />}>
         <Outlet />
       </Suspense>
