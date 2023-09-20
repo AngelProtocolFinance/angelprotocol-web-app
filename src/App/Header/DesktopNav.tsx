@@ -24,6 +24,7 @@ export default function DesktopNav({ classes, links }: Props) {
         ) : (
           <NavLink
             key={`header-link-${link.title}`}
+            end={link.end}
             to={link.href}
             className={createNavLinkStyler(
               styles,
