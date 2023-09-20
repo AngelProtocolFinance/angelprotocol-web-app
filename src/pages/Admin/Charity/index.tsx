@@ -22,7 +22,7 @@ import Programs from "./Programs";
 // import Settings from "./Settings";
 import Templates from "./Templates";
 import Whitelists from "./Whitelists";
-import WidgetConfigurer from "./WidgetConfigurer";
+import Widget from "./Widget";
 import Withdraws from "./Withdraws";
 
 const COMMON: LinkGroup[] = [
@@ -109,10 +109,7 @@ export default function Charity() {
         <Route path={adminRoutes.permissions} element={<Permissions />} />
         <Route path={adminRoutes.other_settings} element={<OtherSettings />} />
         <Route path={adminRoutes.admin_wallet} element={<AdminWallet />} />
-        <Route path={adminRoutes.widget_config}>
-          <Route index element={<WidgetConfigurer />} />
-          <Route path=":endowId" element={<WidgetConfigurer />} />
-        </Route>
+        <Route path={adminRoutes.widget_config} element={<Widget />} />
         <Route index element={<Dashboard />} />
         <Route path="*" element={<Navigate replace to={adminRoutes.index} />} />
       </Route>

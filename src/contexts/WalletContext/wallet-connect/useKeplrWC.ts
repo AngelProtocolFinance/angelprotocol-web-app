@@ -103,6 +103,7 @@ export function useKeplrWC() {
       : undefined;
 
   const connection: Connection = {
+    providerId: "keplr-wc",
     name: "Keplr mobile",
     logo: WALLET_METADATA["keplr-wc"].logo,
     installUrl: WALLET_METADATA["keplr-wc"].logo,

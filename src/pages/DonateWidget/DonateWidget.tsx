@@ -1,28 +1,21 @@
 import { useEffect } from "react";
-import Seo from "components/Seo";
-import { isPrevDark, setToDarkMode, setToLightMode } from "helpers";
-import { PAYMENT_WORDS, titleCase } from "constants/common";
-import { APP_NAME, DAPP_URL } from "constants/env";
-import ApiKeyChecker from "./ApiKeyChecker";
-import EndowmentLoader from "./EndowmentLoader";
-import InnerComponent from "./InnerComponent";
+import { useParams, useSearchParams } from "react-router-dom";
+import { useProfileQuery } from "services/aws/aws";
+import Image from "components/Image";
+import LoaderRing from "components/LoaderRing";
+import QueryLoader from "components/QueryLoader";
+import { idParamToNum, setToLightMode } from "helpers";
+import { LOGO_DARK } from "constants/common";
+import Content from "./Content";
 
-const isPrevThemeDark = isPrevDark();
+//light mode by default
+setToLightMode();
 
 export default function DonateWidget() {
-  /**
-   * Need to set the theme to light, but after widget is closed we need to
-   * reverse the user selected theme on the main webapp to the previous theme
-   */
-  useEffect(() => {
-    if (isPrevThemeDark) {
-      setToLightMode();
-    }
-
-    return () => {
-      isPrevThemeDark && setToDarkMode();
-    };
-  }, []);
+  const routeParams = useParams();
+  const [searchParams] = useSearchParams();
+  const endowId = idParamToNum(routeParams.id);
+  const queryState = useProfileQuery({ endowId }, { skip: endowId === 0 });
 
   /** Hide the Intercom chatbot */
   useEffect(() => {
@@ -34,33 +27,22 @@ export default function DonateWidget() {
   }, []);
 
   return (
-    <ApiKeyChecker>
-      <EndowmentLoader>
-        {(profile) => (
-          <>
-            <Seo
-              title={`${titleCase(PAYMENT_WORDS.verb)} to ${
-                profile.name
-              } - ${APP_NAME}`}
-              description={(profile.overview ?? "").slice(0, 140)}
-              name={profile.name}
-              image={`${profile.logo}`}
-              url={`${DAPP_URL}/donate_widget/${profile.id}`}
-            />
-            <InnerComponent
-              id={profile.id}
-              isKYCRequired={
-                //prettier-ignore
-                (profile.type === "ast" && profile.contributor_verification_required) ||
-                (profile.kyc_donors_only ?? false)
-              }
-              name={profile.name}
-              endowType={profile.type}
-              isFiscalSponsored={profile.fiscal_sponsored ?? false}
-            />
-          </>
-        )}
-      </EndowmentLoader>
-    </ApiKeyChecker>
+    <div className="grid grid-rows-[1fr_auto] justify-items-center gap-10">
+      <QueryLoader
+        queryState={queryState}
+        messages={{
+          loading: (
+            <LoaderRing thickness={12} classes="w-28 place-self-center" />
+          ),
+          error: "Failed to get endowment info",
+        }}
+        classes={{ container: "grid place-items-center h-full w-full" }}
+      >
+        {(profile) => <Content profile={profile} searchParams={searchParams} />}
+      </QueryLoader>{" "}
+      <footer className="grid place-items-center h-20 w-full bg-blue dark:bg-blue-d3">
+        <Image className="w-20" {...LOGO_DARK} />
+      </footer>
+    </div>
   );
 }

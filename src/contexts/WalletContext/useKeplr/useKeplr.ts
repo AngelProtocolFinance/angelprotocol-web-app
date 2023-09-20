@@ -127,7 +127,11 @@ export default function useKeplr() {
       : undefined;
 
   //connection object to render <Connector/>
-  const connection: Connection = { ...WALLET_METADATA.keplr, connect };
+  const connection: Connection = {
+    ...WALLET_METADATA.keplr,
+    connect,
+    providerId: "keplr",
+  };
 
   return {
     connection,

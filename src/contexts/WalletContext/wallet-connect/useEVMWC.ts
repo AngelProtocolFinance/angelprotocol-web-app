@@ -141,6 +141,7 @@ export function useEVMWC() {
       : undefined;
 
   const connection: Connection = {
+    providerId: "evm-wc",
     name: "Metamask mobile",
     logo: WALLET_METADATA["evm-wc"].logo,
     installUrl: WALLET_METADATA["evm-wc"].logo,

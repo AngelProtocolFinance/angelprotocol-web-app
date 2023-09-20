@@ -5,17 +5,17 @@ import Image from "components/Image";
 import Icon, { DrawerIcon } from "../Icon";
 
 export default function TokenSelector({
-  token,
   onChange,
   tokens,
+  token,
 }: SelectorProps) {
-  const [symbol, setSymbol] = useState("");
+  const [searchText, setSearchText] = useState("");
 
   const filtered =
-    symbol === ""
+    searchText === ""
       ? tokens
       : tokens.filter((t) => {
-          return t.symbol.includes(symbol.toLowerCase());
+          return t.symbol.includes(searchText.toLowerCase());
         });
 
   return (
@@ -40,12 +40,12 @@ export default function TokenSelector({
             placeholder="Search..."
             aria-disabled={tokens.length <= 1}
             className="text-left text-sm focus:outline-none bg-transparent w-20"
-            onChange={(event) => setSymbol(event.target.value)}
+            onChange={(event) => setSearchText(event.target.value)}
           />
         </div>
-        {filtered.length === 0 && symbol !== "" ? (
+        {filtered.length === 0 && searchText !== "" ? (
           <div className="relative cursor-default select-none py-2 px-4text-sm">
-            {symbol} not found
+            {searchText} not found
           </div>
         ) : (
           filtered.map((token) => (

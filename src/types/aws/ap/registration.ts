@@ -79,6 +79,8 @@ export type TDocumentation = {
   HqCountry: string;
   EndowDesignation: string;
   ActiveInCountries: string[];
+  LegalEntityType: string;
+  ProjectDescription: string;
 
   //fiscal sponsorship
   AuthorizedToReceiveTaxDeductibleDonations: boolean;

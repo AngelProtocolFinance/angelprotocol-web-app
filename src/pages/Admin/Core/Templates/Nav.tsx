@@ -29,7 +29,7 @@ export default function Nav() {
       </NavLink>
       <Category title="Registrar" classes="mt-4" />
       <NavLink to={routes["registrar.update-config"]} className={styler}>
-        Contracts & WASM codes
+        Update Contract Addresses
       </NavLink>
       <NavLink to={routes["registrar.update-owner"]} className={styler}>
         Update Owner

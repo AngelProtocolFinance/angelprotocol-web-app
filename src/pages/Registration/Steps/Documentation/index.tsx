@@ -31,6 +31,8 @@ function Documentation() {
           isAuthorizedToReceiveTaxDeductibleDonations: "Yes",
           signedFiscalSponsorshipAgreement: "",
           fiscalSponsorshipAgreementSigningURL: "",
+          legalEntityType: "",
+          projectDescription: "",
 
           hasAuthority: false,
           hasAgreedToTerms: false,

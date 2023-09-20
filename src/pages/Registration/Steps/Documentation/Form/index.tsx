@@ -18,7 +18,8 @@ import useSubmit from "./useSubmit";
 
 export default function Form() {
   const { data } = useRegState<2>();
-  const { submit, isSubmitting } = useSubmit();
+  const { submit, isSubmitting, isAuthorizedToReceiveTaxDeductibleDonations } =
+    useSubmit();
 
   return (
     <form className="w-full" onSubmit={submit}>
@@ -80,7 +81,7 @@ export default function Form() {
         }))}
       />
       <Label className="mt-6 mb-2" required>
-        Select the country your organization is headquartered in
+        In what country is your organization registered in?
       </Label>
       <CountrySelector<FV, "hqCountry">
         fieldName="hqCountry"
@@ -90,6 +91,14 @@ export default function Form() {
           input: "text-sm py-3.5",
           error: "field-error",
         }}
+      />
+      <Field<FV>
+        name="legalEntityType"
+        label="What type of legal entity is your organization registered as? This can
+        usually be found in your registration/organizing document"
+        required
+        classes={{ container: "mb-2 mt-6" }}
+        placeholder="e.g. Nonprofit Organization"
       />
       <Label className="mt-6 mb-2">
         Select the countries your organization is active in
@@ -111,6 +120,17 @@ export default function Form() {
           value="No"
         />
       </div>
+
+      {isAuthorizedToReceiveTaxDeductibleDonations === "No" && (
+        <Field<FV, "textarea">
+          type="textarea"
+          name="projectDescription"
+          label="Please provide a description of your organization's charitable activities as well as your charitable mission."
+          required
+          classes={{ container: "mb-6 mt-4" }}
+          placeholder=""
+        />
+      )}
 
       <Label className="mt-6">
         Are you happy to accept anonymous donations? If not, ALL donors will be
