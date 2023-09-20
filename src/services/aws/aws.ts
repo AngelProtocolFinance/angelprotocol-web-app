@@ -200,7 +200,7 @@ const endowCardObj: {
   active_in_countries: "",
   sdgs: "",
   id: "",
-  image: "",
+  logo: "",
   kyc_donors_only: "",
   contributor_verification_required: "",
   name: "",
