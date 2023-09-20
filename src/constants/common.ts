@@ -46,7 +46,7 @@ export const ENDOW_DESIGNATIONS: {
   value: EndowDesignation;
   icon: IconType;
 }[] = [
-  { label: "Charity", value: "Charity", icon: "Charity" },
+  { label: "Charity", value: "Charity", icon: "HeartFill" },
   {
     label: "Religious Organization",
     value: "Religious Organization",
