@@ -29,6 +29,16 @@ export const axelar = createApi({
   baseQuery: customBaseQuery,
   endpoints: (builder) => ({
     //implementation endpoint of useQueryHook
+    gasFeeEstimate: builder.query<any, any>({
+      query: () => ({
+        method: "POST",
+        body: JSON.stringify({
+          method: "estimateGasFee",
+          sourceChain: "polygon",
+          destinationChain: "ethereum-2",
+        }),
+      }),
+    }),
     transactions: builder.query<Transactions, { page: number }>({
       query: ({ page }) => ({
         method: "POST",

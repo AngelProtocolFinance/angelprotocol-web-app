@@ -74,7 +74,7 @@ interface DestinationExpressFee {
   total_usd: number;
 }
 
-interface ApiResponse {
+export interface ApiResponse {
   method: string;
   params: {
     method: string;
@@ -128,7 +128,7 @@ export interface GasEstimateResponse {
 }
 
 export type GasFeeEstimationParams = {
-  method: string;
+  method: "estimateGasFee";
   sourceChain: string;
   destinationChain: string;
   gasLimit?: number;
