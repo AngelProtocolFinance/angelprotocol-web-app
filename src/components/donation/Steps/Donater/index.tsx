@@ -34,12 +34,10 @@ export default function Donater({
 
   const _tokens: TWA[] = isFiat(wallet)
     ? fiats
-    : wallet.coins
-        .map<TWA>((t) => ({
-          ...t,
-          amount: "0",
-        }))
-        .concat(fiats);
+    : wallet.coins.map<TWA>((t) => ({
+        ...t,
+        amount: "0",
+      }));
 
   const initCoin = _tokens[0];
 
