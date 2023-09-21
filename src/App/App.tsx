@@ -39,10 +39,6 @@ export default function App() {
             />
             <Route element={<Layout />}>
               <Route
-                path={`${appRoutes.marketplace}/:id/*`}
-                element={<Profile />}
-              />
-              <Route
                 path={`${appRoutes.profile}/:id/*`}
                 element={<Profile legacy />}
               />
@@ -64,6 +60,11 @@ export default function App() {
               />
               <Route path={`${appRoutes.gift}/*`} element={<Gift />} />
               <Route path={appRoutes.marketplace} element={<Marketplace />} />
+
+              <Route path={appRoutes.marketplace}>
+                <Route path=":id" element={<Profile />} />
+                <Route index element={<Marketplace />} />
+              </Route>
             </Route>
             <Route
               path="*"
