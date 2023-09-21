@@ -17,7 +17,7 @@ export default function useSubmit() {
       token: "aUSDC",
       lockAmt: "100",
       liquidAmt: "100",
-      gasFee: "1000000",
+      gasFee: "1",
     };
 
     const [data, dest, meta] = encodeTx(
