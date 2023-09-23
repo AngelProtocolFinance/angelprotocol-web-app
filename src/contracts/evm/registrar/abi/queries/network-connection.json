@@ -1,0 +1,48 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "networkName",
+        "type": "string"
+      }
+    ],
+    "name": "queryNetworkConnection",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "chainId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "router",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "axelarGateway",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "gasReceiver",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "refundAddr",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct LocalRegistrarLib.NetworkInfo",
+        "name": "response",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]
