@@ -5,7 +5,12 @@ import {
   retry,
 } from "@reduxjs/toolkit/query/react";
 import { InvestGasEstimateParams } from "../types";
-import { GasFeeEstimationParams, QueryRes, Transaction } from "types/axelar";
+import {
+  GasEstimateResponse,
+  GasFeeEstimationParams,
+  QueryRes,
+  Transaction,
+} from "types/axelar";
 import { contracts } from "constants/contracts";
 import { IS_TEST } from "constants/env";
 
@@ -53,12 +58,59 @@ export const axelar = createApi({
 
         return {
           method: "POST",
-          body: JSON.stringify({
-            method: "estimateGasFee",
-            sourceChain: "polygon",
-            destinationChain: "ethereum-2",
-          }),
+          body: JSON.stringify(payload),
         };
+      },
+      transformResponse(res: GasEstimateResponse) {
+        const {
+          base_fee,
+          express_fee,
+
+          //source
+          source_base_fee,
+          source_confirm_fee,
+          source_express_fee,
+
+          //destination
+          destination_base_fee,
+          destination_confirm_fee,
+          destination_express_fee,
+
+          /** tokens involved  */
+          destination_native_token,
+          axelar_token,
+          source_token,
+
+          //settings
+          express_supported,
+        } = res.apiResponse.result;
+
+        const totalAxelarFee = base_fee + (express_supported ? 0 : express_fee);
+        const totalDestinationFee =
+          destination_base_fee +
+          destination_confirm_fee +
+          (express_supported ? 0 : destination_express_fee.total);
+
+        const totalSourceFee =
+          source_base_fee +
+          source_confirm_fee +
+          (express_supported ? 0 : source_express_fee.total);
+
+        const totalDestinationFee_sourceDenom =
+          totalDestinationFee * //to source token denom
+          (destination_native_token.token_price.usd /
+            source_token.token_price.usd);
+
+        const totalAxelarFees_sourceDenom =
+          totalAxelarFee * //to source token denom
+          (axelar_token.token_price.usd / source_token.token_price.usd);
+
+        const totalFee =
+          totalSourceFee +
+          totalDestinationFee_sourceDenom +
+          totalAxelarFees_sourceDenom;
+
+        console.log({ totalFee, res });
       },
     }),
     transactions: builder.query<Transactions, { page: number }>({

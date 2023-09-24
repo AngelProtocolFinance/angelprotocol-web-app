@@ -5,6 +5,7 @@ export { axelar };
 export const {
   useTransactionsQuery,
   useLazyTransactionsQuery,
+  useLazyGasFeeEstimateQuery,
   util: { updateQueryData },
 } = axelar;
 
