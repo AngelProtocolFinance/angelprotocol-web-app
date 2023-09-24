@@ -12,4 +12,4 @@ export type ProposalGroup = "if" | "cw3" | "cw4" | "reg" | "acc";
 
 export type ProposalGroupOptions = ProposalGroup | "all";
 export type ProposalStatusOptions = TransactionStatus | "all";
-export type ApplicationStatusOptions = ApplicationStatus | "all";
+export type ApplicationStatusOptions = Exclude<ApplicationStatus, "inactive">;

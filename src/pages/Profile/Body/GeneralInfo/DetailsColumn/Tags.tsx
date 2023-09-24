@@ -10,7 +10,7 @@ export default function Tags(props: EndowmentProfile) {
       {<EndowDesignationTag {...props} />}
       {props.kyc_donors_only && (
         <Tag>
-          Verification required <Icon type="Info" size={24} />
+          <Icon type="SecurityScan" size={24} /> Donor Verification required
         </Tag>
       )}
       {props.sdgs.map((unsdg_num) => (

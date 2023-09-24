@@ -11,7 +11,7 @@ export default function PageError() {
         to={`${appRoutes.marketplace}`}
         className="text-blue-l5 hover:text-blue text-sm"
       >
-        back to Marketplace
+        Back to Marketplace
       </Link>
     </section>
   );

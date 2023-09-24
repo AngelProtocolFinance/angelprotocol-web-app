@@ -143,7 +143,7 @@ export const aws = createApi({
         error ? [] : ["endowments", "profile", "walletProfile"],
       query: (payload) => {
         return {
-          url: `/${v(2)}/profile/${network}/endowment`,
+          url: `/${v(3)}/profile/${network}/endowment`,
           method: isDeleteMsg(payload.unsignedMsg) ? "DELETE" : "PUT",
           body: payload,
         };
@@ -200,7 +200,7 @@ const endowCardObj: {
   active_in_countries: "",
   sdgs: "",
   id: "",
-  image: "",
+  logo: "",
   kyc_donors_only: "",
   contributor_verification_required: "",
   name: "",

@@ -1,13 +1,23 @@
-import { EndowmentProposal } from "types/aws";
+import { useEndowmentApplicationsQuery } from "services/aws/registration";
+import { ErrorStatus, Info, LoadingStatus } from "components/Status";
 import TableSection, { Cells } from "components/TableSection";
+import { useGetter } from "store/accessors";
 import AppRow from "./AppRow";
 import Header from "./Header";
 import StatusSelector from "./StatusSelector";
 import useSortedApplications from "./useSortApplications";
 
-export default function Table(props: { applications: EndowmentProposal[] }) {
+export default function Table() {
+  const { activeStatus } = useGetter((state) => state.admin.applications);
+  const {
+    data = [],
+    isLoading,
+    isFetching,
+    isError,
+  } = useEndowmentApplicationsQuery(activeStatus);
+
   const { sortedApplications, handleHeaderClick, sortDirection, sortKey } =
-    useSortedApplications(props.applications);
+    useSortedApplications(data);
 
   return (
     <table className="w-full self-start font-work">
@@ -41,17 +51,41 @@ export default function Table(props: { applications: EndowmentProposal[] }) {
             date
           </Header>
           <StatusSelector />
-          <></>
         </Cells>
       </TableSection>
-      <TableSection
-        type="tbody"
-        rowClass="border-b border-gray-l3 dark:border-bluegray"
-      >
-        {sortedApplications.map((app) => (
-          <AppRow key={app.PK} {...app} />
-        ))}
-      </TableSection>
+
+      {isLoading || isFetching ? (
+        <TableSection
+          type="tbody"
+          rowClass="border-b border-gray-l3 dark:border-bluegray"
+        >
+          <td colSpan={5} className="h-24">
+            <LoadingStatus>Loading applications...</LoadingStatus>
+          </td>
+        </TableSection>
+      ) : sortedApplications.length < 1 ? (
+        <TableSection
+          type="tbody"
+          rowClass="border-b border-gray-l3 dark:border-bluegray"
+        >
+          <td colSpan={5} className="h-24">
+            {isError ? (
+              <ErrorStatus>Failed to get applications</ErrorStatus>
+            ) : (
+              <Info>No applications found</Info>
+            )}
+          </td>
+        </TableSection>
+      ) : (
+        <TableSection
+          type="tbody"
+          rowClass="border-b border-gray-l3 dark:border-bluegray"
+        >
+          {sortedApplications.map((app) => (
+            <AppRow key={app.PK} {...app} />
+          ))}
+        </TableSection>
+      )}
     </table>
   );
 }

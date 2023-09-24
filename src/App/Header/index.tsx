@@ -37,7 +37,7 @@ export default function Header({ classes, links, logo }: Props) {
   return (
     <header
       className={`${classes} ${isScrolled ? "shadow-lg" : ""} ${bg} ${mb}
-      transition-shadow ease-in-out duration-300 w-full h-[90px]`}
+    transition-shadow ease-in-out duration-300 w-full h-[90px]`}
     >
       <div className="grid items-center gap-4 px-5 grid-cols-[auto_1fr_auto] h-full">
         <Image className="w-32" {...logo} />

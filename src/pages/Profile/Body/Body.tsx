@@ -22,7 +22,7 @@ export default function Body() {
             IS_AST
               ? []
               : [
-                  { title: "Marketplace", to: appRoutes.marketplace },
+                  { title: "Marketplace", to: `${appRoutes.marketplace}/` },
                   { title: p.name, to: `${appRoutes.marketplace}/${p.id}` },
                 ]
           }
