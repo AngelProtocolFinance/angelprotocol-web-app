@@ -7,6 +7,7 @@ import {
   FundDetails,
   GenericBalMap,
   IndexFundConfig,
+  NetworkInfo,
   RegistrarConfig,
   StrategyParams,
 } from "types/contracts";
@@ -26,6 +27,7 @@ export interface ContractQueries {
   "registrar.fee-setting": Query<{ type: FeeType }, FeeSetting>;
   "registrar.strategy-ids": Query<null, string[]>;
   "registrar.strategy-params": Query<{ id: string }, StrategyParams>;
+  "registrar.network-connection": Query<{ networkId: string }, NetworkInfo>;
 
   "index-fund.config": Query<null, IndexFundConfig>;
   "index-fund.fund": Query<ID, FundDetails>;

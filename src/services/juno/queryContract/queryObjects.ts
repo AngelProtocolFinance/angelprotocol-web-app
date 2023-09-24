@@ -39,6 +39,22 @@ export const queryObjects: {
     registrar.encodeFunctionData("queryAllStrategies", []),
     (result) => registrar.decodeFunctionResult("queryAllStrategies", result)[0],
   ],
+  "registrar.network-connection": [
+    ({ networkId }) =>
+      registrar.encodeFunctionData("queryNetworkConnection", [networkId]),
+    (result) => {
+      const d: LocalRegistrarLib.NetworkInfoStructOutput =
+        registrar.decodeFunctionResult("queryNetworkConnection", result)[0];
+
+      return {
+        chainId: d.chainId.toNumber(),
+        router: d.router.toLowerCase(),
+        axelarGateway: d.axelarGateway.toLowerCase(),
+        gasReceiver: d.gasReceiver.toLowerCase(),
+        refundAddr: d.refundAddr.toLowerCase(),
+      };
+    },
+  ],
   "registrar.strategy-params": [
     ({ id }) => registrar.encodeFunctionData("getStrategyParamsById", [id]),
     (result) => {

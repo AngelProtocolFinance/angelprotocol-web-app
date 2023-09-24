@@ -44,3 +44,8 @@ export type StrategyParams = OverrideProperties<
     approvalState: number;
   }
 >;
+
+export type NetworkInfo = OverrideProperties<
+  LocalRegistrarLib.NetworkInfoStruct,
+  { chainId: number }
+>;
