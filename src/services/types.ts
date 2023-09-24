@@ -5,6 +5,7 @@ import {
   EndowmentProfileUpdate,
   WalletProfile,
 } from "types/aws";
+import { GasFeeEstimationParams } from "types/axelar";
 import { EndowmentDetails } from "types/contracts";
 import { AccountType, EndowmentType } from "types/lists";
 import { SemiPartial } from "types/utils";
@@ -135,4 +136,17 @@ export type FiscalSponsorhipAgreementSigner =
 export type WalletProfileVersion = "legacy" | "latest";
 export type VersionSpecificWalletProfile = WalletProfile & {
   version: "legacy" | "latest";
+};
+
+export type InvestGasEstimateParams = {
+  //also used as gas tokens
+  tokenToInvest: {
+    /** condensed */
+    amount: number;
+    symbol: string;
+  };
+  strategy: {
+    networkId: string;
+    router: string;
+  };
 };

@@ -27,7 +27,10 @@ export interface ContractQueries {
   "registrar.fee-setting": Query<{ type: FeeType }, FeeSetting>;
   "registrar.strategy-ids": Query<null, string[]>;
   "registrar.strategy-params": Query<{ id: string }, StrategyParams>;
-  "registrar.network-connection": Query<{ networkId: string }, NetworkInfo>;
+  "registrar.network-connection": Query<
+    { networkId: string /** axelar chainName e.g. ethereum-2 */ },
+    NetworkInfo
+  >;
 
   "index-fund.config": Query<null, IndexFundConfig>;
   "index-fund.fund": Query<ID, FundDetails>;

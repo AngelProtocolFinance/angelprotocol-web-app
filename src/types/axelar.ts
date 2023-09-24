@@ -1,5 +1,4 @@
 //https://docs.axelarscan.io/
-
 export type QueryRes<T> = {
   data: T[];
   total: number;
@@ -14,6 +13,7 @@ export type Transaction = {
   };
 };
 
+////https://docs.axelarscan.io/interchain/estimateGasFee
 interface SourceToken {
   contract_address: string;
   symbol: string;
@@ -74,44 +74,60 @@ interface DestinationExpressFee {
   total_usd: number;
 }
 
+type DetailedFeeEstimate = {
+  base_fee: number;
+  base_fee_usd: number;
+  execute_gas_multiplier: number;
+  source_base_fee: number;
+  source_base_fee_string: string;
+  source_base_fee_usd: number;
+  destination_base_fee: number;
+  destination_base_fee_string: string;
+  destination_base_fee_usd: number;
+  source_confirm_fee: number;
+  destination_confirm_fee: number;
+  express_supported: boolean;
+  express_fee: number;
+  express_fee_string: string;
+  express_fee_usd: number;
+  express_execute_gas_adjustment: number;
+  express_execute_gas_adjustment_with_multiplier: number;
+  express_execute_gas_multiplier: number;
+  source_express_fee: SourceExpressFee;
+  destination_express_fee: DestinationExpressFee;
+  source_token: SourceToken;
+  destination_native_token: DestinationNativeToken;
+  axelar_token: AxelarToken;
+};
+
 export interface ApiResponse {
-  method: string;
-  params: {
-    method: string;
-    sourceChain: string;
-    destinationChain: string;
-    gasLimit: string;
-    gasMultiplier: string;
-    minGasPrice: string;
-    sourceTokenSymbol: string;
-    showDetailedFees: boolean;
-  };
-  result: {
-    base_fee: number;
-    base_fee_usd: number;
-    execute_gas_multiplier: number;
-    source_base_fee: number;
-    source_base_fee_string: string;
-    source_base_fee_usd: number;
-    destination_base_fee: number;
-    destination_base_fee_string: string;
-    destination_base_fee_usd: number;
-    source_confirm_fee: number;
-    destination_confirm_fee: number;
-    express_supported: boolean;
-    express_fee: number;
-    express_fee_string: string;
-    express_fee_usd: number;
-    express_execute_gas_adjustment: number;
-    express_execute_gas_adjustment_with_multiplier: number;
-    express_execute_gas_multiplier: number;
-    source_express_fee: SourceExpressFee;
-    destination_express_fee: DestinationExpressFee;
-    source_token: SourceToken;
-    destination_native_token: DestinationNativeToken;
-    axelar_token: AxelarToken;
-  };
+  method: any;
+  params: any;
+  result: DetailedFeeEstimate;
 }
+
+export type GasFeeEstimationParams = {
+  method: "estimateGasFee";
+  sourceChain: string;
+  destinationChain: string;
+  gasLimit?: number;
+  gasMultiplier: 1.5;
+  minGasPrice?: number;
+  showDetailedFees: true; //always set this to true
+
+  //gas token
+  sourceTokenSymbol?: string;
+  sourceTokenAddress?: string;
+  sourceContractAddress?: string;
+
+  destinationContractAddress?: string;
+
+  //token being sent with the call, based on source chain
+  symbol: string;
+  amount: number;
+  //scaled amount
+  amountInUnits?: number; //either scaled or condensed
+};
 
 export interface GasEstimateResponse {
   isExpressSupported: boolean;
@@ -126,20 +142,3 @@ export interface GasEstimateResponse {
   apiResponse: ApiResponse;
   time_spent: number;
 }
-
-export type GasFeeEstimationParams = {
-  method: "estimateGasFee";
-  sourceChain: string;
-  destinationChain: string;
-  gasLimit?: number;
-  gasMultiplier?: number;
-  minGasPrice?: number;
-  showDetailedFees?: boolean;
-  sourceTokenSymbol?: string;
-  sourceTokenAddress?: string;
-  sourceContractAddress?: string;
-  destinationContractAddress?: string;
-  symbol?: string;
-  amount?: number;
-  amountInUnits?: number;
-};
