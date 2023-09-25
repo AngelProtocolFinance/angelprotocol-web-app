@@ -106,7 +106,7 @@ export interface ApiResponse {
   result: DetailedFeeEstimate;
 }
 
-export type GasFeeEstimationParams = {
+export type AxelarGasFeeEstimationParams = {
   method: "estimateGasFee";
   sourceChain: string;
   destinationChain: string;
@@ -129,7 +129,7 @@ export type GasFeeEstimationParams = {
   amountInUnits?: number; //either scaled or condensed
 };
 
-export interface GasEstimateResponse {
+export interface AxelarGasEstimateResponse {
   isExpressSupported: boolean;
   baseFee: string;
   expressFee: string;

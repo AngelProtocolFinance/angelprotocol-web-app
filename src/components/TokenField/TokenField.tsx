@@ -8,7 +8,7 @@ import {
   useFormContext,
 } from "react-hook-form";
 import { OnSetAmount, Props } from "./types";
-import { TokenWithAmount } from "types/slices";
+import { TokenWithAmount } from "types/tx";
 import { humanize } from "helpers";
 import Steps from "./Steps";
 import TokenSelector from "./TokenSelector";

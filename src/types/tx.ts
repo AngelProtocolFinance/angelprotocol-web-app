@@ -1,6 +1,6 @@
 import { CreateTxOptions, Msg } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
-import { OverrideProperties } from "type-fest";
+import { Except, OverrideProperties } from "type-fest";
 import { ValueOf } from "type-fest";
 import type { Any } from "@keplr-wallet/proto-types/google/protobuf/any";
 import { FetchedChain, Token, TokenType } from "./aws";
@@ -34,6 +34,11 @@ export type TokenWithBalance = OverrideProperties<
   Token,
   { type: TokenType | "erc20-gift" | "evm-native-gift" }
 > & { balance: number };
+
+export type TokenWithAmount = Except<TokenWithBalance, "type"> & {
+  amount: string;
+  type: TokenWithBalance["type"] | "fiat"; // "fiat" type not present in AWS (added here)
+};
 
 export type Chain = Omit<FetchedChain, "native_currency" | "tokens"> & {
   tokens: TokenWithBalance[];

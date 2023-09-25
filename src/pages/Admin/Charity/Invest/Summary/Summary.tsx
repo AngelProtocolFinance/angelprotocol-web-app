@@ -9,11 +9,11 @@ import { SubmitStep, WithWallet, isFiat, setStep } from "slices/donation";
 import { sendDonation } from "slices/donation/sendDonation";
 import { humanize } from "helpers";
 import { appRoutes } from "constants/routes";
-import { DonationEstimate, estimateDonation } from "./estimateDonation";
+import { DonationEstimate, estimateDonation } from "./estimateInvest";
 
 type EstimateStatus = DonationEstimate | "loading" | "error";
 
-export default function Submit(props: WithWallet<SubmitStep>) {
+export default function Summary(props: any) {
   const dispatch = useSetter();
   const terraWallet = useConnectedWallet();
   const [estimate, setEstimate] = useState<EstimateStatus>("loading");

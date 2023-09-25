@@ -1,5 +1,5 @@
 import { AccountType } from "types/lists";
-import { TokenWithAmount } from "types/slices";
+import { TokenWithAmount } from "types/tx";
 
 export type FormValues = {
   token: TokenWithAmount;

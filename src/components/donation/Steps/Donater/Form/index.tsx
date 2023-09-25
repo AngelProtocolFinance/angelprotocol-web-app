@@ -2,7 +2,7 @@ import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { DonateValues } from "../types";
-import { TokenWithAmount } from "types/slices";
+import { TokenWithAmount } from "types/tx";
 import { DonaterConfigFromWidget } from "types/widget";
 import CountrySelector from "components/CountrySelector";
 import TokenField from "components/TokenField";

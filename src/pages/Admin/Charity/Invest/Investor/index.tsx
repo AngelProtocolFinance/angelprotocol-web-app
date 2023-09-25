@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { AccountBalances, FormValues } from "./types";
 import { TStrategy } from "types/aws";
-import { TokenWithAmount } from "types/slices";
+import { TokenWithAmount } from "types/tx";
 import { useEndowBalanceQuery } from "services/juno/custom";
 import { condenseToNum } from "helpers";
 import Form from "./Form";
