@@ -1,7 +1,4 @@
-// Import the cleanObject function from your TypeScript file.
 import { cleanObject } from "../cleanObject";
-
-// Replace 'your-file' with the actual path to your TypeScript file.
 
 describe("cleanObject", () => {
   test("remove blacklisted values", () => {
