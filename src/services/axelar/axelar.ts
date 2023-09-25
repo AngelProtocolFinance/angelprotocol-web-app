@@ -37,7 +37,7 @@ export const axelar = createApi({
   baseQuery: customBaseQuery,
   endpoints: (builder) => ({
     //implementation endpoint of useQueryHook
-    gasFeeEstimate: builder.query<any, InvestGasEstimateParams>({
+    gasFeeEstimate: builder.query<number, InvestGasEstimateParams>({
       query: ({ tokenToInvest, strategy }) => {
         const payload: GasFeeEstimationParams = {
           method: "estimateGasFee",
@@ -110,7 +110,7 @@ export const axelar = createApi({
           totalDestinationFee_sourceDenom +
           totalAxelarFees_sourceDenom;
 
-        console.log({ totalFee, res });
+        return totalFee;
       },
     }),
     transactions: builder.query<Transactions, { page: number }>({
