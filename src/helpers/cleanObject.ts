@@ -1,14 +1,18 @@
-export function cleanObject<T extends object>(obj: T) {
-  const cleanedObj: Partial<T> = {};
+export function cleanObject<T extends Record<string, any>>(obj: T): T {
+  const cleanedObject: any = {};
+
   for (const key in obj) {
     const val = obj[key];
-    //include all truthy values and 0
-    if (val || isZero(val)) {
-      cleanedObj[key] = val;
+    if (
+      obj.hasOwnProperty(key) && //must be first layer prop
+      val != null && // must not be null or undefined
+      val !== "" && // must not be empty string
+      (Array.isArray(val) ? val.length > 0 : true) && // if array, must not be empty
+      (typeof val === "object" ? Object.keys(val).length > 0 : true) //if object, must not be empty
+    ) {
+      cleanedObject[key] = val;
     }
   }
 
-  return cleanedObj as T;
+  return cleanedObject as T;
 }
-
-const isZero = (val: any) => val === 0;
