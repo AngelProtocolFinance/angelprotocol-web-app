@@ -3,6 +3,7 @@ import { SummaryProps } from "../types";
 import { TokenWithAmount, isTxResultError } from "types/tx";
 import { isTooltip, useAdminContext } from "pages/Admin/Context";
 import { useModalContext } from "contexts/ModalContext";
+import Icon from "components/Icon";
 import Modal from "components/Modal";
 import { TxPrompt } from "components/Prompt";
 import { ErrorStatus, LoadingStatus } from "components/Status";
@@ -22,7 +23,7 @@ const estimateIsError = (
   typeof estimate === "object" && "error" in estimate;
 
 export default function Summary(props: SummaryProps) {
-  const { showModal, setModalOption } = useModalContext();
+  const { showModal, closeModal, setModalOption } = useModalContext();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [estimate, setEstimate] = useState<EstimateStatus>("loading");
   const { txResource, multisig, id } = useAdminContext([
@@ -73,19 +74,32 @@ export default function Summary(props: SummaryProps) {
       as="div"
       className="grid content-start max-h-[95vh] overflow-y-auto max-w-[37.5rem] w-[95vw] sm:w-full fixed-center z-20 bg-gray-l6 dark:bg-blue-d6 border border-prim rounded"
     >
-      <Row title="Name">
-        <span>{props.name}</span>
-      </Row>
-      <Row title="Account">
-        <span className="capitalize">{props.type}</span>
-      </Row>
-      <Row title="Risk Rating">
-        <span>{props.rating}</span>
-      </Row>
-      <Row title="APR">
-        <span>{props.apy}</span>
-      </Row>
-      <Breakdown estimate={estimate} token={token} />
+      <div className="relative border-b border-prim py-5 text-center bg-orange-l6 dark:bg-blue-d7">
+        <span className="font-bold font-heading text-lg">Invest Summary</span>
+        <button
+          onClick={closeModal}
+          type="button"
+          className="absolute right-4 top-1/2 -translate-y-1/2 border border-prim rounded p-2"
+        >
+          <Icon type="Close" size={26.5} />
+        </button>
+      </div>
+      <div className="grid content-start m-8 px-6 py-2 border border-prim rounded">
+        <Row title="Name">
+          <span>{props.name}</span>
+        </Row>
+        <Row title="Account">
+          <span className="capitalize">{props.type}</span>
+        </Row>
+        <Row title="Risk Rating">
+          <span>{props.rating}</span>
+        </Row>
+        <Row title="APR">
+          <span>{props.apy}</span>
+        </Row>
+        <Breakdown estimate={estimate} token={token} />
+      </div>
+
       <div className="mt-14 grid grid-cols-2 gap-5">
         <button
           className="btn-outline-filled btn-donate"
@@ -132,7 +146,7 @@ function Breakdown({
             {token.symbol} {humanize(token.amount, 4)}
           </span>
         </Row>
-        <ErrorStatus classes="my-3 justify-self-center">
+        <ErrorStatus classes="my-4 justify-self-center">
           {estimate.error}
         </ErrorStatus>
       </>
