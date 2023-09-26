@@ -22,6 +22,7 @@ export type Props<T extends FieldValues, K extends Path<T>> = {
   tokens: TokenWithAmount[];
   scale?: Scale;
   classes?: Classes;
+  disabled?: boolean;
 
   //flags
   withGiftcard?: true;

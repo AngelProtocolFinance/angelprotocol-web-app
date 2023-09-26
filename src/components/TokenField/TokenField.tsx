@@ -22,6 +22,7 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
   name,
   classes,
   scale,
+  disabled,
 
   //flags
   withGiftcard,
@@ -74,7 +75,7 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
 
       <div
         aria-invalid={!!get(errors[name], "amount")?.message}
-        aria-disabled={isSubmitting}
+        aria-disabled={isSubmitting || disabled}
         className={`${
           classes?.inputContainer ?? ""
         } relative grid grid-cols-[1fr_auto] items-center gap-2 px-4 field-container`}

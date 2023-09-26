@@ -4,25 +4,29 @@ import { AWSstrategy } from "types/aws";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import Modal from "components/Modal";
-import { LoadingStatus } from "components/Status";
 import TokenField from "components/TokenField";
+import { Tooltip } from "components/admin";
+import Summary from "../Summary";
 import AccountOptions from "./AccountOptions";
-import useSubmit from "./useSubmit";
 
-type FormProps = AWSstrategy & { accountBalances: AccountBalances };
-export default function Form({
-  name,
-  description,
-  rating,
-  accountBalances,
-}: FormProps) {
+type FormProps = AWSstrategy & {
+  accountBalances: AccountBalances;
+  error?: string;
+};
+export default function Form(props: FormProps) {
   const { getValues, handleSubmit } = useFormContext<FV>();
-  const { isSending, submit } = useSubmit();
-  const { closeModal } = useModalContext();
+  const { closeModal, showModal } = useModalContext();
+  const { error, name, description, rating, accountBalances } = props;
   return (
     <Modal
       as="form"
-      onSubmit={handleSubmit(submit)}
+      onSubmit={handleSubmit((fv) => {
+        showModal(Summary, {
+          ...props,
+          token: fv.token,
+          type: fv.type,
+        });
+      })}
       className="max-h-[95vh] overflow-y-auto max-w-[37.5rem] w-[95vw] sm:w-full fixed-center z-20 bg-gray-l6 dark:bg-blue-d6 border border-prim rounded"
     >
       <div className="relative border-b border-prim py-5 text-center bg-orange-l6 dark:bg-blue-d7">
@@ -59,11 +63,13 @@ export default function Form({
           label: "font-heading text-base mb-2",
           inputContainer: "bg-white dark:bg-blue-d7",
         }}
+        disabled={!!error}
         withMininum
       />
+
+      {error && <Tooltip tooltip={error} classes="mx-8" />}
       <div className="mt-8 px-8 py-4 gap-x-3 border-t border-prim flex justify-end">
         <button
-          disabled={isSending}
           onClick={closeModal}
           type="button"
           className="text-sm min-w-[8rem] py-2 btn-outline-filled"
@@ -71,11 +77,11 @@ export default function Form({
           Cancel
         </button>
         <button
-          disabled={isSending}
+          disabled={!!error}
           type="submit"
           className="text-sm min-w-[8rem] py-2 btn-orange disabled:bg-gray-l1"
         >
-          {isSending ? <LoadingStatus>Processing...</LoadingStatus> : "Invest"}
+          Continue
         </button>
       </div>
     </Modal>

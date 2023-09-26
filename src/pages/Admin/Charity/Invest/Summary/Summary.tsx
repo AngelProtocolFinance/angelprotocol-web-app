@@ -35,6 +35,7 @@ export default function Summary(props: SummaryProps) {
   useEffect(() => {
     (async () => {
       setEstimate("loading");
+
       if (isTooltip(txResource)) {
         return setEstimate({ error: txResource });
       }
@@ -43,7 +44,7 @@ export default function Summary(props: SummaryProps) {
       const _estimate = await estimateInvest(id, multisig, wallet, props);
       setEstimate(_estimate);
     })();
-  }, [props, txResource, id, multisig]);
+  }, [props, txResource, multisig, id]);
 
   function goBack() {}
 

@@ -2,12 +2,17 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { AccountBalances, FormValues, InvestorProps } from "./types";
 import { TokenWithAmount } from "types/tx";
+import { isTooltip, useAdminContext } from "pages/Admin/Context";
 import { useEndowBalanceQuery } from "services/juno/custom";
 import { condenseToNum } from "helpers";
 import Form from "./Form";
 import { schema } from "./schema";
 
 export default function Investor({ endowId, strategy }: InvestorProps) {
+  const { txResource } = useAdminContext([
+    "liquidInvestmentManagement",
+    "lockedInvestmentManagement",
+  ]);
   const { data } = useEndowBalanceQuery({
     id: endowId,
   });
@@ -51,7 +56,11 @@ export default function Investor({ endowId, strategy }: InvestorProps) {
   });
   return (
     <FormProvider {...methods}>
-      <Form {...strategy} accountBalances={accountBalances} />
+      <Form
+        {...strategy}
+        accountBalances={accountBalances}
+        error={isTooltip(txResource) ? txResource : undefined}
+      />
     </FormProvider>
   );
 }
