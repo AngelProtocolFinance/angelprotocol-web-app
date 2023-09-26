@@ -1,4 +1,1 @@
-[
-  "function owner() view returns (address)",
-  "function queryAllStrategies() view returns (bytes4[])"
-]
+["function owner() view returns (address)"]
