@@ -104,7 +104,7 @@ export default function Summary(props: SummaryProps) {
       </div>
 
       {adminError && <Tooltip tooltip={adminError} classes="mx-8 my-2" />}
-      <div className="px-8 py-4 gap-x-3 border-t border-prim flex justify-end">
+      <div className="px-8 py-4 gap-x-3 border-t border-prim flex justify-center sm:justify-end">
         <button
           disabled={!!adminError || isSubmitting}
           onClick={goBack}
@@ -202,9 +202,11 @@ function Row({
 }: PropsWithChildren<{ classes?: string; title: string }>) {
   return (
     <div
-      className={`${classes} py-3 font-semibold flex items-center justify-between w-full border-b border-prim last:border-none`}
+      className={`${classes} py-3 font-semibold text-[0.9375rem] flex items-center justify-between w-full border-b border-prim last:border-none`}
     >
-      <p className="text-gray-d1 dark:text-gray font-normal">{title}</p>
+      <p className="text-gray-d1 dark:text-gray font-normal text-base">
+        {title}
+      </p>
       {children}
     </div>
   );

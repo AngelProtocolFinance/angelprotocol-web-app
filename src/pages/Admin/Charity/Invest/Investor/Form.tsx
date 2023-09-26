@@ -68,7 +68,7 @@ export default function Form(props: FormProps) {
       />
 
       {error && <Tooltip tooltip={error} classes="mx-8" />}
-      <div className="mt-8 px-8 py-4 gap-x-3 border-t border-prim flex justify-end">
+      <div className="mt-8 px-8 py-4 gap-x-3 border-t border-prim flex justify-center sm:justify-end">
         <button
           onClick={closeModal}
           type="button"
