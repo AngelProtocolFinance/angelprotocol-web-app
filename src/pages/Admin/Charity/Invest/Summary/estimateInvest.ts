@@ -2,11 +2,9 @@ import Decimal from "decimal.js";
 import { SummaryProps } from "../types";
 import { InvestRequest } from "types/contracts";
 import { EVMTx } from "types/evm";
-import { TxMeta } from "types/tx";
 import { WalletState } from "contexts/WalletContext";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
 import { humanize, scaleToStr } from "helpers";
-import { usdValue as _usdValue } from "helpers/coin-gecko";
 import { estimateEVMFee } from "helpers/tx/estimateTx/estimateEVMfee";
 import crossChainFeeFn from "./crossChainFee";
 

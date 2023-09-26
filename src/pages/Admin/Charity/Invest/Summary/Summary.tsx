@@ -43,7 +43,7 @@ export default function Summary(props: SummaryProps) {
       const _estimate = await estimateInvest(id, multisig, wallet, props);
       setEstimate(_estimate);
     })();
-  }, [props, txResource]);
+  }, [props, txResource, id, multisig]);
 
   function goBack() {}
 
