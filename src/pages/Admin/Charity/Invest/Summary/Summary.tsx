@@ -5,6 +5,7 @@ import { InvestFormValues, SummaryProps } from "../types";
 import { TStrategy } from "types/aws";
 import { Strategy } from "types/contracts";
 import { Estimate, TokenWithAmount } from "types/tx";
+import { isTooltip, useAdminContext } from "pages/Admin/Context";
 import Image from "components/Image";
 import { ErrorStatus, LoadingStatus } from "components/Status";
 import { useSetter } from "store/accessors";
@@ -12,22 +13,33 @@ import { SubmitStep, WithWallet, isFiat, setStep } from "slices/donation";
 import { sendDonation } from "slices/donation/sendDonation";
 import { humanize } from "helpers";
 import { appRoutes } from "constants/routes";
-import { DonationEstimate, estimateDonation } from "./estimateInvest";
+import { estimateInvest } from "./estimateInvest";
 
 type EstimateStatus = DonationEstimate | "loading" | "error";
 
 export default function Summary(props: SummaryProps) {
-  const dispatch = useSetter();
-  const terraWallet = useConnectedWallet();
+  // const dispatch = useSetter();
+  // const terraWallet = useConnectedWallet();
+
   const [estimate, setEstimate] = useState<EstimateStatus>("loading");
+  const { txResource, multisig, id } = useAdminContext([
+    props.type === "liquid"
+      ? "liquidInvestmentManagement"
+      : "lockedInvestmentManagement",
+  ]);
 
   useEffect(() => {
     (async () => {
       setEstimate("loading");
-      const _estimate = await estimateDonation({ ...props, terraWallet });
+      if (isTooltip(txResource)) {
+        return setEstimate("error");
+      }
+      const { wallet } = txResource;
+
+      const _estimate = await estimateInvest(id, multisig, wallet, props);
       setEstimate(_estimate || "error");
     })();
-  }, [props, terraWallet]);
+  }, [props, txResource]);
 
   function goBack() {
     dispatch(setStep(props.kyc ? "kyc-form" : "donate-form"));

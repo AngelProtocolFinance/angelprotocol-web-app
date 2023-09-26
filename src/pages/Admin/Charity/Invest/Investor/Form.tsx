@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { AccountBalances, FormValues as FV } from "./types";
-import { TStrategy } from "types/aws";
+import { AWSstrategy } from "types/aws";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import Modal from "components/Modal";
@@ -9,7 +9,7 @@ import TokenField from "components/TokenField";
 import AccountOptions from "./AccountOptions";
 import useSubmit from "./useSubmit";
 
-type FormProps = TStrategy & { accountBalances: AccountBalances };
+type FormProps = AWSstrategy & { accountBalances: AccountBalances };
 export default function Form({
   name,
   description,

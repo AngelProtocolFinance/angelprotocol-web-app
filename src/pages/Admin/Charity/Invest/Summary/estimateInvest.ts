@@ -20,7 +20,7 @@ export type InvestEstimate = {
 };
 
 export async function estimateInvest(
-  investorEndowId: number,
+  endowId: number,
   multisig: string,
   wallet: WalletState,
   params: SummaryProps
@@ -35,15 +35,15 @@ export async function estimateInvest(
   const investRequest: InvestRequest = {
     strategy: strategy_key,
     token: token.symbol,
-    lockAmt: type === "locked" ? scaledAmount : "",
-    liquidAmt: type === "locked" ? scaledAmount : "",
+    lockAmt: type === "locked" ? scaledAmount : "0",
+    liquidAmt: type === "liquid" ? scaledAmount : "0",
     gasFee: crossChainFee.scaled,
   };
 
   const [data, dest, meta] = encodeTx(
     "accounts.invest-v2",
     {
-      id: investorEndowId,
+      id: endowId,
       investRequest,
     },
     {
