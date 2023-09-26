@@ -7,6 +7,7 @@ import Icon from "components/Icon";
 import Modal from "components/Modal";
 import { TxPrompt } from "components/Prompt";
 import { ErrorStatus, LoadingStatus } from "components/Status";
+import { Tooltip } from "components/admin";
 import { humanize } from "helpers";
 import { sendEVMTx } from "helpers/tx/sendTx/sendEVMTx";
 import {
@@ -69,6 +70,8 @@ export default function Summary(props: SummaryProps) {
   const { token } = props;
   const isNotEstimated = estimateIsError(estimate) || estimate === "loading";
 
+  const adminError = isTooltip(txResource) ? txResource : undefined;
+
   return (
     <Modal
       as="div"
@@ -100,17 +103,24 @@ export default function Summary(props: SummaryProps) {
         <Breakdown estimate={estimate} token={token} />
       </div>
 
-      <div className="mt-14 grid grid-cols-2 gap-5">
+      {adminError && <Tooltip tooltip={adminError} classes="mx-8 my-2" />}
+      <div className="px-8 py-4 gap-x-3 border-t border-prim flex justify-end">
         <button
-          className="btn-outline-filled btn-donate"
+          disabled={!!adminError || isSubmitting}
           onClick={goBack}
           type="button"
-          disabled={isSubmitting}
+          className="text-sm min-w-[8rem] py-2 btn-outline-filled"
         >
           Back
         </button>
         <button
-          className="btn-orange btn-donate"
+          type="button"
+          disabled={
+            !!adminError ||
+            isSubmitting ||
+            isNotEstimated ||
+            estimate.noProceedsLeft
+          }
           onClick={
             isNotEstimated
               ? undefined
@@ -118,8 +128,7 @@ export default function Summary(props: SummaryProps) {
                   submit(estimate);
                 }
           }
-          disabled={isSubmitting || isNotEstimated || estimate.noProceedsLeft}
-          type="submit"
+          className="text-sm min-w-[8rem] py-2 btn-orange disabled:bg-gray-l1"
         >
           Invest
         </button>
@@ -143,7 +152,7 @@ function Breakdown({
         </Row>
         <Row title="TOTAL">
           <span className="text-red dark:text-red-l2">
-            {token.symbol} {humanize(token.amount, 4)}
+            <span>----</span>
           </span>
         </Row>
         <ErrorStatus classes="my-4 justify-self-center">
@@ -193,9 +202,9 @@ function Row({
 }: PropsWithChildren<{ classes?: string; title: string }>) {
   return (
     <div
-      className={`${classes} py-3 text-gray-d1 dark:text-gray flex items-center justify-between w-full border-b border-prim last:border-none`}
+      className={`${classes} py-3 font-semibold flex items-center justify-between w-full border-b border-prim last:border-none`}
     >
-      <p className="text-gray-d2 dark:text-white">{title}</p>
+      <p className="text-gray-d1 dark:text-gray font-normal">{title}</p>
       {children}
     </div>
   );

@@ -41,7 +41,7 @@ export async function estimateInvest(
     };
 
     const amountItem: EstimateItem = {
-      name: "Amount",
+      name: "Invested amount",
       amount: +token.amount,
       prettyAmount: prettyAmount(+token.amount, token.symbol),
     };
