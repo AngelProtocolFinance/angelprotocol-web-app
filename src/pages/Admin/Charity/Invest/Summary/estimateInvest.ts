@@ -1,12 +1,17 @@
+import { SummaryProps } from "../types";
+import { InvestRequest } from "types/contracts";
 import { EVMTx } from "types/evm";
-import { TxContent } from "types/tx";
-import { logger } from "helpers";
+import { WalletState } from "contexts/WalletContext";
+import { createTx, encodeTx } from "contracts/createTx/createTx";
+import { scaleToStr } from "helpers";
 import { usdValue as _usdValue } from "helpers/coin-gecko";
-import { estimateTx } from "helpers/tx";
+import { estimateEVMFee } from "helpers/tx/estimateTx/estimateEVMfee";
+import crossChainFeeFn from "./crossChainFee";
 
 type EstimateItem = {
   name: string;
   amount: number;
+  prettyAmount: string;
 };
 
 export type InvestEstimate = {
@@ -14,22 +19,52 @@ export type InvestEstimate = {
   items: EstimateItem[];
 };
 
-export async function estimateInvest(): Promise<InvestEstimate | null> {
-  let content: TxContent;
-  // ///////////// GET TX CONTENT ///////////////
-  try {
-    // ///////////// ESTIMATE TX ///////////////
-    const txEstimate = await estimateTx(content, wallet);
-    if (!txEstimate) return null;
+export async function estimateInvest(
+  investorEndowId: number,
+  multisig: string,
+  wallet: WalletState,
+  params: SummaryProps
+): Promise<InvestEstimate | null> {
+  const crossChainFee = await crossChainFeeFn(params);
+  if (!crossChainFee) return null;
 
-    // ///////////// Sucessful simulation ///////////////
+  const { token, strategy_key, type } = params;
 
-    return {
-      tx: txEstimate.tx,
-      items: [amount, donationFee, transactionFee, total],
-    };
-  } catch (err) {
-    logger.error(err);
-    return null;
-  }
+  const scaledAmount = scaleToStr(token.amount, token.decimals);
+
+  const investRequest: InvestRequest = {
+    strategy: strategy_key,
+    token: token.symbol,
+    lockAmt: type === "locked" ? scaledAmount : "",
+    liquidAmt: type === "locked" ? scaledAmount : "",
+    gasFee: crossChainFee.scaled,
+  };
+
+  const [data, dest, meta] = encodeTx(
+    "accounts.invest-v2",
+    {
+      id: investorEndowId,
+      investRequest,
+    },
+    {
+      title: "Invest",
+      description: `Invest funds to strategy:${investRequest.strategy}`,
+      content: null,
+    }
+  );
+
+  const { fee, tx: estimatedTx } = await estimateEVMFee(
+    wallet,
+    createTx(wallet.address, "multisig.submit-transaction", {
+      multisig,
+      destination: dest,
+      value: "0",
+      data,
+      meta: meta.encoded,
+    })
+  );
+
+  console.log({ fee });
+
+  return { tx: estimatedTx.val as EVMTx, items: [] };
 }

@@ -1,6 +1,9 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { InvestFormValues, SummaryProps } from "../types";
+import { TStrategy } from "types/aws";
+import { Strategy } from "types/contracts";
 import { Estimate, TokenWithAmount } from "types/tx";
 import Image from "components/Image";
 import { ErrorStatus, LoadingStatus } from "components/Status";
@@ -13,7 +16,7 @@ import { DonationEstimate, estimateDonation } from "./estimateInvest";
 
 type EstimateStatus = DonationEstimate | "loading" | "error";
 
-export default function Summary(props: any) {
+export default function Summary(props: SummaryProps) {
   const dispatch = useSetter();
   const terraWallet = useConnectedWallet();
   const [estimate, setEstimate] = useState<EstimateStatus>("loading");

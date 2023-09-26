@@ -169,7 +169,7 @@ export interface LeaderboardEntry {
   //charity_owner:string
 }
 
-export type TStrategy = {
+export type AWSstrategy = {
   strategy_key: string;
   chain_id: string;
   apy: number; // 5.2

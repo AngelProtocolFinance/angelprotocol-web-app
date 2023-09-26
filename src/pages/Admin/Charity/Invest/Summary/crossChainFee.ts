@@ -1,5 +1,5 @@
 import Dec from "decimal.js";
-import { CrossChainInvestGasEstimateParams } from "services/types";
+import { SummaryProps } from "../types";
 import {
   AxelarGasEstimateResponse,
   AxelarGasFeeEstimationParams,
@@ -14,25 +14,29 @@ type Fee = {
 };
 
 export default async function crossChainFee({
-  tokenToInvest,
-  strategy,
-}: CrossChainInvestGasEstimateParams): Promise<Fee | null> {
+  token,
+  strategy_key: axelarChainName,
+}: SummaryProps): Promise<Fee | null> {
   try {
+    if (axelarChainName === "polygon") {
+      return { amount: 0, scaled: "0" };
+    }
     const payload: AxelarGasFeeEstimationParams = {
       method: "estimateGasFee",
       sourceChain: "Polygon",
-      destinationChain: strategy.networkId,
+      destinationChain: axelarChainName,
       gasMultiplier: 1.5,
       showDetailedFees: true,
 
-      sourceTokenSymbol: tokenToInvest.symbol,
+      sourceTokenSymbol: token.symbol,
       sourceTokenAddress: "0x2c852e740B62308c46DD29B982FBb650D063Bd07", //aUSDC
 
       sourceContractAddress: contracts["accounts"],
-      destinationContractAddress: strategy.router,
+      //TODO: TStrategy must include this value
+      destinationContractAddress: "0x74C615649f260850c0702ca2aDAEDC0eb3F312a6",
 
-      symbol: tokenToInvest.symbol,
-      amount: tokenToInvest.amount,
+      symbol: token.symbol,
+      amount: +token.amount,
     };
 
     const res = await fetch(axelarAPIurl, {

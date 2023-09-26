@@ -136,16 +136,3 @@ export type WalletProfileVersion = "legacy" | "latest";
 export type VersionSpecificWalletProfile = WalletProfile & {
   version: "legacy" | "latest";
 };
-
-export type CrossChainInvestGasEstimateParams = {
-  //also used as gas tokens
-  tokenToInvest: {
-    /** condensed */
-    amount: number;
-    symbol: string;
-  };
-  strategy: {
-    networkId: string;
-    router: string;
-  };
-};
