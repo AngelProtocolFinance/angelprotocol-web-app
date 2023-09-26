@@ -1,15 +1,13 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { AccountBalances, FormValues } from "./types";
-import { AWSstrategy } from "types/aws";
+import { AccountBalances, FormValues, InvestorProps } from "./types";
 import { TokenWithAmount } from "types/tx";
 import { useEndowBalanceQuery } from "services/juno/custom";
 import { condenseToNum } from "helpers";
 import Form from "./Form";
 import { schema } from "./schema";
 
-type Props = AWSstrategy & { endowId: number };
-export default function Investor({ endowId, ...strategy }: Props) {
+export default function Investor({ endowId, strategy }: InvestorProps) {
   const { data } = useEndowBalanceQuery({
     id: endowId,
   });

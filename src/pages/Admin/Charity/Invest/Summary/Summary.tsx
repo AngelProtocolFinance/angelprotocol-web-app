@@ -1,25 +1,29 @@
-import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { InvestFormValues, SummaryProps } from "../types";
-import { TStrategy } from "types/aws";
-import { Strategy } from "types/contracts";
-import { Estimate, TokenWithAmount } from "types/tx";
+import { SummaryProps } from "../types";
+import { TokenWithAmount, isTxResultError } from "types/tx";
 import { isTooltip, useAdminContext } from "pages/Admin/Context";
-import Image from "components/Image";
+import { useModalContext } from "contexts/ModalContext";
+import { TxPrompt } from "components/Prompt";
 import { ErrorStatus, LoadingStatus } from "components/Status";
-import { useSetter } from "store/accessors";
-import { SubmitStep, WithWallet, isFiat, setStep } from "slices/donation";
-import { sendDonation } from "slices/donation/sendDonation";
 import { humanize } from "helpers";
+import { sendEVMTx } from "helpers/tx/sendTx/sendEVMTx";
 import { appRoutes } from "constants/routes";
-import { estimateInvest } from "./estimateInvest";
+import {
+  EstimateErrror,
+  InvestEstimate,
+  estimateInvest,
+} from "./estimateInvest";
 
-type EstimateStatus = DonationEstimate | "loading" | "error";
+type EstimateStatus = InvestEstimate | "loading" | EstimateErrror;
+
+const estimateIsError = (
+  estimate: EstimateStatus
+): estimate is { error: string } =>
+  typeof estimate === "object" && "error" in estimate;
 
 export default function Summary(props: SummaryProps) {
-  // const dispatch = useSetter();
-  // const terraWallet = useConnectedWallet();
+  const { showModal } = useModalContext();
 
   const [estimate, setEstimate] = useState<EstimateStatus>("loading");
   const { txResource, multisig, id } = useAdminContext([
@@ -32,45 +36,51 @@ export default function Summary(props: SummaryProps) {
     (async () => {
       setEstimate("loading");
       if (isTooltip(txResource)) {
-        return setEstimate("error");
+        return setEstimate({ error: txResource });
       }
-      const { wallet } = txResource;
 
+      const { wallet } = txResource;
       const _estimate = await estimateInvest(id, multisig, wallet, props);
-      setEstimate(_estimate || "error");
+      setEstimate(_estimate);
     })();
   }, [props, txResource]);
 
-  function goBack() {
-    dispatch(setStep(props.kyc ? "kyc-form" : "donate-form"));
+  function goBack() {}
+
+  async function submit({ tx }: InvestEstimate) {
+    try {
+      if (isTooltip(txResource)) throw new Error(txResource);
+      const { txMeta, wallet } = txResource;
+
+      showModal(TxPrompt, { loading: "Investing..." });
+      const result = await sendEVMTx(wallet, tx);
+
+      if (isTxResultError(result)) {
+        return showModal(TxPrompt, { error: result.error });
+      }
+      showModal(TxPrompt, { success: txMeta.successMeta });
+    } catch (err) {
+      return showModal(TxPrompt, { error: "Failed to invest assets" });
+    }
   }
 
-  function submit(tx: Estimate["tx"]) {
-    const { wallet, ...donation } = props;
-    dispatch(sendDonation({ donation: donation, wallet: wallet, tx }));
-  }
-
-  const { token } = props.details;
-  const { id: endowId } = props.recipient;
-
-  const isNotEstimated = estimate === "error" || estimate === "loading";
+  const { token } = props;
+  const isNotEstimated = estimateIsError(estimate) || estimate === "loading";
 
   return (
     <div className="grid content-start">
-      <Row title="Currency:">
-        <Image
-          className="ml-auto object-cover h-4 w-4 rounded-full mr-1"
-          src={token.logo}
-        />
-        <span>{token.symbol}</span>
+      <Row title="Name">
+        <span>{props.name}</span>
       </Row>
-      {isFiat(props.wallet) || token.type === "fiat" ? (
-        <></>
-      ) : (
-        <Row title="Blockchain:">
-          <span>{props.wallet.chain.chain_name}</span>
-        </Row>
-      )}
+      <Row title="Account">
+        <span className="capitalize">{props.type}</span>
+      </Row>
+      <Row title="Risk Rating">
+        <span>{props.rating}</span>
+      </Row>
+      <Row title="APR">
+        <span>{props.apy}</span>
+      </Row>
       <Breakdown estimate={estimate} token={token} />
       <div className="mt-14 grid grid-cols-2 gap-5">
         <button
@@ -86,19 +96,19 @@ export default function Summary(props: SummaryProps) {
             isNotEstimated
               ? undefined
               : () => {
-                  submit(estimate.tx);
+                  submit(estimate);
                 }
           }
-          disabled={isNotEstimated}
+          disabled={isNotEstimated || estimate.noProceedsLeft}
           type="submit"
         >
-          Complete
+          Invest
         </button>
         <Link
-          to={appRoutes.marketplace + `/${endowId}`}
+          to={appRoutes.marketplace + `/${id}`}
           className="col-span-full btn-outline btn-donate"
         >
-          Cancel
+          Back
         </Link>
       </div>
     </div>
@@ -112,62 +122,53 @@ function Breakdown({
   estimate: EstimateStatus;
   token: TokenWithAmount;
 }) {
-  switch (estimate) {
-    case "error":
-      return (
-        <>
-          <Row title="Transaction costs:">
-            <span className="text-red dark:text-red-l2">0.0000</span>
-          </Row>
-          <Row title="TOTAL">
-            <span className="text-red dark:text-red-l2">
-              {token.symbol} {humanize(token.amount, 4)}
-            </span>
-          </Row>
-          <ErrorStatus classes="my-3 justify-self-center">
-            This transaction is likely to fail
-          </ErrorStatus>
-        </>
-      );
-    case "loading":
-      return (
-        <>
-          <Row title="Transaction costs:">
-            <span>----</span>
-          </Row>
-          <Row title="TOTAL">
-            <span>
-              {token.symbol} {humanize(token.amount, 4)}
-            </span>
-          </Row>
-          <LoadingStatus classes="justify-self-center my-6">
-            Estimating transaction cost..
-          </LoadingStatus>
-        </>
-      );
-    default:
-      return (
-        <>
-          {estimate.items
-            .filter((i) => i.fiatAmount > 0)
-            .map((item, i) => (
-              <Row key={i} title={item.name}>
-                {item.cryptoAmount ? (
-                  <div className="grid justify-items-end">
-                    <span>
-                      {humanize(item.cryptoAmount.value, 4)}{" "}
-                      {item.cryptoAmount.symbol}
-                    </span>
-                    <span className="text-xs"> {item.prettyFiatAmount}</span>
-                  </div>
-                ) : (
-                  `${item.prettyFiatAmount}`
-                )}
-              </Row>
-            ))}
-        </>
-      );
+  if (estimateIsError(estimate)) {
+    return (
+      <>
+        <Row title="Transaction costs:">
+          <span className="text-red dark:text-red-l2">0.0000</span>
+        </Row>
+        <Row title="TOTAL">
+          <span className="text-red dark:text-red-l2">
+            {token.symbol} {humanize(token.amount, 4)}
+          </span>
+        </Row>
+        <ErrorStatus classes="my-3 justify-self-center"></ErrorStatus>
+      </>
+    );
   }
+
+  if (estimate === "loading") {
+    return (
+      <>
+        <Row title="Transaction costs:">
+          <span>----</span>
+        </Row>
+        <Row title="TOTAL">
+          <span>
+            {token.symbol} {humanize(token.amount, 4)}
+          </span>
+        </Row>
+        <LoadingStatus classes="justify-self-center my-6">
+          Estimating transaction cost..
+        </LoadingStatus>
+      </>
+    );
+  }
+
+  return (
+    <>
+      {estimate.items
+        .filter((i) => i.amount === 0)
+        .map(({ name, amount, prettyAmount }, i) => (
+          <Row key={i} title={name}>
+            <span className={amount < 0 ? "text-red dark:text-red-l2" : ""}>
+              {prettyAmount}
+            </span>
+          </Row>
+        ))}
+    </>
+  );
 }
 
 function Row({
