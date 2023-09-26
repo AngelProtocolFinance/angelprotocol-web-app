@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import { TStrategy } from "types/aws";
+import { AWSstrategy } from "types/aws";
 import { useAdminContext } from "pages/Admin/Context";
 import { useModalContext } from "contexts/ModalContext";
 import ExtLink from "components/ExtLink";
@@ -7,7 +7,7 @@ import Icon from "components/Icon";
 import { humanize } from "helpers";
 import Investor from "./Investor";
 
-export default function Strategy(props: TStrategy) {
+export default function Strategy(props: AWSstrategy) {
   const {
     name,
     market_cap,
