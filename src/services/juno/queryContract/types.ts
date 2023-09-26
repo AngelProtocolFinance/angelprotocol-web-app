@@ -7,9 +7,7 @@ import {
   FundDetails,
   GenericBalMap,
   IndexFundConfig,
-  NetworkInfo,
   RegistrarConfig,
-  StrategyParams,
 } from "types/contracts";
 import { Contract } from "types/lists";
 
@@ -25,12 +23,6 @@ export interface ContractQueries {
   "registrar.config": Query<null, RegistrarConfig>;
   "registrar.owner": Query<null, string>;
   "registrar.fee-setting": Query<{ type: FeeType }, FeeSetting>;
-  "registrar.strategy-ids": Query<null, string[]>;
-  "registrar.strategy-params": Query<{ id: string }, StrategyParams>;
-  "registrar.network-connection": Query<
-    { networkId: string /** axelar chainName e.g. ethereum-2 */ },
-    NetworkInfo
-  >;
 
   "index-fund.config": Query<null, IndexFundConfig>;
   "index-fund.fund": Query<ID, FundDetails>;

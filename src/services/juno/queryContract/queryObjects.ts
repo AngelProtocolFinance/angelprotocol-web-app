@@ -13,10 +13,7 @@ import {
   IIndexFund,
   IndexFundStorage,
 } from "types/typechain-types/contracts/core/index-fund/IndexFund";
-import {
-  LocalRegistrarLib,
-  LibAccounts as RegistrarLibAccounts,
-} from "types/typechain-types/contracts/core/registrar/LocalRegistrar";
+import { LibAccounts as RegistrarLibAccounts } from "types/typechain-types/contracts/core/registrar/LocalRegistrar";
 import { RegistrarStorage } from "types/typechain-types/contracts/core/registrar/interfaces/IRegistrar";
 import { accounts } from "contracts/evm/Account";
 import { erc20 } from "contracts/evm/ERC20";
@@ -34,40 +31,6 @@ export const queryObjects: {
   "registrar.owner": [
     registrar.encodeFunctionData("owner", []),
     (result) => registrar.decodeFunctionResult("owner", result)[0],
-  ],
-  "registrar.strategy-ids": [
-    registrar.encodeFunctionData("queryAllStrategies", []),
-    (result) => registrar.decodeFunctionResult("queryAllStrategies", result)[0],
-  ],
-  "registrar.network-connection": [
-    ({ networkId }) =>
-      registrar.encodeFunctionData("queryNetworkConnection", [networkId]),
-    (result) => {
-      const d: LocalRegistrarLib.NetworkInfoStructOutput =
-        registrar.decodeFunctionResult("queryNetworkConnection", result)[0];
-
-      return {
-        chainId: d.chainId.toNumber(),
-        router: d.router.toLowerCase(),
-        axelarGateway: d.axelarGateway.toLowerCase(),
-        gasReceiver: d.gasReceiver.toLowerCase(),
-        refundAddr: d.refundAddr.toLowerCase(),
-      };
-    },
-  ],
-  "registrar.strategy-params": [
-    ({ id }) => registrar.encodeFunctionData("getStrategyParamsById", [id]),
-    (result) => {
-      const d: LocalRegistrarLib.StrategyParamsStructOutput =
-        registrar.decodeFunctionResult("getStrategyParamsById", result)[0];
-
-      return {
-        approvalState: d.approvalState,
-        network: d.network,
-        lockedVaultAddr: d.lockedVaultAddr.toLowerCase(),
-        liquidVaultAddr: d.liquidVaultAddr.toLowerCase(),
-      };
-    },
   ],
   "registrar.config": [
     registrar.encodeFunctionData("queryConfig", []),

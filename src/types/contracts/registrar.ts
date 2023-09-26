@@ -1,7 +1,6 @@
 import { OverrideProperties } from "type-fest";
 import {
   LibAccounts,
-  LocalRegistrarLib,
   RegistrarMessages,
   RegistrarStorage,
 } from "../typechain-types/contracts/core/registrar/interfaces/IRegistrar";
@@ -30,22 +29,4 @@ export type FeeType =
 export type FeeSetting = OverrideProperties<
   LibAccounts.FeeSettingStruct,
   { bps: number }
->;
-
-/**
- * 0 - not approved
- * 1 - approved
- * 2 - withdraw only
- * 3 - deprecated
- */
-export type StrategyParams = OverrideProperties<
-  LocalRegistrarLib.StrategyParamsStruct,
-  {
-    approvalState: number;
-  }
->;
-
-export type NetworkInfo = OverrideProperties<
-  LocalRegistrarLib.NetworkInfoStruct,
-  { chainId: number }
 >;
