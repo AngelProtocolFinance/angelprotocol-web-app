@@ -100,6 +100,7 @@ export async function estimateInvest(
       items: [amountItem, txFeeItem, crossChainFeeItem, toReceiveItem],
     };
   } catch (err) {
+    console.log(err);
     return { error: "Simulation failed. Transaction is likely to fail." };
   }
 }

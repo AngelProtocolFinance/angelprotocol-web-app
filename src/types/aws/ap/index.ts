@@ -172,6 +172,8 @@ export interface LeaderboardEntry {
 export type AWSstrategy = {
   strategy_key: string;
   chain_id: string;
+  routerAxelarChainName: string;
+  router: string;
   apy: number; // 5.2
   contract: string;
   description: string;
