@@ -1,14 +1,13 @@
 import { PropsWithChildren, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { SummaryProps } from "../types";
 import { TokenWithAmount, isTxResultError } from "types/tx";
 import { isTooltip, useAdminContext } from "pages/Admin/Context";
 import { useModalContext } from "contexts/ModalContext";
+import Modal from "components/Modal";
 import { TxPrompt } from "components/Prompt";
 import { ErrorStatus, LoadingStatus } from "components/Status";
 import { humanize } from "helpers";
 import { sendEVMTx } from "helpers/tx/sendTx/sendEVMTx";
-import { appRoutes } from "constants/routes";
 import {
   EstimateErrror,
   InvestEstimate,
@@ -23,8 +22,8 @@ const estimateIsError = (
   typeof estimate === "object" && "error" in estimate;
 
 export default function Summary(props: SummaryProps) {
-  const { showModal } = useModalContext();
-
+  const { showModal, setModalOption } = useModalContext();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [estimate, setEstimate] = useState<EstimateStatus>("loading");
   const { txResource, multisig, id } = useAdminContext([
     props.type === "liquid"
@@ -34,17 +33,15 @@ export default function Summary(props: SummaryProps) {
 
   useEffect(() => {
     (async () => {
-      setEstimate("loading");
-
       if (isTooltip(txResource)) {
         return setEstimate({ error: txResource });
       }
-
+      setEstimate("loading");
       const { wallet } = txResource;
       const _estimate = await estimateInvest(id, multisig, wallet, props);
       setEstimate(_estimate);
     })();
-  }, [props, txResource, multisig, id]);
+  }, [props]);
 
   function goBack() {}
 
@@ -53,7 +50,9 @@ export default function Summary(props: SummaryProps) {
       if (isTooltip(txResource)) throw new Error(txResource);
       const { txMeta, wallet } = txResource;
 
-      showModal(TxPrompt, { loading: "Investing..." });
+      setIsSubmitting(true);
+      //prevent closing this modal while this fn is still running
+      setModalOption("isDismissible", false);
       const result = await sendEVMTx(wallet, tx);
 
       if (isTxResultError(result)) {
@@ -69,7 +68,10 @@ export default function Summary(props: SummaryProps) {
   const isNotEstimated = estimateIsError(estimate) || estimate === "loading";
 
   return (
-    <div className="grid content-start">
+    <Modal
+      as="div"
+      className="grid content-start max-h-[95vh] overflow-y-auto max-w-[37.5rem] w-[95vw] sm:w-full fixed-center z-20 bg-gray-l6 dark:bg-blue-d6 border border-prim rounded"
+    >
       <Row title="Name">
         <span>{props.name}</span>
       </Row>
@@ -88,6 +90,7 @@ export default function Summary(props: SummaryProps) {
           className="btn-outline-filled btn-donate"
           onClick={goBack}
           type="button"
+          disabled={isSubmitting}
         >
           Back
         </button>
@@ -100,19 +103,13 @@ export default function Summary(props: SummaryProps) {
                   submit(estimate);
                 }
           }
-          disabled={isNotEstimated || estimate.noProceedsLeft}
+          disabled={isSubmitting || isNotEstimated || estimate.noProceedsLeft}
           type="submit"
         >
           Invest
         </button>
-        <Link
-          to={appRoutes.marketplace + `/${id}`}
-          className="col-span-full btn-outline btn-donate"
-        >
-          Back
-        </Link>
       </div>
-    </div>
+    </Modal>
   );
 }
 
@@ -134,7 +131,9 @@ function Breakdown({
             {token.symbol} {humanize(token.amount, 4)}
           </span>
         </Row>
-        <ErrorStatus classes="my-3 justify-self-center"></ErrorStatus>
+        <ErrorStatus classes="my-3 justify-self-center">
+          {estimate.error}
+        </ErrorStatus>
       </>
     );
   }

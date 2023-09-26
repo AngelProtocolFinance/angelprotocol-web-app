@@ -18,13 +18,16 @@ export default async function crossChainFee({
   strategy_key: axelarChainName,
 }: SummaryProps): Promise<Fee | null> {
   try {
+    //zero cross-chain fee for local investments
     if (axelarChainName === "polygon") {
       return { amount: 0, scaled: "0" };
     }
+
     const payload: AxelarGasFeeEstimationParams = {
       method: "estimateGasFee",
       sourceChain: "Polygon",
-      destinationChain: axelarChainName,
+      //TODO: getFrom strategy_key (currently incorrect)
+      destinationChain: "ethereum-2",
       gasMultiplier: 1.5,
       showDetailedFees: true,
 
@@ -32,7 +35,7 @@ export default async function crossChainFee({
       sourceTokenAddress: "0x2c852e740B62308c46DD29B982FBb650D063Bd07", //aUSDC
 
       sourceContractAddress: contracts["accounts"],
-      //TODO: TStrategy must include this value
+      //TODO: AWSstrategy must include this value
       destinationContractAddress: "0x74C615649f260850c0702ca2aDAEDC0eb3F312a6",
 
       symbol: token.symbol,
