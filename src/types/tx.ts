@@ -173,17 +173,7 @@ type Txs = {
     WithdrawMeta
   >;
   "accounts.close": Tx<CloseEndowmentRequest, AccountStatusMeta>;
-  "accounts.invest": Tx<
-    {
-      id: number;
-      account: AccountType;
-      vaults: string[];
-      tokens: string[];
-      amounts: string[]; //uint256
-    },
-    never //future
-  >;
-  "accounts.invest-v2": Tx<InvestPayload, null /** future */>;
+  "accounts.invest": Tx<InvestPayload, null /** future */>;
   "accounts.redeem": Tx<
     {
       id: number;

@@ -73,7 +73,7 @@ export async function estimateInvest(
     };
 
     const [data, dest, meta] = encodeTx(
-      "accounts.invest-v2",
+      "accounts.invest",
       {
         id: endowId,
         investRequest,
