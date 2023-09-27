@@ -15,7 +15,7 @@ export enum chainIDs {
   //add axelar, connext
 }
 
-type Info = { txExplorer: string; addressExplorer: string };
+type Info = { txExplorer: string; addressExplorer: string; name: string };
 
 const explorers: { [key in chainIDs]: string } = {
   1: "https://etherscan.io",
@@ -33,46 +33,57 @@ const explorers: { [key in chainIDs]: string } = {
 
 const _chains: { [key in chainIDs]: Info } = {
   [chainIDs.ethMain]: {
+    name: "Ethereum",
     txExplorer: `${explorers[chainIDs.ethMain]}/tx`,
     addressExplorer: `${explorers[chainIDs.ethMain]}/address`,
   },
   [chainIDs.ethTest]: {
+    name: "Ethereum",
     txExplorer: `${explorers[chainIDs.ethTest]}/tx`,
     addressExplorer: `${explorers[chainIDs.ethTest]}/address`,
   },
   [chainIDs.binanceMain]: {
+    name: "Binance",
     txExplorer: `${explorers[chainIDs.binanceMain]}/tx`,
     addressExplorer: `${explorers[chainIDs.binanceMain]}/address`,
   },
   [chainIDs.binanceTest]: {
+    name: "Binance",
     txExplorer: `${explorers[chainIDs.binanceTest]}/tx`,
     addressExplorer: `${explorers[chainIDs.binanceTest]}/address`,
   },
   [chainIDs.polygonMain]: {
+    name: "Polygon",
     txExplorer: `${explorers[chainIDs.polygonMain]}/tx`,
     addressExplorer: `${explorers[chainIDs.polygonMain]}/address`,
   },
   [chainIDs.polygonTest]: {
+    name: "Polygon",
     txExplorer: `${explorers[chainIDs.polygonTest]}/tx`,
     addressExplorer: `${explorers[chainIDs.polygonTest]}/address`,
   },
   [chainIDs.polygonLocal]: {
+    name: "Polygon Local",
     txExplorer: "",
     addressExplorer: "",
   },
   [chainIDs.junoMain]: {
+    name: "Juno",
     txExplorer: `${explorers[chainIDs.junoMain]}/txs`,
     addressExplorer: `${explorers[chainIDs.junoMain]}/account`,
   },
   [chainIDs.junoTest]: {
+    name: "Juno",
     txExplorer: `${explorers[chainIDs.junoTest]}/txs`,
     addressExplorer: `${explorers[chainIDs.junoTest]}/account`,
   },
   [chainIDs.terraMain]: {
+    name: "Terra",
     txExplorer: `${explorers[chainIDs.terraMain]}/tx`,
     addressExplorer: `${explorers[chainIDs.terraMain]}/address`,
   },
   [chainIDs.terraTest]: {
+    name: "Terra",
     txExplorer: `${explorers[chainIDs.terraTest]}/tx`,
     addressExplorer: `${explorers[chainIDs.terraTest]}/address`,
   },
@@ -83,6 +94,7 @@ export const chains: { [index: string]: Info } = new Proxy(_chains, {
     if (key === "staging") return target["80001"];
     return (
       target[key] ?? {
+        name: "Unknown chain",
         txExplorer: DAPP_URL,
         addressExplorer: DAPP_URL,
       }

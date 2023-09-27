@@ -24,7 +24,6 @@ export type DonationDetails = {
   //meta
   chainId: string;
   chainName: string;
-  tokens: TokenWithAmount[];
   userOptForKYC: boolean;
 };
 

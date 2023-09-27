@@ -41,7 +41,7 @@ type EndowmentBase = {
   active_in_countries?: string[];
   sdgs: UNSDG_NUMS[];
   id: number;
-  image: string;
+  logo: string;
   kyc_donors_only: boolean;
   contributor_verification_required: boolean;
   program: Program[];
@@ -53,7 +53,7 @@ type EndowmentBase = {
 export type EndowmentProfile = EndowmentBase & {
   fiscal_sponsored: boolean;
   contact_email: string;
-  logo: string;
+  image: string;
   overview?: string;
   published: boolean;
   registration_number?: string;
@@ -92,7 +92,7 @@ export type EndowmentCard = EndowmentBase & {
   published: boolean;
 };
 
-export type EndowmentSelectorOption = Pick<EndowmentBase, "id" | "name">;
+export type EndowmentOption = Pick<EndowmentBase, "id" | "name">;
 
 export type EndowmentProfileUpdate = {
   //required

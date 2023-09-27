@@ -8,9 +8,9 @@ import {
 import {
   EndowListPaginatedAWSQueryRes,
   EndowmentCard,
+  EndowmentOption,
   EndowmentProfile,
   EndowmentProfileUpdate,
-  EndowmentSelectorOption,
   EndowmentsQueryParams,
   NewAST,
   Program,
@@ -78,10 +78,7 @@ export const aws = createApi({
         };
       },
     }),
-    endowmentSelectorOptions: builder.query<
-      EndowmentSelectorOption[],
-      EndowmentsQueryParams
-    >({
+    endowmentOptions: builder.query<EndowmentOption[], EndowmentsQueryParams>({
       providesTags: ["endowments"],
       query: (params) => {
         return {
@@ -89,9 +86,7 @@ export const aws = createApi({
           params: { ...params, return: endowSelectorOptionFields },
         };
       },
-      transformResponse(
-        res: EndowListPaginatedAWSQueryRes<EndowmentSelectorOption[]>
-      ) {
+      transformResponse(res: EndowListPaginatedAWSQueryRes<EndowmentOption[]>) {
         return res.Items;
       },
     }),
@@ -148,7 +143,7 @@ export const aws = createApi({
         error ? [] : ["endowments", "profile", "walletProfile"],
       query: (payload) => {
         return {
-          url: `/${v(2)}/profile/${network}/endowment`,
+          url: `/${v(3)}/profile/${network}/endowment`,
           method: isDeleteMsg(payload.unsignedMsg) ? "DELETE" : "PUT",
           body: payload,
         };
@@ -176,14 +171,14 @@ export const {
   useSaveASTMutation,
   useEndowmentCardsQuery,
   useStrategyCardsQuery,
-  useEndowmentSelectorOptionsQuery,
+  useEndowmentOptionsQuery,
   useProfileQuery,
   useProgramQuery,
   useEditProfileMutation,
 
   endpoints: {
     endowmentCards: { useLazyQuery: useLazyEndowmentCardsQuery },
-    endowmentSelectorOptions: { useLazyQuery: useLazyEndowmentIdNamesQuery },
+    endowmentOptions: { useLazyQuery: useLazyEndowmentOptionsQuery },
     profile: { useLazyQuery: useLazyProfileQuery },
   },
   util: {
@@ -205,7 +200,7 @@ const endowCardObj: {
   active_in_countries: "",
   sdgs: "",
   id: "",
-  image: "",
+  logo: "",
   kyc_donors_only: "",
   contributor_verification_required: "",
   name: "",

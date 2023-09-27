@@ -3,7 +3,7 @@ import { Fragment } from "react";
 import { useFormContext } from "react-hook-form";
 import { FV } from "../types";
 import { EndowmentType } from "types/lists";
-import { useEndowmentSelectorOptionsQuery } from "services/aws/aws";
+import { useEndowmentOptionsQuery } from "services/aws/aws";
 import QueryLoader from "components/QueryLoader";
 import { unsdgs } from "constants/unsdgs";
 
@@ -22,7 +22,7 @@ export default function EndowmentOptions({
   const endowTypes: EndowmentType[] =
     endowType === "charity" ? ["charity"] : ["charity", "ast"];
 
-  const queryState = useEndowmentSelectorOptionsQuery({
+  const queryState = useEndowmentOptionsQuery({
     query: searchText || "matchall",
     sort: "default",
     endow_types: endowTypes.join(","),

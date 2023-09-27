@@ -3,7 +3,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { useState } from "react";
 import { useController, useFormContext } from "react-hook-form";
 import { FV } from "../types";
-import { EndowmentSelectorOption } from "types/aws";
+import { EndowmentOption } from "types/aws";
 import { DrawerIcon } from "components/Icon";
 import useDebouncer from "hooks/useDebouncer";
 import EndowmentOptions from "./EndowmentOptions";
@@ -35,7 +35,7 @@ export default function EndowmentSelector() {
         ref={ref}
         placeholder="Select an endowment..."
         onChange={(event) => setSearchText(event.target.value)}
-        displayValue={(value: EndowmentSelectorOption) => value.name}
+        displayValue={(value: EndowmentOption) => value.name}
         className="pl-4 w-full"
       />
 
