@@ -5,16 +5,16 @@ import {
   retry,
 } from "@reduxjs/toolkit/query/react";
 import { TransactionsArgs } from "./types";
+import { WithdrawEndowBeneficiary } from "services/types";
 import { TransactionStatus } from "types/lists";
 import {
   ApplicationProposalRes,
-  BeneficiaryEndowmentsParams,
-  Endowment,
   GraphQLApplicationProposalRes,
   GraphQLEndowmentsRes,
   GraphQLTransactionRes,
   GraphQLTransactionsRes,
   Paginated,
+  WithdrawBeneficiaryEndowmentsQueryParams,
 } from "types/subgraph";
 import { Transaction, TxMeta } from "types/tx";
 import { fromAbiStr } from "helpers";
@@ -191,16 +191,20 @@ export const subgraph = createApi({
     }),
     //endowType, id
     beneficiaryEndowments: builder.query<
-      Endowment[],
-      BeneficiaryEndowmentsParams
+      WithdrawEndowBeneficiary[],
+      WithdrawBeneficiaryEndowmentsQueryParams
     >({
       providesTags: ["transactions"],
-      query: ({ searchText, endowId, endowType }) => {
+      query: ({
+        beneficiaryEndowName,
+        withdrawerEndowId,
+        withdrawerEndowType,
+      }) => {
         const endowTypes =
           //FUTURE: handle type === "daf"
-          endowType === "charity" ? "[Charity]" : "[Charity,Normal]";
-        const searchClause = searchText
-          ? `name_contains_nocase: "${searchText}`
+          withdrawerEndowType === "charity" ? "[Charity]" : "[Charity,Normal]";
+        const searchClause = beneficiaryEndowName
+          ? `name_contains_nocase: "${beneficiaryEndowName}`
           : "";
 
         const NUM_ENDOW_PER_PAGE = 5;
@@ -211,7 +215,7 @@ export const subgraph = createApi({
             query: `{
               endowments(
                 first: ${NUM_ENDOW_PER_PAGE},
-                where: {beneficiaryWallet: null, beneficiaryEndowment: null, id_not: "${endowId}", endowmentType_in: ${endowTypes}, ${searchClause} },
+                where: {beneficiaryWallet: null, beneficiaryEndowment: null, id_not: "${withdrawerEndowId}", endowmentType_in: ${endowTypes}, ${searchClause} },
                 orderBy: name
               ) {
                 id
@@ -222,7 +226,10 @@ export const subgraph = createApi({
         };
       },
       transformResponse: (res: GraphQLEndowmentsRes) => {
-        return res.data.endowments;
+        return res.data.endowments.map((e) => ({
+          ...e,
+          name: e.name || "Default endow name",
+        }));
       },
     }),
   }),

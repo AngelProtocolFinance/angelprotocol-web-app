@@ -2,10 +2,8 @@ import { Combobox } from "@headlessui/react";
 import { Fragment } from "react";
 import { useFormContext } from "react-hook-form";
 import { FV } from "../types";
-import { EndowmentType } from "types/lists";
-import { useEndowmentOptionsQuery } from "services/aws/aws";
+import { useBeneficiaryEndowmentsQuery } from "services/subgraph";
 import QueryLoader from "components/QueryLoader";
-import { unsdgs } from "constants/unsdgs";
 
 type Props = {
   searchText: string;
@@ -19,18 +17,11 @@ export default function EndowmentOptions({
   const { getValues } = useFormContext<FV>();
   const endowId = getValues("endowId");
   const endowType = getValues("endowType");
-  const endowTypes: EndowmentType[] =
-    endowType === "charity" ? ["charity"] : ["charity", "ast"];
 
-  const queryState = useEndowmentOptionsQuery({
-    query: searchText || "matchall",
-    sort: "default",
-    endow_types: endowTypes.join(","),
-    tiers: "2,3",
-    sdgs: Object.keys(unsdgs).join(","),
-    kyc_only: "true,false",
-    page: 1,
-    published: "true,false",
+  const queryState = useBeneficiaryEndowmentsQuery({
+    withdrawerEndowId: endowId,
+    withdrawerEndowType: endowType,
+    beneficiaryEndowName: searchText,
   });
 
   return (
@@ -46,7 +37,6 @@ export default function EndowmentOptions({
           empty: searchText ? `${searchText} not found` : "no options found",
         }}
         //avoid transferring to own endowment
-        filterFn={(option) => option.id !== endowId}
         classes={{ container: "w-full text-sm p-2" }}
       >
         {(endowments) => (

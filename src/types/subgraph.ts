@@ -17,10 +17,10 @@ export type GraphQLTransactionsRes = GraphQLRes<{
   multiSigTransactions: TransactionRes[];
 }>;
 
-export type BeneficiaryEndowmentsParams = {
-  endowType: EndowmentType;
-  endowId: number;
-  searchText: string;
+export type WithdrawBeneficiaryEndowmentsQueryParams = {
+  withdrawerEndowType: EndowmentType;
+  withdrawerEndowId: number;
+  beneficiaryEndowName: string;
 };
 
 export type Endowment = { name: string | null; id: string };
