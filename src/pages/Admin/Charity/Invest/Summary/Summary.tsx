@@ -115,12 +115,7 @@ export default function Summary(props: SummaryProps) {
         </button>
         <button
           type="button"
-          disabled={
-            !!adminError ||
-            isSubmitting ||
-            isNotEstimated ||
-            estimate.noProceedsLeft
-          }
+          disabled={!!adminError || isSubmitting || isNotEstimated}
           onClick={
             isNotEstimated
               ? undefined
@@ -183,12 +178,10 @@ function Breakdown({
   return (
     <>
       {estimate.items
-        .filter((i) => i.amount === 0)
+        .filter((i) => i.amount > 0)
         .map(({ name, amount, prettyAmount }, i) => (
           <Row key={i} title={name}>
-            <span className={amount < 0 ? "text-red dark:text-red-l2" : ""}>
-              {prettyAmount}
-            </span>
+            {prettyAmount}
           </Row>
         ))}
     </>

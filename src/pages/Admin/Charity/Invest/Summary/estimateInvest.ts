@@ -19,7 +19,6 @@ export type EstimateErrror = { error: string };
 export type InvestEstimate = {
   tx: EVMTx;
   items: EstimateItem[];
-  noProceedsLeft?: boolean;
 };
 
 export async function estimateInvest(
@@ -56,6 +55,8 @@ export async function estimateInvest(
       gasFee: crossChainFee.scaled,
     };
 
+    console.log({ investRequest });
+
     const [data, dest, meta] = encodeTx(
       "accounts.invest-v2",
       {
@@ -86,18 +87,17 @@ export async function estimateInvest(
       prettyAmount: prettyAmount(txFee.amount, txFee.symbol),
     };
 
-    const toReceive = new Decimal(token.amount).sub(crossChainFee.amount);
+    const totalAmount = new Decimal(token.amount).add(crossChainFee.amount);
 
-    const toReceiveItem: EstimateItem = {
-      name: "Estimated proceeds",
-      amount: toReceive.toNumber(),
-      prettyAmount: prettyAmount(toReceive.toNumber(), token.symbol),
+    const totalAmountItem: EstimateItem = {
+      name: "Total amount",
+      amount: totalAmount.toNumber(),
+      prettyAmount: prettyAmount(totalAmount.toNumber(), token.symbol),
     };
 
     return {
-      noProceedsLeft: toReceive.lt(0),
       tx: estimatedTx.val as EVMTx,
-      items: [amountItem, txFeeItem, crossChainFeeItem, toReceiveItem],
+      items: [amountItem, txFeeItem, crossChainFeeItem, totalAmountItem],
     };
   } catch (err) {
     console.log(err);
