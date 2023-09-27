@@ -179,7 +179,7 @@ function Breakdown({
     <>
       {estimate.items
         .filter((i) => i.amount > 0)
-        .map(({ name, amount, prettyAmount }, i) => (
+        .map(({ name, prettyAmount }, i) => (
           <Row key={i} title={name}>
             {prettyAmount}
           </Row>
