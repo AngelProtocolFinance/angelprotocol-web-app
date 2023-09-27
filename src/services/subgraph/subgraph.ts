@@ -189,7 +189,6 @@ export const subgraph = createApi({
         return res.data.applicationProposal;
       },
     }),
-    //endowType, id
     beneficiaryEndowments: builder.query<
       WithdrawEndowBeneficiary[],
       WithdrawBeneficiaryEndowmentsQueryParams
@@ -211,7 +210,7 @@ export const subgraph = createApi({
         return {
           method: "POST",
           body: {
-            //prettier ignore
+            //prettier-ignore
             query: `{
               endowments(
                 first: ${NUM_ENDOW_PER_PAGE},
