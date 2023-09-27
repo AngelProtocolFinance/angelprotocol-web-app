@@ -47,6 +47,7 @@ export default function Strategy(props: AWSstrategy) {
         </KeyVal>
         <KeyVal title="Market Cap">{humanize(market_cap, 0)} USD</KeyVal>
         <button
+          disabled={true} //temp
           type="button"
           onClick={() => showModal(Investor, { strategy: props, endowId: id })}
           className="mt-6 @lg:mt-0 btn-outline-filled px-8 py-2 ml-auto w-full @lg:w-auto col-span-full"
