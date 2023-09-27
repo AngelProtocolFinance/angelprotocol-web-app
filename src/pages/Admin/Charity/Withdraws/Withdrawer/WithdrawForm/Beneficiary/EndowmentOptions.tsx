@@ -34,7 +34,7 @@ export default function EndowmentOptions({
         messages={{
           loading: "loading options..",
           error: "failed to get endowments",
-          empty: searchText ? `${searchText} not found` : "no options found",
+          empty: searchText ? `${searchText} not found` : "no endowments found",
         }}
         //avoid transferring to own endowment
         classes={{ container: "w-full text-sm p-2" }}

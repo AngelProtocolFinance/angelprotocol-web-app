@@ -64,10 +64,10 @@ export default function WithdrawForm({
     beneficiaryEndowment:
       closed && closingBeneficiary.type === "endowment"
         ? {
-            id: +closingBeneficiary.value,
+            id: closingBeneficiary.value,
             name: "Closing beneficiary endowment",
           }
-        : { id: 0, name: "" },
+        : { id: "0", name: "" },
 
     beneficiaryType: closed
       ? closingBeneficiary.type
