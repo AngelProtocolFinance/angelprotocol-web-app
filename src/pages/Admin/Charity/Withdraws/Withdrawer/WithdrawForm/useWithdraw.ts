@@ -8,7 +8,6 @@ import { TxOnSuccess, TxSuccessMeta } from "types/tx";
 import { WithdrawMeta } from "types/tx";
 import { client } from "services/constants";
 import { version as v } from "services/helpers";
-import { queryContract } from "services/juno/queryContract";
 import { useModalContext } from "contexts/ModalContext";
 import { TxPrompt } from "components/Prompt";
 import { createTx, encodeTx } from "contracts/createTx/createTx";
@@ -79,62 +78,6 @@ export default function useWithdraw() {
         amount: +a.value,
       })),
     };
-
-    if (fv.beneficiaryType === "endowment") {
-      showModal(TxPrompt, { loading: "Verifying beneficiary endowment.." });
-      try {
-        const beneficiaryEndowment = await queryContract("accounts.endowment", {
-          id: +fv.beneficiaryEndowment.id,
-        });
-
-        /** even though not existing,
-         * queryEndowDetails still returns an endowment with placeholder values */
-        if (beneficiaryEndowment.owner === ADDRESS_ZERO) {
-          return showModal(TxPrompt, {
-            error: `Endowment (id: ${fv.beneficiaryEndowment.id}) doesn't exist`,
-          });
-        }
-
-        const beneficiaryEndowmentState = await queryContract(
-          "accounts.state",
-          {
-            id: +fv.beneficiaryEndowment.id,
-          }
-        );
-
-        /** a closingBeneficiary might have been validated on closeEndowment call,
-         *  but it may have been closed prior to withdraw call
-         */
-        if (beneficiaryEndowmentState.closingEndowment) {
-          return showModal(TxPrompt, {
-            error: "Beneficiary endowment is closed.",
-          });
-        }
-
-        if (fv.endowType === "charity") {
-          if (beneficiaryEndowment.endowType !== "charity") {
-            return showModal(TxPrompt, {
-              error: "Beneficiary must be charity",
-            });
-          }
-        }
-
-        if (fv.endowType === "daf") {
-          const isBeneficiaryDAF = await queryContract("accounts.is-daf", {
-            id: +fv.beneficiaryEndowment.id,
-          });
-          if (!isBeneficiaryDAF) {
-            return showModal(TxPrompt, {
-              error: "Beneficiary is not approved by this DAF",
-            });
-          }
-        }
-      } catch (err) {
-        return showModal(TxPrompt, {
-          error: "Error checking beneficiary endowment",
-        });
-      }
-    }
 
     const [data, dest, meta] = encodeTx(
       "accounts.withdraw",

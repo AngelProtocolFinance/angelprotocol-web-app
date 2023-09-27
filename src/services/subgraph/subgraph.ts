@@ -204,7 +204,7 @@ export const subgraph = createApi({
           //FUTURE: handle type === "daf"
           withdrawerEndowType === "charity" ? "[Charity]" : "[Charity,Normal]";
         const searchClause = beneficiaryEndowName
-          ? `name_contains_nocase: "${beneficiaryEndowName}`
+          ? `name_contains_nocase: "${beneficiaryEndowName}"`
           : "";
 
         const NUM_ENDOW_PER_PAGE = 5;
