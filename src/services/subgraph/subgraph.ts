@@ -8,7 +8,10 @@ import { TransactionsArgs } from "./types";
 import { TransactionStatus } from "types/lists";
 import {
   ApplicationProposalRes,
+  BeneficiaryEndowmentsParams,
+  Endowment,
   GraphQLApplicationProposalRes,
+  GraphQLEndowmentsRes,
   GraphQLTransactionRes,
   GraphQLTransactionsRes,
   Paginated,
@@ -184,6 +187,42 @@ export const subgraph = createApi({
       },
       transformResponse(res: GraphQLApplicationProposalRes) {
         return res.data.applicationProposal;
+      },
+    }),
+    //endowType, id
+    beneficiaryEndowments: builder.query<
+      Endowment[],
+      BeneficiaryEndowmentsParams
+    >({
+      providesTags: ["transactions"],
+      query: ({ searchText, endowId, endowType }) => {
+        const endowTypes =
+          //FUTURE: handle type === "daf"
+          endowType === "charity" ? "[Charity]" : "[Charity,Normal]";
+        const searchClause = searchText
+          ? `name_contains_nocase: "${searchText}`
+          : "";
+
+        const NUM_ENDOW_PER_PAGE = 5;
+        return {
+          method: "POST",
+          body: {
+            //prettier ignore
+            query: `{
+              endowments(
+                first: ${NUM_ENDOW_PER_PAGE},
+                where: {beneficiaryWallet: null, beneficiaryEndowment: null, id_not: "${endowId}", endowmentType_in: ${endowTypes}, ${searchClause} },
+                orderBy: name
+              ) {
+                id
+                name
+              }
+            }`,
+          },
+        };
+      },
+      transformResponse: (res: GraphQLEndowmentsRes) => {
+        return res.data.endowments;
       },
     }),
   }),
