@@ -4,15 +4,19 @@ import { TokenWithAmount } from "types/tx";
 
 export type InvestFormValues = {
   token: TokenWithAmount;
-
-  type: AccountType;
+  accountType: AccountType;
   lockPeriod: "1" | "7" | "14"; //days
 
   //meta
   tokens: TokenWithAmount[];
 };
 
+export type InvestorProps = {
+  strategy: AWSstrategy;
+  endowId: number;
+  initialFormValues?: InvestFormValues;
+};
+
 export type AccountBalances = { [key in AccountType]: number };
 
-export type SummaryProps = Pick<InvestFormValues, "token" | "type"> &
-  AWSstrategy;
+export type SummaryProps = InvestFormValues & AWSstrategy;

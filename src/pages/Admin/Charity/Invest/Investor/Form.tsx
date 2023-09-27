@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { AccountBalances, FormValues as FV } from "./types";
+import { AccountBalances, InvestFormValues as FV } from "../types";
 import { AWSstrategy } from "types/aws";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
@@ -21,11 +21,7 @@ export default function Form(props: FormProps) {
     <Modal
       as="form"
       onSubmit={handleSubmit((fv) => {
-        showModal(Summary, {
-          ...props,
-          token: fv.token,
-          type: fv.type,
-        });
+        showModal(Summary, { ...fv, ...props });
       })}
       className="max-h-[95vh] overflow-y-auto max-w-[37.5rem] w-[95vw] sm:w-full fixed-center z-20 bg-gray-l6 dark:bg-blue-d6 border border-prim rounded"
     >

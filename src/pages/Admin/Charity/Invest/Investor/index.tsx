@@ -1,6 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { AccountBalances, FormValues, InvestorProps } from "./types";
+import { InvestFormValues, InvestorProps } from "../types";
+import { AccountBalances } from "./types";
 import { TokenWithAmount } from "types/tx";
 import { isTooltip, useAdminContext } from "pages/Admin/Context";
 import { useEndowBalanceQuery } from "services/juno/custom";
@@ -8,7 +9,11 @@ import { condenseToNum } from "helpers";
 import Form from "./Form";
 import { schema } from "./schema";
 
-export default function Investor({ endowId, strategy }: InvestorProps) {
+export default function Investor({
+  endowId,
+  strategy,
+  initialFormValues,
+}: InvestorProps) {
   const { txResource } = useAdminContext([
     "liquidInvestmentManagement",
     "lockedInvestmentManagement",
@@ -42,11 +47,11 @@ export default function Investor({ endowId, strategy }: InvestorProps) {
     coingecko_denom: "",
   };
 
-  const methods = useForm<FormValues>({
+  const methods = useForm<InvestFormValues>({
     mode: "onChange",
     reValidateMode: "onChange",
-    defaultValues: {
-      type: "liquid",
+    defaultValues: initialFormValues || {
+      accountType: "liquid",
       lockPeriod: "1",
       token,
       tokens: [token],
