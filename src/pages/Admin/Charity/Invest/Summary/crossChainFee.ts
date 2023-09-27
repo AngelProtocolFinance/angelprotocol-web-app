@@ -1,9 +1,10 @@
 import Dec from "decimal.js";
-import { SummaryProps } from "../types";
+import { AWSstrategy } from "types/aws";
 import {
   AxelarGasEstimateResponse,
   AxelarGasFeeEstimationParams,
 } from "types/axelar";
+import { TokenWithAmount } from "types/tx";
 import { axelarAPIurl } from "services/axelar";
 import { scaleToStr } from "helpers";
 import { contracts } from "constants/contracts";
@@ -13,11 +14,10 @@ type Fee = {
   amount: number;
 };
 
-export default async function crossChainFee({
-  token,
-  routerAxelarChainName,
-  router,
-}: SummaryProps): Promise<Fee | null> {
+export default async function crossChainFee(
+  token: TokenWithAmount,
+  { routerAxelarChainName, router }: AWSstrategy
+): Promise<Fee | null> {
   try {
     //zero cross-chain fee for local investments
     if (routerAxelarChainName === "polygon") {

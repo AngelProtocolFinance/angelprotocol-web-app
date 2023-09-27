@@ -21,7 +21,7 @@ export default function Form(props: FormProps) {
     <Modal
       as="form"
       onSubmit={handleSubmit((fv) => {
-        showModal(Summary, { ...fv, ...props });
+        showModal(Summary, { investorFormValues: fv, strategy: props });
       })}
       className="max-h-[95vh] overflow-y-auto max-w-[37.5rem] w-[95vw] sm:w-full fixed-center z-20 bg-gray-l6 dark:bg-blue-d6 border border-prim rounded"
     >

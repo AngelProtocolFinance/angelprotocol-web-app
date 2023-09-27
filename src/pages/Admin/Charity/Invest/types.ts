@@ -19,4 +19,7 @@ export type InvestorProps = {
 
 export type AccountBalances = { [key in AccountType]: number };
 
-export type SummaryProps = InvestFormValues & AWSstrategy;
+export type SummaryProps = {
+  strategy: AWSstrategy;
+  investorFormValues: InvestFormValues;
+};

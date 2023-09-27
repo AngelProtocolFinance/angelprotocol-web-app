@@ -1,5 +1,6 @@
 import Decimal from "decimal.js";
-import { SummaryProps } from "../types";
+import { InvestFormValues } from "../types";
+import { AWSstrategy } from "types/aws";
 import { InvestRequest } from "types/contracts";
 import { EVMTx } from "types/evm";
 import { WalletState } from "contexts/WalletContext";
@@ -25,50 +26,49 @@ export async function estimateInvest(
   endowId: number,
   multisig: string,
   wallet: WalletState,
-  params: SummaryProps
+  fv: InvestFormValues,
+  strategy: AWSstrategy
 ): Promise<InvestEstimate | EstimateErrror> {
   try {
-    const crossChainFee = await crossChainFeeFn(params);
+    const crossChainFee = await crossChainFeeFn(fv.token, strategy);
     if (!crossChainFee) return { error: "Failed to estimate cross chain fee" };
-
-    const { token, strategy_key, type } = params;
 
     const crossChainFeeItem: EstimateItem = {
       name: "Cross chain fee",
       amount: crossChainFee.amount,
-      prettyAmount: prettyAmount(crossChainFee.amount, token.symbol),
+      prettyAmount: prettyAmount(crossChainFee.amount, fv.token.symbol),
     };
 
     const amountItem: EstimateItem = {
       name: "Invested amount",
-      amount: +token.amount,
-      prettyAmount: prettyAmount(+token.amount, token.symbol),
+      amount: +fv.token.amount,
+      prettyAmount: prettyAmount(+fv.token.amount, fv.token.symbol),
     };
 
-    const totalAmount = new Decimal(token.amount).add(crossChainFee.amount);
+    const totalAmount = new Decimal(fv.token.amount).add(crossChainFee.amount);
 
     const totalAmountItem: EstimateItem = {
       name: "Total amount",
       amount: totalAmount.toNumber(),
-      prettyAmount: prettyAmount(totalAmount.toNumber(), token.symbol),
+      prettyAmount: prettyAmount(totalAmount.toNumber(), fv.token.symbol),
     };
 
-    if (totalAmount.gt(token.balance)) {
+    if (totalAmount.gt(fv.token.balance)) {
       return {
         error: `Not enough balance: ( ${prettyAmount(
-          token.balance,
-          token.symbol
+          fv.token.balance,
+          fv.token.symbol
         )} ) to pay for fees.`,
       };
     }
 
-    const scaledAmount = scaleToStr(token.amount, token.decimals);
+    const scaledAmount = scaleToStr(fv.token.amount, fv.token.decimals);
 
     const investRequest: InvestRequest = {
-      strategy: strategy_key,
-      token: token.symbol,
-      lockAmt: type === "locked" ? scaledAmount : "0",
-      liquidAmt: type === "liquid" ? scaledAmount : "0",
+      strategy: strategy.strategy_key,
+      token: fv.token.symbol,
+      lockAmt: fv.accountType === "locked" ? scaledAmount : "0",
+      liquidAmt: fv.accountType === "liquid" ? scaledAmount : "0",
       gasFee: crossChainFee.scaled,
     };
 

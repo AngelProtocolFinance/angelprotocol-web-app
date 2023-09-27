@@ -1,7 +1,6 @@
 import { PropsWithChildren, useEffect, useState } from "react";
 import { SummaryProps } from "../types";
 import { TokenWithAmount, isTxResultError } from "types/tx";
-import { isTooltip, useAdminContext } from "pages/Admin/Context";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import Modal from "components/Modal";
@@ -10,6 +9,8 @@ import { ErrorStatus, LoadingStatus } from "components/Status";
 import { Tooltip } from "components/admin";
 import { humanize } from "helpers";
 import { sendEVMTx } from "helpers/tx/sendTx/sendEVMTx";
+import { isTooltip, useAdminContext } from "../../../Context";
+import Investor from "../Investor";
 import {
   EstimateErrror,
   InvestEstimate,
@@ -23,12 +24,15 @@ const estimateIsError = (
 ): estimate is { error: string } =>
   typeof estimate === "object" && "error" in estimate;
 
-export default function Summary(props: SummaryProps) {
+export default function Summary({
+  investorFormValues: fv,
+  strategy,
+}: SummaryProps) {
   const { showModal, closeModal, setModalOption } = useModalContext();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [estimate, setEstimate] = useState<EstimateStatus>("loading");
   const { txResource, multisig, id } = useAdminContext([
-    props.type === "liquid"
+    fv.accountType === "liquid"
       ? "liquidInvestmentManagement"
       : "lockedInvestmentManagement",
   ]);
@@ -40,13 +44,20 @@ export default function Summary(props: SummaryProps) {
       }
       setEstimate("loading");
       const { wallet } = txResource;
-      const _estimate = await estimateInvest(id, multisig, wallet, props);
+      const _estimate = await estimateInvest(
+        id,
+        multisig,
+        wallet,
+        fv,
+        strategy
+      );
       setEstimate(_estimate);
     })();
     //eslint-disable-next-line
-  }, [props]);
+  }, [fv, strategy]);
 
-  function goBack() {}
+  const toInvestor = () =>
+    showModal(Investor, { initialFormValues: fv, strategy, endowId: id });
 
   async function submit({ tx }: InvestEstimate) {
     try {
@@ -67,7 +78,6 @@ export default function Summary(props: SummaryProps) {
     }
   }
 
-  const { token } = props;
   const isNotEstimated = estimateIsError(estimate) || estimate === "loading";
 
   const adminError = isTooltip(txResource) ? txResource : undefined;
@@ -89,25 +99,25 @@ export default function Summary(props: SummaryProps) {
       </div>
       <div className="grid content-start m-8 px-6 py-2 border border-prim rounded">
         <Row title="Name">
-          <span>{props.name}</span>
+          <span>{strategy.name}</span>
         </Row>
         <Row title="Account">
-          <span className="capitalize">{props.type}</span>
+          <span className="capitalize">{fv.accountType}</span>
         </Row>
         <Row title="Risk Rating">
-          <span>{props.rating}</span>
+          <span>{strategy.rating}</span>
         </Row>
         <Row title="APR">
-          <span>{props.apy}</span>
+          <span>{strategy.apy}</span>
         </Row>
-        <Breakdown estimate={estimate} token={token} />
+        <Breakdown estimate={estimate} token={fv.token} />
       </div>
 
       {adminError && <Tooltip tooltip={adminError} classes="mx-8 my-2" />}
       <div className="px-8 py-4 gap-x-3 border-t border-prim flex justify-center sm:justify-end">
         <button
           disabled={!!adminError || isSubmitting}
-          onClick={goBack}
+          onClick={toInvestor}
           type="button"
           className="text-sm min-w-[8rem] py-2 btn-outline-filled"
         >
