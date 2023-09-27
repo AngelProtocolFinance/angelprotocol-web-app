@@ -45,6 +45,23 @@ export async function estimateInvest(
       prettyAmount: prettyAmount(+token.amount, token.symbol),
     };
 
+    const totalAmount = new Decimal(token.amount).add(crossChainFee.amount);
+
+    const totalAmountItem: EstimateItem = {
+      name: "Total amount",
+      amount: totalAmount.toNumber(),
+      prettyAmount: prettyAmount(totalAmount.toNumber(), token.symbol),
+    };
+
+    if (totalAmount.gt(token.balance)) {
+      return {
+        error: `Not enough balance: ( ${prettyAmount(
+          token.balance,
+          token.symbol
+        )} ) to pay for fees.`,
+      };
+    }
+
     const scaledAmount = scaleToStr(token.amount, token.decimals);
 
     const investRequest: InvestRequest = {
@@ -54,8 +71,6 @@ export async function estimateInvest(
       liquidAmt: type === "liquid" ? scaledAmount : "0",
       gasFee: crossChainFee.scaled,
     };
-
-    console.log({ investRequest });
 
     const [data, dest, meta] = encodeTx(
       "accounts.invest-v2",
@@ -85,14 +100,6 @@ export async function estimateInvest(
       name: "Transaction fee",
       amount: txFee.amount,
       prettyAmount: prettyAmount(txFee.amount, txFee.symbol),
-    };
-
-    const totalAmount = new Decimal(token.amount).add(crossChainFee.amount);
-
-    const totalAmountItem: EstimateItem = {
-      name: "Total amount",
-      amount: totalAmount.toNumber(),
-      prettyAmount: prettyAmount(totalAmount.toNumber(), token.symbol),
     };
 
     return {
