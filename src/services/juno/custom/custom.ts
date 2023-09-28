@@ -9,7 +9,7 @@ import {
 import { BridgeFeesRes } from "types/aws";
 import { AcceptedTokens, AccountType } from "types/contracts";
 import {
-  GraphQLEndowmentsRes,
+  GraphQLClosedEndowmentsRes,
   MultisigOwnersRes,
   MultisigRes,
 } from "types/subgraph";
@@ -119,7 +119,7 @@ export const customApi = junoApi.injectEndpoints({
         });
 
         const closedEndowmentSourcesQuery = querySubgraph<
-          GraphQLEndowmentsRes["data"]
+          GraphQLClosedEndowmentsRes["data"]
         >(`{
           endowment(id: "${withdrawer.id}") {
             beneficiaryOf {
@@ -134,7 +134,7 @@ export const customApi = junoApi.injectEndpoints({
           bridgeFees,
           earlyLockedWithdrawFeeSetting,
           withdrawFeeSetting,
-          { endowments: closedEndowmentSources },
+          closedEndowmentSourcesRes,
         ] = await Promise.all([
           //show balance of source endowment
           endowBalance(sourceEndowId || withdrawer.id),
@@ -163,10 +163,13 @@ export const customApi = junoApi.injectEndpoints({
               withdrawBps: withdrawFeeSetting.bps,
               earlyLockedWithdrawBps: earlyLockedWithdrawFeeSetting.bps,
             },
-            closedEndowmentSources: closedEndowmentSources.map((endow) => ({
-              ...endow,
-              name: endow.name || "Default endowment name",
-            })),
+            closedEndowmentSources:
+              closedEndowmentSourcesRes.endowment.beneficiaryOf.map(
+                (endow) => ({
+                  ...endow,
+                  name: endow.name || "Default endowment name",
+                })
+              ),
           },
         };
       },
