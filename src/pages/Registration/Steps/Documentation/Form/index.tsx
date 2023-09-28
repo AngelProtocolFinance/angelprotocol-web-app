@@ -56,7 +56,7 @@ export default function Form() {
         label="EIN# (or equivalent non-US charity/nonprofit registration number)"
         required
         classes={{ container: "mb-6 mt-1" }}
-        placeholder="e.g. https://www.example.com"
+        placeholder="e.g. xx-xxxxxxxxxx"
       />
       <Label className="mb-2" required>
         Proof of registration as a 501(C)(3) nonprofit or equivalent
