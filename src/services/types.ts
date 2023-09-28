@@ -66,6 +66,12 @@ export type ProtocolFeeRates = {
   earlyLockedWithdrawBps: number;
 };
 
+export type WithdrawDataQueryParams = {
+  sourceEndowId?: number; //if not provided, source is withdrawer's
+  withdrawerEndowId: number;
+  withdrawerEndowType: EndowmentType;
+};
+
 export type WithdrawData = {
   balances: EndowBalance;
   bridgeFees: BridgeFees;
