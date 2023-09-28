@@ -128,12 +128,14 @@ export const customApi = junoApi.injectEndpoints({
           endowBalance(sourceEndowId || withdrawerEndowId),
           bridgeFeesPromise,
           queryContract("registrar.fee-setting", {
-            type: withdrawerEndowType
-              ? "EarlyLockedWithdraw"
-              : "EarlyLockedWithdrawCharity",
+            type:
+              withdrawerEndowType === "ast"
+                ? "EarlyLockedWithdraw"
+                : "EarlyLockedWithdrawCharity",
           }),
           queryContract("registrar.fee-setting", {
-            type: withdrawerEndowType ? "Withdraw" : "WithdrawCharity",
+            type:
+              withdrawerEndowType === "ast" ? "Withdraw" : "WithdrawCharity",
           }),
         ]);
 
