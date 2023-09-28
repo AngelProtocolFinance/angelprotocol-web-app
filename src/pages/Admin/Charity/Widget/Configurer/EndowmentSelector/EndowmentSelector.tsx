@@ -15,7 +15,7 @@ export default function EndowmentSelector() {
 
   const {
     field: { value: endowment, onChange: onEndowmentChange, ref },
-  } = useController<Pick<FV, "endowment">>({
+  } = useController<FV, "endowment">({
     name: "endowment",
   });
 
