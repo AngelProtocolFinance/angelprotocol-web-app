@@ -5,11 +5,11 @@ import { useAdminContext } from "../../../Context";
 import Tabs from "./Tabs";
 
 export default function Withdrawer() {
-  const { id, closed, closingBeneficiary, endowType } =
+  const { id, closed, name, closingBeneficiary, endowType } =
     useAdminContext<"charity">();
+
   const queryState = useWithdrawDataQuery({
-    withdrawerEndowType: endowType,
-    withdrawerEndowId: id,
+    withdrawer: { id, endowType, name },
   });
 
   return (

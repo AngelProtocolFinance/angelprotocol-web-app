@@ -68,14 +68,23 @@ export type ProtocolFeeRates = {
 
 export type WithdrawDataQueryParams = {
   sourceEndowId?: number; //if not provided, source is withdrawer's
-  withdrawerEndowId: number;
-  withdrawerEndowType: EndowmentType;
+  withdrawer: {
+    id: number;
+    name: string;
+    endowType: EndowmentType;
+  };
+};
+
+type ClosedEndowmentSource = {
+  id: string;
+  name: string;
 };
 
 export type WithdrawData = {
   balances: EndowBalance;
   bridgeFees: BridgeFees;
   protocolFeeRates: ProtocolFeeRates;
+  closedEndowmentSources: ClosedEndowmentSource[] | null;
 };
 
 export type Profile =

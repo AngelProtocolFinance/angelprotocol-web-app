@@ -8,7 +8,11 @@ import {
 } from "../../types";
 import { BridgeFeesRes } from "types/aws";
 import { AcceptedTokens, AccountType } from "types/contracts";
-import { MultisigOwnersRes, MultisigRes } from "types/subgraph";
+import {
+  GraphQLEndowmentsRes,
+  MultisigOwnersRes,
+  MultisigRes,
+} from "types/subgraph";
 import { version as v } from "services/helpers";
 import { IS_TEST } from "constants/env";
 import { APIs, GRAPHQL_ENDPOINT } from "constants/urls";
@@ -106,11 +110,7 @@ export const customApi = junoApi.injectEndpoints({
 
     withdrawData: builder.query<WithdrawData, WithdrawDataQueryParams>({
       providesTags: ["accounts.token-balance"],
-      queryFn: async ({
-        withdrawerEndowId,
-        withdrawerEndowType,
-        sourceEndowId,
-      }) => {
+      queryFn: async ({ withdrawer, sourceEndowId }) => {
         const bridgeFeesPromise = fetch(
           APIs.apes + `/${v(2)}/axelar-bridge-fees`
         ).then<BridgeFeesRes>((res) => {
@@ -118,25 +118,38 @@ export const customApi = junoApi.injectEndpoints({
           return res.json();
         });
 
+        const closedEndowmentSourcesQuery = querySubgraph<
+          GraphQLEndowmentsRes["data"]
+        >(`{
+          endowment(id: "${withdrawer.id}") {
+            beneficiaryOf {
+              id
+              name
+            }
+          }
+        }`);
+
         const [
           balances,
           bridgeFees,
           earlyLockedWithdrawFeeSetting,
           withdrawFeeSetting,
+          { endowments: closedEndowmentSources },
         ] = await Promise.all([
           //show balance of source endowment
-          endowBalance(sourceEndowId || withdrawerEndowId),
+          endowBalance(sourceEndowId || withdrawer.id),
           bridgeFeesPromise,
           queryContract("registrar.fee-setting", {
             type:
-              withdrawerEndowType === "ast"
+              withdrawer.endowType === "ast"
                 ? "EarlyLockedWithdraw"
                 : "EarlyLockedWithdrawCharity",
           }),
           queryContract("registrar.fee-setting", {
             type:
-              withdrawerEndowType === "ast" ? "Withdraw" : "WithdrawCharity",
+              withdrawer.endowType === "ast" ? "Withdraw" : "WithdrawCharity",
           }),
+          closedEndowmentSourcesQuery,
         ]);
 
         return {
@@ -150,6 +163,10 @@ export const customApi = junoApi.injectEndpoints({
               withdrawBps: withdrawFeeSetting.bps,
               earlyLockedWithdrawBps: earlyLockedWithdrawFeeSetting.bps,
             },
+            closedEndowmentSources: closedEndowmentSources.map((endow) => ({
+              ...endow,
+              name: endow.name || "Default endowment name",
+            })),
           },
         };
       },

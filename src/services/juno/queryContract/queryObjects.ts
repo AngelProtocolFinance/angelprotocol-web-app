@@ -165,6 +165,7 @@ export const queryObjects: {
       const controller = d.settingsController;
       return {
         owner: d.owner.toLowerCase(),
+        name: d.name,
         sdgs: d.sdgs.map((s) => s.toNumber()),
         endowType: toEndowType(d.endowType),
         maturityTime: d.maturityTime.toNumber(),
