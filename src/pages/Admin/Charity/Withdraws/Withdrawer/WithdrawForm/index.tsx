@@ -16,6 +16,7 @@ export default function WithdrawForm({
   bridgeFees,
   protocolFeeRates,
   endowmentState,
+  closedEndowSources,
 }: WithdrawerProps & { classes?: string }) {
   const { wallet } = useGetWallet();
   const {
@@ -46,6 +47,7 @@ export default function WithdrawForm({
       depositBps: depositFee.bps,
       withdrawBps: withdrawFee.bps,
     },
+    closedEndowSources,
     endowmentState,
   };
 

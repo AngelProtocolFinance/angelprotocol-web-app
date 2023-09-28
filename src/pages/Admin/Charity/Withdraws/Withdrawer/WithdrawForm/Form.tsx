@@ -4,6 +4,7 @@ import Amounts from "./Amounts";
 import Beneficiary from "./Beneficiary";
 import Breakdown from "./Breakdown";
 import Network from "./Network";
+import SourceEndow from "./SourceEndow";
 import Submit from "./Submit";
 import Warning from "./Warning";
 import useWithdraw from "./useWithdraw";
@@ -26,6 +27,7 @@ export default function Form({ classes = "" }) {
       noValidate
     >
       <fieldset disabled={!!tooltip} className="contents">
+        <SourceEndow classes="-mt-2 mb-2" />
         <Amounts
           classes="mb-4"
           //the withdraw should be done in closingBeneficairy's admin/withdraw

@@ -75,7 +75,7 @@ export type WithdrawDataQueryParams = {
   };
 };
 
-type ClosedEndowmentSource = {
+export type ClosedEndowmentSource = {
   id: string;
   name: string;
 };
@@ -84,7 +84,7 @@ export type WithdrawData = {
   balances: EndowBalance;
   bridgeFees: BridgeFees;
   protocolFeeRates: ProtocolFeeRates;
-  closedEndowmentSources: ClosedEndowmentSource[] | null;
+  closedEndowmentSources: ClosedEndowmentSource[];
 };
 
 export type Profile =

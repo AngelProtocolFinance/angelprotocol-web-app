@@ -4,7 +4,7 @@ import { PropsWithChildren, createContext, useContext, useState } from "react";
  * FUTURE: too much boilerplate even using redux (setup slice, add slice to store, export actions etc.)
  * migrate to `Jotai` or `Relay`
  */
-type WithdrawEndowSource = {
+export type WithdrawEndowSource = {
   id: number;
   name: string;
 };

@@ -25,12 +25,16 @@ function Withdrawer() {
         error: "Failed to load withdraw form",
       }}
     >
-      {({ bridgeFees, balances, protocolFeeRates }) => (
+      {({ bridgeFees, balances, protocolFeeRates, closedEndowmentSources }) => (
         <Tabs
           endowmentState={{ closed, closingBeneficiary }}
           balances={balances}
           bridgeFees={bridgeFees}
           protocolFeeRates={protocolFeeRates}
+          closedEndowSources={closedEndowmentSources.map((endow) => ({
+            ...endow,
+            id: +endow.id,
+          }))}
         />
       )}
     </QueryLoader>
