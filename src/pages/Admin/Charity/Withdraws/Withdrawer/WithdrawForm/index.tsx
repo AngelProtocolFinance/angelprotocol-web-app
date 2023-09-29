@@ -36,7 +36,7 @@ export default function WithdrawForm({
 
   const meta: FormMeta = {
     _amounts: "",
-    endowId: id,
+    thisEndowId: id,
     endowType,
     maturityTime,
     accountType,

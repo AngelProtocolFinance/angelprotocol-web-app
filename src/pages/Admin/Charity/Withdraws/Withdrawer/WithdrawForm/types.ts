@@ -36,7 +36,7 @@ export type FormMeta = {
   endowType: EndowmentType;
   maturityTime: number;
   endowFeeRates: EndowFeeRates;
-  endowId: number;
+  thisEndowId: number;
 } & Pick<
   WithdrawerProps,
   | "accountType"
