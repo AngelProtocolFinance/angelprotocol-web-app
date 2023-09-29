@@ -23,6 +23,7 @@ import { adminRoutes, appRoutes } from "constants/routes";
 import { tokens } from "constants/tokens";
 import { APIs } from "constants/urls";
 import { TxMeta, isTooltip, useAdminContext } from "../../../../Context";
+import { useWithdrawContext } from "../Context";
 import { bridgeFee, chainName } from "./helpers";
 
 const LOG_ERROR = "error";
@@ -40,13 +41,14 @@ type WithdrawLogPayload = {
 };
 
 export default function useWithdraw() {
+  const { withdrawEndowSource } = useWithdrawContext();
   const { handleSubmit, watch, getValues } = useFormContext<FV>();
   const accountType = watch("accountType");
   const beneficiaryType = watch("beneficiaryType");
 
   const {
     multisig,
-    id: endowmentId,
+    id: thisEndowmentId,
     txResource,
     closed,
     closingBeneficiary,
@@ -59,6 +61,9 @@ export default function useWithdraw() {
   const sendTx = useTxSender();
 
   const destinationChainId = watch("destinationChainId");
+  const sourceEndowId = withdrawEndowSource?.id || thisEndowmentId;
+  const isFundsFromClosedEndow = sourceEndowId !== thisEndowmentId;
+
   async function withdraw(fv: FV) {
     if (isTooltip(txResource)) throw new Error(txResource);
 
@@ -82,7 +87,7 @@ export default function useWithdraw() {
     const [data, dest, meta] = encodeTx(
       "accounts.withdraw",
       {
-        id: endowmentId,
+        id: sourceEndowId,
         type: accType,
         beneficiaryAddress:
           fv.beneficiaryType === "wallet" ? fv.beneficiaryWallet : ADDRESS_ZERO,
@@ -96,7 +101,7 @@ export default function useWithdraw() {
       {
         content: metadata,
         title: `${fv.accountType} withdraw `,
-        description: `${fv.accountType} withdraw from endowment id: ${endowmentId}`,
+        description: `${fv.accountType} withdraw from endowment id: ${sourceEndowId}`,
       }
     );
 
@@ -161,7 +166,11 @@ export default function useWithdraw() {
           amount: +fv.amounts[0].value,
           chain_id: wallet.chain.chain_id,
           denomination: tokens[fv.amounts[0].tokenId].symbol,
-          endowment_id: endowmentId,
+          /** 
+           only withdraws from thisEndowment is ever be recorded in AWS
+           - where withdraw is cross-chain and bene is wallet
+           */
+          endowment_id: thisEndowmentId, //source of funds
           endowment_multisig: multisig,
           target_chain: fv.destinationChainId,
           target_wallet: fv.beneficiaryWallet,
@@ -224,6 +233,7 @@ export default function useWithdraw() {
     endowmentType: getValues("endowType"),
     closed,
     closingBeneficiary,
+    isFundsFromClosedEndow,
   };
 }
 
