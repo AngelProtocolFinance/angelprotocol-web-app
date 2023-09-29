@@ -7,6 +7,7 @@ export const {
   useProposalQuery,
   useLazyProposalsQuery,
   useApplicationProposalQuery,
+  useBeneficiaryEndowmentsQuery,
   util: {
     updateQueryData: updateSubgraphQueryData,
     invalidateTags: invalidateSubgraphTags,

@@ -42,7 +42,7 @@ const FEE_BASIS = 10_000;
 
 type FeeArgs = Except<
   FV,
-  "beneficiaryEndowmentId" | "beneficiaryWallet" | "amounts"
+  "beneficiaryEndowment" | "beneficiaryWallet" | "amounts"
 > & {
   withdrawAmount: number;
 };
