@@ -104,12 +104,6 @@ export default function Summary({
         <Row title="Account">
           <span className="capitalize">{fv.accountType}</span>
         </Row>
-        <Row title="Risk Rating">
-          <span>{strategy.rating}</span>
-        </Row>
-        <Row title="APR">
-          <span>{strategy.apy}</span>
-        </Row>
         <Breakdown estimate={estimate} token={fv.token} />
       </div>
 
