@@ -10,6 +10,7 @@ export default function SourceEndow({ classes = "" }) {
   const {
     getValues,
     formState: { isSubmitting },
+    setValue,
   } = useFormContext<FV>();
   const thisEndow = { id, name: "This endowment" };
   const closedEndowSources = getValues("closedEndowSources");
@@ -24,7 +25,18 @@ export default function SourceEndow({ classes = "" }) {
     <Listbox
       value={withdrawEndowSource}
       by="name"
-      onChange={(val: WithdrawEndowSource) => setWithdrawEndowSource(val)}
+      onChange={(val: WithdrawEndowSource) => {
+        /**
+         * user might select beneficiary type to wallet and then select
+         * closed endowment as source. Also update beneficiaryType accordingly
+         */
+        setValue("beneficiaryType", "endowment");
+        setValue("beneficiaryEndowment", {
+          id: val.id.toString(),
+          name: val.name,
+        });
+        setWithdrawEndowSource(val);
+      }}
       as="div"
       className={`relative ${classes}`}
     >
