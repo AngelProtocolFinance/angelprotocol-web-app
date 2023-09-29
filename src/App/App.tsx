@@ -62,7 +62,7 @@ export default function App() {
               <Route path={appRoutes.marketplace} element={<Marketplace />} />
 
               <Route path={appRoutes.marketplace}>
-                <Route path=":id" element={<Profile />} />
+                <Route path=":id/*" element={<Profile />} />
                 <Route index element={<Marketplace />} />
               </Route>
             </Route>
