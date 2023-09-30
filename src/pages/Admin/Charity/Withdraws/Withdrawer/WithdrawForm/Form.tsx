@@ -26,15 +26,19 @@ export default function Form({ classes = "" }) {
       noValidate
     >
       <fieldset disabled={!!tooltip} className="contents">
-        <Amounts />
-
+        <Amounts
+          classes="mb-4"
+          //the withdraw should be done in closingBeneficairy's admin/withdraw
+          disabled={closed && closingBeneficiary.type === "endowment"}
+        />
         {/** beneficiary is already set on closed accounts */}
         {closed ? (
           <Warning>
-            This endowment is closed. Withdraws from this account will go to{" "}
+            This endowment is closed. Only{" "}
             <span className="contents font-work text-orange">
-              Beneficiary {closingBeneficiary.type}: {closingBeneficiary.value}
-            </span>
+              beneficiary {closingBeneficiary.type}: {closingBeneficiary.value}{" "}
+            </span>{" "}
+            can withdraw funds.
           </Warning>
         ) : (
           <Beneficiary />

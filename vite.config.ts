@@ -37,6 +37,7 @@ export default defineConfig(async () => {
     plugins: [
       react(),
       tsconfigPaths(),
+
       {
         ...inject({
           global: [esbuildShim, "global"],

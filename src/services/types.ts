@@ -1,3 +1,4 @@
+import { OverrideProperties } from "type-fest";
 import {
   ASTProfile,
   BridgeFees,
@@ -7,6 +8,7 @@ import {
 } from "types/aws";
 import { EndowmentDetails } from "types/contracts";
 import { AccountType, EndowmentType } from "types/lists";
+import { Endowment } from "types/subgraph";
 import { SemiPartial } from "types/utils";
 
 export type MultisigConfig = {
@@ -136,3 +138,8 @@ export type WalletProfileVersion = "legacy" | "latest";
 export type VersionSpecificWalletProfile = WalletProfile & {
   version: "legacy" | "latest";
 };
+
+export type WithdrawEndowBeneficiary = OverrideProperties<
+  Endowment,
+  { name: string }
+>;

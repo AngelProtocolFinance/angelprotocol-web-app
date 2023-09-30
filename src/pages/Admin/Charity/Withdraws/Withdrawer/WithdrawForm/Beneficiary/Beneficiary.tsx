@@ -1,9 +1,10 @@
 import { RadioGroup } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import { Fragment, useEffect } from "react";
-import { Path, useController, useFormContext } from "react-hook-form";
-import { FV } from "./types";
+import { useController, useFormContext } from "react-hook-form";
+import { FV } from "../types";
 import { BeneficiaryType } from "types/lists";
+import EndowmentSelector from "./EndowmentSelector";
 
 const id = "__beneficiary";
 
@@ -24,16 +25,11 @@ export default function Beneficiary({ classes = "" }) {
   });
 
   const isDAF = getValues("endowType") === "daf";
-  // const beneficiaryType = watch("beneficiaryType");
-  const isBeneficiaryWallet = beneficiaryType === "wallet";
-  const fieldName: Path<FV> = isBeneficiaryWallet
-    ? "beneficiaryWallet"
-    : "beneficiaryEndowmentId";
 
   useEffect(() => {
     (async () => {
       if (beneficiaryType === "wallet") await trigger("beneficiaryWallet");
-      else await trigger("beneficiaryEndowmentId");
+      else await trigger("beneficiaryEndowment");
     })();
   }, [beneficiaryType, trigger]);
 
@@ -65,25 +61,25 @@ export default function Beneficiary({ classes = "" }) {
         </RadioGroup>
       )}
 
-      <input
-        {...register(fieldName)}
-        id={id}
-        type={isBeneficiaryWallet ? "text" : "number"}
-        autoComplete="off"
-        className={`${
-          //for endow id beneficiary, field type is number
-          isBeneficiaryWallet ? "" : "text-field"
-        } -mt-[1px] flex justify-between items-center w-full p-4 border border-gray-l3 dark:border-bluegray rounded-b bg-transparent @max-md:text-sm truncate focus:outline-none`}
-        placeholder={
-          isBeneficiaryWallet ? "Input wallet address" : "Endowment ID:"
-        }
-      />
-      <ErrorMessage
-        errors={errors}
-        name={fieldName}
-        as="span"
-        className="text-right text-red dark:text-red-l2 text-xs -mt-2"
-      />
+      {beneficiaryType === "wallet" && (
+        <>
+          <input
+            {...register("beneficiaryWallet")}
+            id={id}
+            type="text"
+            autoComplete="off"
+            className="flex justify-between items-center w-full p-4 border border-gray-l3 dark:border-bluegray rounded-b bg-transparent @max-md:text-sm truncate focus:outline-none"
+            placeholder="Input wallet address"
+          />
+          <ErrorMessage
+            errors={errors}
+            name="beneficiaryWallet"
+            as="span"
+            className="text-right text-red dark:text-red-l2 text-xs -mt-2"
+          />
+        </>
+      )}
+      {beneficiaryType === "endowment" && <EndowmentSelector />}
     </div>
   );
 }

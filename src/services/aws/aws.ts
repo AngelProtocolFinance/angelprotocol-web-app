@@ -83,7 +83,7 @@ export const aws = createApi({
       query: (params) => {
         return {
           url: `/${v(5)}/endowments/${network}`,
-          params: { ...params, return: ENDOW_ID_NAME_FIELDS },
+          params: { ...params, return: endowSelectorOptionFields },
         };
       },
       transformResponse(res: EndowListPaginatedAWSQueryRes<EndowmentOption[]>) {
@@ -211,10 +211,10 @@ const endowCardObj: {
 };
 const endowCardFields = Object.keys(endowCardObj).join(",");
 
-const ENDOW_ID_NAME_OBJ: {
+const endowSelectorOptionObj: {
   [key in Extract<EndowCardFields, "id" | "name">]: any;
 } = {
   id: "",
   name: "",
 };
-const ENDOW_ID_NAME_FIELDS = Object.keys(ENDOW_ID_NAME_OBJ).join(",");
+const endowSelectorOptionFields = Object.keys(endowSelectorOptionObj).join(",");
