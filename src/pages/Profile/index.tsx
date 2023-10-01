@@ -34,7 +34,7 @@ export default function Profile({ legacy = false }) {
     }
   }
 
-  if (!data.published) return <Unpublished />;
+  // if (!data.published) return <Unpublished />;
 
   return (
     <ProfileContext.Provider value={data}>
