@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { apes } from "services/apes";
 import { aws } from "services/aws/aws";
+import { axelar } from "services/axelar";
 import { junoApi } from "services/juno";
 import subgraph from "services/subgraph";
 import { adminReducer } from "slices/admin";
@@ -23,6 +24,7 @@ export const store = configureStore({
     [aws.reducerPath]: aws.reducer,
     [apes.reducerPath]: apes.reducer,
     [junoApi.reducerPath]: junoApi.reducer,
+    [axelar.reducerPath]: axelar.reducer,
     [subgraph.reducerPath]: subgraph.reducer,
     //auth: authReducer,
     //future: futureReducer,
@@ -32,6 +34,7 @@ export const store = configureStore({
       aws.middleware,
       apes.middleware,
       junoApi.middleware,
+      axelar.middleware,
       subgraph.middleware,
     ]),
 });
