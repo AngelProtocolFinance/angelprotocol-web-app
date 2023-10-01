@@ -8,7 +8,7 @@ const _tabs: AccountType[] = ["liquid", "locked"];
 
 type Props = { classes?: string; balances: EndowBalance } & Pick<
   WithdrawerProps,
-  "bridgeFees" | "protocolFeeRates" | "endowmentState"
+  "bridgeFees" | "protocolFeeRates" | "endowmentState" | "closedEndowSources"
 >;
 
 export default function Tabs({
@@ -17,6 +17,7 @@ export default function Tabs({
   protocolFeeRates,
   endowmentState,
   balances,
+  closedEndowSources,
 }: Props) {
   return (
     <Tab.Group
@@ -43,6 +44,7 @@ export default function Tabs({
               bridgeFees={bridgeFees}
               protocolFeeRates={protocolFeeRates}
               balances={balances[accountType]}
+              closedEndowSources={closedEndowSources}
             />
           </Tab.Panel>
         ))}

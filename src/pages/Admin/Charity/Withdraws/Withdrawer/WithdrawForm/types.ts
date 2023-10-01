@@ -7,6 +7,7 @@ import {
 import { BridgeFees } from "types/aws";
 import { BeneficiaryType, EndowmentType } from "types/lists";
 import { AccountType } from "types/lists";
+import { WithdrawEndowSource } from "../Context";
 
 export type Amount = {
   tokenId: string; //
@@ -20,6 +21,7 @@ export type WithdrawerProps = {
   endowmentState: EndowmentState;
   bridgeFees: BridgeFees;
   protocolFeeRates: ProtocolFeeRates;
+  closedEndowSources: WithdrawEndowSource[];
 };
 
 export type EndowFeeRates = {
@@ -34,10 +36,14 @@ export type FormMeta = {
   endowType: EndowmentType;
   maturityTime: number;
   endowFeeRates: EndowFeeRates;
-  endowId: number;
+  thisEndowId: number;
 } & Pick<
   WithdrawerProps,
-  "accountType" | "endowmentState" | "bridgeFees" | "protocolFeeRates"
+  | "accountType"
+  | "endowmentState"
+  | "bridgeFees"
+  | "protocolFeeRates"
+  | "closedEndowSources"
 >;
 
 export type FormProps = {};

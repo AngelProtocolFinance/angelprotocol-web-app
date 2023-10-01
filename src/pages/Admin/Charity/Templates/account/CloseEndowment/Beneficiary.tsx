@@ -11,7 +11,7 @@ export default function Beneficiary() {
   const {
     formState: { errors },
     field: { value: type, onChange: onTypeChange },
-  } = useController<Pick<FV, "beneficiaryType">>({ name: "beneficiaryType" });
+  } = useController<FV, "beneficiaryType">({ name: "beneficiaryType" });
 
   return (
     <div className="mt-6">

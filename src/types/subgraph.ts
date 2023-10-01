@@ -25,6 +25,9 @@ export type WithdrawBeneficiaryEndowmentsQueryParams = {
 
 export type Endowment = { name: string | null; id: string };
 export type GraphQLEndowmentsRes = GraphQLRes<{ endowments: Endowment[] }>;
+export type GraphQLClosedEndowmentsRes = GraphQLRes<{
+  endowment: { beneficiaryOf: Endowment[] };
+}>;
 
 export type MultisigRes = {
   id: string; //record-id

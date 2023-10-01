@@ -96,6 +96,7 @@ export type EndowmentDetails = OverrideProperties<
   Pick<
     AccountsQueryEndowmentsMessages.EndowmentResponseStruct,
     | "owner"
+    | "name"
     | "endowType"
     | "maturityTime"
     | "allowlistedBeneficiaries"
