@@ -150,7 +150,13 @@ export const customApi = junoApi.injectEndpoints({
 async function endowBalance(id: number): Promise<EndowBalance> {
   //TODO: query registrar
   const tokens: AcceptedTokens = {
-    cw20: ["0x2c852e740B62308c46DD29B982FBb650D063Bd07"],
+    cw20: [
+      IS_TEST
+        ? //aUSDC
+          "0x2c852e740B62308c46DD29B982FBb650D063Bd07"
+        : //USD-Coin
+          "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+    ],
   };
 
   const balances = (type: AccountType) =>
