@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { DonaterConfigFromWidget } from "types/widget";
+import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import KYC from "components/KYC";
@@ -9,11 +10,13 @@ import { fiatWallet, resetDetails } from "slices/donation";
 import { IS_AST } from "constants/env";
 import Donater from "./Donater";
 import Result from "./Result";
+import SplitModal from "./SplitModal";
 import Submit from "./Submit";
 
 type Props = { config: DonaterConfigFromWidget | null };
 
 export default function CurrentStep({ config }: Props) {
+  const { showModal } = useModalContext();
   const state = useGetter((state) => state.donation);
   const dispatch = useSetter();
   const { wallet = IS_AST ? fiatWallet : undefined, isLoading } =
@@ -37,9 +40,19 @@ export default function CurrentStep({ config }: Props) {
   }
 
   if (!wallet) {
-    if (state.recipient?.endowType === "charity") {
+    if (state.recipient && state.recipient.endowType === "charity") {
+      const { id, endowType } = state.recipient;
       return (
-        <button className="btn-outline-filled font-work gap-2">
+        <button
+          type="button"
+          className="btn-outline-filled font-work gap-2"
+          onClick={() => {
+            showModal(SplitModal, {
+              endowId: id,
+              endowType: endowType,
+            });
+          }}
+        >
           <Icon type="CreditCard" className="text-xl" />
           <span className="text-sm">Donate with card</span>
         </button>

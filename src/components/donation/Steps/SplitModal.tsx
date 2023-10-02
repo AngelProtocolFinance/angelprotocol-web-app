@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { EndowmentType } from "types/lists";
 import { useStripeSessionURLMutation } from "services/apes";
+import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import Modal from "components/Modal";
 import Split from "components/Split";
@@ -15,8 +17,10 @@ type FV = {
 };
 
 export default function SplitModal({ endowType, endowId }: Props) {
-  const { setModalOption } = useModalContext();
+  const { setModalOption, closeModal } = useModalContext();
+  const { handleError } = useErrorContext();
   const [sessionURLFn, { isLoading }] = useStripeSessionURLMutation();
+  const [isRedirecting, setIsRedirecting] = useState(false);
 
   const methods = useForm<FV>({
     defaultValues: { pctLiquidSplit: 50 },
@@ -32,18 +36,29 @@ export default function SplitModal({ endowType, endowId }: Props) {
       <Modal
         as="form"
         onSubmit={handleSubmit(async (fv) => {
-          //prevent close modal while async fn is running
-          setModalOption("isDismissible", false);
-          const session = await sessionURLFn({
-            endowId,
-            endowType,
-            liquidSplitPct: fv.pctLiquidSplit.toString(),
-          }).unwrap();
+          try {
+            //prevent close modal while async fn is running
+            setModalOption("isDismissible", false);
 
-          console.log({ session });
+            const session = await sessionURLFn({
+              endowId,
+              endowType,
+              liquidSplitPct: fv.pctLiquidSplit.toString(),
+            }).unwrap();
+
+            console.log({ session });
+            setIsRedirecting(true);
+          } catch (err) {
+            console.error(err);
+            setModalOption("isDismissible", true);
+            setIsRedirecting(false);
+            closeModal();
+            handleError("Failed to load payment platform");
+          }
         })}
-        className="max-h-[95vh] overflow-y-auto max-w-[37.5rem] w-[95vw] sm:w-full fixed-center z-20 bg-gray-l6 dark:bg-blue-d6 border border-prim rounded"
+        className="p-6 max-h-[95vh] overflow-y-auto max-w-[37.5rem] w-[95vw] sm:w-full fixed-center z-20 bg-gray-l6 dark:bg-blue-d6 border border-prim rounded"
       >
+        <h3 className="text-xl mb-4">Specify donation split:</h3>
         <Split<FV, "pctLiquidSplit">
           className="mb-6"
           liqPctField="pctLiquidSplit"
@@ -53,7 +68,11 @@ export default function SplitModal({ endowType, endowId }: Props) {
           type="submit"
           className="text-sm min-w-[8rem] py-2 btn-orange disabled:bg-gray-l1"
         >
-          Continue
+          {isLoading
+            ? "Loading payment platform"
+            : isRedirecting
+            ? "Redirecting..."
+            : "Proceed to payment"}
         </button>
       </Modal>
     </FormProvider>
