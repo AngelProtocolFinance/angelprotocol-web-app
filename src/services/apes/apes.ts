@@ -13,6 +13,7 @@ import { Chain } from "types/tx";
 import { UnsupportedChainError } from "errors/errors";
 import { chainIds } from "constants/chainIds";
 import { IS_TEST, JUNO_LCD_OVERRIDE, JUNO_RPC_OVERRIDE } from "constants/env";
+import { appRoutes } from "constants/routes";
 import { APIs } from "constants/urls";
 import { network } from "../constants";
 import { version as v } from "../helpers";
@@ -88,18 +89,21 @@ export const apes = createApi({
         return res;
       },
     }),
-    stripeSessionURL: builder.mutation<unknown, StripeSessionURLParams>({
-      query: ({ endowType, endowId, liquidSplitPct }) => ({
-        url: `${v(1)}/fiat/stripe-proxy/${
-          endowType === "charity" ? "apes" : "normal"
-        }/${network}`,
-        method: "POST",
-        body: JSON.stringify({
-          endowmentId: endowId,
-          splitLiq: liquidSplitPct,
+    stripeSessionURL: builder.mutation<{ url: string }, StripeSessionURLParams>(
+      {
+        query: ({ endowType, endowId, liquidSplitPct }) => ({
+          url: `${v(1)}/fiat/stripe-proxy/${
+            endowType === "charity" ? "apes" : "normal"
+          }/${network}`,
+          method: "POST",
+          body: JSON.stringify({
+            endowmentId: endowId,
+            splitLiq: liquidSplitPct,
+            redirectUrl: `${window.location.origin}/${appRoutes.donate_fiat_thanks}`,
+          }),
         }),
-      }),
-    }),
+      }
+    ),
   }),
 });
 
