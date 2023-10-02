@@ -15,6 +15,7 @@ import {
 } from "types/subgraph";
 import { version as v } from "services/helpers";
 import { IS_TEST } from "constants/env";
+import { denoms } from "constants/tokens";
 import { APIs, GRAPHQL_ENDPOINT } from "constants/urls";
 import { junoApi } from "../index";
 import { queryContract } from "../queryContract";
@@ -178,9 +179,9 @@ export const customApi = junoApi.injectEndpoints({
 });
 
 async function endowBalance(id: number): Promise<EndowBalance> {
-  //TODO: query registrar
+  //TODO: must be queried from contracts or subgraph if available
   const tokens: AcceptedTokens = {
-    cw20: ["0x2c852e740B62308c46DD29B982FBb650D063Bd07"],
+    cw20: [IS_TEST ? denoms.ausdc : denoms.uusdc],
   };
 
   const balances = (type: AccountType) =>

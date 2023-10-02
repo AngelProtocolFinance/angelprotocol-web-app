@@ -8,7 +8,7 @@ export default function Breakdown() {
   const destinationChainId = watch("destinationChainId");
   const amounts = watch("amounts");
   const usdcAmountStr =
-    amounts.find((a) => a.tokenId === denoms.uausdc)?.value ?? "0";
+    amounts.find((a) => a.tokenId === denoms.ausdc)?.value ?? "0";
 
   const fv = getValues(); //doesn't trigger re-render
   const { items: feeItems, toReceive } = feeData({
