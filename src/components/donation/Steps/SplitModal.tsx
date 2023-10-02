@@ -20,16 +20,14 @@ export default function SplitModal({ endowType, endowId }: Props) {
   const { setModalOption, closeModal } = useModalContext();
   const { handleError } = useErrorContext();
   const [sessionURLFn, { isLoading }] = useStripeSessionURLMutation();
+  //additional state to keep button disabled while redirecting
   const [isRedirecting, setIsRedirecting] = useState(false);
 
   const methods = useForm<FV>({
     defaultValues: { pctLiquidSplit: 50 },
   });
 
-  const {
-    handleSubmit,
-    formState: { isSubmitting },
-  } = methods;
+  const { handleSubmit } = methods;
 
   return (
     <FormProvider {...methods}>
@@ -56,20 +54,20 @@ export default function SplitModal({ endowType, endowId }: Props) {
             handleError("Failed to load payment platform");
           }
         })}
-        className="p-6 max-h-[95vh] overflow-y-auto max-w-[37.5rem] w-[95vw] sm:w-full fixed-center z-20 bg-gray-l6 dark:bg-blue-d6 border border-prim rounded"
+        className="grid p-6 max-h-[95vh] overflow-y-auto max-w-[37.5rem] w-[95vw] sm:w-full fixed-center z-20 bg-gray-l6 dark:bg-blue-d6 border border-prim rounded"
       >
-        <h3 className="text-xl mb-4">Specify donation split:</h3>
+        <h3 className="text-xl mb-4 uppercase">Donation split:</h3>
         <Split<FV, "pctLiquidSplit">
           className="mb-6"
           liqPctField="pctLiquidSplit"
         />
         <button
-          disabled={isSubmitting || isLoading}
+          disabled={isLoading || isRedirecting}
           type="submit"
-          className="text-sm min-w-[8rem] py-2 btn-orange disabled:bg-gray-l1"
+          className="justify-self-end text-sm min-w-[8rem] py-2 btn-orange disabled:bg-gray-l1"
         >
           {isLoading
-            ? "Loading payment platform"
+            ? "Loading platform..."
             : isRedirecting
             ? "Redirecting..."
             : "Proceed to payment"}
