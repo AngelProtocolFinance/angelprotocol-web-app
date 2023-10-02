@@ -67,7 +67,7 @@ export const LINKS: {
     },
   },
   admin_wallet: {
-    title: "Admin Multisig",
+    title: "Multisig Admin",
     to: sidebarRoutes.admin_wallet,
     icon: {
       type: "Wallet",
