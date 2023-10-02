@@ -10,6 +10,7 @@ import { AcceptedTokens, AccountType } from "types/contracts";
 import { MultisigOwnersRes, MultisigRes } from "types/subgraph";
 import { version as v } from "services/helpers";
 import { IS_AST, IS_TEST } from "constants/env";
+import { denoms } from "constants/tokens";
 import { APIs, GRAPHQL_ENDPOINT } from "constants/urls";
 import { junoApi } from "../index";
 import { queryContract } from "../queryContract";
@@ -148,15 +149,9 @@ export const customApi = junoApi.injectEndpoints({
 });
 
 async function endowBalance(id: number): Promise<EndowBalance> {
-  //TODO: query registrar
+  //TODO: must be queried from contracts or subgraph if available
   const tokens: AcceptedTokens = {
-    cw20: [
-      IS_TEST
-        ? //aUSDC
-          "0x2c852e740B62308c46DD29B982FBb650D063Bd07"
-        : //USD-Coin
-          "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
-    ],
+    cw20: [IS_TEST ? denoms.ausdc : denoms.uusdc],
   };
 
   const balances = (type: AccountType) =>
