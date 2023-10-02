@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { DonaterConfigFromWidget } from "types/widget";
 import { useGetWallet } from "contexts/WalletContext";
+import Icon from "components/Icon";
 import KYC from "components/KYC";
 import Status, { LoadingStatus } from "components/Status";
 import { useGetter, useSetter } from "store/accessors";
@@ -36,6 +37,15 @@ export default function CurrentStep({ config }: Props) {
   }
 
   if (!wallet) {
+    if (state.recipient?.endowType === "charity") {
+      return (
+        <button className="btn-outline-filled font-work gap-2">
+          <Icon type="CreditCard" className="text-xl" />
+          <span className="text-sm">Donate with card</span>
+        </button>
+      );
+    }
+
     return (
       <Status icon="Info" classes="justify-self-center">
         You need to connect your wallet to make a donation
