@@ -5,7 +5,8 @@ import { useAdminContext } from "../../../Context";
 import Tabs from "./Tabs";
 
 export default function Withdrawer() {
-  const { id, closed, closingBeneficiary } = useAdminContext<"charity">();
+  const { id, closed, closingBeneficiary, endowType } =
+    useAdminContext<"charity">();
   const queryState = useWithdrawDataQuery({ id });
 
   return (
@@ -22,6 +23,17 @@ export default function Withdrawer() {
           balances={balances}
           bridgeFees={bridgeFees}
           protocolFeeRates={protocolFeeRates}
+          tabNames={
+            endowType === "charity"
+              ? {
+                  liquid: "Current",
+                  locked: "Endowment",
+                }
+              : {
+                  liquid: "Liquid",
+                  locked: "Locked",
+                }
+          }
         />
       )}
     </QueryLoader>

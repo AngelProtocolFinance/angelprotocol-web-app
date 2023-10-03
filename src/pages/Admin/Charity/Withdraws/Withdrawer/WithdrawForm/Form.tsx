@@ -16,6 +16,8 @@ export default function Form({ classes = "" }) {
     beneficiaryType,
     closed,
     closingBeneficiary,
+    accountType,
+    endowmentType,
   } = useWithdraw();
 
   return (
@@ -47,7 +49,14 @@ export default function Form({ classes = "" }) {
             <Breakdown />
           </>
         )}
-
+        {beneficiaryType === "wallet" &&
+          accountType === "locked" &&
+          endowmentType === "charity" && (
+            <Warning>
+              All Endowment withdraws are subject to a 10% early withdraw fee.
+              Consider doing a fee-free Current withdraw.
+            </Warning>
+          )}
         {chainName !== "Polygon" && (
           <Warning>
             Withraws to {chainName} are processed on a hourly basis by our
