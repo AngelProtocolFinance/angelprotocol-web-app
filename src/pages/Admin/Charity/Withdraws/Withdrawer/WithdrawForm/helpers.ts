@@ -3,7 +3,7 @@ import { Except } from "type-fest";
 import { FV } from "./types";
 import { BridgeFees } from "types/aws";
 import { AccountType } from "types/lists";
-import { roundDownToNum } from "helpers";
+import { humanize, roundDownToNum } from "helpers";
 import { hasElapsed } from "helpers/admin";
 import { chainIds } from "constants/chainIds";
 
@@ -56,6 +56,9 @@ const earlyWithdrawRate =
       hasElapsed(maturityTime)
       ? new Decimal(0)
       : amount.mul(bps).div(FEE_BASIS);
+
+const prettyPCT = (bps: number) =>
+  humanize(new Decimal(bps).div(FEE_BASIS).mul(100), 2) + "%";
 
 export const feeData = ({
   destinationChainId,
@@ -131,11 +134,16 @@ export const feeData = ({
   };
   const items: FeeItem[] = [
     {
-      name: "Withdraw Fee",
+      name: `Withdraw Fee ( ${prettyPCT(
+        protocolFeeRates.withdrawBps + endowFeeRates.withdrawBps
+      )} )`,
       value: roundDownToNum(withdrawFeeAp.add(withdrawFeeEndow), 6),
     },
     {
-      name: "Early Withdraw Fee",
+      name: `Early Withdraw Fee ( ${prettyPCT(
+        protocolFeeRates.earlyLockedWithdrawBps +
+          endowFeeRates.earlyLockedWithdrawBps
+      )} )`,
       value: roundDownToNum(
         earlyLockedWithdrawFeeAp.add(earlyLockedWithdrawFeeEndow),
         6

@@ -43,7 +43,7 @@ type Props = { title: string; value: string };
 function Item({ title, value }: Props) {
   return (
     <div className="flex justify-between items-center w-full text-sm py-2 text-gray-d1 dark:text-gray">
-      <span className="uppercase font-semibold text-xs">{title}:</span>
+      <span className="uppercase font-semibold text-xs">{title} :</span>
       <span>{value}</span>
     </div>
   );
