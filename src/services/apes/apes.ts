@@ -99,7 +99,7 @@ export const apes = createApi({
           body: JSON.stringify({
             endowmentId: endowId,
             splitLiq: liquidSplitPct,
-            redirectUrl: `${window.location.origin}/${appRoutes.donate_fiat_thanks}`,
+            redirectUrl: `${window.location.origin}${appRoutes.donate_fiat_thanks}`,
           }),
         }),
       }
