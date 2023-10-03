@@ -4,9 +4,6 @@
 
 ### Requirements
 
-- `Node.js` (v16.x) - https://github.com/nvm-sh/nvm#installing-and-updating
-- `yarn` (v1.22.x) - https://yarnpkg.com/getting-started/install/
-
 - `bun` (1.x) - https://bun.sh/
 
 Install dependencies
