@@ -1,31 +1,34 @@
+import { EndowBalance } from "services/types";
 import { AccountType } from "types/lists";
+import { useEndowBalanceQuery } from "services/juno/custom";
 import ContentLoader from "components/ContentLoader";
 import QueryLoader from "components/QueryLoader";
-import { humanize } from "helpers";
+import { condense, humanize } from "helpers";
 import { useAdminContext } from "../../Context";
+
+const accountBalance = (type: AccountType, fetchedBalance: EndowBalance) =>
+  //endow balance is in USDC
+  condense(fetchedBalance[type][0].amount, 6).toNumber();
 
 export default function Balances({ type }: { type: AccountType }) {
   const { id } = useAdminContext();
   console.log({ id, type });
+  const query = useEndowBalanceQuery({ id });
   return (
     <QueryLoader
-      queryState={{
-        data: { total: 0, free: 0, invested: 0, symbol: "USD" },
-        isLoading: false,
-        isError: false,
-      }}
+      queryState={query}
       messages={{ loading: <Skeleton />, error: "Failed to get balances" }}
     >
-      {({ total, free, invested, symbol }) => (
+      {(balance) => (
         <div className="grid gap-4 @3xl:grid-cols-3 @3xl:gap-6">
-          <Amount title="Total value" symbol={symbol}>
-            {total}
+          <Amount title="Total value" symbol="USDC">
+            {accountBalance(type, balance)}
           </Amount>
-          <Amount title="Invested balances" symbol={symbol}>
-            {invested}
+          <Amount title="Invested balances" symbol="USDC">
+            {0 /** FUTURE: get USDC value of all vault shares*/}
           </Amount>
-          <Amount title="Free balances" symbol={symbol}>
-            {free}
+          <Amount title="Free balances" symbol="USDC">
+            {accountBalance(type, balance)}
           </Amount>
         </div>
       )}
