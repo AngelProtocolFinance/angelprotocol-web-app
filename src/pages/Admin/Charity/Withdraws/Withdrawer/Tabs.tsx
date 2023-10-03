@@ -21,7 +21,6 @@ export default function Tabs({
   balances,
   tabNames,
 }: Props) {
-  console.log(protocolFeeRates);
   return (
     <Tab.Group
       as="div"
