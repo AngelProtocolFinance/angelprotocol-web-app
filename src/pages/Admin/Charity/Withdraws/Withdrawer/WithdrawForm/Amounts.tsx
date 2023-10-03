@@ -16,7 +16,7 @@ export default function Amounts({ classes = "", disabled = false }: Props) {
     setValue,
     formState: { errors },
   } = useFormContext<FV>();
-  const { fields } = useFieldArray<FV>({ name: "amounts" });
+  const { fields } = useFieldArray<FV, "amounts">({ name: "amounts" });
 
   if (fields.length <= 0) {
     return (

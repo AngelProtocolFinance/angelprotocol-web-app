@@ -6,6 +6,7 @@ import {
   isDeleteMsg,
 } from "../types";
 import {
+  AWSstrategy,
   EndowListPaginatedAWSQueryRes,
   EndowmentCard,
   EndowmentOption,
@@ -14,7 +15,6 @@ import {
   EndowmentsQueryParams,
   NewAST,
   Program,
-  TStrategy,
   WalletProfile,
 } from "types/aws";
 import { network } from "services/constants";
@@ -69,7 +69,7 @@ export const aws = createApi({
         };
       },
     }),
-    strategyCards: builder.query<TStrategy[], {}>({
+    strategyCards: builder.query<AWSstrategy[], {}>({
       providesTags: ["strategy"],
       query: (params) => {
         return {

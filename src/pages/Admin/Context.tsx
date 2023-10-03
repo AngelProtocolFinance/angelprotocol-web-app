@@ -54,7 +54,10 @@ type Tooltip = string;
 type AdminType = AdminResource["type"];
 type Resource<T extends AdminType> = Extract<AdminResource, { type: T }>;
 
-type AdminContext<T extends AdminType> = Extract<AdminResource, { type: T }> & {
+export type AdminContext<T extends AdminType> = Extract<
+  AdminResource,
+  { type: T }
+> & {
   txResource: TxResource | Tooltip;
 };
 

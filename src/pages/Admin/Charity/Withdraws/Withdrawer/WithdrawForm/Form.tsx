@@ -4,6 +4,7 @@ import Amounts from "./Amounts";
 import Beneficiary from "./Beneficiary";
 import Breakdown from "./Breakdown";
 import Network from "./Network";
+import SourceEndow from "./SourceEndow";
 import Submit from "./Submit";
 import Warning from "./Warning";
 import useWithdraw from "./useWithdraw";
@@ -16,6 +17,7 @@ export default function Form({ classes = "" }) {
     beneficiaryType,
     closed,
     closingBeneficiary,
+    isFundsFromClosedEndow,
   } = useWithdraw();
 
   return (
@@ -26,6 +28,11 @@ export default function Form({ classes = "" }) {
       noValidate
     >
       <fieldset disabled={!!tooltip} className="contents">
+        {/**
+         * If thisEndowment is closed, can't receive deposits even from
+         * another closed endowments where thisEndowment is beneficiary of
+         */}
+        {!closed && <SourceEndow classes="-mt-2 mb-2" />}
         <Amounts
           classes="mb-4"
           //the withdraw should be done in closingBeneficairy's admin/withdraw
@@ -40,11 +47,13 @@ export default function Form({ classes = "" }) {
             </span>{" "}
             can withdraw funds.
           </Warning>
-        ) : (
+        ) : isFundsFromClosedEndow ? null : ( // beneficiary is thisEndowment, when withdrawing from closed endowment, so no need to show beneficiary type selection
           <Beneficiary />
         )}
 
-        {/** endowment beneficiaries are bound to polygon only */}
+        {/** endowment beneficiaries are bound to polygon only.
+         * When selecting closed endowments as source,
+         * beneficiaryType is set to `endowment` */}
         {beneficiaryType === "wallet" && (
           <>
             <Network />

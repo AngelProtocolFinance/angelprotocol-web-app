@@ -9,6 +9,7 @@ import FundConfig from "./index-fund/Config";
 import CreateFund from "./index-fund/CreateFund";
 import FundMembers from "./index-fund/Members";
 import RemoveFund from "./index-fund/RemoveFund";
+import AccountsContract from "./registrar/AccountsContract";
 import RegistrarConfigExtension from "./registrar/ConfigExtension";
 import RegistrarOwner from "./registrar/Owner";
 import Token from "./registrar/Token";
@@ -47,6 +48,10 @@ export default function Templates() {
           element={<RegistrarOwner />}
         />
         <Route path={routes["registrar.add-token"]} element={<Token />} />
+        <Route
+          path={routes["registrar.add-accounts-contract"]}
+          element={<AccountsContract />}
+        />
 
         {/**_multisig */}
         <Route

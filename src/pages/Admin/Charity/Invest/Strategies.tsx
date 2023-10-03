@@ -1,4 +1,3 @@
-import { TStrategy } from "types/aws";
 import { useStrategyCardsQuery } from "services/aws/aws";
 import { ErrorStatus, LoadingStatus } from "components/Status";
 import Strategy from "./Strategy";
@@ -17,7 +16,7 @@ export default function Strategies() {
       ) : (
         <div className="grid gap-3">
           {data
-            ? data.map((strategy: TStrategy, idx: number) => (
+            ? data.map((strategy, idx: number) => (
                 <Strategy key={idx} {...strategy} />
               ))
             : "No Strategies Found"}

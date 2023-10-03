@@ -2,7 +2,7 @@ import { ObjectSchema, object, string } from "yup";
 import { DonateValues as DV } from "./types";
 import { SchemaShape } from "schemas/types";
 import { Country } from "types/countries";
-import { TokenWithAmount } from "types/slices";
+import { TokenWithAmount } from "types/tx";
 import { tokenShape } from "schemas/shape";
 import { requiredString } from "schemas/string";
 

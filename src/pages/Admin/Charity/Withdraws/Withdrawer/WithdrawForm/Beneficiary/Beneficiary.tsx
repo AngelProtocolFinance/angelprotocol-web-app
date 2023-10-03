@@ -20,7 +20,7 @@ export default function Beneficiary({ classes = "" }) {
 
   const {
     field: { value: beneficiaryType, onChange: onBeneficiaryTypeChange },
-  } = useController<Pick<FV, "beneficiaryType">>({
+  } = useController<FV, "beneficiaryType">({
     name: "beneficiaryType",
   });
 

@@ -26,7 +26,8 @@ export const txs: { [T in TxType]: (args: TxArgs<T>) => string } = {
     accounts.encodeFunctionData("withdraw", toTuple(args)),
   "accounts.close": (args) =>
     accounts.encodeFunctionData("closeEndowment", toTuple(args)),
-  "accounts.invest": () => "", //future
+  "accounts.invest": (payload) =>
+    accounts.encodeFunctionData("strategyInvest", toTuple(payload)),
   "accounts.redeem": () => "", //future
 
   // //// MULTISIG ////
@@ -83,6 +84,11 @@ export const txs: { [T in TxType]: (args: TxArgs<T>) => string } = {
     registrar.encodeFunctionData("updateConfig", [toTuple(config)]),
   "registrar.add-token": ({ token }) =>
     registrar.encodeFunctionData("setTokenAccepted", [token, true]),
+  "registrar.add-accounts-contract": (args) =>
+    registrar.encodeFunctionData(
+      "setAccountsContractAddressByChain",
+      toTuple(args)
+    ),
 
   "gift-card.spend": (gift) =>
     giftCard.encodeFunctionData("executeSpend", toTuple(gift)),

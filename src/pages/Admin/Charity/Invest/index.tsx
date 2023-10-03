@@ -2,6 +2,7 @@ import { adminRoutes } from "constant/routes";
 import Seo from "../Seo";
 import Balances from "../common/Balances";
 import Strategies from "./Strategies";
+import Transactions from "./Transactions";
 
 export default function Invest() {
   return (
@@ -12,6 +13,7 @@ export default function Invest() {
         Invest Dashboard
       </h3>
       <Balances />
+      <Transactions />
       <Strategies />
     </div>
   );

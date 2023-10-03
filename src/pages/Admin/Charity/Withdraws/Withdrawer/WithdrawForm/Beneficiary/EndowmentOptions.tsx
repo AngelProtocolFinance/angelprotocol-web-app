@@ -15,11 +15,11 @@ export default function EndowmentOptions({
   isDebouncing = false,
 }: Props) {
   const { getValues } = useFormContext<FV>();
-  const endowId = getValues("endowId");
+  const thisEndowId = getValues("thisEndowId");
   const endowType = getValues("endowType");
 
   const queryState = useBeneficiaryEndowmentsQuery({
-    withdrawerEndowId: endowId,
+    withdrawerEndowId: thisEndowId,
     withdrawerEndowType: endowType,
     beneficiaryEndowName: searchText,
   });

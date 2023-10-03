@@ -1,24 +1,28 @@
 import { useFormContext } from "react-hook-form";
-import { FormValues as FV } from "./types";
-import { TStrategy } from "types/aws";
+import { AccountBalances, InvestFormValues as FV } from "../types";
+import { AWSstrategy } from "types/aws";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import Modal from "components/Modal";
-import { LoadingStatus } from "components/Status";
 import TokenField from "components/TokenField";
+import { Tooltip } from "components/admin";
+import Summary from "../Summary";
 import AccountOptions from "./AccountOptions";
-import useSubmit from "./useSubmit";
 
-export default function Form({ name, description, rating }: TStrategy) {
+type FormProps = AWSstrategy & {
+  accountBalances: AccountBalances;
+  error?: string;
+};
+export default function Form(props: FormProps) {
   const { getValues, handleSubmit } = useFormContext<FV>();
-  const { isSending } = useSubmit("13123", "liquid");
-  const { closeModal } = useModalContext();
+  const { closeModal, showModal } = useModalContext();
+  const { error, name, description, rating, accountBalances } = props;
   return (
     <Modal
-      onSubmit={handleSubmit(() => {
-        alert("show summary");
-      })}
       as="form"
+      onSubmit={handleSubmit((fv) => {
+        showModal(Summary, { investorFormValues: fv, strategy: props });
+      })}
       className="max-h-[95vh] overflow-y-auto max-w-[37.5rem] w-[95vw] sm:w-full fixed-center z-20 bg-gray-l6 dark:bg-blue-d6 border border-gray-l3 dark:border-bluegray rounded"
     >
       <div className="relative border-b border-gray-l3 dark:border-bluegray py-5 text-center bg-orange-l6 dark:bg-blue-d7">
@@ -44,7 +48,7 @@ export default function Form({ name, description, rating }: TStrategy) {
         />
         <KeyValue title="Accepted Currency" value="USDC" />
       </div>
-      <AccountOptions balances={{ locked: 0, liquid: 0 }} classes="mx-8 mb-6" />
+      <AccountOptions balances={accountBalances} classes="mx-8 mb-6" />
       <TokenField<FV, "token">
         name="token"
         tokens={getValues("tokens")}
@@ -55,11 +59,13 @@ export default function Form({ name, description, rating }: TStrategy) {
           label: "font-heading text-base mb-2",
           inputContainer: "bg-white dark:bg-blue-d7",
         }}
+        disabled={!!error}
         withMininum
       />
-      <div className="mt-8 px-8 py-4 gap-x-3 border-t border-gray-l3 dark:border-bluegray flex justify-end">
+
+      {error && <Tooltip tooltip={error} classes="mx-8 mt-4" />}
+      <div className="mt-8 px-8 py-4 gap-x-3 border-t border-gray-l3 dark:border-bluegray flex justify-center sm:justify-end">
         <button
-          disabled={isSending}
           onClick={closeModal}
           type="button"
           className="text-sm min-w-[8rem] py-2 btn-outline-filled"
@@ -67,25 +73,24 @@ export default function Form({ name, description, rating }: TStrategy) {
           Cancel
         </button>
         <button
-          disabled={true} // isSending
+          disabled={!!error}
           type="submit"
           className="text-sm min-w-[8rem] py-2 btn-orange disabled:bg-gray-l1"
         >
-          {isSending ? <LoadingStatus>Processing...</LoadingStatus> : "Invest"}
-          <span className="text-xs pl-1">(Coming soon)</span>
+          Continue
         </button>
       </div>
     </Modal>
   );
 }
 
-type Props = {
+type KVProps = {
   classes?: string;
   title: string;
   value: string;
   tooltip?: string;
 };
-function KeyValue({ title, value, tooltip, classes = "" }: Props) {
+function KeyValue({ title, value, tooltip, classes = "" }: KVProps) {
   return (
     <div className={`flex justify-between py-3 items-center ${classes}`}>
       <span className="text-gray-d1 dark:text-gray">

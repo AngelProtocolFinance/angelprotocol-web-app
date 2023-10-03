@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { UseFormRegisterReturn, useFormContext } from "react-hook-form";
-import { FormValues } from "./types";
+import { InvestFormValues } from "../types";
 import { AccountType } from "types/lists";
 import { humanize } from "helpers";
 
@@ -13,8 +13,8 @@ type Props = { balances: UserBalances; classes?: string };
 
 export default function AccountOptions({ balances, classes = "" }: Props) {
   const { register, watch, setValue, trigger, getFieldState } =
-    useFormContext<FormValues>();
-  const type = watch("type");
+    useFormContext<InvestFormValues>();
+  const type = watch("accountType");
 
   useEffect(() => {
     const state = getFieldState("token.amount");
@@ -34,12 +34,12 @@ export default function AccountOptions({ balances, classes = "" }: Props) {
         Choose the account to invest with:
       </h3>
       <AccountOption
-        register={register("type")}
+        register={register("accountType")}
         value="liquid"
         balance={balances.liquid}
       />
       <AccountOption
-        register={register("type")}
+        register={register("accountType")}
         value="locked"
         balance={balances.locked}
       />

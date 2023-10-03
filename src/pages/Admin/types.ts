@@ -19,6 +19,7 @@ export type Templates =
       | "registrar.update-owner"
       | "registrar.update-config"
       | "registrar.add-token"
+      | "registrar.add-accounts-contract"
     >
   | "multisig.fund-transfer"; // erc20 transfer and native transfer
 

@@ -1,7 +1,7 @@
 import { PropsWithChildren, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { EstimateStatus } from "./types";
-import { TokenWithAmount } from "types/slices";
+import { TokenWithAmount } from "types/tx";
 import { WithWallet } from "contexts/WalletContext";
 import Image from "components/Image";
 import { ErrorStatus, LoadingStatus } from "components/Status";

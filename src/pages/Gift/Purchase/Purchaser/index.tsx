@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues } from "./types";
-import { TokenWithAmount } from "types/slices";
+import { TokenWithAmount } from "types/tx";
 import { WithWallet } from "contexts/WalletContext";
 import { FormStep } from "slices/gift";
 import { IS_TEST } from "constant/env";
