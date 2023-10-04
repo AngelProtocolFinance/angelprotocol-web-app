@@ -75,7 +75,7 @@ export default function Submit(props: WithWallet<SubmitStep>) {
                   submit(estimate.tx);
                 }
           }
-          disabled={isNotEstimated}
+          aria-disabled={true}
           type="submit"
         >
           Complete
