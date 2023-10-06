@@ -37,7 +37,7 @@ export type TokenWithBalance = OverrideProperties<
 
 export type TokenWithAmount = Except<TokenWithBalance, "type"> & {
   amount: string;
-  type: TokenWithBalance["type"] | "fiat"; // "fiat" type not present in AWS (added here)
+  type: TokenWithBalance["type"];
 };
 
 export type Chain = Omit<FetchedChain, "native_currency" | "tokens"> & {
