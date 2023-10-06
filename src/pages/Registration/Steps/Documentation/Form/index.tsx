@@ -56,7 +56,7 @@ export default function Form() {
         label="EIN# (or equivalent non-US charity/nonprofit registration number)"
         required
         classes={{ container: "mb-6 mt-1" }}
-        placeholder="e.g. https://www.example.com"
+        placeholder="e.g. xx-xxxxxxxxxx"
       />
       <Label className="mb-2" required>
         Proof of registration as a 501(C)(3) nonprofit or equivalent
@@ -108,7 +108,11 @@ export default function Form() {
       <Label className="mt-6">
         Is your organization registered in the United States and recognized by
         the Internal Revenue Service as a nonprofit organization exempt under
-        IRC 501(c)(3)?
+        IRC 501(c)(3)?{" "}
+        <strong>
+          If you are NOT registered in the United States as a 501(c)(3) please
+          select No. You will still be able to proceed with registration.
+        </strong>
       </Label>
       <div className="flex gap-4 mt-4 accent-orange text-sm">
         <Radio<FV, "isAuthorizedToReceiveTaxDeductibleDonations">

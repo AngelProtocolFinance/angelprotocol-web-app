@@ -15,6 +15,7 @@ export const CHARITY_LINKS: LINKS = {
     {
       title: "Marketplace",
       href: appRoutes.marketplace,
+      end: true,
     },
     {
       title: "Giving Partners",
