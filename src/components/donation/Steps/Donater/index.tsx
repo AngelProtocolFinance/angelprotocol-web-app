@@ -25,10 +25,6 @@ export default function Donater({ wallet, config, ...state }: Props) {
     values: state.details || {
       token: initCoin,
       pctLiquidSplit: config?.liquidSplitPct ?? 50,
-
-      //meta
-      // if availCurrs array was not set, include all
-      // otherwise, include only tokens in the availCurrs array + the fee-paying coin
       chainName: wallet.chain.chain_name,
       chainId: wallet.chain.chain_id,
       userOptForKYC: false,
