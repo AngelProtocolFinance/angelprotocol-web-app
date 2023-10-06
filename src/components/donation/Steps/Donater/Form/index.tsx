@@ -4,9 +4,8 @@ import { Link } from "react-router-dom";
 import { DonateValues } from "../types";
 import { TokenWithAmount } from "types/tx";
 import { DonaterConfigFromWidget } from "types/widget";
-import CountrySelector from "components/CountrySelector";
 import TokenField from "components/TokenField";
-import { CheckField, Label } from "components/form";
+import { CheckField } from "components/form";
 import { useGetter } from "store/accessors";
 import { setDetails } from "slices/donation";
 import { PAYMENT_WORDS } from "constants/common";
@@ -21,10 +20,8 @@ type Props = {
 export default function Form({ configFromWidget, tokens }: Props) {
   const {
     reset,
-    resetField,
     handleSubmit,
     getValues,
-    watch,
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<DonateValues>();
   const endowId = useGetter((state) => state.donation.recipient?.id);
@@ -39,7 +36,6 @@ export default function Form({ configFromWidget, tokens }: Props) {
     reset();
   }
 
-  const tokenType = watch("token.type");
   const isStepOneCompleted = !!getValues("token.amount");
   const isInsideWidget = configFromWidget !== null;
 
@@ -58,27 +54,6 @@ export default function Form({ configFromWidget, tokens }: Props) {
         classes={{ label: "text-lg", inputContainer: "dark:bg-blue-d6" }}
         withMininum
       />
-
-      {tokenType === "fiat" && (
-        <>
-          <h4 className="font-bold text-sm mb-2 mt-4">
-            Enter your payment details:
-          </h4>
-          <Label className="mb-2" htmlFor="country">
-            Country of Residence *
-          </Label>
-          <CountrySelector<DonateValues, "country">
-            placeholder="Select a country"
-            fieldName="country"
-            onReset={() => resetField("country")}
-            classes={{
-              container: "px-4 dark:bg-blue-d6 mb-3",
-              input: "py-3.5 placeholder:text-sm",
-              error: "field-error",
-            }}
-          />
-        </>
-      )}
 
       {!isKYCRequired && (
         // if KYC is required, KYC form is automatically shown on next step
