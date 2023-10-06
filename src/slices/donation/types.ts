@@ -17,9 +17,6 @@ export type DonationDetails = {
   token: TokenWithAmount;
   pctLiquidSplit: number; // <input range value transformed to number via onChange
 
-  //for fiat donations
-  country: Country;
-
   //meta
   chainId: string;
   chainName: string;

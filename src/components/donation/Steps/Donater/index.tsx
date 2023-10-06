@@ -25,11 +25,6 @@ export default function Donater({ wallet, config, ...state }: Props) {
     values: state.details || {
       token: initCoin,
       pctLiquidSplit: config?.liquidSplitPct ?? 50,
-      country: {
-        name: "",
-        flag: "",
-        code: "",
-      },
 
       //meta
       // if availCurrs array was not set, include all
