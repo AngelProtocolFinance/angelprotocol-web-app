@@ -5,7 +5,7 @@ import { Asset } from "types/contracts";
 import { SimulContractTx, SimulSendNativeTx } from "types/evm";
 import { EstimatedTx, TxContent } from "types/tx";
 import { WalletState } from "contexts/WalletContext";
-import { FiatWallet, SubmitStep, isFiat } from "slices/donation";
+import { SubmitStep } from "slices/donation";
 import createCosmosMsg from "contracts/createCosmosMsg";
 import { createTx } from "contracts/createTx/createTx";
 import { humanize, logger, scale, scaleToStr } from "helpers";
@@ -37,8 +37,6 @@ const _fiscalSponsorShipFeeFn =
       : new Decimal(0);
 
 const prettyDollar = (amount: Decimal) => `$${humanize(amount, 4)}`;
-const prettyFiat = (amount: Decimal, symbol: string) =>
-  `${symbol} ${humanize(amount, 4)}`;
 
 export async function estimateDonation({
   recipient,
@@ -46,7 +44,7 @@ export async function estimateDonation({
   wallet,
   terraWallet,
 }: SubmitStep & {
-  wallet: WalletState | FiatWallet;
+  wallet: WalletState;
   terraWallet?: ConnectedWallet;
 }): Promise<DonationEstimate | null> {
   let content: TxContent;
@@ -59,41 +57,6 @@ export async function estimateDonation({
   );
 
   try {
-    if (isFiat(wallet) || token.type === "fiat") {
-      //denominate fiat items in chosen fiat currency
-      const fiatAmountDec = new Decimal(token.amount);
-      const baseFee = fiatAmountDec.mul(BASE_FEE_RATE_PCT).div(100);
-      const fiscalSponsorShipFee = fiscalSponsorShipFeeFn(fiatAmountDec);
-
-      const amount: EstimateItem = {
-        name: "Amount",
-        fiatAmount: +token.amount,
-        prettyFiatAmount: prettyFiat(fiatAmountDec, token.symbol),
-      };
-
-      const feeTotal = baseFee.add(fiscalSponsorShipFee);
-      const fee: EstimateItem = {
-        name: isCharity ? "Angel Giving Fee" : "Donation fee",
-        fiatAmount: feeTotal.toNumber(),
-        prettyFiatAmount: prettyFiat(feeTotal, token.symbol),
-      };
-
-      const toReceiveDec = fiatAmountDec.sub(feeTotal);
-      const toReceive: EstimateItem = {
-        name: "Estimated proceeds",
-        fiatAmount: fiatAmountDec.sub(feeTotal).toNumber(),
-        prettyFiatAmount: prettyFiat(toReceiveDec, token.symbol),
-      };
-
-      return {
-        //amount and total are the same for fiat
-        items: [amount, fee, toReceive],
-        tx: {
-          /** not used */
-        } as any,
-      };
-    }
-
     const { chain } = wallet;
 
     if (chain.type === "juno-native") {

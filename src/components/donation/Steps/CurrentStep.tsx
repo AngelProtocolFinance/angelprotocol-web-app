@@ -4,8 +4,7 @@ import { useGetWallet } from "contexts/WalletContext";
 import KYC from "components/KYC";
 import Status, { LoadingStatus } from "components/Status";
 import { useGetter, useSetter } from "store/accessors";
-import { fiatWallet, resetDetails } from "slices/donation";
-import { IS_AST } from "constants/env";
+import { resetDetails } from "slices/donation";
 import Donater from "./Donater";
 import Result from "./Result";
 import Submit from "./Submit";
@@ -15,8 +14,7 @@ type Props = { config: DonaterConfigFromWidget | null };
 export default function CurrentStep({ config }: Props) {
   const state = useGetter((state) => state.donation);
   const dispatch = useSetter();
-  const { wallet = IS_AST ? fiatWallet : undefined, isLoading } =
-    useGetWallet();
+  const { wallet, isLoading } = useGetWallet();
 
   /** reset form state when user disconnects, user might change wallet */
   useEffect(() => {
