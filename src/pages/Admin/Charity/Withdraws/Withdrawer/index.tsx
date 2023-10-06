@@ -35,6 +35,17 @@ function Withdrawer() {
             ...endow,
             id: +endow.id,
           }))}
+          tabNames={
+            endowType === "charity"
+              ? {
+                  liquid: "Current",
+                  locked: "Endowment",
+                }
+              : {
+                  liquid: "Liquid",
+                  locked: "Locked",
+                }
+          }
         />
       )}
     </QueryLoader>

@@ -5,8 +5,13 @@ import { AccountType } from "types/lists";
 import WithdrawForm from "./WithdrawForm";
 
 const _tabs: AccountType[] = ["liquid", "locked"];
+type TabNames = Record<AccountType, string>;
 
-type Props = { classes?: string; balances: EndowBalance } & Pick<
+type Props = {
+  classes?: string;
+  balances: EndowBalance;
+  tabNames: TabNames;
+} & Pick<
   WithdrawerProps,
   "bridgeFees" | "protocolFeeRates" | "endowmentState" | "closedEndowSources"
 >;
@@ -18,6 +23,7 @@ export default function Tabs({
   endowmentState,
   balances,
   closedEndowSources,
+  tabNames,
 }: Props) {
   return (
     <Tab.Group
@@ -30,7 +36,7 @@ export default function Tabs({
             key={`tab-${type}`}
             className="rounded-2xl flex items-center justify-center w-full h-full uppercase text-sm font-bold focus:outline-none aria-selected:bg-orange-l5 aria-selected:dark:bg-blue-d4 aria-selected:border aria-selected:border-prim"
           >
-            {type}
+            {tabNames[type]}
           </Tab>
         ))}
       </Tab.List>

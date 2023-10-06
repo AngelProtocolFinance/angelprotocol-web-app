@@ -18,6 +18,7 @@ export type FilterState = {
   region: { activities: Regions; headquarters: Regions };
   kyc_only: boolean[];
   tiers: Exclude<EndowmentTierNum, 1>[];
+  published: boolean;
 };
 
 export type RegionType = keyof FilterState["region"];
