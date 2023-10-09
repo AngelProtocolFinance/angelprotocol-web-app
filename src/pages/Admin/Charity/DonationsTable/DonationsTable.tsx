@@ -1,6 +1,5 @@
 import { usePaginatedDonationRecords } from "services/apes";
 import QueryLoader from "components/QueryLoader";
-import { PAYMENT_WORDS } from "constants/common";
 import { useAdminContext } from "../../Context";
 import Table from "./Table";
 
@@ -22,9 +21,9 @@ export default function DonationsTable({ classes = "" }) {
           isError,
         }}
         messages={{
-          loading: `Fetching ${PAYMENT_WORDS.noun.plural}..`,
-          error: `Failed to get ${PAYMENT_WORDS.noun.plural}`,
-          empty: `No ${PAYMENT_WORDS.noun.plural} found`,
+          loading: "Fetching donations",
+          error: "Failed to get donations",
+          empty: "No donations found",
         }}
       >
         {(donations) => (

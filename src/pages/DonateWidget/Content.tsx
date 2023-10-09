@@ -8,7 +8,6 @@ import { Steps } from "components/donation";
 import { useSetter } from "store/accessors";
 import { DonationRecipient, setRecipient } from "slices/donation";
 import { possesiveForm } from "helpers";
-import { PAYMENT_WORDS, titleCase } from "constants/common";
 import { APP_NAME, DAPP_URL } from "constants/env";
 import donaterConfigFn from "./donaterConfig";
 
@@ -49,9 +48,7 @@ export default function Content({
       }
     >
       <Seo
-        title={`${titleCase(PAYMENT_WORDS.verb)} to ${
-          profile.name
-        } - ${APP_NAME}`}
+        title={`Donate to ${profile.name} - ${APP_NAME}`}
         description={(profile.overview ?? "").slice(0, 140)}
         name={profile.name}
         image={`${profile.logo}`}
@@ -71,10 +68,10 @@ export default function Content({
       {donaterConfig.isDescriptionTextShown && (
         <>
           <p className="font-body text-xs text-center sm:text-base mb-3">
-            {titleCase(PAYMENT_WORDS.verb)} today to{" "}
-            {possesiveForm(profile.name)} endowment. Your donation will be
-            protected and compounded in perpetuity to provide {profile.name}{" "}
-            with a long-term, sustainable runway. Give once, give forever!
+            Donate today to {possesiveForm(profile.name)} endowment. Your
+            donation will be protected and compounded in perpetuity to provide{" "}
+            {profile.name} with a long-term, sustainable runway. Give once, give
+            forever!
           </p>
           <p className="font-body text-xs text-center sm:text-base">
             Make sure to check out the many crypto and fiat donation options.

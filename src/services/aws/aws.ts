@@ -19,8 +19,6 @@ import {
 } from "types/aws";
 import { network } from "services/constants";
 import { createAuthToken } from "helpers";
-import { chainIds } from "constants/chainIds";
-import { IS_AST } from "constants/env";
 import { APIs } from "constants/urls";
 import { version as v } from "../helpers";
 
@@ -119,9 +117,7 @@ export const aws = createApi({
       providesTags: ["profile"],
       query: ({ endowId, isLegacy = false }) => ({
         params: { legacy: isLegacy },
-        url: IS_AST
-          ? `/${v(1)}/ast/${chainIds.polygon}/${endowId}`
-          : `/${v(2)}/profile/${network}/endowment/${endowId}`,
+        url: `/${v(2)}/profile/${network}/endowment/${endowId}`,
       }),
       transformResponse(r: EndowmentProfile) {
         //transform cloudsearch placeholders
@@ -129,7 +125,7 @@ export const aws = createApi({
         return {
           ...r,
           tagline,
-          type: IS_AST ? "ast" : "charity",
+          type: "charity",
         } as Profile;
       },
     }),

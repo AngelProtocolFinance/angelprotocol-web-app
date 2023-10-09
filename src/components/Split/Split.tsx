@@ -1,6 +1,5 @@
 import { FieldValues, Path, useFormContext } from "react-hook-form";
 import { Token } from "./types";
-import { IS_AST } from "constants/env";
 import Portion from "./Portion";
 import Slider from "./Slider";
 
@@ -21,14 +20,14 @@ export default function Split<FV extends FieldValues, P extends Path<FV>>(
     <div className={`grid grid-cols-2 gap-2 ${props.className || ""}`}>
       <Portion
         percentage={100 - liquidPercentage}
-        title={IS_AST ? "Locked" : "Endowment"}
+        title="Endowment"
         action="Compounded forever"
         token={props.token}
       />
       <Portion
         token={props.token}
         percentage={liquidPercentage}
-        title={IS_AST ? "Liquid" : "Current"}
+        title="Current"
         action="Instantly available"
       >
         <Slider

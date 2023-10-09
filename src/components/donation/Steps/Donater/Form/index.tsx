@@ -9,7 +9,6 @@ import TokenField from "components/TokenField";
 import { CheckField } from "components/form";
 import { useGetter } from "store/accessors";
 import { setDetails } from "slices/donation";
-import { PAYMENT_WORDS } from "constants/common";
 import { appRoutes } from "constants/routes";
 import AdvancedOptions from "../../../AdvancedOptions";
 
@@ -51,7 +50,7 @@ export default function Form({ configFromWidget, tokens }: Props) {
         name="token"
         tokens={tokens}
         withBalance
-        label={`Enter the ${PAYMENT_WORDS.noun.singular} amount:`}
+        label={`Enter the donation amount:`}
         classes={{ label: "text-lg", inputContainer: "dark:bg-blue-d6" }}
         withMininum
       />

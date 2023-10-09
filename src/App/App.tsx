@@ -6,7 +6,6 @@ import ModalContext from "contexts/ModalContext";
 import WalletContext from "contexts/WalletContext";
 import useScrollTop from "hooks/useScrollTop";
 import { chainOptions } from "constants/chainOptions";
-import { IS_AST } from "constants/env";
 import { appRoutes } from "constants/routes";
 import Layout from "./Layout";
 
@@ -67,12 +66,7 @@ export default function App() {
             </Route>
             <Route
               path="*"
-              element={
-                <Navigate
-                  replace
-                  to={IS_AST ? appRoutes.register : appRoutes.marketplace}
-                />
-              }
+              element={<Navigate replace to={appRoutes.marketplace} />}
             />
           </SentryRoutes>
         </ModalContext>

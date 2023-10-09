@@ -7,7 +7,6 @@ import {
   DonationState,
   setRecipient,
 } from "slices/donation";
-import { PAYMENT_WORDS } from "constants/common";
 import { appRoutes } from "constants/routes";
 
 function Content(props: DonationRecipient) {
@@ -53,8 +52,7 @@ function Content(props: DonationRecipient) {
 
       {!isFinalized(state) && (
         <h3 className="text-center text-xl sm:text-3xl leading-snug mb-4">
-          You're about to make a {PAYMENT_WORDS.noun.singular} to{" "}
-          {state.recipient?.name}
+          You're about to make a donation to {state.recipient?.name}
         </h3>
       )}
 

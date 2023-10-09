@@ -5,7 +5,7 @@ import { useWalletProfileQuery } from "services/aws/aws";
 import { useErrorContext } from "contexts/ErrorContext";
 import { WalletState, useSetWallet } from "contexts/WalletContext";
 import { logger } from "helpers";
-import { GENERIC_ERROR_MESSAGE, PAYMENT_WORDS } from "constants/common";
+import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { appRoutes } from "constants/routes";
 import Address from "./Address";
 import Balances from "./Balances";
@@ -69,7 +69,7 @@ function MyDonations({ address }: { address: string }) {
         to={`${appRoutes.donations}/${address}`}
         className="font-heading font-bold text-sm uppercase hover:text-orange"
       >
-        My {PAYMENT_WORDS.noun.plural}
+        My donations
       </Link>
     </div>
   );

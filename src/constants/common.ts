@@ -1,13 +1,7 @@
 import { EndowDesignation } from "types/aws";
 import { IconType } from "components/Icon";
 import { ImageProps } from "components/Image";
-import {
-  BASE_URL,
-  EMAIL_SUPPORT,
-  IS_AST,
-  LOGO_IMG_DARK,
-  LOGO_IMG_LIGHT,
-} from "./env";
+import { BASE_URL, EMAIL_SUPPORT, LOGO_IMG_DARK, LOGO_IMG_LIGHT } from "./env";
 
 export const GENERIC_ERROR_MESSAGE = `An error occurred. Please get in touch with ${EMAIL_SUPPORT} if the problem persists.`;
 
@@ -23,20 +17,6 @@ export const LOGO_LIGHT: ImageProps = {
   title: "Go to Marketing page",
 };
 
-// NOUN AND ACTION WORDS RELATING TO PAYMENTS TO AP/AG ENDOWMENTS
-// (AST == Contribution/Contribute & Charity == Donation/Donate)
-export const PAYMENT_WORDS = {
-  payer: IS_AST ? "contributor" : "donor",
-  noun: {
-    singular: IS_AST ? "contribution" : "donation",
-    plural: IS_AST ? "contributions" : "donations",
-  },
-  verb: IS_AST ? "contribute" : "donate",
-  accounts: {
-    locked: IS_AST ? "locked" : "endowment",
-    liquid: IS_AST ? "liquid" : "current",
-  },
-};
 export const titleCase = (word: string) =>
   word.charAt(0).toUpperCase() + word.substr(1);
 
