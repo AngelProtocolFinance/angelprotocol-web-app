@@ -1,3 +1,4 @@
+import { OverrideProperties } from "type-fest";
 import {
   ASTProfile,
   BridgeFees,
@@ -7,6 +8,7 @@ import {
 } from "types/aws";
 import { EndowmentDetails } from "types/contracts";
 import { AccountType, EndowmentType } from "types/lists";
+import { Endowment } from "types/subgraph";
 import { SemiPartial } from "types/utils";
 
 export type MultisigConfig = {
@@ -64,10 +66,25 @@ export type ProtocolFeeRates = {
   earlyLockedWithdrawBps: number;
 };
 
+export type WithdrawDataQueryParams = {
+  sourceEndowId?: number; //if not provided, source is withdrawer's
+  withdrawer: {
+    id: number;
+    name: string;
+    endowType: EndowmentType;
+  };
+};
+
+export type ClosedEndowmentSource = {
+  id: string;
+  name: string;
+};
+
 export type WithdrawData = {
   balances: EndowBalance;
   bridgeFees: BridgeFees;
   protocolFeeRates: ProtocolFeeRates;
+  closedEndowmentSources: ClosedEndowmentSource[];
 };
 
 export type Profile =
@@ -136,3 +153,8 @@ export type WalletProfileVersion = "legacy" | "latest";
 export type VersionSpecificWalletProfile = WalletProfile & {
   version: "legacy" | "latest";
 };
+
+export type WithdrawEndowBeneficiary = OverrideProperties<
+  Endowment,
+  { name: string }
+>;

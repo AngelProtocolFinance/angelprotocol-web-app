@@ -1,8 +1,7 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { TokenWithAmount } from "types/slices";
-import { Estimate } from "types/tx";
+import { Estimate, TokenWithAmount } from "types/tx";
 import Image from "components/Image";
 import { ErrorStatus, LoadingStatus } from "components/Status";
 import { useSetter } from "store/accessors";

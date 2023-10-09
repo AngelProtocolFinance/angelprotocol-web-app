@@ -1,8 +1,7 @@
 import { Token } from "types/aws";
 import { Country } from "types/countries";
 import { EndowmentType } from "types/lists";
-import { TokenWithAmount } from "types/slices";
-import { EstimatedTx } from "types/tx";
+import { EstimatedTx, TokenWithAmount } from "types/tx";
 import { WalletState } from "contexts/WalletContext";
 import { OptionType } from "components/Selector";
 
@@ -24,7 +23,6 @@ export type DonationDetails = {
   //meta
   chainId: string;
   chainName: string;
-  tokens: TokenWithAmount[];
   userOptForKYC: boolean;
 };
 

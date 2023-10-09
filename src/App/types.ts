@@ -8,6 +8,7 @@ export type Link = {
   };
   href: string;
   external?: boolean;
+  end?: boolean;
 };
 
 type SocialMedia =
@@ -20,7 +21,7 @@ type SocialMedia =
   | "Linkedin"
   | "Instagram";
 
-export type SocialMediaLink = Required<Omit<Link, "external">> & {
+export type SocialMediaLink = Required<Omit<Link, "external" | "end">> & {
   title: SocialMedia;
 };
 
@@ -29,5 +30,6 @@ export type LinkGroup = {
   links: {
     text: string;
     href?: string;
+    exact?: boolean;
   }[];
 };

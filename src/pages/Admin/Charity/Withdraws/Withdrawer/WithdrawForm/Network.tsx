@@ -23,7 +23,7 @@ export default function Network({ classes = "" }) {
   const { watch, trigger, getValues } = useFormContext<FV>();
   const {
     field: { onChange: onNetworkChange, value: selectedNetwork, onBlur },
-  } = useController<Pick<FV, "destinationChainId">>({
+  } = useController<FV, "destinationChainId">({
     name: "destinationChainId",
   });
   const destinationChainId = watch("destinationChainId");

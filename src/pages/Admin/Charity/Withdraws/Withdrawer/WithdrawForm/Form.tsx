@@ -4,6 +4,7 @@ import Amounts from "./Amounts";
 import Beneficiary from "./Beneficiary";
 import Breakdown from "./Breakdown";
 import Network from "./Network";
+import SourceEndow from "./SourceEndow";
 import Submit from "./Submit";
 import Warning from "./Warning";
 import useWithdraw from "./useWithdraw";
@@ -16,6 +17,9 @@ export default function Form({ classes = "" }) {
     beneficiaryType,
     closed,
     closingBeneficiary,
+    isFundsFromClosedEndow,
+    accountType,
+    endowmentType,
   } = useWithdraw();
 
   return (
@@ -26,28 +30,46 @@ export default function Form({ classes = "" }) {
       noValidate
     >
       <fieldset disabled={!!tooltip} className="contents">
-        <Amounts />
-
+        {/**
+         * If thisEndowment is closed, can't receive deposits even from
+         * another closed endowments where thisEndowment is beneficiary of
+         */}
+        {!closed && <SourceEndow classes="-mt-2 mb-2" />}
+        <Amounts
+          classes="mb-4"
+          //the withdraw should be done in closingBeneficairy's admin/withdraw
+          disabled={closed && closingBeneficiary.type === "endowment"}
+        />
         {/** beneficiary is already set on closed accounts */}
         {closed ? (
           <Warning>
-            This endowment is closed. Withdraws from this account will go to{" "}
+            This endowment is closed. Only{" "}
             <span className="contents font-work text-orange">
-              Beneficiary {closingBeneficiary.type}: {closingBeneficiary.value}
-            </span>
+              beneficiary {closingBeneficiary.type}: {closingBeneficiary.value}{" "}
+            </span>{" "}
+            can withdraw funds.
           </Warning>
-        ) : (
+        ) : isFundsFromClosedEndow ? null : ( // beneficiary is thisEndowment, when withdrawing from closed endowment, so no need to show beneficiary type selection
           <Beneficiary />
         )}
 
-        {/** endowment beneficiaries are bound to polygon only */}
+        {/** endowment beneficiaries are bound to polygon only.
+         * When selecting closed endowments as source,
+         * beneficiaryType is set to `endowment` */}
         {beneficiaryType === "wallet" && (
           <>
             <Network />
             <Breakdown />
           </>
         )}
-
+        {beneficiaryType === "wallet" &&
+          accountType === "locked" &&
+          endowmentType === "charity" && (
+            <Warning>
+              All Endowment withdraws are subject to a 10% early withdraw fee.
+              Consider doing a fee-free Current withdraw.
+            </Warning>
+          )}
         {chainName !== "Polygon" && (
           <Warning>
             Withraws to {chainName} are processed on a hourly basis by our

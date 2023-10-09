@@ -6,14 +6,15 @@ import {
   isDeleteMsg,
 } from "../types";
 import {
+  AWSstrategy,
   EndowListPaginatedAWSQueryRes,
   EndowmentCard,
+  EndowmentOption,
   EndowmentProfile,
   EndowmentProfileUpdate,
   EndowmentsQueryParams,
   NewAST,
   Program,
-  TStrategy,
   WalletProfile,
 } from "types/aws";
 import { network } from "services/constants";
@@ -68,7 +69,7 @@ export const aws = createApi({
         };
       },
     }),
-    strategyCards: builder.query<TStrategy[], {}>({
+    strategyCards: builder.query<AWSstrategy[], {}>({
       providesTags: ["strategy"],
       query: (params) => {
         return {
@@ -77,16 +78,16 @@ export const aws = createApi({
         };
       },
     }),
-    endowmentIdNames: builder.query<
-      EndowListPaginatedAWSQueryRes<Pick<EndowmentCard, "id" | "name">[]>,
-      EndowmentsQueryParams
-    >({
+    endowmentOptions: builder.query<EndowmentOption[], EndowmentsQueryParams>({
       providesTags: ["endowments"],
       query: (params) => {
         return {
           url: `/${v(5)}/endowments/${network}`,
-          params: { ...params, return: ENDOW_ID_NAME_FIELDS },
+          params: { ...params, return: endowSelectorOptionFields },
         };
+      },
+      transformResponse(res: EndowListPaginatedAWSQueryRes<EndowmentOption[]>) {
+        return res.Items;
       },
     }),
     walletProfile: builder.query<VersionSpecificWalletProfile, string>({
@@ -142,7 +143,7 @@ export const aws = createApi({
         error ? [] : ["endowments", "profile", "walletProfile"],
       query: (payload) => {
         return {
-          url: `/${v(2)}/profile/${network}/endowment`,
+          url: `/${v(3)}/profile/${network}/endowment`,
           method: isDeleteMsg(payload.unsignedMsg) ? "DELETE" : "PUT",
           body: payload,
         };
@@ -170,14 +171,14 @@ export const {
   useSaveASTMutation,
   useEndowmentCardsQuery,
   useStrategyCardsQuery,
-  useEndowmentIdNamesQuery,
+  useEndowmentOptionsQuery,
   useProfileQuery,
   useProgramQuery,
   useEditProfileMutation,
 
   endpoints: {
     endowmentCards: { useLazyQuery: useLazyEndowmentCardsQuery },
-    endowmentIdNames: { useLazyQuery: useLazyEndowmentIdNamesQuery },
+    endowmentOptions: { useLazyQuery: useLazyEndowmentOptionsQuery },
     profile: { useLazyQuery: useLazyProfileQuery },
   },
   util: {
@@ -199,7 +200,7 @@ const endowCardObj: {
   active_in_countries: "",
   sdgs: "",
   id: "",
-  image: "",
+  logo: "",
   kyc_donors_only: "",
   contributor_verification_required: "",
   name: "",
@@ -210,10 +211,10 @@ const endowCardObj: {
 };
 const endowCardFields = Object.keys(endowCardObj).join(",");
 
-const ENDOW_ID_NAME_OBJ: {
+const endowSelectorOptionObj: {
   [key in Extract<EndowCardFields, "id" | "name">]: any;
 } = {
   id: "",
   name: "",
 };
-const ENDOW_ID_NAME_FIELDS = Object.keys(ENDOW_ID_NAME_OBJ).join(",");
+const endowSelectorOptionFields = Object.keys(endowSelectorOptionObj).join(",");

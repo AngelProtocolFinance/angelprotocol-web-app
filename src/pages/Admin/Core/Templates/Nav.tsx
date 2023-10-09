@@ -37,6 +37,12 @@ export default function Nav() {
       <NavLink to={routes["registrar.add-token"]} className={styler}>
         Add token
       </NavLink>
+      <NavLink
+        to={routes["registrar.add-accounts-contract"]}
+        className={styler}
+      >
+        Add accounts contract
+      </NavLink>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 [
   "function updateOwner(address)",
+  "function setAccountsContractAddressByChain(string,string)",
   "function updateConfig(tuple(address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address))",
   "function setTokenAccepted(address,bool)"
 ]

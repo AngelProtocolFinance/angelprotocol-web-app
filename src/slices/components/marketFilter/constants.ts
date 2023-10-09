@@ -9,6 +9,7 @@ export const initialState: FilterState = {
   endow_designation: ["Religious Organization", "Charity"],
   kyc_only: [true, false],
   tiers: [2, 3],
+  published: true,
 };
 
 export const clearedState: FilterState = {
@@ -20,4 +21,5 @@ export const clearedState: FilterState = {
   endow_designation: ["Charity"],
   kyc_only: [true, false],
   tiers: [2, 3],
+  published: true,
 };

@@ -4,6 +4,7 @@ import {
   IAccountsDepositWithdrawEndowments,
 } from "../typechain-types/contracts/core/accounts/facets/AccountsDepositWithdrawEndowments";
 import { AccountMessages as AccountsQueryEndowmentsMessages } from "../typechain-types/contracts/core/accounts/facets/AccountsQueryEndowments";
+import { AccountMessages as AccountsStrategyMessages } from "../typechain-types/contracts/core/accounts/facets/AccountsStrategy";
 import { AccountMessages as AccountsUpdateEndowmentSettingsControllerMessages } from "../typechain-types/contracts/core/accounts/facets/AccountsUpdateEndowmentSettingsController";
 import {
   AccountMessages,
@@ -96,6 +97,7 @@ export type EndowmentDetails = OverrideProperties<
   Pick<
     AccountsQueryEndowmentsMessages.EndowmentResponseStruct,
     | "owner"
+    | "name"
     | "endowType"
     | "maturityTime"
     | "allowlistedBeneficiaries"
@@ -244,3 +246,14 @@ export type Token = OverrideProperties<
     amnt: string;
   }
 >;
+
+export type InvestRequest = Mapped<
+  AccountsStrategyMessages.InvestRequestStruct,
+  string
+>;
+
+//no standalone type
+export type InvestPayload = {
+  id: number;
+  investRequest: InvestRequest;
+};

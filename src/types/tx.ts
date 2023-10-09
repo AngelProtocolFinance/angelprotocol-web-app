@@ -1,6 +1,6 @@
 import { CreateTxOptions, Msg } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
-import { OverrideProperties } from "type-fest";
+import { Except, OverrideProperties } from "type-fest";
 import { ValueOf } from "type-fest";
 import type { Any } from "@keplr-wallet/proto-types/google/protobuf/any";
 import { FetchedChain, Token, TokenType } from "./aws";
@@ -14,6 +14,7 @@ import {
   FeeSettingsUpdate,
   FundMemberUpdate,
   IndexFundConfigUpdate,
+  InvestPayload,
   NewAST,
   NewFund,
   RegistrarConfigUpdate,
@@ -33,6 +34,11 @@ export type TokenWithBalance = OverrideProperties<
   Token,
   { type: TokenType | "erc20-gift" | "evm-native-gift" }
 > & { balance: number };
+
+export type TokenWithAmount = Except<TokenWithBalance, "type"> & {
+  amount: string;
+  type: TokenWithBalance["type"] | "fiat"; // "fiat" type not present in AWS (added here)
+};
 
 export type Chain = Omit<FetchedChain, "native_currency" | "tokens"> & {
   tokens: TokenWithBalance[];
@@ -167,16 +173,7 @@ type Txs = {
     WithdrawMeta
   >;
   "accounts.close": Tx<CloseEndowmentRequest, AccountStatusMeta>;
-  "accounts.invest": Tx<
-    {
-      id: number;
-      account: AccountType;
-      vaults: string[];
-      tokens: string[];
-      amounts: string[]; //uint256
-    },
-    never //future
-  >;
+  "accounts.invest": Tx<InvestPayload, null /** future */>;
   "accounts.redeem": Tx<
     {
       id: number;
@@ -231,6 +228,10 @@ type Txs = {
   "registrar.update-owner": Tx<{ newOwner: string }, OwnerMeta>;
   "registrar.update-config": Tx<RegistrarConfigUpdate, Diff[]>;
   "registrar.add-token": Tx<{ token: string }, never>; //future
+  "registrar.add-accounts-contract": Tx<
+    { chainName: string; contractAddress: string },
+    never
+  >; //future
 };
 
 export type TxType = keyof Txs;

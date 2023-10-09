@@ -53,7 +53,6 @@ export async function fetchBalances(
     /**fetch balances for ethereum */
     const native = tokens.natives[0]; //evm chains have only one gas token
 
-    console.log({ chain });
     const [nativeBal, gift, ...erc20s] = await Promise.allSettled([
       request({
         method: "eth_getBalance",

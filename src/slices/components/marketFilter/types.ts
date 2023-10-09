@@ -14,4 +14,5 @@ export type FilterState = {
   countries: string[];
   kyc_only: boolean[];
   tiers: Exclude<EndowmentTierNum, 1>[];
+  published: boolean;
 };

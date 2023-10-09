@@ -1,9 +1,9 @@
 import { UseFormRegisterReturn, useFormContext } from "react-hook-form";
-import { FormValues } from "./types";
+import { InvestFormValues } from "../types";
 
 export default function LockDuration({ classes = "" }) {
-  const { register, watch } = useFormContext<FormValues>();
-  const type = watch("type");
+  const { register, watch } = useFormContext<InvestFormValues>();
+  const type = watch("accountType");
 
   if (type === "liquid") return null;
 
@@ -19,7 +19,7 @@ export default function LockDuration({ classes = "" }) {
 
 type OptionProps = {
   register: UseFormRegisterReturn;
-  value: FormValues["lockPeriod"];
+  value: InvestFormValues["lockPeriod"];
 };
 
 function LockOption({ register, value }: OptionProps) {

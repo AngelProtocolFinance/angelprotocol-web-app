@@ -6,17 +6,21 @@ import Image from "components/Image";
 import { humanize } from "helpers";
 import { tokens } from "constants/tokens";
 
-export default function Amounts() {
+type Props = {
+  classes?: string;
+  disabled?: boolean;
+};
+export default function Amounts({ classes = "", disabled = false }: Props) {
   const {
     register,
     setValue,
     formState: { errors },
   } = useFormContext<FV>();
-  const { fields } = useFieldArray<FV>({ name: "amounts" });
+  const { fields } = useFieldArray<FV, "amounts">({ name: "amounts" });
 
   if (fields.length <= 0) {
     return (
-      <div className="flex items-center gap-2 text-red-l1 mb-4">
+      <div className={`flex items-center gap-2 text-red-l1 ${classes}`}>
         <Icon type="Info" />
         <p>No tokens found</p>
       </div>
@@ -30,7 +34,8 @@ export default function Amounts() {
 
         return (
           <div
-            className="relative grid grid-cols-[auto_1fr_auto] items-center gap-2 @md:gap-4 w-full p-4 border border-prim rounded"
+            aria-disabled={disabled}
+            className="relative grid grid-cols-[auto_1fr_auto] items-center gap-2 @md:gap-4 w-full p-4 border border-prim rounded aria-disabled:bg-gray aria-disabled:dark:bg-bluegray-d1 aria-disabled:pointer-events-none"
             key={field.id}
           >
             <label
@@ -49,7 +54,7 @@ export default function Amounts() {
               type="text"
               autoComplete="off"
               placeholder="0.00000"
-              className="w-full outline-none bg-transparent"
+              className="w-full outline-none bg-transparent "
             />
             <button
               type="button"

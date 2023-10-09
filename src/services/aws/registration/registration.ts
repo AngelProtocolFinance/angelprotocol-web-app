@@ -1,4 +1,4 @@
-import { FiscalSponsorhipAgreementSigner } from "services/types";
+import { FiscalSponsorhipAgreementSigner } from "../../types";
 import { ApplicationStatusOptions } from "slices/admin/types";
 import {
   AWSQueryRes,
@@ -124,9 +124,8 @@ const registration_api = aws.injectEndpoints({
       providesTags: [{ type: "admin", id: adminTags.applications }],
       query: (status) => {
         return {
-          url: `v2/registration/list${
-            status !== "all" ? `?regStatus=${status}` : ""
-          }`,
+          url: `${v(2)}/registration/list`,
+          params: { regStatus: status },
         };
       },
       transformResponse: (response: AWSQueryRes<EndowmentProposal[]>) =>

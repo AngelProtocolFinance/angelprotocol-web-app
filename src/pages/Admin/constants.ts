@@ -24,6 +24,7 @@ export const templates: {
   "registrar.update-config": "registrar_update-config",
   "registrar.update-owner": "registrar_update-owner",
   "registrar.add-token": "registrar_add-token",
+  "registrar.add-accounts-contract": "registrar_add-accounts-contract",
 };
 
 export const templateRoutes: { [key in Templates | "index"]: string } = {
@@ -67,7 +68,7 @@ export const LINKS: {
     },
   },
   admin_wallet: {
-    title: "Admin Wallet",
+    title: "Multisig Admin",
     to: sidebarRoutes.admin_wallet,
     icon: {
       type: "Wallet",

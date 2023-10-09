@@ -45,6 +45,7 @@ export default function Menu({
               key={`header-link-${link.title}`}
               className={styler}
               to={link.href}
+              end={link.end}
             >
               {link.title}
             </NavLink>

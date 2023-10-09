@@ -5,13 +5,16 @@ import {
   retry,
 } from "@reduxjs/toolkit/query/react";
 import { TransactionsArgs } from "./types";
+import { WithdrawEndowBeneficiary } from "services/types";
 import { TransactionStatus } from "types/lists";
 import {
   ApplicationProposalRes,
   GraphQLApplicationProposalRes,
+  GraphQLEndowmentsRes,
   GraphQLTransactionRes,
   GraphQLTransactionsRes,
   Paginated,
+  WithdrawBeneficiaryEndowmentsQueryParams,
 } from "types/subgraph";
 import { Transaction, TxMeta } from "types/tx";
 import { fromAbiStr } from "helpers";
@@ -184,6 +187,48 @@ export const subgraph = createApi({
       },
       transformResponse(res: GraphQLApplicationProposalRes) {
         return res.data.applicationProposal;
+      },
+    }),
+    beneficiaryEndowments: builder.query<
+      WithdrawEndowBeneficiary[],
+      WithdrawBeneficiaryEndowmentsQueryParams
+    >({
+      providesTags: ["transactions"],
+      query: ({
+        beneficiaryEndowName,
+        withdrawerEndowId,
+        withdrawerEndowType,
+      }) => {
+        const endowTypes =
+          //FUTURE: handle type === "daf"
+          withdrawerEndowType === "charity" ? "[Charity]" : "[Charity,Normal]";
+        const searchClause = beneficiaryEndowName
+          ? `name_contains_nocase: "${beneficiaryEndowName}"`
+          : "";
+
+        const NUM_ENDOW_PER_PAGE = 5;
+        return {
+          method: "POST",
+          body: {
+            //prettier-ignore
+            query: `{
+              endowments(
+                first: ${NUM_ENDOW_PER_PAGE},
+                where: {beneficiaryWallet: null, beneficiaryEndowment: null, id_not: "${withdrawerEndowId}", endowmentType_in: ${endowTypes}, ${searchClause} },
+                orderBy: name
+              ) {
+                id
+                name
+              }
+            }`,
+          },
+        };
+      },
+      transformResponse: (res: GraphQLEndowmentsRes) => {
+        return res.data.endowments.map((e) => ({
+          ...e,
+          name: e.name || "Default endow name",
+        }));
       },
     }),
   }),

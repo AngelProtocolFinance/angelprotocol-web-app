@@ -20,6 +20,7 @@ export type TPermissions = {
   maturityTime: TPermission;
   donationSplitParams: TPermission;
   profile: TPermission;
+  investments: TPermission;
 };
 
 export type FV = TPermissions & {

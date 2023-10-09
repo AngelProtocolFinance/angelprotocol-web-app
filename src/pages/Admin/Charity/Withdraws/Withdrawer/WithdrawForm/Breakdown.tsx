@@ -1,5 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { FV } from "./types";
+import { IS_TEST } from "constants/env";
 import { denoms } from "constants/tokens";
 import { feeData } from "./helpers";
 
@@ -8,7 +9,8 @@ export default function Breakdown() {
   const destinationChainId = watch("destinationChainId");
   const amounts = watch("amounts");
   const usdcAmountStr =
-    amounts.find((a) => a.tokenId === denoms.ausdc)?.value ?? "0";
+    amounts.find((a) => a.tokenId === (IS_TEST ? denoms.ausdc : denoms.uusdc))
+      ?.value ?? "0";
 
   const fv = getValues(); //doesn't trigger re-render
   const { items: feeItems, toReceive } = feeData({
@@ -41,7 +43,7 @@ type Props = { title: string; value: string };
 function Item({ title, value }: Props) {
   return (
     <div className="flex justify-between items-center w-full text-sm py-2 text-gray-d1 dark:text-gray">
-      <span className="uppercase font-semibold text-xs">{title}:</span>
+      <span className="uppercase font-semibold text-xs">{title} :</span>
       <span>{value}</span>
     </div>
   );

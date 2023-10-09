@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 import { SchemaShape } from "./types";
-import type { TokenWithAmount as TWA } from "types/slices";
+import type { TokenWithAmount as TWA } from "types/tx";
 import { tokenConstraint } from "./number";
 
 type Key = keyof TWA;

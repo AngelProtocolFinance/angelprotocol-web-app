@@ -1,3 +1,5 @@
+import { EndowmentType } from "./lists";
+
 type GraphQLRes<T> = { data: T };
 type Owner = { id: string };
 type Confirmation = { owner: Owner };
@@ -13,6 +15,18 @@ type TransactionRes = {
 
 export type GraphQLTransactionsRes = GraphQLRes<{
   multiSigTransactions: TransactionRes[];
+}>;
+
+export type WithdrawBeneficiaryEndowmentsQueryParams = {
+  withdrawerEndowType: EndowmentType;
+  withdrawerEndowId: number;
+  beneficiaryEndowName: string;
+};
+
+export type Endowment = { name: string | null; id: string };
+export type GraphQLEndowmentsRes = GraphQLRes<{ endowments: Endowment[] }>;
+export type GraphQLClosedEndowmentsRes = GraphQLRes<{
+  endowment: { beneficiaryOf: Endowment[] };
 }>;
 
 export type MultisigRes = {
