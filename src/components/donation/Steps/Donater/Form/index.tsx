@@ -4,13 +4,14 @@ import { Link } from "react-router-dom";
 import { DonateValues } from "../types";
 import { TokenWithAmount } from "types/tx";
 import { DonaterConfigFromWidget } from "types/widget";
+import Split from "components/Split";
 import TokenField from "components/TokenField";
 import { CheckField } from "components/form";
 import { useGetter } from "store/accessors";
 import { setDetails } from "slices/donation";
 import { PAYMENT_WORDS } from "constants/common";
 import { appRoutes } from "constants/routes";
-import AdvancedOptions from "./AdvancedOptions";
+import AdvancedOptions from "../../../AdvancedOptions";
 
 type Props = {
   configFromWidget: DonaterConfigFromWidget | null;
@@ -19,9 +20,9 @@ type Props = {
 
 export default function Form({ configFromWidget, tokens }: Props) {
   const {
+    watch,
     reset,
     handleSubmit,
-    getValues,
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<DonateValues>();
   const endowId = useGetter((state) => state.donation.recipient?.id);
@@ -36,7 +37,8 @@ export default function Form({ configFromWidget, tokens }: Props) {
     reset();
   }
 
-  const isStepOneCompleted = !!getValues("token.amount");
+  const token = watch("token");
+  const isStepOneCompleted = !!token.amount;
   const isInsideWidget = configFromWidget !== null;
 
   return (
@@ -70,8 +72,15 @@ export default function Form({ configFromWidget, tokens }: Props) {
 
       <AdvancedOptions
         classes="mt-10"
-        display={configFromWidget?.advancedOptionsDisplay ?? "expanded"}
-        fixLiquidSplitPct={configFromWidget?.liquidSplitPct}
+        display={configFromWidget?.advancedOptionsDisplay ?? "collapsed"}
+        splitComponent={
+          <Split<DonateValues, "pctLiquidSplit">
+            className="mb-6"
+            liqPctField="pctLiquidSplit"
+            token={{ amount: toNumber(token.amount), symbol: token.symbol }}
+            fixLiquidSplitPct={configFromWidget?.liquidSplitPct}
+          />
+        }
       />
 
       <div
@@ -102,3 +111,8 @@ export default function Form({ configFromWidget, tokens }: Props) {
     </form>
   );
 }
+
+const toNumber = (input: string) => {
+  const num = Number(input);
+  return isNaN(num) ? 0 : num;
+};

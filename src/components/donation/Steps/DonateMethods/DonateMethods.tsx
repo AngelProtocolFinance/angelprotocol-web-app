@@ -4,6 +4,7 @@ import { useGetWallet } from "contexts/WalletContext";
 import Status, { LoadingStatus } from "components/Status";
 import { FormStep } from "slices/donation";
 import Donater from "../Donater";
+import Stripe from "./Stripe";
 
 type Props = {
   donaterConfig: DonaterConfigFromWidget | null;
@@ -35,7 +36,11 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
       </Tab.List>
       <Tab.Panels>
         <Tab.Panel className="grid">
-          <div>stripe donate form</div>
+          <Stripe
+            advanceOptDisplay={
+              donaterConfig?.advancedOptionsDisplay ?? "collapsed"
+            }
+          />
         </Tab.Panel>
         <Tab.Panel className="grid">
           {!wallet ? (
