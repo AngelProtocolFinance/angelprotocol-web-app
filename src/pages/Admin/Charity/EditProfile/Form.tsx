@@ -22,7 +22,7 @@ const sdgOptions = Object.entries(unsdgs).map(([key, { title }]) =>
 );
 
 export default function Form() {
-  const { isSubmitting, id, type, editProfile, reset } = useEditProfile();
+  const { isSubmitting, id, editProfile, reset } = useEditProfile();
   return (
     <form
       onReset={(e) => {
@@ -103,29 +103,24 @@ export default function Form() {
       </Group>
 
       <Group title="Organization">
-        {type === "charity" && (
-          <>
-            <Label className="-mb-4" required>
-              Aligned SDG#
-            </Label>
-            <MultiSelector<FV, "sdgs", UNSDG_NUMS>
-              name="sdgs"
-              options={sdgOptions}
-              classes={{ button: "field-input-admin" }}
-            />
-            <Label className="-mb-4" required>
-              Endowment Designation
-            </Label>
-            <Selector<FV, "endow_designation", string>
-              name="endow_designation"
-              options={ENDOW_DESIGNATIONS.map((option) => ({
-                label: option.label,
-                value: option.value,
-              }))}
-            />
-          </>
-        )}
-
+        <Label className="-mb-4" required>
+          Aligned SDG#
+        </Label>
+        <MultiSelector<FV, "sdgs", UNSDG_NUMS>
+          name="sdgs"
+          options={sdgOptions}
+          classes={{ button: "field-input-admin" }}
+        />
+        <Label className="-mb-4" required>
+          Endowment Designation
+        </Label>
+        <Selector<FV, "endow_designation", string>
+          name="endow_designation"
+          options={ENDOW_DESIGNATIONS.map((option) => ({
+            label: option.label,
+            value: option.value,
+          }))}
+        />
         <Label className="-mb-4">Headquarters</Label>
         <CountrySelector<FV, "hq_country">
           placeholder="Select a country"

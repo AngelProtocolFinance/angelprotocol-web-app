@@ -29,8 +29,8 @@ const CRYPTO_FEE_RATE_PCT = 1.4;
 const FISCAL_SPONSOR_FEE_RATE_PCT = 2.9;
 
 const _fiscalSponsorShipFeeFn =
-  (isCharity: boolean, isFiscalSponsored: boolean) => (amount: Decimal) =>
-    isCharity && isFiscalSponsored
+  (isFiscalSponsored: boolean) => (amount: Decimal) =>
+    isFiscalSponsored
       ? amount.mul(FISCAL_SPONSOR_FEE_RATE_PCT).div(100)
       : new Decimal(0);
 
@@ -48,9 +48,7 @@ export async function estimateDonation({
   let content: TxContent;
   // ///////////// GET TX CONTENT ///////////////
 
-  const isCharity = recipient.endowType === "charity";
   const fiscalSponsorShipFeeFn = _fiscalSponsorShipFeeFn(
-    isCharity,
     recipient.isFiscalSponsored
   );
 
@@ -161,7 +159,7 @@ export async function estimateDonation({
     };
 
     const donationFee: EstimateItem = {
-      name: isCharity ? "Angel Giving Fee" : "Donation fee",
+      name: "Angel Giving Fee",
       fiatAmount: totalFeeDec.toNumber(),
       prettyFiatAmount: prettyDollar(totalFeeDec),
     };

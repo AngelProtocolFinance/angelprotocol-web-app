@@ -1,8 +1,11 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FV } from "./types";
-import { Profile as TProfile } from "services/types";
-import { EndowDesignation, EndowmentProfileUpdate } from "types/aws";
+import {
+  EndowDesignation,
+  EndowmentProfileUpdate,
+  EndowmentProfile as TProfile,
+} from "types/aws";
 import { useProfileQuery } from "services/aws/aws";
 import { FormError, FormSkeleton } from "components/admin";
 import { adminRoutes } from "constants/routes";
@@ -69,14 +72,12 @@ function FormWithContext(props: TProfile & { id: number }) {
     })),
 
     //meta
-    type: props.type,
     initial: init,
   };
 
   const methods = useForm<FV>({
     defaultValues: defaults,
     resolver: yupResolver(schema),
-    context: { isEndow: props.type === "charity" },
   });
 
   return (

@@ -8,7 +8,6 @@ import {
   WithdrawLog,
   WithdrawLogQueryParams,
 } from "types/aws";
-import { EndowmentType } from "types/lists";
 import { Chain } from "types/tx";
 import { UnsupportedChainError } from "errors/errors";
 import { chainIds } from "constants/chainIds";
@@ -22,7 +21,6 @@ import { tags } from "./tags";
 
 type StripeSessionURLParams = {
   endowId: number;
-  endowType: EndowmentType;
   liquidSplitPct: string;
 };
 
@@ -91,10 +89,8 @@ export const apes = createApi({
     }),
     stripeSessionURL: builder.mutation<{ url: string }, StripeSessionURLParams>(
       {
-        query: ({ endowType, endowId, liquidSplitPct }) => ({
-          url: `${v(1)}/fiat/stripe-proxy/${
-            endowType === "charity" ? "apes" : "normal"
-          }/${network}`,
+        query: ({ endowId, liquidSplitPct }) => ({
+          url: `${v(1)}/fiat/stripe-proxy/apes/${network}`,
           method: "POST",
           body: JSON.stringify({
             endowmentId: endowId,

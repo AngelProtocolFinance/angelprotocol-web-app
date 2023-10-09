@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import {
-  Profile,
   ProfileUpdatePayload,
   VersionSpecificWalletProfile,
   isDeleteMsg,
@@ -113,7 +112,10 @@ export const aws = createApi({
       },
       transformResponse: (response: { data: any }) => response,
     }),
-    profile: builder.query<Profile, { endowId: number; isLegacy?: boolean }>({
+    profile: builder.query<
+      EndowmentProfile,
+      { endowId: number; isLegacy?: boolean }
+    >({
       providesTags: ["profile"],
       query: ({ endowId, isLegacy = false }) => ({
         params: { legacy: isLegacy },
@@ -125,8 +127,7 @@ export const aws = createApi({
         return {
           ...r,
           tagline,
-          type: "charity",
-        } as Profile;
+        };
       },
     }),
     program: builder.query<Program, { endowId: number; programId: string }>({

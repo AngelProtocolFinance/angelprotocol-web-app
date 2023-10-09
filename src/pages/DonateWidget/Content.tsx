@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Profile } from "services/types";
+import { EndowmentProfile } from "types/aws";
 import { configIsFallback } from "types/widget";
 import Seo from "components/Seo";
 import { ErrorStatus } from "components/Status";
@@ -12,7 +12,7 @@ import { APP_NAME, DAPP_URL } from "constants/env";
 import donaterConfigFn from "./donaterConfig";
 
 type Props = {
-  profile: Profile;
+  profile: EndowmentProfile;
   searchParams: URLSearchParams;
   classes?: string;
 };
@@ -28,11 +28,7 @@ export default function Content({
     const donationRecipient: DonationRecipient = {
       id: profile.id,
       name: profile.name,
-      endowType: profile.type,
-      isKYCRequired:
-        //prettier-ignore
-        (profile.type === "ast" && profile.contributor_verification_required) ||
-        (profile.kyc_donors_only ?? false),
+      isKYCRequired: profile.kyc_donors_only ?? false,
       isFiscalSponsored: profile.fiscal_sponsored ?? false,
     };
     dispatch(setRecipient(donationRecipient));

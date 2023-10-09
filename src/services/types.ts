@@ -1,11 +1,8 @@
 import {
-  ASTProfile,
   ApplicationStatus,
-  EndowmentProfile,
   EndowmentProfileUpdate,
   WalletProfile,
 } from "types/aws";
-import { EndowmentType } from "types/lists";
 import { SemiPartial } from "types/utils";
 
 export type MultisigConfig = {
@@ -22,19 +19,6 @@ export type ChainQueryArgs = {
 export interface IERC20 {
   amount: string;
   address: string;
-}
-
-export type Profile =
-  | ({
-      type: Extract<EndowmentType, "charity">;
-    } & EndowmentProfile)
-  | ({ type: Extract<EndowmentType, "ast"> } & ASTProfile);
-
-//type guard
-export function profileIsCharity(
-  profile: Profile
-): profile is EndowmentProfile & { type: "charity" } {
-  return profile.type === "charity";
 }
 
 export type ProfileUpdateMsg = SemiPartial<

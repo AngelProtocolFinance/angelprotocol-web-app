@@ -72,22 +72,6 @@ export type EndowmentProfile = EndowmentBase & {
   url?: string;
 } & EndowmentBalances;
 
-const _npo_type: keyof EndowmentBase = "endow_designation";
-//prettier-ignore
-export type ASTProfile = Pick<EndowmentProfile, 
-    "id" 
-  | "name" 
-  | "tagline"
-  | "program"
-  > 
-  & Partial<Omit<EndowmentProfile,
-   "id"
-  |"name"
-  |"tagline"
-  | typeof _npo_type 
-  >>
-  & Partial<EndowmentBalances>
-
 export type EndowmentCard = EndowmentBase & {
   endow_type: EndowmentType;
   published: boolean;

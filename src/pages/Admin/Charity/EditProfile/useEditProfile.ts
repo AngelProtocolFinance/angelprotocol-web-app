@@ -16,14 +16,13 @@ export default function useEditProfile() {
   const {
     reset,
     handleSubmit,
-    getValues,
     formState: { isSubmitting },
   } = useFormContext<FV>();
 
   const { showModal } = useModalContext();
   const updateProfile = useUpdateEndowmentProfile();
 
-  const editProfile: SubmitHandler<FV> = async ({ initial, type, ...fv }) => {
+  const editProfile: SubmitHandler<FV> = async ({ initial, ...fv }) => {
     try {
       /** special case for edit profile: since upload happens prior
        * to tx submission. Other users of useTxSender
@@ -72,7 +71,6 @@ export default function useEditProfile() {
     editProfile: handleSubmit(editProfile),
     isSubmitting,
     id,
-    type: getValues("type"),
   };
 }
 

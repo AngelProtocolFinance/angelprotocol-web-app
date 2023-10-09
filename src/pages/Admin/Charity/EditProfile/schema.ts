@@ -27,11 +27,8 @@ const fileObj = object<any, SchemaShape<ImgLink>>({
 export const schema = object<any, SchemaShape<FV>>({
   //not required for ASTs
   sdgs: array()
-    .max(MAX_SDGS, `maximum ${MAX_SDGS} selections allowed`)
-    .when("$isEndow", {
-      is: true,
-      then: (schema) => schema.min(1, "required"),
-    }),
+    .min(1, "required")
+    .max(MAX_SDGS, `maximum ${MAX_SDGS} selections allowed`),
   tagline: requiredString.max(140, "max length is 140 chars"),
   image: fileObj,
   logo: fileObj,
