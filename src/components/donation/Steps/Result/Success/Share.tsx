@@ -59,7 +59,7 @@ function Prompt({ type, iconSize, recipient: { name } }: Props) {
         ref={msgRef}
         className="my-6 sm:my-10 mx-4 sm:mx-12 text-sm leading-normal p-3 border dark:bg-blue-d6 border-prim rounded"
       >
-        I just donate to <span className="font-bold">{name}</span> on{" "}
+        I just donated to <span className="font-bold">{name}</span> on{" "}
         <span className="font-bold">"@angelgiving_</span>!{" "}
         {`Every gift is
         invested to provide sustainable funding for non-profits: Give once, give

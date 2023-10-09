@@ -157,11 +157,10 @@ async function erc20Balance(
   walletAddress: string,
   rpcURL: string
 ) {
-  //EIPMethods.eth_call, [{ to: erc20, data },"latest"]
   const data = erc20.encodeFunctionData("balanceOf", [walletAddress]);
   const result = await request({
     method: EIPMethods.eth_call,
-    params: [{ to: tokenContract, data }],
+    params: [{ to: tokenContract, data }, "latest"],
     rpcURL,
   });
   const decoded: BigNumber = erc20.decodeFunctionResult("balanceOf", result)[0];
