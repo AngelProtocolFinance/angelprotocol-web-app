@@ -25,7 +25,6 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
   disabled,
 
   //flags
-  withGiftcard,
   withBalance,
   withMininum,
 }: Props<T, K>) {
@@ -88,15 +87,7 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
           placeholder="0.0000"
           className="text-sm py-3 dark:text-gray"
         />
-        <TokenSelector
-          tokens={tokens.filter(
-            (t) =>
-              withGiftcard ||
-              !(t.type === "evm-native-gift" || t.type === "erc20-gift")
-          )}
-          token={token}
-          onChange={onChange}
-        />
+        <TokenSelector tokens={tokens} token={token} onChange={onChange} />
       </div>
       <div className="empty:mb-2">
         <ErrorMessage

@@ -1,5 +1,5 @@
 import { ContactRoles, ReferralMethods, RegistrationStatus } from "types/aws";
-import { EndowmentTierNum } from "types/contracts";
+import { EndowmentTierNum } from "types/aws";
 import { Country } from "types/countries";
 import { UNSDG_NUMS } from "types/lists";
 import { Optional } from "types/utils";

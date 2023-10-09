@@ -50,7 +50,6 @@ export default function Form({ configFromWidget, tokens }: Props) {
       <TokenField<DonateValues, "token">
         name="token"
         tokens={tokens}
-        withGiftcard
         withBalance
         label={`Enter the ${PAYMENT_WORDS.noun.singular} amount:`}
         classes={{ label: "text-lg", inputContainer: "dark:bg-blue-d6" }}

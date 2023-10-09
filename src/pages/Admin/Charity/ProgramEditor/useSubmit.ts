@@ -10,10 +10,9 @@ import { getPayloadDiff } from "helpers/admin";
 import { getFullURL, uploadFiles } from "helpers/uploadFiles";
 import { useAdminContext } from "../../Context";
 import useUpdateEndowmentProfile from "../common/useUpdateEndowmentProfile";
-import { ops } from "./ops";
 
 export default function useSubmit() {
-  const { id, owner } = useAdminContext<"charity">(ops);
+  const { id } = useAdminContext();
   const {
     reset,
     handleSubmit,
@@ -60,7 +59,7 @@ export default function useSubmit() {
 
       const updates: ProfileUpdateMsg = {
         id,
-        owner,
+        owner: "to be removed eventually",
         program: [program],
       };
       await updateProfile(updates);

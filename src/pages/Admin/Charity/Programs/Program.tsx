@@ -7,10 +7,9 @@ import Image from "components/Image";
 import { TxPrompt } from "components/Prompt";
 import { adminRoutes } from "constants/routes";
 import useUpdateEndowmentProfile from "../common/useUpdateEndowmentProfile";
-import { ops } from "./ops";
 
 export function Program(props: TProgram) {
-  const { id, owner } = useAdminContext<"charity">(ops);
+  const { id } = useAdminContext();
   const { showModal } = useModalContext();
   const updateProfile = useUpdateEndowmentProfile();
 
@@ -41,7 +40,11 @@ export function Program(props: TProgram) {
           className="btn-outline-filled w-24 py-2 text-sm @lg:ml-auto"
           type="button"
           onClick={() =>
-            deleteProgram({ id, owner, program_id: props.program_id })
+            deleteProgram({
+              id,
+              owner: "to be removed eventually",
+              program_id: props.program_id,
+            })
           }
         >
           delete

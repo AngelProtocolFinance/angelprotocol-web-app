@@ -1,5 +1,6 @@
-import { EndowmentTierNum } from "../../contracts";
 import { EndowmentType, NetworkType, UNSDG_NUMS } from "../../lists";
+
+export type EndowmentTierNum = 1 | 2 | 3;
 
 type EndowmentBalances = {
   // represents total cumulative balances

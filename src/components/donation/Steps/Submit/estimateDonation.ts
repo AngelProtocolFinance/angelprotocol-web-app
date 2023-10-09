@@ -1,7 +1,6 @@
 import { Coin, MsgExecuteContract, MsgSend } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import Decimal from "decimal.js";
-import { Asset } from "types/contracts";
 import { SimulContractTx, SimulSendNativeTx } from "types/evm";
 import { EstimatedTx, TxContent } from "types/tx";
 import { WalletState } from "contexts/WalletContext";
@@ -12,7 +11,6 @@ import { humanize, logger, scale, scaleToStr } from "helpers";
 import { usdValue as _usdValue } from "helpers/coin-gecko";
 import { estimateTx } from "helpers/tx";
 import { apWallets } from "constants/ap-wallets";
-import { ADDRESS_ZERO } from "constants/evm";
 
 type EstimateItem = {
   name: string;
@@ -108,27 +106,12 @@ export async function estimateDonation({
               value: scaledAmount,
               to: apWallets.evmDeposit,
             };
-          case "erc20": {
+          //"erc20"
+          default: {
             return createTx(wallet.address, "erc20.transfer", {
               erc20: token.token_id,
               to: apWallets.evmDeposit,
               amount: scaledAmount,
-            });
-          }
-          //gifts
-          default: {
-            const isNative = token.type === "evm-native-gift";
-            const asset: Asset = {
-              info: isNative ? 1 : 0,
-              amount: scaledAmount,
-              addr: isNative ? ADDRESS_ZERO : token.token_id,
-              name: "",
-            };
-            return createTx(wallet.address, "gift-card.spend", {
-              asset,
-              id: recipient.id,
-              lockedPCT: 100 - pctLiquidSplit,
-              liquidPCT: pctLiquidSplit,
             });
           }
         }

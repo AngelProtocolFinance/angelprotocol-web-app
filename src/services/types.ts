@@ -1,14 +1,10 @@
-import { OverrideProperties } from "type-fest";
 import {
   ASTProfile,
-  BridgeFees,
   EndowmentProfile,
   EndowmentProfileUpdate,
   WalletProfile,
 } from "types/aws";
-import { EndowmentDetails } from "types/contracts";
-import { AccountType, EndowmentType } from "types/lists";
-import { Endowment } from "types/subgraph";
+import { EndowmentType } from "types/lists";
 import { SemiPartial } from "types/utils";
 
 export type MultisigConfig = {
@@ -16,37 +12,6 @@ export type MultisigConfig = {
   requireExecution: boolean;
   duration: number;
 };
-
-type Base = {
-  multisig: string;
-  members: string[];
-  id: number;
-  config: MultisigConfig;
-};
-
-type APResource = Base & {
-  type: "ap";
-};
-type ReviewResource = Base & {
-  type: "review";
-};
-
-type Beneficiary = {
-  type: "wallet" | "endowment" | "treasury";
-  value: string;
-};
-
-export type EndowmentState = {
-  closed: boolean;
-  closingBeneficiary: Beneficiary;
-};
-
-type CharityResource = Base & {
-  type: "charity";
-} & EndowmentDetails &
-  EndowmentState;
-
-export type AdminResource = APResource | ReviewResource | CharityResource;
 
 export type ChainQueryArgs = {
   address: string;
@@ -57,35 +22,6 @@ export interface IERC20 {
   amount: string;
   address: string;
 }
-
-export type EndowBalance = { [key in AccountType]: IERC20[] };
-
-export type ProtocolFeeRates = {
-  withdrawBps: number;
-  //applied to charities only
-  earlyLockedWithdrawBps: number;
-};
-
-export type WithdrawDataQueryParams = {
-  sourceEndowId?: number; //if not provided, source is withdrawer's
-  withdrawer: {
-    id: number;
-    name: string;
-    endowType: EndowmentType;
-  };
-};
-
-export type ClosedEndowmentSource = {
-  id: string;
-  name: string;
-};
-
-export type WithdrawData = {
-  balances: EndowBalance;
-  bridgeFees: BridgeFees;
-  protocolFeeRates: ProtocolFeeRates;
-  closedEndowmentSources: ClosedEndowmentSource[];
-};
 
 export type Profile =
   | ({
@@ -124,15 +60,6 @@ export function isDeleteMsg(
   );
 }
 
-export type Multisig = {
-  recordId: string;
-  address: string;
-  owners: string[];
-  approvalsRequired: number;
-  requireExecution: boolean;
-  transactionExpiry: number;
-};
-
 export type FiscalSponsorhipAgreementSigner =
   | {
       id: string;
@@ -153,8 +80,3 @@ export type WalletProfileVersion = "legacy" | "latest";
 export type VersionSpecificWalletProfile = WalletProfile & {
   version: "legacy" | "latest";
 };
-
-export type WithdrawEndowBeneficiary = OverrideProperties<
-  Endowment,
-  { name: string }
->;
