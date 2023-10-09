@@ -103,7 +103,7 @@ export type InitApplication = {
 };
 
 export type OrgData = { OrganizationName: string };
-export type WalletData = { Wallet: string };
+export type BankData = { Name: string };
 
 type Append<Reg extends InitApplication, T, U, V> = {
   Registration: Reg["Registration"] & T;
@@ -121,18 +121,18 @@ TODO: should be part of Registration status
 Inactive | Rejected | {id: number}
 */
 };
-export type DoneWallet = Append<DoneDocs, {}, {}, WalletData & NewEndow>;
+export type DoneBankDetails = Append<DoneDocs, {}, {}, BankData & NewEndow>;
 
 type Proposal = {
   application_id: number;
 };
-export type InReview = Append<DoneWallet, Proposal, {}, {}>;
+export type InReview = Append<DoneBankDetails, Proposal, {}, {}>;
 
 export type SavedRegistration =
   | InitApplication
   | DoneContact
   | DoneDocs
-  | DoneWallet
+  | DoneBankDetails
   | InReview;
 
 type ContactUpdate = {
@@ -146,11 +146,15 @@ type DocsUpdate = {
 } & Omit<TDocumentation, "Tier"> &
   Partial<Pick<InitReg, "UN_SDG">>;
 
-type WalletUpdate = {
-  type: "wallet";
-} & WalletData;
+type BankDetailsUpdate = {
+  type: "bank";
+} & BankData;
 
-export type RegistrationUpdate = (ContactUpdate | DocsUpdate | WalletUpdate) & {
+export type RegistrationUpdate = (
+  | ContactUpdate
+  | DocsUpdate
+  | BankDetailsUpdate
+) & {
   reference: string;
 };
 
@@ -160,10 +164,10 @@ export type ContactUpdateResult = {
 };
 
 export type DocsUpdateResult = InitReg & TDocumentation;
-export type WalletUpdateResult = WalletData;
+export type BankDetailsUpdateResult = BankData;
 
 /** alias to provide context outside registration */
-export type Application = DoneWallet;
+export type Application = DoneBankDetails;
 
 /** shape used in Review proposals table */
 export type EndowmentProposal = Pick<

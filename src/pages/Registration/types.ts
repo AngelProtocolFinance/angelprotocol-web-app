@@ -61,16 +61,15 @@ export type Documentation = {
 };
 
 //STEP 3
-type WalletDetails = {
-  //keplr only
-  address: string;
+type BankDetails = {
+  name: string;
 };
 
 export type CompleteRegistration = {
   init: InitReg;
   contact: ContactPerson;
   documentation: Documentation;
-  wallet: WalletDetails;
+  bankDetails: BankDetails;
   endowId?: number; //created
 };
 
@@ -84,7 +83,7 @@ type Step2Data = Optional<
   "documentation"
 >;
 
-type Step3Data = Optional<CompleteRegistration, "wallet">;
+type Step3Data = Optional<CompleteRegistration, "bankDetails">;
 
 type RegStep1 = {
   step: 1;

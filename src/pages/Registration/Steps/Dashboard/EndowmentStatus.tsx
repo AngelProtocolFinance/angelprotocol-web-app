@@ -67,7 +67,7 @@ export default function EndowmentStatus({
         <div className={`grid grid-cols-2 sm:flex gap-2 ${classes}`}>
           <Link
             aria-disabled={isSubmitting}
-            to={`../${steps.wallet}`}
+            to={`../${steps.bank}`}
             state={data.init}
             className="py-3 min-w-[8rem] btn-outline-filled btn-reg"
           >

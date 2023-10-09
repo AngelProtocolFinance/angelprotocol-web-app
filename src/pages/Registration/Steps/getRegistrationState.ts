@@ -5,15 +5,15 @@ import {
   RegistrationState,
 } from "../types";
 import {
+  BankData,
   ContactDetails,
+  DoneBankDetails,
   DoneContact,
   DoneDocs,
-  DoneWallet,
   FileObject,
   InitContact,
   SavedRegistration,
   TDocumentation,
-  WalletData,
 } from "types/aws";
 import { Asset } from "components/registration";
 import { unsdgs } from "constants/unsdgs";
@@ -21,7 +21,7 @@ import { unsdgs } from "constants/unsdgs";
 export function getRegistrationState(
   reg: SavedRegistration
 ): RegistrationState {
-  if (isDoneWallet(reg)) {
+  if (isDoneBank(reg)) {
     const { ContactPerson: c, Registration: r, Metadata: m } = reg;
     return {
       step: 4,
@@ -29,7 +29,7 @@ export function getRegistrationState(
         init: getInit(c),
         contact: formatContactPerson(c, r),
         documentation: formatDocumentation(r),
-        wallet: { address: m.Wallet },
+        bankDetails: { name: m.Name },
         status: r.RegistrationStatus,
         endowId: m.EndowmentId,
       },
@@ -143,8 +143,8 @@ export function genFileAsset(previews: FileObject[]): Asset {
   return { files: [], previews };
 }
 
-function isDoneWallet(data: SavedRegistration): data is DoneWallet {
-  const key: keyof WalletData = "Wallet";
+function isDoneBank(data: SavedRegistration): data is DoneBankDetails {
+  const key: keyof BankData = "Name";
   return key in data.Metadata;
 }
 

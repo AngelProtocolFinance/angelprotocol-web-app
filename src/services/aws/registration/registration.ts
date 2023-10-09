@@ -4,6 +4,7 @@ import {
 } from "../../types";
 import {
   AWSQueryRes,
+  BankDetailsUpdateResult,
   ContactUpdateResult,
   DocsUpdateResult,
   EndowmentProposal,
@@ -11,7 +12,6 @@ import {
   RegistrationUpdate,
   SavedRegistration,
   SubmitResult,
-  WalletUpdateResult,
 } from "types/aws";
 import { adminTags } from "services/aws/tags";
 import { logger } from "helpers";
@@ -102,10 +102,10 @@ const registration_api = aws.injectEndpoints({
                   );
                   break;
                 }
-                case "wallet": {
+                case "bank": {
                   draft.Metadata = Object.assign(
                     draft.Metadata,
-                    data as WalletUpdateResult
+                    data as BankDetailsUpdateResult
                   );
                   break;
                 }

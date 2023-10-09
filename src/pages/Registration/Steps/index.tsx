@@ -3,13 +3,13 @@ import { InitReg } from "../types";
 import { useRegQuery } from "services/aws/registration";
 import { ErrorStatus, LoadingStatus } from "components/Status";
 import { steps } from "../routes";
+import BankDetails from "./BankDetails";
 import Contact from "./ContactDetails";
 import Dashboard from "./Dashboard";
 import Documentation from "./Documentation";
 import ProgressIndicator from "./ProgressIndicator";
 import Reference from "./Reference";
 import { StepGuardProps } from "./StepGuard";
-import Wallet from "./WalletRegistration";
 import { getRegistrationState } from "./getRegistrationState";
 
 export default function Steps({ classes = "" }: { classes?: string }) {
@@ -73,8 +73,8 @@ export default function Steps({ classes = "" }: { classes?: string }) {
             element={<Documentation {...guardProps} step={2} />}
           />
           <Route
-            path={steps.wallet}
-            element={<Wallet {...guardProps} step={3} />}
+            path={steps.bank}
+            element={<BankDetails {...guardProps} step={3} />}
           />
           <Route
             path={steps.summary}
