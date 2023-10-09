@@ -1,6 +1,12 @@
+import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { DonaterConfigFromWidget } from "types/widget";
+import { useStripeSessionURLMutation } from "services/apes";
+import { useErrorContext } from "contexts/ErrorContext";
 import ExtLink from "components/ExtLink";
+import { FormStep } from "slices/donation";
+import { appRoutes } from "constants/routes";
 import { TERMS_OF_USE } from "constants/urls";
 import Split from "../../../Split";
 import AdvancedOptions, {
@@ -9,19 +15,50 @@ import AdvancedOptions, {
 
 type Props = {
   advanceOptDisplay: AdvancedOptionsDisplay;
-  backLink?: string;
+  widgetConfig: DonaterConfigFromWidget | null;
+  state: FormStep;
 };
 type FV = {
   pctLiquidSplit: number;
 };
 
-export default function Stripe({ advanceOptDisplay, backLink }: Props) {
+export default function Stripe({
+  advanceOptDisplay,
+  widgetConfig,
+  state,
+}: Props) {
   const methods = useForm<FV>({
     defaultValues: { pctLiquidSplit: 50 },
   });
+
+  const { handleError } = useErrorContext();
+  const [sessionURLFn, { isLoading }] = useStripeSessionURLMutation();
+  //additional state to keep button disabled while redirecting
+  const [isRedirecting, setIsRedirecting] = useState(false);
+  const { handleSubmit } = methods;
+
+  const isInsideWidget = widgetConfig !== null;
+  const { endowType, id } = state.recipient;
   return (
     <FormProvider {...methods}>
-      <form>
+      <form
+        onSubmit={handleSubmit(async (fv) => {
+          try {
+            const session = await sessionURLFn({
+              endowId: id,
+              endowType,
+              liquidSplitPct: fv.pctLiquidSplit.toString(),
+            }).unwrap();
+
+            setIsRedirecting(true);
+            window.location.href = session.url;
+          } catch (err) {
+            console.error(err);
+            setIsRedirecting(false);
+            handleError("Failed to load payment platform");
+          }
+        })}
+      >
         <AdvancedOptions
           display={advanceOptDisplay}
           splitComponent={
@@ -38,14 +75,21 @@ export default function Stripe({ advanceOptDisplay, backLink }: Props) {
 
         <div
           className={`flex gap-3 md:gap-5 ${
-            backLink ? "justify-center" : "justify-between"
+            isInsideWidget ? "justify-center" : "justify-between"
           } font-body mt-4`}
         >
-          <button className="btn-orange btn-donate w-1/2" type="submit">
-            Pay with stripe
+          <button
+            disabled={isLoading || isRedirecting}
+            className="btn-orange btn-donate w-1/2"
+            type="submit"
+          >
+            {isLoading || isRedirecting ? "Processing..." : "Pay with stripe"}
           </button>
-          {backLink && (
-            <Link className="btn-outline-filled btn-donate w-1/2" to={backLink}>
+          {!isInsideWidget && (
+            <Link
+              className="btn-outline-filled btn-donate w-1/2"
+              to={`${appRoutes.marketplace}/${id}`}
+            >
               back
             </Link>
           )}
