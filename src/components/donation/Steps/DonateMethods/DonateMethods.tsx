@@ -12,22 +12,38 @@ type Props = {
 export default function DonateMethods({ donaterConfig, state }: Props) {
   const { wallet, isLoading } = useGetWallet();
   return (
-    <Tab.Group>
-      <Tab.List>
-        <Tab>Credit/Debit</Tab>
-        <Tab>Crypto</Tab>
+    <Tab.Group as="div" className="grid content-start min-w-[30rem] mt-2">
+      <Tab.List as="div" className="grid grid-cols-2 mb-6">
+        <Tab
+          className={({ selected }) =>
+            `${
+              selected ? "border-orange" : "border-gray-l3 dark:border-bluegray"
+            } uppercase p-2 border-b-4 hover:text-orange-l1`
+          }
+        >
+          Credit/Debit
+        </Tab>
+        <Tab
+          className={({ selected }) =>
+            `${
+              selected ? "border-orange" : "border-gray-l3 dark:border-bluegray"
+            } uppercase p-2 border-b-4 hover:text-orange-l1`
+          }
+        >
+          Crypto
+        </Tab>
       </Tab.List>
       <Tab.Panels>
-        <Tab.Panel>
+        <Tab.Panel className="grid">
           <div>stripe donate form</div>
         </Tab.Panel>
-        <Tab.Panel>
+        <Tab.Panel className="grid">
           {!wallet ? (
-            <Status icon="Info" classes="justify-self-center">
+            <Status icon="Info" classes="justify-self-center mt-4">
               You need to connect your wallet to make a donation
             </Status>
           ) : isLoading ? (
-            <LoadingStatus classes="justify-self-center">
+            <LoadingStatus classes="justify-self-center mt-4">
               Loading wallet
             </LoadingStatus>
           ) : (
