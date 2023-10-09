@@ -13,7 +13,7 @@ type Props = {
 export default function DonateMethods({ donaterConfig, state }: Props) {
   const { wallet, isLoading } = useGetWallet();
   return (
-    <Tab.Group as="div" className="grid content-start min-w-[30rem] mt-2">
+    <Tab.Group as="div" className="grid content-start mt-2">
       <Tab.List as="div" className="grid grid-cols-2 mb-6">
         <Tab
           className={({ selected }) =>

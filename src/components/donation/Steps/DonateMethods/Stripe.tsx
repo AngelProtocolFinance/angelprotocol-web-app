@@ -68,7 +68,7 @@ export default function Stripe({
             />
           }
         />
-        <p className="text-gray-d2 dark:text-gray mt-4">
+        <p className="text-sm text-gray-d2 dark:text-gray mt-4">
           Please click the button below and follow the instructions provided to
           complete your donation
         </p>
