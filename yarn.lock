@@ -5150,6 +5150,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@walletconnect/types@npm:2.10.2":
+  version: 2.10.2
+  resolution: "@walletconnect/types@npm:2.10.2"
+  dependencies:
+    "@walletconnect/events": ^1.0.1
+    "@walletconnect/heartbeat": 1.2.1
+    "@walletconnect/jsonrpc-types": 1.0.3
+    "@walletconnect/keyvaluestorage": ^1.0.2
+    "@walletconnect/logger": ^2.0.1
+    events: ^3.3.0
+  checksum: dafcb840b2b93343db56ca6684edfe8a20d9b2f703f81b2d1fdbea558fe41de9fbddec12c24e9d51a50c75ee6298a1cfd347d7fa0202146033788670371cfd6a
+  languageName: node
+  linkType: hard
+
 "@walletconnect/types@npm:2.9.0":
   version: 2.9.0
   resolution: "@walletconnect/types@npm:2.9.0"
@@ -5708,7 +5722,7 @@ __metadata:
     "@types/react-test-renderer": 18.0.0
     "@walletconnect/modal": 2.6.0
     "@walletconnect/sign-client": 2.9.0
-    "@walletconnect/types": 2.9.0
+    "@walletconnect/types": 2.10.2
     "@web3auth/base": ^5.1.0
     "@web3auth/no-modal": ^5.1.0
     "@web3auth/torus-evm-adapter": ^5.1.0
