@@ -24,6 +24,6 @@ export const adminRoutes = {
   edit_profile: "edit-profile",
   programs: "programs",
   program_editor: "program-editor",
-  withdraws: "withdraws",
+  banking: "banking",
   widget_config: "widget-config",
 } as const;

@@ -36,7 +36,7 @@ export const proposalShape: SchemaShape<ProposalBase> = {
   description: stringByteSchema(4, 1024),
 };
 
-const { program_editor, ...restAdminRoutes } = adminRoutes;
+const { program_editor, index, ...restAdminRoutes } = adminRoutes;
 
 const sidebarRoutes = {
   ...restAdminRoutes,
@@ -49,25 +49,6 @@ const _to: keyof Link = "to";
 export const LINKS: {
   [key in keyof SidebarRoutes]: Link & { [_to]: SidebarRoutes[key] };
 } = {
-  index: {
-    title: "Dashboard",
-    to: sidebarRoutes.index,
-    icon: {
-      type: "Dashboard",
-      size: 24,
-    },
-    end: true,
-  },
-
-  withdraws: {
-    title: "Withdraw",
-    to: sidebarRoutes.withdraws,
-    icon: {
-      type: "MoneyBill",
-      size: 22,
-    },
-  },
-
   edit_profile: {
     title: "Edit Profile",
     to: sidebarRoutes.edit_profile,
@@ -92,5 +73,14 @@ export const LINKS: {
       type: "Widget",
       size: 24,
     },
+  },
+  banking: {
+    title: "Banking (Coming soon)",
+    to: "banking",
+    icon: {
+      type: "Wallet",
+      size: 21.7,
+    },
+    disabled: true,
   },
 };

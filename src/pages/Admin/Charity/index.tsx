@@ -15,6 +15,7 @@ export default function Charity() {
           <Layout
             linkGroups={[
               { title: "Profile", links: [LINKS.edit_profile, LINKS.programs] },
+              { title: "Manage", links: [LINKS.banking] },
             ]}
           />
         }

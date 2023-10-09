@@ -36,7 +36,6 @@ import {
   FaInstagram,
   FaLinkedin,
   FaLinkedinIn,
-  FaMoneyBillWave,
   FaTelegramPlane,
   FaTiktok,
   FaUniversity,
@@ -63,7 +62,6 @@ import {
   MdOutlineFileDownload,
   MdOutlineFilterAlt,
   MdOutlineUploadFile,
-  MdSpaceDashboard,
   MdWidgets,
 } from "react-icons/md";
 import { RiMapPin2Line } from "react-icons/ri";
@@ -84,7 +82,6 @@ export const icons = {
   Copy: MdOutlineContentCopy,
   Crop: IoCrop,
   Dash: GoDash,
-  Dashboard: MdSpaceDashboard,
   Discord: FaDiscord,
   Down: VscTriangleDown,
   Email: MdOutlineEmail,
@@ -112,7 +109,6 @@ export const icons = {
   MapPin: RiMapPin2Line,
   Medium: AiOutlineMedium,
   Menu: FiMenu,
-  MoneyBill: FaMoneyBillWave,
   Moon: FiMoon,
   Picture: ImFilePicture,
   Plus: AiOutlinePlus,
