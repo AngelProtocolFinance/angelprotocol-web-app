@@ -8,7 +8,7 @@ type Props = {
 
 export function Steps({ className = "", donaterConfig }: Props) {
   return (
-    <div className={`grid ${className}`}>
+    <div className={`grid ${className} w-full`}>
       <CurrentStep config={donaterConfig} />
     </div>
   );

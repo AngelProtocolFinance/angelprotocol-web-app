@@ -3,6 +3,7 @@ import { DonaterConfigFromWidget } from "types/widget";
 import { useGetWallet } from "contexts/WalletContext";
 import Status, { LoadingStatus } from "components/Status";
 import { FormStep } from "slices/donation";
+import { appRoutes } from "constants/routes";
 import Donater from "../Donater";
 import Stripe from "./Stripe";
 
@@ -37,6 +38,11 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
       <Tab.Panels>
         <Tab.Panel className="grid">
           <Stripe
+            backLink={
+              donaterConfig
+                ? undefined
+                : `${appRoutes.marketplace}/${state.recipient.id}`
+            }
             advanceOptDisplay={
               donaterConfig?.advancedOptionsDisplay ?? "collapsed"
             }
