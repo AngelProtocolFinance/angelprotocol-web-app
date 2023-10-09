@@ -19,28 +19,11 @@ export enum appRoutes {
 }
 
 export const adminRoutes = {
-  //base routes
-  index_review: "",
   index: "",
-  proposal: "proposal",
-  proposals: "proposals",
-  templates: "templates",
-  widget_config: "widget-config",
-  contributions: "contributions",
-  other_settings: "other-settings",
-  permissions: "permissions",
-  whitelists: "whitelists",
-  maturity: "maturity",
-  admin_wallet: "admin-wallet",
   //charity
   edit_profile: "edit-profile",
   programs: "programs",
   program_editor: "program-editor",
   withdraws: "withdraws",
-  deposits: "deposits",
-  // settings: "settings",
-  invest: "invest-dashboard",
-  account: "account",
-
-  application: "application",
+  widget_config: "widget-config",
 } as const;

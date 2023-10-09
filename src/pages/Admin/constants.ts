@@ -2,7 +2,6 @@ import { Link } from "./Sidebar/types";
 import { ProposalBase, Templates } from "./types";
 import { SchemaShape } from "schemas/types";
 import { stringByteSchema } from "schemas/string";
-import { PAYMENT_WORDS, titleCase } from "constants/common";
 import { adminRoutes } from "constants/routes";
 
 export const templates: {
@@ -37,19 +36,10 @@ export const proposalShape: SchemaShape<ProposalBase> = {
   description: stringByteSchema(4, 1024),
 };
 
-const {
-  application,
-  proposal,
-  templates: templatesRoute,
-  account,
-  program_editor,
-  ...restAdminRoutes
-} = adminRoutes;
+const { program_editor, ...restAdminRoutes } = adminRoutes;
 
 const sidebarRoutes = {
   ...restAdminRoutes,
-  liquidAccount: `${account}/liquid`,
-  lockedAccount: `${account}/locked`,
 } as const;
 
 type SidebarRoutes = typeof sidebarRoutes;
@@ -59,47 +49,6 @@ const _to: keyof Link = "to";
 export const LINKS: {
   [key in keyof SidebarRoutes]: Link & { [_to]: SidebarRoutes[key] };
 } = {
-  other_settings: {
-    title: "Other settings",
-    to: sidebarRoutes.other_settings,
-    icon: {
-      type: "Settings",
-      size: 23,
-    },
-  },
-  admin_wallet: {
-    title: "Multisig Admin",
-    to: sidebarRoutes.admin_wallet,
-    icon: {
-      type: "Wallet",
-      size: 21.7,
-    },
-  },
-  liquidAccount: {
-    title: `${titleCase(PAYMENT_WORDS.accounts.liquid)} Account`,
-    to: sidebarRoutes.liquidAccount,
-    icon: {
-      type: "WaterDrop",
-      size: 24,
-    },
-  },
-  lockedAccount: {
-    title: `${titleCase(PAYMENT_WORDS.accounts.locked)} Account`,
-    to: sidebarRoutes.lockedAccount,
-    icon: {
-      type: "Lock",
-      size: 25.5,
-    },
-  },
-  index_review: {
-    title: "Applications",
-    to: sidebarRoutes.index_review,
-    icon: {
-      type: "Dashboard",
-      size: 24,
-    },
-    end: true,
-  },
   index: {
     title: "Dashboard",
     to: sidebarRoutes.index,
@@ -109,14 +58,7 @@ export const LINKS: {
     },
     end: true,
   },
-  deposits: {
-    title: "Deposit",
-    to: sidebarRoutes.deposits,
-    icon: {
-      type: "Deposit",
-      size: 24,
-    },
-  },
+
   withdraws: {
     title: "Withdraw",
     to: sidebarRoutes.withdraws,
@@ -125,30 +67,7 @@ export const LINKS: {
       size: 22,
     },
   },
-  contributions: {
-    title: titleCase(PAYMENT_WORDS.noun.plural),
-    to: sidebarRoutes.contributions,
-    icon: {
-      type: "DollarCircle",
-      size: 24,
-    },
-  },
-  invest: {
-    title: "Invest Dashboard",
-    to: sidebarRoutes.invest,
-    icon: {
-      type: "Analytics",
-      size: 24,
-    },
-  },
-  // settings: {
-  //   title: "Settings",
-  //   to: sidebarRoutes.settings,
-  //   icon: {
-  //     type: "PermDataSettings",
-  //     size: 24,
-  //   },
-  // },
+
   edit_profile: {
     title: "Edit Profile",
     to: sidebarRoutes.edit_profile,
@@ -165,38 +84,7 @@ export const LINKS: {
       size: 24,
     },
   },
-  permissions: {
-    title: "Permissions",
-    to: sidebarRoutes.permissions,
-    icon: {
-      type: "PermDataSettings",
-      size: 24,
-    },
-  },
-  proposals: {
-    title: "Decision Center",
-    to: sidebarRoutes.proposals,
-    icon: {
-      type: "ClipboardCheck",
-      size: 20,
-    },
-  },
-  whitelists: {
-    title: "Whitelists",
-    to: sidebarRoutes.whitelists,
-    icon: {
-      type: "FactCheck",
-      size: 22,
-    },
-  },
-  maturity: {
-    title: "Maturity",
-    to: "maturity",
-    icon: {
-      type: "Calendar",
-      size: 24,
-    },
-  },
+
   widget_config: {
     title: "Widget Configuration",
     to: "widget-config",
@@ -206,74 +94,3 @@ export const LINKS: {
     },
   },
 };
-
-// THESE WILL BE THE APPROPRIATE ICONS TO USE FOR FUTURE PAGES
-// TODO: REMOVE ONCE ALL ARE MOVED INTO `LINKS` ABOVE.
-//   const linkGroups: LinkGroup[] = [
-//     {
-//       title: "Profile",
-//       links: [
-//         {
-//           icon: {
-//             type: "ListBox",
-//             size: 24,
-//           },
-//           title: "Programs",
-//           to: `${rootPath}${routes.programs}`,
-//         },
-//         {
-//           icon: {
-//             type: "Image",
-//             size: 24,
-//           },
-//           title: "Media",
-//           to: `${rootPath}${routes.media}`,
-//         },
-//       ],
-//     },
-//     {
-//       title: "Manage",
-//       links: [
-//         {
-//           icon: {
-//             type: "FactCheck",
-//             size: 24,
-//           },
-//           title: "Whitelists",
-//           to: `${rootPath}${routes.whitelists}`,
-//         },
-//       ],
-//     },
-//     {
-//       title: "Settings",
-//       links: [
-//         {
-//           icon: {
-//             type: "AccountBalanceWallet",
-//             size: 24,
-//           },
-//           title: "Admin Wallet",
-//           to: `${rootPath}${routes.admin_wallet}`,
-//         },
-//         {
-//           icon: {
-//             type: "SecurityScan",
-//             size: 24,
-//           },
-//           title: "Donor Verification",
-//           to: `${rootPath}${routes.donor_verification}`,
-//         },
-//         {
-//           icon: {
-//             type: "PermDataSettings",
-//             size: 24,
-//           },
-//           title: "Permissions",
-//           to: `${rootPath}${routes.permissions}`,
-//         },
-//       ],
-//     },
-//   ];
-
-//   return linkGroups;
-// }
