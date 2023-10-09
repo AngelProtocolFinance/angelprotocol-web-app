@@ -1,5 +1,4 @@
 import { useModalContext } from "contexts/ModalContext";
-import Icon from "components/Icon";
 import Modal from "components/Modal";
 import { useSetter } from "store/accessors";
 import { clear } from "slices/components/marketFilter";
