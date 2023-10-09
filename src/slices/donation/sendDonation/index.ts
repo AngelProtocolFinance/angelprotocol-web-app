@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { DonateArgs, TxStatus, isFiat } from "../types";
+import { DonateArgs, TxStatus } from "../types";
 import { KYCData, TxLogPayload } from "types/aws";
 import { isTxResultError } from "types/tx";
 import { invalidateApesTags } from "services/apes";
@@ -10,7 +10,6 @@ import { sendTx } from "helpers/tx";
 import { LogDonationFail } from "errors/errors";
 import { chainIds } from "constants/chainIds";
 import { APIs } from "constants/urls";
-// import { SERVICE_PROVIDER } from "constants/fiatTransactions";
 import donation, { setTxStatus } from "../donation";
 
 export const sendDonation = createAsyncThunk<void, DonateArgs>(
@@ -25,32 +24,6 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
     try {
       const { token, pctLiquidSplit } = details;
       updateTx({ loadingMsg: "Payment is being processed..." });
-
-      const authToken = createAuthToken("angelprotocol-web-app");
-      if (isFiat(wallet) || token.type === "fiat") {
-        const { widgetUrl } = await fetch(
-          `${APIs.apes}/${v(2)}/fiat/meld-widget-proxy/${client}/${network}`,
-          {
-            method: "POST",
-            headers: { authorization: authToken },
-            body: JSON.stringify({
-              amount: +token.amount,
-              charityName: recipient.name,
-              countryCode: details.country.code,
-              endowmentId: recipient.id,
-              sourceCurrencyCode: token.symbol,
-              splitLiq: details.pctLiquidSplit.toString(),
-            }),
-          }
-        ).then<{ widgetUrl: string }>((res) => {
-          if (!res.ok) throw new Error("Failed to get widget url");
-          return res.json();
-        });
-
-        updateTx({ loadingMsg: "Redirecting..." });
-        window.location.href = widgetUrl;
-        return;
-      }
 
       const result = await sendTx(wallet, tx);
 
@@ -93,6 +66,7 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
         endowmentId: recipient.id,
       };
 
+      const authToken = createAuthToken("angelprotocol-web-app");
       const response = await fetch(APIs.apes + `/${v(4)}/donation/${client}`, {
         method: "POST",
         headers: { authorization: authToken },

@@ -17,9 +17,6 @@ export type DonationDetails = {
   token: TokenWithAmount;
   pctLiquidSplit: number; // <input range value transformed to number via onChange
 
-  //for fiat donations
-  country: Country;
-
   //meta
   chainId: string;
   chainName: string;
@@ -67,20 +64,12 @@ export type TxStep = {
   status: TxStatus;
 } & Omit<SubmitStep, "step">;
 
-export type FiatWallet = {
-  tokens: FiatToken[];
-};
-
 export type DonateArgs = { donation: SubmitStep } & {
-  wallet: WalletState | FiatWallet;
+  wallet: WalletState;
   tx: EstimatedTx;
 };
 
 export type FiatToken = Pick<Token, "symbol" | "min_donation_amnt" | "logo">;
-export type WithWallet<T> = T & { wallet: WalletState | FiatWallet };
+export type WithWallet<T> = T & { wallet: WalletState };
 
-//isFiatWallet
-export function isFiat(wallet: WalletState | FiatWallet): wallet is FiatWallet {
-  return !!(wallet as FiatWallet).tokens;
-}
 export type DonationStep = DonationState["step"];

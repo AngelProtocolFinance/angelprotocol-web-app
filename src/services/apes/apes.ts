@@ -8,14 +8,23 @@ import {
   WithdrawLog,
   WithdrawLogQueryParams,
 } from "types/aws";
+import { EndowmentType } from "types/lists";
 import { Chain } from "types/tx";
 import { UnsupportedChainError } from "errors/errors";
 import { chainIds } from "constants/chainIds";
 import { IS_TEST, JUNO_LCD_OVERRIDE, JUNO_RPC_OVERRIDE } from "constants/env";
+import { appRoutes } from "constants/routes";
 import { APIs } from "constants/urls";
+import { network } from "../constants";
 import { version as v } from "../helpers";
 import { fetchBalances } from "./helpers/fetchBalances";
 import { tags } from "./tags";
+
+type StripeSessionURLParams = {
+  endowId: number;
+  endowType: EndowmentType;
+  liquidSplitPct: string;
+};
 
 export const apes = createApi({
   reducerPath: "apes",
@@ -80,6 +89,21 @@ export const apes = createApi({
         return res;
       },
     }),
+    stripeSessionURL: builder.mutation<{ url: string }, StripeSessionURLParams>(
+      {
+        query: ({ endowType, endowId, liquidSplitPct }) => ({
+          url: `${v(1)}/fiat/stripe-proxy/${
+            endowType === "charity" ? "apes" : "normal"
+          }/${network}`,
+          method: "POST",
+          body: JSON.stringify({
+            endowmentId: endowId,
+            splitLiq: liquidSplitPct,
+            redirectUrl: `${window.location.origin}${appRoutes.donate_fiat_thanks}`,
+          }),
+        }),
+      }
+    ),
   }),
 });
 
@@ -101,6 +125,7 @@ export const {
   useTokensQuery,
   useWithdrawLogsQuery,
   useLazyWithdrawLogsQuery,
+  useStripeSessionURLMutation,
   util: {
     invalidateTags: invalidateApesTags,
     updateQueryData: updateApesQueryData,

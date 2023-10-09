@@ -62,7 +62,7 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
         >
           {label}
         </label>
-        {withBalance && token.type !== "fiat" && (
+        {withBalance && (
           <button
             type="button"
             onClick={() => onSetAmount(token.balance)}
