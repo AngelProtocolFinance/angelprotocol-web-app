@@ -1,7 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { apes } from "services/apes";
 import { aws } from "services/aws/aws";
-import { adminReducer } from "slices/admin";
 import authReducer from "slices/authSlice";
 import { componentReducer } from "slices/components";
 import { donation } from "slices/donation";
@@ -10,7 +9,6 @@ import widget from "slices/widget";
 
 export const store = configureStore({
   reducer: {
-    admin: adminReducer,
     donation,
     gift,
     auth: authReducer,

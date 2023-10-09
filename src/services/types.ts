@@ -1,5 +1,6 @@
 import {
   ASTProfile,
+  ApplicationStatus,
   EndowmentProfile,
   EndowmentProfileUpdate,
   WalletProfile,
@@ -80,3 +81,5 @@ export type WalletProfileVersion = "legacy" | "latest";
 export type VersionSpecificWalletProfile = WalletProfile & {
   version: "legacy" | "latest";
 };
+
+export type ApplicationStatusOptions = Exclude<ApplicationStatus, "inactive">;

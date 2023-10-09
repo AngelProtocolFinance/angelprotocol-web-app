@@ -1,5 +1,7 @@
-import { FiscalSponsorhipAgreementSigner } from "../../types";
-import { ApplicationStatusOptions } from "slices/admin/types";
+import {
+  ApplicationStatusOptions,
+  FiscalSponsorhipAgreementSigner,
+} from "../../types";
 import {
   AWSQueryRes,
   ContactUpdateResult,
