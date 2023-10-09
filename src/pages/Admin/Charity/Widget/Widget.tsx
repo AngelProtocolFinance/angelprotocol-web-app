@@ -13,7 +13,7 @@ export default function Widget() {
     <div className="grid @4xl:grid-cols-2 @4xl:gap-x-10 w-full h-full group @container/widget">
       <Seo
         title={`Widget Configuration for Endowment ${id}`}
-        url={`${adminRoutes.other_settings}/${id}`}
+        url={`${adminRoutes.widget_config}`}
       />
       <h1 className="text-lg @4xl/widget:text-2xl text-center @4xl/widget:text-left mb-3 @4xl/widget:col-span-2">
         Accept {PAYMENT_WORDS.noun.plural} from your website today!

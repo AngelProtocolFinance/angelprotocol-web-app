@@ -11,7 +11,6 @@ import Icon from "components/Icon";
 import Loader from "components/Loader";
 import { blockTime, hasElapsed } from "helpers/admin";
 import { chainIds } from "constants/chainIds";
-import { adminRoutes, appRoutes } from "constants/routes";
 
 export function Context(props: {
   children(resources: AdminResource): ReactNode;
@@ -237,9 +236,7 @@ function txMeta(
     ? "Successful transaction"
     : "Proposal successfully created";
 
-  const url = willExecute
-    ? `${appRoutes.admin}/${id}`
-    : `${appRoutes.admin}/${id}/${adminRoutes.proposals}`;
+  const url = "";
 
   const description = willExecute ? "Go to admin home" : "Go to proposals";
 
