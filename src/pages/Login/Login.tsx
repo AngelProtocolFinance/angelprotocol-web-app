@@ -36,15 +36,21 @@ function LoginForm({ classes = "" }) {
           label="Password"
           name="password"
         />
-        <button type="submit" className="btn-orange font-work mt-4">
+        <button type="submit" className="btn-orange font-work">
           Sign in
         </button>
 
-        <button className="mt-4 dark:bg-white dark:border-white rounded border-2 border-[#DB4437] hover:bg-[#DB4437]/10 text-[#DB4437] p-2 flex items-center gap-2 uppercase font-bold text-sm">
+        <button
+          type="button"
+          className="mt-8 dark:bg-white dark:border-white rounded border-2 border-[#DB4437] hover:bg-[#DB4437]/10 text-[#DB4437] p-2 flex items-center gap-2 uppercase font-bold text-sm"
+        >
           <Icon size={24} type="Google" />
           <span>Login with google</span>
         </button>
-        <button className="mb-4 dark:bg-white dark:border-white rounded border-2 border-[#4267B2] hover:bg-[#4267B2]/10 text-[#4267B2] p-2 flex items-center gap-2 uppercase font-bold text-sm">
+        <button
+          type="button"
+          className="mb-4 dark:bg-white dark:border-white rounded border-2 border-[#4267B2] hover:bg-[#4267B2]/10 text-[#4267B2] p-2 flex items-center gap-2 uppercase font-bold text-sm"
+        >
           <Icon size={22} type="FacebookCircle" />
           <span>Login with facebook</span>
         </button>
