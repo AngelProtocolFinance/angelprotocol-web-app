@@ -109,29 +109,6 @@
         src="https://www.facebook.com/tr?id=717089233225873&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Meta Pixel Code -->
-    <!-- START SmartLook script -->
-    <script type="text/javascript">
-      if ("%REACT_APP_APP_TYPE%" === "AST") {
-        window.smartlook ||
-          (function (d) {
-            var o = (smartlook = function () {
-                o.api.push(arguments);
-              }),
-              h = d.getElementsByTagName("head")[0];
-            var c = d.createElement("script");
-            o.api = new Array();
-            c.async = true;
-            c.type = "text/javascript";
-            c.charset = "utf-8";
-            c.src = "https://web-sdk.smartlook.com/recorder.js";
-            h.appendChild(c);
-          })(document);
-        smartlook("init", "b78ba41db4f7ae0715167b9d19f512c878c22c2c", {
-          region: "eu",
-        });
-      }
-    </script>
-    <!-- END SmartLook script -->
     <!-- LinkedIn Tracking Script -->
     <script type="text/javascript">
       _linkedin_partner_id = "4969890";
@@ -174,69 +151,67 @@
     </script>
     <script>
       (function () {
-        if ("%REACT_APP_APP_TYPE%" !== "AST") {
-          var w = window;
-          var ic = w.Intercom;
-          if (typeof ic === "function") {
-            ic("reattach_activator");
-            ic("update", w.intercomSettings);
+        var w = window;
+        var ic = w.Intercom;
+        if (typeof ic === "function") {
+          ic("reattach_activator");
+          ic("update", w.intercomSettings);
+        } else {
+          var d = document;
+          var i = function () {
+            i.c(arguments);
+          };
+          i.q = [];
+          i.c = function (args) {
+            i.q.push(args);
+          };
+          w.Intercom = i;
+          var l = function () {
+            var s = d.createElement("script");
+            s.type = "text/javascript";
+            s.async = true;
+            s.onload = async function () {
+              const offset = 100;
+              const initDelay = 200;
+              const debounceTime = 200;
+              //wait a bit to initialize launcher after loading script
+              await new Promise((r) => setTimeout(r, initDelay));
+              const launcher = document.querySelector(".intercom-launcher");
+
+              function debounce(callback) {
+                let timeout;
+                const debounced = (args) => {
+                  if (timeout) {
+                    window.clearTimeout(timeout);
+                  }
+                  timeout = window.setTimeout(() => {
+                    callback.apply(null, args);
+                  }, debounceTime);
+                };
+                return debounced;
+              }
+              const intercomHandleScroll = debounce(function () {
+                launcher.style.display =
+                  window.innerHeight + window.scrollY >=
+                  document.body.offsetHeight - offset
+                    ? "none"
+                    : "block";
+              });
+              window.addEventListener("scroll", intercomHandleScroll, {
+                passive: true,
+              });
+            };
+            s.src = "https://widget.intercom.io/widget/fh3v40sb";
+            var x = d.getElementsByTagName("script")[0];
+            x.parentNode.insertBefore(s, x);
+          };
+
+          if (document.readyState === "complete") {
+            l();
+          } else if (w.attachEvent) {
+            w.attachEvent("onload", l);
           } else {
-            var d = document;
-            var i = function () {
-              i.c(arguments);
-            };
-            i.q = [];
-            i.c = function (args) {
-              i.q.push(args);
-            };
-            w.Intercom = i;
-            var l = function () {
-              var s = d.createElement("script");
-              s.type = "text/javascript";
-              s.async = true;
-              s.onload = async function () {
-                const offset = 100;
-                const initDelay = 200;
-                const debounceTime = 200;
-                //wait a bit to initialize launcher after loading script
-                await new Promise((r) => setTimeout(r, initDelay));
-                const launcher = document.querySelector(".intercom-launcher");
-
-                function debounce(callback) {
-                  let timeout;
-                  const debounced = (args) => {
-                    if (timeout) {
-                      window.clearTimeout(timeout);
-                    }
-                    timeout = window.setTimeout(() => {
-                      callback.apply(null, args);
-                    }, debounceTime);
-                  };
-                  return debounced;
-                }
-                const intercomHandleScroll = debounce(function () {
-                  launcher.style.display =
-                    window.innerHeight + window.scrollY >=
-                    document.body.offsetHeight - offset
-                      ? "none"
-                      : "block";
-                });
-                window.addEventListener("scroll", intercomHandleScroll, {
-                  passive: true,
-                });
-              };
-              s.src = "https://widget.intercom.io/widget/fh3v40sb";
-              var x = d.getElementsByTagName("script")[0];
-              x.parentNode.insertBefore(s, x);
-            };
-
-            if (document.readyState === "complete") {
-              l();
-            } else if (w.attachEvent) {
-              w.attachEvent("onload", l);
-            } else {
-              w.addEventListener("load", l, false);
-            }
+            w.addEventListener("load", l, false);
           }
         }
       })();
@@ -257,9 +232,7 @@
         dataLayer.push(arguments);
       }
       gtag("js", new Date());
-      "%REACT_APP_APP_TYPE%" === "AST"
-        ? gtag("config", "G-PWW5LK3ZN7")
-        : gtag("config", "G-Z2YP33XHHD");
+      gtag("config", "G-Z2YP33XHHD");
     </script>
   </body>
 </html>

@@ -12,7 +12,6 @@ import {
   EndowmentProfile,
   EndowmentProfileUpdate,
   EndowmentsQueryParams,
-  NewAST,
   Program,
   WalletProfile,
 } from "types/aws";
@@ -146,26 +145,12 @@ export const aws = createApi({
         };
       },
     }),
-    saveAST: builder.mutation<unknown, NewAST>({
-      invalidatesTags: (result, error) =>
-        error ? [] : ["endowments", "profile", "walletProfile"],
-      query: (payload) => {
-        const token = createAuthToken("app-user");
-        return {
-          url: `/${v(1)}/ast`,
-          method: "POST",
-          body: payload,
-          headers: { authorization: token },
-        };
-      },
-    }),
   }),
 });
 
 export const {
   useWalletProfileQuery,
   useToggleBookmarkMutation,
-  useSaveASTMutation,
   useEndowmentCardsQuery,
   useStrategyCardsQuery,
   useEndowmentOptionsQuery,

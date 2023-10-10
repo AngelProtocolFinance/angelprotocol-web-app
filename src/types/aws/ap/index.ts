@@ -209,13 +209,3 @@ export interface DonationsMetricList {
   donations_daily_amount: number;
   donations_total_amount: number;
 }
-
-export type NewAST = {
-  chainId: string;
-  id: number;
-  registrant: string;
-  tagline: string;
-  /** not in registration steps */
-  // banner
-  // logo
-};
