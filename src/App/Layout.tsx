@@ -4,14 +4,11 @@ import ExtLink from "components/ExtLink";
 import Loader from "components/Loader";
 import Seo from "components/Seo";
 import { LOGO_DARK } from "constants/common";
-import { IS_AST } from "constants/env";
 import Footer from "./Footer";
 import Header from "./Header";
-import { AST_LINKS, CHARITY_LINKS } from "./constants";
+import { CHARITY_LINKS } from "./constants";
 
-const { HEADER_LINKS, GROUPS_DATA, SOCIAL_MEDIA_LINKS } = IS_AST
-  ? AST_LINKS
-  : CHARITY_LINKS;
+const { HEADER_LINKS, GROUPS_DATA, SOCIAL_MEDIA_LINKS } = CHARITY_LINKS;
 
 export default function Layout() {
   return (

@@ -1,40 +1,5 @@
 import { Link } from "./Sidebar/types";
-import { ProposalBase, Templates } from "./types";
-import { SchemaShape } from "schemas/types";
-import { stringByteSchema } from "schemas/string";
 import { adminRoutes } from "constants/routes";
-
-export const templates: {
-  [K in Templates]: K extends `${infer Contract}.${infer Method}`
-    ? `${Contract}_${Method}`
-    : string;
-} = {
-  "index-fund.create-fund": "index-fund_create-fund",
-  "index-fund.remove-fund": "index-fund_remove-fund",
-  "index-fund.update-members": "index-fund_update-members",
-  "index-fund.config": "index-fund_config",
-
-  "multisig.fund-transfer": "multisig_fund-transfer",
-
-  "accounts.withdraw": "accounts_withdraw", //includes locked-withdraw
-  "accounts.close": "accounts_close",
-  "accounts.update-controller": "accounts_update-controller",
-
-  "registrar.update-config": "registrar_update-config",
-  "registrar.update-owner": "registrar_update-owner",
-  "registrar.add-token": "registrar_add-token",
-  "registrar.add-accounts-contract": "registrar_add-accounts-contract",
-};
-
-export const templateRoutes: { [key in Templates | "index"]: string } = {
-  ...templates,
-  index: "",
-};
-
-export const proposalShape: SchemaShape<ProposalBase> = {
-  title: stringByteSchema(4, 64),
-  description: stringByteSchema(4, 1024),
-};
 
 const { program_editor, index, ...restAdminRoutes } = adminRoutes;
 

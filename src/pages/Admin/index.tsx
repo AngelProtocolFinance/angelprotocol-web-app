@@ -5,13 +5,9 @@ import { Context } from "./Context";
 export default function Admin() {
   return (
     <Context>
-      {() => (
-        <ModalContext>
-          {(() => {
-            return <Charity />;
-          })()}
-        </ModalContext>
-      )}
+      <ModalContext>
+        <Charity />;
+      </ModalContext>
     </Context>
   );
 }

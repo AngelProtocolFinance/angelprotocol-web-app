@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import {
-  Profile,
   ProfileUpdatePayload,
   VersionSpecificWalletProfile,
   isDeleteMsg,
@@ -19,8 +18,6 @@ import {
 } from "types/aws";
 import { network } from "services/constants";
 import { createAuthToken } from "helpers";
-import { chainIds } from "constants/chainIds";
-import { IS_AST } from "constants/env";
 import { APIs } from "constants/urls";
 import { version as v } from "../helpers";
 
@@ -115,13 +112,14 @@ export const aws = createApi({
       },
       transformResponse: (response: { data: any }) => response,
     }),
-    profile: builder.query<Profile, { endowId: number; isLegacy?: boolean }>({
+    profile: builder.query<
+      EndowmentProfile,
+      { endowId: number; isLegacy?: boolean }
+    >({
       providesTags: ["profile"],
       query: ({ endowId, isLegacy = false }) => ({
         params: { legacy: isLegacy },
-        url: IS_AST
-          ? `/${v(1)}/ast/${chainIds.polygon}/${endowId}`
-          : `/${v(2)}/profile/${network}/endowment/${endowId}`,
+        url: `/${v(2)}/profile/${network}/endowment/${endowId}`,
       }),
       transformResponse(r: EndowmentProfile) {
         //transform cloudsearch placeholders
@@ -129,8 +127,7 @@ export const aws = createApi({
         return {
           ...r,
           tagline,
-          type: IS_AST ? "ast" : "charity",
-        } as Profile;
+        };
       },
     }),
     program: builder.query<Program, { endowId: number; programId: string }>({

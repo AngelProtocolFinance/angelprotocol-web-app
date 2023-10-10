@@ -1,7 +1,7 @@
 import Image from "components/Image";
 import { useGetter } from "store/accessors";
 import { possesiveForm } from "helpers";
-import { LOGO_DARK, PAYMENT_WORDS, titleCase } from "constants/common";
+import { LOGO_DARK } from "constants/common";
 import DonaterSample from "./DonaterSample";
 
 export default function Preview({ classes = "" }) {
@@ -23,10 +23,10 @@ export default function Preview({ classes = "" }) {
         {isDescriptionTextShown && (
           <>
             <p className="px-6 @xl/preview:px-10 font-body text-sm mb-4 text-center @xl/preview:text-left">
-              {titleCase(PAYMENT_WORDS.verb)} today to{" "}
-              {possesiveForm(endowName)} endowment. Your donation will be
-              protected and compounded in perpetuity to provide {endowName} with
-              a long-term, sustainable runway. Give once, give forever!
+              Donate today to {possesiveForm(endowName)} endowment. Your
+              donation will be protected and compounded in perpetuity to provide{" "}
+              {endowName} with a long-term, sustainable runway. Give once, give
+              forever!
             </p>
             <p className="px-6 @xl/preview:px-10 font-body text-sm mb-10 text-center @xl/preview:text-left">
               Make sure to check out the many crypto and fiat donation options.
@@ -37,7 +37,7 @@ export default function Preview({ classes = "" }) {
         )}
         <p className="px-6 @xl/preview:px-10 text-center text-sm mb-3">
           Connect the wallet of your choice to donate crypto. <br />
-          Continue below to {PAYMENT_WORDS.verb} fiat (Dollars, GBP, AUD, Euro)
+          Continue below to donate fiat (Dollars, GBP, AUD, Euro)
         </p>
         <DonaterSample
           {...widgetConfig}

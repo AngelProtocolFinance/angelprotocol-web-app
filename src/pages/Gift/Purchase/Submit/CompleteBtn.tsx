@@ -7,7 +7,6 @@ import { purchase } from "slices/gift/purchase";
 import { createTx } from "contracts/createTx/createTx";
 import useTxSender from "hooks/useTxSender";
 import { scaleToStr } from "helpers";
-import { contracts } from "constants/contracts";
 
 type Props = {
   estimate: EstimateStatus;
@@ -16,7 +15,6 @@ type Props = {
 export default function CompleteBtn({ estimate, ...props }: Props) {
   const { details, wallet } = props;
   const { token_id, amount, decimals, symbol } = details.token;
-  const gc = contracts["gift-card"];
   const sendTx = useTxSender();
 
   const dispatch = useSetter();
@@ -42,7 +40,13 @@ export default function CompleteBtn({ estimate, ...props }: Props) {
       <button
         className="btn-orange btn-gift"
         type="button"
-        onClick={() => approve(token_id, scaleToStr(amount, decimals), gc)}
+        onClick={() =>
+          approve(
+            token_id,
+            scaleToStr(amount, decimals),
+            "use-of-gc-contract-to-be-removed"
+          )
+        }
       >
         Approve {symbol}
       </button>

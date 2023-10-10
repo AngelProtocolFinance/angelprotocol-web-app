@@ -1,6 +1,5 @@
 import { Props } from "../types";
 import { maskAddress } from "helpers";
-import { PAYMENT_WORDS } from "constants/common";
 
 export default function Tooltip(props: Props) {
   if (props.type === "post-donation") {
@@ -24,9 +23,9 @@ export default function Tooltip(props: Props) {
       <p
         className={`font-heading font-bold text-center ${props.classes ?? ""}`}
       >
-        {recipient.name} enforces {PAYMENT_WORDS.payer} verification. Please
-        provide your personal information below to complete your donation. You
-        will be sent a tax receipt to your email address automatically
+        {recipient.name} enforces donor verification. Please provide your
+        personal information below to complete your donation. You will be sent a
+        tax receipt to your email address automatically
       </p>
     )) || (
       <p

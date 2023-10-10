@@ -38,7 +38,7 @@ export default function Stripe({
   const { handleSubmit } = methods;
 
   const isInsideWidget = widgetConfig !== null;
-  const { endowType, id } = state.recipient;
+  const { id } = state.recipient;
   return (
     <FormProvider {...methods}>
       <form
@@ -46,7 +46,6 @@ export default function Stripe({
           try {
             const session = await sessionURLFn({
               endowId: id,
-              endowType,
               liquidSplitPct: fv.pctLiquidSplit.toString(),
             }).unwrap();
 

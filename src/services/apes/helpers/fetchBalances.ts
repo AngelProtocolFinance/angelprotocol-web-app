@@ -1,9 +1,11 @@
+import type { BigNumber } from "ethers";
 import { FetchedChain, Token } from "types/aws";
 import { CW20Balance } from "types/contracts";
 import { Coin } from "types/cosmos";
 import { TokenWithBalance } from "types/tx";
-import { queryContract } from "services/juno/queryContract";
+import { erc20 } from "contracts/evm/ERC20";
 import { condenseToNum, objToBase64, request } from "helpers";
+import { EIPMethods } from "constants/evm";
 
 type BalMap = { [index: string]: string | undefined | number };
 type CosmosBalances = { balances: Coin[] };
@@ -53,25 +55,19 @@ export async function fetchBalances(
     /**fetch balances for ethereum */
     const native = tokens.natives[0]; //evm chains have only one gas token
 
-    const [nativeBal, gift, ...erc20s] = await Promise.allSettled([
+    const [nativeBal, ...erc20s] = await Promise.allSettled([
       request({
         method: "eth_getBalance",
         params: [address, "latest"],
         rpcURL: chain.rpc_url,
       }),
-      queryContract("gift-card.balance", { addr: address }),
       ...tokens.alts.map((t) =>
-        queryContract(
-          "erc20.balance",
-          {
-            erc20: t.token_id,
-            addr: address,
-          },
-          chain.rpc_url
-        ).then<Coin>((result) => ({
-          amount: result,
-          denom: t.token_id,
-        }))
+        erc20Balance(t.token_id, address, chain.rpc_url).then<Coin>(
+          (result) => ({
+            amount: result,
+            denom: t.token_id,
+          })
+        )
       ),
     ]);
 
@@ -80,19 +76,6 @@ export async function fetchBalances(
         result.status === "fulfilled" ? result.value : { amount: "", denom: "" }
       )
     );
-
-    let gifts: TokenWithBalance[] = [];
-    if (gift.status === "fulfilled") {
-      const { native, ...erc20s } = gift.value;
-      if (native !== "0") {
-        gifts.push(toGift(chain.native_currency, native));
-      }
-      for (const t of chain.tokens) {
-        if (t.token_id in erc20s) {
-          gifts.push(toGift(t, erc20s[t.token_id]));
-        }
-      }
-    }
 
     return [
       {
@@ -106,21 +89,8 @@ export async function fetchBalances(
         ...t,
         balance: getBal(erc20map, t),
       })),
-      ...gifts,
     ];
   }
-}
-
-function toGift(token: Token, bal: string): TokenWithBalance {
-  const t = token.type;
-  return {
-    ...token,
-    balance: condenseToNum(bal, token.decimals),
-    type:
-      t === "erc20" ? "erc20-gift" : t === "evm-native" ? "evm-native-gift" : t,
-    logo: "/icons/currencies/gift.svg",
-    min_donation_amnt: 0,
-  };
 }
 
 function segragate(tokens: Token[]): { [key in TokenType]: Token[] } {
@@ -180,4 +150,19 @@ async function cw20Balance(
       return res.json();
     })
     .then((result) => result.data.balance);
+}
+
+async function erc20Balance(
+  tokenContract: string,
+  walletAddress: string,
+  rpcURL: string
+) {
+  const data = erc20.encodeFunctionData("balanceOf", [walletAddress]);
+  const result = await request({
+    method: EIPMethods.eth_call,
+    params: [{ to: tokenContract, data }, "latest"],
+    rpcURL,
+  });
+  const decoded: BigNumber = erc20.decodeFunctionResult("balanceOf", result)[0];
+  return decoded.toString();
 }

@@ -3,7 +3,6 @@ import { useProfileQuery } from "services/aws/aws";
 import QueryLoader from "components/QueryLoader";
 import Seo from "components/Seo";
 import { idParamToNum } from "helpers";
-import { PAYMENT_WORDS, titleCase } from "constants/common";
 import { APP_NAME, DAPP_URL } from "constants/env";
 import Content from "./Content";
 
@@ -33,9 +32,7 @@ export default function Donate() {
         {(profile) => (
           <>
             <Seo
-              title={`${titleCase(PAYMENT_WORDS.verb)} to ${
-                profile.name
-              } - ${APP_NAME}`}
+              title={`Donate to ${profile.name} - ${APP_NAME}`}
               description={`${(profile?.overview ?? "").slice(0, 140)}`}
               name={`${profile.name}`}
               image={`${profile.logo}`}
@@ -44,12 +41,7 @@ export default function Donate() {
             <Content
               name={profile.name}
               id={numId}
-              isKYCRequired={
-                //prettier-ignore
-                (profile.type === "ast" && profile.contributor_verification_required) ||
-                (profile.kyc_donors_only ?? false)
-              }
-              endowType={profile.type}
+              isKYCRequired={profile.kyc_donors_only ?? false}
               isFiscalSponsored={profile.fiscal_sponsored ?? false}
             />
           </>
