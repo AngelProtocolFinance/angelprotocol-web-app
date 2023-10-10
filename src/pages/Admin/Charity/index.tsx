@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import { adminRoutes } from "constants/routes";
+import { adminRoutes } from "constant/routes";
 import Layout from "../Layout";
 import { LINKS } from "../constants";
 import EditProfile from "./EditProfile";

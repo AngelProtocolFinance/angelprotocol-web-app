@@ -2,7 +2,7 @@ import { ProfileUpdateMsg, ProgramDeleteMsg } from "services/types";
 import { useModalContext } from "contexts/ModalContext";
 import { TxPrompt } from "components/Prompt";
 import { cleanObject } from "helpers/cleanObject";
-import { appRoutes } from "constants/routes";
+import { appRoutes } from "constant/routes";
 
 export default function useUpdateEndowmentProfile() {
   const { showModal } = useModalContext();

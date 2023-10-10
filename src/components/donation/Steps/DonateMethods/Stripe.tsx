@@ -6,8 +6,8 @@ import { useStripeSessionURLMutation } from "services/apes";
 import { useErrorContext } from "contexts/ErrorContext";
 import ExtLink from "components/ExtLink";
 import { FormStep } from "slices/donation";
-import { appRoutes } from "constants/routes";
-import { TERMS_OF_USE } from "constants/urls";
+import { appRoutes } from "constant/routes";
+import { TERMS_OF_USE } from "constant/urls";
 import Split from "../../../Split";
 import AdvancedOptions, {
   type AdvancedOptionsDisplay,

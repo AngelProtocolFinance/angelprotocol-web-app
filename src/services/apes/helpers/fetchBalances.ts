@@ -5,7 +5,7 @@ import { Coin } from "types/cosmos";
 import { TokenWithBalance } from "types/tx";
 import { erc20 } from "contracts/evm/ERC20";
 import { condenseToNum, objToBase64, request } from "helpers";
-import { EIPMethods } from "constants/evm";
+import { EIPMethods } from "constant/evm";
 
 type BalMap = { [index: string]: string | undefined | number };
 type CosmosBalances = { balances: Coin[] };

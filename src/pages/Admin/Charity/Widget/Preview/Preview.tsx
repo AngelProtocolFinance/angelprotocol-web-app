@@ -1,7 +1,7 @@
 import Image from "components/Image";
 import { useGetter } from "store/accessors";
 import { possesiveForm } from "helpers";
-import { LOGO_DARK } from "constants/common";
+import { LOGO_DARK } from "constant/common";
 import DonaterSample from "./DonaterSample";
 
 export default function Preview({ classes = "" }) {

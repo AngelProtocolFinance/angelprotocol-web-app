@@ -1,5 +1,5 @@
 import { useAdminContext } from "pages/Admin/Context";
-import { adminRoutes } from "constants/routes";
+import { adminRoutes } from "constant/routes";
 import Seo from "../Seo";
 import Configurer from "./Configurer";
 import Preview from "./Preview";

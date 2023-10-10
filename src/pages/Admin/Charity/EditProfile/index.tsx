@@ -8,8 +8,8 @@ import {
 } from "types/aws";
 import { useProfileQuery } from "services/aws/aws";
 import { FormError, FormSkeleton } from "components/admin";
-import { adminRoutes } from "constants/routes";
-import { unsdgs } from "constants/unsdgs";
+import { adminRoutes } from "constant/routes";
+import { unsdgs } from "constant/unsdgs";
 import { useAdminContext } from "../../Context";
 import Seo from "../Seo";
 import Form from "./Form";

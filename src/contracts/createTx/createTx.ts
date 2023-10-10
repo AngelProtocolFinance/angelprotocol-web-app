@@ -1,7 +1,7 @@
 import { SimulContractTx } from "types/evm";
 import { Metadata, TxMeta, TxOptions, TxType } from "types/tx";
 import { toAbiStr } from "helpers";
-import { EMPTY_DATA } from "constants/evm";
+import { EMPTY_DATA } from "constant/evm";
 import { txs } from "./txs";
 
 export function createTx<T extends TxType>(

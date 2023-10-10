@@ -8,7 +8,7 @@ import { Steps } from "components/donation";
 import { useSetter } from "store/accessors";
 import { DonationRecipient, setRecipient } from "slices/donation";
 import { possesiveForm } from "helpers";
-import { APP_NAME, DAPP_URL } from "constants/env";
+import { APP_NAME, DAPP_URL } from "constant/env";
 import donaterConfigFn from "./donaterConfig";
 
 type Props = {

@@ -3,7 +3,7 @@ import { useProfileQuery } from "services/aws/aws";
 import QueryLoader from "components/QueryLoader";
 import Seo from "components/Seo";
 import { idParamToNum } from "helpers";
-import { APP_NAME, DAPP_URL } from "constants/env";
+import { APP_NAME, DAPP_URL } from "constant/env";
 import Content from "./Content";
 
 export default function Donate() {

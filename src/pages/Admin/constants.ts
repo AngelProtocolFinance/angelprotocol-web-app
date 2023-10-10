@@ -1,5 +1,5 @@
 import { Link } from "./Sidebar/types";
-import { adminRoutes } from "constants/routes";
+import { adminRoutes } from "constant/routes";
 
 const { program_editor, index, ...restAdminRoutes } = adminRoutes;
 

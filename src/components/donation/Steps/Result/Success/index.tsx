@@ -3,7 +3,7 @@ import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import { TxStep } from "slices/donation";
 import { getTxUrl, humanize } from "helpers";
-import { appRoutes } from "constants/routes";
+import { appRoutes } from "constant/routes";
 import Share, { SocialMedia } from "./Share";
 
 export default function Success({

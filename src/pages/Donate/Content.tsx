@@ -7,7 +7,7 @@ import {
   DonationState,
   setRecipient,
 } from "slices/donation";
-import { appRoutes } from "constants/routes";
+import { appRoutes } from "constant/routes";
 
 function Content(props: DonationRecipient) {
   const dispatch = useSetter();

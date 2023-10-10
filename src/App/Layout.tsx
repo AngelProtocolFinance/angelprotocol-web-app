@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import ExtLink from "components/ExtLink";
 import Loader from "components/Loader";
 import Seo from "components/Seo";
-import { LOGO_DARK } from "constants/common";
+import { LOGO_DARK } from "constant/common";
 import Footer from "./Footer";
 import Header from "./Header";
 import { CHARITY_LINKS } from "./constants";

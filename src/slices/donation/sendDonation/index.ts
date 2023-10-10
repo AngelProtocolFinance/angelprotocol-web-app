@@ -8,8 +8,8 @@ import { version as v } from "services/helpers";
 import { createAuthToken, logger } from "helpers";
 import { sendTx } from "helpers/tx";
 import { LogDonationFail } from "errors/errors";
-import { chainIds } from "constants/chainIds";
-import { APIs } from "constants/urls";
+import { chainIds } from "constant/chainIds";
+import { APIs } from "constant/urls";
 import donation, { setTxStatus } from "../donation";
 
 export const sendDonation = createAsyncThunk<void, DonateArgs>(

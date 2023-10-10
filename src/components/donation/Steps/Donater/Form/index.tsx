@@ -9,7 +9,7 @@ import TokenField from "components/TokenField";
 import { CheckField } from "components/form";
 import { useGetter } from "store/accessors";
 import { setDetails } from "slices/donation";
-import { appRoutes } from "constants/routes";
+import { appRoutes } from "constant/routes";
 import AdvancedOptions from "../../../AdvancedOptions";
 
 type Props = {

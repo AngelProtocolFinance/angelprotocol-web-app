@@ -18,7 +18,7 @@ import {
 } from "types/aws";
 import { network } from "services/constants";
 import { createAuthToken } from "helpers";
-import { APIs } from "constants/urls";
+import { APIs } from "constant/urls";
 import { version as v } from "../helpers";
 
 const getWalletProfileQuery = (walletAddr: string) =>

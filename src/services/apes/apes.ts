@@ -10,10 +10,10 @@ import {
 } from "types/aws";
 import { Chain } from "types/tx";
 import { UnsupportedChainError } from "errors/errors";
-import { chainIds } from "constants/chainIds";
-import { IS_TEST, JUNO_LCD_OVERRIDE, JUNO_RPC_OVERRIDE } from "constants/env";
-import { appRoutes } from "constants/routes";
-import { APIs } from "constants/urls";
+import { chainIds } from "constant/chainIds";
+import { IS_TEST, JUNO_LCD_OVERRIDE, JUNO_RPC_OVERRIDE } from "constant/env";
+import { appRoutes } from "constant/routes";
+import { APIs } from "constant/urls";
 import { network } from "../constants";
 import { version as v } from "../helpers";
 import { fetchBalances } from "./helpers/fetchBalances";
