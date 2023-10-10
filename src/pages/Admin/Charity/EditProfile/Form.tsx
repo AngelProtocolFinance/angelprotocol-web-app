@@ -89,7 +89,7 @@ export default function Form() {
           charLimit={4000}
           classes={{
             container:
-              "rich-text-toolbar border border-prim text-sm grid grid-rows-[auto_1fr] rounded bg-gray-l6 dark:bg-blue-d5 p-3 min-h-[15rem]",
+              "rich-text-toolbar border border-gray-l3 dark:border-bluegray text-sm grid grid-rows-[auto_1fr] rounded bg-gray-l6 dark:bg-blue-d5 p-3 min-h-[15rem]",
             error: "static field-error -mt-4",
             charCounter: "text-gray-d1 dark:text-gray",
           }}

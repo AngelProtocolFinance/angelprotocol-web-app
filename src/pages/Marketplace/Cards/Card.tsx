@@ -86,7 +86,7 @@ function SDG({ num }: { num: UNSDG_NUMS }) {
       <Tooltip anchorRef={ref} content={unsdgs[num].title} />
       <div
         ref={ref}
-        className="whitespace-nowrap bg-blue-l4 hover:bg-blue-l3 dark:bg-blue-d4 hover:dark:bg-blue-d3 px-1 py-1 border border-prim rounded-lg"
+        className="whitespace-nowrap bg-blue-l4 hover:bg-blue-l3 dark:bg-blue-d4 hover:dark:bg-blue-d3 px-1 py-1 border border-gray-l3 dark:border-bluegray rounded-lg"
       >
         SDG #{num}
       </div>

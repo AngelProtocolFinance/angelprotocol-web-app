@@ -5,8 +5,7 @@ export const IS_MOBILE = isMobile();
 
 // THE CONSTANTS BELOW ARE ALL CONFIGURED BY ENVIRONMENT VARIABLES
 // AND DISPLAY THE DESIRED TEXT/IMAGES/URLS/ETC THROUGHOUT THE APP
-export const APP_TYPE = import.meta.env.VITE_APP_TYPE;
-export const IS_AST = APP_TYPE === "AST";
+
 export const SEO_IMAGE = import.meta.env.VITE_SEO_IMAGE;
 export const LOGO_IMG_LIGHT = import.meta.env.VITE_LOGO_IMG_LIGHT;
 export const LOGO_IMG_DARK = import.meta.env.VITE_LOGO_IMG_DARK;
