@@ -20,6 +20,7 @@ export default function SDGs() {
   return (
     <FlatFilter
       label="UN SDGs"
+      classes="grid grid-rows-2 grid-cols-2 gap-y-2"
       options={options}
       selectedValues={sdgs}
       onChange={(value) => dispatch(setSdgs(value))}

@@ -6,6 +6,7 @@ export type FilterOption<T> = {
 
 export type GroupProps<T> = {
   key?: string | number;
+  classes?: string;
   label: string;
   selectedValues: T[];
   options: FilterOption<T>[];

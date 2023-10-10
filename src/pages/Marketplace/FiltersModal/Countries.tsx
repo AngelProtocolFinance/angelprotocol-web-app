@@ -4,7 +4,7 @@ import { setCountries } from "slices/components/marketFilter";
 import { FilterOption, FlatFilter } from "./common";
 
 const options: FilterOption<string>[] = allCountries.map((c) => ({
-  displayText: `${c.flag} ${c.name}`,
+  displayText: c.name,
   value: c.name,
   key: c.name,
 }));
@@ -18,6 +18,7 @@ export default function Countries() {
   return (
     <FlatFilter
       label="Countries"
+      classes="grid grid-rows-3 grid-cols-3 gap-y-2"
       options={options}
       selectedValues={countries}
       onChange={(value) => dispatch(setCountries(value))}

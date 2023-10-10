@@ -13,7 +13,12 @@ export function FlatFilter<T>(props: GroupProps<T>) {
       <span className="font-bold text-md font-heading uppercase">
         {props.label}
       </span>
-      <Listbox.Options static className="flex flex-wrap float gap-y-2">
+      <Listbox.Options
+        static
+        className={`
+        ${props.classes ? props.classes : "flex flex-wrap float"}
+        gap-y-2`}
+      >
         {props.options.map((option) => (
           <Listbox.Option
             value={option.value}
