@@ -1,5 +1,6 @@
 import {
   AiFillCheckCircle,
+  AiFillGoogleCircle,
   AiFillHeart,
   AiFillSecurityScan,
   AiFillYoutube,
@@ -97,6 +98,7 @@ export const icons = {
   FilterLeft: BsFilterLeft,
   Giftcard: MdCardGiftcard,
   Globe: BiGlobe,
+  Google: AiFillGoogleCircle,
   HeartFill: AiFillHeart,
   HeartOutline: AiOutlineHeart,
   HourglassSplit: BsHourglassSplit,
