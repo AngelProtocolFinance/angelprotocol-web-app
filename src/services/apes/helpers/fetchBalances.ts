@@ -1,4 +1,4 @@
-import type { BigNumber } from "ethers";
+import type { BigNumber } from "@ethersproject/bignumber";
 import { FetchedChain, Token } from "types/aws";
 import { CW20Balance } from "types/contracts";
 import { Coin } from "types/cosmos";
