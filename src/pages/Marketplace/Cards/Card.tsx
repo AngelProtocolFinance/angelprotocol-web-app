@@ -66,7 +66,7 @@ export default function Card({
           <div className="mt-auto empty:hidden grid gap-3">
             {/** UN SDGs - always on bottom */}
             {!isEmpty(sdgs) && (
-              <div className="flex text-3xs font-bold uppercase gap-1 h-max-[40px]">
+              <div className="flex flex-wrap text-3xs font-bold uppercase gap-1 h-max-[40px]">
                 {sdgs.map((s) => (
                   <SDG num={s} key={s} />
                 ))}
@@ -86,7 +86,7 @@ function SDG({ num }: { num: UNSDG_NUMS }) {
       <Tooltip anchorRef={ref} content={unsdgs[num].title} />
       <div
         ref={ref}
-        className="flex items-center bg-blue-l4 hover:bg-blue-l3 dark:bg-blue-d4 hover:dark:bg-blue-d3 h-4 px-1 py-1 border border-gray-l3 dark:border-bluegray rounded-lg"
+        className="whitespace-nowrap bg-blue-l4 hover:bg-blue-l3 dark:bg-blue-d4 hover:dark:bg-blue-d3 px-1 py-1 border border-prim rounded-lg"
       >
         SDG #{num}
       </div>

@@ -1,6 +1,5 @@
 export type NetworkType = "mainnet" | "testnet";
 export type UserTypes = "charity-owner" | "angelprotocol-web-app" | "app-user";
-export type DonateClient = "apes" | "normal";
 export type Chains = "terra" | "juno" | "ethereum" | "binance" | "polygon";
 export type UNSDG_NUMS =
   | 1
@@ -34,15 +33,5 @@ export type ProviderId =
   | "keplr"
   | "web3auth-torus";
 
-export type Contract =
-  | "registrar"
-  | "index-fund"
-  | "multisig/ap"
-  | "multisig/review"
-  | "accounts"
-  | "gift-card";
-
-export type AccountType = "liquid" | "locked";
 export type TransactionStatus = "open" | "approved" | "expired";
 export type EndowmentType = "charity" | "ast" | "daf";
-export type BeneficiaryType = "endowment" | "wallet" | "treasury";

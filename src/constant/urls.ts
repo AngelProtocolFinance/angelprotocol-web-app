@@ -17,7 +17,5 @@ export const POLYGON_RPC = IS_TEST
   : `https://polygon-mainnet.infura.io/v3/${INFURA_ID}`;
 
 export const GRAPHQL_ENDPOINT = IS_TEST
-  ? "https://api.studio.thegraph.com/query/49156/angel-giving-mumbai/v0.0.7"
-  : `https://gateway-arbitrum.network.thegraph.com/api/${
-      import.meta.env.VITE_SUBGRAPH_API_KEY
-    }/subgraphs/id/Gxn2c4EreorowwD3VZeenNS1RrXATh14P3uyUmvuvPwi`;
+  ? "https://api.studio.thegraph.com/query/49156/angel-giving-mumbai/v0.0.8"
+  : `https://gateway-arbitrum.network.thegraph.com/api/${process.env.REACT_APP_SUBGRAPH_API_KEY}/subgraphs/id/Gxn2c4EreorowwD3VZeenNS1RrXATh14P3uyUmvuvPwi`;

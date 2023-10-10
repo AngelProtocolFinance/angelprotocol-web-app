@@ -1,4 +1,4 @@
-import { PropsWithChildren, useEffect, useState } from "react";
+import { PropsWithChildren, useState } from "react";
 import { Link } from "react-router-dom";
 import { EstimateStatus } from "./types";
 import { TokenWithAmount } from "types/tx";
@@ -10,19 +10,10 @@ import { SubmitStep, setStep } from "slices/gift";
 import { humanize } from "helpers";
 import { appRoutes } from "constant/routes";
 import CompleteBtn from "./CompleteBtn";
-import { estimateTx } from "./estimateTx";
 
 export default function Submit(props: WithWallet<SubmitStep>) {
   const dispatch = useSetter();
-  const [estimate, setEstimate] = useState<EstimateStatus>("loading");
-
-  useEffect(() => {
-    (async () => {
-      setEstimate("loading");
-      const _estimate = await estimateTx(props);
-      setEstimate(_estimate || "error");
-    })();
-  }, [props]);
+  const [estimate] = useState<EstimateStatus>("loading");
 
   function goBack() {
     dispatch(setStep(props.step - 1));

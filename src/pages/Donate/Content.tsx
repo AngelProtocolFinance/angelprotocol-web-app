@@ -7,8 +7,7 @@ import {
   DonationState,
   setRecipient,
 } from "slices/donation";
-import { PAYMENT_WORDS } from "constant/common";
-import { appRoutes } from "constant/routes";
+import { appRoutes } from "constants/routes";
 
 function Content(props: DonationRecipient) {
   const dispatch = useSetter();
@@ -34,27 +33,24 @@ function Content(props: DonationRecipient) {
       className="justify-self-center grid padded-container max-w-[35rem] py-8 @sm:py-20 scroll-mt-6"
       id={CONTAINER_ID}
     >
-      {props.endowType !== "ast" && (
-        <Breadcrumbs
-          className="font-body font-normal text-sm justify-self-start sm:justify-self-auto mb-10 sm:mb-12"
-          items={[
-            { title: "Marketplace", to: `${appRoutes.marketplace}/` },
-            {
-              title: props.name,
-              to: `${appRoutes.marketplace}/${props.id}`,
-            },
-            {
-              title: "Donate",
-              to: `${appRoutes.donate}/${props.id}`,
-            },
-          ]}
-        />
-      )}
+      <Breadcrumbs
+        className="font-body font-normal text-sm justify-self-start sm:justify-self-auto mb-10 sm:mb-12"
+        items={[
+          { title: "Marketplace", to: `${appRoutes.marketplace}/` },
+          {
+            title: props.name,
+            to: `${appRoutes.marketplace}/${props.id}`,
+          },
+          {
+            title: "Donate",
+            to: `${appRoutes.donate}/${props.id}`,
+          },
+        ]}
+      />
 
       {!isFinalized(state) && (
         <h3 className="text-center text-xl sm:text-3xl leading-snug mb-4">
-          You're about to make a {PAYMENT_WORDS.noun.singular} to{" "}
-          {state.recipient?.name}
+          You're about to make a donation to {state.recipient?.name}
         </h3>
       )}
 

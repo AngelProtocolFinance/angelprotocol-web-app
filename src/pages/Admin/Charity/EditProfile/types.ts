@@ -1,5 +1,4 @@
 import { OverrideProperties } from "type-fest";
-import { Profile } from "services/types";
 import { EndowmentProfileUpdate } from "types/aws";
 import { Country } from "types/countries";
 import { UNSDG_NUMS } from "types/lists";
@@ -16,4 +15,4 @@ export type FV = OverrideProperties<
     sdgs: OptionType<UNSDG_NUMS>[];
     active_in_countries: OptionType<string>[];
   }
-> & { type: Profile["type"]; initial: EndowmentProfileUpdate };
+> & { initial: EndowmentProfileUpdate };

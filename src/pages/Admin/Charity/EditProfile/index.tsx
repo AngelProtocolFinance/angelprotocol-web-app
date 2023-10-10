@@ -1,23 +1,25 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FV } from "./types";
-import { Profile as TProfile } from "services/types";
-import { EndowDesignation, EndowmentProfileUpdate } from "types/aws";
+import {
+  EndowDesignation,
+  EndowmentProfileUpdate,
+  EndowmentProfile as TProfile,
+} from "types/aws";
 import { useProfileQuery } from "services/aws/aws";
 import { FormError, FormSkeleton } from "components/admin";
-import { adminRoutes } from "constant/routes";
-import { unsdgs } from "constant/unsdgs";
-import { isTooltip, useAdminContext } from "../../Context";
+import { adminRoutes } from "constants/routes";
+import { unsdgs } from "constants/unsdgs";
+import { useAdminContext } from "../../Context";
 import Seo from "../Seo";
 import Form from "./Form";
 import { getEndowDesignationLabelValuePair } from "./getEndowDesignationLabelValuePair";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
-import { ops } from "./ops";
 import { schema } from "./schema";
 import { toProfileUpdate } from "./update";
 
 export default function EditProfile() {
-  const { id } = useAdminContext(ops);
+  const { id } = useAdminContext();
   const {
     data: profile,
     isLoading,
@@ -42,12 +44,11 @@ export default function EditProfile() {
   );
 }
 
-function FormWithContext(props: TProfile) {
-  const { txResource, id, owner } = useAdminContext<"charity">(ops);
-
+function FormWithContext(props: TProfile & { id: number }) {
+  //
   const init: EndowmentProfileUpdate = toProfileUpdate({
     type: "initial",
-    data: { ...props, id, owner },
+    data: { ...props, id: props.id, owner: "is not relevant anymore" },
   });
 
   const defaults: FV = {
@@ -71,20 +72,17 @@ function FormWithContext(props: TProfile) {
     })),
 
     //meta
-    type: props.type,
     initial: init,
   };
 
   const methods = useForm<FV>({
     defaultValues: defaults,
     resolver: yupResolver(schema),
-    context: { isEndow: props.type === "charity" },
   });
-  const tooltip = isTooltip(txResource) ? txResource : undefined;
 
   return (
     <FormProvider {...methods}>
-      <Form tooltip={tooltip} />
+      <Form />
     </FormProvider>
   );
 }

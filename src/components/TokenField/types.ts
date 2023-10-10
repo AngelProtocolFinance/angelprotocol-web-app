@@ -24,8 +24,6 @@ export type Props<T extends FieldValues, K extends Path<T>> = {
   classes?: Classes;
   disabled?: boolean;
 
-  //flags
-  withGiftcard?: true;
   withBalance?: true;
   withMininum?: true;
 };

@@ -1,31 +1,14 @@
-import { toUtf8 } from "@cosmjs/encoding";
-import { hexlify } from "@ethersproject/bytes";
 import { ProfileUpdateMsg, ProgramDeleteMsg } from "services/types";
-import { useEditProfileMutation } from "services/aws/aws";
 import { useModalContext } from "contexts/ModalContext";
 import { TxPrompt } from "components/Prompt";
-import { getProvider } from "helpers";
 import { cleanObject } from "helpers/cleanObject";
-import { appRoutes } from "constant/routes";
-import { isTooltip, useAdminContext } from "../../Context";
-
-// import optimizeImage from "./optimizeImage";
+import { appRoutes } from "constants/routes";
 
 export default function useUpdateEndowmentProfile() {
-  const { txResource } = useAdminContext<"charity">([
-    "name",
-    "image",
-    "logo",
-    "sdgs",
-  ]);
-
   const { showModal } = useModalContext();
-  const [submit] = useEditProfileMutation();
 
   const updateProfile = async (msg: ProfileUpdateMsg | ProgramDeleteMsg) => {
     try {
-      if (isTooltip(txResource)) throw new Error(txResource);
-
       const cleanUpdates = cleanObject(msg);
 
       showModal(
@@ -34,24 +17,13 @@ export default function useUpdateEndowmentProfile() {
         { isDismissible: false }
       );
 
-      const { wallet } = txResource;
-      const provider = (await getProvider(wallet.providerId))!;
-
-      const rawSignature = await provider.request<string>({
-        method: "personal_sign",
-        params: [hexlify(toUtf8(JSON.stringify(cleanUpdates))), wallet.address],
-      });
-
       showModal(
         TxPrompt,
         { loading: "Submitting changes.." },
         { isDismissible: false }
       );
 
-      const result = await submit({ unsignedMsg: cleanUpdates, rawSignature });
-      if ("error" in result) {
-        return showModal(TxPrompt, { error: "Failed to update profile" });
-      }
+      alert("edit profile is WIP");
 
       return showModal(TxPrompt, {
         success: {

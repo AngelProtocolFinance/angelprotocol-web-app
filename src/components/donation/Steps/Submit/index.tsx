@@ -5,7 +5,7 @@ import { Estimate, TokenWithAmount } from "types/tx";
 import Image from "components/Image";
 import { ErrorStatus, LoadingStatus } from "components/Status";
 import { useSetter } from "store/accessors";
-import { SubmitStep, WithWallet, isFiat, setStep } from "slices/donation";
+import { SubmitStep, WithWallet, setStep } from "slices/donation";
 import { sendDonation } from "slices/donation/sendDonation";
 import { humanize } from "helpers";
 import { appRoutes } from "constant/routes";
@@ -49,13 +49,11 @@ export default function Submit(props: WithWallet<SubmitStep>) {
         />
         <span>{token.symbol}</span>
       </Row>
-      {isFiat(props.wallet) || token.type === "fiat" ? (
-        <></>
-      ) : (
-        <Row title="Blockchain:">
-          <span>{props.wallet.chain.chain_name}</span>
-        </Row>
-      )}
+
+      <Row title="Blockchain:">
+        <span>{props.wallet.chain.chain_name}</span>
+      </Row>
+
       <Breakdown estimate={estimate} token={token} />
       <div className="mt-14 grid grid-cols-2 gap-5">
         <button

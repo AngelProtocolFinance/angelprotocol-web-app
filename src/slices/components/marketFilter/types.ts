@@ -1,5 +1,5 @@
 import { EndowDesignation, EndowmentsSortKey, SortDirection } from "types/aws";
-import { EndowmentTierNum } from "types/contracts";
+import { EndowmentTierNum } from "types/aws";
 import { EndowmentType, UNSDG_NUMS } from "types/lists";
 
 export type Sort = { key: EndowmentsSortKey; direction: SortDirection };
@@ -18,6 +18,7 @@ export type FilterState = {
   region: { activities: Regions; headquarters: Regions };
   kyc_only: boolean[];
   tiers: Exclude<EndowmentTierNum, 1>[];
+  published: boolean;
 };
 
 export type RegionType = keyof FilterState["region"];

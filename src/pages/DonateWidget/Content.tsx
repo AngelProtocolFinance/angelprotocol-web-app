@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Profile } from "services/types";
+import { EndowmentProfile } from "types/aws";
 import { configIsFallback } from "types/widget";
 import Seo from "components/Seo";
 import { ErrorStatus } from "components/Status";
@@ -8,12 +8,11 @@ import { Steps } from "components/donation";
 import { useSetter } from "store/accessors";
 import { DonationRecipient, setRecipient } from "slices/donation";
 import { possesiveForm } from "helpers";
-import { PAYMENT_WORDS, titleCase } from "constant/common";
-import { APP_NAME, DAPP_URL } from "constant/env";
+import { APP_NAME, DAPP_URL } from "constants/env";
 import donaterConfigFn from "./donaterConfig";
 
 type Props = {
-  profile: Profile;
+  profile: EndowmentProfile;
   searchParams: URLSearchParams;
   classes?: string;
 };
@@ -29,11 +28,7 @@ export default function Content({
     const donationRecipient: DonationRecipient = {
       id: profile.id,
       name: profile.name,
-      endowType: profile.type,
-      isKYCRequired:
-        //prettier-ignore
-        (profile.type === "ast" && profile.contributor_verification_required) ||
-        (profile.kyc_donors_only ?? false),
+      isKYCRequired: profile.kyc_donors_only ?? false,
       isFiscalSponsored: profile.fiscal_sponsored ?? false,
     };
     dispatch(setRecipient(donationRecipient));
@@ -49,9 +44,7 @@ export default function Content({
       }
     >
       <Seo
-        title={`${titleCase(PAYMENT_WORDS.verb)} to ${
-          profile.name
-        } - ${APP_NAME}`}
+        title={`Donate to ${profile.name} - ${APP_NAME}`}
         description={(profile.overview ?? "").slice(0, 140)}
         name={profile.name}
         image={`${profile.logo}`}
@@ -71,10 +64,10 @@ export default function Content({
       {donaterConfig.isDescriptionTextShown && (
         <>
           <p className="font-body text-xs text-center sm:text-base mb-3">
-            {titleCase(PAYMENT_WORDS.verb)} today to{" "}
-            {possesiveForm(profile.name)} endowment. Your donation will be
-            protected and compounded in perpetuity to provide {profile.name}{" "}
-            with a long-term, sustainable runway. Give once, give forever!
+            Donate today to {possesiveForm(profile.name)} endowment. Your
+            donation will be protected and compounded in perpetuity to provide{" "}
+            {profile.name} with a long-term, sustainable runway. Give once, give
+            forever!
           </p>
           <p className="font-body text-xs text-center sm:text-base">
             Make sure to check out the many crypto and fiat donation options.

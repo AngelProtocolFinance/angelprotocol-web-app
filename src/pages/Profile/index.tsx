@@ -9,7 +9,8 @@ import Body from "./Body";
 import PageError from "./PageError";
 import ProfileContext, { useProfileContext } from "./ProfileContext";
 import Skeleton from "./Skeleton";
-import Unpublished from "./Unpublished";
+
+// import Unpublished from "./Unpublished";
 
 export default function Profile({ legacy = false }) {
   const { id } = useParams<{ id: string }>();
@@ -34,7 +35,7 @@ export default function Profile({ legacy = false }) {
     }
   }
 
-  if (!data.published) return <Unpublished />;
+  // if (!data.published) return <Unpublished />;
 
   return (
     <ProfileContext.Provider value={data}>

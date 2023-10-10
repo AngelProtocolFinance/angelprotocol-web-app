@@ -1,7 +1,7 @@
 import { Link, LinkGroup, SocialMediaLink } from "./types";
-import { BASE_URL, DAPP_URL, SUBDOMAIN_BUILDER } from "constant/env";
-import { appRoutes } from "constant/routes";
-import { LITEPAPER } from "constant/urls";
+import { BASE_URL, DAPP_URL } from "constants/env";
+import { appRoutes } from "constants/routes";
+import { LITEPAPER } from "constants/urls";
 
 type LINKS = {
   HEADER_LINKS: Link[];
@@ -15,6 +15,7 @@ export const CHARITY_LINKS: LINKS = {
     {
       title: "Marketplace",
       href: appRoutes.marketplace,
+      end: true,
     },
     {
       title: "Giving Partners",
@@ -150,26 +151,4 @@ export const CHARITY_LINKS: LINKS = {
       href: "https://www.instagram.com/angel.giving/",
     },
   ],
-};
-
-export const AST_LINKS: LINKS = {
-  HEADER_LINKS: [
-    {
-      title: "GitHub",
-      href: "https://github.com/AngelProtocolFinance/angelprotocol-web-app",
-      external: true,
-    },
-    {
-      title: "Read the Docs",
-      href: SUBDOMAIN_BUILDER("docs"),
-      external: true,
-    },
-    {
-      title: "Talk to Us",
-      href: `${BASE_URL}/talk-to-us/`,
-      external: true,
-    },
-  ],
-  GROUPS_DATA: [],
-  SOCIAL_MEDIA_LINKS: [],
 };

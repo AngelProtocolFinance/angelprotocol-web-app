@@ -2,11 +2,9 @@ import { useEffect } from "react";
 import { DonaterConfigFromWidget } from "types/widget";
 import { useGetWallet } from "contexts/WalletContext";
 import KYC from "components/KYC";
-import Status, { LoadingStatus } from "components/Status";
 import { useGetter, useSetter } from "store/accessors";
-import { fiatWallet, resetDetails } from "slices/donation";
-import { IS_AST } from "constant/env";
-import Donater from "./Donater";
+import { resetDetails } from "slices/donation";
+import DonateMethods from "./DonateMethods";
 import Result from "./Result";
 import Submit from "./Submit";
 
@@ -15,8 +13,7 @@ type Props = { config: DonaterConfigFromWidget | null };
 export default function CurrentStep({ config }: Props) {
   const state = useGetter((state) => state.donation);
   const dispatch = useSetter();
-  const { wallet = IS_AST ? fiatWallet : undefined, isLoading } =
-    useGetWallet();
+  const { wallet } = useGetWallet();
 
   /** reset form state when user disconnects, user might change wallet */
   useEffect(() => {
@@ -27,25 +24,10 @@ export default function CurrentStep({ config }: Props) {
     return <Result {...state} classes="justify-self-center mt-16" />;
   }
 
-  if (isLoading) {
-    return (
-      <LoadingStatus classes="justify-self-center">
-        Loading wallet
-      </LoadingStatus>
-    );
-  }
-
-  if (!wallet) {
-    return (
-      <Status icon="Info" classes="justify-self-center">
-        You need to connect your wallet to make a donation
-      </Status>
-    );
-  }
-
   switch (state.step) {
     case "submit": {
-      return <Submit {...state} wallet={wallet} />;
+      //when wallet is not connected donateState is reset to initial state -> back to donateForm
+      return wallet ? <Submit {...state} wallet={wallet} /> : <></>;
     }
     case "kyc-form": {
       return (
@@ -57,7 +39,7 @@ export default function CurrentStep({ config }: Props) {
       );
     }
     case "donate-form": {
-      return <Donater {...state} config={config} wallet={wallet} />;
+      return <DonateMethods donaterConfig={config} state={state} />;
     }
 
     //init

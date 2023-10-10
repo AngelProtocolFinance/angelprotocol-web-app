@@ -5,9 +5,8 @@ import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import ModalContext from "contexts/ModalContext";
 import WalletContext from "contexts/WalletContext";
 import useScrollTop from "hooks/useScrollTop";
-import { chainOptions } from "constant/chainOptions";
-import { IS_AST } from "constant/env";
-import { appRoutes } from "constant/routes";
+import { chainOptions } from "constants/chainOptions";
+import { appRoutes } from "constants/routes";
 import Layout from "./Layout";
 
 const Admin = lazy(() => import("pages/Admin"));
@@ -16,7 +15,6 @@ const Donations = lazy(() => import("pages/Donations"));
 const Leaderboard = lazy(() => import("pages/Leaderboard"));
 const Marketplace = lazy(() => import("pages/Marketplace"));
 const Registration = lazy(() => import("pages/Registration"));
-const Launchpad = lazy(() => import("pages/Launchpad"));
 const Donate = lazy(() => import("pages/Donate"));
 const DonateFiatThanks = lazy(() => import("pages/DonateFiatThanks"));
 const Gift = lazy(() => import("pages/Gift"));
@@ -39,10 +37,6 @@ export default function App() {
             />
             <Route element={<Layout />}>
               <Route
-                path={`${appRoutes.marketplace}/:id/*`}
-                element={<Profile />}
-              />
-              <Route
                 path={`${appRoutes.profile}/:id/*`}
                 element={<Profile legacy />}
               />
@@ -60,19 +54,19 @@ export default function App() {
               <Route path={appRoutes.leaderboard} element={<Leaderboard />} />
               <Route
                 path={`${appRoutes.register}/*`}
-                element={IS_AST ? <Launchpad /> : <Registration />}
+                element={<Registration />}
               />
               <Route path={`${appRoutes.gift}/*`} element={<Gift />} />
               <Route path={appRoutes.marketplace} element={<Marketplace />} />
+
+              <Route path={appRoutes.marketplace}>
+                <Route path=":id/*" element={<Profile />} />
+                <Route index element={<Marketplace />} />
+              </Route>
             </Route>
             <Route
               path="*"
-              element={
-                <Navigate
-                  replace
-                  to={IS_AST ? appRoutes.register : appRoutes.marketplace}
-                />
-              }
+              element={<Navigate replace to={appRoutes.marketplace} />}
             />
           </SentryRoutes>
         </ModalContext>

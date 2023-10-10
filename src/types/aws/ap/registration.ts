@@ -1,6 +1,6 @@
 import { UNSDG_NUMS } from "types/lists";
-import { EndowmentTierNum } from "../../contracts";
 import { FileObject } from "../common";
+import { EndowmentTierNum } from "./index";
 
 export type RegistrationStatus =
   | "Inactive"

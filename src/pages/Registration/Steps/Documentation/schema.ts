@@ -9,7 +9,7 @@ import { genFileSchema } from "schemas/file";
 import { requiredString } from "schemas/string";
 import { MAX_SDGS } from "constant/unsdgs";
 
-export const MB_LIMIT = 25;
+export const MB_LIMIT = 6;
 const BYTES_IN_MB = 1e6;
 
 const VALID_MIME_TYPES = [

@@ -1,6 +1,0 @@
-[
-  "function executeSpend(tuple(uint8,uint256,address,string),uint256,uint256,uint256)",
-  "function executeDeposit(address,address) payable",
-  "function executeDepositERC20(address,address,tuple(uint8,uint256,address,string))",
-  "event GiftCardsUpdateDeposit(uint256,tuple(address,tuple(uint8,uint256,address,string),bool))"
-]

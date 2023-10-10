@@ -3,9 +3,7 @@ import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import { TxStep } from "slices/donation";
 import { getTxUrl, humanize } from "helpers";
-import { PAYMENT_WORDS } from "constant/common";
-import { IS_AST } from "constant/env";
-import { appRoutes } from "constant/routes";
+import { appRoutes } from "constants/routes";
 import Share, { SocialMedia } from "./Share";
 
 export default function Success({
@@ -22,18 +20,12 @@ export default function Success({
     <div className={`grid justify-items-center ${classes}`}>
       <Icon type="CheckCircle" size={96} className="text-green mb-8" />
       <h3 className="text-2xl sm:text-3xl mb-4 sm:mb-12 text-center leading-relaxed">
-        Thank you for your {PAYMENT_WORDS.noun.singular} of{" "}
+        Thank you for your donation of{" "}
         <span className="font-extrabold">
           {token.symbol} {humanize(token.amount)}
         </span>{" "}
         to <span className="font-extrabold">{name}</span>!
       </h3>
-      {IS_AST && (
-        <p className="text-center mb-8">
-          If you requested it, a tax receipt has been sent to the email address
-          provided.
-        </p>
-      )}
 
       <ExtLink
         href={getTxUrl(chainId, hash)}

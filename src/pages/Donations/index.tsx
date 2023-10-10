@@ -5,7 +5,6 @@ import CsvExporter from "components/CsvExporter";
 import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
 import { isEmpty } from "helpers";
-import { PAYMENT_WORDS } from "constant/common";
 import Filter from "./Filter";
 import MobileTable from "./MobileTable";
 import NoDonations from "./NoDonations";
@@ -30,7 +29,7 @@ export default function Donations() {
   return (
     <div className="grid grid-cols-[1fr_auto] content-start gap-y-4 lg:gap-y-8 lg:gap-x-3 relative padded-container pt-8 lg:pt-20 pb-8">
       <h1 className="text-3xl max-lg:font-work max-lg:text-center max-lg:col-span-full max-lg:mb-4">
-        My {PAYMENT_WORDS.noun.plural}
+        My donations
       </h1>
       <CsvExporter
         aria-disabled={isLoadingOrError || !data?.Items || isEmpty(data.Items)}
@@ -51,7 +50,7 @@ export default function Donations() {
           disabled={isError}
           className="p-3 pl-10 placeholder:text-gray-d1 dark:placeholder:text-gray bg-transparent w-full outline-none disabled:bg-gray-l3 dark:disabled:bg-bluegray-d1"
           type="text"
-          placeholder={`Search ${PAYMENT_WORDS.noun.plural}...`}
+          placeholder={`Search donations...`}
           value={query}
           onChange={(e) => onQueryChange(e.target.value)}
         />
@@ -69,8 +68,8 @@ export default function Donations() {
           isError: isError,
         }}
         messages={{
-          loading: `Loading ${PAYMENT_WORDS.noun.plural}...`,
-          error: `Failed to get ${PAYMENT_WORDS.noun.plural}`,
+          loading: "Loading donations...",
+          error: "Failed to get donations",
           empty: <NoDonations classes="mt-8 place-self-center col-span-full" />,
         }}
       >
