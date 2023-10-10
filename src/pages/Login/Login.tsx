@@ -36,7 +36,7 @@ function LoginForm({ classes = "" }) {
           label="Password"
           name="password"
         />
-        <button type="submit" className="btn-orange font-work">
+        <button type="submit" className="mt-3 btn-orange font-work">
           Sign in
         </button>
 
