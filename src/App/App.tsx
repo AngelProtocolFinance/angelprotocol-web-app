@@ -19,6 +19,8 @@ const Donate = lazy(() => import("pages/Donate"));
 const DonateFiatThanks = lazy(() => import("pages/DonateFiatThanks"));
 const Gift = lazy(() => import("pages/Gift"));
 const DonateWidget = lazy(() => import("pages/DonateWidget"));
+const Login = lazy(() => import("pages/Login"));
+const Signup = lazy(() => import("pages/Signup"));
 
 export default function App() {
   const location = useLocation();
@@ -58,7 +60,8 @@ export default function App() {
               />
               <Route path={`${appRoutes.gift}/*`} element={<Gift />} />
               <Route path={appRoutes.marketplace} element={<Marketplace />} />
-
+              <Route path={appRoutes.login} element={<Login />} />
+              <Route path={appRoutes.signup} element={<Signup />} />
               <Route path={appRoutes.marketplace}>
                 <Route path=":id/*" element={<Profile />} />
                 <Route index element={<Marketplace />} />
