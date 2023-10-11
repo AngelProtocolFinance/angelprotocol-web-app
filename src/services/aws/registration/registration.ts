@@ -4,7 +4,6 @@ import {
 } from "../../types";
 import {
   AWSQueryRes,
-  BankDetailsUpdateResult,
   ContactUpdateResult,
   DocsUpdateResult,
   EndowmentProposal,
@@ -99,13 +98,6 @@ const registration_api = aws.injectEndpoints({
                   draft.Registration = Object.assign(
                     draft.Registration,
                     data as DocsUpdateResult
-                  );
-                  break;
-                }
-                case "bank": {
-                  draft.Metadata = Object.assign(
-                    draft.Metadata,
-                    data as BankDetailsUpdateResult
                   );
                   break;
                 }

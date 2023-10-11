@@ -5,9 +5,7 @@ import {
   RegistrationState,
 } from "../types";
 import {
-  BankData,
   ContactDetails,
-  DoneBankDetails,
   DoneContact,
   DoneDocs,
   FileObject,
@@ -21,27 +19,16 @@ import { unsdgs } from "constants/unsdgs";
 export function getRegistrationState(
   reg: SavedRegistration
 ): RegistrationState {
-  if (isDoneBank(reg)) {
+  if (isDoneDocs(reg)) {
     const { ContactPerson: c, Registration: r, Metadata: m } = reg;
-    return {
-      step: 4,
-      data: {
-        init: getInit(c),
-        contact: formatContactPerson(c, r),
-        documentation: formatDocumentation(r),
-        bankDetails: { name: m.Name },
-        status: r.RegistrationStatus,
-        endowId: m.EndowmentId,
-      },
-    };
-  } else if (isDoneDocs(reg)) {
-    const { ContactPerson: c, Registration: r } = reg;
     return {
       step: 3,
       data: {
         init: getInit(c),
         contact: formatContactPerson(c, r),
         documentation: formatDocumentation(r),
+        status: r.RegistrationStatus,
+        endowId: m.EndowmentId,
       },
     };
   } else if (isDoneContact(reg)) {
@@ -141,11 +128,6 @@ function formatDocumentation({
 
 export function genFileAsset(previews: FileObject[]): Asset {
   return { files: [], previews };
-}
-
-function isDoneBank(data: SavedRegistration): data is DoneBankDetails {
-  const key: keyof BankData = "Name";
-  return key in data.Metadata;
 }
 
 function isDoneDocs(data: SavedRegistration): data is DoneDocs {
