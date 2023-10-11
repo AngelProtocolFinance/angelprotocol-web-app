@@ -3,6 +3,28 @@
 @tailwind utilities;
 @tailwind variants;
 
+[data-amplify-authenticator] {
+  --amplify-components-authenticator-router-box-shadow: theme(boxShadow.none);
+  --amplify-components-authenticator-router-border-color: theme(
+    borderColor.gray.l3
+  );
+  --amplify-components-tabs-item-active-border-color: theme(
+    colors.orange.DEFAULT
+  );
+  --amplify-components-tabs-item-active-color: theme(colors.orange.DEFAULT);
+  --amplify-components-button-primary-background-color: theme(
+    colors.orange.DEFAULT
+  );
+  --amplify-components-button-primary-hover-background-color: theme(
+    colors.orange.l1
+  );
+}
+html:is(.dark) [data-amplify-authenticator] {
+  --amplify-components-authenticator-router-border-color: theme(
+    borderColor.bluegray.DEFAULT
+  );
+}
+
 @layer base {
   h1,
   h2,

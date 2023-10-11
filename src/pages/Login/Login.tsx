@@ -18,7 +18,7 @@ export default function Login() {
   }, [route, navigate, from]);
 
   return (
-    <div className="grid content-start justify-items-center py-8">
+    <div className="grid content-start justify-items-center pt-8 pb-16">
       <Authenticator />
     </div>
   );
