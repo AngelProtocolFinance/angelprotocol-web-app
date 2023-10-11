@@ -28,7 +28,7 @@ export default function TokenSelector({
       <span className="text-sm">{token.symbol}</span>
 
       {tokens.length > 1 && (
-        <Combobox.Button className="">
+        <Combobox.Button>
           {({ open }) => <DrawerIcon isOpen={open} size={20} />}
         </Combobox.Button>
       )}
