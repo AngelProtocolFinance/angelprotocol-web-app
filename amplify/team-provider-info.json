@@ -1,0 +1,25 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-amplify9a510043694d4-staging-103406-authRole",
+      "UnauthRoleArn": "arn:aws:iam::571372027840:role/amplify-amplify9a510043694d4-staging-103406-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::571372027840:role/amplify-amplify9a510043694d4-staging-103406-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-amplify9a510043694d4-staging-103406-deployment",
+      "UnauthRoleName": "amplify-amplify9a510043694d4-staging-103406-unauthRole",
+      "StackName": "amplify-amplify9a510043694d4-staging-103406",
+      "StackId": "arn:aws:cloudformation:us-east-1:571372027840:stack/amplify-amplify9a510043694d4-staging-103406/e12bf640-50ff-11ec-9593-12572f5cd093",
+      "AmplifyAppId": "dpspevs7tj1ov"
+    },
+    "categories": {
+      "auth": {
+        "angelgivingwebapp": {
+          "nativeClientId": "2jliqnhm65qggbvkb71ii2o0p7",
+          "userPoolId": "us-east-1_3a0c2RjsN",
+          "userPoolName": "angelgiving",
+          "webClientId": "2jliqnhm65qggbvkb71ii2o0p7"
+        }
+      }
+    }
+  }
+}
