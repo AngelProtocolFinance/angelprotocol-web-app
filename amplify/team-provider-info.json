@@ -13,12 +13,7 @@
     },
     "categories": {
       "auth": {
-        "angelgivingwebapp": {
-          "nativeClientId": "2jliqnhm65qggbvkb71ii2o0p7",
-          "userPoolId": "us-east-1_3a0c2RjsN",
-          "userPoolName": "angelgiving",
-          "webClientId": "2jliqnhm65qggbvkb71ii2o0p7"
-        }
+        "angelgivingwebapp48512d94": {}
       }
     }
   }
