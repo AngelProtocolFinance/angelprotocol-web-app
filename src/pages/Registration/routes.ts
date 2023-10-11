@@ -11,8 +11,7 @@ enum routes {
 export enum steps {
   contact = "1",
   doc = "2",
-  wallet = "3",
-  summary = "4",
+  summary = "3",
 }
 
 export default routes;

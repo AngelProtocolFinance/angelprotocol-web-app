@@ -12,7 +12,7 @@ import EndowmentStatus from "./EndowmentStatus";
 import Step from "./Step";
 
 function Dashboard() {
-  const { data } = useRegState<4>();
+  const { data } = useRegState<3>();
 
   const [submitApplication, { isLoading: isSubmitting }] = useSubmitMutation();
   const { showModal } = useModalContext();
@@ -67,7 +67,6 @@ function Dashboard() {
 
       <Step num={1} disabled={isStepDisabled} />
       <Step num={2} disabled={isStepDisabled} />
-      <Step num={3} disabled={isStepDisabled} />
 
       <EndowmentStatus
         isSubmitting={isSubmitting}
