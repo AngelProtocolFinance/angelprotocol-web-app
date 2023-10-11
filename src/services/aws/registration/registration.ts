@@ -11,7 +11,6 @@ import {
   RegistrationUpdate,
   SavedRegistration,
   SubmitResult,
-  WalletUpdateResult,
 } from "types/aws";
 import { adminTags } from "services/aws/tags";
 import { logger } from "helpers";
@@ -99,13 +98,6 @@ const registration_api = aws.injectEndpoints({
                   draft.Registration = Object.assign(
                     draft.Registration,
                     data as DocsUpdateResult
-                  );
-                  break;
-                }
-                case "wallet": {
-                  draft.Metadata = Object.assign(
-                    draft.Metadata,
-                    data as WalletUpdateResult
                   );
                   break;
                 }

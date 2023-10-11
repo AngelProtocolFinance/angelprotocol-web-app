@@ -60,17 +60,10 @@ export type Documentation = {
   hasAuthority: boolean;
 };
 
-//STEP 3
-type WalletDetails = {
-  //keplr only
-  address: string;
-};
-
 export type CompleteRegistration = {
   init: InitReg;
   contact: ContactPerson;
   documentation: Documentation;
-  wallet: WalletDetails;
   endowId?: number; //created
 };
 
@@ -84,8 +77,6 @@ type Step2Data = Optional<
   "documentation"
 >;
 
-type Step3Data = Optional<CompleteRegistration, "wallet">;
-
 type RegStep1 = {
   step: 1;
   data: Step1Data;
@@ -98,14 +89,9 @@ type RegStep2 = {
 
 type RegStep3 = {
   step: 3;
-  data: Step3Data;
-};
-
-type RegStep4 = {
-  step: 4;
   data: CompleteRegistration & { status: RegistrationStatus };
 };
 
-export type RegistrationState = RegStep1 | RegStep2 | RegStep3 | RegStep4;
+export type RegistrationState = RegStep1 | RegStep2 | RegStep3;
 
 export type RegStep = RegistrationState["step"];
