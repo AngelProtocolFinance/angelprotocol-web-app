@@ -6,7 +6,7 @@ export default function Admin() {
   return (
     <Context>
       <ModalContext>
-        <Charity />;
+        <Charity />
       </ModalContext>
     </Context>
   );
