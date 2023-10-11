@@ -45,6 +45,5 @@ export const LINKS: {
       type: "Wallet",
       size: 21.7,
     },
-    disabled: true,
   },
 };
