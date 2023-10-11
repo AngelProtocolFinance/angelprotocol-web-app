@@ -1,10 +1,10 @@
 {
   "version": "1",
   "cognitoConfig": {
-    "identityPoolName": "angelgivingwebapp48512d94_identitypool_48512d94",
+    "identityPoolName": "angelgivingwebapp755446e9_identitypool_755446e9",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "angelg48512d94",
-    "userPoolName": "angelgivingwebapp48512d94_userpool_48512d94",
+    "resourceNameTruncated": "angelg755446e9",
+    "userPoolName": "angelgivingwebapp755446e9_userpool_755446e9",
     "autoVerifiedAttributes": [
       "email"
     ],
@@ -31,10 +31,10 @@
     "userpoolClientReadAttributes": [
       "email"
     ],
-    "userpoolClientLambdaRole": "angelg48512d94_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "angelg755446e9_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "48512d94",
-    "resourceName": "angelgivingwebapp48512d94",
+    "sharedId": "755446e9",
+    "resourceName": "angelgivingwebapp755446e9",
     "authSelections": "identityPoolAndUserPool",
     "useDefault": "default",
     "usernameAttributes": [
