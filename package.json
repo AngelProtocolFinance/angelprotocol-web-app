@@ -44,6 +44,7 @@
     "node": "18.16.1"
   },
   "dependencies": {
+    "@aws-amplify/ui-react": "5.3.1",
     "@cosmjs/encoding": "0.31.1",
     "@ethersproject/abi": "^5.7.0",
     "@ethersproject/bignumber": "^5.7.0",
@@ -62,6 +63,7 @@
     "@web3auth/base": "^5.1.0",
     "@web3auth/no-modal": "^5.1.0",
     "@web3auth/torus-evm-adapter": "^5.1.0",
+    "aws-amplify": "5.3.11",
     "compress.js": "^1.2.2",
     "cropperjs": "1.6.0",
     "decimal.js": "^10.3.1",
