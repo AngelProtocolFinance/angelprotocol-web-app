@@ -1,3 +1,4 @@
+import "@aws-amplify/ui-react/styles.css";
 import * as Sentry from "@sentry/react";
 import { WalletProvider } from "@terra-money/wallet-provider";
 import { lazy } from "react";

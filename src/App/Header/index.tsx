@@ -2,11 +2,11 @@ import { useEffect, useRef, useState } from "react";
 import { Location, matchRoutes, useLocation } from "react-router-dom";
 import { Link } from "../types";
 import Image, { ImageProps } from "components/Image";
-import WalletSuite from "components/WalletSuite";
 import { appRoutes } from "constants/routes";
 import DesktopNav from "./DesktopNav";
 import { Opener as MobileNavOpener } from "./MobileNav";
 import ThemeToggle from "./ThemeToggle";
+import UserMenu from "./UserMenu";
 
 type Props = { classes: string; links: Link[]; logo: ImageProps };
 
@@ -45,9 +45,9 @@ export default function Header({ classes, links, logo }: Props) {
           classes="hidden lg:flex font-heading font-bold uppercase"
           links={links}
         />
-        <div className="flex gap-4 justify-self-end">
+        <div className="flex gap-4 justify-self-end items-center">
           <ThemeToggle classes="hidden lg:flex" />
-          <WalletSuite />
+          {location.pathname !== appRoutes.login && <UserMenu />}
         </div>
         <MobileNavOpener
           classes="flex ml-2 lg:hidden"
