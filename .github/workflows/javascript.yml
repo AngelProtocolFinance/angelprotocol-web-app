@@ -2,6 +2,19 @@ name: JavaScript
 on:
   push:
 jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_AMPLIFY_APP_ID: ${{ secrets.AWS_AMPLIFY_APP_ID }}
+      AWS_DEFAULT_REGION: us-east-1
+      AWS_DEFAULT_OUTPUT: json
+    steps:
+      - uses: actions/checkout@v3
+      - name: Deploy
+        run: ./scripts/amplify-deploy.sh $AWS_AMPLIFY_APP_ID ${{ github.head_ref }}
+
   lint-tests:
     name: "Lint and test the codebase"
     environment: production
