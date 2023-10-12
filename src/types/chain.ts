@@ -1,5 +1,6 @@
 type ChainID = string; //"137", "1"
 type NativeAtomicUnit = string; //ujunox uluna
+export type ChainType = "evm" | "cosmos" | "terra";
 export type Chain = {
   id: ChainID;
   type: "evm" | "cosmos" | "terra";
