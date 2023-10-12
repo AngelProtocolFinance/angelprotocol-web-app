@@ -169,5 +169,5 @@ export default function useInjectedWallet(
     }
   }
 
-  return { ...state, ...meta, ...{ connect, disconnect } };
+  return { ...state, ...meta, ...{ connect, disconnect, switchChain } };
 }
