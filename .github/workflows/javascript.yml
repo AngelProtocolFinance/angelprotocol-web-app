@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Deploy
-        run: ./scripts/amplify-deploy.sh $AWS_AMPLIFY_APP_ID ${{ github.head_ref }}
+        run: ./scripts/amplify-deploy.sh $AWS_AMPLIFY_APP_ID ${GITHUB_REF##*/}
 
   lint-tests:
     name: "Lint and test the codebase"
