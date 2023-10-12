@@ -1,258 +1,173 @@
 import Decimal from "decimal.js";
-import { useCallback, useEffect, useState } from "react";
-import { Connection, ProviderInfo } from "./types";
-import { BaseChain } from "types/aws";
+import { useEffect, useState } from "react";
+import { Connected, ProviderState, Wallet, WalletMeta } from "./types-v2";
 import {
   AccountChangeHandler,
   ChainChangeHandler,
   InjectedProvider,
 } from "types/evm";
-import { ProviderId } from "types/lists";
-import { getProvider } from "helpers";
-import {
-  UnexpectedStateError,
-  UnsupportedChainError,
-  WalletDisconnectedError,
-  WalletError,
-  WalletNotInstalledError,
-} from "errors/errors";
-import { chainIDs } from "constants/chains";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
+import { getProvider, logger } from "helpers";
+import { chains } from "constants/chains-v2";
 import { EIPMethods } from "constants/evm";
-import { WALLET_METADATA } from "./constants";
-import {
-  checkXdefiPriority,
-  retrieveUserAction,
-  saveUserAction,
-  toPrefixedHex,
-} from "./helpers";
-import { useAddEthereumChain } from "./hooks";
+import { toPrefixedHex } from "./helpers";
+import { retrieveUserAction, saveUserAction } from "./helpers";
+import { isXdefiPrioritized } from "./helpers/isXdefiPrioritized";
 
-const CHAIN_NOT_ADDED_CODE = 4902;
+export default function useInjectedWallet(
+  meta: WalletMeta & { installUrl: string }
+): Wallet {
+  const { id } = meta;
+  const actionKey = `${id}__pref`;
 
-export default function useInjectedProvider(
-  providerId: Extract<ProviderId, "metamask" | "xdefi-evm" | "binance-wallet">,
-  supportedChains: BaseChain[],
-  connectorName = prettifyId(providerId)
-) {
-  const actionKey = `${providerId}__pref`;
-  //connect only if there's no active wallet
-  const lastAction = retrieveUserAction(actionKey);
-  const shouldReconnect = lastAction === "connect";
-  const [isLoading, setIsLoading] = useState(true);
-  const [address, setAddress] = useState<string>("");
-  const [chainId, setChainId] = useState<string>();
+  const [state, setState] = useState<ProviderState>({
+    status: "disconnected",
+  });
 
-  const addEthereumChain = useAddEthereumChain();
-
+  /** persistent connection */
   useEffect(() => {
-    requestAccess();
+    const lastAction = retrieveUserAction(actionKey);
+    const shouldReconnect = lastAction === "connect";
+    shouldReconnect && connect(false);
     return () => {
-      removeAllListeners(providerId);
+      getProvider(id).then((provider) => {
+        if (provider && provider.removeListener) {
+          provider.removeListener("accountsChanged", handleAccountsChange);
+          provider.removeListener("chainChanged", handleChainChange);
+        }
+      });
     };
     //eslint-disable-next-line
   }, []);
 
-  /** attachers/detachers */
-  const attachChainChangedHandler = (provider: InjectedProvider) => {
-    provider.on("chainChanged", handleChainChange);
-  };
-
-  const attachAccountChangeHandler = (provider: InjectedProvider) => {
-    provider.on("accountsChanged", handleAccountsChange);
-  };
-
-  /** event handlers */
   const handleChainChange: ChainChangeHandler = (hexChainId) => {
-    setChainId(new Decimal(hexChainId).toString());
+    setState((prev) => {
+      if (prev.status === "connected") {
+        return {
+          ...prev,
+          chainId: new Decimal(hexChainId).toString(),
+        };
+      }
+      return prev;
+    });
   };
 
-  //useful when user changes account internally via metamask
   const handleAccountsChange: AccountChangeHandler = (accounts) => {
-    //requestAccounts(new connection) will set the address so no need to set again
-    if (accounts.length > 0) {
-      setAddress(accounts[0]);
-      //if no account is found, means user disconnected
-    } else {
-      setAddress("");
-      setChainId(undefined);
-      saveUserAction(actionKey, "disconnect");
-      removeAllListeners(providerId);
-    }
+    setState((prev) => {
+      if (prev.status === "connected") {
+        if (accounts.length > 0) {
+          return {
+            ...prev,
+            address: accounts[0],
+          };
+        } else {
+          saveUserAction(actionKey, "disconnect");
+          return { status: "disconnected", connect };
+        }
+      }
+      return prev;
+    });
   };
 
-  const verifyChainSupported = useCallback(
-    (chainId: string) => {
-      if (!supportedChains.some((x) => x.chain_id === chainId)) {
-        throw new UnsupportedChainError(chainId);
-      }
-    },
-    [supportedChains]
-  );
-
-  const requestAccess = async (isNewConnection = false) => {
+  async function switchChain(chainId: string) {
     try {
-      const injectedProvider = await getProvider(providerId);
-      if (
-        injectedProvider &&
-        (isNewConnection || shouldReconnect) &&
-        !address
-      ) {
-        attachAccountChangeHandler(injectedProvider);
-        attachChainChangedHandler(injectedProvider);
-
-        const accounts = await injectedProvider.request<string[]>({
-          method: EIPMethods.eth_requestAccounts,
-        });
-
-        const hexChainId = await injectedProvider.request<string>({
-          method: EIPMethods.eth_chainId,
-        });
-
-        const parsedChainId = new Decimal(hexChainId).toString();
-        verifyChainSupported(parsedChainId);
-        setAddress(accounts[0]);
-        setChainId(parsedChainId);
-      }
-      setIsLoading(false);
-    } catch (err: any) {
-      //if user cancels, set pref to disconnect
-      setIsLoading(false);
-      saveUserAction(actionKey, "disconnect");
-      removeAllListeners(providerId);
-
-      if (err instanceof UnsupportedChainError) {
-        throw err;
-      }
-      if (isNewConnection) {
-        //if connection is made via "connect-button"
-        throw new WalletError(
-          err.message || GENERIC_ERROR_MESSAGE,
-          err.code || 0
+      setState((p) => ({ ...(p as Connected), isSwitchingChain: true }));
+      const provider = (await getProvider(id)) as InjectedProvider; //can't switch when wallet is not connected
+      const chain = chains[chainId];
+      await provider
+        .request({
+          method: EIPMethods.wallet_switchEthereumChain,
+          params: [{ chainId: toPrefixedHex(chainId) }],
+        })
+        .catch(
+          async () =>
+            await provider.request({
+              method: EIPMethods.wallet_addEthereumChain,
+              params: [
+                {
+                  chainId: toPrefixedHex(chainId),
+                  chainName: chain.name,
+                  nativeCurrency: {
+                    name: chain.nativeToken.symbol,
+                    symbol: chain.nativeToken.symbol,
+                    decimals: chain.nativeToken.decimals,
+                  },
+                  rpcUrls: [chain.rpc],
+                  blockExplorerUrls: [chain.txExplorer],
+                },
+              ],
+            })
         );
-      }
+    } catch (err) {
+      logger.error(err);
+      alert("Failed to switch chain");
+    } finally {
+      setState((p) => ({ ...(p as Connected), isSwitchingChain: true }));
     }
-  };
-
-  async function disconnect() {
-    if (!address) return;
-    const injectedProvider = await getProvider(providerId);
-    if (!injectedProvider) return;
-    setAddress("");
-    setChainId(undefined);
-    saveUserAction(actionKey, "disconnect");
-    removeAllListeners(providerId);
   }
 
-  const connect = async () => {
-    if (!getProvider(providerId)) {
-      throw new WalletNotInstalledError(providerId);
-    }
-
+  async function connect(isNew /** new connection */ = true) {
     try {
-      //connecting xdefi
-      if (providerId === "xdefi-evm") {
-        checkXdefiPriority();
-        //connecting other wallet
-      } else {
-        if (window?.xfi?.ethereum?.isMetaMask) {
-          throw new WalletError(
-            "Kindly remove priority to xdefi and reload the page",
-            0
-          );
-        }
+      const provider = await getProvider(id);
+      if (!provider) {
+        if (!isNew) return; /** dont alert on persistent connection */
+        return window.open(meta.installUrl, "_blank", "noopener noreferrer");
+      }
+      /** isMobile check not needed, just hide this wallet on mobile */
+
+      /** xdefi checks */
+      if (id === "xdefi-evm" && !isXdefiPrioritized()) {
+        if (!isNew) return;
+        return alert("Kindly prioritize Xdefi and reload the page");
+      } else if (id !== "xdefi-evm" && isXdefiPrioritized()) {
+        if (!isNew) return;
+        return alert("Kindly remove priority to Xdefi and reload the page");
       }
 
-      setIsLoading(true);
-      await requestAccess(true);
-      saveUserAction(actionKey, "connect");
-    } catch (err: any) {
-      setIsLoading(false);
-      throw new WalletError(
-        err?.message || GENERIC_ERROR_MESSAGE,
-        err?.code || 0
-      );
-    }
-  };
-
-  const switchChain = async (chainId: chainIDs) => {
-    const injectedProvider = await getProvider(providerId);
-
-    if (!injectedProvider) {
-      throw new UnexpectedStateError(
-        `Provider ID was never passed, current value: ${providerId}`
-      );
-    }
-    if (!address) {
-      throw new WalletDisconnectedError();
-    }
-
-    verifyChainSupported(chainId);
-
-    try {
-      // Setting `isLoading` to `true` only so that the appropriate loading indicator is shown when switching chains
-      // No need to set it to `false` in the end, as the page should be reloaded anyway after a successful switch
-      // (see comment above "chainChanged" handler)
-      setIsLoading(true);
-      await injectedProvider.request({
-        method: EIPMethods.wallet_switchEthereumChain,
-        params: [{ chainId: toPrefixedHex(chainId) }],
-      });
-    } catch (switchError: any) {
-      if (switchError?.code !== CHAIN_NOT_ADDED_CODE) {
-        throw new WalletError(
-          switchError?.message || GENERIC_ERROR_MESSAGE,
-          switchError?.code || 0
-        );
-      }
-
-      const accounts = await injectedProvider.request<string[]>({
+      setState({ status: "loading" });
+      /** request access */
+      const accounts = await provider.request<string[]>({
         method: EIPMethods.eth_requestAccounts,
       });
-      await addEthereumChain(injectedProvider, accounts[0], chainId);
-    } finally {
-      setIsLoading(false);
+      const hexChainId = await provider.request<string>({
+        method: EIPMethods.eth_chainId,
+      });
+
+      /** attach listeners */
+      provider.on("accountsChanged", handleAccountsChange);
+      provider.on("chainChanged", handleChainChange);
+
+      setState({
+        status: "connected",
+        address: accounts[0],
+        chainId: `${parseInt(hexChainId, 16)}`,
+        isSwitchingChain: false,
+      });
+
+      saveUserAction(actionKey, "connect");
+    } catch (err) {
+      if (isNew) {
+        alert("Failed to connect to wallet.");
+      }
+      setState({ status: "disconnected" });
+      saveUserAction(actionKey, "disconnect");
     }
-  };
+  }
 
-  //consolidate to one object for diff
-  const providerInfo: ProviderInfo | undefined =
-    chainId && address
-      ? {
-          logo: WALLET_METADATA[providerId].logo,
-          providerId,
-          chainId,
-          address: address.toLowerCase(),
-        }
-      : undefined;
+  async function disconnect() {
+    const provider = await getProvider(id);
+    if (provider) {
+      setState({ status: "disconnected" });
+      saveUserAction(actionKey, "disconnect");
 
-  //connection object to render <Connector/>
-  const connection: Connection = {
-    providerId,
-    name: connectorName,
-    logo: WALLET_METADATA[providerId].logo,
-    installUrl: WALLET_METADATA[providerId].installUrl,
-    connect,
-  };
+      if (provider.removeListener) {
+        provider.removeListener("accountsChanged", handleAccountsChange);
+        provider.removeListener("chainChanged", handleChainChange);
+      } else {
+        /** if provider doesn't support removeListener, just reload to remove listeners*/
+        window.location.reload();
+      }
+    }
+  }
 
-  return {
-    connection,
-    disconnect,
-    switchChain,
-    isLoading,
-    providerInfo,
-    supportedChains,
-  };
-}
-
-function removeAllListeners(providerId: ProviderId) {
-  getProvider(providerId).then((provider) => {
-    provider?.removeAllListeners && provider.removeAllListeners();
-  });
-}
-
-function prettifyId(providerId: ProviderId) {
-  //e.g 'xdefi-wallet' --> 'xdefi wallet',
-  const strSpaced = providerId.replace("-", " ");
-  return strSpaced[0].toUpperCase() + strSpaced.slice(1);
+  return { ...state, ...meta, ...{ connect, disconnect } };
 }

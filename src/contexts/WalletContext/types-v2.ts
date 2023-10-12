@@ -6,6 +6,7 @@ export type Connected = {
   status: "connected";
   address: string;
   chainId: string;
+  isSwitchingChain: boolean;
 };
 type Disconnected = { status: "disconnected" };
 type Loading = { status: "loading" };
