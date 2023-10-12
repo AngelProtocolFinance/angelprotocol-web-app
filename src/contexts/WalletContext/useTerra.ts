@@ -2,97 +2,78 @@ import {
   ConnectType,
   Installation,
   Connection as TerraConnection,
-  Wallet,
+  Wallet as TerraWallet,
   WalletStatus,
   useWallet,
 } from "@terra-money/wallet-provider";
-import { Connection, ProviderInfo } from "./types";
-import { BaseChain } from "types/aws";
+import { Connector, ProviderState, Wallet, WalletMeta } from "./types-v2";
 import { ProviderId } from "types/lists";
-import {
-  ManualChainSwitchRequiredError,
-  UnsupportedChainError,
-  WalletDisconnectedError,
-} from "errors/errors";
-import { chainIDs } from "constants/chains";
-import { IS_TEST } from "constants/env";
-
-const SUPPORTED_CHAINS: BaseChain[] = IS_TEST
-  ? [{ chain_id: chainIDs.terraTest, chain_name: "Terra Testnet" }]
-  : [{ chain_id: chainIDs.terraMain, chain_name: "Terra Mainnet" }];
 
 export default function useTerra() {
   const {
     availableConnections,
     availableInstallations,
-    connection,
+    connection: terraConnection,
     network,
     wallets,
-    status,
     connect,
+    status,
     disconnect,
   } = useWallet();
 
-  const terraInfo: ProviderInfo | undefined =
+  const state: ProviderState =
     /** wallets contain wc entry even terraAddress is not resolved */
-    connection && wallets[0].terraAddress
+    terraConnection && wallets[0].terraAddress
       ? {
-          providerId:
-            //use connect type as Id if no futher connections stems out of the type
-            (connection?.identifier as ProviderId) ||
-            connection.type.toLowerCase(),
-          logo: connection?.icon!,
-          chainId: network.chainID,
+          status: "connected",
           address: wallets[0].terraAddress,
+          chainId: network.chainID,
+          isSwitchingChain: false,
         }
-      : undefined;
+      : status === WalletStatus.INITIALIZING
+      ? { status: "loading" }
+      : { status: "disconnected" };
 
-  const connectionFn = genConnectionFn(
+  const connection = connectionFn(
     availableConnections,
     availableInstallations,
     connect
   );
+  const wallet = walletFn(state, disconnect);
   //unpack terra connections so can be ordered later on
-  const stationConnection = connectionFn("station");
-  const xdefiTerraConnection = connectionFn("xdefi-wallet");
-  const leapConnection = connectionFn("leap-wallet");
-  const stationMobileConnection = connectionFn("walletconnect");
-
-  const switchChain = async (chainId: chainIDs) => {
-    if (!connection) {
-      throw new WalletDisconnectedError();
-    }
-
-    if (!SUPPORTED_CHAINS.some((x) => x.chain_id === chainId)) {
-      throw new UnsupportedChainError(chainId);
-    }
-
-    throw new ManualChainSwitchRequiredError(chainId);
-  };
+  const station = wallet(connection("station"));
+  const xdefiTerra = wallet(connection("xdefi-wallet"));
+  const leap = wallet(connection("leap-wallet"));
+  const stationMobile = wallet(connection("walletconnect"));
 
   return {
-    isTerraLoading: status === WalletStatus.INITIALIZING,
-    stationConnection,
-    xdefiTerraConnection,
-    leapConnection,
-    stationMobileConnection,
-    disconnectTerra: disconnect,
-    terraInfo,
-    switchChain,
-    supportedChains: SUPPORTED_CHAINS,
+    station,
+    xdefiTerra,
+    leap,
+    stationMobile,
   };
 }
 
-const genConnectionFn =
+type Connection = Omit<WalletMeta, "type"> & Connector;
+const walletFn =
+  (state: ProviderState, disconnect: TerraWallet["disconnect"]) =>
+  ({ connect, ...meta }: Connection): Wallet => ({
+    ...state,
+    ...meta,
+    type: "terra",
+    ...{ connect, disconnect, switchChain: null },
+  });
+
+const connectionFn =
   (
     connections: TerraConnection[],
     installations: Installation[],
-    connectTerra: Wallet["connect"]
+    connectTerra: TerraWallet["connect"]
   ) =>
   (providerId: ProviderId): Connection => {
     if (providerId === "walletconnect") {
       return {
-        providerId: "walletconnect",
+        id: "walletconnect",
         name: "Terra Station Mobile",
         logo: "/icons/wallets/terra-extension.jpg",
         async connect() {
@@ -105,7 +86,7 @@ const genConnectionFn =
 
     if (connection) {
       return {
-        providerId,
+        id: providerId,
         name: connection.name,
         logo: connection.icon,
         connect: async () =>
@@ -115,7 +96,7 @@ const genConnectionFn =
     const installation = installations.find((x) => x.identifier === providerId);
     if (installation) {
       return {
-        providerId,
+        id: providerId,
         name: installation.name,
         logo: installation.icon,
         connect: async () => {
@@ -126,7 +107,7 @@ const genConnectionFn =
 
     //this should never happen, missing connection always have installation counterpart
     return {
-      providerId: "station",
+      id: "station",
       name: "Unknown wallet",
       logo: "",
       connect: () => {
