@@ -1,11 +1,9 @@
 import { WalletConnectModal } from "@walletconnect/modal";
 import { useEffect, useRef, useState } from "react";
-import { Connection, ProviderInfo } from "../types";
-import { Connected, WalletState } from "./types";
+import { Connected, ProviderState, Wallet, WalletMeta } from "../types-v2";
 import { SessionTypes, SignClientTypes } from "@walletconnect/types";
 import { _pairing, _session, account } from "helpers/wallet-connect";
 import { EIPMethods } from "constants/evm";
-import { WALLET_METADATA } from "../constants";
 
 const wcModal = new WalletConnectModal({
   projectId: "039a7aeef39cb740398760f71a471957",
@@ -27,11 +25,11 @@ const wcModal = new WalletConnectModal({
 });
 
 /** NOTE: only use this wallet in mainnet */
-export function useEVMWC() {
+export function useEVMWC(meta: WalletMeta): Wallet {
   const unsubscribeRef = useRef<() => void>();
   const uriRef = useRef<string>();
 
-  const [state, setState] = useState<WalletState>({
+  const [state, setState] = useState<ProviderState>({
     status: "disconnected",
   });
 
@@ -128,35 +126,11 @@ export function useEVMWC() {
     client.off("session_delete", onSessionDelete);
     setState({ status: "disconnected" });
   }
-
-  /** TODO: refactor to just return Meta & WalletState */
-  const providerInfo: ProviderInfo | undefined =
-    state.status === "connected"
-      ? {
-          logo: WALLET_METADATA["evm-wc"].logo,
-          providerId: "evm-wc",
-          chainId: state.chainId,
-          address: state.address,
-        }
-      : undefined;
-
-  const connection: Connection = {
-    providerId: "evm-wc",
-    name: "Metamask mobile",
-    logo: WALLET_METADATA["evm-wc"].logo,
-    installUrl: WALLET_METADATA["evm-wc"].logo,
-    connect,
-  };
-
-  return {
-    connection,
-    disconnect,
-    isLoading: state.status === "loading",
-    providerInfo,
-  };
+  return { ...state, ...meta, ...{ connect, disconnect, switchChain: null } };
 }
 
 const connected = (namespaces: SessionTypes.Namespaces): Connected => ({
   status: "connected",
+  isSwitchingChain: false,
   ...account(namespaces.eip155),
 });
