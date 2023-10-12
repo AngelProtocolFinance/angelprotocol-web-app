@@ -1,6 +1,5 @@
 import { InjectedProvider, RequestArguments } from "types/evm";
 import { ProviderId } from "types/lists";
-import { Dwindow } from "types/window";
 import web3Auth from "contexts/WalletContext/useWeb3Auth/web3AuthSetup";
 import { _session, account } from "helpers/wallet-connect";
 
@@ -24,19 +23,18 @@ export async function wcProvider(): Promise<Partial<InjectedProvider>> {
 export async function getProvider(
   providerId: ProviderId
 ): Promise<InjectedProvider | undefined> {
-  const dwindow = window as Dwindow;
   switch (providerId) {
     case "binance-wallet":
-      return dwindow.BinanceChain;
+      return window.BinanceChain;
     case "metamask":
-      return dwindow.ethereum;
+      return window.ethereum;
     case "web3auth-torus":
       return web3Auth.provider as InjectedProvider;
     /** only used in sendTx */
     case "evm-wc":
       return wcProvider() as Promise<InjectedProvider>;
     case "xdefi-evm":
-      return dwindow.xfi?.ethereum as InjectedProvider;
+      return window.xfi?.ethereum as InjectedProvider;
     default:
       return undefined;
   }

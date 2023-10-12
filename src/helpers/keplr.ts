@@ -7,11 +7,10 @@ import {
   WCSignDirectRes,
 } from "types/cosmos";
 import { ProviderId } from "types/lists";
-import { Dwindow } from "types/window";
 import { _session } from "./wallet-connect";
 
 export async function keplr(providerId: ProviderId): Promise<Keplr | KeplrWC> {
-  return providerId === "keplr-wc" ? keplrWC() : (window as Dwindow).keplr!;
+  return providerId === "keplr-wc" ? keplrWC() : window.keplr!;
 }
 
 export async function keplrWC(): Promise<KeplrWC> {

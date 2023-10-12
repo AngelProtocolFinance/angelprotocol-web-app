@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Connection, ProviderInfo } from "../types";
 import { BaseChain } from "types/aws";
-import { Dwindow } from "types/window";
 import {
   UnsupportedChainError,
   WalletError,
@@ -26,7 +25,6 @@ const SUPPORTED_CHAINS: BaseChain[] = IS_TEST
 
 const CHAIN_ID = IS_TEST ? chainIDs.junoTest : chainIDs.junoMain;
 const actionKey = `keplr__pref`;
-const dwindow: Dwindow = window;
 
 export default function useKeplr() {
   //connect only if there's no active wallet
@@ -43,18 +41,18 @@ export default function useKeplr() {
 
   const requestAccess = async (chainId: chainIDs, isNewConnection = false) => {
     try {
-      if (!dwindow.keplr) return;
+      if (!window.keplr) return;
 
       if (!SUPPORTED_CHAINS.some((x) => x.chain_id === chainId)) {
         throw new UnsupportedChainError(chainId);
       }
 
       if (chainId === juno_test_chain_info.chainId) {
-        await dwindow.keplr.experimentalSuggestChain(juno_test_chain_info);
+        await window.keplr.experimentalSuggestChain(juno_test_chain_info);
       }
 
-      await dwindow.keplr.enable(chainId);
-      const key = await dwindow.keplr.getKey(chainId);
+      await window.keplr.enable(chainId);
+      const key = await window.keplr.getKey(chainId);
 
       setAddress(key.bech32Address);
       setChainId(chainId);
@@ -74,7 +72,7 @@ export default function useKeplr() {
   };
 
   const connect = async () => {
-    if (!dwindow.keplr) {
+    if (!window.keplr) {
       throw new WalletNotInstalledError("keplr");
     }
 
@@ -100,7 +98,7 @@ export default function useKeplr() {
   }
 
   const switchChain = async (chainId: chainIDs) => {
-    if (!dwindow.keplr) {
+    if (!window.keplr) {
       throw new WalletNotInstalledError("keplr");
     }
 

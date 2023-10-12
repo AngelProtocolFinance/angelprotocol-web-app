@@ -8,7 +8,6 @@ import {
   InjectedProvider,
 } from "types/evm";
 import { ProviderId } from "types/lists";
-import { Dwindow } from "types/window";
 import { getProvider } from "helpers";
 import {
   UnexpectedStateError,
@@ -146,8 +145,6 @@ export default function useInjectedProvider(
   }
 
   const connect = async () => {
-    const dwindow = window as Dwindow;
-
     if (!getProvider(providerId)) {
       throw new WalletNotInstalledError(providerId);
     }
@@ -158,7 +155,7 @@ export default function useInjectedProvider(
         checkXdefiPriority();
         //connecting other wallet
       } else {
-        if (dwindow?.xfi?.ethereum?.isMetaMask) {
+        if (window?.xfi?.ethereum?.isMetaMask) {
           throw new WalletError(
             "Kindly remove priority to xdefi and reload the page",
             0
