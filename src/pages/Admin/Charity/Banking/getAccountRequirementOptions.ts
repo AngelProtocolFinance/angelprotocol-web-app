@@ -3,7 +3,7 @@ import { URLS } from "./constants";
 
 export default async function getAccountRequirementOptions(
   targetCurrency: string,
-  sourceAmount = 1000
+  sourceAmount = 10000
 ): Promise<AccountRequirements[]> {
   return fetch(`${URLS.rootUrl}${URLS.createQuote.url()}`, {
     method: URLS.createQuote.method,
