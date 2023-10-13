@@ -1,10 +1,10 @@
-import { AccountRequirements } from "./types";
+import { AccountRequirementsField } from "./types";
 import { URLS } from "./constants";
 
 export default async function getAccountRequirementOptions(
   targetCurrency: string,
   sourceAmount = 1000
-): Promise<AccountRequirements[]> {
+): Promise<AccountRequirementsField[]> {
   return fetch(`${URLS.rootUrl}${URLS.createQuote.url()}`, {
     method: URLS.createQuote.method,
     headers: {
@@ -20,5 +20,5 @@ export default async function getAccountRequirementOptions(
     .then((quote) =>
       fetch(`${URLS.rootUrl}${URLS.getAccountRequirements.url(quote.id)}`)
     )
-    .then<AccountRequirements[]>((res) => res.json());
+    .then<AccountRequirementsField[]>((res) => res.json());
 }

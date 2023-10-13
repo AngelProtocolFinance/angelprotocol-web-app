@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { AccountRequirements } from "./types";
+import { AccountRequirementsField } from "./types";
 import getAccountRequirementOptions from "./getAccountRequirementOptions";
 
 export default function AccountRequirementsSelector({
@@ -9,10 +9,10 @@ export default function AccountRequirementsSelector({
 }: {
   targetCurrency: string;
   sourceAmount?: number;
-  onChange: (newAccountRequirements: AccountRequirements) => void;
+  onChange: (newAccountRequirements: AccountRequirementsField) => void;
 }) {
   const [accountRequirementsOptions, setAccountRequirementsOptions] =
-    useState<AccountRequirements[]>();
+    useState<AccountRequirementsField[]>();
 
   useEffect(() => {
     getAccountRequirementOptions(targetCurrency, sourceAmount).then((res) => {

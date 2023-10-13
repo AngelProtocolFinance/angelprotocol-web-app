@@ -2,15 +2,15 @@ export interface AccountRequirements {
   type: string;
   title: string;
   usageInfo: string | null;
-  fields: Field[];
+  fields: AccountRequirementsField[];
 }
 
-interface Field {
+export interface AccountRequirementsField {
   name: string;
   group: Group[];
 }
 
-interface Group {
+export interface Group {
   key: string;
   name: string;
   type: "radio" | "select" | "text";
