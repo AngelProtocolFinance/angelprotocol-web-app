@@ -1,4 +1,4 @@
-import { ProviderId } from "types/lists";
+import { ProviderId } from "types/wallet";
 
 export function isEVM(id: ProviderId) {
   switch (id) {

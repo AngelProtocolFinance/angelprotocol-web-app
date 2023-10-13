@@ -13,6 +13,7 @@ export type Chain = {
     id: ChainID | NativeAtomicUnit;
     symbol: string;
     decimals: number;
+    coinGeckoId: string;
   };
 };
 

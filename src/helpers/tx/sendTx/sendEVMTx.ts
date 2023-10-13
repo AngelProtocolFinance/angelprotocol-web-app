@@ -1,17 +1,17 @@
 import { EVMTx, InjectedProvider, LogProcessor, TxReceipt } from "types/evm";
 import { TxResult } from "types/tx";
-import { WalletState } from "contexts/WalletContext";
+import { ConnectedWallet } from "types/wallet";
 import { EIPMethods } from "constants/evm";
 import { getProvider } from "../../evm";
 import { logger } from "../../logger";
 
 export async function sendEVMTx(
-  wallet: WalletState,
+  wallet: ConnectedWallet,
   tx: EVMTx,
   log?: LogProcessor
 ): Promise<TxResult> {
   try {
-    const provider = (await getProvider(wallet.providerId))!;
+    const provider = (await getProvider(wallet.id))!;
 
     const hash = await provider.request<string>({
       method: EIPMethods.eth_sendTransaction,
@@ -23,13 +23,13 @@ export async function sendEVMTx(
     if (!receipt) {
       return {
         error: "Timeout: failed to confirm if transaction is finalized",
-        tx: { hash, chainID: wallet.chain.chain_id },
+        tx: { hash, chainID: wallet.chainId },
       };
     }
 
     return {
       hash: hash,
-      chainID: wallet.chain.chain_id,
+      chainID: wallet.chainId,
       data: log ? log(receipt.logs) : undefined,
     };
   } catch (err) {

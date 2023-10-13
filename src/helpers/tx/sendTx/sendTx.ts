@@ -1,10 +1,10 @@
 import { EstimatedTx } from "types/tx";
-import { WalletState } from "contexts/WalletContext";
+import { ConnectedWallet } from "types/wallet";
 import { sendCosmosTx } from "./sendCosmosTx";
 import { sendEVMTx } from "./sendEVMTx";
 import { sendTerraTx } from "./sendTerraTx";
 
-export default function sendTx(wallet: WalletState, tx: EstimatedTx) {
+export default function sendTx(wallet: ConnectedWallet, tx: EstimatedTx) {
   switch (tx.type) {
     case "cosmos":
       return sendCosmosTx(wallet, tx.val, tx.attribute);

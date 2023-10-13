@@ -1,6 +1,6 @@
 import { Tab } from "@headlessui/react";
 import { DonaterConfigFromWidget } from "types/widget";
-import { useGetWallet } from "contexts/WalletContext";
+import { isDisconnected, useWalletContext } from "contexts/WalletContext";
 import Status, { LoadingStatus } from "components/Status";
 import { FormStep } from "slices/donation";
 import Donater from "../Donater";
@@ -11,7 +11,7 @@ type Props = {
   state: FormStep;
 };
 export default function DonateMethods({ donaterConfig, state }: Props) {
-  const { wallet, isLoading } = useGetWallet();
+  const wallet = useWalletContext();
   return (
     <Tab.Group as="div" className="grid content-start mt-2">
       <Tab.List as="div" className="grid grid-cols-2 mb-6">
@@ -45,11 +45,11 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
           />
         </Tab.Panel>
         <Tab.Panel className="grid">
-          {!wallet ? (
+          {isDisconnected(wallet) ? (
             <Status icon="Info" classes="justify-self-center mt-4">
               You need to connect your wallet to make a donation
             </Status>
-          ) : isLoading ? (
+          ) : wallet === "loading" ? (
             <LoadingStatus classes="justify-self-center mt-4">
               Loading wallet
             </LoadingStatus>

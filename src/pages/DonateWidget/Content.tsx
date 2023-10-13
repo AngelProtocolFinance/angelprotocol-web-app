@@ -3,7 +3,6 @@ import { EndowmentProfile } from "types/aws";
 import { configIsFallback } from "types/widget";
 import Seo from "components/Seo";
 import { ErrorStatus } from "components/Status";
-import WalletSuite from "components/WalletSuite";
 import { Steps } from "components/donation";
 import { useSetter } from "store/accessors";
 import { DonationRecipient, setRecipient } from "slices/donation";
@@ -54,7 +53,6 @@ export default function Content({
         <h1 className="text-lg sm:text-3xl">
           {possesiveForm(profile.name)} endowment
         </h1>
-        <WalletSuite />
       </header>
       {configIsFallback(donaterConfig) && (
         <ErrorStatus classes="mb-4">

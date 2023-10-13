@@ -7,21 +7,22 @@ import {
   isBroadcastError,
 } from "types/cosmos";
 import { Log } from "types/cosmos";
-import { Chain, TxError, TxResult } from "types/tx";
-import { WalletState } from "contexts/WalletContext";
+import { TxError, TxResult } from "types/tx";
+import { ConnectedWallet } from "types/wallet";
 import { base64FromU8a, u8aFromBase64 } from "helpers/encoding";
 import { keplr } from "helpers/keplr";
+import { chains } from "constants/chains-v2";
 
 export async function sendCosmosTx(
-  wallet: WalletState,
+  wallet: ConnectedWallet,
   doc: SignDoc,
   attribute?: string
 ): Promise<TxResult> {
-  const { chain, address, providerId } = wallet;
-  const { lcd_url, chain_id } = chain;
+  const { chainId, address, id } = wallet;
+  const { lcd } = chains[wallet.chainId];
 
-  const client = await keplr(providerId);
-  const { signature, signed } = await client.signDirect(chain_id, address, doc);
+  const client = await keplr(id);
+  const { signature, signed } = await client.signDirect(chainId, address, doc);
 
   const tx: TxRaw = {
     authInfoBytes: signed.authInfoBytes,
@@ -29,7 +30,7 @@ export async function sendCosmosTx(
     signatures: [u8aFromBase64(signature.signature)],
   };
 
-  const result = await fetch(lcd_url + "/cosmos/tx/v1beta1/txs", {
+  const result = await fetch(lcd + "/cosmos/tx/v1beta1/txs", {
     method: "POST",
     body: JSON.stringify({
       tx_bytes: base64FromU8a(TxRaw.encode(tx).finish()),
@@ -45,22 +46,22 @@ export async function sendCosmosTx(
   if (code) {
     return {
       error: "Transaction failed",
-      tx: { hash: txhash, chainID: chain_id },
+      tx: { hash: txhash, chainID: chainId },
     };
   }
 
   const receipt = await _receipt(
-    lcd_url + `/cosmos/tx/v1beta1/txs/${txhash}`,
+    lcd + `/cosmos/tx/v1beta1/txs/${txhash}`,
     10,
     txhash,
-    chain
+    chainId
   );
 
   if (isReceiptError(receipt)) return receipt;
 
   return {
     hash: txhash,
-    chainID: wallet.chain.chain_id,
+    chainID: chainId,
     data: attribute && _attribute(attribute, logs),
   };
 }
@@ -69,12 +70,12 @@ async function _receipt(
   url: string,
   retries: number,
   hash: string,
-  chain: Chain
+  chainId: string
 ): Promise<TxResponse | TxError> {
   if (retries === 0) {
     return {
       error: "Timeout: Failed to confirm if transaction is finalized",
-      tx: { hash, chainID: chain.chain_id },
+      tx: { hash, chainID: chainId },
     };
   }
 
@@ -86,7 +87,7 @@ async function _receipt(
     return res.json().then((res: BroadcastSuccess) => res.tx_response);
   }
 
-  return _receipt(url, retries - 1, hash, chain);
+  return _receipt(url, retries - 1, hash, chainId);
 }
 
 export function _attribute(attribute: string, logs: Log[]) {

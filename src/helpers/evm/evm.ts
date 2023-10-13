@@ -1,5 +1,5 @@
 import { InjectedProvider, RequestArguments } from "types/evm";
-import { ProviderId } from "types/lists";
+import { ProviderId } from "types/wallet";
 import web3Auth from "contexts/WalletContext/useWeb3Auth/web3AuthSetup";
 import { _session, account } from "helpers/wallet-connect";
 

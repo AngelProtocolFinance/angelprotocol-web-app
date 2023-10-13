@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { EstimatedTx, isTxResultError } from "types/tx";
+import { ConnectedWallet } from "types/wallet";
 import { invalidateApesTags } from "services/apes";
 import { createAuthToken, logger } from "helpers";
 import { sendTx } from "helpers/tx";
@@ -9,7 +10,7 @@ import { APIs } from "constants/urls";
 import gift, { GiftDetails, TxStatus, setTxStatus } from "./index";
 
 type Args = {
-  wallet: WalletState;
+  wallet: ConnectedWallet;
   tx: EstimatedTx;
   details: GiftDetails;
 };

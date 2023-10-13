@@ -1,6 +1,6 @@
-import { ConnectedWallet } from "@terra-money/wallet-provider";
+import { ConnectedWallet as TerraConnectedWallet } from "@terra-money/wallet-provider";
 import { Estimate, TxContent } from "types/tx";
-import { WalletState } from "contexts/WalletContext";
+import { ConnectedWallet } from "types/wallet";
 import { logger } from "../../logger";
 import { estimateCosmosFee } from "./estimateCosmosFee";
 import { estimateEVMFee } from "./estimateEVMfee";
@@ -8,8 +8,8 @@ import estimateTerraFee from "./estimateTerraFee";
 
 export default async function estimateTx(
   content: TxContent,
-  wallet: WalletState,
-  terraWallet?: ConnectedWallet
+  wallet: ConnectedWallet,
+  terraWallet?: TerraConnectedWallet
 ): Promise<Estimate | null> {
   try {
     switch (content.type) {

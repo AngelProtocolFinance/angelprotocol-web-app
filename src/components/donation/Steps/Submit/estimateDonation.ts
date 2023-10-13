@@ -1,9 +1,9 @@
 import { Coin, MsgExecuteContract, MsgSend } from "@terra-money/terra.js";
-import { ConnectedWallet } from "@terra-money/wallet-provider";
+import { ConnectedWallet as TerraConnectedWallet } from "@terra-money/wallet-provider";
 import Decimal from "decimal.js";
 import { SimulContractTx, SimulSendNativeTx } from "types/evm";
 import { EstimatedTx, TxContent } from "types/tx";
-import { WalletState } from "contexts/WalletContext";
+import { ConnectedWallet } from "types/wallet";
 import { SubmitStep } from "slices/donation";
 import createCosmosMsg from "contracts/createCosmosMsg";
 import { createTx } from "contracts/createTx/createTx";
@@ -42,8 +42,8 @@ export async function estimateDonation({
   wallet,
   terraWallet,
 }: SubmitStep & {
-  wallet: WalletState;
-  terraWallet?: ConnectedWallet;
+  wallet: ConnectedWallet;
+  terraWallet?: TerraConnectedWallet;
 }): Promise<DonationEstimate | null> {
   let content: TxContent;
   // ///////////// GET TX CONTENT ///////////////
@@ -53,9 +53,7 @@ export async function estimateDonation({
   );
 
   try {
-    const { chain } = wallet;
-
-    if (chain.type === "juno-native") {
+    if (wallet.type === "cosmos") {
       const sender = wallet.address;
       const scaledAmount = scaleToStr(token.amount, token.decimals);
       const to = apWallets.junoDeposit;
@@ -75,7 +73,7 @@ export async function estimateDonation({
       content = { type: "cosmos", val: [msg] };
     }
     // terra native transaction, send or contract interaction
-    else if (chain.type === "terra-native") {
+    else if (wallet.type === "terra") {
       const scaledAmount = scaleToStr(token.amount, token.decimals);
 
       const msg =

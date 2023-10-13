@@ -1,11 +1,7 @@
 import isMobile from "is-mobile";
 import { PropsWithChildren, createContext, useContext } from "react";
-import {
-  ConnectedWallet,
-  ContextState,
-  DisconnectedWallet,
-  Wallet,
-} from "./types";
+import { WalletContextState } from "./types";
+import { ConnectedWallet, DisconnectedWallet, Wallet } from "types/wallet";
 import { IS_MOBILE } from "constants/env";
 import useInjectedProvider from "./useInjectedProvider";
 import useKeplr from "./useKeplr";
@@ -79,8 +75,8 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
 }
 
 const UNINITIALIZED = "unitialized";
-const context = createContext<ContextState>(
-  UNINITIALIZED as unknown as ContextState
+const context = createContext<WalletContextState>(
+  UNINITIALIZED as unknown as WalletContextState
 );
 
 export const useWalletContext = () => {

@@ -2,12 +2,13 @@ import { PropsWithChildren, useState } from "react";
 import { Link } from "react-router-dom";
 import { EstimateStatus } from "./types";
 import { TokenWithAmount } from "types/tx";
-import { WithWallet } from "contexts/WalletContext";
+import { WithWallet } from "types/wallet";
 import Image from "components/Image";
 import { ErrorStatus, LoadingStatus } from "components/Status";
 import { useSetter } from "store/accessors";
 import { SubmitStep, setStep } from "slices/gift";
 import { humanize } from "helpers";
+import { chains } from "constants/chains-v2";
 import { appRoutes } from "constants/routes";
 import CompleteBtn from "./CompleteBtn";
 
@@ -20,7 +21,8 @@ export default function Submit(props: WithWallet<SubmitStep>) {
   }
 
   const { token } = props.details;
-  const { chain } = props.wallet;
+  const { chainId } = props.wallet;
+  const chain = chains[chainId];
 
   return (
     <div className="grid content-start">
@@ -32,7 +34,7 @@ export default function Submit(props: WithWallet<SubmitStep>) {
         <span>{token.symbol}</span>
       </Row>
       <Row title="Blockchain:">
-        <span>{chain.chain_name}</span>
+        <span>{chain.name}</span>
       </Row>
       <Row title="Amount:">
         <span>

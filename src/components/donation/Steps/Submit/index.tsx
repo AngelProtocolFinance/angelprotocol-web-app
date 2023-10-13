@@ -8,6 +8,7 @@ import { useSetter } from "store/accessors";
 import { SubmitStep, WithWallet, setStep } from "slices/donation";
 import { sendDonation } from "slices/donation/sendDonation";
 import { humanize } from "helpers";
+import { chains } from "constants/chains-v2";
 import { appRoutes } from "constants/routes";
 import { DonationEstimate, estimateDonation } from "./estimateDonation";
 
@@ -51,7 +52,7 @@ export default function Submit(props: WithWallet<SubmitStep>) {
       </Row>
 
       <Row title="Blockchain:">
-        <span>{props.wallet.chain.chain_name}</span>
+        <span>{chains[props.wallet.chainId].name}</span>
       </Row>
 
       <Breakdown estimate={estimate} token={token} />

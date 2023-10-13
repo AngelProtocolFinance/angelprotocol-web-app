@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { invalidateApesTags } from "services/apes";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
+import { isConnected, useWalletContext } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import { useSetter } from "store/accessors";
 import { logger } from "helpers";
@@ -19,7 +19,7 @@ export default function KadoModal() {
   const dispatch = useSetter();
   const { closeModal, setModalOption } = useModalContext();
 
-  const { wallet } = useGetWallet();
+  const wallet = useWalletContext();
 
   const handleOnLoad = useCallback(
     () =>
@@ -29,10 +29,12 @@ export default function KadoModal() {
     [setModalOption, dispatch]
   );
 
-  const onToAddress = !wallet ? "" : `&onToAddress=${wallet.address}`;
-  const network = !wallet
-    ? ""
-    : `&network=${getKadoNetworkValue(wallet.chain.chain_id)}`;
+  const onToAddress = isConnected(wallet)
+    ? `&onToAddress=${wallet.address}`
+    : "";
+  const network = isConnected(wallet)
+    ? `&network=${getKadoNetworkValue(wallet.chainId)}`
+    : "";
 
   return (
     <Modal className="fixed inset-0 sm:fixed-center z-10 flex flex-col sm:w-[500px] sm:h-[700px] bg-gray-l6 dark:bg-blue-d6 sm:border border-prim sm:rounded">

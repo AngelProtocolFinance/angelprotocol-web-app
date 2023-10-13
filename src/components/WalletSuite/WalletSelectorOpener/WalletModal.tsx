@@ -1,12 +1,14 @@
+import { DisconnectedWallet } from "types/wallet";
 import { useModalContext } from "contexts/ModalContext";
-import { useSetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import Modal from "components/Modal";
-import Connector from "./Connector";
+import Wallet from "./Wallet";
 
-export default function WalletModal() {
+type Props = {
+  wallets: DisconnectedWallet[];
+};
+export default function WalletModal({ wallets }: Props) {
   const { closeModal } = useModalContext();
-  const { connections } = useSetWallet();
 
   return (
     <Modal className="fixed inset-0 sm:fixed-center z-20 grid sm:items-center w-full sm:max-w-lg h-full sm:h-fit sm:border border-prim sm:rounded bg-gray-l6 text-gray-d2 dark:bg-blue-d6  dark:text-white shadow-[0_0_60px_rgba(0,0,0,0.3)]">
@@ -27,8 +29,9 @@ export default function WalletModal() {
           Select one of the available wallets to continue
         </p>
         <div className="grid sm:grid-cols-2 gap-4 w-full">
-          {!!connections.length &&
-            connections.map((conn) => <Connector key={conn.name} {...conn} />)}
+          {wallets.map((w) => (
+            <Wallet key={w.id} {...w} />
+          ))}
         </div>
       </div>
     </Modal>

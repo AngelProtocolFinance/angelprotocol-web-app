@@ -1,7 +1,7 @@
 import { WalletConnectModal } from "@walletconnect/modal";
 import { useEffect, useRef, useState } from "react";
-import { Connected, ProviderState, Wallet, WalletMeta } from "../types";
 import { SessionTypes, SignClientTypes } from "@walletconnect/types";
+import { Connected, ProviderState, Wallet, WalletMeta } from "types/wallet";
 import { _pairing, _session, account } from "helpers/wallet-connect";
 import { EIPMethods } from "constants/evm";
 

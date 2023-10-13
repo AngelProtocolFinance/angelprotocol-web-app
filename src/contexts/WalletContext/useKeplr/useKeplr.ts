@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ProviderState, Wallet, WalletMeta } from "../types";
+import { ProviderState, Wallet, WalletMeta } from "types/wallet";
 import { juno } from "constants/chains-v2";
 import { retrieveUserAction, saveUserAction } from "../helpers";
 

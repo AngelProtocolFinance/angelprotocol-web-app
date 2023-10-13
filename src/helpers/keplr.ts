@@ -6,7 +6,7 @@ import {
   WCSignAminoRes,
   WCSignDirectRes,
 } from "types/cosmos";
-import { ProviderId } from "types/lists";
+import { ProviderId } from "types/wallet";
 import { _session } from "./wallet-connect";
 
 export async function keplr(providerId: ProviderId): Promise<Keplr | KeplrWC> {

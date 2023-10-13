@@ -2,12 +2,12 @@ import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "./types";
+import { ConnectedWallet } from "types/wallet";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
+import { isConnected, useWalletContext } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import Prompt from "components/Prompt";
 import { createAuthToken } from "helpers";
-import { chainIds } from "constants/chainIds";
 import { APP_NAME } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { APIs } from "constants/urls";
@@ -20,17 +20,19 @@ export default function Form({ classes = "" }) {
     formState: { isSubmitting },
   } = useFormContext<FV>();
   const { showModal } = useModalContext();
-  const { wallet } = useGetWallet();
+
+  const walletState = useWalletContext();
 
   async function submit(data: FV) {
+    /** restricted by submit button */
+    const wallet = walletState as ConnectedWallet;
     const res = await fetch(APIs.aws + "/v1/giftcard/claim", {
       method: "POST",
       headers: { authorization: createAuthToken("angelprotocol-web-app") },
       body: JSON.stringify({
         secret: data.secret,
-        /** restricted by submit button */
-        recipient: wallet?.address,
-        chain: wallet?.chain.chain_id,
+        recipient: wallet.address,
+        chain: wallet.chainId,
       }),
     });
     if (!res.ok) {
@@ -85,16 +87,12 @@ export default function Form({ classes = "" }) {
       <button
         type="submit"
         className="sm:mx-32 btn-outline-filled btn-gift"
-        disabled={
-          isSubmitting || !wallet || wallet.chain.chain_id !== chainIds.juno
-        }
+        disabled={isSubmitting || !isConnected(walletState)}
       >
         {isSubmitting
           ? "Redeeming..."
-          : !wallet
+          : !isConnected(walletState)
           ? "Connect wallet to redeem"
-          : wallet.chain.chain_id !== chainIds.juno
-          ? "Kindly connect Keplr wallet"
           : "Redeem your giftcard"}
       </button>
       <Link

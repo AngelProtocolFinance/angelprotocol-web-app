@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { Location, matchRoutes, useLocation } from "react-router-dom";
 import { Link } from "../types";
 import Image, { ImageProps } from "components/Image";
-import WalletSuite from "components/WalletSuite";
 import { appRoutes } from "constants/routes";
 import DesktopNav from "./DesktopNav";
 import { Opener as MobileNavOpener } from "./MobileNav";
@@ -47,7 +46,6 @@ export default function Header({ classes, links, logo }: Props) {
         />
         <div className="flex gap-4 justify-self-end">
           <ThemeToggle classes="hidden lg:flex" />
-          <WalletSuite />
         </div>
         <MobileNavOpener
           classes="flex ml-2 lg:hidden"

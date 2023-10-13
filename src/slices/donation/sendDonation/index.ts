@@ -9,6 +9,7 @@ import { createAuthToken, logger } from "helpers";
 import { sendTx } from "helpers/tx";
 import { LogDonationFail } from "errors/errors";
 import { chainIds } from "constants/chainIds";
+import { chains } from "constants/chains-v2";
 import { APIs } from "constants/urls";
 import donation, { setTxStatus } from "../donation";
 
@@ -18,6 +19,7 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
     { wallet, tx, donation: { details, kyc, recipient } },
     { dispatch }
   ) => {
+    const chain = chains[wallet.chainId];
     const updateTx = (status: TxStatus) => {
       dispatch(setTxStatus(status));
     };
@@ -54,9 +56,9 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
       const payload: TxLogPayload = {
         ...kycData /** receipt is sent to user if kyc is provider upfront */,
         amount: +token.amount,
-        chainId: wallet.chain.chain_id,
+        chainId: chain.id,
         destinationChainId: chainIds.polygon,
-        chainName: wallet.chain.chain_name,
+        chainName: chain.name,
         charityName: recipient.name,
         denomination: token.symbol,
         splitLiq: `${pctLiquidSplit}`,

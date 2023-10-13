@@ -1,11 +1,11 @@
 import Decimal from "decimal.js";
 import { useEffect, useState } from "react";
-import { Connected, ProviderState, Wallet, WalletMeta } from "./types";
 import {
   AccountChangeHandler,
   ChainChangeHandler,
   InjectedProvider,
 } from "types/evm";
+import { Connected, ProviderState, Wallet, WalletMeta } from "types/wallet";
 import { getProvider, logger } from "helpers";
 import { chains } from "constants/chains-v2";
 import { EIPMethods } from "constants/evm";

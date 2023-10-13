@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { DonaterConfigFromWidget } from "types/widget";
-import { useGetWallet } from "contexts/WalletContext";
+import { isConnected, useWalletContext } from "contexts/WalletContext";
 import KYC from "components/KYC";
 import { useGetter, useSetter } from "store/accessors";
 import { resetDetails } from "slices/donation";
@@ -13,11 +13,11 @@ type Props = { config: DonaterConfigFromWidget | null };
 export default function CurrentStep({ config }: Props) {
   const state = useGetter((state) => state.donation);
   const dispatch = useSetter();
-  const { wallet } = useGetWallet();
+  const wallet = useWalletContext();
 
   /** reset form state when user disconnects, user might change wallet */
   useEffect(() => {
-    !wallet && dispatch(resetDetails());
+    !isConnected(wallet) && dispatch(resetDetails());
   }, [wallet, dispatch]);
 
   if (state.step === "tx") {
@@ -27,7 +27,11 @@ export default function CurrentStep({ config }: Props) {
   switch (state.step) {
     case "submit": {
       //when wallet is not connected donateState is reset to initial state -> back to donateForm
-      return wallet ? <Submit {...state} wallet={wallet} /> : <></>;
+      return isConnected(wallet) ? (
+        <Submit {...state} wallet={wallet} />
+      ) : (
+        <></>
+      );
     }
     case "kyc-form": {
       return (

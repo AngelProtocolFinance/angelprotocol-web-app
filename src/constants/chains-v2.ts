@@ -1,7 +1,7 @@
 import { Chain, Chains } from "types/chain";
 import { INFURA_ID } from "./env";
 
-const polygon: Chain = {
+export const polygon: Chain = {
   id: "137",
   type: "evm",
   brand: "polygon",
@@ -13,6 +13,7 @@ const polygon: Chain = {
     id: "137",
     symbol: "MATIC",
     decimals: 18,
+    coinGeckoId: "matic-network",
   },
 };
 
@@ -28,6 +29,7 @@ const ethereum: Chain = {
     id: "1",
     symbol: "ETH",
     decimals: 18,
+    coinGeckoId: "ethereum",
   },
 };
 
@@ -43,6 +45,7 @@ const binance: Chain = {
     id: "56",
     symbol: "BNB",
     decimals: 18,
+    coinGeckoId: "binancecoin",
   },
 };
 
@@ -58,6 +61,7 @@ export const juno: Chain = {
     id: "ujuno",
     symbol: "JUNO",
     decimals: 6,
+    coinGeckoId: "juno-network",
   },
 };
 
@@ -73,6 +77,7 @@ const terraMainnet: Chain = {
     id: "uluna",
     symbol: "LUNA",
     decimals: 6,
+    coinGeckoId: "terra-luna-2",
   },
 };
 
@@ -88,6 +93,7 @@ const mumbai: Chain = {
     id: "80001",
     symbol: "MATIC",
     decimals: 18,
+    coinGeckoId: "matic-network",
   },
 };
 
@@ -103,6 +109,7 @@ const goerli: Chain = {
     id: "5",
     symbol: "ETH",
     decimals: 18,
+    coinGeckoId: "ethereum",
   },
 };
 
@@ -118,6 +125,7 @@ const binanceTestnet: Chain = {
     id: "97",
     symbol: "BNB",
     decimals: 18,
+    coinGeckoId: "binancecoin",
   },
 };
 
@@ -133,6 +141,7 @@ export const junoTestnet: Chain = {
     id: "ujunox",
     symbol: "JUNOX",
     decimals: 6,
+    coinGeckoId: "ethereum",
   },
 };
 
@@ -148,6 +157,7 @@ const terraTestnet: Chain = {
     id: "uluna",
     symbol: "LUNA",
     decimals: 6,
+    coinGeckoId: "terra-luna-2",
   },
 };
 

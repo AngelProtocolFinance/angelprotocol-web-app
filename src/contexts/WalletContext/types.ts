@@ -1,43 +1,18 @@
-import { ChainType } from "types/chain";
-import { ProviderId } from "types/lists";
+import { ConnectedWallet, DisconnectedWallet } from "types/wallet";
 
-/** connection state */
-export type Connected = {
-  status: "connected";
-  address: string;
-  chainId: string;
-  isSwitchingChain: boolean;
-};
-type Disconnected = { status: "disconnected" };
-type Loading = { status: "loading" };
-
-export type Connector = { connect(...args: any[]): void };
-type Disconnector = { disconnect(): void };
-type ChainSwitcher = { switchChain: ((chainId: string) => void) | null };
-
-export type ProviderState = Connected | Disconnected | Loading;
-
-export type WalletState =
-  | (Connected & Disconnector & ChainSwitcher)
-  | (Disconnected & Connector)
-  | Loading;
-
-export type WalletMeta = {
-  type: ChainType;
-  logo: string;
-  id: ProviderId;
-  name: string;
-};
-
-export type Wallet = WalletMeta & WalletState;
-export type ConnectedWallet = WalletMeta &
-  Connected &
-  Disconnector &
-  ChainSwitcher;
-
-export type DisconnectedWallet = WalletMeta & Disconnected & Connector;
-
-export type ContextState =
+export type WalletContextState =
   | "loading" /** consolidate all LoadingWallet*/
   | ConnectedWallet
   | DisconnectedWallet[];
+
+/** type guards */
+export function isDisconnected(
+  state: WalletContextState
+): state is DisconnectedWallet[] {
+  return state !== "loading" && Array.isArray(state);
+}
+export function isConnected(
+  state: WalletContextState
+): state is ConnectedWallet {
+  return state !== "loading" && !Array.isArray(state);
+}

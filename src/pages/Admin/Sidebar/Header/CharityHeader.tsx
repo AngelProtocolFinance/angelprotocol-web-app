@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useProfileQuery, useWalletProfileQuery } from "services/aws/aws";
-import { useGetWallet } from "contexts/WalletContext";
+import { isConnected, useWalletContext } from "contexts/WalletContext";
 import ContentLoader from "components/ContentLoader";
 import Icon from "components/Icon";
 import Image from "components/Image";
@@ -14,9 +14,10 @@ export default function CharityHeader() {
     isLoading,
     isError,
   } = useProfileQuery({ endowId: id });
-  const { wallet } = useGetWallet();
-  const { data } = useWalletProfileQuery(wallet?.address!, {
-    skip: !wallet,
+  const wallet = useWalletContext();
+  const address = isConnected(wallet) ? wallet.address : "";
+  const { data } = useWalletProfileQuery(address, {
+    skip: !address,
   });
   const [displayOtherEndowments, setDisplayOtherEndowments] = useState(false);
   return (
