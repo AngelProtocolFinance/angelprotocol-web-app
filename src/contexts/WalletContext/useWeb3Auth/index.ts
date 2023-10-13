@@ -1,35 +1,15 @@
-import type { Maybe, SafeEventEmitterProvider } from "@web3auth/base";
+import type { Maybe } from "@web3auth/base";
 import Decimal from "decimal.js";
 import { useEffect, useState } from "react";
-import { ProviderInfo } from "../types";
-import { Connection } from "../types";
-import { BaseChain } from "types/aws";
+import { ProviderState, WalletMeta } from "../types-v2";
 import { AccountChangeHandler, ChainChangeHandler } from "types/evm";
-import { isEmpty, logger } from "helpers";
-import { chainIDs } from "constants/chains";
-import { IS_TEST } from "constants/env";
+import { getProvider, isEmpty, logger } from "helpers";
 import { EIPMethods } from "constants/evm";
 import { WEB3AUTH_LOGO, chainConfig } from "./web3AuthConfigs";
 import web3Auth from "./web3AuthSetup";
 
-type Loading = { status: "loading" };
-
-export type Connected = {
-  status: "connected";
-  address: string;
-  chainId: string;
-  provider: SafeEventEmitterProvider;
-};
-
-type Disconnected = { status: "disconnected" };
-type WalletState = Loading | Connected | Disconnected;
-
-const SUPPORTED_CHAINS: BaseChain[] = IS_TEST
-  ? [{ chain_id: chainIDs.polygonTest, chain_name: "Polygon Testnet" }]
-  : [{ chain_id: chainIDs.polygonMain, chain_name: "Polygon Mainnet" }];
-
 export default function useWeb3Auth() {
-  const [state, setState] = useState<WalletState>({ status: "disconnected" });
+  const [state, setState] = useState<ProviderState>({ status: "disconnected" });
 
   // //// EVENT HANDLERS ////
   const handleChainChange: ChainChangeHandler = (hexChainId) => {
@@ -42,15 +22,15 @@ export default function useWeb3Auth() {
   const handleAccountsChange: AccountChangeHandler = (accounts) => {
     setState((p) => {
       if (p.status !== "connected") return p;
-      if (isEmpty(accounts)) {
-        //side effects that don't modify state
-        p.provider.removeListener("chainChanged", handleChainChange);
-        p.provider.removeListener("accountsChanged", handleAccountsChange);
-        web3Auth.logout({ cleanup: true });
+      getProvider("web3auth-torus").then((provider) => {
+        if (provider && isEmpty(accounts)) {
+          provider.removeListener?.("chainChanged", handleChainChange);
+          provider.removeListener?.("accountsChanged", handleAccountsChange);
+          web3Auth.logout({ cleanup: true });
 
-        return { status: "disconnected" };
-      }
-
+          return { status: "disconnected" };
+        }
+      });
       return { ...p, address: accounts[0] };
     });
   };
@@ -99,7 +79,7 @@ export default function useWeb3Auth() {
         status: "connected",
         address: accounts[0],
         chainId: new Decimal(hexChainId).toString(),
-        provider: provider,
+        isSwitchingChain: false,
       });
     } catch (err) {
       setState({ status: "disconnected" });
@@ -126,36 +106,21 @@ export default function useWeb3Auth() {
       throw new Error("Failed to switch chain");
     }
     if (chainConfig[chainId]) {
+      setState((p) => ({ ...p, isSwitchingChain: true }));
       await web3Auth.addChain(chainConfig[chainId]);
       await web3Auth.switchChain({ chainId: chainConfig[chainId].chainId });
+      setState((p) => ({ ...p, isSwitchingChain: false }));
     }
   };
 
-  const providerInfo: ProviderInfo | undefined =
-    state.status === "connected"
-      ? {
-          logo: WEB3AUTH_LOGO,
-          providerId: "web3auth-torus",
-          chainId: state.chainId,
-          address: state.address.toLowerCase(),
-        }
-      : undefined;
-
-  const connection: Connection = {
-    providerId: "web3auth-torus",
-    connect: login,
-    logo: "https://web3auth.io/images/w3a-L-Favicon-1.svg",
+  const meta: WalletMeta = {
+    type: "evm",
+    id: "web3auth-torus",
     name: "Web3 Auth",
+    logo: WEB3AUTH_LOGO,
   };
 
-  return {
-    isLoading: state.status === "loading",
-    connection,
-    providerInfo,
-    disconnect: logout,
-    switchChain,
-    supportedChains: SUPPORTED_CHAINS,
-  };
+  return { ...state, ...meta };
 }
 
 function val<T>(v: Maybe<T>): v is T {
