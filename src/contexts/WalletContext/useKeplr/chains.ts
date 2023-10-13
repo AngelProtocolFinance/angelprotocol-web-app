@@ -2,7 +2,7 @@ import { ChainInfo } from "@keplr-wallet/types";
 import { JUNO_LCD_OVERRIDE, JUNO_RPC_OVERRIDE } from "constants/env";
 
 // is used only when running on Juno Testnet
-export const juno_test_chain_info: ChainInfo = {
+export const uni6: ChainInfo = {
   //FROM: https://github.com/CosmosContracts/junoswap-asset-list/blob/main/chain_info.json
   // modified denoms
   chainId: "uni-6",

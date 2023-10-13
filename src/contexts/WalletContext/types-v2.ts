@@ -11,7 +11,7 @@ export type Connected = {
 type Disconnected = { status: "disconnected" };
 type Loading = { status: "loading" };
 
-export type Connector = { connect(args?: any): void };
+export type Connector = { connect(...args: any[]): void };
 type Disconnector = { disconnect(): void };
 type ChainSwitcher = { switchChain: ((chainId: string) => void) | null };
 

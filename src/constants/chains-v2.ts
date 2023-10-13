@@ -46,7 +46,7 @@ const binance: Chain = {
   },
 };
 
-const juno: Chain = {
+export const juno: Chain = {
   id: "juno-1",
   type: "cosmos",
   brand: "juno",
@@ -121,7 +121,7 @@ const binanceTestnet: Chain = {
   },
 };
 
-const junoTestnet: Chain = {
+export const junoTestnet: Chain = {
   id: "uni-6",
   type: "cosmos",
   brand: "juno",
