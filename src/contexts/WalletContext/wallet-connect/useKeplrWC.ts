@@ -1,13 +1,13 @@
 import { KeplrQRCodeModalV2 } from "@keplr-wallet/wc-qrcode-modal";
 import { useEffect, useRef, useState } from "react";
-import { Connection, ProviderInfo } from "../types";
-import { Connected, ProviderState } from "../types-v2";
+import { Connected, ProviderState, Wallet, WalletMeta } from "../types-v2";
 import { SessionTypes } from "@walletconnect/types";
 import { _pairing, _session, account } from "helpers/wallet-connect";
-import { WALLET_METADATA } from "../constants";
+
+const keplrIcon = "/icons/wallets/keplr.png";
 
 /** NOTE: only use this wallet in mainnet */
-export function useKeplrWC() {
+export function useKeplrWC(): Wallet {
   const [state, setState] = useState<ProviderState>({
     status: "disconnected",
   });
@@ -90,32 +90,14 @@ export function useKeplrWC() {
     client.off("session_delete", onSessionDelete);
     setState({ status: "disconnected" });
   }
-
-  /** TODO: refactor to just return Meta & WalletState */
-  const providerInfo: ProviderInfo | undefined =
-    state.status === "connected"
-      ? {
-          logo: WALLET_METADATA["keplr-wc"].logo,
-          providerId: "keplr-wc",
-          chainId: state.chainId,
-          address: state.address,
-        }
-      : undefined;
-
-  const connection: Connection = {
-    providerId: "keplr-wc",
+  const meta: WalletMeta = {
+    id: "keplr-wc",
+    logo: keplrIcon,
     name: "Keplr mobile",
-    logo: WALLET_METADATA["keplr-wc"].logo,
-    installUrl: WALLET_METADATA["keplr-wc"].logo,
-    connect,
+    type: "cosmos",
   };
 
-  return {
-    connection,
-    disconnect,
-    isLoading: state.status === "loading",
-    providerInfo,
-  };
+  return { ...state, ...meta, ...{ connect, disconnect, switchChain: null } };
 }
 
 const connected = (namespaces: SessionTypes.Namespaces): Connected => ({

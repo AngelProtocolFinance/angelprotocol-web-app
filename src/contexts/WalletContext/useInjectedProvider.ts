@@ -14,7 +14,7 @@ import { retrieveUserAction, saveUserAction } from "./helpers";
 import { isXdefiPrioritized } from "./helpers/isXdefiPrioritized";
 
 export default function useInjectedWallet(
-  meta: WalletMeta & { installUrl: string }
+  meta: Omit<WalletMeta, "type"> & { installUrl: string }
 ): Wallet {
   const { id } = meta;
   const actionKey = `${id}__pref`;
@@ -169,5 +169,10 @@ export default function useInjectedWallet(
     }
   }
 
-  return { ...state, ...meta, ...{ connect, disconnect, switchChain } };
+  return {
+    ...state,
+    ...meta,
+    type: "evm",
+    ...{ connect, disconnect, switchChain },
+  };
 }

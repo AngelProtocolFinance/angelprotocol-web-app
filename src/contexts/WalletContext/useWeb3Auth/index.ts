@@ -1,14 +1,14 @@
 import type { Maybe } from "@web3auth/base";
 import Decimal from "decimal.js";
 import { useEffect, useState } from "react";
-import { ProviderState, WalletMeta } from "../types-v2";
+import { ProviderState, Wallet, WalletMeta } from "../types-v2";
 import { AccountChangeHandler, ChainChangeHandler } from "types/evm";
 import { getProvider, isEmpty, logger } from "helpers";
 import { EIPMethods } from "constants/evm";
 import { WEB3AUTH_LOGO, chainConfig } from "./web3AuthConfigs";
 import web3Auth from "./web3AuthSetup";
 
-export default function useWeb3Auth() {
+export default function useWeb3Auth(): Wallet {
   const [state, setState] = useState<ProviderState>({ status: "disconnected" });
 
   // //// EVENT HANDLERS ////
@@ -120,7 +120,11 @@ export default function useWeb3Auth() {
     logo: WEB3AUTH_LOGO,
   };
 
-  return { ...state, ...meta };
+  return {
+    ...state,
+    ...meta,
+    ...{ connect: login, disconnect: logout, switchChain: null },
+  };
 }
 
 function val<T>(v: Maybe<T>): v is T {

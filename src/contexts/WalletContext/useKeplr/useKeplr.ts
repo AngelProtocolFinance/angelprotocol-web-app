@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import { ProviderState, Wallet, WalletMeta } from "../types-v2";
-import icon from "assets/icons/wallets/keplr.png";
 import { juno } from "constants/chains-v2";
 import { retrieveUserAction, saveUserAction } from "../helpers";
 
 const actionKey = `keplr__pref`;
 const INSTALL_URL = "https://www.keplr.app/download";
+const keplrIcon = "/icons/wallets/keplr.png";
 const meta: WalletMeta = {
   type: "cosmos",
   id: "keplr",
   name: "Keplr",
-  logo: icon,
+  logo: keplrIcon,
 };
 
 export default function useKeplr(): Wallet {
