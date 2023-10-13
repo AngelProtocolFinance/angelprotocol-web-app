@@ -4,16 +4,18 @@ import getAccountRequirementOptions from "./getAccountRequirementOptions";
 
 export default function AccountRequirementsSelector({
   targetCurrency,
+  sourceAmount,
   onChange,
 }: {
   targetCurrency: string;
+  sourceAmount?: number;
   onChange: (newAccountRequirements: AccountRequirements) => void;
 }) {
   const [accountRequirementsOptions, setAccountRequirementsOptions] =
     useState<AccountRequirements[]>();
 
   useEffect(() => {
-    getAccountRequirementOptions(targetCurrency).then((res) => {
+    getAccountRequirementOptions(targetCurrency, sourceAmount).then((res) => {
       setAccountRequirementsOptions(res);
     });
   }, [targetCurrency]);
