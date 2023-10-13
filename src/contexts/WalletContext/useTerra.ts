@@ -6,7 +6,7 @@ import {
   WalletStatus,
   useWallet,
 } from "@terra-money/wallet-provider";
-import { Connector, ProviderState, Wallet, WalletMeta } from "./types-v2";
+import { Connector, ProviderState, Wallet, WalletMeta } from "./types";
 import { ProviderId } from "types/lists";
 
 export default function useTerra() {

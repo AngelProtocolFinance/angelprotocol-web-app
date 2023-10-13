@@ -1,7 +1,7 @@
 import type { Maybe } from "@web3auth/base";
 import Decimal from "decimal.js";
 import { useEffect, useState } from "react";
-import { ProviderState, Wallet, WalletMeta } from "../types-v2";
+import { ProviderState, Wallet, WalletMeta } from "../types";
 import { AccountChangeHandler, ChainChangeHandler } from "types/evm";
 import { getProvider, isEmpty, logger } from "helpers";
 import { EIPMethods } from "constants/evm";

@@ -1,6 +1,6 @@
 import Decimal from "decimal.js";
 import { useEffect, useState } from "react";
-import { Connected, ProviderState, Wallet, WalletMeta } from "./types-v2";
+import { Connected, ProviderState, Wallet, WalletMeta } from "./types";
 import {
   AccountChangeHandler,
   ChainChangeHandler,

@@ -1,7 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { EstimatedTx, isTxResultError } from "types/tx";
 import { invalidateApesTags } from "services/apes";
-import { WalletState } from "contexts/WalletContext";
 import { createAuthToken, logger } from "helpers";
 import { sendTx } from "helpers/tx";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";

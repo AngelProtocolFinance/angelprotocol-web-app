@@ -5,7 +5,7 @@ import {
   ContextState,
   DisconnectedWallet,
   Wallet,
-} from "./types-v2";
+} from "./types";
 import { IS_MOBILE } from "constants/env";
 import useInjectedProvider from "./useInjectedProvider";
 import useKeplr from "./useKeplr";

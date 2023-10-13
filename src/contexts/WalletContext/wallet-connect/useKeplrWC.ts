@@ -1,6 +1,6 @@
 import { KeplrQRCodeModalV2 } from "@keplr-wallet/wc-qrcode-modal";
 import { useEffect, useRef, useState } from "react";
-import { Connected, ProviderState, Wallet, WalletMeta } from "../types-v2";
+import { Connected, ProviderState, Wallet, WalletMeta } from "../types";
 import { SessionTypes } from "@walletconnect/types";
 import { _pairing, _session, account } from "helpers/wallet-connect";
 
