@@ -57,7 +57,7 @@ export default function useWeb3Auth(): Wallet {
       if (!provider) {
         // don't throw error on persistent connection
         if (isNew) return;
-        throw new Error("Failed to connect to wallet");
+        return alert("Failed to connect to wallet");
       }
 
       const accounts = await provider.request<string[]>({
@@ -69,7 +69,7 @@ export default function useWeb3Auth(): Wallet {
 
       if (!(val(accounts) && val(hexChainId))) {
         if (isNew) return;
-        throw new Error("Failed to connect to wallet");
+        return alert("Failed to connect to wallet");
       }
 
       provider.on("chainChanged", handleChainChange);
@@ -123,7 +123,7 @@ export default function useWeb3Auth(): Wallet {
   return {
     ...state,
     ...meta,
-    ...{ connect: login, disconnect: logout, switchChain: null },
+    ...{ connect: login, disconnect: logout, switchChain },
   };
 }
 

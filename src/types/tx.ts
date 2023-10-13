@@ -1,6 +1,5 @@
 import { CreateTxOptions, Msg } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
-import { Except } from "type-fest";
 import type { Any } from "@keplr-wallet/proto-types/google/protobuf/any";
 import { Token } from "./aws";
 import { Chain } from "./chain";
@@ -12,9 +11,8 @@ import { TransactionStatus } from "./lists";
 
 export type TokenWithBalance = Token & { balance: number };
 
-export type TokenWithAmount = Except<TokenWithBalance, "type"> & {
+export type TokenWithAmount = TokenWithBalance & {
   amount: string;
-  type: TokenWithBalance["type"];
 };
 
 // //////////// SEND TX ////////////

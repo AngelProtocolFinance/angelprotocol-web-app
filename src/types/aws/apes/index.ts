@@ -25,14 +25,9 @@ export type Token = {
   type: TokenType;
 };
 
-export type TokenWithChainID = Token & { chain_id: string };
-
-export type BaseChain = {
+export type FetchedChain = {
   chain_id: string;
   chain_name: string; // Avalanche Fuji Testnet
-};
-
-export type FetchedChain = BaseChain & {
   block_explorer_url: string; // https://testnet.snowtrace.io
   lcd_url: string; // https://api.avax-test.network/ext/bc/C/rpc
   native_currency: Token;

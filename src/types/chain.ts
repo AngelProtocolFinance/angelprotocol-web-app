@@ -1,16 +1,17 @@
 type ChainID = string; //"137", "1"
 type NativeAtomicUnit = string; //ujunox uluna
+type IBCDenom = string;
 export type ChainType = "evm" | "cosmos" | "terra";
 export type Chain = {
   id: ChainID;
-  type: "evm" | "cosmos" | "terra";
+  type: ChainType;
   brand: string; //
   name: string;
   rpc: string;
   lcd: string;
   txExplorer: string;
   nativeToken: {
-    id: ChainID | NativeAtomicUnit;
+    id: ChainID | NativeAtomicUnit | IBCDenom;
     symbol: string;
     decimals: number;
     coinGeckoId: string;

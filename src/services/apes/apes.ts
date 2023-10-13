@@ -1,16 +1,16 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
-  BaseChain,
+  FetchedChain,
   PaginatedAWSQueryRes,
-  TokenWithChainID,
   WithdrawLog,
   WithdrawLogQueryParams,
 } from "types/aws";
-import { IS_TEST } from "constants/env";
+import { TokenWithBalance } from "types/tx";
 import { appRoutes } from "constants/routes";
 import { APIs } from "constants/urls";
 import { network } from "../constants";
 import { version as v } from "../helpers";
+import { fetchBalances } from "./helpers/fetchBalances";
 import { tags } from "./tags";
 
 type StripeSessionURLParams = {
@@ -26,9 +26,6 @@ export const apes = createApi({
   }),
   tagTypes: tags,
   endpoints: (builder) => ({
-    chains: builder.query<BaseChain[], unknown>({
-      query: () => `v1/chains${IS_TEST ? "/test" : ""}`,
-    }),
     withdrawLogs: builder.query<
       PaginatedAWSQueryRes<WithdrawLog[]>,
       WithdrawLogQueryParams
@@ -39,13 +36,20 @@ export const apes = createApi({
         params,
       }),
     }),
-    tokens: builder.query<TokenWithChainID[], unknown>({
-      providesTags: ["tokens"],
-      query: () => `v1/tokens/list${IS_TEST ? "/test" : ""}`,
-      transformResponse(res: TokenWithChainID[]) {
-        //TODO: AWS sort by chain_id
-        res.sort((a, b) => a.chain_id.localeCompare(b.chain_id));
-        return res;
+    tokens: builder.query<
+      TokenWithBalance[],
+      { chainId: string; address?: string }
+    >({
+      providesTags: ["chain"],
+      async queryFn({ address, chainId }, api, options, baseQuery) {
+        const { data } = await baseQuery(`v1/chain/${chainId}`);
+        const chain = data as FetchedChain;
+
+        if (!address) {
+          return { data: chain.tokens.map((t) => ({ ...t, balance: 0 })) };
+        }
+
+        return { data: await fetchBalances(chain, address) };
       },
     }),
     stripeSessionURL: builder.mutation<{ url: string }, StripeSessionURLParams>(
@@ -65,10 +69,9 @@ export const apes = createApi({
 });
 
 export const {
-  useChainsQuery,
-  useTokensQuery,
   useWithdrawLogsQuery,
   useLazyWithdrawLogsQuery,
+  useTokensQuery,
   useStripeSessionURLMutation,
   util: {
     invalidateTags: invalidateApesTags,

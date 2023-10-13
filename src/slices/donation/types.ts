@@ -68,6 +68,5 @@ export type DonateArgs = { donation: SubmitStep } & {
 };
 
 export type FiatToken = Pick<Token, "symbol" | "min_donation_amnt" | "logo">;
-export type WithWallet<T> = T & { wallet: ConnectedWallet };
 
 export type DonationStep = DonationState["step"];
