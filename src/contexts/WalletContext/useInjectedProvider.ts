@@ -92,7 +92,7 @@ export default function useInjectedWallet(
                     decimals: chain.nativeToken.decimals,
                   },
                   rpcUrls: [chain.rpc],
-                  blockExplorerUrls: [chain.txExplorer],
+                  blockExplorerUrls: [chain.blockExplorer],
                 },
               ],
             })

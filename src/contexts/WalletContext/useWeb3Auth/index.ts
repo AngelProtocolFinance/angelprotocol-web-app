@@ -5,7 +5,7 @@ import { AccountChangeHandler, ChainChangeHandler } from "types/evm";
 import { ProviderState, Wallet, WalletMeta } from "types/wallet";
 import { getProvider, isEmpty, logger } from "helpers";
 import { EIPMethods } from "constants/evm";
-import { WEB3AUTH_LOGO, chainConfig } from "./web3AuthConfigs";
+import { chainConfig } from "./web3AuthConfigs";
 import web3Auth from "./web3AuthSetup";
 
 export default function useWeb3Auth(): Wallet {
@@ -60,10 +60,10 @@ export default function useWeb3Auth(): Wallet {
         return alert("Failed to connect to wallet");
       }
 
-      const accounts = await provider.request<string[]>({
+      const accounts = await provider.request<any, string[]>({
         method: EIPMethods.eth_requestAccounts,
       });
-      const hexChainId = await provider.request<string>({
+      const hexChainId = await provider.request<any, string>({
         method: EIPMethods.eth_chainId,
       });
 
@@ -117,7 +117,7 @@ export default function useWeb3Auth(): Wallet {
     type: "evm",
     id: "web3auth-torus",
     name: "Web3 Auth",
-    logo: WEB3AUTH_LOGO,
+    logo: "https://web3auth.io/images/w3a-L-Favicon-1.svg",
   };
 
   return {

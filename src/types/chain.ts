@@ -9,7 +9,7 @@ export type Chain = {
   name: string;
   rpc: string;
   lcd: string;
-  txExplorer: string;
+  blockExplorer: string;
   nativeToken: {
     id: ChainID | NativeAtomicUnit | IBCDenom;
     symbol: string;

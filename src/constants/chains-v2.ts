@@ -8,7 +8,7 @@ export const polygon: Chain = {
   name: "Polygon",
   rpc: "https://rpc-mainnet.maticvigil.com",
   lcd: "",
-  txExplorer: "https://polygonscan.com/tx",
+  blockExplorer: "https://polygonscan.com",
   nativeToken: {
     id: "137",
     symbol: "MATIC",
@@ -24,7 +24,7 @@ const ethereum: Chain = {
   name: "Ethereum",
   rpc: `https://mainnet.infura.io/v3/${INFURA_ID}`,
   lcd: "",
-  txExplorer: "https://etherscan.io/tx",
+  blockExplorer: "https://etherscan.io",
   nativeToken: {
     id: "1",
     symbol: "ETH",
@@ -40,7 +40,7 @@ const binance: Chain = {
   name: "Binance",
   rpc: "https://rpc.ankr.com/bsc",
   lcd: "",
-  txExplorer: "https://bscscan.com/tx",
+  blockExplorer: "https://bscscan.com",
   nativeToken: {
     id: "56",
     symbol: "BNB",
@@ -56,7 +56,7 @@ export const juno: Chain = {
   name: "Juno",
   lcd: "https://juno-api.polkachu.com",
   rpc: "https://juno-rpc.polkachu.com",
-  txExplorer: "https://www.mintscan.io/juno/tx",
+  blockExplorer: "https://www.mintscan.io/juno",
   nativeToken: {
     id: "ujuno",
     symbol: "JUNO",
@@ -72,7 +72,7 @@ const terraMainnet: Chain = {
   name: "Terra Mainnet",
   lcd: "https://phoenix-lcd.terra.dev",
   rpc: "",
-  txExplorer: "https://finder.terra.money/mainnet/tx",
+  blockExplorer: "https://finder.terra.money/mainnet",
   nativeToken: {
     id: "uluna",
     symbol: "LUNA",
@@ -81,14 +81,14 @@ const terraMainnet: Chain = {
   },
 };
 
-const mumbai: Chain = {
+export const mumbai: Chain = {
   id: "80001",
   type: "evm",
   brand: "polygon",
   name: "Polygon Mumbai Testnet",
   rpc: "https://rpc-mumbai.maticvigil.com",
   lcd: "",
-  txExplorer: "https://mumbai.polygonscan.com/tx",
+  blockExplorer: "https://mumbai.polygonscan.com",
   nativeToken: {
     id: "80001",
     symbol: "MATIC",
@@ -104,7 +104,7 @@ const goerli: Chain = {
   name: "Ethereum Goerli Testnet",
   rpc: `https://goerli.infura.io/v3/${INFURA_ID}`,
   lcd: "",
-  txExplorer: "https://goerli.etherscan.io/tx",
+  blockExplorer: "https://goerli.etherscan.io",
   nativeToken: {
     id: "5",
     symbol: "ETH",
@@ -118,9 +118,9 @@ const binanceTestnet: Chain = {
   type: "evm",
   brand: "binance",
   name: "Binance Testnet",
-  rpc: "https://rpc.ankr.com/bsc_testnet_chapel/tx",
+  rpc: "https://rpc.ankr.com/bsc_testnet_chapel",
   lcd: "",
-  txExplorer: "https://testnet.bscscan.com/tx",
+  blockExplorer: "https://testnet.bscscan.com",
   nativeToken: {
     id: "97",
     symbol: "BNB",
@@ -136,7 +136,7 @@ export const junoTestnet: Chain = {
   name: "Juno Testnet",
   lcd: "https://api.uni.junonetwork.io",
   rpc: "https://rpc.uni.junonetwork.io",
-  txExplorer: "https://testnet.ping.pub/juno/tx",
+  blockExplorer: "https://testnet.ping.pub/juno",
   nativeToken: {
     id: "ujunox",
     symbol: "JUNOX",
@@ -152,7 +152,7 @@ const terraTestnet: Chain = {
   name: "Terra Pisco testnet",
   lcd: "https://pisco-lcd.terra.dev",
   rpc: "",
-  txExplorer: "https://finder.terra.money/testnet/tx",
+  blockExplorer: "https://finder.terra.money/testnet",
   nativeToken: {
     id: "uluna",
     symbol: "LUNA",

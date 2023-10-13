@@ -1,24 +1,24 @@
 import { CustomChainConfig } from "@web3auth/base";
-import { chainIDs } from "constants/chains";
+import { mumbai, polygon } from "constants/chains-v2";
 
 export const chainConfig: { [key: string]: CustomChainConfig } = {
-  [chainIDs.polygonTest]: {
+  [polygon.id]: {
     chainNamespace: "eip155",
     chainId: "0x13881",
-    rpcTarget: "https://rpc.ankr.com/polygon_mumbai",
-    displayName: "Polygon Testnet",
-    blockExplorer: "https://polygonscan.com",
-    ticker: "MATIC",
-    tickerName: "Matic",
+    rpcTarget: polygon.rpc,
+    displayName: polygon.name,
+    blockExplorer: polygon.blockExplorer,
+    ticker: polygon.nativeToken.symbol,
+    tickerName: polygon.nativeToken.symbol,
   },
-  [chainIDs.polygonMain]: {
+  [mumbai.id]: {
     chainNamespace: "eip155",
     chainId: "0x89",
-    rpcTarget: "https://rpc.ankr.com/polygon",
-    displayName: "Polygon Mainnet",
-    blockExplorer: "https://polygonscan.com",
-    ticker: "MATIC",
-    tickerName: "Matic",
+    rpcTarget: mumbai.rpc,
+    displayName: mumbai.name,
+    blockExplorer: mumbai.blockExplorer,
+    ticker: mumbai.nativeToken.symbol,
+    tickerName: mumbai.nativeToken.symbol,
   },
 };
 
