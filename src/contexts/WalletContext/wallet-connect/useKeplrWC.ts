@@ -1,14 +1,14 @@
 import { KeplrQRCodeModalV2 } from "@keplr-wallet/wc-qrcode-modal";
 import { useEffect, useRef, useState } from "react";
 import { Connection, ProviderInfo } from "../types";
-import { Connected, WalletState } from "./types";
+import { Connected, ProviderState } from "../types-v2";
 import { SessionTypes } from "@walletconnect/types";
 import { _pairing, _session, account } from "helpers/wallet-connect";
 import { WALLET_METADATA } from "../constants";
 
 /** NOTE: only use this wallet in mainnet */
 export function useKeplrWC() {
-  const [state, setState] = useState<WalletState>({
+  const [state, setState] = useState<ProviderState>({
     status: "disconnected",
   });
   const qrModalRef = useRef<KeplrQRCodeModalV2>();
@@ -120,5 +120,6 @@ export function useKeplrWC() {
 
 const connected = (namespaces: SessionTypes.Namespaces): Connected => ({
   status: "connected",
+  isSwitchingChain: false,
   ...account(namespaces.cosmos),
 });
