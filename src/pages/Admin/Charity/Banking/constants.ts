@@ -12,4 +12,9 @@ export const URLS = {
     method: "POST",
     url: (quoteId: string) => `/v1/quotes/${quoteId}/account-requirements`,
   },
+  getAccountRequirementsForRoute: {
+    method: "GET",
+    url: (targetCurrency: string, sourceAmount: number) =>
+      `/v1/account-requirements?source=USD&target=${targetCurrency}&sourceAmount=${sourceAmount}`,
+  },
 };
