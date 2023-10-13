@@ -18,7 +18,7 @@ export default function AccountRequirementsSelector({
     getAccountRequirementOptions(targetCurrency, sourceAmount).then((res) => {
       setAccountRequirementsOptions(res);
     });
-  }, [targetCurrency]);
+  }, [sourceAmount, targetCurrency]);
 
   if (!accountRequirementsOptions) {
     return <span>Loading...</span>;
