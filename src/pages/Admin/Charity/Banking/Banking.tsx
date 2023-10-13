@@ -38,6 +38,7 @@ export default function Banking() {
           id="amount"
           type="number"
           onChange={(e) => setSourceAmount(Number(e.target.value) / 10)}
+          className="field-input"
         />
       </div>
 
