@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { AccountRequirementsField } from "./types";
+import { AccountRequirements } from "./types";
 import AccountRequirementsSelector from "./AccountRequirementsSelector";
 import CurrencySelector from "./CurrencySelector";
 import RecipientDetailsForm from "./RecipientDetailsForm";
@@ -16,7 +16,7 @@ export default function Banking() {
   const [targetCurrency, setTargetCurrency] = useState<string>();
   const [sourceAmount, setSourceAmount] = useState<number>();
   const [accountRequirements, setAccountRequirements] =
-    useState<AccountRequirementsField>();
+    useState<AccountRequirements>();
 
   useEffect(() => setAccountRequirements(undefined), [targetCurrency]);
 
@@ -44,7 +44,7 @@ export default function Banking() {
           <AccountRequirementsSelector
             targetCurrency={targetCurrency}
             sourceAmount={sourceAmount}
-            onChange={(newAccountRequirements: AccountRequirementsField) =>
+            onChange={(newAccountRequirements: AccountRequirements) =>
               setAccountRequirements(newAccountRequirements)
             }
           />

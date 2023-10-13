@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { AccountRequirements, CreateRecipientRequest } from "../types";
+import { AccountRequirements } from "../types";
 import { FormValues } from "./types";
 import { OptionType } from "components/Selector";
 import Form from "./Form";
