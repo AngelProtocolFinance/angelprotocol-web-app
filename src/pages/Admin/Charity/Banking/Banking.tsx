@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { AccountRequirements } from "./types";
+import useDebouncer from "hooks/useDebouncer";
 import AccountRequirementsSelector from "./AccountRequirementsSelector";
 import CurrencySelector from "./CurrencySelector";
 import RecipientDetailsForm from "./RecipientDetailsForm";
@@ -15,6 +16,7 @@ import RecipientDetailsForm from "./RecipientDetailsForm";
 export default function Banking() {
   const [targetCurrency, setTargetCurrency] = useState<string>();
   const [sourceAmount, setSourceAmount] = useState<number>();
+  const [debouncedSourceAmount] = useDebouncer(sourceAmount, 1000);
   const [accountRequirements, setAccountRequirements] =
     useState<AccountRequirements>();
 
@@ -39,11 +41,11 @@ export default function Banking() {
         />
       </div>
 
-      {!!targetCurrency && (
+      {!!targetCurrency && !!debouncedSourceAmount && (
         <>
           <AccountRequirementsSelector
             targetCurrency={targetCurrency}
-            sourceAmount={sourceAmount}
+            sourceAmount={debouncedSourceAmount}
             onChange={(newAccountRequirements: AccountRequirements) =>
               setAccountRequirements(newAccountRequirements)
             }

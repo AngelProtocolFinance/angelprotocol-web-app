@@ -8,7 +8,7 @@ export default function AccountRequirementsSelector({
   onChange,
 }: {
   targetCurrency: string;
-  sourceAmount?: number;
+  sourceAmount: number;
   onChange: (newAccountRequirements: AccountRequirements) => void;
 }) {
   const [accountRequirementsOptions, setAccountRequirementsOptions] =
@@ -30,7 +30,7 @@ export default function AccountRequirementsSelector({
       <div className="flex gap-2">
         {accountRequirementsOptions.map((accountRequirements) => (
           <button
-            id={accountRequirements.type}
+            key={accountRequirements.type}
             type="button"
             onClick={() => onChange(accountRequirements)}
             className="btn-blue text-sm w-40"
