@@ -16,9 +16,9 @@ export default function CurrentStep({ config }: Props) {
   const wallet = useWalletContext();
 
   /** reset form state when user disconnects, user might change wallet */
-  useEffect(() => {
-    !isConnected(wallet) && dispatch(resetDetails());
-  }, [wallet, dispatch]);
+  // useEffect(() => {
+  //   !isConnected(wallet) && dispatch(resetDetails());
+  // }, [wallet, dispatch]);
 
   if (state.step === "tx") {
     return <Result {...state} classes="justify-self-center mt-16" />;
@@ -30,7 +30,7 @@ export default function CurrentStep({ config }: Props) {
       return isConnected(wallet) ? (
         <Submit {...state} wallet={wallet} />
       ) : (
-        <></>
+        <p>You need to connect your wallet to donate</p>
       );
     }
     case "kyc-form": {

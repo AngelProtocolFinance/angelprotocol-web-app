@@ -9,7 +9,7 @@ export type WalletContextState =
 export function isDisconnected(
   state: WalletContextState
 ): state is DisconnectedWallet[] {
-  return state !== "loading" && Array.isArray(state);
+  return Array.isArray(state);
 }
 export function isConnected(
   state: WalletContextState

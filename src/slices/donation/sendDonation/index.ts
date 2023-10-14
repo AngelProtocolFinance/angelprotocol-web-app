@@ -86,7 +86,7 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
 
       updateTx({ hash });
       //invalidate cache entries
-      dispatch(invalidateApesTags(["chain", "donations"]));
+      dispatch(invalidateApesTags(["tokens", "donations"]));
     } catch (err) {
       logger.error(err);
       updateTx("error");

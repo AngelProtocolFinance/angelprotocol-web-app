@@ -25,7 +25,7 @@ export default function KadoModal() {
     () =>
       // there is a high chance the user bought some new crypto prior to closing this modal
       // reload the page to get new wallet balances
-      setModalOption("onClose", () => dispatch(invalidateApesTags(["chain"]))),
+      setModalOption("onClose", () => dispatch(invalidateApesTags(["tokens"]))),
     [setModalOption, dispatch]
   );
 

@@ -40,10 +40,11 @@ export const apes = createApi({
       TokenWithBalance[],
       { chainId: string; address?: string }
     >({
-      providesTags: ["chain"],
       async queryFn({ address, chainId }, api, options, baseQuery) {
         const { data } = await baseQuery(`v1/chain/${chainId}`);
         const chain = data as FetchedChain;
+
+        console.log({ address, chainId });
 
         if (!address) {
           return { data: chain.tokens.map((t) => ({ ...t, balance: 0 })) };

@@ -41,7 +41,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   const keplrWC = useKeplrWC();
   const evmWC = useEVMWC({
     type: "evm",
-    id: "metamask",
+    id: "evm-wc",
     logo: metamaskIcon,
     name: "Metamask Mobile",
   });

@@ -2,6 +2,7 @@ import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { DonateValues } from "../types";
+import { ConnectedWallet } from "types/wallet";
 import { DonaterConfigFromWidget } from "types/widget";
 import { useGetter } from "store/accessors";
 import { setDetails } from "slices/donation";
@@ -15,9 +16,10 @@ import AdvancedOptions from "../../../AdvancedOptions";
 
 type Props = {
   configFromWidget: DonaterConfigFromWidget | null;
+  wallet: ConnectedWallet;
 };
 
-export default function Form({ configFromWidget }: Props) {
+export default function Form({ configFromWidget, wallet }: Props) {
   const {
     watch,
     reset,
@@ -37,7 +39,7 @@ export default function Form({ configFromWidget }: Props) {
   }
 
   const token = watch("token");
-  const selectedChainId = watch("chainId.value");
+  const chainId = watch("chainId");
   const isStepOneCompleted = !!token.amount;
   const isInsideWidget = configFromWidget !== null;
 
@@ -47,8 +49,14 @@ export default function Form({ configFromWidget }: Props) {
       className="grid rounded-md w-full"
       autoComplete="off"
     >
-      <Label htmlFor="usState" className="mb-2" required={false}>
-        State
+      <div>
+        <span>wallet: {wallet.address}</span>
+        <button onClick={wallet.disconnect} type="button">
+          disconnect
+        </button>
+      </div>
+      <Label htmlFor="chainId" className="mb-2" required={false}>
+        Blockchain
       </Label>
       <Selector<DonateValues, "chainId", string>
         name="chainId"
@@ -56,13 +64,13 @@ export default function Form({ configFromWidget }: Props) {
           label: chain.name,
           value: chain.id,
         }))}
-        classes={{ container: "bg-white dark:bg-blue-d6" }}
+        classes={{ container: "bg-white dark:bg-blue-d6 mb-6" }}
       />
 
       <TokenField<DonateValues, "token">
         name="token"
-        selectedChainId={selectedChainId}
-        userWalletAddress=""
+        selectedChainId={chainId.value}
+        userWalletAddress={wallet.address}
         withBalance
         label={`Enter the donation amount:`}
         classes={{ label: "text-lg", inputContainer: "dark:bg-blue-d6" }}

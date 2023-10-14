@@ -74,7 +74,7 @@ export const purchase = createAsyncThunk<void, Args>(
       updateTx({ error: GENERIC_ERROR_MESSAGE });
     } finally {
       /** invalidate user balance */
-      dispatch(invalidateApesTags(["chain"]));
+      dispatch(invalidateApesTags(["tokens"]));
     }
   }
 );
