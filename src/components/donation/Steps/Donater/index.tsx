@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { DonateValues } from "./types";
-import { TokenWithAmount as TWA, TokenWithAmount } from "types/tx";
+import { TokenWithAmount } from "types/tx";
 import { WithWallet } from "types/wallet";
 import { DonaterConfigFromWidget } from "types/widget";
 import { FormStep } from "slices/donation";

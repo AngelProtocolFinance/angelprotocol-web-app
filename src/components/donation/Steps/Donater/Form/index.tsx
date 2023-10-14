@@ -2,16 +2,15 @@ import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { DonateValues } from "../types";
-import { TokenWithAmount } from "types/tx";
 import { DonaterConfigFromWidget } from "types/widget";
-import { Selector } from "components/Selector";
-import Split from "components/Split";
-import TokenField from "components/TokenField";
-import { CheckField, Label } from "components/form";
 import { useGetter } from "store/accessors";
 import { setDetails } from "slices/donation";
 import { chains } from "constants/chains-v2";
 import { appRoutes } from "constants/routes";
+import { Selector } from "../../../../Selector";
+import Split from "../../../../Split";
+import TokenField from "../../../../TokenField";
+import { CheckField, Label } from "../../../../form";
 import AdvancedOptions from "../../../AdvancedOptions";
 
 type Props = {
