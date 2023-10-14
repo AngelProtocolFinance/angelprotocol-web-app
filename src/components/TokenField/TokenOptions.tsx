@@ -6,16 +6,23 @@ import Image from "../Image";
 import QueryLoader from "../QueryLoader";
 
 type Props = {
-  address: string;
-  chainId: string;
+  userWalletAddress?: string;
+  selectedChainId: string;
   classes?: string;
 };
 
 const container =
   "border border-prim p-1 max-h-60 w-max overflow-y-auto rounded-md bg-gray-l5 dark:bg-blue-d7 shadow-lg focus:outline-none";
-export default function TokenOptions({ classes = "", ...props }: Props) {
+export default function TokenOptions({
+  classes = "",
+  selectedChainId,
+  userWalletAddress = "",
+}: Props) {
   const [searchText, setSearchText] = useState("");
-  const query = useTokensQuery(props);
+  const query = useTokensQuery({
+    chainId: selectedChainId,
+    address: userWalletAddress,
+  });
 
   return (
     <QueryLoader

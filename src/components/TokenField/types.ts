@@ -1,6 +1,5 @@
 import { FieldValues, Path, PathValue } from "react-hook-form";
 import { TokenWithAmount } from "types/tx";
-import { ConnectedWallet } from "types/wallet";
 
 export type OnSetAmount = (balance: TokenWithAmount["balance"]) => void;
 
@@ -20,7 +19,8 @@ type Classes = {
 export type Props<T extends FieldValues, K extends Path<T>> = {
   name: PathValue<T, K> extends TokenWithAmount ? K : never;
   label: string;
-  wallet: ConnectedWallet;
+  selectedChainId: string;
+  userWalletAddress?: string;
   scale?: Scale;
   classes?: Classes;
   disabled?: boolean;
@@ -30,8 +30,8 @@ export type Props<T extends FieldValues, K extends Path<T>> = {
 };
 
 export type SelectorProps = {
-  chainId: string;
-  address: string;
+  selectedChainId: string;
+  userWalletAddress?: string;
   selectedToken: TokenWithAmount;
   onChange(token: TokenWithAmount): void;
 };

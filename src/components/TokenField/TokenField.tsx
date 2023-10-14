@@ -22,7 +22,8 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
   classes,
   scale,
   disabled,
-  wallet,
+  userWalletAddress,
+  selectedChainId,
 
   //flags
   withBalance,
@@ -88,8 +89,8 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
           className="text-sm py-3 dark:text-gray"
         />
         <TokenSelector
-          chainId={wallet.chainId}
-          address={wallet.address}
+          selectedChainId={selectedChainId}
+          userWalletAddress={userWalletAddress}
           selectedToken={token}
           onChange={onChange}
         />

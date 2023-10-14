@@ -14,10 +14,7 @@ export type DonationRecipient = {
 export type DonationDetails = {
   token: TokenWithAmount;
   pctLiquidSplit: number; // <input range value transformed to number via onChange
-
-  //meta
-  chainId: string;
-  chainName: string;
+  chainId: OptionType<string>;
   userOptForKYC: boolean;
 };
 

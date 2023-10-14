@@ -4,20 +4,21 @@ import { Link } from "react-router-dom";
 import { DonateValues } from "../types";
 import { TokenWithAmount } from "types/tx";
 import { DonaterConfigFromWidget } from "types/widget";
+import { Selector } from "components/Selector";
 import Split from "components/Split";
 import TokenField from "components/TokenField";
-import { CheckField } from "components/form";
+import { CheckField, Label } from "components/form";
 import { useGetter } from "store/accessors";
 import { setDetails } from "slices/donation";
+import { chains } from "constants/chains-v2";
 import { appRoutes } from "constants/routes";
 import AdvancedOptions from "../../../AdvancedOptions";
 
 type Props = {
   configFromWidget: DonaterConfigFromWidget | null;
-  tokens: TokenWithAmount[];
 };
 
-export default function Form({ configFromWidget, tokens }: Props) {
+export default function Form({ configFromWidget }: Props) {
   const {
     watch,
     reset,
@@ -37,6 +38,7 @@ export default function Form({ configFromWidget, tokens }: Props) {
   }
 
   const token = watch("token");
+  const selectedChainId = watch("chainId.value");
   const isStepOneCompleted = !!token.amount;
   const isInsideWidget = configFromWidget !== null;
 
@@ -46,9 +48,22 @@ export default function Form({ configFromWidget, tokens }: Props) {
       className="grid rounded-md w-full"
       autoComplete="off"
     >
+      <Label htmlFor="usState" className="mb-2" required={false}>
+        State
+      </Label>
+      <Selector<DonateValues, "chainId", string>
+        name="chainId"
+        options={Object.entries(chains).map(([, chain]) => ({
+          label: chain.name,
+          value: chain.id,
+        }))}
+        classes={{ container: "bg-white dark:bg-blue-d6" }}
+      />
+
       <TokenField<DonateValues, "token">
         name="token"
-        tokens={tokens}
+        selectedChainId={selectedChainId}
+        userWalletAddress=""
         withBalance
         label={`Enter the donation amount:`}
         classes={{ label: "text-lg", inputContainer: "dark:bg-blue-d6" }}

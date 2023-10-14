@@ -31,7 +31,7 @@ export default function Form({ classes = "" }) {
     >
       <TokenField<FV, "token">
         name="token"
-        wallet={{} as any}
+        selectedChainId="80001"
         label="Enter the donation amount:"
         scale={[10, 20, 50, 100, 250]}
         classes={{ label: "text-lg", inputContainer: "dark:bg-blue-d6" }}

@@ -4,8 +4,8 @@ import { DrawerIcon } from "../Icon";
 import TokenOptions from "./TokenOptions";
 
 export default function TokenSelector({
-  chainId,
-  address,
+  selectedChainId,
+  userWalletAddress,
   onChange,
   selectedToken,
 }: SelectorProps) {
@@ -24,8 +24,8 @@ export default function TokenSelector({
 
       <TokenOptions
         classes="absolute right-0 top-2 z-10 mt-10"
-        chainId={chainId}
-        address={address}
+        selectedChainId={selectedChainId}
+        userWalletAddress={userWalletAddress}
       />
     </Combobox>
   );
