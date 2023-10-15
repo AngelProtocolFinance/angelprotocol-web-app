@@ -53,7 +53,7 @@ export default function Submit(props: WithWallet<SubmitStep>) {
       </Row>
 
       <Row title="Blockchain:">
-        <span>{chains[props.wallet.chainId].name}</span>
+        <span>{chains[props.details.chainId.value].name}</span>
       </Row>
 
       <Breakdown estimate={estimate} token={token} />

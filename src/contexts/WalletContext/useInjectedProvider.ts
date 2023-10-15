@@ -1,5 +1,6 @@
 import Decimal from "decimal.js";
 import { useEffect, useState } from "react";
+import { ChainID } from "types/chain";
 import {
   AccountChangeHandler,
   ChainChangeHandler,
@@ -68,7 +69,7 @@ export default function useInjectedWallet(
     });
   };
 
-  async function switchChain(chainId: string) {
+  async function switchChain(chainId: ChainID) {
     try {
       setState((p) => ({ ...(p as Connected), isSwitchingChain: true }));
       const provider = (await getProvider(id)) as InjectedProvider; //can't switch when wallet is not connected

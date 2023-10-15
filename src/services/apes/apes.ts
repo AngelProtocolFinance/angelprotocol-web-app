@@ -44,8 +44,6 @@ export const apes = createApi({
         const { data } = await baseQuery(`v1/chain/${chainId}`);
         const chain = data as FetchedChain;
 
-        console.log({ address, chainId });
-
         if (!address) {
           return { data: chain.tokens.map((t) => ({ ...t, balance: 0 })) };
         }

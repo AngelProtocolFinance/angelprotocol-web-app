@@ -1,4 +1,19 @@
-type ChainID = string; //"137", "1"
+export type ChainID =
+  //polygon
+  | "137"
+  | "80001"
+  //ethereum
+  | "1"
+  | "5"
+  //binance
+  | "56"
+  | "97"
+  //juno
+  | "juno-1"
+  | "uni-6"
+  //terra
+  | "phoenix-1"
+  | "pisco-1";
 type NativeAtomicUnit = string; //ujunox uluna
 type IBCDenom = string;
 export type ChainType = "evm" | "cosmos" | "terra";

@@ -1,4 +1,4 @@
-import { ChainType } from "./chain";
+import { ChainID, ChainType } from "./chain";
 
 export type ProviderId =
   | "binance-wallet"
@@ -17,7 +17,7 @@ export type ProviderId =
 export type Connected = {
   status: "connected";
   address: string;
-  chainId: string;
+  chainId: string; //chainId may not be one of supported chainIds
   isSwitchingChain: boolean;
 };
 type Disconnected = { status: "disconnected" };
@@ -25,7 +25,7 @@ type Loading = { status: "loading" };
 
 export type Connector = { connect(...args: any[]): void };
 type Disconnector = { disconnect(): void };
-type ChainSwitcher = { switchChain: ((chainId: string) => void) | null };
+type ChainSwitcher = { switchChain: ((chainId: ChainID) => void) | null };
 
 export type ProviderState = Connected | Disconnected | Loading;
 

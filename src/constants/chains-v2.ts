@@ -17,7 +17,7 @@ export const polygon: Chain = {
   },
 };
 
-const ethereum: Chain = {
+export const ethereum: Chain = {
   id: "1",
   type: "evm",
   brand: "ethereum",
@@ -33,7 +33,7 @@ const ethereum: Chain = {
   },
 };
 
-const binance: Chain = {
+export const binance: Chain = {
   id: "56",
   type: "evm",
   brand: "binance",
@@ -65,7 +65,7 @@ export const juno: Chain = {
   },
 };
 
-const terraMainnet: Chain = {
+export const terraMainnet: Chain = {
   id: "phoenix-1",
   type: "terra",
   brand: "terra",
@@ -97,7 +97,7 @@ export const mumbai: Chain = {
   },
 };
 
-const goerli: Chain = {
+export const goerli: Chain = {
   id: "5",
   type: "evm",
   brand: "ethereum",
@@ -113,7 +113,7 @@ const goerli: Chain = {
   },
 };
 
-const binanceTestnet: Chain = {
+export const binanceTestnet: Chain = {
   id: "97",
   type: "evm",
   brand: "binance",
@@ -145,7 +145,7 @@ export const junoTestnet: Chain = {
   },
 };
 
-const terraTestnet: Chain = {
+export const terraTestnet: Chain = {
   id: "pisco-1",
   type: "terra",
   brand: "terra",
@@ -162,14 +162,14 @@ const terraTestnet: Chain = {
 };
 
 export const chains: Chains = {
-  [polygon.id]: polygon,
-  [mumbai.id]: mumbai,
-  [ethereum.id]: ethereum,
-  [goerli.id]: goerli,
-  [binance.id]: binance,
-  [binanceTestnet.id]: binanceTestnet,
-  [juno.id]: juno,
-  [junoTestnet.id]: junoTestnet,
-  [terraMainnet.id]: terraMainnet,
-  [terraTestnet.id]: terraTestnet,
+  "137": polygon,
+  "80001": mumbai,
+  "1": ethereum,
+  "5": goerli,
+  "56": binance,
+  "97": binanceTestnet,
+  "juno-1": juno,
+  "uni-6": junoTestnet,
+  "pisco-1": terraMainnet,
+  "phoenix-1": terraTestnet,
 };

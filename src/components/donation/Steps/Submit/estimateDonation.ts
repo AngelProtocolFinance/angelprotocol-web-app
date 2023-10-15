@@ -38,7 +38,7 @@ const prettyDollar = (amount: Decimal) => `$${humanize(amount, 4)}`;
 
 export async function estimateDonation({
   recipient,
-  details: { token, pctLiquidSplit },
+  details: { token },
   wallet,
   terraWallet,
 }: SubmitStep & {

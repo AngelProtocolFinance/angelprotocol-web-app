@@ -1,6 +1,6 @@
 import * as Yup from "yup";
+import { ChainID } from "types/chain";
 import { logger } from "helpers";
-import { chainIds } from "constants/chainIds";
 
 export const junoAddrPattern = /^juno1[a-z0-9]{38,58}$/i;
 export const terraAddrPattern = /^terra1[a-z0-9]{38}$/i;
@@ -8,21 +8,18 @@ const evmAddrPattern = /^0x[a-fA-F0-9]{40}$/;
 
 export const requiredString = Yup.string().required("required");
 
-export const walletAddr = (network: string = chainIds.juno) =>
+export const walletAddr = (chainId: ChainID) =>
   Yup.lazy((val) =>
     val === ""
       ? Yup.string()
       : Yup.string().matches(
-          getWalletAddrPattern(network),
+          walletAddrPatten(chainId),
           "wallet address not valid"
         )
   );
 
-export const requiredWalletAddr = (network: string = chainIds.juno) => {
-  return requiredString.matches(
-    getWalletAddrPattern(network),
-    `invalid address`
-  );
+export const requiredWalletAddr = (chainId: ChainID) => {
+  return requiredString.matches(walletAddrPatten(chainId), `invalid address`);
 };
 
 export const url = Yup.string()
@@ -80,15 +77,23 @@ function getBytesComparer(comparison: "gt" | "lt", num_bytes: number) {
   };
 }
 
-function getWalletAddrPattern(network: string) {
-  switch (network) {
-    case chainIds.binance:
-    case chainIds.ethereum:
-    case chainIds.polygon:
+export function walletAddrPatten(chainId: ChainID) {
+  switch (chainId) {
+    case "1":
+    case "5":
+    case "56":
+    case "97":
+    case "137":
+    case "80001":
       return evmAddrPattern;
-    case chainIds.terra:
+    case "pisco-1":
+    case "phoenix-1":
       return terraAddrPattern;
-    default:
+    case "juno-1":
+    case "uni-6":
       return junoAddrPattern;
+    default:
+      const x: never = chainId;
+      throw new Error(`unhandled ${x}`);
   }
 }
