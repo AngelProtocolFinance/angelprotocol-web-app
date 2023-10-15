@@ -1,5 +1,5 @@
 import { InjectedProvider, RequestArguments } from "types/evm";
-import { ProviderId } from "types/wallet";
+import { WalletID } from "types/wallet";
 import web3Auth from "contexts/WalletContext/useWeb3Auth/web3AuthSetup";
 import { _session, account } from "helpers/wallet-connect";
 
@@ -21,9 +21,9 @@ export async function wcProvider(): Promise<Partial<InjectedProvider>> {
   };
 }
 export async function getProvider(
-  providerId: ProviderId
+  walletID: WalletID
 ): Promise<InjectedProvider | undefined> {
-  switch (providerId) {
+  switch (walletID) {
     case "binance-wallet":
       return window.BinanceChain;
     case "metamask":

@@ -19,7 +19,7 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
     { wallet, tx, donation: { details, kyc, recipient } },
     { dispatch }
   ) => {
-    const chain = chains[wallet.chainId];
+    const chain = chains[details.chainId.value];
     const updateTx = (status: TxStatus) => {
       dispatch(setTxStatus(status));
     };

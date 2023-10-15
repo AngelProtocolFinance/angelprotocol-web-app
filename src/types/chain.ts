@@ -1,4 +1,4 @@
-export type ChainID =
+export type EVMChainID =
   //polygon
   | "137"
   | "80001"
@@ -7,16 +7,16 @@ export type ChainID =
   | "5"
   //binance
   | "56"
-  | "97"
-  //juno
-  | "juno-1"
-  | "uni-6"
-  //terra
-  | "phoenix-1"
-  | "pisco-1";
+  | "97";
+
+export type CosmosChainID = "juno-1" | "uni-6";
+//would remove this type once terra tooling is unified to that of cosmos (keplr)
+export type TerraChainID = "phoenix-1" | "pisco-1";
+
+export type ChainID = EVMChainID | CosmosChainID | TerraChainID;
 type NativeAtomicUnit = string; //ujunox uluna
 type IBCDenom = string;
-export type ChainType = "evm" | "cosmos" | "terra";
+
 export type Chain = {
   id: ChainID;
   type: ChainType;

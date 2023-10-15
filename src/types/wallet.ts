@@ -1,25 +1,29 @@
-import { ChainID, ChainType } from "./chain";
+import { ChainID } from "./chain";
 
-export type ProviderId =
+export type EVMWalletID =
   | "binance-wallet"
   | "metamask"
+  | "xdefi-evm"
   | "evm-wc"
-  | "xdefi-wallet" //xdefi terra provider
-  | "xdefi-evm" //xdefi evm provider
-  | "leap-wallet"
-  | "station"
-  | "walletconnect"
-  | "keplr-wc"
-  | "keplr"
   | "web3auth-torus";
 
+export type TerraWalletID =
+  | "station"
+  | "walletconnect"
+  | "leap-wallet"
+  | "xdefi-wallet";
+
+export type CosmostWalletID = "keplr" | "keplr-wc";
+export type WalletID = EVMWalletID | TerraWalletID | CosmostWalletID;
+
 /** connection state */
+
 export type Connected = {
   status: "connected";
   address: string;
   chainId: string; //chainId may not be one of supported chainIds
-  isSwitchingChain: boolean;
 };
+
 type Disconnected = { status: "disconnected" };
 type Loading = { status: "loading" };
 
@@ -35,9 +39,7 @@ export type WalletState =
   | Loading;
 
 export type WalletMeta = {
-  type: ChainType;
   logo: string;
-  id: ProviderId;
   name: string;
 };
 

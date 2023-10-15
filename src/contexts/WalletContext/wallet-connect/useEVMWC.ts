@@ -48,7 +48,6 @@ export function useEVMWC(meta: WalletMeta): Wallet {
     (async () => {
       setState({ status: "loading" });
       const { session, client } = await _session("MetaMask Wallet");
-
       if (session) {
         setState(connected(session.namespaces));
         client.on("session_update", onSessionUpdate);

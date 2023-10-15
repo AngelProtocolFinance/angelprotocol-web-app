@@ -1,22 +1,22 @@
 import Decimal from "decimal.js";
-import { LogProcessor, SimulTx } from "types/evm";
+import { EVMChainID } from "types/chain";
+import { SimulTx } from "types/evm";
 import { Estimate } from "types/tx";
-import { ConnectedWallet } from "types/wallet";
 import { chains } from "constants/chains-v2";
 import { EIPMethods } from "constants/evm";
 import { condense } from "../../decimal";
 import { request } from "../../evm";
 
 export async function estimateEVMFee(
-  wallet: ConnectedWallet,
-  tx: SimulTx,
-  log?: LogProcessor
+  chainID: EVMChainID,
+  sender: string,
+  tx: SimulTx
 ): Promise<Estimate> {
-  const { rpc, nativeToken } = chains[wallet.chainId];
+  const { rpc, nativeToken } = chains[chainID];
   const [nonce, gas, gasPrice] = await Promise.all([
     request({
       method: EIPMethods.eth_getTransactionCount,
-      params: [wallet.address, "latest"],
+      params: [sender, "latest"],
       rpcURL: rpc,
     }),
     request({
@@ -42,8 +42,7 @@ export async function estimateEVMFee(
     },
     tx: {
       val: { ...tx, nonce, gas: adjusted.toHex(), gasPrice },
-      type: "evm",
-      log,
+      chainID,
     },
   };
 }

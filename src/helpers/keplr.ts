@@ -6,11 +6,13 @@ import {
   WCSignAminoRes,
   WCSignDirectRes,
 } from "types/cosmos";
-import { ProviderId } from "types/wallet";
+import { CosmostWalletID, WalletID } from "types/wallet";
 import { _session } from "./wallet-connect";
 
-export async function keplr(providerId: ProviderId): Promise<Keplr | KeplrWC> {
-  return providerId === "keplr-wc" ? keplrWC() : window.keplr!;
+export async function keplr(
+  walletID: CosmostWalletID
+): Promise<Keplr | KeplrWC> {
+  return walletID === "keplr-wc" ? keplrWC() : window.keplr!;
 }
 
 export async function keplrWC(): Promise<KeplrWC> {

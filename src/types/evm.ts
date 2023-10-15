@@ -20,8 +20,6 @@ export type SimulContractTx = Pick<
 
 export type SimulTx = SimulContractTx | SimulSendNativeTx;
 
-export type LogProcessor = (logs: TxLog[]) => any;
-
 /*** EIP1193 spec https://eips.ethereum.org/EIPS/eip-1193*/
 export interface RequestArguments {
   readonly method: string;

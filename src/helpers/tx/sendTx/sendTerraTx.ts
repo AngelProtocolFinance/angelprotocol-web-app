@@ -1,19 +1,21 @@
 import { CreateTxOptions } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { Timeout, TxFailed, UserDenied } from "@terra-money/wallet-provider";
+import { TerraChainID } from "types/chain";
 import { SubmittedTx, TxResult } from "types/tx";
 import { logger } from "../../logger";
 
 export async function sendTerraTx(
-  wallet: ConnectedWallet,
+  chainID: TerraChainID,
+  post: ConnectedWallet["post"],
   tx: CreateTxOptions
 ): Promise<TxResult> {
   try {
-    const { result, success } = await wallet.post(tx);
+    const { result, success } = await post(tx);
 
     const submitted: SubmittedTx = {
       hash: result.txhash,
-      chainID: wallet.network.chainID,
+      chainID: chainID,
     };
     if (!success) {
       return { error: "Transaction submitted but failed", tx: submitted };
@@ -35,7 +37,7 @@ export async function sendTerraTx(
         tx: err.txhash
           ? {
               hash: err.txhash,
-              chainID: wallet.network.chainID,
+              chainID,
             }
           : undefined,
       };

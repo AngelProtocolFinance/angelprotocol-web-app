@@ -2,12 +2,24 @@ import { CreateTxOptions, Msg } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import type { Any } from "@keplr-wallet/proto-types/google/protobuf/any";
 import { Token } from "./aws";
-import { Chain, ChainID } from "./chain";
+import {
+  Chain,
+  ChainID,
+  CosmosChainID,
+  EVMChainID,
+  TerraChainID,
+} from "./chain";
 import { Allowance, Transfer } from "./contracts/erc20";
 import { SignDoc } from "./cosmos";
 import { Tupleable } from "./evm";
-import { EVMTx, LogProcessor, SimulTx } from "./evm";
+import { EVMTx, SimulTx } from "./evm";
 import { TransactionStatus } from "./lists";
+import {
+  CosmostWalletID,
+  EVMWalletID,
+  TerraWalletID,
+  WalletID,
+} from "./wallet";
 
 export type TokenWithBalance = Token & { balance: number };
 
@@ -15,16 +27,21 @@ export type TokenWithAmount = TokenWithBalance & {
   amount: string;
 };
 
-// //////////// SEND TX ////////////
+// //////////// ESTIMATE TX ////////////
+export type TxContent =
+  | { chainID: CosmosChainID; val: Any[] }
+  | { chainID: TerraChainID; val: Msg[]; wallet: ConnectedWallet }
+  | { chainID: EVMChainID; val: SimulTx };
 
+// //////////// SEND TX ////////////
+export type Sender = { address: string; walletID: WalletID };
 export type EstimatedTx =
-  | { type: "cosmos"; val: SignDoc; attribute?: string }
+  | { sender: Sender; val: SignDoc }
   | {
-      type: "terra";
+      sender: Sender;
       val: CreateTxOptions;
-      wallet: ConnectedWallet /**future client/provider will be included in wallet */;
     }
-  | { type: "evm"; val: EVMTx; log?: LogProcessor };
+  | { sender: Sender; val: EVMTx };
 
 export type SubmittedTx = { hash: string; chainID: ChainID };
 
@@ -33,12 +50,6 @@ export type TxError = { error: string; tx?: SubmittedTx };
 type TxSuccess = SubmittedTx & { data: unknown };
 
 export type TxResult = TxError | TxSuccess;
-
-// //////////// ESTIMATE TX ////////////
-export type TxContent =
-  | { type: "cosmos"; val: Any[]; attribute?: string }
-  | { type: "terra"; val: Msg[]; wallet: ConnectedWallet }
-  | { type: "evm"; val: SimulTx; log?: LogProcessor };
 
 type Fee = { amount: number; symbol: string; coinGeckoId: string };
 export type Estimate = { fee: Fee; tx: EstimatedTx };

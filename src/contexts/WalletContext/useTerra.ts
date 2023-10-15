@@ -8,9 +8,9 @@ import {
 } from "@terra-money/wallet-provider";
 import {
   Connector,
-  ProviderId,
   ProviderState,
   Wallet,
+  WalletID,
   WalletMeta,
 } from "types/wallet";
 
@@ -75,8 +75,8 @@ const connectionFn =
     installations: Installation[],
     connectTerra: TerraWallet["connect"]
   ) =>
-  (providerId: ProviderId): Connection => {
-    if (providerId === "walletconnect") {
+  (walletID: WalletID): Connection => {
+    if (walletID === "walletconnect") {
       return {
         id: "walletconnect",
         name: "Terra Station Mobile",
@@ -87,21 +87,21 @@ const connectionFn =
       };
     }
     // terra providerIDs are simply from their connection identifiers
-    const connection = connections.find((x) => x.identifier === providerId);
+    const connection = connections.find((x) => x.identifier === walletID);
 
     if (connection) {
       return {
-        id: providerId,
+        id: walletID,
         name: connection.name,
         logo: connection.icon,
         connect: async () =>
           connectTerra(connection.type, connection.identifier),
       };
     }
-    const installation = installations.find((x) => x.identifier === providerId);
+    const installation = installations.find((x) => x.identifier === walletID);
     if (installation) {
       return {
-        id: providerId,
+        id: walletID,
         name: installation.name,
         logo: installation.icon,
         connect: async () => {

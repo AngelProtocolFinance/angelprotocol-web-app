@@ -1,4 +1,5 @@
 import { TxRaw } from "@keplr-wallet/proto-types/cosmos/tx/v1beta1/tx";
+import { ChainID, CosmosChainID } from "types/chain";
 import {
   BroadcastRes,
   BroadcastSuccess,
@@ -8,21 +9,22 @@ import {
 } from "types/cosmos";
 import { Log } from "types/cosmos";
 import { TxError, TxResult } from "types/tx";
-import { ConnectedWallet } from "types/wallet";
+import { WalletID } from "types/wallet";
 import { base64FromU8a, u8aFromBase64 } from "helpers/encoding";
 import { keplr } from "helpers/keplr";
 import { chains } from "constants/chains-v2";
 
 export async function sendCosmosTx(
-  wallet: ConnectedWallet,
+  chainID: CosmosChainID,
+  sender: string,
+  providerID: Extract<WalletID, "keplr" | "keplr-wc">,
   doc: SignDoc,
   attribute?: string
 ): Promise<TxResult> {
-  const { chainId, address, id } = wallet;
-  const { lcd } = chains[wallet.chainId];
+  const { lcd } = chains[chainID];
 
-  const client = await keplr(id);
-  const { signature, signed } = await client.signDirect(chainId, address, doc);
+  const client = await keplr(providerID);
+  const { signature, signed } = await client.signDirect(chainID, sender, doc);
 
   const tx: TxRaw = {
     authInfoBytes: signed.authInfoBytes,
@@ -46,7 +48,7 @@ export async function sendCosmosTx(
   if (code) {
     return {
       error: "Transaction failed",
-      tx: { hash: txhash, chainID: chainId },
+      tx: { hash: txhash, chainID },
     };
   }
 
@@ -54,14 +56,14 @@ export async function sendCosmosTx(
     lcd + `/cosmos/tx/v1beta1/txs/${txhash}`,
     10,
     txhash,
-    chainId
+    chainID
   );
 
   if (isReceiptError(receipt)) return receipt;
 
   return {
     hash: txhash,
-    chainID: chainId,
+    chainID,
     data: attribute && _attribute(attribute, logs),
   };
 }
@@ -70,12 +72,12 @@ async function _receipt(
   url: string,
   retries: number,
   hash: string,
-  chainId: string
+  chainID: ChainID
 ): Promise<TxResponse | TxError> {
   if (retries === 0) {
     return {
       error: "Timeout: Failed to confirm if transaction is finalized",
-      tx: { hash, chainID: chainId },
+      tx: { hash, chainID },
     };
   }
 
@@ -87,7 +89,7 @@ async function _receipt(
     return res.json().then((res: BroadcastSuccess) => res.tx_response);
   }
 
-  return _receipt(url, retries - 1, hash, chainId);
+  return _receipt(url, retries - 1, hash, chainID);
 }
 
 export function _attribute(attribute: string, logs: Log[]) {

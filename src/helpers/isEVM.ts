@@ -1,6 +1,6 @@
-import { ProviderId } from "types/wallet";
+import { WalletID } from "types/wallet";
 
-export function isEVM(id: ProviderId) {
+export function isEVM(id: WalletID) {
   switch (id) {
     case "binance-wallet":
     case "evm-wc":

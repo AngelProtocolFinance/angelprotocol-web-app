@@ -1,25 +1,24 @@
 import { Coin, Fee, LCDClient, Msg } from "@terra-money/terra.js";
-import { ConnectedWallet as TerraConnectedWallet } from "@terra-money/wallet-provider";
-import { Estimate } from "types/tx";
-import { ConnectedWallet } from "types/wallet";
+import { TerraChainID } from "types/chain";
+import { Estimate, Sender } from "types/tx";
 import { chains } from "constants/chains-v2";
 import { condenseToNum } from "../../decimal";
 
 export default async function estimateTerraFee(
-  wallet: ConnectedWallet,
-  terraWallet: TerraConnectedWallet,
+  chainID: TerraChainID,
+  sender: Sender,
   msgs: Msg[]
 ): Promise<Estimate> {
-  const { lcd, nativeToken } = chains[wallet.chainId];
+  const { lcd, nativeToken } = chains[chainID];
   const client = new LCDClient({
-    chainID: wallet.chainId,
+    chainID,
     URL: lcd,
     gasAdjustment: 1.6,
     //https://station-assets.terra.money/chains.json
     gasPrices: [new Coin("uluna", 0.015)],
   });
 
-  const account = await client.auth.accountInfo(wallet.address);
+  const account = await client.auth.accountInfo(sender.address);
   const fee = await client.tx.estimateFee(
     [{ sequenceNumber: account.getSequenceNumber() }],
     { msgs, feeDenoms: [nativeToken.id] }
@@ -32,7 +31,7 @@ export default async function estimateTerraFee(
       symbol: nativeToken.symbol,
       coinGeckoId: nativeToken.coinGeckoId,
     },
-    tx: { type: "terra", val: { fee, msgs }, wallet: terraWallet },
+    tx: { sender, val: { fee, msgs } },
   };
 }
 
