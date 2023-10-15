@@ -4,13 +4,15 @@ import { Link } from "react-router-dom";
 import { DonateValues } from "../types";
 import { TokenWithAmount } from "types/tx";
 import { DonaterConfigFromWidget } from "types/widget";
-import { WalletState } from "contexts/WalletContext";
+import { WalletState, useSetWallet } from "contexts/WalletContext";
+import Icon from "components/Icon";
 import Split from "components/Split";
 import TokenField from "components/TokenField";
 import ChainSelector from "components/WalletSuite/ConnectedWallet/Details/ChainSelector";
 import { CheckField } from "components/form";
 import { useGetter } from "store/accessors";
 import { setDetails } from "slices/donation";
+import { maskAddress } from "helpers";
 import { appRoutes } from "constants/routes";
 import AdvancedOptions from "../../../AdvancedOptions";
 
@@ -27,6 +29,7 @@ export default function Form({ configFromWidget, tokens, wallet }: Props) {
     handleSubmit,
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<DonateValues>();
+  const { disconnect } = useSetWallet();
   const endowId = useGetter((state) => state.donation.recipient?.id);
   const isKYCRequired = useGetter(
     (state) => state.donation.recipient?.isKYCRequired
@@ -49,6 +52,20 @@ export default function Form({ configFromWidget, tokens, wallet }: Props) {
       className="grid rounded-md w-full"
       autoComplete="off"
     >
+      <div className="flex items-center gap-2 mb-4 flex-wrap">
+        <Icon type="Wallet" className="text-green" />
+        <p className="text-sm text-gray-d1 dark:text-gray font-work">
+          {maskAddress(wallet.address)}
+        </p>
+        <button
+          type="button"
+          onClick={disconnect}
+          className="text-xs font-work uppercase px-2 py-1 btn-outline"
+        >
+          disconnect
+        </button>
+      </div>
+
       <label className="font-bold mb-1 text-md">Select network :</label>
       <ChainSelector classes="dark:bg-blue-d6 mb-6" {...wallet} />
 
