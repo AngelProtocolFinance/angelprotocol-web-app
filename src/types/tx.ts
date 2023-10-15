@@ -2,7 +2,7 @@ import { CreateTxOptions, Msg } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import type { Any } from "@keplr-wallet/proto-types/google/protobuf/any";
 import { Token } from "./aws";
-import { Chain } from "./chain";
+import { Chain, ChainID } from "./chain";
 import { Allowance, Transfer } from "./contracts/erc20";
 import { SignDoc } from "./cosmos";
 import { Tupleable } from "./evm";
@@ -26,7 +26,7 @@ export type EstimatedTx =
     }
   | { type: "evm"; val: EVMTx; log?: LogProcessor };
 
-export type SubmittedTx = { hash: string; chainID: string };
+export type SubmittedTx = { hash: string; chainID: ChainID };
 
 type TxLoading = { loading: string };
 export type TxError = { error: string; tx?: SubmittedTx };
