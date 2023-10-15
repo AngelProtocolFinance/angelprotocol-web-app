@@ -1,7 +1,9 @@
 import { Tab } from "@headlessui/react";
 import { DonaterConfigFromWidget } from "types/widget";
-import { useGetWallet } from "contexts/WalletContext";
+import { useModalContext } from "contexts/ModalContext";
+import { useGetWallet, useSetWallet } from "contexts/WalletContext";
 import Status, { LoadingStatus } from "components/Status";
+import WalletModal from "components/WalletSuite/WalletSelectorOpener/WalletModal";
 import { FormStep } from "slices/donation";
 import Donater from "../Donater";
 import Stripe from "./Stripe";
@@ -12,6 +14,8 @@ type Props = {
 };
 export default function DonateMethods({ donaterConfig, state }: Props) {
   const { wallet, isLoading } = useGetWallet();
+  const { connections } = useSetWallet();
+  const { showModal } = useModalContext();
   return (
     <Tab.Group as="div" className="grid content-start mt-2">
       <Tab.List as="div" className="grid grid-cols-2 mb-6">
@@ -46,9 +50,19 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
         </Tab.Panel>
         <Tab.Panel className="grid">
           {!wallet ? (
-            <Status icon="Info" classes="justify-self-center mt-4">
-              You need to connect your wallet to make a donation
-            </Status>
+            <div className="grid justify-items-center justify-self-center mt-4">
+              <Status icon="Info" classes="mb-4">
+                You need to connect your wallet to make a donation
+              </Status>
+              <button
+                disabled={isLoading}
+                type="button"
+                onClick={() => showModal(WalletModal, { connections })}
+                className="btn-orange font-work py-2 px-4"
+              >
+                Connect
+              </button>
+            </div>
           ) : isLoading ? (
             <LoadingStatus classes="justify-self-center mt-4">
               Loading wallet
