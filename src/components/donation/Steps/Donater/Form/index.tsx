@@ -4,8 +4,10 @@ import { Link } from "react-router-dom";
 import { DonateValues } from "../types";
 import { TokenWithAmount } from "types/tx";
 import { DonaterConfigFromWidget } from "types/widget";
+import { WalletState } from "contexts/WalletContext";
 import Split from "components/Split";
 import TokenField from "components/TokenField";
+import ChainSelector from "components/WalletSuite/ConnectedWallet/Details/ChainSelector";
 import { CheckField } from "components/form";
 import { useGetter } from "store/accessors";
 import { setDetails } from "slices/donation";
@@ -15,9 +17,10 @@ import AdvancedOptions from "../../../AdvancedOptions";
 type Props = {
   configFromWidget: DonaterConfigFromWidget | null;
   tokens: TokenWithAmount[];
+  wallet: WalletState;
 };
 
-export default function Form({ configFromWidget, tokens }: Props) {
+export default function Form({ configFromWidget, tokens, wallet }: Props) {
   const {
     watch,
     reset,
@@ -46,11 +49,14 @@ export default function Form({ configFromWidget, tokens }: Props) {
       className="grid rounded-md w-full"
       autoComplete="off"
     >
+      <label className="font-bold mb-1 text-md">Select network :</label>
+      <ChainSelector classes="dark:bg-blue-d6 mb-6" {...wallet} />
+
       <TokenField<DonateValues, "token">
         name="token"
         tokens={tokens}
         withBalance
-        label={`Enter the donation amount:`}
+        label={`Enter the donation amount :`}
         classes={{ label: "text-lg", inputContainer: "dark:bg-blue-d6" }}
         withMininum
       />
