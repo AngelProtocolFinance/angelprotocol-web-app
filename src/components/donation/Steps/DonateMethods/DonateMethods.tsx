@@ -52,7 +52,7 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
           {!wallet ? (
             <div className="grid justify-items-center justify-self-center mt-4">
               <Status icon="Info" classes="mb-4">
-                You need to connect your wallet to make a donation
+                Connect your Web3 wallet to make a crypto donation
               </Status>
               <button
                 disabled={isLoading}
@@ -60,7 +60,7 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
                 onClick={() => showModal(WalletModal, { connections })}
                 className="btn-orange font-work py-2 px-4"
               >
-                Connect
+                Connect wallet
               </button>
             </div>
           ) : isLoading ? (
