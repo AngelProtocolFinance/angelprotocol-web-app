@@ -8,13 +8,13 @@ import { WalletState, useSetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import Split from "components/Split";
 import TokenField from "components/TokenField";
-import ChainSelector from "components/WalletSuite/ConnectedWallet/Details/ChainSelector";
 import { CheckField } from "components/form";
 import { useGetter } from "store/accessors";
 import { setDetails } from "slices/donation";
 import { maskAddress } from "helpers";
 import { appRoutes } from "constants/routes";
 import AdvancedOptions from "../../../AdvancedOptions";
+import ChainSelector from "./ChainSelector";
 
 type Props = {
   configFromWidget: DonaterConfigFromWidget | null;
