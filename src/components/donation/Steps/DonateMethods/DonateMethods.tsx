@@ -3,10 +3,10 @@ import { DonaterConfigFromWidget } from "types/widget";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet, useSetWallet } from "contexts/WalletContext";
 import Status, { LoadingStatus } from "components/Status";
-import WalletModal from "components/WalletSuite/WalletSelectorOpener/WalletModal";
 import { FormStep } from "slices/donation";
 import Donater from "../Donater";
 import Stripe from "./Stripe";
+import WalletModal from "./WalletModal";
 
 type Props = {
   donaterConfig: DonaterConfigFromWidget | null;

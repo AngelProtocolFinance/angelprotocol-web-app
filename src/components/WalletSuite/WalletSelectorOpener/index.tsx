@@ -1,7 +1,7 @@
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
+import WalletModal from "../../donation/Steps/DonateMethods/WalletModal/WalletModal";
 import { COMMON_BUTTON_STYLE } from "../constants";
-import WalletModal from "./WalletModal";
 
 type Props = { isLoading: boolean };
 
