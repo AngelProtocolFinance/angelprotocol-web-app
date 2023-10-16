@@ -44,7 +44,6 @@ import {
 import { FiMenu, FiMoon } from "react-icons/fi";
 import { GoDash, GoLinkExternal, GoSync } from "react-icons/go";
 import { GrFacebookOption } from "react-icons/gr";
-import { HiLogout } from "react-icons/hi";
 import { ImFilePicture } from "react-icons/im";
 import { IoMdDownload, IoMdListBox } from "react-icons/io";
 import {
@@ -107,7 +106,6 @@ export const icons = {
   LinkedinIn: FaLinkedinIn,
   ListBox: IoMdListBox,
   Loading: VscLoading,
-  Logout: HiLogout,
   MapPin: RiMapPin2Line,
   Medium: AiOutlineMedium,
   Menu: FiMenu,
