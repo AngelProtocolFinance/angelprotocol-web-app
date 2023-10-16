@@ -4,7 +4,6 @@ import { LinkGroup } from "./types";
 import Icon from "components/Icon";
 import { createNavLinkStyler } from "helpers";
 import Header from "./Header";
-import LogoutBtn from "./LogoutBtn";
 
 type Props = {
   className?: string;
@@ -47,7 +46,6 @@ export default function Sidebar({
           </React.Fragment>
         ))}
       </div>
-      <LogoutBtn />
     </div>
   );
 }

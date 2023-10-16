@@ -9,7 +9,6 @@ export default function Menu({ classes = "", user, signOut }: Props) {
       <p className="text-sm p-2 text-gray-d1 dark:text-gray">
         {user?.attributes?.email}
       </p>
-      <div className=""></div>
       <button
         type="button"
         onClick={signOut}
