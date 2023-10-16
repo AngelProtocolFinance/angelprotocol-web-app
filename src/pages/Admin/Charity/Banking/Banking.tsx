@@ -60,25 +60,28 @@ export default function Banking() {
         />
       </div>
 
-      {!!targetCurrency && debouncedSourceAmount != null && (
-        <>
-          <AccountRequirementsSelector
-            accountRequirements={accountRequirements}
-            isLoading={!accountRequirements}
-            onChange={(index: number) =>
-              setSelectedAccountRequirementsIndex(index)
-            }
-          />
-          {!!accountRequirements &&
-            selectedAccountRequirementsIndex != null && (
-              <RecipientDetailsForm
-                targetCurrency={targetCurrency}
-                accountRequirements={accountRequirements}
-                accountRequirementsIndex={selectedAccountRequirementsIndex}
-              />
-            )}
-        </>
-      )}
+      {!!targetCurrency &&
+        // just check that the debounced amount is defined
+        debouncedSourceAmount != null && (
+          <>
+            <AccountRequirementsSelector
+              accountRequirements={accountRequirements}
+              isLoading={!accountRequirements}
+              onChange={(index: number) =>
+                setSelectedAccountRequirementsIndex(index)
+              }
+            />
+            {!!accountRequirements &&
+              // just check that the index is defined
+              selectedAccountRequirementsIndex != null && (
+                <RecipientDetailsForm
+                  targetCurrency={targetCurrency}
+                  accountRequirements={accountRequirements}
+                  accountRequirementsIndex={selectedAccountRequirementsIndex}
+                />
+              )}
+          </>
+        )}
     </div>
   );
 }
