@@ -2,7 +2,6 @@ import { FormProvider } from "react-hook-form";
 import { AccountRequirements } from "../types";
 import { FormValues } from "./types";
 import { Field } from "components/form";
-import Form from "./Form";
 import useRecipientForm from "./useRecipientForm";
 
 type Props = {
@@ -17,18 +16,21 @@ export default function RecipientDetailsForm({
   const methods = useRecipientForm(targetCurrency, accountRequirements);
 
   const fields = accountRequirements.fields.map(({ group }) => {
-    const fieldGroup = group[0];
+    const requirements = group[0];
 
-    if (fieldGroup.type === "text") {
+    if (requirements.type === "text") {
       return (
         <Field<FormValues>
+          key={`details.${requirements.key}`}
           classes="field-admin"
-          name={`details.${fieldGroup.key}`}
-          label={fieldGroup.name}
-          placeholder={fieldGroup.example}
+          name={`details.${requirements.key}`}
+          label={requirements.name}
+          placeholder={requirements.example}
         />
       );
     }
+
+    return null;
   });
 
   return <FormProvider {...methods}>{fields}</FormProvider>;
