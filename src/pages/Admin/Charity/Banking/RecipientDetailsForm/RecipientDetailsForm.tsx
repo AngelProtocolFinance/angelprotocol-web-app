@@ -1,10 +1,7 @@
-import { yupResolver } from "@hookform/resolvers/yup";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider } from "react-hook-form";
 import { AccountRequirements } from "../types";
-import { FormValues } from "./types";
-import { OptionType } from "components/Selector";
 import Form from "./Form";
-import createSchema from "./createSchema";
+import useRecipientForm from "./useRecipientForm";
 
 type Props = {
   targetCurrency: string;
@@ -15,40 +12,11 @@ export default function RecipientDetailsForm({
   accountRequirements,
   targetCurrency,
 }: Props) {
-  const schema = createSchema(accountRequirements);
-
-  const methods = useForm({
-    resolver: yupResolver(schema),
-    defaultValues: {
-      currency: targetCurrency,
-      type: accountRequirements.type,
-      accountHolderName: "ENDOWMENT_NAME",
-      details: getDefaultValues(accountRequirements),
-    },
-  });
+  const methods = useRecipientForm(targetCurrency, accountRequirements);
 
   return (
     <FormProvider {...methods}>
       <Form />
     </FormProvider>
-  );
-}
-
-function getDefaultValues(
-  accountRequirements: AccountRequirements
-): Record<string, string | OptionType<string>> {
-  return accountRequirements.fields.reduce(
-    (objectShape, field) => {
-      const requirements = field.group[0];
-
-      if (requirements.type === "text") {
-        objectShape[requirements.key] = requirements.example;
-      } else {
-        objectShape[requirements.key] = { label: "", value: "" };
-      }
-
-      return objectShape;
-    },
-    {} as FormValues["details"]
   );
 }
