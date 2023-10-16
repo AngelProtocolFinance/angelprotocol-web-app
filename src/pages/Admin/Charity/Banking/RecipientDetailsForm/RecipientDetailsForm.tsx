@@ -6,24 +6,28 @@ import useRecipientForm from "./useRecipientForm";
 
 type Props = {
   targetCurrency: string;
-  accountRequirements: AccountRequirements;
+  accountRequirements: AccountRequirements[];
+  accountRequirementsIndex: number;
 };
 
 export default function RecipientDetailsForm({
   accountRequirements,
+  accountRequirementsIndex,
   targetCurrency,
 }: Props) {
   const methods = useRecipientForm(targetCurrency, accountRequirements);
 
-  const fields = accountRequirements.fields.map(({ group }) => {
-    const requirements = group[0];
+  const selectedRequirements = accountRequirements[accountRequirementsIndex];
+
+  const fields = selectedRequirements.fields.map((field) => {
+    const requirements = field.group[0];
 
     if (requirements.type === "text") {
       return (
         <Field<FormValues>
-          key={`details.${requirements.key}`}
+          key={`requirements.${selectedRequirements.type}.${requirements.key}`}
           classes="field-admin"
-          name={`details.${requirements.key}`}
+          name={`requirements.${selectedRequirements.type}.${requirements.key}`}
           label={requirements.name}
           placeholder={requirements.example}
         />

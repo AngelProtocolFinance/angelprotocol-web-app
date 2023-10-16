@@ -1,4 +1,11 @@
-import { AnyObject, ObjectSchema, StringSchema, object, string } from "yup";
+import {
+  AnyObject,
+  ObjectSchema,
+  ObjectShape,
+  StringSchema,
+  object,
+  string,
+} from "yup";
 import {
   AccountRequirements,
   AccountRequirementsField,
@@ -11,21 +18,25 @@ import { OptionType } from "components/Selector";
 import { requiredString } from "schemas/string";
 
 export default function createSchema(
-  accountRequirements: AccountRequirements
+  accountRequirementsArray: AccountRequirements[]
 ): ObjectSchema<FormValues> {
   return object<any, SchemaShape<FormValues>>({
     currency: requiredString,
-    type: requiredString,
     accountHolderName: requiredString,
-    details: object(
-      accountRequirements.fields.reduce(
-        (objectShape, field) => {
-          const { key, schema: fieldSchema } = createFieldShape(field);
-          objectShape[key] = fieldSchema;
-          return objectShape;
-        },
-        {} as CreateRecipientRequest["details"]
-      )
+    requirements: object(
+      accountRequirementsArray.reduce((schema, accountRequirements) => {
+        schema[accountRequirements.type] = object(
+          accountRequirements.fields.reduce(
+            (objectShape, field) => {
+              const { key, schema: fieldSchema } = createFieldShape(field);
+              objectShape[key] = fieldSchema;
+              return objectShape;
+            },
+            {} as CreateRecipientRequest["details"]
+          )
+        );
+        return schema;
+      }, {} as ObjectShape)
     ),
   }) as ObjectSchema<FormValues>;
 }

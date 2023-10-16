@@ -25,7 +25,10 @@ export default function Banking() {
     setSelectedAccountRequirementsIndex,
   ] = useState<number>();
 
-  useEffect(() => setAccountRequirements(undefined), [targetCurrency]);
+  useEffect(() => {
+    setAccountRequirements(undefined);
+    setSelectedAccountRequirementsIndex(undefined);
+  }, [targetCurrency]);
 
   useEffect(() => {
     if (!!targetCurrency && !!debouncedSourceAmount) {
@@ -66,14 +69,14 @@ export default function Banking() {
               setSelectedAccountRequirementsIndex(index)
             }
           />
-          {!!accountRequirements && !!selectedAccountRequirementsIndex && (
-            <RecipientDetailsForm
-              targetCurrency={targetCurrency}
-              accountRequirements={
-                accountRequirements[selectedAccountRequirementsIndex]
-              }
-            />
-          )}
+          {!!accountRequirements &&
+            selectedAccountRequirementsIndex != null && (
+              <RecipientDetailsForm
+                targetCurrency={targetCurrency}
+                accountRequirements={accountRequirements}
+                accountRequirementsIndex={selectedAccountRequirementsIndex}
+              />
+            )}
         </>
       )}
     </div>
