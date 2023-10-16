@@ -16,7 +16,7 @@ export default function UserMenu() {
         </Popover.Button>
       ) : (
         <Popover.Button className="btn-orange px-3 h-10 rounded-lg text-sm">
-          Login
+          Sign in
         </Popover.Button>
       )}
       <Popover.Panel className="mt-2 absolute z-10 w-max max-sm:fixed-center sm:right-0">
