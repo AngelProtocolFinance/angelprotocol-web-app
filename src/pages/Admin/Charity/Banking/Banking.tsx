@@ -60,7 +60,7 @@ export default function Banking() {
         />
       </div>
 
-      {!!targetCurrency && !!debouncedSourceAmount && (
+      {!!targetCurrency && debouncedSourceAmount != null && (
         <>
           <AccountRequirementsSelector
             accountRequirements={accountRequirements}
