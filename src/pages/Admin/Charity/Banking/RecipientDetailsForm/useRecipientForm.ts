@@ -1,4 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { AccountRequirements } from "../types";
 import { FormValues } from "./types";
@@ -11,7 +12,7 @@ export default function useRecipientForm(
 ) {
   const schema = createSchema(accountRequirements);
 
-  const methods = useForm({
+  const methods = useForm<FormValues>({
     resolver: yupResolver(schema),
     defaultValues: {
       currency: targetCurrency,
@@ -20,6 +21,10 @@ export default function useRecipientForm(
       details: getDefaultValues(accountRequirements),
     },
   });
+
+  useEffect(() => {
+    methods.setValue("currency", targetCurrency);
+  }, [targetCurrency]);
 
   return methods;
 }
