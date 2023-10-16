@@ -8,7 +8,9 @@ export default function Protected({ children }: PropsWithChildren) {
   const location = useLocation();
   const { route } = useAuthenticator((context) => [context.route]);
   if (route !== "authenticated") {
-    return <Navigate to={appRoutes.login} state={{ from: location }} replace />;
+    return (
+      <Navigate to={appRoutes.signin} state={{ from: location }} replace />
+    );
   }
   return <>{children}</>;
 }

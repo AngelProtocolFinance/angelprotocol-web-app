@@ -4,7 +4,7 @@ export enum appRoutes {
   leaderboard = "/leaderboard",
   admin = "/admin",
   register = "/register",
-  login = "/login",
+  signin = "/signin",
   unsdgs = "/unsdgs",
   profile = "/profile",
   tca = "/tca",

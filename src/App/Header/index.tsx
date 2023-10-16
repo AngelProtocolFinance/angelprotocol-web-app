@@ -47,7 +47,7 @@ export default function Header({ classes, links, logo }: Props) {
         />
         <div className="flex gap-4 justify-self-end items-center">
           <ThemeToggle classes="hidden lg:flex" />
-          {location.pathname !== appRoutes.login && <UserMenu />}
+          {location.pathname !== appRoutes.signin && <UserMenu />}
         </div>
         <MobileNavOpener
           classes="flex ml-2 lg:hidden"
