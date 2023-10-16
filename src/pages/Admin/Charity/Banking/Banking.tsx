@@ -4,6 +4,7 @@ import useDebouncer from "hooks/useDebouncer";
 import AccountRequirementsSelector from "./AccountRequirementsSelector";
 import CurrencySelector from "./CurrencySelector";
 import RecipientDetailsForm from "./RecipientDetailsForm";
+import getAccountRequirementOptions from "./getAccountRequirementOptions";
 
 // TODO: Once recipient is created by filling fields returned using `GET /v1/account-requirements?source=EUR&target=USD&sourceAmount=1000`
 // we need to use its recipientID to create a quote `https://docs.wise.com/api-docs/api-reference/quote#create-authenticated`
@@ -18,9 +19,23 @@ export default function Banking() {
   const [sourceAmount, setSourceAmount] = useState<number>();
   const [debouncedSourceAmount] = useDebouncer(sourceAmount, 1000);
   const [accountRequirements, setAccountRequirements] =
-    useState<AccountRequirements>();
+    useState<AccountRequirements[]>();
+  const [
+    selectedAccountRequirementsIndex,
+    setSelectedAccountRequirementsIndex,
+  ] = useState<number>();
 
   useEffect(() => setAccountRequirements(undefined), [targetCurrency]);
+
+  useEffect(() => {
+    if (!!targetCurrency && !!debouncedSourceAmount) {
+      getAccountRequirementOptions(targetCurrency, debouncedSourceAmount).then(
+        (res) => {
+          setAccountRequirements(res);
+        }
+      );
+    }
+  }, [debouncedSourceAmount, targetCurrency]);
 
   return (
     <div className="flex flex-col gap-5">
@@ -45,16 +60,18 @@ export default function Banking() {
       {!!targetCurrency && !!debouncedSourceAmount && (
         <>
           <AccountRequirementsSelector
-            targetCurrency={targetCurrency}
-            sourceAmount={debouncedSourceAmount}
-            onChange={(newAccountRequirements: AccountRequirements) =>
-              setAccountRequirements(newAccountRequirements)
+            accountRequirements={accountRequirements}
+            isLoading={!accountRequirements}
+            onChange={(index: number) =>
+              setSelectedAccountRequirementsIndex(index)
             }
           />
-          {!!accountRequirements && (
+          {!!accountRequirements && !!selectedAccountRequirementsIndex && (
             <RecipientDetailsForm
               targetCurrency={targetCurrency}
-              accountRequirements={accountRequirements}
+              accountRequirements={
+                accountRequirements[selectedAccountRequirementsIndex]
+              }
             />
           )}
         </>

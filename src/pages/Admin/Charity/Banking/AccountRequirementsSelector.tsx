@@ -1,26 +1,17 @@
-import { useEffect, useState } from "react";
 import { AccountRequirements } from "./types";
-import getAccountRequirementOptions from "./getAccountRequirementOptions";
+
+type Props = {
+  accountRequirements?: AccountRequirements[];
+  isLoading: boolean;
+  onChange: (index: number) => void;
+};
 
 export default function AccountRequirementsSelector({
-  targetCurrency,
-  sourceAmount,
+  accountRequirements,
+  isLoading,
   onChange,
-}: {
-  targetCurrency: string;
-  sourceAmount: number;
-  onChange: (newAccountRequirements: AccountRequirements) => void;
-}) {
-  const [accountRequirementsOptions, setAccountRequirementsOptions] =
-    useState<AccountRequirements[]>();
-
-  useEffect(() => {
-    getAccountRequirementOptions(targetCurrency, sourceAmount).then((res) => {
-      setAccountRequirementsOptions(res);
-    });
-  }, [sourceAmount, targetCurrency]);
-
-  if (!accountRequirementsOptions) {
+}: Props) {
+  if (isLoading || !accountRequirements) {
     return <span>Loading...</span>;
   }
 
@@ -28,11 +19,11 @@ export default function AccountRequirementsSelector({
     <div className="flex flex-col gap-2">
       <span>Choose a transfer type:</span>
       <div className="flex gap-2">
-        {accountRequirementsOptions.map((accountRequirements) => (
+        {accountRequirements.map((accountRequirements, index) => (
           <button
             key={accountRequirements.type}
             type="button"
-            onClick={() => onChange(accountRequirements)}
+            onClick={() => onChange(index)}
             className="btn-blue text-sm w-40"
           >
             {accountRequirements.title}
