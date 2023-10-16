@@ -4,14 +4,29 @@
 @tailwind variants;
 
 [data-amplify-authenticator] {
+  --amplify-components-authenticator-state-inactive-background-color: transparent;
   --amplify-components-authenticator-router-box-shadow: theme(boxShadow.none);
   --amplify-components-authenticator-router-border-color: theme(
     borderColor.gray.l3
   );
+  /** tabs */
+
+  --amplify-components-tabs-item-hover-color: theme(colors.gray.d2);
+  --amplify-components-tabs-item-focus-color: theme(colors.orange.DEFAULT);
+  --amplify-components-tabs-item-border-color: theme(colors.gray.l3);
   --amplify-components-tabs-item-active-border-color: theme(
     colors.orange.DEFAULT
   );
+  --amplify-components-tabs-item-color: theme(colors.gray.d2);
   --amplify-components-tabs-item-active-color: theme(colors.orange.DEFAULT);
+
+  /** fields */
+  --amplify-components-input-border-color: theme(colors.gray.l3);
+  --amplify-components-fieldcontrol-color: theme(colors.gray.d2);
+  --amplify-components-field-label-color: theme(colors.gray.d2);
+  --amplify-components-input-focus-border-color: theme(colors.gray.d1);
+
+  /** submit button */
   --amplify-components-button-primary-background-color: theme(
     colors.orange.DEFAULT
   );
@@ -19,11 +34,31 @@
     colors.orange.l1
   );
 }
+
 html:is(.dark) [data-amplify-authenticator] {
+  /** tabs */
+  --amplify-components-tabs-item-color: theme(colors.white);
+  --amplify-components-tabs-item-hover-color: theme(colors.white);
+  --amplify-components-tabs-item-border-color: theme(colors.bluegray.DEFAULT);
+
+  /** fields */
+  --amplify-components-input-border-color: theme(colors.bluegray.DEFAULT);
+  --amplify-components-input-color: theme(colors.white);
+  --amplify-components-field-label-color: theme(colors.white);
+  --amplify-components-input-focus-border-color: theme(colors.blue.d2);
+
   --amplify-components-authenticator-router-border-color: theme(
     borderColor.bluegray.DEFAULT
   );
+  --amplify-components-authenticator-router-background-color: theme(
+    colors.blue.d6
+  );
 }
+
+/* 
+html:is(.dark) [data-amplify-authenticator] [data-state="inactive"] {
+  background-color: transparent;
+} */
 
 @layer base {
   h1,
