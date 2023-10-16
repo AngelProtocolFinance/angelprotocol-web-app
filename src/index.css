@@ -26,6 +26,38 @@
   --amplify-components-field-label-color: theme(colors.gray.d2);
   --amplify-components-input-focus-border-color: theme(colors.gray.d1);
 
+  /** password */
+  --amplify-components-button-border-color: theme(colors.gray.l3);
+  --amplify-components-passwordfield-button-color: theme(colors.gray.d2);
+  --amplify-components-passwordfield-button-hover-color: theme(colors.gray.d2);
+  --amplify-components-passwordfield-button-active-color: theme(colors.gray.d2);
+  --amplify-components-passwordfield-button-hover-color: theme(colors.gray.d2);
+  --amplify-components-passwordfield-button-active-background-color: theme(
+    colors.transparent
+  );
+  --amplify-components-passwordfield-button-hover-background-color: theme(
+    colors.transparent
+  );
+  --amplify-components-passwordfield-button-hover-border-color: theme(
+    colors.gray.l3
+  );
+
+  /** link */
+  --amplify-components-button-link-color: theme(colors.blue.DEFAULT);
+  --amplify-components-button-link-hover-color: theme(colors.blue.d1);
+  --amplify-components-button-link-focus-color: theme(colors.blue.d1);
+  --amplify-components-button-link-active-color: theme(colors.blue.d1);
+
+  --amplify-components-button-link-hover-background-color: theme(
+    colors.transparent
+  );
+  --amplify-components-button-link-focus-background-color: theme(
+    colors.transparent
+  );
+  --amplify-components-button-link-active-background-color: theme(
+    colors.transparent
+  );
+
   /** submit button */
   --amplify-components-button-primary-background-color: theme(
     colors.orange.DEFAULT
@@ -47,6 +79,25 @@ html:is(.dark) [data-amplify-authenticator] {
   --amplify-components-field-label-color: theme(colors.white);
   --amplify-components-input-focus-border-color: theme(colors.blue.d2);
 
+  /** password */
+  --amplify-components-button-border-color: theme(colors.bluegray.DEFAULT);
+  --amplify-components-passwordfield-button-color: theme(colors.white);
+  --amplify-components-passwordfield-button-hover-color: theme(colors.white);
+  --amplify-components-passwordfield-button-active-color: theme(colors.white);
+  --amplify-components-passwordfield-button-focus-color: theme(colors.white);
+  --amplify-components-passwordfield-button-active-background-color: theme(
+    colors.transparent
+  );
+  --amplify-components-passwordfield-button-hover-background-color: theme(
+    colors.transparent
+  );
+  --amplify-components-passwordfield-button-hover-border-color: theme(
+    colors.bluegray.DEFAULT
+  );
+  --amplify-components-passwordfield-button-focus-border-color: theme(
+    colors.bluegray.DEFAULT
+  );
+
   --amplify-components-authenticator-router-border-color: theme(
     borderColor.bluegray.DEFAULT
   );
@@ -54,11 +105,6 @@ html:is(.dark) [data-amplify-authenticator] {
     colors.blue.d6
   );
 }
-
-/* 
-html:is(.dark) [data-amplify-authenticator] [data-state="inactive"] {
-  background-color: transparent;
-} */
 
 @layer base {
   h1,
