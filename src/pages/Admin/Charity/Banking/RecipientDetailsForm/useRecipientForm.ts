@@ -24,7 +24,7 @@ export default function useRecipientForm(
 
   useEffect(() => {
     methods.setValue("currency", targetCurrency);
-  }, [targetCurrency]);
+  }, [targetCurrency, methods]);
 
   return methods;
 }
