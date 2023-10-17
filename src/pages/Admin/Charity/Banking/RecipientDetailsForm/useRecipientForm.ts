@@ -31,11 +31,19 @@ function getDefaultValues(
       defaultValues[curRequirements.type] = curRequirements.fields.reduce(
         (objectShape, field) => {
           const requirements = field.group[0];
+
+          // react-hook-form turns dot-fields into nested objects, https://github.com/react-hook-form/react-hook-form/issues/3755#issuecomment-943408807
+          const key = requirements.key.replace(".", "__");
+
           if (requirements.type === "text") {
-            objectShape[requirements.key] = "";
+            objectShape[key] = "";
           } else {
-            objectShape[requirements.key] = { label: "", value: "" };
+            objectShape[key] = {
+              label: requirements.example, // this field contains dropdown placeholder text for `select`; for `radio` it's empty string
+              value: "",
+            };
           }
+
           return objectShape;
         },
         {} as Record<string, string | OptionType<string>>

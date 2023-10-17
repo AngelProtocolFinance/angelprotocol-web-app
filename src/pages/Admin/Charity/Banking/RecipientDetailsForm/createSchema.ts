@@ -6,12 +6,7 @@ import {
   object,
   string,
 } from "yup";
-import {
-  AccountRequirements,
-  AccountRequirementsField,
-  CreateRecipientRequest,
-  Group,
-} from "../types";
+import { AccountRequirements, AccountRequirementsField, Group } from "../types";
 import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
 import { OptionType } from "components/Selector";
@@ -26,14 +21,12 @@ export default function createSchema(
     requirements: object(
       accountRequirementsArray.reduce((schema, accountRequirements) => {
         schema[accountRequirements.type] = object(
-          accountRequirements.fields.reduce(
-            (objectShape, field) => {
-              const { key, schema: fieldSchema } = createFieldShape(field);
-              objectShape[key] = fieldSchema;
-              return objectShape;
-            },
-            {} as CreateRecipientRequest["details"]
-          )
+          accountRequirements.fields.reduce((objectShape, field) => {
+            const { key, schema: fieldSchema } = createFieldShape(field);
+            // react-hook-form turns dot-fields into nested objects, https://github.com/react-hook-form/react-hook-form/issues/3755#issuecomment-943408807
+            objectShape[key.replace(".", "__")] = fieldSchema;
+            return objectShape;
+          }, {} as ObjectShape)
         );
         return schema;
       }, {} as ObjectShape)

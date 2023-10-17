@@ -1,7 +1,9 @@
 import { FormProvider } from "react-hook-form";
 import { AccountRequirements } from "../types";
 import { FormValues } from "./types";
-import { Field } from "components/form";
+import { Selector } from "components/Selector";
+import { Field, Label } from "components/form";
+import { isEmpty } from "helpers";
 import useRecipientForm from "./useRecipientForm";
 
 type Props = {
@@ -22,19 +24,40 @@ export default function RecipientDetailsForm({
   const fields = selectedRequirements.fields.map((field) => {
     const requirements = field.group[0];
 
-    if (requirements.type === "text") {
+    // react-hook-form turns dot-fields into nested objects, https://github.com/react-hook-form/react-hook-form/issues/3755#issuecomment-943408807
+    const requirementsKey = requirements.key.replace(".", "__");
+
+    if (
+      requirements.type === "text" ||
+      !requirements.valuesAllowed ||
+      isEmpty(requirements.valuesAllowed)
+    ) {
       return (
         <Field<FormValues>
-          key={`requirements.${selectedRequirements.type}.${requirements.key}`}
+          key={`requirements.${selectedRequirements.type}.${requirementsKey}`}
           classes="field-admin"
-          name={`requirements.${selectedRequirements.type}.${requirements.key}`}
+          name={`requirements.${selectedRequirements.type}.${requirementsKey}`}
           label={requirements.name}
           placeholder={requirements.example}
         />
       );
     }
 
-    return null;
+    return (
+      <div
+        key={`requirements.${selectedRequirements.type}.${requirementsKey}`}
+        className="flex flex-col"
+      >
+        <Label required={requirements.required}>{requirements.name}</Label>
+        <Selector<FormValues, string>
+          name={`requirements.${selectedRequirements.type}.${requirementsKey}`}
+          options={requirements.valuesAllowed.map((valuesAllowed) => ({
+            label: valuesAllowed.name,
+            value: valuesAllowed.key,
+          }))}
+        />
+      </div>
+    );
   });
 
   return <FormProvider {...methods}>{fields}</FormProvider>;
