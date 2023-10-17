@@ -4,28 +4,54 @@ import Icon from "components/Icon";
 import Menu from "./Menu";
 
 export default function UserMenu() {
-  const { user, signOut, route } = useAuthenticator((context) => [
-    context.route,
-  ]);
+  const { authStatus, user, signOut, route, isPending } = useAuthenticator(
+    (context) => [
+      context.authStatus,
+      context.user,
+      context.signOut,
+      context.route,
+      context.isPending,
+    ]
+  );
+
+  const isLoading =
+    authStatus === "configuring" || route === "transition" || isPending;
+
+  const isAuthenticated = authStatus === "authenticated";
 
   return (
     <Popover className="relative">
-      {route === "authenticated" ? (
-        <Popover.Button className="cursor-pointer contents">
-          <Icon type="User" size={24} className="text-white" />
+      {isAuthenticated ? (
+        <Popover.Button
+          disabled={isLoading}
+          className="cursor-pointer contents"
+        >
+          <Icon
+            size={24}
+            type={isLoading ? "Loading" : "User"}
+            className={`text-white disabled:text-gray ${
+              isLoading ? "animate-spin" : ""
+            }`}
+          />
         </Popover.Button>
       ) : (
-        <Popover.Button className="btn-orange px-3 h-10 rounded-lg text-sm">
-          Sign in
+        <Popover.Button
+          className="btn-orange px-3 h-10 rounded-lg text-sm"
+          disabled={isLoading}
+        >
+          Login
         </Popover.Button>
       )}
-      <Popover.Panel className="mt-2 absolute z-10 w-max max-sm:fixed-center sm:right-0">
-        {route === "authenticated" ? (
-          <Menu user={user} signOut={signOut} />
-        ) : (
+
+      {isAuthenticated ? (
+        <Popover.Panel className="mt-2 absolute z-10 w-max right-0">
+          <Menu user={user} signOut={signOut} isLoading={isLoading} />
+        </Popover.Panel>
+      ) : (
+        <Popover.Panel className="mt-2 absolute z-10 w-max max-sm:fixed-center sm:right-0">
           <Authenticator />
-        )}
-      </Popover.Panel>
+        </Popover.Panel>
+      )}
     </Popover>
   );
 }

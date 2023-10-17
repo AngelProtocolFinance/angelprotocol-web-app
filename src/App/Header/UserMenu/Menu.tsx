@@ -1,7 +1,15 @@
 import { WithAuthenticatorProps } from "@aws-amplify/ui-react";
 
-type Props = Required<WithAuthenticatorProps> & { classes?: string };
-export default function Menu({ classes = "", user, signOut }: Props) {
+type Props = Required<WithAuthenticatorProps> & {
+  classes?: string;
+  isLoading: boolean;
+};
+export default function Menu({
+  classes = "",
+  isLoading,
+  user,
+  signOut,
+}: Props) {
   return (
     <div
       className={`${classes} bg-white dark:bg-blue-d6 w-max rounded overflow-hidden`}
@@ -10,11 +18,12 @@ export default function Menu({ classes = "", user, signOut }: Props) {
         {user?.attributes?.email}
       </p>
       <button
+        disabled={isLoading}
         type="button"
         onClick={signOut}
         className="btn-orange rounded-none w-full py-1 px-2 tex-sm"
       >
-        sign out
+        Sign out
       </button>
     </div>
   );
