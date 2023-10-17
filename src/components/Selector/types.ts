@@ -13,12 +13,9 @@ type BaseProps = {
   classes?: Classes;
 };
 
-export interface Props<
-  T extends FieldValues,
-  K extends Path<T>,
-  V extends ValKey,
-> extends BaseProps {
-  name: PathValue<T, K> extends OptionType<V> ? K : never;
+export interface Props<T extends FieldValues, V extends ValKey>
+  extends BaseProps {
+  name: Path<T>;
   placeholder?: string;
   options: OptionType<V>[];
   disabled?: true;

@@ -94,7 +94,7 @@ export default function Form({ classes = "", ...props }: Props) {
           <Label htmlFor="usState" className="mb-2" required={false}>
             State
           </Label>
-          <Selector<FV, "usState", string>
+          <Selector<FV, string>
             name="usState"
             options={states}
             classes={{ container: "bg-white dark:bg-blue-d6" }}
