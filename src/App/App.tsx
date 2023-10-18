@@ -64,7 +64,11 @@ export default function App() {
               <Route path={appRoutes.leaderboard} element={<Leaderboard />} />
               <Route
                 path={`${appRoutes.register}/*`}
-                element={<Registration />}
+                element={
+                  <Protected>
+                    <Registration />
+                  </Protected>
+                }
               />
               <Route path={`${appRoutes.gift}/*`} element={<Gift />} />
               <Route path={appRoutes.marketplace} element={<Marketplace />} />

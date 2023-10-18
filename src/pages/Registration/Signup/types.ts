@@ -1,1 +1,1 @@
-export type FormValues = { email: string; hasAgreedToPrivacyPolicy: boolean };
+export type FormValues = { hasAgreedToPrivacyPolicy: boolean };
