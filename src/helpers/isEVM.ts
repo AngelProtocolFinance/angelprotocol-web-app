@@ -6,7 +6,6 @@ export function isEVM(id: ProviderId) {
     case "evm-wc":
     case "metamask":
     case "xdefi-evm":
-    case "web3auth-torus":
       return true;
     default:
       return false;

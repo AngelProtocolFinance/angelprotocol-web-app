@@ -30,8 +30,7 @@ export type ProviderId =
   | "station"
   | "walletconnect"
   | "keplr-wc"
-  | "keplr"
-  | "web3auth-torus";
+  | "keplr";
 
 export type TransactionStatus = "open" | "approved" | "expired";
 export type EndowmentType = "charity" | "ast" | "daf";

@@ -1,7 +1,6 @@
 import { InjectedProvider, RequestArguments } from "types/evm";
 import { ProviderId } from "types/lists";
 import { Dwindow } from "types/window";
-import web3Auth from "contexts/WalletContext/useWeb3Auth/web3AuthSetup";
 import { _session, account } from "helpers/wallet-connect";
 
 export async function wcProvider(): Promise<Partial<InjectedProvider>> {
@@ -30,8 +29,6 @@ export async function getProvider(
       return dwindow.BinanceChain;
     case "metamask":
       return dwindow.ethereum;
-    case "web3auth-torus":
-      return web3Auth.provider as InjectedProvider;
     /** only used in sendTx */
     case "evm-wc":
       return wcProvider() as Promise<InjectedProvider>;
