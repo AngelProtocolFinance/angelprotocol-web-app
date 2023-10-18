@@ -257,8 +257,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       <setContext.Provider
         value={{
           connections: IS_MOBILE
-            ? //web3 auth should also work on mobile
-              [
+            ? [
                 evmWCConnection,
                 ...(IS_TEST ? [] : [keplrWCConnection]),
                 stationMobileConnection,
