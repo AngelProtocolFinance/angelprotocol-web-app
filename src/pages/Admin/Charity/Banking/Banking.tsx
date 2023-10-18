@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { AccountRequirements } from "./types";
 import useDebouncer from "hooks/useDebouncer";
 import AccountRequirementsSelector from "./AccountRequirementsSelector";
@@ -25,27 +25,36 @@ export default function Banking() {
     setSelectedAccountRequirementsIndex,
   ] = useState<number>();
 
-  useEffect(() => {
-    setAccountRequirements(undefined);
-    setSelectedAccountRequirementsIndex(undefined);
-  }, [targetCurrency]);
+  const updateAccountRequirements = useCallback(
+    (
+      targetCurrency: string | undefined,
+      sourceAmount: number | undefined
+    ): void => {
+      if (!targetCurrency || !sourceAmount) {
+        return;
+      }
+
+      getAccountRequirementOptions(targetCurrency, sourceAmount).then((res) => {
+        setAccountRequirements(res);
+      });
+    },
+    []
+  );
 
   useEffect(() => {
-    if (!!targetCurrency && !!debouncedSourceAmount) {
-      getAccountRequirementOptions(targetCurrency, debouncedSourceAmount).then(
-        (res) => {
-          setAccountRequirements(res);
-        }
-      );
-    }
-  }, [debouncedSourceAmount, targetCurrency]);
+    updateAccountRequirements(targetCurrency, debouncedSourceAmount);
+  }, [debouncedSourceAmount, updateAccountRequirements]);
+
+  const onCurrencyChange = (currency: string) => {
+    setTargetCurrency(currency);
+    setAccountRequirements(undefined);
+    setSelectedAccountRequirementsIndex(undefined);
+    updateAccountRequirements(targetCurrency, debouncedSourceAmount);
+  };
 
   return (
     <div className="flex flex-col gap-5">
-      <CurrencySelector
-        value={targetCurrency}
-        onChange={(currency: string) => setTargetCurrency(currency)}
-      />
+      <CurrencySelector value={targetCurrency} onChange={onCurrencyChange} />
 
       <div className="flex flex-col gap-2">
         <label htmlFor="amount">
