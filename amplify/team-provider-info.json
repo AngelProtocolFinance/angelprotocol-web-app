@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-angelgivingwebapp-dev-161945-authRole",
+      "UnauthRoleArn": "arn:aws:iam::571372027840:role/amplify-angelgivingwebapp-dev-161945-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::571372027840:role/amplify-angelgivingwebapp-dev-161945-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-angelgivingwebapp-dev-161945-deployment",
+      "UnauthRoleName": "amplify-angelgivingwebapp-dev-161945-unauthRole",
+      "StackName": "amplify-angelgivingwebapp-dev-161945",
+      "StackId": "arn:aws:cloudformation:us-east-1:571372027840:stack/amplify-angelgivingwebapp-dev-161945/f1fa2f00-680e-11ee-a142-0ef49d517ab3",
+      "AmplifyAppId": "dpspevs7tj1ov"
+    }
+  }
+}

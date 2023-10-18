@@ -1,3 +1,4 @@
+import "@aws-amplify/ui-react/styles.css";
 import * as Sentry from "@sentry/react";
 import { WalletProvider } from "@terra-money/wallet-provider";
 import { lazy } from "react";
@@ -8,6 +9,7 @@ import useScrollTop from "hooks/useScrollTop";
 import { chainOptions } from "constants/chainOptions";
 import { appRoutes } from "constants/routes";
 import Layout from "./Layout";
+import Protected from "./Protected";
 
 const Admin = lazy(() => import("pages/Admin"));
 const Profile = lazy(() => import("pages/Profile"));
@@ -19,6 +21,7 @@ const Donate = lazy(() => import("pages/Donate"));
 const DonateFiatThanks = lazy(() => import("pages/DonateFiatThanks"));
 const Gift = lazy(() => import("pages/Gift"));
 const DonateWidget = lazy(() => import("pages/DonateWidget"));
+const Signin = lazy(() => import("pages/Signin"));
 
 export default function App() {
   const location = useLocation();
@@ -40,7 +43,14 @@ export default function App() {
                 path={`${appRoutes.profile}/:id/*`}
                 element={<Profile legacy />}
               />
-              <Route path={`${appRoutes.admin}/:id/*`} element={<Admin />} />
+              <Route
+                path={`${appRoutes.admin}/:id/*`}
+                element={
+                  <Protected>
+                    <Admin />
+                  </Protected>
+                }
+              />
 
               <Route
                 path={`${appRoutes.donations}/:address`}
@@ -58,7 +68,7 @@ export default function App() {
               />
               <Route path={`${appRoutes.gift}/*`} element={<Gift />} />
               <Route path={appRoutes.marketplace} element={<Marketplace />} />
-
+              <Route path={appRoutes.signin} element={<Signin />} />
               <Route path={appRoutes.marketplace}>
                 <Route path=":id/*" element={<Profile />} />
                 <Route index element={<Marketplace />} />
