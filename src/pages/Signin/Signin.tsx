@@ -18,7 +18,7 @@ export default function Signin() {
 
   return (
     <div className="grid content-start justify-items-center pt-8 pb-16">
-      <Authenticator />
+      <Authenticator formFields={{ signUp: { name: { order: 1 } } }} />
     </div>
   );
 }

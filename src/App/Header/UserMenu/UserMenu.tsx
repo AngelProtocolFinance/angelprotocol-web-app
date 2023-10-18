@@ -49,7 +49,7 @@ export default function UserMenu() {
         </Popover.Panel>
       ) : (
         <Popover.Panel className="mt-2 absolute z-10 w-max max-sm:fixed-center sm:right-0">
-          <Authenticator />
+          <Authenticator formFields={{ signUp: { name: { order: 1 } } }} />
         </Popover.Panel>
       )}
     </Popover>
