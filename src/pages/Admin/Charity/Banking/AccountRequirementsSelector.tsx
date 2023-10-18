@@ -1,20 +1,14 @@
 import { AccountRequirements } from "./types";
 
 type Props = {
-  accountRequirements?: AccountRequirements[];
-  isLoading: boolean;
+  accountRequirements: AccountRequirements[];
   onChange: (index: number) => void;
 };
 
 export default function AccountRequirementsSelector({
   accountRequirements,
-  isLoading,
   onChange,
 }: Props) {
-  if (isLoading || !accountRequirements) {
-    return <span>Loading...</span>;
-  }
-
   return (
     <div className="flex flex-col gap-2">
       <span>Choose a transfer type:</span>

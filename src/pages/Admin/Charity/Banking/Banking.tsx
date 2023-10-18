@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from "react";
 import { AccountRequirements } from "./types";
-import AccountRequirementsSelector from "./AccountRequirementsSelector";
+import { debounce } from "helpers";
 import CurrencySelector from "./CurrencySelector";
 import RecipientDetailsForm from "./RecipientDetailsForm";
 import getAccountRequirementOptions from "./getAccountRequirementOptions";
@@ -18,15 +18,10 @@ export default function Banking() {
   const [sourceAmount, setSourceAmount] = useState<number>();
   const [accountRequirements, setAccountRequirements] =
     useState<AccountRequirements[]>();
-  const [
-    selectedAccountRequirementsIndex,
-    setSelectedAccountRequirementsIndex,
-  ] = useState<number>();
 
   const onCurrencyChange = (currency: string) => {
     setTargetCurrency(currency);
     setAccountRequirements(undefined);
-    setSelectedAccountRequirementsIndex(undefined);
     if (sourceAmount) {
       getAccountRequirementOptions(currency, sourceAmount).then((res) =>
         setAccountRequirements(res)
@@ -34,17 +29,13 @@ export default function Banking() {
     }
   };
 
-  const debounceAmountChange = debounce((currency: string, amount: number) => {
-    setSourceAmount(amount);
-    getAccountRequirementOptions(currency, amount).then((res) =>
-      setAccountRequirements(res)
-    );
-  }, 1000);
-
   const onAmountChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newSourceAmount = Number(event.target.value) / 10; // random calculation
+    setSourceAmount(newSourceAmount);
     if (targetCurrency) {
-      debounceAmountChange(targetCurrency, newSourceAmount);
+      getAccountRequirementOptions(targetCurrency, newSourceAmount).then(
+        (res) => setAccountRequirements(res)
+      );
     }
   };
 
@@ -59,48 +50,20 @@ export default function Banking() {
         <input
           id="amount"
           type="number"
-          onChange={onAmountChange}
-          value={sourceAmount}
+          onChange={debounce(onAmountChange, 1000)}
           className="field-input"
         />
       </div>
 
       {!!targetCurrency &&
-        // just check that the debounced amount is defined
-        sourceAmount != null && (
-          <>
-            <AccountRequirementsSelector
-              accountRequirements={accountRequirements}
-              isLoading={!accountRequirements}
-              onChange={(index: number) =>
-                setSelectedAccountRequirementsIndex(index)
-              }
-            />
-            {!!accountRequirements &&
-              // just check that the index is defined
-              selectedAccountRequirementsIndex != null && (
-                <RecipientDetailsForm
-                  targetCurrency={targetCurrency}
-                  accountRequirements={accountRequirements}
-                  accountRequirementsIndex={selectedAccountRequirementsIndex}
-                />
-              )}
-          </>
-        )}
+        (!accountRequirements ? (
+          <span>Loading...</span>
+        ) : (
+          <RecipientDetailsForm
+            targetCurrency={targetCurrency}
+            accountRequirements={accountRequirements}
+          />
+        ))}
     </div>
   );
 }
-
-const debounce = <T extends (...args: any[]) => ReturnType<T>>(
-  callback: T,
-  timeout: number
-): ((...args: Parameters<T>) => void) => {
-  let timer: ReturnType<typeof setTimeout>;
-
-  return (...args: Parameters<T>) => {
-    clearTimeout(timer);
-    timer = setTimeout(() => {
-      callback(...args);
-    }, timeout);
-  };
-};
