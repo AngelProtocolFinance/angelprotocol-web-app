@@ -1,6 +1,5 @@
-import { useCallback, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { AccountRequirements } from "./types";
-import useDebouncer from "hooks/useDebouncer";
 import AccountRequirementsSelector from "./AccountRequirementsSelector";
 import CurrencySelector from "./CurrencySelector";
 import RecipientDetailsForm from "./RecipientDetailsForm";
@@ -17,7 +16,6 @@ import getAccountRequirementOptions from "./getAccountRequirementOptions";
 export default function Banking() {
   const [targetCurrency, setTargetCurrency] = useState<string>();
   const [sourceAmount, setSourceAmount] = useState<number>();
-  const [debouncedSourceAmount] = useDebouncer(sourceAmount, 1000);
   const [accountRequirements, setAccountRequirements] =
     useState<AccountRequirements[]>();
   const [
@@ -25,31 +23,29 @@ export default function Banking() {
     setSelectedAccountRequirementsIndex,
   ] = useState<number>();
 
-  const updateAccountRequirements = useCallback(
-    (
-      targetCurrency: string | undefined,
-      sourceAmount: number | undefined
-    ): void => {
-      if (!targetCurrency || !sourceAmount) {
-        return;
-      }
-
-      getAccountRequirementOptions(targetCurrency, sourceAmount).then((res) => {
-        setAccountRequirements(res);
-      });
-    },
-    []
-  );
-
-  useEffect(() => {
-    updateAccountRequirements(targetCurrency, debouncedSourceAmount);
-  }, [debouncedSourceAmount, updateAccountRequirements]);
-
   const onCurrencyChange = (currency: string) => {
     setTargetCurrency(currency);
     setAccountRequirements(undefined);
     setSelectedAccountRequirementsIndex(undefined);
-    updateAccountRequirements(targetCurrency, debouncedSourceAmount);
+    if (sourceAmount) {
+      getAccountRequirementOptions(currency, sourceAmount).then((res) =>
+        setAccountRequirements(res)
+      );
+    }
+  };
+
+  const debounceAmountChange = debounce((currency: string, amount: number) => {
+    setSourceAmount(amount);
+    getAccountRequirementOptions(currency, amount).then((res) =>
+      setAccountRequirements(res)
+    );
+  }, 1000);
+
+  const onAmountChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const newSourceAmount = Number(event.target.value) / 10; // random calculation
+    if (targetCurrency) {
+      debounceAmountChange(targetCurrency, newSourceAmount);
+    }
   };
 
   return (
@@ -60,18 +56,18 @@ export default function Banking() {
         <label htmlFor="amount">
           What is amount of donations you expect to keep on our platform?
         </label>
-        {/** random calculation */}
         <input
           id="amount"
           type="number"
-          onChange={(e) => setSourceAmount(Number(e.target.value) / 10)}
+          onChange={onAmountChange}
+          value={sourceAmount}
           className="field-input"
         />
       </div>
 
       {!!targetCurrency &&
         // just check that the debounced amount is defined
-        debouncedSourceAmount != null && (
+        sourceAmount != null && (
           <>
             <AccountRequirementsSelector
               accountRequirements={accountRequirements}
@@ -94,3 +90,17 @@ export default function Banking() {
     </div>
   );
 }
+
+const debounce = <T extends (...args: any[]) => ReturnType<T>>(
+  callback: T,
+  timeout: number
+): ((...args: Parameters<T>) => void) => {
+  let timer: ReturnType<typeof setTimeout>;
+
+  return (...args: Parameters<T>) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      callback(...args);
+    }, timeout);
+  };
+};
