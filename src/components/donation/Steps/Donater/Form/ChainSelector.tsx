@@ -8,7 +8,10 @@ import { chainIDs } from "constants/chains";
 const SELECTOR_STYLE =
   "flex justify-between items-center w-full p-4 pl-3 font-normal font-body text-sm";
 
-export default function ChainSelector(props: WalletState) {
+export default function ChainSelector({
+  classes = "",
+  ...props
+}: WalletState & { classes?: string }) {
   const { handleError } = useErrorContext();
 
   const { switchChain } = useSetWallet();
@@ -29,7 +32,7 @@ export default function ChainSelector(props: WalletState) {
       className="relative"
     >
       <Listbox.Button
-        className={`${SELECTOR_STYLE} border border-prim rounded`}
+        className={`${classes} ${SELECTOR_STYLE} border border-prim rounded`}
       >
         {({ open }) => (
           <>
@@ -42,7 +45,7 @@ export default function ChainSelector(props: WalletState) {
           </>
         )}
       </Listbox.Button>
-      <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-y-auto flex flex-col border border-prim rounded bg-white dark:bg-blue-d6 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+      <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-y-auto flex flex-col border border-prim rounded bg-white dark:bg-blue-d6 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
         {props.supportedChains.map((suppChain) => (
           <Option key={suppChain.chain_id} {...suppChain} />
         ))}
