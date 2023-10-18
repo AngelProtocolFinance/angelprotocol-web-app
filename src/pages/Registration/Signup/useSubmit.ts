@@ -1,3 +1,4 @@
+import { useAuthenticator } from "@aws-amplify/ui-react";
 import { useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { InitReg } from "../types";
@@ -8,6 +9,7 @@ import { storeRegistrationReference } from "helpers";
 import routes from "../routes";
 
 export default function useSubmit() {
+  const { user } = useAuthenticator((context) => [context.user]);
   const [register] = useNewApplicationMutation();
   const { handleError } = useErrorContext();
   const {
@@ -16,7 +18,12 @@ export default function useSubmit() {
   } = useFormContext<FormValues>();
   const navigate = useNavigate();
 
-  async function onSubmit({ email }: FormValues) {
+  async function onSubmit() {
+    const email = user.attributes?.email;
+    if (!email) {
+      throw new Error("Logged in user has no email attribute");
+    }
+
     try {
       const res = await register({ email }).unwrap();
       const state: InitReg = {
