@@ -28,6 +28,9 @@ const root = createRoot(container as Element);
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRY_DSN,
 });
+
+config.oauth.redirectSignIn = window.location.origin + "/";
+config.oauth.redirectSignOut = window.location.origin + "/";
 Amplify.configure(config);
 
 root.render(
