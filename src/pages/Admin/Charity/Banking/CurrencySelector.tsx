@@ -27,6 +27,12 @@ export default function CurrencySelector({
         >
           EUR
         </button>
+        <button
+          onClick={() => onChange("KRW")}
+          className="btn-orange text-sm w-40"
+        >
+          KRW
+        </button>
       </div>
     </div>
   );
