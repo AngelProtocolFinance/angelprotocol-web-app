@@ -1,13 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { ChainQueryArgs } from "../types";
-import {
-  BaseChain,
-  FetchedChain,
-  PaginatedAWSQueryRes,
-  TokenWithChainID,
-  WithdrawLog,
-  WithdrawLogQueryParams,
-} from "types/aws";
+import { BaseChain, FetchedChain } from "types/aws";
 import { Chain } from "types/tx";
 import { UnsupportedChainError } from "errors/errors";
 import { chainIds } from "constants/chainIds";
@@ -34,16 +27,6 @@ export const apes = createApi({
   endpoints: (builder) => ({
     chains: builder.query<BaseChain[], unknown>({
       query: () => `v1/chains${IS_TEST ? "/test" : ""}`,
-    }),
-    withdrawLogs: builder.query<
-      PaginatedAWSQueryRes<WithdrawLog[]>,
-      WithdrawLogQueryParams
-    >({
-      providesTags: ["withdraw_logs"],
-      query: ({ cw3, ...params }) => ({
-        url: `/${v(3)}/withdraw/${cw3}`,
-        params,
-      }),
     }),
     chain: builder.query<Chain, ChainQueryArgs>({
       providesTags: ["chain"],
@@ -78,15 +61,6 @@ export const apes = createApi({
         }
       },
     }),
-    tokens: builder.query<TokenWithChainID[], unknown>({
-      providesTags: ["tokens"],
-      query: () => `v1/tokens/list${IS_TEST ? "/test" : ""}`,
-      transformResponse(res: TokenWithChainID[]) {
-        //TODO: AWS sort by chain_id
-        res.sort((a, b) => a.chain_id.localeCompare(b.chain_id));
-        return res;
-      },
-    }),
     stripeSessionURL: builder.mutation<{ url: string }, StripeSessionURLParams>(
       {
         query: ({ endowId, liquidSplitPct }) => ({
@@ -118,9 +92,6 @@ export const {
   useChainsQuery,
   useChainQuery,
   useLazyChainQuery,
-  useTokensQuery,
-  useWithdrawLogsQuery,
-  useLazyWithdrawLogsQuery,
   useStripeSessionURLMutation,
   util: {
     invalidateTags: invalidateApesTags,

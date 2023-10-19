@@ -4,8 +4,6 @@ import { FormValues } from "./types";
 import { TokenWithAmount } from "types/tx";
 import { WithWallet } from "contexts/WalletContext";
 import { FormStep } from "slices/gift";
-import { IS_TEST } from "constants/env";
-import { denoms } from "constants/tokens";
 import Form from "./Form";
 import { schema } from "./schema";
 
@@ -14,13 +12,7 @@ export default function Purchaser({
   wallet,
   ...state
 }: WithWallet<FormStep> & { classes?: string }) {
-  const _tokens: TokenWithAmount[] = wallet.coins
-    .filter((t) => IS_TEST || t.token_id === denoms.axlusdc)
-    .map((t) => ({
-      ...t,
-      amount: "0",
-    }));
-
+  const _tokens: TokenWithAmount[] = [];
   const methods = useForm<FormValues>({
     mode: "onChange",
     reValidateMode: "onChange",
