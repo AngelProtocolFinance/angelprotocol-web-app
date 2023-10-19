@@ -18,13 +18,6 @@ export const walletAddr = (network: string = chainIds.juno) =>
         )
   );
 
-export const requiredWalletAddr = (network: string = chainIds.juno) => {
-  return requiredString.matches(
-    getWalletAddrPattern(network),
-    `invalid address`
-  );
-};
-
 export const url = Yup.string()
   .nullable()
   .test({

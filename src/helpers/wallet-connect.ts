@@ -3,7 +3,7 @@ import { SessionTypes } from "@walletconnect/types";
 
 type Name = "Keplr" | "MetaMask Wallet";
 
-export const signClient = SignClient.init({
+const signClient = SignClient.init({
   projectId: "039a7aeef39cb740398760f71a471957",
 });
 

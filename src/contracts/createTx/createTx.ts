@@ -17,7 +17,7 @@ export function createTx<T extends TxType>(
   };
 }
 
-export function encodeTx<T extends TxType>(
+function encodeTx<T extends TxType>(
   type: T,
   options: TxOptions<T>
 ): [string, string] {

@@ -15,5 +15,3 @@ export const EIPMethods = {
 
   //others
 };
-
-export const EMPTY_DATA = "0x";
