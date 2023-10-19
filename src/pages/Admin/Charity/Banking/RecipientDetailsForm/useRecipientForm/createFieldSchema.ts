@@ -33,25 +33,37 @@ function createStringSchema(
     schema = schema.required("required");
   }
   if (requirements.minLength) {
-    schema = schema.min(requirements.minLength);
+    schema = schema.min(
+      requirements.minLength,
+      `Must be at least ${requirements.minLength} charasters`
+    );
   }
   if (requirements.maxLength) {
-    schema = schema.max(requirements.maxLength);
+    schema = schema.max(
+      requirements.maxLength,
+      `Must be at most ${requirements.maxLength} charasters`
+    );
   }
   if (requirements.validationRegexp) {
-    schema = schema.matches(new RegExp(requirements.validationRegexp));
+    schema = schema.matches(
+      new RegExp(requirements.validationRegexp),
+      `Must be a valid ${requirements.name}`
+    );
   }
   if (requirements.validationAsync) {
     const { url, params } = requirements.validationAsync;
-    schema = schema.test((val) =>
-      // Apparently `params` always contains just one parameter.
-      fetch(`${url}?${params[0].key}=${val}`)
-        .then((res) => res.ok)
-        .catch((err) => {
-          console.log("Error fetching accounts requirements");
-          console.log(err);
-          return false;
-        })
+    schema = schema.test(
+      "Field's remote validation",
+      `Must be a valid ${requirements.name}`,
+      (val) =>
+        // Apparently `params` always contains just one parameter.
+        fetch(`${url}?${params[0].key}=${val}`)
+          .then((res) => res.ok)
+          .catch((err) => {
+            console.log("Error fetching accounts requirements");
+            console.log(err);
+            return false;
+          })
     );
   }
   return schema;
@@ -69,6 +81,10 @@ function createOptionsTypeSchema(
   }
   if (requirements.valuesAllowed) {
     schema = schema.test(
+      "Allowed values",
+      `Must be one of: ${requirements.valuesAllowed
+        .map((x) => x.key)
+        .join(", ")}`,
       (val) => !!requirements.valuesAllowed?.find((x) => val.value === x.key)
     );
   }
