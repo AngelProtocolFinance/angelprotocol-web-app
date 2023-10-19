@@ -8,8 +8,6 @@ export type RegistrationStatus =
   | "Active"
   | "Rejected";
 
-export type ApplicationStatus = "inactive" | "under-review" | "active";
-
 export type ReferralMethods =
   | ""
   | "referral"
@@ -153,16 +151,6 @@ export type ContactUpdateResult = {
 };
 
 export type DocsUpdateResult = InitReg & TDocumentation;
-
-/** shape used in Review proposals table */
-export type EndowmentProposal = Pick<
-  InitReg & Proposal,
-  "PK" | "RegistrationDate" | "RegistrationStatus"
-> &
-  OrgData &
-  TDocumentation &
-  Pick<InitContact, "Email"> &
-  Proposal;
 
 export type SubmitResult = {
   RegistrationStatus: RegistrationStatus;
