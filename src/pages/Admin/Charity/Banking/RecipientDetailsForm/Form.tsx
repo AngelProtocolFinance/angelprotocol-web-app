@@ -18,8 +18,26 @@ export default function Form({ accountRequirements }: Props) {
 
         const name: Path<FormValues> = `requirements.${accountRequirements.type}.${requirementsKey}`;
 
+        if (requirements.type === "date") {
+          return (
+            <Field<FormValues, "date">
+              key={name}
+              name={name}
+              type="date"
+              label={requirements.name}
+              required={requirements.required}
+              classes={{
+                input: "date-input uppercase",
+                container: "field-admin",
+              }}
+            />
+          );
+        }
+
         if (
           requirements.type === "text" ||
+          // if by any chance there are fields that are of type `"text"`, but DO have `valuesAllowed` defined,
+          // they should be treated as selectors
           !requirements.valuesAllowed ||
           isEmpty(requirements.valuesAllowed)
         ) {
@@ -29,6 +47,7 @@ export default function Form({ accountRequirements }: Props) {
               name={name}
               label={requirements.name}
               placeholder={requirements.example}
+              required={requirements.required}
               classes="field-admin"
             />
           );

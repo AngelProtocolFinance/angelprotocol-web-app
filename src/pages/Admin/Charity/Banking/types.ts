@@ -13,7 +13,7 @@ export interface Field {
 export interface Group {
   key: string;
   name: string;
-  type: "radio" | "select" | "text";
+  type: "radio" | "select" | "text" | "date";
   refreshRequirementsOnChange: boolean;
   required: boolean;
   displayFormat: null;

@@ -13,8 +13,9 @@ type FieldSchema = {
 export default function createFieldSchema(field: Field): FieldSchema {
   const requirements = field.group[0];
 
+  // type === "date" will be validated using `requirements.validationRegexp`
   const schema =
-    requirements.type === "text"
+    requirements.type === "text" || requirements.type === "date"
       ? createStringSchema(requirements)
       : createOptionsTypeSchema(requirements);
 

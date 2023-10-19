@@ -13,7 +13,7 @@ export default function getDefaultValues(
 
           const key = undot(requirements.key);
 
-          if (requirements.type === "text") {
+          if (requirements.type === "text" || requirements.type === "date") {
             objectShape[key] = "";
           } else {
             objectShape[key] = {
