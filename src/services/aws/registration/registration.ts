@@ -125,22 +125,6 @@ const registration_api = aws.injectEndpoints({
       transformResponse: (response: AWSQueryRes<EndowmentProposal[]>) =>
         response.Items,
     }),
-    /**TODO this should return a value
-     * { isEmailVerified } so to redirect already verified user if trying to
-     * verify again
-     */
-    requestEmail: builder.mutation<any, { uuid: string; email: string }>({
-      invalidatesTags: [{ type: "admin", id: adminTags.registration }],
-      query: ({ uuid, email }) => {
-        return {
-          url: "v3/registration/build-email",
-          method: "POST",
-          params: { uuid, type: "verify-email" },
-          body: { Email: email },
-        };
-      },
-      transformResponse: (response: { data: any }) => response,
-    }),
     submit: builder.mutation<SubmitResult, { ref: string; chain_id: string }>({
       invalidatesTags: [{ type: "admin", id: adminTags.registration }],
       query: ({ ref, chain_id }) => ({
@@ -167,6 +151,5 @@ export const {
   //mutations
   useUpdateRegMutation,
   useNewApplicationMutation,
-  useRequestEmailMutation,
   useSubmitMutation,
 } = registration_api;

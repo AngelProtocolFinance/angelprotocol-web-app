@@ -5,21 +5,10 @@ import {
 } from "types/aws";
 import { SemiPartial } from "types/utils";
 
-export type MultisigConfig = {
-  threshold: number;
-  requireExecution: boolean;
-  duration: number;
-};
-
 export type ChainQueryArgs = {
   address: string;
   chainId: string;
 };
-
-export interface IERC20 {
-  amount: string;
-  address: string;
-}
 
 export type ProfileUpdateMsg = SemiPartial<
   EndowmentProfileUpdate,
@@ -61,7 +50,6 @@ export type FiscalSponsorhipAgreementSigner =
     }
   | string; //signerEID;
 
-export type WalletProfileVersion = "legacy" | "latest";
 export type VersionSpecificWalletProfile = WalletProfile & {
   version: "legacy" | "latest";
 };

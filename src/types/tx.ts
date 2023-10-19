@@ -1,7 +1,6 @@
 import { CreateTxOptions, Msg } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { Except } from "type-fest";
-import { ValueOf } from "type-fest";
 import type { Any } from "@keplr-wallet/proto-types/google/protobuf/any";
 import { FetchedChain, Token } from "./aws";
 import { Allowance, Transfer } from "./contracts/erc20";
@@ -24,7 +23,6 @@ export type Chain = Omit<FetchedChain, "native_currency" | "tokens"> & {
 };
 
 // //////////// SEND TX ////////////
-
 export type EstimatedTx =
   | { type: "cosmos"; val: SignDoc; attribute?: string }
   | {
@@ -52,7 +50,7 @@ type Fee = { amount: number; symbol: string; coinGeckoId: string };
 export type Estimate = { fee: Fee; tx: EstimatedTx };
 
 // //////////// HOOK SENDER & PROMPT ////////////
-export type TxSuccessMeta = {
+type TxSuccessMeta = {
   message: string;
   link?: { url: string; description: string };
 };
@@ -60,7 +58,7 @@ export type TxSuccessMeta = {
 type SuccessState = { success: TxSuccessMeta; tx?: SubmittedTx };
 
 export type TxState = TxLoading | TxError | SuccessState;
-export type TxOnSuccess = (result: TxSuccess, chain: Chain) => void;
+type TxOnSuccess = (result: TxSuccess, chain: Chain) => void;
 
 export type SenderArgs = {
   tagPayloads?: TagPayload[];
@@ -83,54 +81,13 @@ export function isTxLoading(tx: TxState): tx is TxLoading {
   return "loading" in tx;
 }
 
-// ///// TX META
-
-type MetaToken = Pick<Token, "symbol" | "logo"> & { amount: number };
-
-export type WithdrawMeta = {
-  beneficiary: string;
-  tokens: MetaToken[];
-};
-
-export type AccountStatusMeta = {
-  beneficiary: string; //endow id: .. | index fund: .. |
-};
-
-export type ThresholdMeta = {
-  curr: number;
-  new: number;
-};
-
-export type DurationMeta = {
-  curr: string;
-  new: string;
-};
-
-export type OwnerMeta = {
-  curr: string;
-  new: string;
-};
-
-export type TransferMeta = {
-  to: string;
-  token: MetaToken;
-};
-
-export type MultisigMembersMeta = {
-  addresses: string[];
-  action: "add" | "remove";
-};
-
-type Tx<T extends Tupleable, M> = {
-  meta: M;
+type Tx<T extends Tupleable> = {
   args: T;
 };
 
-export type ID = { id: number };
-
 type Txs = {
-  "erc20.transfer": Tx<Transfer, TransferMeta>;
-  "erc20.approve": Tx<Allowance, never>; //not multisig tx
+  "erc20.transfer": Tx<Transfer>;
+  "erc20.approve": Tx<Allowance>; //not multisig tx
 };
 
 export type TxType = keyof Txs;
@@ -141,11 +98,6 @@ export type TxOptions<T extends TxType> = T extends `${infer C}.${string}`
   ? Txs[T]["args"] & { [key in C]: string }
   : Empty;
 
-export type Metadata<T extends TxType> = Txs[T]["meta"];
-export type TxMeta = ValueOf<{
-  [K in keyof Txs]: { id: K; data?: Txs[K]["meta"] };
-}> & { title: string; description: string };
-
 export type Transaction = {
   transactionId: number;
   recordId: string;
@@ -153,5 +105,4 @@ export type Transaction = {
   status: TransactionStatus;
   confirmations: string[];
   owners: string[];
-  meta?: TxMeta;
 };

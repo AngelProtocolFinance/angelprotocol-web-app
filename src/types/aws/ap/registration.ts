@@ -38,7 +38,7 @@ export type ContactRoles =
   | "treasurer"
   | "vice-president";
 
-export type InitReg = {
+type InitReg = {
   PK: string;
   SK: "Registration";
   RegistrationDate: string /** ISO string*/;
@@ -102,7 +102,7 @@ export type InitApplication = {
   Metadata: InitMeta;
 };
 
-export type OrgData = { OrganizationName: string };
+type OrgData = { OrganizationName: string };
 
 type Append<Reg extends InitApplication, T, U, V> = {
   Registration: Reg["Registration"] & T;
@@ -124,7 +124,7 @@ export type DoneDocs = Append<DoneContact, TDocumentation, {}, NewEndow>;
 type Proposal = {
   application_id: number;
 };
-export type InReview = Append<DoneDocs, Proposal, {}, {}>;
+type InReview = Append<DoneDocs, Proposal, {}, {}>;
 
 export type SavedRegistration =
   | InitApplication
@@ -153,9 +153,6 @@ export type ContactUpdateResult = {
 };
 
 export type DocsUpdateResult = InitReg & TDocumentation;
-
-/** alias to provide context outside registration */
-export type Application = DoneDocs;
 
 /** shape used in Review proposals table */
 export type EndowmentProposal = Pick<

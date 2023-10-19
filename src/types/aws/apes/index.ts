@@ -42,8 +42,8 @@ export type FetchedChain = BaseChain & {
   type: "juno-native" | "terra-native" | "evm-native" | "placeholder"; // | "sol" | "btc" | ...
 };
 
-export type RouteStatus = "OK" | "DEPOSIT_CONFIRMED" | "PENDING";
-export type RouterId = "axelar" | "connext";
+type RouteStatus = "OK" | "DEPOSIT_CONFIRMED" | "PENDING";
+type RouterId = "axelar" | "connext";
 
 type WithdrawRoute = {
   id: RouterId;
@@ -81,15 +81,4 @@ export type WithdrawLogQueryParams = {
   start?: number; //to load next page, set start to ItemCutOff + 1
   limit?: number; // Number of items to be returned per request. If not provided, API defaults to return all
   proposal_status?: string | null; // comma separated ProposalStatus values
-};
-
-export type BridgeFees = {
-  binance: number;
-  ethereum: number;
-  "terra-2": number;
-  juno: number;
-};
-export type BridgeFeesRes = {
-  deposit: BridgeFees;
-  withdraw: BridgeFees;
 };
