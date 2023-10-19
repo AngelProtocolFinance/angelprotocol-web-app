@@ -41,12 +41,10 @@ function createStringSchema(
     schema = schema.matches(new RegExp(requirements.validationRegexp));
   }
   if (requirements.validationAsync) {
+    const { url, params } = requirements.validationAsync;
     schema = schema.test((val) =>
-      fetch(
-        // Seems to always be one parameter. We can update when proved otherwise
-        `${requirements.validationAsync!.url}?${requirements.validationAsync
-          ?.params[0].key}=${val}`
-      )
+      // Apparently `params` always contains just one parameter.
+      fetch(`${url}?${params[0].key}=${val}`)
         .then((res) => res.ok)
         .catch((err) => {
           console.log("Error fetching accounts requirements");
