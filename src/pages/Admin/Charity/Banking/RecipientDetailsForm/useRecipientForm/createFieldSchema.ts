@@ -1,45 +1,18 @@
-import {
-  AnyObject,
-  ObjectSchema,
-  ObjectShape,
-  StringSchema,
-  object,
-  string,
-} from "yup";
-import { AccountRequirements, AccountRequirementsField, Group } from "../types";
-import { FormValues } from "./types";
-import { SchemaShape } from "schemas/types";
+import { AnyObject, ObjectSchema, StringSchema, object, string } from "yup";
+import { AccountRequirementsField, Group } from "../../types";
 import { OptionType } from "components/Selector";
 import { requiredString } from "schemas/string";
 
-export default function createSchema(
-  accountRequirementsArray: AccountRequirements[]
-): ObjectSchema<FormValues> {
-  return object<any, SchemaShape<FormValues>>({
-    currency: requiredString,
-    accountHolderName: requiredString,
-    requirements: object(
-      accountRequirementsArray.reduce((schema, accountRequirements) => {
-        schema[accountRequirements.type] = object(
-          accountRequirements.fields.reduce((objectShape, field) => {
-            const { key, schema: fieldSchema } = createFieldShape(field);
-            // react-hook-form turns dot-fields into nested objects, https://github.com/react-hook-form/react-hook-form/issues/3755#issuecomment-943408807
-            objectShape[key.replace(".", "__")] = fieldSchema;
-            return objectShape;
-          }, {} as ObjectShape)
-        );
-        return schema;
-      }, {} as ObjectShape)
-    ),
-  }) as ObjectSchema<FormValues>;
-}
-
-function createFieldShape(field: AccountRequirementsField): {
+type FieldSchema = {
   key: string;
   schema:
     | StringSchema<string | undefined, AnyObject, undefined, "">
     | ObjectSchema<OptionType<string>, any, OptionType<string>, "">;
-} {
+};
+
+export default function createFieldSchema(
+  field: AccountRequirementsField
+): FieldSchema {
   const requirements = field.group[0];
 
   const schema =
@@ -87,7 +60,9 @@ function createStringSchema(
   return schema;
 }
 
-function createOptionsTypeSchema(requirements: Group) {
+function createOptionsTypeSchema(
+  requirements: Group
+): ObjectSchema<OptionType<string>, AnyObject, any, ""> {
   let schema: ObjectSchema<OptionType<string>> = object({
     label: requiredString,
     value: requiredString,

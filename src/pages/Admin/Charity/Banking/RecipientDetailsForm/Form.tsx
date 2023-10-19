@@ -13,7 +13,8 @@ export default function Form({ accountRequirements }: Props) {
       {accountRequirements.fields.map((field) => {
         const requirements = field.group[0];
 
-        // react-hook-form turns dot-fields into nested objects, https://github.com/react-hook-form/react-hook-form/issues/3755#issuecomment-943408807
+        // `react-hook-form` turns dot-fields into nested objects, causing weird behavior.
+        // To solve, turn dots into some other character https://github.com/react-hook-form/react-hook-form/issues/3755#issuecomment-943408807
         const requirementsKey = requirements.key.replace(".", "__");
 
         const name: Path<FormValues> = `requirements.${accountRequirements.type}.${requirementsKey}`;
