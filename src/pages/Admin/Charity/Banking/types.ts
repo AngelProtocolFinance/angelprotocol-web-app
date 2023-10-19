@@ -2,10 +2,10 @@ export interface AccountRequirements {
   type: string;
   title: string;
   usageInfo: string | null;
-  fields: AccountRequirementsField[];
+  fields: Field[];
 }
 
-export interface AccountRequirementsField {
+export interface Field {
   name: string;
   group: Group[];
 }

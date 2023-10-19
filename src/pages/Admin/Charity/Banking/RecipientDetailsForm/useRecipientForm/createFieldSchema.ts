@@ -1,5 +1,5 @@
 import { AnyObject, ObjectSchema, StringSchema, object, string } from "yup";
-import { AccountRequirementsField, Group } from "../../types";
+import { Field, Group } from "../../types";
 import { OptionType } from "components/Selector";
 import { requiredString } from "schemas/string";
 
@@ -10,9 +10,7 @@ type FieldSchema = {
     | ObjectSchema<OptionType<string>, any, OptionType<string>, "">;
 };
 
-export default function createFieldSchema(
-  field: AccountRequirementsField
-): FieldSchema {
+export default function createFieldSchema(field: Field): FieldSchema {
   const requirements = field.group[0];
 
   const schema =
