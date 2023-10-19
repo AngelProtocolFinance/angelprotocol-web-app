@@ -7,7 +7,6 @@ import { Allowance, Transfer } from "./contracts/erc20";
 import { SignDoc } from "./cosmos";
 import { Tupleable } from "./evm";
 import { EVMTx, LogProcessor, SimulTx } from "./evm";
-import { TransactionStatus } from "./lists";
 import { TagPayload } from "./third-party/redux";
 
 export type TokenWithBalance = Token & { balance: number };
@@ -97,12 +96,3 @@ type Empty = { [key: string]: never };
 export type TxOptions<T extends TxType> = T extends `${infer C}.${string}`
   ? Txs[T]["args"] & { [key in C]: string }
   : Empty;
-
-export type Transaction = {
-  transactionId: number;
-  recordId: string;
-  expiry: number;
-  status: TransactionStatus;
-  confirmations: string[];
-  owners: string[];
-};

@@ -154,24 +154,6 @@ export interface LeaderboardEntry {
   //charity_owner:string
 }
 
-export type AWSstrategy = {
-  strategy_key: string;
-  chain_id: string;
-  routerAxelarChainName: string;
-  router: string;
-  apy: number; // 5.2
-  contract: string;
-  description: string;
-  icon: string;
-  market_cap: number; // 100,024,000 USD
-  name: string;
-  provider: { name: string; url: string; icon: string };
-  rating: string; // "AAA";
-  type: string; // "Uncollateralized Lending";
-  vaults: { locked: string; liquid: string };
-  website: string;
-};
-
 export interface Update {
   endowments: LeaderboardEntry[];
   last_update: string;

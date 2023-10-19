@@ -1,20 +1,10 @@
 import { toBase64 as base64FromU8a, toUtf8 as toU8a } from "@cosmjs/encoding";
-import { AbiCoder } from "@ethersproject/abi";
 
 export {
   fromBase64 as u8aFromBase64,
   fromHex as u8aFromHex,
 } from "@cosmjs/encoding";
 export { base64FromU8a, toU8a };
-
-export function toAbiStr(obj: object) {
-  const coder = new AbiCoder();
-  return coder.encode(["string"], [JSON.stringify(obj)]);
-}
-export function fromAbiStr<T>(encoded: string) {
-  const coder = new AbiCoder();
-  return JSON.parse(coder.decode(["string"], encoded)[0]) as T;
-}
 
 /**
  *

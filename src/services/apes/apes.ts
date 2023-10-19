@@ -1,13 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { ChainQueryArgs } from "../types";
-import {
-  BaseChain,
-  FetchedChain,
-  PaginatedAWSQueryRes,
-  TokenWithChainID,
-  WithdrawLog,
-  WithdrawLogQueryParams,
-} from "types/aws";
+import { BaseChain, FetchedChain, TokenWithChainID } from "types/aws";
 import { Chain } from "types/tx";
 import { UnsupportedChainError } from "errors/errors";
 import { chainIds } from "constants/chainIds";
@@ -34,16 +27,6 @@ export const apes = createApi({
   endpoints: (builder) => ({
     chains: builder.query<BaseChain[], unknown>({
       query: () => `v1/chains${IS_TEST ? "/test" : ""}`,
-    }),
-    withdrawLogs: builder.query<
-      PaginatedAWSQueryRes<WithdrawLog[]>,
-      WithdrawLogQueryParams
-    >({
-      providesTags: ["withdraw_logs"],
-      query: ({ cw3, ...params }) => ({
-        url: `/${v(3)}/withdraw/${cw3}`,
-        params,
-      }),
     }),
     chain: builder.query<Chain, ChainQueryArgs>({
       providesTags: ["chain"],
@@ -119,8 +102,6 @@ export const {
   useChainQuery,
   useLazyChainQuery,
   useTokensQuery,
-  useWithdrawLogsQuery,
-  useLazyWithdrawLogsQuery,
   useStripeSessionURLMutation,
   util: {
     invalidateTags: invalidateApesTags,

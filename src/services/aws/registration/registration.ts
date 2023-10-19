@@ -1,12 +1,7 @@
+import { FiscalSponsorhipAgreementSigner } from "../../types";
 import {
-  ApplicationStatusOptions,
-  FiscalSponsorhipAgreementSigner,
-} from "../../types";
-import {
-  AWSQueryRes,
   ContactUpdateResult,
   DocsUpdateResult,
-  EndowmentProposal,
   InitApplication,
   RegistrationUpdate,
   SavedRegistration,
@@ -111,20 +106,6 @@ const registration_api = aws.injectEndpoints({
       },
     }),
 
-    endowmentApplications: builder.query<
-      EndowmentProposal[],
-      ApplicationStatusOptions
-    >({
-      providesTags: [{ type: "admin", id: adminTags.applications }],
-      query: (status) => {
-        return {
-          url: `${v(2)}/registration/list`,
-          params: { regStatus: status },
-        };
-      },
-      transformResponse: (response: AWSQueryRes<EndowmentProposal[]>) =>
-        response.Items,
-    }),
     submit: builder.mutation<SubmitResult, { ref: string; chain_id: string }>({
       invalidatesTags: [{ type: "admin", id: adminTags.registration }],
       query: ({ ref, chain_id }) => ({
@@ -145,7 +126,6 @@ export const {
   //queries
   useRegQuery,
   useLazyRegQuery,
-  useEndowmentApplicationsQuery,
   useFiscalSponsorshipAgreementSigningURLMutation,
 
   //mutations

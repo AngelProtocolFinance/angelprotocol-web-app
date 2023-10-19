@@ -14,30 +14,3 @@ export function DivContainer({
     </fieldset>
   );
 }
-
-export function FormContainer({
-  className = "",
-  children,
-  ...props
-}: React.FormHTMLAttributes<HTMLFormElement>) {
-  return (
-    <form {...props} className={containerClass + " " + className}>
-      <fieldset className="contents" disabled={!!props["aria-disabled"]}>
-        {children}
-      </fieldset>
-    </form>
-  );
-}
-
-export function GroupContainer({
-  children,
-  className = "",
-}: PropsWithChildren<{ className?: string }>) {
-  return (
-    <div
-      className={`p-3 pb-6 grid gap-6 rounded bg-gray-l6 dark:bg-blue-d5 border border-prim ${className}`}
-    >
-      {children}
-    </div>
-  );
-}

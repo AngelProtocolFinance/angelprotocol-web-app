@@ -64,22 +64,6 @@ export const url = Yup.string()
     },
   });
 
-export const stringByteSchema = (minBytes: number, maxBytes: number) =>
-  Yup.string()
-    .required(`required`)
-    .test("min_length", `too short`, getBytesComparer("gt", minBytes))
-    .test("max_length", `too long`, getBytesComparer("lt", maxBytes));
-
-function getBytesComparer(comparison: "gt" | "lt", num_bytes: number) {
-  return function (str?: string) {
-    if (comparison === "gt") {
-      return new Blob([str || ""]).size > num_bytes;
-    } else {
-      return new Blob([str || ""]).size <= num_bytes;
-    }
-  };
-}
-
 function getWalletAddrPattern(network: string) {
   switch (network) {
     case chainIds.binance:
