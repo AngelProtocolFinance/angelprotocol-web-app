@@ -11,4 +11,3 @@ export * from "./maskAddress";
 export * from "./theme";
 export * from "./encoding";
 export * from "./registration";
-export * from "./getTypedKeys";

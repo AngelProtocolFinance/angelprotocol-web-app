@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { ChainQueryArgs } from "../types";
-import { BaseChain, FetchedChain, TokenWithChainID } from "types/aws";
+import { BaseChain, FetchedChain } from "types/aws";
 import { Chain } from "types/tx";
 import { UnsupportedChainError } from "errors/errors";
 import { chainIds } from "constants/chainIds";
@@ -61,15 +61,6 @@ export const apes = createApi({
         }
       },
     }),
-    tokens: builder.query<TokenWithChainID[], unknown>({
-      providesTags: ["tokens"],
-      query: () => `v1/tokens/list${IS_TEST ? "/test" : ""}`,
-      transformResponse(res: TokenWithChainID[]) {
-        //TODO: AWS sort by chain_id
-        res.sort((a, b) => a.chain_id.localeCompare(b.chain_id));
-        return res;
-      },
-    }),
     stripeSessionURL: builder.mutation<{ url: string }, StripeSessionURLParams>(
       {
         query: ({ endowId, liquidSplitPct }) => ({
@@ -101,7 +92,6 @@ export const {
   useChainsQuery,
   useChainQuery,
   useLazyChainQuery,
-  useTokensQuery,
   useStripeSessionURLMutation,
   util: {
     invalidateTags: invalidateApesTags,

@@ -1,8 +1,4 @@
-import {
-  ApplicationStatus,
-  EndowmentProfileUpdate,
-  WalletProfile,
-} from "types/aws";
+import { EndowmentProfileUpdate, WalletProfile } from "types/aws";
 import { SemiPartial } from "types/utils";
 
 export type ChainQueryArgs = {
@@ -53,5 +49,3 @@ export type FiscalSponsorhipAgreementSigner =
 export type VersionSpecificWalletProfile = WalletProfile & {
   version: "legacy" | "latest";
 };
-
-export type ApplicationStatusOptions = Exclude<ApplicationStatus, "inactive">;
