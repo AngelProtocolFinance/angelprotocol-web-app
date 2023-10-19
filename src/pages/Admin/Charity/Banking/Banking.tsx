@@ -56,6 +56,7 @@ export default function Banking() {
       </div>
 
       {!!targetCurrency &&
+        !!sourceAmount &&
         (!accountRequirements ? (
           <span>Loading...</span>
         ) : (
