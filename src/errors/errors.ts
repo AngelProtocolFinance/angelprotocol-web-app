@@ -1,5 +1,4 @@
 import { WithoutInstallers } from "contexts/WalletContext/types";
-import { Chain } from "types/tx";
 import { WALLET_METADATA } from "contexts/WalletContext/constants";
 import { chainIds } from "constants/chainIds";
 import { EMAIL_SUPPORT, EXPECTED_NETWORK_TYPE } from "constants/env";
@@ -99,18 +98,6 @@ export class CosmosTxSimulationFail extends APError {
     message = "Submission aborted. This transaction is likely to fail"
   ) {
     super("CosmosTxSimulationFail", message);
-  }
-}
-
-export class TxResultFail extends Error {
-  chain: Chain;
-  txHash: string;
-  constructor(chain: Chain, txHash: string) {
-    //No need to dump to user technical details of why result failed, a link to failed tx is sufficient
-    super("Failed to broadcast transaction");
-    this.chain = chain;
-    this.txHash = txHash;
-    this.name = "TxResultFail";
   }
 }
 

@@ -5,7 +5,7 @@ import { SortDirection } from "../ap";
  * put all aws/apes definitions here, if big category exist, separate in a file
  */
 
-export type TokenType =
+type TokenType =
   | "juno-native"
   | "terra-native"
   | "evm-native"
@@ -45,7 +45,7 @@ export type FetchedChain = BaseChain & {
 export type RouteStatus = "OK" | "DEPOSIT_CONFIRMED" | "PENDING";
 export type RouterId = "axelar" | "connext";
 
-export type WithdrawRoute = {
+type WithdrawRoute = {
   id: RouterId;
   output_symbol: string;
   output_amount: number;
