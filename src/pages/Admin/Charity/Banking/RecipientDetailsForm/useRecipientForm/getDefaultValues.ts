@@ -1,5 +1,6 @@
 import { AccountRequirements } from "../../types";
 import { FormValues } from "../types";
+import { undot } from "../dot";
 
 export default function getDefaultValues(
   accountRequirements: AccountRequirements[]
@@ -10,9 +11,7 @@ export default function getDefaultValues(
         (objectShape, field) => {
           const requirements = field.group[0];
 
-          // `react-hook-form` turns dot-fields into nested objects, causing weird behavior.
-          // To solve, turn dots into some other character https://github.com/react-hook-form/react-hook-form/issues/3755#issuecomment-943408807
-          const key = requirements.key.replace(".", "__");
+          const key = undot(requirements.key);
 
           if (requirements.type === "text") {
             objectShape[key] = "";

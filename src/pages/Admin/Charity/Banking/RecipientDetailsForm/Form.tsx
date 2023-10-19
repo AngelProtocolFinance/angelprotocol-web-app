@@ -4,6 +4,7 @@ import { FormValues } from "./types";
 import { Selector } from "components/Selector";
 import { Field, Label } from "components/form";
 import { isEmpty } from "helpers";
+import { undot } from "./dot";
 
 type Props = { accountRequirements: AccountRequirements };
 
@@ -13,9 +14,7 @@ export default function Form({ accountRequirements }: Props) {
       {accountRequirements.fields.map((field) => {
         const requirements = field.group[0];
 
-        // `react-hook-form` turns dot-fields into nested objects, causing weird behavior.
-        // To solve, turn dots into some other character https://github.com/react-hook-form/react-hook-form/issues/3755#issuecomment-943408807
-        const requirementsKey = requirements.key.replace(".", "__");
+        const requirementsKey = undot(requirements.key);
 
         const name: Path<FormValues> = `requirements.${accountRequirements.type}.${requirementsKey}`;
 
