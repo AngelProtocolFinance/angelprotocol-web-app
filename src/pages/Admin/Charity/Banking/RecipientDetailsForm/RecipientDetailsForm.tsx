@@ -14,10 +14,7 @@ export default function RecipientDetailsForm({
   accountRequirements,
   targetCurrency,
 }: Props) {
-  const [
-    selectedAccountRequirementsIndex,
-    setSelectedAccountRequirementsIndex,
-  ] = useState<number>();
+  const [selectedIndex, setSelectedIndex] = useState<number>();
 
   const methods = useRecipientForm(targetCurrency, accountRequirements);
 
@@ -25,15 +22,11 @@ export default function RecipientDetailsForm({
     <>
       <AccountRequirementsSelector
         accountRequirements={accountRequirements}
-        onChange={(index: number) => setSelectedAccountRequirementsIndex(index)}
+        onChange={(index: number) => setSelectedIndex(index)}
       />
       <FormProvider {...methods}>
-        {selectedAccountRequirementsIndex != null && (
-          <Form
-            accountRequirements={
-              accountRequirements[selectedAccountRequirementsIndex]
-            }
-          />
+        {selectedIndex != null && (
+          <Form accountRequirements={accountRequirements[selectedIndex]} />
         )}
       </FormProvider>
     </>
