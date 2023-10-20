@@ -6,10 +6,16 @@ import { Field, Label } from "components/form";
 import { isEmpty } from "helpers";
 import { undot } from "./dot";
 
-export default function RequirementField({ data }: { data: Group }) {
+export default function RequirementField({
+  data,
+  index,
+}: {
+  data: Group;
+  index: number;
+}) {
   const requirementsKey = undot(data.key);
 
-  const name: Path<FormValues> = `requirements.${requirementsKey}`;
+  const name: Path<FormValues> = `requirements.${index}.${requirementsKey}`;
 
   if (data.type === "date") {
     return (
