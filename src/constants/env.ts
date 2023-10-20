@@ -5,12 +5,13 @@ export const IS_MOBILE = isMobile();
 
 // THE CONSTANTS BELOW ARE ALL CONFIGURED BY ENVIRONMENT VARIABLES
 // AND DISPLAY THE DESIRED TEXT/IMAGES/URLS/ETC THROUGHOUT THE APP
-export const SEO_IMAGE = process.env.REACT_APP_SEO_IMAGE;
+export const SEO_IMAGE =
+  "https://charity-profile-images.s3.amazonaws.com/logo/angelprotocol-wings-bl.png";
 export const LOGO_IMG_DARK = process.env.REACT_APP_LOGO_IMG_DARK;
-export const EMAIL_SUPPORT = process.env.REACT_APP_EMAIL_SUPPORT;
-export const APP_NAME = process.env.REACT_APP_APP_NAME;
-export const BASE_URL = `https://${process.env.REACT_APP_BASE_DOMAIN}`;
-export const DAPP_URL = `https://${process.env.REACT_APP_DAPP_DOMAIN}`;
+export const EMAIL_SUPPORT = "support@angelgiving.io";
+export const APP_NAME = "Angel Giving";
+export const BASE_URL = "https://angelgiving.io";
+export const DAPP_URL = "https://app.angelgiving.io";
 
 // NETWORK TYPE
 const NETWORK: "TESTNET" | "LOCAL" | undefined /** mainnet if not specified */ =
