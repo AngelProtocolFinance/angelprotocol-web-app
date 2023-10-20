@@ -36,9 +36,14 @@ export default function createRules(
       : undefined,
     validate:
       data.validationAsync || data.valuesAllowed
-        ? async (value) => {
+        ? async (fieldValue) => {
+            const value = getValue(fieldValue);
+            if (!value) {
+              return "required";
+            }
+
             if (data.valuesAllowed) {
-              if (!data.valuesAllowed?.find((x) => getValue(value) === x.key)) {
+              if (!data.valuesAllowed?.find((x) => value === x.key)) {
                 return `must be one of: ${data.valuesAllowed
                   .map((x) => x.key)
                   .join(", ")}`;
