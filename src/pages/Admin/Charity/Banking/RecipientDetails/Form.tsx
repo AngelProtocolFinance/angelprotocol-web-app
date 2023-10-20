@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FormProvider } from "react-hook-form";
 import { AccountRequirements, CreateRecipientRequest } from "../types";
 import { FormValues } from "./types";
@@ -14,10 +14,13 @@ type Props = {
 };
 
 export default function Form(props: Props) {
-  const methods = useRecipientForm(
+  const { methods, refreshRequirementsOnChange } = useRecipientForm(
     props.accountRequirements,
     props.targetCurrency,
     props.defaultValues
+  );
+  const [refreshRequirements, setRefreshRequirements] = useState(
+    refreshRequirementsOnChange
   );
 
   const {
@@ -27,8 +30,13 @@ export default function Form(props: Props) {
 
   const onSubmit = handleSubmit(async (formValues) => {
     const request = convertToCreateRecipientRequest(formValues);
-    console.log("request");
-    console.log(request);
+    if (refreshRequirements) {
+      console.log("load additional fields");
+      setRefreshRequirements(false);
+    } else {
+      console.log("request");
+      console.log(request);
+    }
   });
 
   const { onCleanup } = props;
