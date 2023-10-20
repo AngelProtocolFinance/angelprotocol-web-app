@@ -2,7 +2,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FV } from "./types";
 import {
-  EndowDesignation,
   EndowmentProfileUpdate,
   EndowmentProfile as TProfile,
 } from "types/aws";
@@ -13,7 +12,6 @@ import { unsdgs } from "constants/unsdgs";
 import { useAdminContext } from "../../Context";
 import Seo from "../Seo";
 import Form from "./Form";
-import { getEndowDesignationLabelValuePair } from "./getEndowDesignationLabelValuePair";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import { schema } from "./schema";
 import { toProfileUpdate } from "./update";
@@ -60,9 +58,7 @@ function FormWithContext(props: TProfile & { id: number }) {
     },
     logo: { name: "", publicUrl: props.logo ?? "", preview: props.logo ?? "" },
     endow_designation: init.endow_designation
-      ? getEndowDesignationLabelValuePair(
-          init.endow_designation as EndowDesignation
-        )
+      ? { label: init.endow_designation, value: init.endow_designation }
       : { label: "", value: "" },
     hq_country: { flag: "", name: props.hq_country ?? "", code: "" },
     sdgs: init.sdgs.map((x) => getSDGLabelValuePair(x, unsdgs[x].title)),

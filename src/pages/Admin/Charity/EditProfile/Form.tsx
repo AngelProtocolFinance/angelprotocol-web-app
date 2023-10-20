@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { FV } from "./types";
+import { EndowDesignation } from "types/aws";
 import { UNSDG_NUMS } from "types/lists";
 import ActivityCountries from "components/ActivityCountries";
 import CountrySelector from "components/CountrySelector";
@@ -9,7 +10,6 @@ import { RichTextEditor } from "components/RichText";
 import { MultiSelector, Selector } from "components/Selector";
 import Toggle from "components/Toggle";
 import { Field, Label } from "components/form";
-import { ENDOW_DESIGNATIONS } from "constants/common";
 import { appRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
 import Group from "./common/Group";
@@ -20,6 +20,14 @@ import useEditProfile from "./useEditProfile";
 const sdgOptions = Object.entries(unsdgs).map(([key, { title }]) =>
   getSDGLabelValuePair(key, title)
 );
+
+const endowDesignations: EndowDesignation[] = [
+  "Charity",
+  "Religious Organization",
+  "University",
+  "Hospital",
+  "Other",
+];
 
 export default function Form() {
   const { isSubmitting, id, editProfile, reset } = useEditProfile();
@@ -116,9 +124,9 @@ export default function Form() {
         </Label>
         <Selector<FV, "endow_designation", string>
           name="endow_designation"
-          options={ENDOW_DESIGNATIONS.map((option) => ({
-            label: option.label,
-            value: option.value,
+          options={endowDesignations.map((designation) => ({
+            label: designation,
+            value: designation,
           }))}
         />
         <Label className="-mb-4">Headquarters</Label>

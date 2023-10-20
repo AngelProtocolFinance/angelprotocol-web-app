@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "../types";
+import { EndowDesignation } from "types/aws";
 import ActivityCountries from "components/ActivityCountries";
 import CountrySelector from "components/CountrySelector";
 import ExtLink from "components/ExtLink";
 import { MultiSelector, Selector } from "components/Selector";
 import { CheckField, Field, Label, Radio } from "components/form";
 import { FileDropzone, LoadText } from "components/registration";
-import { ENDOW_DESIGNATIONS } from "constants/common";
 import { APP_NAME } from "constants/env";
 import { unsdgs } from "constants/unsdgs";
 import { TERMS_OF_USE } from "constants/urls";
@@ -15,6 +15,14 @@ import { useRegState } from "../../StepGuard";
 import { MB_LIMIT } from "../schema";
 // import { CashEligibleCheckbox } from "./CashEligibleCheckbox";
 import useSubmit from "./useSubmit";
+
+const endowDesignations: EndowDesignation[] = [
+  "Charity",
+  "Religious Organization",
+  "University",
+  "Hospital",
+  "Other",
+];
 
 export default function Form() {
   const { data } = useRegState<2>();
@@ -75,9 +83,9 @@ export default function Form() {
       </Label>
       <Selector<FV, "endowDesignation", string>
         name="endowDesignation"
-        options={ENDOW_DESIGNATIONS.map((option) => ({
-          label: option.label,
-          value: option.value,
+        options={endowDesignations.map((designation) => ({
+          label: designation,
+          value: designation,
         }))}
       />
       <Label className="mt-6 mb-2" required>
