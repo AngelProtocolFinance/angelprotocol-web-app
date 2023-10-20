@@ -45,5 +45,5 @@ export type CreateRecipientRequest = {
   currency: string;
   type: string;
   accountHolderName: string;
-  details: Record<string, string | number>;
+  details: Record<string, string>;
 };
