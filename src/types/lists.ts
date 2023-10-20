@@ -32,5 +32,4 @@ export type ProviderId =
   | "keplr-wc"
   | "keplr";
 
-export type TransactionStatus = "open" | "approved" | "expired";
 export type EndowmentType = "charity" | "ast" | "daf";

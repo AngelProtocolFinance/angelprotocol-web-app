@@ -96,7 +96,7 @@ export type EndowmentProfileUpdate = {
   contact_email: string;
   // categories_sdgs: UNSDG_NUMS[];
   contributor_verification_required: boolean;
-  endow_designation: string;
+  endow_designation: EndowDesignation | "";
   hq_country: string;
   image: string;
   kyc_donors_only: boolean;
