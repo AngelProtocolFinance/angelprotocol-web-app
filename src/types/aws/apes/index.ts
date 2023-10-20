@@ -1,5 +1,4 @@
-import { NetworkType, TransactionStatus } from "../../lists";
-import { SortDirection } from "../ap";
+import { NetworkType } from "../../lists";
 
 /**
  * put all aws/apes definitions here, if big category exist, separate in a file
