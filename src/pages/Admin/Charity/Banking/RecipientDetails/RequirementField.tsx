@@ -1,8 +1,8 @@
-import { Path } from "react-hook-form";
+import { Path, useFormContext } from "react-hook-form";
 import { Group } from "../types";
 import { FormValues } from "./types";
 import { Selector } from "components/Selector";
-import { Field, Label } from "components/form";
+import { FieldController, Label } from "components/form";
 import { isEmpty } from "helpers";
 import { undot } from "./dot";
 
@@ -13,14 +13,18 @@ export default function RequirementField({
   data: Group;
   index: number;
 }) {
+  const { control } = useFormContext<FormValues>();
   const requirementsKey = undot(data.key);
 
   const name: Path<FormValues> = `requirements.${index}.${requirementsKey}`;
 
   if (data.type === "date") {
     return (
-      <Field<FormValues, "date">
-        name={name}
+      <FieldController<FormValues, "date">
+        controlProps={{
+          control,
+          name,
+        }}
         type="date"
         label={data.name}
         required={data.required}
@@ -40,8 +44,11 @@ export default function RequirementField({
     isEmpty(data.valuesAllowed)
   ) {
     return (
-      <Field<FormValues>
-        name={name}
+      <FieldController<FormValues>
+        controlProps={{
+          control,
+          name,
+        }}
         label={data.name}
         placeholder={data.example}
         required={data.required}
