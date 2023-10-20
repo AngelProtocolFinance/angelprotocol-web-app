@@ -34,13 +34,13 @@ const DOLLAR_SIGN = "$";
  * To solve, turn dots into some other character https://github.com/react-hook-form/react-hook-form/issues/3755#issuecomment-943408807
  *
  * @param key string
- * @returns string with dot characters (.) replaced with dollar signs ($)
+ * @returns same string with dot characters (.) replaced with dollar signs ($)
  * */
 export const undot = (key: string): string => key.replace(DOT, DOLLAR_SIGN);
 
 /**
  * @see {@link undot}
  * @param key string
- * @returns string with dollar signs ($) replaced with dot characters (.)
+ * @returns same string with dollar signs ($) replaced with dot characters (.)
  */
 export const redot = (key: string): string => key.replace(DOLLAR_SIGN, DOT);

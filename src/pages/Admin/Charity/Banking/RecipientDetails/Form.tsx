@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { FormProvider } from "react-hook-form";
-import { AccountRequirements } from "../types";
+import { AccountRequirements, CreateRecipientRequest } from "../types";
 import { FormValues } from "./types";
 import RequirementField from "./RequirementField";
+import { redot } from "./dot";
 import useRecipientForm from "./useRecipientForm";
 
 type Props = {
@@ -25,8 +26,9 @@ export default function Form(props: Props) {
   } = methods;
 
   const onSubmit = handleSubmit(async (formValues) => {
-    console.log("formValues");
-    console.log(formValues);
+    const request = convertToCreateRecipientRequest(formValues);
+    console.log("request");
+    console.log(request);
   });
 
   const { onCleanup } = props;
@@ -58,4 +60,21 @@ export default function Form(props: Props) {
       </form>
     </FormProvider>
   );
+}
+
+function convertToCreateRecipientRequest(
+  formValues: FormValues
+): CreateRecipientRequest {
+  return {
+    accountHolderName: formValues.accountHolderName,
+    currency: formValues.currency,
+    type: formValues.type,
+    details: Object.entries(formValues.requirements).reduce(
+      (details, [key, value]) => {
+        details[redot(key)] = typeof value === "object" ? value.value : value;
+        return details;
+      },
+      {} as CreateRecipientRequest["details"]
+    ),
+  };
 }
