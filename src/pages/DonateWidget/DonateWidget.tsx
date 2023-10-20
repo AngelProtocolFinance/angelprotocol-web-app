@@ -1,11 +1,10 @@
 import { useEffect } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import { useProfileQuery } from "services/aws/aws";
-import Image from "components/Image";
+import { DappLogo } from "components/Image";
 import LoaderRing from "components/LoaderRing";
 import QueryLoader from "components/QueryLoader";
 import { idParamToNum, setToLightMode } from "helpers";
-import { LOGO_DARK } from "constants/common";
 import Content from "./Content";
 
 //light mode by default
@@ -41,7 +40,7 @@ export default function DonateWidget() {
         {(profile) => <Content profile={profile} searchParams={searchParams} />}
       </QueryLoader>{" "}
       <footer className="grid place-items-center h-20 w-full bg-blue dark:bg-blue-d3">
-        <Image className="w-20" {...LOGO_DARK} />
+        <DappLogo classes="w-20" />
       </footer>
     </div>
   );
