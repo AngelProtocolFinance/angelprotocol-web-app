@@ -3,7 +3,6 @@ import { createElement } from "react";
 import {
   FieldValues,
   UseControllerProps,
-  get,
   useController,
 } from "react-hook-form";
 import { Classes } from "./types";
@@ -42,6 +41,7 @@ export function FieldController<
 }: FieldProps<T, K>) {
   const {
     field,
+    fieldState: { invalid },
     formState: { errors, isSubmitting },
   } = useController(controlProps);
 
@@ -59,7 +59,7 @@ export function FieldController<
         ...field,
         ...(type === textarea ? {} : { type }),
         id,
-        "aria-invalid": !!get(errors, field.name)?.message,
+        "aria-invalid": invalid,
         disabled: isSubmitting || disabled,
         className: `${input}`,
         autoComplete: "off",

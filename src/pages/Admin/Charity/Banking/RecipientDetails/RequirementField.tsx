@@ -4,27 +4,24 @@ import { FormValues } from "./types";
 import { Selector } from "components/Selector";
 import { FieldController, Label } from "components/form";
 import { isEmpty } from "helpers";
-import { undot } from "./dot";
+import createRules from "./createRules";
 
-export default function RequirementField({
-  data,
-  index,
-}: {
+type Props = {
   data: Group;
   index: number;
-}) {
-  const { control } = useFormContext<FormValues>();
-  const requirementsKey = undot(data.key);
+};
 
-  const name: Path<FormValues> = `requirements.${index}.${requirementsKey}`;
+export default function RequirementField({ data, index }: Props) {
+  const { control } = useFormContext<FormValues>();
+
+  const name: Path<FormValues> = `requirements.${index}.value`;
+
+  const rules = createRules(data);
 
   if (data.type === "date") {
     return (
       <FieldController<FormValues, "date">
-        controlProps={{
-          control,
-          name,
-        }}
+        controlProps={{ control, name, rules }}
         type="date"
         label={data.name}
         required={data.required}
@@ -45,10 +42,7 @@ export default function RequirementField({
   ) {
     return (
       <FieldController<FormValues>
-        controlProps={{
-          control,
-          name,
-        }}
+        controlProps={{ control, name, rules }}
         label={data.name}
         placeholder={data.example}
         required={data.required}
@@ -62,6 +56,7 @@ export default function RequirementField({
       <Label required={data.required}>{data.name}</Label>
       <Selector<FormValues, string>
         name={name}
+        rules={rules}
         options={data.valuesAllowed.map((valuesAllowed) => ({
           label: valuesAllowed.name,
           value: valuesAllowed.key,

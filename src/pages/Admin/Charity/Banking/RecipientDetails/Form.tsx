@@ -84,11 +84,8 @@ function convertToCreateRecipientRequest(
     currency: formValues.currency,
     type: formValues.type,
     details: formValues.requirements.reduce<Record<string, string>>(
-      (details, requirement) => {
-        Object.keys(requirement).forEach((key) => {
-          const value = requirement[key];
-          details[redot(key)] = typeof value === "object" ? value.value : value;
-        });
+      (details, { key, value }) => {
+        details[redot(key)] = typeof value === "object" ? value.value : value;
         return details;
       },
       {}

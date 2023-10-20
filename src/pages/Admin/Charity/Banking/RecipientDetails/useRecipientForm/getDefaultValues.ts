@@ -25,7 +25,7 @@ export default function getDefaultValues(
               value: "",
             };
 
-      return { [key]: value };
+      return { key, value };
     }),
   };
 }

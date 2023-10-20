@@ -9,6 +9,7 @@ import { styles, valueKey } from "./constants";
 
 export function Selector<T extends FieldValues, V extends ValKey>({
   name,
+  rules,
   disabled,
   options,
   children,
@@ -19,9 +20,7 @@ export function Selector<T extends FieldValues, V extends ValKey>({
   const {
     formState: { isSubmitting, errors },
     field: { value: selected, onChange, ref },
-  } = useController<{ [index: string]: OptionType<V> }>({ name });
-
-  const valuePath = `${name}.${valueKey}`;
+  } = useController<T>({ name, rules });
 
   const isDisabled = isSubmitting || disabled;
   return (
@@ -39,7 +38,7 @@ export function Selector<T extends FieldValues, V extends ValKey>({
       >
         <FocusableInput ref={ref} />
         <Listbox.Button
-          aria-invalid={!!get(errors, valuePath)?.message}
+          aria-invalid={!!get(errors, name)?.message}
           aria-disabled={isDisabled}
           as="button"
           className={`${button} ${styles.selectorButton}`}
@@ -71,7 +70,7 @@ export function Selector<T extends FieldValues, V extends ValKey>({
             ))}
         </Listbox.Options>
         <ErrorMessage
-          name={valuePath}
+          name={name as any}
           errors={errors}
           as="p"
           className="absolute -bottom-5 right-0 text-right text-xs text-red dark:text-red-l2"
