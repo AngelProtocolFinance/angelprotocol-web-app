@@ -1,6 +1,6 @@
 import { Listbox } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
-import { FieldValues, get, useController } from "react-hook-form";
+import { FieldValues, useController } from "react-hook-form";
 import { Props } from "./types";
 import { OptionType, ValKey } from "types/utils";
 import { DrawerIcon } from "components/Icon";
@@ -18,6 +18,7 @@ export function Selector<T extends FieldValues, V extends ValKey>({
 }: Props<T, V>) {
   const { container = "", button = "" } = classes || {};
   const {
+    fieldState: { invalid },
     formState: { isSubmitting, errors },
     field: { value: selected, onChange, ref },
   } = useController<T>({ name, rules });
@@ -38,7 +39,7 @@ export function Selector<T extends FieldValues, V extends ValKey>({
       >
         <FocusableInput ref={ref} />
         <Listbox.Button
-          aria-invalid={!!get(errors, name)?.message}
+          aria-invalid={invalid}
           aria-disabled={isDisabled}
           as="button"
           className={`${button} ${styles.selectorButton}`}
