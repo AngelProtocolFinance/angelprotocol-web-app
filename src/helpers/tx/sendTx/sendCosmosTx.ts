@@ -89,14 +89,12 @@ async function _receipt(
   return _receipt(url, retries - 1, hash, chain);
 }
 
-export function _attribute(attribute: string, logs: Log[]) {
+function _attribute(attribute: string, logs: Log[]) {
   return logs[0].events
     .find((e) => e.type === "wasm")
     ?.attributes.find((a) => a.key === attribute)?.value;
 }
 
-export function isReceiptError(
-  result: TxResponse | TxError
-): result is TxError {
+function isReceiptError(result: TxResponse | TxError): result is TxError {
   return "error" in result;
 }

@@ -1,7 +1,7 @@
 import { EndowDesignation } from "types/aws";
 import { IconType } from "components/Icon";
 import { ImageProps } from "components/Image";
-import { BASE_URL, EMAIL_SUPPORT, LOGO_IMG_DARK, LOGO_IMG_LIGHT } from "./env";
+import { BASE_URL, EMAIL_SUPPORT, LOGO_IMG_DARK } from "./env";
 
 export const GENERIC_ERROR_MESSAGE = `An error occurred. Please get in touch with ${EMAIL_SUPPORT} if the problem persists.`;
 
@@ -11,14 +11,6 @@ export const LOGO_DARK: ImageProps = {
   src: LOGO_IMG_DARK,
   title: "Go to Marketing page",
 };
-export const LOGO_LIGHT: ImageProps = {
-  href: BASE_URL,
-  src: LOGO_IMG_LIGHT,
-  title: "Go to Marketing page",
-};
-
-export const titleCase = (word: string) =>
-  word.charAt(0).toUpperCase() + word.substr(1);
 
 // AS OF NOW, ONLY APPLIES TO CHARITY ENDOWMENTS
 export const ENDOW_DESIGNATIONS: {

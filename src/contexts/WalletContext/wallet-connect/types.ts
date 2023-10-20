@@ -1,6 +1,3 @@
-import { ProviderId } from "types/lists";
-
-export type WalletMeta = { logo: string; name: string; providerId: ProviderId };
 type Loading = { status: "loading" };
 
 export type Connected = {

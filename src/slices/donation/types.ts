@@ -1,4 +1,3 @@
-import { Token } from "types/aws";
 import { Country } from "types/countries";
 import { EstimatedTx, TokenWithAmount } from "types/tx";
 import { WalletState } from "contexts/WalletContext";
@@ -67,7 +66,6 @@ export type DonateArgs = { donation: SubmitStep } & {
   tx: EstimatedTx;
 };
 
-export type FiatToken = Pick<Token, "symbol" | "min_donation_amnt" | "logo">;
 export type WithWallet<T> = T & { wallet: WalletState };
 
 export type DonationStep = DonationState["step"];
