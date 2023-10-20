@@ -7,21 +7,17 @@ import { undot } from "../dot";
 import createFieldSchema from "./createFieldSchema";
 
 export default function createSchema(
-  accountRequirementsArray: AccountRequirements[]
+  accountRequirements: AccountRequirements
 ): ObjectSchema<FormValues> {
   return object<any, SchemaShape<FormValues>>({
     currency: requiredString,
     accountHolderName: requiredString,
+    type: requiredString,
     requirements: object(
-      accountRequirementsArray.reduce((schema, accountRequirements) => {
-        schema[accountRequirements.type] = object(
-          accountRequirements.fields.reduce((objectShape, field) => {
-            const { key, schema: fieldSchema } = createFieldSchema(field);
-            objectShape[undot(key)] = fieldSchema;
-            return objectShape;
-          }, {} as ObjectShape)
-        );
-        return schema;
+      accountRequirements.fields.reduce((objectShape, field) => {
+        const { key, schema: fieldSchema } = createFieldSchema(field);
+        objectShape[undot(key)] = fieldSchema;
+        return objectShape;
       }, {} as ObjectShape)
     ),
   }) as ObjectSchema<FormValues>;

@@ -1,4 +1,4 @@
-import { AccountRequirements } from "./types";
+import { AccountRequirements } from "../types";
 
 type Props = {
   accountRequirements: AccountRequirements[];

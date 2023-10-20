@@ -6,18 +6,18 @@ import createSchema from "./createSchema";
 import getDefaultValues from "./getDefaultValues";
 
 export default function useRecipientForm(
+  accountRequirements: AccountRequirements,
   targetCurrency: string,
-  accountRequirements: AccountRequirements[]
+  defaultValues: FormValues = getDefaultValues(
+    accountRequirements,
+    targetCurrency
+  )
 ): UseFormReturn<FormValues, any, undefined> {
   const schema = createSchema(accountRequirements);
 
   const methods = useForm<FormValues>({
     resolver: yupResolver(schema),
-    defaultValues: {
-      currency: targetCurrency,
-      accountHolderName: "ENDOWMENT_NAME",
-      requirements: getDefaultValues(accountRequirements),
-    },
+    defaultValues: defaultValues,
   });
 
   return methods;

@@ -2,7 +2,7 @@ import { ChangeEvent, useState } from "react";
 import { AccountRequirements } from "./types";
 import { debounce } from "helpers";
 import CurrencySelector from "./CurrencySelector";
-import RecipientDetailsForm from "./RecipientDetailsForm";
+import RecipientDetails from "./RecipientDetails";
 import getAccountRequirementOptions from "./getAccountRequirementOptions";
 
 // TODO: Once recipient is created by filling fields returned using `GET /v1/account-requirements?source=EUR&target=USD&sourceAmount=1000`
@@ -60,7 +60,7 @@ export default function Banking() {
         (!accountRequirements ? (
           <span>Loading...</span>
         ) : (
-          <RecipientDetailsForm
+          <RecipientDetails
             targetCurrency={targetCurrency}
             accountRequirements={accountRequirements}
           />
