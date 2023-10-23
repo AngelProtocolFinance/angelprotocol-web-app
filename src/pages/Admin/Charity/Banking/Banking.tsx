@@ -41,6 +41,7 @@ export default function Banking() {
 
       {!!targetCurrency && !!sourceAmount && (
         <RecipientDetails
+          key={`${targetCurrency}${sourceAmount}`}
           targetCurrency={targetCurrency}
           sourceAmount={sourceAmount}
         />
