@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { FormProvider, useFieldArray } from "react-hook-form";
-import { AccountRequirements, CreateRecipientRequest } from "../types";
+import { AccountRequirements, CreateRecipientRequest, Quote } from "../types";
 import { FormValues } from "./types";
+import { useErrorContext } from "contexts/ErrorContext";
+import useTypedWiseMutation from "../useTypedWiseMutation";
 import RequirementField from "./RequirementField";
 import { redot } from "./dot";
 import useRecipientForm from "./useRecipientForm";
@@ -10,7 +12,9 @@ type Props = {
   accountRequirements: AccountRequirements;
   defaultValues: FormValues;
   onCleanup: (formValues: FormValues) => void;
+  onRefreshRequirements: (accountRequirements: AccountRequirements[]) => void;
   targetCurrency: string;
+  quote: Quote;
 };
 
 export default function Form(props: Props) {
@@ -26,17 +30,22 @@ export default function Form(props: Props) {
     name: "requirements",
     control: methods.control,
   });
+  const { postAccountRequirements } = useTypedWiseMutation();
+  const { handleError } = useErrorContext();
 
   const {
     handleSubmit,
     formState: { isSubmitting },
   } = methods;
 
-  const onSubmit = handleSubmit(async (formValues) => {
+  const onSubmit = handleSubmit((formValues) => {
     const request = convertToCreateRecipientRequest(formValues);
     if (refreshRequirements) {
       console.log("load additional fields");
       setRefreshRequirements(false);
+      postAccountRequirements(props.quote.id, request)
+        .then((accReqs) => props.onRefreshRequirements(accReqs))
+        .catch((error) => handleError(error));
     } else {
       console.log("request");
       console.log(request);

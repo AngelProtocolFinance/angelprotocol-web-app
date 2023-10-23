@@ -47,3 +47,5 @@ export type CreateRecipientRequest = {
   accountHolderName: string;
   details: Record<string, string>;
 };
+
+export type Quote = { id: string };

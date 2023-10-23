@@ -1,5 +1,5 @@
 import { useCallback, useReducer } from "react";
-import { AccountRequirements } from "../types";
+import { AccountRequirements, Quote } from "../types";
 import { FormValues } from "./types";
 import AccountRequirementsSelector from "./AccountRequirementsSelector";
 import Form from "./Form";
@@ -7,11 +7,15 @@ import Form from "./Form";
 type Props = {
   targetCurrency: string;
   accountRequirements: AccountRequirements[];
+  onRefreshRequirements: (newRequirements: AccountRequirements[]) => void;
+  quote: Quote;
 };
 
 export default function RecipientDetails({
   accountRequirements,
   targetCurrency,
+  quote,
+  onRefreshRequirements,
 }: Props) {
   const [state, dispatch] = useReducer(reducer, {
     formValuesArray: [],
@@ -37,6 +41,8 @@ export default function RecipientDetails({
           key={`form-${accountRequirements[state.selectedIndex].type}`}
           accountRequirements={accountRequirements[state.selectedIndex]}
           targetCurrency={targetCurrency}
+          quote={quote}
+          onRefreshRequirements={onRefreshRequirements}
           defaultValues={state.formValuesArray[state.selectedIndex]}
           onCleanup={updateDefaultValues}
         />

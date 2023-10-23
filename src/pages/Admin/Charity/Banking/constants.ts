@@ -1,3 +1,4 @@
+import { CreateRecipientRequest } from "./types";
 import { WiseRequest } from "services/types";
 
 export const WISE_REQUESTS = {
@@ -15,9 +16,13 @@ export const WISE_REQUESTS = {
     url: `/v1/quotes/${quoteId}/account-requirements`,
     headers: { "Accept-Minor-Version": "1" },
   }),
-  postAccountRequirements: (quoteId: string): WiseRequest => ({
+  postAccountRequirements: (
+    quoteId: string,
+    createRecipientRequest: CreateRecipientRequest
+  ): WiseRequest => ({
     method: "POST",
     url: `/v1/quotes/${quoteId}/account-requirements`,
     headers: { "Accept-Minor-Version": "1" },
+    payload: JSON.stringify(createRecipientRequest),
   }),
 } as const;

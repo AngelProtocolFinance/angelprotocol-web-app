@@ -1,15 +1,16 @@
 import { useCallback } from "react";
-import { AccountRequirements } from "./types";
+import { AccountRequirements, CreateRecipientRequest, Quote } from "./types";
 import { WiseRequest } from "services/types";
 import { useWiseMutation } from "services/aws/aws";
 import { WISE_REQUESTS } from "./constants";
 
-type Quote = { id: string };
-
 type Result = {
   createQuote: (targetCurrency: string, sourceAmount: number) => Promise<Quote>;
   getAccountRequirements: (quoteId: string) => Promise<AccountRequirements[]>;
-  postAccountRequirements: (quoteId: string) => Promise<AccountRequirements[]>;
+  postAccountRequirements: (
+    quoteId: string,
+    createRecipientRequest: CreateRecipientRequest
+  ) => Promise<AccountRequirements[]>;
   state: ReturnType<typeof useWiseMutation>[1];
 };
 
@@ -40,9 +41,12 @@ export default function useTypedWiseMutation(): Result {
   );
 
   const postAccountRequirements = useCallback(
-    async (quoteId: string): Promise<AccountRequirements[]> =>
+    async (
+      quoteId: string,
+      createRecipientRequest: CreateRecipientRequest
+    ): Promise<AccountRequirements[]> =>
       send<AccountRequirements[]>(
-        WISE_REQUESTS.postAccountRequirements(quoteId)
+        WISE_REQUESTS.postAccountRequirements(quoteId, createRecipientRequest)
       ),
     [send]
   );

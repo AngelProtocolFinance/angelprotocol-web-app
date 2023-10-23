@@ -1,5 +1,5 @@
-import { ChangeEvent, useCallback, useState } from "react";
-import { AccountRequirements } from "./types";
+import { ChangeEvent, useCallback, useReducer } from "react";
+import { AccountRequirements, Quote } from "./types";
 import { useErrorContext } from "contexts/ErrorContext";
 import { debounce } from "helpers";
 import CurrencySelector from "./CurrencySelector";
@@ -15,26 +15,40 @@ import useTypedWiseMutation from "./useTypedWiseMutation";
 // https://docs.wise.com/api-docs/api-reference/recipient#account-requirements
 
 export default function Banking() {
-  const [targetCurrency, setTargetCurrency] = useState<string>();
-  const [sourceAmount, setSourceAmount] = useState<number>();
-  const [accountRequirements, setAccountRequirements] =
-    useState<AccountRequirements[]>();
+  const [
+    { targetCurrency, sourceAmount, accountRequirements, quote },
+    dispatch,
+  ] = useReducer(reducer, {
+    targetCurrency: undefined,
+    sourceAmount: undefined,
+    accountRequirements: undefined,
+    quote: undefined,
+  });
+
   const { createQuote, getAccountRequirements } = useTypedWiseMutation();
   const { handleError } = useErrorContext();
 
   const handleAccountRequirementsChange = useCallback(
     async (targetCurrency: string, sourceAmount: number): Promise<void> => {
       return createQuote(targetCurrency, sourceAmount)
-        .then((quote) => getAccountRequirements(quote.id))
-        .then((accReqs) => setAccountRequirements(accReqs))
+        .then((quote) =>
+          getAccountRequirements(quote.id).then((accountRequirements) =>
+            dispatch({
+              type: "getAccountRequirements",
+              payload: {
+                quote,
+                accountRequirements,
+              },
+            })
+          )
+        )
         .catch((error) => handleError(error));
     },
     [createQuote, getAccountRequirements, handleError]
   );
 
   const onCurrencyChange = (currency: string) => {
-    setTargetCurrency(currency);
-    setAccountRequirements(undefined);
+    dispatch({ type: "targetCurrency", payload: currency });
     if (sourceAmount) {
       handleAccountRequirementsChange(currency, sourceAmount);
     }
@@ -42,7 +56,7 @@ export default function Banking() {
 
   const onAmountChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newSourceAmount = Number(event.target.value) / 10; // random calculation
-    setSourceAmount(newSourceAmount);
+    dispatch({ type: "sourceAmount", payload: newSourceAmount });
     if (targetCurrency) {
       handleAccountRequirementsChange(targetCurrency, newSourceAmount);
     }
@@ -66,14 +80,81 @@ export default function Banking() {
 
       {!!targetCurrency &&
         !!sourceAmount &&
-        (!accountRequirements ? (
+        (!quote || !accountRequirements ? (
           <span>Loading...</span>
         ) : (
           <RecipientDetails
             targetCurrency={targetCurrency}
             accountRequirements={accountRequirements}
+            onRefreshRequirements={(newRequirements) =>
+              dispatch({
+                type: "refreshRequirements",
+                payload: newRequirements,
+              })
+            }
+            quote={quote}
           />
         ))}
     </div>
   );
+}
+
+type State = {
+  targetCurrency: string | undefined;
+  sourceAmount: number | undefined;
+  accountRequirements: AccountRequirements[] | undefined;
+  quote: Quote | undefined;
+};
+
+type Action =
+  | {
+      type: "getAccountRequirements";
+      payload: {
+        accountRequirements: AccountRequirements[];
+        quote: Quote;
+      };
+    }
+  | {
+      type: "refreshRequirements";
+      payload: AccountRequirements[];
+    }
+  | {
+      type: "sourceAmount";
+      payload: number;
+    }
+  | {
+      type: "targetCurrency";
+      payload: string;
+    };
+
+function reducer(state: State, action: Action): State {
+  switch (action.type) {
+    case "getAccountRequirements":
+      return {
+        ...state,
+        accountRequirements: action.payload.accountRequirements,
+        quote: action.payload.quote,
+      };
+    case "refreshRequirements":
+      return {
+        ...state,
+        accountRequirements: action.payload,
+      };
+    case "sourceAmount":
+      return {
+        ...state,
+        sourceAmount: action.payload,
+        accountRequirements: undefined,
+        quote: undefined,
+      };
+    case "targetCurrency":
+      return {
+        ...state,
+        targetCurrency: action.payload,
+        accountRequirements: undefined,
+        quote: undefined,
+      };
+    default:
+      return state;
+  }
 }
