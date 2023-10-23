@@ -1,11 +1,11 @@
 import { ChangeEvent, useCallback, useState } from "react";
 import { AccountRequirements } from "./types";
-import { useWiseMutation } from "services/aws/aws";
 import { useErrorContext } from "contexts/ErrorContext";
 import { debounce } from "helpers";
 import CurrencySelector from "./CurrencySelector";
 import RecipientDetails from "./RecipientDetails";
 import { URLS } from "./constants";
+import useTypedWiseMutation from "./useTypedWiseMutation";
 
 // TODO: Once recipient is created by filling fields returned using `GET /v1/account-requirements?source=EUR&target=USD&sourceAmount=1000`
 // we need to use its recipientID to create a quote `https://docs.wise.com/api-docs/api-reference/quote#create-authenticated`
@@ -21,15 +21,12 @@ export default function Banking() {
   const [sourceAmount, setSourceAmount] = useState<number>();
   const [accountRequirements, setAccountRequirements] =
     useState<AccountRequirements[]>();
-  const [
-    sendRequest,
-    //  { isLoading } use to disable form while loading
-  ] = useWiseMutation();
+  const [sendRequest] = useTypedWiseMutation();
   const { handleError } = useErrorContext();
 
   const getAccountRequirements = useCallback(
     async (targetCurrency: string, sourceAmount: number): Promise<void> => {
-      return sendRequest({
+      return sendRequest<Quote>({
         url: URLS.createQuote.url(),
         method: URLS.createQuote.method,
         payload: JSON.stringify({
@@ -38,16 +35,13 @@ export default function Banking() {
           sourceAmount,
         }),
       })
-        .unwrap()
-        .then((res) => res as Quote)
         .then((quote: Quote) =>
-          sendRequest({
+          sendRequest<AccountRequirements[]>({
             url: URLS.getAccountRequirements.url(quote.id),
             method: URLS.getAccountRequirements.method,
             headers: { "Accept-Minor-Version": "1" },
-          }).unwrap()
+          })
         )
-        .then((res) => res as AccountRequirements[])
         .then((res) => setAccountRequirements(res))
         .catch((error) => handleError(error));
       // url: URLS.getAccountRequirementsForRoute.url(
