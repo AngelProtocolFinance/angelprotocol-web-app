@@ -21,10 +21,10 @@ export default function Submit(props: WithWallet<SubmitStep>) {
   useEffect(() => {
     (async () => {
       setEstimate("loading");
-      const _estimate = await estimateDonation({ ...props, terraWallet });
+      const _estimate = await estimateDonation({ ...props });
       setEstimate(_estimate || "error");
     })();
-  }, [props, terraWallet]);
+  }, [props]);
 
   function goBack() {
     dispatch(setStep(props.kyc ? "kyc-form" : "donate-form"));
@@ -32,7 +32,7 @@ export default function Submit(props: WithWallet<SubmitStep>) {
 
   function submit(txPackage: TxPackage) {
     const { wallet, ...donation } = props;
-    dispatch(sendDonation({ donation: donation, wallet: wallet, tx }));
+    dispatch(sendDonation({ donation: donation, ...txPackage }));
   }
 
   const { token } = props.details;

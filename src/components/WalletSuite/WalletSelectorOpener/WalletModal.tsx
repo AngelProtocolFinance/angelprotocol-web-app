@@ -30,7 +30,7 @@ export default function WalletModal({ wallets }: Props) {
         </p>
         <div className="grid sm:grid-cols-2 gap-4 w-full">
           {wallets.map((w) => (
-            <Wallet key={w.id} {...w} />
+            <Wallet key={w.name} {...w} />
           ))}
         </div>
       </div>

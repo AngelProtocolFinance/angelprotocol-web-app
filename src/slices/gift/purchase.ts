@@ -1,6 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { EstimatedTx, isTxResultError } from "types/tx";
-import { ConnectedWallet } from "types/wallet";
+import { TxPackage, isTxResultError } from "types/tx";
 import { invalidateApesTags } from "services/apes";
 import { createAuthToken, logger } from "helpers";
 import { sendTx } from "helpers/tx";
@@ -10,28 +9,27 @@ import { APIs } from "constants/urls";
 import gift, { GiftDetails, TxStatus, setTxStatus } from "./index";
 
 type Args = {
-  wallet: ConnectedWallet;
-  tx: EstimatedTx;
   details: GiftDetails;
+  txPackage: TxPackage;
 };
 
 export const purchase = createAsyncThunk<void, Args>(
   `${gift.name}/purchase`,
-  async ({ wallet, tx, details }, { dispatch }) => {
+  async ({ details, txPackage }, { dispatch }) => {
     const updateTx = (status: TxStatus) => {
       dispatch(setTxStatus(status));
     };
 
     try {
       updateTx({ msg: "Payment is being processed..." });
-      const result = await sendTx(wallet, tx);
+      const result = await sendTx(txPackage);
 
       if (isTxResultError(result)) {
         return updateTx({ error: result.error });
       }
 
-      const { hash, data } = result;
-      const depositID = data as null | string;
+      const { hash } = result;
+      const depositID = "";
       if (details.recipient) {
         return updateTx({ hash: result.hash });
       }
@@ -44,7 +42,7 @@ export const purchase = createAsyncThunk<void, Args>(
 
       let randNums = window.crypto.getRandomValues(new BigUint64Array(62));
       let preImage = `${randNums[0]}${randNums[1]}`;
-      let secret = `ap-${details.chainId}-${preImage}`;
+      let secret = `ap-${details.chainID}-${preImage}`;
 
       updateTx({ msg: "Processing giftcard code..." });
       const res = await fetch(APIs.aws + "/v1/giftcard/deposit", {
@@ -55,7 +53,7 @@ export const purchase = createAsyncThunk<void, Args>(
         body: JSON.stringify({
           secret,
           depositId: Number(depositID),
-          chain: details.chainId,
+          chain: details.chainID,
         }),
       });
 

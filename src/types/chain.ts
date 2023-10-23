@@ -19,7 +19,6 @@ type IBCDenom = string;
 
 export type Chain = {
   id: ChainID;
-  type: ChainType;
   brand: string; //
   name: string;
   rpc: string;

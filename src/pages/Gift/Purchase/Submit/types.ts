@@ -1,3 +1,3 @@
-import { Estimate } from "types/tx";
+import { EstimateResult } from "types/tx";
 
-export type EstimateStatus = Estimate | "loading" | "error";
+export type EstimateStatus = EstimateResult | "loading" | "error";

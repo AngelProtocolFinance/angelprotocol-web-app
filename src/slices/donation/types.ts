@@ -1,8 +1,7 @@
 import { Token } from "types/aws";
 import { ChainID } from "types/chain";
 import { Country } from "types/countries";
-import { EstimatedTx, TokenWithAmount, TxPackage } from "types/tx";
-import { ConnectedWallet } from "types/wallet";
+import { TokenWithAmount, TxPackage } from "types/tx";
 import { OptionType } from "components/Selector";
 
 export type DonationRecipient = {
@@ -15,7 +14,6 @@ export type DonationRecipient = {
 export type DonationDetails = {
   token: TokenWithAmount;
   pctLiquidSplit: number; // <input range value transformed to number via onChange
-  sender: string;
   chainId: OptionType<ChainID>;
   userOptForKYC: boolean;
 };
