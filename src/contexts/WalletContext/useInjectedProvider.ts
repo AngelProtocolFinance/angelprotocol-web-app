@@ -1,13 +1,15 @@
 import Decimal from "decimal.js";
 import { useEffect, useState } from "react";
 import { ChainID } from "types/chain";
+import { AccountChangeHandler, ChainChangeHandler } from "types/evm";
 import {
-  AccountChangeHandler,
-  ChainChangeHandler,
-  InjectedProvider,
-} from "types/evm";
-import { Connected, ProviderState, Wallet, WalletMeta } from "types/wallet";
-import { getProvider, logger } from "helpers";
+  Connected,
+  InjectedProviderID,
+  ProviderState,
+  Wallet,
+  WalletMeta,
+} from "types/wallet";
+import { injectedProvider, logger } from "helpers";
 import { chains } from "constants/chains-v2";
 import { EIPMethods } from "constants/evm";
 import { toPrefixedHex } from "./helpers";
@@ -15,10 +17,11 @@ import { retrieveUserAction, saveUserAction } from "./helpers";
 import { isXdefiPrioritized } from "./helpers/isXdefiPrioritized";
 
 export default function useInjectedWallet(
-  meta: Omit<WalletMeta, "type"> & { installUrl: string }
+  providerID: InjectedProviderID,
+  meta: WalletMeta,
+  installURL: string
 ): Wallet {
-  const { id } = meta;
-  const actionKey = `${id}__pref`;
+  const actionKey = `${providerID}__pref`;
 
   const [state, setState] = useState<ProviderState>({
     status: "disconnected",
@@ -30,7 +33,7 @@ export default function useInjectedWallet(
     const shouldReconnect = lastAction === "connect";
     shouldReconnect && connect(false);
     return () => {
-      getProvider(id).then((provider) => {
+      injectedProvider(providerID).then((provider) => {
         if (provider && provider.removeListener) {
           provider.removeListener("accountsChanged", handleAccountsChange);
           provider.removeListener("chainChanged", handleChainChange);
@@ -41,51 +44,37 @@ export default function useInjectedWallet(
   }, []);
 
   const handleChainChange: ChainChangeHandler = (hexChainId) => {
-    setState((prev) => {
-      if (prev.status === "connected") {
-        return {
-          ...prev,
-          chainId: new Decimal(hexChainId).toString(),
-        };
-      }
-      return prev;
-    });
+    if (state.status !== "connected") return;
+    setState({ ...state, chainId: new Decimal(hexChainId).toString() });
   };
 
   const handleAccountsChange: AccountChangeHandler = (accounts) => {
-    setState((prev) => {
-      if (prev.status === "connected") {
-        if (accounts.length > 0) {
-          return {
-            ...prev,
-            address: accounts[0],
-          };
-        } else {
-          saveUserAction(actionKey, "disconnect");
-          return { status: "disconnected", connect };
-        }
-      }
-      return prev;
-    });
+    if (state.status !== "connected") return;
+    if (accounts.length === 0) {
+      return setState({ status: "disconnected" });
+    }
+    setState({ ...state, address: accounts[0] });
+    saveUserAction(actionKey, "disconnect");
   };
 
-  async function switchChain(chainId: ChainID) {
+  async function switchChain(chainID: ChainID) {
     try {
-      setState((p) => ({ ...(p as Connected), isSwitchingChain: true }));
-      const provider = (await getProvider(id)) as InjectedProvider; //can't switch when wallet is not connected
-      const chain = chains[chainId];
-      await provider
+      if (state.status !== "connected") {
+        return alert("Wallet is not connected");
+      }
+      const chain = chains[chainID];
+      await state
         .request({
           method: EIPMethods.wallet_switchEthereumChain,
-          params: [{ chainId: toPrefixedHex(chainId) }],
+          params: [{ chainId: toPrefixedHex(chainID) }],
         })
         .catch(
           async () =>
-            await provider.request({
+            await state.request({
               method: EIPMethods.wallet_addEthereumChain,
               params: [
                 {
-                  chainId: toPrefixedHex(chainId),
+                  chainId: toPrefixedHex(chainID),
                   chainName: chain.name,
                   nativeCurrency: {
                     name: chain.nativeToken.symbol,
@@ -106,21 +95,21 @@ export default function useInjectedWallet(
     }
   }
 
-  async function connect(isNew /** new connection */ = true) {
+  async function connect(isUserInitiated = true) {
     try {
-      const provider = await getProvider(id);
+      const provider = await injectedProvider(providerID);
       if (!provider) {
-        if (!isNew) return; /** dont alert on persistent connection */
-        return window.open(meta.installUrl, "_blank", "noopener noreferrer");
+        if (!isUserInitiated) return; /** dont alert on persistent connection */
+        return window.open(installURL, "_blank", "noopener noreferrer");
       }
       /** isMobile check not needed, just hide this wallet on mobile */
 
       /** xdefi checks */
-      if (id === "xdefi-evm" && !isXdefiPrioritized()) {
-        if (!isNew) return;
+      if (providerID === "xdefi-evm" && !isXdefiPrioritized()) {
+        if (!isUserInitiated) return;
         return alert("Kindly prioritize Xdefi and reload the page");
-      } else if (id !== "xdefi-evm" && isXdefiPrioritized()) {
-        if (!isNew) return;
+      } else if (providerID !== "xdefi-evm" && isXdefiPrioritized()) {
+        if (!isUserInitiated) return;
         return alert("Kindly remove priority to Xdefi and reload the page");
       }
 
@@ -138,15 +127,16 @@ export default function useInjectedWallet(
       provider.on("chainChanged", handleChainChange);
 
       setState({
+        id: providerID,
         status: "connected",
         address: accounts[0],
         chainId: `${parseInt(hexChainId, 16)}`,
-        isSwitchingChain: false,
+        request: provider.request.bind(provider),
       });
 
       saveUserAction(actionKey, "connect");
     } catch (err) {
-      if (isNew) {
+      if (isUserInitiated) {
         alert("Failed to connect to wallet.");
       }
       setState({ status: "disconnected" });
@@ -155,7 +145,7 @@ export default function useInjectedWallet(
   }
 
   async function disconnect() {
-    const provider = await getProvider(id);
+    const provider = await injectedProvider(providerID);
     if (provider) {
       setState({ status: "disconnected" });
       saveUserAction(actionKey, "disconnect");
@@ -173,7 +163,6 @@ export default function useInjectedWallet(
   return {
     ...state,
     ...meta,
-    type: "evm",
     ...{ connect, disconnect, switchChain },
   };
 }

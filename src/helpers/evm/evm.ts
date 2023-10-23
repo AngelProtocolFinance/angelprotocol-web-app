@@ -1,42 +1,21 @@
 import { InjectedProvider, RequestArguments } from "types/evm";
-import { WalletID } from "types/wallet";
-import web3Auth from "contexts/WalletContext/useWeb3Auth/web3AuthSetup";
-import { _session, account } from "helpers/wallet-connect";
+import { InjectedProviderID } from "types/wallet";
+import { _session } from "helpers/wallet-connect";
 
-export async function wcProvider(): Promise<Partial<InjectedProvider>> {
-  //FUTURE: pass peer name in wcProvider call
-  const { session, client } = await _session("MetaMask Wallet");
-  const { chainId } = account(session!.namespaces.eip155);
-  return {
-    async request<T>({ method, params }: RequestArguments): Promise<T> {
-      return client.request<T>({
-        topic: session!.topic,
-        chainId: `eip155:${chainId}`,
-        request: {
-          method,
-          params,
-        },
-      });
-    },
-  };
-}
-export async function getProvider(
-  walletID: WalletID
+export async function injectedProvider(
+  id: InjectedProviderID
 ): Promise<InjectedProvider | undefined> {
-  switch (walletID) {
+  switch (id) {
     case "binance-wallet":
       return window.BinanceChain;
     case "metamask":
       return window.ethereum;
-    case "web3auth-torus":
-      return web3Auth.provider as InjectedProvider;
     /** only used in sendTx */
-    case "evm-wc":
-      return wcProvider() as Promise<InjectedProvider>;
     case "xdefi-evm":
       return window.xfi?.ethereum as InjectedProvider;
     default:
-      return undefined;
+      const x: never = id;
+      throw new Error(`${x} not used`);
   }
 }
 

@@ -1,6 +1,8 @@
 import { WalletConnectModal } from "@walletconnect/modal";
 import { useEffect, useRef, useState } from "react";
+import { SignClient } from "@walletconnect/sign-client/dist/types/client";
 import { SessionTypes, SignClientTypes } from "@walletconnect/types";
+import { RequestArguments } from "types/evm";
 import { Connected, ProviderState, Wallet, WalletMeta } from "types/wallet";
 import { _pairing, _session, account } from "helpers/wallet-connect";
 import { EIPMethods } from "constants/evm";
@@ -40,7 +42,11 @@ export function useEVMWC(meta: WalletMeta): Wallet {
   function onSessionUpdate({
     params: { namespaces },
   }: SignClientTypes.EventArguments["session_update"]) {
-    setState(connected(namespaces));
+    setState((prev) =>
+      prev.status === "connected"
+        ? { ...prev, ...account(namespaces.eip155) }
+        : prev
+    );
   }
 
   /** persistent connection */
@@ -49,7 +55,7 @@ export function useEVMWC(meta: WalletMeta): Wallet {
       setState({ status: "loading" });
       const { session, client } = await _session("MetaMask Wallet");
       if (session) {
-        setState(connected(session.namespaces));
+        setState(connected(session, client));
         client.on("session_update", onSessionUpdate);
         client.on("session_delete", onSessionDelete);
       } else {
@@ -97,7 +103,8 @@ export function useEVMWC(meta: WalletMeta): Wallet {
       }
 
       const session = await approval();
-      setState(connected(session.namespaces));
+
+      setState(connected(session, client));
       client.on("session_delete", onSessionDelete);
       client.on("session_update", onSessionUpdate);
     } catch (err) {
@@ -128,8 +135,24 @@ export function useEVMWC(meta: WalletMeta): Wallet {
   return { ...state, ...meta, ...{ connect, disconnect, switchChain: null } };
 }
 
-const connected = (namespaces: SessionTypes.Namespaces): Connected => ({
-  status: "connected",
-  isSwitchingChain: false,
-  ...account(namespaces.eip155),
-});
+const connected = (
+  session: SessionTypes.Struct,
+  client: SignClient
+): Connected => {
+  const acc = account(session.namespaces.eip155);
+  return {
+    ...acc,
+    status: "connected",
+    id: "evm-wc",
+    request<T>({ method, params }: RequestArguments) {
+      return client.request<T>({
+        topic: session!.topic,
+        chainId: `eip155:${acc.chainId}`,
+        request: {
+          method,
+          params,
+        },
+      });
+    },
+  };
+};

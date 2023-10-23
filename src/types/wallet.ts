@@ -1,11 +1,8 @@
 import { ChainID } from "./chain";
+import { RequestArguments } from "./evm";
 
-export type EVMWalletID =
-  | "binance-wallet"
-  | "metamask"
-  | "xdefi-evm"
-  | "evm-wc"
-  | "web3auth-torus";
+export type InjectedProviderID = "binance-wallet" | "metamask" | "xdefi-evm";
+export type EVMWalletID = InjectedProviderID | "evm-wc" | "web3auth-torus";
 
 export type TerraWalletID =
   | "station"
@@ -18,11 +15,18 @@ export type WalletID = EVMWalletID | TerraWalletID | CosmostWalletID;
 
 /** connection state */
 
-export type Connected = {
+type ProviderConnected = {
   status: "connected";
   address: string;
   chainId: string; //chainId may not be one of supported chainIds
 };
+
+type EVMConnected = ProviderConnected & {
+  id: EVMWalletID;
+  request: <T>(args: RequestArguments) => Promise<T>;
+};
+
+export type Connected = EVMConnected;
 
 type Disconnected = { status: "disconnected" };
 type Loading = { status: "loading" };
