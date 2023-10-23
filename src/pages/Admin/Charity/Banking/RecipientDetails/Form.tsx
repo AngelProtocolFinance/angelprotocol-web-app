@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FormProvider, useFieldArray } from "react-hook-form";
+import { FormProvider } from "react-hook-form";
 import { AccountRequirements, CreateRecipientRequest } from "../types";
 import { FormValues } from "./types";
 import RequirementField from "./RequirementField";
@@ -24,10 +24,6 @@ export default function Form(props: Props) {
   const [refreshRequirements, setRefreshRequirements] = useState(
     refreshRequirementsOnChange
   );
-  const { fields } = useFieldArray({
-    name: "requirements",
-    control: methods.control,
-  });
   // const { postAccountRequirements } = useTypedWiseMutation();
   // const { handleError } = useErrorContext();
 
@@ -63,11 +59,9 @@ export default function Form(props: Props) {
     <FormProvider {...methods}>
       <form onSubmit={onSubmit} className="grid gap-4">
         <div className="grid grid-cols-2 gap-2">
-          {fields.map((field, index) => {
-            const data = props.accountRequirements.fields[index].group[0]; // seems that `field.group.length === 1` in all cases
-            return (
-              <RequirementField key={field.id} data={data} index={index} />
-            );
+          {props.accountRequirements.fields.map((field) => {
+            const data = field.group[0]; // seems that `field.group.length === 1` in all cases
+            return <RequirementField key={data.key} data={data} />;
           })}
         </div>
 
@@ -90,12 +84,11 @@ function convertToCreateRecipientRequest(
     accountHolderName: formValues.accountHolderName,
     currency: formValues.currency,
     type: formValues.type,
-    details: formValues.requirements.reduce<Record<string, string>>(
-      (details, { key, value }) => {
-        details[redot(key)] = typeof value === "object" ? value.value : value;
-        return details;
-      },
-      {}
-    ),
+    details: Object.entries(formValues.requirements).reduce<
+      CreateRecipientRequest["details"]
+    >((details, [key, value]) => {
+      details[redot(key)] = typeof value === "object" ? value.value : value;
+      return details;
+    }, {}),
   };
 }

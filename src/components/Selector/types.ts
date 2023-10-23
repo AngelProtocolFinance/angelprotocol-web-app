@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { FieldValues, Path, PathValue, RegisterOptions } from "react-hook-form";
+import { FieldValues, Path, PathValue } from "react-hook-form";
 import { OptionType, ValKey } from "types/utils";
 
 type Classes = {
@@ -16,10 +16,6 @@ type BaseProps = {
 export interface Props<T extends FieldValues, V extends ValKey>
   extends BaseProps {
   name: Path<T>;
-  rules?: Omit<
-    RegisterOptions<T, Path<T>>,
-    "disabled" | "valueAsNumber" | "valueAsDate" | "setValueAs"
-  >;
   placeholder?: string;
   options: OptionType<V>[];
   disabled?: true;

@@ -1,27 +1,20 @@
-import { Path, useFormContext } from "react-hook-form";
+import { Path } from "react-hook-form";
 import { Group } from "../types";
 import { FormValues } from "./types";
 import { Selector } from "components/Selector";
-import { FieldController, Label } from "components/form";
+import { Field, Label } from "components/form";
 import { isEmpty } from "helpers";
-import createRules from "./createRules";
+import { undot } from "./dot";
 
-type Props = {
-  data: Group;
-  index: number;
-};
+export default function RequirementField({ data }: { data: Group }) {
+  const requirementsKey = undot(data.key);
 
-export default function RequirementField({ data, index }: Props) {
-  const { control } = useFormContext<FormValues>();
-
-  const name: Path<FormValues> = `requirements.${index}.value`;
-
-  const rules = createRules(data);
+  const name: Path<FormValues> = `requirements.${requirementsKey}`;
 
   if (data.type === "date") {
     return (
-      <FieldController<FormValues, "date">
-        controlProps={{ control, name, rules }}
+      <Field<FormValues, "date">
+        name={name}
         type="date"
         label={data.name}
         required={data.required}
@@ -41,8 +34,8 @@ export default function RequirementField({ data, index }: Props) {
     isEmpty(data.valuesAllowed)
   ) {
     return (
-      <FieldController<FormValues>
-        controlProps={{ control, name, rules }}
+      <Field<FormValues>
+        name={name}
         label={data.name}
         placeholder={data.example}
         required={data.required}
@@ -56,7 +49,6 @@ export default function RequirementField({ data, index }: Props) {
       <Label required={data.required}>{data.name}</Label>
       <Selector<FormValues, string>
         name={name}
-        rules={rules}
         options={data.valuesAllowed.map((valuesAllowed) => ({
           label: valuesAllowed.name,
           value: valuesAllowed.key,

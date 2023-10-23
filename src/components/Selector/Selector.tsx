@@ -1,6 +1,6 @@
 import { Listbox } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
-import { FieldValues, useController } from "react-hook-form";
+import { FieldValues, get, useController } from "react-hook-form";
 import { Props } from "./types";
 import { OptionType, ValKey } from "types/utils";
 import { DrawerIcon } from "components/Icon";
@@ -9,7 +9,6 @@ import { styles, valueKey } from "./constants";
 
 export function Selector<T extends FieldValues, V extends ValKey>({
   name,
-  rules,
   disabled,
   options,
   children,
@@ -18,10 +17,11 @@ export function Selector<T extends FieldValues, V extends ValKey>({
 }: Props<T, V>) {
   const { container = "", button = "" } = classes || {};
   const {
-    fieldState: { invalid },
     formState: { isSubmitting, errors },
     field: { value: selected, onChange, ref },
-  } = useController<T>({ name, rules });
+  } = useController<{ [index: string]: OptionType<V> }>({ name });
+
+  const valuePath = `${name}.${valueKey}`;
 
   const isDisabled = isSubmitting || disabled;
   return (
@@ -39,7 +39,7 @@ export function Selector<T extends FieldValues, V extends ValKey>({
       >
         <FocusableInput ref={ref} />
         <Listbox.Button
-          aria-invalid={invalid}
+          aria-invalid={!!get(errors, valuePath)?.message}
           aria-disabled={isDisabled}
           as="button"
           className={`${button} ${styles.selectorButton}`}
@@ -71,7 +71,7 @@ export function Selector<T extends FieldValues, V extends ValKey>({
             ))}
         </Listbox.Options>
         <ErrorMessage
-          name={name as any}
+          name={valuePath}
           errors={errors}
           as="p"
           className="absolute -bottom-5 right-0 text-right text-xs text-red dark:text-red-l2"

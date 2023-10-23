@@ -1,6 +1,5 @@
 import { AccountRequirements } from "../../types";
 import { FormValues } from "../types";
-import { OptionType } from "components/Selector";
 import { undot } from "../dot";
 
 export default function getDefaultValues(
@@ -11,21 +10,24 @@ export default function getDefaultValues(
     currency: targetCurrency,
     accountHolderName: "ENDOWMENT_NAME",
     type: accountRequirements.type,
-    requirements: accountRequirements.fields.map((field) => {
-      const requirements = field.group[0];
+    requirements: accountRequirements.fields.reduce<FormValues["requirements"]>(
+      (defaultValues, field) => {
+        const requirements = field.group[0];
 
-      const key = undot(requirements.key);
+        const key = undot(requirements.key);
 
-      const value: string | OptionType<string> =
-        requirements.type === "text" || requirements.type === "date"
-          ? ""
-          : {
-              // this field contains dropdown placeholder text for `type === select`; for `type === radio` it's empty string
-              label: requirements.example,
-              value: "",
-            };
+        if (requirements.type === "text" || requirements.type === "date") {
+          defaultValues[key] = "";
+        } else {
+          defaultValues[key] = {
+            label: requirements.example, // this field contains dropdown placeholder text for `select`; for `radio` it's empty string
+            value: "",
+          };
+        }
 
-      return { key, value };
-    }),
+        return defaultValues;
+      },
+      {}
+    ),
   };
 }
