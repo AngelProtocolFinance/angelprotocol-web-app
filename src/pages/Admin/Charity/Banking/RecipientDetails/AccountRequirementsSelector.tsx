@@ -2,11 +2,13 @@ import { AccountRequirements } from "../types";
 
 type Props = {
   accountRequirements: AccountRequirements[];
+  currentIndex: number | undefined;
   onChange: (index: number) => void;
 };
 
 export default function AccountRequirementsSelector({
   accountRequirements,
+  currentIndex,
   onChange,
 }: Props) {
   return (
@@ -18,7 +20,9 @@ export default function AccountRequirementsSelector({
             key={accountRequirements.type}
             type="button"
             onClick={() => onChange(index)}
-            className="btn-blue text-sm w-40"
+            className={`${
+              index === currentIndex ? "btn-blue" : "btn-outline"
+            } text-sm w-40`}
           >
             {accountRequirements.title}
           </button>
