@@ -3,9 +3,8 @@ import { useEffect, useState } from "react";
 import { ChainID } from "types/chain";
 import { AccountChangeHandler, ChainChangeHandler } from "types/evm";
 import {
-  Connected,
+  EVMProviderState,
   InjectedProviderID,
-  ProviderState,
   Wallet,
   WalletMeta,
 } from "types/wallet";
@@ -23,7 +22,7 @@ export default function useInjectedWallet(
 ): Wallet {
   const actionKey = `${providerID}__pref`;
 
-  const [state, setState] = useState<ProviderState>({
+  const [state, setState] = useState<EVMProviderState>({
     status: "disconnected",
   });
 
@@ -58,10 +57,10 @@ export default function useInjectedWallet(
   };
 
   async function switchChain(chainID: ChainID) {
+    if (state.status !== "connected") {
+      return alert("Wallet is not connected");
+    }
     try {
-      if (state.status !== "connected") {
-        return alert("Wallet is not connected");
-      }
       const chain = chains[chainID];
       await state
         .request({
@@ -91,7 +90,6 @@ export default function useInjectedWallet(
       logger.error(err);
       alert("Failed to switch chain");
     } finally {
-      setState((p) => ({ ...(p as Connected), isSwitchingChain: true }));
     }
   }
 

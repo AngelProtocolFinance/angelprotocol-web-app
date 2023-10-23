@@ -8,7 +8,8 @@ import {
 } from "@terra-money/wallet-provider";
 import {
   Connector,
-  ProviderState,
+  TerraProviderState,
+  TerraWalletID,
   Wallet,
   WalletID,
   WalletMeta,
@@ -24,16 +25,22 @@ export default function useTerra() {
     connect,
     status,
     disconnect,
+    post,
   } = useWallet();
 
-  const state: ProviderState =
+  const state: TerraProviderState =
     /** wallets contain wc entry even terraAddress is not resolved */
     terraConnection && wallets[0].terraAddress
       ? {
+          // terra providerIDs are simply from their connection identifiers
+          id:
+            terraConnection.type === ConnectType.WALLETCONNECT
+              ? "walletconnect"
+              : (terraConnection.identifier as TerraWalletID),
           status: "connected",
           address: wallets[0].terraAddress,
           chainId: network.chainID,
-          isSwitchingChain: false,
+          post,
         }
       : status === WalletStatus.INITIALIZING
       ? { status: "loading" }
@@ -61,11 +68,11 @@ export default function useTerra() {
 
 type Connection = Omit<WalletMeta, "type"> & Connector;
 const walletFn =
-  (state: ProviderState, disconnect: TerraWallet["disconnect"]) =>
+  (state: TerraProviderState, disconnect: TerraWallet["disconnect"]) =>
   ({ connect, ...meta }: Connection): Wallet => ({
     ...state,
     ...meta,
-    type: "terra",
+
     ...{ connect, disconnect, switchChain: null },
   });
 
@@ -78,7 +85,6 @@ const connectionFn =
   (walletID: WalletID): Connection => {
     if (walletID === "walletconnect") {
       return {
-        id: "walletconnect",
         name: "Terra Station Mobile",
         logo: "/icons/wallets/terra-extension.jpg",
         async connect() {
@@ -91,7 +97,6 @@ const connectionFn =
 
     if (connection) {
       return {
-        id: walletID,
         name: connection.name,
         logo: connection.icon,
         connect: async () =>
@@ -101,7 +106,6 @@ const connectionFn =
     const installation = installations.find((x) => x.identifier === walletID);
     if (installation) {
       return {
-        id: walletID,
         name: installation.name,
         logo: installation.icon,
         connect: async () => {
@@ -112,7 +116,6 @@ const connectionFn =
 
     //this should never happen, missing connection always have installation counterpart
     return {
-      id: "station",
       name: "Unknown wallet",
       logo: "",
       connect: () => {

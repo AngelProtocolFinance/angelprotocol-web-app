@@ -3,7 +3,12 @@ import { useEffect, useRef, useState } from "react";
 import { SignClient } from "@walletconnect/sign-client/dist/types/client";
 import { SessionTypes, SignClientTypes } from "@walletconnect/types";
 import { RequestArguments } from "types/evm";
-import { Connected, ProviderState, Wallet, WalletMeta } from "types/wallet";
+import {
+  EVMConnected,
+  EVMProviderState,
+  Wallet,
+  WalletMeta,
+} from "types/wallet";
 import { _pairing, _session, account } from "helpers/wallet-connect";
 import { EIPMethods } from "constants/evm";
 
@@ -31,7 +36,7 @@ export function useEVMWC(meta: WalletMeta): Wallet {
   const unsubscribeRef = useRef<() => void>();
   const uriRef = useRef<string>();
 
-  const [state, setState] = useState<ProviderState>({
+  const [state, setState] = useState<EVMProviderState>({
     status: "disconnected",
   });
 
@@ -139,7 +144,7 @@ export function useEVMWC(meta: WalletMeta): Wallet {
 const connected = (
   session: SessionTypes.Struct,
   client: SignClient
-): Connected => {
+): EVMConnected => {
   const acc = account(session.namespaces.eip155);
   return {
     ...acc,
