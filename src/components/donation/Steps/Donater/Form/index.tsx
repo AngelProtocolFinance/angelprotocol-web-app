@@ -2,7 +2,6 @@ import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { DonateValues } from "../types";
-import { ConnectedWallet } from "types/wallet";
 import { DonaterConfigFromWidget } from "types/widget";
 import { useGetter } from "store/accessors";
 import { setDetails } from "slices/donation";
@@ -16,10 +15,9 @@ import AdvancedOptions from "../../../AdvancedOptions";
 
 type Props = {
   configFromWidget: DonaterConfigFromWidget | null;
-  wallet: ConnectedWallet;
 };
 
-export default function Form({ configFromWidget, wallet }: Props) {
+export default function Form({ configFromWidget }: Props) {
   const {
     watch,
     reset,
@@ -49,12 +47,6 @@ export default function Form({ configFromWidget, wallet }: Props) {
       className="grid rounded-md w-full"
       autoComplete="off"
     >
-      <div>
-        <span>wallet: {wallet.address}</span>
-        <button onClick={wallet.disconnect} type="button">
-          disconnect
-        </button>
-      </div>
       <Label htmlFor="chainId" className="mb-2" required={false}>
         Blockchain
       </Label>
@@ -70,7 +62,6 @@ export default function Form({ configFromWidget, wallet }: Props) {
       <TokenField<DonateValues, "token">
         name="token"
         selectedChainId={chainId.value}
-        userWalletAddress={wallet.address}
         withBalance
         label={`Enter the donation amount:`}
         classes={{ label: "text-lg", inputContainer: "dark:bg-blue-d6" }}

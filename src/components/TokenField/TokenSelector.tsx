@@ -5,7 +5,6 @@ import TokenOptions from "./TokenOptions";
 
 export default function TokenSelector({
   selectedChainId,
-  userWalletAddress,
   onChange,
   selectedToken,
 }: SelectorProps) {
@@ -25,7 +24,6 @@ export default function TokenSelector({
       <TokenOptions
         classes="absolute right-0 top-2 z-10 mt-10"
         selectedChainId={selectedChainId}
-        userWalletAddress={userWalletAddress}
       />
     </Combobox>
   );

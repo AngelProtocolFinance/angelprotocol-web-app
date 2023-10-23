@@ -14,7 +14,7 @@ import { DonationEstimate, estimateDonation } from "./estimateDonation";
 
 type EstimateStatus = DonationEstimate | "loading" | "error";
 
-export default function Submit(props: WithWallet<SubmitStep>) {
+export default function Submit(props: SubmitStep) {
   const dispatch = useSetter();
   const [estimate, setEstimate] = useState<EstimateStatus>("loading");
 

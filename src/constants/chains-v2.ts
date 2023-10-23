@@ -3,7 +3,6 @@ import { INFURA_ID } from "./env";
 
 export const polygon: Chain = {
   id: "137",
-  type: "evm",
   brand: "polygon",
   name: "Polygon",
   rpc: "https://rpc-mainnet.maticvigil.com",
@@ -19,7 +18,6 @@ export const polygon: Chain = {
 
 export const ethereum: Chain = {
   id: "1",
-  type: "evm",
   brand: "ethereum",
   name: "Ethereum",
   rpc: `https://mainnet.infura.io/v3/${INFURA_ID}`,
@@ -35,7 +33,6 @@ export const ethereum: Chain = {
 
 export const binance: Chain = {
   id: "56",
-  type: "evm",
   brand: "binance",
   name: "Binance",
   rpc: "https://rpc.ankr.com/bsc",
@@ -51,7 +48,6 @@ export const binance: Chain = {
 
 export const juno: Chain = {
   id: "juno-1",
-  type: "cosmos",
   brand: "juno",
   name: "Juno",
   lcd: "https://juno-api.polkachu.com",
@@ -67,7 +63,6 @@ export const juno: Chain = {
 
 export const terraMainnet: Chain = {
   id: "phoenix-1",
-  type: "terra",
   brand: "terra",
   name: "Terra Mainnet",
   lcd: "https://phoenix-lcd.terra.dev",
@@ -83,7 +78,6 @@ export const terraMainnet: Chain = {
 
 export const mumbai: Chain = {
   id: "80001",
-  type: "evm",
   brand: "polygon",
   name: "Polygon Mumbai Testnet",
   rpc: "https://rpc-mumbai.maticvigil.com",
@@ -99,7 +93,6 @@ export const mumbai: Chain = {
 
 export const goerli: Chain = {
   id: "5",
-  type: "evm",
   brand: "ethereum",
   name: "Ethereum Goerli Testnet",
   rpc: `https://goerli.infura.io/v3/${INFURA_ID}`,
@@ -115,7 +108,6 @@ export const goerli: Chain = {
 
 export const binanceTestnet: Chain = {
   id: "97",
-  type: "evm",
   brand: "binance",
   name: "Binance Testnet",
   rpc: "https://rpc.ankr.com/bsc_testnet_chapel",
@@ -131,7 +123,6 @@ export const binanceTestnet: Chain = {
 
 export const junoTestnet: Chain = {
   id: "uni-6",
-  type: "cosmos",
   brand: "juno",
   name: "Juno Testnet",
   lcd: "https://api.uni.junonetwork.io",
@@ -147,7 +138,6 @@ export const junoTestnet: Chain = {
 
 export const terraTestnet: Chain = {
   id: "pisco-1",
-  type: "terra",
   brand: "terra",
   name: "Terra Pisco testnet",
   lcd: "https://pisco-lcd.terra.dev",

@@ -1,46 +1,36 @@
 import { Combobox } from "@headlessui/react";
 import { useState } from "react";
+import { ChainID } from "types/chain";
 import { useTokensQuery } from "services/apes";
 import Icon from "../Icon";
 import Image from "../Image";
 
 type Props = {
-  userWalletAddress?: string;
-  selectedChainId: string;
+  selectedChainId: ChainID;
   classes?: string;
 };
 
 const container =
   "border border-prim p-1 max-h-60 w-max overflow-y-auto rounded-md bg-gray-l5 dark:bg-blue-d7 shadow-lg focus:outline-none";
-export default function TokenOptions({
-  classes = "",
-  selectedChainId,
-  userWalletAddress = "",
-}: Props) {
+export default function TokenOptions({ classes = "", selectedChainId }: Props) {
   const [searchText, setSearchText] = useState("");
   const {
     data: tokens,
     isLoading,
     isError,
-  } = useTokensQuery(
-    {
-      chainId: selectedChainId,
-      address: userWalletAddress,
+  } = useTokensQuery(selectedChainId, {
+    selectFromResult({ data = [], ...rest }) {
+      return {
+        ...rest,
+        data:
+          searchText === ""
+            ? data
+            : data.filter((t) => {
+                return t.symbol.includes(searchText.toLowerCase());
+              }),
+      };
     },
-    {
-      selectFromResult({ data = [], ...rest }) {
-        return {
-          ...rest,
-          data:
-            searchText === ""
-              ? data
-              : data.filter((t) => {
-                  return t.symbol.includes(searchText.toLowerCase());
-                }),
-        };
-      },
-    }
-  );
+  });
 
   if (isLoading) {
     return (

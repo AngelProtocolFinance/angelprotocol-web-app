@@ -20,10 +20,7 @@ export default function Purchaser({
     defaultValues: state.details || {
       token: _tokens[0],
       recipient: "",
-
-      //meta
-      tokens: _tokens,
-      chainId: wallet.chainId,
+      chainID: "137",
     },
     resolver: yupResolver(schema),
   });

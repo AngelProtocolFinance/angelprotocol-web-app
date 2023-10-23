@@ -7,7 +7,7 @@ import {
   useController,
   useFormContext,
 } from "react-hook-form";
-import { OnSetAmount, Props } from "./types";
+import { Props } from "./types";
 import { TokenWithAmount } from "types/tx";
 import TokenSelector from "./TokenSelector";
 
@@ -18,9 +18,7 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
   label,
   name,
   classes,
-
   disabled,
-  userWalletAddress,
   selectedChainId,
 
   //flags
@@ -28,7 +26,6 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
 }: Props<T, K>) {
   const {
     register,
-    setValue,
     resetField,
     formState: { errors, isSubmitting },
   } = useFormContext<T>();
@@ -43,12 +40,6 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
   useEffect(() => {
     resetField(amountField);
   }, [token.token_id, amountField, resetField]);
-
-  const onSetAmount: OnSetAmount = (balance) =>
-    setValue(amountField, balance as any, {
-      shouldValidate: true,
-      shouldDirty: true,
-    });
 
   return (
     <div className={`grid ${classes?.container ?? ""}`}>
@@ -78,7 +69,6 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
         />
         <TokenSelector
           selectedChainId={selectedChainId}
-          userWalletAddress={userWalletAddress}
           selectedToken={token}
           onChange={onChange}
         />

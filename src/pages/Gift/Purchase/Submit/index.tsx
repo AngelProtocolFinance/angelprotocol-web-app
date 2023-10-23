@@ -8,7 +8,6 @@ import { ErrorStatus, LoadingStatus } from "components/Status";
 import { useSetter } from "store/accessors";
 import { SubmitStep, setStep } from "slices/gift";
 import { humanize } from "helpers";
-import { chains } from "constants/chains-v2";
 import { appRoutes } from "constants/routes";
 import CompleteBtn from "./CompleteBtn";
 
@@ -21,8 +20,6 @@ export default function Submit(props: WithWallet<SubmitStep>) {
   }
 
   const { token } = props.details;
-  const { chainId } = props.wallet;
-  const chain = chains[chainId];
 
   return (
     <div className="grid content-start">
@@ -34,7 +31,7 @@ export default function Submit(props: WithWallet<SubmitStep>) {
         <span>{token.symbol}</span>
       </Row>
       <Row title="Blockchain:">
-        <span>{chain.name}</span>
+        <span>Chain name</span>
       </Row>
       <Row title="Amount:">
         <span>

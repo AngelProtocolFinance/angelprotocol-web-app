@@ -1,26 +1,15 @@
 import { EstimateStatus } from "./types";
-import { Estimate } from "types/tx";
-import { WithWallet } from "types/wallet";
-import { useSetter } from "store/accessors";
+import { EstimateResult } from "types/tx";
 import { SubmitStep } from "slices/gift";
-import { purchase } from "slices/gift/purchase";
 
 type Props = {
   estimate: EstimateStatus;
-} & WithWallet<SubmitStep>;
+} & SubmitStep;
 
-export default function CompleteBtn({ estimate, ...props }: Props) {
-  const { details, wallet } = props;
-
-  const dispatch = useSetter();
-  function submit({ tx }: Estimate) {
-    dispatch(purchase({ wallet, tx, details: details }));
-  }
-
+export default function CompleteBtn({ estimate }: Props) {
   return (
     <button
       className="btn-orange btn-gift"
-      onClick={isEstimated(estimate) ? () => submit(estimate) : undefined}
       disabled={!isEstimated(estimate)}
       type="button"
     >
@@ -29,5 +18,5 @@ export default function CompleteBtn({ estimate, ...props }: Props) {
   );
 }
 
-const isEstimated = (val: EstimateStatus): val is Estimate =>
+const isEstimated = (val: EstimateStatus): val is EstimateResult =>
   !(val === "error" || val === "loading");

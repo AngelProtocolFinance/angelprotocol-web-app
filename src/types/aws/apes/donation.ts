@@ -1,3 +1,5 @@
+import { ChainID } from "../../chain";
+
 export type KYCData = {
   fullName: string; // "John Doe"
   email: string; // "john@doe.email.com"
@@ -12,7 +14,7 @@ export type KYCData = {
 
 type DonationRecordBase = {
   amount: number;
-  chainId: string;
+  chainId: ChainID;
   date: string;
   hash: string;
   symbol: string;
