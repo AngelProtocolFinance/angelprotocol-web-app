@@ -22,8 +22,6 @@ export type WCSignDirectRes = {
   //signDoc - no need, just return the same doc for broadcasting
 };
 
-export type KeplrWC = Pick<Keplr, "signAmino" | "signDirect">;
-
 interface Attribute {
   readonly key: string;
   readonly value: string;

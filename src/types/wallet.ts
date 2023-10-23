@@ -28,9 +28,9 @@ export type EVMConnected = ProviderConnected & {
   request: <T>(args: RequestArguments) => Promise<T>;
 };
 
-type CosmosConnected = ProviderConnected & {
+export type CosmosConnected = ProviderConnected & {
   id: CosmostWalletID;
-  client: Keplr | KeplrWC;
+  sign: Keplr["signDirect"];
 };
 
 type TerraConnected = ProviderConnected & {

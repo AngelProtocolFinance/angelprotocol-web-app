@@ -1,14 +1,22 @@
 import { KeplrQRCodeModalV2 } from "@keplr-wallet/wc-qrcode-modal";
 import { useEffect, useRef, useState } from "react";
+import { TxRaw } from "@keplr-wallet/proto-types/cosmos/tx/v1beta1/tx";
+import { SignClient } from "@walletconnect/sign-client/dist/types/client";
 import { SessionTypes } from "@walletconnect/types";
-import { Connected, ProviderState, Wallet, WalletMeta } from "types/wallet";
+import { SignDoc, WCSignDirectRes } from "types/cosmos";
+import {
+  CosmosConnected,
+  CosmosProviderState,
+  Wallet,
+  WalletMeta,
+} from "types/wallet";
 import { _pairing, _session, account } from "helpers/wallet-connect";
 
 const keplrIcon = "/icons/wallets/keplr.png";
 
 /** NOTE: only use this wallet in mainnet */
 export function useKeplrWC(): Wallet {
-  const [state, setState] = useState<ProviderState>({
+  const [state, setState] = useState<CosmosProviderState>({
     status: "disconnected",
   });
   const qrModalRef = useRef<KeplrQRCodeModalV2>();
@@ -24,7 +32,7 @@ export function useKeplrWC(): Wallet {
       const { client, session } = await _session("Keplr");
 
       if (session) {
-        setState(connected(session.namespaces));
+        setState(connected(session, client));
         client.on("session_delete", onSessionDelete);
       } else {
         setState({ status: "disconnected" });
@@ -64,7 +72,7 @@ export function useKeplrWC(): Wallet {
       }
       const session = await approval();
 
-      setState(connected(session.namespaces));
+      setState(connected(session, client));
 
       client.on("session_delete", onSessionDelete);
       if (uri) {
@@ -91,17 +99,48 @@ export function useKeplrWC(): Wallet {
     setState({ status: "disconnected" });
   }
   const meta: WalletMeta = {
-    id: "keplr-wc",
     logo: keplrIcon,
     name: "Keplr mobile",
-    type: "cosmos",
   };
 
   return { ...state, ...meta, ...{ connect, disconnect, switchChain: null } };
 }
 
-const connected = (namespaces: SessionTypes.Namespaces): Connected => ({
-  status: "connected",
-  isSwitchingChain: false,
-  ...account(namespaces.cosmos),
-});
+const connected = (
+  session: SessionTypes.Struct,
+  client: SignClient
+): CosmosConnected => {
+  return {
+    ...account(session.namespaces.cosmos),
+    id: "keplr-wc",
+    status: "connected",
+    async sign(chainID, signer, doc: SignDoc) {
+      const tx = TxRaw.fromPartial({
+        bodyBytes: doc.bodyBytes,
+        authInfoBytes: doc.authInfoBytes,
+      });
+      const { authInfoBytes, bodyBytes } = TxRaw.toJSON(tx) as any;
+      const { signature } = await client
+        .request<WCSignDirectRes>({
+          topic: session.topic,
+          chainId: `cosmos:${chainID}`,
+          request: {
+            method: "cosmos_signDirect",
+            params: {
+              signerAddress: signer,
+              signDoc: {
+                authInfoBytes,
+                bodyBytes,
+                chainId: doc.chainId,
+                accountNumber: doc.accountNumber?.toString(),
+              },
+            },
+          },
+        })
+        .catch((err) => {
+          throw err;
+        });
+      return { signature, signed: doc };
+    },
+  };
+};
