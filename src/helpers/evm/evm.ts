@@ -1,6 +1,5 @@
 import { InjectedProvider, RequestArguments } from "types/evm";
 import { InjectedProviderID } from "types/wallet";
-import { _session } from "helpers/wallet-connect";
 
 export async function injectedProvider(
   id: InjectedProviderID

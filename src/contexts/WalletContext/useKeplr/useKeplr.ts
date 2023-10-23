@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { CosmosProviderState, Wallet, WalletMeta } from "types/wallet";
-import { cosmosChains, juno } from "constants/chains-v2";
+import { juno } from "constants/chains-v2";
 import { retrieveUserAction, saveUserAction } from "../helpers";
 
 const actionKey = `keplr__pref`;

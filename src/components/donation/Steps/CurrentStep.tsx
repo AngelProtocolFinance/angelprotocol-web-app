@@ -28,7 +28,6 @@ export default function CurrentStep({ config }: Props) {
     case "donate-form": {
       return <DonateMethods donaterConfig={config} state={state} />;
     }
-
     //init
     default: {
       return <></>; // <Steps /> sets to step 1 onMount

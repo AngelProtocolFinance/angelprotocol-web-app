@@ -33,6 +33,7 @@ export default function Breakdown({
       //if amount + fee.amount > balance, error
       setEstimate(newEstimate);
     })();
+    //eslint-disable-next-line
   }, [sender, submitStep]);
 
   const token = submitStep.details.token;

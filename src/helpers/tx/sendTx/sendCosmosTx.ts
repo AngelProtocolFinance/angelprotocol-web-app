@@ -40,7 +40,7 @@ export async function sendCosmosTx(
     return { error: "Failed to broadcast transaction" };
   }
 
-  const { code, txhash, logs } = result.tx_response;
+  const { code, txhash } = result.tx_response;
   if (code) {
     return {
       error: "Transaction failed",
