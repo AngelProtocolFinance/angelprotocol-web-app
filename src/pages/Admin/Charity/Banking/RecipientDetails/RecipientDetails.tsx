@@ -1,32 +1,78 @@
-import { useCallback, useReducer } from "react";
-import { AccountRequirements, Quote } from "../types";
+import { useCallback, useEffect, useReducer, useState } from "react";
+import { AccountRequirements } from "../types";
 import { FormValues } from "./types";
+import { useErrorContext } from "contexts/ErrorContext";
+import useTypedWiseMutation from "../useTypedWiseMutation";
 import AccountRequirementsSelector from "./AccountRequirementsSelector";
 import Form from "./Form";
 
 type Props = {
   targetCurrency: string;
-  accountRequirements: AccountRequirements[];
-  onRefreshRequirements: (newRequirements: AccountRequirements[]) => void;
-  quote: Quote;
+  sourceAmount: number;
 };
 
 export default function RecipientDetails({
-  accountRequirements,
   targetCurrency,
-  quote,
-  onRefreshRequirements,
+  sourceAmount,
 }: Props) {
+  const [accountRequirements, setAccountRequirements] =
+    useState<AccountRequirements[]>();
+  // const [quote, setQuote] = useState<Quote>();
+
   const [state, dispatch] = useReducer(reducer, {
     formValuesArray: [],
     selectedIndex: -1,
   });
+
+  const {
+    createQuote,
+    // getAccountRequirements,
+    getAccountRequirementsForRoute,
+  } = useTypedWiseMutation();
+  const { handleError } = useErrorContext();
 
   const updateDefaultValues = useCallback(
     (formValues: FormValues) =>
       dispatch({ type: "formValues", payload: formValues }),
     []
   );
+
+  const onRefreshRequirements = useCallback(
+    (newRequirements: AccountRequirements[]) =>
+      setAccountRequirements(newRequirements),
+    []
+  );
+
+  useEffect(() => {
+    // createQuote(targetCurrency, sourceAmount)
+    //   .then((quote) =>
+    //     getAccountRequirements(quote.id).then((newRequirements) => {
+    //       (newRequirements) => {
+    //         setAccountRequirements(newRequirements);
+    //         setQuote(quote);
+    //       }
+    //     )
+    //   )
+    getAccountRequirementsForRoute(targetCurrency, sourceAmount)
+      .then((newRequirements) => {
+        setAccountRequirements(newRequirements);
+      })
+      .catch((error) => handleError(error));
+  }, [
+    createQuote,
+    // getAccountRequirements,
+    getAccountRequirementsForRoute,
+    handleError,
+    sourceAmount,
+    targetCurrency,
+  ]);
+
+  if (
+    // !quote ||
+    !accountRequirements
+  ) {
+    return <span>Loading...</span>;
+  }
 
   return (
     <>
@@ -41,7 +87,7 @@ export default function RecipientDetails({
           key={`form-${accountRequirements[state.selectedIndex].type}`}
           accountRequirements={accountRequirements[state.selectedIndex]}
           targetCurrency={targetCurrency}
-          quote={quote}
+          // quote={quote}
           onRefreshRequirements={onRefreshRequirements}
           defaultValues={state.formValuesArray[state.selectedIndex]}
           onCleanup={updateDefaultValues}

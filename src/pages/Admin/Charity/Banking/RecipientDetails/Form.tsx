@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import { FormProvider, useFieldArray } from "react-hook-form";
-import { AccountRequirements, CreateRecipientRequest, Quote } from "../types";
+import { AccountRequirements, CreateRecipientRequest } from "../types";
 import { FormValues } from "./types";
-import { useErrorContext } from "contexts/ErrorContext";
-import useTypedWiseMutation from "../useTypedWiseMutation";
 import RequirementField from "./RequirementField";
 import { redot } from "./dot";
 import useRecipientForm from "./useRecipientForm";
@@ -14,7 +12,7 @@ type Props = {
   onCleanup: (formValues: FormValues) => void;
   onRefreshRequirements: (accountRequirements: AccountRequirements[]) => void;
   targetCurrency: string;
-  quote: Quote;
+  // quote: Quote;
 };
 
 export default function Form(props: Props) {
@@ -26,12 +24,12 @@ export default function Form(props: Props) {
   const [refreshRequirements, setRefreshRequirements] = useState(
     refreshRequirementsOnChange
   );
-  const { fields, append } = useFieldArray({
+  const { fields } = useFieldArray({
     name: "requirements",
     control: methods.control,
   });
-  const { postAccountRequirements } = useTypedWiseMutation();
-  const { handleError } = useErrorContext();
+  // const { postAccountRequirements } = useTypedWiseMutation();
+  // const { handleError } = useErrorContext();
 
   const {
     handleSubmit,
@@ -43,9 +41,9 @@ export default function Form(props: Props) {
     if (refreshRequirements) {
       console.log("load additional fields");
       setRefreshRequirements(false);
-      postAccountRequirements(props.quote.id, request)
-        .then((accReqs) => props.onRefreshRequirements(accReqs))
-        .catch((error) => handleError(error));
+      // postAccountRequirements(props.quote.id, request)
+      //   .then((accReqs) => props.onRefreshRequirements(accReqs))
+      //   .catch((error) => handleError(error));
     } else {
       console.log("request");
       console.log(request);
