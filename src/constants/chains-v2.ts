@@ -1,4 +1,10 @@
-import { Chain, Chains } from "types/chain";
+import {
+  Chain,
+  Chains,
+  CosmosChainID,
+  EVMChainID,
+  TerraChainID,
+} from "types/chain";
 import { INFURA_ID } from "./env";
 
 export const polygon: Chain = {
@@ -163,3 +169,7 @@ export const chains: Chains = {
   "pisco-1": terraMainnet,
   "phoenix-1": terraTestnet,
 };
+
+export const EVMChains: EVMChainID[] = ["1", "137", "5", "56", "80001", "97"];
+export const cosmosChains: CosmosChainID[] = ["juno-1", "uni-6"];
+export const terraChains: TerraChainID[] = ["phoenix-1", "pisco-1"];

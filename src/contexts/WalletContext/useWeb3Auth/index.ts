@@ -8,6 +8,7 @@ import {
 } from "types/evm";
 import { EVMProviderState, Wallet, WalletMeta } from "types/wallet";
 import { logger } from "helpers";
+import { EVMChains } from "constants/chains-v2";
 import { EIPMethods } from "constants/evm";
 import { chainConfig } from "./web3AuthConfigs";
 import web3Auth from "./web3AuthSetup";
@@ -115,6 +116,7 @@ export default function useWeb3Auth(): Wallet {
   const meta: WalletMeta = {
     name: "Web3 Auth",
     logo: "https://web3auth.io/images/w3a-L-Favicon-1.svg",
+    supportedChains: EVMChains,
   };
 
   return {

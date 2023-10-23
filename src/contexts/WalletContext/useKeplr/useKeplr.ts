@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { CosmosProviderState, Wallet, WalletMeta } from "types/wallet";
-import { juno } from "constants/chains-v2";
+import { cosmosChains, juno } from "constants/chains-v2";
 import { retrieveUserAction, saveUserAction } from "../helpers";
 
 const actionKey = `keplr__pref`;
@@ -9,6 +9,7 @@ const keplrIcon = "/icons/wallets/keplr.png";
 const meta: WalletMeta = {
   name: "Keplr",
   logo: keplrIcon,
+  supportedChains: ["uni-6", "juno-1"],
 };
 
 export default function useKeplr(): Wallet {

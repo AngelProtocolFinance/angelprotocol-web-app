@@ -38,24 +38,21 @@ export type TxResult = TxError | TxSuccess;
 
 type Fee = { amount: number; symbol: string; coinGeckoId: string };
 
-export type TxPackage =
-  | {
-      chainID: CosmosChainID;
-      toSend: SignDoc;
-      sign: Keplr["signDirect"];
-      sender: string;
-    }
-  | {
-      chainID: TerraChainID;
-      toSend: CreateTxOptions;
-      post: TerraConnectedWallet["post"];
-      sender: string;
-    }
-  | { chainID: EVMChainID; toSend: EVMTx; request: Requester; sender: string };
+type CosmosEstimate = { chainID: CosmosChainID; toSend: SignDoc };
+type EVMEstimate = { chainID: EVMChainID; toSend: EVMTx };
+type TerraEstimate = { chainID: TerraChainID; toSend: CreateTxOptions };
 
 export type EstimateResult = {
   fee: Fee;
-} & Pick<TxPackage, "chainID" | "toSend">;
+} & (CosmosEstimate | EVMEstimate | TerraEstimate);
+
+export type TxPackage = { sender: string } & (
+  | (CosmosEstimate & { sign: Keplr["signDirect"] })
+  | (TerraEstimate & {
+      post: TerraConnectedWallet["post"];
+    })
+  | (EVMEstimate & { request: Requester })
+);
 
 // //////////// HOOK SENDER & PROMPT ////////////
 export type TxSuccessMeta = {

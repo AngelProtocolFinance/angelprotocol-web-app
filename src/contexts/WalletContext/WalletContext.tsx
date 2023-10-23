@@ -2,6 +2,7 @@ import isMobile from "is-mobile";
 import { PropsWithChildren, createContext, useContext } from "react";
 import { WalletContextState } from "./types";
 import { ConnectedWallet, DisconnectedWallet, Wallet } from "types/wallet";
+import { EVMChains } from "constants/chains-v2";
 import { IS_MOBILE } from "constants/env";
 import useInjectedProvider from "./useInjectedProvider";
 import useKeplr from "./useKeplr";
@@ -19,19 +20,24 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     {
       name: "Metamask",
       logo: metamaskIcon,
+      supportedChains: EVMChains,
     },
     "https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn"
   );
 
   const binance = useInjectedProvider(
     "binance-wallet",
-    { name: "Binance wallet", logo: binanceWalletIcon },
+    {
+      name: "Binance wallet",
+      logo: binanceWalletIcon,
+      supportedChains: EVMChains,
+    },
     "https://chrome.google.com/webstore/detail/binance-wallet/fhbohimaelbohpjbbldcngcnapndodjp"
   );
 
   const xdefiEvm = useInjectedProvider(
     "xdefi-evm",
-    { logo: xdefiIcon, name: "Xdefi ethereum" },
+    { logo: xdefiIcon, name: "Xdefi ethereum", supportedChains: EVMChains },
     "https://chrome.google.com/webstore/detail/xdefi-wallet/hmeobnfnfcmdkdcmlblgagmfpfboieaf?hl=en"
   );
 
@@ -42,6 +48,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   const evmWC = useEVMWC({
     logo: metamaskIcon,
     name: "Metamask Mobile",
+    supportedChains: EVMChains,
   });
 
   const wallets: Wallet[] = isMobile()

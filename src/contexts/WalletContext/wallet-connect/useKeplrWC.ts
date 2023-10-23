@@ -101,6 +101,7 @@ export function useKeplrWC(): Wallet {
   const meta: WalletMeta = {
     logo: keplrIcon,
     name: "Keplr mobile",
+    supportedChains: ["juno-1"],
   };
 
   return { ...state, ...meta, ...{ connect, disconnect, switchChain: null } };

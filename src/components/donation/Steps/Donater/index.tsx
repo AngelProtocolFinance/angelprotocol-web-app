@@ -42,7 +42,7 @@ export default function Donater({ wallet, config, ...state }: Props) {
   });
   return (
     <FormProvider {...methods}>
-      <Form configFromWidget={config} wallet={wallet} />
+      <Form configFromWidget={config} />
     </FormProvider>
   );
 }

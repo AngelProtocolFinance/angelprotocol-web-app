@@ -14,6 +14,7 @@ import {
   WalletID,
   WalletMeta,
 } from "types/wallet";
+import { terraChains } from "constants/chains-v2";
 
 export default function useTerra() {
   const {
@@ -87,6 +88,7 @@ const connectionFn =
       return {
         name: "Terra Station Mobile",
         logo: "/icons/wallets/terra-extension.jpg",
+        supportedChains: terraChains,
         async connect() {
           connectTerra(ConnectType.WALLETCONNECT);
         },
@@ -99,6 +101,7 @@ const connectionFn =
       return {
         name: connection.name,
         logo: connection.icon,
+        supportedChains: terraChains,
         connect: async () =>
           connectTerra(connection.type, connection.identifier),
       };
@@ -108,6 +111,7 @@ const connectionFn =
       return {
         name: installation.name,
         logo: installation.icon,
+        supportedChains: terraChains,
         connect: async () => {
           window.open(installation.url, "_blank", "noopener noreferrer");
         },
@@ -118,6 +122,7 @@ const connectionFn =
     return {
       name: "Unknown wallet",
       logo: "",
+      supportedChains: terraChains,
       connect: () => {
         throw new Error("Unknown wallet");
       },

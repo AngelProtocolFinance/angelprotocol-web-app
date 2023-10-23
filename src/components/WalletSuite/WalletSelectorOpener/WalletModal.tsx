@@ -2,7 +2,7 @@ import { DisconnectedWallet } from "types/wallet";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import Modal from "components/Modal";
-import Wallet from "./Wallet";
+import Wallet from "../../donation/Steps/Submit/Wallet";
 
 type Props = {
   wallets: DisconnectedWallet[];

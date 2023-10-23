@@ -57,6 +57,7 @@ export type WalletState =
 export type WalletMeta = {
   logo: string;
   name: string;
+  supportedChains: ChainID[];
 };
 
 export type Wallet = WalletMeta & WalletState;
@@ -92,4 +93,4 @@ export const isEVM = (val: Connected | ConnectedWallet): val is EVMConnected =>
 
 export const isTerra = (
   val: Connected | ConnectedWallet
-): val is EVMConnected => types[val.id] === "terra";
+): val is TerraConnected => types[val.id] === "terra";
