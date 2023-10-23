@@ -7,7 +7,7 @@ type FieldSchema = {
   key: string;
   schema:
     | StringSchema<string | undefined, AnyObject, undefined, "">
-    | ObjectSchema<OptionType<string>, any, OptionType<string>, "">;
+    | ObjectSchema<OptionType<string | undefined>, any, OptionType<string>, "">;
 };
 
 export default function createFieldSchema(field: Field): FieldSchema {
@@ -71,22 +71,13 @@ function createStringSchema(
 
 function createOptionsTypeSchema(
   requirements: Group
-): ObjectSchema<OptionType<string>, AnyObject, any, ""> {
-  let schema: ObjectSchema<OptionType<string>> = object({
+): ObjectSchema<OptionType<string | undefined>, AnyObject, any, ""> {
+  // - since we'll have allowed values set in the component itself, there's only need to check whether the field is required
+  // - other validations make no sense for selectors ([min/max]Length, validationRegexp etc.)
+  const schema: ObjectSchema<OptionType<string | undefined>> = object({
     label: requiredString,
-    value: requiredString,
+    value: requirements.required ? requiredString : string(),
   });
-  if (requirements.required) {
-    schema = schema.required("required");
-  }
-  if (requirements.valuesAllowed) {
-    schema = schema.test(
-      "Allowed values",
-      `Must be one of: ${requirements.valuesAllowed
-        .map((x) => x.key)
-        .join(", ")}`,
-      (val) => !!requirements.valuesAllowed?.find((x) => val.value === x.key)
-    );
-  }
+
   return schema;
 }

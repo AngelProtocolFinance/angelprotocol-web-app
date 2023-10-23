@@ -20,7 +20,7 @@ export default function getDefaultValues(
           defaultValues[key] = "";
         } else {
           defaultValues[key] = {
-            label: requirements.example, // this field contains dropdown placeholder text for `select`; for `radio` it's empty string
+            label: requirements.example || "Select...", // this field contains dropdown placeholder text for `select`; for `radio` it's empty string
             value: "",
           };
         }
