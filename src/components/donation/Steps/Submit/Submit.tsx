@@ -30,6 +30,14 @@ export default function Submit(props: SubmitStep) {
     );
   }
 
+  if (!wallet.supportedChains.includes(chainID)) {
+    return (
+      <Container {...props}>
+        <Info>Connected wallet doesn't support this chain</Info>
+      </Container>
+    );
+  }
+
   if (chainID !== wallet.chainId) {
     return (
       <Container {...props}>
