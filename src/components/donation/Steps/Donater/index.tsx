@@ -2,14 +2,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { DonateValues } from "./types";
 import { TokenWithAmount } from "types/tx";
-import { WithWallet } from "types/wallet";
 import { DonaterConfigFromWidget } from "types/widget";
 import { FormStep } from "slices/donation";
 import { polygon } from "constants/chains-v2";
 import Form from "./Form";
 import { schema } from "./schema";
 
-type Props = WithWallet<FormStep> & {
+type Props = FormStep & {
   config: DonaterConfigFromWidget | null;
 };
 
@@ -26,7 +25,7 @@ const initToken: TokenWithAmount = {
   amount: "0",
 };
 
-export default function Donater({ wallet, config, ...state }: Props) {
+export default function Donater({ config, ...state }: Props) {
   const initial: DonateValues = {
     token: initToken,
     pctLiquidSplit: config?.liquidSplitPct ?? 50,

@@ -1,9 +1,5 @@
 import { Tab } from "@headlessui/react";
 import { DonaterConfigFromWidget } from "types/widget";
-import { useModalContext } from "contexts/ModalContext";
-import { isDisconnected, useWalletContext } from "contexts/WalletContext";
-import Status, { LoadingStatus } from "components/Status";
-import WalletModal from "components/WalletSuite/WalletSelectorOpener/WalletModal";
 import { FormStep } from "slices/donation";
 import Donater from "../Donater";
 import Stripe from "./Stripe";
@@ -13,8 +9,6 @@ type Props = {
   state: FormStep;
 };
 export default function DonateMethods({ donaterConfig, state }: Props) {
-  const wallet = useWalletContext();
-  const { showModal } = useModalContext();
   return (
     <Tab.Group as="div" className="grid content-start mt-2">
       <Tab.List as="div" className="grid grid-cols-2 mb-6">
@@ -48,26 +42,7 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
           />
         </Tab.Panel>
         <Tab.Panel className="grid">
-          {isDisconnected(wallet) ? (
-            <div className="grid gap-2 place-items-centerjustify-self-center mt-4">
-              <Status icon="Info" classes="">
-                You need to connect your wallet to make a donation
-              </Status>
-              <button
-                onClick={() => {
-                  showModal(WalletModal, { wallets: wallet });
-                }}
-              >
-                connect
-              </button>
-            </div>
-          ) : wallet === "loading" ? (
-            <LoadingStatus classes="justify-self-center mt-4">
-              Loading wallet
-            </LoadingStatus>
-          ) : (
-            <Donater {...state} config={donaterConfig} wallet={wallet} />
-          )}
+          <Donater {...state} config={donaterConfig} />
         </Tab.Panel>
       </Tab.Panels>
     </Tab.Group>

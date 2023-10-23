@@ -39,7 +39,8 @@ export const apes = createApi({
 
     tokens: builder.query<Token[], ChainID>({
       query: (chainID) => `v1/chain/${chainID}`,
-      transformResponse: (res: FetchedChain) => res.tokens,
+      transformResponse: (res: FetchedChain) =>
+        [res.native_currency].concat(res.tokens),
     }),
 
     stripeSessionURL: builder.mutation<{ url: string }, StripeSessionURLParams>(
