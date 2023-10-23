@@ -23,7 +23,6 @@ const initToken: TokenWithAmount = {
   token_id: "",
   coingecko_denom: "",
   type: "erc20",
-  balance: 0,
   amount: "0",
 };
 

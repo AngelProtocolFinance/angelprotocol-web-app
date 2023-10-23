@@ -9,8 +9,6 @@ import {
 } from "react-hook-form";
 import { OnSetAmount, Props } from "./types";
 import { TokenWithAmount } from "types/tx";
-import { humanize } from "helpers";
-import Steps from "./Steps";
 import TokenSelector from "./TokenSelector";
 
 const amountKey: keyof TokenWithAmount = "amount";
@@ -20,14 +18,13 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
   label,
   name,
   classes,
-  scale,
+
   disabled,
   userWalletAddress,
   selectedChainId,
 
   //flags
-  withBalance,
-  witMininum,
+  withMininum,
 }: Props<T, K>) {
   const {
     register,
@@ -62,15 +59,6 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
         >
           {label}
         </label>
-        {withBalance && (
-          <button
-            type="button"
-            onClick={() => onSetAmount(token.balance)}
-            className="text-right hover:text-blue text-xs flex"
-          >
-            BAL: {humanize(+token.balance, 3)} {token.symbol}
-          </button>
-        )}
       </div>
 
       <div
@@ -109,7 +97,6 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
           Minimal amount: {token.symbol} {token.min_donation_amnt}
         </p>
       )}
-      {scale && <Steps scale={scale} token={token} onSetAmount={onSetAmount} />}
     </div>
   );
 }

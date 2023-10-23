@@ -20,7 +20,7 @@ export async function sendTerraTx(
     if (!success) {
       return { error: "Transaction submitted but failed", tx: submitted };
     }
-    return { ...submitted, data: null };
+    return { ...submitted };
   } catch (err) {
     logger.error(err);
     if (err instanceof UserDenied) {

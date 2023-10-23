@@ -34,13 +34,13 @@ const _fiscalSponsorShipFeeFn =
 const prettyDollar = (amount: Decimal) => `$${humanize(amount, 4)}`;
 
 export async function estimateDonation({
+  sender,
   recipient,
   details: {
     token,
-    sender,
     chainId: { value: chainID },
   },
-}: SubmitStep & {}): Promise<DonationEstimate | null> {
+}: SubmitStep & { sender: string }): Promise<DonationEstimate | null> {
   let toEstimate: EstimateInput;
   // ///////////// GET TX CONTENT ///////////////
 
