@@ -132,6 +132,7 @@ export function useEVMWC(meta: WalletMeta): Wallet {
     client.off("session_delete", onSessionDelete);
     setState({ status: "disconnected" });
   }
+
   return { ...state, ...meta, ...{ connect, disconnect, switchChain: null } };
 }
 

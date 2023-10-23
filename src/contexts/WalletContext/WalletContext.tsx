@@ -14,34 +14,32 @@ const metamaskIcon = "/icons/wallets/metamask.png";
 const xdefiIcon = "/icons/wallets/xdefi.jpg";
 
 export default function WalletContext(props: PropsWithChildren<{}>) {
-  const metamask = useInjectedProvider({
-    id: "metamask",
-    logo: metamaskIcon,
-    name: "Metamask",
-    installUrl:
-      "https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn",
-  });
-  const binance = useInjectedProvider({
-    id: "binance-wallet",
-    logo: binanceWalletIcon,
-    name: "Binance wallet",
-    installUrl:
-      "https://chrome.google.com/webstore/detail/binance-wallet/fhbohimaelbohpjbbldcngcnapndodjp",
-  });
-  const xdefiEvm = useInjectedProvider({
-    id: "xdefi-evm",
-    logo: xdefiIcon,
-    name: "Xdefi ethereum",
-    installUrl:
-      "https://chrome.google.com/webstore/detail/xdefi-wallet/hmeobnfnfcmdkdcmlblgagmfpfboieaf?hl=en",
-  });
+  const metamask = useInjectedProvider(
+    "metamask",
+    {
+      name: "Metamask",
+      logo: metamaskIcon,
+    },
+    "https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn"
+  );
+
+  const binance = useInjectedProvider(
+    "binance-wallet",
+    { name: "Binance wallet", logo: binanceWalletIcon },
+    "https://chrome.google.com/webstore/detail/binance-wallet/fhbohimaelbohpjbbldcngcnapndodjp"
+  );
+
+  const xdefiEvm = useInjectedProvider(
+    "xdefi-evm",
+    { logo: xdefiIcon, name: "Xdefi ethereum" },
+    "https://chrome.google.com/webstore/detail/xdefi-wallet/hmeobnfnfcmdkdcmlblgagmfpfboieaf?hl=en"
+  );
+
   const { station, stationMobile, xdefiTerra, leap } = useTerra();
   const keplr = useKeplr();
   const web3Auth = useWeb3Auth();
   const keplrWC = useKeplrWC();
   const evmWC = useEVMWC({
-    type: "evm",
-    id: "evm-wc",
     logo: metamaskIcon,
     name: "Metamask Mobile",
   });
