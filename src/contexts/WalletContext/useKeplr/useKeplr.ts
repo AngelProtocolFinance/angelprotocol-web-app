@@ -21,10 +21,10 @@ export default function useKeplr(): Wallet {
     retrieveUserAction(actionKey) === "connect" && connect(false);
   }, []); // eslint-disable-line
 
-  async function connect(isNew = true) {
+  async function connect(isUserInitiated = true) {
     try {
       if (!window.keplr) {
-        if (!isNew) return; /** dont redirect persistent connection */
+        if (!isUserInitiated) return; /** dont redirect persistent connection */
         return window.open(INSTALL_URL, "_blank", "noopener noreferrer");
       }
       setState({ status: "loading" });
@@ -39,7 +39,7 @@ export default function useKeplr(): Wallet {
       });
       saveUserAction(actionKey, "connect");
     } catch (err) {
-      if (isNew) {
+      if (isUserInitiated) {
         return alert("Failed to connect to wallet.");
       }
       setState({ status: "disconnected" });

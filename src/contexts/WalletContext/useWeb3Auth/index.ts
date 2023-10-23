@@ -1,38 +1,34 @@
 import type { Maybe } from "@web3auth/base";
 import Decimal from "decimal.js";
 import { useEffect, useState } from "react";
-import { AccountChangeHandler, ChainChangeHandler } from "types/evm";
-import { ProviderState, Wallet, WalletMeta } from "types/wallet";
-import { getProvider, isEmpty, logger } from "helpers";
+import {
+  AccountChangeHandler,
+  ChainChangeHandler,
+  RequestArguments,
+} from "types/evm";
+import { EVMProviderState, Wallet, WalletMeta } from "types/wallet";
+import { logger } from "helpers";
 import { EIPMethods } from "constants/evm";
 import { chainConfig } from "./web3AuthConfigs";
 import web3Auth from "./web3AuthSetup";
 
 export default function useWeb3Auth(): Wallet {
-  const [state, setState] = useState<ProviderState>({ status: "disconnected" });
+  const [state, setState] = useState<EVMProviderState>({
+    status: "disconnected",
+  });
 
   // //// EVENT HANDLERS ////
   const handleChainChange: ChainChangeHandler = (hexChainId) => {
-    setState((p) =>
-      p.status === "connected"
-        ? { ...p, chainId: new Decimal(hexChainId).toString() }
-        : p
-    );
+    if (state.status !== "connected") return;
+    setState({ ...state, chainId: new Decimal(hexChainId).toString() });
   };
   const handleAccountsChange: AccountChangeHandler = (accounts) => {
-    setState((p) => {
-      if (p.status !== "connected") return p;
-      getProvider("web3auth-torus").then((provider) => {
-        if (provider && isEmpty(accounts)) {
-          provider.removeListener?.("chainChanged", handleChainChange);
-          provider.removeListener?.("accountsChanged", handleAccountsChange);
-          web3Auth.logout({ cleanup: true });
+    if (state.status !== "connected") return;
 
-          return { status: "disconnected" };
-        }
-      });
-      return { ...p, address: accounts[0] };
-    });
+    if (accounts.length === 0) {
+      return setState({ status: "disconnected" });
+    }
+    setState({ ...state, address: accounts[0] });
   };
 
   // //// PERSISTENT CONNECTION ////
@@ -43,20 +39,20 @@ export default function useWeb3Auth(): Wallet {
   }, []);
 
   // //// USER INITIATED CONNECTION ////
-  const login = async (isNew = true) => {
+  const login = async (isUserInitiated = true) => {
     try {
       setState({ status: "loading" });
 
       //there's always a need to initialize Web3Auth
       await web3Auth.init();
 
-      const provider = isNew
+      const provider = isUserInitiated
         ? await web3Auth.connectTo("torus-evm")
         : web3Auth.provider;
 
       if (!provider) {
         // don't throw error on persistent connection
-        if (isNew) return;
+        if (isUserInitiated) return;
         return alert("Failed to connect to wallet");
       }
 
@@ -68,7 +64,7 @@ export default function useWeb3Auth(): Wallet {
       });
 
       if (!(val(accounts) && val(hexChainId))) {
-        if (isNew) return;
+        if (isUserInitiated) return;
         return alert("Failed to connect to wallet");
       }
 
@@ -76,15 +72,18 @@ export default function useWeb3Auth(): Wallet {
       provider.on("accountsChanged", handleAccountsChange);
 
       setState({
+        id: "web3auth-torus",
         status: "connected",
         address: accounts[0],
         chainId: new Decimal(hexChainId).toString(),
-        isSwitchingChain: false,
+        request<T>({ method, params }: RequestArguments) {
+          return provider.request({ params, method }) as Promise<T>;
+        },
       });
     } catch (err) {
       setState({ status: "disconnected" });
       //let caller of login() handle error
-      if (isNew) throw err;
+      if (isUserInitiated) throw err;
       //log for persistent connection
       logger.error(err);
     }
@@ -114,8 +113,6 @@ export default function useWeb3Auth(): Wallet {
   };
 
   const meta: WalletMeta = {
-    type: "evm",
-    id: "web3auth-torus",
     name: "Web3 Auth",
     logo: "https://web3auth.io/images/w3a-L-Favicon-1.svg",
   };
