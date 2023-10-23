@@ -10,8 +10,9 @@ type Props = {
   accountRequirements: AccountRequirements;
   defaultValues: FormValues;
   onCleanup: (formValues: FormValues) => void;
-  onRefreshRequirements: (accountRequirements: AccountRequirements[]) => void;
+  onRefreshRequirements: (accountRequirements: AccountRequirements) => void;
   targetCurrency: string;
+  requirementsRefreshed: boolean;
   // quote: Quote;
 };
 
@@ -21,8 +22,9 @@ export default function Form(props: Props) {
     props.targetCurrency,
     props.defaultValues
   );
+  // if requirements have already been refreshed, there's no need to do this a 2nd time
   const [refreshRequirements, setRefreshRequirements] = useState(
-    refreshRequirementsOnChange
+    !props.requirementsRefreshed && refreshRequirementsOnChange
   );
   // const { postAccountRequirements } = useTypedWiseMutation();
   // const { handleError } = useErrorContext();
