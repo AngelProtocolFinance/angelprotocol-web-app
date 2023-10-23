@@ -1,30 +1,29 @@
-import { Estimate, TxContent } from "types/tx";
-import { WalletID } from "types/wallet";
+import { EstimateInput, EstimateResult } from "types/tx";
 import { logger } from "../../logger";
 import { estimateCosmosFee } from "./estimateCosmosFee";
 import { estimateEVMFee } from "./estimateEVMfee";
 import estimateTerraFee from "./estimateTerraFee";
 
 export default async function estimateTx(
-  content: TxContent,
-  sender: { address: string; walletID: WalletID }
-): Promise<Estimate | null> {
+  toEstimate: EstimateInput,
+  sender: { address: string }
+): Promise<EstimateResult | null> {
   try {
-    switch (content.chainID) {
+    switch (toEstimate.chainID) {
       case "juno-1":
       case "uni-6": {
-        const { val, chainID } = content;
+        const { val, chainID } = toEstimate;
         return estimateCosmosFee(chainID, sender.address, val);
       }
       case "phoenix-1":
       case "pisco-1": {
-        const { chainID, val, wallet } = content;
-        return estimateTerraFee(chainID, sender.address, val, wallet);
+        const { chainID, val } = toEstimate;
+        return estimateTerraFee(chainID, sender.address, val);
       }
 
       //evm chains
       default: {
-        const { chainID, val } = content;
+        const { chainID, val } = toEstimate;
         return estimateEVMFee(chainID, sender.address, val);
       }
     }

@@ -1,8 +1,7 @@
 import { Coin, MsgExecuteContract, MsgSend } from "@terra-money/terra.js";
-import { ConnectedWallet as TerraConnectedWallet } from "@terra-money/wallet-provider";
 import Decimal from "decimal.js";
 import { SimulContractTx, SimulSendNativeTx } from "types/evm";
-import { EstimatedTx, TxContent } from "types/tx";
+import { EstimateInput, EstimateResult } from "types/tx";
 import { SubmitStep } from "slices/donation";
 import createCosmosMsg from "contracts/createCosmosMsg";
 import { createTx } from "contracts/createTx/createTx";
@@ -18,8 +17,7 @@ type EstimateItem = {
   prettyFiatAmount: string; //$, AUD, ETC
 };
 
-export type DonationEstimate = {
-  tx: EstimatedTx;
+export type DonationEstimate = EstimateResult & {
   items: EstimateItem[];
 };
 
@@ -42,11 +40,8 @@ export async function estimateDonation({
     sender,
     chainId: { value: chainID },
   },
-  terraWallet,
-}: SubmitStep & {
-  terraWallet?: TerraConnectedWallet;
-}): Promise<DonationEstimate | null> {
-  let content: TxContent;
+}: SubmitStep & {}): Promise<DonationEstimate | null> {
+  let toEstimate: EstimateInput;
   // ///////////// GET TX CONTENT ///////////////
 
   const fiscalSponsorShipFeeFn = _fiscalSponsorShipFeeFn(
@@ -72,7 +67,7 @@ export async function estimateDonation({
                 cw20: token.token_id,
               });
 
-        content = { chainID, val: [msg] };
+        toEstimate = { chainID, val: [msg] };
         break;
       }
 
@@ -90,7 +85,7 @@ export async function estimateDonation({
                   recipient: apWallets.terra,
                 },
               });
-        content = { chainID, val: [msg], wallet: terraWallet! };
+        toEstimate = { chainID, val: [msg] };
         break;
       }
       //evm chains
@@ -116,18 +111,18 @@ export async function estimateDonation({
           }
         })();
 
-        content = { chainID, val: tx };
+        toEstimate = { chainID, val: tx };
       }
     }
 
     // ///////////// ESTIMATE TX ///////////////
-    const txEstimate = await estimateTx(content, sender);
-    if (!txEstimate) return null;
+    const estimate = await estimateTx(toEstimate, { address: sender });
+    if (!estimate) return null;
 
     // ///////////// Sucessful simulation ///////////////
     const [tokenUSDValue, feeUSDValue] = await Promise.all([
       _usdValue(token.coingecko_denom),
-      _usdValue(txEstimate.fee.coinGeckoId),
+      _usdValue(estimate.fee.coinGeckoId),
     ]);
 
     const tokenUSDAmountDec = new Decimal(tokenUSDValue).mul(token.amount);
@@ -141,9 +136,7 @@ export async function estimateDonation({
       prettyFiatAmount: `$${humanize(tokenUSDAmountDec, 4)}`,
     };
 
-    const feeUSDValueAmount = new Decimal(feeUSDValue).mul(
-      txEstimate.fee.amount
-    );
+    const feeUSDValueAmount = new Decimal(feeUSDValue).mul(estimate.fee.amount);
 
     const baseFee = tokenUSDAmountDec.mul(BASE_FEE_RATE_PCT).div(100);
     const cryptoFee = feeUSDValueAmount.mul(CRYPTO_FEE_RATE_PCT).div(100);
@@ -154,8 +147,8 @@ export async function estimateDonation({
     const transactionFee: EstimateItem = {
       name: "Transaction fee",
       cryptoAmount: {
-        value: txEstimate.fee.amount.toString(),
-        symbol: txEstimate.fee.symbol,
+        value: estimate.fee.amount.toString(),
+        symbol: estimate.fee.symbol,
       },
       fiatAmount: feeUSDValueAmount.toNumber(),
       prettyFiatAmount: prettyDollar(feeUSDValueAmount),
@@ -175,7 +168,7 @@ export async function estimateDonation({
     };
 
     return {
-      tx: txEstimate.tx,
+      ...estimate,
       items: [amount, donationFee, transactionFee, total],
     };
   } catch (err) {

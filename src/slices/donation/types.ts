@@ -1,7 +1,7 @@
 import { Token } from "types/aws";
 import { ChainID } from "types/chain";
 import { Country } from "types/countries";
-import { EstimatedTx, TokenWithAmount } from "types/tx";
+import { EstimatedTx, TokenWithAmount, TxPackage } from "types/tx";
 import { ConnectedWallet } from "types/wallet";
 import { OptionType } from "components/Selector";
 
@@ -61,10 +61,7 @@ export type TxStep = {
   status: TxStatus;
 } & Omit<SubmitStep, "step">;
 
-export type DonateArgs = { donation: SubmitStep } & {
-  wallet: ConnectedWallet;
-  tx: EstimatedTx;
-};
+export type DonateArgs = { donation: SubmitStep } & TxPackage;
 
 export type FiatToken = Pick<Token, "symbol" | "min_donation_amnt" | "logo">;
 

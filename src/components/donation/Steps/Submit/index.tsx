@@ -1,7 +1,6 @@
-import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Estimate, TokenWithAmount } from "types/tx";
+import { EstimateResult, TokenWithAmount, TxPackage } from "types/tx";
 import { WithWallet } from "types/wallet";
 import Image from "components/Image";
 import { ErrorStatus, LoadingStatus } from "components/Status";
@@ -17,7 +16,6 @@ type EstimateStatus = DonationEstimate | "loading" | "error";
 
 export default function Submit(props: WithWallet<SubmitStep>) {
   const dispatch = useSetter();
-  const terraWallet = useConnectedWallet();
   const [estimate, setEstimate] = useState<EstimateStatus>("loading");
 
   useEffect(() => {
@@ -32,7 +30,7 @@ export default function Submit(props: WithWallet<SubmitStep>) {
     dispatch(setStep(props.kyc ? "kyc-form" : "donate-form"));
   }
 
-  function submit(tx: Estimate["tx"]) {
+  function submit(txPackage: TxPackage) {
     const { wallet, ...donation } = props;
     dispatch(sendDonation({ donation: donation, wallet: wallet, tx }));
   }

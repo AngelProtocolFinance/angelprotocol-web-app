@@ -67,3 +67,29 @@ export type ConnectedWallet = WalletMeta &
 
 export type DisconnectedWallet = WalletMeta & Disconnected & Connector;
 export type WithWallet<T> = T & { wallet: ConnectedWallet };
+
+const types: { [key in WalletID]: "cosmos" | "terra" | "evm" } = {
+  "binance-wallet": "evm",
+  "evm-wc": "evm",
+  metamask: "evm",
+  "web3auth-torus": "evm",
+  "xdefi-evm": "evm",
+  keplr: "cosmos",
+  "keplr-wc": "cosmos",
+  station: "terra",
+  walletconnect: "terra",
+  "leap-wallet": "terra",
+  "xdefi-wallet": "terra",
+};
+
+//type guards
+export const isCosmos = (
+  val: Connected | ConnectedWallet
+): val is CosmosConnected => types[val.id] === "cosmos";
+
+export const isEVM = (val: Connected | ConnectedWallet): val is EVMConnected =>
+  types[val.id] === "evm";
+
+export const isTerra = (
+  val: Connected | ConnectedWallet
+): val is EVMConnected => types[val.id] === "terra";

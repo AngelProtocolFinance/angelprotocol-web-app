@@ -1,5 +1,7 @@
-import { CreateTxOptions, Msg } from "@terra-money/terra.js";
+import type { CreateTxOptions, Msg } from "@terra-money/terra.js";
+import type { ConnectedWallet as TerraConnectedWallet } from "@terra-money/wallet-provider";
 import type { Any } from "@keplr-wallet/proto-types/google/protobuf/any";
+import { Keplr } from "@keplr-wallet/types";
 import { Token } from "./aws";
 import {
   Chain,
@@ -10,7 +12,7 @@ import {
 } from "./chain";
 import { Allowance, Transfer } from "./contracts/erc20";
 import { SignDoc } from "./cosmos";
-import { Tupleable } from "./evm";
+import { Requester, Tupleable } from "./evm";
 import { EVMTx, SimulTx } from "./evm";
 import { TransactionStatus } from "./lists";
 
@@ -38,13 +40,24 @@ export type TxResult = TxError | TxSuccess;
 
 type Fee = { amount: number; symbol: string; coinGeckoId: string };
 
+export type TxPackage =
+  | {
+      chainID: CosmosChainID;
+      toSend: SignDoc;
+      sign: Keplr["signDirect"];
+      sender: string;
+    }
+  | {
+      chainID: TerraChainID;
+      toSend: CreateTxOptions;
+      post: TerraConnectedWallet["post"];
+      sender: string;
+    }
+  | { chainID: EVMChainID; toSend: EVMTx; request: Requester; sender: string };
+
 export type EstimateResult = {
   fee: Fee;
-} & (
-  | { chainID: CosmosChainID; toSend: SignDoc }
-  | { chainID: TerraChainID; toSend: CreateTxOptions }
-  | { chainID: EVMChainID; toSend: EVMTx }
-);
+} & Pick<TxPackage, "chainID" | "toSend">;
 
 // //////////// HOOK SENDER & PROMPT ////////////
 export type TxSuccessMeta = {

@@ -1,29 +1,22 @@
-import { ChainID } from "types/chain";
-import { EstimatedTx } from "types/tx";
-import { ConnectedWallet } from "types/wallet";
+import { TxPackage } from "types/tx";
 import { sendCosmosTx } from "./sendCosmosTx";
 import { sendEVMTx } from "./sendEVMTx";
 import { sendTerraTx } from "./sendTerraTx";
 
-export default function sendTx(wallet: ConnectedWallet, tx: EstimatedTx) {
-  switch (wallet.chainID) {
+export default function sendTx({ sender, ...txPackage }: TxPackage) {
+  switch (txPackage.chainID) {
     case "juno-1":
-      return sendCosmosTx(wallet.chainID);
-  }
-  switch (tx.chainID) {
-    case "juno-1":
-    case "uni-6":
-      return sendCosmosTx(
-        tx.chainID,
-        wallet.address,
-        wallet.id as "keplr" | "keplr-wc",
-        tx.val,
-        tx.attribute
-      );
+    case "uni-6": {
+      const { chainID, toSend, sign } = txPackage;
+      return sendCosmosTx(chainID, sender, toSend, sign);
+    }
     case "phoenix-1":
-    case "pisco-1":
-      return sendTerraTx(tx.chainID, tx.wallet.post, tx.val);
+    case "pisco-1": {
+      const { chainID, toSend, post } = txPackage;
+      return sendTerraTx(chainID, post, toSend);
+    }
     default:
-      return sendEVMTx(tx.chainID, wallet.id, tx.val, tx.log);
+      const { chainID, toSend, request } = txPackage;
+      return sendEVMTx(toSend, request, chainID);
   }
 }
