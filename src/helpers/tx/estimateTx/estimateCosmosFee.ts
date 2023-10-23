@@ -10,7 +10,7 @@ import {
 import type { Any } from "@keplr-wallet/proto-types/google/protobuf/any";
 import { CosmosChainID } from "types/chain";
 import { JSONAccount, SimulateRes } from "types/cosmos";
-import { Estimate } from "types/tx";
+import { EstimateResult } from "types/tx";
 import { condenseToNum } from "helpers/decimal";
 import { base64FromU8a } from "helpers/encoding";
 import { chains } from "constants/chains-v2";
@@ -25,7 +25,7 @@ export async function estimateCosmosFee(
   chainID: CosmosChainID,
   sender: string,
   msgs: Any[]
-): Promise<Estimate> {
+): Promise<EstimateResult> {
   const chain = chains[chainID];
   const { account } = await fetch(
     chain.lcd + `/cosmos/auth/v1beta1/accounts/${sender}`
@@ -103,14 +103,13 @@ export async function estimateCosmosFee(
       symbol: chain.nativeToken.symbol,
       coinGeckoId: chain.nativeToken.coinGeckoId,
     },
-    tx: {
-      chainID,
-      val: {
-        authInfoBytes: AuthInfo.encode(authInfoWithFee).finish(),
-        bodyBytes,
-        accountNumber: Long.fromString(account.account_number),
-        chainId: chain.id,
-      },
+
+    chainID,
+    toSend: {
+      authInfoBytes: AuthInfo.encode(authInfoWithFee).finish(),
+      bodyBytes,
+      accountNumber: Long.fromString(account.account_number),
+      chainId: chain.id,
     },
   };
 }

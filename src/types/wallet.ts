@@ -1,7 +1,6 @@
 import { ConnectedWallet as TerraConnectedWallet } from "@terra-money/wallet-provider";
 import { Keplr } from "@keplr-wallet/types";
 import { ChainID } from "./chain";
-import { KeplrWC } from "./cosmos";
 import { RequestArguments } from "./evm";
 
 export type InjectedProviderID = "binance-wallet" | "metamask" | "xdefi-evm";

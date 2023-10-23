@@ -1,26 +1,21 @@
 import { EVMChainID } from "types/chain";
-import { EVMTx, InjectedProvider, LogProcessor, TxReceipt } from "types/evm";
+import { EVMTx, Requester, TxReceipt } from "types/evm";
 import { TxResult } from "types/tx";
-import { WalletID } from "types/wallet";
 import { EIPMethods } from "constants/evm";
-import { getProvider } from "../../evm";
 import { logger } from "../../logger";
 
 export async function sendEVMTx(
-  chainID: EVMChainID,
-  providerID: WalletID,
   tx: EVMTx,
-  log?: LogProcessor
+  request: Requester,
+  chainID: EVMChainID
 ): Promise<TxResult> {
   try {
-    const provider = (await getProvider(providerID))!;
-
-    const hash = await provider.request<string>({
+    const hash = await request<string>({
       method: EIPMethods.eth_sendTransaction,
       params: [tx],
     });
 
-    const receipt = await getReceipt(provider, hash, 10);
+    const receipt = await getReceipt(request, hash, 10);
 
     if (!receipt) {
       return {
@@ -32,7 +27,6 @@ export async function sendEVMTx(
     return {
       hash: hash,
       chainID,
-      data: log ? log(receipt.logs) : undefined,
     };
   } catch (err) {
     logger.error(err);
@@ -41,7 +35,7 @@ export async function sendEVMTx(
 }
 
 async function getReceipt(
-  provider: InjectedProvider,
+  request: Requester,
   hash: string,
   retries: number
 ): Promise<TxReceipt | null> {
@@ -49,7 +43,7 @@ async function getReceipt(
 
   await new Promise((r) => setTimeout(r, 1000 * (10 - retries)));
 
-  const receipt = await provider.request<TxReceipt | null>({
+  const receipt = await request<TxReceipt | null>({
     method: EIPMethods.eth_getTransactionReceipt,
     params: [hash],
   });
@@ -58,5 +52,5 @@ async function getReceipt(
     return receipt;
   }
 
-  return getReceipt(provider, hash, retries - 1);
+  return getReceipt(request, hash, retries - 1);
 }

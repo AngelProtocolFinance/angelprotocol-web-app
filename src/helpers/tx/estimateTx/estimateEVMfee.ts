@@ -1,7 +1,7 @@
 import Decimal from "decimal.js";
 import { EVMChainID } from "types/chain";
 import { SimulTx } from "types/evm";
-import { Estimate } from "types/tx";
+import { EstimateResult } from "types/tx";
 import { chains } from "constants/chains-v2";
 import { EIPMethods } from "constants/evm";
 import { condense } from "../../decimal";
@@ -11,7 +11,7 @@ export async function estimateEVMFee(
   chainID: EVMChainID,
   sender: string,
   tx: SimulTx
-): Promise<Estimate> {
+): Promise<EstimateResult> {
   const { rpc, nativeToken } = chains[chainID];
   const [nonce, gas, gasPrice] = await Promise.all([
     request({
@@ -40,9 +40,7 @@ export async function estimateEVMFee(
       symbol: nativeToken.symbol,
       coinGeckoId: nativeToken.coinGeckoId,
     },
-    tx: {
-      val: { ...tx, nonce, gas: adjusted.toHex(), gasPrice },
-      chainID,
-    },
+    chainID,
+    toSend: { ...tx, nonce, gas: adjusted.toHex(), gasPrice },
   };
 }
