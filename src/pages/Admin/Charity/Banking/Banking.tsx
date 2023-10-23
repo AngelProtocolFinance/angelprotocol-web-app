@@ -1,9 +1,11 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useCallback, useState } from "react";
 import { AccountRequirements } from "./types";
+import { useWiseMutation } from "services/aws/aws";
+import { useErrorContext } from "contexts/ErrorContext";
 import { debounce } from "helpers";
 import CurrencySelector from "./CurrencySelector";
 import RecipientDetails from "./RecipientDetails";
-import getAccountRequirementOptions from "./getAccountRequirementOptions";
+import { URLS } from "./constants";
 
 // TODO: Once recipient is created by filling fields returned using `GET /v1/account-requirements?source=EUR&target=USD&sourceAmount=1000`
 // we need to use its recipientID to create a quote `https://docs.wise.com/api-docs/api-reference/quote#create-authenticated`
@@ -12,20 +14,60 @@ import getAccountRequirementOptions from "./getAccountRequirementOptions";
 // `POST /v1/quotes/{{quoteId}}/account-requirements`
 // Reason: not all required fields get returned by `GET /v1/account-requirements`, see 4th paragraph in docs:
 // https://docs.wise.com/api-docs/api-reference/recipient#account-requirements
+type Quote = { id: string };
 
 export default function Banking() {
   const [targetCurrency, setTargetCurrency] = useState<string>();
   const [sourceAmount, setSourceAmount] = useState<number>();
   const [accountRequirements, setAccountRequirements] =
     useState<AccountRequirements[]>();
+  const [
+    sendRequest,
+    //  { isLoading } use to disable form while loading
+  ] = useWiseMutation();
+  const { handleError } = useErrorContext();
+
+  const getAccountRequirements = useCallback(
+    async (targetCurrency: string, sourceAmount: number): Promise<void> => {
+      return sendRequest({
+        url: URLS.createQuote.url(),
+        method: URLS.createQuote.method,
+        payload: JSON.stringify({
+          sourceCurrency: "USD",
+          targetCurrency,
+          sourceAmount,
+        }),
+      })
+        .unwrap()
+        .then((res) => res as Quote)
+        .then((quote: Quote) =>
+          sendRequest({
+            url: URLS.getAccountRequirements.url(quote.id),
+            method: URLS.getAccountRequirements.method,
+            headers: { "Accept-Minor-Version": "1" },
+          }).unwrap()
+        )
+        .then((res) => res as AccountRequirements[])
+        .then((res) => setAccountRequirements(res))
+        .catch((error) => handleError(error));
+      // url: URLS.getAccountRequirementsForRoute.url(
+      //   targetCurrency,
+      //   sourceAmount
+      // ),
+      // method: URLS.getAccountRequirementsForRoute.method,
+      // })
+      //   .unwrap()
+      //   .then((res) => setAccountRequirements(res as AccountRequirements[]))
+      //   .catch((error) => handleError(error));
+    },
+    [sendRequest, handleError]
+  );
 
   const onCurrencyChange = (currency: string) => {
     setTargetCurrency(currency);
     setAccountRequirements(undefined);
     if (sourceAmount) {
-      getAccountRequirementOptions(currency, sourceAmount).then((res) =>
-        setAccountRequirements(res)
-      );
+      getAccountRequirements(currency, sourceAmount);
     }
   };
 
@@ -33,9 +75,7 @@ export default function Banking() {
     const newSourceAmount = Number(event.target.value) / 10; // random calculation
     setSourceAmount(newSourceAmount);
     if (targetCurrency) {
-      getAccountRequirementOptions(targetCurrency, newSourceAmount).then(
-        (res) => setAccountRequirements(res)
-      );
+      getAccountRequirements(targetCurrency, newSourceAmount);
     }
   };
 

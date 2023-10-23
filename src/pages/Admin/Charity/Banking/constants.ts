@@ -1,9 +1,7 @@
 export const URLS = {
-  rootUrl: "https://api.sandbox.transferwise.tech",
   createQuote: {
     method: "POST",
-    // url: () => `/v3/profiles/{{profileId}}/quotes`,
-    url: () => `/v3/profiles/${process.env.REACT_APP_WISE_PROFILE_ID}/quotes`,
+    url: () => `/v3/profiles/{{profileId}}/quotes`,
   },
   getAccountRequirements: {
     method: "GET",
@@ -18,4 +16,4 @@ export const URLS = {
     url: (targetCurrency: string, sourceAmount: number) =>
       `/v1/account-requirements?source=USD&target=${targetCurrency}&sourceAmount=${sourceAmount}`,
   },
-};
+} as const;

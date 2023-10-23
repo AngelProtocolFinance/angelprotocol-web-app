@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import {
   ProfileUpdatePayload,
   VersionSpecificWalletProfile,
+  WiseRequest,
   isDeleteMsg,
 } from "../types";
 import {
@@ -135,6 +136,17 @@ export const aws = createApi({
         };
       },
     }),
+    /**
+     * The endpoint returns different types of results depending on the requests sent, but since it's impossible
+     * to specify a generic return argument here, we return `unknown` and cast the return value manually
+     */
+    wise: builder.mutation<unknown, WiseRequest>({
+      query: (payload) => ({
+        url: `/${v(1)}/wise`,
+        method: "POST",
+        body: payload,
+      }),
+    }),
   }),
 });
 
@@ -146,6 +158,7 @@ export const {
   useProfileQuery,
   useProgramQuery,
   useEditProfileMutation,
+  useWiseMutation,
 
   endpoints: {
     endowmentCards: { useLazyQuery: useLazyEndowmentCardsQuery },

@@ -49,3 +49,11 @@ export type FiscalSponsorhipAgreementSigner =
 export type VersionSpecificWalletProfile = WalletProfile & {
   version: "legacy" | "latest";
 };
+
+export type WiseRequest = {
+  method: "GET" | "POST" | "DELETE" | "PUT";
+  headers?: Record<string, string>;
+  payload?: string; // stringified payload as needed
+  url: string;
+  endowment_id?: number; // only needed if request is "create a recipient"
+};
