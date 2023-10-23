@@ -1,6 +1,6 @@
 import { PropsWithChildren, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { EstimateResult, TokenWithAmount, TxPackage } from "types/tx";
+import { TokenWithAmount, TxPackage } from "types/tx";
 import { WithWallet } from "types/wallet";
 import Image from "components/Image";
 import { ErrorStatus, LoadingStatus } from "components/Status";
@@ -31,7 +31,7 @@ export default function Submit(props: WithWallet<SubmitStep>) {
   }
 
   function submit(txPackage: TxPackage) {
-    const { wallet, ...donation } = props;
+    const { ...donation } = props;
     dispatch(sendDonation({ donation: donation, ...txPackage }));
   }
 

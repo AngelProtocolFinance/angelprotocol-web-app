@@ -27,7 +27,7 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
 
   //flags
   withBalance,
-  withMininum,
+  witMininum,
 }: Props<T, K>) {
   const {
     register,

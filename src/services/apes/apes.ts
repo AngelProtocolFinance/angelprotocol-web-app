@@ -2,15 +2,15 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
   FetchedChain,
   PaginatedAWSQueryRes,
+  Token,
   WithdrawLog,
   WithdrawLogQueryParams,
 } from "types/aws";
-import { TokenWithBalance } from "types/tx";
+import { ChainID } from "types/chain";
 import { appRoutes } from "constants/routes";
 import { APIs } from "constants/urls";
 import { network } from "../constants";
 import { version as v } from "../helpers";
-import { fetchBalances } from "./helpers/fetchBalances";
 import { tags } from "./tags";
 
 type StripeSessionURLParams = {
@@ -36,21 +36,12 @@ export const apes = createApi({
         params,
       }),
     }),
-    tokens: builder.query<
-      TokenWithBalance[],
-      { chainId: string; address?: string }
-    >({
-      async queryFn({ address, chainId }, api, options, baseQuery) {
-        const { data } = await baseQuery(`v1/chain/${chainId}`);
-        const chain = data as FetchedChain;
 
-        if (!address) {
-          return { data: chain.tokens.map((t) => ({ ...t, balance: 0 })) };
-        }
-
-        return { data: await fetchBalances(chain, address) };
-      },
+    tokens: builder.query<Token[], ChainID>({
+      query: (chainID) => `v1/chain/${chainID}`,
+      transformResponse: (res: FetchedChain) => res.tokens,
     }),
+
     stripeSessionURL: builder.mutation<{ url: string }, StripeSessionURLParams>(
       {
         query: ({ endowId, liquidSplitPct }) => ({

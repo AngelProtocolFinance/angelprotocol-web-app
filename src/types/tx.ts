@@ -16,9 +16,7 @@ import { Requester, Tupleable } from "./evm";
 import { EVMTx, SimulTx } from "./evm";
 import { TransactionStatus } from "./lists";
 
-export type TokenWithBalance = Token & { balance: number };
-
-export type TokenWithAmount = TokenWithBalance & {
+export type TokenWithAmount = Token & {
   amount: string;
 };
 
