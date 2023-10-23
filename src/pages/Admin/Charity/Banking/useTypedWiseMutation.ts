@@ -1,14 +1,20 @@
 import { useCallback } from "react";
+import { AccountRequirements } from "./types";
 import { WiseRequest } from "services/types";
 import { useWiseMutation } from "services/aws/aws";
-import { useErrorContext } from "contexts/ErrorContext";
+import { WISE_REQUESTS } from "./constants";
 
-export default function useTypedWiseMutation(): [
-  <T>(request: WiseRequest) => Promise<T>,
-  ReturnType<typeof useWiseMutation>[1],
-] {
-  const { handleError } = useErrorContext();
-  const [sendRequest, requestState] = useWiseMutation();
+type Quote = { id: string };
+
+type Result = {
+  createQuote: (targetCurrency: string, sourceAmount: number) => Promise<Quote>;
+  getAccountRequirements: (quoteId: string) => Promise<AccountRequirements[]>;
+  postAccountRequirements: (quoteId: string) => Promise<AccountRequirements[]>;
+  state: ReturnType<typeof useWiseMutation>[1];
+};
+
+export default function useTypedWiseMutation(): Result {
+  const [sendRequest, state] = useWiseMutation();
 
   const send = useCallback(
     async function <T>(request: WiseRequest): Promise<T> {
@@ -16,8 +22,35 @@ export default function useTypedWiseMutation(): [
         .unwrap()
         .then((res) => res as T);
     },
-    [handleError, sendRequest]
+    [sendRequest]
   );
 
-  return [send, requestState];
+  const createQuote = useCallback(
+    async (targetCurrency: string, sourceAmount: number): Promise<Quote> =>
+      send<Quote>(WISE_REQUESTS.createQuote(targetCurrency, sourceAmount)),
+    [send]
+  );
+
+  const getAccountRequirements = useCallback(
+    async (quoteId: string): Promise<AccountRequirements[]> =>
+      send<AccountRequirements[]>(
+        WISE_REQUESTS.getAccountRequirements(quoteId)
+      ),
+    [send]
+  );
+
+  const postAccountRequirements = useCallback(
+    async (quoteId: string): Promise<AccountRequirements[]> =>
+      send<AccountRequirements[]>(
+        WISE_REQUESTS.postAccountRequirements(quoteId)
+      ),
+    [send]
+  );
+
+  return {
+    createQuote,
+    getAccountRequirements,
+    postAccountRequirements,
+    state,
+  };
 }

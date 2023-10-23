@@ -1,19 +1,23 @@
-export const URLS = {
-  createQuote: {
+import { WiseRequest } from "services/types";
+
+export const WISE_REQUESTS = {
+  createQuote: (targetCurrency: string, sourceAmount: number): WiseRequest => ({
     method: "POST",
-    url: () => `/v3/profiles/{{profileId}}/quotes`,
-  },
-  getAccountRequirements: {
+    url: "/v3/profiles/{{profileId}}/quotes",
+    payload: JSON.stringify({
+      sourceCurrency: "USD",
+      targetCurrency,
+      sourceAmount,
+    }),
+  }),
+  getAccountRequirements: (quoteId: string): WiseRequest => ({
     method: "GET",
-    url: (quoteId: string) => `/v1/quotes/${quoteId}/account-requirements`,
-  },
-  postAccountRequirements: {
+    url: `/v1/quotes/${quoteId}/account-requirements`,
+    headers: { "Accept-Minor-Version": "1" },
+  }),
+  postAccountRequirements: (quoteId: string): WiseRequest => ({
     method: "POST",
-    url: (quoteId: string) => `/v1/quotes/${quoteId}/account-requirements`,
-  },
-  getAccountRequirementsForRoute: {
-    method: "GET",
-    url: (targetCurrency: string, sourceAmount: number) =>
-      `/v1/account-requirements?source=USD&target=${targetCurrency}&sourceAmount=${sourceAmount}`,
-  },
+    url: `/v1/quotes/${quoteId}/account-requirements`,
+    headers: { "Accept-Minor-Version": "1" },
+  }),
 } as const;
