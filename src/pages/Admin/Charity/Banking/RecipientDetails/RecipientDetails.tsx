@@ -6,6 +6,7 @@ import { isEmpty } from "helpers";
 import useTypedWiseMutation from "../useTypedWiseMutation";
 import AccountRequirementsSelector from "./AccountRequirementsSelector";
 import Form from "./Form";
+import reducer from "./reducer";
 
 type Props = {
   targetCurrency: string;
@@ -16,13 +17,10 @@ export default function RecipientDetails({
   targetCurrency,
   sourceAmount,
 }: Props) {
-  // const [quote, setQuote] = useState<Quote>();
-
   const [state, dispatch] = useReducer(reducer, {
-    accountRequirements: [],
-    formValuesArray: [],
-    requirementsRefreshed: [],
+    requirementsDataArray: [],
     selectedIndex: -1,
+    // quote: undefined
   });
 
   const {
@@ -45,18 +43,20 @@ export default function RecipientDetails({
   );
 
   useEffect(() => {
-    // createQuote(targetCurrency, sourceAmount)
-    //   .then((quote) =>
-    //     getAccountRequirements(quote.id).then((newRequirements) => {
-    //       (newRequirements) => {
-    //         setAccountRequirements(newRequirements);
-    //         setQuote(quote);
-    //       }
-    //     )
+    // createQuote(targetCurrency, sourceAmount).then((quote) =>
+    //   getAccountRequirements(quote.id).then((newRequirements) =>
+    //     dispatch({
+    //       type: "accountRequirements",
+    //       payload: { accountRequirements: newRequirements, quote: quote },
+    //     })
     //   )
+    // );
     getAccountRequirementsForRoute(targetCurrency, sourceAmount)
       .then((newRequirements) => {
-        dispatch({ type: "accountRequirements", payload: newRequirements });
+        dispatch({
+          type: "accountRequirements",
+          payload: { accountRequirements: newRequirements },
+        });
       })
       .catch((error) => handleError(error));
   }, [
@@ -69,100 +69,37 @@ export default function RecipientDetails({
   ]);
 
   if (
-    // !quote ||
-    isEmpty(state.accountRequirements)
+    // !state.quote ||
+    isEmpty(state.requirementsDataArray)
   ) {
     return <span>Loading...</span>;
   }
 
+  const requirements = state.requirementsDataArray[state.selectedIndex];
+
   return (
     <>
       <AccountRequirementsSelector
-        accountRequirements={state.accountRequirements}
+        accountRequirements={state.requirementsDataArray.map(
+          (x) => x.accountRequirements
+        )}
+        currentIndex={state.selectedIndex}
         onChange={(index: number) =>
           dispatch({ type: "selectedIndex", payload: index })
         }
       />
       {state.selectedIndex >= 0 && (
         <Form
-          key={`form-${state.accountRequirements[state.selectedIndex].type}`}
-          accountRequirements={state.accountRequirements[state.selectedIndex]}
+          key={`form-${requirements.accountRequirements.type}`}
+          accountRequirements={requirements.accountRequirements}
           targetCurrency={targetCurrency}
-          // quote={quote}
+          // quote={state.quote}
           onRefreshRequirements={onRefreshRequirements}
-          defaultValues={state.formValuesArray[state.selectedIndex]}
+          defaultValues={requirements.currentFormValues}
           onCleanup={updateDefaultValues}
-          requirementsRefreshed={
-            state.requirementsRefreshed[state.selectedIndex]
-          }
+          requirementsRefreshed={requirements.refreshed}
         />
       )}
     </>
   );
-}
-
-type State = {
-  accountRequirements: AccountRequirements[];
-  formValuesArray: FormValues[];
-  requirementsRefreshed: boolean[];
-  selectedIndex: number;
-};
-
-type Action =
-  | {
-      type: "accountRequirements";
-      payload: AccountRequirements[];
-    }
-  | {
-      type: "formValues";
-      payload: FormValues;
-    }
-  | {
-      type: "refreshRequirements";
-      payload: AccountRequirements;
-    }
-  | {
-      type: "selectedIndex";
-      payload: number;
-    };
-
-function reducer(state: State, action: Action): State {
-  switch (action.type) {
-    case "accountRequirements":
-      return {
-        ...state,
-        accountRequirements: action.payload,
-        requirementsRefreshed: Array<boolean>(action.payload.length),
-      };
-    case "formValues":
-      const newFormValuesArray = [
-        ...state.formValuesArray.slice(0, state.selectedIndex),
-        action.payload,
-        ...state.formValuesArray.slice(state.selectedIndex + 1),
-      ];
-      return { ...state, formValuesArray: newFormValuesArray };
-    case "refreshRequirements":
-      const newAccountRequirements = [
-        ...state.accountRequirements.slice(0, state.selectedIndex),
-        action.payload,
-        ...state.accountRequirements.slice(state.selectedIndex + 1),
-      ];
-      return {
-        ...state,
-        accountRequirements: newAccountRequirements,
-        requirementsRefreshed: insert(
-          state.requirementsRefreshed,
-          state.selectedIndex,
-          true
-        ),
-      };
-    case "selectedIndex":
-      return { ...state, selectedIndex: action.payload };
-    default:
-      return state;
-  }
-}
-
-function insert<T>(arr: T[], at: number, item: T): T[] {
-  return [...arr.slice(0, at), item, ...arr.slice(at + 1)];
 }

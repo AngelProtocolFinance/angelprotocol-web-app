@@ -8,7 +8,7 @@ import useRecipientForm from "./useRecipientForm";
 
 type Props = {
   accountRequirements: AccountRequirements;
-  defaultValues: FormValues;
+  defaultValues: FormValues | undefined;
   onCleanup: (formValues: FormValues) => void;
   onRefreshRequirements: (accountRequirements: AccountRequirements) => void;
   targetCurrency: string;
