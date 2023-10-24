@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { FormProvider } from "react-hook-form";
 import { AccountRequirements, CreateRecipientRequest, Quote } from "../types";
 import { FormValues } from "./types";
+import { useAdminContext } from "pages/Admin/Context";
 import { useErrorContext } from "contexts/ErrorContext";
 import useTypedWiseMutation from "../useTypedWiseMutation";
 import RequirementField from "./RequirementField";
@@ -19,35 +20,38 @@ type Props = {
 };
 
 export default function Form(props: Props) {
-  const { methods, refreshRequirementsOnChange } = useRecipientForm(
+  const { id } = useAdminContext();
+  const { postAccountRequirements, createRecipientAccount } =
+    useTypedWiseMutation();
+  const { handleError } = useErrorContext();
+
+  const { methods, refreshRequirementsNeeded } = useRecipientForm(
     props.accountRequirements,
     props.targetCurrency,
     props.defaultValues
   );
-  // if requirements have already been refreshed, there's no need to do this a 2nd time
-  const [refreshRequirements, setRefreshRequirements] = useState(
-    !props.requirementsRefreshed && refreshRequirementsOnChange
-  );
-  const { postAccountRequirements } = useTypedWiseMutation();
-  const { handleError } = useErrorContext();
 
   const {
+    getValues,
     handleSubmit,
     formState: { isSubmitting },
   } = methods;
 
-  const onSubmit = handleSubmit((formValues) => {
-    const request = convertToCreateRecipientRequest(formValues);
-    if (refreshRequirements) {
-      postAccountRequirements(props.quote.id, request)
-        .then((accReqs) => {
-          setRefreshRequirements(false);
-          props.onRefreshRequirements(accReqs);
-        })
-        .catch((error) => handleError(error));
-    } else {
-      console.log("request");
-      console.log(request);
+  const onSubmit = handleSubmit(async (formValues) => {
+    try {
+      const request = convertToCreateRecipientRequest(formValues);
+
+      // refresh requirements if necessary
+      if (!props.requirementsRefreshed && refreshRequirementsNeeded) {
+        const accReqs = await postAccountRequirements(props.quote.id, request);
+        props.onRefreshRequirements(accReqs);
+      }
+      // otherwise create the recipient
+      else {
+        await createRecipientAccount(id, request);
+      }
+    } catch (error) {
+      handleError(error);
     }
   });
 
@@ -57,9 +61,9 @@ export default function Form(props: Props) {
   // when switching between account requirement types
   useEffect(
     () => () => {
-      onCleanup(methods.getValues());
+      onCleanup(getValues());
     },
-    [methods, onCleanup]
+    [getValues, onCleanup]
   );
 
   return (

@@ -11,6 +11,15 @@ export const WISE_REQUESTS = {
       sourceAmount,
     }),
   }),
+  createRecipientAccount: (
+    endowment_id: number,
+    request: CreateRecipientRequest
+  ): WiseRequest => ({
+    method: "POST",
+    url: "/v1/accounts",
+    endowment_id,
+    payload: JSON.stringify(request),
+  }),
   getAccountRequirements: (quoteId: string): WiseRequest => ({
     method: "GET",
     url: `/v1/quotes/${quoteId}/account-requirements`,
@@ -18,11 +27,11 @@ export const WISE_REQUESTS = {
   }),
   postAccountRequirements: (
     quoteId: string,
-    createRecipientRequest: CreateRecipientRequest
+    request: CreateRecipientRequest
   ): WiseRequest => ({
     method: "POST",
     url: `/v1/quotes/${quoteId}/account-requirements`,
     headers: { "Accept-Minor-Version": "1" },
-    payload: JSON.stringify(createRecipientRequest),
+    payload: JSON.stringify(request),
   }),
 } as const;

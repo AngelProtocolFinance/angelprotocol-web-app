@@ -1,15 +1,20 @@
 import { useCallback } from "react";
 import { AccountRequirements, CreateRecipientRequest, Quote } from "./types";
 import { WiseRequest } from "services/types";
-import { useWiseMutation } from "services/aws/aws";
+import { EndowmentProfile } from "types/aws";
+import { invalidateAwsTags, useWiseMutation } from "services/aws/aws";
 import { WISE_REQUESTS } from "./constants";
 
 type Result = {
   createQuote: (targetCurrency: string, sourceAmount: number) => Promise<Quote>;
+  createRecipientAccount: (
+    endowment_id: number,
+    request: CreateRecipientRequest
+  ) => Promise<any>;
   getAccountRequirements: (quoteId: string) => Promise<AccountRequirements[]>;
   postAccountRequirements: (
     quoteId: string,
-    createRecipientRequest: CreateRecipientRequest
+    request: CreateRecipientRequest
   ) => Promise<AccountRequirements>;
   state: ReturnType<typeof useWiseMutation>[1];
 };
@@ -29,6 +34,20 @@ export default function useTypedWiseMutation(): Result {
   const createQuote = useCallback(
     async (targetCurrency: string, sourceAmount: number): Promise<Quote> =>
       send<Quote>(WISE_REQUESTS.createQuote(targetCurrency, sourceAmount)),
+    [send]
+  );
+
+  const createRecipientAccount = useCallback(
+    async (
+      endowment_id: number,
+      request: CreateRecipientRequest
+    ): Promise<EndowmentProfile> =>
+      send<EndowmentProfile>(
+        WISE_REQUESTS.createRecipientAccount(endowment_id, request)
+      ).then((res) => {
+        invalidateAwsTags(["profile"]);
+        return res;
+      }),
     [send]
   );
 
@@ -53,6 +72,7 @@ export default function useTypedWiseMutation(): Result {
 
   return {
     createQuote,
+    createRecipientAccount,
     getAccountRequirements,
     postAccountRequirements,
     state,
