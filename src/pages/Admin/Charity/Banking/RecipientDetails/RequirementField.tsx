@@ -1,6 +1,6 @@
 import { Path } from "react-hook-form";
-import { Group } from "../types";
 import { FormValues } from "./types";
+import { Group } from "types/aws";
 import { Selector } from "components/Selector";
 import { Field, Label } from "components/form";
 import { isEmpty } from "helpers";

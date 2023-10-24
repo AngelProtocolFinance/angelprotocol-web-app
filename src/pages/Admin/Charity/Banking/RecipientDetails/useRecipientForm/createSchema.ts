@@ -1,7 +1,7 @@
 import { ObjectSchema, ObjectShape, object } from "yup";
-import { AccountRequirements } from "../../types";
 import { FormValues } from "../types";
 import { SchemaShape } from "schemas/types";
+import { AccountRequirements } from "types/aws";
 import { requiredString } from "schemas/string";
 import { undot } from "../dot";
 import createFieldSchema from "./createFieldSchema";

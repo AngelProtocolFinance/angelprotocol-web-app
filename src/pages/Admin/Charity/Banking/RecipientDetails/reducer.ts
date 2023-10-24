@@ -1,5 +1,5 @@
-import { AccountRequirements, Quote } from "../types";
 import { FormValues } from "./types";
+import { AccountRequirements, Quote } from "types/aws";
 
 type RequirementsData = {
   accountRequirements: AccountRequirements;

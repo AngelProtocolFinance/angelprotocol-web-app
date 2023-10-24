@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useReducer } from "react";
-import { AccountRequirements } from "../types";
 import { FormValues } from "./types";
+import { AccountRequirements } from "types/aws";
+import { useWiseMutationProxy } from "services/aws/bankDetails";
 import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";
-import useTypedWiseMutation from "../useTypedWiseMutation";
 import AccountRequirementsSelector from "./AccountRequirementsSelector";
 import Form from "./Form";
 import reducer from "./reducer";
@@ -23,7 +23,7 @@ export default function RecipientDetails({
     quote: undefined,
   });
 
-  const { createQuote, getAccountRequirements } = useTypedWiseMutation();
+  const { createQuote, getAccountRequirements } = useWiseMutationProxy();
   const { handleError } = useErrorContext();
 
   const updateDefaultValues = useCallback(

@@ -1,5 +1,5 @@
 import { AnyObject, ObjectSchema, StringSchema, object, string } from "yup";
-import { Field, Group } from "../../types";
+import { Field, Group } from "types/aws";
 import { OptionType } from "components/Selector";
 import { requiredString } from "schemas/string";
 

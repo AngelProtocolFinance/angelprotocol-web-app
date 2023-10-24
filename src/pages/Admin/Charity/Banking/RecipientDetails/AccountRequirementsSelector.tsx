@@ -1,4 +1,4 @@
-import { AccountRequirements } from "../types";
+import { AccountRequirements } from "types/aws";
 
 type Props = {
   accountRequirements: AccountRequirements[];

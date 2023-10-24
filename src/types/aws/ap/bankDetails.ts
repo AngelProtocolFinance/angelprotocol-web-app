@@ -1,16 +1,24 @@
-export interface AccountRequirements {
+export type WiseRequest = {
+  method: "GET" | "POST" | "DELETE" | "PUT";
+  headers?: Record<string, string>;
+  payload?: string; // stringified payload as needed
+  url: string;
+  endowment_id?: number; // only needed if request is "create a recipient"
+};
+
+export type AccountRequirements = {
   type: string;
   title: string;
   usageInfo: string | null;
   fields: Field[];
-}
+};
 
-export interface Field {
+export type Field = {
   name: string;
   group: Group[];
-}
+};
 
-export interface Group {
+export type Group = {
   key: string;
   name: string;
   type: "radio" | "select" | "text" | "date";
@@ -23,23 +31,23 @@ export interface Group {
   validationRegexp: string | null;
   validationAsync: ValidationAsync | null;
   valuesAllowed: ValuesAllowed[] | null;
-}
+};
 
-interface ValidationAsync {
+type ValidationAsync = {
   url: string;
   params: Param[];
-}
+};
 
-interface Param {
+type Param = {
   key: string;
   parameterName: string;
   required: boolean;
-}
+};
 
-interface ValuesAllowed {
+type ValuesAllowed = {
   key: string;
   name: string;
-}
+};
 
 export type CreateRecipientRequest = {
   currency: string;

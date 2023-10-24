@@ -1,9 +1,14 @@
 import { useCallback } from "react";
-import { AccountRequirements, CreateRecipientRequest, Quote } from "./types";
-import { WiseRequest } from "services/types";
-import { EndowmentProfile } from "types/aws";
-import { invalidateAwsTags, useWiseMutation } from "services/aws/aws";
-import { WISE_REQUESTS } from "./constants";
+import {
+  AccountRequirements,
+  CreateRecipientRequest,
+  EndowmentProfile,
+  Quote,
+  WiseRequest,
+} from "types/aws";
+import { invalidateAwsTags } from "services/aws/aws";
+import { WISE_REQUESTS } from "../../constants";
+import { bank_details_api } from "./bankDetails";
 
 type Result = {
   createQuote: (targetCurrency: string, sourceAmount: number) => Promise<Quote>;
@@ -16,11 +21,11 @@ type Result = {
     quoteId: string,
     request: CreateRecipientRequest
   ) => Promise<AccountRequirements>;
-  state: ReturnType<typeof useWiseMutation>[1];
+  state: ReturnType<typeof bank_details_api.useWiseMutation>[1];
 };
 
-export default function useTypedWiseMutation(): Result {
-  const [sendRequest, state] = useWiseMutation();
+export function useWiseMutationProxy(): Result {
+  const [sendRequest, state] = bank_details_api.useWiseMutation();
 
   const send = useCallback(
     async function <T>(request: WiseRequest): Promise<T> {

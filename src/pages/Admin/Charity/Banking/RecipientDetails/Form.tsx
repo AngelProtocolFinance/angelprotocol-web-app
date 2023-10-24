@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { FormProvider } from "react-hook-form";
-import { AccountRequirements, CreateRecipientRequest, Quote } from "../types";
 import { FormValues } from "./types";
+import { AccountRequirements, CreateRecipientRequest, Quote } from "types/aws";
 import { useAdminContext } from "pages/Admin/Context";
+import { useWiseMutationProxy } from "services/aws/bankDetails";
 import { useErrorContext } from "contexts/ErrorContext";
-import useTypedWiseMutation from "../useTypedWiseMutation";
 import RequirementField from "./RequirementField";
 import { redot } from "./dot";
 import useRecipientForm from "./useRecipientForm";
@@ -22,7 +22,7 @@ type Props = {
 export default function Form(props: Props) {
   const { id } = useAdminContext();
   const { postAccountRequirements, createRecipientAccount } =
-    useTypedWiseMutation();
+    useWiseMutationProxy();
   const { handleError } = useErrorContext();
 
   const { methods, refreshRequirementsNeeded } = useRecipientForm(
