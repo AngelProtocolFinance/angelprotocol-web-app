@@ -1,8 +1,9 @@
-import { PropsWithChildren, useEffect } from "react";
+import { useEffect } from "react";
 import { EstimateStatus } from "../types";
 import { ErrorStatus, LoadingStatus } from "components/Status";
 import { SubmitStep } from "slices/donation";
 import { humanize } from "helpers";
+import { Row } from "../Row";
 import { estimateDonation } from "./estimateDonation";
 
 type Props = {
@@ -93,20 +94,5 @@ export default function Breakdown({
           </Row>
         ))}
     </>
-  );
-}
-
-function Row({
-  title,
-  children,
-  classes = "",
-}: PropsWithChildren<{ classes?: string; title: string }>) {
-  return (
-    <div
-      className={`${classes} py-3 text-gray-d1 dark:text-gray flex items-center justify-between w-full border-b border-prim last:border-none`}
-    >
-      <p className="text-gray-d2 dark:text-white">{title}</p>
-      {children}
-    </div>
   );
 }

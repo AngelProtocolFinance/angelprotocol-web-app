@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
@@ -13,7 +12,6 @@ import Split from "../../../../Split";
 import TokenField from "../../../../TokenField";
 import { CheckField } from "../../../../form";
 import AdvancedOptions from "../../../AdvancedOptions";
-import { initToken } from "../constants";
 
 type Props = {
   configFromWidget: DonaterConfigFromWidget | null;
@@ -23,7 +21,6 @@ export default function Form({ configFromWidget }: Props) {
   const {
     watch,
     reset,
-    resetField,
     handleSubmit,
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<DonateValues>();
@@ -44,9 +41,9 @@ export default function Form({ configFromWidget }: Props) {
   const isStepOneCompleted = !!token.amount;
   const isInsideWidget = configFromWidget !== null;
 
-  useEffect(() => {
-    resetField("token", { defaultValue: initToken });
-  }, [chainId, resetField]);
+  // useEffect(() => {
+  //   resetField("token", { defaultValue: initToken });
+  // }, [chainId, resetField]);
 
   return (
     <form

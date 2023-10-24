@@ -5,6 +5,7 @@ import { ConnectedWallet, isCosmos, isEVM, isTerra } from "types/wallet";
 import { isDisconnected, useWalletContext } from "contexts/WalletContext";
 import { Info, LoadingStatus } from "components/Status";
 import { SubmitStep } from "slices/donation";
+import { chains } from "constants/chains-v2";
 import Breakdown from "./Breakdown";
 import Container from "./Container";
 import WalletSelection from "./WalletSelection";
@@ -34,20 +35,33 @@ export default function Submit(props: SubmitStep) {
 
   if (!wallet.supportedChains.includes(chainID)) {
     return (
-      <Container {...props}>
-        <Info classes="justify-self-center">
-          Connected wallet doesn't support this chain
+      <Container {...props} wallet={wallet}>
+        <Info classes="justify-self-center mt-6">
+          Connected wallet doesn't support this chain.
         </Info>
+        <button
+          className="btn-outline-filled px-4 py-2 mt-4 text-xs font-normal font-work justify-self-center"
+          type="button"
+          onClick={wallet.disconnect}
+        >
+          change wallet
+        </button>
       </Container>
     );
   }
 
   if (chainID !== wallet.chainId) {
     return (
-      <Container {...props}>
-        <Info classes="justify-self-center">
+      <Container {...props} wallet={wallet}>
+        <Info classes="justify-self-center mt-6">
           Your wallet is not connected to your selected chain
         </Info>
+        <button
+          type="button"
+          className="btn-outline-filled px-4 py-2 mt-4 text-xs font-normal font-work justify-self-center"
+        >
+          Switch to {chains[chainID].name}
+        </button>
       </Container>
     );
   }

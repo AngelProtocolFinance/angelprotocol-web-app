@@ -1,12 +1,18 @@
 import { PropsWithChildren } from "react";
 import { Link } from "react-router-dom";
 import { TxPackage } from "types/tx";
+import { ConnectedWallet } from "types/wallet";
 import { useSetter } from "store/accessors";
 import { SubmitStep, setStep } from "slices/donation";
 import { sendDonation } from "slices/donation/sendDonation";
+import { chains } from "constants/chains-v2";
 import { appRoutes } from "constants/routes";
+import Image from "../../../Image";
+import { Row } from "./Row";
 
-type Props = PropsWithChildren<SubmitStep & { txPackage?: TxPackage }>;
+type Props = PropsWithChildren<
+  SubmitStep & { txPackage?: TxPackage; wallet?: ConnectedWallet }
+>;
 
 export default function Container({ children, txPackage, ...props }: Props) {
   const dispatch = useSetter();
@@ -16,8 +22,30 @@ export default function Container({ children, txPackage, ...props }: Props) {
   function submit(txPackage: TxPackage) {
     dispatch(sendDonation({ donation: props, ...txPackage }));
   }
+
   return (
     <div className="grid content-start">
+      <Row title="Currency:">
+        <Image
+          className="ml-auto object-cover h-4 w-4 rounded-full mr-1"
+          src={props.details.token.logo}
+        />
+        <span>{props.details.token.symbol}</span>
+      </Row>
+
+      <Row title="Blockchain:">
+        <span>{chains[props.details.chainId.value].name}</span>
+      </Row>
+      {props.wallet && (
+        <Row title="Wallet:">
+          <Image
+            className="ml-auto object-cover h-4 w-4 rounded-full mr-1"
+            src={props.wallet.logo}
+          />
+          <span>{props.wallet.name}</span>
+        </Row>
+      )}
+
       {children}
       <div className="mt-14 grid grid-cols-2 gap-5">
         <button
