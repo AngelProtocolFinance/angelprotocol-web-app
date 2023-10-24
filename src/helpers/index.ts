@@ -1,4 +1,4 @@
-export * from "./array";
+export * from "./isEmpty";
 export * from "./createAuthToken";
 export * from "./createNavLinkStyler";
 export * from "./debounce";

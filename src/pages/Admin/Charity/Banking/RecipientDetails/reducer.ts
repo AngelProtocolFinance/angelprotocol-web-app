@@ -1,6 +1,5 @@
 import { AccountRequirements } from "../types";
 import { FormValues } from "./types";
-import { insert } from "helpers";
 
 type RequirementsData = {
   accountRequirements: AccountRequirements;
@@ -24,29 +23,19 @@ export default function reducer(state: State, action: Action): State {
         })),
       };
     case "formValues":
+      const reqArr = [...state.requirementsDataArray];
+      reqArr[state.selectedIndex].currentFormValues = action.payload;
       return {
         ...state,
-        requirementsDataArray: insert(
-          state.requirementsDataArray,
-          state.selectedIndex,
-          {
-            ...state.requirementsDataArray[state.selectedIndex],
-            currentFormValues: action.payload,
-          }
-        ),
+        requirementsDataArray: reqArr,
       };
     case "refreshRequirements":
+      const reqArr2 = [...state.requirementsDataArray];
+      reqArr2[state.selectedIndex].accountRequirements = action.payload;
+      reqArr2[state.selectedIndex].refreshed = true;
       return {
         ...state,
-        requirementsDataArray: insert(
-          state.requirementsDataArray,
-          state.selectedIndex,
-          {
-            ...state.requirementsDataArray[state.selectedIndex],
-            accountRequirements: action.payload,
-            refreshed: true,
-          }
-        ),
+        requirementsDataArray: reqArr2,
       };
     case "selectedIndex":
       return { ...state, selectedIndex: action.payload };
