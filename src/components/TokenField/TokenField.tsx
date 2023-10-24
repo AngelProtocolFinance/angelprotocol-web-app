@@ -1,5 +1,4 @@
 import { ErrorMessage } from "@hookform/error-message";
-import { useEffect } from "react";
 import {
   FieldValues,
   Path,
@@ -26,8 +25,8 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
 }: Props<T, K>) {
   const {
     register,
-    resetField,
-    formState: { errors, isSubmitting },
+    setValue,
+    formState: { errors, isSubmitting, isDirty },
   } = useFormContext<T>();
   const {
     field: { onChange, value: token },
@@ -36,10 +35,6 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
   });
 
   const amountField: any = `${name}.${amountKey}`;
-
-  useEffect(() => {
-    resetField(amountField);
-  }, [token.token_id, amountField, resetField]);
 
   return (
     <div className={`grid ${classes?.container ?? ""}`}>
@@ -70,7 +65,10 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
         <TokenSelector
           selectedChainId={selectedChainId}
           selectedToken={token}
-          onChange={onChange}
+          onChange={(token) => {
+            isDirty && setValue(amountField, "0" as any);
+            onChange(token);
+          }}
         />
       </div>
       <div className="empty:mb-2">

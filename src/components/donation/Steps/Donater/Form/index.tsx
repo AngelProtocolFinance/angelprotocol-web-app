@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
@@ -10,8 +11,9 @@ import { appRoutes } from "constants/routes";
 import { Selector } from "../../../../Selector";
 import Split from "../../../../Split";
 import TokenField from "../../../../TokenField";
-import { CheckField, Label } from "../../../../form";
+import { CheckField } from "../../../../form";
 import AdvancedOptions from "../../../AdvancedOptions";
+import { initToken } from "../constants";
 
 type Props = {
   configFromWidget: DonaterConfigFromWidget | null;
@@ -21,6 +23,7 @@ export default function Form({ configFromWidget }: Props) {
   const {
     watch,
     reset,
+    resetField,
     handleSubmit,
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<DonateValues>();
@@ -41,22 +44,26 @@ export default function Form({ configFromWidget }: Props) {
   const isStepOneCompleted = !!token.amount;
   const isInsideWidget = configFromWidget !== null;
 
+  useEffect(() => {
+    resetField("token", { defaultValue: initToken });
+  }, [chainId, resetField]);
+
   return (
     <form
       onSubmit={handleSubmit(submit)}
       className="grid rounded-md w-full"
       autoComplete="off"
     >
-      <Label htmlFor="chainId" className="mb-2" required={false}>
-        Blockchain
-      </Label>
+      <label htmlFor="chainId" className="mb-1 font-bold text-lg">
+        Select network :
+      </label>
       <Selector<DonateValues, "chainId", string>
         name="chainId"
         options={Object.entries(chains).map(([, chain]) => ({
           label: chain.name,
           value: chain.id,
         }))}
-        classes={{ container: "bg-white dark:bg-blue-d6 mb-6" }}
+        classes={{ container: "bg-white dark:bg-blue-d6 mb-8" }}
       />
 
       <TokenField<DonateValues, "token">

@@ -4,6 +4,7 @@ import { ChainID } from "types/chain";
 import { useTokensQuery } from "services/apes";
 import Icon from "../Icon";
 import Image from "../Image";
+import { ErrorStatus, LoadingStatus } from "../Status";
 
 type Props = {
   selectedChainId: ChainID;
@@ -15,27 +16,25 @@ const container =
 export default function TokenOptions({ classes = "", selectedChainId }: Props) {
   const [searchText, setSearchText] = useState("");
   const {
-    data: tokens,
+    data: tokens = [],
     isLoading,
+    isFetching,
     isError,
-  } = useTokensQuery(selectedChainId, {
-    selectFromResult({ data = [], ...rest }) {
-      return {
-        ...rest,
-        data:
-          searchText === ""
-            ? data
-            : data.filter((t) => {
-                return t.symbol.includes(searchText.toLowerCase());
-              }),
-      };
-    },
-  });
+  } = useTokensQuery(selectedChainId);
 
-  if (isLoading) {
+  const searchResult =
+    searchText === ""
+      ? tokens
+      : tokens.filter((t) => {
+          return t.symbol.toLowerCase().includes(searchText.toLowerCase());
+        });
+
+  if (isLoading || isFetching) {
     return (
       <Combobox.Options className={`${classes} ${container}`}>
-        loading...
+        <LoadingStatus classes="text-sm text-gray-d2 dark:text-gray p-2">
+          Loading..
+        </LoadingStatus>
       </Combobox.Options>
     );
   }
@@ -43,7 +42,7 @@ export default function TokenOptions({ classes = "", selectedChainId }: Props) {
   if (isError) {
     return (
       <Combobox.Options className={`${classes} ${container}`}>
-        Failed to load tokens
+        <ErrorStatus classes="text-sm p-2">Failed to load tokens</ErrorStatus>
       </Combobox.Options>
     );
   }
@@ -59,12 +58,12 @@ export default function TokenOptions({ classes = "", selectedChainId }: Props) {
           onChange={(event) => setSearchText(event.target.value)}
         />
       </div>
-      {tokens.length === 0 && searchText !== "" ? (
+      {searchResult.length === 0 && searchText !== "" ? (
         <div className="relative cursor-default select-none py-2 px-4 text-sm">
           {searchText} not found
         </div>
       ) : (
-        tokens.map((token) => (
+        searchResult.map((token) => (
           <Combobox.Option
             key={token.token_id + token.type}
             className={

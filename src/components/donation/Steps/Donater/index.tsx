@@ -1,28 +1,15 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { DonateValues } from "./types";
-import { TokenWithAmount } from "types/tx";
 import { DonaterConfigFromWidget } from "types/widget";
 import { FormStep } from "slices/donation";
 import { polygon } from "constants/chains-v2";
 import Form from "./Form";
+import { initToken } from "./constants";
 import { schema } from "./schema";
 
 type Props = FormStep & {
   config: DonaterConfigFromWidget | null;
-};
-
-const initToken: TokenWithAmount = {
-  approved: false,
-  decimals: 6,
-  logo: "",
-  min_donation_amnt: 0,
-  name: "",
-  symbol: "",
-  token_id: "",
-  coingecko_denom: "",
-  type: "erc20",
-  amount: "0",
 };
 
 export default function Donater({ config, ...state }: Props) {
@@ -34,8 +21,6 @@ export default function Donater({ config, ...state }: Props) {
   };
 
   const methods = useForm<DonateValues>({
-    mode: "onChange",
-    reValidateMode: "onChange",
     values: state.details || initial,
     resolver: yupResolver(schema),
   });
