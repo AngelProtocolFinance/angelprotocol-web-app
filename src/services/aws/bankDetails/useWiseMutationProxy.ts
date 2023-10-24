@@ -7,24 +7,9 @@ import {
   WiseRequest,
 } from "types/aws";
 import { invalidateAwsTags } from "services/aws/aws";
-import { WISE_REQUESTS } from "../../constants";
 import { bank_details_api } from "./bankDetails";
 
-type Result = {
-  createQuote: (targetCurrency: string, sourceAmount: number) => Promise<Quote>;
-  createRecipientAccount: (
-    endowment_id: number,
-    request: CreateRecipientRequest
-  ) => Promise<any>;
-  getAccountRequirements: (quoteId: string) => Promise<AccountRequirements[]>;
-  postAccountRequirements: (
-    quoteId: string,
-    request: CreateRecipientRequest
-  ) => Promise<AccountRequirements>;
-  state: ReturnType<typeof bank_details_api.useWiseMutation>[1];
-};
-
-export function useWiseMutationProxy(): Result {
+export function useWiseMutationProxy() {
   const [sendRequest, state] = bank_details_api.useWiseMutation();
 
   const send = useCallback(
@@ -38,7 +23,15 @@ export function useWiseMutationProxy(): Result {
 
   const createQuote = useCallback(
     async (targetCurrency: string, sourceAmount: number): Promise<Quote> =>
-      send<Quote>(WISE_REQUESTS.createQuote(targetCurrency, sourceAmount)),
+      send<Quote>({
+        method: "POST",
+        url: "/v3/profiles/{{profileId}}/quotes",
+        payload: JSON.stringify({
+          sourceCurrency: "USD",
+          targetCurrency,
+          sourceAmount,
+        }),
+      }),
     [send]
   );
 
@@ -47,9 +40,12 @@ export function useWiseMutationProxy(): Result {
       endowment_id: number,
       request: CreateRecipientRequest
     ): Promise<EndowmentProfile> =>
-      send<EndowmentProfile>(
-        WISE_REQUESTS.createRecipientAccount(endowment_id, request)
-      ).then((res) => {
+      send<EndowmentProfile>({
+        method: "POST",
+        url: "/v1/accounts",
+        endowment_id,
+        payload: JSON.stringify(request),
+      }).then((res) => {
         invalidateAwsTags(["profile"]);
         return res;
       }),
@@ -58,20 +54,25 @@ export function useWiseMutationProxy(): Result {
 
   const getAccountRequirements = useCallback(
     async (quoteId: string): Promise<AccountRequirements[]> =>
-      send<AccountRequirements[]>(
-        WISE_REQUESTS.getAccountRequirements(quoteId)
-      ),
+      send<AccountRequirements[]>({
+        method: "GET",
+        url: `/v1/quotes/${quoteId}/account-requirements`,
+        headers: { "Accept-Minor-Version": "1" },
+      }),
     [send]
   );
 
   const postAccountRequirements = useCallback(
     async (
       quoteId: string,
-      createRecipientRequest: CreateRecipientRequest
+      request: CreateRecipientRequest
     ): Promise<AccountRequirements> =>
-      send<AccountRequirements>(
-        WISE_REQUESTS.postAccountRequirements(quoteId, createRecipientRequest)
-      ),
+      send<AccountRequirements>({
+        method: "POST",
+        url: `/v1/quotes/${quoteId}/account-requirements`,
+        headers: { "Accept-Minor-Version": "1" },
+        payload: JSON.stringify(request),
+      }),
     [send]
   );
 

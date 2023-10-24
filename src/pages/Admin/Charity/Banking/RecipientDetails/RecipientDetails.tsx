@@ -3,7 +3,9 @@ import { FormValues } from "./types";
 import { AccountRequirements } from "types/aws";
 import { useWiseMutationProxy } from "services/aws/bankDetails";
 import { useErrorContext } from "contexts/ErrorContext";
+import LoaderRing from "components/LoaderRing";
 import { isEmpty } from "helpers";
+import { EMAIL_SUPPORT } from "constants/env";
 import AccountRequirementsSelector from "./AccountRequirementsSelector";
 import Form from "./Form";
 import reducer from "./reducer";
@@ -22,9 +24,12 @@ export default function RecipientDetails({
     selectedIndex: -1,
     quote: undefined,
   });
-
-  const { createQuote, getAccountRequirements } = useWiseMutationProxy();
   const { handleError } = useErrorContext();
+  const {
+    createQuote,
+    getAccountRequirements,
+    state: { isError },
+  } = useWiseMutationProxy();
 
   const updateDefaultValues = useCallback(
     (formValues: FormValues) =>
@@ -39,16 +44,21 @@ export default function RecipientDetails({
   );
 
   useEffect(() => {
-    createQuote(targetCurrency, sourceAmount)
-      .then((quote) =>
-        getAccountRequirements(quote.id).then((newRequirements) =>
-          dispatch({
-            type: "accountRequirements",
-            payload: { accountRequirements: newRequirements, quote: quote },
-          })
-        )
-      )
-      .catch((error) => handleError(error));
+    (async () => {
+      try {
+        const quote = await createQuote(targetCurrency, sourceAmount);
+        const newRequirements = await getAccountRequirements(quote.id);
+        dispatch({
+          type: "accountRequirements",
+          payload: { accountRequirements: newRequirements, quote: quote },
+        });
+      } catch (error) {
+        handleError(
+          error,
+          `An error occured. Please try again later. If the error persists, please contact ${EMAIL_SUPPORT}`
+        );
+      }
+    })();
   }, [
     createQuote,
     getAccountRequirements,
@@ -58,7 +68,15 @@ export default function RecipientDetails({
   ]);
 
   if (!state.quote || isEmpty(state.requirementsDataArray)) {
-    return <span>Loading...</span>;
+    return (
+      <div className="flex gap-2">
+        <LoaderRing thickness={10} classes="w-6" /> Loading...
+      </div>
+    );
+  }
+
+  if (isError) {
+    return null;
   }
 
   const requirements = state.requirementsDataArray[state.selectedIndex];

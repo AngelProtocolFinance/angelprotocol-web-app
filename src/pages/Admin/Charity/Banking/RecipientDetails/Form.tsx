@@ -5,6 +5,7 @@ import { AccountRequirements, CreateRecipientRequest, Quote } from "types/aws";
 import { useAdminContext } from "pages/Admin/Context";
 import { useWiseMutationProxy } from "services/aws/bankDetails";
 import { useErrorContext } from "contexts/ErrorContext";
+import LoaderRing from "components/LoaderRing";
 import RequirementField from "./RequirementField";
 import { redot } from "./dot";
 import useRecipientForm from "./useRecipientForm";
@@ -81,7 +82,13 @@ export default function Form(props: Props) {
           type="submit"
           className="px-6 btn-orange text-sm w-80"
         >
-          Save
+          {isSubmitting ? (
+            <>
+              <LoaderRing thickness={10} classes="w-6" /> Submitting...
+            </>
+          ) : (
+            "Save"
+          )}
         </button>
       </form>
     </FormProvider>
