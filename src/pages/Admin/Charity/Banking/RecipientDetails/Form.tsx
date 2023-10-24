@@ -1,32 +1,25 @@
 import { useEffect } from "react";
 import { FormProvider } from "react-hook-form";
 import { FormValues } from "./types";
-import { AccountRequirements, CreateRecipientRequest, Quote } from "types/aws";
-import { useAdminContext } from "pages/Admin/Context";
-import { useWiseMutationProxy } from "services/aws/bankDetails";
-import { useErrorContext } from "contexts/ErrorContext";
+import { AccountRequirements, CreateRecipientRequest } from "types/aws";
 import LoaderRing from "components/LoaderRing";
 import RequirementField from "./RequirementField";
 import { redot } from "./dot";
-import useRecipientForm from "./useRecipientForm";
+import useForm from "./useForm";
 
 type Props = {
   accountRequirements: AccountRequirements;
   defaultValues: FormValues | undefined;
   onCleanup: (formValues: FormValues) => void;
-  onRefreshRequirements: (accountRequirements: AccountRequirements) => void;
+  onSubmit: (
+    request: CreateRecipientRequest,
+    refreshRequirementsNeeded: boolean
+  ) => void;
   targetCurrency: string;
-  requirementsRefreshed: boolean;
-  quote: Quote;
 };
 
 export default function Form(props: Props) {
-  const { id } = useAdminContext();
-  const { postAccountRequirements, createRecipientAccount } =
-    useWiseMutationProxy();
-  const { handleError } = useErrorContext();
-
-  const { methods, refreshRequirementsNeeded } = useRecipientForm(
+  const { methods, refreshRequirementsNeeded } = useForm(
     props.accountRequirements,
     props.targetCurrency,
     props.defaultValues
@@ -39,21 +32,8 @@ export default function Form(props: Props) {
   } = methods;
 
   const onSubmit = handleSubmit(async (formValues) => {
-    try {
-      const request = convertToCreateRecipientRequest(formValues);
-
-      // refresh requirements if necessary
-      if (!props.requirementsRefreshed && refreshRequirementsNeeded) {
-        const accReqs = await postAccountRequirements(props.quote.id, request);
-        props.onRefreshRequirements(accReqs);
-      }
-      // otherwise create the recipient
-      else {
-        await createRecipientAccount(id, request);
-      }
-    } catch (error) {
-      handleError(error);
-    }
+    const request = convertToCreateRecipientRequest(formValues);
+    props.onSubmit(request, refreshRequirementsNeeded);
   });
 
   const { onCleanup } = props;
