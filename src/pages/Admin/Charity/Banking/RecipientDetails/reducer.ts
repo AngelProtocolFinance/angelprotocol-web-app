@@ -1,4 +1,4 @@
-import { AccountRequirements } from "../types";
+import { AccountRequirements, Quote } from "../types";
 import { FormValues } from "./types";
 
 type RequirementsData = {
@@ -10,13 +10,10 @@ type RequirementsData = {
 export default function reducer(state: State, action: Action): State {
   switch (action.type) {
     case "accountRequirements":
-      const {
-        accountRequirements,
-        // quote
-      } = action.payload;
+      const { accountRequirements, quote } = action.payload;
       return {
         ...state,
-        // quote: quote,
+        quote: quote,
         requirementsDataArray: accountRequirements.map((item) => ({
           accountRequirements: item,
           refreshed: false,
@@ -47,14 +44,14 @@ export default function reducer(state: State, action: Action): State {
 type State = {
   requirementsDataArray: RequirementsData[];
   selectedIndex: number;
-  // quote: Quote | undefined;
+  quote: Quote | undefined;
 };
 
 type Action =
   | {
       type: "accountRequirements";
       payload: {
-        // quote: Quote,
+        quote: Quote;
         accountRequirements: AccountRequirements[];
       };
     }

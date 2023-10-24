@@ -16,13 +16,6 @@ export const WISE_REQUESTS = {
     url: `/v1/quotes/${quoteId}/account-requirements`,
     headers: { "Accept-Minor-Version": "1" },
   }),
-  getAccountRequirementsForRoute: (
-    targetCurrency: string,
-    sourceAmount: number
-  ): WiseRequest => ({
-    method: "GET",
-    url: `/v1/account-requirements?source=USD&target=${targetCurrency}&sourceAmount=${sourceAmount}`,
-  }),
   postAccountRequirements: (
     quoteId: string,
     createRecipientRequest: CreateRecipientRequest

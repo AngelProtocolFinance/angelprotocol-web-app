@@ -20,14 +20,10 @@ export default function RecipientDetails({
   const [state, dispatch] = useReducer(reducer, {
     requirementsDataArray: [],
     selectedIndex: -1,
-    // quote: undefined
+    quote: undefined,
   });
 
-  const {
-    createQuote,
-    // getAccountRequirements,
-    getAccountRequirementsForRoute,
-  } = useTypedWiseMutation();
+  const { createQuote, getAccountRequirements } = useTypedWiseMutation();
   const { handleError } = useErrorContext();
 
   const updateDefaultValues = useCallback(
@@ -43,35 +39,25 @@ export default function RecipientDetails({
   );
 
   useEffect(() => {
-    // createQuote(targetCurrency, sourceAmount).then((quote) =>
-    //   getAccountRequirements(quote.id).then((newRequirements) =>
-    //     dispatch({
-    //       type: "accountRequirements",
-    //       payload: { accountRequirements: newRequirements, quote: quote },
-    //     })
-    //   )
-    // );
-    getAccountRequirementsForRoute(targetCurrency, sourceAmount)
-      .then((newRequirements) => {
-        dispatch({
-          type: "accountRequirements",
-          payload: { accountRequirements: newRequirements },
-        });
-      })
+    createQuote(targetCurrency, sourceAmount)
+      .then((quote) =>
+        getAccountRequirements(quote.id).then((newRequirements) =>
+          dispatch({
+            type: "accountRequirements",
+            payload: { accountRequirements: newRequirements, quote: quote },
+          })
+        )
+      )
       .catch((error) => handleError(error));
   }, [
     createQuote,
-    // getAccountRequirements,
-    getAccountRequirementsForRoute,
+    getAccountRequirements,
     handleError,
     sourceAmount,
     targetCurrency,
   ]);
 
-  if (
-    // !state.quote ||
-    isEmpty(state.requirementsDataArray)
-  ) {
+  if (!state.quote || isEmpty(state.requirementsDataArray)) {
     return <span>Loading...</span>;
   }
 
@@ -93,7 +79,7 @@ export default function RecipientDetails({
           key={`form-${requirements.accountRequirements.type}`}
           accountRequirements={requirements.accountRequirements}
           targetCurrency={targetCurrency}
-          // quote={state.quote}
+          quote={state.quote}
           onRefreshRequirements={onRefreshRequirements}
           defaultValues={requirements.currentFormValues}
           onCleanup={updateDefaultValues}
