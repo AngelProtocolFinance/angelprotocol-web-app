@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { UseFormReturn, useForm as useReactHookForm } from "react-hook-form";
-import { FormValues } from "../types";
+import { UseFormReturn, useForm } from "react-hook-form";
+import { FormValues } from "../../types";
 import { AccountRequirements } from "types/aws";
 import createSchema from "./createSchema";
 import getDefaultValues from "./getDefaultValues";
@@ -22,14 +22,14 @@ type Result = {
  *
  *    For more info on `refreshRequirementsNeeded`, see https://docs.wise.com/api-docs/api-reference/recipient#account-requirements
  */
-export default function useForm(
+export default function useRecipientDetailsForm(
   accountRequirements: AccountRequirements,
   targetCurrency: string,
   initValues: FormValues = getDefaultValues(accountRequirements, targetCurrency)
 ): Result {
   const schema = createSchema(accountRequirements);
 
-  const methods = useReactHookForm<FormValues>({
+  const methods = useForm<FormValues>({
     resolver: yupResolver(schema),
     defaultValues: initValues,
   });

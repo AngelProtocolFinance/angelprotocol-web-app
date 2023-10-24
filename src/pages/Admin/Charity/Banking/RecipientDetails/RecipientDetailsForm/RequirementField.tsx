@@ -1,10 +1,10 @@
 import { Path } from "react-hook-form";
-import { FormValues } from "./types";
+import { FormValues } from "../types";
 import { Group } from "types/aws";
 import { Selector } from "components/Selector";
 import { Field, Label } from "components/form";
 import { isEmpty } from "helpers";
-import { undot } from "./dot";
+import { undot } from "../dot";
 
 export default function RequirementField({ data }: { data: Group }) {
   const requirementsKey = undot(data.key);

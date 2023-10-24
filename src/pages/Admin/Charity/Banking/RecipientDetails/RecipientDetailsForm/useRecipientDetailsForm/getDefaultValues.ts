@@ -1,6 +1,6 @@
-import { FormValues } from "../types";
+import { FormValues } from "../../types";
 import { AccountRequirements } from "types/aws";
-import { undot } from "../dot";
+import { undot } from "../../dot";
 
 export default function getDefaultValues(
   accountRequirements: AccountRequirements,

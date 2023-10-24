@@ -1,9 +1,9 @@
 import { ObjectSchema, ObjectShape, object } from "yup";
-import { FormValues } from "../types";
+import { FormValues } from "../../types";
 import { SchemaShape } from "schemas/types";
 import { AccountRequirements } from "types/aws";
 import { requiredString } from "schemas/string";
-import { undot } from "../dot";
+import { undot } from "../../dot";
 import createFieldSchema from "./createFieldSchema";
 
 export default function createSchema(

@@ -1,7 +1,7 @@
 import LoaderRing from "components/LoaderRing";
 import { isEmpty } from "helpers";
 import AccountRequirementsSelector from "./AccountRequirementsSelector";
-import Form from "./Form";
+import RecipientDetailsForm from "./RecipientDetailsForm";
 import useRecipientDetails from "./useRecipientDetails";
 
 type Props = {
@@ -48,16 +48,14 @@ export default function RecipientDetails({
           dispatch({ type: "selectedIndex", payload: index })
         }
       />
-      {selectedIndex >= 0 && (
-        <Form
-          key={`form-${requirements.accountRequirements.type}`}
-          accountRequirements={requirements.accountRequirements}
-          targetCurrency={targetCurrency}
-          defaultValues={requirements.currentFormValues}
-          onCleanup={updateDefaultValues}
-          onSubmit={handleSubmit}
-        />
-      )}
+      <RecipientDetailsForm
+        key={`form-${requirements.accountRequirements.type}`}
+        accountRequirements={requirements.accountRequirements}
+        targetCurrency={targetCurrency}
+        defaultValues={requirements.currentFormValues}
+        onCleanup={updateDefaultValues}
+        onSubmit={handleSubmit}
+      />
     </>
   );
 }

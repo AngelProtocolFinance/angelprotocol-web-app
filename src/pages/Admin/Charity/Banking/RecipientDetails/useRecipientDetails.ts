@@ -17,7 +17,7 @@ export default function useRecipientDetails(
 ) {
   const [state, dispatch] = useReducer(reducer, {
     requirementsDataArray: [],
-    selectedIndex: -1,
+    selectedIndex: 0,
     quote: undefined,
   });
   const { quote, requirementsDataArray, selectedIndex } = state;
