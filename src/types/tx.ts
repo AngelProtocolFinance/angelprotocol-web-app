@@ -3,18 +3,11 @@ import type { ConnectedWallet as TerraConnectedWallet } from "@terra-money/walle
 import type { Any } from "@keplr-wallet/proto-types/google/protobuf/any";
 import { Keplr } from "@keplr-wallet/types";
 import { Token } from "./aws";
-import {
-  Chain,
-  ChainID,
-  CosmosChainID,
-  EVMChainID,
-  TerraChainID,
-} from "./chain";
+import { ChainID, CosmosChainID, EVMChainID, TerraChainID } from "./chain";
 import { Allowance, Transfer } from "./contracts/erc20";
 import { SignDoc } from "./cosmos";
 import { Requester, Tupleable } from "./evm";
 import { EVMTx, SimulTx } from "./evm";
-import { TransactionStatus } from "./lists";
 
 export type TokenWithAmount = Token & {
   amount: string;
@@ -55,7 +48,7 @@ export type TxPackage = { sender: string } & (
 );
 
 // //////////// HOOK SENDER & PROMPT ////////////
-export type TxSuccessMeta = {
+type TxSuccessMeta = {
   message: string;
   link?: { url: string; description: string };
 };
@@ -63,7 +56,6 @@ export type TxSuccessMeta = {
 type SuccessState = { success: TxSuccessMeta; tx?: SubmittedTx };
 
 export type TxState = TxLoading | TxError | SuccessState;
-export type TxOnSuccess = (result: TxSuccess, chain: Chain) => void;
 
 // //////////// TYPE GUARDS ////////////
 export function isTxResultError(tx: TxResult): tx is TxError {
@@ -83,8 +75,6 @@ type Tx<T extends Tupleable> = {
   args: T;
 };
 
-export type ID = { id: number };
-
 type Txs = {
   "erc20.transfer": Tx<Transfer>;
   "erc20.approve": Tx<Allowance>; //not multisig tx
@@ -97,12 +87,3 @@ type Empty = { [key: string]: never };
 export type TxOptions<T extends TxType> = T extends `${infer C}.${string}`
   ? Txs[T]["args"] & { [key in C]: string }
   : Empty;
-
-export type Transaction = {
-  transactionId: number;
-  recordId: string;
-  expiry: number;
-  status: TransactionStatus;
-  confirmations: string[];
-  owners: string[];
-};

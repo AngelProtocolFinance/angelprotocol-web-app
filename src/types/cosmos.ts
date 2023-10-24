@@ -10,7 +10,7 @@ export interface Coin {
   readonly amount: string;
 }
 
-export type WCSignature = StdSignature;
+type WCSignature = StdSignature;
 
 export type WCSignAminoRes = {
   signature: WCSignature;
@@ -57,7 +57,7 @@ export type SimulateRes = {
   };
 };
 
-export type JSONAny<T> = {
+type JSONAny<T> = {
   "@type": string;
 } & T;
 

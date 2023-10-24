@@ -5,7 +5,6 @@ import {
   EVMChainID,
   TerraChainID,
 } from "types/chain";
-import { INFURA_ID } from "./env";
 
 export const polygon: Chain = {
   id: "137",
@@ -26,7 +25,7 @@ export const ethereum: Chain = {
   id: "1",
   brand: "ethereum",
   name: "Ethereum",
-  rpc: `https://mainnet.infura.io/v3/${INFURA_ID}`,
+  rpc: `https://mainnet.infura.io/v3/${"INFURA_ID"}`,
   lcd: "",
   blockExplorer: "https://etherscan.io",
   nativeToken: {
@@ -101,7 +100,7 @@ export const goerli: Chain = {
   id: "5",
   brand: "ethereum",
   name: "Ethereum Goerli Testnet",
-  rpc: `https://goerli.infura.io/v3/${INFURA_ID}`,
+  rpc: `https://goerli.infura.io/v3/${"INFURA_ID"}`,
   lcd: "",
   blockExplorer: "https://goerli.etherscan.io",
   nativeToken: {

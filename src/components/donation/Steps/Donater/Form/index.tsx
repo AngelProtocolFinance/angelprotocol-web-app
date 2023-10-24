@@ -70,7 +70,7 @@ export default function Form({ configFromWidget }: Props) {
         name="token"
         selectedChainId={chainId.value}
         withBalance
-        label={`Enter the donation amount:`}
+        label={`Enter the donation amount :`}
         classes={{ label: "text-lg", inputContainer: "dark:bg-blue-d6" }}
         withMininum
       />

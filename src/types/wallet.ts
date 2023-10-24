@@ -4,7 +4,7 @@ import { ChainID } from "./chain";
 import { RequestArguments } from "./evm";
 
 export type InjectedProviderID = "binance-wallet" | "metamask" | "xdefi-evm";
-export type EVMWalletID = InjectedProviderID | "evm-wc" | "web3auth-torus";
+export type EVMWalletID = InjectedProviderID | "evm-wc";
 
 export type TerraWalletID =
   | "station"
@@ -73,7 +73,6 @@ const types: { [key in WalletID]: "cosmos" | "terra" | "evm" } = {
   "binance-wallet": "evm",
   "evm-wc": "evm",
   metamask: "evm",
-  "web3auth-torus": "evm",
   "xdefi-evm": "evm",
   keplr: "cosmos",
   "keplr-wc": "cosmos",

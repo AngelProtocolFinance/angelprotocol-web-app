@@ -1,9 +1,9 @@
+import { Authenticator } from "@aws-amplify/ui-react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
 import { DonationsMetricList, Update } from "types/aws";
 import { store } from "store/store";
-import { APP_NAME } from "constants/env";
 import App from "../App";
 
 const mockMetrics: DonationsMetricList = {
@@ -43,9 +43,11 @@ describe("App.tsx tests", () => {
   test("Visit top level pages", async () => {
     render(
       <MemoryRouter>
-        <Provider store={store}>
-          <App />
-        </Provider>
+        <Authenticator.Provider>
+          <Provider store={store}>
+            <App />
+          </Provider>
+        </Authenticator.Provider>
       </MemoryRouter>
     );
     // footer is immediately rendered
@@ -101,8 +103,8 @@ describe("App.tsx tests", () => {
     expect(screen.getByTestId(loaderTestId)).toBeInTheDocument();
     //registration is finally loaded
     expect(
-      await screen.findByRole("heading", {
-        name: `Register to ${APP_NAME}`,
+      await screen.findByRole("button", {
+        name: /sign in/i,
       })
     ).toBeInTheDocument();
     expect(screen.queryByTestId(loaderTestId)).toBeNull();

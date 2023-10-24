@@ -1,4 +1,3 @@
-import { Token } from "types/aws";
 import { ChainID } from "types/chain";
 import { Country } from "types/countries";
 import { TokenWithAmount, TxPackage } from "types/tx";
@@ -60,7 +59,5 @@ export type TxStep = {
 } & Omit<SubmitStep, "step">;
 
 export type DonateArgs = { donation: SubmitStep } & TxPackage;
-
-export type FiatToken = Pick<Token, "symbol" | "min_donation_amnt" | "logo">;
 
 export type DonationStep = DonationState["step"];

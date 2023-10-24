@@ -1,3 +1,4 @@
+import "@aws-amplify/ui-react/styles.css";
 import * as Sentry from "@sentry/react";
 import { lazy } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
@@ -5,6 +6,7 @@ import ModalContext from "contexts/ModalContext";
 import useScrollTop from "hooks/useScrollTop";
 import { appRoutes } from "constants/routes";
 import Layout from "./Layout";
+import Protected from "./Protected";
 
 const Admin = lazy(() => import("pages/Admin"));
 const Profile = lazy(() => import("pages/Profile"));
@@ -16,6 +18,7 @@ const Donate = lazy(() => import("pages/Donate"));
 const DonateFiatThanks = lazy(() => import("pages/DonateFiatThanks"));
 const Gift = lazy(() => import("pages/Gift"));
 const DonateWidget = lazy(() => import("pages/DonateWidget"));
+const Signin = lazy(() => import("pages/Signin"));
 
 export default function App() {
   const location = useLocation();
@@ -35,7 +38,14 @@ export default function App() {
             path={`${appRoutes.profile}/:id/*`}
             element={<Profile legacy />}
           />
-          <Route path={`${appRoutes.admin}/:id/*`} element={<Admin />} />
+          <Route
+            path={`${appRoutes.admin}/:id/*`}
+            element={
+              <Protected>
+                <Admin />
+              </Protected>
+            }
+          />
 
           <Route
             path={`${appRoutes.donations}/:address`}
@@ -47,10 +57,17 @@ export default function App() {
             element={<DonateFiatThanks />}
           />
           <Route path={appRoutes.leaderboard} element={<Leaderboard />} />
-          <Route path={`${appRoutes.register}/*`} element={<Registration />} />
+          <Route
+            path={`${appRoutes.register}/*`}
+            element={
+              <Protected>
+                <Registration />
+              </Protected>
+            }
+          />
           <Route path={`${appRoutes.gift}/*`} element={<Gift />} />
           <Route path={appRoutes.marketplace} element={<Marketplace />} />
-
+          <Route path={appRoutes.signin} element={<Signin />} />
           <Route path={appRoutes.marketplace}>
             <Route path=":id/*" element={<Profile />} />
             <Route index element={<Marketplace />} />

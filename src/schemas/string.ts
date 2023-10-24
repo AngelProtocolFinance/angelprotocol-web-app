@@ -18,10 +18,6 @@ export const walletAddr = (chainId: ChainID) =>
         )
   );
 
-export const requiredWalletAddr = (chainId: ChainID) => {
-  return requiredString.matches(walletAddrPatten(chainId), `invalid address`);
-};
-
 export const url = Yup.string()
   .nullable()
   .test({
@@ -60,22 +56,6 @@ export const url = Yup.string()
       return givenURL.protocol === "http:" || givenURL.protocol === "https:";
     },
   });
-
-export const stringByteSchema = (minBytes: number, maxBytes: number) =>
-  Yup.string()
-    .required(`required`)
-    .test("min_length", `too short`, getBytesComparer("gt", minBytes))
-    .test("max_length", `too long`, getBytesComparer("lt", maxBytes));
-
-function getBytesComparer(comparison: "gt" | "lt", num_bytes: number) {
-  return function (str?: string) {
-    if (comparison === "gt") {
-      return new Blob([str || ""]).size > num_bytes;
-    } else {
-      return new Blob([str || ""]).size <= num_bytes;
-    }
-  };
-}
 
 export function walletAddrPatten(chainId: ChainID) {
   switch (chainId) {

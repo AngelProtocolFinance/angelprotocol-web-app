@@ -49,11 +49,9 @@ export default function Content({
         image={`${profile.logo}`}
         url={`${DAPP_URL}/donate_widget/${profile.id}`}
       />
-      <header className="flex justify-center items-center gap-10 w-full h-24 z-20">
-        <h1 className="text-lg sm:text-3xl">
-          {possesiveForm(profile.name)} endowment
-        </h1>
-      </header>
+      <h1 className="flex justify-center items-center gap-10 w-full h-24 z-20 text-lg sm:text-3xl">
+        {possesiveForm(profile.name)} endowment
+      </h1>
       {configIsFallback(donaterConfig) && (
         <ErrorStatus classes="mb-4">
           Invalid widget config found - loaded defaults

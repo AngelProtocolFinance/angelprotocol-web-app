@@ -51,19 +51,6 @@ export class UnexpectedStateError extends APError {
   }
 }
 
-export class WrongChainError extends APError {
-  constructor(expectedChain?: string) {
-    super(
-      "WrongChainError",
-      `Connected to the wrong chain.${
-        !expectedChain
-          ? ""
-          : ` Please connect to the ${expectedChain} chain and reload the page.`
-      }`
-    );
-  }
-}
-
 export class WrongNetworkError extends APError {
   constructor() {
     super(
@@ -88,14 +75,6 @@ export class ManualChainSwitchRequiredError extends APError {
       "ManualChainSwitchRequiredError",
       `Please use your wallet to switch to ${chainId} chain and reload the page`
     );
-  }
-}
-
-export class CosmosTxSimulationFail extends APError {
-  constructor(
-    message = "Submission aborted. This transaction is likely to fail"
-  ) {
-    super("CosmosTxSimulationFail", message);
   }
 }
 

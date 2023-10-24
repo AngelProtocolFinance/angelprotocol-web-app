@@ -1,4 +1,4 @@
-import { BASE_URL, INFURA_ID, IS_TEST } from "./env";
+import { BASE_URL } from "./env";
 
 export const APIs = {
   aws: "https://kpnxz5rzo2.execute-api.us-east-1.amazonaws.com",
@@ -9,7 +9,3 @@ export const LITEPAPER = `${BASE_URL}/docs/litepaper-introduction/`;
 export const PRIVACY_POLICY = `${BASE_URL}/privacy-policy/`;
 
 export const TERMS_OF_USE = `${BASE_URL}/terms-of-use-npo/`;
-
-export const POLYGON_RPC = IS_TEST
-  ? `https://polygon-mumbai.infura.io/v3/${INFURA_ID}`
-  : `https://polygon-mainnet.infura.io/v3/${INFURA_ID}`;

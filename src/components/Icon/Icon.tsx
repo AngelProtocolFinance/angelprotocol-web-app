@@ -1,7 +1,7 @@
 import { IconBaseProps } from "react-icons";
 import { IconType, icons } from "./icons";
 
-export interface IconProps extends IconBaseProps {
+interface IconProps extends IconBaseProps {
   type: IconType;
 }
 

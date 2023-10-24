@@ -3,11 +3,9 @@ import { PropsWithChildren, createContext, useContext } from "react";
 import { WalletContextState } from "./types";
 import { ConnectedWallet, DisconnectedWallet, Wallet } from "types/wallet";
 import { EVMChains } from "constants/chains-v2";
-import { IS_MOBILE } from "constants/env";
 import useInjectedProvider from "./useInjectedProvider";
 import useKeplr from "./useKeplr";
 import useTerra from "./useTerra";
-import useWeb3Auth from "./useWeb3Auth";
 import { useEVMWC, useKeplrWC } from "./wallet-connect";
 
 const binanceWalletIcon = "/icons/wallets/binance.png";
@@ -43,7 +41,6 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
 
   const { station, stationMobile, xdefiTerra, leap } = useTerra();
   const keplr = useKeplr();
-  const web3Auth = useWeb3Auth();
   const keplrWC = useKeplrWC();
   const evmWC = useEVMWC({
     logo: metamaskIcon,
@@ -52,9 +49,9 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   });
 
   const wallets: Wallet[] = isMobile()
-    ? [web3Auth, evmWC, keplrWC, stationMobile]
+    ? [evmWC, keplrWC, stationMobile]
     : //prettier-ignore
-      [web3Auth,keplr,metamask,evmWC,keplrWC,binance,xdefiEvm,xdefiTerra,leap,station, stationMobile];
+      [keplr,metamask,evmWC,keplrWC,binance,xdefiEvm,xdefiTerra,leap,station, stationMobile];
 
   const connectedWallet = wallets.find((w) => w.status === "connected") as
     | ConnectedWallet
@@ -69,9 +66,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
           ? "loading"
           : connectedWallet
           ? connectedWallet
-          : ((IS_MOBILE
-              ? [web3Auth, evmWC, keplrWC, stationMobile]
-              : wallets) as DisconnectedWallet[])
+          : (wallets as DisconnectedWallet[])
       }
     >
       {props.children}

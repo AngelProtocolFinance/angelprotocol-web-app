@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 
 /**tailwind screen sizes*/
-export const SCREEN_SM = 640;
 export const SCREEN_MD = 768;
 export const SCREEN_LG = 1024;
 

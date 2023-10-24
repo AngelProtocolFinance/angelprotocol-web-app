@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "./types";
 import ExtLink from "components/ExtLink";
-import { CheckField, Field } from "components/form";
+import { CheckField } from "components/form";
 import { Separator } from "components/registration";
 import { APP_NAME } from "constants/env";
 import { PRIVACY_POLICY } from "constants/urls";
@@ -27,11 +27,6 @@ export default function Form({ classes = "" }: { classes?: string }) {
     >
       <h3 className="text-3xl text-center">{`Register to ${APP_NAME}`}</h3>
 
-      <Field<FV>
-        name="email"
-        label="E-mail"
-        placeholder="e.g. johndoe@example.com"
-      />
       <CheckField<FV>
         required
         name="hasAgreedToPrivacyPolicy"
@@ -51,7 +46,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
         className="btn-orange btn-reg"
         disabled={isSubmitting}
       >
-        Register
+        Start a new application
       </button>
       <Separator classes="before:mr-2 after:ml-2">OR</Separator>
 

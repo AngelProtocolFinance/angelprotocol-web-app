@@ -1,11 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import {
-  FetchedChain,
-  PaginatedAWSQueryRes,
-  Token,
-  WithdrawLog,
-  WithdrawLogQueryParams,
-} from "types/aws";
+import { FetchedChain, Token } from "types/aws";
 import { ChainID } from "types/chain";
 import { appRoutes } from "constants/routes";
 import { APIs } from "constants/urls";
@@ -26,17 +20,6 @@ export const apes = createApi({
   }),
   tagTypes: tags,
   endpoints: (builder) => ({
-    withdrawLogs: builder.query<
-      PaginatedAWSQueryRes<WithdrawLog[]>,
-      WithdrawLogQueryParams
-    >({
-      providesTags: ["withdraw_logs"],
-      query: ({ cw3, ...params }) => ({
-        url: `/${v(3)}/withdraw/${cw3}`,
-        params,
-      }),
-    }),
-
     tokens: builder.query<Token[], ChainID>({
       query: (chainID) => `v1/chain/${chainID}`,
       transformResponse: (res: FetchedChain) =>
@@ -60,8 +43,6 @@ export const apes = createApi({
 });
 
 export const {
-  useWithdrawLogsQuery,
-  useLazyWithdrawLogsQuery,
   useTokensQuery,
   useStripeSessionURLMutation,
   util: {
