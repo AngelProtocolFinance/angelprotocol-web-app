@@ -17,7 +17,9 @@ export default function Submit(props: SubmitStep) {
   if (wallet === "loading") {
     return (
       <Container {...props}>
-        <LoadingStatus>Connecting wallet..</LoadingStatus>
+        <LoadingStatus classes="justify-self-center">
+          Connecting wallet..
+        </LoadingStatus>
       </Container>
     );
   }
@@ -33,7 +35,9 @@ export default function Submit(props: SubmitStep) {
   if (!wallet.supportedChains.includes(chainID)) {
     return (
       <Container {...props}>
-        <Info>Connected wallet doesn't support this chain</Info>
+        <Info classes="justify-self-center">
+          Connected wallet doesn't support this chain
+        </Info>
       </Container>
     );
   }
@@ -41,7 +45,9 @@ export default function Submit(props: SubmitStep) {
   if (chainID !== wallet.chainId) {
     return (
       <Container {...props}>
-        <Info>Your wallet is not connected to your selected chain</Info>
+        <Info classes="justify-self-center">
+          Your wallet is not connected to your selected chain
+        </Info>
       </Container>
     );
   }
