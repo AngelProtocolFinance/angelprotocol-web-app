@@ -34,7 +34,8 @@ export function createStringSchema(
       "Field's remote validation",
       `Must be a valid ${requirements.name}`,
       (val) =>
-        // Apparently `params` always contains just one parameter.
+        // Still waiting on some response from Wise Support on how to handle
+        // cases when params.length > 1, as it's currently not clear how do this.
         fetch(`${url}?${params[0].key}=${val}`)
           .then((res) => res.ok)
           .catch((err) => {
