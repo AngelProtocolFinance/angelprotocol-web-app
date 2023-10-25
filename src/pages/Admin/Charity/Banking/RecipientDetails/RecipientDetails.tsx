@@ -6,12 +6,12 @@ import useRecipientDetails from "./useRecipientDetails";
 
 type Props = {
   targetCurrency: string;
-  sourceAmount: number;
+  expectedFunds: number;
 };
 
 export default function RecipientDetails({
   targetCurrency,
-  sourceAmount,
+  expectedFunds,
 }: Props) {
   const {
     dispatch,
@@ -21,7 +21,7 @@ export default function RecipientDetails({
     requirementsDataArray,
     selectedIndex,
     updateDefaultValues,
-  } = useRecipientDetails(targetCurrency, sourceAmount);
+  } = useRecipientDetails(targetCurrency, expectedFunds);
 
   if (isLoading) {
     return (

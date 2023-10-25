@@ -13,7 +13,7 @@ const ERROR_MSG = `An error occured. Please try again later. If the error persis
 
 export default function useRecipientDetails(
   targetCurrency: string,
-  sourceAmount: number
+  expectedFunds: number
 ) {
   const { id } = useAdminContext();
   const [state, dispatch] = useReducer(reducer, {
@@ -41,7 +41,8 @@ export default function useRecipientDetails(
   useEffect(() => {
     (async () => {
       try {
-        const quote = await createQuote(targetCurrency, sourceAmount);
+        const withdrawAmount = calculateExpectedWithdrawAmount(expectedFunds);
+        const quote = await createQuote(targetCurrency, withdrawAmount);
         const newRequirements = await getAccountRequirements(quote.id);
         dispatch({
           type: "accountRequirements",
@@ -56,7 +57,7 @@ export default function useRecipientDetails(
     createQuote,
     getAccountRequirements,
     handleError,
-    sourceAmount,
+    expectedFunds,
     targetCurrency,
   ]);
 
@@ -98,4 +99,8 @@ export default function useRecipientDetails(
     handleSubmit,
     updateDefaultValues,
   };
+}
+
+function calculateExpectedWithdrawAmount(sourceAmount: number): number {
+  return sourceAmount / 10; // random calculation, will be handled in separate issue
 }

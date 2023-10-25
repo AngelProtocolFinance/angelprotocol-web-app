@@ -5,15 +5,15 @@ import RecipientDetails from "./RecipientDetails";
 
 export default function Banking() {
   const [targetCurrency, setTargetCurrency] = useState<string>();
-  const [sourceAmount, setSourceAmount] = useState<number>();
-  const [debouncedSourceAmount] = useDebouncer(sourceAmount, 1000);
+  const [expectedFunds, setExpectedFunds] = useState<number>();
+  const [debouncedExpectedFunds] = useDebouncer(expectedFunds, 1000);
 
   const onCurrencyChange = (currency: string) => {
     setTargetCurrency(currency);
   };
 
-  const onAmountChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSourceAmount(Number(event.target.value) / 10); // random calculation
+  const handleFundsChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setExpectedFunds(Number(event.target.value));
   };
 
   return (
@@ -27,19 +27,19 @@ export default function Banking() {
         <input
           id="amount"
           type="number"
-          value={sourceAmount || ""}
-          onChange={onAmountChange}
+          value={expectedFunds || ""}
+          onChange={handleFundsChange}
           className="field-input"
         />
       </div>
 
-      {!!targetCurrency && !!debouncedSourceAmount && (
+      {!!targetCurrency && !!debouncedExpectedFunds && (
         <RecipientDetails
           // we need this key to tell React that when any of the fields passed to this component changes,
           // it needs to rerender the whole component and thus reset its state
-          key={`${targetCurrency}${debouncedSourceAmount}`}
+          key={`${targetCurrency}${debouncedExpectedFunds}`}
           targetCurrency={targetCurrency}
-          sourceAmount={debouncedSourceAmount}
+          expectedFunds={debouncedExpectedFunds}
         />
       )}
     </div>
