@@ -1,12 +1,6 @@
 import { FormValues } from "./types";
 import { AccountRequirements, Quote } from "types/aws";
 
-type RequirementsData = {
-  accountRequirements: AccountRequirements;
-  currentFormValues?: FormValues;
-  refreshed: boolean;
-};
-
 export default function reducer(state: State, action: Action): State {
   switch (action.type) {
     case "accountRequirements":
@@ -18,6 +12,7 @@ export default function reducer(state: State, action: Action): State {
           accountRequirements: item,
           refreshed: false,
         })),
+        isLoading: false,
       };
     case "formValues":
       const reqArr = [...state.requirementsDataArray];
@@ -36,6 +31,8 @@ export default function reducer(state: State, action: Action): State {
       };
     case "selectedIndex":
       return { ...state, selectedIndex: action.payload };
+    case "isLoading":
+      return { ...state, isLoading: action.payload };
     default:
       return state;
   }
@@ -45,6 +42,13 @@ type State = {
   requirementsDataArray: RequirementsData[];
   selectedIndex: number;
   quote: Quote | undefined;
+  isLoading: boolean;
+};
+
+type RequirementsData = {
+  accountRequirements: AccountRequirements;
+  currentFormValues?: FormValues;
+  refreshed: boolean;
 };
 
 type Action =
@@ -66,4 +70,8 @@ type Action =
   | {
       type: "selectedIndex";
       payload: number;
+    }
+  | {
+      type: "isLoading";
+      payload: boolean;
     };

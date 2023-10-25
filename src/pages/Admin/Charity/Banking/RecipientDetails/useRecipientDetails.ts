@@ -20,6 +20,7 @@ export default function useRecipientDetails(
     requirementsDataArray: [],
     selectedIndex: 0,
     quote: undefined,
+    isLoading: true,
   });
   const { handleError } = useErrorContext();
 
@@ -48,6 +49,7 @@ export default function useRecipientDetails(
         });
       } catch (error) {
         handleError(error, ERROR_MSG);
+        dispatch({ type: "isLoading", payload: false });
       }
     })();
   }, [

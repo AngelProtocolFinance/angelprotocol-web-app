@@ -13,7 +13,7 @@ export default function Banking() {
   };
 
   const onAmountChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSourceAmount(Number(event.target.value)); // random calculation
+    setSourceAmount(Number(event.target.value) / 10); // random calculation
   };
 
   return (
@@ -35,6 +35,8 @@ export default function Banking() {
 
       {!!targetCurrency && !!debouncedSourceAmount && (
         <RecipientDetails
+          // we need this key to tell React that when any of the fields passed to this component changes,
+          // it needs to rerender the whole component and thus reset its state
           key={`${targetCurrency}${debouncedSourceAmount}`}
           targetCurrency={targetCurrency}
           sourceAmount={debouncedSourceAmount}

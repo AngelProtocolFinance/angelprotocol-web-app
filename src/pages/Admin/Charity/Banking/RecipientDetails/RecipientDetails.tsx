@@ -17,13 +17,13 @@ export default function RecipientDetails({
     dispatch,
     handleSubmit,
     isError,
-    quote,
+    isLoading,
     requirementsDataArray,
     selectedIndex,
     updateDefaultValues,
   } = useRecipientDetails(targetCurrency, sourceAmount);
 
-  if (!quote || isEmpty(requirementsDataArray)) {
+  if (isLoading) {
     return (
       <div className="flex gap-2">
         <LoaderRing thickness={10} classes="w-6" /> Loading...
@@ -31,8 +31,8 @@ export default function RecipientDetails({
     );
   }
 
-  if (isError) {
-    return null;
+  if (isError || isEmpty(requirementsDataArray)) {
+    return <span>An error occurred</span>;
   }
 
   const requirements = requirementsDataArray[selectedIndex];
@@ -49,6 +49,8 @@ export default function RecipientDetails({
         }
       />
       <RecipientDetailsForm
+        // we need this key to tell React that when any of the fields passed to this component changes,
+        // it needs to rerender the whole component and thus recreate the form
         key={`form-${requirements.accountRequirements.type}`}
         accountRequirements={requirements.accountRequirements}
         targetCurrency={targetCurrency}
