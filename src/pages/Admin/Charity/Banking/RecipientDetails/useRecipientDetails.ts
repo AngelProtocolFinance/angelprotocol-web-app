@@ -53,13 +53,8 @@ export default function useRecipientDetails(
         dispatch({ type: "isLoading", payload: false });
       }
     })();
-  }, [
-    createQuote,
-    getAccountRequirements,
-    handleError,
-    expectedFunds,
-    targetCurrency,
-  ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleSubmit = async (
     request: CreateRecipientRequest,
@@ -101,6 +96,8 @@ export default function useRecipientDetails(
   };
 }
 
+// Random calculation, will be handled in separate issue
+// See https://linear.app/angel-protocol/issue/AP-859/set-an-actual-calculation-to-get-the-estimate-withdrawal-amount-when
 function calculateExpectedWithdrawAmount(sourceAmount: number): number {
-  return sourceAmount / 10; // random calculation, will be handled in separate issue
+  return sourceAmount / 10;
 }
