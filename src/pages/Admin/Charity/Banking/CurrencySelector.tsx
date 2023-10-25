@@ -24,10 +24,11 @@ export default function CurrencySelector({
     query === ""
       ? currencies
       : currencies.filter((currency) => {
-          const formatQuery = query.toLowerCase().replace(/\s+/g, "");
+          // check whether query matches either the currency name or any of its keywords
+          const formatQuery = query.toLowerCase().replace(/\s+/g, ""); // ignore spaces and casing
           const matchesName = currency.name
             .toLowerCase()
-            .replace(/\s+/g, "")
+            .replace(/\s+/g, "") // ignore spaces and casing
             .includes(formatQuery);
           const matchesKeyword = new RegExp(
             currency.searchKeywords.join("|"),
