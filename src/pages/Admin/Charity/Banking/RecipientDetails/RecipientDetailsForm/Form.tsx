@@ -24,10 +24,11 @@ export default function Form(props: Props) {
   return (
     <form onSubmit={onSubmit} className="grid gap-4">
       <div className="grid grid-cols-2 gap-2">
-        {props.accountRequirements.fields.map((field) => {
-          const data = field.group[0]; // seems that `field.group.length === 1` in all cases
-          return <RequirementField key={data.key} data={data} />;
-        })}
+        {props.accountRequirements.fields
+          .flatMap((field) => field.group)
+          .map((requirements) => (
+            <RequirementField key={requirements.key} data={requirements} />
+          ))}
       </div>
 
       <button

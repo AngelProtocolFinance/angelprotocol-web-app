@@ -12,18 +12,18 @@ export default function getDefaultValues(
     type: accountRequirements.type,
     requirements: accountRequirements.fields.reduce<FormValues["requirements"]>(
       (defaultValues, field) => {
-        const requirements = field.group[0];
+        field.group.forEach((requirements) => {
+          const key = undot(requirements.key);
 
-        const key = undot(requirements.key);
-
-        if (requirements.type === "text" || requirements.type === "date") {
-          defaultValues[key] = "";
-        } else {
-          defaultValues[key] = {
-            label: requirements.example || "Select...", // this field contains dropdown placeholder text for `select`; for `radio` it's empty string
-            value: "",
-          };
-        }
+          if (requirements.type === "text" || requirements.type === "date") {
+            defaultValues[key] = "";
+          } else {
+            defaultValues[key] = {
+              label: requirements.example || "Select...", // this field contains dropdown placeholder text for `select`; for `radio` it's empty string
+              value: "",
+            };
+          }
+        });
 
         return defaultValues;
       },

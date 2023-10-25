@@ -1,31 +1,9 @@
 import { AnyObject, ObjectSchema, StringSchema, object, string } from "yup";
-import { Field, Group } from "types/aws";
+import { Group } from "types/aws";
 import { OptionType } from "components/Selector";
 import { requiredString } from "schemas/string";
 
-type FieldSchema = {
-  key: string;
-  schema:
-    | StringSchema<string | undefined, AnyObject, undefined, "">
-    | ObjectSchema<OptionType<string | undefined>, any, OptionType<string>, "">;
-};
-
-export default function createFieldSchema(field: Field): FieldSchema {
-  const requirements = field.group[0];
-
-  // type === "date" will be validated using `requirements.validationRegexp`
-  const schema =
-    requirements.type === "text" || requirements.type === "date"
-      ? createStringSchema(requirements)
-      : createOptionsTypeSchema(requirements);
-
-  return {
-    key: requirements.key,
-    schema,
-  };
-}
-
-function createStringSchema(
+export function createStringSchema(
   requirements: Group
 ): StringSchema<string | undefined, AnyObject, undefined, ""> {
   let schema = string();
@@ -69,7 +47,7 @@ function createStringSchema(
   return schema;
 }
 
-function createOptionsTypeSchema(
+export function createOptionsTypeSchema(
   requirements: Group
 ): ObjectSchema<OptionType<string | undefined>, AnyObject, any, ""> {
   // - since we'll have allowed values set in the component itself, there's only need to check whether the field is required

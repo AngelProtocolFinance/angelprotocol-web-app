@@ -34,8 +34,8 @@ export default function useRecipientDetailsForm(
     defaultValues: initValues,
   });
 
-  const refreshRequirementsNeeded = accountRequirements.fields.some(
-    (field) => field.group[0].refreshRequirementsOnChange
+  const refreshRequirementsNeeded = accountRequirements.fields.some((field) =>
+    field.group.some((group) => group.refreshRequirementsOnChange)
   );
 
   return { methods, refreshRequirementsNeeded };
