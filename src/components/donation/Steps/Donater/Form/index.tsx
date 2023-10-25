@@ -12,18 +12,15 @@ import Split from "../../../../Split";
 import TokenField from "../../../../TokenField";
 import { CheckField } from "../../../../form";
 import AdvancedOptions from "../../../AdvancedOptions";
+import { initToken } from "../constants";
 
 type Props = {
   configFromWidget: DonaterConfigFromWidget | null;
 };
 
 export default function Form({ configFromWidget }: Props) {
-  const {
-    watch,
-    reset,
-    handleSubmit,
-    formState: { isValid, isDirty, isSubmitting },
-  } = useFormContext<DonateValues>();
+  const { watch, reset, setValue, handleSubmit } =
+    useFormContext<DonateValues>();
   const endowId = useGetter((state) => state.donation.recipient?.id);
   const isKYCRequired = useGetter(
     (state) => state.donation.recipient?.isKYCRequired
@@ -38,12 +35,7 @@ export default function Form({ configFromWidget }: Props) {
 
   const token = watch("token");
   const chainId = watch("chainId");
-  const isStepOneCompleted = !!token.amount;
   const isInsideWidget = configFromWidget !== null;
-
-  // useEffect(() => {
-  //   resetField("token", { defaultValue: initToken });
-  // }, [chainId, resetField]);
 
   return (
     <form
@@ -60,6 +52,10 @@ export default function Form({ configFromWidget }: Props) {
           label: chain.name,
           value: chain.id,
         }))}
+        onOptionChange={() => {
+          setValue("token", initToken);
+          setValue("token.amount", "0");
+        }}
         classes={{ container: "bg-white dark:bg-blue-d6 mb-8" }}
       />
 
@@ -111,15 +107,7 @@ export default function Form({ configFromWidget }: Props) {
             Cancel
           </Link>
         )}
-        <button
-          className="btn-orange btn-donate w-1/2"
-          // * make sure that fields doesn't make form dirty on initial load
-          // * isStepOneCompleted, when user goes back to step 1 (filled out previously)
-          disabled={
-            !isValid || isSubmitting || !(isDirty || isStepOneCompleted)
-          }
-          type="submit"
-        >
+        <button className="btn-orange btn-donate w-1/2" type="submit">
           Continue
         </button>
       </div>

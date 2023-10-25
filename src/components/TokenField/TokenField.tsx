@@ -11,6 +11,7 @@ import { TokenWithAmount } from "types/tx";
 import TokenSelector from "./TokenSelector";
 
 const amountKey: keyof TokenWithAmount = "amount";
+const tokenIDkey: keyof TokenWithAmount = "token_id";
 type BaseFormValue = { [index: string]: TokenWithAmount };
 
 export default function TokenField<T extends FieldValues, K extends Path<T>>({
@@ -25,8 +26,7 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
 }: Props<T, K>) {
   const {
     register,
-    setValue,
-    formState: { errors, isSubmitting, isDirty },
+    formState: { errors, isSubmitting },
   } = useFormContext<T>();
   const {
     field: { onChange, value: token },
@@ -35,6 +35,7 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
   });
 
   const amountField: any = `${name}.${amountKey}`;
+  const tokenIDField: any = `${name}.${tokenIDkey}`;
 
   return (
     <div className={`grid ${classes?.container ?? ""}`}>
@@ -65,10 +66,7 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
         <TokenSelector
           selectedChainId={selectedChainId}
           selectedToken={token}
-          onChange={(token) => {
-            isDirty && setValue(amountField, "0" as any);
-            onChange(token);
-          }}
+          onChange={onChange}
         />
       </div>
       <div className="empty:mb-2">
@@ -79,8 +77,15 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
           as="p"
           className="static field-error text-left my-1"
         />
+        <ErrorMessage
+          data-error
+          errors={errors}
+          name={tokenIDField}
+          as="p"
+          className="static field-error text-left my-1"
+        />
       </div>
-      {withMininum && (
+      {withMininum && token.min_donation_amnt !== 0 && (
         <p className="text-xs mb-3">
           Minimal amount: {token.symbol} {token.min_donation_amnt}
         </p>

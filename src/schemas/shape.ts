@@ -1,4 +1,4 @@
-import * as Yup from "yup";
+import { lazy, string } from "yup";
 import { SchemaShape } from "./types";
 import type { TokenWithAmount as TWA } from "types/tx";
 import { tokenConstraint } from "./number";
@@ -8,9 +8,10 @@ type Min = TWA["min_donation_amnt"];
 const minKey: Key = "min_donation_amnt";
 
 export const tokenShape = (withMin = true): SchemaShape<TWA> => ({
-  amount: Yup.lazy((amount: string) =>
+  token_id: string().required("select token"),
+  amount: lazy((amount: string) =>
     amount === ""
-      ? Yup.string().required("required")
+      ? string().required("required")
       : tokenConstraint.when([minKey], (values, schema) => {
           const [minAmount] = values as [Min];
           return withMin && !!minAmount
