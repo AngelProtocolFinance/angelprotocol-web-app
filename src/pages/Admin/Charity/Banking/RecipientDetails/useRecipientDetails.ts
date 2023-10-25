@@ -15,15 +15,14 @@ export default function useRecipientDetails(
   targetCurrency: string,
   sourceAmount: number
 ) {
+  const { id } = useAdminContext();
   const [state, dispatch] = useReducer(reducer, {
     requirementsDataArray: [],
     selectedIndex: 0,
     quote: undefined,
   });
-  const { quote, requirementsDataArray, selectedIndex } = state;
-
-  const { id } = useAdminContext();
   const { handleError } = useErrorContext();
+
   const {
     createQuote,
     getAccountRequirements,
@@ -64,19 +63,19 @@ export default function useRecipientDetails(
     refreshRequirementsNeeded: boolean
   ) => {
     try {
-      if (!quote) {
+      if (!state.quote) {
         throw new UnexpectedStateError("No 'quote' present.");
       }
-      if (isEmpty(requirementsDataArray)) {
+      if (isEmpty(state.requirementsDataArray)) {
         throw new UnexpectedStateError("Requirements not loaded.");
       }
       // refresh requirements if necessary
       if (
-        !requirementsDataArray[selectedIndex].refreshed &&
+        !state.requirementsDataArray[state.selectedIndex].refreshed &&
         refreshRequirementsNeeded
       ) {
         const newRequirements = await postAccountRequirements(
-          quote.id,
+          state.quote.id,
           request
         );
         dispatch({ type: "refreshRequirements", payload: newRequirements });
@@ -91,9 +90,7 @@ export default function useRecipientDetails(
   };
 
   return {
-    quote,
-    requirementsDataArray,
-    selectedIndex,
+    ...state,
     isError,
     dispatch,
     handleSubmit,
