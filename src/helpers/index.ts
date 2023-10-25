@@ -1,6 +1,5 @@
 export * from "./createAuthToken";
 export * from "./createNavLinkStyler";
-export * from "./debounce";
 export * from "./decimal";
 export * from "./getPossessiveForm";
 export * from "./evm";

@@ -1,18 +1,19 @@
 import { ChangeEvent, useState } from "react";
-import { debounce } from "helpers";
+import useDebouncer from "hooks/useDebouncer";
 import CurrencySelector from "./CurrencySelector";
 import RecipientDetails from "./RecipientDetails";
 
 export default function Banking() {
   const [targetCurrency, setTargetCurrency] = useState<string>();
   const [sourceAmount, setSourceAmount] = useState<number>();
+  const [debouncedSourceAmount] = useDebouncer(sourceAmount, 1000);
 
   const onCurrencyChange = (currency: string) => {
     setTargetCurrency(currency);
   };
 
   const onAmountChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSourceAmount(Number(event.target.value) / 10); // random calculation
+    setSourceAmount(Number(event.target.value)); // random calculation
   };
 
   return (
@@ -26,16 +27,17 @@ export default function Banking() {
         <input
           id="amount"
           type="number"
-          onChange={debounce(onAmountChange, 1000)}
+          value={sourceAmount || ""}
+          onChange={onAmountChange}
           className="field-input"
         />
       </div>
 
-      {!!targetCurrency && !!sourceAmount && (
+      {!!targetCurrency && !!debouncedSourceAmount && (
         <RecipientDetails
-          key={`${targetCurrency}${sourceAmount}`}
+          key={`${targetCurrency}${debouncedSourceAmount}`}
           targetCurrency={targetCurrency}
-          sourceAmount={sourceAmount}
+          sourceAmount={debouncedSourceAmount}
         />
       )}
     </div>
