@@ -57,3 +57,11 @@ export type CreateRecipientRequest = {
 };
 
 export type Quote = { id: string };
+
+export type WiseCurrency = {
+  code: string;
+  symbol: string;
+  name: string;
+  countryKeywords: string[];
+  supportsDecimals: boolean;
+};

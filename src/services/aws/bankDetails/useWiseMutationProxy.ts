@@ -4,6 +4,7 @@ import {
   CreateRecipientRequest,
   EndowmentProfile,
   Quote,
+  WiseCurrency,
   WiseRequest,
 } from "types/aws";
 import { invalidateAwsTags } from "services/aws/aws";
@@ -48,6 +49,12 @@ export function useWiseMutationProxy() {
     [send]
   );
 
+  const getCurrencies = useCallback(
+    (): Promise<WiseCurrency[]> =>
+      send<WiseCurrency[]>(REQUESTS.getCurrencies()),
+    [send]
+  );
+
   const postAccountRequirements = useCallback(
     (
       quoteId: string,
@@ -63,6 +70,7 @@ export function useWiseMutationProxy() {
     createQuote,
     createRecipientAccount,
     getAccountRequirements,
+    getCurrencies,
     postAccountRequirements,
     state,
   };
