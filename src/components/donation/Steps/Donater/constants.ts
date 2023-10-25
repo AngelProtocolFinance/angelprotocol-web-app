@@ -5,7 +5,6 @@ export const initToken: TokenWithAmount = {
   decimals: 6,
   logo: "",
   min_donation_amnt: 0,
-  name: "",
   symbol: "Select token",
   token_id: "",
   coingecko_denom: "",

@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { FetchedChain, Token } from "types/aws";
+import { Token } from "types/aws";
 import { ChainID } from "types/chain";
 import { appRoutes } from "constants/routes";
 import { APIs } from "constants/urls";
@@ -21,9 +21,7 @@ export const apes = createApi({
   tagTypes: tags,
   endpoints: (builder) => ({
     tokens: builder.query<Token[], ChainID>({
-      query: (chainID) => `v1/chain/${chainID}`,
-      transformResponse: (res: FetchedChain) =>
-        [res.native_currency].concat(res.tokens),
+      query: (chainID) => `v1/tokens/${chainID}`,
     }),
 
     stripeSessionURL: builder.mutation<{ url: string }, StripeSessionURLParams>(
