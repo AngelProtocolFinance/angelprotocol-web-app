@@ -10,7 +10,11 @@ type Props = {
 };
 export default function DonateMethods({ donaterConfig, state }: Props) {
   return (
-    <Tab.Group as="div" className="grid content-start mt-2">
+    <Tab.Group
+      as="div"
+      className="grid content-start mt-2"
+      defaultIndex={state.details?.method === "crypto" ? 1 : 0}
+    >
       <Tab.List as="div" className="grid grid-cols-2 mb-6">
         <Tab
           className={({ selected }) =>

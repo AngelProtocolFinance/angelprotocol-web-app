@@ -11,6 +11,7 @@ export type DonationRecipient = {
 };
 
 export type DonationDetails = {
+  method: "stripe" | "crypto"; //use to preserve selected method
   token: TokenWithAmount;
   pctLiquidSplit: number; // <input range value transformed to number via onChange
   chainId: OptionType<ChainID>;

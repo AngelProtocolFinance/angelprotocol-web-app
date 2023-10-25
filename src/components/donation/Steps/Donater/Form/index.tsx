@@ -32,7 +32,7 @@ export default function Form({ configFromWidget }: Props) {
   const dispatch = useDispatch();
 
   function submit(data: DonateValues) {
-    dispatch(setDetails(data));
+    dispatch(setDetails({ ...data, method: "crypto" }));
     reset();
   }
 
