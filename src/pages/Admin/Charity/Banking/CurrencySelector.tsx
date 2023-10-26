@@ -2,6 +2,7 @@ import { Combobox, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { WiseCurrency } from "types/aws";
 import { DrawerIcon } from "components/Icon";
+import { isEmpty } from "helpers";
 
 export type Currency = {
   code: string;
@@ -69,7 +70,9 @@ export default function CurrencySelector(props: Props) {
           afterLeave={() => setQuery("")}
         >
           <Combobox.Options className="absolute top-full mt-2 z-10 w-full bg-white dark:bg-blue-d6 shadow-lg rounded overflow-y-scroll scroller text-base ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-            {(filteredCurrencies.length > 0 &&
+            {isEmpty(filteredCurrencies) ? (
+              <div className="p-2 text-sm cursor-default">Nothing found</div>
+            ) : (
               filteredCurrencies.map((currency) => (
                 <Combobox.Option key={currency.code} value={currency}>
                   {({ active, selected }) => (
@@ -84,8 +87,7 @@ export default function CurrencySelector(props: Props) {
                     </div>
                   )}
                 </Combobox.Option>
-              ))) || (
-              <div className="p-2 text-sm cursor-default">Nothing found</div>
+              ))
             )}
           </Combobox.Options>
         </Transition>
