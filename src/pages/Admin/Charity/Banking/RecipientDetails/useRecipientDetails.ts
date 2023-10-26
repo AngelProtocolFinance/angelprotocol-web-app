@@ -27,6 +27,7 @@ export default function useRecipientDetails(
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [quote, setQuote] = useState<Quote>();
   const [isLoading, setLoading] = useState<boolean>(true);
+  const [isSubmitting, setSubmitting] = useState<boolean>(false);
 
   const { handleError } = useErrorContext();
 
@@ -80,6 +81,7 @@ export default function useRecipientDetails(
       if (isEmpty(requirementsDataArray)) {
         throw new UnexpectedStateError("Requirements not loaded.");
       }
+      setSubmitting(true);
       // refresh requirements if necessary
       if (
         !requirementsDataArray[selectedIndex].refreshed &&
@@ -102,6 +104,8 @@ export default function useRecipientDetails(
       }
     } catch (error) {
       handleError(error, ERROR_MSG);
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -109,6 +113,7 @@ export default function useRecipientDetails(
     handleSubmit,
     isError,
     isLoading,
+    isSubmitting,
     requirementsDataArray,
     selectedIndex,
     setSelectedIndex,
