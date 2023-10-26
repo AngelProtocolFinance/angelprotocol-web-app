@@ -44,6 +44,7 @@ export default function useRecipientDetails(
         const withdrawAmount = calculateExpectedWithdrawAmount(expectedFunds);
         const quote = await createQuote(targetCurrency, withdrawAmount);
         const newRequirements = await getAccountRequirements(quote.id);
+        // this dispatch sets `isLoading` to false
         dispatch({
           type: "accountRequirements",
           payload: { accountRequirements: newRequirements, quote: quote },
