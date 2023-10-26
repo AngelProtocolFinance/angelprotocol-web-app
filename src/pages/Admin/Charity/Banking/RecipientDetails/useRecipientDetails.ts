@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { FormValues } from "./types";
 import { AccountRequirements, CreateRecipientRequest, Quote } from "types/aws";
 import { useAdminContext } from "pages/Admin/Context";
 import { useTypedWiseMutation } from "services/aws/bankDetails";
 import { useErrorContext } from "contexts/ErrorContext";
-import { isEmpty } from "helpers";
 import { UnexpectedStateError } from "errors/errors";
 import { EMAIL_SUPPORT } from "constants/env";
 import getDefaultValues from "./getDefaultValues";
@@ -42,14 +41,6 @@ export default function useRecipientDetails(
     state: { isError },
   } = useTypedWiseMutation();
 
-  const updateDefaultValues = (formValues: FormValues) => {
-    setRequirementsDataArray((prev) => {
-      const updated = [...prev];
-      updated[selectedIndex].currentFormValues = formValues;
-      return updated;
-    });
-  };
-
   useEffect(() => {
     (async () => {
       try {
@@ -84,20 +75,31 @@ export default function useRecipientDetails(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const updateDefaultValues = useCallback(
+    (formValues: FormValues) => {
+      setRequirementsDataArray((prev) => {
+        const updated = [...prev];
+        updated[selectedIndex].currentFormValues = formValues;
+        return updated;
+      });
+    },
+    [selectedIndex]
+  );
+
   const handleSubmit = async (request: CreateRecipientRequest) => {
     try {
       if (!quote) {
         throw new UnexpectedStateError("No 'quote' present.");
       }
-      if (isEmpty(requirementsDataArray)) {
+
+      const requirements = requirementsDataArray.at(selectedIndex);
+      if (!requirements) {
         throw new UnexpectedStateError("Requirements not loaded.");
       }
+
       setSubmitting(true);
       // refresh requirements if necessary, see https://docs.wise.com/api-docs/api-reference/recipient#account-requirements
-      if (
-        requirementsDataArray[selectedIndex].refreshOnSubmit &&
-        !requirementsDataArray[selectedIndex].refreshed
-      ) {
+      if (requirements.refreshOnSubmit && !requirements.refreshed) {
         const newRequirements = await postAccountRequirements(
           quote.id,
           request
