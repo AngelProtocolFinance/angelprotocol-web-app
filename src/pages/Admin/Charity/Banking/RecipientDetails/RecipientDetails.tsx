@@ -18,7 +18,7 @@ export default function RecipientDetails({
     handleSubmit,
     isError,
     isLoading,
-    isSubmitting, // should disable the UI when true
+    // isSubmitting, // should disable the UI when true
     requirementsDataArray,
     selectedIndex,
     setSelectedIndex,
