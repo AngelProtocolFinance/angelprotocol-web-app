@@ -9,21 +9,19 @@ export type Currency = {
   searchKeywords: string[];
 };
 
-export default function CurrencySelector({
-  value,
-  currencies,
-  onChange,
-}: {
+type Props = {
   value: Currency;
   currencies: Currency[];
   onChange: (currency: Currency) => void;
-}) {
+};
+
+export default function CurrencySelector(props: Props) {
   const [query, setQuery] = useState("");
 
   const filteredCurrencies =
     query === ""
-      ? currencies
-      : currencies.filter((currency) => {
+      ? props.currencies
+      : props.currencies.filter((currency) => {
           // check whether query matches either the currency name or any of its keywords
           const formatQuery = query.toLowerCase().replace(/\s+/g, ""); // ignore spaces and casing
           const matchesName = currency.name
@@ -42,8 +40,8 @@ export default function CurrencySelector({
     <div className="grid gap-2">
       <span>Select the currency to receive your funds in</span>
       <Combobox
-        value={value}
-        onChange={onChange}
+        value={props.value}
+        onChange={props.onChange}
         as="div"
         className="relative items-center grid grid-cols-[1fr_auto] w-full field-container"
       >

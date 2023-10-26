@@ -28,7 +28,7 @@ export default function Banking() {
     return (
       <span>
         Error loading currencies. Please try again later. If the error persists,
-        please contact {EMAIL_SUPPORT}
+        please contact {EMAIL_SUPPORT}.
       </span>
     );
   }
