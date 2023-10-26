@@ -1,27 +1,33 @@
-import { useCallback, useEffect, useReducer } from "react";
+import { useEffect, useState } from "react";
 import { FormValues } from "./types";
-import { CreateRecipientRequest } from "types/aws";
+import { AccountRequirements, CreateRecipientRequest, Quote } from "types/aws";
 import { useAdminContext } from "pages/Admin/Context";
 import { useWiseMutationProxy } from "services/aws/bankDetails";
 import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";
 import { UnexpectedStateError } from "errors/errors";
 import { EMAIL_SUPPORT } from "constants/env";
-import reducer from "./reducer";
 
 const ERROR_MSG = `An error occured. Please try again later. If the error persists, please contact ${EMAIL_SUPPORT}`;
+
+type RequirementsData = {
+  accountRequirements: AccountRequirements;
+  currentFormValues?: FormValues;
+  refreshed: boolean;
+};
 
 export default function useRecipientDetails(
   targetCurrency: string,
   expectedFunds: number
 ) {
   const { id } = useAdminContext();
-  const [state, dispatch] = useReducer(reducer, {
-    requirementsDataArray: [],
-    selectedIndex: 0,
-    quote: undefined,
-    isLoading: true,
-  });
+  const [requirementsDataArray, setRequirementsDataArray] = useState<
+    RequirementsData[]
+  >([]);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [quote, setQuote] = useState<Quote>();
+  const [isLoading, setLoading] = useState<boolean>(true);
+
   const { handleError } = useErrorContext();
 
   const {
@@ -32,11 +38,13 @@ export default function useRecipientDetails(
     state: { isError },
   } = useWiseMutationProxy();
 
-  const updateDefaultValues = useCallback(
-    (formValues: FormValues) =>
-      dispatch({ type: "formValues", payload: formValues }),
-    [dispatch]
-  );
+  const updateDefaultValues = (formValues: FormValues) => {
+    setRequirementsDataArray((prev) => {
+      const updated = [...prev];
+      updated[selectedIndex].currentFormValues = formValues;
+      return updated;
+    });
+  };
 
   useEffect(() => {
     (async () => {
@@ -44,14 +52,18 @@ export default function useRecipientDetails(
         const withdrawAmount = calculateExpectedWithdrawAmount(expectedFunds);
         const quote = await createQuote(targetCurrency, withdrawAmount);
         const newRequirements = await getAccountRequirements(quote.id);
-        // this dispatch sets `isLoading` to false
-        dispatch({
-          type: "accountRequirements",
-          payload: { accountRequirements: newRequirements, quote: quote },
-        });
+
+        setRequirementsDataArray(
+          newRequirements.map((item) => ({
+            accountRequirements: item,
+            refreshed: false,
+          }))
+        );
+        setQuote(quote);
+        setLoading(false);
       } catch (error) {
         handleError(error, ERROR_MSG);
-        dispatch({ type: "isLoading", payload: false });
+        setLoading(false);
       }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -62,22 +74,27 @@ export default function useRecipientDetails(
     refreshRequirementsNeeded: boolean
   ) => {
     try {
-      if (!state.quote) {
+      if (!quote) {
         throw new UnexpectedStateError("No 'quote' present.");
       }
-      if (isEmpty(state.requirementsDataArray)) {
+      if (isEmpty(requirementsDataArray)) {
         throw new UnexpectedStateError("Requirements not loaded.");
       }
       // refresh requirements if necessary
       if (
-        !state.requirementsDataArray[state.selectedIndex].refreshed &&
+        !requirementsDataArray[selectedIndex].refreshed &&
         refreshRequirementsNeeded
       ) {
         const newRequirements = await postAccountRequirements(
-          state.quote.id,
+          quote.id,
           request
         );
-        dispatch({ type: "refreshRequirements", payload: newRequirements });
+        setRequirementsDataArray((prev) => {
+          const updated = [...prev];
+          updated[selectedIndex].accountRequirements = newRequirements;
+          updated[selectedIndex].refreshed = true;
+          return updated;
+        });
       }
       // otherwise create the recipient
       else {
@@ -89,10 +106,12 @@ export default function useRecipientDetails(
   };
 
   return {
-    ...state,
-    isError,
-    dispatch,
     handleSubmit,
+    isError,
+    isLoading,
+    requirementsDataArray,
+    selectedIndex,
+    setSelectedIndex,
     updateDefaultValues,
   };
 }

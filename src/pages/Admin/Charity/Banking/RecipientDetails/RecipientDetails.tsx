@@ -15,12 +15,12 @@ export default function RecipientDetails({
   expectedFunds,
 }: Props) {
   const {
-    dispatch,
     handleSubmit,
     isError,
     isLoading,
     requirementsDataArray,
     selectedIndex,
+    setSelectedIndex,
     updateDefaultValues,
   } = useRecipientDetails(targetCurrency, expectedFunds);
 
@@ -50,9 +50,7 @@ export default function RecipientDetails({
           (x) => x.accountRequirements
         )}
         currentIndex={selectedIndex}
-        onChange={(index: number) =>
-          dispatch({ type: "selectedIndex", payload: index })
-        }
+        onChange={setSelectedIndex}
       />
       <RecipientDetailsForm
         // we need this key to tell React that when any of the fields passed to this component changes,
