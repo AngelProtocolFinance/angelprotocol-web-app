@@ -1,5 +1,4 @@
 import LoaderRing from "components/LoaderRing";
-import { isEmpty } from "helpers";
 import { EMAIL_SUPPORT } from "constants/env";
 import AccountRequirementsSelector from "./AccountRequirementsSelector";
 import RecipientDetailsForm from "./RecipientDetailsForm";
@@ -33,7 +32,9 @@ export default function RecipientDetails({
     );
   }
 
-  if (isError || isEmpty(requirementsDataArray)) {
+  const requirements = requirementsDataArray.at(selectedIndex);
+
+  if (isError || !requirements) {
     return (
       <span>
         An error occurred. Please try again later. If the error persists, please
@@ -41,8 +42,6 @@ export default function RecipientDetails({
       </span>
     );
   }
-
-  const requirements = requirementsDataArray[selectedIndex];
 
   return (
     <>
