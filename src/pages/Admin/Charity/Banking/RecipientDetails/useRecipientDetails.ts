@@ -33,8 +33,9 @@ export default function useRecipientDetails(
   const { handleError } = useErrorContext();
 
   const {
-    createQuote,
-    getAccountRequirements,
+    // createQuote,
+    // getAccountRequirements,
+    getAccountRequirementsForRoute,
     postAccountRequirements,
     createRecipientAccount,
     state: { isError },
@@ -52,8 +53,12 @@ export default function useRecipientDetails(
     (async () => {
       try {
         const withdrawAmount = calculateExpectedWithdrawAmount(expectedFunds);
-        const quote = await createQuote(targetCurrency, withdrawAmount);
-        const newRequirements = await getAccountRequirements(quote.id);
+        // const quote = await createQuote(targetCurrency, withdrawAmount);
+        // const newRequirements = await getAccountRequirements(quote.id);
+        const newRequirements = await getAccountRequirementsForRoute(
+          targetCurrency,
+          withdrawAmount
+        );
 
         setRequirementsDataArray(
           newRequirements.map((item) => {

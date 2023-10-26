@@ -19,14 +19,33 @@ export default function useBanking() {
   const { handleError } = useErrorContext();
 
   const {
-    getCurrencies,
+    // getCurrencies,
     state: { isError },
   } = useTypedWiseMutation();
 
   useEffect(() => {
     (async () => {
       try {
-        const wiseCurrencies = await getCurrencies();
+        // TODO: uncomment once Wise API token is working
+        // const wiseCurrencies = await getCurrencies();
+
+        // placeholder until Wise API token is fixed
+        const wiseCurrencies = [
+          {
+            code: "AUD",
+            symbol: "A$",
+            name: "Australian dollar",
+            countryKeywords: ["AUD", "AU", "Australia", "aus"],
+            supportsDecimals: true,
+          },
+          {
+            code: "JPY",
+            symbol: "¥",
+            name: "Japanese yen",
+            countryKeywords: ["JPY", "JP", "Japan", "jpn"],
+            supportsDecimals: false,
+          },
+        ];
 
         const selectorCurrencies: Currency[] = wiseCurrencies.map((x) => ({
           code: x.code,

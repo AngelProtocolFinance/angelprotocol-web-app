@@ -30,15 +30,11 @@ export default function RecipientDetailsForm(props: Props) {
     };
   }, [methods, onCleanup]);
 
-  const handleSubmit = (request: CreateRecipientRequest): void => {
-    props.onSubmit(request);
-  };
-
   return (
     <FormProvider {...methods}>
       <Form
         accountRequirements={props.accountRequirements}
-        onSubmit={handleSubmit}
+        onSubmit={(request) => props.onSubmit(request)}
       />
     </FormProvider>
   );

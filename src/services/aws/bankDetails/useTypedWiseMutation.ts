@@ -53,6 +53,23 @@ export function useTypedWiseMutation() {
     [send]
   );
 
+  /**
+   * Temporary endpoint to use until Wise API token is fixed.
+   *
+   * TODO: ONCE {@link getAccountRequirements} IS IN USE, THIS ENDPOINT CAN BE DELETED
+   */
+  const getAccountRequirementsForRoute = useCallback(
+    (
+      targetCurrency: string,
+      sourceAmount: number
+    ): Promise<AccountRequirements[]> =>
+      fetch(
+        `https://api.sandbox.transferwise.tech/v1/account-requirements?source=USD&target=${targetCurrency}&sourceAmount=${sourceAmount}`,
+        { headers: { "Content-Type": "application/json" } }
+      ).then<AccountRequirements[]>((res) => res.json()),
+    []
+  );
+
   const getCurrencies = useCallback(
     (): Promise<WiseCurrency[]> =>
       send<WiseCurrency[]>(REQUESTS.getCurrencies()),
@@ -74,6 +91,7 @@ export function useTypedWiseMutation() {
     createQuote,
     createRecipientAccount,
     getAccountRequirements,
+    getAccountRequirementsForRoute,
     getCurrencies,
     postAccountRequirements,
     state,
