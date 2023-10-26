@@ -9,15 +9,12 @@ type Props = {
   accountRequirements: AccountRequirements;
   defaultValues: FormValues | undefined;
   onCleanup: (formValues: FormValues) => void;
-  onSubmit: (
-    request: CreateRecipientRequest,
-    refreshRequirements: boolean
-  ) => void;
+  onSubmit: (request: CreateRecipientRequest) => void;
   targetCurrency: string;
 };
 
 export default function RecipientDetailsForm(props: Props) {
-  const { methods, refreshRequirementsOnSubmit } = useRecipientDetailsForm(
+  const methods = useRecipientDetailsForm(
     props.accountRequirements,
     props.targetCurrency,
     props.defaultValues
@@ -34,7 +31,7 @@ export default function RecipientDetailsForm(props: Props) {
   }, [methods, onCleanup]);
 
   const handleSubmit = (request: CreateRecipientRequest): void => {
-    props.onSubmit(request, refreshRequirementsOnSubmit);
+    props.onSubmit(request);
   };
 
   return (

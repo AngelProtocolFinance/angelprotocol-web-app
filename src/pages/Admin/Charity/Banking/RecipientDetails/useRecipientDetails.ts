@@ -14,6 +14,7 @@ type RequirementsData = {
   accountRequirements: AccountRequirements;
   currentFormValues?: FormValues;
   refreshed: boolean;
+  refreshOnSubmit: boolean; // See https://docs.wise.com/api-docs/api-reference/recipient#account-requirements
 };
 
 export default function useRecipientDetails(
@@ -55,10 +56,16 @@ export default function useRecipientDetails(
         const newRequirements = await getAccountRequirements(quote.id);
 
         setRequirementsDataArray(
-          newRequirements.map((item) => ({
-            accountRequirements: item,
-            refreshed: false,
-          }))
+          newRequirements.map((item) => {
+            const data: RequirementsData = {
+              accountRequirements: item,
+              refreshed: false,
+              refreshOnSubmit: item.fields.some((field) =>
+                field.group.some((group) => group.refreshRequirementsOnChange)
+              ),
+            };
+            return data;
+          })
         );
         setQuote(quote);
         setLoading(false);
@@ -70,10 +77,7 @@ export default function useRecipientDetails(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleSubmit = async (
-    request: CreateRecipientRequest,
-    refreshRequirementsNeeded: boolean
-  ) => {
+  const handleSubmit = async (request: CreateRecipientRequest) => {
     try {
       if (!quote) {
         throw new UnexpectedStateError("No 'quote' present.");
@@ -82,10 +86,10 @@ export default function useRecipientDetails(
         throw new UnexpectedStateError("Requirements not loaded.");
       }
       setSubmitting(true);
-      // refresh requirements if necessary
+      // refresh requirements if necessary, see https://docs.wise.com/api-docs/api-reference/recipient#account-requirements
       if (
-        !requirementsDataArray[selectedIndex].refreshed &&
-        refreshRequirementsNeeded
+        requirementsDataArray[selectedIndex].refreshOnSubmit &&
+        !requirementsDataArray[selectedIndex].refreshed
       ) {
         const newRequirements = await postAccountRequirements(
           quote.id,
