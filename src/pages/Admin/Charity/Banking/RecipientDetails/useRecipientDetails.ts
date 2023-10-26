@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { FormValues } from "./types";
 import { AccountRequirements, CreateRecipientRequest, Quote } from "types/aws";
 import { useAdminContext } from "pages/Admin/Context";
-import { useWiseMutationProxy } from "services/aws/bankDetails";
+import { useTypedWiseMutation } from "services/aws/bankDetails";
 import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";
 import { UnexpectedStateError } from "errors/errors";
@@ -37,7 +37,7 @@ export default function useRecipientDetails(
     postAccountRequirements,
     createRecipientAccount,
     state: { isError },
-  } = useWiseMutationProxy();
+  } = useTypedWiseMutation();
 
   const updateDefaultValues = (formValues: FormValues) => {
     setRequirementsDataArray((prev) => {

@@ -1,1 +1,1 @@
-export * from "./useWiseMutationProxy";
+export * from "./useTypedWiseMutation";

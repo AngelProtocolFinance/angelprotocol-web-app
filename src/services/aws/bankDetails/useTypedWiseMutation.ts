@@ -11,7 +11,11 @@ import { invalidateAwsTags } from "services/aws/aws";
 import { bank_details_api } from "./bankDetails";
 import { REQUESTS } from "./constants";
 
-export function useWiseMutationProxy() {
+/**
+ * Wraps calls to AWS Wise proxy and returns typed responses.
+ * @returns object containing all the proxy endpoints + request state
+ */
+export function useTypedWiseMutation() {
   const [sendRequest, state] = bank_details_api.useWiseMutation();
 
   const send = useCallback(

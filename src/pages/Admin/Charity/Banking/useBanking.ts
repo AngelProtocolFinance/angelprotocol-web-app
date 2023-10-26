@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useWiseMutationProxy } from "services/aws/bankDetails";
+import { useTypedWiseMutation } from "services/aws/bankDetails";
 import { useErrorContext } from "contexts/ErrorContext";
 import useDebouncer from "hooks/useDebouncer";
 import { logger } from "helpers";
@@ -21,7 +21,7 @@ export default function useBanking() {
   const {
     getCurrencies,
     state: { isError },
-  } = useWiseMutationProxy();
+  } = useTypedWiseMutation();
 
   useEffect(() => {
     (async () => {
