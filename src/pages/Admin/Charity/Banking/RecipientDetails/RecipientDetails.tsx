@@ -1,5 +1,6 @@
 import LoaderRing from "components/LoaderRing";
 import { isEmpty } from "helpers";
+import { EMAIL_SUPPORT } from "constants/env";
 import AccountRequirementsSelector from "./AccountRequirementsSelector";
 import RecipientDetailsForm from "./RecipientDetailsForm";
 import useRecipientDetails from "./useRecipientDetails";
@@ -32,7 +33,12 @@ export default function RecipientDetails({
   }
 
   if (isError || isEmpty(requirementsDataArray)) {
-    return <span>An error occurred</span>;
+    return (
+      <span>
+        An error occurred. Please try again later. If the error persists, please
+        contact {EMAIL_SUPPORT}.
+      </span>
+    );
   }
 
   const requirements = requirementsDataArray[selectedIndex];
@@ -50,7 +56,7 @@ export default function RecipientDetails({
       />
       <RecipientDetailsForm
         // we need this key to tell React that when any of the fields passed to this component changes,
-        // it needs to rerender the whole component and thus recreate the form
+        // it needs to recreate the form state by rerendering the whole component
         key={`form-${requirements.accountRequirements.type}`}
         accountRequirements={requirements.accountRequirements}
         targetCurrency={targetCurrency}
