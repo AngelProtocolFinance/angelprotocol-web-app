@@ -1,3 +1,6 @@
+/**
+ * Defines format of the request to send to our AWS Wise proxy
+ */
 export type WiseRequest = {
   method: "GET" | "POST" | "DELETE" | "PUT";
   url: string;
@@ -6,6 +9,9 @@ export type WiseRequest = {
   endowment_id?: number; // only needed if request is "create a recipient"
 };
 
+/**
+ * See https://docs.wise.com/api-docs/api-reference/recipient#account-requirements
+ */
 export type AccountRequirements = {
   type: string;
   title: string;
@@ -58,6 +64,9 @@ export type CreateRecipientRequest = {
 
 export type Quote = { id: string };
 
+/**
+ * See https://docs.wise.com/api-docs/api-reference/currencies
+ */
 export type WiseCurrency = {
   code: string;
   symbol: string;
