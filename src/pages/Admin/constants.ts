@@ -39,7 +39,7 @@ export const LINKS: {
     },
   },
   banking: {
-    title: "Banking (Coming soon)",
+    title: "Banking",
     to: sidebarRoutes.banking,
     icon: {
       type: "Wallet",
