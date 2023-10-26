@@ -11,13 +11,13 @@ type Props = {
   onCleanup: (formValues: FormValues) => void;
   onSubmit: (
     request: CreateRecipientRequest,
-    refreshRequirementsNeeded: boolean
+    refreshRequirements: boolean
   ) => void;
   targetCurrency: string;
 };
 
 export default function RecipientDetailsForm(props: Props) {
-  const { methods, refreshRequirementsNeeded } = useRecipientDetailsForm(
+  const { methods, refreshRequirementsOnSubmit } = useRecipientDetailsForm(
     props.accountRequirements,
     props.targetCurrency,
     props.defaultValues
@@ -27,15 +27,14 @@ export default function RecipientDetailsForm(props: Props) {
 
   // save current form values so that they can be preloaded
   // when switching between account requirement types
-  useEffect(
-    () => () => {
+  useEffect(() => {
+    return () => {
       onCleanup(methods.getValues());
-    },
-    [methods, onCleanup]
-  );
+    };
+  }, [methods, onCleanup]);
 
-  const handleSubmit = (request: CreateRecipientRequest) => {
-    props.onSubmit(request, refreshRequirementsNeeded);
+  const handleSubmit = (request: CreateRecipientRequest): void => {
+    props.onSubmit(request, refreshRequirementsOnSubmit);
   };
 
   return (

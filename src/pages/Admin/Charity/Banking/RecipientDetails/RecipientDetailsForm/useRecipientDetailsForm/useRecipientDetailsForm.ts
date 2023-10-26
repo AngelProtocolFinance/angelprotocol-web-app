@@ -7,7 +7,7 @@ import getDefaultValues from "./getDefaultValues";
 
 type Result = {
   methods: UseFormReturn<FormValues, any, undefined>;
-  refreshRequirementsNeeded: boolean;
+  refreshRequirementsOnSubmit: boolean;
 };
 
 /**
@@ -17,10 +17,10 @@ type Result = {
  * @param initValues initial values
  * @returns an object containing 2 fields:
  *  - `methods`: used to initialize `react-hook-form`
- *  - `refreshRequirementsNeeded`: boolean value representing whether additional fields need to
- *    be loaded after filling the form.
+ *  - `refreshRequirementsOnSubmit`: boolean value representing whether additional fields need to
+ *    be loaded after submitting the form.
  *
- *    For more info on `refreshRequirementsNeeded`, see https://docs.wise.com/api-docs/api-reference/recipient#account-requirements
+ *    For more info on `refreshRequirementsOnSubmit`, see https://docs.wise.com/api-docs/api-reference/recipient#account-requirements
  */
 export default function useRecipientDetailsForm(
   accountRequirements: AccountRequirements,
@@ -34,9 +34,9 @@ export default function useRecipientDetailsForm(
     defaultValues: initValues,
   });
 
-  const refreshRequirementsNeeded = accountRequirements.fields.some((field) =>
+  const refreshRequirementsOnSubmit = accountRequirements.fields.some((field) =>
     field.group.some((group) => group.refreshRequirementsOnChange)
   );
 
-  return { methods, refreshRequirementsNeeded };
+  return { methods, refreshRequirementsOnSubmit };
 }
