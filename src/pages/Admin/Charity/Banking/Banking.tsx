@@ -27,8 +27,8 @@ export default function Banking() {
   if (isError || !targetCurrency || isEmpty(currencies)) {
     return (
       <span>
-        Error loading currencies. Please try again later. If the error persists,
-        please contact {EMAIL_SUPPORT}.
+        An error occurred. Please try again later. If the error persists, please
+        contact {EMAIL_SUPPORT}.
       </span>
     );
   }
