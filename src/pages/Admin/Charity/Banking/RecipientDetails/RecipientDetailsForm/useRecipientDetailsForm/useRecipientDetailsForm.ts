@@ -3,7 +3,6 @@ import { UseFormReturn, useForm } from "react-hook-form";
 import { FormValues } from "../../types";
 import { AccountRequirements } from "types/aws";
 import createSchema from "./createSchema";
-import getDefaultValues from "./getDefaultValues";
 
 /**
  *
@@ -14,8 +13,7 @@ import getDefaultValues from "./getDefaultValues";
  */
 export default function useRecipientDetailsForm(
   accountRequirements: AccountRequirements,
-  targetCurrency: string,
-  initValues: FormValues = getDefaultValues(accountRequirements, targetCurrency)
+  initValues: FormValues
 ): UseFormReturn<FormValues, any, undefined> {
   const schema = createSchema(accountRequirements);
 

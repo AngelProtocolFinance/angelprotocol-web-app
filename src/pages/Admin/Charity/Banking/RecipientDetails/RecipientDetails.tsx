@@ -58,7 +58,6 @@ export default function RecipientDetails({
         // it needs to recreate the form state by rerendering the whole component
         key={`form-${requirements.accountRequirements.type}`}
         accountRequirements={requirements.accountRequirements}
-        targetCurrency={targetCurrency}
         defaultValues={requirements.currentFormValues}
         onCleanup={updateDefaultValues}
         onSubmit={handleSubmit}

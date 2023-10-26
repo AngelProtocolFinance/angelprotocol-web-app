@@ -7,12 +7,13 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";
 import { UnexpectedStateError } from "errors/errors";
 import { EMAIL_SUPPORT } from "constants/env";
+import getDefaultValues from "./getDefaultValues";
 
 const ERROR_MSG = `An error occured. Please try again later. If the error persists, please contact ${EMAIL_SUPPORT}`;
 
 type RequirementsData = {
   accountRequirements: AccountRequirements;
-  currentFormValues?: FormValues;
+  currentFormValues: FormValues;
   refreshed: boolean;
   refreshOnSubmit: boolean; // See https://docs.wise.com/api-docs/api-reference/recipient#account-requirements
 };
@@ -64,6 +65,7 @@ export default function useRecipientDetails(
           newRequirements.map((item) => {
             const data: RequirementsData = {
               accountRequirements: item,
+              currentFormValues: getDefaultValues(item, targetCurrency),
               refreshed: false,
               refreshOnSubmit: item.fields.some((field) =>
                 field.group.some((group) => group.refreshRequirementsOnChange)

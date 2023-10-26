@@ -7,16 +7,14 @@ import useRecipientDetailsForm from "./useRecipientDetailsForm";
 
 type Props = {
   accountRequirements: AccountRequirements;
-  defaultValues: FormValues | undefined;
+  defaultValues: FormValues;
   onCleanup: (formValues: FormValues) => void;
   onSubmit: (request: CreateRecipientRequest) => void;
-  targetCurrency: string;
 };
 
 export default function RecipientDetailsForm(props: Props) {
   const methods = useRecipientDetailsForm(
     props.accountRequirements,
-    props.targetCurrency,
     props.defaultValues
   );
 
