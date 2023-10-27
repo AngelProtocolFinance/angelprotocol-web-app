@@ -25,7 +25,7 @@ export default function AccountRequirementsSelector({
             onClick={() => onChange(index)}
             className={`${
               index === currentIndex ? "btn-blue" : "btn-outline"
-            } text-sm w-48`}
+            } text-xs sm:text-sm w-40 sm:w-48`}
           >
             {accountRequirements.title}
           </button>
