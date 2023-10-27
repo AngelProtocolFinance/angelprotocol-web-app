@@ -41,14 +41,14 @@ export default function Banking() {
       <div className="grid gap-5 max-w-4xl justify-self-center">
         <Group
           title="Bank account details"
-          description="The following information will be used to withdraw donations to your bank account."
+          description="The following information will be used to register your bank account that will be used to withdraw your donations."
         >
           <VerificationStatus />
           <CurrencySelector
             value={targetCurrency}
             currencies={currencies}
             onChange={(currency: Currency) => setTargetCurrency(currency)}
-            classes="w-60"
+            classes="w-60 md:w-80"
           />
           <ExpectedFunds onChange={setExpectedFunds} />
         </Group>

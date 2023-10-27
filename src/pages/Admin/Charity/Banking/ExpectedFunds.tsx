@@ -10,7 +10,7 @@ export default function ExpectedFunds({ onChange }: Props) {
       <Label htmlFor="amount">
         What is the amount of donations you expect to receive on our platform?
       </Label>
-      <div className="w-80">
+      <div className="w-60 md:w-80">
         <input
           id="amount"
           type="number"
