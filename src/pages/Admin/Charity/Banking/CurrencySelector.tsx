@@ -1,7 +1,8 @@
 import { Combobox, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
+import { Fragment, useRef, useState } from "react";
 import { WiseCurrency } from "types/aws";
 import { DrawerIcon } from "components/Icon";
+import { Label } from "components/form";
 import { isEmpty } from "helpers";
 
 export type Currency = {
@@ -16,6 +17,7 @@ type Props = {
 };
 
 export default function CurrencySelector(props: Props) {
+  const inputRef = useRef<HTMLInputElement>(null);
   const [query, setQuery] = useState("");
 
   const filteredCurrencies =
@@ -35,7 +37,9 @@ export default function CurrencySelector(props: Props) {
 
   return (
     <div className="grid gap-2">
-      <span>Select the currency to receive your funds in</span>
+      <Label htmlFor={inputRef.current?.id}>
+        Select the currency to receive your funds in
+      </Label>
       <Combobox
         value={props.value}
         onChange={props.onChange}
@@ -43,6 +47,7 @@ export default function CurrencySelector(props: Props) {
         className="relative items-center grid grid-cols-[1fr_auto] w-full field-container"
       >
         <Combobox.Input
+          ref={inputRef}
           className="w-full border-none px-4 py-3.5 text-sm leading-5 text-gray-900 focus:ring-0"
           displayValue={(currency: WiseCurrency) => currency.name}
           onChange={(event) => setQuery(event.target.value)}
