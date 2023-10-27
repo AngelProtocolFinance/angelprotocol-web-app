@@ -49,8 +49,11 @@ export default function CurrencySelector(props: Props) {
         <Combobox.Input
           ref={inputRef}
           className="w-full border-none px-4 py-3.5 text-sm leading-5 text-gray-900 focus:ring-0"
-          displayValue={(currency: WiseCurrency) => currency.name}
+          displayValue={(currency: WiseCurrency) =>
+            `${currency.code} - ${currency.name}`
+          }
           onChange={(event) => setQuery(event.target.value)}
+          spellCheck={false}
         />
         <Combobox.Button className="flex items-center pr-2">
           {({ open }) => (
