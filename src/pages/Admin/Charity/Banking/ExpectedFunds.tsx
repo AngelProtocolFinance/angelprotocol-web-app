@@ -10,14 +10,17 @@ export default function ExpectedFunds({ onChange }: Props) {
       <Label htmlFor="amount">
         What is the amount of donations you expect to receive on our platform?
       </Label>
-      <input
-        id="amount"
-        type="number"
-        onChange={(event) => onChange(Number(event.target.value))}
-        className="field-input text-field"
-        autoComplete="off"
-        spellCheck={false}
-      />
+      <div className="w-80">
+        <input
+          id="amount"
+          type="number"
+          placeholder="10.000"
+          onChange={(event) => onChange(Number(event.target.value))}
+          className="field-input text-field"
+          autoComplete="off"
+          spellCheck={false}
+        />
+      </div>
     </div>
   );
 }
