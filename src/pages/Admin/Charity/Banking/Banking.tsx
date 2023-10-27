@@ -1,3 +1,4 @@
+import Divider from "components/Divider";
 import LoaderRing from "components/LoaderRing";
 import { isEmpty } from "helpers";
 import { EMAIL_SUPPORT } from "constants/env";
@@ -51,17 +52,20 @@ export default function Banking() {
             classes="w-60 md:w-80"
           />
           <ExpectedFunds onChange={setExpectedFunds} />
-        </Group>
 
-        {!!debouncedExpectedFunds && (
-          <RecipientDetails
-            // we need this key to tell React that when any of the fields passed to this component changes,
-            // it needs to reset its state by rerendering the whole component
-            key={`${targetCurrency.code}${debouncedExpectedFunds}`}
-            targetCurrency={targetCurrency.code}
-            expectedFunds={debouncedExpectedFunds}
-          />
-        )}
+          {!!debouncedExpectedFunds && (
+            <>
+              <Divider />
+              <RecipientDetails
+                // we need this key to tell React that when any of the fields passed to this component changes,
+                // it needs to reset its state by rerendering the whole component
+                key={`${targetCurrency.code}${debouncedExpectedFunds}`}
+                targetCurrency={targetCurrency.code}
+                expectedFunds={debouncedExpectedFunds}
+              />
+            </>
+          )}
+        </Group>
       </div>
     </div>
   );
