@@ -43,7 +43,7 @@ export default function CurrencySelector(props: Props) {
         className="relative items-center grid grid-cols-[1fr_auto] w-full field-container"
       >
         <Combobox.Input
-          className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
+          className="w-full border-none px-4 py-3.5 text-sm leading-5 text-gray-900 focus:ring-0"
           displayValue={(currency: WiseCurrency) => currency.name}
           onChange={(event) => setQuery(event.target.value)}
         />
