@@ -53,7 +53,7 @@ export default function Banking() {
           <ExpectedFunds onChange={setExpectedFunds} />
         </Group>
 
-        {!!targetCurrency && !!debouncedExpectedFunds && (
+        {!!debouncedExpectedFunds && (
           <RecipientDetails
             // we need this key to tell React that when any of the fields passed to this component changes,
             // it needs to reset its state by rerendering the whole component
