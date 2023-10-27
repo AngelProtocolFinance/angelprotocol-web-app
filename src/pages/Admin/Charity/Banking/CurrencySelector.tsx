@@ -31,7 +31,7 @@ export default function CurrencySelector(props: Props) {
   const classes = unpack(props.classes);
 
   return (
-    <div className="grid gap-2">
+    <div className="field">
       <Label htmlFor={inputRef.current?.id}>
         Select your bank account currency:
       </Label>
