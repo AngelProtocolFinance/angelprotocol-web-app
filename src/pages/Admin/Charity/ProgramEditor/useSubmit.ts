@@ -9,7 +9,7 @@ import { isEmpty } from "helpers";
 import { getPayloadDiff } from "helpers/admin";
 import { getFullURL, uploadFiles } from "helpers/uploadFiles";
 import { useAdminContext } from "../../Context";
-import useUpdateEndowmentProfile from "../common/useUpdateEndowmentProfile";
+import { useUpdateEndowmentProfile } from "../common";
 
 export default function useSubmit() {
   const { id } = useAdminContext();
