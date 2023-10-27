@@ -52,6 +52,7 @@ export default function RecipientDetails({
         )}
         currentIndex={selectedIndex}
         onChange={setSelectedIndex}
+        className="mb-6"
       />
       <RecipientDetailsForm
         // we need this key to tell React that when any of the fields passed to this component changes,

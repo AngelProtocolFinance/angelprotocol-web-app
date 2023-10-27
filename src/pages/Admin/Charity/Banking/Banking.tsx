@@ -56,13 +56,15 @@ export default function Banking() {
           {!!debouncedExpectedFunds && (
             <>
               <Divider />
-              <RecipientDetails
-                // we need this key to tell React that when any of the fields passed to this component changes,
-                // it needs to reset its state by rerendering the whole component
-                key={`${targetCurrency.code}${debouncedExpectedFunds}`}
-                targetCurrency={targetCurrency.code}
-                expectedFunds={debouncedExpectedFunds}
-              />
+              <div className="min-h-[20rem]">
+                <RecipientDetails
+                  // we need this key to tell React that when any of the fields passed to this component changes,
+                  // it needs to reset its state by rerendering the whole component
+                  key={`${targetCurrency.code}${debouncedExpectedFunds}`}
+                  targetCurrency={targetCurrency.code}
+                  expectedFunds={debouncedExpectedFunds}
+                />
+              </div>
             </>
           )}
         </Group>
