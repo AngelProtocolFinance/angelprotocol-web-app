@@ -4,7 +4,7 @@ import { Group } from "types/aws";
 import { Selector } from "components/Selector";
 import { Field, Label } from "components/form";
 import { isEmpty } from "helpers";
-import { undot } from "../dot";
+import { undot } from "../helpers";
 
 export default function RequirementField({ data }: { data: Group }) {
   const requirementsKey = undot(data.key);

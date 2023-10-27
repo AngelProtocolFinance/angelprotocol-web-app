@@ -2,7 +2,7 @@ import { useFormContext } from "react-hook-form";
 import { FormValues } from "../types";
 import { AccountRequirements, CreateRecipientRequest } from "types/aws";
 import LoaderRing from "components/LoaderRing";
-import { redot } from "../dot";
+import { redot } from "../helpers/dot";
 import RequirementField from "./RequirementField";
 
 type Props = {
