@@ -8,7 +8,7 @@ export default function ExpectedFunds({ onChange }: Props) {
   return (
     <div className="field">
       <Label htmlFor="amount">
-        What is amount of donations you expect to keep on our platform?
+        What is the amount of donations you expect to keep on our platform?
       </Label>
       <input
         id="amount"
