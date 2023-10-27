@@ -1,5 +1,7 @@
+import { useEffect, useState } from "react";
 import Divider from "components/Divider";
 import LoaderRing from "components/LoaderRing";
+import useDebouncer from "hooks/useDebouncer";
 import { isEmpty } from "helpers";
 import { EMAIL_SUPPORT } from "constants/env";
 import { Group } from "../common";
@@ -7,18 +9,27 @@ import CurrencySelector, { Currency } from "./CurrencySelector";
 import ExpectedFunds from "./ExpectedFunds";
 import RecipientDetails from "./RecipientDetails";
 import VerificationStatus from "./VerificationStatus";
-import useBanking from "./useBanking";
+import useCurrencies from "./useCurrencies";
+
+const DEFAULT_TARGET_CURRENCY = "USD";
 
 export default function Banking() {
-  const {
-    currencies,
-    debouncedExpectedFunds,
-    isError,
-    isLoading,
-    targetCurrency,
-    setExpectedFunds,
-    setTargetCurrency,
-  } = useBanking();
+  const [expectedFunds, setExpectedFunds] = useState<number>();
+  const [debouncedExpectedFunds] = useDebouncer(expectedFunds, 1000);
+  const [targetCurrency, setTargetCurrency] = useState<Currency>();
+
+  const { currencies, isError, isLoading } = useCurrencies();
+
+  useEffect(() => {
+    if (isEmpty(currencies)) {
+      return;
+    }
+    // if DEFAULT_TARGET_CURRENCY is not among the returned currencies for whatever reason, use the first one
+    const newTargetCurrency =
+      currencies.find((x) => x.code === DEFAULT_TARGET_CURRENCY) ??
+      currencies[0];
+    setTargetCurrency(newTargetCurrency);
+  }, [currencies]);
 
   if (isLoading) {
     return (
