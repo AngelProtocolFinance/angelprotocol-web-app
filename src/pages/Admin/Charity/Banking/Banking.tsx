@@ -2,7 +2,8 @@ import LoaderRing from "components/LoaderRing";
 import { isEmpty } from "helpers";
 import { EMAIL_SUPPORT } from "constants/env";
 import { Group } from "../common";
-import CurrencySelector from "./CurrencySelector";
+import CurrencySelector, { Currency } from "./CurrencySelector";
+import ExpectedFunds from "./ExpectedFunds";
 import RecipientDetails from "./RecipientDetails";
 import VerificationStatus from "./VerificationStatus";
 import useBanking from "./useBanking";
@@ -43,29 +44,13 @@ export default function Banking() {
           description="The following information will be used to withdraw donations to your bank account."
         >
           <VerificationStatus />
-          <div className="grid gap-5">
-            <CurrencySelector
-              value={targetCurrency}
-              currencies={currencies}
-              onChange={setTargetCurrency}
-              classes="w-60"
-            />
-            <div className="flex flex-col gap-2">
-              <label htmlFor="amount">
-                What is amount of donations you expect to keep on our platform?
-              </label>
-              <input
-                id="amount"
-                type="number"
-                onChange={(event) =>
-                  setExpectedFunds(Number(event.target.value))
-                }
-                className="field-input text-field"
-                autoComplete="off"
-                spellCheck={false}
-              />
-            </div>
-          </div>
+          <CurrencySelector
+            value={targetCurrency}
+            currencies={currencies}
+            onChange={(currency: Currency) => setTargetCurrency(currency)}
+            classes="w-60"
+          />
+          <ExpectedFunds onChange={setExpectedFunds} />
         </Group>
 
         {!!targetCurrency && !!debouncedExpectedFunds && (
