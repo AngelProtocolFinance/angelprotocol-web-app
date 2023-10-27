@@ -1,8 +1,10 @@
 import { Combobox, Transition } from "@headlessui/react";
 import { Fragment, useRef, useState } from "react";
+import { Classes } from "components/form/types";
 import { WiseCurrency } from "types/aws";
 import { DrawerIcon } from "components/Icon";
 import { Label } from "components/form";
+import { unpack } from "components/form/helpers";
 import { isEmpty } from "helpers";
 
 export type Currency = {
@@ -11,6 +13,7 @@ export type Currency = {
 };
 
 type Props = {
+  classes?: Classes;
   value: Currency;
   currencies: Currency[];
   onChange: (currency: Currency) => void;
@@ -23,28 +26,20 @@ export default function CurrencySelector(props: Props) {
   const filteredCurrencies =
     query === ""
       ? props.currencies
-      : props.currencies.filter((currency) => {
-          // check whether query matches either the currency name or any of its keywords
-          const formatQuery = query.toLowerCase().replace(/\s+/g, ""); // ignore spaces and casing
-          const matchesCode = currency.code.toLowerCase().includes(formatQuery);
-          const matchesName = currency.name
-            .toLowerCase()
-            .replace(/\s+/g, "") // ignore spaces and casing
-            .includes(formatQuery);
+      : props.currencies.filter(currencyFilter(query));
 
-          return matchesCode || matchesName;
-        });
+  const classes = unpack(props.classes);
 
   return (
     <div className="grid gap-2">
       <Label htmlFor={inputRef.current?.id}>
-        Select the currency to receive your funds in
+        Select your bank account currency:
       </Label>
       <Combobox
         value={props.value}
         onChange={props.onChange}
         as="div"
-        className="relative items-center grid grid-cols-[1fr_auto] w-full field-container"
+        className={`relative items-center grid grid-cols-[1fr_auto] w-full field-container ${classes.container}`}
       >
         <Combobox.Input
           ref={inputRef}
@@ -61,7 +56,7 @@ export default function CurrencySelector(props: Props) {
               isOpen={open}
               size={25}
               className="h-full w-full text-gray-400"
-              aria-hidden="true"
+              aria-hidden
             />
           )}
         </Combobox.Button>
@@ -98,4 +93,18 @@ export default function CurrencySelector(props: Props) {
       </Combobox>
     </div>
   );
+}
+
+function currencyFilter(query: string): (value: Currency) => boolean {
+  return (currency) => {
+    // check whether query matches either the currency name or any of its keywords
+    const formatQuery = query.toLowerCase().replace(/\s+/g, ""); // ignore spaces and casing
+    const matchesCode = currency.code.toLowerCase().includes(formatQuery);
+    const matchesName = currency.name
+      .toLowerCase()
+      .replace(/\s+/g, "") // ignore spaces and casing
+      .includes(formatQuery);
+
+    return matchesCode || matchesName;
+  };
 }
