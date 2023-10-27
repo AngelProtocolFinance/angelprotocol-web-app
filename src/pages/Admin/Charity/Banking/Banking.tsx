@@ -41,7 +41,7 @@ export default function Banking() {
       <div className="grid gap-5 max-w-4xl justify-self-center">
         <Group
           title="Bank account details"
-          description="The following information will be used to register your bank account that will be used to withdraw your donations."
+          description="The following information will be used to register your bank account that will be used to withdraw your funds."
         >
           <VerificationStatus />
           <CurrencySelector
