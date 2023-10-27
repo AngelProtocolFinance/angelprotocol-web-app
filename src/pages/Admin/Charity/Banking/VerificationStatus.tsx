@@ -42,28 +42,28 @@ function VerificationStatus() {
   switch (profile.bank_verified) {
     case "Not Submitted":
       return (
-        <span className="flex gap-1 items-center text-xs bg-gray-l4 sm:text-sm font-semibold px-2 rounded">
+        <span className="flex gap-1 items-center justify-center w-36 text-xs bg-gray-l4 sm:text-sm font-semibold p-2 rounded">
           Not submitted{" "}
           <Icon type="Exclamation" aria-hidden className="text-sm" />
         </span>
       );
     case "Under Review":
       return (
-        <span className="flex gap-1 items-center bg-orange-l4 text-xs sm:text-sm text-orange-d1 font-semibold px-2 rounded">
+        <span className="flex gap-1 items-center justify-center w-36 bg-orange-l4 text-xs sm:text-sm text-orange-d1 font-semibold px-2 rounded">
           Under review{" "}
           <Icon type="HourglassSplit" aria-hidden className="text-sm" />
         </span>
       );
     case "Approved":
       return (
-        <span className="flex gap-1 items-center bg-green-l3 text-xs sm:text-sm text-green-d2 font-semibold px-2 rounded">
+        <span className="flex gap-1 items-center justify-center w-36 bg-green-l3 text-xs sm:text-sm text-green-d2 font-semibold px-2 rounded">
           Approved{" "}
           <Icon type="Check" aria-hidden className="text-xl sm:text-2xl" />
         </span>
       );
     case "Rejected":
       return (
-        <span className="flex gap-1 items-center bg-red-l4 text-xs sm:text-sm text-red-d1 font-semibold px-2 rounded">
+        <span className="flex gap-1 items-center justify-center w-36 bg-red-l4 text-xs sm:text-sm text-red-d1 font-semibold px-2 rounded">
           Rejected{" "}
           <Icon type="ExclamationCircleFill" aria-hidden className="text-sm" />
         </span>
