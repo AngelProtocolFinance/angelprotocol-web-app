@@ -15,7 +15,10 @@ const DEFAULT_TARGET_CURRENCY = "USD";
 
 export default function Banking() {
   const [expectedFunds, setExpectedFunds] = useState<number>();
-  const [debouncedExpectedFunds] = useDebouncer(expectedFunds, 1000);
+  const [debouncedExpectedFunds, isDebouncing] = useDebouncer(
+    expectedFunds,
+    1000
+  );
   const [targetCurrency, setTargetCurrency] = useState<Currency>();
 
   const { currencies, isError, isLoading } = useCurrencies();
@@ -74,6 +77,7 @@ export default function Banking() {
                   key={`${targetCurrency.code}${debouncedExpectedFunds}`}
                   targetCurrency={targetCurrency.code}
                   expectedFunds={debouncedExpectedFunds}
+                  isLoading={isDebouncing}
                 />
               </div>
             </>
