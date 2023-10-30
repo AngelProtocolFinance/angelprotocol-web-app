@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "../types";
 import { EndowDesignation } from "types/aws";
+import countries from "assets/countries/all.json";
 import ActivityCountries from "components/ActivityCountries";
 import CountrySelector from "components/CountrySelector";
 import ExtLink from "components/ExtLink";
@@ -93,6 +94,7 @@ export default function Form() {
       <CountrySelector<FV, "hqCountry">
         fieldName="hqCountry"
         placeholder="Select a country"
+        countries={countries}
         classes={{
           container: "px-4",
           input: "text-sm py-3.5",

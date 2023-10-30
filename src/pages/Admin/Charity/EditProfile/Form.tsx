@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { FV } from "./types";
 import { EndowDesignation } from "types/aws";
 import { UNSDG_NUMS } from "types/lists";
+import countries from "assets/countries/all.json";
 import ActivityCountries from "components/ActivityCountries";
 import CountrySelector from "components/CountrySelector";
 import Icon from "components/Icon";
@@ -133,6 +134,7 @@ export default function Form() {
         <CountrySelector<FV, "hq_country">
           placeholder="Select a country"
           fieldName="hq_country"
+          countries={countries}
           classes={{
             container: "px-4 bg-gray-l6 dark:bg-blue-d5",
             input: "text-sm py-3.5",
