@@ -60,7 +60,7 @@ export default function Banking() {
           <CurrencySelector
             value={targetCurrency}
             currencies={currencies}
-            onChange={(currency: Currency) => setTargetCurrency(currency)}
+            onChange={setTargetCurrency}
             classes="w-60 md:w-80"
           />
           <ExpectedFunds
