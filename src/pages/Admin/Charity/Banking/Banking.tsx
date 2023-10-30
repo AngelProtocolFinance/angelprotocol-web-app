@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Divider from "components/Divider";
 import LoaderRing from "components/LoaderRing";
-import useDebouncer from "hooks/useDebouncer";
+import useDebounce from "hooks/useDebounce";
 import { isEmpty } from "helpers";
 import { EMAIL_SUPPORT } from "constants/env";
 import { Group } from "../common";
@@ -15,11 +15,9 @@ const DEFAULT_TARGET_CURRENCY = "USD";
 
 export default function Banking() {
   const [expectedFunds, setExpectedFunds] = useState<number>();
-  const [debouncedExpectedFunds, isDebouncing] = useDebouncer(
-    expectedFunds,
-    1000
-  );
   const [targetCurrency, setTargetCurrency] = useState<Currency>();
+
+  const [debounce, isDebouncing] = useDebounce();
 
   const { currencies, isError, isLoading } = useCurrencies();
 
@@ -65,18 +63,20 @@ export default function Banking() {
             onChange={(currency: Currency) => setTargetCurrency(currency)}
             classes="w-60 md:w-80"
           />
-          <ExpectedFunds onChange={setExpectedFunds} />
+          <ExpectedFunds
+            onChange={(ef) => debounce(() => setExpectedFunds(ef), 1000)}
+          />
 
-          {!!debouncedExpectedFunds && (
+          {!!expectedFunds && (
             <>
               <Divider />
               <div className="min-h-[20rem]">
                 <RecipientDetails
                   // we need this key to tell React that when any of the fields passed to this component changes,
                   // it needs to reset its state by rerendering the whole component
-                  key={`${targetCurrency.code}${debouncedExpectedFunds}`}
+                  key={`${targetCurrency.code}${expectedFunds}`}
                   targetCurrency={targetCurrency.code}
-                  expectedFunds={debouncedExpectedFunds}
+                  expectedFunds={expectedFunds}
                   isLoading={isDebouncing}
                 />
               </div>
