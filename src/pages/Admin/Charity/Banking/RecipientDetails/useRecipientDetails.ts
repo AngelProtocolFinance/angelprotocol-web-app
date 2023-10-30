@@ -36,7 +36,10 @@ export default function useRecipientDetails(
     RequirementsData[]
   >([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [quote, setQuote] = useState<Quote>();
+  const [
+    quote,
+    // setQuote
+  ] = useState<Quote>();
   const [isLoading, setLoading] = useState<boolean>(true);
   const [isSubmitting, setSubmitting] = useState<boolean>(false);
 
@@ -56,8 +59,8 @@ export default function useRecipientDetails(
     (async () => {
       try {
         const sourceAmount = calculateExpectedWithdrawAmount(expectedFunds);
-        // const quote = await createQuote(targetCurrency, sourceAmount).unwrap();
-        // const newRequirements = await getAccountRequirements(quote.id).unwrap();
+        // const newQuote = await createQuote(targetCurrency, sourceAmount).unwrap();
+        // const newRequirements = await getAccountRequirements(newQuote.id).unwrap();
         const newRequirements = await getAccountRequirementsForRoute({
           targetCurrency,
           sourceAmount,
@@ -75,7 +78,7 @@ export default function useRecipientDetails(
             return data;
           })
         );
-        setQuote(quote);
+        // setQuote(newQuote);
         setLoading(false);
       } catch (error) {
         handleError(error, ERROR_MSG);
