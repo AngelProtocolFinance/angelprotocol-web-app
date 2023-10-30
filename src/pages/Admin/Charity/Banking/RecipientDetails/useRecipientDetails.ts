@@ -2,7 +2,13 @@ import { useCallback, useEffect, useState } from "react";
 import { FormValues } from "./types";
 import { AccountRequirements, CreateRecipientRequest, Quote } from "types/aws";
 import { useAdminContext } from "pages/Admin/Context";
-import { useTypedWiseMutation } from "services/aws/bankDetails";
+import {
+  // useCreateQuoteMutation,
+  // useGetAccountRequirementsMutation,
+  useCreateRecipientAccountMutation,
+  useGetAccountRequirementsForRouteMutation,
+  usePostAccountRequirementsMutation,
+} from "services/aws/bankDetails";
 import { useErrorContext } from "contexts/ErrorContext";
 import { UnexpectedStateError } from "errors/errors";
 import { EMAIL_SUPPORT } from "constants/env";
@@ -21,7 +27,7 @@ export default function useRecipientDetails(
   targetCurrency: string,
   expectedFunds: number
 ) {
-  const { id } = useAdminContext();
+  const { id: endowment_id } = useAdminContext();
   const [requirementsDataArray, setRequirementsDataArray] = useState<
     RequirementsData[]
   >([]);
@@ -32,25 +38,26 @@ export default function useRecipientDetails(
 
   const { handleError } = useErrorContext();
 
-  const {
-    // createQuote,
-    // getAccountRequirements,
-    getAccountRequirementsForRoute,
-    postAccountRequirements,
-    createRecipientAccount,
-    state: { isError },
-  } = useTypedWiseMutation();
+  // const [createQuote, { isError }] = useCreateQuoteMutation();
+  // const [getAccountRequirements, { isError: isError1 }] =
+  //   useGetAccountRequirementsMutation();
+  const [getAccountRequirementsForRoute, { isError: isError1 }] =
+    useGetAccountRequirementsForRouteMutation();
+  const [postAccountRequirements, { isError: isError2 }] =
+    usePostAccountRequirementsMutation();
+  const [createRecipientAccount, { isError: isError3 }] =
+    useCreateRecipientAccountMutation();
 
   useEffect(() => {
     (async () => {
       try {
-        const withdrawAmount = calculateExpectedWithdrawAmount(expectedFunds);
-        // const quote = await createQuote(targetCurrency, withdrawAmount);
-        // const newRequirements = await getAccountRequirements(quote.id);
-        const newRequirements = await getAccountRequirementsForRoute(
+        const sourceAmount = calculateExpectedWithdrawAmount(expectedFunds);
+        // const quote = await createQuote(targetCurrency, sourceAmount).unwrap();
+        // const newRequirements = await getAccountRequirements(quote.id).unwrap();
+        const newRequirements = await getAccountRequirementsForRoute({
           targetCurrency,
-          withdrawAmount
-        );
+          sourceAmount,
+        }).unwrap();
 
         setRequirementsDataArray(
           newRequirements.map((item) => {
@@ -100,10 +107,10 @@ export default function useRecipientDetails(
       setSubmitting(true);
       // refresh requirements if necessary, see https://docs.wise.com/api-docs/api-reference/recipient#account-requirements
       if (requirements.refreshOnSubmit && !requirements.refreshed) {
-        const newRequirements = await postAccountRequirements(
-          quote.id,
-          request
-        );
+        const newRequirements = await postAccountRequirements({
+          quoteId: quote.id,
+          request,
+        }).unwrap();
         setRequirementsDataArray((prev) => {
           const updated = [...prev];
           updated[selectedIndex].accountRequirements = newRequirements;
@@ -113,7 +120,7 @@ export default function useRecipientDetails(
       }
       // otherwise create the recipient
       else {
-        await createRecipientAccount(id, request);
+        await createRecipientAccount({ endowment_id, request }).unwrap();
       }
     } catch (error) {
       handleError(error, ERROR_MSG);
@@ -124,7 +131,7 @@ export default function useRecipientDetails(
 
   return {
     handleSubmit,
-    isError,
+    isError: isError1 || isError2 || isError3,
     isLoading,
     isSubmitting,
     requirementsDataArray,
