@@ -1,6 +1,7 @@
 import { FormValues } from "./types";
 import { AccountRequirements } from "types/aws";
-import { isTextType, undot } from "./helpers";
+import { Country } from "types/countries";
+import { isCountry, isTextType, undot } from "./helpers";
 
 export default function getDefaultValues(
   accountRequirements: AccountRequirements,
@@ -17,6 +18,9 @@ export default function getDefaultValues(
 
           if (isTextType(requirements)) {
             defaultValues[key] = "";
+          } else if (isCountry(requirements)) {
+            const country: Country = { code: "", flag: "", name: "" };
+            defaultValues[key] = country;
           } else {
             defaultValues[key] = {
               // `requirements.example` contains dropdown placeholder text for `select`; for `radio` it's empty string

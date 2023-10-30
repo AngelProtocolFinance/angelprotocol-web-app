@@ -2,9 +2,10 @@ import { ObjectSchema, ObjectShape, object } from "yup";
 import { FormValues } from "../../types";
 import { SchemaShape } from "schemas/types";
 import { AccountRequirements, Group } from "types/aws";
+import { Country } from "types/countries";
 import { isEmpty } from "helpers";
 import { requiredString } from "schemas/string";
-import { undot } from "../../helpers";
+import { isCountry, undot } from "../../helpers";
 import {
   createOptionsTypeSchema,
   createStringSchema,
@@ -37,6 +38,15 @@ function getSchema(requirements: Group) {
       // we will it as a "text" field
       isEmpty(requirements.valuesAllowed ?? [])
       ? createStringSchema(requirements)
+      : // country-related requirements need to be converted into `type Country`-like objects
+      isCountry(requirements)
+      ? object<any, SchemaShape<Country>>({
+          name: requiredString,
+          code: requiredString.max(
+            2,
+            "Country code should contain 2 characters"
+          ),
+        })
       : createOptionsTypeSchema(requirements);
 
   return schema;
