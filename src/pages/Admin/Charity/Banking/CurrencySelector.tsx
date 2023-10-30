@@ -7,7 +7,6 @@ import { isEmpty } from "helpers";
 export type Currency = {
   code: string;
   name: string;
-  searchKeywords: string[];
 };
 
 type Props = {
@@ -25,16 +24,13 @@ export default function CurrencySelector(props: Props) {
       : props.currencies.filter((currency) => {
           // check whether query matches either the currency name or any of its keywords
           const formatQuery = query.toLowerCase().replace(/\s+/g, ""); // ignore spaces and casing
+          const matchesCode = currency.code.toLowerCase().includes(formatQuery);
           const matchesName = currency.name
             .toLowerCase()
             .replace(/\s+/g, "") // ignore spaces and casing
             .includes(formatQuery);
-          const matchesKeyword = new RegExp(
-            currency.searchKeywords.join("|"),
-            "i"
-          ).test(formatQuery);
 
-          return matchesName || matchesKeyword;
+          return matchesCode || matchesName;
         });
 
   return (

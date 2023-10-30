@@ -1,7 +1,7 @@
 import LoaderRing from "components/LoaderRing";
 import { isEmpty } from "helpers";
 import { EMAIL_SUPPORT } from "constants/env";
-import CurrencySelector, { Currency } from "./CurrencySelector";
+import CurrencySelector from "./CurrencySelector";
 import RecipientDetails from "./RecipientDetails";
 import useBanking from "./useBanking";
 
@@ -38,7 +38,7 @@ export default function Banking() {
       <CurrencySelector
         value={targetCurrency}
         currencies={currencies}
-        onChange={(currency: Currency) => setTargetCurrency(currency)}
+        onChange={setTargetCurrency}
       />
 
       <div className="flex flex-col gap-2">

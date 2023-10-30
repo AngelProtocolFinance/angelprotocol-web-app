@@ -48,11 +48,13 @@ export default function useBanking() {
           },
         ];
 
-        const selectorCurrencies: Currency[] = wiseCurrencies.map((x) => ({
-          code: x.code,
-          name: x.name,
-          searchKeywords: x.countryKeywords,
-        }));
+        const selectorCurrencies: Currency[] = wiseCurrencies.map((x) => {
+          const currency: Currency = {
+            code: x.code,
+            name: x.name,
+          };
+          return currency;
+        });
 
         let newTargetCurrency = selectorCurrencies.find(
           (x) => x.code === DEFAULT_TARGET_CURRENCY
