@@ -82,7 +82,7 @@ export default function CurrencySelector(props: Props) {
                         selected ? "font-semibold" : "font-normal"
                       } flex items-center gap-2 p-2 text-sm cursor-pointer truncate`}
                     >
-                      {currency.name}
+                      {currency.code} - {currency.name}
                     </div>
                   )}
                 </Combobox.Option>
