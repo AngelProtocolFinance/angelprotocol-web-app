@@ -91,7 +91,7 @@ export default function Form() {
       <Label className="mt-6 mb-2" required>
         In what country is your organization registered in?
       </Label>
-      <CountrySelector<FV, "hqCountry">
+      <CountrySelector<FV>
         fieldName="hqCountry"
         placeholder="Select a country"
         countries={countries}

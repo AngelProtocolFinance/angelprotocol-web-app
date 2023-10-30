@@ -22,12 +22,9 @@ export const placeHolderCountryOption: Country = {
 
 const nameKey: keyof Country = "name";
 
-export default function CountrySelector<
-  T extends FieldValues,
-  K extends Path<T>,
->(props: {
+export default function CountrySelector<T extends FieldValues>(props: {
   countries: Country[];
-  fieldName: T[K] extends Country ? K : never;
+  fieldName: Path<T>;
   onReset?(): void;
   placeholder?: string;
   classes?: {

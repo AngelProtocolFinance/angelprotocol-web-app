@@ -131,7 +131,7 @@ export default function Form() {
           }))}
         />
         <Label className="-mb-4">Headquarters</Label>
-        <CountrySelector<FV, "hq_country">
+        <CountrySelector<FV>
           placeholder="Select a country"
           fieldName="hq_country"
           countries={countries}
