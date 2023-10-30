@@ -1,5 +1,5 @@
 import { Combobox, Transition } from "@headlessui/react";
-import { Fragment, useRef, useState } from "react";
+import { Fragment, memo, useRef, useState } from "react";
 import { Classes } from "components/form/types";
 import { WiseCurrency } from "types/aws";
 import { DrawerIcon } from "components/Icon";
@@ -19,7 +19,21 @@ type Props = {
   onChange: (currency: Currency) => void;
 };
 
-export default function CurrencySelector(props: Props) {
+function currencyFilter(query: string): (value: Currency) => boolean {
+  return (currency) => {
+    // check whether query matches either the currency name or any of its keywords
+    const formatQuery = query.toLowerCase().replace(/\s+/g, ""); // ignore spaces and casing
+    const matchesCode = currency.code.toLowerCase().includes(formatQuery);
+    const matchesName = currency.name
+      .toLowerCase()
+      .replace(/\s+/g, "") // ignore spaces and casing
+      .includes(formatQuery);
+
+    return matchesCode || matchesName;
+  };
+}
+
+function CurrencySelector(props: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [query, setQuery] = useState("");
 
@@ -95,16 +109,4 @@ export default function CurrencySelector(props: Props) {
   );
 }
 
-function currencyFilter(query: string): (value: Currency) => boolean {
-  return (currency) => {
-    // check whether query matches either the currency name or any of its keywords
-    const formatQuery = query.toLowerCase().replace(/\s+/g, ""); // ignore spaces and casing
-    const matchesCode = currency.code.toLowerCase().includes(formatQuery);
-    const matchesName = currency.name
-      .toLowerCase()
-      .replace(/\s+/g, "") // ignore spaces and casing
-      .includes(formatQuery);
-
-    return matchesCode || matchesName;
-  };
-}
+export default memo(CurrencySelector);
