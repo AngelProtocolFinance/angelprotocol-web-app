@@ -10,6 +10,7 @@ import {
   usePostAccountRequirementsMutation,
 } from "services/aws/bankDetails";
 import { useErrorContext } from "contexts/ErrorContext";
+import { isEmpty } from "helpers";
 import { UnexpectedStateError } from "errors/errors";
 import { EMAIL_SUPPORT } from "constants/env";
 import getDefaultValues from "./getDefaultValues";
@@ -66,6 +67,12 @@ export default function useRecipientDetails(
           sourceAmount,
         }).unwrap();
 
+        if (isEmpty(newRequirements)) {
+          return handleError(
+            "Target currency not supported. Please use a bank account with a different currency."
+          );
+        }
+
         setRequirementsDataArray(
           newRequirements.map((item) => {
             const data: RequirementsData = {
@@ -79,14 +86,20 @@ export default function useRecipientDetails(
           })
         );
         // setQuote(newQuote);
-        setLoading(false);
       } catch (error) {
         handleError(error, ERROR_MSG);
+      } finally {
         setLoading(false);
       }
     })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [
+    targetCurrency,
+    expectedFunds,
+    // createQuote,
+    // getAccountRequirements,
+    getAccountRequirementsForRoute,
+    handleError,
+  ]);
 
   const updateDefaultValues = useCallback(
     (formValues: FormValues) => {

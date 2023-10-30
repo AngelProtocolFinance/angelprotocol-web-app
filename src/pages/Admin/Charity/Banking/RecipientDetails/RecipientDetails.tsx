@@ -1,4 +1,5 @@
 import LoaderRing from "components/LoaderRing";
+import { isEmpty } from "helpers";
 import { EMAIL_SUPPORT } from "constants/env";
 import AccountRequirementsSelector from "./AccountRequirementsSelector";
 import RecipientDetailsForm from "./RecipientDetailsForm";
@@ -35,13 +36,34 @@ export default function RecipientDetails({
     );
   }
 
-  const requirements = requirementsDataArray.at(selectedIndex);
-
-  if (isError || !requirements) {
+  if (isError) {
     return (
       <span>
         An error occurred. Please try again later. If the error persists, please
         contact {EMAIL_SUPPORT}.
+      </span>
+    );
+  }
+
+  // requirements *can* be empty, check the following example when source currency is USD and target is ALL (Albanian lek):
+  // https://api.sandbox.transferwise.tech/v1/account-requirements?source=USD&target=ALL&sourceAmount=1000
+  if (isEmpty(requirementsDataArray)) {
+    return (
+      <span>
+        Target currency not supported. Please use a bank account with a
+        different currency.
+      </span>
+    );
+  }
+
+  const requirements = requirementsDataArray.at(selectedIndex);
+
+  // should never happen as `selectedIndex === 0` by default and can only be set to value `< requirementsDataArray.length`
+  if (!requirements) {
+    return (
+      <span>
+        Non-existent requirements type selected. Please reload the page and try
+        again. If the error persists, please contact {EMAIL_SUPPORT}.
       </span>
     );
   }
@@ -57,7 +79,8 @@ export default function RecipientDetails({
         className="mb-6"
       />
       <RecipientDetailsForm
-        // we need this key to tell React that when any of the fields passed to this component changes,
+        // since all fields need to be rerendered when new requirements type is chosen,
+        // we can set this key to tell React that when any of the fields passed to this component changes,
         // it needs to recreate the form state by rerendering the whole component
         key={`form-${requirements.accountRequirements.type}`}
         accountRequirements={requirements.accountRequirements}
