@@ -89,6 +89,17 @@ export const bank_details_api = aws.injectEndpoints({
         },
       }),
     }),
+    /**
+     * This endpoint should be used to check whether additional requirement fields need to be loaded.
+     *
+     * As per docs:
+     *    Use the GET endpoint to learn what datapoints are required to send a payment to your beneficiary.
+     *    As you build that form, use the POST endpoint to learn if any additional datapoints are required as
+     *    a result of passing a field that has "refreshRequirementsOnChange": true' in the GET Response.
+     *    You should be posting the same recipient account payload that will be posted to v1/accounts.
+     *
+     * For more details see https://docs.wise.com/api-docs/api-reference/recipient#account-requirements
+     */
     postAccountRequirements: builder.mutation<
       AccountRequirements,
       { quoteId: string; request: CreateRecipientRequest }
@@ -113,5 +124,6 @@ export const {
   useGetAccountRequirementsForRouteMutation,
   useGetAccountRequirementsMutation,
   useGetCurrenciesMutation,
+
   usePostAccountRequirementsMutation,
 } = bank_details_api;

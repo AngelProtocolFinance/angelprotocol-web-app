@@ -19,8 +19,12 @@ const ERROR_MSG = `An error occured. Please try again later. If the error persis
 type RequirementsData = {
   accountRequirements: AccountRequirements;
   currentFormValues: FormValues;
-  refreshed: boolean;
-  refreshOnSubmit: boolean; // See https://docs.wise.com/api-docs/api-reference/recipient#account-requirements
+  /**
+   * Indicates whether requirements refresh is necessary.
+   *
+   * See https://docs.wise.com/api-docs/api-reference/recipient#account-requirements
+   */
+  refreshRequired: boolean;
 };
 
 export default function useRecipientDetails(
@@ -64,8 +68,7 @@ export default function useRecipientDetails(
             const data: RequirementsData = {
               accountRequirements: item,
               currentFormValues: getDefaultValues(item, targetCurrency),
-              refreshed: false,
-              refreshOnSubmit: item.fields.some((field) =>
+              refreshRequired: item.fields.some((field) =>
                 field.group.some((group) => group.refreshRequirementsOnChange)
               ),
             };
@@ -93,6 +96,46 @@ export default function useRecipientDetails(
     [selectedIndex]
   );
 
+  const refreshRequirements = async (request: CreateRecipientRequest) => {
+    try {
+      if (!quote) {
+        throw new UnexpectedStateError("No 'quote' present.");
+      }
+
+      const requirements = requirementsDataArray.at(selectedIndex);
+      if (!requirements) {
+        throw new UnexpectedStateError("Requirements not loaded.");
+      }
+      if (!requirements.refreshRequired) {
+        throw new UnexpectedStateError(
+          "Requirements don't need to be refreshed."
+        );
+      }
+
+      setSubmitting(true);
+
+      const newRequirements = await postAccountRequirements({
+        quoteId: quote.id,
+        request,
+      }).unwrap();
+      setRequirementsDataArray((prev) => {
+        const updated = [...prev];
+        updated[selectedIndex].accountRequirements = newRequirements;
+        updated[selectedIndex].refreshRequired = false;
+        // TODO: use the below logic once Wise API token start working
+        // updated[selectedIndex].refreshRequired = newRequirements.fields.some(
+        //   (field) =>
+        //     field.group.some((group) => group.refreshRequirementsOnChange)
+        // );
+        return updated;
+      });
+    } catch (error) {
+      handleError(error, ERROR_MSG);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   const handleSubmit = async (request: CreateRecipientRequest) => {
     try {
       if (!quote) {
@@ -105,23 +148,8 @@ export default function useRecipientDetails(
       }
 
       setSubmitting(true);
-      // refresh requirements if necessary, see https://docs.wise.com/api-docs/api-reference/recipient#account-requirements
-      if (requirements.refreshOnSubmit && !requirements.refreshed) {
-        const newRequirements = await postAccountRequirements({
-          quoteId: quote.id,
-          request,
-        }).unwrap();
-        setRequirementsDataArray((prev) => {
-          const updated = [...prev];
-          updated[selectedIndex].accountRequirements = newRequirements;
-          updated[selectedIndex].refreshed = true;
-          return updated;
-        });
-      }
-      // otherwise create the recipient
-      else {
-        await createRecipientAccount({ endowment_id, request }).unwrap();
-      }
+
+      await createRecipientAccount({ endowment_id, request }).unwrap();
     } catch (error) {
       handleError(error, ERROR_MSG);
     } finally {
@@ -134,6 +162,7 @@ export default function useRecipientDetails(
     isError: isError1 || isError2 || isError3,
     isLoading,
     isSubmitting,
+    refreshRequirements,
     requirementsDataArray,
     selectedIndex,
     setSelectedIndex,

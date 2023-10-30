@@ -18,6 +18,7 @@ export default function RecipientDetails({
     isError,
     isLoading,
     // isSubmitting, // should disable the UI when true
+    refreshRequirements,
     requirementsDataArray,
     selectedIndex,
     setSelectedIndex,
@@ -58,8 +59,10 @@ export default function RecipientDetails({
         key={`form-${requirements.accountRequirements.type}`}
         accountRequirements={requirements.accountRequirements}
         defaultValues={requirements.currentFormValues}
+        refreshRequired={requirements.refreshRequired}
         onCleanup={updateDefaultValues}
         onSubmit={handleSubmit}
+        onRefresh={refreshRequirements}
       />
     </>
   );

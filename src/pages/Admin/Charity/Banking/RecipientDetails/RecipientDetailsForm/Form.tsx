@@ -7,6 +7,8 @@ import RequirementField from "./RequirementField";
 
 type Props = {
   accountRequirements: AccountRequirements;
+  refreshRequired: boolean;
+  onRefresh: (request: CreateRecipientRequest) => void;
   onSubmit: (request: CreateRecipientRequest) => void;
 };
 
@@ -16,9 +18,13 @@ export default function Form(props: Props) {
     formState: { isSubmitting },
   } = useFormContext<FormValues>();
 
-  const handleSubmission = handleSubmit(async (formValues) => {
+  const handleSubmission = handleSubmit((formValues) => {
     const request = convertToCreateRecipientRequest(formValues);
-    props.onSubmit(request);
+    if (props.refreshRequired) {
+      props.onRefresh(request);
+    } else {
+      props.onSubmit(request);
+    }
   });
 
   return (
@@ -31,19 +37,43 @@ export default function Form(props: Props) {
           ))}
       </div>
 
-      <button
-        disabled={isSubmitting}
-        type="submit"
-        className="px-6 btn-orange text-sm w-80"
-      >
-        {isSubmitting ? (
-          <>
-            <LoaderRing thickness={10} classes="w-6" /> Submitting...
-          </>
-        ) : (
-          "Save"
-        )}
-      </button>
+      {props.refreshRequired ? (
+        <>
+          <span>
+            After you fill the form, we may need additional information to be
+            able to submit your bank details for validation. Please fill the
+            form and click the "Check requirements" button below.
+          </span>
+          <button
+            disabled={isSubmitting}
+            type="submit"
+            className="px-6 btn-orange text-sm w-80"
+          >
+            {isSubmitting ? (
+              <>
+                <LoaderRing thickness={10} classes="w-6" /> Checking additional
+                requirements...
+              </>
+            ) : (
+              "Check requirements"
+            )}
+          </button>
+        </>
+      ) : (
+        <button
+          disabled={isSubmitting}
+          type="submit"
+          className="px-6 btn-orange text-sm w-80"
+        >
+          {isSubmitting ? (
+            <>
+              <LoaderRing thickness={10} classes="w-6" /> Submitting...
+            </>
+          ) : (
+            "Submit"
+          )}
+        </button>
+      )}
     </form>
   );
 }
