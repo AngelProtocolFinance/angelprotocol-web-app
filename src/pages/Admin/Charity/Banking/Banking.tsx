@@ -3,6 +3,7 @@ import { isEmpty } from "helpers";
 import { EMAIL_SUPPORT } from "constants/env";
 import CurrencySelector from "./CurrencySelector";
 import RecipientDetails from "./RecipientDetails";
+import VerificationStatus from "./VerificationStatus";
 import useBanking from "./useBanking";
 
 export default function Banking() {
@@ -35,6 +36,11 @@ export default function Banking() {
 
   return (
     <div className="grid gap-5 justify-start">
+      <div className="flex gap-2 sm:gap-5">
+        <h3 className="text-xl sm:text-2xl font-body">Bank account details</h3>
+        <VerificationStatus />
+      </div>
+
       <CurrencySelector
         value={targetCurrency}
         currencies={currencies}
