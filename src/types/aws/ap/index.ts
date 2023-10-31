@@ -52,6 +52,7 @@ type EndowmentBase = {
 };
 
 export type EndowmentProfile = EndowmentBase & {
+  bank_verified: "Not Submitted" | "Under Review" | "Approved" | "Rejected";
   fiscal_sponsored: boolean;
   contact_email: string;
   image: string;
@@ -68,8 +69,8 @@ export type EndowmentProfile = EndowmentBase & {
     tiktok?: string;
   };
   street_address?: string;
-
   url?: string;
+  wise_recipient_id: string;
 } & EndowmentBalances;
 
 export type EndowmentCard = EndowmentBase & {
