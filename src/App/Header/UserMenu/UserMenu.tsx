@@ -1,6 +1,10 @@
 import { Authenticator, useAuthenticator } from "@aws-amplify/ui-react";
 import { Popover } from "@headlessui/react";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import Icon from "components/Icon";
+import { OAUTH_PATH_STORAGE_KEY } from "constants/o-auth";
+import { appRoutes } from "constants/routes";
 import Menu from "./Menu";
 
 export default function UserMenu() {
@@ -48,10 +52,22 @@ export default function UserMenu() {
           <Menu user={user} signOut={signOut} isLoading={isLoading} />
         </Popover.Panel>
       ) : (
-        <Popover.Panel className="mt-2 absolute z-10 w-max max-sm:fixed-center sm:right-0">
-          <Authenticator formFields={{ signUp: { name: { order: 1 } } }} />
-        </Popover.Panel>
+        <AuthenticatorPanel />
       )}
     </Popover>
+  );
+}
+
+function AuthenticatorPanel() {
+  const location = useLocation();
+  useEffect(() => {
+    if (location.pathname.startsWith(appRoutes.auth_redirector)) return;
+    localStorage.setItem(OAUTH_PATH_STORAGE_KEY, location.pathname);
+    //eslint-disable-next-line
+  }, [location.pathname]);
+  return (
+    <Popover.Panel className="mt-2 absolute z-10 w-max max-sm:fixed-center sm:right-0">
+      <Authenticator formFields={{ signUp: { name: { order: 1 } } }} />
+    </Popover.Panel>
   );
 }

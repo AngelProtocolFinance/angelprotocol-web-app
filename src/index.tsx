@@ -9,6 +9,7 @@ import Loader from "components/Loader";
 import { store } from "store/store";
 import { initTheme } from "helpers";
 import ErrorBoundary from "errors/ErrorBoundary";
+import { appRoutes } from "constants/routes";
 import config from "./aws-exports";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
@@ -29,7 +30,8 @@ Sentry.init({
   dsn: process.env.REACT_APP_SENTRY_DSN,
 });
 
-config.oauth.redirectSignIn = window.location.origin + "/";
+config.oauth.redirectSignIn =
+  window.location.origin + `${appRoutes.auth_redirector}/`;
 config.oauth.redirectSignOut = window.location.origin + "/";
 Amplify.configure(config);
 

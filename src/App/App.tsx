@@ -3,6 +3,7 @@ import * as Sentry from "@sentry/react";
 import { WalletProvider } from "@terra-money/wallet-provider";
 import { lazy } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import OAUTHRedirector from "pages/OAuthRedirector";
 import ModalContext from "contexts/ModalContext";
 import WalletContext from "contexts/WalletContext";
 import useScrollTop from "hooks/useScrollTop";
@@ -73,6 +74,10 @@ export default function App() {
               <Route path={`${appRoutes.gift}/*`} element={<Gift />} />
               <Route path={appRoutes.marketplace} element={<Marketplace />} />
               <Route path={appRoutes.signin} element={<Signin />} />
+              <Route
+                path={appRoutes.auth_redirector}
+                element={<OAUTHRedirector />}
+              />
               <Route path={appRoutes.marketplace}>
                 <Route path=":id/*" element={<Profile />} />
                 <Route index element={<Marketplace />} />
