@@ -19,7 +19,7 @@ export default function Banking() {
 
   if (isLoading) {
     return (
-      <div className="flex gap-2">
+      <div className="flex items-center gap-2">
         <LoaderRing thickness={10} classes="w-6" /> Loading...
       </div>
     );
