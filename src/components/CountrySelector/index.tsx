@@ -24,6 +24,7 @@ const nameKey: keyof Country = "name";
 
 export default function CountrySelector<T extends FieldValues>(props: {
   countries: Country[];
+  disabled?: boolean;
   fieldName: Path<T>;
   onReset?(): void;
   placeholder?: string;
@@ -63,7 +64,8 @@ export default function CountrySelector<T extends FieldValues>(props: {
   return (
     <Combobox
       aria-invalid={!!get(errors, `${props.fieldName}.name`)?.message}
-      aria-disabled={isSubmitting}
+      aria-disabled={props.disabled || isSubmitting}
+      disabled={props.disabled || isSubmitting}
       value={country}
       onChange={onCountryChange}
       as="div"
