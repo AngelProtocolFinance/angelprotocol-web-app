@@ -18,7 +18,7 @@ export default function Submit(props: SubmitStep) {
   if (wallet === "loading") {
     return (
       <Container {...props}>
-        <LoadingStatus classes="justify-self-center">
+        <LoadingStatus classes="justify-self-center mt-6">
           Connecting wallet..
         </LoadingStatus>
       </Container>
