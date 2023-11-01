@@ -2,12 +2,27 @@ import { memo, useEffect } from "react";
 import { useAdminContext } from "pages/Admin/Context";
 import { useProfileQuery } from "services/aws/aws";
 import { useErrorContext } from "contexts/ErrorContext";
-import Icon from "components/Icon";
+import Icon, { IconType } from "components/Icon";
 import LoaderRing from "components/LoaderRing";
 import { EMAIL_SUPPORT } from "constants/env";
 
 const PROFILE_ERROR = `Error loading profile. Please try again later. If the error persists,
 please contact ${EMAIL_SUPPORT}.`;
+
+function Status(props: {
+  className: string;
+  label: string;
+  iconType: IconType;
+}) {
+  const { className, label, iconType } = props;
+  return (
+    <span
+      className={`flex gap-1 items-center justify-center w-36 p-2 rounded text-xs sm:text-sm font-semibold ${className}`}
+    >
+      {label} <Icon type={iconType} aria-hidden className="text-sm" />
+    </span>
+  );
+}
 
 function VerificationStatus() {
   const { id } = useAdminContext();
@@ -42,30 +57,35 @@ function VerificationStatus() {
   switch (profile.bank_verified) {
     case "Not Submitted":
       return (
-        <span className="flex gap-1 items-center justify-center w-36 p-2 rounded bg-gray-l4 dark:bg-gray text-xs sm:text-sm font-semibold">
-          Not submitted{" "}
-          <Icon type="Exclamation" aria-hidden className="text-sm" />
-        </span>
+        <Status
+          className="bg-gray-l4 dark:bg-gray"
+          label="Not Submitted"
+          iconType="Exclamation"
+        />
       );
     case "Under Review":
       return (
-        <span className="flex gap-1 items-center justify-center w-36 p-2 rounded bg-orange-l4 dark:bg-orange-l1 text-xs sm:text-sm text-orange-d1 dark:text-white font-semibold">
-          Under review{" "}
-          <Icon type="HourglassSplit" aria-hidden className="text-sm" />
-        </span>
+        <Status
+          className="bg-orange-l4 dark:bg-orange-l1 text-orange-d1 dark:text-white"
+          label="Under Review"
+          iconType="HourglassSplit"
+        />
       );
     case "Approved":
       return (
-        <span className="flex gap-1 items-center justify-center w-36 p-2 rounded bg-green-l3 dark:bg-green-d1 text-xs sm:text-sm text-green-d2 dark:text-white font-semibold">
-          Approved <Icon type="Check" aria-hidden className="text-sm" />
-        </span>
+        <Status
+          className="bg-green-l3 dark:bg-green-d1 text-green-d2 dark:text-white"
+          label="Approved"
+          iconType="Check"
+        />
       );
     case "Rejected":
       return (
-        <span className="flex gap-1 items-center justify-center w-36 p-2 rounded bg-red-l4 dark:bg-red-l1 text-xs sm:text-sm text-red-d1 dark:text-white font-semibold">
-          Rejected{" "}
-          <Icon type="ExclamationCircleFill" aria-hidden className="text-sm" />
-        </span>
+        <Status
+          className="bg-red-l4 dark:bg-red-l1 text-red-d1 dark:text-white"
+          label="Rejected"
+          iconType="ExclamationCircleFill"
+        />
       );
     default:
       return (
