@@ -61,9 +61,9 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         stationMobile,
       ];
 
-  const connectedWallet = wallets.find((w) => w.status === "connected") as
-    | ConnectedWallet
-    | undefined;
+  const connectedWallet = wallets.find(
+    (w) => w.status === "connected" || w.status === "switching"
+  ) as ConnectedWallet | undefined;
 
   const isLoading = wallets.some((w) => w.status === "loading");
 

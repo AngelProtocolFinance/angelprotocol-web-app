@@ -61,6 +61,7 @@ export default function useInjectedWallet(
       return alert("Wallet is not connected");
     }
     try {
+      setState({ ...state, status: "switching" });
       const chain = chains[chainID];
       await state
         .request({
@@ -90,6 +91,7 @@ export default function useInjectedWallet(
       logger.error(err);
       alert("Failed to switch chain");
     } finally {
+      setState({ ...state, status: "connected" });
     }
   }
 

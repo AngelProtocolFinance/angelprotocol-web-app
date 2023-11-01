@@ -57,7 +57,9 @@ export default function Submit(props: SubmitStep) {
           Your wallet is not connected to your selected chain
         </Info>
         <button
+          disabled={wallet.status === "switching"}
           type="button"
+          onClick={() => wallet.switchChain?.(chainID)}
           className="btn-outline-filled px-4 py-2 mt-4 text-xs font-normal font-work justify-self-center"
         >
           Switch to {chains[chainID].name}
@@ -67,7 +69,11 @@ export default function Submit(props: SubmitStep) {
   }
 
   return (
-    <Container {...props} txPackage={txPackage(estimate, wallet)}>
+    <Container
+      {...props}
+      txPackage={txPackage(estimate, wallet)}
+      wallet={wallet}
+    >
       <Breakdown
         submitStep={props}
         estimate={estimate}
