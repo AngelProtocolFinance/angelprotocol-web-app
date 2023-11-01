@@ -1,13 +1,6 @@
-import { memo, useEffect } from "react";
-import { useAdminContext } from "pages/Admin/Context";
-import { useProfileQuery } from "services/aws/aws";
-import { useErrorContext } from "contexts/ErrorContext";
+import { memo } from "react";
+import { EndowmentProfile } from "types/aws";
 import Icon, { IconType } from "components/Icon";
-import LoaderRing from "components/LoaderRing";
-import { EMAIL_SUPPORT } from "constants/env";
-
-const PROFILE_ERROR = `Error loading profile. Please try again later. If the error persists,
-please contact ${EMAIL_SUPPORT}.`;
 
 function Status(props: {
   className: string;
@@ -24,37 +17,12 @@ function Status(props: {
   );
 }
 
-function VerificationStatus() {
-  const { id } = useAdminContext();
-  const {
-    data: profile,
-    isLoading,
-    isError,
-    error,
-  } = useProfileQuery({
-    endowId: id,
-  });
-  const { handleError } = useErrorContext();
+type Props = {
+  status: EndowmentProfile["bank_verification_status"];
+};
 
-  useEffect(() => {
-    if (error) {
-      handleError(error, PROFILE_ERROR);
-    }
-  }, [error, handleError]);
-
-  if (isLoading) {
-    return (
-      <div className="flex items-center gap-2">
-        <LoaderRing thickness={10} classes="w-6" /> Loading...
-      </div>
-    );
-  }
-
-  if (isError || !profile) {
-    return <span>{PROFILE_ERROR}</span>;
-  }
-
-  switch (profile.bank_verification_status) {
+function VerificationStatus({ status }: Props) {
+  switch (status) {
     case "Not Submitted":
       return (
         <Status

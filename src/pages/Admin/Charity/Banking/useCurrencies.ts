@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useGetCurrenciesMutation } from "services/aws/bankDetails";
+// import { useGetCurrenciesMutation } from "services/aws/bankDetails";
 import { useErrorContext } from "contexts/ErrorContext";
 import { EMAIL_SUPPORT } from "constants/env";
 import { Currency } from "./CurrencySelector";
@@ -12,11 +12,7 @@ export default function useCurrencies() {
 
   const { handleError } = useErrorContext();
 
-  const [
-    ,
-    // getCurrencies
-    { isError },
-  ] = useGetCurrenciesMutation();
+  // const [ getCurrencies] = useGetCurrenciesMutation();
 
   useEffect(() => {
     (async () => {
@@ -148,7 +144,6 @@ export default function useCurrencies() {
 
   return {
     currencies,
-    isError,
     isLoading,
   };
 }

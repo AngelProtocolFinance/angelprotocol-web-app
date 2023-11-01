@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+import { useAdminContext } from "pages/Admin/Context";
+import { useProfileQuery } from "services/aws/aws";
+import { useErrorContext } from "contexts/ErrorContext";
 import Divider from "components/Divider";
 import LoaderRing from "components/LoaderRing";
 import useDebounce from "hooks/useDebounce";
@@ -13,13 +16,35 @@ import useCurrencies from "./useCurrencies";
 
 const DEFAULT_TARGET_CURRENCY = "USD";
 
+const PROFILE_ERROR = `Error loading profile. Please try again later. If the error persists,
+please contact ${EMAIL_SUPPORT}.`;
+
 export default function Banking() {
   const [expectedFunds, setExpectedFunds] = useState<number>();
   const [targetCurrency, setTargetCurrency] = useState<Currency>();
-
   const [debounce, isDebouncing] = useDebounce();
 
-  const { currencies, isError, isLoading } = useCurrencies();
+  // load profile
+  const { id } = useAdminContext();
+  const {
+    data: profile,
+    isLoading: isLoadingProfile,
+    isError: isProfileError,
+    error,
+  } = useProfileQuery({
+    endowId: id,
+  });
+
+  const { handleError } = useErrorContext();
+
+  useEffect(() => {
+    if (error) {
+      handleError(error, PROFILE_ERROR);
+    }
+  }, [error, handleError]);
+
+  // load currencies
+  const { currencies, isLoading } = useCurrencies();
 
   useEffect(() => {
     if (isEmpty(currencies)) {
@@ -32,7 +57,7 @@ export default function Banking() {
     setTargetCurrency(newTargetCurrency);
   }, [currencies]);
 
-  if (isLoading) {
+  if (isLoading || isLoadingProfile) {
     return (
       <div className="flex items-center gap-2">
         <LoaderRing thickness={10} classes="w-6" /> Loading...
@@ -40,13 +65,17 @@ export default function Banking() {
     );
   }
 
-  if (isError || !targetCurrency || isEmpty(currencies)) {
+  if (!targetCurrency || isEmpty(currencies)) {
     return (
       <span>
         An error occurred. Please try again later. If the error persists, please
         contact {EMAIL_SUPPORT}.
       </span>
     );
+  }
+
+  if (isProfileError || !profile) {
+    return <span>{PROFILE_ERROR}</span>;
   }
 
   return (
@@ -56,7 +85,7 @@ export default function Banking() {
           title="Bank account details"
           description="The following information will be used to register your bank account that will be used to withdraw your funds."
         >
-          <VerificationStatus />
+          <VerificationStatus status={profile.bank_verification_status} />
           <CurrencySelector
             value={targetCurrency}
             currencies={currencies}
