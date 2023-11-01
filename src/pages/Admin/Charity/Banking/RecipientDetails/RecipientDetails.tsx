@@ -8,18 +8,16 @@ import useRecipientDetails from "./useRecipientDetails";
 type Props = {
   targetCurrency: string;
   expectedFunds: number;
-  isLoading: boolean;
 };
 
 export default function RecipientDetails({
   targetCurrency,
   expectedFunds,
-  isLoading,
 }: Props) {
   const {
     handleSubmit,
     isError,
-    isLoading: isLoadingRequirements,
+    isLoading,
     // isSubmitting, // should disable the UI when true
     refreshRequirements,
     requirementsDataArray,
@@ -28,7 +26,7 @@ export default function RecipientDetails({
     updateDefaultValues,
   } = useRecipientDetails(targetCurrency, expectedFunds);
 
-  if (isLoading || isLoadingRequirements) {
+  if (isLoading) {
     return (
       <div className="flex items-center gap-2">
         <LoaderRing thickness={10} classes="w-6" /> Loading...

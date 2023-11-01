@@ -64,21 +64,31 @@ export default function Banking() {
             classes="w-60 md:w-80"
           />
           <ExpectedFunds
-            onChange={(ef) => debounce(() => setExpectedFunds(ef), 1000)}
+            onChange={(value) => {
+              // if new value is 0 (zero), no need to debounce, but
+              // still call the function itself to cancel the previous call
+              const delay = !value ? 0 : 1000;
+              debounce(() => setExpectedFunds(value), delay);
+            }}
           />
 
           {!!expectedFunds && (
             <>
               <Divider />
               <div className="min-h-[20rem]">
-                <RecipientDetails
-                  // we need this key to tell React that when any of the fields passed to this component changes,
-                  // it needs to reset its state by rerendering the whole component
-                  key={`${targetCurrency.code}${expectedFunds}`}
-                  targetCurrency={targetCurrency.code}
-                  expectedFunds={expectedFunds}
-                  isLoading={isDebouncing}
-                />
+                {isDebouncing ? (
+                  <div className="flex items-center gap-2">
+                    <LoaderRing thickness={10} classes="w-6" /> Loading...
+                  </div>
+                ) : (
+                  <RecipientDetails
+                    // we need this key to tell React that when any of the fields passed to this component changes,
+                    // it needs to reset its state by rerendering the whole component
+                    key={`${targetCurrency.code}${expectedFunds}`}
+                    targetCurrency={targetCurrency.code}
+                    expectedFunds={expectedFunds}
+                  />
+                )}
               </div>
             </>
           )}
