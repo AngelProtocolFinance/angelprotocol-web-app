@@ -10,7 +10,7 @@ export const polygon: Chain = {
   id: "137",
   brand: "polygon",
   name: "Polygon",
-  rpc: "https://rpc-mainnet.maticvigil.com",
+  rpc: "https://polygon.llamarpc.com",
   lcd: "",
   blockExplorer: "https://polygonscan.com",
   nativeToken: {
@@ -25,7 +25,7 @@ export const ethereum: Chain = {
   id: "1",
   brand: "ethereum",
   name: "Ethereum",
-  rpc: `https://mainnet.infura.io/v3/${"INFURA_ID"}`,
+  rpc: "https://eth.llamarpc.com",
   lcd: "",
   blockExplorer: "https://etherscan.io",
   nativeToken: {
@@ -85,7 +85,7 @@ export const mumbai: Chain = {
   id: "80001",
   brand: "polygon",
   name: "Polygon Mumbai Testnet",
-  rpc: "https://rpc-mumbai.maticvigil.com",
+  rpc: "https://rpc.ankr.com/polygon_mumbai",
   lcd: "",
   blockExplorer: "https://mumbai.polygonscan.com",
   nativeToken: {
@@ -100,7 +100,7 @@ export const goerli: Chain = {
   id: "5",
   brand: "ethereum",
   name: "Ethereum Goerli Testnet",
-  rpc: `https://goerli.infura.io/v3/${"INFURA_ID"}`,
+  rpc: "https://rpc.ankr.com/eth_goerli",
   lcd: "",
   blockExplorer: "https://goerli.etherscan.io",
   nativeToken: {
