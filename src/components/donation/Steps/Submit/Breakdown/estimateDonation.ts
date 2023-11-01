@@ -172,6 +172,7 @@ export async function estimateDonation({
       items: [amount, donationFee, transactionFee, total],
     };
   } catch (err) {
+    console.log(err);
     logger.error(err);
     return null;
   }

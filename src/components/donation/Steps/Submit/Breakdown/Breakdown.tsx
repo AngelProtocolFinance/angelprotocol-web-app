@@ -5,6 +5,7 @@ import { SubmitStep } from "slices/donation";
 import { humanize } from "helpers";
 import { Row } from "../Row";
 import { estimateDonation } from "./estimateDonation";
+import { tokenBalance } from "./tokenBalance";
 
 type Props = {
   estimate: EstimateStatus;
@@ -22,8 +23,12 @@ export default function Breakdown({
   useEffect(() => {
     (async () => {
       setEstimate("loading");
-      //1. fetch balances
-      // if token.amount < balance
+      const { token, chainId } = submitStep.details;
+      const balance = await tokenBalance(token, chainId.value, sender);
+      if (balance < +token.amount) {
+        return setEstimate({ error: `Not enough balance` });
+      }
+
       const newEstimate = await estimateDonation({ ...submitStep, sender });
 
       if (!newEstimate) {
