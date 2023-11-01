@@ -39,7 +39,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     "https://chrome.google.com/webstore/detail/xdefi-wallet/hmeobnfnfcmdkdcmlblgagmfpfboieaf?hl=en"
   );
 
-  const { station, stationMobile, xdefiTerra, leap } = useTerra();
+  const { wc: stationMobile, extensions } = useTerra();
   const keplr = useKeplr();
   const keplrWC = useKeplrWC();
   const evmWC = useEVMWC({
@@ -50,8 +50,16 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
 
   const wallets: Wallet[] = isMobile()
     ? [evmWC, keplrWC, stationMobile]
-    : //prettier-ignore
-      [keplr,metamask,evmWC,keplrWC,binance,xdefiEvm,xdefiTerra,leap,station, stationMobile];
+    : [
+        keplr,
+        metamask,
+        evmWC,
+        keplrWC,
+        binance,
+        xdefiEvm,
+        ...extensions,
+        stationMobile,
+      ];
 
   const connectedWallet = wallets.find((w) => w.status === "connected") as
     | ConnectedWallet

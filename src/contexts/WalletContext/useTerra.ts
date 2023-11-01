@@ -2,25 +2,22 @@ import {
   ConnectType,
   Installation,
   Connection as TerraConnection,
-  Wallet as TerraWallet,
   WalletStatus,
   useWallet,
 } from "@terra-money/wallet-provider";
 import {
-  Connector,
   TerraProviderState,
   TerraWalletID,
   Wallet,
-  WalletID,
   WalletMeta,
 } from "types/wallet";
-import { terraChains } from "constants/chains-v2";
+import { isXdefiPrioritized } from "./helpers/isXdefiPrioritized";
 
+const XDEFI_ID: TerraWalletID = "xdefi-wallet";
 export default function useTerra() {
   const {
     availableConnections,
     availableInstallations,
-    connection: terraConnection,
     network,
     wallets,
     connect,
@@ -29,102 +26,67 @@ export default function useTerra() {
     post,
   } = useWallet();
 
-  const state: TerraProviderState =
-    /** wallets contain wc entry even terraAddress is not resolved */
-    terraConnection && wallets[0].terraAddress
-      ? {
-          // terra providerIDs are simply from their connection identifiers
-          id:
-            terraConnection.type === ConnectType.WALLETCONNECT
-              ? "walletconnect"
-              : (terraConnection.identifier as TerraWalletID),
-          status: "connected",
-          address: wallets[0].terraAddress,
-          chainId: network.chainID,
-          post,
-        }
-      : status === WalletStatus.INITIALIZING
-      ? { status: "loading" }
-      : { status: "disconnected" };
+  const wallet = (c: Installation | TerraConnection): Wallet => {
+    const meta: WalletMeta = {
+      name: c.name,
+      logo: c.icon,
+      supportedChains: ["phoenix-1", "pisco-1"],
+    };
 
-  const connection = connectionFn(
-    availableConnections,
-    availableInstallations,
-    connect
-  );
-  const wallet = walletFn(state, disconnect);
-  //unpack terra connections so can be ordered later on
-  const station = wallet(connection("station"));
-  const xdefiTerra = wallet(connection("xdefi-wallet"));
-  const leap = wallet(connection("leap-wallet"));
-  const stationMobile = wallet(connection("walletconnect"));
+    const state: TerraProviderState =
+      status === WalletStatus.INITIALIZING
+        ? { status: "loading" }
+        : WalletStatus.WALLET_CONNECTED && wallets[0]
+        ? {
+            id: (c.identifier || c.type.toLowerCase) as TerraWalletID,
+            status: "connected",
+            address: wallets[0].terraAddress,
+            chainId: network.chainID,
+            post,
+          }
+        : { status: "disconnected" };
 
-  return {
-    station,
-    xdefiTerra,
-    leap,
-    stationMobile,
-  };
-}
-
-type Connection = Omit<WalletMeta, "type"> & Connector;
-const walletFn =
-  (state: TerraProviderState, disconnect: TerraWallet["disconnect"]) =>
-  ({ connect, ...meta }: Connection): Wallet => ({
-    ...state,
-    ...meta,
-
-    ...{ connect, disconnect, switchChain: null },
-  });
-
-const connectionFn =
-  (
-    connections: TerraConnection[],
-    installations: Installation[],
-    connectTerra: TerraWallet["connect"]
-  ) =>
-  (walletID: WalletID): Connection => {
-    if (walletID === "walletconnect") {
-      return {
-        name: "Terra Station Mobile",
-        logo: "/icons/wallets/terra-extension.jpg",
-        supportedChains: terraChains,
-        async connect() {
-          connectTerra(ConnectType.WALLETCONNECT);
-        },
-      };
-    }
-    // terra providerIDs are simply from their connection identifiers
-    const connection = connections.find((x) => x.identifier === walletID);
-
-    if (connection) {
-      return {
-        name: connection.name,
-        logo: connection.icon,
-        supportedChains: terraChains,
-        connect: async () =>
-          connectTerra(connection.type, connection.identifier),
-      };
-    }
-    const installation = installations.find((x) => x.identifier === walletID);
-    if (installation) {
-      return {
-        name: installation.name,
-        logo: installation.icon,
-        supportedChains: terraChains,
-        connect: async () => {
-          window.open(installation.url, "_blank", "noopener noreferrer");
-        },
-      };
-    }
-
-    //this should never happen, missing connection always have installation counterpart
     return {
-      name: "Unknown wallet",
-      logo: "",
-      supportedChains: terraChains,
-      connect: () => {
-        throw new Error("Unknown wallet");
+      ...state,
+      ...meta,
+      ...{
+        connect() {
+          console.log(c);
+          //if installation
+          if ("url" in c) {
+            return window.open(c.url, "_blank", "noopener noreferrer");
+          }
+          if (c.identifier !== XDEFI_ID && isXdefiPrioritized()) {
+            return alert("Kindly remove priority to Xdefi and reload the page");
+          }
+          try {
+            connect(c.type, c.identifier);
+          } catch (err) {
+            alert("Failed to connect to wallet");
+          }
+        },
+        disconnect,
+        switchChain: null,
       },
     };
   };
+
+  const terraWC: TerraConnection = {
+    name: "Terra mobile",
+    type: ConnectType.WALLETCONNECT,
+    icon: "/icons/wallets/terra-extension.jpg",
+  };
+
+  return {
+    extensions: availableConnections
+      .filter(whitelist)
+      .map((c) => wallet(c))
+      .concat(availableInstallations.filter(whitelist).map((i) => wallet(i))),
+    wc: wallet(terraWC),
+  };
+}
+
+function whitelist<T extends TerraConnection | Installation>(conn: T) {
+  const id = conn.identifier;
+  return id === XDEFI_ID || id === "leap-wallet" || id === "station";
+}

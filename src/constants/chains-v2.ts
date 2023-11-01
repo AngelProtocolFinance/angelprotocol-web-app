@@ -1,10 +1,4 @@
-import {
-  Chain,
-  Chains,
-  CosmosChainID,
-  EVMChainID,
-  TerraChainID,
-} from "types/chain";
+import { Chain, Chains, CosmosChainID, EVMChainID } from "types/chain";
 
 export const polygon: Chain = {
   id: "137",
@@ -171,4 +165,3 @@ export const chains: Chains = {
 
 export const EVMChains: EVMChainID[] = ["1", "137", "5", "56", "80001", "97"];
 export const cosmosChains: CosmosChainID[] = ["juno-1", "uni-6"];
-export const terraChains: TerraChainID[] = ["phoenix-1", "pisco-1"];
