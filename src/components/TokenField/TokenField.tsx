@@ -25,6 +25,7 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
   withMininum,
 }: Props<T, K>) {
   const {
+    getValues,
     register,
     formState: { errors, isSubmitting },
   } = useFormContext<T>();
@@ -66,7 +67,10 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
         <TokenSelector
           selectedChainId={selectedChainId}
           selectedToken={token}
-          onChange={onChange}
+          onChange={(token) => {
+            //preserve previously provided amount
+            onChange({ ...token, [amountKey]: getValues(amountField) });
+          }}
         />
       </div>
       <div className="empty:mb-2">

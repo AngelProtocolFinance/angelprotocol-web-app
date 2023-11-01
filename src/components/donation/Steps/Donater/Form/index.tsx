@@ -2,6 +2,7 @@ import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { DonateValues } from "../types";
+import { ChainID } from "types/chain";
 import { DonaterConfigFromWidget } from "types/widget";
 import { useGetter } from "store/accessors";
 import { setDetails } from "slices/donation";
@@ -46,7 +47,7 @@ export default function Form({ configFromWidget }: Props) {
       <label htmlFor="chainId" className="mb-1 font-bold text-lg">
         Select network :
       </label>
-      <Selector<DonateValues, "chainId", string>
+      <Selector<DonateValues, "chainId", ChainID>
         name="chainId"
         options={Object.entries(chains).map(([, chain]) => ({
           label: chain.name,
