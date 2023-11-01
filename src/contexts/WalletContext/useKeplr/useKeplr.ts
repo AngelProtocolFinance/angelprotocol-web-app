@@ -37,6 +37,7 @@ export default function useKeplr(): Wallet {
         address: key.bech32Address,
         chainId: juno.id,
         sign: window.keplr.signDirect.bind(window.keplr),
+        isSwitching: false,
       });
       saveUserAction(actionKey, "connect");
     } catch (err) {

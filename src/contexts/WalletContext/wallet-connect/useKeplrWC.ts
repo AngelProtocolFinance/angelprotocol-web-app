@@ -115,6 +115,7 @@ const connected = (
     ...account(session.namespaces.cosmos),
     id: "keplr-wc",
     status: "connected",
+    isSwitching: false,
     async sign(chainID, signer, doc: SignDoc) {
       const tx = TxRaw.fromPartial({
         bodyBytes: doc.bodyBytes,

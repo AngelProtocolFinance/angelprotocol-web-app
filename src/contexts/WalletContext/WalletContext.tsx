@@ -1,8 +1,8 @@
 import isMobile from "is-mobile";
 import { PropsWithChildren, createContext, useContext } from "react";
 import { WalletContextState } from "./types";
+import { EVMChainID } from "types/chain";
 import { ConnectedWallet, DisconnectedWallet, Wallet } from "types/wallet";
-import { EVMChains } from "constants/chains-v2";
 import useInjectedProvider from "./useInjectedProvider";
 import useKeplr from "./useKeplr";
 import useTerra from "./useTerra";
@@ -11,6 +11,8 @@ import { useEVMWC, useKeplrWC } from "./wallet-connect";
 const binanceWalletIcon = "/icons/wallets/binance.png";
 const metamaskIcon = "/icons/wallets/metamask.png";
 const xdefiIcon = "/icons/wallets/xdefi.jpg";
+
+const EVMChains: EVMChainID[] = ["1", "137", "5", "56", "80001", "97"];
 
 export default function WalletContext(props: PropsWithChildren<{}>) {
   const metamask = useInjectedProvider(
@@ -28,7 +30,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     {
       name: "Binance wallet",
       logo: binanceWalletIcon,
-      supportedChains: EVMChains,
+      supportedChains: ["56", "97"],
     },
     "https://chrome.google.com/webstore/detail/binance-wallet/fhbohimaelbohpjbbldcngcnapndodjp"
   );
@@ -61,9 +63,9 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         stationMobile,
       ];
 
-  const connectedWallet = wallets.find(
-    (w) => w.status === "connected" || w.status === "switching"
-  ) as ConnectedWallet | undefined;
+  const connectedWallet = wallets.find((w) => w.status === "connected") as
+    | ConnectedWallet
+    | undefined;
 
   const isLoading = wallets.some((w) => w.status === "loading");
 

@@ -42,6 +42,7 @@ export default function useTerra() {
         ? {
             id: (c.identifier || c.type.toLowerCase) as TerraWalletID,
             status: "connected",
+            isSwitching: false,
             address: wallets[0].terraAddress,
             chainId: network.chainID,
             post,

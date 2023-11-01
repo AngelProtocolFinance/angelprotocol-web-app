@@ -149,6 +149,7 @@ const connected = (
   return {
     ...acc,
     status: "connected",
+    isSwitching: false,
     id: "evm-wc",
     request<T>({ method, params }: RequestArguments) {
       return client.request<T>({

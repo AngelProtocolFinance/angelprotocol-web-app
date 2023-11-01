@@ -43,17 +43,22 @@ export default function useInjectedWallet(
   }, []);
 
   const handleChainChange: ChainChangeHandler = (hexChainId) => {
-    if (state.status !== "connected") return;
-    setState({ ...state, chainId: new Decimal(hexChainId).toString() });
+    setState((prev) => {
+      if (prev.status !== "connected") return prev;
+      return { ...prev, chainId: new Decimal(hexChainId).toString() };
+    });
   };
 
   const handleAccountsChange: AccountChangeHandler = (accounts) => {
-    if (state.status !== "connected") return;
-    if (accounts.length === 0) {
-      return setState({ status: "disconnected" });
-    }
-    setState({ ...state, address: accounts[0] });
-    saveUserAction(actionKey, "disconnect");
+    setState((prev) => {
+      if (prev.status !== "connected") return prev;
+      if (accounts.length <= 0) {
+        return { status: "disconnected" };
+      }
+
+      saveUserAction(actionKey, "disconnect");
+      return { ...prev, address: accounts[0] };
+    });
   };
 
   async function switchChain(chainID: ChainID) {
@@ -61,7 +66,7 @@ export default function useInjectedWallet(
       return alert("Wallet is not connected");
     }
     try {
-      setState({ ...state, status: "switching" });
+      setState({ ...state, isSwitching: true });
       const chain = chains[chainID];
       await state
         .request({
@@ -91,7 +96,7 @@ export default function useInjectedWallet(
       logger.error(err);
       alert("Failed to switch chain");
     } finally {
-      setState({ ...state, status: "connected" });
+      setState({ ...state, isSwitching: false });
     }
   }
 
@@ -132,6 +137,7 @@ export default function useInjectedWallet(
         address: accounts[0],
         chainId: `${parseInt(hexChainId, 16)}`,
         request: provider.request.bind(provider),
+        isSwitching: false,
       });
 
       saveUserAction(actionKey, "connect");

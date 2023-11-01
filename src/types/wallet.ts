@@ -17,9 +17,10 @@ export type WalletID = EVMWalletID | TerraWalletID | CosmostWalletID;
 
 /** connection state */
 type ProviderConnected = {
-  status: "connected" | "switching";
+  status: "connected";
   address: string;
   chainId: string; //chainId may not be one of supported chainIds
+  isSwitching: boolean;
 };
 
 export type EVMConnected = ProviderConnected & {
