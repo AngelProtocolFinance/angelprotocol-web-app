@@ -3,9 +3,9 @@ import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
 import { FileObject } from "types/aws";
 import { Country } from "types/countries";
-import { OptionType } from "components/Selector";
 import { Asset } from "components/registration";
 import { genFileSchema } from "schemas/file";
+import { optionType } from "schemas/shape";
 import { requiredString } from "schemas/string";
 import { MAX_SDGS } from "constants/unsdgs";
 
@@ -37,11 +37,6 @@ function genAssetShape(isRequired: boolean = false): SchemaShape<Asset> {
   };
 }
 
-const optionSchema = object<any, SchemaShape<OptionType<string>>>({
-  label: requiredString,
-  value: requiredString,
-});
-
 export const schema = object<any, SchemaShape<FormValues>>({
   proofOfIdentity: object(genAssetShape(true)),
   proofOfRegistration: object(genAssetShape(true)),
@@ -52,7 +47,7 @@ export const schema = object<any, SchemaShape<FormValues>>({
   hqCountry: object<any, SchemaShape<Country>>({
     name: requiredString,
   }),
-  endowDesignation: optionSchema,
+  endowDesignation: optionType({ required: true }),
   legalEntityType: requiredString,
   //isKYCRequired defaulted to No on default value
   projectDescription: string().when(

@@ -4,6 +4,7 @@ import { FieldValues, Path, PathValue } from "react-hook-form";
 export type ValKey = string | number;
 
 export type OptionType<V> = { label: string; value: V };
+
 type Classes = {
   container?: string;
   button?: string;
