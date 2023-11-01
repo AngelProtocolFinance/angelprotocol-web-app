@@ -21,6 +21,7 @@ export default function useTerra() {
     network,
     wallets,
     connect,
+    connection,
     status,
     disconnect,
     post,
@@ -28,8 +29,9 @@ export default function useTerra() {
 
   const wallet = (c: Installation | TerraConnection): Wallet => {
     const meta: WalletMeta = {
-      name: c.name,
-      logo: c.icon,
+      //terra wallets share the same state, always use active connection meta
+      name: connection?.name || c.name,
+      logo: connection?.icon || c.icon,
       supportedChains: ["phoenix-1", "pisco-1"],
     };
 
@@ -51,7 +53,6 @@ export default function useTerra() {
       ...meta,
       ...{
         connect() {
-          console.log(c);
           //if installation
           if ("url" in c) {
             return window.open(c.url, "_blank", "noopener noreferrer");
