@@ -7,6 +7,7 @@ import RequirementField from "./RequirementField";
 
 type Props = {
   accountRequirements: AccountRequirements;
+  disabled: boolean;
   refreshRequired: boolean;
   onRefresh: (request: CreateRecipientRequest) => void;
   onSubmit: (request: CreateRecipientRequest) => void;
@@ -28,20 +29,45 @@ export default function Form(props: Props) {
   });
 
   return (
-    <form onSubmit={handleSubmission} className="grid gap-6">
-      {props.accountRequirements.fields
-        .flatMap((field) => field.group)
-        .map((requirements) => (
-          <RequirementField key={requirements.key} data={requirements} />
-        ))}
+    <form onSubmit={handleSubmission}>
+      <fieldset
+        aria-disabled={props.disabled}
+        disabled={props.disabled}
+        className="grid gap-6"
+      >
+        {props.accountRequirements.fields
+          .flatMap((field) => field.group)
+          .map((requirements) => (
+            <RequirementField
+              key={requirements.key}
+              data={requirements}
+              disabled={props.disabled}
+            />
+          ))}
 
-      {props.refreshRequired ? (
-        <>
-          <span>
-            After you fill the form, we may need additional information to be
-            able to submit your bank details for validation. Please fill the
-            form and click the "Check requirements" button below.
-          </span>
+        {props.refreshRequired ? (
+          <>
+            <span>
+              After you fill the form, we may need additional information to be
+              able to submit your bank details for validation. Please fill the
+              form and click the "Check requirements" button below.
+            </span>
+            <button
+              disabled={isSubmitting}
+              type="submit"
+              className="px-6 btn-orange text-sm w-80"
+            >
+              {isSubmitting ? (
+                <>
+                  <LoaderRing thickness={10} classes="w-6" /> Checking
+                  additional requirements...
+                </>
+              ) : (
+                "Check requirements"
+              )}
+            </button>
+          </>
+        ) : (
           <button
             disabled={isSubmitting}
             type="submit"
@@ -49,29 +75,14 @@ export default function Form(props: Props) {
           >
             {isSubmitting ? (
               <>
-                <LoaderRing thickness={10} classes="w-6" /> Checking additional
-                requirements...
+                <LoaderRing thickness={10} classes="w-6" /> Submitting...
               </>
             ) : (
-              "Check requirements"
+              "Submit"
             )}
           </button>
-        </>
-      ) : (
-        <button
-          disabled={isSubmitting}
-          type="submit"
-          className="px-6 btn-orange text-sm w-80"
-        >
-          {isSubmitting ? (
-            <>
-              <LoaderRing thickness={10} classes="w-6" /> Submitting...
-            </>
-          ) : (
-            "Submit"
-          )}
-        </button>
-      )}
+        )}
+      </fieldset>
     </form>
   );
 }

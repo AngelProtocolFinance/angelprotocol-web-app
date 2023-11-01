@@ -1,10 +1,11 @@
 import { Label } from "components/form";
 
 type Props = {
+  disabled: boolean;
   onChange: (expectedFunds: number) => void;
 };
 
-export default function ExpectedFunds({ onChange }: Props) {
+export default function ExpectedFunds({ disabled, onChange }: Props) {
   return (
     <div className="field">
       <Label htmlFor="amount" required aria-required>
@@ -19,6 +20,7 @@ export default function ExpectedFunds({ onChange }: Props) {
           className="field-input text-field"
           autoComplete="off"
           spellCheck={false}
+          disabled={disabled}
         />
       </div>
     </div>

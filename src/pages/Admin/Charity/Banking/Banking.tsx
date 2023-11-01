@@ -78,6 +78,8 @@ export default function Banking() {
     return <span>{PROFILE_ERROR}</span>;
   }
 
+  const disabled = profile.bank_verification_status === "Under Review";
+
   return (
     <div className="grid">
       <div className="grid gap-5 max-w-4xl justify-self-center">
@@ -91,6 +93,7 @@ export default function Banking() {
             currencies={currencies}
             onChange={setTargetCurrency}
             classes="w-60 md:w-80"
+            disabled={disabled}
           />
           <ExpectedFunds
             onChange={(value) => {
@@ -99,6 +102,7 @@ export default function Banking() {
               const delay = !value ? 0 : 1000;
               debounce(() => setExpectedFunds(value), delay);
             }}
+            disabled={disabled}
           />
 
           {!!expectedFunds && (
@@ -116,6 +120,7 @@ export default function Banking() {
                     key={`${targetCurrency.code}${expectedFunds}`}
                     targetCurrency={targetCurrency.code}
                     expectedFunds={expectedFunds}
+                    disabled={disabled}
                   />
                 )}
               </div>

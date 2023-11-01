@@ -14,6 +14,7 @@ export type Currency = {
 
 type Props = {
   classes?: Classes;
+  disabled: boolean;
   value: Currency;
   currencies: Currency[];
   onChange: (currency: Currency) => void;
@@ -51,6 +52,8 @@ function CurrencySelector(props: Props) {
       </Label>
       <Combobox
         value={props.value}
+        aria-disabled={props.disabled}
+        disabled={props.disabled}
         onChange={props.onChange}
         as="div"
         className={`relative items-center grid grid-cols-[1fr_auto] field-container ${classes.container}`}

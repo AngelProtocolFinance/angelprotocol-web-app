@@ -8,6 +8,7 @@ import useRecipientDetailsForm from "./useRecipientDetailsForm";
 type Props = {
   accountRequirements: AccountRequirements;
   defaultValues: FormValues;
+  disabled: boolean;
   refreshRequired: boolean;
   onCleanup: (formValues: FormValues) => void;
   onRefresh: (request: CreateRecipientRequest) => void;
@@ -34,6 +35,7 @@ export default function RecipientDetailsForm(props: Props) {
     <FormProvider {...methods}>
       <Form
         accountRequirements={props.accountRequirements}
+        disabled={props.disabled}
         refreshRequired={props.refreshRequired}
         onRefresh={(request) => props.onRefresh(request)}
         onSubmit={(request) => props.onSubmit(request)}

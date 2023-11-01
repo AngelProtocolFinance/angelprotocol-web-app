@@ -5,6 +5,7 @@ type Props = {
   accountRequirements: AccountRequirements[];
   className?: string;
   currentIndex: number | undefined;
+  disabled: boolean;
   onChange: (index: number) => void;
 };
 
@@ -12,6 +13,7 @@ export default function AccountRequirementsSelector({
   accountRequirements,
   className = "",
   currentIndex,
+  disabled,
   onChange,
 }: Props) {
   return (
@@ -26,6 +28,8 @@ export default function AccountRequirementsSelector({
             className={`${
               index === currentIndex ? "btn-blue" : "btn-outline"
             } text-xs sm:text-sm w-40 sm:w-48`}
+            disabled={disabled}
+            aria-disabled={disabled}
           >
             {accountRequirements.title}
           </button>

@@ -8,7 +8,12 @@ import { Field, Label } from "components/form";
 import { isEmpty } from "helpers";
 import { isCountry, undot } from "../helpers";
 
-export default function RequirementField({ data }: { data: Group }) {
+type Props = {
+  data: Group;
+  disabled?: boolean; // need this only for CountrySelector
+};
+
+export default function RequirementField({ data, disabled }: Props) {
   const requirementsKey = undot(data.key);
 
   const name: Path<FormValues> = `requirements.${requirementsKey}`;
@@ -61,6 +66,7 @@ export default function RequirementField({ data }: { data: Group }) {
             input: "text-sm py-4",
             error: "field-error",
           }}
+          disabled={disabled}
         />
       </div>
     );

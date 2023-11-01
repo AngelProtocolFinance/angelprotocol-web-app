@@ -6,11 +6,13 @@ import RecipientDetailsForm from "./RecipientDetailsForm";
 import useRecipientDetails from "./useRecipientDetails";
 
 type Props = {
+  disabled: boolean;
   targetCurrency: string;
   expectedFunds: number;
 };
 
 export default function RecipientDetails({
+  disabled,
   targetCurrency,
   expectedFunds,
 }: Props) {
@@ -73,6 +75,7 @@ export default function RecipientDetails({
           (x) => x.accountRequirements
         )}
         currentIndex={selectedIndex}
+        disabled={disabled}
         onChange={setSelectedIndex}
         className="mb-6"
       />
@@ -83,6 +86,7 @@ export default function RecipientDetails({
         key={`form-${requirements.accountRequirements.type}`}
         accountRequirements={requirements.accountRequirements}
         defaultValues={requirements.currentFormValues}
+        disabled={disabled}
         refreshRequired={requirements.refreshRequired}
         onCleanup={updateDefaultValues}
         onSubmit={handleSubmit}
