@@ -122,7 +122,7 @@ export default function Form() {
         <Label className="-mb-4" required>
           Endowment Designation
         </Label>
-        <Selector<FV, string>
+        <Selector<FV, "endow_designation", string>
           name="endow_designation"
           options={endowDesignations.map((designation) => ({
             label: designation,

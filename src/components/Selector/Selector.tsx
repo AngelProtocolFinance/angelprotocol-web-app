@@ -1,20 +1,24 @@
 import { Listbox } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
-import { FieldValues, get, useController } from "react-hook-form";
+import { FieldValues, Path, get, useController } from "react-hook-form";
 import { Props } from "./types";
 import { OptionType, ValKey } from "types/utils";
 import { DrawerIcon } from "components/Icon";
 import FocusableInput from "./FocusableInput";
 import { styles, valueKey } from "./constants";
 
-export function Selector<T extends FieldValues, V extends ValKey>({
+export function Selector<
+  T extends FieldValues,
+  K extends Path<T>,
+  V extends ValKey,
+>({
   name,
   disabled,
   options,
   children,
   classes,
   onOptionChange,
-}: Props<T, V>) {
+}: Props<T, K, V>) {
   const { container = "", button = "" } = classes || {};
   const {
     formState: { isSubmitting, errors },

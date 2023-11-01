@@ -47,7 +47,7 @@ export default function RequirementField({ data }: { data: Group }) {
   return (
     <div className="flex flex-col">
       <Label required={data.required}>{data.name}</Label>
-      <Selector<FormValues, string>
+      <Selector<FormValues, any, string>
         name={name}
         options={data.valuesAllowed.map((valuesAllowed) => ({
           label: valuesAllowed.name,
