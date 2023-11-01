@@ -54,7 +54,7 @@ function VerificationStatus() {
     return <span>{PROFILE_ERROR}</span>;
   }
 
-  switch (profile.bank_verified) {
+  switch (profile.bank_verification_status) {
     case "Not Submitted":
       return (
         <Status
