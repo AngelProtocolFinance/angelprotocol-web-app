@@ -1,4 +1,4 @@
-import { ObjectSchema, array, object, string } from "yup";
+import { ObjectSchema, array, object } from "yup";
 import { FV } from "./types";
 import { SchemaShape } from "schemas/types";
 import { ImgLink } from "components/ImgEditor";
@@ -34,14 +34,8 @@ export const schema = object<any, SchemaShape<FV>>({
   url: url,
   // registration_number: no need to validate,
   endow_designation: object<any, SchemaShape<OptionType<string>>>({
-    label: string().when("$isEndow", {
-      is: true,
-      then: () => requiredString,
-    }),
-    value: string().when("$isEndow", {
-      is: true,
-      then: () => requiredString,
-    }),
+    label: requiredString,
+    value: requiredString,
   }),
   name: requiredString,
   active_in_countries: array(),
