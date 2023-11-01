@@ -37,7 +37,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
 
   const xdefiEvm = useInjectedProvider(
     "xdefi-evm",
-    { logo: xdefiIcon, name: "Xdefi ethereum", supportedChains: EVMChains },
+    { logo: xdefiIcon, name: "Xdefi", supportedChains: EVMChains },
     "https://chrome.google.com/webstore/detail/xdefi-wallet/hmeobnfnfcmdkdcmlblgagmfpfboieaf?hl=en"
   );
 
