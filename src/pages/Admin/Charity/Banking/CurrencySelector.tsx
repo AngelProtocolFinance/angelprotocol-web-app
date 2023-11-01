@@ -46,7 +46,7 @@ function CurrencySelector(props: Props) {
 
   return (
     <div className="field">
-      <Label htmlFor={inputRef.current?.id}>
+      <Label htmlFor={inputRef.current?.id} required aria-required>
         Select your bank account currency:
       </Label>
       <Combobox

@@ -7,7 +7,7 @@ type Props = {
 export default function ExpectedFunds({ onChange }: Props) {
   return (
     <div className="field">
-      <Label htmlFor="amount">
+      <Label htmlFor="amount" required aria-required>
         What is the amount of donations you expect to receive on our platform?
       </Label>
       <div className="w-60 md:w-80">
