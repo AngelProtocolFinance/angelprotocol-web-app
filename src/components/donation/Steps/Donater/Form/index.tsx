@@ -6,7 +6,7 @@ import { ChainID } from "types/chain";
 import { DonaterConfigFromWidget } from "types/widget";
 import { useGetter } from "store/accessors";
 import { setDetails } from "slices/donation";
-import { chains } from "constants/chains-v2";
+import { chainList } from "constants/chains-v2";
 import { appRoutes } from "constants/routes";
 import { Selector } from "../../../../Selector";
 import Split from "../../../../Split";
@@ -49,9 +49,9 @@ export default function Form({ configFromWidget }: Props) {
       </label>
       <Selector<DonateValues, "chainId", ChainID>
         name="chainId"
-        options={Object.entries(chains).map(([, chain]) => ({
-          label: chain.name,
-          value: chain.id,
+        options={chainList.map(({ name, id }) => ({
+          label: name,
+          value: id,
         }))}
         onOptionChange={() => {
           setValue("token", initToken);

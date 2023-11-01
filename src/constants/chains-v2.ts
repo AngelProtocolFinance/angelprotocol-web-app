@@ -1,5 +1,6 @@
 import { Chain, Chains, CosmosChainID, EVMChainID } from "types/chain";
 
+//mainnets
 export const polygon: Chain = {
   id: "137",
   brand: "polygon",
@@ -63,7 +64,7 @@ export const juno: Chain = {
 export const terraMainnet: Chain = {
   id: "phoenix-1",
   brand: "terra",
-  name: "Terra Mainnet",
+  name: "Terra",
   lcd: "https://phoenix-lcd.terra.dev",
   rpc: "",
   blockExplorer: "https://finder.terra.money/mainnet",
@@ -75,6 +76,7 @@ export const terraMainnet: Chain = {
   },
 };
 
+//testnets
 export const mumbai: Chain = {
   id: "80001",
   brand: "polygon",
@@ -150,18 +152,23 @@ export const terraTestnet: Chain = {
   },
 };
 
-export const chains: Chains = {
-  "137": polygon,
-  "80001": mumbai,
-  "1": ethereum,
-  "5": goerli,
-  "56": binance,
-  "97": binanceTestnet,
-  "juno-1": juno,
-  "uni-6": junoTestnet,
-  "pisco-1": terraMainnet,
-  "phoenix-1": terraTestnet,
-};
+export const chainList: Chain[] = [
+  polygon,
+  ethereum,
+  binance,
+  juno,
+  terraMainnet,
+  mumbai,
+  goerli,
+  binanceTestnet,
+  junoTestnet,
+  terraTestnet,
+];
+
+export const chains: Chains = chainList.reduce(
+  (prev, curr) => ({ ...prev, [curr.id]: curr }),
+  {} as Chains
+);
 
 export const EVMChains: EVMChainID[] = ["1", "137", "5", "56", "80001", "97"];
 export const cosmosChains: CosmosChainID[] = ["juno-1", "uni-6"];
