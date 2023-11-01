@@ -1,4 +1,5 @@
 export enum appRoutes {
+  auth_redirector = "/auth-redirector",
   marketplace = "/marketplace",
   leaderboard = "/leaderboard",
   admin = "/admin",
