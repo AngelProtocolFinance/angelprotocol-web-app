@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
+import { ChainID } from "types/chain";
 import { CosmosProviderState, Wallet, WalletMeta } from "types/wallet";
-import { juno } from "constants/chains-v2";
+import { juno, terraMainnet } from "constants/chains-v2";
 import { retrieveUserAction, saveUserAction } from "../helpers";
 
 const actionKey = `keplr__pref`;
@@ -9,7 +10,7 @@ const keplrIcon = "/icons/wallets/keplr.png";
 const meta: WalletMeta = {
   name: "Keplr",
   logo: keplrIcon,
-  supportedChains: ["uni-6", "juno-1"],
+  supportedChains: ["juno-1", "phoenix-1"],
 };
 
 export default function useKeplr(): Wallet {
@@ -29,6 +30,7 @@ export default function useKeplr(): Wallet {
         return window.open(INSTALL_URL, "_blank", "noopener noreferrer");
       }
       setState({ status: "loading" });
+      await window.keplr.enable([juno.id, terraMainnet.id]);
       const key = await window.keplr.getKey(juno.id);
 
       setState({
@@ -49,10 +51,16 @@ export default function useKeplr(): Wallet {
     }
   }
 
+  async function switchChain(chainID: ChainID) {
+    if (state.status !== "connected" || !window.keplr) return;
+    const key = await window.keplr.getKey(chainID);
+    setState({ ...state, address: key.bech32Address, chainId: chainID });
+  }
+
   function disconnect() {
     setState({ status: "disconnected" });
     saveUserAction(actionKey, "disconnect");
   }
 
-  return { ...meta, ...state, ...{ connect, disconnect, switchChain: null } };
+  return { ...meta, ...state, ...{ connect, disconnect, switchChain } };
 }
