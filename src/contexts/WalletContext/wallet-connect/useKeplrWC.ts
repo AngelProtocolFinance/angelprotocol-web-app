@@ -104,7 +104,11 @@ export function useKeplrWC(): Wallet {
     supportedChains: ["juno-1"],
   };
 
-  return { ...state, ...meta, ...{ connect, disconnect, switchChain: null } };
+  return {
+    ...state,
+    ...meta,
+    ...{ connect, disconnect, switchChain: null },
+  };
 }
 
 const connected = (

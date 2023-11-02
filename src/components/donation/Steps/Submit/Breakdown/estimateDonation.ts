@@ -6,7 +6,7 @@ import { SubmitStep } from "slices/donation";
 import createCosmosMsg from "contracts/createCosmosMsg";
 import { createTx } from "contracts/createTx/createTx";
 import { humanize, logger, scale, scaleToStr } from "helpers";
-import { usdValue as _usdValue } from "helpers/coin-gecko";
+import { USD } from "helpers/coin-gecko";
 import { estimateTx } from "helpers/tx";
 import { apWallets } from "constants/ap-wallets";
 
@@ -120,27 +120,27 @@ export async function estimateDonation({
     if (!estimate) return null;
 
     // ///////////// Sucessful simulation ///////////////
-    const [tokenUSDValue, feeUSDValue] = await Promise.all([
-      _usdValue(token.coingecko_denom),
-      _usdValue(estimate.fee.coinGeckoId),
+    const [tokenUSD, feeUSD] = await Promise.all([
+      USD(token.coingecko_denom),
+      USD(estimate.fee.coinGeckoId),
     ]);
 
-    const tokenUSDAmountDec = new Decimal(tokenUSDValue).mul(token.amount);
+    const tokenUSDDec = new Decimal(tokenUSD).mul(token.amount);
     const amount: EstimateItem = {
       name: "Amount",
       cryptoAmount: {
         value: token.amount,
         symbol: token.symbol,
       },
-      fiatAmount: tokenUSDAmountDec.toNumber(),
-      prettyFiatAmount: `$${humanize(tokenUSDAmountDec, 4)}`,
+      fiatAmount: tokenUSDDec.toNumber(),
+      prettyFiatAmount: `$${humanize(tokenUSDDec, 4)}`,
     };
 
-    const feeUSDValueAmount = new Decimal(feeUSDValue).mul(estimate.fee.amount);
+    const feeUSDDec = new Decimal(feeUSD).mul(estimate.fee.amount);
 
-    const baseFee = tokenUSDAmountDec.mul(BASE_FEE_RATE_PCT).div(100);
-    const cryptoFee = feeUSDValueAmount.mul(CRYPTO_FEE_RATE_PCT).div(100);
-    const fiscalSponsorShipFee = fiscalSponsorShipFeeFn(tokenUSDAmountDec);
+    const baseFee = tokenUSDDec.mul(BASE_FEE_RATE_PCT).div(100);
+    const cryptoFee = tokenUSDDec.mul(CRYPTO_FEE_RATE_PCT).div(100);
+    const fiscalSponsorShipFee = fiscalSponsorShipFeeFn(tokenUSDDec);
     //feeUSD is on top of tokenAmountUSD
     const totalFeeDec = baseFee.add(cryptoFee).add(fiscalSponsorShipFee);
 
@@ -150,8 +150,8 @@ export async function estimateDonation({
         value: estimate.fee.amount.toString(),
         symbol: estimate.fee.symbol,
       },
-      fiatAmount: feeUSDValueAmount.toNumber(),
-      prettyFiatAmount: prettyDollar(feeUSDValueAmount),
+      fiatAmount: feeUSDDec.toNumber(),
+      prettyFiatAmount: prettyDollar(feeUSDDec),
     };
 
     const donationFee: EstimateItem = {
@@ -160,7 +160,7 @@ export async function estimateDonation({
       prettyFiatAmount: prettyDollar(totalFeeDec),
     };
 
-    const totalDec = tokenUSDAmountDec.sub(totalFeeDec);
+    const totalDec = tokenUSDDec.sub(totalFeeDec);
     const total: EstimateItem = {
       name: "Estimated proceeds",
       fiatAmount: totalDec.toNumber(),
@@ -172,7 +172,6 @@ export async function estimateDonation({
       items: [amount, donationFee, transactionFee, total],
     };
   } catch (err) {
-    console.log(err);
     logger.error(err);
     return null;
   }

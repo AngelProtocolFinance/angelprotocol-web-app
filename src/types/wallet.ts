@@ -43,7 +43,9 @@ type Loading = { status: "loading" };
 
 export type Connector = { connect(...args: any[]): void };
 type Disconnector = { disconnect(): void };
-type ChainSwitcher = { switchChain: ((chainId: ChainID) => void) | null };
+type ChainSwitcher = {
+  switchChain: ((chainId: ChainID) => void) | null;
+};
 
 export type EVMProviderState = EVMConnected | Disconnected | Loading;
 export type CosmosProviderState = CosmosConnected | Disconnected | Loading;

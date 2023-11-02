@@ -53,17 +53,25 @@ export default function Submit(props: SubmitStep) {
   if (chainID !== wallet.chainId) {
     return (
       <Container {...props} wallet={wallet}>
-        <Info classes="justify-self-center mt-6">
-          Your wallet is not connected to your selected chain
-        </Info>
-        <button
-          disabled={wallet.isSwitching}
-          type="button"
-          onClick={() => wallet.switchChain?.(chainID)}
-          className="btn-outline-filled px-4 py-2 mt-4 text-xs font-normal font-work justify-self-center"
-        >
-          Switch to {chains[chainID].name}
-        </button>
+        {wallet.switchChain ? (
+          <>
+            <Info classes="justify-self-center mt-6">
+              Your wallet is not connected to your selected chain.
+            </Info>
+            <button
+              disabled={wallet.isSwitching}
+              type="button"
+              onClick={() => wallet.switchChain?.(chainID)}
+              className="btn-outline-filled px-4 py-2 mt-4 text-xs font-normal font-work justify-self-center"
+            >
+              Switch to {chains[chainID].name}
+            </button>
+          </>
+        ) : (
+          <Info classes="justify-self-center mt-6">
+            Kindly set your wallet network to your selected chain.
+          </Info>
+        )}
       </Container>
     );
   }

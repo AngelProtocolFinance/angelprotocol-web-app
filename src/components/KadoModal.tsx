@@ -11,7 +11,7 @@ import IFrame from "./IFrame";
 import Modal from "./Modal";
 
 const KADO_NETWORKS = ["ethereum", "juno", "terra", "polygon"] as const;
-type KADO_NETWORK_VALUES = (typeof KADO_NETWORKS)[number];
+type KADO_NETWORK = (typeof KADO_NETWORKS)[number];
 
 const NETWORK_LIST = KADO_NETWORKS.join(",");
 
@@ -33,7 +33,7 @@ export default function KadoModal() {
     ? `&onToAddress=${wallet.address}`
     : "";
   const network = isConnected(wallet)
-    ? `&network=${getKadoNetworkValue(wallet.chainId)}`
+    ? `&network=${kadoNetwork(wallet.chainId)}`
     : "";
 
   return (
@@ -60,7 +60,7 @@ export default function KadoModal() {
   );
 }
 
-function getKadoNetworkValue(chainId: string): KADO_NETWORK_VALUES {
+function kadoNetwork(chainId: string): KADO_NETWORK {
   switch (chainId) {
     case chains["80001"].id:
     case chains["137"].id:

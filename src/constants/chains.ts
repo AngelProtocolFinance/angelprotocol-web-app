@@ -122,21 +122,6 @@ export const binanceTestnet: Chain = {
   },
 };
 
-export const junoTestnet: Chain = {
-  id: "uni-6",
-  brand: "juno",
-  name: "Juno Testnet",
-  lcd: "https://api.uni.junonetwork.io",
-  rpc: "https://rpc.uni.junonetwork.io",
-  blockExplorer: "https://testnet.ping.pub/juno",
-  nativeToken: {
-    id: "ujunox",
-    symbol: "JUNOX",
-    decimals: 6,
-    coinGeckoId: "ethereum",
-  },
-};
-
 export const terraTestnet: Chain = {
   id: "pisco-1",
   brand: "terra",
@@ -161,7 +146,6 @@ export const chainList: Chain[] = [
   mumbai,
   goerli,
   binanceTestnet,
-  junoTestnet,
   terraTestnet,
 ];
 
