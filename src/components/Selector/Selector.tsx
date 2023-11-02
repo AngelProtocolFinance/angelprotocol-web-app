@@ -1,7 +1,8 @@
 import { Listbox } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import { FieldValues, Path, get, useController } from "react-hook-form";
-import { OptionType, Props, ValKey } from "./types";
+import { Props, ValKey } from "./types";
+import { OptionType } from "types/utils";
 import { DrawerIcon } from "components/Icon";
 import FocusableInput from "./FocusableInput";
 import { styles, valueKey } from "./constants";

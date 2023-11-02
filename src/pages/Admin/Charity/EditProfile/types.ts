@@ -2,8 +2,8 @@ import { OverrideProperties } from "type-fest";
 import { EndowDesignation, EndowmentProfileUpdate } from "types/aws";
 import { Country } from "types/countries";
 import { UNSDG_NUMS } from "types/lists";
+import { OptionType } from "types/utils";
 import { ImgLink } from "components/ImgEditor";
-import { OptionType } from "components/Selector";
 
 export type FV = OverrideProperties<
   EndowmentProfileUpdate,

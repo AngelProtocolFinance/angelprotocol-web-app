@@ -7,3 +7,5 @@ export type Diff = [string, PrimitiveValue, PrimitiveValue];
 export type SemiPartial<T, K extends keyof T> = { [key in K]: T[key] } & {
   [key in Exclude<keyof T, K>]?: T[key];
 };
+
+export type OptionType<V> = { label: string; value: V };

@@ -3,7 +3,7 @@ import { EndowmentTierNum } from "types/aws";
 import { Country } from "types/countries";
 import { UNSDG_NUMS } from "types/lists";
 import { Optional } from "types/utils";
-import { OptionType } from "components/Selector";
+import { OptionType } from "types/utils";
 import { Asset } from "components/registration";
 
 //REF_ID is global to registration

@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 import { SchemaShape } from "./types";
 import type { TokenWithAmount as TWA } from "types/tx";
-import { OptionType } from "components/Selector";
+import { OptionType } from "types/utils";
 import { tokenConstraint } from "./number";
 import { requiredString } from "./string";
 
