@@ -1,4 +1,4 @@
-import { OptionType } from "./types";
+import { OptionType } from "types/utils";
 
 export const valueKey: keyof OptionType<any> = "value";
 

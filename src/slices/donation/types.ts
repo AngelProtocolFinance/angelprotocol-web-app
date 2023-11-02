@@ -1,7 +1,7 @@
 import { ChainID } from "types/chain";
 import { Country } from "types/countries";
 import { TokenWithAmount, TxPackage } from "types/tx";
-import { OptionType } from "components/Selector";
+import { OptionType } from "types/utils";
 
 export type DonationRecipient = {
   id: number;
