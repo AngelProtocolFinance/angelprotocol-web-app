@@ -1,8 +1,6 @@
 import { ReactNode } from "react";
 import { FieldValues, Path, PathValue } from "react-hook-form";
-import { OptionType } from "types/utils";
-
-export type ValKey = string | number;
+import { OptionType, ValKey } from "types/utils";
 
 type Classes = {
   container?: string;

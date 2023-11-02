@@ -8,8 +8,8 @@ import {
   useController,
   useFormContext,
 } from "react-hook-form";
-import { MultiselectorProps, ValKey } from "./types";
-import { OptionType } from "types/utils";
+import { MultiselectorProps } from "./types";
+import { OptionType, ValKey } from "types/utils";
 import Icon, { DrawerIcon } from "components/Icon";
 import FocusableInput from "./FocusableInput";
 import { styles, valueKey } from "./constants";

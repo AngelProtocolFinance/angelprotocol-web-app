@@ -8,4 +8,6 @@ export type SemiPartial<T, K extends keyof T> = { [key in K]: T[key] } & {
   [key in Exclude<keyof T, K>]?: T[key];
 };
 
+export type ValKey = string | number;
+
 export type OptionType<V> = { label: string; value: V };
