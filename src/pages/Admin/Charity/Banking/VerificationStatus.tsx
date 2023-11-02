@@ -34,7 +34,7 @@ function VerificationStatus({ status }: Props) {
     case "Under Review":
       return (
         <Status
-          className="bg-orange-l3 dark:bg-orange-l1 text-orange-d1 dark:text-white"
+          className="bg-yellow-l2 dark:bg-yellow text-yellow-d2 dark:text-white"
           label="Under Review"
           iconType="HourglassSplit"
         />
