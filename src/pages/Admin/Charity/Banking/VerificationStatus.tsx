@@ -10,7 +10,7 @@ function Status(props: {
   const { className, label, iconType } = props;
   return (
     <span
-      className={`flex gap-1 items-center justify-center w-36 p-2 rounded text-xs sm:text-sm font-semibold ${className}`}
+      className={`flex gap-1 items-center justify-center p-2 rounded-sm text-xs sm:text-sm font-semibold ${className}`}
     >
       {label} <Icon type={iconType} aria-hidden className="text-sm" />
     </span>
