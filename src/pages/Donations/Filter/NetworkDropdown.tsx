@@ -1,38 +1,20 @@
 import { FormValues as FV } from "./types";
-import { useChainsQuery } from "services/apes";
-import QueryLoader from "components/QueryLoader";
-import { Selector, selectorButtonStyle } from "components/Selector";
+import { Selector } from "components/Selector";
+import { chains } from "constants/chains";
 
 export default function NetworkDropdown({ classes = "" }) {
-  const queryState = useChainsQuery("");
-
   return (
     <div className={classes + " grid gap-2"}>
       <label className="text-sm">Network</label>
-      <QueryLoader
-        queryState={queryState}
-        messages={{
-          loading: "Fetching network options...",
-          error: "Failed to get network options",
-          empty: "No network to choose from",
-        }}
-        //filterFn: TODO show only network related to donor address
-        classes={{
-          container:
-            selectorButtonStyle + " bg-white dark:bg-blue-d6 px-4 py-3",
-        }}
-      >
-        {(networks) => (
-          <Selector<FV, "network", string>
-            name="network"
-            classes={{ button: "dark:bg-blue-d6" }}
-            options={networks.map((n) => ({
-              label: n.chain_name,
-              value: n.chain_name,
-            }))}
-          />
-        )}
-      </QueryLoader>
+
+      <Selector<FV, "network", string>
+        name="network"
+        classes={{ button: "dark:bg-blue-d6" }}
+        options={Object.entries(chains).map(([, chain]) => ({
+          label: chain.name,
+          value: chain.name,
+        }))}
+      />
     </div>
   );
 }

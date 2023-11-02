@@ -1,1 +1,1 @@
-export const tags = ["chain", "withdraw_logs", "donations", "tokens"] as const;
+export const tags = ["chain", "donations", "tokens"] as const;

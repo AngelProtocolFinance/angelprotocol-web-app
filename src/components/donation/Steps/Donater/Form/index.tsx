@@ -2,34 +2,26 @@ import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { DonateValues } from "../types";
-import { TokenWithAmount } from "types/tx";
+import { ChainID } from "types/chain";
 import { DonaterConfigFromWidget } from "types/widget";
-import { WalletState, useSetWallet } from "contexts/WalletContext";
-import Icon from "components/Icon";
-import Split from "components/Split";
-import TokenField from "components/TokenField";
-import { CheckField } from "components/form";
 import { useGetter } from "store/accessors";
 import { setDetails } from "slices/donation";
-import { maskAddress } from "helpers";
+import { chainList } from "constants/chains";
 import { appRoutes } from "constants/routes";
+import { Selector } from "../../../../Selector";
+import Split from "../../../../Split";
+import TokenField from "../../../../TokenField";
+import { CheckField } from "../../../../form";
 import AdvancedOptions from "../../../AdvancedOptions";
-import ChainSelector from "./ChainSelector";
+import { initToken } from "../constants";
 
 type Props = {
   configFromWidget: DonaterConfigFromWidget | null;
-  tokens: TokenWithAmount[];
-  wallet: WalletState;
 };
 
-export default function Form({ configFromWidget, tokens, wallet }: Props) {
-  const {
-    watch,
-    reset,
-    handleSubmit,
-    formState: { isValid, isDirty, isSubmitting },
-  } = useFormContext<DonateValues>();
-  const { disconnect } = useSetWallet();
+export default function Form({ configFromWidget }: Props) {
+  const { watch, reset, setValue, handleSubmit } =
+    useFormContext<DonateValues>();
   const endowId = useGetter((state) => state.donation.recipient?.id);
   const isKYCRequired = useGetter(
     (state) => state.donation.recipient?.isKYCRequired
@@ -38,12 +30,12 @@ export default function Form({ configFromWidget, tokens, wallet }: Props) {
   const dispatch = useDispatch();
 
   function submit(data: DonateValues) {
-    dispatch(setDetails(data));
+    dispatch(setDetails({ ...data, method: "crypto" }));
     reset();
   }
 
   const token = watch("token");
-  const isStepOneCompleted = !!token.amount;
+  const chainId = watch("chainId");
   const isInsideWidget = configFromWidget !== null;
 
   return (
@@ -52,26 +44,25 @@ export default function Form({ configFromWidget, tokens, wallet }: Props) {
       className="grid rounded-md w-full"
       autoComplete="off"
     >
-      <div className="flex items-center gap-2 mb-4 flex-wrap">
-        <Icon type="Wallet" className="text-green" />
-        <p className="text-sm text-gray-d1 dark:text-gray font-work">
-          {maskAddress(wallet.address)}
-        </p>
-        <button
-          type="button"
-          onClick={disconnect}
-          className="text-xs font-work uppercase px-2 py-1 btn-outline"
-        >
-          disconnect
-        </button>
-      </div>
-
-      <label className="font-bold mb-1 text-md">Select network :</label>
-      <ChainSelector classes="dark:bg-blue-d6 mb-6" {...wallet} />
+      <label htmlFor="chainId" className="mb-1 font-bold text-lg">
+        Select network :
+      </label>
+      <Selector<DonateValues, "chainId", ChainID>
+        name="chainId"
+        options={chainList.map(({ name, id }) => ({
+          label: name,
+          value: id,
+        }))}
+        onOptionChange={() => {
+          setValue("token", initToken);
+          setValue("token.amount", "0");
+        }}
+        classes={{ container: "bg-white dark:bg-blue-d6 mb-8" }}
+      />
 
       <TokenField<DonateValues, "token">
         name="token"
-        tokens={tokens}
+        selectedChainId={chainId.value}
         withBalance
         label={`Enter the donation amount :`}
         classes={{ label: "text-lg", inputContainer: "dark:bg-blue-d6" }}
@@ -117,15 +108,7 @@ export default function Form({ configFromWidget, tokens, wallet }: Props) {
             Cancel
           </Link>
         )}
-        <button
-          className="btn-orange btn-donate w-1/2"
-          // * make sure that fields doesn't make form dirty on initial load
-          // * isStepOneCompleted, when user goes back to step 1 (filled out previously)
-          disabled={
-            !isValid || isSubmitting || !(isDirty || isStepOneCompleted)
-          }
-          type="submit"
-        >
+        <button className="btn-orange btn-donate w-1/2" type="submit">
           Continue
         </button>
       </div>

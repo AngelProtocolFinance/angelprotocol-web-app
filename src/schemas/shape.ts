@@ -1,4 +1,4 @@
-import * as Yup from "yup";
+import { lazy, object, string } from "yup";
 import { SchemaShape } from "./types";
 import type { TokenWithAmount as TWA } from "types/tx";
 import { OptionType } from "types/utils";
@@ -7,27 +7,24 @@ import { requiredString } from "./string";
 
 type Key = keyof TWA;
 type Min = TWA["min_donation_amnt"];
-type Bal = TWA["balance"];
 const minKey: Key = "min_donation_amnt";
-const balKey: Key = "balance";
 
 export const tokenShape = (withMin = true): SchemaShape<TWA> => ({
-  amount: Yup.lazy((amount: string) =>
+  token_id: string().required("select token"),
+  amount: lazy((amount: string) =>
     amount === ""
       ? requiredString
-      : tokenConstraint.when([minKey, balKey], (values, schema) => {
-          const [minAmount, balance] = values as [Min, Bal];
+      : tokenConstraint.when([minKey], (values, schema) => {
+          const [minAmount] = values as [Min];
           return withMin && !!minAmount
-            ? schema
-                .min(minAmount || 0, `amount must be at least ${minAmount}`)
-                .max(balance, "not enough balance")
-            : schema.max(balance, "not enough balance");
+            ? schema.min(minAmount || 0, `amount must be at least ${minAmount}`)
+            : schema;
         })
   ),
 });
 
 export const optionType = ({ required } = { required: false }) =>
-  Yup.object<any, SchemaShape<OptionType<string>>>({
-    label: required ? requiredString : Yup.string(),
-    value: required ? requiredString : Yup.string(),
+  object<any, SchemaShape<OptionType<string>>>({
+    label: required ? requiredString : string(),
+    value: required ? requiredString : string(),
   });

@@ -23,6 +23,7 @@ export interface Props<
   options: OptionType<V>[];
   disabled?: true;
   classes?: Classes;
+  onOptionChange?(): void;
   children?: (selected: OptionType<V>) => ReactNode;
 }
 

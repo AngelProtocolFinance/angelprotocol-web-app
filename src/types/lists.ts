@@ -20,16 +20,5 @@ export type UNSDG_NUMS =
   | 16
   | 17;
 
-export type ProviderId =
-  | "binance-wallet"
-  | "metamask"
-  | "evm-wc"
-  | "xdefi-wallet" //xdefi terra provider
-  | "xdefi-evm" //xdefi evm provider
-  | "leap-wallet"
-  | "station"
-  | "walletconnect"
-  | "keplr-wc"
-  | "keplr";
-
+export type TransactionStatus = "open" | "approved" | "expired";
 export type EndowmentType = "charity" | "ast" | "daf";

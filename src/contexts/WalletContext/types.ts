@@ -1,33 +1,18 @@
-import { BaseChain } from "types/aws";
-import { ProviderId } from "types/lists";
-import { chainIDs } from "constants/chains";
-import { WalletState } from "./WalletContext";
+import { ConnectedWallet, DisconnectedWallet } from "types/wallet";
 
-export type WithWallet<T> = T & { wallet: WalletState };
+export type WalletContextState =
+  | "loading" /** consolidate all LoadingWallet*/
+  | ConnectedWallet
+  | DisconnectedWallet[];
 
-export type WithoutInstallers = Exclude<
-  ProviderId,
-  "station" | "walletconnect" | "leap-wallet"
->;
-
-export type Connection = {
-  providerId: ProviderId;
-  logo: string;
-  installUrl?: string;
-  name: string;
-  connect(args?: any): Promise<void>;
-};
-
-export type ProviderInfo = {
-  providerId: ProviderId;
-  logo: string;
-  chainId: string;
-  address: string;
-};
-
-export type ProviderStatus = {
-  providerInfo?: ProviderInfo;
-  isLoading: boolean;
-  supportedChains: BaseChain[];
-  switchChain: (chainId: chainIDs) => Promise<void>;
-};
+/** type guards */
+export function isDisconnected(
+  state: WalletContextState
+): state is DisconnectedWallet[] {
+  return Array.isArray(state);
+}
+export function isConnected(
+  state: WalletContextState
+): state is ConnectedWallet {
+  return state !== "loading" && !Array.isArray(state);
+}

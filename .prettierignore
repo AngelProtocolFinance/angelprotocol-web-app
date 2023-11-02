@@ -1,1 +1,3 @@
 src/types/typechain-types
+src/aws-exports.js
+amplify

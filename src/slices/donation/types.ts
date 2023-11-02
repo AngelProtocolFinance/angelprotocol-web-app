@@ -1,7 +1,7 @@
+import { ChainID } from "types/chain";
 import { Country } from "types/countries";
-import { EstimatedTx, TokenWithAmount } from "types/tx";
+import { TokenWithAmount, TxPackage } from "types/tx";
 import { OptionType } from "types/utils";
-import { WalletState } from "contexts/WalletContext";
 
 export type DonationRecipient = {
   id: number;
@@ -11,12 +11,10 @@ export type DonationRecipient = {
 };
 
 export type DonationDetails = {
+  method: "stripe" | "crypto"; //use to preserve selected method
   token: TokenWithAmount;
   pctLiquidSplit: number; // <input range value transformed to number via onChange
-
-  //meta
-  chainId: string;
-  chainName: string;
+  chainId: OptionType<ChainID>;
   userOptForKYC: boolean;
 };
 
@@ -61,11 +59,6 @@ export type TxStep = {
   status: TxStatus;
 } & Omit<SubmitStep, "step">;
 
-export type DonateArgs = { donation: SubmitStep } & {
-  wallet: WalletState;
-  tx: EstimatedTx;
-};
-
-export type WithWallet<T> = T & { wallet: WalletState };
+export type DonateArgs = { donation: SubmitStep } & TxPackage;
 
 export type DonationStep = DonationState["step"];

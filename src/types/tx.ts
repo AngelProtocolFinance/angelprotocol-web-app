@@ -1,52 +1,51 @@
-import { CreateTxOptions, Msg } from "@terra-money/terra.js";
-import { ConnectedWallet } from "@terra-money/wallet-provider";
-import { Except } from "type-fest";
+import type { CreateTxOptions, Msg } from "@terra-money/terra.js";
+import type { ConnectedWallet as TerraConnectedWallet } from "@terra-money/wallet-provider";
 import type { Any } from "@keplr-wallet/proto-types/google/protobuf/any";
-import { FetchedChain, Token } from "./aws";
+import { Keplr } from "@keplr-wallet/types";
+import { Token } from "./aws";
+import { ChainID, CosmosChainID, EVMChainID, TerraChainID } from "./chain";
 import { Allowance, Transfer } from "./contracts/erc20";
 import { SignDoc } from "./cosmos";
-import { Tupleable } from "./evm";
-import { EVMTx, LogProcessor, SimulTx } from "./evm";
-import { TagPayload } from "./third-party/redux";
+import { Requester, Tupleable } from "./evm";
+import { EVMTx, SimulTx } from "./evm";
 
-export type TokenWithBalance = Token & { balance: number };
-
-export type TokenWithAmount = Except<TokenWithBalance, "type"> & {
+export type TokenWithAmount = Token & {
   amount: string;
-  type: TokenWithBalance["type"];
 };
 
-export type Chain = Omit<FetchedChain, "native_currency" | "tokens"> & {
-  tokens: TokenWithBalance[];
-  native_currency: TokenWithBalance;
-};
+// //////////// ESTIMATE TX ////////////
+export type EstimateInput =
+  | { chainID: CosmosChainID; val: Any[] }
+  | { chainID: TerraChainID; val: Msg[] }
+  | { chainID: EVMChainID; val: SimulTx };
 
 // //////////// SEND TX ////////////
-export type EstimatedTx =
-  | { type: "cosmos"; val: SignDoc; attribute?: string }
-  | {
-      type: "terra";
-      val: CreateTxOptions;
-      wallet: ConnectedWallet /**future client/provider will be included in wallet */;
-    }
-  | { type: "evm"; val: EVMTx; log?: LogProcessor };
 
-export type SubmittedTx = { hash: string; chainID: string };
+export type SubmittedTx = { hash: string; chainID: ChainID };
 
 type TxLoading = { loading: string };
 export type TxError = { error: string; tx?: SubmittedTx };
-type TxSuccess = SubmittedTx & { data: unknown };
+type TxSuccess = SubmittedTx;
 
 export type TxResult = TxError | TxSuccess;
 
-// //////////// ESTIMATE TX ////////////
-export type TxContent =
-  | { type: "cosmos"; val: Any[]; attribute?: string }
-  | { type: "terra"; val: Msg[]; wallet: ConnectedWallet }
-  | { type: "evm"; val: SimulTx; log?: LogProcessor };
-
 type Fee = { amount: number; symbol: string; coinGeckoId: string };
-export type Estimate = { fee: Fee; tx: EstimatedTx };
+
+type CosmosEstimate = { chainID: CosmosChainID; toSend: SignDoc };
+type EVMEstimate = { chainID: EVMChainID; toSend: EVMTx };
+type TerraEstimate = { chainID: TerraChainID; toSend: CreateTxOptions };
+
+export type EstimateResult = {
+  fee: Fee;
+} & (CosmosEstimate | EVMEstimate | TerraEstimate);
+
+export type TxPackage = { sender: string } & (
+  | (CosmosEstimate & { sign: Keplr["signDirect"] })
+  | (TerraEstimate & {
+      post: TerraConnectedWallet["post"];
+    })
+  | (EVMEstimate & { request: Requester })
+);
 
 // //////////// HOOK SENDER & PROMPT ////////////
 type TxSuccessMeta = {
@@ -57,14 +56,6 @@ type TxSuccessMeta = {
 type SuccessState = { success: TxSuccessMeta; tx?: SubmittedTx };
 
 export type TxState = TxLoading | TxError | SuccessState;
-type TxOnSuccess = (result: TxSuccess, chain: Chain) => void;
-
-export type SenderArgs = {
-  tagPayloads?: TagPayload[];
-  successMeta?: TxSuccessMeta;
-  content: TxContent;
-  onSuccess?: TxOnSuccess;
-};
 
 // //////////// TYPE GUARDS ////////////
 export function isTxResultError(tx: TxResult): tx is TxError {

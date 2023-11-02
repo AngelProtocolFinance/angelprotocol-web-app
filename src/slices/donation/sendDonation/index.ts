@@ -9,15 +9,17 @@ import { createAuthToken, logger } from "helpers";
 import { sendTx } from "helpers/tx";
 import { LogDonationFail } from "errors/errors";
 import { chainIds } from "constants/chainIds";
+import { chains } from "constants/chains";
 import { APIs } from "constants/urls";
 import donation, { setTxStatus } from "../donation";
 
 export const sendDonation = createAsyncThunk<void, DonateArgs>(
   `${donation.name}/sendDonation`,
   async (
-    { wallet, tx, donation: { details, kyc, recipient } },
+    { donation: { details, kyc, recipient }, ...txPackage },
     { dispatch }
   ) => {
+    const chain = chains[details.chainId.value];
     const updateTx = (status: TxStatus) => {
       dispatch(setTxStatus(status));
     };
@@ -25,7 +27,7 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
       const { token, pctLiquidSplit } = details;
       updateTx({ loadingMsg: "Payment is being processed..." });
 
-      const result = await sendTx(wallet, tx);
+      const result = await sendTx(txPackage);
 
       if (isTxResultError(result)) {
         return updateTx("error");
@@ -54,15 +56,15 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
       const payload: TxLogPayload = {
         ...kycData /** receipt is sent to user if kyc is provider upfront */,
         amount: +token.amount,
-        chainId: wallet.chain.chain_id,
+        chainId: chain.id,
         destinationChainId: chainIds.polygon,
-        chainName: wallet.chain.chain_name,
+        chainName: chain.name,
         charityName: recipient.name,
         denomination: token.symbol,
         splitLiq: `${pctLiquidSplit}`,
         transactionId: hash,
         transactionDate: new Date().toISOString(),
-        walletAddress: wallet.address,
+        walletAddress: txPackage.sender,
         endowmentId: recipient.id,
       };
 
@@ -84,7 +86,7 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
 
       updateTx({ hash });
       //invalidate cache entries
-      dispatch(invalidateApesTags(["chain", "donations"]));
+      dispatch(invalidateApesTags(["tokens", "donations"]));
     } catch (err) {
       logger.error(err);
       updateTx("error");

@@ -1,5 +1,3 @@
-import { WithoutInstallers } from "contexts/WalletContext/types";
-import { WALLET_METADATA } from "contexts/WalletContext/constants";
 import { chainIds } from "constants/chainIds";
 import { EMAIL_SUPPORT, EXPECTED_NETWORK_TYPE } from "constants/env";
 
@@ -77,17 +75,6 @@ export class ManualChainSwitchRequiredError extends APError {
       "ManualChainSwitchRequiredError",
       `Please use your wallet to switch to ${chainId} chain and reload the page`
     );
-  }
-}
-
-export class WalletNotInstalledError extends APError {
-  providerId: WithoutInstallers;
-  constructor(providerId: WithoutInstallers) {
-    super(
-      "WalletNotInstalledError",
-      `Wallet ${WALLET_METADATA[providerId].name} not installed`
-    );
-    this.providerId = providerId;
   }
 }
 

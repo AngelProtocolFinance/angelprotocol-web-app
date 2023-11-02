@@ -1,39 +1,32 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { DonateValues } from "./types";
-import { TokenWithAmount as TWA } from "types/tx";
 import { DonaterConfigFromWidget } from "types/widget";
-import { FormStep, WithWallet } from "slices/donation";
+import { FormStep } from "slices/donation";
+import { polygon } from "constants/chains";
 import Form from "./Form";
+import { initToken } from "./constants";
 import { schema } from "./schema";
 
-type Props = WithWallet<FormStep> & {
+type Props = FormStep & {
   config: DonaterConfigFromWidget | null;
 };
 
-export default function Donater({ wallet, config, ...state }: Props) {
-  const _tokens: TWA[] = wallet.coins.map<TWA>((t) => ({
-    ...t,
-    amount: "0",
-  }));
-
-  const initCoin = _tokens[0];
+export default function Donater({ config, ...state }: Props) {
+  const initial: DonateValues = {
+    token: initToken,
+    pctLiquidSplit: config?.liquidSplitPct ?? 50,
+    chainId: { label: polygon.name, value: polygon.id },
+    userOptForKYC: false,
+  };
 
   const methods = useForm<DonateValues>({
-    mode: "onChange",
-    reValidateMode: "onChange",
-    values: state.details || {
-      token: initCoin,
-      pctLiquidSplit: config?.liquidSplitPct ?? 50,
-      chainName: wallet.chain.chain_name,
-      chainId: wallet.chain.chain_id,
-      userOptForKYC: false,
-    },
+    values: state.details || initial,
     resolver: yupResolver(schema),
   });
   return (
     <FormProvider {...methods}>
-      <Form configFromWidget={config} tokens={_tokens} wallet={wallet} />
+      <Form configFromWidget={config} />
     </FormProvider>
   );
 }
