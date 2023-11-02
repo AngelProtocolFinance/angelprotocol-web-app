@@ -1,7 +1,7 @@
 import { Country } from "types/countries";
 import { EstimatedTx, TokenWithAmount } from "types/tx";
+import { OptionType } from "types/utils";
 import { WalletState } from "contexts/WalletContext";
-import { OptionType } from "components/Selector";
 
 export type DonationRecipient = {
   id: number;
