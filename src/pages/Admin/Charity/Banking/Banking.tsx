@@ -57,7 +57,7 @@ export default function Banking() {
     setTargetCurrency(newTargetCurrency);
   }, [currencies]);
 
-  if (!isLoading || isLoadingProfile) {
+  if (isLoading || isLoadingProfile) {
     return (
       <div className="flex items-center justify-center gap-2">
         <LoaderRing thickness={10} classes="w-6" /> Loading...
