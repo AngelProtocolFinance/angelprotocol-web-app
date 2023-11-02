@@ -13,7 +13,7 @@ import { JSONAccount, SimulateRes } from "types/cosmos";
 import { EstimateResult } from "types/tx";
 import { condenseToNum } from "helpers/decimal";
 import { base64FromU8a } from "helpers/encoding";
-import { chains } from "constants/chains-v2";
+import { chains } from "constants/chains";
 
 const GAS_PRICE = "0.075";
 

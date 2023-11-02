@@ -10,7 +10,7 @@ import {
 } from "types/cosmos";
 import { TxError, TxResult } from "types/tx";
 import { base64FromU8a, u8aFromBase64 } from "helpers/encoding";
-import { chains } from "constants/chains-v2";
+import { chains } from "constants/chains";
 
 export async function sendCosmosTx(
   chainID: CosmosChainID,

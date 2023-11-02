@@ -9,7 +9,7 @@ import { createAuthToken, logger } from "helpers";
 import { sendTx } from "helpers/tx";
 import { LogDonationFail } from "errors/errors";
 import { chainIds } from "constants/chainIds";
-import { chains } from "constants/chains-v2";
+import { chains } from "constants/chains";
 import { APIs } from "constants/urls";
 import donation, { setTxStatus } from "../donation";
 

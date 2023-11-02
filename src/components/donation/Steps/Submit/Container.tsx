@@ -6,7 +6,7 @@ import { useSetter } from "store/accessors";
 import { SubmitStep, setStep } from "slices/donation";
 import { sendDonation } from "slices/donation/sendDonation";
 import { maskAddress } from "helpers";
-import { chains } from "constants/chains-v2";
+import { chains } from "constants/chains";
 import { appRoutes } from "constants/routes";
 import Image from "../../../Image";
 import { Row } from "./Row";

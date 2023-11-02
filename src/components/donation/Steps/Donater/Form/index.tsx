@@ -6,7 +6,7 @@ import { ChainID } from "types/chain";
 import { DonaterConfigFromWidget } from "types/widget";
 import { useGetter } from "store/accessors";
 import { setDetails } from "slices/donation";
-import { chainList } from "constants/chains-v2";
+import { chainList } from "constants/chains";
 import { appRoutes } from "constants/routes";
 import { Selector } from "../../../../Selector";
 import Split from "../../../../Split";

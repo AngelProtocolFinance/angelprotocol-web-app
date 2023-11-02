@@ -1,103 +1,174 @@
-import { DAPP_URL } from "./env";
+import { Chain, Chains, CosmosChainID, EVMChainID } from "types/chain";
 
-export enum chainIDs {
-  junoMain = "juno-1",
-  junoTest = "uni-6",
-  polygonMain = "137",
-  polygonTest = "80001",
-  polygonLocal = "1337",
-  binanceMain = "56",
-  binanceTest = "97",
-  ethMain = "1",
-  ethTest = "5",
-  terraMain = "phoenix-1",
-  terraTest = "pisco-1",
-  //add axelar, connext
-}
-
-type Info = { txExplorer: string; addressExplorer: string; name: string };
-
-const explorers: { [key in chainIDs]: string } = {
-  1: "https://etherscan.io",
-  5: "https://goerli.etherscan.io",
-  97: "https://testnet.bscscan.com",
-  56: "https://bscscan.com",
-  137: "https://polygonscan.com",
-  80001: "https://mumbai.polygonscan.com",
-  1337: "",
-  "juno-1": "https://www.mintscan.io/juno",
-  "uni-6": "https://testnet.mintscan.io/juno-testnet",
-  "phoenix-1": "https://finder.terra.money/mainnet",
-  "pisco-1": "https://finder.terra.money/testnet",
-};
-
-const _chains: { [key in chainIDs]: Info } = {
-  [chainIDs.ethMain]: {
-    name: "Ethereum",
-    txExplorer: `${explorers[chainIDs.ethMain]}/tx`,
-    addressExplorer: `${explorers[chainIDs.ethMain]}/address`,
-  },
-  [chainIDs.ethTest]: {
-    name: "Ethereum",
-    txExplorer: `${explorers[chainIDs.ethTest]}/tx`,
-    addressExplorer: `${explorers[chainIDs.ethTest]}/address`,
-  },
-  [chainIDs.binanceMain]: {
-    name: "Binance",
-    txExplorer: `${explorers[chainIDs.binanceMain]}/tx`,
-    addressExplorer: `${explorers[chainIDs.binanceMain]}/address`,
-  },
-  [chainIDs.binanceTest]: {
-    name: "Binance",
-    txExplorer: `${explorers[chainIDs.binanceTest]}/tx`,
-    addressExplorer: `${explorers[chainIDs.binanceTest]}/address`,
-  },
-  [chainIDs.polygonMain]: {
-    name: "Polygon",
-    txExplorer: `${explorers[chainIDs.polygonMain]}/tx`,
-    addressExplorer: `${explorers[chainIDs.polygonMain]}/address`,
-  },
-  [chainIDs.polygonTest]: {
-    name: "Polygon",
-    txExplorer: `${explorers[chainIDs.polygonTest]}/tx`,
-    addressExplorer: `${explorers[chainIDs.polygonTest]}/address`,
-  },
-  [chainIDs.polygonLocal]: {
-    name: "Polygon Local",
-    txExplorer: "",
-    addressExplorer: "",
-  },
-  [chainIDs.junoMain]: {
-    name: "Juno",
-    txExplorer: `${explorers[chainIDs.junoMain]}/txs`,
-    addressExplorer: `${explorers[chainIDs.junoMain]}/account`,
-  },
-  [chainIDs.junoTest]: {
-    name: "Juno",
-    txExplorer: `${explorers[chainIDs.junoTest]}/txs`,
-    addressExplorer: `${explorers[chainIDs.junoTest]}/account`,
-  },
-  [chainIDs.terraMain]: {
-    name: "Terra",
-    txExplorer: `${explorers[chainIDs.terraMain]}/tx`,
-    addressExplorer: `${explorers[chainIDs.terraMain]}/address`,
-  },
-  [chainIDs.terraTest]: {
-    name: "Terra",
-    txExplorer: `${explorers[chainIDs.terraTest]}/tx`,
-    addressExplorer: `${explorers[chainIDs.terraTest]}/address`,
+//mainnets
+export const polygon: Chain = {
+  id: "137",
+  brand: "polygon",
+  name: "Polygon",
+  rpc: "https://polygon.llamarpc.com",
+  lcd: "",
+  blockExplorer: "https://polygonscan.com",
+  nativeToken: {
+    id: "137",
+    symbol: "MATIC",
+    decimals: 18,
+    coinGeckoId: "matic-network",
   },
 };
 
-export const chains: { [index: string]: Info } = new Proxy(_chains, {
-  get(target, key: chainIDs | "staging") {
-    if (key === "staging") return target["80001"];
-    return (
-      target[key] ?? {
-        name: "Unknown chain",
-        txExplorer: DAPP_URL,
-        addressExplorer: DAPP_URL,
-      }
-    ); //TODO: what's good fallback link
+export const ethereum: Chain = {
+  id: "1",
+  brand: "ethereum",
+  name: "Ethereum",
+  rpc: "https://eth.llamarpc.com",
+  lcd: "",
+  blockExplorer: "https://etherscan.io",
+  nativeToken: {
+    id: "1",
+    symbol: "ETH",
+    decimals: 18,
+    coinGeckoId: "ethereum",
   },
-});
+};
+
+export const binance: Chain = {
+  id: "56",
+  brand: "binance",
+  name: "Binance",
+  rpc: "https://rpc.ankr.com/bsc",
+  lcd: "",
+  blockExplorer: "https://bscscan.com",
+  nativeToken: {
+    id: "56",
+    symbol: "BNB",
+    decimals: 18,
+    coinGeckoId: "binancecoin",
+  },
+};
+
+export const juno: Chain = {
+  id: "juno-1",
+  brand: "juno",
+  name: "Juno",
+  lcd: "https://juno-api.polkachu.com",
+  rpc: "https://juno-rpc.polkachu.com",
+  blockExplorer: "https://www.mintscan.io/juno",
+  nativeToken: {
+    id: "ujuno",
+    symbol: "JUNO",
+    decimals: 6,
+    coinGeckoId: "juno-network",
+  },
+};
+
+export const terraMainnet: Chain = {
+  id: "phoenix-1",
+  brand: "terra",
+  name: "Terra",
+  lcd: "https://phoenix-lcd.terra.dev",
+  rpc: "",
+  blockExplorer: "https://finder.terra.money/mainnet",
+  nativeToken: {
+    id: "uluna",
+    symbol: "LUNA",
+    decimals: 6,
+    coinGeckoId: "terra-luna-2",
+  },
+};
+
+//testnets
+export const mumbai: Chain = {
+  id: "80001",
+  brand: "polygon",
+  name: "Polygon Mumbai Testnet",
+  rpc: "https://rpc.ankr.com/polygon_mumbai",
+  lcd: "",
+  blockExplorer: "https://mumbai.polygonscan.com",
+  nativeToken: {
+    id: "80001",
+    symbol: "MATIC",
+    decimals: 18,
+    coinGeckoId: "matic-network",
+  },
+};
+
+export const goerli: Chain = {
+  id: "5",
+  brand: "ethereum",
+  name: "Ethereum Goerli Testnet",
+  rpc: "https://rpc.ankr.com/eth_goerli",
+  lcd: "",
+  blockExplorer: "https://goerli.etherscan.io",
+  nativeToken: {
+    id: "5",
+    symbol: "ETH",
+    decimals: 18,
+    coinGeckoId: "ethereum",
+  },
+};
+
+export const binanceTestnet: Chain = {
+  id: "97",
+  brand: "binance",
+  name: "Binance Testnet",
+  rpc: "https://rpc.ankr.com/bsc_testnet_chapel",
+  lcd: "",
+  blockExplorer: "https://testnet.bscscan.com",
+  nativeToken: {
+    id: "97",
+    symbol: "BNB",
+    decimals: 18,
+    coinGeckoId: "binancecoin",
+  },
+};
+
+export const junoTestnet: Chain = {
+  id: "uni-6",
+  brand: "juno",
+  name: "Juno Testnet",
+  lcd: "https://api.uni.junonetwork.io",
+  rpc: "https://rpc.uni.junonetwork.io",
+  blockExplorer: "https://testnet.ping.pub/juno",
+  nativeToken: {
+    id: "ujunox",
+    symbol: "JUNOX",
+    decimals: 6,
+    coinGeckoId: "ethereum",
+  },
+};
+
+export const terraTestnet: Chain = {
+  id: "pisco-1",
+  brand: "terra",
+  name: "Terra Pisco testnet",
+  lcd: "https://pisco-lcd.terra.dev",
+  rpc: "",
+  blockExplorer: "https://finder.terra.money/testnet",
+  nativeToken: {
+    id: "uluna",
+    symbol: "LUNA",
+    decimals: 6,
+    coinGeckoId: "terra-luna-2",
+  },
+};
+
+export const chainList: Chain[] = [
+  polygon,
+  ethereum,
+  binance,
+  juno,
+  terraMainnet,
+  mumbai,
+  goerli,
+  binanceTestnet,
+  junoTestnet,
+  terraTestnet,
+];
+
+export const chains: Chains = chainList.reduce(
+  (prev, curr) => ({ ...prev, [curr.id]: curr }),
+  {} as Chains
+);
+
+export const EVMChains: EVMChainID[] = ["1", "137", "5", "56", "80001", "97"];
+export const cosmosChains: CosmosChainID[] = ["juno-1", "uni-6"];

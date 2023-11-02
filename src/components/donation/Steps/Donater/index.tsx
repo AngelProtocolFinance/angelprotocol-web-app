@@ -3,7 +3,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { DonateValues } from "./types";
 import { DonaterConfigFromWidget } from "types/widget";
 import { FormStep } from "slices/donation";
-import { polygon } from "constants/chains-v2";
+import { polygon } from "constants/chains";
 import Form from "./Form";
 import { initToken } from "./constants";
 import { schema } from "./schema";

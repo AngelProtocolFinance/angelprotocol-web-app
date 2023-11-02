@@ -9,7 +9,7 @@ import {
   WalletMeta,
 } from "types/wallet";
 import { injectedProvider, logger } from "helpers";
-import { chains } from "constants/chains-v2";
+import { chains } from "constants/chains";
 import { EIPMethods } from "constants/evm";
 import { toPrefixedHex } from "./helpers";
 import { retrieveUserAction, saveUserAction } from "./helpers";
