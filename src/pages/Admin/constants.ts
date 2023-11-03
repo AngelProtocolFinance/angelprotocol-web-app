@@ -30,22 +30,20 @@ export const LINKS: {
       size: 24,
     },
   },
-
   widget_config: {
     title: "Widget Configuration",
-    to: "widget-config",
+    to: sidebarRoutes.widget_config,
     icon: {
       type: "Widget",
       size: 24,
     },
   },
   banking: {
-    title: "Banking (Coming soon)",
-    to: "banking",
+    title: "Banking",
+    to: sidebarRoutes.banking,
     icon: {
       type: "Wallet",
       size: 21.7,
     },
-    disabled: true,
   },
 };

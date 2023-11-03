@@ -1,11 +1,11 @@
 import {
-  AiFillCheckCircle,
   AiFillHeart,
   AiFillSecurityScan,
   AiFillYoutube,
   AiOutlineHeart,
   AiOutlineInfoCircle,
   AiOutlineMedium,
+  AiOutlineMinusCircle,
   AiOutlinePlus,
   AiOutlineQuestionCircle,
   AiOutlineUpload,
@@ -20,6 +20,7 @@ import {
   BiSun,
 } from "react-icons/bi";
 import {
+  BsDashCircle,
   BsExclamationCircleFill,
   BsFilterLeft,
   BsHourglassSplit,
@@ -76,7 +77,8 @@ export const icons = {
   Back: MdOutlineArrowBackIosNew,
   Blockchain: SiHiveBlockchain,
   Check: BiCheck,
-  CheckCircle: AiFillCheckCircle,
+  CheckCircle: BsDashCircle,
+  CircleMinus: AiOutlineMinusCircle,
   Close: IoClose,
   CloseCircle: IoCloseCircle,
   Copy: MdOutlineContentCopy,

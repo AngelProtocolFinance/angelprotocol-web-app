@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { adminRoutes } from "constants/routes";
 import Layout from "../Layout";
 import { LINKS } from "../constants";
+import Banking from "./Banking";
 import EditProfile from "./EditProfile";
 import ProgramEditor from "./ProgramEditor";
 import Programs from "./Programs";
@@ -27,6 +28,7 @@ export default function Charity() {
           element={<ProgramEditor />}
         />
         <Route path={adminRoutes.widget_config} element={<Widget />} />
+        <Route path={adminRoutes.banking} element={<Banking />} />
         <Route
           path="*"
           element={<Navigate replace to={adminRoutes.edit_profile} />}

@@ -61,7 +61,7 @@ export default function Milestone({
           classes={{ input: "date-input uppercase", container: "field-admin" }}
           name={`milestones.${idx}.milestone_date`}
           label="Date of milestone"
-          placeholder="e.g. John"
+          placeholder="e.g. 2014-09-23"
           required
         />
         <Field<FV>
