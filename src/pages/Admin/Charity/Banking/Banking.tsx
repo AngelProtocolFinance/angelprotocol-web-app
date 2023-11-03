@@ -1,10 +1,8 @@
-import { Popover, Transition } from "@headlessui/react";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAdminContext } from "pages/Admin/Context";
 import { useProfileQuery } from "services/aws/aws";
 import { useErrorContext } from "contexts/ErrorContext";
 import Divider from "components/Divider";
-import Icon from "components/Icon";
 import LoaderRing from "components/LoaderRing";
 import useDebounce from "hooks/useDebounce";
 import { isEmpty } from "helpers";
@@ -13,6 +11,7 @@ import { Group } from "../common";
 import CurrencySelector, { Currency } from "./CurrencySelector";
 import ExpectedFunds from "./ExpectedFunds";
 import RecipientDetails from "./RecipientDetails";
+import UpdateDetailsButton from "./UpdateDetailsButton";
 import VerificationStatus from "./VerificationStatus";
 import useCurrencies from "./useCurrencies";
 
@@ -98,7 +97,10 @@ export default function Banking() {
         >
           <VerificationStatus status={status} />
           {disabled && status !== "Under Review" && (
-            <UpdateDetailsButton onClick={() => setWantsToResubmit(true)} />
+            <UpdateDetailsButton
+              className="my-4"
+              onClick={() => setWantsToResubmit(true)}
+            />
           )}
           <CurrencySelector
             value={targetCurrency}
@@ -140,44 +142,6 @@ export default function Banking() {
           )}
         </Group>
       </div>
-    </div>
-  );
-}
-
-function UpdateDetailsButton({ onClick }: { onClick: () => void }) {
-  const ref = useRef<HTMLButtonElement>(null);
-  return (
-    <div className="flex gap-2 items-center">
-      <button
-        ref={ref}
-        type="button"
-        className="px-2 btn-orange text-xs w-40"
-        onClick={onClick}
-      >
-        Update Bank Details
-      </button>
-      <Popover className="relative">
-        <>
-          <Popover.Button className="group flex items-center rounded-full text-base font-medium hover:text-orange focus:outline-none">
-            <Icon type="Info" className="text-2xl" />
-          </Popover.Button>
-          <Transition
-            as={Fragment}
-            enter="transition ease-out duration-200"
-            enterFrom="opacity-0 translate-x-0"
-            enterTo="opacity-100 translate-x-1"
-            leave="transition ease-in duration-150"
-            leaveFrom="opacity-100 translate-x-1"
-            leaveTo="opacity-0 translate-x-0"
-          >
-            <Popover.Panel className="absolute left-6 -translate-y-1/2 -mt-3 z-10 w-screen max-w-sm transform p-4 bg-white dark:bg-blue-d3 overflow-hidden rounded-lg shadow-lg ring-1 ring-black/5">
-              Submitting new bank details will void your existing bank
-              connection and will require a review and approval. Do so with care
-              to prevent unnecessary payout delays!
-            </Popover.Panel>
-          </Transition>
-        </>
-      </Popover>
     </div>
   );
 }
