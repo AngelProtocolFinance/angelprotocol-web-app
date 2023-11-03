@@ -158,22 +158,19 @@ function UpdateDetailsButton({ onClick }: { onClick: () => void }) {
       </button>
       <Popover className="relative">
         <>
-          <Popover.Button
-            className={`
-                group inline-flex items-center rounded-md bg-orange-700 px-3 py-2 text-base font-medium hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75`}
-          >
-            <Icon type="Info" className="text-lg" />
+          <Popover.Button className="group flex items-center rounded-full text-base font-medium hover:text-orange focus:outline-none">
+            <Icon type="Info" className="text-2xl" />
           </Popover.Button>
           <Transition
             as={Fragment}
             enter="transition ease-out duration-200"
-            enterFrom="opacity-0 translate-y-1"
-            enterTo="opacity-100 translate-y-0"
+            enterFrom="opacity-0 translate-x-0"
+            enterTo="opacity-100 translate-x-1"
             leave="transition ease-in duration-150"
-            leaveFrom="opacity-100 translate-y-0"
-            leaveTo="opacity-0 translate-y-1"
+            leaveFrom="opacity-100 translate-x-1"
+            leaveTo="opacity-0 translate-x-0"
           >
-            <Popover.Panel className="absolute left-1/2 z-10 mt-3 w-screen max-w-sm -translate-x-1/2 transform p-4 bg-white dark:bg-blue-d3 overflow-hidden rounded-lg shadow-lg ring-1 ring-black/5">
+            <Popover.Panel className="absolute left-6 -translate-y-1/2 -mt-3 z-10 w-screen max-w-sm transform p-4 bg-white dark:bg-blue-d3 overflow-hidden rounded-lg shadow-lg ring-1 ring-black/5">
               Submitting new bank details will void your existing bank
               connection and will require a review and approval. Do so with care
               to prevent unnecessary payout delays!
