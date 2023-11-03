@@ -1,8 +1,5 @@
-import {
-  Authenticator as AmplifyAuthenticator,
-  CheckboxField,
-  useAuthenticator,
-} from "@aws-amplify/ui-react";
+import { Authenticator as AmplifyAuthenticator } from "@aws-amplify/ui-react";
+import ExtLink from "./ExtLink";
 
 export default function Authenticator() {
   return (
@@ -10,17 +7,40 @@ export default function Authenticator() {
       components={{
         SignUp: {
           FormFields() {
-            const { validationErrors } = useAuthenticator();
             return (
               <>
                 <AmplifyAuthenticator.SignUp.FormFields />
-                <CheckboxField
-                  errorMessage={validationErrors.acknowledgement as string}
-                  hasError={!!validationErrors.acknowledgement}
-                  name="acknowledgement"
-                  value="yes"
-                  label={<p>I agree to terms and conditions</p>}
-                />
+                <p className="text-sm">
+                  By signing up, you agree to our{" "}
+                  <ExtLink
+                    href="https://angelgiving.io/privacy-policy/"
+                    className="text-blue hover:text-blue-l2"
+                  >
+                    Privacy Policy
+                  </ExtLink>
+                  ,{" "}
+                  <ExtLink
+                    href="https://angelgiving.io/cookie-policy/"
+                    className="text-blue hover:text-blue-l2"
+                  >
+                    Cookie Policy
+                  </ExtLink>
+                  , and Terms of Use (
+                  <ExtLink
+                    href="https://angelgiving.io/terms-of-use/"
+                    className="text-blue hover:text-blue-l2"
+                  >
+                    Donors
+                  </ExtLink>{" "}
+                  &{" "}
+                  <ExtLink
+                    href="https://angelgiving.io/terms-of-use-npo/"
+                    className="text-blue hover:text-blue-l2"
+                  >
+                    NPOs
+                  </ExtLink>
+                  ) .
+                </p>
               </>
             );
           },
