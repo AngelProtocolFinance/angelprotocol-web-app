@@ -80,13 +80,12 @@ export default function Banking() {
     return <span>{PROFILE_ERROR}</span>;
   }
 
-  const status: typeof profile.bank_verification_status =
-    profile.bank_verification_status ?? "Approved";
+  const verif_status = profile.bank_verification_status;
 
   const disabled =
-    status === "Under Review" ||
-    (status === "Approved" && !wantsToResubmit) ||
-    (status === "Rejected" && !wantsToResubmit);
+    verif_status === "Under Review" ||
+    (verif_status === "Approved" && !wantsToResubmit) ||
+    (verif_status === "Rejected" && !wantsToResubmit);
 
   return (
     <div className="grid">
@@ -95,8 +94,8 @@ export default function Banking() {
           title="Bank account details"
           description="The following information will be used to register your bank account that will be used to withdraw your funds."
         >
-          <VerificationStatus status={status} />
-          {disabled && status !== "Under Review" && (
+          <VerificationStatus status={verif_status} />
+          {disabled && verif_status !== "Under Review" && (
             <UpdateDetailsButton
               className="my-4"
               onClick={() => setWantsToResubmit(true)}
