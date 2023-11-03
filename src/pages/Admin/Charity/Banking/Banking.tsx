@@ -23,7 +23,7 @@ please contact ${EMAIL_SUPPORT}.`;
 export default function Banking() {
   const [expectedFunds, setExpectedFunds] = useState<number>();
   const [targetCurrency, setTargetCurrency] = useState<Currency>();
-  const [wantsToResubmit, setWantsToResubmit] = useState(false);
+  const [resubmitRequired, setResubmitRequired] = useState(false);
   const [debounce, isDebouncing] = useDebounce();
 
   // load profile
@@ -84,8 +84,8 @@ export default function Banking() {
 
   const disabled =
     verif_status === "Under Review" ||
-    (verif_status === "Approved" && !wantsToResubmit) ||
-    (verif_status === "Rejected" && !wantsToResubmit);
+    (verif_status === "Approved" && !resubmitRequired) ||
+    (verif_status === "Rejected" && !resubmitRequired);
 
   return (
     <div className="grid">
@@ -98,7 +98,7 @@ export default function Banking() {
           {disabled && verif_status !== "Under Review" && (
             <UpdateDetailsButton
               className="my-4"
-              onClick={() => setWantsToResubmit(true)}
+              onClick={() => setResubmitRequired(true)}
             />
           )}
           <CurrencySelector
