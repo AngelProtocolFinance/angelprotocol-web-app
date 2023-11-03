@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { Popover, Transition } from "@headlessui/react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { useAdminContext } from "pages/Admin/Context";
 import { useProfileQuery } from "services/aws/aws";
 import { useErrorContext } from "contexts/ErrorContext";
 import Divider from "components/Divider";
+import Icon from "components/Icon";
 import LoaderRing from "components/LoaderRing";
 import useDebounce from "hooks/useDebounce";
 import { isEmpty } from "helpers";
@@ -22,6 +24,7 @@ please contact ${EMAIL_SUPPORT}.`;
 export default function Banking() {
   const [expectedFunds, setExpectedFunds] = useState<number>();
   const [targetCurrency, setTargetCurrency] = useState<Currency>();
+  const [wantsToResubmit, setWantsToResubmit] = useState(false);
   const [debounce, isDebouncing] = useDebounce();
 
   // load profile
@@ -78,7 +81,13 @@ export default function Banking() {
     return <span>{PROFILE_ERROR}</span>;
   }
 
-  const disabled = profile.bank_verification_status === "Under Review";
+  const status: typeof profile.bank_verification_status =
+    profile.bank_verification_status ?? "Approved";
+
+  const disabled =
+    status === "Under Review" ||
+    (status === "Approved" && !wantsToResubmit) ||
+    (status === "Rejected" && !wantsToResubmit);
 
   return (
     <div className="grid">
@@ -87,7 +96,10 @@ export default function Banking() {
           title="Bank account details"
           description="The following information will be used to register your bank account that will be used to withdraw your funds."
         >
-          <VerificationStatus status={profile.bank_verification_status} />
+          <VerificationStatus status={status} />
+          {disabled && status !== "Under Review" && (
+            <UpdateDetailsButton onClick={() => setWantsToResubmit(true)} />
+          )}
           <CurrencySelector
             value={targetCurrency}
             currencies={currencies}
@@ -128,6 +140,47 @@ export default function Banking() {
           )}
         </Group>
       </div>
+    </div>
+  );
+}
+
+function UpdateDetailsButton({ onClick }: { onClick: () => void }) {
+  const ref = useRef<HTMLButtonElement>(null);
+  return (
+    <div className="flex gap-2 items-center">
+      <button
+        ref={ref}
+        type="button"
+        className="px-2 btn-orange text-xs w-40"
+        onClick={onClick}
+      >
+        Update Bank Details
+      </button>
+      <Popover className="relative">
+        <>
+          <Popover.Button
+            className={`
+                group inline-flex items-center rounded-md bg-orange-700 px-3 py-2 text-base font-medium hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75`}
+          >
+            <Icon type="Info" className="text-lg" />
+          </Popover.Button>
+          <Transition
+            as={Fragment}
+            enter="transition ease-out duration-200"
+            enterFrom="opacity-0 translate-y-1"
+            enterTo="opacity-100 translate-y-0"
+            leave="transition ease-in duration-150"
+            leaveFrom="opacity-100 translate-y-0"
+            leaveTo="opacity-0 translate-y-1"
+          >
+            <Popover.Panel className="absolute left-1/2 z-10 mt-3 w-screen max-w-sm -translate-x-1/2 transform p-4 bg-white dark:bg-blue-d3 overflow-hidden rounded-lg shadow-lg ring-1 ring-black/5">
+              Submitting new bank details will void your existing bank
+              connection and will require a review and approval. Do so with care
+              to prevent unnecessary payout delays!
+            </Popover.Panel>
+          </Transition>
+        </>
+      </Popover>
     </div>
   );
 }
