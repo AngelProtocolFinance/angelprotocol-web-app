@@ -4,7 +4,7 @@ import CountrySelector from "components/CountrySelector";
 import ExtLink from "components/ExtLink";
 import { Selector } from "components/Selector";
 import { CheckField, Field, Label } from "components/form";
-import { TERMS_OF_USE } from "constants/urls";
+import { TERMS_OF_USE_DONOR } from "constants/urls";
 import Controls from "./Controls";
 import Tooltip from "./Tooltip";
 import { states } from "./us-states";
@@ -126,7 +126,7 @@ export default function Form({ classes = "", ...props }: Props) {
         }}
       >
         I have read and I agree with{" "}
-        <ExtLink className="underline text-orange" href={TERMS_OF_USE}>
+        <ExtLink className="underline text-orange" href={TERMS_OF_USE_DONOR}>
           Terms & Conditions
         </ExtLink>
         .

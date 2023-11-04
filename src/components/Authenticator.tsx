@@ -1,4 +1,6 @@
 import { Authenticator as AmplifyAuthenticator } from "@aws-amplify/ui-react";
+import { BASE_URL } from "constants/env";
+import { PRIVACY_POLICY, TERMS_OF_USE_NPO } from "constants/urls";
 import ExtLink from "./ExtLink";
 
 export default function Authenticator() {
@@ -13,33 +15,25 @@ export default function Authenticator() {
                 <p className="text-sm">
                   By signing up, you agree to our{" "}
                   <ExtLink
-                    href="https://angelgiving.io/privacy-policy/"
+                    href={PRIVACY_POLICY}
                     className="text-blue hover:text-blue-l2"
                   >
                     Privacy Policy
                   </ExtLink>
                   ,{" "}
                   <ExtLink
-                    href="https://angelgiving.io/cookie-policy/"
+                    href={`${BASE_URL}/cookie-policy/`}
                     className="text-blue hover:text-blue-l2"
                   >
                     Cookie Policy
                   </ExtLink>
-                  , and Terms of Use (
+                  , and{" "}
                   <ExtLink
-                    href="https://angelgiving.io/terms-of-use/"
+                    href={TERMS_OF_USE_NPO}
                     className="text-blue hover:text-blue-l2"
                   >
-                    Donors
-                  </ExtLink>{" "}
-                  &{" "}
-                  <ExtLink
-                    href="https://angelgiving.io/terms-of-use-npo/"
-                    className="text-blue hover:text-blue-l2"
-                  >
-                    NPOs
+                    Terms of Use
                   </ExtLink>
-                  ) .
                 </p>
               </>
             );

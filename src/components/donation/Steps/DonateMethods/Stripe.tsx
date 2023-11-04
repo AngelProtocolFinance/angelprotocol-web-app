@@ -7,7 +7,7 @@ import { useErrorContext } from "contexts/ErrorContext";
 import ExtLink from "components/ExtLink";
 import { FormStep } from "slices/donation";
 import { appRoutes } from "constants/routes";
-import { TERMS_OF_USE } from "constants/urls";
+import { TERMS_OF_USE_DONOR } from "constants/urls";
 import Split from "../../../Split";
 import AdvancedOptions, {
   type AdvancedOptionsDisplay,
@@ -95,7 +95,7 @@ export default function Stripe({
         </div>
         <p className="text-sm italic text-gray-d2 dark:text-gray mt-4">
           By making a donation, you agree to our{" "}
-          <ExtLink className="underline text-orange" href={TERMS_OF_USE}>
+          <ExtLink className="underline text-orange" href={TERMS_OF_USE_DONOR}>
             Terms & Conditions
           </ExtLink>
         </p>

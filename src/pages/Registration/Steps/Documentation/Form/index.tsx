@@ -9,7 +9,7 @@ import { CheckField, Field, Label, Radio } from "components/form";
 import { FileDropzone, LoadText } from "components/registration";
 import { APP_NAME } from "constants/env";
 import { unsdgs } from "constants/unsdgs";
-import { TERMS_OF_USE } from "constants/urls";
+import { TERMS_OF_USE_NPO } from "constants/urls";
 import { steps } from "../../../routes";
 import { useRegState } from "../../StepGuard";
 import { MB_LIMIT } from "../schema";
@@ -183,7 +183,7 @@ export default function Form() {
         }}
       >
         By checking this box, you declare that you have read and agreed to our{" "}
-        <ExtLink className="underline text-orange" href={TERMS_OF_USE}>
+        <ExtLink className="underline text-orange" href={TERMS_OF_USE_NPO}>
           Terms & Conditions
         </ExtLink>
         .
