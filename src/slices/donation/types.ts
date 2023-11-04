@@ -27,7 +27,6 @@ export type KYC = {
   state: string;
   usState: OptionType<string>;
   email: string;
-  hasAgreedToTerms: boolean;
   agreedToGetUpdates: boolean;
 };
 

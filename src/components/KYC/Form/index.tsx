@@ -3,8 +3,8 @@ import { FormValues as FV, Props } from "../types";
 import CountrySelector from "components/CountrySelector";
 import ExtLink from "components/ExtLink";
 import { Selector } from "components/Selector";
-import { CheckField, Field, Label } from "components/form";
-import { TERMS_OF_USE_DONOR } from "constants/urls";
+import { Field, Label } from "components/form";
+import { PRIVACY_POLICY, TERMS_OF_USE_DONOR } from "constants/urls";
 import Controls from "./Controls";
 import Tooltip from "./Tooltip";
 import { states } from "./us-states";
@@ -116,21 +116,20 @@ export default function Form({ classes = "", ...props }: Props) {
         placeholder="e.g. johndoe@mail.com"
         classes={{ container: "col-span-full field-kyc" }}
       />
-      <CheckField<FV>
-        name="hasAgreedToTerms"
-        classes={{
-          container: `check-field-kyc ${
-            isPostKyc ? "my-2" : "my-12"
-          } col-span-full`,
-          error: "mt-2",
-        }}
-      >
-        I have read and I agree with{" "}
-        <ExtLink className="underline text-orange" href={TERMS_OF_USE_DONOR}>
-          Terms & Conditions
+      <p className="text-sm col-span-full">
+        By submitting this information, you agree to our{" "}
+        <ExtLink href={PRIVACY_POLICY} className="text-blue hover:text-blue-l2">
+          Privacy Policy
+        </ExtLink>{" "}
+        and{" "}
+        <ExtLink
+          href={TERMS_OF_USE_DONOR}
+          className="text-blue hover:text-blue-l2"
+        >
+          Terms of Use
         </ExtLink>
         .
-      </CheckField>
+      </p>
       {props.type === "post-donation" ? (
         <button
           className="col-span-full btn-orange text-sm"
