@@ -119,9 +119,6 @@ function formatDocumentation({
 
     //meta
     tier: Tier,
-    cashEligible: false,
-    hasAuthority: true,
-    hasAgreedToTerms: true,
     isAnonymousDonationsAllowed: KycDonorsOnly ? "No" : "Yes",
   };
 }

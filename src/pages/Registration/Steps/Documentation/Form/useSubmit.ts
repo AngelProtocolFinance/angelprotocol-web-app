@@ -27,27 +27,26 @@ export default function useSubmit() {
 
   const submit: SubmitHandler<FormValues> = async ({
     website,
-    hasAuthority,
-    hasAgreedToTerms,
     sdgs,
     isAnonymousDonationsAllowed,
     hqCountry,
     activeInCountries,
     endowDesignation,
-    cashEligible,
     ein,
     isAuthorizedToReceiveTaxDeductibleDonations,
-    signedFiscalSponsorshipAgreement,
-    fiscalSponsorshipAgreementSigningURL,
     legalEntityType,
     projectDescription,
-    ...documents
+    proofOfIdentity,
+    proofOfRegistration,
   }) => {
     try {
       if (!isDirty && documentation) {
         return navigate(`../${step}`, { state: init });
       }
-      const previews = await getFilePreviews({ ...documents });
+      const previews = await getFilePreviews({
+        proofOfIdentity,
+        proofOfRegistration,
+      });
       await updateReg({
         type: "documentation",
         reference: init.reference,
@@ -62,7 +61,7 @@ export default function useSubmit() {
         HqCountry: hqCountry.name,
         EndowDesignation: endowDesignation.value,
         ActiveInCountries: activeInCountries.map((opt) => opt.value),
-        CashEligible: cashEligible,
+        CashEligible: true,
         EIN: ein,
         AuthorizedToReceiveTaxDeductibleDonations:
           isAuthorizedToReceiveTaxDeductibleDonations === "Yes" ? true : false,

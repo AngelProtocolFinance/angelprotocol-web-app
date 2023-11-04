@@ -1,4 +1,4 @@
-import { ObjectSchema, array, bool, object, string } from "yup";
+import { ObjectSchema, array, object, string } from "yup";
 import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
 import { FileObject } from "types/aws";
@@ -60,12 +60,5 @@ export const schema = object<any, SchemaShape<FormValues>>({
             .required("required")
             .max(4000, "maximum 4000 characters allowed");
     }
-  ),
-
-  hasAuthority: bool().isTrue(
-    "Please confirm that you have the authority to create this endowment"
-  ),
-  hasAgreedToTerms: bool().isTrue(
-    "Please confirm that you agree to our Terms and Conditions"
   ),
 }) as ObjectSchema<FormValues>;

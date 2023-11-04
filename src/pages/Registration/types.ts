@@ -42,7 +42,6 @@ export type Documentation = {
   website: string;
   sdgs: OptionType<UNSDG_NUMS>[];
 
-  hasAgreedToTerms: boolean;
   tier: EndowmentTierNum;
 
   hqCountry: Country;
@@ -56,8 +55,6 @@ export type Documentation = {
 
   //others
   isAnonymousDonationsAllowed: "Yes" | "No";
-  cashEligible: boolean;
-  hasAuthority: boolean;
 };
 
 export type CompleteRegistration = {
