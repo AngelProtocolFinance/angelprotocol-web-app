@@ -136,8 +136,9 @@ export default function useCurrencies() {
         });
 
         const newTargetCurrency =
-          currencies.find((x) => x.code === DEFAULT_TARGET_CURRENCY) ??
-          currencies[0];
+          selectorCurrencies.find((x) => x.code === DEFAULT_TARGET_CURRENCY) ??
+          selectorCurrencies[0];
+
         setTargetCurrency(newTargetCurrency);
         setCurrencies(selectorCurrencies);
         setLoading(false);
