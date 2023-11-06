@@ -98,8 +98,8 @@ export default function Banking() {
           />
           <ExpectedFunds
             onChange={(value) => {
-              // if new value is 0 (zero), no need to debounce, but
-              // still call the function itself to cancel the previous call
+              // if new value is empty or 0 (zero), no need to debounce, but
+              // still call the function itself to cancel the previous debounce call
               const delay = !value ? 0 : 1000;
               debounce(() => setExpectedFunds(value), delay);
             }}
