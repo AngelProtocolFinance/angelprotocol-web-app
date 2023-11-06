@@ -29,6 +29,7 @@ export default function RequirementField({ data, disabled }: Props) {
           input: "date-input uppercase",
           container: "field-admin",
         }}
+        disabled={disabled}
       />
     );
   }
@@ -47,6 +48,7 @@ export default function RequirementField({ data, disabled }: Props) {
         placeholder={data.example}
         required={data.required}
         classes="field-admin"
+        disabled={disabled}
       />
     );
   }
@@ -81,6 +83,7 @@ export default function RequirementField({ data, disabled }: Props) {
           label: valuesAllowed.name,
           value: valuesAllowed.key,
         }))}
+        disabled={disabled}
       />
     </div>
   );
