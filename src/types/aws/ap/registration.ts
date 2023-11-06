@@ -56,8 +56,7 @@ type InitMeta = {
 };
 
 export type ContactDetails = {
-  FirstName: string;
-  LastName: string;
+  Name: string;
   PhoneNumber: string;
   Goals: string;
   Role: ContactRoles;
@@ -72,11 +71,9 @@ export type TDocumentation = {
   ProofOfIdentity: FileObject;
 
   //organization details
-  EIN: string;
   ProofOfRegistration: FileObject;
   Website: string;
   Tier: EndowmentTierNum;
-  HqCountry: string;
   EndowDesignation: string;
   ActiveInCountries: string[];
   LegalEntityType: string;
@@ -100,7 +97,7 @@ export type InitApplication = {
   Metadata: InitMeta;
 };
 
-type OrgData = { OrganizationName: string };
+type OrgData = { OrganizationName: string; HqCountry: string; EIN: string };
 
 type Append<Reg extends InitApplication, T, U, V> = {
   Registration: Reg["Registration"] & T;
