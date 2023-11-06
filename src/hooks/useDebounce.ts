@@ -6,18 +6,18 @@ function useDebounce(): [
 ] {
   const [isDebouncing, setDebouncing] = useState(false);
   const lastKeyStroke = useRef(0);
-  const timeoutId = useRef<NodeJS.Timeout>();
+  const timeout = useRef<NodeJS.Timeout>();
 
   const debounce = useCallback(
     (callback: () => void | Promise<void>, delay: number) => {
       lastKeyStroke.current = Date.now();
       setDebouncing(true);
 
-      if (timeoutId.current) {
-        clearTimeout(timeoutId.current);
+      if (timeout.current) {
+        clearTimeout(timeout.current);
       }
 
-      timeoutId.current = setTimeout(async () => {
+      timeout.current = setTimeout(async () => {
         if (Date.now() - lastKeyStroke.current >= delay) {
           await callback();
           setDebouncing(false);
