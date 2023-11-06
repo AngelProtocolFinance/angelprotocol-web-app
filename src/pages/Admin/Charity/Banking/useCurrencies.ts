@@ -4,10 +4,13 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { EMAIL_SUPPORT } from "constants/env";
 import { Currency } from "./CurrencySelector";
 
+const DEFAULT_TARGET_CURRENCY = "USD";
+
 const ERROR_MSG = `Error loading currencies. Please try again later. If the error persists, please contact ${EMAIL_SUPPORT}.`;
 
 export default function useCurrencies() {
   const [currencies, setCurrencies] = useState<Currency[]>([]);
+  const [targetCurrency, setTargetCurrency] = useState<Currency>();
   const [isLoading, setLoading] = useState(true);
 
   const { handleError } = useErrorContext();
@@ -132,6 +135,10 @@ export default function useCurrencies() {
           return currency;
         });
 
+        const newTargetCurrency =
+          currencies.find((x) => x.code === DEFAULT_TARGET_CURRENCY) ??
+          currencies[0];
+        setTargetCurrency(newTargetCurrency);
         setCurrencies(selectorCurrencies);
         setLoading(false);
       } catch (error) {
@@ -145,5 +152,7 @@ export default function useCurrencies() {
   return {
     currencies,
     isLoading,
+    targetCurrency,
+    setTargetCurrency,
   };
 }

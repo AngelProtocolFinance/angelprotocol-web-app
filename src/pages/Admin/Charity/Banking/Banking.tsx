@@ -8,21 +8,18 @@ import useDebounce from "hooks/useDebounce";
 import { isEmpty } from "helpers";
 import { EMAIL_SUPPORT } from "constants/env";
 import { Group } from "../common";
-import CurrencySelector, { Currency } from "./CurrencySelector";
+import CurrencySelector from "./CurrencySelector";
 import ExpectedFunds from "./ExpectedFunds";
 import RecipientDetails from "./RecipientDetails";
 import UpdateDetailsButton from "./UpdateDetailsButton";
 import VerificationStatus from "./VerificationStatus";
 import useCurrencies from "./useCurrencies";
 
-const DEFAULT_TARGET_CURRENCY = "USD";
-
 const PROFILE_ERROR = `Error loading profile. Please try again later. If the error persists,
 please contact ${EMAIL_SUPPORT}.`;
 
 export default function Banking() {
   const [expectedFunds, setExpectedFunds] = useState<number>();
-  const [targetCurrency, setTargetCurrency] = useState<Currency>();
   const [resubmitRequired, setResubmitRequired] = useState(false);
   const [debounce, isDebouncing] = useDebounce();
 
@@ -33,9 +30,7 @@ export default function Banking() {
     isLoading: isLoadingProfile,
     isError: isProfileError,
     error,
-  } = useProfileQuery({
-    endowId: id,
-  });
+  } = useProfileQuery({ endowId: id });
 
   const { handleError } = useErrorContext();
 
@@ -45,21 +40,14 @@ export default function Banking() {
     }
   }, [error, handleError]);
 
-  // load currencies
-  const { currencies, isLoading } = useCurrencies();
+  const {
+    currencies,
+    isLoading: isLoadingCurrencies,
+    targetCurrency,
+    setTargetCurrency,
+  } = useCurrencies();
 
-  useEffect(() => {
-    if (isEmpty(currencies)) {
-      return;
-    }
-    // if DEFAULT_TARGET_CURRENCY is not among the returned currencies for whatever reason, use the first one
-    const newTargetCurrency =
-      currencies.find((x) => x.code === DEFAULT_TARGET_CURRENCY) ??
-      currencies[0];
-    setTargetCurrency(newTargetCurrency);
-  }, [currencies]);
-
-  if (isLoading || isLoadingProfile) {
+  if (isLoadingCurrencies || isLoadingProfile) {
     return (
       <div className="flex items-center justify-center gap-2">
         <LoaderRing thickness={10} classes="w-6" /> Loading...
@@ -67,7 +55,7 @@ export default function Banking() {
     );
   }
 
-  if (!targetCurrency || isEmpty(currencies)) {
+  if (isEmpty(currencies) || !targetCurrency) {
     return (
       <span>
         An error occurred. Please try again later. If the error persists, please
