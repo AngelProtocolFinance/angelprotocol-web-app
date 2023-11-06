@@ -112,4 +112,6 @@ function CurrencySelector(props: Props) {
   );
 }
 
+// Should only ever re-render when a new currency is selected,
+// not when some unrelated state changes
 export default memo(CurrencySelector);
