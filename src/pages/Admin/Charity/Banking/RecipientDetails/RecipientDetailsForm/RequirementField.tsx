@@ -55,7 +55,7 @@ export default function RequirementField({ data, disabled }: Props) {
     return (
       <div className="field">
         <Label required={data.required}>{data.name}</Label>
-        <CountrySelector<FormValues>
+        <CountrySelector<FormValues, any>
           fieldName={name}
           countries={countries.filter((country) =>
             data.valuesAllowed!.find((x) => x.key === country.code)

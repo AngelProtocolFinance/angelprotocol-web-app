@@ -79,7 +79,7 @@ export default function Form({ classes = "", ...props }: Props) {
           Country
         </Label>
 
-        <CountrySelector<FV>
+        <CountrySelector<FV, "country">
           placeholder="Select a country"
           fieldName="country"
           countries={countries}
