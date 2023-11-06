@@ -58,7 +58,7 @@ export default function RecipientDetails({
 
   const requirements = requirementsDataArray.at(selectedIndex);
 
-  // should never happen as `selectedIndex === 0` by default and can only be set to value `< requirementsDataArray.length`
+  // should never happen as `selectedIndex === 0` by default and can only be set to value smaller than `requirementsDataArray.length`
   if (!requirements) {
     return (
       <span>
