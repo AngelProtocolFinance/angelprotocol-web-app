@@ -2,8 +2,8 @@ import { useFormContext } from "react-hook-form";
 import { FormValues } from "../types";
 import { AccountRequirements, CreateRecipientRequest } from "types/aws";
 import LoaderRing from "components/LoaderRing";
-import { redot } from "../helpers/dot";
 import RequirementField from "./RequirementField";
+import formToCreateRecipientRequest from "./formToCreateRecipientRequest";
 
 type Props = {
   accountRequirements: AccountRequirements;
@@ -14,13 +14,10 @@ type Props = {
 };
 
 export default function Form(props: Props) {
-  const {
-    handleSubmit,
-    formState: { isSubmitting },
-  } = useFormContext<FormValues>();
+  const { handleSubmit } = useFormContext<FormValues>();
 
   const handleSubmission = handleSubmit((formValues) => {
-    const request = convertToCreateRecipientRequest(formValues);
+    const request = formToCreateRecipientRequest(formValues);
     if (props.refreshRequired) {
       props.onRefresh(request);
     } else {
@@ -47,62 +44,37 @@ export default function Form(props: Props) {
             able to submit your bank details for validation. Please fill the
             form and click the "Check requirements" button below.
           </span>
-          <button
-            disabled={isSubmitting}
-            type="submit"
-            className="px-6 btn-orange text-sm w-80"
-          >
-            {isSubmitting ? (
-              <>
-                <LoaderRing thickness={10} classes="w-6" /> Checking additional
-                requirements...
-              </>
-            ) : (
-              "Check requirements"
-            )}
-          </button>
+          <SubmitButton text="Check Requirements" loadingText="Checking..." />
         </>
       ) : (
-        <button
-          disabled={isSubmitting}
-          type="submit"
-          className="px-6 btn-orange text-sm w-80"
-        >
-          {isSubmitting ? (
-            <>
-              <LoaderRing thickness={10} classes="w-6" /> Submitting...
-            </>
-          ) : (
-            "Submit"
-          )}
-        </button>
+        <SubmitButton text="Submit" loadingText="Submitting..." />
       )}
     </form>
   );
 }
 
-function convertToCreateRecipientRequest(
-  formValues: FormValues
-): CreateRecipientRequest {
-  return {
-    accountHolderName: formValues.accountHolderName,
-    currency: formValues.currency,
-    type: formValues.type,
-    details: Object.entries(formValues.requirements).reduce<
-      CreateRecipientRequest["details"]
-    >((details, [key, value]) => {
-      const origKey = redot(key);
-      if (typeof value === "string") {
-        // if value is string
-        details[origKey] = value;
-      } else if ("code" in value) {
-        // if value is Country
-        details[origKey] = value.code;
-      } else {
-        // if value is OptionType
-        details[origKey] = value.value;
-      }
-      return details;
-    }, {}),
-  };
+function SubmitButton(props: { text: string; loadingText: string }) {
+  const {
+    formState: { isSubmitting },
+  } = useFormContext<FormValues>();
+
+  return (
+    <button
+      disabled={isSubmitting}
+      type="submit"
+      className="px-6 btn-orange gap-1 text-sm w-80"
+    >
+      {isSubmitting ? (
+        <>
+          <LoaderRing
+            thickness={10}
+            classes={{ container: "w-4", ringToColor: "to-white" }}
+          />{" "}
+          {props.loadingText}
+        </>
+      ) : (
+        props.text
+      )}
+    </button>
+  );
 }
