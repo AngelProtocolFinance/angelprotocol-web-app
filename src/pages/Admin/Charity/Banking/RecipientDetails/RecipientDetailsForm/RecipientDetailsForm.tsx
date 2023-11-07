@@ -22,14 +22,15 @@ export default function RecipientDetailsForm(props: Props) {
   );
 
   const { onCleanup } = props;
+  const { getValues } = methods;
 
   // save current form values so that they can be preloaded
   // when switching between account requirement types
   useEffect(() => {
     return () => {
-      onCleanup(methods.getValues());
+      onCleanup(getValues());
     };
-  }, [methods, onCleanup]);
+  }, [getValues, onCleanup]);
 
   return (
     <FormProvider {...methods}>
