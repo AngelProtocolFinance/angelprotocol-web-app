@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { useAdminContext } from "pages/Admin/Context";
 import { useProfileQuery } from "services/aws/aws";
 import { useErrorContext } from "contexts/ErrorContext";
+import BankDetails from "components/BankDetails";
 import LoaderRing from "components/LoaderRing";
 import { EMAIL_SUPPORT } from "constants/env";
 import { Group } from "../common";
-import BankDetails from "./BankDetails";
 import UpdateDetailsButton from "./UpdateDetailsButton";
 import VerificationStatus from "./VerificationStatus";
 
