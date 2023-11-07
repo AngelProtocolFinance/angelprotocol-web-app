@@ -1,6 +1,7 @@
-import { Authenticator, useAuthenticator } from "@aws-amplify/ui-react";
+import { useAuthenticator } from "@aws-amplify/ui-react";
 import { useEffect } from "react";
 import { Location, useLocation, useNavigate } from "react-router-dom";
+import Authenticator from "components/Authenticator";
 import LoaderRing from "components/LoaderRing";
 import { OAUTH_PATH_STORAGE_KEY } from "constants/o-auth";
 
@@ -32,7 +33,7 @@ export default function Signin() {
         //while user is still authenticated, use loader in place of authenticator while navigating
         <LoaderRing thickness={12} classes="w-32" />
       ) : (
-        <Authenticator formFields={{ signUp: { name: { order: 1 } } }} />
+        <Authenticator />
       )}
     </div>
   );

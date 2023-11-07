@@ -1,7 +1,8 @@
-import { Authenticator, useAuthenticator } from "@aws-amplify/ui-react";
+import { useAuthenticator } from "@aws-amplify/ui-react";
 import { Popover } from "@headlessui/react";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import Authenticator from "components/Authenticator";
 import Icon from "components/Icon";
 import { OAUTH_PATH_STORAGE_KEY } from "constants/o-auth";
 import { appRoutes } from "constants/routes";
@@ -67,7 +68,7 @@ function AuthenticatorPanel() {
   }, [location.pathname]);
   return (
     <Popover.Panel className="mt-2 absolute z-10 w-max max-sm:fixed-center sm:right-0">
-      <Authenticator formFields={{ signUp: { name: { order: 1 } } }} />
+      <Authenticator />
     </Popover.Panel>
   );
 }

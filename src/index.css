@@ -85,6 +85,7 @@
 }
 
 html:is(.dark) [data-amplify-authenticator] {
+  --amplify-components-divider-label-background-color: theme(colors.blue.d6);
   --amplify-internal-button-color: theme(colors.white);
   --amplify-components-heading-color: theme(colors.white);
   --amplify-components-text-color: theme(colors.white);

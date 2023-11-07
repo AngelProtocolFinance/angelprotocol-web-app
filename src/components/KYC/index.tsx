@@ -16,7 +16,6 @@ export default function KYC(props: Props) {
       isOnDonation && props.state.kyc
         ? props.state.kyc
         : {
-            hasAgreedToTerms: false,
             country: placeHolderCountryOption,
             usState: { label: "", value: "" },
           },
