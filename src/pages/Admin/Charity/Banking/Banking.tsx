@@ -2,27 +2,18 @@ import { useEffect, useState } from "react";
 import { useAdminContext } from "pages/Admin/Context";
 import { useProfileQuery } from "services/aws/aws";
 import { useErrorContext } from "contexts/ErrorContext";
-import Divider from "components/Divider";
 import LoaderRing from "components/LoaderRing";
-import useDebounce from "hooks/useDebounce";
-import { isEmpty } from "helpers";
 import { EMAIL_SUPPORT } from "constants/env";
 import { Group } from "../common";
-import CurrencySelector from "./CurrencySelector";
-import ExpectedFunds from "./ExpectedFunds";
-import RecipientDetails from "./RecipientDetails";
+import BankDetails from "./BankDetails";
 import UpdateDetailsButton from "./UpdateDetailsButton";
 import VerificationStatus from "./VerificationStatus";
-import useCurrencies from "./useCurrencies";
 
 const PROFILE_ERROR = `Error loading profile. Please try again later. If the error persists,
 please contact ${EMAIL_SUPPORT}.`;
 
 export default function Banking() {
-  const [expectedMontlyDonations, setExpectedMontlyDonations] =
-    useState<number>();
   const [resubmitRequired, setResubmitRequired] = useState(false);
-  const [debounce, isDebouncing] = useDebounce();
 
   // load profile
   const { id } = useAdminContext();
@@ -41,27 +32,11 @@ export default function Banking() {
     }
   }, [error, handleError]);
 
-  const {
-    currencies,
-    isLoading: isLoadingCurrencies,
-    targetCurrency,
-    setTargetCurrency,
-  } = useCurrencies();
-
-  if (isLoadingCurrencies || isLoadingProfile) {
+  if (isLoadingProfile) {
     return (
       <div className="flex items-center justify-center gap-2">
         <LoaderRing thickness={10} classes="w-6" /> Loading...
       </div>
-    );
-  }
-
-  if (isEmpty(currencies) || !targetCurrency) {
-    return (
-      <span>
-        An error occurred. Please try again later. If the error persists, please
-        contact {EMAIL_SUPPORT}.
-      </span>
     );
   }
 
@@ -90,44 +65,7 @@ export default function Banking() {
               onClick={() => setResubmitRequired(true)}
             />
           )}
-          <CurrencySelector
-            value={targetCurrency}
-            currencies={currencies}
-            onChange={setTargetCurrency}
-            classes="w-60 md:w-80"
-            disabled={disabled}
-          />
-          <ExpectedFunds
-            onChange={(value) => {
-              // if new value is empty or 0 (zero), no need to debounce, but
-              // still call the function itself to cancel the previous debounce call
-              const delay = !value ? 0 : 1000;
-              debounce(() => setExpectedMontlyDonations(value), delay);
-            }}
-            disabled={disabled}
-          />
-
-          {!!expectedMontlyDonations && (
-            <>
-              <Divider />
-              <div className="min-h-[20rem]">
-                {isDebouncing ? (
-                  <div className="flex items-center gap-2">
-                    <LoaderRing thickness={10} classes="w-6" /> Loading...
-                  </div>
-                ) : (
-                  <RecipientDetails
-                    // we need this key to tell React that when any of the fields passed to this component changes,
-                    // it needs to reset its state by rerendering the whole component
-                    key={`${targetCurrency.code}${expectedMontlyDonations}`}
-                    targetCurrency={targetCurrency.code}
-                    expectedMontlyDonations={expectedMontlyDonations}
-                    disabled={disabled}
-                  />
-                )}
-              </div>
-            </>
-          )}
+          <BankDetails disabled={disabled} />
         </Group>
       </div>
     </div>
