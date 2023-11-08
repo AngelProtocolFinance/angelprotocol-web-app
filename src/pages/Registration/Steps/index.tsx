@@ -9,7 +9,6 @@ import Documentation from "./Documentation";
 import ProgressIndicator from "./ProgressIndicator";
 import Reference from "./Reference";
 import { StepGuardProps } from "./StepGuard";
-import Wallet from "./WalletRegistration";
 import { getRegistrationState } from "./getRegistrationState";
 
 export default function Steps({ classes = "" }: { classes?: string }) {
@@ -73,12 +72,8 @@ export default function Steps({ classes = "" }: { classes?: string }) {
             element={<Documentation {...guardProps} step={2} />}
           />
           <Route
-            path={steps.wallet}
-            element={<Wallet {...guardProps} step={3} />}
-          />
-          <Route
             path={steps.summary}
-            element={<Dashboard {...guardProps} step={4} />}
+            element={<Dashboard {...guardProps} step={3} />}
           />
         </Routes>
       </div>

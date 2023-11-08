@@ -1,20 +1,27 @@
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "../types";
+import { EndowDesignation } from "types/aws";
 import ActivityCountries from "components/ActivityCountries";
 import CountrySelector from "components/CountrySelector";
 import ExtLink from "components/ExtLink";
 import { MultiSelector, Selector } from "components/Selector";
-import { CheckField, Field, Label, Radio } from "components/form";
+import { Field, Label, Radio } from "components/form";
 import { FileDropzone, LoadText } from "components/registration";
-import { ENDOW_DESIGNATIONS } from "constant/common";
-import { APP_NAME } from "constant/env";
 import { unsdgs } from "constant/unsdgs";
-import { TERMS_OF_USE } from "constant/urls";
+import { TERMS_OF_USE_NPO } from "constant/urls";
 import { steps } from "../../../routes";
 import { useRegState } from "../../StepGuard";
 import { MB_LIMIT } from "../schema";
 // import { CashEligibleCheckbox } from "./CashEligibleCheckbox";
 import useSubmit from "./useSubmit";
+
+const endowDesignations: EndowDesignation[] = [
+  "Charity",
+  "Religious Organization",
+  "University",
+  "Hospital",
+  "Other",
+];
 
 export default function Form() {
   const { data } = useRegState<2>();
@@ -75,9 +82,9 @@ export default function Form() {
       </Label>
       <Selector<FV, "endowDesignation", string>
         name="endowDesignation"
-        options={ENDOW_DESIGNATIONS.map((option) => ({
-          label: option.label,
-          value: option.value,
+        options={endowDesignations.map((designation) => ({
+          label: designation,
+          value: designation,
         }))}
       />
       <Label className="mt-6 mb-2" required>
@@ -152,34 +159,15 @@ export default function Form() {
       </div>
 
       <Separator classes="my-8" />
-      {/*<CashEligibleCheckbox />*/}
-      <CheckField<FV>
-        name="hasAuthority"
-        required
-        classes={{
-          container: "check-field-reg text-sm mb-3",
-          input: "checkbox-reg self-start sm:self-center",
-          error: "mt-t",
-        }}
-      >
-        By checking this box, you declare that you have the authority to create
-        an endowment in the name of {data.contact.orgName} through {APP_NAME}
-      </CheckField>
-      <CheckField<FV>
-        name="hasAgreedToTerms"
-        required
-        classes={{
-          container: "check-field-reg text-sm",
-          input: "self-start sm:self-center",
-          error: "mt-1",
-        }}
-      >
-        By checking this box, you declare that you have read and agreed to our{" "}
-        <ExtLink className="underline text-orange" href={TERMS_OF_USE}>
+
+      <p className="text-sm">
+        By submitting this information, you declare that you have read and
+        agreed to our{" "}
+        <ExtLink className="underline text-orange" href={TERMS_OF_USE_NPO}>
           Terms & Conditions
         </ExtLink>
         .
-      </CheckField>
+      </p>
       <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
         <Link
           aria-disabled={isSubmitting}

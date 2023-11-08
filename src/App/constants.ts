@@ -1,7 +1,12 @@
 import { Link, LinkGroup, SocialMediaLink } from "./types";
 import { BASE_URL, DAPP_URL } from "constant/env";
 import { appRoutes } from "constant/routes";
-import { LITEPAPER } from "constant/urls";
+import {
+  LITEPAPER,
+  PRIVACY_POLICY,
+  TERMS_OF_USE_DONOR,
+  TERMS_OF_USE_NPO,
+} from "constant/urls";
 
 type LINKS = {
   HEADER_LINKS: Link[];
@@ -37,7 +42,7 @@ export const CHARITY_LINKS: LINKS = {
       links: [
         {
           text: "Non-profits",
-          href: `${BASE_URL}`,
+          href: BASE_URL,
         },
         {
           text: "Giving Partners (CSR)",
@@ -75,13 +80,13 @@ export const CHARITY_LINKS: LINKS = {
       links: [
         {
           text: "Privacy policy",
-          href: `${BASE_URL}/privacy-policy/`,
+          href: PRIVACY_POLICY,
         },
         {
           text: "Terms of Use",
-          href: `${BASE_URL}/terms-of-use/`,
+          href: TERMS_OF_USE_DONOR,
         },
-        { text: "Terms for NPO", href: `${BASE_URL}/terms-of-use-npo/` },
+        { text: "Terms for NPO", href: TERMS_OF_USE_NPO },
       ],
     },
   ],

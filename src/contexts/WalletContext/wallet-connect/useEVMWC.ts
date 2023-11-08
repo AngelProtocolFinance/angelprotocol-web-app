@@ -1,11 +1,16 @@
 import { WalletConnectModal } from "@walletconnect/modal";
 import { useEffect, useRef, useState } from "react";
-import { Connection, ProviderInfo } from "../types";
-import { Connected, WalletState } from "./types";
+import { SignClient } from "@walletconnect/sign-client/dist/types/client";
 import { SessionTypes, SignClientTypes } from "@walletconnect/types";
+import { RequestArguments } from "types/evm";
+import {
+  EVMConnected,
+  EVMProviderState,
+  Wallet,
+  WalletMeta,
+} from "types/wallet";
 import { _pairing, _session, account } from "helpers/wallet-connect";
 import { EIPMethods } from "constant/evm";
-import { WALLET_METADATA } from "../constants";
 
 const wcModal = new WalletConnectModal({
   projectId: "039a7aeef39cb740398760f71a471957",
@@ -27,11 +32,11 @@ const wcModal = new WalletConnectModal({
 });
 
 /** NOTE: only use this wallet in mainnet */
-export function useEVMWC() {
+export function useEVMWC(meta: WalletMeta): Wallet {
   const unsubscribeRef = useRef<() => void>();
   const uriRef = useRef<string>();
 
-  const [state, setState] = useState<WalletState>({
+  const [state, setState] = useState<EVMProviderState>({
     status: "disconnected",
   });
 
@@ -42,7 +47,11 @@ export function useEVMWC() {
   function onSessionUpdate({
     params: { namespaces },
   }: SignClientTypes.EventArguments["session_update"]) {
-    setState(connected(namespaces));
+    setState((prev) =>
+      prev.status === "connected"
+        ? { ...prev, ...account(namespaces.eip155) }
+        : prev
+    );
   }
 
   /** persistent connection */
@@ -50,9 +59,8 @@ export function useEVMWC() {
     (async () => {
       setState({ status: "loading" });
       const { session, client } = await _session("MetaMask Wallet");
-
       if (session) {
-        setState(connected(session.namespaces));
+        setState(connected(session, client));
         client.on("session_update", onSessionUpdate);
         client.on("session_delete", onSessionDelete);
       } else {
@@ -100,7 +108,8 @@ export function useEVMWC() {
       }
 
       const session = await approval();
-      setState(connected(session.namespaces));
+
+      setState(connected(session, client));
       client.on("session_delete", onSessionDelete);
       client.on("session_update", onSessionUpdate);
     } catch (err) {
@@ -129,34 +138,28 @@ export function useEVMWC() {
     setState({ status: "disconnected" });
   }
 
-  /** TODO: refactor to just return Meta & WalletState */
-  const providerInfo: ProviderInfo | undefined =
-    state.status === "connected"
-      ? {
-          logo: WALLET_METADATA["evm-wc"].logo,
-          providerId: "evm-wc",
-          chainId: state.chainId,
-          address: state.address,
-        }
-      : undefined;
-
-  const connection: Connection = {
-    providerId: "evm-wc",
-    name: "Metamask mobile",
-    logo: WALLET_METADATA["evm-wc"].logo,
-    installUrl: WALLET_METADATA["evm-wc"].logo,
-    connect,
-  };
-
-  return {
-    connection,
-    disconnect,
-    isLoading: state.status === "loading",
-    providerInfo,
-  };
+  return { ...state, ...meta, ...{ connect, disconnect, switchChain: null } };
 }
 
-const connected = (namespaces: SessionTypes.Namespaces): Connected => ({
-  status: "connected",
-  ...account(namespaces.eip155),
-});
+const connected = (
+  session: SessionTypes.Struct,
+  client: SignClient
+): EVMConnected => {
+  const acc = account(session.namespaces.eip155);
+  return {
+    ...acc,
+    status: "connected",
+    isSwitching: false,
+    id: "evm-wc",
+    request<T>({ method, params }: RequestArguments) {
+      return client.request<T>({
+        topic: session!.topic,
+        chainId: `eip155:${acc.chainId}`,
+        request: {
+          method,
+          params,
+        },
+      });
+    },
+  };
+};

@@ -1,10 +1,9 @@
 import { useEffect } from "react";
-import { useGetWallet } from "contexts/WalletContext";
+import { isConnected, useWalletContext } from "contexts/WalletContext";
 import { ErrorStatus, LoadingStatus } from "components/Status";
 import { useGetter, useSetter } from "store/accessors";
 import { GiftState, resetDetails } from "slices/gift";
-import { chainIds } from "constant/chainIds";
-import { APP_NAME, IS_TEST } from "constant/env";
+import { APP_NAME } from "constant/env";
 import Progress from "./Progress";
 import Purchaser from "./Purchaser";
 import Result from "./Result";
@@ -34,15 +33,15 @@ export default function Purchase({ classes = "" }) {
 
 function CurrStep(props: GiftState) {
   const dispatch = useSetter();
-  const { wallet, isLoading } = useGetWallet();
+  const wallet = useWalletContext();
 
   /** reset form state when user disconnects, user might change wallet */
   useEffect(() => {
-    !wallet && dispatch(resetDetails());
+    !isConnected(wallet) && dispatch(resetDetails());
   }, [wallet, dispatch]);
 
   if (props.step === 2 || props.step === 1) {
-    if (isLoading) {
+    if (wallet === "loading") {
       return (
         <LoadingStatus classes="justify-self-center">
           Loading wallet
@@ -50,18 +49,10 @@ function CurrStep(props: GiftState) {
       );
     }
 
-    if (!wallet) {
+    if (!isConnected(wallet)) {
       return (
         <ErrorStatus classes="justify-self-center">
           You need to connect your wallet to make a donation
-        </ErrorStatus>
-      );
-    }
-
-    if (wallet.chain.chain_id !== chainIds.polygon) {
-      return (
-        <ErrorStatus classes="justify-self-center">
-          Kindly switch to Polygon {IS_TEST ? "Testnet" : "Mainnet"}
         </ErrorStatus>
       );
     }

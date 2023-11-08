@@ -1,9 +1,7 @@
 import { ReactNode } from "react";
 import { FieldValues, Path, PathValue } from "react-hook-form";
+import { OptionType, ValKey } from "types/utils";
 
-export type ValKey = string | number;
-
-export type OptionType<V> = { label: string; value: V };
 type Classes = {
   container?: string;
   button?: string;
@@ -25,6 +23,7 @@ export interface Props<
   options: OptionType<V>[];
   disabled?: true;
   classes?: Classes;
+  onOptionChange?(): void;
   children?: (selected: OptionType<V>) => ReactNode;
 }
 

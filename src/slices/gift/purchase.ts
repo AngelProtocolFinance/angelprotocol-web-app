@@ -1,7 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { EstimatedTx, isTxResultError } from "types/tx";
+import { TxPackage, isTxResultError } from "types/tx";
 import { invalidateApesTags } from "services/apes";
-import { WalletState } from "contexts/WalletContext";
 import { createAuthToken, logger } from "helpers";
 import { sendTx } from "helpers/tx";
 import { GENERIC_ERROR_MESSAGE } from "constant/common";
@@ -10,28 +9,27 @@ import { APIs } from "constant/urls";
 import gift, { GiftDetails, TxStatus, setTxStatus } from "./index";
 
 type Args = {
-  wallet: WalletState;
-  tx: EstimatedTx;
   details: GiftDetails;
+  txPackage: TxPackage;
 };
 
 export const purchase = createAsyncThunk<void, Args>(
   `${gift.name}/purchase`,
-  async ({ wallet, tx, details }, { dispatch }) => {
+  async ({ details, txPackage }, { dispatch }) => {
     const updateTx = (status: TxStatus) => {
       dispatch(setTxStatus(status));
     };
 
     try {
       updateTx({ msg: "Payment is being processed..." });
-      const result = await sendTx(wallet, tx);
+      const result = await sendTx(txPackage);
 
       if (isTxResultError(result)) {
         return updateTx({ error: result.error });
       }
 
-      const { hash, data } = result;
-      const depositID = data as null | string;
+      const { hash } = result;
+      const depositID = "";
       if (details.recipient) {
         return updateTx({ hash: result.hash });
       }
@@ -44,7 +42,7 @@ export const purchase = createAsyncThunk<void, Args>(
 
       let randNums = window.crypto.getRandomValues(new BigUint64Array(62));
       let preImage = `${randNums[0]}${randNums[1]}`;
-      let secret = `ap-${details.chainId}-${preImage}`;
+      let secret = `ap-${details.chainID}-${preImage}`;
 
       updateTx({ msg: "Processing giftcard code..." });
       const res = await fetch(APIs.aws + "/v1/giftcard/deposit", {
@@ -55,7 +53,7 @@ export const purchase = createAsyncThunk<void, Args>(
         body: JSON.stringify({
           secret,
           depositId: Number(depositID),
-          chain: details.chainId,
+          chain: details.chainID,
         }),
       });
 
@@ -74,7 +72,7 @@ export const purchase = createAsyncThunk<void, Args>(
       updateTx({ error: GENERIC_ERROR_MESSAGE });
     } finally {
       /** invalidate user balance */
-      dispatch(invalidateApesTags(["chain"]));
+      dispatch(invalidateApesTags(["tokens"]));
     }
   }
 );

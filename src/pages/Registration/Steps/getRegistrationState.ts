@@ -8,12 +8,10 @@ import {
   ContactDetails,
   DoneContact,
   DoneDocs,
-  DoneWallet,
   FileObject,
   InitContact,
   SavedRegistration,
   TDocumentation,
-  WalletData,
 } from "types/aws";
 import { Asset } from "components/registration";
 import { unsdgs } from "constant/unsdgs";
@@ -21,27 +19,16 @@ import { unsdgs } from "constant/unsdgs";
 export function getRegistrationState(
   reg: SavedRegistration
 ): RegistrationState {
-  if (isDoneWallet(reg)) {
+  if (isDoneDocs(reg)) {
     const { ContactPerson: c, Registration: r, Metadata: m } = reg;
-    return {
-      step: 4,
-      data: {
-        init: getInit(c),
-        contact: formatContactPerson(c, r),
-        documentation: formatDocumentation(r),
-        wallet: { address: m.Wallet },
-        status: r.RegistrationStatus,
-        endowId: m.EndowmentId,
-      },
-    };
-  } else if (isDoneDocs(reg)) {
-    const { ContactPerson: c, Registration: r } = reg;
     return {
       step: 3,
       data: {
         init: getInit(c),
         contact: formatContactPerson(c, r),
         documentation: formatDocumentation(r),
+        status: r.RegistrationStatus,
+        endowId: m.EndowmentId,
       },
     };
   } else if (isDoneContact(reg)) {
@@ -132,20 +119,12 @@ function formatDocumentation({
 
     //meta
     tier: Tier,
-    cashEligible: false,
-    hasAuthority: true,
-    hasAgreedToTerms: true,
     isAnonymousDonationsAllowed: KycDonorsOnly ? "No" : "Yes",
   };
 }
 
 export function genFileAsset(previews: FileObject[]): Asset {
   return { files: [], previews };
-}
-
-function isDoneWallet(data: SavedRegistration): data is DoneWallet {
-  const key: keyof WalletData = "Wallet";
-  return key in data.Metadata;
 }
 
 function isDoneDocs(data: SavedRegistration): data is DoneDocs {

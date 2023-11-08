@@ -1,4 +1,5 @@
 import Dec, { Decimal } from "decimal.js";
+import { describe, expect, test } from "vitest";
 import {
   condense,
   condenseToNum,
@@ -9,7 +10,7 @@ import {
   scale,
   scaleToStr,
   toPreciseLocaleString,
-} from ".";
+} from "./index";
 
 describe("common decimal helpers", () => {
   test("condense different input types", () => {

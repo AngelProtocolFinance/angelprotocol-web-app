@@ -48,7 +48,7 @@ export default function ProgressIndicator({ step, classes = "" }: Props) {
             setIsOtherStepsShown((prev) => !prev);
           }}
         >
-          <DrawerIcon className="" isOpen={isOtherStepsShown} size={25} />
+          <DrawerIcon isOpen={isOtherStepsShown} size={25} />
         </button>
       </div>
 
@@ -58,9 +58,6 @@ export default function ProgressIndicator({ step, classes = "" }: Props) {
             Documentation
           </Step>
           <Step isDone={step >= 3} isCurr={currPath === 3}>
-            Wallet address
-          </Step>
-          <Step isDone={step >= 4} isCurr={currPath === 4}>
             Summary
           </Step>
         </>

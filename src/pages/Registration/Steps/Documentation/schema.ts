@@ -1,11 +1,11 @@
-import { ObjectSchema, array, bool, object, string } from "yup";
+import { ObjectSchema, array, object, string } from "yup";
 import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
 import { FileObject } from "types/aws";
 import { Country } from "types/countries";
-import { OptionType } from "components/Selector";
 import { Asset } from "components/registration";
 import { genFileSchema } from "schemas/file";
+import { optionType } from "schemas/shape";
 import { requiredString } from "schemas/string";
 import { MAX_SDGS } from "constant/unsdgs";
 
@@ -37,11 +37,6 @@ function genAssetShape(isRequired: boolean = false): SchemaShape<Asset> {
   };
 }
 
-const optionSchema = object<any, SchemaShape<OptionType<string>>>({
-  label: requiredString,
-  value: requiredString,
-});
-
 export const schema = object<any, SchemaShape<FormValues>>({
   proofOfIdentity: object(genAssetShape(true)),
   proofOfRegistration: object(genAssetShape(true)),
@@ -52,7 +47,7 @@ export const schema = object<any, SchemaShape<FormValues>>({
   hqCountry: object<any, SchemaShape<Country>>({
     name: requiredString,
   }),
-  endowDesignation: optionSchema,
+  endowDesignation: optionType({ required: true }),
   legalEntityType: requiredString,
   //isKYCRequired defaulted to No on default value
   projectDescription: string().when(
@@ -65,12 +60,5 @@ export const schema = object<any, SchemaShape<FormValues>>({
             .required("required")
             .max(4000, "maximum 4000 characters allowed");
     }
-  ),
-
-  hasAuthority: bool().isTrue(
-    "Please confirm that you have the authority to create this endowment"
-  ),
-  hasAgreedToTerms: bool().isTrue(
-    "Please confirm that you agree to our Terms and Conditions"
   ),
 }) as ObjectSchema<FormValues>;

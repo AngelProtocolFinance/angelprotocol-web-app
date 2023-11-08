@@ -1,17 +1,11 @@
+import { FiscalSponsorhipAgreementSigner } from "../../types";
 import {
-  ApplicationStatusOptions,
-  FiscalSponsorhipAgreementSigner,
-} from "../../types";
-import {
-  AWSQueryRes,
   ContactUpdateResult,
   DocsUpdateResult,
-  EndowmentProposal,
   InitApplication,
   RegistrationUpdate,
   SavedRegistration,
   SubmitResult,
-  WalletUpdateResult,
 } from "types/aws";
 import { adminTags } from "services/aws/tags";
 import { logger } from "helpers";
@@ -102,13 +96,6 @@ const registration_api = aws.injectEndpoints({
                   );
                   break;
                 }
-                case "wallet": {
-                  draft.Metadata = Object.assign(
-                    draft.Metadata,
-                    data as WalletUpdateResult
-                  );
-                  break;
-                }
               }
               draft.reqId = draft.reqId + 1;
             })
@@ -119,42 +106,11 @@ const registration_api = aws.injectEndpoints({
       },
     }),
 
-    endowmentApplications: builder.query<
-      EndowmentProposal[],
-      ApplicationStatusOptions
-    >({
-      providesTags: [{ type: "admin", id: adminTags.applications }],
-      query: (status) => {
-        return {
-          url: `${v(2)}/registration/list`,
-          params: { regStatus: status },
-        };
-      },
-      transformResponse: (response: AWSQueryRes<EndowmentProposal[]>) =>
-        response.Items,
-    }),
-    /**TODO this should return a value
-     * { isEmailVerified } so to redirect already verified user if trying to
-     * verify again
-     */
-    requestEmail: builder.mutation<any, { uuid: string; email: string }>({
+    submit: builder.mutation<SubmitResult, string>({
       invalidatesTags: [{ type: "admin", id: adminTags.registration }],
-      query: ({ uuid, email }) => {
-        return {
-          url: "v3/registration/build-email",
-          method: "POST",
-          params: { uuid, type: "verify-email" },
-          body: { Email: email },
-        };
-      },
-      transformResponse: (response: { data: any }) => response,
-    }),
-    submit: builder.mutation<SubmitResult, { ref: string; chain_id: string }>({
-      invalidatesTags: [{ type: "admin", id: adminTags.registration }],
-      query: ({ ref, chain_id }) => ({
-        url: `${v(3)}/registration/${ref}/submit`,
+      query: (referenceID) => ({
+        url: `${v(4)}/registration/${referenceID}/submit`,
         method: "POST",
-        body: { chain_id },
       }),
       transformErrorResponse(err, meta, arg) {
         return {
@@ -169,12 +125,10 @@ export const {
   //queries
   useRegQuery,
   useLazyRegQuery,
-  useEndowmentApplicationsQuery,
   useFiscalSponsorshipAgreementSigningURLMutation,
 
   //mutations
   useUpdateRegMutation,
   useNewApplicationMutation,
-  useRequestEmailMutation,
   useSubmitMutation,
 } = registration_api;

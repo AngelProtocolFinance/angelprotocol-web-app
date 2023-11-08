@@ -5,7 +5,6 @@ import {
   isDeleteMsg,
 } from "../types";
 import {
-  AWSstrategy,
   EndowListPaginatedAWSQueryRes,
   EndowmentCard,
   EndowmentOption,
@@ -62,15 +61,6 @@ export const aws = createApi({
         return {
           url: `/${v(5)}/endowments/${network}`,
           params: { ...params, return: endowCardFields },
-        };
-      },
-    }),
-    strategyCards: builder.query<AWSstrategy[], {}>({
-      providesTags: ["strategy"],
-      query: (params) => {
-        return {
-          url: `/v1/strategy/list`,
-          params: { ...params },
         };
       },
     }),
@@ -152,7 +142,6 @@ export const {
   useWalletProfileQuery,
   useToggleBookmarkMutation,
   useEndowmentCardsQuery,
-  useStrategyCardsQuery,
   useEndowmentOptionsQuery,
   useProfileQuery,
   useProgramQuery,

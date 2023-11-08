@@ -1,9 +1,9 @@
-import { ObjectSchema, array, object, string } from "yup";
+import { ObjectSchema, array, object } from "yup";
 import { FV } from "./types";
 import { SchemaShape } from "schemas/types";
 import { ImgLink } from "components/ImgEditor";
-import { OptionType } from "components/Selector";
 import { genFileSchema } from "schemas/file";
+import { optionType } from "schemas/shape";
 import { requiredString, url } from "schemas/string";
 import { MAX_SDGS } from "constant/unsdgs";
 
@@ -23,7 +23,6 @@ const fileObj = object<any, SchemaShape<ImgLink>>({
 });
 
 //construct strict shape to avoid hardcoding shape keys
-
 export const schema = object<any, SchemaShape<FV>>({
   sdgs: array()
     .min(1, "required")
@@ -33,16 +32,7 @@ export const schema = object<any, SchemaShape<FV>>({
   logo: fileObj,
   url: url,
   // registration_number: no need to validate,
-  endow_designation: object<any, SchemaShape<OptionType<string>>>({
-    label: string().when("$isEndow", {
-      is: true,
-      then: () => requiredString,
-    }),
-    value: string().when("$isEndow", {
-      is: true,
-      then: () => requiredString,
-    }),
-  }),
+  endow_designation: optionType({ required: true }),
   name: requiredString,
   active_in_countries: array(),
   social_media_urls: object().shape<SchemaShape<FV["social_media_urls"]>>({

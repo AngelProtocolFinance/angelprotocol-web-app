@@ -1,17 +1,17 @@
 import { useCallback } from "react";
 import { invalidateApesTags } from "services/apes";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
+import { isConnected, useWalletContext } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import { useSetter } from "store/accessors";
 import { logger } from "helpers";
-import { chainIDs } from "constant/chains";
+import { chains } from "constant/chains";
 import { KADO_API_KEY } from "constant/env";
 import IFrame from "./IFrame";
 import Modal from "./Modal";
 
 const KADO_NETWORKS = ["ethereum", "juno", "terra", "polygon"] as const;
-type KADO_NETWORK_VALUES = (typeof KADO_NETWORKS)[number];
+type KADO_NETWORK = (typeof KADO_NETWORKS)[number];
 
 const NETWORK_LIST = KADO_NETWORKS.join(",");
 
@@ -19,20 +19,22 @@ export default function KadoModal() {
   const dispatch = useSetter();
   const { closeModal, setModalOption } = useModalContext();
 
-  const { wallet } = useGetWallet();
+  const wallet = useWalletContext();
 
   const handleOnLoad = useCallback(
     () =>
       // there is a high chance the user bought some new crypto prior to closing this modal
       // reload the page to get new wallet balances
-      setModalOption("onClose", () => dispatch(invalidateApesTags(["chain"]))),
+      setModalOption("onClose", () => dispatch(invalidateApesTags(["tokens"]))),
     [setModalOption, dispatch]
   );
 
-  const onToAddress = !wallet ? "" : `&onToAddress=${wallet.address}`;
-  const network = !wallet
-    ? ""
-    : `&network=${getKadoNetworkValue(wallet.chain.chain_id)}`;
+  const onToAddress = isConnected(wallet)
+    ? `&onToAddress=${wallet.address}`
+    : "";
+  const network = isConnected(wallet)
+    ? `&network=${kadoNetwork(wallet.chainId)}`
+    : "";
 
   return (
     <Modal className="fixed inset-0 sm:fixed-center z-10 flex flex-col sm:w-[500px] sm:h-[700px] bg-gray-l6 dark:bg-blue-d6 sm:border border-gray-l3 dark:border-bluegray sm:rounded">
@@ -58,22 +60,21 @@ export default function KadoModal() {
   );
 }
 
-function getKadoNetworkValue(chainId: string): KADO_NETWORK_VALUES {
+function kadoNetwork(chainId: string): KADO_NETWORK {
   switch (chainId) {
-    case chainIDs.polygonMain:
-    case chainIDs.polygonTest:
+    case chains["80001"].id:
+    case chains["137"].id:
       return "polygon";
     // if Binance, just default to ethereum
-    case chainIDs.binanceMain:
-    case chainIDs.binanceTest:
-    case chainIDs.ethMain:
-    case chainIDs.ethTest:
+    case chains["56"].id:
+    case chains["97"].id:
+    case chains["1"].id:
+    case chains["5"].id:
       return "ethereum";
-    case chainIDs.junoMain:
-    case chainIDs.junoTest:
+    case chains["juno-1"].id:
       return "juno";
-    case chainIDs.terraMain:
-    case chainIDs.terraTest:
+    case chains["phoenix-1"].id:
+    case chains["pisco-1"].id:
       return "terra";
     default:
       logger.error(`${chainId} is not supported`);

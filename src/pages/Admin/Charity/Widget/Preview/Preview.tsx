@@ -1,7 +1,6 @@
-import Image from "components/Image";
+import { DappLogo } from "components/Image";
 import { useGetter } from "store/accessors";
 import { possesiveForm } from "helpers";
-import { LOGO_DARK } from "constant/common";
 import DonaterSample from "./DonaterSample";
 
 export default function Preview({ classes = "" }) {
@@ -45,7 +44,7 @@ export default function Preview({ classes = "" }) {
         />
 
         <footer className="grid place-items-center h-20 w-full bg-blue mt-auto">
-          <Image className="w-20" {...LOGO_DARK} />
+          <DappLogo classes="w-20" />
         </footer>
       </div>
     </section>

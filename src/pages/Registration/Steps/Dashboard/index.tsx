@@ -6,13 +6,12 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import Prompt from "components/Prompt";
 import { handleMutationResult } from "helpers";
-import { chainIds } from "constant/chainIds";
 import { useRegState, withStepGuard } from "../StepGuard";
 import EndowmentStatus from "./EndowmentStatus";
 import Step from "./Step";
 
 function Dashboard() {
-  const { data } = useRegState<4>();
+  const { data } = useRegState<3>();
 
   const [submitApplication, { isLoading: isSubmitting }] = useSubmitMutation();
   const { showModal } = useModalContext();
@@ -20,10 +19,7 @@ function Dashboard() {
 
   const submit = async ({ init }: CompleteRegistration) => {
     handleMutationResult(
-      await submitApplication({
-        ref: init.reference,
-        chain_id: chainIds.polygon,
-      }),
+      await submitApplication(init.reference),
       handleError,
       () => {
         if (window.hasOwnProperty("lintrk")) {
@@ -67,7 +63,6 @@ function Dashboard() {
 
       <Step num={1} disabled={isStepDisabled} />
       <Step num={2} disabled={isStepDisabled} />
-      <Step num={3} disabled={isStepDisabled} />
 
       <EndowmentStatus
         isSubmitting={isSubmitting}

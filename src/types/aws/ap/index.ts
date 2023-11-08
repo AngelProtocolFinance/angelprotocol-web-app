@@ -52,6 +52,7 @@ type EndowmentBase = {
 };
 
 export type EndowmentProfile = EndowmentBase & {
+  bank_verified: "Not Submitted" | "Under Review" | "Approved" | "Rejected";
   fiscal_sponsored: boolean;
   contact_email: string;
   image: string;
@@ -68,8 +69,8 @@ export type EndowmentProfile = EndowmentBase & {
     tiktok?: string;
   };
   street_address?: string;
-
   url?: string;
+  wise_recipient_id: string;
 } & EndowmentBalances;
 
 export type EndowmentCard = EndowmentBase & {
@@ -96,7 +97,7 @@ export type EndowmentProfileUpdate = {
   contact_email: string;
   // categories_sdgs: UNSDG_NUMS[];
   contributor_verification_required: boolean;
-  endow_designation: string;
+  endow_designation: EndowDesignation | "";
   hq_country: string;
   image: string;
   kyc_donors_only: boolean;
@@ -154,42 +155,10 @@ export interface LeaderboardEntry {
   //charity_owner:string
 }
 
-export type AWSstrategy = {
-  strategy_key: string;
-  chain_id: string;
-  routerAxelarChainName: string;
-  router: string;
-  apy: number; // 5.2
-  contract: string;
-  description: string;
-  icon: string;
-  market_cap: number; // 100,024,000 USD
-  name: string;
-  provider: { name: string; url: string; icon: string };
-  rating: string; // "AAA";
-  type: string; // "Uncollateralized Lending";
-  vaults: { locked: string; liquid: string };
-  website: string;
-};
-
 export interface Update {
   endowments: LeaderboardEntry[];
   last_update: string;
 }
-
-export type Airdrops = Airdrop[];
-export type Airdrop = {
-  stage: number;
-  haloTokens: string; // uhalo amount
-  proof: string[];
-  // chainId: "bombay-12";
-  // stage: 1;
-  // haloTokens: "10000000";
-  // proof: string[];
-  // claimable: true;
-  // address: "terra1tc2yp07pce93uwnneqr0cptqze6lvke9edal3l";
-  // pk: "bombay-12:terra1tc2yp07pce93uwnneqr0cptqze6lvke9edal3l";
-};
 
 export type EndowmentBookmark = {
   endowId: number;

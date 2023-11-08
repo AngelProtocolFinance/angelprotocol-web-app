@@ -1,4 +1,4 @@
-import { vi } from "vitest";
+import { afterAll, beforeEach, describe, expect, test, vi } from "vitest";
 import { APIs } from "constant/urls";
 import { Bucket, bucketURL, uploadFiles } from "./uploadFiles";
 
@@ -8,7 +8,7 @@ const bucket: Bucket = "endow-profiles";
 const baseURL = `https://${bucket}.${bucketURL}/${TIME_STAMP}`;
 
 beforeEach(() => {
-  global.fetch = vi.fn();
+  global.fetch = vi.fn() as any;
 });
 
 afterAll(() => {

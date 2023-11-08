@@ -27,7 +27,7 @@ export default function Widget() {
       </p>
       <Preview classes="mt-10 order-last @4xl/widget:order-none @4xl/widget:mt-0" />
       <div className="w-full">
-        <Configurer classes="" />
+        <Configurer />
         <Snippet classes="mt-10" />
       </div>
     </div>

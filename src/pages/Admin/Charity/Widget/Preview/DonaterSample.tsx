@@ -1,8 +1,5 @@
 import { WidgetConfig } from "types/widget";
-import { placeholderChain } from "contexts/WalletContext/constants";
 import AdvancedOptions from "./AdvancedOptions";
-
-const TOKEN = placeholderChain.tokens[0];
 
 export default function DonaterSample({
   advancedOptions,
@@ -19,9 +16,7 @@ export default function DonaterSample({
         <span className="text-gray-d1 dark:text-gray">0.00000</span>
         <span className="text-sm ml-auto">TOKEN</span>
       </div>
-      <p className="text-xs mt-1">
-        Minimal amount: {TOKEN.symbol} {TOKEN.min_donation_amnt}
-      </p>
+      <p className="text-xs mt-1">Minimal amount: Token 0.0000</p>
       {advancedOptions.display !== "hidden" && (
         <AdvancedOptions
           classes="mt-10"

@@ -1,21 +1,27 @@
 import { PropsWithChildren } from "react";
-import { EndowmentProfile } from "types/aws";
-import Icon from "components/Icon";
-import { ENDOW_DESIGNATIONS } from "constant/common";
+import { EndowDesignation, EndowmentProfile } from "types/aws";
+import Icon, { IconType } from "components/Icon";
 
-export default function EndowDesignationTag(
-  props: Pick<EndowmentProfile, "endow_designation">
-) {
-  const endowDesignation = ENDOW_DESIGNATIONS.find(
-    (option) => option.value === props.endow_designation
-  );
-  return endowDesignation && props.endow_designation !== "Other" ? (
+const icons: { [key in EndowDesignation]: IconType } = {
+  Charity: "HeartFill",
+  "Religious Organization": "ReligiousOrganization",
+  University: "University",
+  Hospital: "Hospital",
+  Other: "Charity",
+};
+
+export default function EndowDesignationTag({
+  endow_designation,
+}: Pick<EndowmentProfile, "endow_designation">) {
+  if (endow_designation === "Other") return null;
+
+  return (
     <div className="flex flex-col items-start gap-3">
       <Tag>
-        <Icon type={endowDesignation.icon} size={24} /> {endowDesignation.label}
+        <Icon type={icons[endow_designation]} size={24} /> {endow_designation}
       </Tag>
     </div>
-  ) : null;
+  );
 }
 
 const Tag = (props: PropsWithChildren<{}>) => (

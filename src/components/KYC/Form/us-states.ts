@@ -1,4 +1,4 @@
-import { OptionType } from "components/Selector";
+import { OptionType } from "types/utils";
 
 export const states: OptionType<string>[] = [
   //from https://usastatescode.com/state-array-json

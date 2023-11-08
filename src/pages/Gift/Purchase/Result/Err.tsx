@@ -4,7 +4,6 @@ import Icon from "components/Icon";
 import { useSetter } from "store/accessors";
 import { TError, setStep } from "slices/gift";
 import { getTxUrl } from "helpers";
-import { chainIds } from "constant/chainIds";
 import { appRoutes } from "constant/routes";
 
 export default function Err({ error, hash }: TError) {
@@ -26,7 +25,7 @@ export default function Err({ error, hash }: TError) {
       <p className="text-center mb-8">{error}</p>
       {hash && (
         <ExtLink
-          href={getTxUrl(chainIds.juno, hash)}
+          href={getTxUrl("juno-1", hash)}
           className="btn-gift btn-outline-filled gap-3.5 w-full sm:w-auto mb-3 min-w-[15.6rem]"
         >
           <Icon type="ExternalLink" size={22} />

@@ -1,6 +1,3 @@
-import { WithoutInstallers } from "contexts/WalletContext/types";
-import { Chain } from "types/tx";
-import { WALLET_METADATA } from "contexts/WalletContext/constants";
 import { chainIds } from "constant/chainIds";
 import { EMAIL_SUPPORT, EXPECTED_NETWORK_TYPE } from "constant/env";
 
@@ -54,19 +51,6 @@ export class UnexpectedStateError extends APError {
   }
 }
 
-export class WrongChainError extends APError {
-  constructor(expectedChain?: string) {
-    super(
-      "WrongChainError",
-      `Connected to the wrong chain.${
-        !expectedChain
-          ? ""
-          : ` Please connect to the ${expectedChain} chain and reload the page.`
-      }`
-    );
-  }
-}
-
 export class WrongNetworkError extends APError {
   constructor() {
     super(
@@ -91,37 +75,6 @@ export class ManualChainSwitchRequiredError extends APError {
       "ManualChainSwitchRequiredError",
       `Please use your wallet to switch to ${chainId} chain and reload the page`
     );
-  }
-}
-
-export class CosmosTxSimulationFail extends APError {
-  constructor(
-    message = "Submission aborted. This transaction is likely to fail"
-  ) {
-    super("CosmosTxSimulationFail", message);
-  }
-}
-
-export class TxResultFail extends Error {
-  chain: Chain;
-  txHash: string;
-  constructor(chain: Chain, txHash: string) {
-    //No need to dump to user technical details of why result failed, a link to failed tx is sufficient
-    super("Failed to broadcast transaction");
-    this.chain = chain;
-    this.txHash = txHash;
-    this.name = "TxResultFail";
-  }
-}
-
-export class WalletNotInstalledError extends APError {
-  providerId: WithoutInstallers;
-  constructor(providerId: WithoutInstallers) {
-    super(
-      "WalletNotInstalledError",
-      `Wallet ${WALLET_METADATA[providerId].name} not installed`
-    );
-    this.providerId = providerId;
   }
 }
 

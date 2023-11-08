@@ -1,5 +1,5 @@
 import { WalletControllerChainOptions } from "@terra-money/wallet-provider";
-import { IS_TEST } from "constant/env";
+import { IS_TEST } from "./env";
 
 /**
  * from: https://assets.terra.money/chains.json
@@ -18,8 +18,8 @@ const chains = {
   classic: {
     name: "classic",
     chainID: "columbus-5",
-    lcd: "https://columbus-lcd.terra.dev",
-    api: "https://columbus-api.terra.dev",
+    lcd: "https://terra-classic-lcd.publicnode.com",
+    api: "https://terra-classic-public-api.publicnode.com",
     mantle: "https://columbus-mantle.terra.dev",
     walletconnectID: 2,
   },

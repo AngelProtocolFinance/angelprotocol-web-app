@@ -1,4 +1,4 @@
-import { vi } from "vitest";
+import { describe, expect, test, vi } from "vitest";
 import { FileObject } from "types/aws";
 import { Bucket, bucketURL } from "helpers/uploadFiles";
 import { getFilePreviews } from "./getFilePreviews";
@@ -29,7 +29,7 @@ const result3: FileObject = {
 };
 
 const uploadFiles = vi.fn();
-global.fetch = vi.fn();
+global.fetch = vi.fn() as any;
 
 describe("get documentation file previews", () => {
   test("correct preview mapping for new uploads", async () => {

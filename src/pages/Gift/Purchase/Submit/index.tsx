@@ -2,7 +2,7 @@ import { PropsWithChildren, useState } from "react";
 import { Link } from "react-router-dom";
 import { EstimateStatus } from "./types";
 import { TokenWithAmount } from "types/tx";
-import { WithWallet } from "contexts/WalletContext";
+import { WithWallet } from "types/wallet";
 import Image from "components/Image";
 import { ErrorStatus, LoadingStatus } from "components/Status";
 import { useSetter } from "store/accessors";
@@ -20,7 +20,6 @@ export default function Submit(props: WithWallet<SubmitStep>) {
   }
 
   const { token } = props.details;
-  const { chain } = props.wallet;
 
   return (
     <div className="grid content-start">
@@ -32,7 +31,7 @@ export default function Submit(props: WithWallet<SubmitStep>) {
         <span>{token.symbol}</span>
       </Row>
       <Row title="Blockchain:">
-        <span>{chain.chain_name}</span>
+        <span>Chain name</span>
       </Row>
       <Row title="Amount:">
         <span>
@@ -100,8 +99,6 @@ function TxTotal({
           </LoadingStatus>
         </>
       );
-    case "for-approval":
-      return <></>;
 
     default:
       const { fee } = estimate;

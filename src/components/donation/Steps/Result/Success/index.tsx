@@ -28,7 +28,7 @@ export default function Success({
       </h3>
 
       <ExtLink
-        href={getTxUrl(chainId, hash)}
+        href={getTxUrl(chainId.value, hash)}
         className="gap-3.5 w-full sm:w-auto btn-outline-filled btn-donate"
       >
         <Icon type="ExternalLink" size={22} />

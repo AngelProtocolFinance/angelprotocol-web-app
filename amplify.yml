@@ -1,4 +1,9 @@
 version: 1
+backend:
+  phases:
+    build:
+      commands:
+        - amplifyPush --simple
 frontend:
   phases:
     preBuild:
@@ -11,18 +16,7 @@ frontend:
         - VITE_KADO_API_KEY=${REACT_APP_KADO_API_KEY}
         - VITE_NETWORK=${REACT_APP_NETWORK}
         - VITE_JUNO_LCD_NODE=${REACT_APP_JUNO_LCD_NODE}
-        - VITE_APP_TYPE=${REACT_APP_APP_TYPE}
-        - VITE_APP_NAME=${REACT_APP_APP_NAME}
-        - VITE_BASE_DOMAIN=${REACT_APP_BASE_DOMAIN}
-        - VITE_DAPP_DOMAIN=${REACT_APP_DAPP_DOMAIN}
-        - VITE_EMAIL_SUPPORT=${REACT_APP_EMAIL_SUPPORT}
-        - VITE_SEO_IMAGE=${REACT_APP_SEO_IMAGE}
-        - VITE_LOGO_IMG_DARK=${REACT_APP_LOGO_IMG_DARK}
-        - VITE_LOGO_IMG_LIGHT=${REACT_APP_LOGO_IMG_LIGHT}
         - VITE_SENTRY_DSN=${REACT_APP_SENTRY_DSN}
-        - VITE_SUBGRAPH_API_KEY=${REACT_APP_SUBGRAPH_API_KEY}
-        - VITE_INFURA_ID=${REACT_APP_INFURA_ID}
-        - VITE_WEB3AUTH_CLIENT_ID=${REACT_APP_WEB3AUTH_CLIENT_ID}
         - IS_TESTNET=${IS_TESTNET}
         - IS_TEST=${IS_TEST}
         - export NODE_OPTIONS="--max-old-space-size=8192"

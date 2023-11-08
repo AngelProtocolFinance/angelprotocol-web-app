@@ -24,7 +24,6 @@ function Documentation() {
           website: "",
 
           sdgs: [],
-          cashEligible: false,
           hqCountry: { name: "", flag: "", code: "" },
           endowDesignation: { value: "", label: "" },
           activeInCountries: [],
@@ -34,8 +33,6 @@ function Documentation() {
           legalEntityType: "",
           projectDescription: "",
 
-          hasAuthority: false,
-          hasAgreedToTerms: false,
           isAnonymousDonationsAllowed: "Yes",
         },
   });

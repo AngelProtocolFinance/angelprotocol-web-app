@@ -1,40 +1,42 @@
 import { Coin, Fee, LCDClient, Msg } from "@terra-money/terra.js";
-import { ConnectedWallet } from "@terra-money/wallet-provider";
-import { Estimate } from "types/tx";
-import { WalletState } from "contexts/WalletContext";
+import { TerraChainID } from "types/chain";
+import { EstimateResult } from "types/tx";
+import { chains } from "constant/chains";
 import { condenseToNum } from "../../decimal";
 
 export default async function estimateTerraFee(
-  wallet: WalletState,
-  terraWallet: ConnectedWallet,
+  chainID: TerraChainID,
+  sender: string,
   msgs: Msg[]
-): Promise<Estimate> {
+): Promise<EstimateResult> {
+  const { lcd, nativeToken } = chains[chainID];
   const client = new LCDClient({
-    chainID: wallet.chain.chain_id,
-    URL: wallet.chain.lcd_url,
+    chainID,
+    URL: lcd,
     gasAdjustment: 1.6,
     //https://station-assets.terra.money/chains.json
     gasPrices: [new Coin("uluna", 0.015)],
   });
 
-  const account = await client.auth.accountInfo(wallet.address);
+  const account = await client.auth.accountInfo(sender);
   const fee = await client.tx.estimateFee(
     [{ sequenceNumber: account.getSequenceNumber() }],
-    { msgs, feeDenoms: [wallet.chain.native_currency.token_id] }
+    { msgs, feeDenoms: [nativeToken.id] }
   );
-  const amount = extractFeeAmount(fee, wallet.displayCoin.token_id);
+  const amount = extractFeeAmount(fee, nativeToken.id);
 
   return {
     fee: {
       amount,
-      symbol: wallet.displayCoin.symbol,
-      coinGeckoId: wallet.displayCoin.coingecko_denom,
+      symbol: nativeToken.symbol,
+      coinGeckoId: nativeToken.coinGeckoId,
     },
-    tx: { type: "terra", val: { fee, msgs }, wallet: terraWallet },
+    chainID,
+    toSend: { fee, msgs },
   };
 }
 
-export function extractFeeAmount(stdFee: Fee, denom: string): number {
-  const stdFeeAmount = stdFee.amount.get(denom)!.amount.toString();
-  return condenseToNum(stdFeeAmount);
+function extractFeeAmount(stdFee: Fee, denom: string): number {
+  const stdFeeAmount = stdFee.amount.get(denom)!.amount;
+  return condenseToNum(stdFeeAmount.toString());
 }

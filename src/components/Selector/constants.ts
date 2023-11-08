@@ -1,6 +1,5 @@
-import { OptionType } from "./types";
+import { OptionType } from "types/utils";
 
-export const labelKey: keyof OptionType<any> = "label";
 export const valueKey: keyof OptionType<any> = "value";
 
 export const styles = {
