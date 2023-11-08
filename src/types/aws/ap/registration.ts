@@ -84,20 +84,25 @@ type FiscalSponsorship =
   | { type: "US" }
   | { type: "Non-US"; FSASigningURL: string; signedFSAdownloadURL?: string };
 
-//use generic step name
+export type SubmissionStatus = {
+  status: RegistrationStatus;
+};
+
 export type DoneRegistrantDetails = InitReg &
   RegistrationMeta &
   RegistrantDetails;
 export type DoneOrgDetails = DoneRegistrantDetails & OrgDetails;
 export type DoneOrgDocs = DoneOrgDetails & OrgDocs;
 export type DoneBankDetails = DoneOrgDocs & BankDetails;
-export type Complete = DoneBankDetails & FiscalSponsorship;
+export type ForSubmission = DoneBankDetails & FiscalSponsorship;
+export type Submitted = ForSubmission & SubmissionStatus;
 
 export type SavedRegistration =
   | DoneRegistrantDetails
   | DoneOrgDetails
   | DoneOrgDocs
   | DoneBankDetails
-  | Complete;
+  | ForSubmission
+  | SubmissionStatus;
 
-export type RegistrationUpdate = Pick<InitReg, "uuid"> & Partial<Complete>;
+export type RegistrationUpdate = Pick<InitReg, "uuid"> & Partial<Submitted>;
