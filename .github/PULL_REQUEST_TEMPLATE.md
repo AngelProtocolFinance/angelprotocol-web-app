@@ -4,10 +4,10 @@
 
 ## Instructions on making this work
 
-- run `bun install` to install npm dependencies
-- run `bun run test` to verify all tests still pass
-- (optional) run `bun run build` to verify the build passes
-- run `bun start` to start the webapp
+- run `yarn install` to install npm dependencies
+- run `yarn test` to verify all tests still pass
+- (optional) run `yarn build` to verify the build passes
+- run `yarn start` to start the webapp
 -
 
 ## UI changes for review
