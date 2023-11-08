@@ -4,14 +4,14 @@
 
 ### Requirements
 
-- `Node.js` (v20.x) - https://github.com/nvm-sh/nvm#installing-and-updating
-- `yarn` (v1.22.x) - https://yarnpkg.com/getting-started/install/
+- `Node.js` (v18.x) - https://github.com/nvm-sh/nvm#installing-and-updating
+- `yarn` (v4) - https://yarnpkg.com/getting-started/install/
 
 We recommend using a version manager like `nvm`. Assuming you are using nvm, you can install and use Node v18 with the following two commands:
 
 ```shell
-nvm install v20
-nvm use v20
+nvm install v18
+nvm use v18
 ```
 
 We use `yarn` as a package manager. After installing yarn, simply run the package installer:

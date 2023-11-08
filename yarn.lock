@@ -5940,7 +5940,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:20.9.0":
+"@types/node@npm:*":
   version: 20.9.0
   resolution: "@types/node@npm:20.9.0"
   dependencies:
@@ -5953,6 +5953,15 @@ __metadata:
   version: 10.12.18
   resolution: "@types/node@npm:10.12.18"
   checksum: 7c2f966f59bff476ea9bf6bbe2d4b03d583899cb4fd7eb4d4daf49bab3475a9c68601ed8e40f57f89a860f46ab4e6c0216ad428506abac17182e888675b265f8
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:18.18.9":
+  version: 18.18.9
+  resolution: "@types/node@npm:18.18.9"
+  dependencies:
+    undici-types: "npm:~5.26.4"
+  checksum: 8d58fba5eede0df009412ee188bc96f4baf340f4fafbda1bc66fb680fa775aedc88f0cb154a2455966443d9538af402fff022fb0632bddb1bd0648e5a86e5db9
   languageName: node
   linkType: hard
 
@@ -6853,7 +6862,7 @@ __metadata:
     "@testing-library/user-event": "npm:14.4.3"
     "@trivago/prettier-plugin-sort-imports": "npm:4.2.0"
     "@types/jsonwebtoken": "npm:8.5.9"
-    "@types/node": "npm:20.9.0"
+    "@types/node": "npm:18.18.9"
     "@types/quill": "npm:2.0.9"
     "@types/react": "npm:18.2.15"
     "@types/react-csv": "npm:1.1.3"
