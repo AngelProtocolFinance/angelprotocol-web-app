@@ -51,7 +51,7 @@ type InitReg = {
   SK: "Registration";
   RegistrationDate: string /** ISO string*/;
   RegistrationStatus: RegistrationStatus;
-  UN_SDG: UNSDG_NUMS[] | 0;
+  UN_SDG: UNSDG_NUMS[];
 };
 
 export type InitContact = {
