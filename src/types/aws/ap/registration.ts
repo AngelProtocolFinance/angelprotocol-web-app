@@ -1,6 +1,5 @@
-import { UNSDG_NUMS } from "types/lists";
 import { FileObject } from "../common";
-import { EndowmentTierNum } from "./index";
+import { EndowDesignation } from "../index";
 
 export type RegistrationStatus =
   | "Inactive"
@@ -36,125 +35,74 @@ export type ContactRoles =
   | "treasurer"
   | "vice-president";
 
-type InitReg = {
-  PK: string;
-  SK: "Registration";
-  RegistrationDate: string /** ISO string*/;
-  RegistrationStatus: RegistrationStatus;
-  UN_SDG: UNSDG_NUMS[];
+export type InitReg = {
+  uuid: string;
+  registrationDate: string /** ISO string*/;
+  registrantEmail: string;
+  registrantName: string;
 };
 
-export type InitContact = {
-  PK: string;
-  SK: "ContactPerson";
-  Email: string;
+type RegistrationMeta = {
+  orgRole: ContactRoles;
+  referralMethod: ReferralMethods;
+  referralCode: string; //when ReferralMethod is "referral"
+  otherReferralCode: string; //when ReferralMethod is "other"
 };
 
-type InitMeta = {
-  PK: string;
-  SK: "Metadata";
+type RegistrantDetails = {
+  registrantPhoneNumber: string;
+  registrantGoals: string;
+  registrantRole: ContactRoles;
+  registrantOtherRole: string;
 };
 
-export type ContactDetails = {
-  FirstName: string;
-  LastName: string;
-  PhoneNumber: string;
-  Goals: string;
-  Role: ContactRoles;
-  OtherRole: string;
-  ReferralMethod: ReferralMethods;
-  ReferralCode: string; //when ReferralMethod is "referral"
-  OtherReferralMethod: string; //when ReferralMethod is "other"
+type OrgDetails = {
+  orgName: string;
+  orgDesignation: EndowDesignation;
+  orgHQCountry: string;
+  orgCountriesOfOperation: string[];
+  orgTagline: string;
 };
 
-export type TDocumentation = {
-  //user identity
-  ProofOfIdentity: FileObject;
+type OrgDocs =
+  | {
+      type: "US";
+      EIN: string;
+    }
+  | {
+      type: "Non-US";
+      orgRegistrationNumber: string;
+      orgLegalEntityType: string;
+      orgProofOfRegistration: FileObject;
+    };
 
-  //organization details
-  EIN: string;
-  ProofOfRegistration: FileObject;
-  Website: string;
-  Tier: EndowmentTierNum;
-  HqCountry: string;
-  EndowDesignation: string;
-  ActiveInCountries: string[];
-  LegalEntityType: string;
-  ProjectDescription: string;
-
-  //fiscal sponsorship
-  AuthorizedToReceiveTaxDeductibleDonations: boolean;
-  //only exists if AuthorizedToReceiveTaxDeductibleDonations is false
-  FiscalSponsorshipAgreementSigningURL?: string;
-  SignedFiscalSponsorshipAgreement?: string;
-
-  //others
-  KycDonorsOnly: boolean;
-  CashEligible: boolean;
+type BankDetails = {
+  recipienctAccountID: string;
 };
 
-//INIT STEP
-export type InitApplication = {
-  Registration: InitReg;
-  ContactPerson: InitContact;
-  Metadata: InitMeta;
+type FiscalSponsorship =
+  | { type: "US" }
+  | { type: "Non-US"; FSASigningURL: string; signedFSAdownloadURL?: string };
+
+export type SubmissionStatus = {
+  status: RegistrationStatus;
 };
 
-type OrgData = { OrganizationName: string };
-
-type Append<Reg extends InitApplication, T, U, V> = {
-  Registration: Reg["Registration"] & T;
-  ContactPerson: Reg["ContactPerson"] & U;
-  Metadata: Reg["Metadata"] & V;
-};
-
-type NewEndow = {
-  EndowmentId?: number;
-  /** when created 
-TODO: should be part of Registration status
-Inactive | Rejected | {id: number}
-*/
-};
-
-export type DoneContact = Append<InitApplication, OrgData, ContactDetails, {}>;
-export type DoneDocs = Append<DoneContact, TDocumentation, {}, NewEndow>;
-
-type Proposal = {
-  application_id: number;
-};
-type InReview = Append<DoneDocs, Proposal, {}, {}>;
+export type DoneRegistrantDetails = InitReg &
+  RegistrationMeta &
+  RegistrantDetails;
+export type DoneOrgDetails = DoneRegistrantDetails & OrgDetails;
+export type DoneOrgDocs = DoneOrgDetails & OrgDocs;
+export type DoneBankDetails = DoneOrgDocs & BankDetails;
+export type ForSubmission = DoneBankDetails & FiscalSponsorship;
+export type Submitted = ForSubmission & SubmissionStatus;
 
 export type SavedRegistration =
-  | InitApplication
-  | DoneContact
-  | DoneDocs
-  | InReview;
+  | DoneRegistrantDetails
+  | DoneOrgDetails
+  | DoneOrgDocs
+  | DoneBankDetails
+  | ForSubmission
+  | SubmissionStatus;
 
-type ContactUpdate = {
-  type: "contact details";
-  ContactPerson: Pick<InitContact, "Email"> & Partial<ContactDetails>;
-  Registration: OrgData;
-};
-
-type DocsUpdate = {
-  type: "documentation";
-} & Omit<TDocumentation, "Tier"> &
-  Partial<Pick<InitReg, "UN_SDG">>;
-
-export type RegistrationUpdate = (ContactUpdate | DocsUpdate) & {
-  reference: string;
-};
-
-export type ContactUpdateResult = {
-  ContactPerson: ContactDetails;
-  Registration: OrgData;
-};
-
-export type DocsUpdateResult = InitReg & TDocumentation;
-
-export type SubmitResult = {
-  RegistrationStatus: RegistrationStatus;
-  chain_id: string;
-  application_id: number;
-  Email: string;
-};
+export type RegistrationUpdate = Pick<InitReg, "uuid"> & Partial<Submitted>;
