@@ -12,6 +12,7 @@ import {
   InitContact,
   SavedRegistration,
   TDocumentation,
+  isDoneDocs,
 } from "types/aws";
 import { Asset } from "components/registration";
 import { unsdgs } from "constants/unsdgs";
@@ -20,7 +21,7 @@ export function getRegistrationState(
   reg: SavedRegistration
 ): RegistrationState {
   if (isDoneDocs(reg)) {
-    const { ContactPerson: c, Registration: r, Metadata: m } = reg;
+    const { ContactPerson: c, Registration: r } = reg;
     return {
       step: 3,
       data: {

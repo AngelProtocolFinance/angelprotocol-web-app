@@ -23,30 +23,30 @@ export default function Form({ classes = "" }: { classes?: string }) {
       </p>
       <h3 className="mb-4">Personal information</h3>
       <Field<FV>
-        name="firstName"
+        name="FirstName"
         label="First name"
         placeholder="e.g. John"
         required
         classes={{ container: "mb-4" }}
       />
       <Field<FV>
-        name="lastName"
+        name="LastName"
         label="Last name"
         placeholder="e.g. Doe"
         required
         classes={{ container: "mb-4" }}
       />
       <Field<FV>
-        name="phone"
+        name="PhoneNumber"
         label="Phone number"
         placeholder="000000000"
         required={false}
         classes={{ container: "mb-4" }}
       />
-      <Field<FV> name="email" label="E-mail address" required disabled />
+      <Field<FV> name="Email" label="E-mail address" required disabled />
       <h3 className="mt-8 mb-4">Organization information</h3>
       <Field<FV>
-        name="orgName"
+        name="OrganizationName"
         label="Name of your organization"
         placeholder="Organization name"
         classes={{ container: "mb-4" }}
@@ -55,11 +55,11 @@ export default function Form({ classes = "" }: { classes?: string }) {
       <Label required className="mb-2">
         What's your role within the organization?
       </Label>
-      <Selector<FV, "role", ContactRoles> name="role" options={roleOptions}>
+      <Selector<FV, "Role", ContactRoles> name="Role" options={roleOptions}>
         {({ value }) =>
           value === "other" && (
             <Field<FV>
-              name="otherRole"
+              name="OtherRole"
               label="Specify your role"
               required
               classes={{ container: "mt-4" }}
@@ -72,15 +72,15 @@ export default function Form({ classes = "" }: { classes?: string }) {
       <Label required className="mb-2">
         How did you find about us?
       </Label>
-      <Selector<FV, "referralMethod", ReferralMethods>
-        name="referralMethod"
+      <Selector<FV, "ReferralMethod", ReferralMethods>
+        name="ReferralMethod"
         options={referralOptions}
       >
         {({ value }) => (
           <>
             {value === "other" && (
               <Field<FV>
-                name="otherReferralMethod"
+                name="OtherReferralMethod"
                 label="Please provide additional information"
                 required
                 classes={{ container: "mt-4" }}
@@ -88,7 +88,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
             )}
             {value === "referral" && (
               <Field<FV>
-                name="referralCode"
+                name="ReferralCode"
                 label="Referral Code"
                 required
                 classes={{ container: "mt-4" }}

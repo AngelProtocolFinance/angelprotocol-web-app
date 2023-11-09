@@ -27,22 +27,22 @@ export default function useSubmit() {
 
     handleMutationResult(
       await updateReg({
-        type: "contact details",
-        reference: fv.ref,
+        type: "contact-details",
+        reference: fv.PK,
         ContactPerson: {
-          FirstName: fv.firstName,
-          LastName: fv.lastName,
-          Email: fv.email,
-          Goals: fv.goals,
-          PhoneNumber: fv.phone,
-          ReferralMethod: fv.referralMethod.value,
-          OtherReferralMethod: fv.referralMethod.value,
-          ReferralCode: fv.referralCode,
-          Role: fv.role.value,
-          OtherRole: fv.otherRole,
+          FirstName: fv.FirstName,
+          LastName: fv.LastName,
+          Email: fv.Email,
+          Goals: fv.Goals,
+          PhoneNumber: fv.PhoneNumber,
+          ReferralMethod: fv.ReferralMethod.value,
+          OtherReferralMethod: fv.OtherReferralMethod,
+          ReferralCode: fv.ReferralCode,
+          Role: fv.Role.value,
+          OtherRole: fv.OtherRole,
         },
         Registration: {
-          OrganizationName: fv.orgName,
+          OrganizationName: fv.OrganizationName,
         },
       }),
       handleError

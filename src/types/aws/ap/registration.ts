@@ -50,7 +50,7 @@ type InitReg = {
   SK: "Registration";
   RegistrationDate: string /** ISO string*/;
   RegistrationStatus: RegistrationStatus;
-  UN_SDG: UNSDG_NUMS[];
+  UN_SDG: UNSDG_NUMS[] | 0;
 };
 
 export type InitContact = {
@@ -70,7 +70,7 @@ type Append<Reg extends InitApplication, R, C> = {
   ContactPerson: Reg["ContactPerson"] & C;
 };
 
-type OrgDataForStep1 = { OrganizationName: string };
+export type OrgDataForStep1 = { OrganizationName: string };
 export type ContactDetails = {
   FirstName: string;
   LastName: string;
@@ -83,13 +83,14 @@ export type ContactDetails = {
   OtherReferralMethod: string; //when ReferralMethod is "other"
 };
 
-type OrgDetails = {
+export type OrgDetails = {
   Website: string;
   HqCountry: string;
   ActiveInCountries: string[];
   EndowDesignation: string;
   KycDonorsOnly: boolean;
   ProjectDescription: string;
+  UN_SDG: UNSDG_NUMS[];
 };
 
 export type FSAInquiry = {
@@ -101,7 +102,7 @@ export type NonFSADocumentation = {
   EIN: string;
 };
 
-type FSADocumentation = {
+export type FSADocumentation = {
   DocType: "FSA";
   RegistrationNumber: string;
   ProofOfRegistration: FileObject;
@@ -112,9 +113,9 @@ type FSADocumentation = {
   SignedFiscalSponsorshipAgreement?: string;
 };
 
-type TDocumentation = FSADocumentation | NonFSADocumentation;
+export type TDocumentation = FSADocumentation | NonFSADocumentation;
 
-type Banking = {
+export type BankingDetails = {
   BankStatement: FileObject;
   wise_recipient_id: string;
 };
@@ -127,7 +128,7 @@ export type DoneContact = Append<
 export type DoneOrgDetails = Append<DoneContact, OrgDetails, {}>;
 export type DoneFSAInquiry = Append<DoneOrgDetails, FSAInquiry, {}>;
 export type DoneDocs = Append<DoneFSAInquiry, TDocumentation, {}>;
-export type DoneBanking = Append<DoneDocs, Banking, {}>;
+export type DoneBanking = Append<DoneDocs, BankingDetails, {}>;
 type InReview = Append<DoneBanking, { Email: string; EndowmentId: number }, {}>;
 
 export type SavedRegistration =
@@ -160,7 +161,7 @@ type DocumentationUpdate = {
 
 type BankingUpdate = {
   type: "banking";
-} & Partial<Banking>;
+} & Partial<BankingDetails>;
 
 export type RegistrationUpdate = (
   | ContactUpdate
@@ -195,17 +196,20 @@ export function isDoneOrgDetails(
   return !!(data.Registration as OrgDetails).Website;
 }
 
-export function isDoneFSAInquiry(data: SavedRegistration): data is DoneFSAInquiry{
+export function isDoneFSAInquiry(
+  data: SavedRegistration
+): data is DoneFSAInquiry {
   //could be false
-  return (data.Registration as FSAInquiry).AuthorizedToReceiveTaxDeductibleDonations !== undefined
+  return (
+    (data.Registration as FSAInquiry)
+      .AuthorizedToReceiveTaxDeductibleDonations !== undefined
+  );
 }
 
 export function isDoneDocs(data: SavedRegistration): data is DoneDocs {
- return !!(data.Registration as TDocumentation).DocType!!
+  return !!(data.Registration as TDocumentation).DocType!!;
 }
 
-export function isDoneBanking(data:SavedRegistration):data is DoneBanking {
-  return !!(data.Registration as Banking).wise_recipient_id!!
+export function isDoneBanking(data: SavedRegistration): data is DoneBanking {
+  return !!(data.Registration as BankingDetails).wise_recipient_id!!;
 }
-
-
