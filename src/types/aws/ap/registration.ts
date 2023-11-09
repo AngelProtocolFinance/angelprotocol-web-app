@@ -1,6 +1,15 @@
 import { UNSDG_NUMS } from "types/lists";
 import { FileObject } from "../common";
-import { EndowmentTierNum } from "./index";
+
+/**
+ * Steps:
+ * 1 - Registrant Details
+ * 2 - Org details
+ * 3 - FSA Questionaire or FSA info
+ * 4 - FSADocumentation | EIN
+ * 5 - BankDetails
+ * 6 - Review
+ */
 
 export type RegistrationStatus =
   | "Inactive"
@@ -50,11 +59,18 @@ export type InitContact = {
   Email: string;
 };
 
-type InitMeta = {
-  PK: string;
-  SK: "Metadata";
+//INIT STEP
+export type InitApplication = {
+  Registration: InitReg;
+  ContactPerson: InitContact;
 };
 
+type Append<Reg extends InitApplication, R, C> = {
+  Registration: Reg["Registration"] & R;
+  ContactPerson: Reg["ContactPerson"] & C;
+};
+
+type OrgDataForStep1 = { OrganizationName: string };
 export type ContactDetails = {
   FirstName: string;
   LastName: string;
@@ -67,45 +83,40 @@ export type ContactDetails = {
   OtherReferralMethod: string; //when ReferralMethod is "other"
 };
 
-export type TDocumentation = {
-  //user identity
-  ProofOfIdentity: FileObject;
-
-  //organization details
-  EIN: string;
-  ProofOfRegistration: FileObject;
+type OrgDetails = {
   Website: string;
-  Tier: EndowmentTierNum;
   HqCountry: string;
-  EndowDesignation: string;
   ActiveInCountries: string[];
-  LegalEntityType: string;
-  ProjectDescription: string;
-
-  //fiscal sponsorship
-  AuthorizedToReceiveTaxDeductibleDonations: boolean;
-  //only exists if AuthorizedToReceiveTaxDeductibleDonations is false
-  FiscalSponsorshipAgreementSigningURL?: string;
-  SignedFiscalSponsorshipAgreement?: string;
-
-  //others
+  EndowDesignation: string;
   KycDonorsOnly: boolean;
-  CashEligible: boolean;
+  ProjectDescription: string;
 };
 
-//INIT STEP
-export type InitApplication = {
-  Registration: InitReg;
-  ContactPerson: InitContact;
-  Metadata: InitMeta;
+export type FSAInquiry = {
+  AuthorizedToReceiveTaxDeductibleDonations: boolean;
 };
 
-type OrgDataForStep1 = { OrganizationName: string };
+export type NonFSADocumentation = {
+  Type: "Non-FSA";
+  EIN: string;
+};
 
-type Append<Reg extends InitApplication, T, U, V> = {
-  Registration: Reg["Registration"] & T;
-  ContactPerson: Reg["ContactPerson"] & U;
-  Metadata: Reg["Metadata"] & V;
+type FSADocumentation = {
+  Type: "FSA";
+  RegistrationNumber: string;
+  ProofOfRegistration: FileObject;
+  ProofOfIdentity: FileObject;
+  LegalEntityType: string;
+
+  FiscalSponsorshipAgreementSigningURL: string;
+  SignedFiscalSponsorshipAgreement?: string;
+};
+
+type TDocumentation = FSADocumentation | NonFSADocumentation;
+
+type Banking = {
+  BankStatement: FileObject;
+  wiseRecipientID: string;
 };
 
 type NewEndow = {
@@ -116,37 +127,51 @@ Inactive | Rejected | {id: number}
 */
 };
 
-export type DoneStep1 = Append<
+export type DoneContact = Append<
   InitApplication,
   OrgDataForStep1,
-  ContactDetails,
-  {}
+  ContactDetails
 >;
-export type DoneDocs = Append<DoneStep1, TDocumentation, {}, NewEndow>;
+export type DoneOrgDetails = Append<DoneContact, OrgDetails, {}>;
+export type DoneFSAInquiry = Append<DoneOrgDetails, FSAInquiry, {}>;
+export type DoneDocs = Append<DoneFSAInquiry, TDocumentation, {}>;
+export type DoneBanking = Append<DoneDocs, Banking, {}>;
 
-type Proposal = {
-  application_id: number;
-};
-type InReview = Append<DoneDocs, Proposal, {}, {}>;
+type InReview = Append<DoneOrgDetails, { Email: string }, {}>;
 
 export type SavedRegistration =
   | InitApplication
-  | DoneStep1
+  | DoneContact
+  | DoneOrgDetails
+  | DoneFSAInquiry
   | DoneDocs
   | InReview;
 
 type ContactUpdate = {
-  type: "contact details";
+  type: "contact-details";
   ContactPerson: Pick<InitContact, "Email"> & Partial<ContactDetails>;
   Registration: OrgDataForStep1;
 };
 
-type DocsUpdate = {
-  type: "documentation";
-} & Omit<TDocumentation, "Tier"> &
+type OrgDetailsUpdate = {
+  type: "org-details";
+} & Partial<OrgDetails> &
   Partial<Pick<InitReg, "UN_SDG">>;
 
-export type RegistrationUpdate = (ContactUpdate | DocsUpdate) & {
+type FSAInquiryUpdate = {
+  type: "fsa-inquiry";
+} & Partial<FSAInquiry>;
+
+type DocumentationUpdate = {
+  type: "documentation";
+} & Partial<TDocumentation>;
+
+export type RegistrationUpdate = (
+  | ContactUpdate
+  | OrgDetailsUpdate
+  | FSAInquiryUpdate
+  | DocumentationUpdate
+) & {
   reference: string;
 };
 
@@ -159,7 +184,5 @@ export type DocsUpdateResult = InitReg & TDocumentation;
 
 export type SubmitResult = {
   RegistrationStatus: RegistrationStatus;
-  chain_id: string;
-  application_id: number;
   Email: string;
 };
