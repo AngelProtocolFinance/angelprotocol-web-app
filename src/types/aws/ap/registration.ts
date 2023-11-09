@@ -116,15 +116,7 @@ type TDocumentation = FSADocumentation | NonFSADocumentation;
 
 type Banking = {
   BankStatement: FileObject;
-  wiseRecipientID: string;
-};
-
-type NewEndow = {
-  EndowmentId?: number;
-  /** when created 
-TODO: should be part of Registration status
-Inactive | Rejected | {id: number}
-*/
+  wise_recipient_id: string;
 };
 
 export type DoneContact = Append<
@@ -136,8 +128,7 @@ export type DoneOrgDetails = Append<DoneContact, OrgDetails, {}>;
 export type DoneFSAInquiry = Append<DoneOrgDetails, FSAInquiry, {}>;
 export type DoneDocs = Append<DoneFSAInquiry, TDocumentation, {}>;
 export type DoneBanking = Append<DoneDocs, Banking, {}>;
-
-type InReview = Append<DoneOrgDetails, { Email: string }, {}>;
+type InReview = Append<DoneBanking, { Email: string; EndowmentId: number }, {}>;
 
 export type SavedRegistration =
   | InitApplication
@@ -145,6 +136,7 @@ export type SavedRegistration =
   | DoneOrgDetails
   | DoneFSAInquiry
   | DoneDocs
+  | DoneBanking
   | InReview;
 
 type ContactUpdate = {
@@ -166,11 +158,16 @@ type DocumentationUpdate = {
   type: "documentation";
 } & Partial<TDocumentation>;
 
+type BankingUpdate = {
+  type: "banking";
+} & Partial<Banking>;
+
 export type RegistrationUpdate = (
   | ContactUpdate
   | OrgDetailsUpdate
   | FSAInquiryUpdate
   | DocumentationUpdate
+  | BankingUpdate
 ) & {
   reference: string;
 };
