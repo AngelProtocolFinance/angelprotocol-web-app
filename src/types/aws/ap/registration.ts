@@ -100,7 +100,7 @@ export type InitApplication = {
   Metadata: InitMeta;
 };
 
-type OrgData = { OrganizationName: string };
+type OrgDataForStep1 = { OrganizationName: string };
 
 type Append<Reg extends InitApplication, T, U, V> = {
   Registration: Reg["Registration"] & T;
@@ -116,8 +116,13 @@ Inactive | Rejected | {id: number}
 */
 };
 
-export type DoneContact = Append<InitApplication, OrgData, ContactDetails, {}>;
-export type DoneDocs = Append<DoneContact, TDocumentation, {}, NewEndow>;
+export type DoneStep1 = Append<
+  InitApplication,
+  OrgDataForStep1,
+  ContactDetails,
+  {}
+>;
+export type DoneDocs = Append<DoneStep1, TDocumentation, {}, NewEndow>;
 
 type Proposal = {
   application_id: number;
@@ -126,14 +131,14 @@ type InReview = Append<DoneDocs, Proposal, {}, {}>;
 
 export type SavedRegistration =
   | InitApplication
-  | DoneContact
+  | DoneStep1
   | DoneDocs
   | InReview;
 
 type ContactUpdate = {
   type: "contact details";
   ContactPerson: Pick<InitContact, "Email"> & Partial<ContactDetails>;
-  Registration: OrgData;
+  Registration: OrgDataForStep1;
 };
 
 type DocsUpdate = {
@@ -147,7 +152,7 @@ export type RegistrationUpdate = (ContactUpdate | DocsUpdate) & {
 
 export type ContactUpdateResult = {
   ContactPerson: ContactDetails;
-  Registration: OrgData;
+  Registration: OrgDataForStep1;
 };
 
 export type DocsUpdateResult = InitReg & TDocumentation;

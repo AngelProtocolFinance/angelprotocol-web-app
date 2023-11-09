@@ -6,8 +6,8 @@ import {
 } from "../types";
 import {
   ContactDetails,
-  DoneContact,
   DoneDocs,
+  DoneStep1,
   FileObject,
   InitContact,
   SavedRegistration,
@@ -59,7 +59,7 @@ function getInit(i: InitContact): InitReg {
 
 function formatContactPerson(
   c: ContactDetails & InitContact,
-  r: DoneContact["Registration"]
+  r: DoneStep1["Registration"]
 ): ContactPerson {
   return {
     firstName: c.FirstName,
@@ -132,7 +132,7 @@ function isDoneDocs(data: SavedRegistration): data is DoneDocs {
   return key in data.Registration;
 }
 
-function isDoneContact(data: SavedRegistration): data is DoneContact {
+function isDoneContact(data: SavedRegistration): data is DoneStep1 {
   const key: keyof ContactDetails = "FirstName";
   return key in data.ContactPerson;
 }
