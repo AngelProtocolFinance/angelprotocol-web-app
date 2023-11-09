@@ -154,17 +154,7 @@ export default function useRecipientDetails(
 
   const handleSubmit = async (request: CreateRecipientRequest) => {
     try {
-      if (!quote) {
-        throw new UnexpectedStateError("No 'quote' present.");
-      }
-
-      const requirements = requirementsDataArray.at(selectedIndex);
-      if (!requirements) {
-        throw new UnexpectedStateError("Requirements not loaded.");
-      }
-
       setSubmitting(true);
-
       await createRecipientAccount({ endowment_id, request }).unwrap();
     } catch (error) {
       handleError(error, ERROR_MSG);
