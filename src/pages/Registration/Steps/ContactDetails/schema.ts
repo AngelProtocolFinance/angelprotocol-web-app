@@ -7,7 +7,7 @@ import { optionType } from "schemas/shape";
 import { requiredString } from "schemas/string";
 
 type Key = keyof FormValues;
-const roleKey: Key = "role";
+const roleKey: Key = "orgRole";
 const referralMethodKey: Key = "referralMethod";
 
 const otherRole = string().when(roleKey, ([option], schema) =>
@@ -24,14 +24,12 @@ const otherReferralMethod = (referralMethod: ReferralMethods) =>
   );
 
 export const schema = object<any, SchemaShape<FormValues>>({
-  orgName: requiredString,
-  firstName: requiredString,
-  lastName: requiredString,
-  //email: disabled: already validated at signup
-  goals: requiredString,
-  role: optionType({ required: true }),
+  // registrantName: already validated at signup
+  // registrantEmail: already validated at signup
+  orgRole: optionType({ required: true }),
+  otherOrgRole: otherRole,
   referralMethod: optionType({ required: true }),
   otherReferralMethod: otherReferralMethod("other"),
   referralCode: otherReferralMethod("referral"),
-  otherRole: otherRole,
+  registrantGoals: requiredString,
 }) as ObjectSchema<FormValues>;

@@ -42,21 +42,21 @@ export type InitReg = {
   registrantName: string;
 };
 
-type RegistrationMeta = {
-  orgRole: ContactRoles;
+export type RegistrationMeta = {
   referralMethod: ReferralMethods;
   referralCode: string; //when ReferralMethod is "referral"
-  otherReferralCode: string; //when ReferralMethod is "other"
+  otherReferralMethod: string; //when ReferralMethod is "other"
 };
 
-type RegistrantDetails = {
+export type RegistrantDetails = {
+  orgRole: ContactRoles;
+  otherOrgRole: string;
   registrantPhoneNumber: string;
   registrantGoals: string;
   registrantRole: ContactRoles;
-  registrantOtherRole: string;
 };
 
-type OrgDetails = {
+export type OrgDetails = {
   orgName: string;
   orgDesignation: EndowDesignation;
   orgHQCountry: string;
@@ -64,7 +64,7 @@ type OrgDetails = {
   orgTagline: string;
 };
 
-type OrgDocs =
+export type OrgDocs =
   | {
       type: "US";
       EIN: string;
@@ -76,7 +76,7 @@ type OrgDocs =
       orgProofOfRegistration: FileObject;
     };
 
-type BankDetails = {
+export type BankDetails = {
   recipienctAccountID: string;
 };
 

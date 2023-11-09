@@ -1,4 +1,15 @@
-import { ContactRoles, ReferralMethods, RegistrationStatus } from "types/aws";
+import { OverrideProperties } from "type-fest";
+import {
+  BankDetails,
+  ContactRoles,
+  InitReg,
+  OrgDetails,
+  OrgDocs,
+  ReferralMethods,
+  RegistrantDetails,
+  RegistrationMeta,
+  RegistrationStatus,
+} from "types/aws";
 import { EndowmentTierNum } from "types/aws";
 import { Country } from "types/countries";
 import { UNSDG_NUMS } from "types/lists";
@@ -7,29 +18,19 @@ import { OptionType } from "types/utils";
 import { Asset } from "components/registration";
 
 //REF_ID is global to registration
-export type InitReg = {
-  reference: string;
-  email: string;
-};
+export type NewRegistrationPayload = Pick<
+  InitReg,
+  "registrantEmail" | "registrantName"
+>;
 
-//STEP 1
-export type ContactPerson = {
-  firstName: string;
-  lastName: string;
-  //https://www.npmjs.com/package/react-phone-input-2
-  phone: string; // {format: string, value:string}
-  // disabled, can't be changed once confirmed
-  email: string;
-
-  orgName: string;
-  role: ContactRoles;
-  otherRole: string;
-  referralCode: string;
-
-  referralMethod: ReferralMethods;
-  otherReferralMethod: string;
-  goals: string;
-};
+//STEP 1 - RegistrantDetails
+export type StepOneData = OverrideProperties<
+  RegistrantDetails & RegistrationMeta & NewRegistrationPayload,
+  {
+    orgRole: OptionType<ContactRoles>;
+    referralMethod: OptionType<ReferralMethods>;
+  }
+>;
 
 //STEP 2
 export type Documentation = {
@@ -59,8 +60,10 @@ export type Documentation = {
 
 export type CompleteRegistration = {
   init: InitReg;
-  contact: ContactPerson;
-  documentation: Documentation;
+  registrant: RegistrantDetails;
+  org: OrgDetails;
+  docs: OrgDocs;
+  banking: BankDetails;
   endowId?: number; //created
 };
 

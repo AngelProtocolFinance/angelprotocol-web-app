@@ -23,43 +23,39 @@ export default function Form({ classes = "" }: { classes?: string }) {
       </p>
       <h3 className="mb-4">Personal information</h3>
       <Field<FV>
-        name="firstName"
-        label="First name"
-        placeholder="e.g. John"
+        name="registrantName"
+        label="Full name"
+        placeholder="e.g. John Doe"
         required
         classes={{ container: "mb-4" }}
+        disabled
       />
+
       <Field<FV>
-        name="lastName"
-        label="Last name"
-        placeholder="e.g. Doe"
-        required
-        classes={{ container: "mb-4" }}
-      />
-      <Field<FV>
-        name="phone"
+        name="registrantPhoneNumber"
         label="Phone number"
         placeholder="000000000"
         required={false}
         classes={{ container: "mb-4" }}
       />
-      <Field<FV> name="email" label="E-mail address" required disabled />
-      <h3 className="mt-8 mb-4">Organization information</h3>
       <Field<FV>
-        name="orgName"
-        label="Name of your organization"
-        placeholder="Organization name"
-        classes={{ container: "mb-4" }}
+        name="registrantEmail"
+        label="E-mail address"
         required
+        disabled
       />
+
       <Label required className="mb-2">
         What's your role within the organization?
       </Label>
-      <Selector<FV, "role", ContactRoles> name="role" options={roleOptions}>
+      <Selector<FV, "orgRole", ContactRoles>
+        name="orgRole"
+        options={roleOptions}
+      >
         {({ value }) =>
           value === "other" && (
             <Field<FV>
-              name="otherRole"
+              name="otherOrgRole"
               label="Specify your role"
               required
               classes={{ container: "mt-4" }}
