@@ -1,4 +1,5 @@
 import { UNSDG_NUMS } from "types/lists";
+import { EndowDesignation } from ".";
 import { FileObject } from "../common";
 
 /**
@@ -87,9 +88,8 @@ export type OrgDetails = {
   Website: string;
   HqCountry: string;
   ActiveInCountries: string[];
-  EndowDesignation: string;
+  EndowDesignation: EndowDesignation | "";
   KycDonorsOnly: boolean;
-  ProjectDescription: string;
   UN_SDG: UNSDG_NUMS[];
 };
 
@@ -108,7 +108,7 @@ export type FSADocumentation = {
   ProofOfRegistration: FileObject;
   ProofOfIdentity: FileObject;
   LegalEntityType: string;
-
+  ProjectDescription: string;
   FiscalSponsorshipAgreementSigningURL: string;
   SignedFiscalSponsorshipAgreement?: string;
 };

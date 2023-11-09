@@ -2,7 +2,6 @@ import { Except, OverrideProperties } from "type-fest";
 import {
   BankingDetails,
   ContactDetails,
-  EndowDesignation,
   FSADocumentation,
   FSAInquiry,
   NonFSADocumentation,
@@ -10,10 +9,6 @@ import {
   RegistrationStatus,
   TDocumentation,
 } from "types/aws";
-import { EndowmentTierNum } from "types/aws";
-import { Country } from "types/countries";
-import { UNSDG_NUMS } from "types/lists";
-import { OptionType } from "types/utils";
 import { Asset } from "components/registration";
 
 //REF_ID is global to registration
@@ -21,15 +16,6 @@ export type InitReg = {
   reference: string;
   email: string;
 };
-
-export type FormOrgDetails = OverrideProperties<
-  Except<OrgDetails, "KycDonorsOnly">,
-  {
-    HqCountry: Country;
-    EndowDesignation: OptionType<EndowDesignation | "">;
-    ActiveInCountries: OptionType<string>[];
-  }
-> & { isAnonymousDonationsAllowed: "Yes" | "No" };
 
 export type FormFSAInquiry = FSAInquiry;
 export type FormFSADocumentation = OverrideProperties<
@@ -46,35 +32,9 @@ export type FormFSADocumentation = OverrideProperties<
 >;
 export type FormNonFSADocumentation = Except<NonFSADocumentation, "DocType">;
 
-//STEP 2
-export type OrgDetails2 = {
-  //registrant identity
-  proofOfIdentity: Asset;
-
-  //organization details
-  ein: string;
-  proofOfRegistration: Asset;
-  website: string;
-  sdgs: OptionType<UNSDG_NUMS>[];
-
-  tier: EndowmentTierNum;
-
-  hqCountry: Country;
-  endowDesignation: OptionType<string>;
-  activeInCountries: OptionType<string>[];
-  isAuthorizedToReceiveTaxDeductibleDonations: "Yes" | "No";
-  fiscalSponsorshipAgreementSigningURL: string;
-  signedFiscalSponsorshipAgreement: string;
-  legalEntityType: string;
-  projectDescription: string;
-
-  //others
-  isAnonymousDonationsAllowed: "Yes" | "No";
-};
-
 export type CompleteRegistration = {
   init: InitReg;
-  contact: ContactDetails;
+  contact: ContactDetails & { orgName: string };
   orgDetails: OrgDetails;
   fsaInquiry: FSAInquiry;
   documentation: TDocumentation;

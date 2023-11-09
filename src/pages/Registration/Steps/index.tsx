@@ -5,7 +5,7 @@ import { ErrorStatus, LoadingStatus } from "components/Status";
 import { steps } from "../routes";
 import Contact from "./ContactDetails";
 import Dashboard from "./Dashboard";
-import Documentation from "./Documentation";
+import OrgDetails from "./OrgDetails";
 import ProgressIndicator from "./ProgressIndicator";
 import Reference from "./Reference";
 import { StepGuardProps } from "./StepGuard";
@@ -68,8 +68,8 @@ export default function Steps({ classes = "" }: { classes?: string }) {
             element={<Contact {...guardProps} step={1} />}
           />
           <Route
-            path={steps.doc}
-            element={<Documentation {...guardProps} step={2} />}
+            path={steps.orgDetails}
+            element={<OrgDetails {...guardProps} step={2} />}
           />
           <Route
             path={steps.summary}
