@@ -126,13 +126,3 @@ function formatDocumentation({
 export function genFileAsset(previews: FileObject[]): Asset {
   return { files: [], previews };
 }
-
-function isDoneDocs(data: SavedRegistration): data is DoneDocs {
-  const key: keyof TDocumentation = "ProofOfIdentity";
-  return key in data.Registration;
-}
-
-function isDoneContact(data: SavedRegistration): data is DoneStep1 {
-  const key: keyof ContactDetails = "FirstName";
-  return key in data.ContactPerson;
-}

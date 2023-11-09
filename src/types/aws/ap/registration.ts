@@ -97,12 +97,12 @@ export type FSAInquiry = {
 };
 
 export type NonFSADocumentation = {
-  Type: "Non-FSA";
+  DocType: "Non-FSA";
   EIN: string;
 };
 
 type FSADocumentation = {
-  Type: "FSA";
+  DocType: "FSA";
   RegistrationNumber: string;
   ProofOfRegistration: FileObject;
   ProofOfIdentity: FileObject;
@@ -183,3 +183,29 @@ export type SubmitResult = {
   RegistrationStatus: RegistrationStatus;
   Email: string;
 };
+
+/** type guards */
+export function isDoneContact(data: SavedRegistration): data is DoneContact {
+  return !!(data.ContactPerson as ContactDetails).FirstName;
+}
+
+export function isDoneOrgDetails(
+  data: SavedRegistration
+): data is DoneOrgDetails {
+  return !!(data.Registration as OrgDetails).Website;
+}
+
+export function isDoneFSAInquiry(data: SavedRegistration): data is DoneFSAInquiry{
+  //could be false
+  return (data.Registration as FSAInquiry).AuthorizedToReceiveTaxDeductibleDonations !== undefined
+}
+
+export function isDoneDocs(data: SavedRegistration): data is DoneDocs {
+ return !!(data.Registration as TDocumentation).DocType!!
+}
+
+export function isDoneBanking(data:SavedRegistration):data is DoneBanking {
+  return !!(data.Registration as Banking).wise_recipient_id!!
+}
+
+
