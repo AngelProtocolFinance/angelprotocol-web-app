@@ -2,14 +2,12 @@ import { Except, OverrideProperties } from "type-fest";
 import {
   BankingDetails,
   ContactDetails,
-  FSADocumentation,
   FSAInquiry,
   NonFSADocumentation,
   OrgDetails,
   RegistrationStatus,
   TDocumentation,
 } from "types/aws";
-import { Asset } from "components/registration";
 
 //REF_ID is global to registration
 export type InitReg = {
@@ -18,18 +16,7 @@ export type InitReg = {
 };
 
 export type FormFSAInquiry = FSAInquiry;
-export type FormFSADocumentation = OverrideProperties<
-  Except<
-    FSADocumentation,
-    | "DocType"
-    | "FiscalSponsorshipAgreementSigningURL"
-    | "SignedFiscalSponsorshipAgreement"
-  >,
-  {
-    ProofOfIdentity: Asset;
-    ProofOfRegistration: Asset;
-  }
->;
+
 export type FormNonFSADocumentation = Except<NonFSADocumentation, "DocType">;
 
 export type CompleteRegistration = {
@@ -52,7 +39,7 @@ type Data<
 type Step1Data = Data<"init", "contact">;
 type Step2Data = Data<"init" | "contact", "orgDetails">;
 type Step3Data = Data<"init" | "contact" | "orgDetails", "fsaInquiry">;
-type Step4Data = Data<
+export type Step4Data = Data<
   "init" | "contact" | "orgDetails" | "fsaInquiry",
   "documentation"
 >;

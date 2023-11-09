@@ -154,7 +154,3 @@ function fsaInquiry(reg: DoneFSAInquiry["Registration"]): FSAInquiry {
       reg.AuthorizedToReceiveTaxDeductibleDonations,
   };
 }
-
-export function genFileAsset(previews: FileObject[]): Asset {
-  return { files: [], previews };
-}
