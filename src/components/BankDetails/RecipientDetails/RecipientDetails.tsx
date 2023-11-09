@@ -1,4 +1,6 @@
+import { CreateRecipientRequest } from "types/aws";
 import LoaderRing from "components/LoaderRing";
+import { Asset } from "components/registration";
 import { isEmpty } from "helpers";
 import { EMAIL_SUPPORT } from "constants/env";
 import AccountRequirementsSelector from "./AccountRequirementsSelector";
@@ -9,12 +11,17 @@ type Props = {
   disabled: boolean;
   targetCurrency: string;
   expectedMontlyDonations: number;
+  onSubmit: (
+    request: CreateRecipientRequest,
+    bankStatementPDF: Asset
+  ) => Promise<any>;
 };
 
 export default function RecipientDetails({
   disabled,
   targetCurrency,
   expectedMontlyDonations,
+  onSubmit,
 }: Props) {
   const {
     handleSubmit,
@@ -26,7 +33,7 @@ export default function RecipientDetails({
     selectedIndex,
     setSelectedIndex,
     updateDefaultValues,
-  } = useRecipientDetails(targetCurrency, expectedMontlyDonations);
+  } = useRecipientDetails(targetCurrency, expectedMontlyDonations, onSubmit);
 
   if (isLoading) {
     return (

@@ -2,16 +2,12 @@ import { useCallback, useEffect, useState } from "react";
 import { FormValues } from "./types";
 import { AccountRequirements, CreateRecipientRequest, Quote } from "types/aws";
 import { FileDropzoneAsset } from "types/components";
-import { useAdminContext } from "pages/Admin/Context";
 import {
-  // useCreateQuoteMutation,
-  // useGetAccountRequirementsMutation,
-  useCreateRecipientAccountMutation,
   useGetAccountRequirementsForRouteMutation,
   usePostAccountRequirementsMutation,
 } from "services/aws/bankDetails";
 import { useErrorContext } from "contexts/ErrorContext";
-import { getFilePreviews, isEmpty } from "helpers";
+import { isEmpty } from "helpers";
 import { UnexpectedStateError } from "errors/errors";
 import { EMAIL_SUPPORT } from "constants/env";
 import getDefaultValues from "./getDefaultValues";
@@ -31,9 +27,12 @@ type RequirementsData = {
 
 export default function useRecipientDetails(
   targetCurrency: string,
-  expectedMontlyDonations: number
+  expectedMontlyDonations: number,
+  onSubmit: (
+    request: CreateRecipientRequest,
+    bankStatementPDF: FileDropzoneAsset
+  ) => Promise<any>
 ) {
-  const { id: endowment_id } = useAdminContext();
   const [requirementsDataArray, setRequirementsDataArray] = useState<
     RequirementsData[]
   >([]);
@@ -42,20 +41,17 @@ export default function useRecipientDetails(
     quote,
     // setQuote
   ] = useState<Quote>();
-  const [isLoading, setLoading] = useState<boolean>(true);
-  const [isSubmitting, setSubmitting] = useState<boolean>(false);
+  const [isLoading, setLoading] = useState(true);
+  const [isSubmitting, setSubmitting] = useState(false);
+  const [isError, setError] = useState(false);
 
   const { handleError } = useErrorContext();
 
-  // const [createQuote, { isError }] = useCreateQuoteMutation();
-  // const [getAccountRequirements, { isError: isError1 }] =
-  //   useGetAccountRequirementsMutation();
-  const [getAccountRequirementsForRoute, { isError: isError1 }] =
+  // const [createQuote] = useCreateQuoteMutation();
+  // const [getAccountRequirements] = useGetAccountRequirementsMutation();
+  const [getAccountRequirementsForRoute] =
     useGetAccountRequirementsForRouteMutation();
-  const [postAccountRequirements, { isError: isError2 }] =
-    usePostAccountRequirementsMutation();
-  const [createRecipientAccount, { isError: isError3 }] =
-    useCreateRecipientAccountMutation();
+  const [postAccountRequirements] = usePostAccountRequirementsMutation();
 
   useEffect(() => {
     (async () => {
@@ -88,6 +84,7 @@ export default function useRecipientDetails(
         // setQuote(newQuote);
       } catch (error) {
         handleError(error, ERROR_MSG);
+        setError(true);
       } finally {
         setLoading(false);
       }
@@ -145,8 +142,10 @@ export default function useRecipientDetails(
         // );
         return updated;
       });
+      setError(false);
     } catch (error) {
       handleError(error, ERROR_MSG);
+      setError(true);
     } finally {
       setSubmitting(false);
     }
@@ -158,13 +157,11 @@ export default function useRecipientDetails(
   ) => {
     try {
       setSubmitting(true);
-      const bankStatementPreview = await getFilePreviews({ bankStatementPDF });
-      // TODO: logging just to avoid compiler warnings about unused variable,
-      // will be updated to real logic once possible
-      console.log(bankStatementPreview.bankStatementPDF);
-      await createRecipientAccount({ PK: endowment_id, request }).unwrap();
+      await onSubmit(request, bankStatementPDF);
+      setError(false);
     } catch (error) {
       handleError(error, ERROR_MSG);
+      setError(true);
     } finally {
       setSubmitting(false);
     }
@@ -172,7 +169,7 @@ export default function useRecipientDetails(
 
   return {
     handleSubmit,
-    isError: isError1 || isError2 || isError3,
+    isError,
     isLoading,
     isSubmitting,
     refreshRequirements,
