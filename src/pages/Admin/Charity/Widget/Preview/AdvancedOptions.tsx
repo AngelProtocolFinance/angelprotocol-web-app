@@ -34,7 +34,7 @@ export default function AdvancedOptions({
 
           <div className="grid grid-cols-2 gap-2 mb-6">
             <Portion
-              title="Endowment"
+              title="Sustainability Fund"
               percentage={100 - liquidPercentage}
               action="Compounded forever"
             />
@@ -56,8 +56,8 @@ export default function AdvancedOptions({
           <div className="flex items-center gap-4 px-4 py-3 text-center border border-gray-l2 rounded">
             <Icon type="Info" size={44} />
             <p className="text-sm leading-normal text-left">
-              Donations into the Endowment provide sustainable financial runaway
-              and allow your gift to give forever
+              Donations into the Sustainability Fund provide sustainable
+              financial runaway and allow your gift to give forever
             </p>
           </div>
         </div>
