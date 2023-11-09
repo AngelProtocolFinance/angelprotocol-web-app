@@ -42,7 +42,7 @@ export default function Form() {
       className="w-full max-w-4xl justify-self-center grid content-start gap-6 mt-6 font-body"
     >
       <Link
-        to={`${appRoutes.marketplace}/${id}`}
+        to={`${appRoutes.profile}/${id}`}
         className="text-blue hover:text-orange text-sm flex items-center gap-1"
       >
         <Icon type="Back" />
