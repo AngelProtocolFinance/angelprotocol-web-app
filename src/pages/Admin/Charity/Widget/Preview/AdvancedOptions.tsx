@@ -40,7 +40,7 @@ export default function AdvancedOptions({
             />
 
             <Portion
-              title="Current"
+              title="Donation"
               percentage={liquidPercentage}
               action="Instantly available"
             >

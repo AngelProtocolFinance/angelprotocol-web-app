@@ -27,7 +27,7 @@ export default function Split<FV extends FieldValues, P extends Path<FV>>(
       <Portion
         token={props.token}
         percentage={liquidPercentage}
-        title="Current"
+        title="Donation"
         action="Instantly available"
       >
         <Slider
