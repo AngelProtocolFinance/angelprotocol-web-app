@@ -1,11 +1,9 @@
 import { FiscalSponsorhipAgreementSigner } from "../../types";
 import {
-  ContactUpdateResult,
-  DocsUpdateResult,
-  InitApplication,
+  InitReg,
   RegistrationUpdate,
   SavedRegistration,
-  SubmitResult,
+  SubmissionStatus,
 } from "types/aws";
 import { adminTags } from "services/aws/tags";
 import { logger } from "helpers";
@@ -15,10 +13,7 @@ import { aws } from "../aws";
 
 const registration_api = aws.injectEndpoints({
   endpoints: (builder) => ({
-    newApplication: builder.mutation<
-      Pick<InitApplication, "Registration" | "ContactPerson">,
-      { email: string }
-    >({
+    newApplication: builder.mutation<InitReg, { email: string }>({
       invalidatesTags: [{ type: "admin", id: adminTags.registration }],
       query: ({ email }) => ({
         url: "v3/registration",
@@ -54,11 +49,10 @@ const registration_api = aws.injectEndpoints({
       },
     }),
     updateReg: builder.mutation<any, RegistrationUpdate>({
-      query: ({ type, reference, ...payload }) => {
+      query: ({ uuid, ...payload }) => {
         return {
-          url: "v3/registration",
+          url: `v4/registration/${uuid}`,
           method: "PUT",
-          params: { uuid: reference },
           body: payload,
         };
       },
@@ -69,34 +63,12 @@ const registration_api = aws.injectEndpoints({
         };
       },
       /** pessimistic manual cache update so not to GET fresh data */
-      async onQueryStarted({ type, reference }, { dispatch, queryFulfilled }) {
+      async onQueryStarted({ uuid }, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
           dispatch(
-            registration_api.util.updateQueryData("reg", reference, (draft) => {
-              switch (type) {
-                case "contact details":
-                  {
-                    const { ContactPerson, Registration } =
-                      data as ContactUpdateResult;
-                    draft.ContactPerson = Object.assign(
-                      draft.ContactPerson,
-                      ContactPerson
-                    );
-                    draft.Registration = {
-                      ...draft.Registration,
-                      OrganizationName: Registration.OrganizationName,
-                    };
-                  }
-                  break;
-                case "documentation": {
-                  draft.Registration = Object.assign(
-                    draft.Registration,
-                    data as DocsUpdateResult
-                  );
-                  break;
-                }
-              }
+            registration_api.util.updateQueryData("reg", uuid, (draft) => {
+              Object.assign(draft, data);
               draft.reqId = draft.reqId + 1;
             })
           );
@@ -106,10 +78,10 @@ const registration_api = aws.injectEndpoints({
       },
     }),
 
-    submit: builder.mutation<SubmitResult, string>({
+    submit: builder.mutation<SubmissionStatus, string>({
       invalidatesTags: [{ type: "admin", id: adminTags.registration }],
-      query: (referenceID) => ({
-        url: `${v(4)}/registration/${referenceID}/submit`,
+      query: (uuid) => ({
+        url: `${v(4)}/registration/${uuid}/submit`,
         method: "POST",
       }),
       transformErrorResponse(err, meta, arg) {
