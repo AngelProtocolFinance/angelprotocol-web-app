@@ -49,7 +49,6 @@ export default function Steps({ classes = "" }: { classes?: string }) {
   const guardProps: Omit<StepGuardProps, "step"> = {
     init: initReg,
     state: regState,
-    stateId: data.reqId,
   };
 
   return (

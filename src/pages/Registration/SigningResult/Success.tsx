@@ -15,9 +15,7 @@ export default function Success() {
     try {
       const reference = getSavedRegistrationReference();
       if (!reference) return navigate(appRoutes.register);
-      const { reqId, ...savedRegistration } = await checkPrevRegistration(
-        reference
-      ).unwrap();
+      const savedRegistration = await checkPrevRegistration(reference).unwrap();
       const state = getRegistrationState(savedRegistration);
       navigate(`${appRoutes.register}/${routes.steps}/${state.step}`, {
         state: state.data.init,
