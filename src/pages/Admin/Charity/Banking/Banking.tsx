@@ -65,7 +65,7 @@ export default function Banking() {
   }
 
   if (isProfileError || !profile) {
-    return <span>{PROFILE_ERROR}</span>;
+    return null;
   }
 
   const verif_status = profile.bank_verification_status;
