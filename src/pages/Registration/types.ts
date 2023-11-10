@@ -1,4 +1,4 @@
-import { Except, OverrideProperties } from "type-fest";
+import { Except } from "type-fest";
 import {
   BankingDetails,
   ContactDetails,

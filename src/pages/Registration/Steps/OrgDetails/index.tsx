@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues } from "./types";
-import { OrgDetails } from "types/aws";
+import { OrgDetails as TOrgDetails } from "types/aws";
 import { unsdgs } from "constants/unsdgs";
 import { useRegState, withStepGuard } from "../StepGuard";
 import Form from "./Form";
@@ -35,7 +35,7 @@ function OrgDetails() {
 
 export default withStepGuard(OrgDetails);
 
-function formFomat(org: OrgDetails): FormValues {
+function formFomat(org: TOrgDetails): FormValues {
   return {
     //level 1
     Website: org.Website,

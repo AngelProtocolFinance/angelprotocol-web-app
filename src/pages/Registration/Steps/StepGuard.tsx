@@ -1,4 +1,4 @@
-import { FC, createContext, useContext, useEffect, useRef } from "react";
+import { FC, createContext, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { InitReg, RegStep, RegistrationState } from "../types";
 
@@ -23,6 +23,7 @@ export function withStepGuard<T extends object>(Step: FC<T>) {
       if (thisStep > savedStep) {
         navigate(`../${savedStep}`, { state: init });
       }
+      //eslint-disable-next-line
     }, []);
 
     return (

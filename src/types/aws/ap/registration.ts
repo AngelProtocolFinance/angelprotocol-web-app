@@ -218,7 +218,7 @@ export function isDoneDocs(data: SavedRegistration): data is DoneDocs {
     );
   }
 
-  return !!(data.Registration as TDocumentation).DocType!!;
+  return true;
 }
 
 export function isDoneBanking(data: SavedRegistration): data is DoneBanking {

@@ -6,7 +6,6 @@ import {
   DoneFSAInquiry,
   DoneOrgDetails,
   FSAInquiry,
-  FileObject,
   InitContact,
   OrgDetails,
   SavedRegistration,
@@ -17,7 +16,6 @@ import {
   isDoneFSAInquiry,
   isDoneOrgDetails,
 } from "types/aws";
-import { Asset } from "components/registration";
 
 export function getRegistrationState(
   reg: SavedRegistration
@@ -98,7 +96,7 @@ export function getRegistrationState(
     };
   }
 
-  const { ContactPerson: c, Registration: r } = reg;
+  const { ContactPerson: c } = reg;
   return {
     step: 1,
     data: {
