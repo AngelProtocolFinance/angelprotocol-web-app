@@ -18,6 +18,8 @@ export type RegistrationStatus =
   | "Active"
   | "Rejected";
 
+export type BankVerificationStatus = "Not Submitted" | "Under Review";
+
 export type ReferralMethods =
   | ""
   | "referral"
@@ -58,6 +60,7 @@ export type InitContact = {
   PK: string;
   SK: "ContactPerson";
   Email: string;
+  bank_verification_status: BankVerificationStatus;
 };
 
 //INIT STEP
