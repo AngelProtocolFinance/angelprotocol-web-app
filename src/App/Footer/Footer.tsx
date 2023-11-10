@@ -9,7 +9,7 @@ type Props = { linkGroups: LinkGroup[]; socials: SocialMediaLink[] };
 
 function Footer({ linkGroups, socials }: Props) {
   return (
-    <footer className="flex flex-col items-center text-white bg-blue dark:bg-blue-d3">
+    <footer className="flex flex-col items-center text-white bg-blue-d3 dark:bg-blue-d3">
       <section className="padded-container flex flex-col gap-8 items-center justify-center w-full pt-8 pb-10 lg:flex-row lg:items-start lg:justify-between lg:gap-0 lg:pb-16">
         <Links groups={linkGroups} />
         <Newsletter />

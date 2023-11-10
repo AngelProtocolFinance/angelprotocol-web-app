@@ -87,7 +87,7 @@ export default function SignatureNotice({ classes = "" }) {
       <button
         type="button"
         disabled={submitText === redirectingText}
-        className="w-full max-w-[26.25rem] btn-orange btn-reg mt-6"
+        className="w-full max-w-[26.25rem] btn-red btn-reg mt-6"
         onClick={() => proceed(reg)}
       >
         {submitText}

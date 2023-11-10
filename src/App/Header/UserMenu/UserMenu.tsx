@@ -41,7 +41,7 @@ export default function UserMenu() {
         </Popover.Button>
       ) : (
         <Popover.Button
-          className="btn-orange px-3 h-10 rounded-lg text-sm"
+          className="btn-red px-3 h-10 rounded-lg text-sm"
           disabled={isLoading}
         >
           Login

@@ -45,8 +45,8 @@ function Prompt({ type, iconSize, recipient: { name } }: Props) {
   }, []);
 
   return (
-    <Modal className="grid content-start fixed-center z-20 border border-prim bg-gray-l6 dark:bg-blue-d5 font-work text-gray-d2 dark:text-white w-[91%] sm:w-full max-w-[39rem] rounded overflow-hidden">
-      <div className="grid place-items-center relative h-16 font-heading font-bold bg-orange-l5 dark:bg-blue-d7 border-b border-prim">
+    <Modal className="grid content-start fixed-center z-20 border border-prim bg-gray-l4 dark:bg-blue-d4 font-work text-gray-d2 dark:text-white w-[91%] sm:w-full max-w-[39rem] rounded overflow-hidden">
+      <div className="grid place-items-center relative h-16 font-heading font-bold bg-red-l5 dark:bg-blue-d7 border-b border-prim">
         Share on {type}
         <button
           onClick={closeModal}
@@ -57,7 +57,7 @@ function Prompt({ type, iconSize, recipient: { name } }: Props) {
       </div>
       <p
         ref={msgRef}
-        className="my-6 sm:my-10 mx-4 sm:mx-12 text-sm leading-normal p-3 border dark:bg-blue-d6 border-prim rounded"
+        className="my-6 sm:my-10 mx-4 sm:mx-12 text-sm leading-normal p-3 border dark:bg-blue-d3 border-prim rounded"
       >
         I just donated to <span className="font-bold">{name}</span> on{" "}
         <span className="font-bold">"@angelgiving_</span>!{" "}
@@ -67,7 +67,7 @@ function Prompt({ type, iconSize, recipient: { name } }: Props) {
       </p>
       <ExtLink
         href={generateShareLink(shareText, type)}
-        className="btn-orange btn-donate gap-2 min-w-[16rem] mb-6 sm:mb-10 mx-4 sm:justify-self-center sm:w-auto"
+        className="btn-red btn-donate gap-2 min-w-[16rem] mb-6 sm:mb-10 mx-4 sm:justify-self-center sm:w-auto"
       >
         <div className="relative w-8 h-8 grid place-items-center border border-white rounded">
           <Icon type={type} className="absolute-center" size={iconSize} />

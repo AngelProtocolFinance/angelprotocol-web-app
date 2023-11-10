@@ -11,7 +11,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
   const { submit, isSubmitting } = useSubmit();
   return (
     <form
-      className={`w-full bg-white dark:bg-blue-d6 ${classes}`}
+      className={`w-full bg-white dark:bg-blue-d3 ${classes}`}
       onSubmit={submit}
     >
       <h2 className="text-center sm:text-left text-xl mb-2">
@@ -106,7 +106,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
       />
       <button
         type="submit"
-        className="mt-8 py-3 px-8 w-full sm:w-auto btn-orange btn-reg"
+        className="mt-8 py-3 px-8 w-full sm:w-auto btn-red btn-reg"
         disabled={isSubmitting}
       >
         <LoadText isLoading={isSubmitting}>Continue</LoadText>

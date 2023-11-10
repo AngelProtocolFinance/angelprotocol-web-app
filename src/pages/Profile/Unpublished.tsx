@@ -4,7 +4,7 @@ import { appRoutes } from "constants/routes";
 
 export default function Unpublished() {
   return (
-    <section className="flex flex-col items-center justify-center w-full h-screen gap-2 bg-blue dark:bg-blue-d5 text-red-l4 dark:text-red-l2">
+    <section className="flex flex-col items-center justify-center w-full h-screen gap-2 bg-blue dark:bg-blue-d4 text-red-l4 dark:text-red-l2">
       <Icon type="ExclamationCircleFill" size={30} />
       <p className="text-lg text-center">
         This Endowment has no public profile

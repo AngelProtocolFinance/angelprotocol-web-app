@@ -20,7 +20,7 @@ function Program(props: TProgram) {
     <div className="border border-prim rounded relative group overflow-hidden">
       <Link
         to={`program/${props.program_id}`}
-        className="absolute inset-0 group-hover:border group-hover:border-orange dark:group-hover:border-blue"
+        className="absolute inset-0 group-hover:border group-hover:border-blue-l2 dark:group-hover:border-blue"
       />
       <Image src={props.program_banner} className="h-64 w-full object-cover " />
       <div className="p-5">

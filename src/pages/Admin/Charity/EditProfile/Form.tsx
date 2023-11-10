@@ -42,7 +42,7 @@ export default function Form() {
     >
       <Link
         to={`${appRoutes.marketplace}/${id}`}
-        className="text-blue hover:text-orange text-sm flex items-center gap-1"
+        className="text-blue hover:text-red text-sm flex items-center gap-1"
       >
         <Icon type="Back" />
         <span>Back to profile</span>
@@ -97,7 +97,7 @@ export default function Form() {
           charLimit={4000}
           classes={{
             container:
-              "rich-text-toolbar border border-prim text-sm grid grid-rows-[auto_1fr] rounded bg-gray-l6 dark:bg-blue-d5 p-3 min-h-[15rem]",
+              "rich-text-toolbar border border-prim text-sm grid grid-rows-[auto_1fr] rounded bg-gray-l4 dark:bg-blue-d4 p-3 min-h-[15rem]",
             error: "static field-error -mt-4",
             charCounter: "text-gray-d1 dark:text-gray",
           }}
@@ -134,7 +134,7 @@ export default function Form() {
           placeholder="Select a country"
           fieldName="hq_country"
           classes={{
-            container: "px-4 bg-gray-l6 dark:bg-blue-d5",
+            container: "px-4 bg-gray-l4 dark:bg-blue-d4",
             input: "text-sm py-3.5",
             error: "field-error",
           }}
@@ -143,7 +143,7 @@ export default function Form() {
         <ActivityCountries<FV, "active_in_countries">
           name="active_in_countries"
           classes={{
-            container: "bg-white dark:bg-blue-d6",
+            container: "bg-white dark:bg-blue-d3",
             button: "field-input-admin",
           }}
         />
@@ -210,7 +210,7 @@ export default function Form() {
         <button
           disabled={isSubmitting}
           type="submit"
-          className="px-6 btn-orange text-sm"
+          className="px-6 btn-red text-sm"
         >
           Submit changes
         </button>

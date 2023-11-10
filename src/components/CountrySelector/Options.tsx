@@ -4,7 +4,7 @@ import { Country } from "types/countries";
 import countries from "assets/countries/all.json";
 
 const containerStyle =
-  "absolute top-full mt-2 z-10 w-full bg-white dark:bg-blue-d6 shadow-lg rounded overflow-y-scroll scroller";
+  "absolute top-full mt-2 z-10 w-full bg-white dark:bg-blue-d3 shadow-lg rounded overflow-y-scroll scroller";
 
 const options: Country[] = countries;
 export default function Options({ query }: { query: string }) {

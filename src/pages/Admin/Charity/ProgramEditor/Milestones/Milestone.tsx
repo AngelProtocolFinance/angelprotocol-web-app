@@ -28,7 +28,7 @@ export default function Milestone({
         milestoneError ? "border-red" : "border-prim"
       } rounded overflow-hidden`}
     >
-      <div className="relative py-3 px-4 text-center bg-orange-l6 dark:bg-blue-d7">
+      <div className="relative py-3 px-4 text-center bg-red-l6 dark:bg-blue-d7">
         <span className="text-xl font-bold font-heading">
           {title || `Milestone ${idx + 1}`}
         </span>
@@ -42,7 +42,7 @@ export default function Milestone({
         className={({ open }) =>
           `${
             open ? "border-t border-prim" : ""
-          } bg-white dark:bg-blue-d6 py-6 px-4 grid content-start gap-6`
+          } bg-white dark:bg-blue-d3 py-6 px-4 grid content-start gap-6`
         }
       >
         <Label className="-mb-4">Image of milestone</Label>
@@ -77,7 +77,7 @@ export default function Milestone({
           charLimit={MAX_CHARS}
           classes={{
             container:
-              "rich-text-toolbar border border-prim text-sm grid grid-rows-[auto_1fr] rounded bg-gray-l6 dark:bg-blue-d5 p-3 min-h-[15rem]",
+              "rich-text-toolbar border border-prim text-sm grid grid-rows-[auto_1fr] rounded bg-gray-l4 dark:bg-blue-d4 p-3 min-h-[15rem]",
             error: "static field-error -mt-4",
             charCounter: "text-gray-d1 dark:text-gray",
           }}

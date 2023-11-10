@@ -33,14 +33,14 @@ export default function Donations() {
       </h1>
       <CsvExporter
         aria-disabled={isLoadingOrError || !data?.Items || isEmpty(data.Items)}
-        classes="max-lg:row-start-5 max-lg:col-span-full lg:justify-self-end btn-orange px-8 py-3"
+        classes="max-lg:row-start-5 max-lg:col-span-full lg:justify-self-end btn-red px-8 py-3"
         headers={csvHeaders}
         data={data?.Items || []}
         filename="donations.csv"
       >
         Export to CSV
       </CsvExporter>
-      <div className="relative flex gap-x-3 items-center border border-prim w-full bg-white dark:bg-blue-d6 rounded">
+      <div className="relative flex gap-x-3 items-center border border-prim w-full bg-white dark:bg-blue-d3 rounded">
         <Icon
           type="Search"
           size={24}

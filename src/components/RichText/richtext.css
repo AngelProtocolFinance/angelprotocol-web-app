@@ -20,12 +20,12 @@
 
 .ql-toolbar button.ql-active .ql-stroke {
   fill: none;
-  stroke: orange !important;
+  stroke: red !important;
 }
 
 .ql-toolbar button:hover .ql-stroke {
   fill: none;
-  stroke: orange !important;
+  stroke: red !important;
 }
 
 .ql-toolbar .ql-stroke {

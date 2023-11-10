@@ -35,7 +35,7 @@ export default function Cards({ classes = "" }: { classes?: string }) {
 
           {hasMore && (
             <button
-              className="col-span-full btn-orange rounded-md p-2 text-sm w-full mt-6"
+              className="col-span-full btn-red rounded-md p-2 text-sm w-full mt-6"
               onClick={loadNextPage}
               disabled={isLoading || isLoadingNextPage}
             >

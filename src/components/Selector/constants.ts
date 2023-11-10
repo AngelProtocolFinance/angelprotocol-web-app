@@ -17,5 +17,5 @@ export const styles = {
         : ""
     }`,
   options:
-    "rounded-sm text-sm border border-prim absolute top-full mt-2 z-10 bg-gray-l6 dark:bg-blue-d6 w-full max-h-[10rem] overflow-y-auto scroller",
+    "rounded-sm text-sm border border-prim absolute top-full mt-2 z-10 bg-gray-l4 dark:bg-blue-d3 w-full max-h-[10rem] overflow-y-auto scroller",
 };

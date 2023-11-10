@@ -29,7 +29,7 @@ export default function EndowmentSelector() {
       onChange={onEndowmentChange}
       as="div"
       by="name"
-      className="relative items-center flex w-full field-container min-h-[3rem] bg-white dark:bg-blue-d6"
+      className="relative items-center flex w-full field-container min-h-[3rem] bg-white dark:bg-blue-d3"
     >
       <Combobox.Input
         ref={ref}

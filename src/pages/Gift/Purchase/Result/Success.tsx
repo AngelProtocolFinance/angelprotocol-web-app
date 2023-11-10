@@ -28,7 +28,7 @@ export default function Success(props: Props) {
 
       <Link
         to={appRoutes.marketplace}
-        className="w-full sm:w-auto min-w-[15.6rem] btn-orange btn-gift"
+        className="w-full sm:w-auto min-w-[15.6rem] btn-red btn-gift"
       >
         Back to the platform
       </Link>
@@ -62,7 +62,7 @@ function EmailCode({ secret }: { secret: string }) {
         <p className="text-xs text-center uppercase text-gray-d1 dark:text-gray p-4 border-b border-prim">
           Your giftcard code:
         </p>
-        <p className="bg-orange-l6 dark:bg-blue-d7 p-4 font-bold text-center text-3xl leading-relaxed break-all">
+        <p className="bg-red-l6 dark:bg-blue-d7 p-4 font-bold text-center text-3xl leading-relaxed break-all">
           {secret}
         </p>
       </div>

@@ -22,7 +22,7 @@ export default function Options({ searchText, isDebouncing = false }: Props) {
   });
 
   return (
-    <Combobox.Options className="absolute left-0 top-full mt-2 z-10 w-full bg-white dark:bg-blue-d6 shadow-lg rounded overflow-y-scroll scroller">
+    <Combobox.Options className="absolute left-0 top-full mt-2 z-10 w-full bg-white dark:bg-blue-d3 shadow-lg rounded overflow-y-scroll scroller">
       <QueryLoader
         queryState={{
           ...queryState,

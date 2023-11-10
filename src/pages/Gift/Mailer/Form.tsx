@@ -80,7 +80,7 @@ export default function Form({ classes = "" }) {
         fieldName="message"
         classes={{
           container:
-            "rich-text-toolbar border border-prim text-sm grid grid-rows-[auto_10rem] rounded bg-white dark:bg-blue-d6 aria-disabled:bg-gray-l5 aria-disabled:dark:bg-bluegray-d1 p-3 break-words",
+            "rich-text-toolbar border border-prim text-sm grid grid-rows-[auto_10rem] rounded bg-white dark:bg-blue-d3 aria-disabled:bg-gray-l5 aria-disabled:dark:bg-bluegray-d1 p-3 break-words",
           error: "text-right text-red dark:text-red-l1 text-xs -mt-4",
           charCounter: "text-gray-d1 dark:text-gray",
         }}
@@ -97,7 +97,7 @@ export default function Form({ classes = "" }) {
           Reset
         </button>
         <button
-          className="btn-orange btn-gift"
+          className="btn-red btn-gift"
           type="submit"
           disabled={isSubmitting}
         >

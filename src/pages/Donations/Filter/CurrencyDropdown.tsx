@@ -32,14 +32,14 @@ export default function CurrencyDropdown({ classes = "" }) {
         }}
         classes={{
           container:
-            selectorButtonStyle + " bg-white dark:bg-blue-d6 px-4 py-3",
+            selectorButtonStyle + " bg-white dark:bg-blue-d3 px-4 py-3",
         }}
         filterFn={(token) => tokenTypes.includes(token.type)}
       >
         {(tokens) => (
           <Selector<FV, "currency", string>
             name="currency"
-            classes={{ button: "dark:bg-blue-d6" }}
+            classes={{ button: "dark:bg-blue-d3" }}
             options={tokens.map((c) => ({ label: c.symbol, value: c.symbol }))}
           />
         )}

@@ -41,7 +41,7 @@ export default function ImgEditor<T extends FieldValues, K extends Path<T>>(
 
   const overlay = `before:content-[''] before:absolute before:inset-0 ${
     isDragActive
-      ? "before:bg-orange-l5/95 before:dark:bg-blue-d6/95"
+      ? "before:bg-red-l5/95 before:dark:bg-blue-d3/95"
       : isSubmitting
       ? "before:bg-gray-l5/95 before:dark:bg-bluegray-d1/95"
       : ""
@@ -54,11 +54,11 @@ export default function ImgEditor<T extends FieldValues, K extends Path<T>>(
           className: `relative ${overlay} group rounded border border-dashed focus:outline-none ${
             isDragActive
               ? "border-gray-d1 dark:border-gray"
-              : "border-prim focus:border-orange-l2 focus:dark:border-blue-d1"
+              : "border-prim focus:border-red-l2 focus:dark:border-blue-d1"
           } ${
             isSubmitting
               ? "cursor-default bg-gray-l5 dark:bg-bluegray-d1"
-              : "bg-gray-l6 dark:bg-blue-d5 cursor-pointer"
+              : "bg-gray-l4 dark:bg-blue-d4 cursor-pointer"
           } ${classes?.dropzone ?? ""}`,
           ref,
         })}

@@ -121,7 +121,7 @@ export default function Form() {
           select No. You will still be able to proceed with registration.
         </strong>
       </Label>
-      <div className="flex gap-4 mt-4 accent-orange text-sm">
+      <div className="flex gap-4 mt-4 accent-red text-sm">
         <Radio<FV, "isAuthorizedToReceiveTaxDeductibleDonations">
           name="isAuthorizedToReceiveTaxDeductibleDonations"
           value="Yes"
@@ -147,7 +147,7 @@ export default function Form() {
         Are you happy to accept anonymous donations? If not, ALL donors will be
         required to provide a name and address.
       </Label>
-      <div className="flex gap-4 mt-4 accent-orange text-sm">
+      <div className="flex gap-4 mt-4 accent-red text-sm">
         <Radio<FV, "isAnonymousDonationsAllowed">
           name="isAnonymousDonationsAllowed"
           value="Yes"
@@ -163,7 +163,7 @@ export default function Form() {
       <p className="text-sm">
         By submitting this information, you declare that you have read and
         agreed to our{" "}
-        <ExtLink className="underline text-orange" href={TERMS_OF_USE_NPO}>
+        <ExtLink className="underline text-red" href={TERMS_OF_USE_NPO}>
           Terms & Conditions
         </ExtLink>
         .
@@ -180,7 +180,7 @@ export default function Form() {
         <button
           disabled={isSubmitting}
           type="submit"
-          className="py-3 min-w-[8rem] btn-orange btn-reg"
+          className="py-3 min-w-[8rem] btn-red btn-reg"
         >
           <LoadText isLoading={isSubmitting}>Continue</LoadText>
         </button>

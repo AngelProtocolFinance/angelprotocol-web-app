@@ -83,7 +83,7 @@ export default function Form({ classes = "", ...props }: Props) {
           fieldName="country"
           onReset={() => resetField("usState")}
           classes={{
-            container: "px-4 bg-gray-l6 dark:bg-blue-d6",
+            container: "px-4 bg-gray-l4 dark:bg-blue-d3",
             input: "py-3 placeholder:text-sm",
             error: "field-error",
           }}
@@ -97,7 +97,7 @@ export default function Form({ classes = "", ...props }: Props) {
           <Selector<FV, "usState", string>
             name="usState"
             options={states}
-            classes={{ container: "bg-white dark:bg-blue-d6" }}
+            classes={{ container: "bg-white dark:bg-blue-d3" }}
           />
         </div>
       ) : (
@@ -132,7 +132,7 @@ export default function Form({ classes = "", ...props }: Props) {
       </p>
       {props.type === "post-donation" ? (
         <button
-          className="col-span-full btn-orange text-sm"
+          className="col-span-full btn-red text-sm"
           disabled={isSubmitting}
           type="submit"
         >

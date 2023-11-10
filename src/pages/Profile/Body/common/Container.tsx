@@ -17,7 +17,7 @@ export default function Container({
 
   return (
     <div
-      className={`flex flex-col gap-px w-full border border-prim rounded dark:bg-blue-d6 ${classes}`}
+      className={`flex flex-col gap-px w-full border border-prim rounded dark:bg-blue-d4 ${classes}`}
     >
       {expanded ? (
         <StaticHeader title={title} />
@@ -42,7 +42,7 @@ type HeaderProps = {
 function StaticHeader({ title, classes = "", children }: HeaderProps) {
   return (
     <div
-      className={`flex items-center justify-between px-8 py-5 w-full bg-orange-l5 border-prim rounded dark:bg-blue-d7 ${classes}`}
+      className={`flex items-center justify-between px-8 py-5 w-full bg-blue-l4 border-prim rounded dark:bg-blue-d3 ${classes}`}
     >
       <span className="font-heading font-bold text-xl">{title}</span>
       {children}

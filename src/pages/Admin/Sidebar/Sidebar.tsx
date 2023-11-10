@@ -18,7 +18,7 @@ export default function Sidebar({
 }: Props) {
   return (
     <div
-      className={`flex flex-col w-72 md:w-64 h-full bg-white dark:bg-blue-d6 border-r border-prim ${className}`}
+      className={`flex flex-col w-72 md:w-64 h-full bg-white dark:bg-blue-d3 border-r border-prim ${className}`}
     >
       <Header />
 
@@ -51,6 +51,6 @@ export default function Sidebar({
 }
 
 const linkClassName = createNavLinkStyler(
-  "flex items-center gap-2 py-3 px-5 font-bold text-sm hover:text-orange-l1 active:text-orange transition ease-in-out duration-300 aria-disabled:text-gray aria-disabled:pointer-events-none",
-  "pointer-events-none text-orange"
+  "flex items-center gap-2 py-3 px-5 font-bold text-sm hover:text-red-l1 active:text-red transition ease-in-out duration-300 aria-disabled:text-gray aria-disabled:pointer-events-none",
+  "pointer-events-none text-red"
 );

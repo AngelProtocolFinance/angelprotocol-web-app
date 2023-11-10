@@ -7,7 +7,7 @@ export default function Hero({ classes = "" }: { classes?: string }) {
     >
       <h1 className="order-1 font-extrabold w-full text-[1.63rem] md:text-3xl lg:text-[2.75rem] text-center lg:text-left lg:self-end">
         <div className="leading-tight">ANGEL GIVING REDEFINES</div>
-        <div className="leading-tight text-orange">
+        <div className="leading-tight text-green">
           GLOBAL NONPROFIT FINANCING.
         </div>
       </h1>

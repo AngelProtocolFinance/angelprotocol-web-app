@@ -19,7 +19,7 @@ export default function List() {
       }}
     >
       {(programs) => (
-        <div className="@container grid gap-3 p-4 @lg:p-8 border border-prim rounded bg-white dark:bg-blue-d6">
+        <div className="@container grid gap-3 p-4 @lg:p-8 border border-prim rounded bg-white dark:bg-blue-d3">
           {programs.map((p) => (
             <Program {...p} key={p.program_id} />
           ))}

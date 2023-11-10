@@ -38,7 +38,7 @@ export default function Err({
           onClick={() => {
             dispatch(setStep("donate-form"));
           }}
-          className="w-full btn-orange btn-donate"
+          className="w-full btn-red btn-donate"
         >
           Change payment details
         </button>

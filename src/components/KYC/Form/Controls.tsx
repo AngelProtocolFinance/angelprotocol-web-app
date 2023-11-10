@@ -33,7 +33,7 @@ export default function Controls({
       </button>
 
       <button
-        className="btn-orange btn-donate"
+        className="btn-red btn-donate"
         disabled={isSubmitting}
         type="submit"
       >

@@ -57,7 +57,7 @@ export default function Form({ configFromWidget }: Props) {
           setValue("token", initToken);
           setValue("token.amount", "0");
         }}
-        classes={{ container: "bg-white dark:bg-blue-d6 mb-8" }}
+        classes={{ container: "bg-white dark:bg-blue-d3 mb-8" }}
       />
 
       <TokenField<DonateValues, "token">
@@ -65,7 +65,7 @@ export default function Form({ configFromWidget }: Props) {
         selectedChainId={chainId.value}
         withBalance
         label={`Enter the donation amount :`}
-        classes={{ label: "text-lg", inputContainer: "dark:bg-blue-d6" }}
+        classes={{ label: "text-lg", inputContainer: "dark:bg-blue-d3" }}
         withMininum
       />
 
@@ -108,7 +108,7 @@ export default function Form({ configFromWidget }: Props) {
             Cancel
           </Link>
         )}
-        <button className="btn-orange btn-donate w-1/2" type="submit">
+        <button className="btn-red btn-donate w-1/2" type="submit">
           Continue
         </button>
       </div>

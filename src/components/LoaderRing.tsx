@@ -19,7 +19,7 @@ export default function LoaderRing({
       </clipPath>
 
       <foreignObject x="0" y="0" width="100" height="100" clipPath="url(#clip)">
-        <div className="animate-spin w-full h-full rounded-full bg-[conic-gradient(var(--tw-gradient-stops))] from-transparent to-orange" />
+        <div className="animate-spin w-full h-full rounded-full bg-[conic-gradient(var(--tw-gradient-stops))] from-transparent to-red" />
       </foreignObject>
     </svg>
   );

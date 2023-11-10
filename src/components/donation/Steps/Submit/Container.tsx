@@ -68,7 +68,7 @@ export default function Container({ children, txPackage, ...props }: Props) {
           Back
         </button>
         <button
-          className="btn-orange btn-donate"
+          className="btn-red btn-donate"
           onClick={!txPackage ? undefined : () => submit(txPackage)}
           disabled={!txPackage}
           type="submit"

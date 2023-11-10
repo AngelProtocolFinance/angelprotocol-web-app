@@ -79,10 +79,10 @@ export default function Stripe({
         >
           <button
             disabled={isLoading || isRedirecting}
-            className="btn-orange btn-donate w-1/2"
+            className="btn-red btn-donate w-1/2"
             type="submit"
           >
-            {isLoading || isRedirecting ? "Processing..." : "Pay with stripe"}
+            {isLoading || isRedirecting ? "Processing..." : "Pay with card"}
           </button>
           {!isInsideWidget && (
             <Link
@@ -95,7 +95,10 @@ export default function Stripe({
         </div>
         <p className="text-sm italic text-gray-d2 dark:text-gray mt-4">
           By making a donation, you agree to our{" "}
-          <ExtLink className="underline text-orange" href={TERMS_OF_USE_DONOR}>
+          <ExtLink
+            className="underline text-blue hover:text-blue-l1"
+            href={TERMS_OF_USE_DONOR}
+          >
             Terms & Conditions
           </ExtLink>
         </p>

@@ -5,7 +5,7 @@ import { createNavLinkStyler } from "helpers";
 
 type Props = { classes: string; links: Link[] };
 
-const styles = "px-4 transition ease-in-out duration-300 hover:text-orange-l1";
+const styles = "px-4 transition ease-in-out duration-300 hover:text-green";
 
 export default function DesktopNav({ classes, links }: Props) {
   return (
@@ -28,7 +28,7 @@ export default function DesktopNav({ classes, links }: Props) {
             to={link.href}
             className={createNavLinkStyler(
               styles,
-              "pointer-events-none text-orange-l1"
+              "pointer-events-none text-green"
             )}
           >
             {link.title}

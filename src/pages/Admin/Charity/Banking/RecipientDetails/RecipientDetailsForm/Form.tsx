@@ -47,7 +47,7 @@ export default function Form(props: Props) {
           <button
             disabled={isSubmitting}
             type="submit"
-            className="px-6 btn-orange text-sm w-80"
+            className="px-6 btn-red text-sm w-80"
           >
             {isSubmitting ? (
               <>
@@ -63,7 +63,7 @@ export default function Form(props: Props) {
         <button
           disabled={isSubmitting}
           type="submit"
-          className="px-6 btn-orange text-sm w-80"
+          className="px-6 btn-red text-sm w-80"
         >
           {isSubmitting ? (
             <>

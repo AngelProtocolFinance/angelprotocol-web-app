@@ -19,8 +19,8 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
         <Tab
           className={({ selected }) =>
             `${
-              selected ? "border-orange" : "border-gray-l3 dark:border-bluegray"
-            } uppercase p-2 border-b-4 hover:text-orange-l1`
+              selected ? "border-blue" : "border-gray-l3 dark:border-blue-d4"
+            } uppercase p-2 border-b-4 hover:text-blue-l1`
           }
         >
           Credit/Debit
@@ -28,8 +28,8 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
         <Tab
           className={({ selected }) =>
             `${
-              selected ? "border-orange" : "border-gray-l3 dark:border-bluegray"
-            } uppercase p-2 border-b-4 hover:text-orange-l1`
+              selected ? "border-blue" : "border-gray-l3 dark:border-blue-d4"
+            } uppercase p-2 border-b-4 hover:text-blue-l1`
           }
         >
           Crypto

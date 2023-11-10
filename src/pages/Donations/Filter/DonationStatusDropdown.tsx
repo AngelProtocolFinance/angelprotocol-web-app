@@ -8,7 +8,7 @@ export default function DonationStatusDropdown({ classes = "" }) {
       <label className="text-sm">Status</label>
       <Selector<FV, "status", string>
         name="status"
-        classes={{ button: "dark:bg-blue-d6" }}
+        classes={{ button: "dark:bg-blue-d3" }}
         options={statuses}
       />
     </div>

@@ -51,7 +51,7 @@ export default function Form({
         </button>
         <button
           type="submit"
-          className="btn-orange btn-donate max-sm:mx-auto w-40"
+          className="btn-red btn-donate max-sm:mx-auto w-40"
         >
           Update Snippet
         </button>

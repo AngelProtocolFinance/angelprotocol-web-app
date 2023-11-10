@@ -23,7 +23,7 @@ export default function Welcome({ classes = "" }: { classes?: string }) {
         Your fundraising profile & endowment are just few steps away 😇
       </p>
       <Link
-        className="w-full max-w-[26.25rem] btn-orange btn-reg"
+        className="w-full max-w-[26.25rem] btn-red btn-reg"
         to={`${appRoutes.register}/${routes.steps}/${steps.contact}`}
         state={state}
       >

@@ -21,7 +21,7 @@ export default function DonateFiatThanks() {
       </p>
       <Link
         to={appRoutes.marketplace}
-        className="w-full sm:w-auto btn-orange btn-donate h-10 rounded-lg"
+        className="w-full sm:w-auto btn-red btn-donate h-10 rounded-lg"
       >
         Back to the platform
       </Link>

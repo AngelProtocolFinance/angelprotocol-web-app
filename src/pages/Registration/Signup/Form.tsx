@@ -23,11 +23,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
     >
       <h3 className="text-3xl text-center">{`Register to ${APP_NAME}`}</h3>
 
-      <button
-        type="submit"
-        className="btn-orange btn-reg"
-        disabled={isSubmitting}
-      >
+      <button type="submit" className="btn-red btn-reg" disabled={isSubmitting}>
         Start a new application
       </button>
       <Separator classes="before:mr-2 after:ml-2">OR</Separator>
@@ -42,7 +38,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
 
       <button
         type="button"
-        className="underline text-orange-l1 justify-self-center text-sm"
+        className="underline text-red-l1 justify-self-center text-sm"
         onClick={openIntercomHelp}
       >
         Need Help?

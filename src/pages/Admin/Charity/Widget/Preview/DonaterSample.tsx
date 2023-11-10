@@ -26,7 +26,7 @@ export default function DonaterSample({
       )}
       <button
         type="button"
-        className="btn-orange justify-self-center w-44 font-body mt-8"
+        className="btn-red justify-self-center w-44 font-body mt-8"
       >
         Continue
       </button>

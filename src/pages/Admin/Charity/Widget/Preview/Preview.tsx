@@ -15,7 +15,7 @@ export default function Preview({ classes = "" }) {
       <div className="pt-6 flex flex-col @xl/preview:pt-10 h-full overflow-y-auto scroller w-full max-h-[800px] border border-gray-l2 rounded text-gray-d2 bg-white">
         <header className="mb-10 px-10 flex justify-between items-center w-full">
           <h1 className="text-xl">{endowName}</h1>
-          <button className="btn btn-orange px-3 h-10 rounded-lg text-xs normal-case">
+          <button className="btn btn-red px-3 h-10 rounded-lg text-xs normal-case">
             0x1...ad4
           </button>
         </header>

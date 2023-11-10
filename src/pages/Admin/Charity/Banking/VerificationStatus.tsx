@@ -42,14 +42,14 @@ function VerificationStatus() {
   switch (profile.bank_verified) {
     case "Not Submitted":
       return (
-        <span className="flex gap-1 items-center text-xs bg-gray-l4 sm:text-sm font-semibold px-2 rounded">
+        <span className="flex gap-1 items-center text-xs bg-gray-l3 sm:text-sm font-semibold px-2 rounded">
           Not submitted{" "}
           <Icon type="Exclamation" aria-hidden className="text-sm" />
         </span>
       );
     case "Under Review":
       return (
-        <span className="flex gap-1 items-center bg-orange-l4 text-xs sm:text-sm text-orange-d1 font-semibold px-2 rounded">
+        <span className="flex gap-1 items-center bg-red-l4 text-xs sm:text-sm text-red-d1 font-semibold px-2 rounded">
           Under review{" "}
           <Icon type="HourglassSplit" aria-hidden className="text-sm" />
         </span>

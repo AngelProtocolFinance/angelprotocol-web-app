@@ -53,7 +53,7 @@ export default function Success({
 
       <Link
         to={appRoutes.marketplace + `/${id}`}
-        className="w-full sm:w-auto btn-orange btn-donate"
+        className="w-full sm:w-auto btn-red btn-donate"
       >
         Back to the platform
       </Link>

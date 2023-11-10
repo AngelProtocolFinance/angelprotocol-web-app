@@ -15,7 +15,7 @@ export default function Table({ classes = "", endowments }: Props) {
       <table className="border-collapse table-auto w-full">
         <TableSection
           type="thead"
-          rowClass="border-b border-prim bg-orange-l6 dark:bg-blue-d6"
+          rowClass="border-b border-prim bg-red-l6 dark:bg-blue-d3"
         >
           <Cells
             type="th"
@@ -29,7 +29,7 @@ export default function Table({ classes = "", endowments }: Props) {
         </TableSection>
         <TableSection
           type="tbody"
-          rowClass="border-b border-gray-l4 dark:border-bluegray/70"
+          rowClass="border-b border-gray-l3 dark:border-blue-d4/70"
         >
           {endowments.map((endowment) => (
             <Row key={endowment.endowment_id} {...endowment} />

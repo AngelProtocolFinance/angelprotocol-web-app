@@ -33,7 +33,7 @@ export default function Form({ classes = "" }) {
         name="token"
         selectedChainId="80001"
         label="Enter the donation amount:"
-        classes={{ label: "text-lg", inputContainer: "dark:bg-blue-d6" }}
+        classes={{ label: "text-lg", inputContainer: "dark:bg-blue-d3" }}
         withBalance
       />
 
@@ -47,7 +47,7 @@ export default function Form({ classes = "" }) {
           Cancel
         </Link>
         <button
-          className="btn-orange btn-gift"
+          className="btn-red btn-gift"
           disabled={
             !isValid || (wasCompleted ? false : !isDirty) || isSubmitting
           }
