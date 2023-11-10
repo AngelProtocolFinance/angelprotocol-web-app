@@ -38,8 +38,8 @@ type Data<
 
 type Step1Data = Data<"init", "contact">;
 type Step2Data = Data<"init" | "contact", "orgDetails">;
-type Step3Data = Data<"init" | "contact" | "orgDetails", "fsaInquiry">;
-export type Step4Data = Data<
+export type Step3Data = Data<"init" | "contact" | "orgDetails", "fsaInquiry">;
+type Step4Data = Data<
   "init" | "contact" | "orgDetails" | "fsaInquiry",
   "documentation"
 >;

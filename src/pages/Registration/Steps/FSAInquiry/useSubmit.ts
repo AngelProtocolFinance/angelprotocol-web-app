@@ -1,15 +1,15 @@
 import { SubmitHandler, UseFormReturn } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { FormValues as FV, Props } from "./types";
+import { Step3Data } from "../../types";
+import { FV } from "./types";
 import { useUpdateRegMutation } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 
-type Args = {
-  props: Props;
-  form: UseFormReturn<FV>;
-};
-
-export default function useSubmit({ form, props }: Args) {
+export default function useSubmit(
+  data: Step3Data,
+  form: UseFormReturn<FV>,
+  thisStep: number
+) {
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },
@@ -20,20 +20,21 @@ export default function useSubmit({ form, props }: Args) {
   const navigate = useNavigate();
 
   const submit: SubmitHandler<FV> = async (fv) => {
-    if (!isDirty && props.doc) {
-      return navigate(`../${props.thisStep}`, { state: props.init });
+    if (!isDirty && data.fsaInquiry !== undefined) {
+      return navigate(`../${thisStep + 1}`, { state: data.init });
     }
     const result = await updateReg({
-      reference: props.init.reference,
-      type: "documentation",
-      DocType: "Non-FSA",
-      EIN: fv.EIN,
+      reference: data.init.reference,
+      type: "fsa-inquiry",
+      AuthorizedToReceiveTaxDeductibleDonations:
+        fv.AuthorizedToReceiveTaxDeductibleDonations === "Yes",
     });
 
     if ("error" in result) {
       return handleError(result.error);
     }
-    navigate(`../${props.thisStep}`, { state: props.init });
+
+    navigate(`../${thisStep + 1}`, { state: data.init });
   };
 
   return {
