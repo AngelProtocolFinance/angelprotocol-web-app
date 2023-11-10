@@ -155,7 +155,7 @@ export default function useRecipientDetails(
   const handleSubmit = async (request: CreateRecipientRequest) => {
     try {
       setSubmitting(true);
-      await createRecipientAccount({ endowment_id, request }).unwrap();
+      await createRecipientAccount({ PK: endowment_id, request }).unwrap();
     } catch (error) {
       handleError(error, ERROR_MSG);
     } finally {
