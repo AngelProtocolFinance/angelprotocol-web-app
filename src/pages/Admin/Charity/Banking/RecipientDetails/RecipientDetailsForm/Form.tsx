@@ -2,6 +2,9 @@ import { useFormContext } from "react-hook-form";
 import { FormValues } from "../types";
 import { AccountRequirements, CreateRecipientRequest } from "types/aws";
 import LoaderRing from "components/LoaderRing";
+import { Label } from "components/form";
+import { Asset, FileDropzone } from "components/registration";
+import { MB_LIMIT } from "schemas/file";
 import RequirementField from "./RequirementField";
 import formToCreateRecipientRequest from "./formToCreateRecipientRequest";
 
@@ -10,18 +13,19 @@ type Props = {
   disabled: boolean;
   refreshRequired: boolean;
   onRefresh: (request: CreateRecipientRequest) => void;
-  onSubmit: (request: CreateRecipientRequest) => void;
+  onSubmit: (request: CreateRecipientRequest, bankStatementPDF: Asset) => void;
 };
 
 export default function Form(props: Props) {
   const { handleSubmit } = useFormContext<FormValues>();
 
   const handleSubmission = handleSubmit((formValues) => {
-    const request = formToCreateRecipientRequest(formValues);
+    const { bankStatementPDF, ...bankDetails } = formValues;
+    const request = formToCreateRecipientRequest(bankDetails);
     if (props.refreshRequired) {
       props.onRefresh(request);
     } else {
-      props.onSubmit(request);
+      props.onSubmit(request, bankStatementPDF);
     }
   });
 
@@ -36,6 +40,14 @@ export default function Form(props: Props) {
             disabled={props.disabled}
           />
         ))}
+
+      <div className="field">
+        <Label required>Please provide your Bank Statement</Label>
+        <FileDropzone<FormValues, "bankStatementPDF">
+          name="bankStatementPDF"
+          tooltip={fileTooltip}
+        />
+      </div>
 
       {props.refreshRequired ? (
         <>
@@ -78,3 +90,5 @@ function SubmitButton(props: { text: string; loadingText: string }) {
     </button>
   );
 }
+
+const fileTooltip = `Valid types are: PDF, JPG, PNG and WEBP. File should be less than ${MB_LIMIT}MB.`;

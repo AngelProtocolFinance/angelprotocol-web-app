@@ -4,6 +4,7 @@ import { SchemaShape } from "schemas/types";
 import { AccountRequirements, Group } from "types/aws";
 import { Country } from "types/countries";
 import { isEmpty } from "helpers";
+import { genAssetShape } from "schemas/file";
 import { requiredString } from "schemas/string";
 import { isCountry, undot } from "../../helpers";
 import {
@@ -15,8 +16,9 @@ export default function createSchema(
   accountRequirements: AccountRequirements
 ): ObjectSchema<FormValues> {
   return object<any, SchemaShape<FormValues>>({
-    currency: requiredString,
     accountHolderName: requiredString,
+    bankStatementPDF: object(genAssetShape(true)),
+    currency: requiredString,
     type: requiredString,
     requirements: object(
       accountRequirements.fields.reduce<ObjectShape>((objectShape, field) => {

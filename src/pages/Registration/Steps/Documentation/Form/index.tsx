@@ -8,11 +8,11 @@ import ExtLink from "components/ExtLink";
 import { MultiSelector, Selector } from "components/Selector";
 import { Field, Label, Radio } from "components/form";
 import { FileDropzone, LoadText } from "components/registration";
+import { MB_LIMIT } from "schemas/file";
 import { unsdgs } from "constants/unsdgs";
 import { TERMS_OF_USE_NPO } from "constants/urls";
 import { steps } from "../../../routes";
 import { useRegState } from "../../StepGuard";
-import { MB_LIMIT } from "../schema";
 // import { CashEligibleCheckbox } from "./CashEligibleCheckbox";
 import useSubmit from "./useSubmit";
 

@@ -3,7 +3,7 @@ import { CreateRecipientRequest } from "types/aws";
 import { redot } from "../helpers/dot";
 
 export default function formToCreateRecipientRequest(
-  formValues: FormValues
+  formValues: Omit<FormValues, "bankStatementPDF">
 ): CreateRecipientRequest {
   return {
     accountHolderName: formValues.accountHolderName,

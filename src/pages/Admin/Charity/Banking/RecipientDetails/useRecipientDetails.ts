@@ -10,7 +10,8 @@ import {
   usePostAccountRequirementsMutation,
 } from "services/aws/bankDetails";
 import { useErrorContext } from "contexts/ErrorContext";
-import { isEmpty } from "helpers";
+import { Asset } from "components/registration";
+import { getFilePreviews, isEmpty } from "helpers";
 import { UnexpectedStateError } from "errors/errors";
 import { EMAIL_SUPPORT } from "constants/env";
 import getDefaultValues from "./getDefaultValues";
@@ -152,9 +153,16 @@ export default function useRecipientDetails(
     }
   };
 
-  const handleSubmit = async (request: CreateRecipientRequest) => {
+  const handleSubmit = async (
+    request: CreateRecipientRequest,
+    bankStatementPDF: Asset
+  ) => {
     try {
       setSubmitting(true);
+      const bankStatementPreview = await getFilePreviews({ bankStatementPDF });
+      // TODO: logging just to avoid compiler warnings about unused variable,
+      // will be updated to real logic once possible
+      console.log(bankStatementPreview.bankStatementPDF);
       await createRecipientAccount({ PK: endowment_id, request }).unwrap();
     } catch (error) {
       handleError(error, ERROR_MSG);
