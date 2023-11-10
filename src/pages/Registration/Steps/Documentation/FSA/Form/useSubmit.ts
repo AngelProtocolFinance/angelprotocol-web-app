@@ -1,22 +1,62 @@
 import { SubmitHandler, useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { FormValues, Props } from "../types";
-import { useUpdateRegMutation } from "services/aws/registration";
+import {
+  useFiscalSponsorshipAgreementSigningURLMutation,
+  useUpdateRegMutation,
+} from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import { getFilePreviews } from "./getFilePreviews";
 
-export default function useSubmit({ doc, thisStep, init }: Props) {
+export default function useSubmit({
+  doc,
+  thisStep,
+  init,
+  orgCountry,
+  orgName,
+  contact,
+}: Props) {
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },
   } = useFormContext<FormValues>();
 
   const [updateReg] = useUpdateRegMutation();
+  const [generateSigningURL] =
+    useFiscalSponsorshipAgreementSigningURLMutation();
+
   const { handleError } = useErrorContext();
   const navigate = useNavigate();
 
   const submit: SubmitHandler<FormValues> = async (fv) => {
     try {
+      //no signing URL generated yet
+      if (!doc?.FiscalSponsorshipAgreementSigningURL) {
+        const { url } = await generateSigningURL({
+          id: init.reference,
+          email: init.email,
+          firstName: contact.FirstName,
+          lastName: contact.LastName,
+          role:
+            contact.Role === "other" ? contact.OtherRole : contact.OtherRole,
+          org: {
+            name: orgName,
+            legalEntityType: fv.LegalEntityType,
+            hq: orgCountry,
+            projectDescription: fv.ProjectDescription,
+          },
+        }).unwrap();
+        return navigate({ pathname: url });
+      }
+
+      //signingURL generated but not signed
+      if (
+        doc.FiscalSponsorshipAgreementSigningURL &&
+        !doc.SignedFiscalSponsorshipAgreement
+      ) {
+        return navigate({ pathname: doc.FiscalSponsorshipAgreementSigningURL });
+      }
+
       if (!isDirty && doc) {
         return navigate(`../${thisStep}`, { state: init });
       }

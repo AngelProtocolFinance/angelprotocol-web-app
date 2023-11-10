@@ -109,7 +109,7 @@ export type FSADocumentation = {
   ProofOfIdentity: FileObject;
   LegalEntityType: string;
   ProjectDescription: string;
-  FiscalSponsorshipAgreementSigningURL: string;
+  FiscalSponsorshipAgreementSigningURL?: string;
   SignedFiscalSponsorshipAgreement?: string;
 };
 
@@ -207,6 +207,17 @@ export function isDoneFSAInquiry(
 }
 
 export function isDoneDocs(data: SavedRegistration): data is DoneDocs {
+  const docTypeKey: keyof TDocumentation = "DocType";
+  if (!(docTypeKey in data)) return false;
+
+  const _data = data as unknown as TDocumentation;
+  if (_data.DocType === "FSA") {
+    return (
+      !!_data.FiscalSponsorshipAgreementSigningURL &&
+      !!_data.SignedFiscalSponsorshipAgreement
+    );
+  }
+
   return !!(data.Registration as TDocumentation).DocType!!;
 }
 
