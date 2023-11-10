@@ -21,27 +21,29 @@ export default function useSubmit() {
   const navigate = useNavigate();
 
   const submit: SubmitHandler<FormValues> = async (fv) => {
-    try {
-      if (!isDirty && orgDetails) {
-        return navigate(`../${step}`, { state: init });
-      }
-
-      await updateReg({
-        type: "org-details",
-        reference: init.reference,
-        //payload
-        Website: fv.Website,
-        UN_SDG: fv.UN_SDG.map(
-          (sdg) => sdg.value
-        ) /**TODO: AWS update to accept number[] */,
-        KycDonorsOnly: fv.isAnonymousDonationsAllowed === "No",
-        HqCountry: fv.HqCountry.name,
-        EndowDesignation: fv.EndowDesignation.value,
-        ActiveInCountries: fv.ActiveInCountries.map((opt) => opt.value),
-      });
-    } catch (err) {
-      handleError(err);
+    if (!isDirty && orgDetails) {
+      return navigate(`../${step + 1}`, { state: init });
     }
+
+    const result = await updateReg({
+      type: "org-details",
+      reference: init.reference,
+      //payload
+      Website: fv.Website,
+      UN_SDG: fv.UN_SDG.map(
+        (sdg) => sdg.value
+      ) /**TODO: AWS update to accept number[] */,
+      KycDonorsOnly: fv.isAnonymousDonationsAllowed === "No",
+      HqCountry: fv.HqCountry.name,
+      EndowDesignation: fv.EndowDesignation.value,
+      ActiveInCountries: fv.ActiveInCountries.map((opt) => opt.value),
+    });
+
+    if ("error" in result) {
+      return handleError(result.error);
+    }
+
+    navigate(`../${step + 1}`, { state: init });
   };
   return {
     submit: handleSubmit(submit),

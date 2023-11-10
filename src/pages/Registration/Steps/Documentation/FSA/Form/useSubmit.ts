@@ -20,6 +20,7 @@ export default function useSubmit({ doc, thisStep, init }: Props) {
       if (!isDirty && doc) {
         return navigate(`../${thisStep}`, { state: init });
       }
+
       const previews = await getFilePreviews({
         POI: fv.ProofOfIdentity,
         POR: fv.ProofOfRegistration,
@@ -29,8 +30,8 @@ export default function useSubmit({ doc, thisStep, init }: Props) {
         DocType: "FSA",
         reference: init.reference,
 
-        ProofOfIdentity: previews.POI[0], //poi is level1 and required
-        ProofOfRegistration: previews.POR[0], //por is level1 and required,
+        ProofOfIdentity: previews.POI[0],
+        ProofOfRegistration: previews.POR[0],
         LegalEntityType: fv.LegalEntityType,
         ProjectDescription: fv.ProjectDescription,
       });

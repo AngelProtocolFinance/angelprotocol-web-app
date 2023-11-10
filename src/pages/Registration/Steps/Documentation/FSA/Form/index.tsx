@@ -1,26 +1,34 @@
 import { Link } from "react-router-dom";
 import { FormValues as FV, Props } from "../types";
-import ExtLink from "components/ExtLink";
 import { Field, Label } from "components/form";
 import { FileDropzone, LoadText } from "components/registration";
-import { TERMS_OF_USE_NPO } from "constants/urls";
 import { steps } from "../../../../routes";
 import { MB_LIMIT } from "../schema";
 import useSubmit from "./useSubmit";
 
 export default function Form(props: Props) {
-  const { orgName, init } = props;
+  const { init } = props;
   const { submit, isSubmitting } = useSubmit(props);
 
   return (
     <form className="w-full" onSubmit={submit}>
       <h2 className="text-center sm:text-left text-xl mb-2">Documentation</h2>
-      <p className="mt-2 text-sm">
-        This information will be kept private and will be used to validate you
-        are an authorized representative of{" "}
-        <span className="font-semibold">{orgName}</span> whose organization is
-        registered and in good standing.
+      <p className="text-center mt-6">
+        Angel Giving serves as a granting organization, accepting donations on
+        behalf of our partner nonprofits and granting them out after processing
+        and converting. This requires our partner nonprofits to be able to
+        accept US tax-deductible donations.
       </p>
+
+      <p className="mt-6 text-center">
+        Angel Giving provides fiscal sponsorship services at market-leading cost
+        for our partner organizations to enable this ability (2.9%). If you
+        would like to proceed, please review and sign the fiscal sponsorship
+        agreement:
+      </p>
+
+      <Separator classes="my-8" />
+
       <h4 className="text-center sm:text-left text-lg mt-8">
         Government issued ID
       </h4>
@@ -72,14 +80,6 @@ export default function Form(props: Props) {
 
       <Separator classes="my-8" />
 
-      <p className="text-sm">
-        By submitting this information, you declare that you have read and
-        agreed to our{" "}
-        <ExtLink className="underline text-orange" href={TERMS_OF_USE_NPO}>
-          Terms & Conditions
-        </ExtLink>
-        .
-      </p>
       <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
         <Link
           aria-disabled={isSubmitting}
