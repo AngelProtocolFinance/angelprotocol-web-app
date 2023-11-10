@@ -2,16 +2,6 @@ import { UNSDG_NUMS } from "types/lists";
 import { EndowDesignation } from ".";
 import { FileObject } from "../common";
 
-/**
- * Steps:
- * 1 - Registrant Details
- * 2 - Org details
- * 3 - FSA Questionaire or FSA info
- * 4 - FSADocumentation | EIN
- * 5 - BankDetails
- * 6 - Review
- */
-
 export type RegistrationStatus =
   | "Inactive"
   | "Under Review"
@@ -54,13 +44,13 @@ type InitReg = {
   RegistrationDate: string /** ISO string*/;
   RegistrationStatus: RegistrationStatus;
   UN_SDG: UNSDG_NUMS[];
+  bank_verification_status: BankVerificationStatus;
 };
 
 export type InitContact = {
   PK: string;
   SK: "ContactPerson";
   Email: string;
-  bank_verification_status: BankVerificationStatus;
 };
 
 //INIT STEP

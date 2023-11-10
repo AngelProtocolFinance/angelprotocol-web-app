@@ -97,8 +97,8 @@ export default function Form({ classes = "" }: { classes?: string }) {
           </>
         )}
       </Selector>
-      <Field
-        name="goals"
+      <Field<FV>
+        name="Goals"
         label="Goals"
         placeholder={`What is your goal working with ${APP_NAME}?`}
         classes={{ container: "mt-4" }}

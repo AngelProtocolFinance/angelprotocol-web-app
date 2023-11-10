@@ -21,6 +21,7 @@ function ContactDetails() {
           PK: init.reference,
           Role: toRoleOption(contact.Role),
           ReferralMethod: toReferralOption(contact.ReferralMethod),
+          OrganizationName: contact.orgName,
         }
       : {
           PK: init.reference,

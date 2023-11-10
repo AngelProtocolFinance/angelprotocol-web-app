@@ -27,28 +27,15 @@ export default function Form() {
 
   return (
     <form className="w-full" onSubmit={submit}>
-      <h2 className="text-center sm:text-left text-xl mb-2">Documentation</h2>
-      <p className="mt-2 text-sm">
-        This information will be kept private and will be used to validate you
-        are an authorized representative of{" "}
-        <span className="font-semibold">{data.contact.orgName}</span> whose
-        organization is registered and in good standing.
-      </p>
-      <h4 className="text-center sm:text-left text-lg mt-8">
-        Government issued ID
-      </h4>
-      <Label required className="mb-2 mt-1">
-        Please provide passport, driver's license, or ID card.
-      </Label>
-
-      <h2 className="text-center sm:text-left text-lg mt-8">
+      <h2 className="text-center sm:text-left text-xl mb-2">
         Organizational Details
       </h2>
+
       <Field<FV>
         name="Website"
         label="Website of your organization"
         required
-        classes={{ container: "mb-6 mt-2" }}
+        classes={{ container: "mb-6 mt-4" }}
         placeholder="e.g. https://www.example.com"
       />
 

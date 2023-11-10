@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { FormValues as FV } from "../types";
 import { useUpdateRegMutation } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
+import { steps } from "../../../routes";
 import { useRegState } from "../../StepGuard";
 
 export default function useSubmit() {
@@ -11,7 +12,6 @@ export default function useSubmit() {
     formState: { isDirty, isSubmitting },
   } = useFormContext<FV>();
   const {
-    step,
     data: { init, contact },
   } = useRegState<1>();
 
@@ -21,7 +21,7 @@ export default function useSubmit() {
 
   const submit: SubmitHandler<FV> = async (fv) => {
     if (!isDirty && contact) {
-      return navigate(`../${step + 1}`, { state: init }); // go to latest step
+      return navigate(`../${steps.orgDetails}`, { state: init }); // go to latest step
     }
 
     const result = await updateReg({
@@ -48,8 +48,11 @@ export default function useSubmit() {
       return handleError(result.error);
     }
 
-    navigate(`../${step + 1}`, { state: init });
+    navigate(`../${steps.orgDetails}`, { state: init });
   };
 
-  return { submit: handleSubmit(submit), isSubmitting };
+  return {
+    submit: handleSubmit(submit, (error) => console.log(error)),
+    isSubmitting,
+  };
 }
