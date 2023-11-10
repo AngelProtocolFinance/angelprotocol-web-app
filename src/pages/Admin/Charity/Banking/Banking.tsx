@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { useAdminContext } from "pages/Admin/Context";
 import { useProfileQuery } from "services/aws/aws";
+import { useCreateRecipientAccountMutation } from "services/aws/bankDetails";
 import { useErrorContext } from "contexts/ErrorContext";
 import BankDetails from "components/BankDetails";
 import LoaderRing from "components/LoaderRing";
+import { getFilePreviews } from "helpers";
 import { EMAIL_SUPPORT } from "constants/env";
 import { Group } from "../common";
 import UpdateDetailsButton from "./UpdateDetailsButton";
@@ -13,7 +15,11 @@ const PROFILE_ERROR = `Error loading profile. Please try again later. If the err
 please contact ${EMAIL_SUPPORT}.`;
 
 export default function Banking() {
+  const { id: endowment_id } = useAdminContext();
+
   const [resubmitRequired, setResubmitRequired] = useState(false);
+
+  const [createRecipientAccount] = useCreateRecipientAccountMutation();
 
   // load profile
   const { id } = useAdminContext();
@@ -65,7 +71,23 @@ export default function Banking() {
               onClick={() => setResubmitRequired(true)}
             />
           )}
-          <BankDetails disabled={disabled} />
+          <BankDetails
+            disabled={disabled}
+            onSubmit={async (request, bankStatementPDF) => {
+              const bankStatementPreview = await getFilePreviews({
+                bankStatementPDF,
+              });
+              // TODO: logging just to avoid compiler warnings about unused variable,
+              // will be updated to real logic once possible
+              console.log(
+                `TODO: handle bank statement: ${bankStatementPreview.bankStatementPDF[0].publicUrl}`
+              );
+              await createRecipientAccount({
+                PK: endowment_id,
+                request,
+              }).unwrap();
+            }}
+          />
         </Group>
       </div>
     </div>

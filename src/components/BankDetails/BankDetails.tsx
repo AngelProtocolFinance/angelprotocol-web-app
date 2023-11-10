@@ -1,24 +1,28 @@
 import { useState } from "react";
-import { useAdminContext } from "pages/Admin/Context";
-import { useCreateRecipientAccountMutation } from "services/aws/bankDetails";
+import { CreateRecipientRequest } from "types/aws";
 import Divider from "components/Divider";
 import LoaderRing from "components/LoaderRing";
+import { Asset } from "components/registration";
 import useDebounce from "hooks/useDebounce";
-import { getFilePreviews, isEmpty } from "helpers";
+import { isEmpty } from "helpers";
 import { EMAIL_SUPPORT } from "constants/env";
 import CurrencySelector from "./CurrencySelector";
 import ExpectedFunds from "./ExpectedFunds";
 import RecipientDetails from "./RecipientDetails";
 import useCurrencies from "./useCurrencies";
 
-export default function BankDetails({ disabled = false }) {
-  const { id: endowment_id } = useAdminContext();
+type Props = {
+  disabled?: boolean;
+  onSubmit: (
+    request: CreateRecipientRequest,
+    bankStatementPDF: Asset
+  ) => Promise<void>;
+};
+
+export default function BankDetails({ disabled = false, onSubmit }: Props) {
   const [expectedMontlyDonations, setExpectedMontlyDonations] =
     useState<number>();
-
   const [debounce, isDebouncing] = useDebounce();
-
-  const [createRecipientAccount] = useCreateRecipientAccountMutation();
 
   const { currencies, isLoading, targetCurrency, setTargetCurrency } =
     useCurrencies();
@@ -75,18 +79,7 @@ export default function BankDetails({ disabled = false }) {
                 targetCurrency={targetCurrency.code}
                 expectedMontlyDonations={expectedMontlyDonations}
                 disabled={disabled}
-                onSubmit={async (request, bankStatementPDF) => {
-                  const bankStatementPreview = await getFilePreviews({
-                    bankStatementPDF,
-                  });
-                  // TODO: logging just to avoid compiler warnings about unused variable,
-                  // will be updated to real logic once possible
-                  console.log(bankStatementPreview.bankStatementPDF[0]);
-                  await createRecipientAccount({
-                    PK: endowment_id,
-                    request,
-                  }).unwrap();
-                }}
+                onSubmit={onSubmit}
               />
             )}
           </div>
