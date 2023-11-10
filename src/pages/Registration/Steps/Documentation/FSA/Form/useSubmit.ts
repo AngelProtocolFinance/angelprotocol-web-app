@@ -46,7 +46,7 @@ export default function useSubmit({
             projectDescription: fv.ProjectDescription,
           },
         }).unwrap();
-        return navigate({ pathname: url });
+        return navigate(url);
       }
 
       //signingURL generated but not signed
@@ -54,7 +54,7 @@ export default function useSubmit({
         doc.FiscalSponsorshipAgreementSigningURL &&
         !doc.SignedFiscalSponsorshipAgreement
       ) {
-        return navigate({ pathname: doc.FiscalSponsorshipAgreementSigningURL });
+        return navigate(doc.FiscalSponsorshipAgreementSigningURL);
       }
 
       if (!isDirty && doc) {

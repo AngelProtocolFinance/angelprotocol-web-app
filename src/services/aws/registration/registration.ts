@@ -1,7 +1,6 @@
 import { FiscalSponsorhipAgreementSigner } from "../../types";
 import {
   ContactUpdateResult,
-  DocsUpdateResult,
   InitApplication,
   RegistrationUpdate,
   SavedRegistration,
@@ -26,7 +25,7 @@ const registration_api = aws.injectEndpoints({
         body: { Email: email },
       }),
     }),
-    reg: builder.query<SavedRegistration & { reqId: number }, string>({
+    reg: builder.query<SavedRegistration, string>({
       providesTags: [{ type: "admin", id: adminTags.registration }],
       query: (uuid) => {
         return {
@@ -75,7 +74,7 @@ const registration_api = aws.injectEndpoints({
           dispatch(
             registration_api.util.updateQueryData("reg", reference, (draft) => {
               switch (type) {
-                case "contact details":
+                case "contact-details":
                   {
                     const { ContactPerson, Registration } =
                       data as ContactUpdateResult;
@@ -89,15 +88,11 @@ const registration_api = aws.injectEndpoints({
                     };
                   }
                   break;
-                case "documentation": {
-                  draft.Registration = Object.assign(
-                    draft.Registration,
-                    data as DocsUpdateResult
-                  );
-                  break;
+                //other updates are to draft.Registration
+                default: {
+                  draft.Registration = Object.assign(draft.Registration, data);
                 }
               }
-              draft.reqId = draft.reqId + 1;
             })
           );
         } catch (err) {
