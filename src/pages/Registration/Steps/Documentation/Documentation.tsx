@@ -5,19 +5,21 @@ import NonFSA from "./NonFSA";
 function Documentation() {
   const { data } = useRegState<4>();
 
-  if (
-    data.fsaInquiry.AuthorizedToReceiveTaxDeductibleDonations &&
-    data.documentation?.DocType === "FSA"
-  ) {
+  //documentation is previously completed
+  if (data.documentation && data.documentation.DocType === "FSA") {
     return <FSADocumentation doc={data.documentation} />;
   }
 
-  if (
-    !data.fsaInquiry.AuthorizedToReceiveTaxDeductibleDonations &&
-    data.documentation?.DocType === "Non-FSA"
-  ) {
+  if (data.documentation && data.documentation.DocType === "Non-FSA") {
     return <NonFSA doc={data.documentation} />;
   }
+
+  //if not previously completed, depend on fsaInquiry
+  if (data.fsaInquiry.AuthorizedToReceiveTaxDeductibleDonations) {
+    return <FSADocumentation doc={undefined} />;
+  }
+
+  return <NonFSA doc={undefined} />;
 }
 
 export default withStepGuard(Documentation);
