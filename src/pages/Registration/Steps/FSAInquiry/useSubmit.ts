@@ -4,12 +4,9 @@ import { Step3Data } from "../../types";
 import { FV } from "./types";
 import { useUpdateRegMutation } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
+import { steps } from "../../routes";
 
-export default function useSubmit(
-  data: Step3Data,
-  form: UseFormReturn<FV>,
-  thisStep: number
-) {
+export default function useSubmit(data: Step3Data, form: UseFormReturn<FV>) {
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },
@@ -21,7 +18,7 @@ export default function useSubmit(
 
   const submit: SubmitHandler<FV> = async (fv) => {
     if (!isDirty && data.fsaInquiry !== undefined) {
-      return navigate(`../${thisStep + 1}`, { state: data.init });
+      return navigate(`../${steps.docs}`, { state: data.init });
     }
     const result = await updateReg({
       reference: data.init.reference,
@@ -34,7 +31,7 @@ export default function useSubmit(
       return handleError(result.error);
     }
 
-    navigate(`../${thisStep + 1}`, { state: data.init });
+    navigate(`../${steps.docs}`, { state: data.init });
   };
 
   return {

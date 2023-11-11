@@ -5,6 +5,7 @@ import { ErrorStatus, LoadingStatus } from "components/Status";
 import { steps } from "../routes";
 import Contact from "./ContactDetails";
 import Dashboard from "./Dashboard";
+import FSAInquiry from "./FSAInquiry/";
 import OrgDetails from "./OrgDetails";
 import ProgressIndicator from "./ProgressIndicator";
 import Reference from "./Reference";
@@ -71,8 +72,12 @@ export default function Steps({ classes = "" }: { classes?: string }) {
             element={<OrgDetails {...guardProps} step={2} />}
           />
           <Route
+            path={steps.fsaInquiry}
+            element={<FSAInquiry {...guardProps} step={3} />}
+          />
+          <Route
             path={steps.summary}
-            element={<Dashboard {...guardProps} step={3} />}
+            element={<Dashboard {...guardProps} step={4} />}
           />
         </Routes>
       </div>

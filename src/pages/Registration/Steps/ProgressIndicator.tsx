@@ -58,7 +58,7 @@ export default function ProgressIndicator({ step, classes = "" }: Props) {
             Organization
           </Step>
           <Step isDone={step >= 3} isCurr={currPath === 3}>
-            Fiscal Sponsorship
+            IRC 501(c)(3)
           </Step>
           <Step isDone={step >= 4} isCurr={currPath === 4}>
             Documentation
