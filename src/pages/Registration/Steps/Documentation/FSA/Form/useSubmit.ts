@@ -1,21 +1,19 @@
 import { SubmitHandler, useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { FormValues, Props } from "../types";
+import { useRegState } from "pages/Registration/Steps/StepGuard";
 import {
   useFiscalSponsorshipAgreementSigningURLMutation,
   useUpdateRegMutation,
 } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
+import { steps } from "../../../../routes";
 import { getFilePreviews } from "./getFilePreviews";
 
-export default function useSubmit({
-  doc,
-  thisStep,
-  init,
-  orgCountry,
-  orgName,
-  contact,
-}: Props) {
+export default function useSubmit({ doc }: Props) {
+  const {
+    data: { contact, init, orgDetails },
+  } = useRegState<4>();
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },
@@ -40,9 +38,9 @@ export default function useSubmit({
           role:
             contact.Role === "other" ? contact.OtherRole : contact.OtherRole,
           org: {
-            name: orgName,
+            name: contact.orgName,
             legalEntityType: fv.LegalEntityType,
-            hq: orgCountry,
+            hq: orgDetails.HqCountry,
             projectDescription: fv.ProjectDescription,
           },
         }).unwrap();
@@ -58,7 +56,7 @@ export default function useSubmit({
       }
 
       if (!isDirty && doc) {
-        return navigate(`../${thisStep}`, { state: init });
+        return navigate(`../${steps.banking}`, { state: init });
       }
 
       const previews = await getFilePreviews({

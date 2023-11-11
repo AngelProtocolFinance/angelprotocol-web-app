@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { FormValues as FV, Props } from "../types";
+import { useRegState } from "pages/Registration/Steps/StepGuard";
 import ExtLink from "components/ExtLink";
 import { Field, Label } from "components/form";
 import { FileDropzone, LoadText } from "components/registration";
@@ -8,7 +9,7 @@ import { MB_LIMIT } from "../schema";
 import useSubmit from "./useSubmit";
 
 export default function Form(props: Props) {
-  const { init } = props;
+  const { data } = useRegState<4>();
   const { submit, isSubmitting } = useSubmit(props);
 
   return (
@@ -94,7 +95,7 @@ export default function Form(props: Props) {
         <Link
           aria-disabled={isSubmitting}
           to={`../${steps.orgDetails}`}
-          state={init}
+          state={data.init}
           className="py-3 min-w-[8rem] btn-outline-filled btn-reg"
         >
           Back

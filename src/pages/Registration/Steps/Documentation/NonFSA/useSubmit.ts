@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { FormValues as FV, Props } from "./types";
 import { useUpdateRegMutation } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
+import { steps } from "../../../routes";
+import { useRegState } from "../../StepGuard";
 
 type Args = {
   props: Props;
@@ -10,6 +12,7 @@ type Args = {
 };
 
 export default function useSubmit({ form, props }: Args) {
+  const { data } = useRegState<4>();
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },
@@ -21,10 +24,10 @@ export default function useSubmit({ form, props }: Args) {
 
   const submit: SubmitHandler<FV> = async (fv) => {
     if (!isDirty && props.doc) {
-      return navigate(`../${props.thisStep}`, { state: props.init });
+      return navigate(`../${steps.banking}`, { state: data.init });
     }
     const result = await updateReg({
-      reference: props.init.reference,
+      reference: data.init.reference,
       type: "documentation",
       DocType: "Non-FSA",
       EIN: fv.EIN,
@@ -33,7 +36,7 @@ export default function useSubmit({ form, props }: Args) {
     if ("error" in result) {
       return handleError(result.error);
     }
-    navigate(`../${props.thisStep}`, { state: props.init });
+    return navigate(`../${steps.banking}`, { state: data.init });
   };
 
   return {

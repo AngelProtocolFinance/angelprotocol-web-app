@@ -6,9 +6,11 @@ import { FormValues as FV, Props } from "./types";
 import { Field } from "components/form";
 import { LoadText } from "components/registration";
 import { steps } from "../../../routes";
+import { useRegState } from "../../StepGuard";
 import useSubmit from "./useSubmit";
 
-export default function Form(props: Props) {
+export default function NonFSA(props: Props) {
+  const { data } = useRegState<4>();
   const { doc } = props;
   const methods = useForm<FV>({
     resolver: yupResolver(object({ EIN: string().required("required") })),
@@ -35,7 +37,7 @@ export default function Form(props: Props) {
           <Link
             aria-disabled={isSubmitting}
             to={`../${steps.fsaInquiry}`}
-            state={props.init}
+            state={data.init}
             className="py-3 min-w-[8rem] btn-outline-filled btn-reg"
           >
             Back
