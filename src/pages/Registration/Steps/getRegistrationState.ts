@@ -64,19 +64,7 @@ export function getRegistrationState(
   if (isDoneOrgDetails(reg)) {
     const { ContactPerson: c, Registration: r } = reg;
     return {
-      step: 3,
-      data: {
-        init: initReg(c),
-        contact: { ...c, orgName: r.OrganizationName },
-        orgDetails: orgDetails(r),
-      },
-    };
-  }
-
-  if (isDoneOrgDetails(reg)) {
-    const { ContactPerson: c, Registration: r } = reg;
-    return {
-      step: 3,
+      step: 2,
       data: {
         init: initReg(c),
         contact: { ...c, orgName: r.OrganizationName },
@@ -88,7 +76,7 @@ export function getRegistrationState(
   if (isDoneContact(reg)) {
     const { ContactPerson: c, Registration: r } = reg;
     return {
-      step: 2,
+      step: 1,
       data: {
         init: initReg(c),
         contact: { ...c, orgName: r.OrganizationName },

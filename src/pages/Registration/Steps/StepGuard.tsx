@@ -20,7 +20,7 @@ export function withStepGuard<T extends object>(Step: FC<T>) {
     const { step: savedStep } = state;
 
     useEffect(() => {
-      if (thisStep > savedStep) {
+      if (thisStep > savedStep + 1) {
         navigate(`../${savedStep}`, { state: init });
       }
       //eslint-disable-next-line
