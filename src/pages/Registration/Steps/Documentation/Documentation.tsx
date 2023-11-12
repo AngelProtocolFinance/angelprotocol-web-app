@@ -16,10 +16,10 @@ function Documentation() {
 
   //if not previously completed, depend on fsaInquiry
   if (data.fsaInquiry.AuthorizedToReceiveTaxDeductibleDonations) {
-    return <FSADocumentation doc={undefined} />;
+    return <NonFSA doc={undefined} />;
   }
 
-  return <NonFSA doc={undefined} />;
+  return <FSADocumentation doc={undefined} />;
 }
 
 export default withStepGuard(Documentation);

@@ -87,6 +87,7 @@ const registration_api = aws.injectEndpoints({
                     };
                   }
                   break;
+
                 //other updates are to draft.Registration
                 default: {
                   draft.Registration = Object.assign(draft.Registration, data);

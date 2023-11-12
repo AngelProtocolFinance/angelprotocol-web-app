@@ -110,20 +110,21 @@ function orgDetails(reg: DoneOrgDetails["Registration"]): OrgDetails {
   };
 }
 
-function docs(reg: DoneDocs["Registration"]): TDocumentation {
-  if (reg.DocType === "Non-FSA") {
-    return { EIN: reg.EIN, DocType: reg.DocType };
+function docs(reg: DoneDocs["Registration"]): TDocumentation["Documentation"] {
+  const doc = reg.Documentation;
+  if (doc.DocType === "Non-FSA") {
+    return { EIN: doc.EIN, DocType: doc.DocType };
   }
   return {
-    DocType: reg.DocType,
-    ProofOfIdentity: reg.ProofOfIdentity,
-    RegistrationNumber: reg.RegistrationNumber,
-    ProofOfRegistration: reg.ProofOfRegistration,
-    LegalEntityType: reg.LegalEntityType,
-    ProjectDescription: reg.ProjectDescription,
+    DocType: doc.DocType,
+    ProofOfIdentity: doc.ProofOfIdentity,
+    RegistrationNumber: doc.RegistrationNumber,
+    ProofOfRegistration: doc.ProofOfRegistration,
+    LegalEntityType: doc.LegalEntityType,
+    ProjectDescription: doc.ProjectDescription,
     FiscalSponsorshipAgreementSigningURL:
-      reg.FiscalSponsorshipAgreementSigningURL,
-    SignedFiscalSponsorshipAgreement: reg.SignedFiscalSponsorshipAgreement,
+      doc.FiscalSponsorshipAgreementSigningURL,
+    SignedFiscalSponsorshipAgreement: doc.SignedFiscalSponsorshipAgreement,
   };
 }
 

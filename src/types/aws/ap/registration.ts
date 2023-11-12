@@ -65,6 +65,7 @@ type Append<Reg extends InitApplication, R, C> = {
 };
 
 export type OrgDataForStep1 = { OrganizationName: string };
+
 export type ContactDetails = {
   FirstName: string;
   LastName: string;
@@ -106,7 +107,9 @@ export type FSADocumentation = {
   SignedFiscalSponsorshipAgreement?: string;
 };
 
-export type TDocumentation = FSADocumentation | NonFSADocumentation;
+export type TDocumentation = {
+  Documentation: FSADocumentation | NonFSADocumentation;
+};
 
 export type BankingDetails = {
   BankStatement: FileObject;
@@ -150,7 +153,7 @@ type FSAInquiryUpdate = {
 
 type DocumentationUpdate = {
   type: "documentation";
-} & Partial<TDocumentation>;
+} & Partial<TDocumentation["Documentation"]>;
 
 type BankingUpdate = {
   type: "banking";
@@ -171,7 +174,7 @@ export type ContactUpdateResult = {
   Registration: OrgDataForStep1;
 };
 
-export type DocsUpdateResult = InitReg & TDocumentation;
+export type DocsUpdateResult = InitReg & TDocumentation["Documentation"];
 
 export type SubmitResult = {
   RegistrationStatus: RegistrationStatus;
@@ -193,25 +196,14 @@ export function isDoneFSAInquiry(
   data: SavedRegistration
 ): data is DoneFSAInquiry {
   //could be false
-  return (
+  return !(
     (data.Registration as FSAInquiry)
-      .AuthorizedToReceiveTaxDeductibleDonations !== undefined
+      .AuthorizedToReceiveTaxDeductibleDonations == null
   );
 }
 
 export function isDoneDocs(data: SavedRegistration): data is DoneDocs {
-  const docTypeKey: keyof TDocumentation = "DocType";
-  if (!(docTypeKey in data)) return false;
-
-  const _data = data as unknown as TDocumentation;
-  if (_data.DocType === "FSA") {
-    return (
-      !!_data.FiscalSponsorshipAgreementSigningURL &&
-      !!_data.SignedFiscalSponsorshipAgreement
-    );
-  }
-
-  return true;
+  return !!(data.Registration as TDocumentation).Documentation;
 }
 
 export function isDoneBanking(data: SavedRegistration): data is DoneBanking {

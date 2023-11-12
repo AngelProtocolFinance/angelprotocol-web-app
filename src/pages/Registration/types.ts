@@ -24,7 +24,7 @@ export type CompleteRegistration = {
   contact: ContactDetails & { orgName: string };
   orgDetails: OrgDetails;
   fsaInquiry: FSAInquiry;
-  documentation: TDocumentation;
+  documentation: TDocumentation["Documentation"];
   banking: BankingDetails;
   endowId?: number;
 };
