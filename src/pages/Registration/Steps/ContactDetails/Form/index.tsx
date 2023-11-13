@@ -11,7 +11,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
   const { submit, isSubmitting } = useSubmit();
   return (
     <form
-      className={`w-full bg-white dark:bg-blue-d3 ${classes}`}
+      className={`w-full bg-white dark:bg-blue-d4 ${classes}`}
       onSubmit={submit}
     >
       <h2 className="text-center sm:text-left text-xl mb-2">

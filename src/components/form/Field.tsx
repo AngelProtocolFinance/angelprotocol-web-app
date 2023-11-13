@@ -61,7 +61,7 @@ export function Field<T extends FieldValues, K extends InputType = "text">({
 
       {(tooltip && ( //tooltip in normal flow
         <p className={error + " text-left mt-2 left-0 text-xs"}>
-          <span className="text-gray-d1 dark:text-gray">{tooltip}</span>{" "}
+          <span className="text-gray-d1 dark:text-gray-l1">{tooltip}</span>{" "}
           <ErrorMessage
             errors={errors}
             name={name}

@@ -218,7 +218,7 @@ html:is(.dark) [data-amplify-authenticator] {
     @apply absolute -bottom-5 right-0 text-xs text-right text-red dark:text-red-l2;
   }
   .field-input {
-    @apply w-full rounded text-sm px-4 py-3.5 bg-transparent placeholder:text-gray-d1 dark:placeholder:text-gray border border-gray-l3 dark:border-blue-d4 focus:outline-none focus:border-gray-d1 focus:dark:border-blue-l2 disabled:bg-gray-l3 disabled:text-gray-d1 disabled:dark:text-gray disabled:dark:bg-blue-d1 aria-disabled:bg-gray-l3 aria-disabled:text-gray-d1 aria-disabled:dark:text-gray aria-disabled:dark:bg-blue-d1 aria-disabled:pointer-events-none;
+    @apply w-full rounded text-sm px-4 py-3.5 bg-transparent placeholder:text-gray-d1 dark:placeholder:text-gray border border-gray-l3 dark:border-blue-d2 focus:outline-none focus:border-gray-d1 focus:dark:border-blue-d1 disabled:bg-gray-l3 disabled:text-gray-d2 disabled:dark:text-gray disabled:dark:bg-gray-d2 aria-disabled:bg-gray-l3 aria-disabled:text-gray aria-disabled:dark:text-gray-l3 aria-disabled:dark:bg-gray-d1 aria-disabled:pointer-events-none;
   }
 
   .field-input[aria-invalid="true"] {
@@ -265,7 +265,7 @@ html:is(.dark) [data-amplify-authenticator] {
   }
 
   .field-container {
-    @apply rounded border border-gray-l3 dark:border-blue-d4 focus-within:border-gray-d1 focus-within:dark:border-blue-l2 aria-disabled:bg-gray-l3 aria-disabled:dark:bg-blue-d1 aria-disabled:text-gray-d1 aria-disabled:dark:text-gray aria-disabled:pointer-events-none;
+    @apply rounded border border-gray-l3 dark:border-blue-d2 focus-within:border-gray-d1 focus-within:dark:border-blue-d2 aria-disabled:bg-gray-l3 aria-disabled:dark:bg-blue-d3 aria-disabled:text-gray-d1 aria-disabled:dark:text-gray-l1 aria-disabled:pointer-events-none;
   }
 
   .field-container[aria-invalid="true"] {
@@ -286,7 +286,7 @@ html:is(.dark) [data-amplify-authenticator] {
 
   .field > textarea,
   .field > input {
-    @apply field-input dark:border-gray-d1 peer-focus:dark:border-gray-l1;
+    @apply field-input dark:border-blue-d2 peer-focus:dark:border-blue-d1;
   }
 
   /* This css is required to handle createElement error UI  */
