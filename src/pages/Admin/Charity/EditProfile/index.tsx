@@ -6,6 +6,7 @@ import {
   EndowmentProfile as TProfile,
 } from "types/aws";
 import { useProfileQuery } from "services/aws/aws";
+import { country } from "components/CountrySelector";
 import { FormError, FormSkeleton } from "components/admin";
 import { adminRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
@@ -60,7 +61,7 @@ function FormWithContext(props: TProfile & { id: number }) {
     endow_designation: init.endow_designation
       ? { label: init.endow_designation, value: init.endow_designation }
       : { label: "", value: "" },
-    hq_country: { flag: "", name: props.hq_country ?? "", code: "" },
+    hq_country: country(props.hq_country ?? ""),
     sdgs: init.sdgs.map((x) => getSDGLabelValuePair(x, unsdgs[x].title)),
     active_in_countries: init.active_in_countries.map((x) => ({
       label: x,

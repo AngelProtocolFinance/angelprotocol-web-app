@@ -1,5 +1,5 @@
 import { FieldValues, Path, PathValue } from "react-hook-form";
-import { OptionType } from "types/utils";
+import { OptionType } from "types/components";
 import countries from "assets/countries/all.json";
 import { MultiSelector } from "components/Selector";
 

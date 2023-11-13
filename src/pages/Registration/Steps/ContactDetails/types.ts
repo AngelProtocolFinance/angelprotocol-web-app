@@ -1,6 +1,6 @@
 import { ContactPerson } from "../../types";
 import { ContactRoles, ReferralMethods } from "types/aws";
-import { OptionType } from "types/utils";
+import { OptionType } from "types/components";
 
 export type FormValues = Omit<ContactPerson, "role" | "referralMethod"> & {
   role: OptionType<ContactRoles>;

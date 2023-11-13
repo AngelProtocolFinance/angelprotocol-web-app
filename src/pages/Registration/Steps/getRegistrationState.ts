@@ -8,12 +8,12 @@ import {
   ContactDetails,
   DoneContact,
   DoneDocs,
-  FileObject,
   InitContact,
   SavedRegistration,
   TDocumentation,
 } from "types/aws";
-import { Asset } from "components/registration";
+import { country } from "components/CountrySelector";
+import { asset } from "components/FileDropzone";
 import { unsdgs } from "constants/unsdgs";
 
 export function getRegistrationState(
@@ -95,8 +95,8 @@ function formatDocumentation({
 }: DoneDocs["Registration"]): Documentation {
   return {
     //level 1
-    proofOfIdentity: genFileAsset([poi]),
-    proofOfRegistration: genFileAsset([por]),
+    proofOfIdentity: asset([poi]),
+    proofOfRegistration: asset([por]),
     ein: EIN,
 
     website: Website,
@@ -104,7 +104,7 @@ function formatDocumentation({
       value: sdg,
       label: `${sdg} - ${unsdgs[sdg].title}`,
     })),
-    hqCountry: { name: HqCountry, flag: "", code: "" },
+    hqCountry: country(HqCountry),
     endowDesignation: { value: EndowDesignation, label: EndowDesignation },
     /**TODO: must be part of Registration not Metadata */
 
@@ -121,10 +121,6 @@ function formatDocumentation({
     tier: Tier,
     isAnonymousDonationsAllowed: KycDonorsOnly ? "No" : "Yes",
   };
-}
-
-export function genFileAsset(previews: FileObject[]): Asset {
-  return { files: [], previews };
 }
 
 function isDoneDocs(data: SavedRegistration): data is DoneDocs {

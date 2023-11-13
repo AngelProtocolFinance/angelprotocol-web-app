@@ -7,14 +7,9 @@ import {
   useController,
   useFormContext,
 } from "react-hook-form";
-import { FileObject } from "types/aws";
+import { Asset } from "types/components";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
-
-export type Asset = {
-  previews: FileObject[]; //from previous submission
-  files: File[]; //new files
-};
 
 type Key = keyof Asset;
 const filesKey: Key = "files";
@@ -22,7 +17,10 @@ const previewsKey: Key = "previews";
 
 type FilesPath = `${string}.${typeof filesKey}`;
 
-export function FileDropzone<T extends FieldValues, K extends Path<T>>(props: {
+export default function FileDropzone<
+  T extends FieldValues,
+  K extends Path<T>,
+>(props: {
   name: T[K] extends Asset ? K : never;
   multiple?: true;
   disabled?: boolean;
