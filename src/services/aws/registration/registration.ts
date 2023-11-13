@@ -41,6 +41,7 @@ const registration_api = aws.injectEndpoints({
       { url: string },
       FiscalSponsorhipAgreementSigner
     >({
+      //no need to invalidate registration as latest would be fetched on redirect/success
       query: (signer) => {
         return {
           url: `${v(1)}/registration/fiscal-sponsorship-agreement`,

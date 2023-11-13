@@ -1,11 +1,9 @@
+import { useState } from "react";
 import { SubmitHandler, useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { FormValues, Props } from "../types";
 import { useRegState } from "pages/Registration/Steps/StepGuard";
-import {
-  useFiscalSponsorshipAgreementSigningURLMutation,
-  useUpdateRegMutation,
-} from "services/aws/registration";
+import { useFiscalSponsorshipAgreementSigningURLMutation } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import { steps } from "../../../../routes";
 import { getFilePreviews } from "./getFilePreviews";
@@ -19,7 +17,9 @@ export default function useSubmit({ doc }: Props) {
     formState: { isDirty, isSubmitting },
   } = useFormContext<FormValues>();
 
-  const [updateReg] = useUpdateRegMutation();
+  //use separate state to show redirection
+  const [isRedirecting, setRedirecting] = useState(false);
+
   const [generateSigningURL] =
     useFiscalSponsorshipAgreementSigningURLMutation();
 
@@ -28,6 +28,22 @@ export default function useSubmit({ doc }: Props) {
 
   const submit: SubmitHandler<FormValues> = async (fv) => {
     try {
+      //signed agreement and user didn't change any documents
+      if (!isDirty && doc?.SignedFiscalSponsorshipAgreement) {
+        return navigate(`../${steps.banking}`, { state: init });
+      }
+
+      //existing url and user doesn't change any documents
+      if (!isDirty && doc?.FiscalSponsorshipAgreementSigningURL) {
+        setRedirecting(true);
+        window.location.href = doc.FiscalSponsorshipAgreementSigningURL;
+      }
+
+      const previews = await getFilePreviews({
+        POI: fv.ProofOfIdentity,
+        POR: fv.ProofOfRegistration,
+      });
+
       //no signing URL generated yet
       if (!doc?.FiscalSponsorshipAgreementSigningURL) {
         const { url } = await generateSigningURL({
@@ -35,50 +51,27 @@ export default function useSubmit({ doc }: Props) {
           email: init.email,
           firstName: contact.FirstName,
           lastName: contact.LastName,
-          role:
-            contact.Role === "other" ? contact.OtherRole : contact.OtherRole,
-          org: {
-            name: contact.orgName,
-            legalEntityType: fv.LegalEntityType,
-            hq: orgDetails.HqCountry,
-            projectDescription: fv.ProjectDescription,
+          role: contact.Role === "other" ? contact.OtherRole : contact.Role,
+          docs: {
+            OrgName: contact.orgName,
+            HqCountry: orgDetails.HqCountry,
+            RegistrationNumber: fv.RegistrationNumber,
+            ProofOfIdentity: previews.POI[0],
+            ProofOfRegistration: previews.POR[0],
+            LegalEntityType: fv.LegalEntityType,
+            ProjectDescription: fv.ProjectDescription,
           },
         }).unwrap();
-        return navigate(url);
+        setRedirecting(true);
+        window.location.href = url;
       }
-
-      //signingURL generated but not signed
-      if (
-        doc.FiscalSponsorshipAgreementSigningURL &&
-        !doc.SignedFiscalSponsorshipAgreement
-      ) {
-        return navigate(doc.FiscalSponsorshipAgreementSigningURL);
-      }
-
-      if (!isDirty && doc) {
-        return navigate(`../${steps.banking}`, { state: init });
-      }
-
-      const previews = await getFilePreviews({
-        POI: fv.ProofOfIdentity,
-        POR: fv.ProofOfRegistration,
-      });
-      await updateReg({
-        type: "documentation",
-        DocType: "FSA",
-        reference: init.reference,
-
-        ProofOfIdentity: previews.POI[0],
-        ProofOfRegistration: previews.POR[0],
-        LegalEntityType: fv.LegalEntityType,
-        ProjectDescription: fv.ProjectDescription,
-      });
     } catch (err) {
       handleError(err);
     }
   };
   return {
-    submit: handleSubmit(submit),
+    submit: handleSubmit(submit, (error) => console.log(error)),
     isSubmitting,
+    isRedirecting,
   };
 }

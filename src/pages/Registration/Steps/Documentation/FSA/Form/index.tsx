@@ -10,7 +10,7 @@ import useSubmit from "./useSubmit";
 
 export default function Form(props: Props) {
   const { data } = useRegState<4>();
-  const { submit, isSubmitting } = useSubmit(props);
+  const { submit, isSubmitting, isRedirecting } = useSubmit(props);
 
   return (
     <form className="w-full" onSubmit={submit}>
@@ -101,12 +101,15 @@ export default function Form(props: Props) {
           Back
         </Link>
         <button
-          disabled={isSubmitting}
+          disabled={isSubmitting || isRedirecting}
           type="submit"
           className="py-3 min-w-[8rem] btn-orange btn-reg"
         >
-          <LoadText isLoading={isSubmitting}>
-            {props.doc?.SignedFiscalSponsorshipAgreement ? "Sign" : "Continue"}
+          <LoadText
+            isLoading={isSubmitting || isRedirecting}
+            text={isSubmitting ? "Submitting.." : "Redirecting.."}
+          >
+            {props.doc?.SignedFiscalSponsorshipAgreement ? "Continue" : "Sign"}
           </LoadText>
         </button>
       </div>

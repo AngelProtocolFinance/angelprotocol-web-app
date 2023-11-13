@@ -1,3 +1,4 @@
+import { Except } from "type-fest";
 import { UNSDG_NUMS } from "types/lists";
 import { EndowDesignation } from ".";
 import { FileObject } from "../common";
@@ -91,18 +92,26 @@ export type FSAInquiry = {
   AuthorizedToReceiveTaxDeductibleDonations: boolean;
 };
 
-export type NonFSADocumentation = {
-  DocType: "Non-FSA";
-  EIN: string;
-};
-
-export type FSADocumentation = {
-  DocType: "FSA";
+export type FSASignerDocumentation = {
+  OrgName: string;
+  HqCountry: string;
   RegistrationNumber: string;
   ProofOfRegistration: FileObject;
   ProofOfIdentity: FileObject;
   LegalEntityType: string;
   ProjectDescription: string;
+};
+
+export type NonFSADocumentation = {
+  DocType: "Non-FSA";
+  EIN: string;
+};
+
+export type FSADocumentation = Except<
+  FSASignerDocumentation,
+  "HqCountry" | "OrgName"
+> & {
+  DocType: "FSA";
   FiscalSponsorshipAgreementSigningURL?: string;
   SignedFiscalSponsorshipAgreement?: string;
 };
@@ -153,7 +162,8 @@ type FSAInquiryUpdate = {
 
 type DocumentationUpdate = {
   type: "documentation";
-} & Partial<TDocumentation["Documentation"]>;
+  //FSADocumentation handled in pdf-signing-url generator
+} & NonFSADocumentation;
 
 type BankingUpdate = {
   type: "banking";
