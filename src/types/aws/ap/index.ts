@@ -52,7 +52,11 @@ type EndowmentBase = {
 };
 
 export type EndowmentProfile = EndowmentBase & {
-  bank_verified: "Not Submitted" | "Under Review" | "Approved" | "Rejected";
+  bank_verification_status:
+    | "Not Submitted"
+    | "Under Review"
+    | "Approved"
+    | "Rejected";
   fiscal_sponsored: boolean;
   contact_email: string;
   image: string;

@@ -9,7 +9,6 @@ import {
   useFormContext,
 } from "react-hook-form";
 import { Country } from "types/countries";
-import countries from "assets/countries/all.json";
 import Icon, { DrawerIcon } from "../Icon";
 import Options from "./Options";
 
@@ -27,6 +26,8 @@ export default function CountrySelector<
   T extends FieldValues,
   K extends Path<T>,
 >(props: {
+  countries: Country[];
+  disabled?: boolean;
   fieldName: T[K] extends Country ? K : never;
   onReset?(): void;
   placeholder?: string;
@@ -55,7 +56,8 @@ export default function CountrySelector<
   useEffect(() => {
     (async () => {
       if (country.name && !country.flag) {
-        const flag = countries.find((c) => c.name === country.name)?.flag || "";
+        const flag =
+          props.countries.find((c) => c.name === country.name)?.flag || "";
         onCountryChange({ name: country.name, flag, code: country.code });
       }
     })();
@@ -65,7 +67,8 @@ export default function CountrySelector<
   return (
     <Combobox
       aria-invalid={!!get(errors, `${props.fieldName}.name`)?.message}
-      aria-disabled={isSubmitting}
+      aria-disabled={props.disabled || isSubmitting}
+      disabled={props.disabled || isSubmitting}
       value={country}
       onChange={onCountryChange}
       as="div"

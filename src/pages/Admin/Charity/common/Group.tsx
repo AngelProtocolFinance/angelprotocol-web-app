@@ -1,6 +1,6 @@
 import { PropsWithChildren } from "react";
 
-export default function Group({
+export function Group({
   description,
   ...props
 }: PropsWithChildren<{

@@ -10,6 +10,8 @@ import {
   usePostAccountRequirementsMutation,
 } from "services/aws/bankDetails";
 import { useErrorContext } from "contexts/ErrorContext";
+import { Asset } from "components/registration";
+import { getFilePreviews, isEmpty } from "helpers";
 import { UnexpectedStateError } from "errors/errors";
 import { EMAIL_SUPPORT } from "constants/env";
 import getDefaultValues from "./getDefaultValues";
@@ -36,7 +38,10 @@ export default function useRecipientDetails(
     RequirementsData[]
   >([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [quote, setQuote] = useState<Quote>();
+  const [
+    quote,
+    // setQuote
+  ] = useState<Quote>();
   const [isLoading, setLoading] = useState<boolean>(true);
   const [isSubmitting, setSubmitting] = useState<boolean>(false);
 
@@ -56,12 +61,18 @@ export default function useRecipientDetails(
     (async () => {
       try {
         const sourceAmount = calculateExpectedWithdrawAmount(expectedFunds);
-        // const quote = await createQuote(targetCurrency, sourceAmount).unwrap();
-        // const newRequirements = await getAccountRequirements(quote.id).unwrap();
+        // const newQuote = await createQuote(targetCurrency, sourceAmount).unwrap();
+        // const newRequirements = await getAccountRequirements(newQuote.id).unwrap();
         const newRequirements = await getAccountRequirementsForRoute({
           targetCurrency,
           sourceAmount,
         }).unwrap();
+
+        if (isEmpty(newRequirements)) {
+          return handleError(
+            "Target currency not supported. Please use a bank account with a different currency."
+          );
+        }
 
         setRequirementsDataArray(
           newRequirements.map((item) => {
@@ -75,15 +86,21 @@ export default function useRecipientDetails(
             return data;
           })
         );
-        setQuote(quote);
-        setLoading(false);
+        // setQuote(newQuote);
       } catch (error) {
         handleError(error, ERROR_MSG);
+      } finally {
         setLoading(false);
       }
     })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [
+    targetCurrency,
+    expectedFunds,
+    // createQuote,
+    // getAccountRequirements,
+    getAccountRequirementsForRoute,
+    handleError,
+  ]);
 
   const updateDefaultValues = useCallback(
     (formValues: FormValues) => {
@@ -136,20 +153,17 @@ export default function useRecipientDetails(
     }
   };
 
-  const handleSubmit = async (request: CreateRecipientRequest) => {
+  const handleSubmit = async (
+    request: CreateRecipientRequest,
+    bankStatementPDF: Asset
+  ) => {
     try {
-      if (!quote) {
-        throw new UnexpectedStateError("No 'quote' present.");
-      }
-
-      const requirements = requirementsDataArray.at(selectedIndex);
-      if (!requirements) {
-        throw new UnexpectedStateError("Requirements not loaded.");
-      }
-
       setSubmitting(true);
-
-      await createRecipientAccount({ endowment_id, request }).unwrap();
+      const bankStatementPreview = await getFilePreviews({ bankStatementPDF });
+      // TODO: logging just to avoid compiler warnings about unused variable,
+      // will be updated to real logic once possible
+      console.log(bankStatementPreview.bankStatementPDF);
+      await createRecipientAccount({ PK: endowment_id, request }).unwrap();
     } catch (error) {
       handleError(error, ERROR_MSG);
     } finally {

@@ -1,12 +1,19 @@
 import { Path } from "react-hook-form";
 import { FormValues } from "../types";
 import { Group } from "types/aws";
+import countries from "assets/countries/all.json";
+import CountrySelector from "components/CountrySelector";
 import { Selector } from "components/Selector";
 import { Field, Label } from "components/form";
 import { isEmpty } from "helpers";
-import { undot } from "../dot";
+import { isCountry, undot } from "../helpers";
 
-export default function RequirementField({ data }: { data: Group }) {
+type Props = {
+  data: Group;
+  disabled?: boolean; // need this only for CountrySelector
+};
+
+export default function RequirementField({ data, disabled }: Props) {
   const requirementsKey = undot(data.key);
 
   const name: Path<FormValues> = `requirements.${requirementsKey}`;
@@ -22,6 +29,7 @@ export default function RequirementField({ data }: { data: Group }) {
           input: "date-input uppercase",
           container: "field-admin",
         }}
+        disabled={disabled}
       />
     );
   }
@@ -40,12 +48,34 @@ export default function RequirementField({ data }: { data: Group }) {
         placeholder={data.example}
         required={data.required}
         classes="field-admin"
+        disabled={disabled}
       />
     );
   }
 
+  if (isCountry(data)) {
+    return (
+      <div className="field">
+        <Label required={data.required}>{data.name}</Label>
+        <CountrySelector<FormValues, any>
+          fieldName={name}
+          countries={countries.filter((country) =>
+            data.valuesAllowed!.find((x) => x.key === country.code)
+          )}
+          placeholder={data.example}
+          classes={{
+            container: "px-4",
+            input: "text-sm py-4",
+            error: "field-error",
+          }}
+          disabled={disabled}
+        />
+      </div>
+    );
+  }
+
   return (
-    <div className="flex flex-col">
+    <div className="field">
       <Label required={data.required}>{data.name}</Label>
       <Selector<FormValues, any, string>
         name={name}
@@ -53,6 +83,7 @@ export default function RequirementField({ data }: { data: Group }) {
           label: valuesAllowed.name,
           value: valuesAllowed.key,
         }))}
+        disabled={disabled}
       />
     </div>
   );

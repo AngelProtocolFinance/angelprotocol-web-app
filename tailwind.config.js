@@ -42,6 +42,13 @@ module.exports = {
         d3: "#522200",
         d4: "#291100"
       },
+      yellow: {
+        d2: "#A16207",
+        d1: "#CA8A04",
+        DEFAULT: "#EAB308",
+        l1: "#FACC15",
+        l2: "#FDE047",
+      },
       gray: {
         l4: '#d2dbe0',
         l3: '#a5b6c2',

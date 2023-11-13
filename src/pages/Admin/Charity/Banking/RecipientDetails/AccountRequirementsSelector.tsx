@@ -1,20 +1,25 @@
 import { AccountRequirements } from "types/aws";
+import { Label } from "components/form";
 
 type Props = {
   accountRequirements: AccountRequirements[];
+  className?: string;
   currentIndex: number | undefined;
+  disabled: boolean;
   onChange: (index: number) => void;
 };
 
 export default function AccountRequirementsSelector({
   accountRequirements,
+  className = "",
   currentIndex,
+  disabled,
   onChange,
 }: Props) {
   return (
-    <div className="flex flex-col gap-2">
-      <span>Choose a transfer type:</span>
-      <div className="flex gap-2">
+    <div className={`grid gap-2 ${className}`}>
+      <Label>Choose a transfer type:</Label>
+      <div className="flex flex-wrap gap-2">
         {accountRequirements.map((accountRequirements, index) => (
           <button
             key={accountRequirements.type}
@@ -22,7 +27,9 @@ export default function AccountRequirementsSelector({
             onClick={() => onChange(index)}
             className={`${
               index === currentIndex ? "btn-blue" : "btn-outline"
-            } text-sm w-40`}
+            } text-xs sm:text-sm w-40 sm:w-48`}
+            disabled={disabled}
+            aria-disabled={disabled}
           >
             {accountRequirements.title}
           </button>

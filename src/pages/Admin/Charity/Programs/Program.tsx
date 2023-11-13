@@ -6,7 +6,7 @@ import { useModalContext } from "contexts/ModalContext";
 import Image from "components/Image";
 import { TxPrompt } from "components/Prompt";
 import { adminRoutes } from "constants/routes";
-import useUpdateEndowmentProfile from "../common/useUpdateEndowmentProfile";
+import { useUpdateEndowmentProfile } from "../common";
 
 export function Program(props: TProgram) {
   const { id } = useAdminContext();

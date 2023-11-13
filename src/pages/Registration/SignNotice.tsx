@@ -71,15 +71,15 @@ export default function SignatureNotice({ classes = "" }) {
       </p>
 
       <p className="text-center mt-6">
-        Angel Giving serves as a granting organization, accepting donations on
+        Better Giving serves as a granting organization, accepting donations on
         behalf of our partner nonprofits and granting them out after processing
         and converting. This requires our partner nonprofits to be able to
         accept US tax-deductible donations.
       </p>
 
       <p className="mt-6 text-center">
-        Angel Giving provides fiscal sponsorship services at market-leading cost
-        for our partner organizations to enable this ability (2.9%). If you
+        Better Giving provides fiscal sponsorship services at market-leading
+        cost for our partner organizations to enable this ability (2.9%). If you
         would like to proceed, please review and sign the fiscal sponsorship
         agreement:
       </p>

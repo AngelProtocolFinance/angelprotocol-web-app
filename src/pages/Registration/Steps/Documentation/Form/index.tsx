@@ -1,17 +1,18 @@
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "../types";
 import { EndowDesignation } from "types/aws";
+import countries from "assets/countries/all.json";
 import ActivityCountries from "components/ActivityCountries";
 import CountrySelector from "components/CountrySelector";
 import ExtLink from "components/ExtLink";
 import { MultiSelector, Selector } from "components/Selector";
 import { Field, Label, Radio } from "components/form";
 import { FileDropzone, LoadText } from "components/registration";
+import { MB_LIMIT } from "schemas/file";
 import { unsdgs } from "constants/unsdgs";
 import { TERMS_OF_USE_NPO } from "constants/urls";
 import { steps } from "../../../routes";
 import { useRegState } from "../../StepGuard";
-import { MB_LIMIT } from "../schema";
 // import { CashEligibleCheckbox } from "./CashEligibleCheckbox";
 import useSubmit from "./useSubmit";
 
@@ -93,6 +94,7 @@ export default function Form() {
       <CountrySelector<FV, "hqCountry">
         fieldName="hqCountry"
         placeholder="Select a country"
+        countries={countries}
         classes={{
           container: "px-4",
           input: "text-sm py-3.5",
