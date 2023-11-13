@@ -2,6 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues } from "./types";
 import { OrgDetails as TOrgDetails } from "types/aws";
+import { country } from "components/CountrySelector";
 import { unsdgs } from "constants/unsdgs";
 import { useRegState, withStepGuard } from "../StepGuard";
 import Form from "./Form";
@@ -43,7 +44,7 @@ function formFomat(org: TOrgDetails): FormValues {
       value: sdg,
       label: `${sdg} - ${unsdgs[sdg].title}`,
     })),
-    HqCountry: { name: org.HqCountry, flag: "", code: "" },
+    HqCountry: country(org.HqCountry),
     EndowDesignation: {
       value: org.EndowDesignation,
       label: org.EndowDesignation,
