@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 import { SchemaShape } from "./types";
 import { FileObject } from "types/aws";
-import { Asset } from "components/registration";
+import { Asset } from "types/components";
 
 export const MB_LIMIT = 6;
 

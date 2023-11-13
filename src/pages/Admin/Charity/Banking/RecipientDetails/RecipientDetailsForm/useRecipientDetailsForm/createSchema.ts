@@ -2,7 +2,7 @@ import { ObjectSchema, ObjectShape, object } from "yup";
 import { FormValues } from "../../types";
 import { SchemaShape } from "schemas/types";
 import { AccountRequirements, Group } from "types/aws";
-import { Country } from "types/countries";
+import { Country } from "types/components";
 import { isEmpty } from "helpers";
 import { genAssetShape } from "schemas/file";
 import { requiredString } from "schemas/string";

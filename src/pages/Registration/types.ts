@@ -1,10 +1,10 @@
 import { ContactRoles, ReferralMethods, RegistrationStatus } from "types/aws";
 import { EndowmentTierNum } from "types/aws";
-import { Country } from "types/countries";
+import { OptionType } from "types/components";
+import { Country } from "types/components";
 import { UNSDG_NUMS } from "types/lists";
 import { Optional } from "types/utils";
-import { OptionType } from "types/utils";
-import { Asset } from "components/registration";
+import { Asset } from "components/FileDropzone";
 
 //REF_ID is global to registration
 export type InitReg = {

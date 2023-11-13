@@ -9,7 +9,7 @@ import {
   useFormContext,
 } from "react-hook-form";
 import { MultiselectorProps } from "./types";
-import { OptionType, ValKey } from "types/utils";
+import { OptionType, ValKey } from "types/components";
 import Icon, { DrawerIcon } from "components/Icon";
 import FocusableInput from "./FocusableInput";
 import { styles, valueKey } from "./constants";

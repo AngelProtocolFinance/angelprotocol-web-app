@@ -10,7 +10,7 @@ import {
   usePostAccountRequirementsMutation,
 } from "services/aws/bankDetails";
 import { useErrorContext } from "contexts/ErrorContext";
-import { Asset } from "components/registration";
+import { Asset } from "components/FileDropzone";
 import { getFilePreviews, isEmpty } from "helpers";
 import { UnexpectedStateError } from "errors/errors";
 import { EMAIL_SUPPORT } from "constants/env";

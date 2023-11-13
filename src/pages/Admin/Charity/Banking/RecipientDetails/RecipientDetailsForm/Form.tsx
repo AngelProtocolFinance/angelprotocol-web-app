@@ -1,9 +1,9 @@
 import { useFormContext } from "react-hook-form";
 import { FormValues } from "../types";
 import { AccountRequirements, CreateRecipientRequest } from "types/aws";
+import FileDropzone, { Asset } from "components/FileDropzone";
 import LoaderRing from "components/LoaderRing";
 import { Label } from "components/form";
-import { Asset, FileDropzone } from "components/registration";
 import { MB_LIMIT } from "schemas/file";
 import RequirementField from "./RequirementField";
 import formToCreateRecipientRequest from "./formToCreateRecipientRequest";

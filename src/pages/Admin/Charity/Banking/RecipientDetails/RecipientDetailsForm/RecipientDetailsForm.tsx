@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { FormProvider } from "react-hook-form";
 import { FormValues } from "../types";
 import { AccountRequirements, CreateRecipientRequest } from "types/aws";
-import { Asset } from "components/registration";
+import { Asset } from "components/FileDropzone";
 import Form from "./Form";
 import useRecipientDetailsForm from "./useRecipientDetailsForm";
 

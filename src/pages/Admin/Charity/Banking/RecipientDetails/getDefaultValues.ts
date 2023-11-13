@@ -1,7 +1,7 @@
 import { FormValues } from "./types";
 import { AccountRequirements } from "types/aws";
-import { Country } from "types/countries";
-import { genFileAsset } from "pages/Registration/Steps/getRegistrationState";
+import { Country } from "types/components";
+import { asset } from "components/FileDropzone";
 import { isCountry, isTextType, undot } from "./helpers";
 
 export default function getDefaultValues(
@@ -10,7 +10,7 @@ export default function getDefaultValues(
 ): FormValues {
   return {
     accountHolderName: "ENDOWMENT_NAME",
-    bankStatementPDF: genFileAsset([]),
+    bankStatementPDF: asset([]),
     currency: targetCurrency,
     type: accountRequirements.type,
     requirements: accountRequirements.fields.reduce<FormValues["requirements"]>(
