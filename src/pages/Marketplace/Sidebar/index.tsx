@@ -15,7 +15,7 @@ export default function Sidebar({ classes = "" }: { classes?: string }) {
 
   return (
     <div
-      className={`border border-prim dark:bg-blue-d4 dark:text-white overflow-y-auto md:overflow-hidden md:rounded-md content-start md:h-fit md:w-80 bg-gray-l4 ${classes}`}
+      className={`border border-prim dark:bg-blue-d4 dark:text-white overflow-y-auto md:overflow-hidden md:rounded-md content-start md:h-fit md:w-80 ${classes}`}
     >
       <div className="flex justify-between p-3 items-center md:hidden bg-red-l6 dark:bg-blue-d7 border-b border-prim">
         <h3 className="text-red text-xl font-black uppercase">Filters</h3>
@@ -23,13 +23,13 @@ export default function Sidebar({ classes = "" }: { classes?: string }) {
           <Icon type="Close" size={25} />
         </button>
       </div>
-      <div className="bg-red-l6 dark:bg-blue-d7 flex items-center justify-between p-4 border-b border-prim">
+      <div className="bg-gray-l4 dark:bg-blue-d4 flex items-center justify-between p-4 border-b border-prim">
         <h3 className="uppercase">Filter by</h3>
         <button
           type="button"
           title="Remove all filter selections."
           onClick={() => dispatch(clear())}
-          className="text-gray-d1 dark:text-gray-l3 text-sm"
+          className="text-blue hover:text-blue-l1 text-sm"
         >
           Clear Filters
         </button>
@@ -37,7 +37,7 @@ export default function Sidebar({ classes = "" }: { classes?: string }) {
           type="button"
           title="Reset all filters to their default values."
           onClick={() => dispatch(reset())}
-          className="text-gray-d1 dark:text-gray-l3 text-sm"
+          className="text-blue hover:text-blue-l1 text-sm"
         >
           Reset Filters
         </button>
