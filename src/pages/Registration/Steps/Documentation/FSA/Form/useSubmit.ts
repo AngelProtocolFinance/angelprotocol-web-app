@@ -29,42 +29,39 @@ export default function useSubmit({ doc }: Props) {
   const submit: SubmitHandler<FormValues> = async (fv) => {
     try {
       //signed agreement and user didn't change any documents
-      if (!isDirty && doc?.SignedFiscalSponsorshipAgreement) {
-        return navigate(`../${steps.banking}`, { state: init });
-      }
+      // if (!isDirty && doc?.SignedFiscalSponsorshipAgreement) {
+      //   return navigate(`../${steps.banking}`, { state: init });
+      // }
 
       //existing url and user doesn't change any documents
-      if (!isDirty && doc?.FiscalSponsorshipAgreementSigningURL) {
-        setRedirecting(true);
-        window.location.href = doc.FiscalSponsorshipAgreementSigningURL;
-      }
+      // if (!isDirty && doc?.FiscalSponsorshipAgreementSigningURL) {
+      //   setRedirecting(true);
+      //   window.location.href = doc.FiscalSponsorshipAgreementSigningURL;
+      // }
 
       const previews = await getFilePreviews({
         POI: fv.ProofOfIdentity,
         POR: fv.ProofOfRegistration,
       });
 
-      //no signing URL generated yet
-      if (!doc?.FiscalSponsorshipAgreementSigningURL) {
-        const { url } = await generateSigningURL({
-          id: init.reference,
-          email: init.email,
-          firstName: contact.FirstName,
-          lastName: contact.LastName,
-          role: contact.Role === "other" ? contact.OtherRole : contact.Role,
-          docs: {
-            OrgName: contact.orgName,
-            HqCountry: orgDetails.HqCountry,
-            RegistrationNumber: fv.RegistrationNumber,
-            ProofOfIdentity: previews.POI[0],
-            ProofOfRegistration: previews.POR[0],
-            LegalEntityType: fv.LegalEntityType,
-            ProjectDescription: fv.ProjectDescription,
-          },
-        }).unwrap();
-        setRedirecting(true);
-        window.location.href = url;
-      }
+      const { url } = await generateSigningURL({
+        id: init.reference,
+        email: init.email,
+        firstName: contact.FirstName,
+        lastName: contact.LastName,
+        role: contact.Role === "other" ? contact.OtherRole : contact.Role,
+        docs: {
+          OrgName: contact.orgName,
+          HqCountry: orgDetails.HqCountry,
+          RegistrationNumber: fv.RegistrationNumber,
+          ProofOfIdentity: previews.POI[0],
+          ProofOfRegistration: previews.POR[0],
+          LegalEntityType: fv.LegalEntityType,
+          ProjectDescription: fv.ProjectDescription,
+        },
+      }).unwrap();
+      setRedirecting(true);
+      window.location.href = url;
     } catch (err) {
       handleError(err);
     }

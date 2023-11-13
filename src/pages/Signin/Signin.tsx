@@ -9,6 +9,7 @@ export default function Signin() {
   const { state } = useLocation();
   const navigate = useNavigate();
   const _state = state as { from?: Location } | undefined;
+
   const { route, authStatus } = useAuthenticator((context) => [
     context.route,
     context.authStatus,
@@ -23,7 +24,10 @@ export default function Signin() {
 
   useEffect(() => {
     if (route === "authenticated") {
-      navigate(from, { replace: true });
+      navigate(
+        { pathname: from, search: _state?.from?.search },
+        { replace: true }
+      );
     }
   }, [route, navigate, from]);
 
