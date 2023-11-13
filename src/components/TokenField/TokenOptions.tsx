@@ -12,7 +12,7 @@ type Props = {
 };
 
 const container =
-  "border border-prim p-1 max-h-60 w-max overflow-y-auto rounded-md bg-gray-l5 dark:bg-blue-d7 shadow-lg focus:outline-none";
+  "border border-prim p-1 max-h-60 w-max overflow-y-auto rounded-md bg-gray-l4 dark:bg-blue-d7 shadow-lg focus:outline-none";
 export default function TokenOptions({ classes = "", selectedChainId }: Props) {
   const [searchText, setSearchText] = useState("");
   const {

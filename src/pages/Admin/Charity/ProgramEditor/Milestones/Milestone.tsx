@@ -28,7 +28,7 @@ export default function Milestone({
         milestoneError ? "border-red" : "border-prim"
       } rounded overflow-hidden`}
     >
-      <div className="relative py-3 px-4 text-center bg-red-l6 dark:bg-blue-d7">
+      <div className="relative py-3 px-4 text-center bg-blue-l2 dark:bg-blue-d2">
         <span className="text-xl font-bold font-heading">
           {title || `Milestone ${idx + 1}`}
         </span>

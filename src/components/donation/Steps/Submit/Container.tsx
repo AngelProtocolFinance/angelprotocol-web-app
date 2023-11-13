@@ -77,7 +77,7 @@ export default function Container({ children, txPackage, ...props }: Props) {
         </button>
         <Link
           to={appRoutes.marketplace + `/${props.recipient.id}`}
-          className="col-span-full btn-outline btn-donate"
+          className="col-span-full btn-outline btn-donate border-gray-l2"
         >
           Cancel
         </Link>

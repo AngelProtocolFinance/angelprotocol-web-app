@@ -46,7 +46,7 @@ function Prompt({ type, iconSize, recipient: { name } }: Props) {
 
   return (
     <Modal className="grid content-start fixed-center z-20 border border-prim bg-gray-l4 dark:bg-blue-d4 font-work text-gray-d2 dark:text-white w-[91%] sm:w-full max-w-[39rem] rounded overflow-hidden">
-      <div className="grid place-items-center relative h-16 font-heading font-bold bg-red-l5 dark:bg-blue-d7 border-b border-prim">
+      <div className="grid place-items-center relative h-16 font-heading font-bold bg-blue-l2 dark:bg-blue-d4 border-b border-prim">
         Share on {type}
         <button
           onClick={closeModal}

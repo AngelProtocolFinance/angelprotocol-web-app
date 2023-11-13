@@ -74,7 +74,7 @@ function Portion(
   }>
 ) {
   return (
-    <div className="flex flex-col items-center p-6 bg-red-l6 border border-gray-l2 rounded">
+    <div className="flex flex-col items-center p-6 bg-blue-l4 border border-gray-l2 rounded">
       <p className="uppercase font-bold text-sm">{props.title}</p>
       <p className="text-xs mb-2 font-bold">{props.percentage}%</p>
       <p className="uppercase text-xs text-center font-body">{props.action}</p>

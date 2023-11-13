@@ -77,6 +77,14 @@ export default function Stripe({
             isInsideWidget ? "justify-center" : "justify-between"
           } font-body mt-4`}
         >
+          {!isInsideWidget && (
+            <Link
+              className="btn-outline-gray btn-donate w-1/2"
+              to={`${appRoutes.marketplace}/${id}`}
+            >
+              back
+            </Link>
+          )}
           <button
             disabled={isLoading || isRedirecting}
             className="btn-red btn-donate w-1/2"
@@ -84,14 +92,6 @@ export default function Stripe({
           >
             {isLoading || isRedirecting ? "Processing..." : "Pay with card"}
           </button>
-          {!isInsideWidget && (
-            <Link
-              className="btn-outline-filled btn-donate w-1/2"
-              to={`${appRoutes.marketplace}/${id}`}
-            >
-              back
-            </Link>
-          )}
         </div>
         <p className="text-sm italic text-gray-d2 dark:text-gray mt-4">
           By making a donation, you agree to our{" "}

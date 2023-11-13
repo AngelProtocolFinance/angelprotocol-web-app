@@ -32,7 +32,7 @@ export default function Table({
     >
       <TableSection
         type="thead"
-        rowClass="bg-red-l6 dark:bg-blue-d7 divide-x divide-prim"
+        rowClass="bg-blue-l4 dark:bg-blue-d4 divide-x divide-prim"
       >
         <Cells
           type="th"
@@ -86,8 +86,8 @@ export default function Table({
       </TableSection>
       <TableSection
         type="tbody"
-        rowClass="even:bg-red-l6 dark:odd:bg-blue-d3 dark:even:bg-blue-d7 divide-x divide-prim"
-        selectedClass="bg-red-l5 dark:bg-blue-d4"
+        rowClass="even:bg-blue-l4 dark:odd:bg-blue-d3 dark:even:bg-blue-d4 divide-x divide-prim"
+        selectedClass="bg-blue-l4 dark:bg-blue-d4"
       >
         {sorted
           .map((row) => (

@@ -251,11 +251,8 @@ html:is(.dark) [data-amplify-authenticator] {
 
 /** Layer 2 components */
 @layer components {
-  .btn-red {
-    @apply btn bg-red disabled:bg-gray aria-disabled:bg-gray text-white enabled:hover:bg-red-l1 active:bg-red-d1 focus-visible:ring-red-l4;
-  }
   .btn-outline {
-    @apply btn disabled:bg-gray-l1 aria-disabled:bg-gray-l1 aria-disabled:dark:bg-blue disabled:dark:bg-blue border border-gray-l1 dark:border-blue-d4 enabled:hover:border-gray enabled:hover:dark:border-blue-d2;
+    @apply btn disabled:bg-gray-l1 aria-disabled:bg-gray-l1 aria-disabled:dark:bg-blue disabled:dark:bg-blue border border-gray-l1 dark:border-blue-d2 enabled:hover:border-gray-d2 enabled:hover:dark:border-blue-d2;
   }
   .btn-blue {
     @apply btn bg-blue disabled:bg-gray enabled:hover:bg-blue-l1 active:bg-blue-d1 focus-visible:ring-blue-l4;
@@ -289,7 +286,7 @@ html:is(.dark) [data-amplify-authenticator] {
 
   .field > textarea,
   .field > input {
-    @apply field-input;
+    @apply field-input dark:border-gray-d1 peer-focus:dark:border-gray-l1;
   }
 
   /* This css is required to handle createElement error UI  */
@@ -326,10 +323,10 @@ html:is(.dark) [data-amplify-authenticator] {
 /** page components */
 @layer components {
   .btn-outline-filled {
-    @apply btn-outline bg-red-l4 dark:bg-blue-d2 enabled:hover:bg-gray-l4 dark:hover:bg-blue-d1;
+    @apply btn-outline bg-gray-l2 dark:bg-blue-d2 enabled:hover:bg-gray-l1 dark:hover:bg-blue-d1;
   }
   .btn-outline-gray {
-    @apply btn-outline bg-gray-l3 enabled:hover:bg-gray-l2 active:bg-gray-l2 dark:bg-blue-d1 dark:enabled:hover:bg-blue dark:active:bg-blue-d2;
+    @apply btn-outline bg-gray-l2 enabled:hover:bg-gray-l1 active:bg-gray-l1 dark:bg-gray-d1 dark:hover:bg-gray dark:active:bg-gray;
   }
   .btn-gift {
     @apply text-base sm:text-sm;
@@ -357,7 +354,7 @@ html:is(.dark) [data-amplify-authenticator] {
   .field-kyc > input,
   .field-admin > textarea,
   .field-admin > input {
-    @apply bg-gray-l3 dark:bg-blue-d4;
+    @apply bg-gray-l4 dark:bg-blue-d4;
   }
 
   .field-admin-sec > input {

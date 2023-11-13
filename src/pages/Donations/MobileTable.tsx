@@ -42,7 +42,7 @@ export default function MobileTable({
             <>
               <Disclosure.Button
                 className={`${
-                  open ? "bg-red-l5 dark:bg-blue-d4" : ""
+                  open ? "bg-blue-l4 dark:bg-blue-d4" : ""
                 } w-full grid grid-cols-[auto_1fr_auto] divide-x divide-prim`}
               >
                 <DrawerIcon

@@ -9,7 +9,7 @@ export default function PageError() {
       <p className="text-lg text-center">Failed to load endowment profile</p>
       <Link
         to={`${appRoutes.marketplace}`}
-        className="text-blue-l5 hover:text-blue text-sm"
+        className="text-blue-l4 hover:text-blue text-sm"
       >
         Back to Marketplace
       </Link>
