@@ -15,11 +15,28 @@ import {
   isDoneDocs,
   isDoneFSAInquiry,
   isDoneOrgDetails,
+  isSubmitted,
 } from "types/aws";
 
 export function getRegistrationState(
   reg: SavedRegistration
 ): RegistrationState {
+  if (isSubmitted(reg)) {
+    const { ContactPerson: c, Registration: r } = reg;
+    return {
+      step: 6,
+      data: {
+        init: initReg(c),
+        contact: { ...c, orgName: r.OrganizationName },
+        orgDetails: orgDetails(r),
+        fsaInquiry: fsaInquiry(r),
+        documentation: docs(r),
+        banking: bankDetails(r),
+        status: r.RegistrationStatus,
+      },
+    };
+  }
+
   if (isDoneBanking(reg)) {
     const { ContactPerson: c, Registration: r } = reg;
     return {

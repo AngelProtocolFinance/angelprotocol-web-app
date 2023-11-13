@@ -43,7 +43,7 @@ export default function Step({
 const title: { [key in TStep]: string } = {
   1: "Contact Details",
   2: "Organization",
-  3: "Tax",
+  3: "IRC 501(c)(3)",
   4: "Documentation",
   5: "Banking",
 };

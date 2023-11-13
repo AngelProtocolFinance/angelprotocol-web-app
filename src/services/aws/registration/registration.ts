@@ -105,10 +105,10 @@ const registration_api = aws.injectEndpoints({
     submit: builder.mutation<SubmitResult, string>({
       invalidatesTags: [{ type: "admin", id: adminTags.registration }],
       query: (referenceID) => ({
-        url: `${v(4)}/registration/${referenceID}/submit`,
+        url: `${v(5)}/registration/${referenceID}/submit`,
         method: "POST",
       }),
-      transformErrorResponse(err, meta, arg) {
+      transformErrorResponse(err) {
         return {
           status: err.status,
           data: `Registration submission failed. Contact ${EMAIL_SUPPORT}`,
