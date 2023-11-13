@@ -82,7 +82,7 @@ export default function Stripe({
             className="btn-orange btn-donate w-1/2"
             type="submit"
           >
-            {isLoading || isRedirecting ? "Processing..." : "Pay with stripe"}
+            {isLoading || isRedirecting ? "Processing..." : "Pay with card"}
           </button>
           {!isInsideWidget && (
             <Link
