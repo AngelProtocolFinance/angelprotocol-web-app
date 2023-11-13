@@ -16,6 +16,7 @@ export default function Signin() {
   ]);
 
   const from = _state?.from?.pathname || "/";
+  const search = _state?.from?.search || "";
 
   useEffect(() => {
     localStorage.setItem(OAUTH_PATH_STORAGE_KEY, from);
@@ -24,12 +25,9 @@ export default function Signin() {
 
   useEffect(() => {
     if (route === "authenticated") {
-      navigate(
-        { pathname: from, search: _state?.from?.search },
-        { replace: true }
-      );
+      navigate({ pathname: from, search }, { replace: true });
     }
-  }, [route, navigate, from]);
+  }, [route, navigate, from, search]);
 
   return (
     <div className="grid place-items-center py-14">

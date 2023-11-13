@@ -29,15 +29,15 @@ export default function useSubmit({ doc }: Props) {
   const submit: SubmitHandler<FormValues> = async (fv) => {
     try {
       //signed agreement and user didn't change any documents
-      // if (!isDirty && doc?.SignedFiscalSponsorshipAgreement) {
-      //   return navigate(`../${steps.banking}`, { state: init });
-      // }
+      if (!isDirty && doc?.SignedFiscalSponsorshipAgreement) {
+        return navigate(`../${steps.banking}`, { state: init });
+      }
 
       //existing url and user doesn't change any documents
-      // if (!isDirty && doc?.FiscalSponsorshipAgreementSigningURL) {
-      //   setRedirecting(true);
-      //   window.location.href = doc.FiscalSponsorshipAgreementSigningURL;
-      // }
+      if (!isDirty && doc?.FiscalSponsorshipAgreementSigningURL) {
+        setRedirecting(true);
+        window.location.href = doc.FiscalSponsorshipAgreementSigningURL;
+      }
 
       const previews = await getFilePreviews({
         POI: fv.ProofOfIdentity,
