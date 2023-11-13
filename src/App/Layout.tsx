@@ -11,21 +11,8 @@ const { HEADER_LINKS, GROUPS_DATA, SOCIAL_MEDIA_LINKS } = CHARITY_LINKS;
 
 export default function Layout() {
   return (
-    <div className="grid grid-rows-[auto_auto_1fr_auto]">
+    <div className="grid grid-rows-[auto_1fr_auto]">
       <Seo /> {/* Load all defaults for SEO meta tags */}
-      <div className="text-center dark:bg-blue bg-blue-d3">
-        <span className="md:text-sm md:uppercase text-white">
-          Looking for the old site? It has moved to{" "}
-          <ExtLink
-            key="banner-link-legacy"
-            className="transition ease-in-out duration-300 hover:text-orange-l1"
-            href="https://legacy.angelgiving.io"
-          >
-            https://legacy.angelgiving.io
-          </ExtLink>{" "}
-          and will be sunset on Oct 13, 2023. Migrate to Polygon today!
-        </span>
-      </div>
       <Header classes="top-0 sticky z-20" links={HEADER_LINKS} />
       <Suspense fallback={<LoaderComponent />}>
         <Outlet />
