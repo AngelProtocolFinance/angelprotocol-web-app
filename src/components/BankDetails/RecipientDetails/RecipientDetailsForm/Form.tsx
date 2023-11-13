@@ -16,7 +16,7 @@ type Props = {
   onRefresh: (request: CreateRecipientRequest) => void;
   onSubmit: (
     request: CreateRecipientRequest,
-    bankStatementPDF: FileDropzoneAsset
+    bankStatementFile: FileDropzoneAsset
   ) => void;
 };
 
@@ -24,12 +24,12 @@ export default function Form(props: Props) {
   const { handleSubmit } = useFormContext<FormValues>();
 
   const handleSubmission = handleSubmit((formValues) => {
-    const { bankStatementPDF, ...bankDetails } = formValues;
+    const { bankStatementFile, ...bankDetails } = formValues;
     const request = formToCreateRecipientRequest(bankDetails);
     if (props.refreshRequired) {
       props.onRefresh(request);
     } else {
-      props.onSubmit(request, bankStatementPDF);
+      props.onSubmit(request, bankStatementFile);
     }
   });
 
@@ -47,8 +47,8 @@ export default function Form(props: Props) {
 
       <div className="field">
         <Label required>Please provide your Bank Statement</Label>
-        <FileDropzone<FormValues, "bankStatementPDF">
-          name="bankStatementPDF"
+        <FileDropzone<FormValues, "bankStatementFile">
+          name="bankStatementFile"
           tooltip={fileTooltip}
         />
       </div>

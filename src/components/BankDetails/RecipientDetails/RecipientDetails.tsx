@@ -1,6 +1,6 @@
 import { CreateRecipientRequest } from "types/aws";
+import { FileDropzoneAsset } from "types/components";
 import LoaderRing from "components/LoaderRing";
-import { Asset } from "components/registration";
 import { isEmpty } from "helpers";
 import { EMAIL_SUPPORT } from "constants/env";
 import AccountRequirementsSelector from "./AccountRequirementsSelector";
@@ -13,7 +13,7 @@ type Props = {
   expectedMontlyDonations: number;
   onSubmit: (
     request: CreateRecipientRequest,
-    bankStatementPDF: Asset
+    bankStatementFile: FileDropzoneAsset
   ) => Promise<any>;
 };
 

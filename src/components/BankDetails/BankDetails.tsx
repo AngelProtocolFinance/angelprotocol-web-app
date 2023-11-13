@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { CreateRecipientRequest } from "types/aws";
+import { FileDropzoneAsset } from "types/components";
 import Divider from "components/Divider";
 import LoaderRing from "components/LoaderRing";
-import { Asset } from "components/registration";
 import useDebounce from "hooks/useDebounce";
 import { isEmpty } from "helpers";
 import { EMAIL_SUPPORT } from "constants/env";
@@ -15,7 +15,7 @@ type Props = {
   disabled?: boolean;
   onSubmit: (
     request: CreateRecipientRequest,
-    bankStatementPDF: Asset
+    bankStatementFile: FileDropzoneAsset
   ) => Promise<void>;
 };
 

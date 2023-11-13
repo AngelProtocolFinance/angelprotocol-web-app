@@ -10,7 +10,7 @@ export default function getDefaultValues(
 ): FormValues {
   return {
     accountHolderName: "ENDOWMENT_NAME",
-    bankStatementPDF: asset([]),
+    bankStatementFile: asset([]),
     currency: targetCurrency,
     type: accountRequirements.type,
     requirements: accountRequirements.fields.reduce<FormValues["requirements"]>(

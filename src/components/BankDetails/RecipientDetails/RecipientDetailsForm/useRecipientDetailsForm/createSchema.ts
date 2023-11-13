@@ -17,7 +17,7 @@ export default function createSchema(
 ): ObjectSchema<FormValues> {
   return object<any, SchemaShape<FormValues>>({
     accountHolderName: requiredString,
-    bankStatementPDF: object(genAssetShape(true)),
+    bankStatementFile: object(genAssetShape(true)),
     currency: requiredString,
     type: requiredString,
     requirements: object(

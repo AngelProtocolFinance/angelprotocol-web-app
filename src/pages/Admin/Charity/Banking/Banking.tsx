@@ -73,14 +73,14 @@ export default function Banking() {
           )}
           <BankDetails
             disabled={disabled}
-            onSubmit={async (request, bankStatementPDF) => {
+            onSubmit={async (request, bankStatementFile) => {
               const bankStatementPreview = await getFilePreviews({
-                bankStatementPDF,
+                bankStatementFile,
               });
               // TODO: logging just to avoid compiler warnings about unused variable,
               // will be updated to real logic once possible
               console.log(
-                `TODO: handle bank statement: ${bankStatementPreview.bankStatementPDF[0].publicUrl}`
+                `TODO: handle bank statement: ${bankStatementPreview.bankStatementFile[0].publicUrl}`
               );
               await createRecipientAccount({
                 PK: endowment_id,

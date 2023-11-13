@@ -15,7 +15,7 @@ type Props = {
   onRefresh: (request: CreateRecipientRequest) => void;
   onSubmit: (
     request: CreateRecipientRequest,
-    bankStatementPDF: FileDropzoneAsset
+    bankStatementFile: FileDropzoneAsset
   ) => void;
 };
 
