@@ -113,7 +113,7 @@ export const aws = createApi({
       providesTags: ["profile"],
       query: ({ endowId, isLegacy = false }) => ({
         params: { legacy: isLegacy },
-        url: `/${v(2)}/profile/${network}/endowment/${endowId}`,
+        url: `/${v(1)}/profile/endowment/${endowId}`,
       }),
       transformResponse(r: EndowmentProfile) {
         //transform cloudsearch placeholders
