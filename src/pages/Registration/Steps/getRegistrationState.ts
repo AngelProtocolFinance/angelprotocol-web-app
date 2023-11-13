@@ -12,6 +12,7 @@ import {
   SavedRegistration,
   TDocumentation,
 } from "types/aws";
+import { country } from "components/CountrySelector";
 import { asset } from "components/FileDropzone";
 import { unsdgs } from "constants/unsdgs";
 
@@ -103,7 +104,7 @@ function formatDocumentation({
       value: sdg,
       label: `${sdg} - ${unsdgs[sdg].title}`,
     })),
-    hqCountry: { name: HqCountry, flag: "", code: "" },
+    hqCountry: country(HqCountry),
     endowDesignation: { value: EndowDesignation, label: EndowDesignation },
     /**TODO: must be part of Registration not Metadata */
 
