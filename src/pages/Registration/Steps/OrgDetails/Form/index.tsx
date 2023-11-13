@@ -29,7 +29,7 @@ export default function Form() {
   return (
     <form className="w-full" onSubmit={submit}>
       <h2 className="text-center sm:text-left text-xl mb-2">
-        Organizational Details
+        Organization Details
       </h2>
 
       <Field<FV>
