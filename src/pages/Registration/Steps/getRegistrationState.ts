@@ -130,7 +130,7 @@ function docs(reg: DoneDocs["Registration"]): TDocumentation["Documentation"] {
 
 function bankDetails(reg: DoneBanking["Registration"]): BankingDetails {
   return {
-    BankStatement: reg.BankStatement,
+    BankStatementPDF: reg.BankStatementPDF,
     wise_recipient_id: reg.wise_recipient_id,
   };
 }

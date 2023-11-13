@@ -3,6 +3,7 @@ import { InitReg } from "../types";
 import { useRegQuery } from "services/aws/registration";
 import { ErrorStatus, LoadingStatus } from "components/Status";
 import { steps } from "../routes";
+import Banking from "./Banking";
 import Contact from "./ContactDetails";
 import Dashboard from "./Dashboard";
 import Documentation from "./Documentation";
@@ -81,8 +82,12 @@ export default function Steps({ classes = "" }: { classes?: string }) {
             element={<Documentation {...guardProps} step={4} />}
           />
           <Route
+            path={steps.banking}
+            element={<Banking {...guardProps} step={5} />}
+          />
+          <Route
             path={steps.summary}
-            element={<Dashboard {...guardProps} step={5} />}
+            element={<Dashboard {...guardProps} step={6} />}
           />
         </Routes>
       </div>

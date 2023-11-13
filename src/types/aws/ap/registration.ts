@@ -121,7 +121,7 @@ export type TDocumentation = {
 };
 
 export type BankingDetails = {
-  BankStatement: FileObject;
+  BankStatementPDF: FileObject;
   wise_recipient_id: string;
 };
 
