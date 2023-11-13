@@ -1,6 +1,6 @@
 import { Combobox } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   FieldValues,
   Path,
@@ -8,18 +8,12 @@ import {
   useController,
   useFormContext,
 } from "react-hook-form";
-import { Country } from "types/countries";
-import countries from "assets/countries/all.json";
+import { Country } from "types/components";
 import Icon, { DrawerIcon } from "../Icon";
 import Options from "./Options";
+import { placeHolderCountryOption } from "./constants";
 
 type BaseFormShape = { [index: string]: Country };
-
-export const placeHolderCountryOption: Country = {
-  name: "",
-  flag: "",
-  code: "",
-};
 
 const nameKey: keyof Country = "name";
 
@@ -27,6 +21,8 @@ export default function CountrySelector<
   T extends FieldValues,
   K extends Path<T>,
 >(props: {
+  countries: Country[];
+  disabled?: boolean;
   fieldName: T[K] extends Country ? K : never;
   onReset?(): void;
   placeholder?: string;
@@ -48,24 +44,11 @@ export default function CountrySelector<
 
   const [query, setQuery] = useState(country.name);
 
-  /**
-   * some consumers can only store countryName:string
-   * in this case, get flag for them when this component loads
-   */
-  useEffect(() => {
-    (async () => {
-      if (country.name && !country.flag) {
-        const flag = countries.find((c) => c.name === country.name)?.flag || "";
-        onCountryChange({ name: country.name, flag, code: country.code });
-      }
-    })();
-    // eslint-disable-next-line
-  }, []);
-
   return (
     <Combobox
       aria-invalid={!!get(errors, `${props.fieldName}.name`)?.message}
-      aria-disabled={isSubmitting}
+      aria-disabled={props.disabled || isSubmitting}
+      disabled={props.disabled || isSubmitting}
       value={country}
       onChange={onCountryChange}
       as="div"
@@ -102,7 +85,7 @@ export default function CountrySelector<
         </button>
       )}
 
-      <Options query={query} />
+      <Options query={query} options={props.countries} />
 
       <ErrorMessage
         errors={errors}

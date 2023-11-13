@@ -5,8 +5,8 @@ import { FormValues, Props } from "../types";
 import { useRegState } from "pages/Registration/Steps/StepGuard";
 import { useFiscalSponsorshipAgreementSigningURLMutation } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
+import { getFilePreviews } from "helpers";
 import { steps } from "../../../../routes";
-import { getFilePreviews } from "./getFilePreviews";
 
 export default function useSubmit({ doc }: Props) {
   const {

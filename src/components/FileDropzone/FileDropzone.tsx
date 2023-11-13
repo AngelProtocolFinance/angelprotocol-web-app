@@ -7,23 +7,21 @@ import {
   useController,
   useFormContext,
 } from "react-hook-form";
-import { FileObject } from "types/aws";
+import { FileDropzoneAsset } from "types/components";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 
-export type Asset = {
-  previews: FileObject[]; //from previous submission
-  files: File[]; //new files
-};
-
-type Key = keyof Asset;
+type Key = keyof FileDropzoneAsset;
 const filesKey: Key = "files";
 const previewsKey: Key = "previews";
 
 type FilesPath = `${string}.${typeof filesKey}`;
 
-export function FileDropzone<T extends FieldValues, K extends Path<T>>(props: {
-  name: T[K] extends Asset ? K : never;
+export default function FileDropzone<
+  T extends FieldValues,
+  K extends Path<T>,
+>(props: {
+  name: T[K] extends FileDropzoneAsset ? K : never;
   multiple?: true;
   disabled?: boolean;
   className?: string;
@@ -39,7 +37,9 @@ export function FileDropzone<T extends FieldValues, K extends Path<T>>(props: {
 
   const {
     field: { value: files, onChange: onFilesChange, ref },
-  } = useController<Record<string, Asset>, FilesPath>({ name: filesId });
+  } = useController<Record<string, FileDropzoneAsset>, FilesPath>({
+    name: filesId,
+  });
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: (files: File[]) => {
@@ -92,7 +92,7 @@ function DropzoneText({
   filesId,
   files,
   previews,
-}: Asset & { filesId: string; formErrors: any }) {
+}: FileDropzoneAsset & { filesId: string; formErrors: any }) {
   const isFilesEmpty = files.length <= 0;
   const isPreviewsEmpty = previews.length <= 0;
 

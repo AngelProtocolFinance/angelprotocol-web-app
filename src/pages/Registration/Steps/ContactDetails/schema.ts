@@ -2,7 +2,7 @@ import { ObjectSchema, object, string } from "yup";
 import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
 import { ContactRoles, ReferralMethods } from "types/aws";
-import { OptionType } from "types/utils";
+import { OptionType } from "types/components";
 import { optionType } from "schemas/shape";
 import { requiredString } from "schemas/string";
 

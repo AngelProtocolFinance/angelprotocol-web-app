@@ -3,6 +3,7 @@ export * from "./createNavLinkStyler";
 export * from "./decimal";
 export * from "./getPossessiveForm";
 export * from "./evm";
+export * from "./getFilePreviews";
 export * from "./getTxUrl";
 export * from "./idParamToNum";
 export * from "./isEmpty";

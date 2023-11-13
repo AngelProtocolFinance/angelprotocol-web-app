@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "../types";
 import { EndowDesignation } from "types/aws";
+import countries from "assets/countries/all.json";
 import ActivityCountries from "components/ActivityCountries";
 import CountrySelector from "components/CountrySelector";
 import ExtLink from "components/ExtLink";
@@ -65,6 +66,7 @@ export default function Form() {
           input: "text-sm py-3.5",
           error: "field-error",
         }}
+        countries={countries}
       />
 
       <Label className="mt-6 mb-2">

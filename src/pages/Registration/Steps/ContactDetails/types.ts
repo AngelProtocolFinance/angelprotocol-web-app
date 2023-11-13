@@ -6,7 +6,7 @@ import {
   OrgDataForStep1,
   ReferralMethods,
 } from "types/aws";
-import { OptionType } from "types/utils";
+import { OptionType } from "types/components";
 
 export type FormValues = OverrideProperties<
   ContactDetails & OrgDataForStep1,

@@ -1,5 +1,5 @@
-import { Asset } from "components/registration";
+import { FileDropzoneAsset } from "types/components";
 
 export type FormValues = {
-  bankStatement: Asset;
+  bankStatement: FileDropzoneAsset;
 };

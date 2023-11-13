@@ -1,6 +1,8 @@
 import { CreateRecipientRequest } from "types/aws";
-import { OptionType } from "types/utils";
+import { FileDropzoneAsset, OptionType } from "types/components";
+import { Country } from "types/components";
 
 export type FormValues = Omit<CreateRecipientRequest, "details"> & {
-  requirements: Record<string, string | OptionType<string>>;
+  bankStatementPDF: FileDropzoneAsset;
+  requirements: Record<string, string | OptionType<string> | Country>;
 };

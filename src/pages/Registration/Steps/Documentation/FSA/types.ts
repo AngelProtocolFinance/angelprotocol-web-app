@@ -1,6 +1,6 @@
 import { Except, OverrideProperties } from "type-fest";
 import { FSADocumentation } from "types/aws";
-import type { Asset } from "components/registration";
+import type { FileDropzoneAsset } from "types/components";
 
 export type FormValues = OverrideProperties<
   Except<
@@ -10,8 +10,8 @@ export type FormValues = OverrideProperties<
     | "SignedFiscalSponsorshipAgreement"
   >,
   {
-    ProofOfIdentity: Asset;
-    ProofOfRegistration: Asset;
+    ProofOfIdentity: FileDropzoneAsset;
+    ProofOfRegistration: FileDropzoneAsset;
   }
 >;
 

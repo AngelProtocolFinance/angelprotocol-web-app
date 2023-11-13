@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues, Props } from "./types";
 import { FileObject, FSADocumentation as TFSADocumentation } from "types/aws";
-import { Asset } from "components/registration";
+import { FileDropzoneAsset } from "types/components";
 import Form from "./Form";
 import { schema } from "./schema";
 
@@ -39,6 +39,6 @@ function formFormat(doc: TFSADocumentation): FormValues {
   };
 }
 
-export function asset(previews: FileObject[]): Asset {
+export function asset(previews: FileObject[]): FileDropzoneAsset {
   return { files: [], previews };
 }

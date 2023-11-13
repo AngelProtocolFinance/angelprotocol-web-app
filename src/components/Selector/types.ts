@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { FieldValues, Path, PathValue } from "react-hook-form";
-import { OptionType, ValKey } from "types/utils";
+import { OptionType, ValKey } from "types/components";
 
 type Classes = {
   container?: string;
@@ -9,7 +9,7 @@ type Classes = {
 
 type BaseProps = {
   placeholder?: string;
-  disabled?: true;
+  disabled?: boolean;
   classes?: Classes;
 };
 
@@ -21,7 +21,6 @@ export interface Props<
   name: PathValue<T, K> extends OptionType<V> ? K : never;
   placeholder?: string;
   options: OptionType<V>[];
-  disabled?: true;
   classes?: Classes;
   onOptionChange?(): void;
   children?: (selected: OptionType<V>) => ReactNode;

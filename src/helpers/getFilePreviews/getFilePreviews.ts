@@ -1,10 +1,10 @@
 import { FileObject } from "types/aws";
-import { Asset } from "components/registration";
-import { getFullURL, uploadFiles } from "helpers/uploadFiles";
+import { FileDropzoneAsset } from "types/components";
+import { getFullURL, uploadFiles } from "../uploadFiles";
 
-export async function getFilePreviews<T extends { [index: string]: Asset }>(
-  fields: T
-): Promise<{ [key in keyof T]: FileObject[] }> {
+export async function getFilePreviews<
+  T extends { [index: string]: FileDropzoneAsset },
+>(fields: T): Promise<{ [key in keyof T]: FileObject[] }> {
   const files = Object.entries(fields).flatMap<File>(
     ([, asset]) => asset.files
   );

@@ -1,8 +1,9 @@
 import { FormProvider, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "./types";
+import FileDropzone from "components/FileDropzone";
 import { Label } from "components/form";
-import { FileDropzone, LoadText } from "components/registration";
+import { LoadText } from "components/registration";
 import { steps } from "../../routes";
 import { useRegState, withStepGuard } from "../StepGuard";
 import useSubmit from "./useSubmit";

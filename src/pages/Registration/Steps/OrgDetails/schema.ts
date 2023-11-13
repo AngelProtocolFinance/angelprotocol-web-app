@@ -1,7 +1,7 @@
 import { ObjectSchema, array, object, string } from "yup";
 import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
-import { Country } from "types/countries";
+import { Country } from "types/components";
 import { optionType } from "schemas/shape";
 import { requiredString } from "schemas/string";
 import { MAX_SDGS } from "constants/unsdgs";

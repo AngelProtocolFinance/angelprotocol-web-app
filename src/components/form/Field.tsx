@@ -53,6 +53,7 @@ export function Field<T extends FieldValues, K extends InputType = "text">({
         id,
         "aria-invalid": !!get(errors, name)?.message,
         disabled: isSubmitting || disabled,
+        "aria-disabled": isSubmitting || disabled,
         className: `${input}`,
         autoComplete: "off",
         spellCheck: false,

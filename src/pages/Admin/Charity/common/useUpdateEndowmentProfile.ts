@@ -4,7 +4,7 @@ import { TxPrompt } from "components/Prompt";
 import { cleanObject } from "helpers/cleanObject";
 import { appRoutes } from "constants/routes";
 
-export default function useUpdateEndowmentProfile() {
+export function useUpdateEndowmentProfile() {
   const { showModal } = useModalContext();
 
   const updateProfile = async (msg: ProfileUpdateMsg | ProgramDeleteMsg) => {

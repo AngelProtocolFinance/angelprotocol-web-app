@@ -1,6 +1,6 @@
 import { AnyObject, ObjectSchema, StringSchema, object, string } from "yup";
 import { Group } from "types/aws";
-import { OptionType } from "types/utils";
+import { OptionType } from "types/components";
 import { requiredString } from "schemas/string";
 
 export function createStringSchema(

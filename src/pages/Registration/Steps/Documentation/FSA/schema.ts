@@ -2,7 +2,7 @@ import { ObjectSchema, array, object } from "yup";
 import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
 import { FileObject } from "types/aws";
-import { Asset } from "components/registration";
+import { FileDropzoneAsset } from "types/components";
 import { genFileSchema } from "schemas/file";
 import { requiredString } from "schemas/string";
 
@@ -16,9 +16,11 @@ const VALID_MIME_TYPES = [
   "image/webp",
 ];
 
-const previewsKey: keyof Asset = "previews";
+const previewsKey: keyof FileDropzoneAsset = "previews";
 
-function genAssetShape(isRequired: boolean = false): SchemaShape<Asset> {
+function genAssetShape(
+  isRequired: boolean = false
+): SchemaShape<FileDropzoneAsset> {
   return {
     files: array(genFileSchema(MB_LIMIT * BYTES_IN_MB, VALID_MIME_TYPES)).when(
       previewsKey,
