@@ -10,7 +10,7 @@ export default function Dashboard() {
   const queryState = useProfileQuery({ endowId: id }, { skip: !id });
 
   return (
-    <div className="grid content-start mt-6">
+    <div className="w-full max-w-4xl grid content-start mt-6">
       <Seo title="Endowment Dashboard" />
       <h3 className="uppercase font-extrabold text-2xl mb-4">Dashboard</h3>
       <QueryLoader
@@ -41,7 +41,7 @@ export default function Dashboard() {
               free={totalContributions - donationsBal - sustainabilityFundBal}
               payedOut={sustainabilityFundBal}
             />
-            <div className="@container col-span-2 flex justify-end gap-5 items-center p-4 rounded border border-prim bg-orange-l6 dark:bg-blue-d6 font-bold text-lg font-heading">
+            <div className="@container col-span-2 flex justify-end gap-5 items-center p-4 rounded border border-prim bg-orange-l6 dark:bg-blue-d6 font-bold text-sm sm:text-lg font-heading">
               Total Number of Contributions to Your Fund:
               <span>{contributionsCount}</span>
             </div>
