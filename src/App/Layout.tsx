@@ -1,6 +1,5 @@
 import { Suspense } from "react";
 import { Outlet } from "react-router-dom";
-import ExtLink from "components/ExtLink";
 import Loader from "components/Loader";
 import Seo from "components/Seo";
 import Footer from "./Footer";
