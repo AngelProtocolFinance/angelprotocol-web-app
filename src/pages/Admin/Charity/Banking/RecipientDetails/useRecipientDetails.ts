@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { FormValues } from "./types";
 import { AccountRequirements, CreateRecipientRequest, Quote } from "types/aws";
+import { FileDropzoneAsset } from "types/components";
 import { useAdminContext } from "pages/Admin/Context";
 import {
   // useCreateQuoteMutation,
@@ -10,7 +11,6 @@ import {
   usePostAccountRequirementsMutation,
 } from "services/aws/bankDetails";
 import { useErrorContext } from "contexts/ErrorContext";
-import { Asset } from "components/FileDropzone";
 import { getFilePreviews, isEmpty } from "helpers";
 import { UnexpectedStateError } from "errors/errors";
 import { EMAIL_SUPPORT } from "constants/env";
@@ -155,7 +155,7 @@ export default function useRecipientDetails(
 
   const handleSubmit = async (
     request: CreateRecipientRequest,
-    bankStatementPDF: Asset
+    bankStatementPDF: FileDropzoneAsset
   ) => {
     try {
       setSubmitting(true);

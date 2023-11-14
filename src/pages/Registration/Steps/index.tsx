@@ -3,9 +3,12 @@ import { InitReg } from "../types";
 import { useRegQuery } from "services/aws/registration";
 import { ErrorStatus, LoadingStatus } from "components/Status";
 import { steps } from "../routes";
+import Banking from "./Banking";
 import Contact from "./ContactDetails";
 import Dashboard from "./Dashboard";
 import Documentation from "./Documentation";
+import FSAInquiry from "./FSAInquiry/";
+import OrgDetails from "./OrgDetails";
 import ProgressIndicator from "./ProgressIndicator";
 import Reference from "./Reference";
 import { StepGuardProps } from "./StepGuard";
@@ -49,7 +52,6 @@ export default function Steps({ classes = "" }: { classes?: string }) {
   const guardProps: Omit<StepGuardProps, "step"> = {
     init: initReg,
     state: regState,
-    stateId: data.reqId,
   };
 
   return (
@@ -68,12 +70,24 @@ export default function Steps({ classes = "" }: { classes?: string }) {
             element={<Contact {...guardProps} step={1} />}
           />
           <Route
-            path={steps.doc}
-            element={<Documentation {...guardProps} step={2} />}
+            path={steps.orgDetails}
+            element={<OrgDetails {...guardProps} step={2} />}
+          />
+          <Route
+            path={steps.fsaInquiry}
+            element={<FSAInquiry {...guardProps} step={3} />}
+          />
+          <Route
+            path={steps.docs}
+            element={<Documentation {...guardProps} step={4} />}
+          />
+          <Route
+            path={steps.banking}
+            element={<Banking {...guardProps} step={5} />}
           />
           <Route
             path={steps.summary}
-            element={<Dashboard {...guardProps} step={3} />}
+            element={<Dashboard {...guardProps} step={6} />}
           />
         </Routes>
       </div>

@@ -1,12 +1,15 @@
+import { Except } from "type-fest";
 import { UNSDG_NUMS } from "types/lists";
+import { EndowDesignation } from ".";
 import { FileObject } from "../common";
-import { EndowmentTierNum } from "./index";
 
 export type RegistrationStatus =
   | "Inactive"
   | "Under Review"
   | "Active"
   | "Rejected";
+
+export type BankVerificationStatus = "Not Submitted" | "Under Review";
 
 export type ReferralMethods =
   | ""
@@ -42,6 +45,7 @@ type InitReg = {
   RegistrationDate: string /** ISO string*/;
   RegistrationStatus: RegistrationStatus;
   UN_SDG: UNSDG_NUMS[];
+  bank_verification_status: BankVerificationStatus;
 };
 
 export type InitContact = {
@@ -50,10 +54,18 @@ export type InitContact = {
   Email: string;
 };
 
-type InitMeta = {
-  PK: string;
-  SK: "Metadata";
+//INIT STEP
+export type InitApplication = {
+  Registration: InitReg;
+  ContactPerson: InitContact;
 };
+
+type Append<Reg extends InitApplication, R, C> = {
+  Registration: Reg["Registration"] & R;
+  ContactPerson: Reg["ContactPerson"] & C;
+};
+
+export type OrgDataForStep1 = { OrganizationName: string };
 
 export type ContactDetails = {
   FirstName: string;
@@ -67,94 +79,150 @@ export type ContactDetails = {
   OtherReferralMethod: string; //when ReferralMethod is "other"
 };
 
-export type TDocumentation = {
-  //user identity
-  ProofOfIdentity: FileObject;
-
-  //organization details
-  EIN: string;
-  ProofOfRegistration: FileObject;
+export type OrgDetails = {
   Website: string;
-  Tier: EndowmentTierNum;
   HqCountry: string;
-  EndowDesignation: string;
   ActiveInCountries: string[];
+  EndowDesignation: EndowDesignation | "";
+  KycDonorsOnly: boolean;
+  UN_SDG: UNSDG_NUMS[];
+};
+
+export type FSAInquiry = {
+  AuthorizedToReceiveTaxDeductibleDonations: boolean;
+};
+
+export type FSASignerDocumentation = {
+  OrgName: string;
+  HqCountry: string;
+  RegistrationNumber: string;
+  ProofOfRegistration: FileObject;
+  ProofOfIdentity: FileObject;
   LegalEntityType: string;
   ProjectDescription: string;
+};
 
-  //fiscal sponsorship
-  AuthorizedToReceiveTaxDeductibleDonations: boolean;
-  //only exists if AuthorizedToReceiveTaxDeductibleDonations is false
+export type NonFSADocumentation = {
+  DocType: "Non-FSA";
+  EIN: string;
+};
+
+export type FSADocumentation = Except<
+  FSASignerDocumentation,
+  "HqCountry" | "OrgName"
+> & {
+  DocType: "FSA";
   FiscalSponsorshipAgreementSigningURL?: string;
   SignedFiscalSponsorshipAgreement?: string;
-
-  //others
-  KycDonorsOnly: boolean;
-  CashEligible: boolean;
 };
 
-//INIT STEP
-export type InitApplication = {
-  Registration: InitReg;
-  ContactPerson: InitContact;
-  Metadata: InitMeta;
+export type TDocumentation = {
+  Documentation: FSADocumentation | NonFSADocumentation;
 };
 
-type OrgData = { OrganizationName: string };
-
-type Append<Reg extends InitApplication, T, U, V> = {
-  Registration: Reg["Registration"] & T;
-  ContactPerson: Reg["ContactPerson"] & U;
-  Metadata: Reg["Metadata"] & V;
+export type BankingDetails = {
+  BankStatementPDF: FileObject;
+  wise_recipient_id: string;
 };
 
-type NewEndow = {
-  EndowmentId?: number;
-  /** when created 
-TODO: should be part of Registration status
-Inactive | Rejected | {id: number}
-*/
-};
+export type DoneContact = Append<
+  InitApplication,
+  OrgDataForStep1,
+  ContactDetails
+>;
+export type DoneOrgDetails = Append<DoneContact, OrgDetails, {}>;
+export type DoneFSAInquiry = Append<DoneOrgDetails, FSAInquiry, {}>;
+export type DoneDocs = Append<DoneFSAInquiry, TDocumentation, {}>;
+export type DoneBanking = Append<DoneDocs, BankingDetails, {}>;
 
-export type DoneContact = Append<InitApplication, OrgData, ContactDetails, {}>;
-export type DoneDocs = Append<DoneContact, TDocumentation, {}, NewEndow>;
+export type SubmissionDetails = { Email: string; EndowmentId: number };
 
-type Proposal = {
-  application_id: number;
-};
-type InReview = Append<DoneDocs, Proposal, {}, {}>;
+type InReview = Append<DoneBanking, SubmissionDetails, {}>;
 
 export type SavedRegistration =
   | InitApplication
   | DoneContact
+  | DoneOrgDetails
+  | DoneFSAInquiry
   | DoneDocs
+  | DoneBanking
   | InReview;
 
 type ContactUpdate = {
-  type: "contact details";
+  type: "contact-details";
   ContactPerson: Pick<InitContact, "Email"> & Partial<ContactDetails>;
-  Registration: OrgData;
+  Registration: OrgDataForStep1;
 };
 
-type DocsUpdate = {
-  type: "documentation";
-} & Omit<TDocumentation, "Tier"> &
+type OrgDetailsUpdate = {
+  type: "org-details";
+} & Partial<OrgDetails> &
   Partial<Pick<InitReg, "UN_SDG">>;
 
-export type RegistrationUpdate = (ContactUpdate | DocsUpdate) & {
+type FSAInquiryUpdate = {
+  type: "fsa-inquiry";
+} & Partial<FSAInquiry>;
+
+type DocumentationUpdate = {
+  type: "documentation";
+  //FSADocumentation handled in pdf-signing-url generator
+} & NonFSADocumentation;
+
+type BankingUpdate = {
+  type: "banking";
+} & Partial<BankingDetails>;
+
+export type RegistrationUpdate = (
+  | ContactUpdate
+  | OrgDetailsUpdate
+  | FSAInquiryUpdate
+  | DocumentationUpdate
+  | BankingUpdate
+) & {
   reference: string;
 };
 
 export type ContactUpdateResult = {
   ContactPerson: ContactDetails;
-  Registration: OrgData;
+  Registration: OrgDataForStep1;
 };
 
-export type DocsUpdateResult = InitReg & TDocumentation;
+export type DocsUpdateResult = InitReg & TDocumentation["Documentation"];
 
 export type SubmitResult = {
   RegistrationStatus: RegistrationStatus;
-  chain_id: string;
-  application_id: number;
   Email: string;
 };
+
+/** type guards */
+export function isDoneContact(data: SavedRegistration): data is DoneContact {
+  return !!(data.ContactPerson as ContactDetails).FirstName;
+}
+
+export function isDoneOrgDetails(
+  data: SavedRegistration
+): data is DoneOrgDetails {
+  return !!(data.Registration as OrgDetails).Website;
+}
+
+export function isDoneFSAInquiry(
+  data: SavedRegistration
+): data is DoneFSAInquiry {
+  //could be false
+  return !(
+    (data.Registration as FSAInquiry)
+      .AuthorizedToReceiveTaxDeductibleDonations == null
+  );
+}
+
+export function isDoneDocs(data: SavedRegistration): data is DoneDocs {
+  return !!(data.Registration as TDocumentation).Documentation;
+}
+
+export function isDoneBanking(data: SavedRegistration): data is DoneBanking {
+  return !!(data.Registration as BankingDetails).BankStatementPDF;
+}
+
+export function isSubmitted(data: SavedRegistration): data is InReview {
+  return !!(data.Registration as SubmissionDetails).EndowmentId;
+}

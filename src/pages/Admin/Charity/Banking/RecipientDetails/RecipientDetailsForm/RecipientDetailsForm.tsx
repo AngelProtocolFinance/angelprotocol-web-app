@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { FormProvider } from "react-hook-form";
 import { FormValues } from "../types";
 import { AccountRequirements, CreateRecipientRequest } from "types/aws";
-import { Asset } from "components/FileDropzone";
+import { FileDropzoneAsset } from "types/components";
 import Form from "./Form";
 import useRecipientDetailsForm from "./useRecipientDetailsForm";
 
@@ -13,7 +13,10 @@ type Props = {
   refreshRequired: boolean;
   onCleanup: (formValues: FormValues) => void;
   onRefresh: (request: CreateRecipientRequest) => void;
-  onSubmit: (request: CreateRecipientRequest, bankStatementPDF: Asset) => void;
+  onSubmit: (
+    request: CreateRecipientRequest,
+    bankStatementPDF: FileDropzoneAsset
+  ) => void;
 };
 
 export default function RecipientDetailsForm(props: Props) {

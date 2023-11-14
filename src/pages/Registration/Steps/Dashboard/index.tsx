@@ -11,7 +11,7 @@ import EndowmentStatus from "./EndowmentStatus";
 import Step from "./Step";
 
 function Dashboard() {
-  const { data } = useRegState<3>();
+  const { data } = useRegState<6>();
 
   const [submitApplication, { isLoading: isSubmitting }] = useSubmitMutation();
   const { showModal } = useModalContext();
@@ -39,15 +39,8 @@ function Dashboard() {
     );
   };
 
-  const { status, documentation } = data;
+  const { status } = data;
   const isStepDisabled = isSubmitting || status === "Under Review";
-
-  if (
-    documentation.isAuthorizedToReceiveTaxDeductibleDonations === "No" &&
-    !documentation.signedFiscalSponsorshipAgreement
-  ) {
-    return <Navigate to={`../../${routes.sign_notice}`} state={data} />;
-  }
 
   if (status === "Active") {
     return <Navigate to={`../../${routes.success}`} state={data} />;
@@ -63,6 +56,9 @@ function Dashboard() {
 
       <Step num={1} disabled={isStepDisabled} />
       <Step num={2} disabled={isStepDisabled} />
+      <Step num={3} disabled={isStepDisabled} />
+      <Step num={4} disabled={isStepDisabled} />
+      <Step num={5} disabled={isStepDisabled} />
 
       <EndowmentStatus
         isSubmitting={isSubmitting}

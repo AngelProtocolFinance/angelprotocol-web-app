@@ -9,6 +9,7 @@ import routes from "../routes";
 
 export default function useSubmit() {
   const { user } = useAuthenticator((context) => [context.user]);
+
   const [register] = useNewApplicationMutation();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { handleError } = useErrorContext();
