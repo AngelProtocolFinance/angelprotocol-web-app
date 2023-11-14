@@ -5,7 +5,6 @@ import { DappLogo } from "components/Image";
 import { appRoutes } from "constants/routes";
 import DesktopNav from "./DesktopNav";
 import { Opener as MobileNavOpener } from "./MobileNav";
-import ThemeToggle from "./ThemeToggle";
 import UserMenu from "./UserMenu";
 
 type Props = { classes: string; links: Link[] };
@@ -46,7 +45,6 @@ export default function Header({ classes, links }: Props) {
           links={links}
         />
         <div className="flex gap-4 justify-self-end items-center">
-          <ThemeToggle classes="hidden lg:flex" />
           {!(
             location.pathname === appRoutes.signin ||
             location.pathname === appRoutes.auth_redirector
