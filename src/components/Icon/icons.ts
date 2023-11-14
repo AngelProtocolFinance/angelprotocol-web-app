@@ -20,7 +20,7 @@ import {
   BiSun,
 } from "react-icons/bi";
 import {
-  BsDashCircle,
+  BsCheckCircle,
   BsExclamationCircleFill,
   BsFilterLeft,
   BsHourglassSplit,
@@ -77,7 +77,7 @@ export const icons = {
   Back: MdOutlineArrowBackIosNew,
   Blockchain: SiHiveBlockchain,
   Check: BiCheck,
-  CheckCircle: BsDashCircle,
+  CheckCircle: BsCheckCircle,
   CircleMinus: AiOutlineMinusCircle,
   Close: IoClose,
   CloseCircle: IoCloseCircle,
