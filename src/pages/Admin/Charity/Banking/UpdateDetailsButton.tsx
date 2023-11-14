@@ -35,7 +35,7 @@ export default function UpdateDetailsButton(props: Props) {
             leaveTo="opacity-0 translate-y-0 lg:translate-x-0 lg:translate-y-0"
           >
             {/** using `-translate-x-2/4` instead of `-translate-x-1/2` here as the latter has no effect for some reason */}
-            <Popover.Panel className="absolute -left-6 lg:left-8 -translate-x-2/4 sm:-translate-x-1/4 lg:translate-x-0 lg:-translate-y-1/2 mt-1 z-10 w-screen max-w-xs sm:max-w-sm transform p-4 bg-white dark:bg-blue-d3 overflow-hidden text-xs sm:text-sm rounded-lg shadow-lg ring-1 ring-black/5">
+            <Popover.Panel className="absolute -left-6 lg:left-8 -translate-x-2/4 sm:-translate-x-1/4 lg:translate-x-0 lg:-top-8 mt-1 lg:mt-0 z-10 w-screen max-w-xs sm:max-w-sm p-4 bg-white dark:bg-blue-d3 overflow-hidden text-xs sm:text-sm rounded-lg shadow-lg ring-1 ring-black/5">
               Submitting new bank details will void your existing bank
               connection and will require a review and approval. Do so with care
               to prevent unnecessary payout delays!
