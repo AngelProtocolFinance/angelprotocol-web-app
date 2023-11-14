@@ -1,5 +1,5 @@
 import { Popover, Transition } from "@headlessui/react";
-import { Fragment, useRef } from "react";
+import { Fragment } from "react";
 import Icon from "components/Icon";
 
 type Props = {
@@ -10,12 +10,9 @@ type Props = {
 export default function UpdateDetailsButton(props: Props) {
   const { className = "", onClick } = props;
 
-  const ref = useRef<HTMLButtonElement>(null);
-
   return (
     <div className={`flex gap-2 items-center ${className}`}>
       <button
-        ref={ref}
         type="button"
         className="px-2 btn-orange text-xs w-40"
         onClick={onClick}
