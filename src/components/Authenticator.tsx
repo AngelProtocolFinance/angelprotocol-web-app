@@ -40,7 +40,31 @@ export default function Authenticator() {
           },
         },
       }}
-      formFields={{ signUp: { name: { order: 1 } } }}
+      formFields={{
+        signIn: {
+          username: { placeholder: "e.g. john.doe@email.com" },
+          password: { placeholder: "********" },
+        },
+        signUp: {
+          email: { placeholder: "e.g. john.doe@email.com" },
+          password: { placeholder: "********" },
+          confirm_password: { placeholder: "********" },
+          given_name: {
+            order: 1,
+            isRequired: true,
+            type: "text",
+            label: "First Name",
+            placeholder: "e.g. John",
+          },
+          family_name: {
+            order: 2,
+            isRequired: true,
+            type: "text",
+            label: "Last name",
+            placeholder: "e.g. Doe",
+          },
+        },
+      }}
     />
   );
 }
