@@ -18,19 +18,11 @@ export default function Balance({ type, total, free, payedOut }: Props) {
         Note: balances are estimations.
       </p>
       <div className="grid grid-cols-[auto_1fr] gap-y-5 justify-self-start gap-x-2 sm:gap-x-8 @lg:flex @lg:gap-x-8">
-        <Amount
-          title="Total value"
-          classes="col-span-full @lg:mr-auto"
-          symbol="USD"
-        >
+        <Amount title="Total value" classes="col-span-full @lg:mr-auto">
           {humanize(condense(total), 2)}
         </Amount>
-        <Amount title="Free balance" symbol="USD">
-          {humanize(condense(free), 2)}
-        </Amount>
-        <Amount title="Payed out" symbol="USD">
-          {humanize(payedOut, 2)}
-        </Amount>
+        <Amount title="Free balance">{humanize(condense(free), 2)}</Amount>
+        <Amount title="Payed out">{humanize(payedOut, 2)}</Amount>
       </div>
     </div>
   );
@@ -39,15 +31,14 @@ export default function Balance({ type, total, free, payedOut }: Props) {
 function Amount({
   classes = "",
   ...props
-}: PropsWithChildren<{ classes?: string; title: string; symbol: string }>) {
+}: PropsWithChildren<{ classes?: string; title: string }>) {
   return (
     <div className={classes}>
       <p className="text-2xs sm:text-xs text-gray-d1 dark:text-gray sm:mb-1 uppercase">
         {props.title}
       </p>
       <span className="font-bold text-sm sm:text-xl font-heading">
-        {props.children}{" "}
-        <span className="text-xs font-normal">{props.symbol}</span>
+        {props.children} <span className="text-xs font-normal">USD</span>
       </span>
     </div>
   );
