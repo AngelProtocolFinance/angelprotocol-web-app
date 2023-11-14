@@ -1,6 +1,6 @@
 import { useAdminContext } from "pages/Admin/Context";
 import { useProfileQuery } from "services/aws/aws";
-import LoaderRing from "components/LoaderRing";
+import ContentLoader from "components/ContentLoader";
 import QueryLoader from "components/QueryLoader";
 import Seo from "../Seo";
 import Balance from "./Balance";
@@ -16,7 +16,7 @@ export default function Dashboard() {
       <QueryLoader
         queryState={queryState}
         messages={{
-          loading: <LoaderRing thickness={12} classes="w-28" />,
+          loading: <LoaderSkeleton />,
           error: "Failed to get endowment info",
         }}
       >
@@ -48,6 +48,16 @@ export default function Dashboard() {
           </div>
         )}
       </QueryLoader>
+    </div>
+  );
+}
+
+function LoaderSkeleton() {
+  return (
+    <div className="grid gap-4 @4xl:grid-cols-2">
+      <ContentLoader className="h-60 w-full" />
+      <ContentLoader className="h-60 w-full" />
+      <ContentLoader className="h-16 w-full @4xl:col-span-2" />
     </div>
   );
 }
