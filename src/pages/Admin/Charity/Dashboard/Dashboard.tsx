@@ -26,27 +26,31 @@ export default function Dashboard() {
           payoutsPending,
           payoutsMade,
           sustainabilityFundBal,
-          totalContributions,
-        }) => (
-          <div className="grid gap-4 @4xl:grid-cols-2">
-            <Balance
-              type="Donations"
-              total={donationsBal}
-              free={payoutsPending}
-              payedOut={payoutsMade}
-            />
-            <Balance
-              type="Sustainability Fund"
-              total={totalContributions - donationsBal}
-              free={totalContributions - donationsBal - sustainabilityFundBal}
-              payedOut={sustainabilityFundBal}
-            />
-            <div className="@container col-span-2 flex justify-end gap-5 items-center p-4 rounded border border-prim bg-orange-l6 dark:bg-blue-d6 font-bold text-sm sm:text-lg font-heading">
-              Total Number of Contributions to Your Fund:
-              <span>{contributionsCount}</span>
+          totalEarnings,
+        }) => {
+          const earningsPayoutsPending = payoutsPending - donationsBal;
+          const earningsPayoutsMade = totalEarnings - earningsPayoutsPending;
+          return (
+            <div className="grid gap-4 @4xl:grid-cols-2">
+              <Balance
+                type="Donations"
+                current={donationsBal}
+                pending={donationsBal}
+                payedOut={payoutsMade - earningsPayoutsMade}
+              />
+              <Balance
+                type="Sustainability Fund"
+                current={sustainabilityFundBal}
+                pending={earningsPayoutsPending}
+                payedOut={earningsPayoutsMade}
+              />
+              <div className="@container col-span-2 flex justify-end gap-5 items-center p-4 rounded border border-prim bg-orange-l6 dark:bg-blue-d6 font-bold text-sm sm:text-lg font-heading">
+                Total Number of Contributions to Your Fund:
+                <span>{contributionsCount}</span>
+              </div>
             </div>
-          </div>
-        )}
+          );
+        }}
       </QueryLoader>
     </div>
   );

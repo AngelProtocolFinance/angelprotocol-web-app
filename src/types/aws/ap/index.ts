@@ -9,6 +9,7 @@ type EndowmentBalances = {
   payoutsPending: number;
   sustainabilityFundBal: number;
   totalContributions: number;
+  totalEarnings: number;
 };
 
 export type MileStone = {
