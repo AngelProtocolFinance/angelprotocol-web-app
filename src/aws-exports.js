@@ -3,12 +3,12 @@
 
 const awsmobile = {
     "aws_project_region": "us-east-1",
-    "aws_cognito_identity_pool_id": "us-east-1:be8b5874-c985-49b6-8968-eedb10f7ade2",
+    "aws_cognito_identity_pool_id": "us-east-1:8574d806-30d5-4de4-8165-96e72b41cd0e",
     "aws_cognito_region": "us-east-1",
-    "aws_user_pools_id": "us-east-1_p1kV3Cb0C",
-    "aws_user_pools_web_client_id": "2ho9v068hhr4uae9qmbopom76u",
+    "aws_user_pools_id": "us-east-1_WO32hDPz3",
+    "aws_user_pools_web_client_id": "14qre65ehhsh5f6899ikdhk2qj",
     "oauth": {
-        "domain": "2h40h8r8d938-dev.auth.us-east-1.amazoncognito.com",
+        "domain": "gc8hpcg5cpes-dev.auth.us-east-1.amazoncognito.com",
         "scope": [
             "phone",
             "email",
@@ -16,8 +16,8 @@ const awsmobile = {
             "profile",
             "aws.cognito.signin.user.admin"
         ],
-        "redirectSignIn": "https://auth-ui.dpspevs7tj1ov.amplifyapp.com/,http://localhost:4200/,https://staging.angelgiving.io/",
-        "redirectSignOut": "https://auth-ui.dpspevs7tj1ov.amplifyapp.com/,http://localhost:4200/,https://staging.angelgiving.io/",
+        "redirectSignIn": "https://auth-ui.dpspevs7tj1ov.amplifyapp.com/auth-redirector/,https://staging.better.giving/auth-redirector/,http://localhost:4200/auth-redirector/,https://app.better.giving/auth-redirector/",
+        "redirectSignOut": "https://auth-ui.dpspevs7tj1ov.amplifyapp.com/,https://staging.better.giving/,http://localhost:4200/,https://app.better.giving/",
         "responseType": "code"
     },
     "federationTarget": "COGNITO_USER_POOLS",
@@ -29,7 +29,8 @@ const awsmobile = {
     ],
     "aws_cognito_signup_attributes": [
         "EMAIL",
-        "NAME"
+        "GIVEN_NAME",
+        "FAMILY_NAME"
     ],
     "aws_cognito_mfa_configuration": "OPTIONAL",
     "aws_cognito_mfa_types": [
@@ -37,7 +38,12 @@ const awsmobile = {
     ],
     "aws_cognito_password_protection_settings": {
         "passwordPolicyMinLength": 8,
-        "passwordPolicyCharacters": []
+        "passwordPolicyCharacters": [
+            "REQUIRES_LOWERCASE",
+            "REQUIRES_NUMBERS",
+            "REQUIRES_SYMBOLS",
+            "REQUIRES_UPPERCASE"
+        ]
     },
     "aws_cognito_verification_mechanisms": [
         "EMAIL"
