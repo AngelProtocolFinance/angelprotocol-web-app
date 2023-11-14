@@ -38,7 +38,8 @@ function Amount({
         {props.title}
       </p>
       <span className="font-bold text-sm sm:text-xl font-heading">
-        {props.children} <span className="text-xs font-normal">USD</span>
+        {props.children}{" "}
+        <span className="text-2xs sm:text-xs font-normal">USD</span>
       </span>
     </div>
   );
