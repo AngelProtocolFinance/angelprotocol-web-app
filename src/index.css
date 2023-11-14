@@ -84,6 +84,10 @@
   );
 }
 
+[data-amplify-authenticator] .amplify-text--error {
+  font-size: theme(fontSize.sm);
+}
+
 html:is(.dark) [data-amplify-authenticator] {
   --amplify-components-divider-label-background-color: theme(colors.blue.d6);
   --amplify-internal-button-color: theme(colors.white);
