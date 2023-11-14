@@ -29,7 +29,7 @@ export const CHARITY_LINKS: LINKS = {
     },
     {
       title: "About",
-      href: `${BASE_URL}/about-angel-giving/`,
+      href: `${BASE_URL}/about-better-giving/`,
       external: true,
     },
     { title: "Register", href: appRoutes.register },
@@ -58,7 +58,7 @@ export const CHARITY_LINKS: LINKS = {
     {
       title: "About",
       links: [
-        { text: "About us", href: `${BASE_URL}/about-angel-giving/` },
+        { text: "About us", href: `${BASE_URL}/about-better-giving/` },
         {
           text: "Meet the team",
           href: `${BASE_URL}/about/#:~:text=MEET%20THE%20TEAM-`,

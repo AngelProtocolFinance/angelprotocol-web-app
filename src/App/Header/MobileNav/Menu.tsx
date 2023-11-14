@@ -1,5 +1,4 @@
 import { Dialog } from "@headlessui/react";
-import ThemeToggle from "App/Header/ThemeToggle";
 import { NavLink } from "react-router-dom";
 import { Link } from "../../types";
 import { useModalContext } from "contexts/ModalContext";
@@ -45,10 +44,6 @@ export default function Menu({ links }: { links: Link[] }) {
             </NavLink>
           )
         )}
-        <span className="flex justify-between items-center mt-4">
-          <span>Theme</span>
-          <ThemeToggle classes="flex" />
-        </span>
       </nav>
     </Dialog.Panel>
   );

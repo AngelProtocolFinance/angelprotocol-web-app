@@ -29,7 +29,7 @@ export default function Success() {
     <>
       <Icon type="CheckCircle" className="text-green" size={70} />
       <h1 className="text-2xl uppercase text-center mt-10 mb-4">
-        Signature saved!
+        Fiscal Sponsorship Agreement signature was successfully saved!
       </h1>
 
       <button
