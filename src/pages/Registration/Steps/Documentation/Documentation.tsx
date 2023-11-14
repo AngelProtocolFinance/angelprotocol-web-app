@@ -2,7 +2,7 @@ import { useRegState, withStepGuard } from "../StepGuard";
 import FSADocumentation from "./FSA";
 import NonFSA from "./NonFSA";
 
-function Documentation() {
+export function Documentation() {
   const { data } = useRegState<4>();
 
   //documentation is previously completed
