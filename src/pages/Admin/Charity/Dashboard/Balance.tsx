@@ -10,14 +10,14 @@ type Props = {
 
 export default function Balance({ type, total, free, payedOut }: Props) {
   return (
-    <div className="@container rounded border border-prim bg-orange-l6 dark:bg-blue-d6">
-      <h4 className="uppercase text-sm sm:text-xl font-bold mb-5 pt-5 px-4">
+    <div className="@container rounded border border-prim bg-orange-l6 dark:bg-blue-d6 p-4">
+      <h4 className="uppercase text-sm sm:text-xl font-bold mb-5">
         {type} account
       </h4>
-      <p className="text-xs sm:text-sm text-gray-d1 dark:text-gray mb-8 px-4">
+      <p className="text-xs sm:text-sm text-gray-d1 dark:text-gray mb-8">
         Note: balances are estimations.
       </p>
-      <div className="grid grid-cols-[auto_1fr] gap-y-5 justify-self-start gap-x-2 sm:gap-x-8 @lg:flex @lg:gap-x-8 px-4">
+      <div className="grid grid-cols-[auto_1fr] gap-y-5 justify-self-start gap-x-2 sm:gap-x-8 @lg:flex @lg:gap-x-8">
         <Amount
           title="Total value"
           classes="col-span-full @lg:mr-auto"
