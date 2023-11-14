@@ -6,10 +6,7 @@ import Success from "./Success";
 export default function SignResult({ classes = "" }) {
   const [URLSearchParams] = useSearchParams();
 
-  const params = Array.from(URLSearchParams.entries()).reduce(
-    (acc, [key, value]) => ({ ...acc, [key]: value }),
-    {} as QueryParams
-  );
+  const params = Object.fromEntries(URLSearchParams.entries()) as QueryParams;
 
   return (
     <div

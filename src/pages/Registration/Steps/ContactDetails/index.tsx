@@ -18,15 +18,16 @@ function ContactDetails() {
     defaultValues: contact
       ? {
           ...contact,
-          ref: init.reference,
-          role: toRoleOption(contact.role),
-          referralMethod: toReferralOption(contact.referralMethod),
+          PK: init.reference,
+          Role: toRoleOption(contact.Role),
+          ReferralMethod: toReferralOption(contact.ReferralMethod),
+          OrganizationName: contact.orgName,
         }
       : {
-          ref: init.reference,
-          email: init.email,
-          role: { value: "", label: roles[""] },
-          referralMethod: {
+          PK: init.reference,
+          Email: init.email,
+          Role: { value: "", label: roles[""] },
+          ReferralMethod: {
             value: "",
             label: referralMethods[""],
           },

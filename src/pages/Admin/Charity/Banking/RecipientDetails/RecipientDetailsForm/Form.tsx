@@ -1,7 +1,8 @@
 import { useFormContext } from "react-hook-form";
 import { FormValues } from "../types";
 import { AccountRequirements, CreateRecipientRequest } from "types/aws";
-import FileDropzone, { Asset } from "components/FileDropzone";
+import { FileDropzoneAsset } from "types/components";
+import FileDropzone from "components/FileDropzone";
 import LoaderRing from "components/LoaderRing";
 import { Label } from "components/form";
 import { MB_LIMIT } from "schemas/file";
@@ -13,7 +14,10 @@ type Props = {
   disabled: boolean;
   refreshRequired: boolean;
   onRefresh: (request: CreateRecipientRequest) => void;
-  onSubmit: (request: CreateRecipientRequest, bankStatementPDF: Asset) => void;
+  onSubmit: (
+    request: CreateRecipientRequest,
+    bankStatementPDF: FileDropzoneAsset
+  ) => void;
 };
 
 export default function Form(props: Props) {

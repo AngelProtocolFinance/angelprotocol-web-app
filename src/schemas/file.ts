@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 import { SchemaShape } from "./types";
 import { FileObject } from "types/aws";
-import { Asset } from "types/components";
+import { FileDropzoneAsset } from "types/components";
 
 export const MB_LIMIT = 6;
 
@@ -14,9 +14,11 @@ const VALID_MIME_TYPES = [
   "image/webp",
 ];
 
-const previewsKey: keyof Asset = "previews";
+const previewsKey: keyof FileDropzoneAsset = "previews";
 
-export function genAssetShape(isRequired = false): SchemaShape<Asset> {
+export function genAssetShape(
+  isRequired = false
+): SchemaShape<FileDropzoneAsset> {
   return {
     files: Yup.array(
       genFileSchema(MB_LIMIT * BYTES_IN_MB, VALID_MIME_TYPES)

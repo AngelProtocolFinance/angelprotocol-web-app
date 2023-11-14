@@ -1,4 +1,8 @@
-import { EndowmentProfileUpdate, WalletProfile } from "types/aws";
+import {
+  EndowmentProfileUpdate,
+  FSASignerDocumentation,
+  WalletProfile,
+} from "types/aws";
 import { SemiPartial } from "types/utils";
 
 export type ChainQueryArgs = {
@@ -37,12 +41,7 @@ export type FiscalSponsorhipAgreementSigner =
       lastName: string;
       email: string;
       role: string;
-      org: {
-        name: string;
-        legalEntityType: string;
-        hq: string;
-        projectDescription: string;
-      };
+      docs: FSASignerDocumentation;
     }
   | string; //signerEID;
 

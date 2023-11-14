@@ -1,7 +1,7 @@
 import { FileObject } from "types/aws";
-import { Asset } from "types/components";
+import { FileDropzoneAsset } from "types/components";
 
-export const asset = (previews: FileObject[]): Asset => ({
+export const asset = (previews: FileObject[]): FileDropzoneAsset => ({
   files: [],
   previews,
 });

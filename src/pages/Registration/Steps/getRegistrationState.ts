@@ -1,134 +1,160 @@
+import { InitReg, RegistrationState } from "../types";
 import {
-  ContactPerson,
-  Documentation,
-  InitReg,
-  RegistrationState,
-} from "../types";
-import {
-  ContactDetails,
-  DoneContact,
+  BankingDetails,
+  DoneBanking,
   DoneDocs,
+  DoneFSAInquiry,
+  DoneOrgDetails,
+  FSAInquiry,
   InitContact,
+  OrgDetails,
   SavedRegistration,
   TDocumentation,
+  isDoneBanking,
+  isDoneContact,
+  isDoneDocs,
+  isDoneFSAInquiry,
+  isDoneOrgDetails,
+  isSubmitted,
 } from "types/aws";
-import { country } from "components/CountrySelector";
-import { asset } from "components/FileDropzone";
-import { unsdgs } from "constants/unsdgs";
 
 export function getRegistrationState(
   reg: SavedRegistration
 ): RegistrationState {
+  if (isSubmitted(reg)) {
+    const { ContactPerson: c, Registration: r } = reg;
+    return {
+      step: 6,
+      data: {
+        init: initReg(c),
+        contact: { ...c, orgName: r.OrganizationName },
+        orgDetails: orgDetails(r),
+        fsaInquiry: fsaInquiry(r),
+        documentation: docs(r),
+        banking: bankDetails(r),
+        status: r.RegistrationStatus,
+      },
+    };
+  }
+
+  if (isDoneBanking(reg)) {
+    const { ContactPerson: c, Registration: r } = reg;
+    return {
+      step: 5,
+      data: {
+        init: initReg(c),
+        contact: { ...c, orgName: r.OrganizationName },
+        orgDetails: orgDetails(r),
+        fsaInquiry: fsaInquiry(r),
+        documentation: docs(r),
+        banking: bankDetails(r),
+      },
+    };
+  }
+
   if (isDoneDocs(reg)) {
-    const { ContactPerson: c, Registration: r, Metadata: m } = reg;
+    const { ContactPerson: c, Registration: r } = reg;
+    return {
+      step: 4,
+      data: {
+        init: initReg(c),
+        contact: { ...c, orgName: r.OrganizationName },
+        orgDetails: orgDetails(r),
+        fsaInquiry: fsaInquiry(r),
+        documentation: docs(r),
+      },
+    };
+  }
+
+  if (isDoneFSAInquiry(reg)) {
+    const { ContactPerson: c, Registration: r } = reg;
     return {
       step: 3,
       data: {
-        init: getInit(c),
-        contact: formatContactPerson(c, r),
-        documentation: formatDocumentation(r),
-        status: r.RegistrationStatus,
-        endowId: m.EndowmentId,
+        init: initReg(c),
+        contact: { ...c, orgName: r.OrganizationName },
+        orgDetails: orgDetails(r),
+        fsaInquiry: fsaInquiry(r),
       },
     };
-  } else if (isDoneContact(reg)) {
+  }
+  if (isDoneOrgDetails(reg)) {
     const { ContactPerson: c, Registration: r } = reg;
     return {
       step: 2,
       data: {
-        init: getInit(c),
-        contact: formatContactPerson(c, r),
-      },
-    };
-  } else {
-    return {
-      step: 1,
-      data: {
-        init: getInit(reg.ContactPerson),
+        init: initReg(c),
+        contact: { ...c, orgName: r.OrganizationName },
+        orgDetails: orgDetails(r),
       },
     };
   }
+
+  if (isDoneContact(reg)) {
+    const { ContactPerson: c, Registration: r } = reg;
+    return {
+      step: 1,
+      data: {
+        init: initReg(c),
+        contact: { ...c, orgName: r.OrganizationName },
+      },
+    };
+  }
+
+  const { ContactPerson: c } = reg;
+  return {
+    step: 1,
+    data: {
+      init: initReg(c),
+    },
+  };
 }
 
-function getInit(i: InitContact): InitReg {
+function initReg(i: InitContact): InitReg {
   return {
     email: i.Email,
     reference: i.PK,
   };
 }
-
-function formatContactPerson(
-  c: ContactDetails & InitContact,
-  r: DoneContact["Registration"]
-): ContactPerson {
+function orgDetails(reg: DoneOrgDetails["Registration"]): OrgDetails {
   return {
-    firstName: c.FirstName,
-    lastName: c.LastName,
-    phone: c.PhoneNumber,
-    email: c.Email,
-    orgName: r.OrganizationName,
-    role: c.Role,
-    otherRole: c.OtherRole,
-    referralMethod: c.ReferralMethod,
-    otherReferralMethod: c.OtherReferralMethod,
-    referralCode: c.ReferralCode,
-    goals: c.Goals,
+    Website: reg.Website,
+    HqCountry: reg.HqCountry,
+    ActiveInCountries: reg.ActiveInCountries,
+    EndowDesignation: reg.EndowDesignation,
+    KycDonorsOnly: reg.KycDonorsOnly,
+    UN_SDG: reg.UN_SDG,
   };
 }
 
-function formatDocumentation({
-  Tier,
-  ProofOfIdentity: poi,
-  ProofOfRegistration: por,
-  Website,
-  UN_SDG,
-  KycDonorsOnly,
-  HqCountry,
-  EndowDesignation,
-  ActiveInCountries,
-  AuthorizedToReceiveTaxDeductibleDonations,
-  FiscalSponsorshipAgreementSigningURL = "",
-  SignedFiscalSponsorshipAgreement = "",
-  EIN,
-  LegalEntityType,
-  ProjectDescription,
-}: DoneDocs["Registration"]): Documentation {
+function docs(reg: DoneDocs["Registration"]): TDocumentation["Documentation"] {
+  const doc = reg.Documentation;
+  if (doc.DocType === "Non-FSA") {
+    return { EIN: doc.EIN, DocType: doc.DocType };
+  }
   return {
-    //level 1
-    proofOfIdentity: asset([poi]),
-    proofOfRegistration: asset([por]),
-    ein: EIN,
-
-    website: Website,
-    sdgs: UN_SDG.map((sdg) => ({
-      value: sdg,
-      label: `${sdg} - ${unsdgs[sdg].title}`,
-    })),
-    hqCountry: country(HqCountry),
-    endowDesignation: { value: EndowDesignation, label: EndowDesignation },
-    /**TODO: must be part of Registration not Metadata */
-
-    //general
-    activeInCountries: ActiveInCountries.map((c) => ({ label: c, value: c })),
-    isAuthorizedToReceiveTaxDeductibleDonations:
-      AuthorizedToReceiveTaxDeductibleDonations ? "Yes" : "No",
-    fiscalSponsorshipAgreementSigningURL: FiscalSponsorshipAgreementSigningURL,
-    signedFiscalSponsorshipAgreement: SignedFiscalSponsorshipAgreement,
-    legalEntityType: LegalEntityType,
-    projectDescription: ProjectDescription,
-
-    //meta
-    tier: Tier,
-    isAnonymousDonationsAllowed: KycDonorsOnly ? "No" : "Yes",
+    DocType: doc.DocType,
+    ProofOfIdentity: doc.ProofOfIdentity,
+    RegistrationNumber: doc.RegistrationNumber,
+    ProofOfRegistration: doc.ProofOfRegistration,
+    LegalEntityType: doc.LegalEntityType,
+    ProjectDescription: doc.ProjectDescription,
+    FiscalSponsorshipAgreementSigningURL:
+      doc.FiscalSponsorshipAgreementSigningURL,
+    SignedFiscalSponsorshipAgreement: doc.SignedFiscalSponsorshipAgreement,
   };
 }
 
-function isDoneDocs(data: SavedRegistration): data is DoneDocs {
-  const key: keyof TDocumentation = "ProofOfIdentity";
-  return key in data.Registration;
+function bankDetails(reg: DoneBanking["Registration"]): BankingDetails {
+  return {
+    BankStatementPDF: reg.BankStatementPDF,
+    wise_recipient_id: reg.wise_recipient_id,
+  };
 }
 
-function isDoneContact(data: SavedRegistration): data is DoneContact {
-  const key: keyof ContactDetails = "FirstName";
-  return key in data.ContactPerson;
+function fsaInquiry(reg: DoneFSAInquiry["Registration"]): FSAInquiry {
+  return {
+    AuthorizedToReceiveTaxDeductibleDonations:
+      reg.AuthorizedToReceiveTaxDeductibleDonations,
+  };
 }

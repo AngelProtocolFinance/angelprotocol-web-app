@@ -5,7 +5,7 @@ export type ValKey = string | number;
 export type OptionType<V> = { label: string; value: V };
 
 //dropzone
-export type Asset = {
+export type FileDropzoneAsset = {
   previews: FileObject[]; //from previous submission
   files: File[]; //new files
 };

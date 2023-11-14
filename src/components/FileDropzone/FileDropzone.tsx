@@ -7,11 +7,11 @@ import {
   useController,
   useFormContext,
 } from "react-hook-form";
-import { Asset } from "types/components";
+import { FileDropzoneAsset } from "types/components";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 
-type Key = keyof Asset;
+type Key = keyof FileDropzoneAsset;
 const filesKey: Key = "files";
 const previewsKey: Key = "previews";
 
@@ -21,7 +21,7 @@ export default function FileDropzone<
   T extends FieldValues,
   K extends Path<T>,
 >(props: {
-  name: T[K] extends Asset ? K : never;
+  name: T[K] extends FileDropzoneAsset ? K : never;
   multiple?: true;
   disabled?: boolean;
   className?: string;
@@ -37,7 +37,9 @@ export default function FileDropzone<
 
   const {
     field: { value: files, onChange: onFilesChange, ref },
-  } = useController<Record<string, Asset>, FilesPath>({ name: filesId });
+  } = useController<Record<string, FileDropzoneAsset>, FilesPath>({
+    name: filesId,
+  });
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: (files: File[]) => {
@@ -90,7 +92,7 @@ function DropzoneText({
   filesId,
   files,
   previews,
-}: Asset & { filesId: string; formErrors: any }) {
+}: FileDropzoneAsset & { filesId: string; formErrors: any }) {
   const isFilesEmpty = files.length <= 0;
   const isPreviewsEmpty = previews.length <= 0;
 
