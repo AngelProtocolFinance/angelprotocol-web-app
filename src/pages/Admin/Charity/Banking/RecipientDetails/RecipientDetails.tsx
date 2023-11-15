@@ -8,13 +8,13 @@ import useRecipientDetails from "./useRecipientDetails";
 type Props = {
   disabled: boolean;
   targetCurrency: string;
-  expectedFunds: number;
+  expectedMontlyDonations: number;
 };
 
 export default function RecipientDetails({
   disabled,
   targetCurrency,
-  expectedFunds,
+  expectedMontlyDonations,
 }: Props) {
   const {
     handleSubmit,
@@ -26,7 +26,7 @@ export default function RecipientDetails({
     selectedIndex,
     setSelectedIndex,
     updateDefaultValues,
-  } = useRecipientDetails(targetCurrency, expectedFunds);
+  } = useRecipientDetails(targetCurrency, expectedMontlyDonations);
 
   if (isLoading) {
     return (

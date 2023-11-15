@@ -19,7 +19,8 @@ const PROFILE_ERROR = `Error loading profile. Please try again later. If the err
 please contact ${EMAIL_SUPPORT}.`;
 
 export default function Banking() {
-  const [expectedFunds, setExpectedFunds] = useState<number>();
+  const [expectedMontlyDonations, setExpectedMontlyDonations] =
+    useState<number>();
   const [resubmitRequired, setResubmitRequired] = useState(false);
   const [debounce, isDebouncing] = useDebounce();
 
@@ -101,12 +102,12 @@ export default function Banking() {
               // if new value is empty or 0 (zero), no need to debounce, but
               // still call the function itself to cancel the previous debounce call
               const delay = !value ? 0 : 1000;
-              debounce(() => setExpectedFunds(value), delay);
+              debounce(() => setExpectedMontlyDonations(value), delay);
             }}
             disabled={disabled}
           />
 
-          {!!expectedFunds && (
+          {!!expectedMontlyDonations && (
             <>
               <Divider />
               <div className="min-h-[20rem]">
@@ -118,9 +119,9 @@ export default function Banking() {
                   <RecipientDetails
                     // we need this key to tell React that when any of the fields passed to this component changes,
                     // it needs to reset its state by rerendering the whole component
-                    key={`${targetCurrency.code}${expectedFunds}`}
+                    key={`${targetCurrency.code}${expectedMontlyDonations}`}
                     targetCurrency={targetCurrency.code}
-                    expectedFunds={expectedFunds}
+                    expectedMontlyDonations={expectedMontlyDonations}
                     disabled={disabled}
                   />
                 )}
