@@ -15,7 +15,10 @@ export default function Balance({ type, current, pending, payedOut }: Props) {
         {type} account
       </h4>
       <div className="grid @xs:grid-cols-[auto_1fr] gap-y-5 justify-self-start gap-x-2 @xs:gap-x-8">
-        <Amount title="Current balance" classes="col-span-full @xs:mr-auto">
+        <Amount
+          title="Total Current Contributions"
+          classes="col-span-full @xs:mr-auto"
+        >
           {humanize(current, 2)}
         </Amount>
         <Amount title="Pending payout">{humanize(pending, 2)}</Amount>
