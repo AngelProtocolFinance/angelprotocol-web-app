@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Authenticator from "components/Authenticator";
 import Icon from "components/Icon";
-import { OAUTH_PATH_STORAGE_KEY } from "constants/o-auth";
+import { OAUTH_PATH_STORAGE_KEY } from "constants/auth";
 import { appRoutes } from "constants/routes";
 import Menu from "./Menu";
 

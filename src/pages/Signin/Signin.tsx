@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { Location, useLocation, useNavigate } from "react-router-dom";
 import Authenticator from "components/Authenticator";
 import LoaderRing from "components/LoaderRing";
-import { OAUTH_PATH_STORAGE_KEY } from "constants/o-auth";
+import { OAUTH_PATH_STORAGE_KEY } from "constants/auth";
 
 export default function Signin() {
   const { state } = useLocation();
