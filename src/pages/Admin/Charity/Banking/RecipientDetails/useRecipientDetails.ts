@@ -31,7 +31,7 @@ type RequirementsData = {
 
 export default function useRecipientDetails(
   targetCurrency: string,
-  expectedFunds: number
+  expectedMontlyDonations: number
 ) {
   const { id: endowment_id } = useAdminContext();
   const [requirementsDataArray, setRequirementsDataArray] = useState<
@@ -60,12 +60,11 @@ export default function useRecipientDetails(
   useEffect(() => {
     (async () => {
       try {
-        const sourceAmount = calculateExpectedWithdrawAmount(expectedFunds);
-        // const newQuote = await createQuote(targetCurrency, sourceAmount).unwrap();
+        // const newQuote = await createQuote(targetCurrency, expectedFunds).unwrap();
         // const newRequirements = await getAccountRequirements(newQuote.id).unwrap();
         const newRequirements = await getAccountRequirementsForRoute({
           targetCurrency,
-          sourceAmount,
+          sourceAmount: expectedMontlyDonations,
         }).unwrap();
 
         if (isEmpty(newRequirements)) {
@@ -95,7 +94,7 @@ export default function useRecipientDetails(
     })();
   }, [
     targetCurrency,
-    expectedFunds,
+    expectedMontlyDonations,
     // createQuote,
     // getAccountRequirements,
     getAccountRequirementsForRoute,
@@ -182,10 +181,4 @@ export default function useRecipientDetails(
     setSelectedIndex,
     updateDefaultValues,
   };
-}
-
-// Random calculation, will be handled in separate issue
-// See https://linear.app/angel-protocol/issue/AP-859/set-an-actual-calculation-to-get-the-estimate-withdrawal-amount-when
-function calculateExpectedWithdrawAmount(sourceAmount: number): number {
-  return sourceAmount / 10;
 }
