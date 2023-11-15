@@ -14,9 +14,6 @@ export default function Balance({ type, current, pending, payedOut }: Props) {
       <h4 className="uppercase text-sm @xs:text-xl font-bold mb-5">
         {type} account
       </h4>
-      <p className="text-xs @xs:text-sm text-gray-d1 dark:text-gray mb-8">
-        Note: balances are estimations.
-      </p>
       <div className="grid @xs:grid-cols-[auto_1fr] gap-y-5 justify-self-start gap-x-2 @xs:gap-x-8">
         <Amount title="Current balance" classes="col-span-full @xs:mr-auto">
           {humanize(current, 2)}
