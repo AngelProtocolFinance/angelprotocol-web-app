@@ -11,15 +11,15 @@ import useSubmit from "./useSubmit";
 function Banking() {
   const { data } = useRegState<5>();
   const methods = useForm<FV>({
-    defaultValues: data.banking?.BankStatementPDF
+    defaultValues: data.banking?.BankStatementFile
       ? {
-          bankStatement: {
-            previews: [data.banking?.BankStatementPDF],
+          bankStatementFile: {
+            previews: [data.banking?.BankStatementFile],
             files: [],
           },
         }
       : {
-          bankStatement: { previews: [], files: [] },
+          bankStatementFile: { previews: [], files: [] },
         },
   });
   const { submit, isSubmitting } = useSubmit(methods);
@@ -30,8 +30,8 @@ function Banking() {
         <Label required className="mb-2 mt-1">
           Bank statement
         </Label>
-        <FileDropzone<FV, "bankStatement">
-          name="bankStatement"
+        <FileDropzone<FV, "bankStatementFile">
+          name="bankStatementFile"
           tooltip="Valid types are: PDF, JPG, PNG and WEBP. File should be less than 1 MB."
         />
 

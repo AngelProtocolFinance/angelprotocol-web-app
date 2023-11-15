@@ -121,7 +121,7 @@ export type TDocumentation = {
 };
 
 export type BankingDetails = {
-  BankStatementPDF: FileObject;
+  BankStatementFile: FileObject;
   wise_recipient_id: string;
 };
 
@@ -220,7 +220,7 @@ export function isDoneDocs(data: SavedRegistration): data is DoneDocs {
 }
 
 export function isDoneBanking(data: SavedRegistration): data is DoneBanking {
-  return !!(data.Registration as BankingDetails).BankStatementPDF;
+  return !!(data.Registration as BankingDetails).BankStatementFile;
 }
 
 export function isSubmitted(data: SavedRegistration): data is InReview {
