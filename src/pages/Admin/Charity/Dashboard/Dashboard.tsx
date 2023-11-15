@@ -34,28 +34,6 @@ export default function Dashboard() {
           const earningsPayoutsMade = totalEarnings - earningsPayoutsPending;
           return (
             <div className="grid gap-4 @lg:grid-cols-2">
-              {/** Header */}
-              <div className="col-span-2 grid @2xl:grid-cols-3 gap-4">
-                <HeaderPart>
-                  Pending payout:
-                  <span className="flex items-center gap-1">
-                    {payoutsPending}{" "}
-                    <span className="text-2xs sm:text-xs font-normal">USD</span>
-                  </span>
-                </HeaderPart>
-                <HeaderPart>
-                  Total Contributions:
-                  <span className="flex items-center gap-1">
-                    {totalContributions}{" "}
-                    <span className="text-2xs sm:text-xs font-normal">USD</span>
-                  </span>
-                </HeaderPart>
-                <HeaderPart>
-                  Contribution Count:
-                  <span>{contributionsCount}</span>
-                </HeaderPart>
-              </div>
-
               {/** Balances */}
               <Balance
                 type="Donations"
@@ -69,6 +47,28 @@ export default function Dashboard() {
                 pending={earningsPayoutsPending}
                 payedOut={earningsPayoutsMade}
               />
+
+              {/** General info */}
+              <div className="col-span-2 grid @2xl:grid-cols-3 gap-4">
+                <DataPart>
+                  Pending payout:
+                  <span className="flex items-center gap-1">
+                    {payoutsPending}{" "}
+                    <span className="text-2xs sm:text-xs font-normal">USD</span>
+                  </span>
+                </DataPart>
+                <DataPart>
+                  Total Contributions:
+                  <span className="flex items-center gap-1">
+                    {totalContributions}{" "}
+                    <span className="text-2xs sm:text-xs font-normal">USD</span>
+                  </span>
+                </DataPart>
+                <DataPart>
+                  Contribution Count:
+                  <span>{contributionsCount}</span>
+                </DataPart>
+              </div>
             </div>
           );
         }}
@@ -91,7 +91,7 @@ function LoaderSkeleton() {
   );
 }
 
-function HeaderPart({ children }: PropsWithChildren<{}>) {
+function DataPart({ children }: PropsWithChildren<{}>) {
   return (
     <div className="flex justify-center items-center gap-5 p-4 rounded border border-prim bg-orange-l6 dark:bg-blue-d6 font-bold text-sm @sm:text-base font-heading">
       {children}
