@@ -11,7 +11,7 @@ type Props = {
   defaultValues: FormValues;
   disabled: boolean;
   refreshRequired: boolean;
-  children: (
+  formButtons: (
     disabled: boolean,
     isSubmitting: boolean,
     refreshRequired: boolean
@@ -50,9 +50,8 @@ export default function RecipientDetailsForm(props: Props) {
         refreshRequired={props.refreshRequired}
         onRefresh={props.onRefresh}
         onSubmit={props.onSubmit}
-      >
-        {props.children}
-      </Form>
+        formButtons={props.formButtons}
+      />
     </FormProvider>
   );
 }

@@ -13,7 +13,7 @@ type Props = {
   accountRequirements: AccountRequirements;
   disabled: boolean;
   refreshRequired: boolean;
-  children: (
+  formButtons: (
     disabled: boolean,
     isSubmitting: boolean,
     refreshRequired: boolean
@@ -62,7 +62,7 @@ export default function Form(props: Props) {
         />
       </div>
 
-      {props.children(props.disabled, isSubmitting, props.refreshRequired)}
+      {props.formButtons(props.disabled, isSubmitting, props.refreshRequired)}
     </form>
   );
 }

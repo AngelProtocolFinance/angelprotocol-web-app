@@ -31,7 +31,7 @@ export default function BankDetails({
   alreadySubmitted = false,
   isSubmitting,
   onSubmit,
-  children,
+  children: formButtons,
 }: Props) {
   const [resubmitRequired, setResubmitRequired] = useState(false);
   const [expectedMontlyDonations, setExpectedMontlyDonations] =
@@ -83,7 +83,7 @@ export default function BankDetails({
       {/* Display disabled form buttons by default, this is necessary 
           to be able to show "Back" button during registration */}
       {!expectedMontlyDonations ? (
-        children(true, false, true)
+        formButtons(true, false, true)
       ) : (
         <>
           <Divider />
@@ -101,9 +101,8 @@ export default function BankDetails({
                 expectedMontlyDonations={expectedMontlyDonations}
                 disabled={disabled}
                 onSubmit={onSubmit}
-              >
-                {children}
-              </RecipientDetails>
+                formButtons={formButtons}
+              />
             )}
           </div>
         </>

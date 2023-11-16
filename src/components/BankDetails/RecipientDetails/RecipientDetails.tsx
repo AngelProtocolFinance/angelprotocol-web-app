@@ -13,7 +13,7 @@ type Props = {
   disabled: boolean;
   targetCurrency: string;
   expectedMontlyDonations: number;
-  children: (
+  formButtons: (
     disabled: boolean,
     isSubmitting: boolean,
     refreshRequired: boolean
@@ -29,7 +29,7 @@ export default function RecipientDetails({
   disabled,
   targetCurrency,
   expectedMontlyDonations,
-  children,
+  formButtons,
   onSubmit,
 }: Props) {
   const {
@@ -102,9 +102,8 @@ export default function RecipientDetails({
         onCleanup={updateDefaultValues}
         onSubmit={handleSubmit}
         onRefresh={refreshRequirements}
-      >
-        {children}
-      </RecipientDetailsForm>
+        formButtons={formButtons}
+      />
     </>
   );
 }
