@@ -20,14 +20,14 @@ export default function Split<FV extends FieldValues, P extends Path<FV>>(
     <div className={`grid grid-cols-2 gap-2 ${props.className || ""}`}>
       <Portion
         percentage={100 - liquidPercentage}
-        title="Endowment"
+        title="Sustainability Fund"
         action="Compounded forever"
         token={props.token}
       />
       <Portion
         token={props.token}
         percentage={liquidPercentage}
-        title="Current"
+        title="Donation"
         action="Instantly available"
       >
         <Slider
