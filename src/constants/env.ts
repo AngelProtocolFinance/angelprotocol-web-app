@@ -12,10 +12,9 @@ export const APP_NAME = "Better Giving";
 export const BASE_URL = "https://better.giving";
 export const DAPP_URL = "https://app.better.giving";
 
-// NETWORK TYPE
-const NETWORK: "TESTNET" | "LOCAL" | undefined /** mainnet if not specified */ =
-  process.env.REACT_APP_NETWORK as any;
-export const IS_TEST = NETWORK === "TESTNET" || NETWORK === "LOCAL";
+const ENV = process.env.REACT_APP_ENVIRONMENT;
+
+export const IS_TEST = ENV === "STAGING";
 export const EXPECTED_NETWORK_TYPE: NetworkType = IS_TEST
   ? "testnet"
   : "mainnet";
