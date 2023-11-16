@@ -6,12 +6,14 @@ import {
   isDeleteMsg,
 } from "../types";
 import {
+  DonationsQueryParams,
   EndowListPaginatedAWSQueryRes,
   EndowmentCard,
   EndowmentOption,
   EndowmentProfile,
   EndowmentProfileUpdate,
   EndowmentsQueryParams,
+  PaginatedAWSQueryRes,
   Program,
   WalletProfile,
 } from "types/aws";
@@ -140,6 +142,17 @@ export const aws = createApi({
         };
       },
     }),
+    donations: builder.query<PaginatedAWSQueryRes<any[]>, DonationsQueryParams>(
+      {
+        providesTags: ["donations"],
+        query: ({ id, chain_id, ...rest }) => {
+          return {
+            url: `${v(3)}/donation/${chain_id}/${id}`,
+            params: rest,
+          };
+        },
+      }
+    ),
   }),
 });
 
