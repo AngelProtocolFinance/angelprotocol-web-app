@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
-import { Auth } from "aws-amplify";
 import {
   ProfileUpdatePayload,
   VersionSpecificWalletProfile,
@@ -16,7 +15,8 @@ import {
   WalletProfile,
 } from "types/aws";
 import { network } from "services/constants";
-import { createAuthToken } from "helpers";
+import { jwtToken } from "helpers/jwt-token";
+import { TEMP_JWT } from "constants/auth";
 import { APIs } from "constants/urls";
 import { version as v } from "../helpers";
 
@@ -28,14 +28,8 @@ const awsBaseQuery = retry(
     baseUrl: APIs.aws,
     mode: "cors",
     async prepareHeaders(headers) {
-      // As 'prepareHeaders' is called after builder.query returns the request to be sent,
-      // this check allows for custom 'authorization' headers to be set within the builder.query
-      if (!headers.has("authorization")) {
-        const token = await Auth.currentSession().then((res) =>
-          res.getAccessToken().getJwtToken()
-        );
-
-        headers.append("authorization", `Bearer ${token}`);
+      if (headers.get("authorization") === TEMP_JWT) {
+        headers.set("authorization", `Bearer ${await jwtToken()}`);
       }
       return headers;
     },
@@ -101,7 +95,6 @@ export const aws = createApi({
           url: `${getWalletProfileQuery(wallet)}/bookmarks`,
           method: type === "add" ? "POST" : "DELETE",
           body: { endowId },
-          headers: { authorization: createAuthToken("app-user") },
         };
       },
       transformResponse: (response: { data: any }) => response,
@@ -134,7 +127,7 @@ export const aws = createApi({
         error ? [] : ["endowments", "profile", "walletProfile"],
       query: (payload) => {
         return {
-          url: `/${v(3)}/profile/${network}/endowment`,
+          url: `/${v(1)}/profile/endowment`,
           method: isDeleteMsg(payload.unsignedMsg) ? "DELETE" : "PUT",
           body: payload,
         };

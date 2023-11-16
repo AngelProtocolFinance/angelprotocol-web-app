@@ -7,7 +7,6 @@ import { useModalContext } from "contexts/ModalContext";
 import { isConnected, useWalletContext } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import Prompt from "components/Prompt";
-import { createAuthToken } from "helpers";
 import { APP_NAME } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { APIs } from "constants/urls";
@@ -28,7 +27,6 @@ export default function Form({ classes = "" }) {
     const wallet = walletState as ConnectedWallet;
     const res = await fetch(APIs.aws + "/v1/giftcard/claim", {
       method: "POST",
-      headers: { authorization: createAuthToken("angelprotocol-web-app") },
       body: JSON.stringify({
         secret: data.secret,
         recipient: wallet.address,

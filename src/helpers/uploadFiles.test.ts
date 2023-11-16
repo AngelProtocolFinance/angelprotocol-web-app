@@ -7,7 +7,7 @@ const bucket: Bucket = "endow-profiles";
 const baseURL = `https://${bucket}.${bucketURL}/${TIME_STAMP}`;
 global.fetch = jest.fn();
 
-jest.mock("./createAuthToken", () => ({ createAuthToken: () => AUTH_TOKEN }));
+jest.mock("./jwt-token", () => ({ jwtToken: () => AUTH_TOKEN }));
 
 describe("uploadFiles tests", () => {
   test("upload multiple files", async () => {
@@ -36,7 +36,7 @@ describe("uploadFiles tests", () => {
         fileName: `${TIME_STAMP}-_test_file_name`,
       }),
       headers: {
-        authorization: AUTH_TOKEN,
+        authorization: `Bearer ${AUTH_TOKEN}`,
       },
     });
   });

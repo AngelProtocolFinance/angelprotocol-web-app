@@ -8,6 +8,7 @@ import {
 } from "types/aws";
 import { adminTags } from "services/aws/tags";
 import { logger } from "helpers";
+import { TEMP_JWT } from "constants/auth";
 import { EMAIL_SUPPORT } from "constants/env";
 import { version as v } from "../../helpers";
 import { aws } from "../aws";
@@ -23,6 +24,7 @@ const registration_api = aws.injectEndpoints({
         url: `${v(4)}/registration`,
         method: "POST",
         body: { Email: email },
+        headers: { authorization: TEMP_JWT },
       }),
     }),
     reg: builder.query<SavedRegistration, string>({
