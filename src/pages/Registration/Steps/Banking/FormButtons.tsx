@@ -10,17 +10,10 @@ type Props = {
 };
 
 export default function FormButtons({ refreshRequired, ...rest }: Props) {
-  return refreshRequired ? (
-    <RefreshRequired {...rest} />
-  ) : (
-    <NoRefreshRequired {...rest} />
-  );
+  return refreshRequired ? <Refresh {...rest} /> : <Submit {...rest} />;
 }
 
-function RefreshRequired({
-  disabled,
-  isSubmitting,
-}: Omit<Props, "refreshRequired">) {
+function Refresh({ disabled, isSubmitting }: Omit<Props, "refreshRequired">) {
   const { data } = useRegState<5>();
   return (
     <>
@@ -42,7 +35,7 @@ function RefreshRequired({
           aria-disabled={disabled || isSubmitting}
           disabled={disabled || isSubmitting}
           type="submit"
-          className="px-6 btn-orange gap-1 text-sm w-80"
+          className="py-3 min-w-[8rem] btn-orange btn-reg"
         >
           <LoadText isLoading={isSubmitting} text="Checking...">
             Check Requirements
@@ -53,7 +46,7 @@ function RefreshRequired({
   );
 }
 
-function NoRefreshRequired({ isSubmitting }: { isSubmitting: boolean }) {
+function Submit({ isSubmitting }: { isSubmitting: boolean }) {
   const { data } = useRegState<5>();
   return (
     <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
