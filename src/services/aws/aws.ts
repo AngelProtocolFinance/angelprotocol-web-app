@@ -127,7 +127,7 @@ export const aws = createApi({
         error ? [] : ["endowments", "profile", "walletProfile"],
       query: (payload) => {
         return {
-          url: `/${v(3)}/profile/${network}/endowment`,
+          url: `/${v(3)}/profile/endowment`,
           method: isDeleteMsg(payload.unsignedMsg) ? "DELETE" : "PUT",
           body: payload,
         };
