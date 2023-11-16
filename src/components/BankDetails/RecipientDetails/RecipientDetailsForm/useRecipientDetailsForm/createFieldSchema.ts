@@ -6,10 +6,8 @@ import { requiredString } from "schemas/string";
 export function createStringSchema(
   requirements: Group
 ): StringSchema<string | undefined, AnyObject, undefined, ""> {
-  let schema = string();
-  if (requirements.required) {
-    schema = schema.required("required");
-  }
+  let schema = requirements.required ? requiredString : string();
+
   if (requirements.minLength) {
     schema = schema.min(
       requirements.minLength,
@@ -23,10 +21,10 @@ export function createStringSchema(
     );
   }
   if (requirements.validationRegexp) {
-    schema = schema.matches(
-      new RegExp(requirements.validationRegexp),
-      `Must be a valid ${requirements.name}`
-    );
+    schema = schema.matches(new RegExp(requirements.validationRegexp), {
+      message: `Must be a valid ${requirements.name}`,
+      excludeEmptyString: true,
+    });
   }
   if (requirements.validationAsync) {
     const { url, params } = requirements.validationAsync;
@@ -45,6 +43,7 @@ export function createStringSchema(
           })
     );
   }
+
   return schema;
 }
 
