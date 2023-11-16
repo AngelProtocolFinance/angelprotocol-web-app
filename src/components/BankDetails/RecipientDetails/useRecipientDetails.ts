@@ -3,7 +3,8 @@ import { FormValues } from "./types";
 import { AccountRequirements, CreateRecipientRequest, Quote } from "types/aws";
 import { FileDropzoneAsset } from "types/components";
 import {
-  useGetAccountRequirementsForRouteMutation,
+  useCreateQuoteMutation,
+  useGetAccountRequirementsMutation,
   usePostAccountRequirementsMutation,
 } from "services/aws/bankDetails";
 import { useErrorContext } from "contexts/ErrorContext";
@@ -17,7 +18,6 @@ type RequirementsData = {
   currentFormValues: FormValues;
   /**
    * Indicates whether requirements refresh is necessary.
-   *
    * See https://docs.wise.com/api-docs/api-reference/recipient#account-requirements
    */
   refreshRequired: boolean;
@@ -36,31 +36,28 @@ export default function useRecipientDetails(
     RequirementsData[]
   >([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [
-    quote,
-    // setQuote
-  ] = useState<Quote>();
-  const [isLoading, setLoading] = useState(true);
+  const [quote, setQuote] = useState<Quote>(); // store quote to use to refresh requirements
+  const [isLoading, setLoading] = useState(true); // starts in loading state, loads only once
   const [isSubmitting, setSubmitting] = useState(false);
   const [isError, setError] = useState(false);
 
   const { handleError } = useErrorContext();
 
-  // const [createQuote] = useCreateQuoteMutation();
-  // const [getAccountRequirements] = useGetAccountRequirementsMutation();
-  const [getAccountRequirementsForRoute] =
-    useGetAccountRequirementsForRouteMutation();
+  const [createQuote] = useCreateQuoteMutation();
+  const [getAccountRequirements] = useGetAccountRequirementsMutation();
   const [postAccountRequirements] = usePostAccountRequirementsMutation();
 
   useEffect(() => {
     (async () => {
       try {
-        // const newQuote = await createQuote(targetCurrency, expectedFunds).unwrap();
-        // const newRequirements = await getAccountRequirements(newQuote.id).unwrap();
-        const newRequirements = await getAccountRequirementsForRoute({
-          targetCurrency,
+        const newQuote = await createQuote({
           sourceAmount: expectedMontlyDonations,
+          targetCurrency: targetCurrency,
         }).unwrap();
+
+        const newRequirements = await getAccountRequirements(
+          newQuote.id
+        ).unwrap();
 
         if (isEmpty(newRequirements)) {
           return handleError(
@@ -80,7 +77,7 @@ export default function useRecipientDetails(
             return data;
           })
         );
-        // setQuote(newQuote);
+        setQuote(newQuote);
       } catch (error) {
         handleError(error, GENERIC_ERROR_MESSAGE);
         setError(true);
@@ -89,11 +86,12 @@ export default function useRecipientDetails(
       }
     })();
   }, [
+    // despite these parameters being included in the dep. array,
+    // this effect will only ever be run once (see ../BankDetails.tsx)
     targetCurrency,
     expectedMontlyDonations,
-    // createQuote,
-    // getAccountRequirements,
-    getAccountRequirementsForRoute,
+    createQuote,
+    getAccountRequirements,
     handleError,
   ]);
 
@@ -118,6 +116,8 @@ export default function useRecipientDetails(
       if (!requirements) {
         throw new UnexpectedStateError("Requirements not loaded.");
       }
+
+      // should never happen, but throw immediately if it does
       if (!requirements.refreshRequired) {
         throw new UnexpectedStateError(
           "Requirements don't need to be refreshed."
@@ -130,15 +130,14 @@ export default function useRecipientDetails(
         quoteId: quote.id,
         request,
       }).unwrap();
+
       setRequirementsDataArray((prev) => {
         const updated = [...prev];
         updated[selectedIndex].accountRequirements = newRequirements;
-        updated[selectedIndex].refreshRequired = false;
-        // TODO: use the below logic once Wise API token start working
-        // updated[selectedIndex].refreshRequired = newRequirements.fields.some(
-        //   (field) =>
-        //     field.group.some((group) => group.refreshRequirementsOnChange)
-        // );
+        updated[selectedIndex].refreshRequired = newRequirements.fields.some(
+          (field) =>
+            field.group.some((group) => group.refreshRequirementsOnChange)
+        );
         return updated;
       });
       setError(false);

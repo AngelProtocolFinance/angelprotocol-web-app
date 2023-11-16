@@ -59,30 +59,6 @@ export const bank_details_api = aws.injectEndpoints({
         },
       }),
     }),
-    /**
-     * Temporary endpoint to use until Wise API token is fixed.
-     *
-     * TODO: ONCE {@link getAccountRequirements} IS IN USE, THIS ENDPOINT CAN BE DELETED
-     */
-    getAccountRequirementsForRoute: builder.mutation<
-      AccountRequirements[],
-      { targetCurrency: string; sourceAmount: number }
-    >({
-      queryFn: ({ targetCurrency, sourceAmount }) =>
-        fetch(
-          `https://api.sandbox.transferwise.tech/v1/account-requirements?source=USD&target=${targetCurrency}&sourceAmount=${sourceAmount}`,
-          { headers: { "Content-Type": "application/json" } }
-        )
-          .then<AccountRequirements[]>((res) => res.json())
-          .then((value) => ({ data: value }))
-          .catch((error) => ({
-            error: {
-              status: "CUSTOM_ERROR",
-              error: "Error getting requirements",
-              data: error,
-            },
-          })),
-    }),
     getCurrencies: builder.mutation<WiseCurrency[], unknown>({
       query: () => ({
         url: `/${v(1)}/wise`,
@@ -125,7 +101,6 @@ export const bank_details_api = aws.injectEndpoints({
 export const {
   useCreateQuoteMutation,
   useCreateRecipientAccountMutation,
-  useGetAccountRequirementsForRouteMutation,
   useGetAccountRequirementsMutation,
   useGetCurrenciesMutation,
 

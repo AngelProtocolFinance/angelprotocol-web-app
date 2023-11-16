@@ -95,7 +95,9 @@ export default function BankDetails({
             ) : (
               <RecipientDetails
                 // we need this key to tell React that when any of the fields passed to this component changes,
-                // it needs to reset its state by rerendering the whole component
+                // it needs to reset its state by re-rendering the whole component.
+                // This way the `react-hook-form` reruns the `useForm` initializer function with the new requirements
+                // that will get loaded due to changed target currency and expected montly donation (in Wise terms: source amount).
                 key={`${targetCurrency.code}${expectedMontlyDonations}`}
                 targetCurrency={targetCurrency.code}
                 expectedMontlyDonations={expectedMontlyDonations}
