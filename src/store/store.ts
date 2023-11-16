@@ -1,7 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { apes } from "services/apes";
 import { aws } from "services/aws/aws";
-import authReducer from "slices/authSlice";
 import { componentReducer } from "slices/components";
 import { donation } from "slices/donation";
 import gift from "slices/gift";
@@ -11,7 +10,6 @@ export const store = configureStore({
   reducer: {
     donation,
     gift,
-    auth: authReducer,
     component: componentReducer,
     widget,
     [aws.reducerPath]: aws.reducer,

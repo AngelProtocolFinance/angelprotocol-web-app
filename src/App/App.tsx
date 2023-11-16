@@ -76,7 +76,6 @@ export default function App() {
             }
           />
           <Route path={`${appRoutes.gift}/*`} element={<Gift />} />
-          <Route path={appRoutes.marketplace} element={<Marketplace />} />
           <Route path={appRoutes.signin} element={<Signin />} />
           <Route
             path={appRoutes.auth_redirector}
