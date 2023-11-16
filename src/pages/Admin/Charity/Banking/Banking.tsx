@@ -8,6 +8,7 @@ import LoaderRing from "components/LoaderRing";
 import { getFilePreviews } from "helpers";
 import { EMAIL_SUPPORT } from "constants/env";
 import { Group } from "../common";
+import FormButtons from "./FormButtons";
 import VerificationStatus from "./VerificationStatus";
 
 const PROFILE_ERROR = `Error loading profile. Please try again later. If the error persists,
@@ -75,7 +76,14 @@ export default function Banking() {
                 request,
               }).unwrap();
             }}
-          />
+          >
+            {(disabled, refreshRequired) => (
+              <FormButtons
+                disabled={disabled}
+                refreshRequired={refreshRequired}
+              />
+            )}
+          </BankDetails>
         </Group>
       </div>
     </div>

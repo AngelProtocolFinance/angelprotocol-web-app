@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { CreateRecipientRequest } from "types/aws";
 import { FileDropzoneAsset } from "types/components";
 import Divider from "components/Divider";
@@ -14,13 +14,18 @@ import useCurrencies from "./useCurrencies";
 
 type Props = {
   disabled?: boolean;
+  children: (disabled: boolean, refreshRequired: boolean) => ReactNode;
   onSubmit: (
     request: CreateRecipientRequest,
     bankStatementFile: FileDropzoneAsset
   ) => Promise<void>;
 };
 
-export default function BankDetails({ disabled = false, onSubmit }: Props) {
+export default function BankDetails({
+  disabled = false,
+  onSubmit,
+  children,
+}: Props) {
   const [resubmitRequired, setResubmitRequired] = useState(false);
   const [expectedMontlyDonations, setExpectedMontlyDonations] =
     useState<number>();
@@ -88,7 +93,9 @@ export default function BankDetails({ disabled = false, onSubmit }: Props) {
                 expectedMontlyDonations={expectedMontlyDonations}
                 disabled={disabled}
                 onSubmit={onSubmit}
-              />
+              >
+                {children}
+              </RecipientDetails>
             )}
           </div>
         </>

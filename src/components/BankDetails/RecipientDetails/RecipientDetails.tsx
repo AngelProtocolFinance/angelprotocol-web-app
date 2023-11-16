@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import { CreateRecipientRequest } from "types/aws";
 import { FileDropzoneAsset } from "types/components";
 import LoaderRing from "components/LoaderRing";
@@ -11,6 +12,7 @@ type Props = {
   disabled: boolean;
   targetCurrency: string;
   expectedMontlyDonations: number;
+  children: (disabled: boolean, refreshRequired: boolean) => ReactNode;
   onSubmit: (
     request: CreateRecipientRequest,
     bankStatementFile: FileDropzoneAsset
@@ -21,6 +23,7 @@ export default function RecipientDetails({
   disabled,
   targetCurrency,
   expectedMontlyDonations,
+  children,
   onSubmit,
 }: Props) {
   const {
@@ -98,7 +101,9 @@ export default function RecipientDetails({
         onCleanup={updateDefaultValues}
         onSubmit={handleSubmit}
         onRefresh={refreshRequirements}
-      />
+      >
+        {children}
+      </RecipientDetailsForm>
     </>
   );
 }

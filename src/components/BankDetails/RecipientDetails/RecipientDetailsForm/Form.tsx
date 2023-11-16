@@ -1,9 +1,9 @@
+import { ReactNode } from "react";
 import { useFormContext } from "react-hook-form";
 import { FormValues } from "../types";
 import { AccountRequirements, CreateRecipientRequest } from "types/aws";
 import { FileDropzoneAsset } from "types/components";
 import FileDropzone from "components/FileDropzone";
-import LoaderRing from "components/LoaderRing";
 import { Label } from "components/form";
 import { MB_LIMIT } from "schemas/file";
 import RequirementField from "./RequirementField";
@@ -13,6 +13,7 @@ type Props = {
   accountRequirements: AccountRequirements;
   disabled: boolean;
   refreshRequired: boolean;
+  children: (disabled: boolean, refreshRequired: boolean) => ReactNode;
   onRefresh: (request: CreateRecipientRequest) => void;
   onSubmit: (
     request: CreateRecipientRequest,
@@ -21,7 +22,10 @@ type Props = {
 };
 
 export default function Form(props: Props) {
-  const { handleSubmit } = useFormContext<FormValues>();
+  const {
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useFormContext<FormValues>();
 
   const handleSubmission = handleSubmit((formValues) => {
     const { bankStatementFile, ...bankDetails } = formValues;
@@ -53,45 +57,8 @@ export default function Form(props: Props) {
         />
       </div>
 
-      {props.refreshRequired ? (
-        <>
-          <span>
-            After you fill the form, we may need additional information to be
-            able to submit your bank details for validation. Please fill the
-            form and click the "Check requirements" button below.
-          </span>
-          <SubmitButton text="Check Requirements" loadingText="Checking..." />
-        </>
-      ) : (
-        <SubmitButton text="Submit" loadingText="Submitting..." />
-      )}
+      {props.children(isSubmitting, props.refreshRequired)}
     </form>
-  );
-}
-
-function SubmitButton(props: { text: string; loadingText: string }) {
-  const {
-    formState: { isSubmitting },
-  } = useFormContext<FormValues>();
-
-  return (
-    <button
-      disabled={isSubmitting}
-      type="submit"
-      className="px-6 btn-orange gap-1 text-sm w-80"
-    >
-      {isSubmitting ? (
-        <>
-          <LoaderRing
-            thickness={10}
-            classes={{ container: "w-4", ringToColor: "to-white" }}
-          />{" "}
-          {props.loadingText}
-        </>
-      ) : (
-        props.text
-      )}
-    </button>
   );
 }
 
