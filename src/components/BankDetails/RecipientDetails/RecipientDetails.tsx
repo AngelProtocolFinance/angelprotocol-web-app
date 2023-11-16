@@ -19,7 +19,8 @@ type Props = {
   ) => ReactNode;
   onSubmit: (
     request: CreateRecipientRequest,
-    bankStatementFile: FileDropzoneAsset
+    bankStatementFile: FileDropzoneAsset,
+    isDirty: boolean
   ) => Promise<any>;
 };
 

@@ -62,7 +62,7 @@ export default function Banking() {
           <VerificationStatus status={verif_status} />
           <BankDetails
             disabled={isSubmitted}
-            onSubmit={async (request, bankStatementFile) => {
+            onSubmit={async (request, bankStatementFile, _isDirty) => {
               const bankStatementPreview = await getFilePreviews({
                 bankStatementFile,
               });

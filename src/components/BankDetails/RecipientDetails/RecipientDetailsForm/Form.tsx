@@ -21,14 +21,15 @@ type Props = {
   onRefresh: (request: CreateRecipientRequest) => void;
   onSubmit: (
     request: CreateRecipientRequest,
-    bankStatementFile: FileDropzoneAsset
+    bankStatementFile: FileDropzoneAsset,
+    isDirty: boolean
   ) => void;
 };
 
 export default function Form(props: Props) {
   const {
     handleSubmit,
-    formState: { isSubmitting },
+    formState: { isSubmitting, isDirty },
   } = useFormContext<FormValues>();
 
   const handleSubmission = handleSubmit((formValues) => {
@@ -37,7 +38,7 @@ export default function Form(props: Props) {
     if (props.refreshRequired) {
       props.onRefresh(request);
     } else {
-      props.onSubmit(request, bankStatementFile);
+      props.onSubmit(request, bankStatementFile, isDirty);
     }
   });
 

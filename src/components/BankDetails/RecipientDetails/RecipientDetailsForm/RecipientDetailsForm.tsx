@@ -20,7 +20,8 @@ type Props = {
   onRefresh: (request: CreateRecipientRequest) => void;
   onSubmit: (
     request: CreateRecipientRequest,
-    bankStatementFile: FileDropzoneAsset
+    bankStatementFile: FileDropzoneAsset,
+    isDirty: boolean
   ) => void;
 };
 

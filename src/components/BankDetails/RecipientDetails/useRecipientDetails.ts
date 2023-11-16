@@ -30,7 +30,8 @@ export default function useRecipientDetails(
   expectedMontlyDonations: number,
   onSubmit: (
     request: CreateRecipientRequest,
-    bankStatementFile: FileDropzoneAsset
+    bankStatementFile: FileDropzoneAsset,
+    isDirty: boolean
   ) => Promise<any>
 ) {
   const [requirementsDataArray, setRequirementsDataArray] = useState<
@@ -153,11 +154,12 @@ export default function useRecipientDetails(
 
   const handleSubmit = async (
     request: CreateRecipientRequest,
-    bankStatementFile: FileDropzoneAsset
+    bankStatementFile: FileDropzoneAsset,
+    isDirty: boolean
   ) => {
     try {
       setSubmitting(true);
-      await onSubmit(request, bankStatementFile);
+      await onSubmit(request, bankStatementFile, isDirty);
       setError(false);
     } catch (error) {
       handleError(error, ERROR_MSG);
