@@ -5,7 +5,7 @@ import { statuses } from "./constants";
 export default function RegStatusDropdown({ classes = "" }) {
   return (
     <div className={classes + " grid gap-2"}>
-      <label className="text-sm">Status</label>
+      <label className="text-sm">Application Status</label>
       <Selector<FV, "status", string>
         name="status"
         classes={{ button: "dark:bg-blue-d6" }}

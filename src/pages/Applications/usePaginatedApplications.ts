@@ -14,15 +14,17 @@ export default function usePaginatedApplications() {
   const [query, setQuery] = useState<string>("");
   const [debouncedQuery, isDebouncing] = useDebouncer(query, 500);
 
-  const [params, setParams] = useState<ApplicationsQueryParams>({});
+  const [params, setParams] = useState<ApplicationsQueryParams>({
+    limit: 10,
+  });
 
   const queryState = useApplicationsQuery(params, {
     selectFromResult({ data, ...rest }) {
       if (!data?.Items) {
         return { data, ...rest };
       }
-      console.log({ debouncedQuery });
 
+      console.log({ debouncedQuery });
       return {
         data: { Items: data.Items, ItemCutoff: data.ItemCutoff },
         ...rest,
@@ -57,8 +59,6 @@ export default function usePaginatedApplications() {
       }
     }
   }
-
-  console.log(queryState);
 
   const hasMore = !!data?.ItemCutoff;
 

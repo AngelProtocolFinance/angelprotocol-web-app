@@ -5,7 +5,7 @@ import { chains } from "constants/chains";
 export default function BankingStatusDropdown({ classes = "" }) {
   return (
     <div className={classes + " grid gap-2"}>
-      <label className="text-sm">Network</label>
+      <label className="text-sm">Banking Status</label>
       <Selector<FV, "network", string>
         name="network"
         classes={{ button: "dark:bg-blue-d6" }}
