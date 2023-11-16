@@ -1,4 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { CreateRecipientRequest } from "types/aws";
+import { FileDropzoneAsset } from "types/components";
 import { useAdminContext } from "pages/Admin/Context";
 import { useProfileQuery } from "services/aws/aws";
 import { useCreateRecipientAccountMutation } from "services/aws/bankDetails";
@@ -6,6 +8,7 @@ import { useErrorContext } from "contexts/ErrorContext";
 import BankDetails from "components/BankDetails";
 import LoaderRing from "components/LoaderRing";
 import { getFilePreviews } from "helpers";
+import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { EMAIL_SUPPORT } from "constants/env";
 import { Group } from "../common";
 import FormButtons from "./FormButtons";
@@ -16,6 +19,8 @@ please contact ${EMAIL_SUPPORT}.`;
 
 export default function Banking() {
   const { id: endowment_id } = useAdminContext();
+
+  const [isSubmitting, setSubmitting] = useState(false);
 
   const [createRecipientAccount] = useCreateRecipientAccountMutation();
 
@@ -52,6 +57,31 @@ export default function Banking() {
 
   const isSubmitted = verif_status !== "Not Submitted";
 
+  const submit = async (
+    request: CreateRecipientRequest,
+    bankStatementFile: FileDropzoneAsset
+  ) => {
+    try {
+      setSubmitting(true);
+      const bankStatementPreview = await getFilePreviews({
+        bankStatementFile,
+      });
+      // TODO: logging just to avoid compiler warnings about unused variable,
+      // will be updated to real logic once possible
+      console.log(
+        `TODO: handle bank statement: ${bankStatementPreview.bankStatementFile[0].publicUrl}`
+      );
+      await createRecipientAccount({
+        PK: endowment_id,
+        request,
+      }).unwrap();
+    } catch (error) {
+      handleError(error, GENERIC_ERROR_MESSAGE);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
     <div className="grid">
       <div className="grid gap-5 max-w-4xl justify-self-center">
@@ -61,21 +91,9 @@ export default function Banking() {
         >
           <VerificationStatus status={verif_status} />
           <BankDetails
-            disabled={isSubmitted}
-            onSubmit={async (request, bankStatementFile, _isDirty) => {
-              const bankStatementPreview = await getFilePreviews({
-                bankStatementFile,
-              });
-              // TODO: logging just to avoid compiler warnings about unused variable,
-              // will be updated to real logic once possible
-              console.log(
-                `TODO: handle bank statement: ${bankStatementPreview.bankStatementFile[0].publicUrl}`
-              );
-              await createRecipientAccount({
-                PK: endowment_id,
-                request,
-              }).unwrap();
-            }}
+            alreadySubmitted={isSubmitted}
+            isSubmitting={isSubmitting}
+            onSubmit={submit}
           >
             {(disabled, isSubmitting, refreshRequired) => (
               <FormButtons

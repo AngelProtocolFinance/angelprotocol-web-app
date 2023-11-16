@@ -3,6 +3,7 @@ import { CreateRecipientRequest } from "types/aws";
 import { FileDropzoneAsset } from "types/components";
 import LoaderRing from "components/LoaderRing";
 import { isEmpty } from "helpers";
+import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { EMAIL_SUPPORT } from "constants/env";
 import AccountRequirementsSelector from "./AccountRequirementsSelector";
 import RecipientDetailsForm from "./RecipientDetailsForm";
@@ -52,12 +53,7 @@ export default function RecipientDetails({
   }
 
   if (isError) {
-    return (
-      <span>
-        An error occurred. Please try again later. If the error persists, please
-        contact {EMAIL_SUPPORT}.
-      </span>
-    );
+    return <span>{GENERIC_ERROR_MESSAGE}</span>;
   }
 
   // requirements *can* be empty, check the following example when source currency is USD and target is ALL (Albanian lek):

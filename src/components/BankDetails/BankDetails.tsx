@@ -5,7 +5,7 @@ import Divider from "components/Divider";
 import LoaderRing from "components/LoaderRing";
 import useDebounce from "hooks/useDebounce";
 import { isEmpty } from "helpers";
-import { EMAIL_SUPPORT } from "constants/env";
+import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import CurrencySelector from "./CurrencySelector";
 import ExpectedFunds from "./ExpectedFunds";
 import RecipientDetails from "./RecipientDetails";
@@ -13,7 +13,8 @@ import UpdateDetailsButton from "./UpdateDetailsButton";
 import useCurrencies from "./useCurrencies";
 
 type Props = {
-  disabled?: boolean;
+  alreadySubmitted?: boolean;
+  isSubmitting: boolean;
   children: (
     disabled: boolean,
     isSubmitting: boolean,
@@ -27,7 +28,8 @@ type Props = {
 };
 
 export default function BankDetails({
-  disabled = false,
+  alreadySubmitted = false,
+  isSubmitting,
   onSubmit,
   children,
 }: Props) {
@@ -48,17 +50,14 @@ export default function BankDetails({
   }
 
   if (isEmpty(currencies) || !targetCurrency) {
-    return (
-      <span>
-        An error occurred. Please try again later. If the error persists, please
-        contact {EMAIL_SUPPORT}.
-      </span>
-    );
+    return <span>{GENERIC_ERROR_MESSAGE}</span>;
   }
+
+  const disabled = alreadySubmitted || isSubmitting;
 
   return (
     <div className="grid gap-6">
-      {disabled && !resubmitRequired && (
+      {alreadySubmitted && !resubmitRequired && (
         <UpdateDetailsButton
           className="my-4"
           onClick={() => setResubmitRequired(true)}

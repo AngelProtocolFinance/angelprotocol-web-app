@@ -5,10 +5,14 @@ import useSubmit from "./useSubmit";
 
 function Banking() {
   const { data } = useRegState<5>();
-  const submit = useSubmit();
+  const { submit, isSubmitting } = useSubmit();
 
   return (
-    <BankDetails disabled={!!data.banking?.wise_recipient_id} onSubmit={submit}>
+    <BankDetails
+      alreadySubmitted={!!data.banking?.wise_recipient_id}
+      isSubmitting={isSubmitting}
+      onSubmit={submit}
+    >
       {(disabled, isSubmitting, refreshRequired) => (
         <FormButtons
           disabled={disabled}

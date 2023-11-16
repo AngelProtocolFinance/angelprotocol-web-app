@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CreateRecipientRequest } from "types/aws";
 import { FileDropzoneAsset } from "types/components";
@@ -6,6 +6,7 @@ import { useCreateRecipientAccountMutation } from "services/aws/bankDetails";
 import { useUpdateRegMutation } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import { getFilePreviews } from "helpers";
+import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { steps } from "../../routes";
 import { useRegState } from "../StepGuard";
 
@@ -15,6 +16,7 @@ export default function useSubmit() {
   const [updateReg] = useUpdateRegMutation();
   const { handleError } = useErrorContext();
   const navigate = useNavigate();
+  const [isSubmitting, setSubmitting] = useState(false);
 
   const submit = useCallback(
     async (
@@ -22,29 +24,37 @@ export default function useSubmit() {
       bankStatementFile: FileDropzoneAsset,
       isDirty: boolean
     ) => {
-      if (!isDirty && data.banking?.BankStatementFile) {
+      try {
+        if (!isDirty && data.banking?.BankStatementFile) {
+          return navigate(`../${steps.summary}`, { state: data.init });
+        }
+
+        setSubmitting(true);
+
+        const bankStatementPreview = await getFilePreviews({
+          bankStatementFile,
+        });
+
+        await createRecipientAccount({
+          PK: data.contact.PK,
+          request,
+        }).unwrap();
+
+        const result = await updateReg({
+          reference: data.init.reference,
+          type: "banking",
+          BankStatementFile: bankStatementPreview.bankStatementFile[0],
+        });
+
+        if ("error" in result) {
+          return handleError(result.error);
+        }
         return navigate(`../${steps.summary}`, { state: data.init });
+      } catch (error) {
+        handleError(error, GENERIC_ERROR_MESSAGE);
+      } finally {
+        setSubmitting(false);
       }
-
-      const bankStatementPreview = await getFilePreviews({
-        bankStatementFile,
-      });
-
-      await createRecipientAccount({
-        PK: data.contact.PK,
-        request,
-      }).unwrap();
-
-      const result = await updateReg({
-        reference: data.init.reference,
-        type: "banking",
-        BankStatementFile: bankStatementPreview.bankStatementFile[0],
-      });
-
-      if ("error" in result) {
-        return handleError(result.error);
-      }
-      return navigate(`../${steps.summary}`, { state: data.init });
     },
     [
       data.banking?.BankStatementFile,
@@ -57,5 +67,5 @@ export default function useSubmit() {
     ]
   );
 
-  return submit;
+  return { isSubmitting, submit };
 }

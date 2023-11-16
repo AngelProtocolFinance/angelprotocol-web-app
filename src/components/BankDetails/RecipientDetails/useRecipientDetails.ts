@@ -9,10 +9,8 @@ import {
 import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";
 import { UnexpectedStateError } from "errors/errors";
-import { EMAIL_SUPPORT } from "constants/env";
+import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import getDefaultValues from "./getDefaultValues";
-
-const ERROR_MSG = `An error occured. Please try again later. If the error persists, please contact ${EMAIL_SUPPORT}`;
 
 type RequirementsData = {
   accountRequirements: AccountRequirements;
@@ -84,7 +82,7 @@ export default function useRecipientDetails(
         );
         // setQuote(newQuote);
       } catch (error) {
-        handleError(error, ERROR_MSG);
+        handleError(error, GENERIC_ERROR_MESSAGE);
         setError(true);
       } finally {
         setLoading(false);
@@ -145,7 +143,7 @@ export default function useRecipientDetails(
       });
       setError(false);
     } catch (error) {
-      handleError(error, ERROR_MSG);
+      handleError(error, GENERIC_ERROR_MESSAGE);
       setError(true);
     } finally {
       setSubmitting(false);
@@ -162,7 +160,7 @@ export default function useRecipientDetails(
       await onSubmit(request, bankStatementFile, isDirty);
       setError(false);
     } catch (error) {
-      handleError(error, ERROR_MSG);
+      handleError(error, GENERIC_ERROR_MESSAGE);
       setError(true);
     } finally {
       setSubmitting(false);
