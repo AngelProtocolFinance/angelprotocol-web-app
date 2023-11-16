@@ -9,6 +9,7 @@ import { EMAIL_SUPPORT } from "constants/env";
 import CurrencySelector from "./CurrencySelector";
 import ExpectedFunds from "./ExpectedFunds";
 import RecipientDetails from "./RecipientDetails";
+import UpdateDetailsButton from "./UpdateDetailsButton";
 import useCurrencies from "./useCurrencies";
 
 type Props = {
@@ -20,6 +21,7 @@ type Props = {
 };
 
 export default function BankDetails({ disabled = false, onSubmit }: Props) {
+  const [resubmitRequired, setResubmitRequired] = useState(false);
   const [expectedMontlyDonations, setExpectedMontlyDonations] =
     useState<number>();
   const [debounce, isDebouncing] = useDebounce();
@@ -46,6 +48,12 @@ export default function BankDetails({ disabled = false, onSubmit }: Props) {
 
   return (
     <div className="grid gap-6">
+      {disabled && !resubmitRequired && (
+        <UpdateDetailsButton
+          className="my-4"
+          onClick={() => setResubmitRequired(true)}
+        />
+      )}
       <CurrencySelector
         value={targetCurrency}
         currencies={currencies}
