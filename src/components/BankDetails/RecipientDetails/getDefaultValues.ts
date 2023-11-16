@@ -5,11 +5,12 @@ import { asset } from "components/FileDropzone";
 import { isCountry, isTextType, undot } from "./helpers";
 
 export default function getDefaultValues(
+  accountHolderName: string,
   accountRequirements: AccountRequirements,
   targetCurrency: string
 ): FormValues {
   return {
-    accountHolderName: "ENDOWMENT_NAME",
+    accountHolderName: accountHolderName,
     bankStatementFile: asset([]),
     currency: targetCurrency,
     type: accountRequirements.type,

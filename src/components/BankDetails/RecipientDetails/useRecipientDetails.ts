@@ -24,6 +24,7 @@ type RequirementsData = {
 };
 
 export default function useRecipientDetails(
+  accountHolderName: string,
   targetCurrency: string,
   expectedMontlyDonations: number,
   onSubmit: (
@@ -69,7 +70,11 @@ export default function useRecipientDetails(
           newRequirements.map((item) => {
             const data: RequirementsData = {
               accountRequirements: item,
-              currentFormValues: getDefaultValues(item, targetCurrency),
+              currentFormValues: getDefaultValues(
+                accountHolderName,
+                item,
+                targetCurrency
+              ),
               refreshRequired: item.fields.some((field) =>
                 field.group.some((group) => group.refreshRequirementsOnChange)
               ),
@@ -88,6 +93,7 @@ export default function useRecipientDetails(
   }, [
     // despite these parameters being included in the dep. array,
     // this effect will only ever be run once (see ../BankDetails.tsx)
+    accountHolderName,
     targetCurrency,
     expectedMontlyDonations,
     createQuote,

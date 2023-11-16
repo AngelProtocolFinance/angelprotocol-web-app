@@ -91,6 +91,7 @@ export default function Banking() {
         >
           <VerificationStatus status={verif_status} />
           <BankDetails
+            accountHolderName={profile.name}
             alreadySubmitted={isSubmitted}
             isSubmitting={isSubmitting}
             onSubmit={submit}

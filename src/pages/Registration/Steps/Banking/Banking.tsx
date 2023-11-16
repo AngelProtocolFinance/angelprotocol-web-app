@@ -9,6 +9,7 @@ function Banking() {
 
   return (
     <BankDetails
+      accountHolderName={data.contact.orgName}
       alreadySubmitted={!!data.banking?.wise_recipient_id}
       isSubmitting={isSubmitting}
       onSubmit={submit}
