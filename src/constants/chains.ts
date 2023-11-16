@@ -2,6 +2,7 @@ import { Chain, Chains, CosmosChainID, EVMChainID } from "types/chain";
 
 //mainnets
 export const polygon: Chain = {
+  isTest: false,
   id: "137",
   brand: "polygon",
   name: "Polygon",
@@ -17,6 +18,7 @@ export const polygon: Chain = {
 };
 
 export const ethereum: Chain = {
+  isTest: false,
   id: "1",
   brand: "ethereum",
   name: "Ethereum",
@@ -32,6 +34,7 @@ export const ethereum: Chain = {
 };
 
 export const binance: Chain = {
+  isTest: false,
   id: "56",
   brand: "binance",
   name: "Binance",
@@ -47,6 +50,7 @@ export const binance: Chain = {
 };
 
 export const juno: Chain = {
+  isTest: false,
   id: "juno-1",
   brand: "juno",
   name: "Juno",
@@ -62,6 +66,7 @@ export const juno: Chain = {
 };
 
 export const terraMainnet: Chain = {
+  isTest: false,
   id: "phoenix-1",
   brand: "terra",
   name: "Terra",
@@ -78,6 +83,7 @@ export const terraMainnet: Chain = {
 
 //testnets
 export const mumbai: Chain = {
+  isTest: true,
   id: "80001",
   brand: "polygon",
   name: "Polygon Mumbai Testnet",
@@ -93,6 +99,7 @@ export const mumbai: Chain = {
 };
 
 export const goerli: Chain = {
+  isTest: true,
   id: "5",
   brand: "ethereum",
   name: "Ethereum Goerli Testnet",
@@ -108,6 +115,7 @@ export const goerli: Chain = {
 };
 
 export const binanceTestnet: Chain = {
+  isTest: true,
   id: "97",
   brand: "binance",
   name: "Binance Testnet",
@@ -123,6 +131,7 @@ export const binanceTestnet: Chain = {
 };
 
 export const terraTestnet: Chain = {
+  isTest: true,
   id: "pisco-1",
   brand: "terra",
   name: "Terra Pisco testnet",
