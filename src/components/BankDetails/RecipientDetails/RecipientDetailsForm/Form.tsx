@@ -13,7 +13,11 @@ type Props = {
   accountRequirements: AccountRequirements;
   disabled: boolean;
   refreshRequired: boolean;
-  children: (disabled: boolean, refreshRequired: boolean) => ReactNode;
+  children: (
+    disabled: boolean,
+    isSubmitting: boolean,
+    refreshRequired: boolean
+  ) => ReactNode;
   onRefresh: (request: CreateRecipientRequest) => void;
   onSubmit: (
     request: CreateRecipientRequest,
@@ -57,7 +61,7 @@ export default function Form(props: Props) {
         />
       </div>
 
-      {props.children(isSubmitting, props.refreshRequired)}
+      {props.children(props.disabled, isSubmitting, props.refreshRequired)}
     </form>
   );
 }

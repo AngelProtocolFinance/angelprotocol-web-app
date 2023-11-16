@@ -11,7 +11,11 @@ type Props = {
   defaultValues: FormValues;
   disabled: boolean;
   refreshRequired: boolean;
-  children: (disabled: boolean, refreshRequired: boolean) => ReactNode;
+  children: (
+    disabled: boolean,
+    isSubmitting: boolean,
+    refreshRequired: boolean
+  ) => ReactNode;
   onCleanup: (formValues: FormValues) => void;
   onRefresh: (request: CreateRecipientRequest) => void;
   onSubmit: (

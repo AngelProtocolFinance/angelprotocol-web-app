@@ -14,7 +14,11 @@ import useCurrencies from "./useCurrencies";
 
 type Props = {
   disabled?: boolean;
-  children: (disabled: boolean, refreshRequired: boolean) => ReactNode;
+  children: (
+    disabled: boolean,
+    isSubmitting: boolean,
+    refreshRequired: boolean
+  ) => ReactNode;
   onSubmit: (
     request: CreateRecipientRequest,
     bankStatementFile: FileDropzoneAsset
@@ -76,7 +80,11 @@ export default function BankDetails({
         disabled={disabled}
       />
 
-      {!!expectedMontlyDonations && (
+      {/* Display disabled form buttons by default, this is necessary 
+          to be able to show "Back" button during registration */}
+      {!expectedMontlyDonations ? (
+        children(true, false, true)
+      ) : (
         <>
           <Divider />
           <div className="min-h-[20rem]">

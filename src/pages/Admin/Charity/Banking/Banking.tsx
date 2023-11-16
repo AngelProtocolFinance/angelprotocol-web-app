@@ -77,9 +77,10 @@ export default function Banking() {
               }).unwrap();
             }}
           >
-            {(disabled, refreshRequired) => (
+            {(disabled, isSubmitting, refreshRequired) => (
               <FormButtons
                 disabled={disabled}
+                isSubmitting={isSubmitting}
                 refreshRequired={refreshRequired}
               />
             )}
