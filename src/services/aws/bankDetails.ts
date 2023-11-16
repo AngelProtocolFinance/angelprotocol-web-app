@@ -83,7 +83,7 @@ export const bank_details_api = aws.injectEndpoints({
             },
           })),
     }),
-    getCurrencies: builder.mutation<WiseCurrency[], undefined>({
+    getCurrencies: builder.mutation<WiseCurrency[], unknown>({
       query: () => ({
         url: `/${v(1)}/wise`,
         method: "POST",
