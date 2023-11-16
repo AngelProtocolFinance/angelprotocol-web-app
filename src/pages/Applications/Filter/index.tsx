@@ -3,7 +3,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormEventHandler, useRef } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues as FV } from "./types";
-import { DonationsQueryParams } from "types/aws";
+import { ApplicationsQueryParams } from "types/aws";
 import Icon, { DrawerIcon } from "components/Icon";
 import { dateToFormFormat } from "components/form";
 import { cleanObject } from "helpers/cleanObject";
@@ -12,7 +12,7 @@ import { schema } from "./schema";
 
 type Props = {
   classes?: string;
-  setParams: React.Dispatch<React.SetStateAction<DonationsQueryParams>>;
+  setParams: React.Dispatch<React.SetStateAction<ApplicationsQueryParams>>;
   isDisabled: boolean;
   donorAddress: string;
 };
@@ -43,23 +43,21 @@ export default function Filter({
   const { handleSubmit, reset } = methods;
 
   async function submit(data: FV) {
-    setParams((prev) => ({
-      id: prev.id,
-      chain_id: prev.chain_id,
-      ...cleanObject({
-        afterDate: data.startDate ? new Date(data.startDate).toISOString() : "",
-        beforeDate: data.endDate ? new Date(data.endDate).toISOString() : "",
-        chainName: data.network.value,
-        denomination: data.currency.value,
-        status: data.status.value,
-      }),
-    }));
+    setParams(
+      cleanObject({
+        regAfterDate: data.startDate
+          ? new Date(data.startDate).toISOString()
+          : "",
+        regBeforeDate: data.endDate ? new Date(data.endDate).toISOString() : "",
+        regStatus: data.status.value,
+      })
+    );
     buttonRef.current?.click();
   }
 
   const onReset: FormEventHandler<HTMLFormElement> = () => {
     reset();
-    setParams((prev) => ({ id: prev.id, chain_id: prev.chain_id }));
+    setParams({});
     buttonRef.current?.click();
   };
   return (

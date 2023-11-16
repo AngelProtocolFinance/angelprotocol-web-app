@@ -7,7 +7,6 @@ import {
 } from "../types";
 import {
   ApplicationsQueryParams,
-  DonationsQueryParams,
   EndowListPaginatedAWSQueryRes,
   EndowmentCard,
   EndowmentOption,

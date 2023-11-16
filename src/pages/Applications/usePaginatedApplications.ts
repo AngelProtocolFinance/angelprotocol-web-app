@@ -21,16 +21,10 @@ export default function usePaginatedApplications() {
       if (!data?.Items) {
         return { data, ...rest };
       }
-
-      const filtered = data?.Items.filter(({ kycData, ...flatFields }) =>
-        Object.values(flatFields)
-          .reduce<string>((result, val) => `${val}` + result, "")
-          .toLocaleLowerCase()
-          .includes(debouncedQuery.toLocaleLowerCase())
-      );
+      console.log({ debouncedQuery });
 
       return {
-        data: { Items: filtered, ItemCutoff: data.ItemCutoff },
+        data: { Items: data.Items, ItemCutoff: data.ItemCutoff },
         ...rest,
       };
     },
@@ -63,6 +57,8 @@ export default function usePaginatedApplications() {
       }
     }
   }
+
+  console.log(queryState);
 
   const hasMore = !!data?.ItemCutoff;
 

@@ -1,10 +1,10 @@
 import { useParams } from "react-router-dom";
-import { usePaginatedDonationRecords } from "services/apes";
 import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
 import Filter from "./Filter";
 import NoDonations from "./NoDonations";
 import Table from "./Table";
+import usePaginatedApplications from "./usePaginatedApplications";
 
 export default function Applications() {
   const { address: donorAddress = "" } = useParams<{ address: string }>();
@@ -18,7 +18,7 @@ export default function Applications() {
     loadNextPage,
     onQueryChange,
     setParams,
-  } = usePaginatedDonationRecords({ donorAddress });
+  } = usePaginatedApplications();
 
   const isLoadingOrError = isLoading || isLoadingNextPage || isError;
 

@@ -20,6 +20,7 @@ const DonateFiatThanks = lazy(() => import("pages/DonateFiatThanks"));
 const Gift = lazy(() => import("pages/Gift"));
 const DonateWidget = lazy(() => import("pages/DonateWidget"));
 const Signin = lazy(() => import("pages/Signin"));
+const Applications = lazy(() => import("pages/Applications"));
 
 export default function App() {
   const location = useLocation();
@@ -44,6 +45,14 @@ export default function App() {
             element={
               <Protected>
                 <Admin />
+              </Protected>
+            }
+          />
+          <Route
+            path={appRoutes.applications}
+            element={
+              <Protected>
+                <Applications />
               </Protected>
             }
           />
