@@ -81,7 +81,7 @@ export const bank_details_api = aws.injectEndpoints({
      * For more details see https://docs.wise.com/api-docs/api-reference/recipient#account-requirements
      */
     postAccountRequirements: builder.mutation<
-      AccountRequirements,
+      AccountRequirements[],
       { quoteId: string; request: CreateRecipientRequest }
     >({
       query: ({ quoteId, request }) => ({

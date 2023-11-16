@@ -138,12 +138,18 @@ export default function useRecipientDetails(
       }).unwrap();
 
       setRequirementsDataArray((prev) => {
-        const updated = [...prev];
-        updated[selectedIndex].accountRequirements = newRequirements;
-        updated[selectedIndex].refreshRequired = newRequirements.fields.some(
-          (field) =>
-            field.group.some((group) => group.refreshRequirementsOnChange)
-        );
+        const updated: RequirementsData[] = newRequirements.map((newReq) => ({
+          accountRequirements: newReq,
+          currentFormValues:
+            prev.find(
+              (prevReq) => prevReq.accountRequirements.type === newReq.type
+            )?.currentFormValues ??
+            getDefaultValues(accountHolderName, newReq, targetCurrency),
+          refreshRequired:
+            prev[selectedIndex].accountRequirements.type === newReq.type
+              ? false // just finished checking requirements for selected type, so no need to do it again
+              : prev[selectedIndex].refreshRequired, // just copy/paste for other types
+        }));
         return updated;
       });
       setError(false);
