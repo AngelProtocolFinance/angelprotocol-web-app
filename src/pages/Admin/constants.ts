@@ -5,6 +5,7 @@ const { program_editor, index, ...restAdminRoutes } = adminRoutes;
 
 const sidebarRoutes = {
   ...restAdminRoutes,
+  dashboard: "",
 } as const;
 
 type SidebarRoutes = typeof sidebarRoutes;
@@ -21,6 +22,15 @@ export const LINKS: {
       type: "User",
       size: 20.5,
     },
+  },
+  dashboard: {
+    title: "Dashboard",
+    to: sidebarRoutes.dashboard,
+    icon: {
+      type: "Dashboard",
+      size: 24,
+    },
+    end: true,
   },
   programs: {
     title: "Programs",

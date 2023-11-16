@@ -63,6 +63,7 @@ import {
   MdOutlineFileDownload,
   MdOutlineFilterAlt,
   MdOutlineUploadFile,
+  MdSpaceDashboard,
   MdWidgets,
 } from "react-icons/md";
 import { RiMapPin2Line } from "react-icons/ri";
@@ -84,6 +85,7 @@ export const icons = {
   Copy: MdOutlineContentCopy,
   Crop: IoCrop,
   Dash: GoDash,
+  Dashboard: MdSpaceDashboard,
   Discord: FaDiscord,
   Down: VscTriangleDown,
   Email: MdOutlineEmail,
