@@ -6,6 +6,7 @@ import {
   isDeleteMsg,
 } from "../types";
 import {
+  ApplicationsQueryParams,
   DonationsQueryParams,
   EndowListPaginatedAWSQueryRes,
   EndowmentCard,
@@ -55,6 +56,7 @@ export const aws = createApi({
     "endowments",
     "strategy",
     "program",
+    "applications",
   ],
   reducerPath: "aws",
   baseQuery: awsBaseQuery,
@@ -142,17 +144,18 @@ export const aws = createApi({
         };
       },
     }),
-    donations: builder.query<PaginatedAWSQueryRes<any[]>, DonationsQueryParams>(
-      {
-        providesTags: ["donations"],
-        query: ({ id, chain_id, ...rest }) => {
-          return {
-            url: `${v(3)}/donation/${chain_id}/${id}`,
-            params: rest,
-          };
-        },
-      }
-    ),
+    applications: builder.query<
+      PaginatedAWSQueryRes<any[]>,
+      ApplicationsQueryParams
+    >({
+      providesTags: ["applications"],
+      query: (params) => {
+        return {
+          url: `${v(1)}/applications`,
+          params,
+        };
+      },
+    }),
   }),
 });
 
@@ -164,11 +167,13 @@ export const {
   useProfileQuery,
   useProgramQuery,
   useEditProfileMutation,
+  useApplicationsQuery,
 
   endpoints: {
     endowmentCards: { useLazyQuery: useLazyEndowmentCardsQuery },
     endowmentOptions: { useLazyQuery: useLazyEndowmentOptionsQuery },
     profile: { useLazyQuery: useLazyProfileQuery },
+    applications: { useLazyQuery: useLazyApplicationsQuery },
   },
   util: {
     invalidateTags: invalidateAwsTags,
