@@ -1,18 +1,12 @@
 import { useState } from "react";
+import { ApplicationsQueryParams } from "types/aws";
 import {
-  DonationMadeByDonor,
-  DonationReceivedByEndow,
-  DonationsQueryParams,
-  PaginatedAWSQueryRes,
-} from "types/aws";
-import {
-  updateDonationsQueryData,
-  useDonationsQuery,
-  useLazyDonationsQuery,
-} from "services/apes";
+  updateAWSQueryData,
+  useApplicationsQuery,
+  useLazyApplicationsQuery,
+} from "services/aws/aws";
 import { useSetter } from "store/accessors";
 import useDebouncer from "hooks/useDebouncer";
-import { chainIds } from "constants/chainIds";
 
 export default function usePaginatedApplications() {
   const dispatch = useSetter();
@@ -20,16 +14,9 @@ export default function usePaginatedApplications() {
   const [query, setQuery] = useState<string>("");
   const [debouncedQuery, isDebouncing] = useDebouncer(query, 500);
 
-  const id: string =
-    "endowmentId" in owner ? owner.endowmentId : owner.donorAddress;
+  const [params, setParams] = useState<ApplicationsQueryParams>({});
 
-  const [params, setParams] = useState<DonationsQueryParams>({
-    id,
-    chain_id: chainIds.polygon,
-  });
-
-  const queryState = useDonationsQuery(params, {
-    skip: !id,
+  const queryState = useApplicationsQuery(params, {
     selectFromResult({ data, ...rest }) {
       if (!data?.Items) {
         return { data, ...rest };
@@ -52,7 +39,7 @@ export default function usePaginatedApplications() {
   const { isLoading, isError, data, originalArgs } = queryState;
 
   const [loadMore, { isLoading: isLoadingNextPage, isError: isErrorNextPage }] =
-    useLazyDonationsQuery();
+    useLazyApplicationsQuery();
 
   async function loadNextPage() {
     //button is hidden when there's no more
@@ -68,7 +55,7 @@ export default function usePaginatedApplications() {
       if (newEndowRes) {
         //pessimistic update to original cache data
         dispatch(
-          updateDonationsQueryData("donations", originalArgs, (prevResult) => {
+          updateAWSQueryData("applications", originalArgs, (prevResult) => {
             prevResult.Items.push(...newEndowRes.Items);
             prevResult.ItemCutoff = newEndowRes.ItemCutoff;
           })
@@ -80,9 +67,7 @@ export default function usePaginatedApplications() {
   const hasMore = !!data?.ItemCutoff;
 
   return {
-    data: data as T extends EndowmentOwner
-      ? PaginatedAWSQueryRes<DonationReceivedByEndow[]>
-      : PaginatedAWSQueryRes<DonationMadeByDonor[]>,
+    data,
     hasMore,
     isError: isError || isErrorNextPage,
     isLoading: isLoading || isDebouncing,

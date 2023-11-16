@@ -1,5 +1,4 @@
 export type ApplicationsQueryParams = {
-  uuid: string;
   regAfterDate?: string;
   regBeforeDate?: string;
   regStatus?: string;
