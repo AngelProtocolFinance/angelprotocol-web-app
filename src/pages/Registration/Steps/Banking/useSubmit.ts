@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CreateRecipientRequest } from "types/aws";
 import { FileDropzoneAsset } from "types/components";
@@ -18,54 +18,43 @@ export default function useSubmit() {
   const navigate = useNavigate();
   const [isSubmitting, setSubmitting] = useState(false);
 
-  const submit = useCallback(
-    async (
-      request: CreateRecipientRequest,
-      bankStatementFile: FileDropzoneAsset,
-      isDirty: boolean
-    ) => {
-      try {
-        if (!isDirty && data.banking?.BankStatementFile) {
-          return navigate(`../${steps.summary}`, { state: data.init });
-        }
-
-        setSubmitting(true);
-
-        const bankStatementPreview = await getFilePreviews({
-          bankStatementFile,
-        });
-
-        await createRecipientAccount({
-          PK: data.contact.PK,
-          request,
-        }).unwrap();
-
-        const result = await updateReg({
-          reference: data.init.reference,
-          type: "banking",
-          BankStatementFile: bankStatementPreview.bankStatementFile[0],
-        });
-
-        if ("error" in result) {
-          return handleError(result.error);
-        }
+  const submit = async (
+    request: CreateRecipientRequest,
+    bankStatementFile: FileDropzoneAsset,
+    isDirty: boolean
+  ) => {
+    try {
+      if (!isDirty && data.banking?.BankStatementFile) {
         return navigate(`../${steps.summary}`, { state: data.init });
-      } catch (error) {
-        handleError(error, GENERIC_ERROR_MESSAGE);
-      } finally {
-        setSubmitting(false);
       }
-    },
-    [
-      data.banking?.BankStatementFile,
-      data.contact.PK,
-      data.init,
-      createRecipientAccount,
-      handleError,
-      navigate,
-      updateReg,
-    ]
-  );
+
+      setSubmitting(true);
+
+      const bankStatementPreview = await getFilePreviews({
+        bankStatementFile,
+      });
+
+      await createRecipientAccount({
+        PK: data.contact.PK,
+        request,
+      }).unwrap();
+
+      const result = await updateReg({
+        reference: data.init.reference,
+        type: "banking",
+        BankStatementFile: bankStatementPreview.bankStatementFile[0],
+      });
+
+      if ("error" in result) {
+        return handleError(result.error);
+      }
+      return navigate(`../${steps.summary}`, { state: data.init });
+    } catch (error) {
+      handleError(error, GENERIC_ERROR_MESSAGE);
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   return { isSubmitting, submit };
 }
