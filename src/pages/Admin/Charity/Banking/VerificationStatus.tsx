@@ -1,27 +1,11 @@
-import { memo } from "react";
 import { EndowmentProfile } from "types/aws";
 import Icon, { IconType } from "components/Icon";
-
-function Status(props: {
-  className: string;
-  label: string;
-  iconType: IconType;
-}) {
-  const { className, label, iconType } = props;
-  return (
-    <span
-      className={`flex gap-1 items-center justify-center p-2 rounded-sm text-xs sm:text-sm font-semibold ${className}`}
-    >
-      {label} <Icon type={iconType} aria-hidden className="text-sm" />
-    </span>
-  );
-}
 
 type Props = {
   status: EndowmentProfile["bank_verification_status"];
 };
 
-function VerificationStatus({ status }: Props) {
+export default function VerificationStatus({ status }: Props) {
   switch (status) {
     case "Not Submitted":
       return (
@@ -64,4 +48,17 @@ function VerificationStatus({ status }: Props) {
   }
 }
 
-export default memo(VerificationStatus);
+function Status(props: {
+  className: string;
+  label: string;
+  iconType: IconType;
+}) {
+  const { className, label, iconType } = props;
+  return (
+    <span
+      className={`flex gap-1 items-center justify-center p-2 rounded-sm text-xs sm:text-sm font-semibold ${className}`}
+    >
+      {label} <Icon type={iconType} aria-hidden className="text-sm" />
+    </span>
+  );
+}
