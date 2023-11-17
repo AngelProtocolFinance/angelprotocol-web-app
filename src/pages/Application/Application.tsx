@@ -65,6 +65,26 @@ export default function Application() {
           </Row>
         </div>
       </Container>
+      <div className="flex gap-x-3 justify-self-center sm:justify-self-end">
+        <button
+          type="button"
+          className="px-4 py-1 min-w-[6rem] font-work text-sm uppercase btn-outline"
+        >
+          back
+        </button>
+        <button
+          type="button"
+          className="px-4 py-1 min-w-[6rem] font-work text-sm uppercase btn-red"
+        >
+          reject
+        </button>
+        <button
+          type="button"
+          className="px-4 py-1 min-w-[6rem] font-work text-sm uppercase btn-green"
+        >
+          approve
+        </button>
+      </div>
     </div>
   );
 }
