@@ -32,7 +32,7 @@ export default function Table({
           <HeaderButton
             onClick={handleHeaderClick("OrganizationName")}
             _activeSortKey={sortKey}
-            _sortKey="charityName"
+            _sortKey="OrganizationName"
             _sortDirection={sortDirection}
           >
             Charity Name
@@ -40,7 +40,7 @@ export default function Table({
           <HeaderButton
             onClick={handleHeaderClick("RegistrationDate")}
             _activeSortKey={sortKey}
-            _sortKey="date"
+            _sortKey="RegistrationDate"
             _sortDirection={sortDirection}
           >
             Date Submitted
@@ -48,7 +48,7 @@ export default function Table({
           <HeaderButton
             onClick={handleHeaderClick("HqCountry")}
             _activeSortKey={sortKey}
-            _sortKey="chainName"
+            _sortKey="HqCountry"
             _sortDirection={sortDirection}
           >
             HQ Country
@@ -56,7 +56,7 @@ export default function Table({
           <HeaderButton
             onClick={handleHeaderClick("RegistrationStatus")}
             _activeSortKey={sortKey}
-            _sortKey="amount"
+            _sortKey="RegistrationStatus"
             _sortDirection={sortDirection}
           >
             Registration Status
