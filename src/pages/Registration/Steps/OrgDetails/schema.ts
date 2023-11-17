@@ -6,8 +6,6 @@ import { optionType } from "schemas/shape";
 import { requiredString } from "schemas/string";
 import { MAX_SDGS } from "constants/unsdgs";
 
-export const MB_LIMIT = 6;
-
 export const schema = object<any, SchemaShape<FormValues>>({
   Website: string().required("required").url("invalid url"),
   UN_SDG: array()

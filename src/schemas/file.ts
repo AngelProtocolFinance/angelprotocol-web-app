@@ -1,33 +1,33 @@
 import * as Yup from "yup";
-import { SchemaShape } from "./types";
 import { FileObject } from "types/aws";
 import { FileDropzoneAsset } from "types/components";
 
-export const MB_LIMIT = 6;
+const mimeTypeObjects = [
+  { type: "image/jpeg", name: "JPEG" },
+  { type: "image/png", name: "PNG" },
+  { type: "application/pdf", name: "PDF" },
+  { type: "image/webp", name: "WEBP" },
+  { type: "image/svg", name: "SVG" },
+] as const;
 
-const BYTES_IN_MB = 1e6;
-
-const VALID_MIME_TYPES = [
-  "image/jpeg",
-  "image/png",
-  "application/pdf",
-  "image/webp",
-];
+export type MIMEType = (typeof mimeTypeObjects)[number]["name"];
 
 const previewsKey: keyof FileDropzoneAsset = "previews";
 
-export function genAssetShape(
-  isRequired = false
-): SchemaShape<FileDropzoneAsset> {
-  return {
-    files: Yup.array(
-      genFileSchema(MB_LIMIT * BYTES_IN_MB, VALID_MIME_TYPES)
-    ).when(previewsKey, ([previews], schema) =>
-      (previews as FileObject[]).length <= 0 && isRequired
-        ? schema.min(1, "required")
-        : schema
+export function fileDropzoneAssetShape(
+  maxByteSize: number,
+  validMimeTypes: MIMEType[],
+  required = false
+) {
+  return Yup.object({
+    files: Yup.array(genFileSchema(maxByteSize, validMimeTypes)).when(
+      previewsKey,
+      ([previews], schema) =>
+        (previews as FileObject[]).length <= 0 && required
+          ? schema.min(1, "required")
+          : schema
     ),
-  };
+  });
 }
 
 /**
@@ -35,12 +35,12 @@ export function genAssetShape(
  * @param types an array of strings representing valid MIME types
  * @returns Yup schema for validating files
  */
-export const genFileSchema = (maxSize: number, types: string[]) =>
+export const genFileSchema = (maxSize: number, types: MIMEType[]) =>
   Yup.mixed<File>()
     .test({
       name: "must be of correct type",
       message: "invalid file type",
-      test: (file) => (file ? types.includes(file.type) : true),
+      test: (file) => !file || !!types.find((mime) => mime === file.type),
     })
     .test({
       name: "must be less than size limit",

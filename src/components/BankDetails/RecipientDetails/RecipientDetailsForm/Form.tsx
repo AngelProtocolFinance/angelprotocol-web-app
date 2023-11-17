@@ -5,8 +5,8 @@ import { AccountRequirements, CreateRecipientRequest } from "types/aws";
 import { FileDropzoneAsset } from "types/components";
 import FileDropzone from "components/FileDropzone";
 import { Label } from "components/form";
-import { MB_LIMIT } from "schemas/file";
 import RequirementField from "./RequirementField";
+import { MB_LIMIT, VALID_MIME_TYPES } from "./constants";
 import formToCreateRecipientRequest from "./formToCreateRecipientRequest";
 
 type Props = {
@@ -67,4 +67,6 @@ export default function Form(props: Props) {
   );
 }
 
-const fileTooltip = `Valid types are: PDF, JPG, PNG and WEBP. File should be less than ${MB_LIMIT}MB.`;
+const fileTooltip = `Valid types are: ${VALID_MIME_TYPES.join(
+  ", "
+)}. File should be less than ${MB_LIMIT}MB.`;

@@ -1,41 +1,24 @@
-import { ObjectSchema, array, object } from "yup";
+import { ObjectSchema, object } from "yup";
 import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
-import { FileObject } from "types/aws";
-import { FileDropzoneAsset } from "types/components";
-import { genFileSchema } from "schemas/file";
+import { MIMEType, fileDropzoneAssetShape } from "schemas/file";
 import { requiredString } from "schemas/string";
+import { BYTES_IN_MB } from "constants/common";
 
 export const MB_LIMIT = 6;
-const BYTES_IN_MB = 1e6;
 
-const VALID_MIME_TYPES = [
-  "image/jpeg",
-  "image/png",
-  "application/pdf",
-  "image/webp",
-];
+export const VALID_MIME_TYPES: MIMEType[] = ["JPEG", "PNG", "PDF", "WEBP"];
 
-const previewsKey: keyof FileDropzoneAsset = "previews";
-
-function genAssetShape(
-  isRequired: boolean = false
-): SchemaShape<FileDropzoneAsset> {
-  return {
-    files: array(genFileSchema(MB_LIMIT * BYTES_IN_MB, VALID_MIME_TYPES)).when(
-      previewsKey,
-      ([previews], schema) =>
-        (previews as FileObject[]).length <= 0 && isRequired
-          ? schema.min(1, "required")
-          : schema
-    ),
-  };
-}
+const assetShape = fileDropzoneAssetShape(
+  MB_LIMIT * BYTES_IN_MB,
+  VALID_MIME_TYPES,
+  true
+);
 
 export const schema = object<any, SchemaShape<FormValues>>({
   RegistrationNumber: requiredString,
-  ProofOfIdentity: object(genAssetShape(true)),
-  ProofOfRegistration: object(genAssetShape(true)),
+  ProofOfIdentity: assetShape,
+  ProofOfRegistration: assetShape,
   LegalEntityType: requiredString,
   ProjectDescription: requiredString.max(
     4000,
