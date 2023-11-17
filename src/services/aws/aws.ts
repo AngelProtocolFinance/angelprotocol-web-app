@@ -33,7 +33,7 @@ const awsBaseQuery = retry(
     mode: "cors",
     async prepareHeaders(headers) {
       if (headers.get("authorization") === TEMP_JWT) {
-        headers.set("authorization", `Bearer ${await jwtToken()}`);
+        headers.set("authorization", await jwtToken());
       }
       return headers;
     },
@@ -147,6 +147,7 @@ export const aws = createApi({
         return {
           url: `${v(1)}/applications`,
           params,
+          headers: { authorization: TEMP_JWT },
         };
       },
       transformResponse() {
