@@ -20,7 +20,7 @@ export default function getDefaultValues(
           const key = undot(requirements.key);
 
           if (isTextType(requirements)) {
-            defaultValues[key] = "";
+            defaultValues[key] = null;
           } else if (isCountry(requirements)) {
             const country: Country = { code: "", flag: "", name: "" };
             defaultValues[key] = country;

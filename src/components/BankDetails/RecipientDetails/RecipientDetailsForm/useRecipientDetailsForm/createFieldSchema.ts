@@ -5,8 +5,8 @@ import { requiredString } from "schemas/string";
 
 export function createStringSchema(
   requirements: Group
-): StringSchema<string | undefined, AnyObject, undefined, ""> {
-  let schema = requirements.required ? requiredString : string();
+): StringSchema<string | undefined | null, AnyObject, undefined, ""> {
+  let schema = requirements.required ? requiredString : string().nullable();
 
   if (requirements.minLength) {
     schema = schema.min(

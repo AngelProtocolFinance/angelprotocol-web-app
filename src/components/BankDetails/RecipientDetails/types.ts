@@ -4,5 +4,5 @@ import { Country } from "types/components";
 
 export type FormValues = Omit<CreateRecipientRequest, "details"> & {
   bankStatementFile: FileDropzoneAsset;
-  requirements: Record<string, string | OptionType<string> | Country>;
+  requirements: Record<string, null | string | OptionType<string> | Country>;
 };
