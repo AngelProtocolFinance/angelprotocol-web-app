@@ -45,9 +45,11 @@ type ValuesAllowed = {
 };
 
 export type CreateRecipientRequest = {
-  currency: string;
-  type: string;
   accountHolderName: string;
+  currency: string;
+  ownedByCustomer: false;
+  profile: "{{profileId}}";
+  type: string;
   details: Record<string, string | undefined>;
 };
 

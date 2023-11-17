@@ -9,6 +9,8 @@ export default function formToCreateRecipientRequest(
     accountHolderName: formValues.accountHolderName,
     currency: formValues.currency,
     type: formValues.type,
+    ownedByCustomer: false,
+    profile: "{{profileId}}", // AWS replaces it with actual Profile ID
     details: Object.entries(formValues.requirements).reduce<
       CreateRecipientRequest["details"]
     >((details, [key, value]) => {
