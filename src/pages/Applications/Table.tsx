@@ -1,8 +1,10 @@
+import { Link } from "react-router-dom";
 import { TableProps } from "./types";
 import { RegistrationStatus } from "types/aws";
 import { HeaderButton } from "components/HeaderButton";
 import TableSection, { Cells } from "components/TableSection";
 import useSort from "hooks/useSort";
+import { appRoutes } from "constants/routes";
 import LoadMoreBtn from "./LoadMoreBtn";
 
 export default function Table({
@@ -55,10 +57,12 @@ export default function Table({
             HQ Country
           </HeaderButton>
           <HeaderButton
+            style={{ justifyContent: "center" }}
             onClick={handleHeaderClick("RegistrationStatus")}
             _activeSortKey={sortKey}
             _sortKey="RegistrationStatus"
             _sortDirection={sortDirection}
+            className="w-full"
           >
             Registration Status
           </HeaderButton>
@@ -85,7 +89,12 @@ export default function Table({
               <td className="text-center">
                 <Status status={row.RegistrationStatus} />
               </td>
-              <>icon</>
+              <Link
+                to={appRoutes.applications + `/${row.PK}`}
+                className="text-center w-full inline-block"
+              >
+                icon
+              </Link>
             </Cells>
           ))
           .concat(
@@ -112,7 +121,7 @@ export default function Table({
 
 const bg: { [key in RegistrationStatus]: string } = {
   Active: "bg-green",
-  "Under Review": "bg-gray-d2",
+  "Under Review": "bg-gray-d1",
   Rejected: "bg-red",
   Inactive: "bg-yellow",
 };
@@ -126,7 +135,7 @@ const text: { [key in RegistrationStatus]: string } = {
 function Status({ status }: { status: RegistrationStatus }) {
   return (
     <p
-      className={`${bg[status]} rounded px-3 py-1 inline-block uppercase text-xs`}
+      className={`${bg[status]} rounded px-3 py-1 inline-block uppercase text-xs text-white`}
     >
       {text[status]}
     </p>
