@@ -17,7 +17,7 @@ export default function Application() {
         <span className="text-sm font-semibold uppercase">Application ID:</span>
         <span className="uppercase text-sm font-work">{app.PK}</span>
       </div>
-      <div className="flex max-sm:flex-col gap-x-4">
+      <div className="flex max-sm:flex-col gap-x-4 -mt-2 lg:-mt-4">
         <span className="text-sm font-semibold uppercase">Date submitted:</span>
         <span className="uppercase text-sm font-work">
           {new Date(app.RegistrationDate).toLocaleDateString()}
