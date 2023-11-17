@@ -72,7 +72,7 @@ export default function Banking() {
         `TODO: handle bank statement: ${bankStatementPreview.bankStatementFile[0].publicUrl}`
       );
       await createRecipientAccount({
-        PK: endowment_id,
+        endowmentId: endowment_id,
         request,
       }).unwrap();
     } catch (error) {

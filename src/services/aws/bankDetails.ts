@@ -31,19 +31,25 @@ export const bank_details_api = aws.injectEndpoints({
     }),
     createRecipientAccount: builder.mutation<
       EndowmentProfile,
-      {
-        // TODO: split PK (reference) and endow. ID when AWS handler is ready
-        PK: string | number;
-        request: CreateRecipientRequest;
-      }
+      | {
+          PK: string;
+          endowmentId?: never;
+          request: CreateRecipientRequest;
+        }
+      | {
+          PK?: never;
+          endowmentId: number;
+          request: CreateRecipientRequest;
+        }
     >({
-      query: ({ PK, request }) => ({
+      query: ({ PK, endowmentId, request }) => ({
         url: `/${v(1)}/wise`,
         method: "POST",
         body: {
           method: "POST",
           url: "/v1/accounts",
           PK,
+          endowmentId,
           payload: JSON.stringify(request),
         },
       }),
