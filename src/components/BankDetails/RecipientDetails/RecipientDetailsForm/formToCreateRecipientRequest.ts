@@ -13,10 +13,14 @@ export default function formToCreateRecipientRequest(
       CreateRecipientRequest["details"]
     >((details, [key, value]) => {
       const origKey = redot(key);
+
       if (value == null) {
-        // if value is null/undefined
-        details[origKey] = "";
-      } else if (typeof value === "string") {
+        // if value is null/undefined, it's probably optional,
+        // so don't include it
+        return details;
+      }
+
+      if (typeof value === "string") {
         // if value is string
         details[origKey] = value;
       } else if ("code" in value) {

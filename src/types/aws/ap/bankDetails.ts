@@ -48,7 +48,7 @@ export type CreateRecipientRequest = {
   currency: string;
   type: string;
   accountHolderName: string;
-  details: Record<string, string>;
+  details: Record<string, string | undefined>;
 };
 
 export type Quote = { id: string };
