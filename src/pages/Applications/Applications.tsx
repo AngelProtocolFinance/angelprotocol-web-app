@@ -61,10 +61,9 @@ export default function Applications() {
         }}
       >
         {(donations) => (
-          <div className="grid col-span-full">
+          <div className="grid col-span-full overflow-x-auto">
             <Table
               donations={donations}
-              classes="hidden max-lg:mt-4 lg:table"
               hasMore={hasMore}
               onLoadMore={loadNextPage}
               disabled={isLoadingOrError}
