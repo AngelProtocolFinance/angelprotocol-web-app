@@ -16,7 +16,7 @@ export default function Application() {
       <p>Application ID: {app.PK}</p>
 
       <Container title="Endowment application">
-        <dl className="grid grid-cols-[auto_auto_1fr]">
+        <div className="grid grid-cols-[auto_auto_1fr]">
           {doc.DocType === "FSA" ? (
             <Row label="Registration No.">{doc.RegistrationNumber}</Row>
           ) : (
@@ -32,31 +32,40 @@ export default function Application() {
           {doc.DocType === "FSA" && (
             <>
               <Row label="Contact national ID">
-                <ExtLink href={doc.ProofOfIdentity.publicUrl}>
-                  <span>{doc.ProofOfIdentity.publicUrl}</span>
-                  <Icon type="ExternalLink" />
-                </ExtLink>
+                <DocLink url={doc.ProofOfIdentity.publicUrl} />
               </Row>
               <Row label="Charity registration doc">
-                <ExtLink href={doc.ProofOfRegistration.publicUrl}>
-                  {doc.ProofOfRegistration.publicUrl}
-                  <Icon type="ExternalLink" />
-                </ExtLink>
+                <DocLink url={doc.ProofOfRegistration.publicUrl} />
               </Row>
               <Row label="Fiscal sponsorship agreement">
-                <ExtLink href={doc.SignedFiscalSponsorshipAgreement}>
-                  {doc.SignedFiscalSponsorshipAgreement}
-                  <Icon type="ExternalLink" />
-                </ExtLink>
+                <DocLink url={doc.SignedFiscalSponsorshipAgreement ?? ""} />
               </Row>
             </>
           )}
-        </dl>
+        </div>
       </Container>
       <Container title="Banking details">
-        <div>content</div>
+        <div className="grid grid-cols-[auto_auto_1fr]">
+          <Row label="Bank name">Great Bank of Northwest Luzon</Row>
+          <Row label="Address">123 Winding Road, Singapore</Row>
+          <Row label="Account number">012345678910</Row>
+          <Row label="Account holder name">Jesse Pinkman</Row>
+          <Row label="Anticipated monthly donations (USD)">$10,000</Row>
+          <Row label="Bank statement document">
+            <DocLink url="https://google.com" />
+          </Row>
+        </div>
       </Container>
     </div>
+  );
+}
+
+function DocLink({ url }: { url: string }) {
+  return (
+    <ExtLink href={url} className="flex items-center gap-2">
+      <span>{url}</span>
+      <Icon type="ExternalLink" />
+    </ExtLink>
   );
 }
 
