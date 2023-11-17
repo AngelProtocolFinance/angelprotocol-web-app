@@ -5,6 +5,7 @@ import {
   isDeleteMsg,
 } from "../types";
 import {
+  Application,
   ApplicationsQueryParams,
   EndowListPaginatedAWSQueryRes,
   EndowmentCard,
@@ -21,6 +22,7 @@ import { jwtToken } from "helpers/jwt-token";
 import { TEMP_JWT } from "constants/auth";
 import { APIs } from "constants/urls";
 import { version as v } from "../helpers";
+import { applications } from "./constants";
 
 const getWalletProfileQuery = (walletAddr: string) =>
   `/${v(2)}/profile/${network}/user/${walletAddr}`;
@@ -137,7 +139,7 @@ export const aws = createApi({
       },
     }),
     applications: builder.query<
-      PaginatedAWSQueryRes<any[]>,
+      PaginatedAWSQueryRes<Application[]>,
       ApplicationsQueryParams
     >({
       providesTags: ["applications"],
@@ -145,6 +147,14 @@ export const aws = createApi({
         return {
           url: `${v(1)}/applications`,
           params,
+        };
+      },
+      transformResponse() {
+        return {
+          Items: applications,
+          ItemCutoff: 0,
+          Count: 10,
+          ScannedCount: 10,
         };
       },
     }),

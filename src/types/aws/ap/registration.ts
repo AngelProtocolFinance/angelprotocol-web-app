@@ -194,6 +194,9 @@ export type SubmitResult = {
   Email: string;
 };
 
+export type Application = Omit<InReview["ContactPerson"], "SK"> &
+  InReview["Registration"];
+
 /** type guards */
 export function isDoneContact(data: SavedRegistration): data is DoneContact {
   return !!(data.ContactPerson as ContactDetails).FirstName;
