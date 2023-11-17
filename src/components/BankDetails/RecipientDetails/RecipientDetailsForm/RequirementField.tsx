@@ -18,6 +18,7 @@ export default function RequirementField({ data, disabled }: Props) {
 
   const name: Path<FormValues> = `requirements.${requirementsKey}`;
 
+  // Optional Wise field names contain " (optional)" at the end
   const label = data.name.replace(new RegExp("\\s*\\(optional\\)$"), "");
 
   if (data.type === "date") {
