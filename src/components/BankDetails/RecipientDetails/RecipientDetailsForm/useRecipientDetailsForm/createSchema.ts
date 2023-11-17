@@ -18,7 +18,6 @@ export default function createSchema(
   accountRequirements: AccountRequirements
 ): ObjectSchema<FormValues> {
   return object<any, SchemaShape<FormValues>>({
-    accountHolderName: requiredString,
     bankStatementFile: fileDropzoneAssetShape(
       MB_LIMIT * BYTES_IN_MB,
       VALID_MIME_TYPES,

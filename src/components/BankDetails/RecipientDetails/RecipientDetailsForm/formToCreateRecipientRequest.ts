@@ -5,13 +5,15 @@ import { redot } from "../helpers/dot";
 export default function formToCreateRecipientRequest(
   formValues: Omit<FormValues, "bankStatementFile">
 ): CreateRecipientRequest {
+  const { accountHolderName, ...requirements } = formValues.requirements;
+
   return {
-    accountHolderName: formValues.accountHolderName,
+    accountHolderName: accountHolderName as string,
     currency: formValues.currency,
     type: formValues.type,
     ownedByCustomer: false,
     profile: "{{profileId}}", // AWS replaces it with actual Profile ID
-    details: Object.entries(formValues.requirements).reduce<
+    details: Object.entries(requirements).reduce<
       CreateRecipientRequest["details"]
     >((details, [key, value]) => {
       const origKey = redot(key);

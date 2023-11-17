@@ -13,7 +13,6 @@ import UpdateDetailsButton from "./UpdateDetailsButton";
 import useCurrencies from "./useCurrencies";
 
 type Props = {
-  accountHolderName: string;
   alreadySubmitted?: boolean;
   isSubmitting: boolean;
   children: (
@@ -29,7 +28,6 @@ type Props = {
 };
 
 export default function BankDetails({
-  accountHolderName,
   alreadySubmitted = false,
   isSubmitting,
   onSubmit,
@@ -101,7 +99,6 @@ export default function BankDetails({
                 // This way the `react-hook-form` reruns the `useForm` initializer function with the new requirements
                 // that will get loaded due to changed target currency and expected montly donation (in Wise terms: source amount).
                 key={`${targetCurrency.code}${expectedMontlyDonations}`}
-                accountHolderName={accountHolderName}
                 targetCurrency={targetCurrency.code}
                 expectedMontlyDonations={expectedMontlyDonations}
                 disabled={disabled}

@@ -10,7 +10,6 @@ import RecipientDetailsForm from "./RecipientDetailsForm";
 import useRecipientDetails from "./useRecipientDetails";
 
 type Props = {
-  accountHolderName: string;
   disabled: boolean;
   targetCurrency: string;
   expectedMontlyDonations: number;
@@ -27,7 +26,6 @@ type Props = {
 };
 
 export default function RecipientDetails({
-  accountHolderName,
   disabled,
   targetCurrency,
   expectedMontlyDonations,
@@ -44,12 +42,7 @@ export default function RecipientDetails({
     selectedIndex,
     setSelectedIndex,
     updateDefaultValues,
-  } = useRecipientDetails(
-    accountHolderName,
-    targetCurrency,
-    expectedMontlyDonations,
-    onSubmit
-  );
+  } = useRecipientDetails(targetCurrency, expectedMontlyDonations, onSubmit);
 
   if (isLoading) {
     return (
