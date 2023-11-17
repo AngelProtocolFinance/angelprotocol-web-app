@@ -1,4 +1,5 @@
 import { TableProps } from "./types";
+import { RegistrationStatus } from "types/aws";
 import { HeaderButton } from "components/HeaderButton";
 import TableSection, { Cells } from "components/TableSection";
 import useSort from "hooks/useSort";
@@ -81,7 +82,9 @@ export default function Table({
               <>{row.OrganizationName}</>
               <>{new Date(row.RegistrationDate).toLocaleDateString()}</>
               <>{row.HqCountry}</>
-              <>{row.RegistrationStatus}</>
+              <td className="text-center">
+                <Status status={row.RegistrationStatus} />
+              </td>
               <>icon</>
             </Cells>
           ))
@@ -104,5 +107,28 @@ export default function Table({
           )}
       </TableSection>
     </table>
+  );
+}
+
+const bg: { [key in RegistrationStatus]: string } = {
+  Active: "bg-green",
+  "Under Review": "bg-gray-d2",
+  Rejected: "bg-red",
+  Inactive: "bg-yellow",
+};
+
+const text: { [key in RegistrationStatus]: string } = {
+  Active: "Approved",
+  "Under Review": "Pending",
+  Rejected: "Rejected",
+  Inactive: "Pending",
+};
+function Status({ status }: { status: RegistrationStatus }) {
+  return (
+    <p
+      className={`${bg[status]} rounded px-3 py-1 inline-block uppercase text-xs`}
+    >
+      {text[status]}
+    </p>
   );
 }

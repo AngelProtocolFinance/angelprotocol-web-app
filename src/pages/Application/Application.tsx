@@ -10,6 +10,7 @@ export default function Application() {
       </h1>
       <h3 className="text-lg">{app.OrganizationName}</h3>
       <p>Application ID: {app.PK}</p>
+
       <Container title="Endowment application">
         <div>content</div>
       </Container>
