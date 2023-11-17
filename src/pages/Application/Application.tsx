@@ -13,10 +13,19 @@ export default function Application() {
         Applications Review - Details
       </h1>
       <h3 className="text-lg">{app.OrganizationName}</h3>
-      <p>Application ID: {app.PK}</p>
+      <div className="flex max-sm:flex-col gap-x-4">
+        <span className="text-sm font-semibold uppercase">Application ID:</span>
+        <span className="uppercase text-sm font-work">{app.PK}</span>
+      </div>
+      <div className="flex max-sm:flex-col gap-x-4">
+        <span className="text-sm font-semibold uppercase">Date submitted:</span>
+        <span className="uppercase text-sm font-work">
+          {new Date(app.RegistrationDate).toLocaleDateString()}
+        </span>
+      </div>
 
       <Container title="Endowment application">
-        <div className="grid grid-cols-[auto_auto_1fr]">
+        <div className="grid sm:grid-cols-[auto_auto_1fr]">
           {doc.DocType === "FSA" ? (
             <Row label="Registration No.">{doc.RegistrationNumber}</Row>
           ) : (
@@ -45,7 +54,7 @@ export default function Application() {
         </div>
       </Container>
       <Container title="Banking details">
-        <div className="grid grid-cols-[auto_auto_1fr]">
+        <div className="grid sm:grid-cols-[auto_auto_1fr]">
           <Row label="Bank name">Great Bank of Northwest Luzon</Row>
           <Row label="Address">123 Winding Road, Singapore</Row>
           <Row label="Account number">012345678910</Row>
@@ -75,11 +84,13 @@ type Props = PropsWithChildren<{
 function Row(props: Props) {
   return (
     <>
-      <div className="p-3 flex items-center text-sm font-semibold uppercase">
+      <div className="px-3 max-sm:pt-3 sm:p-3 flex items-center text-xs font-semibold uppercase">
         {props.label}
       </div>
-      <div className="w-px border-r border-prim last:border-none" />
-      <div className="p-3 flex items-center">{props.children}</div>
+      <div className="max-sm:hidden w-px border-r border-prim last:border-none" />
+      <div className="px-3 max-sm:pb-3 sm:p-3 flex items-center text-sm">
+        {props.children}
+      </div>
       <div className="h-px col-span-full border-b border-prim last:border-none" />
     </>
   );
