@@ -2,13 +2,14 @@ import { Link } from "react-router-dom";
 import { TableProps } from "./types";
 import { RegistrationStatus } from "types/aws";
 import { HeaderButton } from "components/HeaderButton";
+import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
 import useSort from "hooks/useSort";
 import { appRoutes } from "constants/routes";
 import LoadMoreBtn from "./LoadMoreBtn";
 
 export default function Table({
-  donations,
+  applications,
   classes = "",
   disabled,
   isLoading,
@@ -16,7 +17,7 @@ export default function Table({
   onLoadMore,
 }: TableProps) {
   const { handleHeaderClick, sorted, sortDirection, sortKey } = useSort(
-    donations,
+    applications,
     "RegistrationDate"
   );
 
@@ -91,9 +92,14 @@ export default function Table({
               </td>
               <Link
                 to={appRoutes.applications + `/${row.PK}`}
-                className="text-center w-full inline-block"
+                className="text-center w-full inline-block hover:text-orange active:text-orange-d1"
               >
-                icon
+                <Icon
+                  size={24}
+                  type="Folder"
+                  title="application details"
+                  className="inline-block"
+                />
               </Link>
             </Cells>
           ))

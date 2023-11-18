@@ -1,7 +1,7 @@
 import { Application } from "types/aws";
 
 export type TableProps = {
-  donations: Application[];
+  applications: Application[];
   classes?: string;
   onLoadMore(): void;
   hasMore: boolean;

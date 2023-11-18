@@ -55,15 +55,15 @@ export default function Applications() {
           isError: isError,
         }}
         messages={{
-          loading: "Loading donations...",
-          error: "Failed to get donations",
+          loading: "Loading applications...",
+          error: "Failed to get applications",
           empty: <NoDonations classes="mt-8 place-self-center col-span-full" />,
         }}
       >
-        {(donations) => (
+        {(applications) => (
           <div className="grid col-span-full overflow-x-auto">
             <Table
-              donations={donations}
+              applications={applications}
               hasMore={hasMore}
               onLoadMore={loadNextPage}
               disabled={isLoadingOrError}
