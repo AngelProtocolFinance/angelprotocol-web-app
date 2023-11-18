@@ -1,13 +1,9 @@
 import { Link } from "react-router-dom";
 import { TableProps } from "./types";
-import ExtLink from "components/ExtLink";
+import { RegistrationStatus } from "types/aws";
 import { HeaderButton } from "components/HeaderButton";
-import Icon from "components/Icon";
-import useKYC from "components/KYC/useKYC";
 import TableSection, { Cells } from "components/TableSection";
 import useSort from "hooks/useSort";
-import { getTxUrl, humanize } from "helpers";
-import { chainIds } from "constants/chainIds";
 import { appRoutes } from "constants/routes";
 import LoadMoreBtn from "./LoadMoreBtn";
 
@@ -21,10 +17,8 @@ export default function Table({
 }: TableProps) {
   const { handleHeaderClick, sorted, sortDirection, sortKey } = useSort(
     donations,
-    "date"
+    "RegistrationDate"
   );
-
-  const showKYCForm = useKYC();
 
   return (
     <table
@@ -39,49 +33,40 @@ export default function Table({
           cellClass="px-3 py-4 text-xs uppercase font-semibold text-left first:rounded-tl last:rounded-tr"
         >
           <HeaderButton
-            onClick={handleHeaderClick("charityName")}
+            onClick={handleHeaderClick("OrganizationName")}
             _activeSortKey={sortKey}
-            _sortKey="charityName"
+            _sortKey="OrganizationName"
             _sortDirection={sortDirection}
           >
-            Recipient
+            Charity Name
           </HeaderButton>
           <HeaderButton
-            onClick={handleHeaderClick("date")}
+            onClick={handleHeaderClick("RegistrationDate")}
             _activeSortKey={sortKey}
-            _sortKey="date"
+            _sortKey="RegistrationDate"
             _sortDirection={sortDirection}
           >
-            Date
+            Date Submitted
           </HeaderButton>
           <HeaderButton
-            onClick={handleHeaderClick("chainName")}
+            onClick={handleHeaderClick("HqCountry")}
             _activeSortKey={sortKey}
-            _sortKey="chainName"
+            _sortKey="HqCountry"
             _sortDirection={sortDirection}
           >
-            Network
-          </HeaderButton>
-          <>Currency</>
-          <HeaderButton
-            onClick={handleHeaderClick("amount")}
-            _activeSortKey={sortKey}
-            _sortKey="amount"
-            _sortDirection={sortDirection}
-          >
-            Amount
+            HQ Country
           </HeaderButton>
           <HeaderButton
-            onClick={handleHeaderClick("usdValue")}
+            style={{ justifyContent: "center" }}
+            onClick={handleHeaderClick("RegistrationStatus")}
             _activeSortKey={sortKey}
-            _sortKey="usdValue"
+            _sortKey="RegistrationStatus"
             _sortDirection={sortDirection}
+            className="w-full"
           >
-            USD Value
+            Registration Status
           </HeaderButton>
-          <>TX Hash</>
-          <span className="flex justify-center">Status</span>
-          <span className="flex justify-center">Receipt</span>
+          <span className="flex justify-center">Details</span>
         </Cells>
       </TableSection>
       <TableSection
@@ -92,59 +77,24 @@ export default function Table({
         {sorted
           .map((row) => (
             <Cells
-              key={row.hash}
+              key={row.PK}
               type="td"
               cellClass={`p-3 border-t border-prim max-w-[256px] truncate ${
                 hasMore ? "" : "first:rounded-bl last:rounded-br"
               }`}
             >
+              <>{row.OrganizationName}</>
+              <>{new Date(row.RegistrationDate).toLocaleDateString()}</>
+              <>{row.HqCountry}</>
+              <td className="text-center">
+                <Status status={row.RegistrationStatus} />
+              </td>
               <Link
-                to={`${
-                  appRoutes[
-                    row.chainId === chainIds.juno ? "profile" : "marketplace"
-                  ]
-                }/${row.id}`}
-                className="flex items-center justify-between gap-1 cursor-pointer text-sm hover:underline"
+                to={appRoutes.applications + `/${row.PK}`}
+                className="text-center w-full inline-block"
               >
-                <span className="truncate max-w-[12rem]">
-                  {row.charityName}
-                </span>
-                <Icon type="ExternalLink" className="w-5 h-5" />
+                icon
               </Link>
-              <>{new Date(row.date).toLocaleDateString()}</>
-              <>{row.chainName}</>
-              <span className="font-body text-sm">{row.symbol}</span>
-              <>{humanize(row.amount, 3)}</>
-              <>{`$${humanize(row.usdValue, 2)}`}</>
-              <ExtLink
-                href={getTxUrl(row.chainId, row.hash)}
-                className="text-center text-angel-blue cursor-pointer uppercase text-sm"
-              >
-                {row.hash}
-              </ExtLink>
-              <div className="text-center text-white">
-                <span
-                  className={`${
-                    row.donationFinalized
-                      ? "bg-green"
-                      : "bg-gray-d1 dark:bg-gray"
-                  } font-body px-2 py-0.5 rounded`}
-                >
-                  {row.donationFinalized ? "RECEIVED" : "PENDING"}
-                </span>
-              </div>
-              <button
-                className="w-full flex justify-center"
-                onClick={() =>
-                  showKYCForm({
-                    type: "post-donation",
-                    txHash: row.hash,
-                    classes: "grid gap-5",
-                  })
-                }
-              >
-                <Icon type="FatArrowDownload" className="text-2xl" />
-              </button>
             </Cells>
           ))
           .concat(
@@ -166,5 +116,28 @@ export default function Table({
           )}
       </TableSection>
     </table>
+  );
+}
+
+const bg: { [key in RegistrationStatus]: string } = {
+  Active: "bg-green",
+  "Under Review": "bg-gray-d1",
+  Rejected: "bg-red",
+  Inactive: "bg-yellow",
+};
+
+const text: { [key in RegistrationStatus]: string } = {
+  Active: "Approved",
+  "Under Review": "Pending",
+  Rejected: "Rejected",
+  Inactive: "Pending",
+};
+function Status({ status }: { status: RegistrationStatus }) {
+  return (
+    <p
+      className={`${bg[status]} rounded px-3 py-1 inline-block uppercase text-xs text-white`}
+    >
+      {text[status]}
+    </p>
   );
 }

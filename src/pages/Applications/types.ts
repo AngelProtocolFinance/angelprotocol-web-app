@@ -1,7 +1,7 @@
-import { DonationMadeByDonor } from "types/aws";
+import { Application } from "types/aws";
 
 export type TableProps = {
-  donations: DonationMadeByDonor[];
+  donations: Application[];
   classes?: string;
   onLoadMore(): void;
   hasMore: boolean;

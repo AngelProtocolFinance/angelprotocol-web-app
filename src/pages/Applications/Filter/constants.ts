@@ -1,6 +1,8 @@
+import { RegistrationStatus } from "types/aws";
 import { OptionType } from "types/components";
 
-export const statuses: OptionType<string>[] = [
-  { label: "RECEIVED", value: "RECEIVED" },
-  { label: "PENDING", value: "PENDING" },
+export const statuses: OptionType<RegistrationStatus>[] = [
+  { label: "Rejected", value: "Rejected" },
+  { label: "Under Review", value: "Under Review" },
+  { label: "Approved", value: "Active" },
 ];

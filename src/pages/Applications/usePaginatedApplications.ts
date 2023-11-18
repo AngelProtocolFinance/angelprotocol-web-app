@@ -23,10 +23,14 @@ export default function usePaginatedApplications() {
       if (!data?.Items) {
         return { data, ...rest };
       }
+      const filtered = data?.Items.filter(({ OrganizationName, PK }) =>
+        (OrganizationName + PK)
+          .toLowerCase()
+          .includes(debouncedQuery.toLowerCase())
+      );
 
-      console.log({ debouncedQuery });
       return {
-        data: { Items: data.Items, ItemCutoff: data.ItemCutoff },
+        data: { Items: filtered, ItemCutoff: data.ItemCutoff },
         ...rest,
       };
     },
