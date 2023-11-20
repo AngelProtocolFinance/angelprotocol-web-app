@@ -1,14 +1,24 @@
 import { PropsWithChildren } from "react";
+import { Link } from "react-router-dom";
 import { ApplicationDetails } from "types/aws";
+import { useModalContext } from "contexts/ModalContext";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
+import { appRoutes } from "constants/routes";
 import Container from "./Container";
+import Prompt from "./Prompt";
 
 const NA = "Not provided";
 
 export default function Loaded(props: ApplicationDetails) {
+  const { showModal } = useModalContext();
   const { ContactPerson: c, Registration: r, WiseRecipient: w } = props;
   const doc = r.Documentation;
+
+  const review = (verdict: "approve" | "reject") => () => {
+    showModal(Prompt, { verdict, uuid: c.PK, orgName: r.OrganizationName });
+  };
+
   return (
     <>
       <h3 className="text-lg">{r.OrganizationName}</h3>
@@ -64,19 +74,21 @@ export default function Loaded(props: ApplicationDetails) {
         </div>
       </Container>
       <div className="flex gap-x-3 justify-self-center sm:justify-self-end">
-        <button
-          type="button"
+        <Link
+          to={appRoutes.applications}
           className="px-4 py-1 min-w-[6rem] font-work text-sm uppercase btn-outline"
         >
           back
-        </button>
+        </Link>
         <button
+          onClick={review("reject")}
           type="button"
           className="px-4 py-1 min-w-[6rem] font-work text-sm uppercase btn-red"
         >
           reject
         </button>
         <button
+          onClick={review("approve")}
           type="button"
           className="px-4 py-1 min-w-[6rem] font-work text-sm uppercase btn-green"
         >
