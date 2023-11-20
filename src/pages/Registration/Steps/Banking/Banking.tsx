@@ -11,10 +11,10 @@ import useSubmit from "./useSubmit";
 function Banking() {
   const { data } = useRegState<5>();
   const methods = useForm<FV>({
-    defaultValues: data.banking?.BankStatementPDF
+    defaultValues: data.banking?.BankStatementFile
       ? {
           bankStatement: {
-            previews: [data.banking?.BankStatementPDF],
+            previews: [data.banking?.BankStatementFile],
             files: [],
           },
         }

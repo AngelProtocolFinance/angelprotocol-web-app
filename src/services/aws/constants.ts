@@ -19,7 +19,7 @@ const application = (
     KycDonorsOnly: false,
     AuthorizedToReceiveTaxDeductibleDonations: true,
     Documentation: { DocType: "Non-FSA", EIN: "13131" },
-    BankStatementPDF: {
+    BankStatementFile: {
       name: "place holder file.pdf",
       publicUrl: "https://google.com",
     },

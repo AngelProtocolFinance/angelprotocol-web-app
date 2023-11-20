@@ -18,13 +18,13 @@ export default function useSubmit(form: UseFormReturn<FV>) {
   const navigate = useNavigate();
 
   const submit: SubmitHandler<FV> = async (fv) => {
-    if (!isDirty && data.banking?.BankStatementPDF) {
+    if (!isDirty && data.banking?.BankStatementFile) {
       return navigate(`../${steps.summary}`, { state: data.init });
     }
     const result = await updateReg({
       reference: data.init.reference,
       type: "banking",
-      BankStatementPDF: {
+      BankStatementFile: {
         name: fv.bankStatement.files[0]?.name || "placeholder banking",
         publicUrl: "https://google.com",
       },
