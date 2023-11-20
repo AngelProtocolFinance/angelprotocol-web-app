@@ -7,17 +7,22 @@ import {
   useForm,
 } from "react-hook-form";
 import { object, string } from "yup";
+import { useReviewApplicationMutation } from "services/aws/aws";
+import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import Modal from "components/Modal";
 import { Field } from "components/form";
 
 type Props = {
+  uuid: string;
   orgName: string;
   verdict: "approve" | "reject";
 };
 
-export default function Prompt({ verdict, orgName }: Props) {
+export default function Prompt({ verdict, orgName, uuid }: Props) {
+  const [review, { isLoading }] = useReviewApplicationMutation();
+  const { handleError } = useErrorContext();
   const { isDismissible, setModalOption, closeModal } = useModalContext();
   const methods = useForm({
     resolver: yupResolver(object({ reason: string().optional() })),
@@ -26,11 +31,26 @@ export default function Prompt({ verdict, orgName }: Props) {
 
   type FV = typeof methods extends UseFormReturn<infer U> ? U : never;
 
-  const onSubmit: SubmitHandler<FV> = async (fv) => {};
+  const onSubmit: SubmitHandler<FV> = async (fv) => {
+    setModalOption("isDismissible", false);
+    const result = await review({
+      PK: uuid,
+      ...(verdict === "approve"
+        ? { verdict: "approved" }
+        : { verdict: "rejected", rejectionReason: fv.reason ?? "" }),
+    });
+
+    if ("error" in result) {
+      handleError(result.error);
+    }
+
+    alert(`Application ${verdict === "approve" ? "approved" : "rejected"}`);
+  };
 
   return (
     <Modal
       as="form"
+      onSubmit={methods.handleSubmit(onSubmit)}
       className="fixed-center z-10 grid text-gray-d2 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded overflow-hidden"
     >
       <div className="relative">
@@ -40,6 +60,7 @@ export default function Prompt({ verdict, orgName }: Props) {
         {isDismissible && (
           <button
             onClick={closeModal}
+            disabled={isLoading}
             className="border border-prim p-2 rounded-md absolute top-1/2 right-4 transform -translate-y-1/2 disabled:text-gray-l3 dark:disabled:text-bluegray-d1 disabled:dark:border-bluegray-d1"
           >
             <Icon type="Close" size={24} />
@@ -95,6 +116,7 @@ export default function Prompt({ verdict, orgName }: Props) {
 
       <div className="p-3 sm:px-8 sm:py-4 w-full text-center sm:text-right bg-orange-l6 dark:bg-blue-d7 border-t border-prim">
         <button
+          disabled={isLoading}
           type="button"
           className="inline-block btn-orange px-8 py-2 max-sm:w-full"
           onClick={closeModal}
@@ -102,6 +124,7 @@ export default function Prompt({ verdict, orgName }: Props) {
           Cancel
         </button>
         <button
+          disabled={isLoading}
           type="button"
           className="inline-block btn-orange px-8 py-2 max-sm:w-full"
           onClick={closeModal}
