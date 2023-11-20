@@ -205,6 +205,12 @@ type WiseRecipient = {
 
 export type ApplicationDetails = InReview & { WiseRecipient?: WiseRecipient };
 
+//could be futher simplified to just {verdict: "approved" | string}
+export type ApplicationVerdict = { PK: string } & (
+  | { verdict: "approved" }
+  | { verdict: "rejected"; rejectionReason: string }
+);
+
 /** type guards */
 export function isDoneContact(data: SavedRegistration): data is DoneContact {
   return !!(data.ContactPerson as ContactDetails).FirstName;
