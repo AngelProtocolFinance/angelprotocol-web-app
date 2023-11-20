@@ -22,7 +22,7 @@ export default function Balance({ type, current, pending, payedOut }: Props) {
           {humanize(current, 2)}
         </Amount>
         <Amount title="Pending payout">{humanize(pending, 2)}</Amount>
-        <Amount title="Payed out">{humanize(payedOut, 2)}</Amount>
+        <Amount title="Paid out">{humanize(payedOut, 2)}</Amount>
       </div>
     </div>
   );
