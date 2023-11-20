@@ -2,6 +2,7 @@ import { Tab } from "@headlessui/react";
 import { DonaterConfigFromWidget } from "types/widget";
 import { FormStep } from "slices/donation";
 import Donater from "../Donater";
+import Other from "./Other";
 import Stripe from "./Stripe";
 
 type Props = {
@@ -44,12 +45,7 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
           <Donater {...state} config={donaterConfig} />
         </Tab.Panel>
         <Tab.Panel className="grid">
-          <div>
-            <p className="text-gray-d1 text-sm text-center">
-              Coming Soon! Watch here for donation options with Stock
-              contributions and DAFs.
-            </p>
-          </div>
+          <Other />
         </Tab.Panel>
       </Tab.Panels>
     </Tab.Group>

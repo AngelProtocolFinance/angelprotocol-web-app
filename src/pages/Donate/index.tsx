@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useProfileQuery } from "services/aws/aws";
 import QueryLoader from "components/QueryLoader";
 import Seo from "components/Seo";
+import Other from "components/donation/Steps/DonateMethods/Other";
 import { idParamToNum } from "helpers";
 import { APP_NAME, DAPP_URL } from "constants/env";
 import Content from "./Content";
@@ -21,7 +22,8 @@ export default function Donate() {
         }}
         className="relative overlay w-full object-cover h-72 bg-center bg-cover"
       />
-      <QueryLoader
+      <Other />
+      {/* <QueryLoader
         queryState={queryState}
         messages={{
           loading: "Getting endowment info..",
@@ -46,7 +48,7 @@ export default function Donate() {
             />
           </>
         )}
-      </QueryLoader>
+      </QueryLoader> */}
     </section>
   );
 }
