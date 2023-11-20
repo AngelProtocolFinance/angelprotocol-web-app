@@ -7,7 +7,7 @@ import Icon from "components/Icon";
 import { Field, Label } from "components/form";
 import { LoadText } from "components/registration";
 import { steps } from "../../../../routes";
-import { MB_LIMIT } from "../schema";
+import { MB_LIMIT, VALID_MIME_TYPES } from "../schema";
 import useSubmit from "./useSubmit";
 
 export default function Form(props: Props) {
@@ -95,4 +95,6 @@ export default function Form(props: Props) {
   );
 }
 
-const fileTooltip = `Valid types are: PDF, JPG, PNG and WEBP. File should be less than ${MB_LIMIT}MB.`;
+const fileTooltip = `Valid types are: ${VALID_MIME_TYPES.join(
+  ", "
+)}. File should be less than ${MB_LIMIT}MB.`;

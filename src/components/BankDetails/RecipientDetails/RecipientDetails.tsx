@@ -1,5 +1,9 @@
+import { ReactNode } from "react";
+import { CreateRecipientRequest } from "types/aws";
+import { FileDropzoneAsset } from "types/components";
 import LoaderRing from "components/LoaderRing";
 import { isEmpty } from "helpers";
+import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { EMAIL_SUPPORT } from "constants/env";
 import AccountRequirementsSelector from "./AccountRequirementsSelector";
 import RecipientDetailsForm from "./RecipientDetailsForm";
@@ -9,12 +13,24 @@ type Props = {
   disabled: boolean;
   targetCurrency: string;
   expectedMontlyDonations: number;
+  formButtons: (
+    disabled: boolean,
+    isSubmitting: boolean,
+    refreshRequired: boolean
+  ) => ReactNode;
+  onSubmit: (
+    request: CreateRecipientRequest,
+    bankStatementFile: FileDropzoneAsset,
+    isDirty: boolean
+  ) => Promise<any>;
 };
 
 export default function RecipientDetails({
   disabled,
   targetCurrency,
   expectedMontlyDonations,
+  formButtons,
+  onSubmit,
 }: Props) {
   const {
     handleSubmit,
@@ -26,7 +42,7 @@ export default function RecipientDetails({
     selectedIndex,
     setSelectedIndex,
     updateDefaultValues,
-  } = useRecipientDetails(targetCurrency, expectedMontlyDonations);
+  } = useRecipientDetails(targetCurrency, expectedMontlyDonations, onSubmit);
 
   if (isLoading) {
     return (
@@ -37,12 +53,7 @@ export default function RecipientDetails({
   }
 
   if (isError) {
-    return (
-      <span>
-        An error occurred. Please try again later. If the error persists, please
-        contact {EMAIL_SUPPORT}.
-      </span>
-    );
+    return <span>{GENERIC_ERROR_MESSAGE}</span>;
   }
 
   // requirements *can* be empty, check the following example when source currency is USD and target is ALL (Albanian lek):
@@ -91,6 +102,7 @@ export default function RecipientDetails({
         onCleanup={updateDefaultValues}
         onSubmit={handleSubmit}
         onRefresh={refreshRequirements}
+        formButtons={formButtons}
       />
     </>
   );

@@ -31,15 +31,25 @@ export const bank_details_api = aws.injectEndpoints({
     }),
     createRecipientAccount: builder.mutation<
       EndowmentProfile,
-      { PK: number; request: CreateRecipientRequest }
+      | {
+          PK: string;
+          endowmentId?: never;
+          request: CreateRecipientRequest;
+        }
+      | {
+          PK?: never;
+          endowmentId: number;
+          request: CreateRecipientRequest;
+        }
     >({
-      query: ({ PK, request }) => ({
+      query: ({ PK, endowmentId, request }) => ({
         url: `/${v(1)}/wise`,
         method: "POST",
         body: {
           method: "POST",
           url: "/v1/accounts",
           PK,
+          endowmentId,
           payload: JSON.stringify(request),
         },
       }),
@@ -55,31 +65,7 @@ export const bank_details_api = aws.injectEndpoints({
         },
       }),
     }),
-    /**
-     * Temporary endpoint to use until Wise API token is fixed.
-     *
-     * TODO: ONCE {@link getAccountRequirements} IS IN USE, THIS ENDPOINT CAN BE DELETED
-     */
-    getAccountRequirementsForRoute: builder.mutation<
-      AccountRequirements[],
-      { targetCurrency: string; sourceAmount: number }
-    >({
-      queryFn: ({ targetCurrency, sourceAmount }) =>
-        fetch(
-          `https://api.sandbox.transferwise.tech/v1/account-requirements?source=USD&target=${targetCurrency}&sourceAmount=${sourceAmount}`,
-          { headers: { "Content-Type": "application/json" } }
-        )
-          .then<AccountRequirements[]>((res) => res.json())
-          .then((value) => ({ data: value }))
-          .catch((error) => ({
-            error: {
-              status: "CUSTOM_ERROR",
-              error: "Error getting requirements",
-              data: error,
-            },
-          })),
-    }),
-    getCurrencies: builder.mutation<WiseCurrency[], undefined>({
+    getCurrencies: builder.mutation<WiseCurrency[], unknown>({
       query: () => ({
         url: `/${v(1)}/wise`,
         method: "POST",
@@ -101,7 +87,7 @@ export const bank_details_api = aws.injectEndpoints({
      * For more details see https://docs.wise.com/api-docs/api-reference/recipient#account-requirements
      */
     postAccountRequirements: builder.mutation<
-      AccountRequirements,
+      AccountRequirements[],
       { quoteId: string; request: CreateRecipientRequest }
     >({
       query: ({ quoteId, request }) => ({
@@ -121,7 +107,6 @@ export const bank_details_api = aws.injectEndpoints({
 export const {
   useCreateQuoteMutation,
   useCreateRecipientAccountMutation,
-  useGetAccountRequirementsForRouteMutation,
   useGetAccountRequirementsMutation,
   useGetCurrenciesMutation,
 

@@ -2,28 +2,22 @@ import { useCallback, useEffect, useState } from "react";
 import { FormValues } from "./types";
 import { AccountRequirements, CreateRecipientRequest, Quote } from "types/aws";
 import { FileDropzoneAsset } from "types/components";
-import { useAdminContext } from "pages/Admin/Context";
 import {
-  // useCreateQuoteMutation,
-  // useGetAccountRequirementsMutation,
-  useCreateRecipientAccountMutation,
-  useGetAccountRequirementsForRouteMutation,
+  useCreateQuoteMutation,
+  useGetAccountRequirementsMutation,
   usePostAccountRequirementsMutation,
 } from "services/aws/bankDetails";
 import { useErrorContext } from "contexts/ErrorContext";
-import { getFilePreviews, isEmpty } from "helpers";
+import { isEmpty } from "helpers";
 import { UnexpectedStateError } from "errors/errors";
-import { EMAIL_SUPPORT } from "constants/env";
+import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import getDefaultValues from "./getDefaultValues";
-
-const ERROR_MSG = `An error occured. Please try again later. If the error persists, please contact ${EMAIL_SUPPORT}`;
 
 type RequirementsData = {
   accountRequirements: AccountRequirements;
   currentFormValues: FormValues;
   /**
    * Indicates whether requirements refresh is necessary.
-   *
    * See https://docs.wise.com/api-docs/api-reference/recipient#account-requirements
    */
   refreshRequired: boolean;
@@ -31,41 +25,39 @@ type RequirementsData = {
 
 export default function useRecipientDetails(
   targetCurrency: string,
-  expectedMontlyDonations: number
+  expectedMontlyDonations: number,
+  onSubmit: (
+    request: CreateRecipientRequest,
+    bankStatementFile: FileDropzoneAsset,
+    isDirty: boolean
+  ) => Promise<any>
 ) {
-  const { id: endowment_id } = useAdminContext();
   const [requirementsDataArray, setRequirementsDataArray] = useState<
     RequirementsData[]
   >([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [
-    quote,
-    // setQuote
-  ] = useState<Quote>();
-  const [isLoading, setLoading] = useState<boolean>(true);
-  const [isSubmitting, setSubmitting] = useState<boolean>(false);
+  const [quote, setQuote] = useState<Quote>(); // store quote to use to refresh requirements
+  const [isLoading, setLoading] = useState(true); // starts in loading state, loads only once
+  const [isSubmitting, setSubmitting] = useState(false);
+  const [isError, setError] = useState(false);
 
   const { handleError } = useErrorContext();
 
-  // const [createQuote, { isError }] = useCreateQuoteMutation();
-  // const [getAccountRequirements, { isError: isError1 }] =
-  //   useGetAccountRequirementsMutation();
-  const [getAccountRequirementsForRoute, { isError: isError1 }] =
-    useGetAccountRequirementsForRouteMutation();
-  const [postAccountRequirements, { isError: isError2 }] =
-    usePostAccountRequirementsMutation();
-  const [createRecipientAccount, { isError: isError3 }] =
-    useCreateRecipientAccountMutation();
+  const [createQuote] = useCreateQuoteMutation();
+  const [getAccountRequirements] = useGetAccountRequirementsMutation();
+  const [postAccountRequirements] = usePostAccountRequirementsMutation();
 
   useEffect(() => {
     (async () => {
       try {
-        // const newQuote = await createQuote(targetCurrency, expectedFunds).unwrap();
-        // const newRequirements = await getAccountRequirements(newQuote.id).unwrap();
-        const newRequirements = await getAccountRequirementsForRoute({
-          targetCurrency,
+        const newQuote = await createQuote({
           sourceAmount: expectedMontlyDonations,
+          targetCurrency: targetCurrency,
         }).unwrap();
+
+        const newRequirements = await getAccountRequirements(
+          newQuote.id
+        ).unwrap();
 
         if (isEmpty(newRequirements)) {
           return handleError(
@@ -85,19 +77,21 @@ export default function useRecipientDetails(
             return data;
           })
         );
-        // setQuote(newQuote);
+        setQuote(newQuote);
       } catch (error) {
-        handleError(error, ERROR_MSG);
+        handleError(error, GENERIC_ERROR_MESSAGE);
+        setError(true);
       } finally {
         setLoading(false);
       }
     })();
   }, [
+    // despite these parameters being included in the dep. array,
+    // this effect will only ever be run once (see ../BankDetails.tsx)
     targetCurrency,
     expectedMontlyDonations,
-    // createQuote,
-    // getAccountRequirements,
-    getAccountRequirementsForRoute,
+    createQuote,
+    getAccountRequirements,
     handleError,
   ]);
 
@@ -122,6 +116,8 @@ export default function useRecipientDetails(
       if (!requirements) {
         throw new UnexpectedStateError("Requirements not loaded.");
       }
+
+      // should never happen, but throw immediately if it does
       if (!requirements.refreshRequired) {
         throw new UnexpectedStateError(
           "Requirements don't need to be refreshed."
@@ -134,19 +130,25 @@ export default function useRecipientDetails(
         quoteId: quote.id,
         request,
       }).unwrap();
+
       setRequirementsDataArray((prev) => {
-        const updated = [...prev];
-        updated[selectedIndex].accountRequirements = newRequirements;
-        updated[selectedIndex].refreshRequired = false;
-        // TODO: use the below logic once Wise API token start working
-        // updated[selectedIndex].refreshRequired = newRequirements.fields.some(
-        //   (field) =>
-        //     field.group.some((group) => group.refreshRequirementsOnChange)
-        // );
+        const updated: RequirementsData[] = newRequirements.map((newReq) => ({
+          accountRequirements: newReq,
+          currentFormValues:
+            prev.find(
+              (prevReq) => prevReq.accountRequirements.type === newReq.type
+            )?.currentFormValues ?? getDefaultValues(newReq, targetCurrency),
+          refreshRequired:
+            prev[selectedIndex].accountRequirements.type === newReq.type
+              ? false // just finished checking requirements for selected type, so no need to do it again
+              : prev[selectedIndex].refreshRequired, // just copy/paste for other types
+        }));
         return updated;
       });
+      setError(false);
     } catch (error) {
-      handleError(error, ERROR_MSG);
+      handleError(error, GENERIC_ERROR_MESSAGE);
+      setError(true);
     } finally {
       setSubmitting(false);
     }
@@ -154,17 +156,16 @@ export default function useRecipientDetails(
 
   const handleSubmit = async (
     request: CreateRecipientRequest,
-    bankStatementPDF: FileDropzoneAsset
+    bankStatementFile: FileDropzoneAsset,
+    isDirty: boolean
   ) => {
     try {
       setSubmitting(true);
-      const bankStatementPreview = await getFilePreviews({ bankStatementPDF });
-      // TODO: logging just to avoid compiler warnings about unused variable,
-      // will be updated to real logic once possible
-      console.log(bankStatementPreview.bankStatementPDF);
-      await createRecipientAccount({ PK: endowment_id, request }).unwrap();
+      await onSubmit(request, bankStatementFile, isDirty);
+      setError(false);
     } catch (error) {
-      handleError(error, ERROR_MSG);
+      handleError(error, GENERIC_ERROR_MESSAGE);
+      setError(true);
     } finally {
       setSubmitting(false);
     }
@@ -172,7 +173,7 @@ export default function useRecipientDetails(
 
   return {
     handleSubmit,
-    isError: isError1 || isError2 || isError3,
+    isError,
     isLoading,
     isSubmitting,
     refreshRequirements,

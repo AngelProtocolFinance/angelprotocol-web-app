@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { ReactNode, useEffect } from "react";
 import { FormProvider } from "react-hook-form";
 import { FormValues } from "../types";
 import { AccountRequirements, CreateRecipientRequest } from "types/aws";
@@ -11,11 +11,17 @@ type Props = {
   defaultValues: FormValues;
   disabled: boolean;
   refreshRequired: boolean;
+  formButtons: (
+    disabled: boolean,
+    isSubmitting: boolean,
+    refreshRequired: boolean
+  ) => ReactNode;
   onCleanup: (formValues: FormValues) => void;
   onRefresh: (request: CreateRecipientRequest) => void;
   onSubmit: (
     request: CreateRecipientRequest,
-    bankStatementPDF: FileDropzoneAsset
+    bankStatementFile: FileDropzoneAsset,
+    isDirty: boolean
   ) => void;
 };
 
@@ -44,6 +50,7 @@ export default function RecipientDetailsForm(props: Props) {
         refreshRequired={props.refreshRequired}
         onRefresh={props.onRefresh}
         onSubmit={props.onSubmit}
+        formButtons={props.formButtons}
       />
     </FormProvider>
   );

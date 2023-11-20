@@ -18,12 +18,15 @@ export default function RequirementField({ data, disabled }: Props) {
 
   const name: Path<FormValues> = `requirements.${requirementsKey}`;
 
+  // Optional Wise field names contain " (optional)" at the end
+  const label = data.name.replace(new RegExp("\\s*\\(optional\\)$"), "");
+
   if (data.type === "date") {
     return (
       <Field<FormValues, "date">
         name={name}
         type="date"
-        label={data.name}
+        label={label}
         required={data.required}
         classes={{
           input: "date-input uppercase",
@@ -44,7 +47,7 @@ export default function RequirementField({ data, disabled }: Props) {
     return (
       <Field<FormValues>
         name={name}
-        label={data.name}
+        label={label}
         placeholder={data.example}
         required={data.required}
         classes="field-admin"
@@ -56,7 +59,7 @@ export default function RequirementField({ data, disabled }: Props) {
   if (isCountry(data)) {
     return (
       <div className="field">
-        <Label required={data.required}>{data.name}</Label>
+        <Label required={data.required}>{label}</Label>
         <CountrySelector<FormValues, any>
           fieldName={name}
           countries={countries.filter((country) =>
@@ -76,7 +79,7 @@ export default function RequirementField({ data, disabled }: Props) {
 
   return (
     <div className="field">
-      <Label required={data.required}>{data.name}</Label>
+      <Label required={data.required}>{label}</Label>
       <Selector<FormValues, any, string>
         name={name}
         options={data.valuesAllowed.map((valuesAllowed) => ({

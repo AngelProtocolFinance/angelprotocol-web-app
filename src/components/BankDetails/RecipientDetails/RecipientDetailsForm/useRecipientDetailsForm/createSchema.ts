@@ -4,9 +4,11 @@ import { SchemaShape } from "schemas/types";
 import { AccountRequirements, Group } from "types/aws";
 import { Country } from "types/components";
 import { isEmpty } from "helpers";
-import { genAssetShape } from "schemas/file";
+import { fileDropzoneAssetShape } from "schemas/file";
 import { requiredString } from "schemas/string";
+import { BYTES_IN_MB } from "constants/common";
 import { isCountry, undot } from "../../helpers";
+import { MB_LIMIT, VALID_MIME_TYPES } from "../constants";
 import {
   createOptionsTypeSchema,
   createStringSchema,
@@ -16,8 +18,11 @@ export default function createSchema(
   accountRequirements: AccountRequirements
 ): ObjectSchema<FormValues> {
   return object<any, SchemaShape<FormValues>>({
-    accountHolderName: requiredString,
-    bankStatementPDF: object(genAssetShape(true)),
+    bankStatementFile: fileDropzoneAssetShape(
+      MB_LIMIT * BYTES_IN_MB,
+      VALID_MIME_TYPES,
+      true
+    ),
     currency: requiredString,
     type: requiredString,
     requirements: object(

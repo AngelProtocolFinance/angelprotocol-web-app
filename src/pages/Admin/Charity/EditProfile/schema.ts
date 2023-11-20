@@ -2,17 +2,12 @@ import { ObjectSchema, array, object } from "yup";
 import { FV } from "./types";
 import { SchemaShape } from "schemas/types";
 import { ImgLink } from "components/ImgEditor";
-import { genFileSchema } from "schemas/file";
+import { MIMEType, genFileSchema } from "schemas/file";
 import { optionType } from "schemas/shape";
 import { requiredString, url } from "schemas/string";
 import { MAX_SDGS } from "constants/unsdgs";
 
-export const VALID_MIME_TYPES = [
-  "image/jpeg",
-  "image/png",
-  "image/webp",
-  "image/svg",
-];
+export const VALID_MIME_TYPES: MIMEType[] = ["JPEG", "PNG", "WEBP", "SVG"];
 
 export const MAX_SIZE_IN_BYTES = 1e6;
 

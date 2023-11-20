@@ -68,6 +68,7 @@ type Append<Reg extends InitApplication, R, C> = {
 export type OrgDataForStep1 = { OrganizationName: string };
 
 export type ContactDetails = {
+  PK: string;
   FirstName: string;
   LastName: string;
   PhoneNumber: string;
@@ -121,7 +122,7 @@ export type TDocumentation = {
 };
 
 export type BankingDetails = {
-  BankStatementPDF: FileObject;
+  BankStatementFile: FileObject;
   wise_recipient_id: string;
 };
 
@@ -220,7 +221,7 @@ export function isDoneDocs(data: SavedRegistration): data is DoneDocs {
 }
 
 export function isDoneBanking(data: SavedRegistration): data is DoneBanking {
-  return !!(data.Registration as BankingDetails).BankStatementPDF;
+  return !!(data.Registration as BankingDetails).BankStatementFile;
 }
 
 export function isSubmitted(data: SavedRegistration): data is InReview {
