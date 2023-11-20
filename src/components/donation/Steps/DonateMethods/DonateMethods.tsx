@@ -28,7 +28,7 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
           Credit/Debit
         </Tab>
         <Tab className={({ selected }) => tabClasses(selected)}>Crypto</Tab>
-        <Tab className={({ selected }) => tabClasses(selected)}>Other t</Tab>
+        <Tab className={({ selected }) => tabClasses(selected)}>Other</Tab>
       </Tab.List>
       <Tab.Panels>
         <Tab.Panel className="grid">
