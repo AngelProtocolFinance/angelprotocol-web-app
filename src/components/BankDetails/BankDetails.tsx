@@ -33,7 +33,7 @@ export default function BankDetails({
   onSubmit,
   children: formButtons,
 }: Props) {
-  const [resubmitRequired, setResubmitRequired] = useState(false);
+  const [shouldUpdate, setShouldUpdate] = useState(!alreadySubmitted);
   const [expectedMontlyDonations, setExpectedMontlyDonations] =
     useState<number>();
   const [debounce, isDebouncing] = useDebounce();
@@ -53,14 +53,14 @@ export default function BankDetails({
     return <span>{GENERIC_ERROR_MESSAGE}</span>;
   }
 
-  const disabled = alreadySubmitted || isSubmitting;
+  const disabled = !shouldUpdate || isSubmitting;
 
   return (
     <div className="grid gap-6">
-      {alreadySubmitted && !resubmitRequired && (
+      {!shouldUpdate && (
         <UpdateDetailsButton
           className="my-4"
-          onClick={() => setResubmitRequired(true)}
+          onClick={() => setShouldUpdate(true)}
         />
       )}
       <CurrencySelector
