@@ -137,7 +137,7 @@ export type DoneBanking = Append<DoneDocs, BankingDetails, {}>;
 
 export type SubmissionDetails = { Email: string; EndowmentId: number };
 
-type InReview = Append<DoneBanking, SubmissionDetails, {}>;
+export type InReview = Append<DoneBanking, SubmissionDetails, {}>;
 
 export type SavedRegistration =
   | InitApplication
@@ -194,8 +194,15 @@ export type SubmitResult = {
   Email: string;
 };
 
-export type Application = Omit<InReview["ContactPerson"], "SK"> &
-  InReview["Registration"];
+export type Application = InReview;
+
+type WiseRecipient = {
+  accountName: string;
+  accountNumber: string;
+  address: string;
+  bankName: string;
+};
+export type ApplicationDetails = InReview & { WiseRecipient: WiseRecipient };
 
 /** type guards */
 export function isDoneContact(data: SavedRegistration): data is DoneContact {

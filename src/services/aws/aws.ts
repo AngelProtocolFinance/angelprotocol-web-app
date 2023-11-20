@@ -1,11 +1,13 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import {
+  EndowmentApplication,
   ProfileUpdatePayload,
   VersionSpecificWalletProfile,
   isDeleteMsg,
 } from "../types";
 import {
   Application,
+  ApplicationDetails,
   ApplicationsQueryParams,
   EndowListPaginatedAWSQueryRes,
   EndowmentCard,
@@ -22,7 +24,6 @@ import { jwtToken } from "helpers/jwt-token";
 import { TEMP_JWT } from "constants/auth";
 import { APIs } from "constants/urls";
 import { version as v } from "../helpers";
-import { applications } from "./constants";
 
 const getWalletProfileQuery = (walletAddr: string) =>
   `/${v(2)}/profile/${network}/user/${walletAddr}`;
@@ -52,6 +53,7 @@ export const aws = createApi({
     "strategy",
     "program",
     "applications",
+    "application",
   ],
   reducerPath: "aws",
   baseQuery: awsBaseQuery,
@@ -139,7 +141,7 @@ export const aws = createApi({
       },
     }),
     applications: builder.query<
-      PaginatedAWSQueryRes<Application[]>,
+      PaginatedAWSQueryRes<EndowmentApplication[]>,
       ApplicationsQueryParams
     >({
       providesTags: ["applications"],
@@ -150,14 +152,23 @@ export const aws = createApi({
           headers: { authorization: TEMP_JWT },
         };
       },
-      transformResponse() {
+      transformResponse(res: PaginatedAWSQueryRes<Application[]>) {
+        const { Items, ...rest } = res;
+        const transformed = Items.map((item) => {
+          const { SK: C, ...c } = item.ContactPerson;
+          const { SK: R, ...r } = item.Registration;
+          //remove SKs, not needed
+          return { ...c, ...r };
+        });
         return {
-          Items: applications,
-          ItemCutoff: 0,
-          Count: 10,
-          ScannedCount: 10,
+          Items: transformed,
+          ...rest,
         };
       },
+    }),
+    application: builder.query<ApplicationDetails, string>({
+      providesTags: ["application"],
+      query: (uuid) => ({ url: `${v(1)}/applications`, params: { uuid } }),
     }),
   }),
 });
@@ -171,6 +182,7 @@ export const {
   useProgramQuery,
   useEditProfileMutation,
   useApplicationsQuery,
+  useApplicationQuery,
 
   endpoints: {
     endowmentCards: { useLazyQuery: useLazyEndowmentCardsQuery },

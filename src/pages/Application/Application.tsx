@@ -1,26 +1,49 @@
 import { PropsWithChildren } from "react";
-import { applications } from "services/aws/constants";
+import { useParams } from "react-router-dom";
+import { useApplicationQuery } from "services/aws/aws";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon/Icon";
+import LoaderRing from "components/LoaderRing";
+import { ErrorStatus } from "components/Status";
 import Container from "./Container";
 
-const app = applications[0];
-const doc = app.Documentation;
 export default function Application() {
+  const { id = "" } = useParams();
+  const { data, isLoading, isError } = useApplicationQuery(id, { skip: !id });
+
+  if (isLoading) {
+    return (
+      <div className="grid place-items-center padded-container py-8">
+        <LoaderRing thickness={10} classes="w-32" />
+      </div>
+    );
+  }
+
+  if (!isError || !data) {
+    return (
+      <div className="grid content-start padded-container py-8">
+        <ErrorStatus>Failed to load application details</ErrorStatus>
+      </div>
+    );
+  }
+
+  const { ContactPerson: c, Registration: r, WiseRecipient: w } = data;
+  const doc = r.Documentation;
+
   return (
     <div className="grid content-start gap-y-4 lg:gap-y-8 lg:gap-x-3 relative padded-container pt-8 lg:pt-20 pb-8">
       <h1 className="text-center text-3xl max-lg:font-work col-span-full max-lg:mb-4">
         Applications Review - Details
       </h1>
-      <h3 className="text-lg">{app.OrganizationName}</h3>
+      <h3 className="text-lg">{r.OrganizationName}</h3>
       <div className="flex max-sm:flex-col gap-x-4">
         <span className="text-sm font-semibold uppercase">Application ID:</span>
-        <span className="uppercase text-sm font-work">{app.PK}</span>
+        <span className="uppercase text-sm font-work">{r.PK}</span>
       </div>
       <div className="flex max-sm:flex-col gap-x-4 -mt-2 lg:-mt-4">
         <span className="text-sm font-semibold uppercase">Date submitted:</span>
         <span className="uppercase text-sm font-work">
-          {new Date(app.RegistrationDate).toLocaleDateString()}
+          {new Date(r.RegistrationDate).toLocaleDateString()}
         </span>
       </div>
 
@@ -31,13 +54,13 @@ export default function Application() {
           ) : (
             <Row label="EIN">{doc.EIN}</Row>
           )}
-          <Row label="HQ Country">{app.HqCountry}</Row>
+          <Row label="HQ Country">{r.HqCountry}</Row>
           <Row label="Countries active in">
-            {app.ActiveInCountries.join(", ")}
+            {r.ActiveInCountries.join(", ")}
           </Row>
-          <Row label="UN SDG">{app.UN_SDG.join(", ")}</Row>
-          <Row label="Contact name">{app.FirstName + " " + app.LastName}</Row>
-          <Row label="Contact email">{app.Email}</Row>
+          <Row label="UN SDG">{r.UN_SDG.join(", ")}</Row>
+          <Row label="Contact name">{c.FirstName + " " + c.LastName}</Row>
+          <Row label="Contact email">{c.Email}</Row>
           {doc.DocType === "FSA" && (
             <>
               <Row label="Contact national ID">
@@ -55,13 +78,12 @@ export default function Application() {
       </Container>
       <Container title="Banking details">
         <div className="grid sm:grid-cols-[auto_auto_1fr]">
-          <Row label="Bank name">Great Bank of Northwest Luzon</Row>
-          <Row label="Address">123 Winding Road, Singapore</Row>
-          <Row label="Account number">012345678910</Row>
-          <Row label="Account holder name">Jesse Pinkman</Row>
-          <Row label="Anticipated monthly donations (USD)">$10,000</Row>
+          <Row label="Bank name">{w.bankName}</Row>
+          <Row label="Address">{w.address}</Row>
+          <Row label="Account number">{w.accountNumber}</Row>
+          <Row label="Account holder name">{w.accountName}</Row>
           <Row label="Bank statement document">
-            <DocLink url="https://google.com" />
+            <DocLink url={r.BankStatementFile.publicUrl} />
           </Row>
         </div>
       </Container>
