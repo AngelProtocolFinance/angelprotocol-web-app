@@ -36,7 +36,7 @@ export default function Filter({
       network: { label: "Select network...", value: "" },
       currency: { label: "Select currency...", value: "" },
       donorAddress: donorAddress,
-      status: { label: "Select status...", value: "" },
+      status: { label: "Under Review", value: "Under Review" },
     },
   });
 

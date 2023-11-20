@@ -203,7 +203,7 @@ type WiseRecipient = {
   bankName: string;
 };
 
-export type ApplicationDetails = InReview & { WiseRecipient: WiseRecipient };
+export type ApplicationDetails = InReview & { WiseRecipient?: WiseRecipient };
 
 /** type guards */
 export function isDoneContact(data: SavedRegistration): data is DoneContact {

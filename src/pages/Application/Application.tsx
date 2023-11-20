@@ -17,8 +17,14 @@ export default function Application() {
       <QueryLoader
         queryState={queryState}
         messages={{
-          loading: <LoaderRing thickness={10} classes="w-32" />,
-          error: <ErrorStatus>Failed to load application details</ErrorStatus>,
+          loading: (
+            <LoaderRing thickness={10} classes="w-32 justify-self-center" />
+          ),
+          error: (
+            <ErrorStatus classes="justify-self-center">
+              Failed to load application details
+            </ErrorStatus>
+          ),
         }}
       >
         {(data) => <Loaded {...data} />}

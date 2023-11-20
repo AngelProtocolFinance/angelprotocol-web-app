@@ -4,6 +4,8 @@ import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import Container from "./Container";
 
+const NA = "Not provided";
+
 export default function Loaded(props: ApplicationDetails) {
   const { ContactPerson: c, Registration: r, WiseRecipient: w } = props;
   const doc = r.Documentation;
@@ -52,10 +54,10 @@ export default function Loaded(props: ApplicationDetails) {
       </Container>
       <Container title="Banking details">
         <div className="grid sm:grid-cols-[auto_auto_1fr]">
-          <Row label="Bank name">{w.bankName}</Row>
-          <Row label="Address">{w.address}</Row>
-          <Row label="Account number">{w.accountNumber}</Row>
-          <Row label="Account holder name">{w.accountName}</Row>
+          <Row label="Bank name">{w?.bankName || NA}</Row>
+          <Row label="Address">{w?.address || NA}</Row>
+          <Row label="Account number">{w?.accountNumber || NA}</Row>
+          <Row label="Account holder name">{w?.accountName || NA}</Row>
           <Row label="Bank statement document">
             <DocLink url={r.BankStatementFile.publicUrl} />
           </Row>

@@ -16,6 +16,7 @@ export default function usePaginatedApplications() {
 
   const [params, setParams] = useState<ApplicationsQueryParams>({
     limit: 10,
+    regStatus: "Under Review",
   });
 
   const queryState = useApplicationsQuery(params, {
