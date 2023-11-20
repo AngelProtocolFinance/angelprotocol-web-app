@@ -1,6 +1,11 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { PropsWithChildren } from "react";
-import { FormProvider, UseFormReturn, useForm } from "react-hook-form";
+import {
+  FormProvider,
+  SubmitHandler,
+  UseFormReturn,
+  useForm,
+} from "react-hook-form";
 import { object, string } from "yup";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
@@ -20,6 +25,8 @@ export default function Prompt({ verdict, orgName }: Props) {
   });
 
   type FV = typeof methods extends UseFormReturn<infer U> ? U : never;
+
+  const onSubmit: SubmitHandler<FV> = async (fv) => {};
 
   return (
     <Modal

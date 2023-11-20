@@ -7,6 +7,7 @@ import {
 import {
   Application,
   ApplicationDetails,
+  ApplicationVerdict,
   ApplicationsQueryParams,
   EndowListPaginatedAWSQueryRes,
   EndowmentCard,
@@ -160,6 +161,17 @@ export const aws = createApi({
         headers: { authorization: TEMP_JWT },
       }),
     }),
+    reviewApplication: builder.mutation<any, ApplicationVerdict>({
+      invalidatesTags: ["application", "applications"],
+      query: (verdict) => {
+        return {
+          url: `${v(1)}/applications`,
+          method: "POST",
+          headers: { authorization: TEMP_JWT },
+          body: verdict,
+        };
+      },
+    }),
   }),
 });
 
@@ -173,6 +185,7 @@ export const {
   useEditProfileMutation,
   useApplicationsQuery,
   useApplicationQuery,
+  useReviewApplicationMutation,
 
   endpoints: {
     endowmentCards: { useLazyQuery: useLazyEndowmentCardsQuery },
