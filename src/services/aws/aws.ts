@@ -166,7 +166,7 @@ export const aws = createApi({
       query: (verdict) => {
         return {
           url: `${v(1)}/applications`,
-          method: "POST",
+          method: "PUT",
           headers: { authorization: TEMP_JWT },
           body: verdict,
         };
