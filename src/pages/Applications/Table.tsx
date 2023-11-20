@@ -129,7 +129,7 @@ const bg: { [key in RegistrationStatus]: string } = {
   Active: "bg-green",
   "Under Review": "bg-gray-d1",
   Rejected: "bg-red",
-  Inactive: "bg-yellow",
+  Inactive: "bg-gray-d1",
 };
 
 const text: { [key in RegistrationStatus]: string } = {

@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import {
-  EndowmentApplication,
   ProfileUpdatePayload,
   VersionSpecificWalletProfile,
   isDeleteMsg,
@@ -141,7 +140,7 @@ export const aws = createApi({
       },
     }),
     applications: builder.query<
-      PaginatedAWSQueryRes<EndowmentApplication[]>,
+      PaginatedAWSQueryRes<Application[]>,
       ApplicationsQueryParams
     >({
       providesTags: ["applications"],
@@ -150,19 +149,6 @@ export const aws = createApi({
           url: `${v(1)}/applications`,
           params,
           headers: { authorization: TEMP_JWT },
-        };
-      },
-      transformResponse(res: PaginatedAWSQueryRes<Application[]>) {
-        const { Items, ...rest } = res;
-        const transformed = Items.map((item) => {
-          const { SK: C, ...c } = item.ContactPerson;
-          const { SK: R, ...r } = item.Registration;
-          //remove SKs, not needed
-          return { ...c, ...r };
-        });
-        return {
-          Items: transformed,
-          ...rest,
         };
       },
     }),

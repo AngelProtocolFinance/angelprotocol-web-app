@@ -194,7 +194,7 @@ export type SubmitResult = {
   Email: string;
 };
 
-export type Application = InReview;
+export type Application = InReview["Registration"] & Pick<InitContact, "Email">;
 
 type WiseRecipient = {
   accountName: string;
@@ -202,6 +202,7 @@ type WiseRecipient = {
   address: string;
   bankName: string;
 };
+
 export type ApplicationDetails = InReview & { WiseRecipient: WiseRecipient };
 
 /** type guards */

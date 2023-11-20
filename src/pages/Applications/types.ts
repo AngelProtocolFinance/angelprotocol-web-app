@@ -1,7 +1,7 @@
-import { EndowmentApplication } from "services/types";
+import { Application } from "types/aws";
 
 export type TableProps = {
-  applications: EndowmentApplication[];
+  applications: Application[];
   classes?: string;
   onLoadMore(): void;
   hasMore: boolean;
