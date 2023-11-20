@@ -154,7 +154,11 @@ export const aws = createApi({
     }),
     application: builder.query<ApplicationDetails, string>({
       providesTags: ["application"],
-      query: (uuid) => ({ url: `${v(1)}/applications`, params: { uuid } }),
+      query: (uuid) => ({
+        url: `${v(1)}/applications`,
+        params: { uuid },
+        headers: { authorization: TEMP_JWT },
+      }),
     }),
   }),
 });
