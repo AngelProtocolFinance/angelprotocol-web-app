@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Helmet } from "react-helmet";
 
 type Type = "stocks" | "daf";
 
@@ -42,10 +41,12 @@ export default function Other(_props: Props) {
         </div>
       ) : (
         <div className="flex flex-col items-center gap-5">
-          <h3 className="text-2xl sm:text-3xl mb-4 sm:mb-12 text-center leading-relaxed">
-            DAF
+          <h3 className="text-2xl sm:text-3xl text-center leading-relaxed">
+            DAFDirect
           </h3>
-          <p>Donation using DAFDirect widget direct to Better Giving.</p>
+          <p className="text-center">
+            Donation using DAFDirect widget direct to Better Giving.
+          </p>
           <iframe
             title="DAFDirect Widget"
             src="/dafdirect-widget.html"
@@ -53,7 +54,7 @@ export default function Other(_props: Props) {
             height="300"
           ></iframe>
           <button
-            className="btn-outline-filled btn-donate w-40"
+            className="btn-outline-filled btn-donate w-1/2"
             type="button"
             onClick={() => setType(undefined)}
           >
