@@ -32,7 +32,7 @@ const awsBaseQuery = retry(
   fetchBaseQuery({
     baseUrl: APIs.aws,
     mode: "cors",
-    async prepareHeaders(headers) {
+    async prepareHeaders(headers, api) {
       if (headers.get("authorization") === TEMP_JWT) {
         headers.set("authorization", await jwtToken());
       }
