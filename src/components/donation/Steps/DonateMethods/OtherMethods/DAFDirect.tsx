@@ -1,3 +1,5 @@
+import IFrame from "components/IFrame";
+
 export default function DAFDirect() {
   return (
     <>
@@ -7,12 +9,12 @@ export default function DAFDirect() {
       <p className="text-center">
         Donation using DAFDirect widget direct to Better Giving.
       </p>
-      <iframe
+      <IFrame
         title="DAFDirect Widget"
         src="/dafdirect-widget.html"
         width="180"
         height="300"
-      ></iframe>
+      ></IFrame>
     </>
   );
 }
