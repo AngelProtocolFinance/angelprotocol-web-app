@@ -4,6 +4,7 @@ import Layout from "../Layout";
 import { LINKS } from "../constants";
 import Banking from "./Banking";
 import Dashboard from "./Dashboard";
+import Donations from "./Donations";
 import EditProfile from "./EditProfile";
 import ProgramEditor from "./ProgramEditor";
 import Programs from "./Programs";
@@ -23,6 +24,7 @@ export default function Charity() {
           />
         }
       >
+        <Route path={adminRoutes.donations} element={<Donations />} />
         <Route path={adminRoutes.edit_profile} element={<EditProfile />} />
         <Route path={adminRoutes.programs} element={<Programs />} />
         <Route
