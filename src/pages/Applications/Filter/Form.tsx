@@ -1,6 +1,8 @@
 import { Popover } from "@headlessui/react";
 import { FC, FormEventHandler } from "react";
 import { FormValues as FV } from "./types";
+import countries from "assets/countries/all.json";
+import CountrySelector from "components/CountrySelector";
 import Icon from "components/Icon";
 import DateInput from "./DateInput";
 import RegStatusDropdown from "./RegStatusDropdown";
@@ -26,7 +28,21 @@ const Form: FC<Props> = ({ onReset, submit, classes = "" }) => {
         </Popover.Button>
       </div>
 
-      <div className="grid gap-x-[1.125rem] grid-cols-2 px-4 lg:px-6 lg:pt-6">
+      <div className="grid gap-2 px-4 lg:px-6 lg:pt-6">
+        <label className="text-sm">HQ Country</label>
+        <CountrySelector<FV, "hqCountry">
+          placeholder="Select a country"
+          fieldName="hqCountry"
+          countries={countries}
+          classes={{
+            container: "px-2",
+            input: "text-sm py-3.5",
+            error: "field-error",
+          }}
+        />
+      </div>
+
+      <div className="grid gap-x-[1.125rem] grid-cols-2 px-4 lg:px-6">
         <label className="col-span-full text-sm mb-2">Date</label>
         <DateInput<FV> name="startDate" />
         <DateInput<FV> name="endDate" />

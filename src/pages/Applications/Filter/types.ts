@@ -1,13 +1,11 @@
 import { RegistrationStatus } from "types/aws";
-import { OptionType } from "types/components";
+import { Country, OptionType } from "types/components";
 
 export type FormValues = {
   startDate: string;
   endDate: string;
-  network: OptionType<string>;
-  currency: OptionType<string>;
   status: OptionType<RegistrationStatus>;
-
+  hqCountry: Country;
   //meta
   donorAddress: string;
 };

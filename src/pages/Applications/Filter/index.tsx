@@ -33,9 +33,7 @@ export default function Filter({
       //set default value so empty can be tagged as invalid
       startDate: dateToFormFormat(getYearAgo()),
       endDate: dateToFormFormat(new Date()),
-      network: { label: "Select network...", value: "" },
-      currency: { label: "Select currency...", value: "" },
-      donorAddress: donorAddress,
+      hqCountry: { name: "", flag: "", code: "" },
       status: { label: "Under Review", value: "Under Review" },
     },
   });
@@ -45,10 +43,10 @@ export default function Filter({
   async function submit(data: FV) {
     setParams(
       cleanObject({
-        regAfterDate: data.startDate
+        regBeforeDate: data.startDate
           ? new Date(data.startDate).toISOString()
           : "",
-        regBeforeDate: data.endDate ? new Date(data.endDate).toISOString() : "",
+        regAfterDate: data.endDate ? new Date(data.endDate).toISOString() : "",
         regStatus: data.status.value,
       })
     );
