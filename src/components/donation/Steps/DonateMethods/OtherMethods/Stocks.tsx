@@ -34,10 +34,15 @@ export default function Stocks({ state }: Props) {
         </span>
       </div>
       <h4 className="text-lg sm:text-xl leading-relaxed">Let Us Know</h4>
-      For your gift to be recognized when it comes into our account, please
-      email us details of the shares you are donating and which project or
-      projects to designate your donation to. Please send this email to
-      support@better.giving.
+      <div className="grid gap-2">
+        <p>
+          For your gift to be recognized when it comes into our account, please
+          email us details of the shares you are donating and which project or
+          projects to designate your donation to. Please send this email to
+          support@better.giving.
+        </p>
+        <i>Note: You can also CC us the email you send to your broker.</i>
+      </div>
       <button
         type="button"
         className="btn-orange btn-donate my-4 w-1/2 justify-self-center"
