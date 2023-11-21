@@ -16,7 +16,7 @@ export default function Stocks({ state }: Props) {
         To donate stock, please email or provide your broker with the following
         information:
       </p>
-      <div className="grid rounded bg-gray-l5 p-2">
+      <div className="grid rounded bg-gray-l5 dark:bg-bluegray-d1 p-2">
         <p>Please transfer X shares of ABC to:</p>
         <p>Deliver to: Fidelity Investments</p>
         <p>DTC number: 0226</p>
@@ -26,13 +26,18 @@ export default function Stocks({ state }: Props) {
           Reference: [Internal Ref#, if needed] {charityName} ({profileUrl})
         </p>
       </div>
-      <div className="grid">
-        <p> You may also need the following information:</p>
-        <span className="rounded bg-gray-l5 p-2">
-          Better.Giving is a non-profit with 501(c)(3) tax-exempt status,
-          Federal ID #: 87-3758939.
-        </span>
-      </div>
+      <p> You may also need the following information:</p>
+      <span className="rounded bg-gray-l5 dark:bg-bluegray-d1 p-2">
+        Better.Giving is a non-profit with 501(c)(3) tax-exempt status, Federal
+        ID #: 87-3758939.
+      </span>
+      <button
+        type="button"
+        className="btn-orange btn-donate my-4 w-1/2 justify-self-center"
+        onClick={() => openEmailClient(charityName, profileUrl)}
+      >
+        Send email
+      </button>
       <h4 className="text-lg sm:text-xl leading-relaxed">Let Us Know</h4>
       <div className="grid gap-2">
         <p>
@@ -43,13 +48,6 @@ export default function Stocks({ state }: Props) {
         </p>
         <i>Note: You can also CC us the email you send to your broker.</i>
       </div>
-      <button
-        type="button"
-        className="btn-orange btn-donate my-4 w-1/2 justify-self-center"
-        onClick={() => openEmailClient(charityName, profileUrl)}
-      >
-        Send email
-      </button>
       <h4 className="text-lg sm:text-xl leading-relaxed">
         Benefits of Donating Appreciated stock
       </h4>
