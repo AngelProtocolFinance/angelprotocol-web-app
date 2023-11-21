@@ -40,7 +40,7 @@ export default function Stocks({ state }: Props) {
       support@better.giving.
       <button
         type="button"
-        className="btn-outline-filled btn-donate w-1/2"
+        className="btn-orange btn-donate my-4 w-1/2 justify-self-center"
         onClick={() => openEmailClient(charityName, profileUrl)}
       >
         Send email

@@ -32,7 +32,7 @@ export default function OtherMethods(props: Props) {
         <div className="grid gap-5">
           {type === "stocks" ? <Stocks state={props.state} /> : <DAFDirect />}
           <button
-            className="btn-outline-filled btn-donate w-1/2"
+            className="btn-outline-filled btn-donate w-1/2 justify-self-center"
             type="button"
             onClick={() => setType(undefined)}
           >
