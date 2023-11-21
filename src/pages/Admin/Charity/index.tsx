@@ -4,6 +4,7 @@ import Layout from "../Layout";
 import { LINKS } from "../constants";
 import Banking from "./Banking";
 import Dashboard from "./Dashboard";
+import Donations from "./Donations";
 import EditProfile from "./EditProfile";
 import ProgramEditor from "./ProgramEditor";
 import Programs from "./Programs";
@@ -16,13 +17,14 @@ export default function Charity() {
         element={
           <Layout
             linkGroups={[
-              { links: [LINKS.dashboard] },
+              { links: [LINKS.dashboard, LINKS.donations] },
               { title: "Profile", links: [LINKS.edit_profile, LINKS.programs] },
               { title: "Manage", links: [LINKS.banking] },
             ]}
           />
         }
       >
+        <Route path={adminRoutes.donations} element={<Donations />} />
         <Route path={adminRoutes.edit_profile} element={<EditProfile />} />
         <Route path={adminRoutes.programs} element={<Programs />} />
         <Route
