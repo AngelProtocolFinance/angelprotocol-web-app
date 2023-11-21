@@ -15,26 +15,45 @@ export default function formToCreateRecipientRequest(
     profile: "{{profileId}}", // AWS replaces it with actual Profile ID
     details: Object.entries(requirements).reduce<
       CreateRecipientRequest["details"]
-    >((details, [key, value]) => {
-      const origKey = redot(key);
+    >(
+      (details, [key, value]) => {
+        if (value == null) {
+          // if value is null/undefined, it's probably optional,
+          // so don't include it
+          return details;
+        }
 
-      if (value == null) {
-        // if value is null/undefined, it's probably optional,
-        // so don't include it
-        return details;
-      }
+        const origKey = redot(key);
 
-      if (typeof value === "string") {
+        let objToFill = details;
+        let field = origKey;
+
+        if (origKey.startsWith("address.")) {
+          objToFill = details["address"] as Record<string, string>; // address object
+          field = origKey.split(".")[1]; // address field
+        }
+
         // if value is string
-        details[origKey] = value;
-      } else if ("code" in value) {
-        // if value is Country
-        details[origKey] = value.code;
-      } else {
-        // if value is OptionType
-        details[origKey] = value.value;
-      }
-      return details;
-    }, {}),
+        if (typeof value === "string") {
+          fill(objToFill, field, value);
+        } else if ("code" in value) {
+          // if value is Country
+          fill(objToFill, field, value.code);
+        } else {
+          // if value is OptionType
+          fill(objToFill, field, value.value);
+        }
+        return details;
+      },
+      { address: {} }
+    ),
   };
+}
+
+function fill(
+  obj: Record<string, any>,
+  field: string,
+  value: string | null | undefined
+) {
+  obj[field] = value;
 }
