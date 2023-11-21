@@ -1,4 +1,3 @@
-import { useParams } from "react-router-dom";
 import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
 import Filter from "./Filter";
@@ -6,7 +5,6 @@ import Table from "./Table";
 import usePaginatedApplications from "./usePaginatedApplications";
 
 export default function Applications() {
-  const { address: donorAddress = "" } = useParams<{ address: string }>();
   const {
     data,
     hasMore,
@@ -17,6 +15,7 @@ export default function Applications() {
     loadNextPage,
     onQueryChange,
     setParams,
+    isFetching,
   } = usePaginatedApplications();
 
   const isLoadingOrError = isLoading || isLoadingNextPage || isError;
@@ -42,9 +41,8 @@ export default function Applications() {
         />
       </div>
       <Filter
-        isDisabled={isLoadingOrError}
+        isDisabled={isLoadingOrError || isFetching}
         setParams={setParams}
-        donorAddress={donorAddress}
         classes="max-lg:col-span-full max-lg:w-full"
       />
       <QueryLoader

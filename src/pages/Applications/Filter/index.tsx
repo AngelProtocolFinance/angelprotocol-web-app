@@ -14,15 +14,9 @@ type Props = {
   classes?: string;
   setParams: React.Dispatch<React.SetStateAction<ApplicationsQueryParams>>;
   isDisabled: boolean;
-  donorAddress: string;
 };
 
-export default function Filter({
-  setParams,
-  donorAddress,
-  classes = "",
-  isDisabled,
-}: Props) {
+export default function Filter({ setParams, classes = "", isDisabled }: Props) {
   const buttonRef = useRef<HTMLButtonElement | null>(null);
 
   const methods = useForm<FV>({
@@ -38,7 +32,11 @@ export default function Filter({
     },
   });
 
-  const { handleSubmit, reset } = methods;
+  const {
+    handleSubmit,
+    reset,
+    formState: { isDirty },
+  } = methods;
 
   function ISOdate(date: string, addCurrTime?: boolean) {
     if (!date) return "";
@@ -92,6 +90,7 @@ export default function Filter({
 
       <FormProvider {...methods}>
         <Form
+          isDirty={isDirty}
           submit={handleSubmit(submit)}
           onReset={onReset}
           classes="max-lg:fixed max-lg:inset-x-0 max-lg:top-0 lg:mt-1 absolute top-full z-20"
