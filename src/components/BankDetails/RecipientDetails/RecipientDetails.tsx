@@ -94,7 +94,10 @@ export default function RecipientDetails({
         // since all fields need to be rerendered when new requirements type is chosen,
         // we can set this key to tell React that when any of the fields passed to this component changes,
         // it needs to recreate the form state by rerendering the whole component
-        key={`form-${requirements.accountRequirements.type}`}
+        //
+        // Reason for using `requirements.accountRequirements.fields.length` to set the component key is that upo
+        // refreshing the requirements, the number of fields will change, thus causing the whole form to be recreated
+        key={`form-${requirements.accountRequirements.type}-${requirements.accountRequirements.fields.length}`}
         accountRequirements={requirements.accountRequirements}
         defaultValues={requirements.currentFormValues}
         disabled={disabled}
