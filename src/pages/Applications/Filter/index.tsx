@@ -57,7 +57,10 @@ export default function Filter({
 
   const onReset: FormEventHandler<HTMLFormElement> = () => {
     reset();
-    setParams({});
+    setParams({
+      limit: 10,
+      regStatus: "Under Review",
+    });
     buttonRef.current?.click();
   };
   return (
