@@ -1,10 +1,13 @@
 import { useState } from "react";
+import { FormStep } from "slices/donation";
+import DAFDirect from "./DAFDirect";
+import Stocks from "./Stocks";
 
 type Type = "stocks" | "daf";
 
-type Props = {};
+type Props = { state: FormStep };
 
-export default function Other(_props: Props) {
+export default function OtherMethods(_props: Props) {
   const [type, setType] = useState<Type>();
   return (
     <div className="flex gap-3 md:gap-5 justify-center font-body mt-4">
@@ -25,34 +28,9 @@ export default function Other(_props: Props) {
             DAF
           </button>
         </>
-      ) : type === "stocks" ? (
-        <div className="grid items-center gap-5">
-          <h3 className="text-2xl sm:text-3xl mb-4 sm:mb-12 text-center leading-relaxed">
-            Stocks
-          </h3>
-          <p>Coming Soon! 😃</p>
-          <button
-            className="btn-outline-filled btn-donate w-40"
-            type="button"
-            onClick={() => setType(undefined)}
-          >
-            Back
-          </button>
-        </div>
       ) : (
         <div className="flex flex-col items-center gap-5">
-          <h3 className="text-2xl sm:text-3xl text-center leading-relaxed">
-            DAFDirect
-          </h3>
-          <p className="text-center">
-            Donation using DAFDirect widget direct to Better Giving.
-          </p>
-          <iframe
-            title="DAFDirect Widget"
-            src="/dafdirect-widget.html"
-            width="180"
-            height="300"
-          ></iframe>
+          {type === "stocks" ? <Stocks /> : <DAFDirect />}
           <button
             className="btn-outline-filled btn-donate w-1/2"
             type="button"
