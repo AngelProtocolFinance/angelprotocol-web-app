@@ -16,7 +16,7 @@ export default function Charity() {
         element={
           <Layout
             linkGroups={[
-              { links: [LINKS.dashboard] },
+              { links: [LINKS.dashboard, LINKS.donations] },
               { title: "Profile", links: [LINKS.edit_profile, LINKS.programs] },
               { title: "Manage", links: [LINKS.banking] },
             ]}

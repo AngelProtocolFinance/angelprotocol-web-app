@@ -32,6 +32,14 @@ export const LINKS: {
     },
     end: true,
   },
+  donations: {
+    title: "Donations",
+    to: sidebarRoutes.donations,
+    icon: {
+      type: "DollarCircle",
+      size: 24,
+    },
+  },
   programs: {
     title: "Programs",
     to: sidebarRoutes.programs,
