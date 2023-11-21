@@ -38,15 +38,13 @@ export default function Filter({ setParams, classes = "", isDisabled }: Props) {
     formState: { isDirty },
   } = methods;
 
-  function ISOdate(date: string, addCurrTime?: boolean) {
+  function ISOdate(date: string, end?: boolean) {
     if (!date) return "";
 
     const output = new Date(date);
-    if (addCurrTime) {
-      const now = new Date();
-      const currTime = now.getHours();
-      output.setHours(currTime);
-    }
+    //include up to the last second of the day
+    if (end) output.setHours(23, 59, 59);
+
     return output.toISOString();
   }
 
