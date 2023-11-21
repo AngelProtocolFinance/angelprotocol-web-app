@@ -40,13 +40,23 @@ export default function Filter({
 
   const { handleSubmit, reset } = methods;
 
+  function ISOdate(date: string, addCurrTime?: boolean) {
+    if (!date) return "";
+
+    const output = new Date(date);
+    if (addCurrTime) {
+      const now = new Date();
+      const currTime = now.getHours();
+      output.setHours(currTime);
+    }
+    return output.toISOString();
+  }
+
   async function submit(data: FV) {
     setParams(
       cleanObject({
-        regBeforeDate: data.startDate
-          ? new Date(data.startDate).toISOString()
-          : "",
-        regAfterDate: data.endDate ? new Date(data.endDate).toISOString() : "",
+        regBeforeDate: ISOdate(data.startDate),
+        regAfterDate: ISOdate(data.endDate, true),
         regStatus: data.status.value,
       })
     );

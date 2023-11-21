@@ -15,7 +15,7 @@ export default function DateInput<T extends FieldValues>({
     <div>
       <input
         {...register(name as any)}
-        type="date"
+        type="datetime"
         className="date-input uppercase text-sm relative w-full px-4 py-3 border border-prim rounded-md border-collapse dark:bg-blue-d6"
       />
       <ErrorMessage
