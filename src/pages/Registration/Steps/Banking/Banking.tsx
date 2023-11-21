@@ -1,59 +1,26 @@
-import { FormProvider, useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
-import { FormValues as FV } from "./types";
-import FileDropzone from "components/FileDropzone";
-import { Label } from "components/form";
-import { LoadText } from "components/registration";
-import { steps } from "../../routes";
+import BankDetails from "components/BankDetails";
 import { useRegState, withStepGuard } from "../StepGuard";
+import FormButtons from "./FormButtons";
 import useSubmit from "./useSubmit";
 
 function Banking() {
   const { data } = useRegState<5>();
-  const methods = useForm<FV>({
-    defaultValues: data.banking?.BankStatementFile
-      ? {
-          bankStatement: {
-            previews: [data.banking?.BankStatementFile],
-            files: [],
-          },
-        }
-      : {
-          bankStatement: { previews: [], files: [] },
-        },
-  });
-  const { submit, isSubmitting } = useSubmit(methods);
+  const { submit, isSubmitting } = useSubmit();
 
   return (
-    <FormProvider {...methods}>
-      <form className="w-full" onSubmit={submit}>
-        <Label required className="mb-2 mt-1">
-          Bank statement
-        </Label>
-        <FileDropzone<FV, "bankStatement">
-          name="bankStatement"
-          tooltip="Valid types are: PDF, JPG, PNG and WEBP. File should be less than 1 MB."
+    <BankDetails
+      alreadySubmitted={!!data.banking?.wise_recipient_id}
+      isSubmitting={isSubmitting}
+      onSubmit={submit}
+    >
+      {(disabled, isSubmitting, refreshRequired) => (
+        <FormButtons
+          disabled={disabled}
+          isSubmitting={isSubmitting}
+          refreshRequired={refreshRequired}
         />
-
-        <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
-          <Link
-            aria-disabled={isSubmitting}
-            to={`../${steps.docs}`}
-            state={data.init}
-            className="py-3 min-w-[8rem] btn-outline-filled btn-reg"
-          >
-            Back
-          </Link>
-          <button
-            disabled={isSubmitting}
-            type="submit"
-            className="py-3 min-w-[8rem] btn-orange btn-reg"
-          >
-            <LoadText isLoading={isSubmitting}>Continue</LoadText>
-          </button>
-        </div>
-      </form>
-    </FormProvider>
+      )}
+    </BankDetails>
   );
 }
 

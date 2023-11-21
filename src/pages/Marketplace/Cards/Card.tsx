@@ -2,7 +2,6 @@ import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { EndowmentCard } from "types/aws";
 import { UNSDG_NUMS } from "types/lists";
-import BookmarkBtn from "components/BookmarkBtn";
 import Icon from "components/Icon";
 import Image from "components/Image";
 import Tooltip from "components/Tooltip";
@@ -30,7 +29,6 @@ export default function Card({
           {endow_designation}
         </p>
         {kyc_donors_only && <KYCIcon className="ml-auto" />}
-        <BookmarkBtn endowId={id} />
       </div>
       <Link
         to={`${appRoutes.marketplace}/${id}`}

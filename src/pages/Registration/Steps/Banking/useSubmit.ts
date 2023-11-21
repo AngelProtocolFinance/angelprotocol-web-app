@@ -1,43 +1,60 @@
-import { SubmitHandler, UseFormReturn } from "react-hook-form";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FormValues as FV } from "./types";
+import { CreateRecipientRequest } from "types/aws";
+import { FileDropzoneAsset } from "types/components";
+import { useCreateRecipientAccountMutation } from "services/aws/bankDetails";
 import { useUpdateRegMutation } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
+import { getFilePreviews } from "helpers";
+import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { steps } from "../../routes";
 import { useRegState } from "../StepGuard";
 
-export default function useSubmit(form: UseFormReturn<FV>) {
+export default function useSubmit() {
   const { data } = useRegState<5>();
-  const {
-    handleSubmit,
-    formState: { isDirty, isSubmitting },
-  } = form;
-
+  const [createRecipientAccount] = useCreateRecipientAccountMutation();
   const [updateReg] = useUpdateRegMutation();
   const { handleError } = useErrorContext();
   const navigate = useNavigate();
+  const [isSubmitting, setSubmitting] = useState(false);
 
-  const submit: SubmitHandler<FV> = async (fv) => {
-    if (!isDirty && data.banking?.BankStatementFile) {
+  const submit = async (
+    request: CreateRecipientRequest,
+    bankStatementFile: FileDropzoneAsset,
+    isDirty: boolean
+  ) => {
+    try {
+      if (!isDirty && data.banking?.BankStatementFile) {
+        return navigate(`../${steps.summary}`, { state: data.init });
+      }
+
+      setSubmitting(true);
+
+      const bankStatementPreview = await getFilePreviews({
+        bankStatementFile,
+      });
+
+      await createRecipientAccount({
+        PK: data.contact.PK,
+        request,
+      }).unwrap();
+
+      const result = await updateReg({
+        reference: data.init.reference,
+        type: "banking",
+        BankStatementFile: bankStatementPreview.bankStatementFile[0],
+      });
+
+      if ("error" in result) {
+        return handleError(result.error);
+      }
       return navigate(`../${steps.summary}`, { state: data.init });
+    } catch (error) {
+      handleError(error, GENERIC_ERROR_MESSAGE);
+    } finally {
+      setSubmitting(false);
     }
-    const result = await updateReg({
-      reference: data.init.reference,
-      type: "banking",
-      BankStatementFile: {
-        name: fv.bankStatement.files[0]?.name || "placeholder banking",
-        publicUrl: "https://google.com",
-      },
-    });
-
-    if ("error" in result) {
-      return handleError(result.error);
-    }
-    return navigate(`../${steps.summary}`, { state: data.init });
   };
 
-  return {
-    submit: handleSubmit(submit),
-    isSubmitting,
-  };
+  return { isSubmitting, submit };
 }

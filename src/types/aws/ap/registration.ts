@@ -68,6 +68,7 @@ type Append<Reg extends InitApplication, R, C> = {
 export type OrgDataForStep1 = { OrganizationName: string };
 
 export type ContactDetails = {
+  PK: string;
   FirstName: string;
   LastName: string;
   PhoneNumber: string;

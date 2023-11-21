@@ -1,46 +1,47 @@
 import * as Yup from "yup";
-import { SchemaShape } from "./types";
 import { FileObject } from "types/aws";
 import { FileDropzoneAsset } from "types/components";
 
-export const MB_LIMIT = 6;
+const MIME_TYPES = {
+  JPEG: "image/jpeg",
+  PNG: "image/png",
+  PDF: "application/pdf",
+  WEBP: "image/webp",
+  SVG: "image/svg",
+};
 
-const BYTES_IN_MB = 1e6;
-
-const VALID_MIME_TYPES = [
-  "image/jpeg",
-  "image/png",
-  "application/pdf",
-  "image/webp",
-];
+export type MIMEType = keyof typeof MIME_TYPES;
 
 const previewsKey: keyof FileDropzoneAsset = "previews";
 
-export function genAssetShape(
-  isRequired = false
-): SchemaShape<FileDropzoneAsset> {
-  return {
-    files: Yup.array(
-      genFileSchema(MB_LIMIT * BYTES_IN_MB, VALID_MIME_TYPES)
-    ).when(previewsKey, ([previews], schema) =>
-      (previews as FileObject[]).length <= 0 && isRequired
-        ? schema.min(1, "required")
-        : schema
+export function fileDropzoneAssetShape(
+  maxByteSize: number,
+  validMimeTypes: MIMEType[],
+  required = false
+) {
+  return Yup.object({
+    files: Yup.array(genFileSchema(maxByteSize, validMimeTypes)).when(
+      previewsKey,
+      ([previews], schema) =>
+        (previews as FileObject[]).length <= 0 && required
+          ? schema.min(1, "required")
+          : schema
     ),
-  };
+  });
 }
 
 /**
  * @param maxSize maximum file size in bytes
- * @param types an array of strings representing valid MIME types
+ * @param mimeTypes an array of strings representing valid MIME types
  * @returns Yup schema for validating files
  */
-export const genFileSchema = (maxSize: number, types: string[]) =>
+export const genFileSchema = (maxSize: number, mimeTypes: MIMEType[]) =>
   Yup.mixed<File>()
     .test({
       name: "must be of correct type",
       message: "invalid file type",
-      test: (file) => (file ? types.includes(file.type) : true),
+      test: (file) =>
+        !file || !!mimeTypes.find((type) => MIME_TYPES[type] === file.type),
     })
     .test({
       name: "must be less than size limit",
