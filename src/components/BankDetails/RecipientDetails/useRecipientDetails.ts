@@ -11,7 +11,7 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";
 import { UnexpectedStateError } from "errors/errors";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
-import getDefaultValues from "./getDefaultValues";
+import { getDefaultValues, updateReqField } from "./helpers";
 
 type RequirementsData = {
   accountRequirements: AccountRequirements;
@@ -134,10 +134,7 @@ export default function useRecipientDetails(
       setRequirementsDataArray((prev) => {
         const updated: RequirementsData[] = newRequirements.map((newReq) => ({
           accountRequirements: newReq,
-          currentFormValues:
-            prev.find(
-              (prevReq) => prevReq.accountRequirements.type === newReq.type
-            )?.currentFormValues ?? getDefaultValues(newReq, targetCurrency),
+          currentFormValues: refreshFormValues(prev, newReq, targetCurrency),
           refreshRequired:
             prev[selectedIndex].accountRequirements.type === newReq.type
               ? false // just finished checking requirements for selected type, so no need to do it again
@@ -182,4 +179,47 @@ export default function useRecipientDetails(
     setSelectedIndex,
     updateDefaultValues,
   };
+}
+
+function refreshFormValues(
+  prevReqDataArr: RequirementsData[],
+  newReq: AccountRequirements,
+  targetCurrency: string
+): FormValues {
+  const prevReqData = prevReqDataArr.find(
+    (prevReq) => prevReq.accountRequirements.type === newReq.type
+  );
+
+  if (!prevReqData) {
+    return getDefaultValues(newReq, targetCurrency);
+  }
+
+  const currentRequirementGroups =
+    prevReqData.accountRequirements.fields.flatMap((field) => field.group);
+
+  const newRequirementGroups = newReq.fields
+    .flatMap((field) => field.group)
+    .filter(
+      (group) =>
+        !currentRequirementGroups.find((curGroup) => curGroup.key === group.key)
+    );
+
+  const newRequirements: FormValues["requirements"] =
+    newRequirementGroups.reduce((curr, group) => updateReqField(curr, group), {
+      ...prevReqData.currentFormValues.requirements,
+    });
+
+  console.log("--------------------");
+  console.log(`prev reqs`);
+  console.log(prevReqData.currentFormValues);
+  console.log(`new reqs`);
+  console.log(newRequirements);
+  console.log("--------------------");
+
+  const newFormValues: FormValues = {
+    ...prevReqData.currentFormValues,
+    requirements: newRequirements,
+  };
+
+  return newFormValues;
 }
