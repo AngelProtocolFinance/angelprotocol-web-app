@@ -19,9 +19,23 @@ export default function Loaded(props: ApplicationDetails) {
     showModal(Prompt, { verdict, uuid: c.PK, orgName: r.OrganizationName });
   };
 
+  const prevVerdict =
+    r.RegistrationStatus === "Active" || r.RegistrationStatus === "Rejected"
+      ? r.RegistrationStatus
+      : null;
+
   return (
     <>
       <h3 className="text-lg">{r.OrganizationName}</h3>
+      {prevVerdict && (
+        <div
+          className={`${
+            prevVerdict === "Active" ? "bg-green" : "bg-red"
+          } text-white px-2 py-1 text-xs font-work uppercase rounded justify-self-start -mt-4 lg:-mt-6`}
+        >
+          {prevVerdict === "Active" ? "Approved" : "Rejected"}
+        </div>
+      )}
       <div className="flex max-sm:flex-col gap-x-4">
         <span className="text-sm font-semibold uppercase">Application ID:</span>
         <span className="uppercase text-sm font-work">{r.PK}</span>
@@ -81,6 +95,7 @@ export default function Loaded(props: ApplicationDetails) {
           back
         </Link>
         <button
+          disabled={!!prevVerdict}
           onClick={review("reject")}
           type="button"
           className="px-4 py-1 min-w-[6rem] font-work text-sm uppercase btn-red"
@@ -88,6 +103,7 @@ export default function Loaded(props: ApplicationDetails) {
           reject
         </button>
         <button
+          disabled={!!prevVerdict}
           onClick={review("approve")}
           type="button"
           className="px-4 py-1 min-w-[6rem] font-work text-sm uppercase btn-green"

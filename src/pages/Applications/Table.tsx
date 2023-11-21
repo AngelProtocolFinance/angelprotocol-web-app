@@ -136,8 +136,9 @@ const text: { [key in RegistrationStatus]: string } = {
   Active: "Approved",
   "Under Review": "Pending",
   Rejected: "Rejected",
-  Inactive: "Pending",
+  Inactive: "Incomplete",
 };
+
 function Status({ status }: { status: RegistrationStatus }) {
   return (
     <p
