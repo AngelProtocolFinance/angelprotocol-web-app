@@ -37,7 +37,7 @@ export default function usePaginatedApplications() {
     },
   });
 
-  const { isLoading, isError, data, originalArgs } = queryState;
+  const { isLoading, isFetching, isError, data, originalArgs } = queryState;
 
   const [loadMore, { isLoading: isLoadingNextPage, isError: isErrorNextPage }] =
     useLazyApplicationsQuery();
@@ -71,7 +71,7 @@ export default function usePaginatedApplications() {
     data,
     hasMore,
     isError: isError || isErrorNextPage,
-    isLoading: isLoading || isDebouncing,
+    isLoading: isLoading || isDebouncing || isFetching,
     isLoadingNextPage,
     query,
     loadNextPage,

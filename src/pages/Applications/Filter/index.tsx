@@ -58,6 +58,7 @@ export default function Filter({
         regBeforeDate: ISOdate(data.startDate),
         regAfterDate: ISOdate(data.endDate, true),
         regStatus: data.status.value,
+        hqCountry: data.hqCountry.name,
       })
     );
     buttonRef.current?.click();
