@@ -2,7 +2,6 @@ import { useParams } from "react-router-dom";
 import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
 import Filter from "./Filter";
-import NoDonations from "./NoDonations";
 import Table from "./Table";
 import usePaginatedApplications from "./usePaginatedApplications";
 
@@ -57,7 +56,7 @@ export default function Applications() {
         messages={{
           loading: "Loading applications...",
           error: "Failed to get applications",
-          empty: <NoDonations classes="mt-8 place-self-center col-span-full" />,
+          empty: "No applications found.",
         }}
       >
         {(applications) => (
