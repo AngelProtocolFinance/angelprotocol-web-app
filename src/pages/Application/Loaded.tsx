@@ -102,7 +102,7 @@ export default function Loaded(props: ApplicationDetails) {
 function DocLink({ url }: { url: string }) {
   return (
     <ExtLink href={url} className="text-blue hover:text-blue-d1">
-      <span>{url}</span>
+      <span className="break-all">{url}</span>
       <Icon
         type="ExternalLink"
         className="inline relative bottom-px ml-2"

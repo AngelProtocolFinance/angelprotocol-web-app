@@ -75,8 +75,10 @@ export default function Prompt({ verdict, orgName, uuid }: Props) {
       </h3>
 
       <p className="px-6 pb-4 text-center text-gray-d1 dark:text-gray mt-4">
-        <div> You are about to {verdict} the Application for</div>
-        <div className="font-semibold">{orgName}</div>
+        <span className="block">
+          You are about to {verdict} the Application for
+        </span>
+        <span className="font-semibold block">{orgName}</span>
       </p>
 
       {verdict === "approve" ? (
