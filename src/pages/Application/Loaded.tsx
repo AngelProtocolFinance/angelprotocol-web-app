@@ -31,7 +31,7 @@ export default function Loaded(props: ApplicationDetails) {
         <div
           className={`${
             prevVerdict === "Active" ? "bg-green" : "bg-red"
-          } text-white px-2 py-1 text-xs font-work uppercase rounded justify-self-start -mt-4 lg:-mt-6`}
+          } text-white px-2 py-1 text-xs font-work uppercase rounded justify-self-start -mt-3 lg:-mt-6`}
         >
           {prevVerdict === "Active" ? "Approved" : "Rejected"}
         </div>

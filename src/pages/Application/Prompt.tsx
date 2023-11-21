@@ -12,6 +12,7 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import Modal from "components/Modal";
+import GenericPrompt from "components/Prompt";
 import { Field } from "components/form";
 
 type Props = {
@@ -23,9 +24,15 @@ type Props = {
 export default function Prompt({ verdict, orgName, uuid }: Props) {
   const [review, { isLoading }] = useReviewApplicationMutation();
   const { handleError } = useErrorContext();
-  const { isDismissible, setModalOption, closeModal } = useModalContext();
+  const { isDismissible, setModalOption, closeModal, showModal } =
+    useModalContext();
   const methods = useForm({
-    resolver: yupResolver(object({ reason: string().optional() })),
+    resolver: yupResolver(
+      object({
+        reason:
+          verdict === "approve" ? string() : string().required("required"),
+      })
+    ),
     defaultValues: { reason: "" },
   });
 
@@ -44,7 +51,14 @@ export default function Prompt({ verdict, orgName, uuid }: Props) {
       handleError(result.error);
     }
 
-    alert(`Application ${verdict === "approve" ? "approved" : "rejected"}`);
+    showModal(GenericPrompt, {
+      headline: "Success",
+      children: (
+        <p className="my-4 text-lg font-semibold">
+          Your review has been submitted.
+        </p>
+      ),
+    });
   };
 
   return (
@@ -105,12 +119,14 @@ export default function Prompt({ verdict, orgName, uuid }: Props) {
 
       {verdict === "reject" && (
         <FormProvider {...methods}>
-          <Field<FV, "textarea">
-            name="reason"
-            type="textarea"
-            label="Reason for rejection:"
-            classes="w-full px-6 mb-4"
-          />
+          <div className="px-6 w-full pb-6">
+            <Field<FV, "textarea">
+              required
+              name="reason"
+              type="textarea"
+              label="Reason for rejection:"
+            />
+          </div>
         </FormProvider>
       )}
 
