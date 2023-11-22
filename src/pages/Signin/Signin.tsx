@@ -26,7 +26,9 @@ export default function Signin() {
         username: email,
         password,
       });
-      console.log(isSignedIn, nextStep);
+      if (!isSignedIn && nextStep.signInStep === "CONFIRM_SIGN_UP") {
+        return alert("Redirect to confirm page");
+      }
     } catch (err) {
       console.log(err);
       handleError(err);
