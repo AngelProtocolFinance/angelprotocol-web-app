@@ -14,11 +14,6 @@
     "format": "yarn run prettier --write 'src/**/*.{ts,tsx}'",
     "prepare": "husky install"
   },
-  "jest": {
-    "moduleNameMapper": {
-      "@aws-amplify/ui-react/styles.css": "@aws-amplify/ui-react/dist/styles.css"
-    }
-  },
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -49,7 +44,6 @@
     "node": "18.16.1"
   },
   "dependencies": {
-    "@aws-amplify/ui-react": "6.0.3",
     "@cosmjs/encoding": "0.31.1",
     "@ethersproject/abi": "^5.7.0",
     "@ethersproject/bignumber": "^5.7.0",

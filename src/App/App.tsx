@@ -1,4 +1,3 @@
-import "@aws-amplify/ui-react/styles.css";
 import * as Sentry from "@sentry/react";
 import { lazy } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";

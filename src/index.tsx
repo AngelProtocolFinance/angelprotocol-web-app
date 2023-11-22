@@ -1,6 +1,4 @@
-import { Authenticator } from "@aws-amplify/ui-react";
 import * as Sentry from "@sentry/react";
-import { initAmplify } from "init-amplify";
 import { StrictMode, Suspense, lazy } from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
@@ -10,6 +8,7 @@ import { store } from "store/store";
 import { initTheme } from "helpers";
 import ErrorBoundary from "errors/ErrorBoundary";
 import "./index.css";
+import { initAmplify } from "./init-amplify";
 import reportWebVitals from "./reportWebVitals";
 
 //set theme immediately, so even suspense loaders and can use it
@@ -36,9 +35,7 @@ root.render(
       <Provider store={store}>
         <BrowserRouter>
           <Suspense fallback={<LoaderComponent />}>
-            <Authenticator.Provider>
-              <App />
-            </Authenticator.Provider>
+            <App />
           </Suspense>
         </BrowserRouter>
       </Provider>
