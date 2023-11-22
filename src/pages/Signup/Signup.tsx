@@ -1,32 +1,41 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FormProvider, useForm } from "react-hook-form";
+import { signUp } from "aws-amplify/auth";
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { InferType, object, string } from "yup";
 import { Field } from "components/form";
 import { appRoutes } from "constants/routes";
+import { FV, schema } from "./schema";
 
 export default function Signup() {
-  const schema = object({
-    firstName: string().required("required"),
-    lastName: string().required("required"),
-    email: string().required("required").email("invalid email"),
-    password: string().required("required").min(6, "min 6 characters"),
-    passwordConfirmation: string()
-      .required("required")
-      .when(["password"], ([password], schema) =>
-        schema.matches(password, "password doesn't match")
-      ),
-  });
-  type FV = InferType<typeof schema>;
   const methods = useForm<FV>({ resolver: yupResolver(schema) });
   const { handleSubmit } = methods;
+
+  const signup: SubmitHandler<FV> = async (fv) => {
+    try {
+      const { isSignUpComplete, nextStep } = await signUp({
+        username: fv.email,
+        password: fv.password,
+        options: {
+          userAttributes: {
+            email: fv.email,
+            given_name: fv.firstName,
+            family_name: fv.lastName,
+          },
+          // optional
+          autoSignIn: true, // or SignInOptions e.g { authFlowType: "USER_SRP_AUTH" }
+        },
+      });
+      if (nextStep.signUpStep === "CONFIRM_SIGN_UP") {
+        //
+      }
+    } catch (err) {}
+  };
+
   return (
     <FormProvider {...methods}>
       <form
-        onSubmit={handleSubmit((fv) => {
-          console.log(fv);
-        })}
-        className="py-8 content-start grid justify-self-center gap-6 w-full max-w-sm"
+        onSubmit={handleSubmit(signup)}
+        className="py-8 sm:py-16 content-start grid justify-self-center gap-6 w-full max-w-sm"
       >
         <Field<FV>
           label="First name"
@@ -43,11 +52,13 @@ export default function Signup() {
           type="password"
           label="Password"
           name="password"
+          placeholder="********"
         />
         <Field<FV, "password">
           type="password"
           label="Re-enter password"
           name="passwordConfirmation"
+          placeholder="********"
         />
         <button type="submit" className="mt-4 btn-orange font-work">
           Sign up

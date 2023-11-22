@@ -3,7 +3,6 @@ import { signIn, signInWithRedirect } from "aws-amplify/auth";
 import { useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { Link, Navigate, useLocation } from "react-router-dom";
-import { InferType, object, string } from "yup";
 import { useErrorContext } from "contexts/ErrorContext";
 import Icon from "components/Icon";
 import LoaderRing from "components/LoaderRing";
@@ -11,12 +10,7 @@ import { Field } from "components/form";
 import { useGetter } from "store/accessors";
 import { OAUTH_PATH_STORAGE_KEY } from "constants/auth";
 import { appRoutes } from "constants/routes";
-
-const schema = object({
-  email: string().required("required").email("invalid email"),
-  password: string().required("required").min(6, "min 6 characters"),
-});
-type FV = InferType<typeof schema>;
+import { FV, schema } from "./schema";
 
 export default function Login() {
   const { state } = useLocation();
