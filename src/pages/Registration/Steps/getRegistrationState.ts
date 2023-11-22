@@ -17,96 +17,119 @@ import {
   isDoneOrgDetails,
   isSubmitted,
 } from "types/aws";
+import { steps } from "../routes";
 
-export function getRegistrationState(
-  reg: SavedRegistration
-): RegistrationState {
+export function getRegistrationState(reg: SavedRegistration): {
+  state: RegistrationState;
+  nextStep: steps;
+} {
   if (isSubmitted(reg)) {
     const { ContactPerson: c, Registration: r } = reg;
     return {
-      step: 6,
-      data: {
-        init: initReg(c),
-        contact: { ...c, orgName: r.OrganizationName },
-        orgDetails: orgDetails(r),
-        fsaInquiry: fsaInquiry(r),
-        documentation: docs(r),
-        banking: bankDetails(r),
-        status: r.RegistrationStatus,
+      state: {
+        step: 6,
+        data: {
+          init: initReg(c),
+          contact: { ...c, orgName: r.OrganizationName },
+          orgDetails: orgDetails(r),
+          fsaInquiry: fsaInquiry(r),
+          documentation: docs(r),
+          banking: bankDetails(r),
+          status: r.RegistrationStatus,
+        },
       },
+      nextStep: steps.summary,
     };
   }
 
   if (isDoneBanking(reg)) {
     const { ContactPerson: c, Registration: r } = reg;
     return {
-      step: 5,
-      data: {
-        init: initReg(c),
-        contact: { ...c, orgName: r.OrganizationName },
-        orgDetails: orgDetails(r),
-        fsaInquiry: fsaInquiry(r),
-        documentation: docs(r),
-        banking: bankDetails(r),
+      state: {
+        step: 5,
+        data: {
+          init: initReg(c),
+          contact: { ...c, orgName: r.OrganizationName },
+          orgDetails: orgDetails(r),
+          fsaInquiry: fsaInquiry(r),
+          documentation: docs(r),
+          banking: bankDetails(r),
+        },
       },
+      nextStep: steps.summary,
     };
   }
 
   if (isDoneDocs(reg)) {
     const { ContactPerson: c, Registration: r } = reg;
     return {
-      step: 4,
-      data: {
-        init: initReg(c),
-        contact: { ...c, orgName: r.OrganizationName },
-        orgDetails: orgDetails(r),
-        fsaInquiry: fsaInquiry(r),
-        documentation: docs(r),
+      state: {
+        step: 4,
+        data: {
+          init: initReg(c),
+          contact: { ...c, orgName: r.OrganizationName },
+          orgDetails: orgDetails(r),
+          fsaInquiry: fsaInquiry(r),
+          documentation: docs(r),
+        },
       },
+      nextStep: steps.banking,
     };
   }
 
   if (isDoneFSAInquiry(reg)) {
     const { ContactPerson: c, Registration: r } = reg;
     return {
-      step: 3,
-      data: {
-        init: initReg(c),
-        contact: { ...c, orgName: r.OrganizationName },
-        orgDetails: orgDetails(r),
-        fsaInquiry: fsaInquiry(r),
+      state: {
+        step: 3,
+        data: {
+          init: initReg(c),
+          contact: { ...c, orgName: r.OrganizationName },
+          orgDetails: orgDetails(r),
+          fsaInquiry: fsaInquiry(r),
+        },
       },
+      nextStep: steps.docs,
     };
   }
   if (isDoneOrgDetails(reg)) {
     const { ContactPerson: c, Registration: r } = reg;
     return {
-      step: 2,
-      data: {
-        init: initReg(c),
-        contact: { ...c, orgName: r.OrganizationName },
-        orgDetails: orgDetails(r),
+      state: {
+        step: 2,
+        data: {
+          init: initReg(c),
+          contact: { ...c, orgName: r.OrganizationName },
+          orgDetails: orgDetails(r),
+        },
       },
+      nextStep: steps.fsaInquiry,
     };
   }
 
   if (isDoneContact(reg)) {
     const { ContactPerson: c, Registration: r } = reg;
     return {
-      step: 1,
-      data: {
-        init: initReg(c),
-        contact: { ...c, orgName: r.OrganizationName },
+      state: {
+        step: 1,
+        data: {
+          init: initReg(c),
+          contact: { ...c, orgName: r.OrganizationName },
+        },
       },
+      nextStep: steps.orgDetails,
     };
   }
 
   const { ContactPerson: c } = reg;
   return {
-    step: 1,
-    data: {
-      init: initReg(c),
+    state: {
+      step: 1,
+      data: {
+        init: initReg(c),
+      },
     },
+    nextStep: steps.contact,
   };
 }
 
@@ -116,6 +139,7 @@ function initReg(i: InitContact): InitReg {
     reference: i.PK,
   };
 }
+
 function orgDetails(reg: DoneOrgDetails["Registration"]): OrgDetails {
   return {
     Website: reg.Website,
