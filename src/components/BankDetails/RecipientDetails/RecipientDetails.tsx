@@ -102,7 +102,7 @@ export default function RecipientDetails({
         defaultValues={requirements.currentFormValues}
         disabled={disabled}
         refreshRequired={requirements.refreshRequired}
-        onCleanup={updateDefaultValues}
+        onUpdateValues={updateDefaultValues}
         onSubmit={handleSubmit}
         onRefresh={refreshRequirements}
         formButtons={formButtons}
