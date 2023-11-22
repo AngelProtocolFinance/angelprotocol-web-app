@@ -14,6 +14,7 @@ export default function DAFDirect() {
         src="/dafdirect-widget.html"
         width="180"
         height="300"
+        className="justify-self-center"
       ></IFrame>
     </>
   );
