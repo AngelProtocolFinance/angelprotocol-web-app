@@ -1,5 +1,6 @@
 import { Authenticator } from "@aws-amplify/ui-react";
 import * as Sentry from "@sentry/react";
+import { initAmplify } from "init-amplify";
 import { StrictMode, Suspense, lazy } from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
@@ -26,6 +27,8 @@ const root = createRoot(container as Element);
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRY_DSN,
 });
+
+initAmplify();
 
 root.render(
   <StrictMode>

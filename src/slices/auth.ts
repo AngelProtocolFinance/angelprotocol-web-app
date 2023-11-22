@@ -1,5 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { fetchAuthSession } from "aws-amplify/auth";
+import {
+  AuthUser,
+  fetchAuthSession,
+  fetchUserAttributes,
+  getCurrentUser,
+} from "aws-amplify/auth";
 
 type User =
   | null
@@ -7,6 +12,7 @@ type User =
   | {
       token: string;
       isAdmin: boolean;
+      id: string; //email or name or username
     };
 
 type State = {
@@ -17,32 +23,51 @@ const initialState: State = {
   user: "loading",
 };
 
-export const getUser = createAsyncThunk<User>("auth/getUser", async () => {
-  try {
-    const session = await fetchAuthSession();
+export const loadSession = createAsyncThunk<User, AuthUser | undefined>(
+  "auth/loadSession",
+  async (user) => {
+    try {
+      const session = await fetchAuthSession();
+      if (!session.tokens) return null;
 
-    if (!session.tokens) return null;
-    const payload = session.tokens.accessToken.payload;
-    const token = session.tokens.accessToken.toString();
+      const [attributes, _user] = await Promise.all([
+        fetchUserAttributes(),
+        user ? Promise.resolve(user) : getCurrentUser(),
+      ]);
 
-    console.log(payload);
+      const payload = session.tokens.accessToken.payload;
+      const token = session.tokens.accessToken.toString();
 
-    return { token, isAdmin: false };
-  } catch (err) {
-    console.log(err);
-    return null;
+      console.log({ payload, attributes, user });
+      return {
+        token,
+        isAdmin: false,
+        id: attributes.email || user?.username || "User",
+      };
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
   }
-});
+);
 
 const auth = createSlice({
   name: "widget",
   initialState,
-  reducers: {},
+  reducers: {
+    reset: (state) => {
+      state.user = null;
+    },
+  },
   extraReducers(builder) {
-    builder.addCase(getUser.fulfilled, (state, action) => {
+    builder.addCase(loadSession.fulfilled, (state, action) => {
       state.user = action.payload;
+    });
+    builder.addCase(loadSession.pending, (state) => {
+      state.user = "loading";
     });
   },
 });
 
 export default auth.reducer;
+export const { reset } = auth.actions;
