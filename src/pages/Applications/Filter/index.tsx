@@ -7,6 +7,7 @@ import { ApplicationsQueryParams } from "types/aws";
 import Icon, { DrawerIcon } from "components/Icon";
 import { dateToFormFormat } from "components/form";
 import { cleanObject } from "helpers/cleanObject";
+import { weeksAgo } from "helpers/weeksAgo";
 import Form from "./Form";
 import { schema } from "./schema";
 
@@ -25,7 +26,7 @@ export default function Filter({ setParams, classes = "", isDisabled }: Props) {
     resolver: yupResolver(schema),
     defaultValues: {
       //set default value so empty can be tagged as invalid
-      startDate: dateToFormFormat(getYearAgo()),
+      startDate: dateToFormFormat(weeksAgo("now", 1)),
       endDate: dateToFormFormat(new Date()),
       hqCountry: { name: "", flag: "", code: "" },
       status: { label: "Under Review", value: "Under Review" },
@@ -91,11 +92,4 @@ export default function Filter({ setParams, classes = "", isDisabled }: Props) {
       </FormProvider>
     </Popover>
   );
-}
-
-function getYearAgo() {
-  const date = new Date();
-  const currYear = date.getFullYear();
-  date.setFullYear(currYear - 1);
-  return date;
 }
