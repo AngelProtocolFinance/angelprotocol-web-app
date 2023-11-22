@@ -73,11 +73,8 @@ export default function Stocks({ state }: Props) {
         ID #: 87-3758939.
       </span>
       <FormProvider {...methods}>
-        <Group>
-          <form
-            className="grid gap-6 p-6 border border-prim rounded bg-white dark:bg-blue-d6"
-            onSubmit={submit}
-          >
+        <form onSubmit={submit}>
+          <Group>
             <b>
               We can help with the email you'll need to send to your broker
               ensuring they have all the necessary information. Complete the
@@ -104,8 +101,8 @@ export default function Stocks({ state }: Props) {
             >
               Build Email
             </button>
-          </form>
-        </Group>
+          </Group>
+        </form>
       </FormProvider>
       <h4 className="text-lg sm:text-xl leading-relaxed">
         Step 2: Let Us Know
