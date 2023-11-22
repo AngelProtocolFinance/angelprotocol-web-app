@@ -50,18 +50,18 @@ function FSAInquiry() {
           </>
         ) : (
           <p className="text-sm text-gray-d1 dark:text-gray leading-relaxed">
-            Organizations in the{" "}
+            Great news: Nonprofit Organizations in{" "}
             <span className="font-semibold">{data.orgDetails.HqCountry}</span>{" "}
-            are not recognized by the Internal Revenue Service as a nonprofit
-            organization exempt under IRC 501(c)(3).
+            can now take advantage of {APP_NAME}’s Fiscal Sponsorship service.
           </p>
         )}
 
         {!possiblyTaxExempt || answer === "No" ? (
           <p className="text-sm text-gray-d1 dark:text-gray leading-relaxed mt-4">
             {APP_NAME} provides fiscal sponsorship services at market-leading
-            cost for our partner organizations to enable this ability (2.9%).
-            Continue to setup fiscal sponsorship agreement.
+            cost (2.9%) for our partner organizations worldwide to enable them
+            to receive tax efficient donations from the USA. Continue to setup
+            your fiscal sponsorship agreement.
           </p>
         ) : null}
 
