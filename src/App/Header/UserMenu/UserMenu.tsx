@@ -1,14 +1,15 @@
-import { signOut } from "@aws-amplify/auth";
 import { Popover } from "@headlessui/react";
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Icon from "components/Icon";
-import { useGetter } from "store/accessors";
+import { useGetter, useSetter } from "store/accessors";
+import { logout } from "slices/auth";
 import { appRoutes } from "constants/routes";
 import Menu from "./Menu";
 
 export default function UserMenu() {
   const user = useGetter((state) => state.auth.user);
+  const dispatch = useSetter();
 
   const location = useLocation();
 
@@ -32,7 +33,7 @@ export default function UserMenu() {
       </Popover.Button>
 
       <Popover.Panel className="mt-2 absolute z-10 w-max right-0">
-        <Menu userEmail={user.id} signOut={signOut} />
+        <Menu user={user} signOut={() => dispatch(logout())} />
       </Popover.Panel>
     </Popover>
   );
