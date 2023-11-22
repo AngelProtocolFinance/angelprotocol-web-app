@@ -1,13 +1,11 @@
 import { FiscalSponsorhipAgreementSigner } from "../../types";
 import {
-  ContactUpdateResult,
   InitApplication,
   RegistrationUpdate,
   SavedRegistration,
   SubmitResult,
 } from "types/aws";
 import { adminTags } from "services/aws/tags";
-import { logger } from "helpers";
 import { TEMP_JWT } from "constants/auth";
 import { EMAIL_SUPPORT } from "constants/env";
 import { version as v } from "../../helpers";
@@ -56,6 +54,7 @@ const registration_api = aws.injectEndpoints({
       },
     }),
     updateReg: builder.mutation<any, RegistrationUpdate>({
+      invalidatesTags: [{ type: "admin", id: adminTags.registration }],
       query: ({ reference, ...payload }) => {
         return {
           url: `v5/registration/${reference}`,
@@ -63,44 +62,11 @@ const registration_api = aws.injectEndpoints({
           body: payload,
         };
       },
-      transformErrorResponse(res, meta, { type }) {
+      transformErrorResponse(res, _meta, { type }) {
         return {
           status: res.status,
           data: `Failed to update ${type}. Please try again later.`,
         };
-      },
-      /** pessimistic manual cache update so not to GET fresh data */
-      async onQueryStarted({ type, reference }, { dispatch, queryFulfilled }) {
-        try {
-          const { data } = await queryFulfilled;
-          dispatch(
-            registration_api.util.updateQueryData("reg", reference, (draft) => {
-              switch (type) {
-                case "contact-details":
-                  {
-                    const { ContactPerson, Registration } =
-                      data as ContactUpdateResult;
-                    draft.ContactPerson = Object.assign(
-                      draft.ContactPerson,
-                      ContactPerson
-                    );
-                    draft.Registration = {
-                      ...draft.Registration,
-                      OrganizationName: Registration.OrganizationName,
-                    };
-                  }
-                  break;
-
-                //other updates are to draft.Registration
-                default: {
-                  draft.Registration = Object.assign(draft.Registration, data);
-                }
-              }
-            })
-          );
-        } catch (err) {
-          logger.error(err);
-        }
       },
     }),
 

@@ -9,7 +9,7 @@ function Banking() {
 
   return (
     <BankDetails
-      alreadySubmitted={!!data.banking?.wise_recipient_id}
+      alreadySubmitted={!!data.banking?.BankStatementFile}
       isSubmitting={isSubmitting}
       onSubmit={submit}
     >
