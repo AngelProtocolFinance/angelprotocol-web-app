@@ -6,6 +6,7 @@ export enum appRoutes {
   applications = "/applications",
   register = "/register",
   signin = "/signin",
+  signup = "/signup",
   profile = "/profile",
   donations = "/donations",
   donate = "/donate",

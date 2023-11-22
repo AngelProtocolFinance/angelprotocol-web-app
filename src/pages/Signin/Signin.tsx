@@ -60,67 +60,67 @@ export default function Login() {
   }
 
   return (
-    <div className="grid content-start justify-items-center py-8">
-      <FormProvider {...methods}>
-        <fieldset className="contents" disabled={isSubmitting || isRedirecting}>
-          <form
-            onSubmit={handleSubmit(directSignin)}
-            className="grid gap-4 w-full max-w-sm"
-          >
-            <Field<FV>
-              label="E-mail address"
-              name="email"
-              placeholder="e.g. John Doe"
-            />
-            <Field<FV, "password">
-              placeholder="********"
-              type="password"
-              label="Password"
-              name="password"
-            />
-            <button type="submit" className="mt-3 btn-orange font-work">
-              Sign in
-            </button>
+    // <div className="grid content-start justify-items-center py-8">
+    <FormProvider {...methods}>
+      <fieldset className="contents" disabled={isSubmitting || isRedirecting}>
+        <form
+          onSubmit={handleSubmit(directSignin)}
+          className="grid gap-4 w-full max-w-md py-8 sm:py-16 justify-self-center padded-container"
+        >
+          <Field<FV>
+            label="E-mail address"
+            name="email"
+            placeholder="e.g. John Doe"
+          />
+          <Field<FV, "password">
+            placeholder="********"
+            type="password"
+            label="Password"
+            name="password"
+          />
+          <button type="submit" className="mt-3 btn-orange font-work">
+            Sign in
+          </button>
 
-            <p className="h-px flex items-center justify-center border-b border-prim my-4">
-              <span className="bg-white px-4 text-gray-d1 dark:text-gray text-xs uppercase">
-                or
-              </span>
-            </p>
-            <button
-              onClick={async () => {
-                try {
-                  setIsRedirecting(true);
+          <p className="h-px flex items-center justify-center border-b border-prim my-4">
+            <span className="bg-white px-4 text-gray-d1 dark:text-gray text-xs uppercase">
+              or
+            </span>
+          </p>
+          <button
+            onClick={async () => {
+              try {
+                setIsRedirecting(true);
 
-                  /** could be set by custom state, but state is nowhere to be found in redirect url search params,
+                /** could be set by custom state, but state is nowhere to be found in redirect url search params,
                   instead it is in hub event instead which defeats the purpose of redirectURLds
                   https://docs.amplify.aws/javascript/build-a-backend/auth/add-social-provider/#add-custom-state
                   */
-                  localStorage.setItem(OAUTH_PATH_STORAGE_KEY, from);
-                  await signInWithRedirect({
-                    provider: "Google",
-                  });
-                } catch (err) {
-                  handleError(err);
-                  setIsRedirecting(false);
-                }
-              }}
-              type="button"
-              className="dark:bg-white dark:border-white rounded border-2 border-[#DB4437] enabled:hover:bg-[#DB4437]/10 text-[#DB4437] disabled:text-gray-l1 dark:disabled-text-gray disabled:border-gray-l2 dark:disabled:border-bluegray disabled:pointer-events-none p-2 flex items-center justify-center gap-2 uppercase font-bold text-sm"
-            >
-              <Icon size={24} type="Google" />
-              <span>Signin with google</span>
-            </button>
+                localStorage.setItem(OAUTH_PATH_STORAGE_KEY, from);
+                await signInWithRedirect({
+                  provider: "Google",
+                });
+              } catch (err) {
+                handleError(err);
+                setIsRedirecting(false);
+              }
+            }}
+            type="button"
+            className="dark:bg-white dark:border-white rounded border-2 border-[#DB4437] enabled:hover:bg-[#DB4437]/10 text-[#DB4437] disabled:text-gray-l1 dark:disabled-text-gray disabled:border-gray-l2 dark:disabled:border-bluegray disabled:pointer-events-none p-2 flex items-center justify-center gap-2 uppercase font-bold text-sm"
+          >
+            <Icon size={24} type="Google" />
+            <span>Signin with google</span>
+          </button>
 
-            <p className="text-gray-d1 dark:text-gray text-sm">
-              Don't have an account?{" "}
-              <Link className="text-orange" to={appRoutes.signin}>
-                Create one
-              </Link>
-            </p>
-          </form>
-        </fieldset>
-      </FormProvider>
-    </div>
+          <p className="text-gray-d1 dark:text-gray text-sm">
+            Don't have an account?{" "}
+            <Link className="text-orange" to={appRoutes.signin}>
+              Create one
+            </Link>
+          </p>
+        </form>
+      </fieldset>
+    </FormProvider>
+    // </div>
   );
 }
