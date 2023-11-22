@@ -10,11 +10,10 @@ import RegStatusDropdown from "./RegStatusDropdown";
 type Props = {
   submit: FormEventHandler<HTMLFormElement>;
   onReset: FormEventHandler<HTMLFormElement>;
-  isDirty: boolean;
   classes?: string;
 };
 
-const Form: FC<Props> = ({ onReset, submit, classes = "", isDirty }) => {
+const Form: FC<Props> = ({ onReset, submit, classes = "" }) => {
   return (
     <Popover.Panel
       as="form"
@@ -60,7 +59,6 @@ const Form: FC<Props> = ({ onReset, submit, classes = "", isDirty }) => {
           Reset filters
         </button>
         <button
-          disabled={!isDirty}
           type="submit"
           className="btn btn-orange px-6 py-2 rounded-sm text-xs font-work font-bold uppercase"
         >

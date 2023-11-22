@@ -5,6 +5,6 @@ export type ApplicationsQueryParams = {
   start?: number; //to load next page, set start to ItemCutOff + 1
   hqCountry?: string;
   regStatus?: RegistrationStatus;
-  regAfterDate?: string; //ISO string
-  regBeforeDate?: string; //ISO string
+  regDateStart?: string; //ISO string
+  regDateEnd?: string; //ISO string
 };

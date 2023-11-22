@@ -32,11 +32,7 @@ export default function Filter({ setParams, classes = "", isDisabled }: Props) {
     },
   });
 
-  const {
-    handleSubmit,
-    reset,
-    formState: { isDirty },
-  } = methods;
+  const { handleSubmit, reset } = methods;
 
   function ISOdate(date: string, end?: boolean) {
     if (!date) return "";
@@ -51,8 +47,8 @@ export default function Filter({ setParams, classes = "", isDisabled }: Props) {
   async function submit(data: FV) {
     setParams(
       cleanObject({
-        regBeforeDate: ISOdate(data.startDate),
-        regAfterDate: ISOdate(data.endDate, true),
+        regDateStart: ISOdate(data.startDate),
+        regDateEnd: ISOdate(data.endDate, true),
         regStatus: data.status.value,
         hqCountry: data.hqCountry.name,
       })
@@ -88,7 +84,6 @@ export default function Filter({ setParams, classes = "", isDisabled }: Props) {
 
       <FormProvider {...methods}>
         <Form
-          isDirty={isDirty}
           submit={handleSubmit(submit)}
           onReset={onReset}
           classes="max-lg:fixed max-lg:inset-x-0 max-lg:top-0 lg:mt-1 absolute top-full z-20"
