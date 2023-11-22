@@ -40,7 +40,7 @@ export function getRegistrationState(
   if (isDoneBanking(reg)) {
     const { ContactPerson: c, Registration: r } = reg;
     return {
-      step: 6,
+      step: 5,
       data: {
         init: initReg(c),
         contact: { ...c, orgName: r.OrganizationName },
@@ -48,7 +48,6 @@ export function getRegistrationState(
         fsaInquiry: fsaInquiry(r),
         documentation: docs(r),
         banking: bankDetails(r),
-        status: r.RegistrationStatus,
       },
     };
   }
@@ -56,7 +55,7 @@ export function getRegistrationState(
   if (isDoneDocs(reg)) {
     const { ContactPerson: c, Registration: r } = reg;
     return {
-      step: 5,
+      step: 4,
       data: {
         init: initReg(c),
         contact: { ...c, orgName: r.OrganizationName },
@@ -70,7 +69,7 @@ export function getRegistrationState(
   if (isDoneFSAInquiry(reg)) {
     const { ContactPerson: c, Registration: r } = reg;
     return {
-      step: 4,
+      step: 3,
       data: {
         init: initReg(c),
         contact: { ...c, orgName: r.OrganizationName },
@@ -82,7 +81,7 @@ export function getRegistrationState(
   if (isDoneOrgDetails(reg)) {
     const { ContactPerson: c, Registration: r } = reg;
     return {
-      step: 3,
+      step: 2,
       data: {
         init: initReg(c),
         contact: { ...c, orgName: r.OrganizationName },
@@ -94,7 +93,7 @@ export function getRegistrationState(
   if (isDoneContact(reg)) {
     const { ContactPerson: c, Registration: r } = reg;
     return {
-      step: 2,
+      step: 1,
       data: {
         init: initReg(c),
         contact: { ...c, orgName: r.OrganizationName },
