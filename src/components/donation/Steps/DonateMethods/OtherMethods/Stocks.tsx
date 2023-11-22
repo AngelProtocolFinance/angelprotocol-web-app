@@ -11,16 +11,16 @@ type FormValues = {
   emailTo?: string;
   numberOfShares?: number;
   stockSymbol?: string;
-  ref?: string;
 };
 
 const schema = object<any, SchemaShape<FormValues>>({
   emailTo: string().email("Invalid email format"),
   numberOfShares: number()
+    .nullable()
     .positive("must be greater than zero")
-    .typeError("must be a number"),
+    .typeError("must be a number")
+    .transform((cur, orig) => (orig === "" ? null : cur)),
   stockSymbol: string(),
-  ref: string(),
 }) as ObjectSchema<FormValues>;
 
 type Props = { state: FormStep };
@@ -31,18 +31,16 @@ export default function Stocks({ state }: Props) {
 
   const methods = useForm<FormValues>({
     resolver: yupResolver(schema),
-    defaultValues: { numberOfShares: 0 },
   });
 
   const submit = methods.handleSubmit(
-    ({ emailTo, numberOfShares, stockSymbol, ref }) =>
+    ({ emailTo, numberOfShares, stockSymbol }) =>
       openEmailClient(
         charityName,
         profileUrl,
         emailTo,
         numberOfShares,
-        stockSymbol,
-        ref
+        stockSymbol
       )
   );
 
@@ -149,9 +147,8 @@ const openEmailClient = (
   charityName: string,
   profileUrl: string,
   emailTo = "",
-  numberOfShares: string | number = "[NUMBER_OF_SHARES]",
-  stockSymbol = "[STOCK_SYMBOL]",
-  ref = "[INTERNAL REF#, if needed]"
+  numberOfShares?: number,
+  stockSymbol?: string
 ) => {
   window.open(`
   mailto:${emailTo}
@@ -160,16 +157,18 @@ const openEmailClient = (
     &body=
 Hi,${NEW_LINE}
 ${NEW_LINE}
-I would like to donate stock to support ${charityName} (${profileUrl}). I have CCed better.giving (EIN 87-3758939) to ensure this tax-deductible donation gets accounted for correctly, please ask them if you have any technical questions.${NEW_LINE}
+I would like to donate stock to support ${charityName} (${profileUrl}). 
+I have CCed better.giving (EIN 87-3758939) to ensure this tax-deductible donation gets accounted for correctly, 
+please ask them if you have any technical questions.${NEW_LINE}
 ${NEW_LINE}
-Please transfer ${
-    numberOfShares ?? "[X]"
-  } shares of ${stockSymbol} to:${NEW_LINE}
+Please transfer ${numberOfShares || "[NUMBER_OF_SHARES]"} shares of ${
+    stockSymbol || "[STOCK_SYMBOL]"
+  } to:${NEW_LINE}
 Deliver to: Fidelity Investments${NEW_LINE}
 DTC number: 0226${NEW_LINE}
 Account number: Z40390069${NEW_LINE}
 Account name: Altruistic Partners Empowering Society, Inc${NEW_LINE}
-Reference: ${ref} ${charityName} (${profileUrl})${NEW_LINE}
+Reference: [INTERNAL REF#, if needed] ${charityName} (${profileUrl})${NEW_LINE}
 ${NEW_LINE}
 Thank you.`);
 };
