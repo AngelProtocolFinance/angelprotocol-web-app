@@ -19,6 +19,7 @@ const DonateFiatThanks = lazy(() => import("pages/DonateFiatThanks"));
 const Gift = lazy(() => import("pages/Gift"));
 const DonateWidget = lazy(() => import("pages/DonateWidget"));
 const Signin = lazy(() => import("pages/Signin"));
+const Signup = lazy(() => import("pages/Signup"));
 const Applications = lazy(() => import("pages/Applications"));
 const Application = lazy(() => import("pages/Application"));
 
@@ -85,6 +86,7 @@ export default function App() {
           />
           <Route path={`${appRoutes.gift}/*`} element={<Gift />} />
           <Route path={appRoutes.signin} element={<Signin />} />
+          <Route path={appRoutes.signup} element={<Signup />} />
           <Route
             path={appRoutes.auth_redirector}
             element={<OAUTHRedirector />}

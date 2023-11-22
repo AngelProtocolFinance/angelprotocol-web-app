@@ -110,7 +110,7 @@ export default function Signin() {
 
           <p className="text-gray-d1 dark:text-gray text-sm">
             Don't have an account?{" "}
-            <Link className="text-orange" to={appRoutes.signin}>
+            <Link className="text-orange" to={appRoutes.signup}>
               Create one
             </Link>
           </p>

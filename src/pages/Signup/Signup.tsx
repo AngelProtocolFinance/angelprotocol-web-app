@@ -2,11 +2,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { signUp } from "aws-amplify/auth";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { useErrorContext } from "contexts/ErrorContext";
 import { Field } from "components/form";
 import { appRoutes } from "constants/routes";
 import { FV, schema } from "./schema";
 
 export default function Signup() {
+  const { handleError } = useErrorContext();
   const methods = useForm<FV>({ resolver: yupResolver(schema) });
   const { handleSubmit } = methods;
 
@@ -25,17 +27,19 @@ export default function Signup() {
           autoSignIn: true, // or SignInOptions e.g { authFlowType: "USER_SRP_AUTH" }
         },
       });
-      if (nextStep.signUpStep === "CONFIRM_SIGN_UP") {
-        //
+      if (!isSignUpComplete && nextStep.signUpStep === "CONFIRM_SIGN_UP") {
+        return alert("Redirect to confirm page");
       }
-    } catch (err) {}
+    } catch (err) {
+      handleError(err);
+    }
   };
 
   return (
     <FormProvider {...methods}>
       <form
         onSubmit={handleSubmit(signup)}
-        className="py-8 sm:py-16 content-start grid justify-self-center gap-6 w-full max-w-sm"
+        className="padded-container py-8 sm:py-16 grid content-start justify-self-center gap-6 w-full max-w-md"
       >
         <Field<FV>
           label="First name"
