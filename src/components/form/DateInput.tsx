@@ -1,6 +1,5 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { FieldValues, Path, useFormContext } from "react-hook-form";
-import { FormValues } from "./types";
 
 export default function DateInput<T extends FieldValues>({
   name,
@@ -10,11 +9,11 @@ export default function DateInput<T extends FieldValues>({
   const {
     register,
     formState: { errors },
-  } = useFormContext<FormValues>();
+  } = useFormContext<T>();
   return (
     <div>
       <input
-        {...register(name as any)}
+        {...register(name)}
         type="date"
         className="date-input uppercase text-sm relative w-full px-4 py-3 border border-prim rounded-md border-collapse dark:bg-blue-d6"
       />

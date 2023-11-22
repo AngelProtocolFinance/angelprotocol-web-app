@@ -4,7 +4,7 @@ import { FormValues as FV } from "./types";
 import countries from "assets/countries/all.json";
 import CountrySelector from "components/CountrySelector";
 import Icon from "components/Icon";
-import DateInput from "./DateInput";
+import { DateInput } from "components/form";
 import RegStatusDropdown from "./RegStatusDropdown";
 
 type Props = {
