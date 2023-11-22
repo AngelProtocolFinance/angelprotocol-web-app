@@ -36,7 +36,7 @@ const Form: FC<Props> = ({ onReset, submit, classes = "", isDirty }) => {
           fieldName="hqCountry"
           countries={countries}
           classes={{
-            container: "px-2",
+            container: "px-2 dark:bg-blue-d6",
             input: "text-sm py-3.5",
             error: "field-error",
           }}
