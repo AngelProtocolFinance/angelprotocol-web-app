@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useErrorContext } from "contexts/ErrorContext";
 import { Field } from "components/form";
 import { appRoutes } from "constants/routes";
+import Agreement from "./Agreement";
 import { FV, schema } from "./schema";
 
 export default function Signup() {
@@ -64,7 +65,10 @@ export default function Signup() {
           name="passwordConfirmation"
           placeholder="********"
         />
-        <button type="submit" className="mt-4 btn-orange font-work">
+
+        <Agreement />
+
+        <button type="submit" className="btn-orange font-work">
           Sign up
         </button>
 
