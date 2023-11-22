@@ -1,11 +1,13 @@
 import { FiscalSponsorhipAgreementSigner } from "../../types";
 import {
+  ContactUpdateResult,
   InitApplication,
   RegistrationUpdate,
   SavedRegistration,
   SubmitResult,
 } from "types/aws";
 import { adminTags } from "services/aws/tags";
+import { logger } from "helpers";
 import { TEMP_JWT } from "constants/auth";
 import { EMAIL_SUPPORT } from "constants/env";
 import { version as v } from "../../helpers";
@@ -54,7 +56,6 @@ const registration_api = aws.injectEndpoints({
       },
     }),
     updateReg: builder.mutation<any, RegistrationUpdate>({
-      invalidatesTags: [{ type: "admin", id: adminTags.registration }],
       query: ({ reference, ...payload }) => {
         return {
           url: `v5/registration/${reference}`,
@@ -67,6 +68,56 @@ const registration_api = aws.injectEndpoints({
           status: res.status,
           data: `Failed to update ${type}. Please try again later.`,
         };
+      },
+      /** pessimistic manual cache update so not to GET fresh data */
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(
+            registration_api.util.updateQueryData(
+              "reg",
+              args.reference,
+              (draft) => {
+                switch (args.type) {
+                  case "contact-details":
+                    {
+                      const { ContactPerson, Registration } =
+                        data as ContactUpdateResult;
+                      draft.ContactPerson = Object.assign(
+                        draft.ContactPerson,
+                        ContactPerson
+                      );
+                      draft.Registration = {
+                        ...draft.Registration,
+                        OrganizationName: Registration.OrganizationName,
+                      };
+                    }
+                    break;
+
+                  //other updates are to draft.Registration
+                  default: {
+                    let tempData = data;
+
+                    // since `wise_recipient_id` is not returned as a result of updateReg,
+                    // we need to pass it and manually update it in the draft.Registration
+                    if (args.type === "banking") {
+                      tempData = Object.assign({}, data, {
+                        wise_recipient_id: args.wise_recipient_id,
+                      });
+                    }
+
+                    draft.Registration = Object.assign(
+                      draft.Registration,
+                      tempData
+                    );
+                  }
+                }
+              }
+            )
+          );
+        } catch (err) {
+          logger.error(err);
+        }
       },
     }),
 
