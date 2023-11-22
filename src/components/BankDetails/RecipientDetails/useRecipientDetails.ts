@@ -209,13 +209,6 @@ function refreshFormValues(
       ...prevReqData.currentFormValues.requirements,
     });
 
-  console.log("--------------------");
-  console.log(`prev reqs`);
-  console.log(prevReqData.currentFormValues);
-  console.log(`new reqs`);
-  console.log(newRequirements);
-  console.log("--------------------");
-
   const newFormValues: FormValues = {
     ...prevReqData.currentFormValues,
     requirements: newRequirements,
