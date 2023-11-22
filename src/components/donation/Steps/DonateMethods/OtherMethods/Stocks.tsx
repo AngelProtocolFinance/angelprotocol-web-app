@@ -51,6 +51,9 @@ export default function Stocks({ state }: Props) {
       <h3 className="text-2xl sm:text-3xl text-center leading-relaxed">
         Stocks
       </h3>
+      <h4 className="text-lg sm:text-xl leading-relaxed">
+        Step 1: Contact Your Broker
+      </h4>
       <p>
         To donate stock, please email or provide your broker with the following
         information:
@@ -101,7 +104,9 @@ export default function Stocks({ state }: Props) {
           </button>
         </form>
       </FormProvider>
-      <h4 className="text-lg sm:text-xl leading-relaxed">Let Us Know</h4>
+      <h4 className="text-lg sm:text-xl leading-relaxed">
+        Step 2: Let Us Know
+      </h4>
       <div className="grid gap-2">
         <p>
           For your gift to be recognized when it comes into our account, please
@@ -109,7 +114,10 @@ export default function Stocks({ state }: Props) {
           projects to designate your donation to. Please send this email to
           support@better.giving.
         </p>
-        <i>Note: You can also CC us the email you send to your broker.</i>
+        <i>
+          If you generated an email with the above form, then we should have
+          been "CC'd" automatically on the email to your broker.
+        </i>
       </div>
       <h4 className="text-lg sm:text-xl leading-relaxed">
         Benefits of Donating Appreciated stock
