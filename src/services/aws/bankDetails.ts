@@ -1,6 +1,5 @@
 import {
   AccountRequirements,
-  BankingDetails,
   CreateRecipientRequest,
   Quote,
   WiseCurrency,
