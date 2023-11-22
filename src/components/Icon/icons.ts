@@ -1,4 +1,5 @@
 import {
+  AiFillGoogleCircle,
   AiFillHeart,
   AiFillSecurityScan,
   AiFillYoutube,
@@ -104,6 +105,7 @@ export const icons = {
   Folder: MdOutlineFolder,
   Giftcard: MdCardGiftcard,
   Globe: BiGlobe,
+  Google: AiFillGoogleCircle,
   HeartFill: AiFillHeart,
   HeartOutline: AiOutlineHeart,
   HourglassSplit: BsHourglassSplit,
