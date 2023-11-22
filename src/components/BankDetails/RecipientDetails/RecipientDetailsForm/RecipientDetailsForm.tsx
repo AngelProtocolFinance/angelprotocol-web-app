@@ -49,6 +49,7 @@ export default function RecipientDetailsForm(props: Props) {
         disabled={props.disabled}
         refreshRequired={props.refreshRequired}
         onRefresh={(request) => {
+          // update current form values prior to refreshing the form (loads new fields)
           onUpdateValues(getValues());
           props.onRefresh(request);
         }}

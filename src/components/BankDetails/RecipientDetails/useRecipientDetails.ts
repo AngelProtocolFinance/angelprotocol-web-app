@@ -11,7 +11,7 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";
 import { UnexpectedStateError } from "errors/errors";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
-import { getDefaultValues, updateReqField } from "./helpers";
+import { addRequirementGroup, getDefaultValues } from "./helpers";
 
 type RequirementsData = {
   accountRequirements: AccountRequirements;
@@ -132,14 +132,24 @@ export default function useRecipientDetails(
       }).unwrap();
 
       setRequirementsDataArray((prev) => {
-        const updated: RequirementsData[] = newRequirements.map((newReq) => ({
-          accountRequirements: newReq,
-          currentFormValues: refreshFormValues(prev, newReq, targetCurrency),
-          refreshRequired:
-            prev[selectedIndex].accountRequirements.type === newReq.type
-              ? false // just finished checking requirements for selected type, so no need to do it again
-              : prev[selectedIndex].refreshRequired, // just copy/paste for other types
-        }));
+        const updated: RequirementsData[] = newRequirements.map((newReq) => {
+          // should always be found, but not 100% sure how Wise behaves in all cases
+          const prevReq = prev.find(
+            (x) => x.accountRequirements.type === newReq.type
+          );
+          const currFormValues = !prevReq
+            ? getDefaultValues(newReq, targetCurrency)
+            : getRefreshedFormValues(prevReq, newReq);
+
+          return {
+            accountRequirements: newReq,
+            currentFormValues: currFormValues,
+            refreshRequired:
+              prev[selectedIndex].accountRequirements.type === newReq.type
+                ? false // just finished checking requirements for selected type, so no need to do it again
+                : prev[selectedIndex].refreshRequired, // just copy/paste for other types
+          };
+        });
         return updated;
       });
       setError(false);
@@ -181,36 +191,37 @@ export default function useRecipientDetails(
   };
 }
 
-function refreshFormValues(
-  prevReqDataArr: RequirementsData[],
-  newReq: AccountRequirements,
-  targetCurrency: string
+/**
+ * Checks whether there are any new requirements to add to the form and if so, adds them and sets them
+ * to the appropriate default value.
+ *
+ * @param currReqData current requirements data
+ * @param newReq new requirements that might include new requirement groups
+ * @returns previous form values with the new requirements included and set to appropriate default value
+ */
+function getRefreshedFormValues(
+  currReqData: RequirementsData,
+  newReq: AccountRequirements
 ): FormValues {
-  const prevReqData = prevReqDataArr.find(
-    (prevReq) => prevReq.accountRequirements.type === newReq.type
+  // get current requirement groups
+  const currGroups = currReqData.accountRequirements.fields.flatMap(
+    (field) => field.group
   );
 
-  if (!prevReqData) {
-    return getDefaultValues(newReq, targetCurrency);
-  }
-
-  const currentRequirementGroups =
-    prevReqData.accountRequirements.fields.flatMap((field) => field.group);
-
-  const newRequirementGroups = newReq.fields
+  // get only new requirement groups
+  const newGroups = newReq.fields
     .flatMap((field) => field.group)
-    .filter(
-      (group) =>
-        !currentRequirementGroups.find((curGroup) => curGroup.key === group.key)
-    );
+    .filter((ng) => !currGroups.find((cg) => cg.key === ng.key));
 
-  const newRequirements: FormValues["requirements"] =
-    newRequirementGroups.reduce((curr, group) => updateReqField(curr, group), {
-      ...prevReqData.currentFormValues.requirements,
-    });
+  // add new requirement groups (if any) to the current requirements
+  const newRequirements: FormValues["requirements"] = newGroups.reduce(
+    (curr, group) => addRequirementGroup(curr, group),
+    { ...currReqData.currentFormValues.requirements }
+  );
 
+  // update default form values
   const newFormValues: FormValues = {
-    ...prevReqData.currentFormValues,
+    ...currReqData.currentFormValues,
     requirements: newRequirements,
   };
 

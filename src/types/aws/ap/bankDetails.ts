@@ -50,7 +50,7 @@ export type CreateRecipientRequest = {
   ownedByCustomer: false;
   profile: "{{profileId}}";
   type: string;
-  details: Record<string, Record<string, string> | string | undefined>;
+  details: Record<string, string | Record<string, string> | undefined>;
 };
 
 export type Quote = { id: string };

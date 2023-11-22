@@ -123,7 +123,7 @@ export type TDocumentation = {
 
 export type BankingDetails = {
   BankStatementFile: FileObject;
-  wise_recipient_id: string;
+  wise_recipient_id: number;
 };
 
 export type DoneContact = Append<

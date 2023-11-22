@@ -4,6 +4,14 @@ import { Country } from "types/components";
 import { asset } from "components/FileDropzone";
 import { isCountry, isTextType, undot } from ".";
 
+/**
+ * Creates a FormValues object based on the passed requirements,
+ * with all fields set to appropriate default values.
+ *
+ * @param accountRequirements requirements to process
+ * @param targetCurrency target currency
+ * @returns FormValues object with all fields set to appropriate default values
+ */
 export function getDefaultValues(
   accountRequirements: AccountRequirements,
   targetCurrency: string
@@ -14,7 +22,7 @@ export function getDefaultValues(
     type: accountRequirements.type,
     requirements: accountRequirements.fields.reduce<FormValues["requirements"]>(
       (defaultValues, field) => {
-        const updated = updateDefaultValues(field, defaultValues);
+        const updated = addRequirementField(defaultValues, field);
         return updated;
       },
       {}
@@ -22,35 +30,49 @@ export function getDefaultValues(
   };
 }
 
-function updateDefaultValues(
-  field: Field,
-  defaultValues: FormValues["requirements"]
+/**
+ * Adds a requirement field (set to default value depending on type) to current form requirements.
+ *
+ * @param currFormValues current form requirements
+ * @param field requirement field to add
+ * @returns current form requirements with the new req. field added
+ */
+function addRequirementField(
+  currFormValues: FormValues["requirements"],
+  field: Field
 ): FormValues["requirements"] {
   const result = field.group.reduce(
-    (curr, requirements) => updateReqField(curr, requirements),
-    { ...defaultValues }
+    (curr, group) => addRequirementGroup(curr, group),
+    { ...currFormValues }
   );
 
   return result;
 }
 
-export function updateReqField(
-  curr: FormValues["requirements"],
-  requirements: Group
+/**
+ * Adds a requirement group (set to default value depending on type) to current form requirements.
+ *
+ * @param currFormValues current form requirements
+ * @param group requirement group to add
+ * @returns current form requirements with the new req. group added
+ */
+export function addRequirementGroup(
+  currFormValues: FormValues["requirements"],
+  group: Group
 ): FormValues["requirements"] {
-  const updated = { ...curr };
+  const updated = { ...currFormValues };
 
-  const key = undot(requirements.key);
+  const key = undot(group.key);
 
-  if (isTextType(requirements)) {
+  if (isTextType(group)) {
     updated[key] = null;
-  } else if (isCountry(requirements)) {
+  } else if (isCountry(group)) {
     const country: Country = { code: "", flag: "", name: "" };
     updated[key] = country;
   } else {
     updated[key] = {
       // `requirements.example` contains dropdown placeholder text for `select`; for `radio` it's empty string
-      label: requirements.example || "Select...",
+      label: group.example || "Select...",
       value: "",
     };
   }

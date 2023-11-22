@@ -1,7 +1,7 @@
 import {
   AccountRequirements,
+  BankingDetails,
   CreateRecipientRequest,
-  EndowmentProfile,
   Quote,
   WiseCurrency,
 } from "types/aws";
@@ -30,7 +30,7 @@ export const bank_details_api = aws.injectEndpoints({
       }),
     }),
     createRecipientAccount: builder.mutation<
-      EndowmentProfile,
+      { wise_recipient_id: number },
       | {
           PK: string;
           endowmentId?: never;

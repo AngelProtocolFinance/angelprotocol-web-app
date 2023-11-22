@@ -34,7 +34,7 @@ export default function useSubmit() {
         bankStatementFile,
       });
 
-      await createRecipientAccount({
+      const { wise_recipient_id } = await createRecipientAccount({
         PK: data.contact.PK,
         request,
       }).unwrap();
@@ -43,6 +43,7 @@ export default function useSubmit() {
         reference: data.init.reference,
         type: "banking",
         BankStatementFile: bankStatementPreview.bankStatementFile[0],
+        wise_recipient_id,
       });
 
       if ("error" in result) {
