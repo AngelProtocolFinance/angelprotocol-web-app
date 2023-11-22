@@ -12,7 +12,7 @@ import { OAUTH_PATH_STORAGE_KEY } from "constants/auth";
 import { appRoutes } from "constants/routes";
 import { FV, schema } from "./schema";
 
-export default function Login() {
+export default function Signin() {
   const { state } = useLocation();
 
   const { handleError } = useErrorContext();
