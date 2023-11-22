@@ -11,7 +11,7 @@ import useDebouncer from "hooks/useDebouncer";
 export default function usePaginatedApplications() {
   const dispatch = useSetter();
 
-  const [query, setQuery] = useState<string>("");
+  const [query, setQuery] = useState("");
   const [debouncedQuery, isDebouncing] = useDebouncer(query, 500);
 
   const [params, setParams] = useState<ApplicationsQueryParams>({
