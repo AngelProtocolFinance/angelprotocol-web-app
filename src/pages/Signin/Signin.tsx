@@ -1,105 +1,126 @@
-import { Authenticator, useAuthenticator } from "@aws-amplify/ui-react";
-import { useEffect } from "react";
-import { Location, useLocation, useNavigate } from "react-router-dom";
-import ExtLink from "components/ExtLink";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { signIn, signInWithRedirect } from "aws-amplify/auth";
+import { useState } from "react";
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { Link, Navigate, useLocation } from "react-router-dom";
+import { InferType, object, string } from "yup";
+import { useErrorContext } from "contexts/ErrorContext";
+import Icon from "components/Icon";
 import LoaderRing from "components/LoaderRing";
-import { BASE_URL } from "constants/env";
-import { PRIVACY_POLICY, TERMS_OF_USE_NPO } from "constants/urls";
+import { Field } from "components/form";
+import { useGetter } from "store/accessors";
+import { OAUTH_PATH_STORAGE_KEY } from "constants/auth";
+import { appRoutes } from "constants/routes";
 
-const OAUTH_PATH_STORAGE_KEY = "OATH_ORIGIN";
+const schema = object({
+  email: string().required("required").email("invalid email"),
+  password: string().required("required").min(6, "min 6 characters"),
+});
+type FV = InferType<typeof schema>;
 
-export default function Signin() {
+export default function Login() {
   const { state } = useLocation();
-  const navigate = useNavigate();
+
+  const { handleError } = useErrorContext();
+  const [isRedirecting, setIsRedirecting] = useState(false);
+  const currUser = useGetter((state) => state.auth.user);
+  const methods = useForm<FV>({ resolver: yupResolver(schema) });
+
+  const directSignin: SubmitHandler<FV> = async ({ email, password }) => {
+    try {
+      const { isSignedIn, nextStep } = await signIn({
+        username: email,
+        password,
+      });
+      console.log(isSignedIn, nextStep);
+    } catch (err) {
+      console.log(err);
+      handleError(err);
+    }
+  };
+
+  const {
+    handleSubmit,
+    formState: { isSubmitting },
+  } = methods;
+
+  if (currUser === "loading" || currUser?.isSigningOut) {
+    return (
+      <div className="grid content-start place-items-center py-8">
+        <LoaderRing thickness={12} classes="w-32 mt-8" />
+      </div>
+    );
+  }
+
   const _state = state as { from?: Location } | undefined;
-
-  const { route, authStatus } = useAuthenticator((context) => [
-    context.route,
-    context.authStatus,
-  ]);
-
   const from = _state?.from?.pathname || "/";
   const search = _state?.from?.search || "";
-
-  useEffect(() => {
-    localStorage.setItem(OAUTH_PATH_STORAGE_KEY, from);
-    //eslint-disable-next-line
-  }, []);
-
-  useEffect(() => {
-    if (route === "authenticated") {
-      navigate({ pathname: from, search }, { replace: true });
-    }
-  }, [route, navigate, from, search]);
+  if (currUser) {
+    return <Navigate to={{ pathname: from, search }} replace />;
+  }
 
   return (
-    <div className="grid place-items-center py-14">
-      {authStatus === "configuring" || authStatus === "authenticated" ? (
-        //while user is still authenticated, use loader in place of authenticator while navigating
-        <LoaderRing thickness={12} classes="w-32" />
-      ) : (
-        <Authenticator
-          components={{
-            SignUp: {
-              FormFields() {
-                return (
-                  <>
-                    <Authenticator.SignUp.FormFields />
-                    <p className="text-sm">
-                      By signing up, you agree to our{" "}
-                      <ExtLink
-                        href={PRIVACY_POLICY}
-                        className="text-blue hover:text-blue-l2"
-                      >
-                        Privacy Policy
-                      </ExtLink>
-                      ,{" "}
-                      <ExtLink
-                        href={`${BASE_URL}/cookie-policy/`}
-                        className="text-blue hover:text-blue-l2"
-                      >
-                        Cookie Policy
-                      </ExtLink>
-                      , and{" "}
-                      <ExtLink
-                        href={TERMS_OF_USE_NPO}
-                        className="text-blue hover:text-blue-l2"
-                      >
-                        Terms of Use
-                      </ExtLink>
-                    </p>
-                  </>
-                );
-              },
-            },
-          }}
-          formFields={{
-            signIn: {
-              username: { placeholder: "e.g. john.doe@email.com" },
-              password: { placeholder: "********" },
-            },
-            signUp: {
-              email: { placeholder: "e.g. john.doe@email.com" },
-              password: { placeholder: "********" },
-              confirm_password: { placeholder: "********" },
-              given_name: {
-                order: 1,
-                isRequired: true,
-                type: "text",
-                label: "First Name",
-                placeholder: "e.g. John",
-              },
-              family_name: {
-                order: 2,
-                isRequired: true,
-                type: "text",
-                label: "Last name",
-                placeholder: "e.g. Doe",
-              },
-            },
-          }}
-        />
-      )}
+    <div className="grid content-start justify-items-center py-8">
+      <FormProvider {...methods}>
+        <fieldset className="contents" disabled={isSubmitting || isRedirecting}>
+          <form
+            onSubmit={handleSubmit(directSignin)}
+            className="grid gap-4 w-full max-w-sm"
+          >
+            <Field<FV>
+              label="E-mail address"
+              name="email"
+              placeholder="e.g. John Doe"
+            />
+            <Field<FV, "password">
+              placeholder="********"
+              type="password"
+              label="Password"
+              name="password"
+            />
+            <button type="submit" className="mt-3 btn-orange font-work">
+              Sign in
+            </button>
+
+            <p className="h-px flex items-center justify-center border-b border-prim my-4">
+              <span className="bg-white px-4 text-gray-d1 dark:text-gray text-xs uppercase">
+                or
+              </span>
+            </p>
+            <button
+              onClick={async () => {
+                try {
+                  setIsRedirecting(true);
+
+                  /** could be set by custom state, but state is nowhere to be found in redirect url search params,
+                  instead it is in hub event instead which defeats the purpose of redirectURLds
+                  https://docs.amplify.aws/javascript/build-a-backend/auth/add-social-provider/#add-custom-state
+                  */
+                  localStorage.setItem(OAUTH_PATH_STORAGE_KEY, from);
+                  await signInWithRedirect({
+                    provider: "Google",
+                  });
+                } catch (err) {
+                  handleError(err);
+                  setIsRedirecting(false);
+                }
+              }}
+              type="button"
+              className="dark:bg-white dark:border-white rounded border-2 border-[#DB4437] enabled:hover:bg-[#DB4437]/10 text-[#DB4437] disabled:text-gray-l1 dark:disabled-text-gray disabled:border-gray-l2 dark:disabled:border-bluegray disabled:pointer-events-none p-2 flex items-center justify-center gap-2 uppercase font-bold text-sm"
+            >
+              <Icon size={24} type="Google" />
+              <span>Signin with google</span>
+            </button>
+
+            <p className="text-gray-d1 dark:text-gray text-sm">
+              Don't have an account?{" "}
+              <Link className="text-orange" to={appRoutes.signin}>
+                Create one
+              </Link>
+            </p>
+          </form>
+        </fieldset>
+      </FormProvider>
     </div>
   );
 }

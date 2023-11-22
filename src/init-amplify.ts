@@ -55,6 +55,7 @@ export function initAmplify() {
   store.dispatch(loadSession());
 
   Hub.listen("auth", async ({ payload }) => {
+    console.log(payload, payload.event);
     switch (payload.event) {
       case "signedIn":
         store.dispatch(loadSession(payload.data));
