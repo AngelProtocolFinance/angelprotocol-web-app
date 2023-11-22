@@ -6,14 +6,17 @@ import {
   getCurrentUser,
 } from "aws-amplify/auth";
 
-type User =
-  | null
-  | "loading"
-  | {
-      token: string;
-      isAdmin: boolean;
-      id: string; //email or name or username
-    };
+type User = null | "loading" | SignedInUser;
+
+type SignedInUser = {
+  token: string;
+  isAdmin: boolean;
+  id: string; //email or name or username
+  isSigningOut: boolean;
+};
+
+export const userIsSignedIn = (user: User): user is SignedInUser =>
+  !!(user as SignedInUser).token;
 
 type State = {
   user: User;
@@ -23,6 +26,7 @@ const initialState: State = {
   user: "loading",
 };
 
+// export const logout = createAsyncThunk("auth/logout",)
 export const loadSession = createAsyncThunk<User, AuthUser | undefined>(
   "auth/loadSession",
   async (user) => {
@@ -43,6 +47,7 @@ export const loadSession = createAsyncThunk<User, AuthUser | undefined>(
         token,
         isAdmin: false,
         id: attributes.email || user?.username || "User",
+        isSigningOut: false,
       };
     } catch (err) {
       console.log(err);
@@ -57,6 +62,11 @@ const auth = createSlice({
   reducers: {
     reset: (state) => {
       state.user = null;
+    },
+    initSignout: (state) => {
+      if (userIsSignedIn(state.user)) {
+        state.user.isSigningOut = true;
+      }
     },
   },
   extraReducers(builder) {
