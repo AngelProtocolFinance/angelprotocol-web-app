@@ -50,7 +50,15 @@ export type CreateRecipientRequest = {
   ownedByCustomer: false;
   profile: "{{profileId}}";
   type: string;
-  details: Record<string, string | Record<string, string> | undefined>;
+  details: Record<
+    string,
+    // root field values
+    | string
+    // address object field
+    | Record<string, string>
+    // undefined or non-set values
+    | undefined
+  >;
 };
 
 export type Quote = { id: string };
