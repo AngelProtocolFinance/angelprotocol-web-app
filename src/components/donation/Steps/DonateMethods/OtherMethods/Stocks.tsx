@@ -2,6 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { ObjectSchema, number, object, string } from "yup";
 import { SchemaShape } from "schemas/types";
+import Group from "components/Group";
 import { Field } from "components/form";
 import { FormStep } from "slices/donation";
 import { EMAIL_SUPPORT } from "constants/env";
@@ -72,37 +73,39 @@ export default function Stocks({ state }: Props) {
         ID #: 87-3758939.
       </span>
       <FormProvider {...methods}>
-        <form
-          className="grid gap-6 p-6 border border-prim rounded bg-white dark:bg-blue-d6"
-          onSubmit={submit}
-        >
-          <b>
-            We can help with the email you'll need to send to your broker
-            ensuring they have all the necessary information. Complete the form
-            below and click "Build Email" to generate a ready-to-send email in
-            your default email application. All fields are optional, but the
-            more you can provide now the less editing will be needed before
-            sending.
-          </b>
-          <Field<FormValues, "emailTo">
-            name="emailTo"
-            label="Your broker's email address"
-          />
-          <Field<FormValues, "stockSymbol">
-            name="stockSymbol"
-            label="Stock Symbol (Ticker)"
-          />
-          <Field<FormValues, "numberOfShares">
-            name="numberOfShares"
-            label="Number of Shares to donate"
-          />
-          <button
-            type="submit"
-            className="btn-orange btn-donate my-4 w-1/2 justify-self-center"
+        <Group>
+          <form
+            className="grid gap-6 p-6 border border-prim rounded bg-white dark:bg-blue-d6"
+            onSubmit={submit}
           >
-            Build Email
-          </button>
-        </form>
+            <b>
+              We can help with the email you'll need to send to your broker
+              ensuring they have all the necessary information. Complete the
+              form below and click "Build Email" to generate a ready-to-send
+              email in your default email application. All fields are optional,
+              but the more you can provide now the less editing will be needed
+              before sending.
+            </b>
+            <Field<FormValues, "emailTo">
+              name="emailTo"
+              label="Your broker's email address"
+            />
+            <Field<FormValues, "stockSymbol">
+              name="stockSymbol"
+              label="Stock Symbol (Ticker)"
+            />
+            <Field<FormValues, "numberOfShares">
+              name="numberOfShares"
+              label="Number of Shares to donate"
+            />
+            <button
+              type="submit"
+              className="btn-orange btn-donate my-4 w-1/2 justify-self-center"
+            >
+              Build Email
+            </button>
+          </form>
+        </Group>
       </FormProvider>
       <h4 className="text-lg sm:text-xl leading-relaxed">
         Step 2: Let Us Know
