@@ -77,7 +77,7 @@ export default function Loaded(props: ApplicationDetails) {
         </div>
       </Container>
       <Container title="Banking details">
-        <div className="grid sm:grid-cols-[auto_auto_1fr]">
+        <dl className="grid sm:grid-cols-[auto_auto_1fr]">
           <Row label="Bank name">{w?.bankName || NA}</Row>
           <Row label="Address">{w?.address || NA}</Row>
           <Row label="Account number">{w?.accountNumber || NA}</Row>
@@ -85,7 +85,7 @@ export default function Loaded(props: ApplicationDetails) {
           <Row label="Bank statement document">
             <DocLink url={r.BankStatementFile.publicUrl} />
           </Row>
-        </div>
+        </dl>
       </Container>
       <div className="flex gap-x-3 justify-self-center sm:justify-self-end">
         <Link
@@ -134,14 +134,20 @@ type Props = PropsWithChildren<{
 function Row(props: Props) {
   return (
     <>
-      <div className="px-3 max-sm:pt-3 sm:p-3 flex items-center text-xs font-semibold uppercase">
+      <dt className="px-3 max-sm:pt-3 sm:p-3 flex items-center text-xs font-semibold uppercase">
         {props.label}
-      </div>
-      <div className="max-sm:hidden w-px border-r border-prim last:border-none" />
-      <div className="px-3 max-sm:pb-3 sm:p-3 flex items-center text-sm">
+      </dt>
+      <div
+        aria-hidden={true}
+        className="max-sm:hidden w-px border-r border-prim last:border-none"
+      />
+      <dd className="px-3 max-sm:pb-3 sm:p-3 flex items-center text-sm">
         {props.children}
-      </div>
-      <div className="h-px col-span-full border-b border-prim last:border-none" />
+      </dd>
+      <div
+        aria-hidden={true}
+        className="h-px col-span-full border-b border-prim last:border-none"
+      />
     </>
   );
 }
