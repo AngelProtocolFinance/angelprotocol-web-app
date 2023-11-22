@@ -34,6 +34,8 @@ export default function useSubmit() {
         bankStatementFile,
       });
 
+      // we need to pass this variable to `updateReg` in order to update
+      // its the cache registration data once the request is succesful
       const { wise_recipient_id } = await createRecipientAccount({
         PK: data.contact.PK,
         request,
