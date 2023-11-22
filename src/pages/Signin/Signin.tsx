@@ -1,15 +1,14 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { signIn, signInWithRedirect } from "aws-amplify/auth";
+import { signIn } from "aws-amplify/auth";
 import { useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { Link, Navigate, useLocation } from "react-router-dom";
 import { useErrorContext } from "contexts/ErrorContext";
-import Icon from "components/Icon";
 import LoaderRing from "components/LoaderRing";
 import { Field } from "components/form";
 import { useGetter } from "store/accessors";
-import { OAUTH_PATH_STORAGE_KEY } from "constants/auth";
 import { appRoutes } from "constants/routes";
+import Google from "./Google";
 import { FV, schema } from "./schema";
 
 export default function Signin() {
@@ -63,6 +62,14 @@ export default function Signin() {
           onSubmit={handleSubmit(directSignin)}
           className="grid gap-4 w-full max-w-md py-8 sm:py-16 justify-self-center padded-container"
         >
+          <Google setIsRedirecting={setIsRedirecting} from={from} />
+
+          <p className="h-px flex items-center justify-center border-b border-prim my-4">
+            <span className="bg-white px-4 text-gray-d1 dark:text-gray text-xs uppercase">
+              or
+            </span>
+          </p>
+
           <Field<FV>
             label="E-mail address"
             name="email"
@@ -76,36 +83,6 @@ export default function Signin() {
           />
           <button type="submit" className="mt-3 btn-orange font-work">
             Sign in
-          </button>
-
-          <p className="h-px flex items-center justify-center border-b border-prim my-4">
-            <span className="bg-white px-4 text-gray-d1 dark:text-gray text-xs uppercase">
-              or
-            </span>
-          </p>
-          <button
-            onClick={async () => {
-              try {
-                setIsRedirecting(true);
-
-                /** could be set by custom state, but state is nowhere to be found in redirect url search params,
-                  instead it is in hub event instead which defeats the purpose of redirectURLds
-                  https://docs.amplify.aws/javascript/build-a-backend/auth/add-social-provider/#add-custom-state
-                  */
-                localStorage.setItem(OAUTH_PATH_STORAGE_KEY, from);
-                await signInWithRedirect({
-                  provider: "Google",
-                });
-              } catch (err) {
-                handleError(err);
-                setIsRedirecting(false);
-              }
-            }}
-            type="button"
-            className="dark:bg-white dark:border-white rounded border-2 border-[#DB4437] enabled:hover:bg-[#DB4437]/10 text-[#DB4437] disabled:text-gray-l1 dark:disabled-text-gray disabled:border-gray-l2 dark:disabled:border-bluegray disabled:pointer-events-none p-2 flex items-center justify-center gap-2 uppercase font-bold text-sm"
-          >
-            <Icon size={24} type="Google" />
-            <span>Signin with google</span>
           </button>
 
           <p className="text-gray-d1 dark:text-gray text-sm">

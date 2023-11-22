@@ -6,7 +6,7 @@ export const schema = object({
   email: string().required("required").email("invalid email"),
   password: string()
     .required("required")
-    .min(8, "Password must be at least 8 characters")
+    .min(8, "must be at least 8 characters")
     .matches(/[a-z]/, "must contain at least one lowercase letter")
     .matches(/[A-Z]/, "contain at least one uppercase letter")
     .matches(/\d/, "must contain at least one number")
