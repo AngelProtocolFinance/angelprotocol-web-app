@@ -8,7 +8,9 @@ import { storeRegistrationReference } from "helpers";
 import routes from "../routes";
 
 export default function useSubmit() {
-  const { user } = useAuthenticator((context) => [context.user]);
+  const { unverifiedUserAttributes } = useAuthenticator((context) => [
+    context.unverifiedUserAttributes,
+  ]);
 
   const [register] = useNewApplicationMutation();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -18,7 +20,7 @@ export default function useSubmit() {
   async function handleSubmit(ev: FormEvent<HTMLFormElement>) {
     ev.preventDefault();
 
-    const email = user.attributes?.email;
+    const email = unverifiedUserAttributes.email;
     if (!email) {
       throw new Error("Logged in user has no email attribute");
     }

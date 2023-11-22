@@ -50,7 +50,11 @@ export default function UserMenu() {
       </Popover.Button>
 
       <Popover.Panel className="mt-2 absolute z-10 w-max right-0">
-        <Menu user={user} signOut={signOut} isLoading={isLoading} />
+        <Menu
+          userEmail={user.username}
+          signOut={signOut}
+          isLoading={isLoading}
+        />
       </Popover.Panel>
     </Popover>
   );

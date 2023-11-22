@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { Auth } from "aws-amplify";
+import { fetchAuthSession } from "aws-amplify/auth";
 
 type User =
   | null
@@ -19,10 +19,13 @@ const initialState: State = {
 
 export const getUser = createAsyncThunk<User>("auth/getUser", async () => {
   try {
-    const session = await Auth.currentSession();
-    const payload = session.getAccessToken().payload;
+    const session = await fetchAuthSession();
+
+    if (!session.tokens) return null;
+    const payload = session.tokens.accessToken.payload;
+    const token = session.tokens.accessToken.toString();
+
     console.log(payload);
-    const token = session.getAccessToken().getJwtToken();
 
     return { token, isAdmin: false };
   } catch (err) {
