@@ -79,10 +79,12 @@ export default function Stocks({ state }: Props) {
           onSubmit={submit}
         >
           <b>
-            You can fill the form below and after clicking the "Open Email
-            Client" button your Email Client will get opened and the data you
-            entered will be used to automatically create an email for you to
-            send to your Broker.
+            We can help with the email you'll need to send to your broker
+            ensuring they have all the necessary information. Complete the form
+            below and click "Build Email" to generate a ready-to-send email in
+            your default email application. All fields are optional, but the
+            more you can provide now the less editing will be needed before
+            sending.
           </b>
           <Field<FormValues, "emailTo">
             name="emailTo"
@@ -100,7 +102,7 @@ export default function Stocks({ state }: Props) {
             type="submit"
             className="btn-orange btn-donate my-4 w-1/2 justify-self-center"
           >
-            Open Email Client
+            Build Email
           </button>
         </form>
       </FormProvider>
