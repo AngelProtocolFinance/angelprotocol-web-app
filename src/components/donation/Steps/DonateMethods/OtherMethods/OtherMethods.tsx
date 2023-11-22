@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Icon from "components/Icon";
 import { FormStep } from "slices/donation";
 import DAFDirect from "./DAFDirect";
 import Stocks from "./Stocks";
@@ -30,14 +31,29 @@ export default function OtherMethods(props: Props) {
         </>
       ) : (
         <div className="grid gap-5">
-          {type === "stocks" ? <Stocks state={props.state} /> : <DAFDirect />}
           <button
-            className="btn-outline-filled btn-donate w-1/2 justify-self-center"
+            className="text-blue hover:text-orange text-sm flex items-center gap-1 justify-self-start"
             type="button"
             onClick={() => setType(undefined)}
           >
+            <Icon type="Back" />
             Back
           </button>
+          {type === "stocks" ? (
+            <>
+              <Stocks state={props.state} />
+              <button
+                className="text-blue hover:text-orange text-sm flex items-center gap-1 justify-self-start"
+                type="button"
+                onClick={() => setType(undefined)}
+              >
+                <Icon type="Back" />
+                Back
+              </button>
+            </>
+          ) : (
+            <DAFDirect />
+          )}
         </div>
       )}
     </div>
