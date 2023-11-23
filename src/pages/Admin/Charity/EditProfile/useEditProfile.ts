@@ -49,13 +49,13 @@ export default function useEditProfile() {
       }
 
       //only include top level keys that appeared on diff
-      const cleanUpdate: ProfileUpdateMsg = {
-        id,
-      };
-      for (const [path] of diffs) {
-        const key = path.split(".")[0] as keyof ProfileUpdateMsg;
-        (cleanUpdate as any)[key] = update[key];
-      }
+      const cleanUpdate = diffs.reduce<ProfileUpdateMsg>(
+        (result, [path]) => {
+          const key = path.split(".")[0] as keyof ProfileUpdateMsg;
+          return { ...result, [key]: update[key] };
+        },
+        { id }
+      );
 
       await updateProfile(cleanUpdate);
     } catch (err) {
