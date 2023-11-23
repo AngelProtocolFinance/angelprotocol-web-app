@@ -34,10 +34,7 @@ export default function Dashboard() {
           const earningsPayoutsMade = isNaN(totalEarnings)
             ? 0
             : totalEarnings - earningsPayoutsPending;
-          const donationsPaidOut =
-            payoutsMade - earningsPayoutsMade
-              ? payoutsMade - earningsPayoutsMade
-              : 0;
+          const donationsPaidOut = payoutsMade - earningsPayoutsMade;
           return (
             <>
               <h3 className="uppercase text-xl mb-2">Account Balances</h3>
