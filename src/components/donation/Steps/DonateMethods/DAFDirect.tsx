@@ -2,7 +2,7 @@ import IFrame from "components/IFrame";
 
 export default function DAFDirect() {
   return (
-    <>
+    <div className="grid gap-5">
       <h3 className="text-2xl sm:text-3xl text-center leading-relaxed">
         DAFDirect
       </h3>
@@ -16,6 +16,6 @@ export default function DAFDirect() {
         height="300"
         className="justify-self-center"
       ></IFrame>
-    </>
+    </div>
   );
 }

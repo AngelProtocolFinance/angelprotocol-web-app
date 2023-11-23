@@ -46,7 +46,7 @@ export default function Stocks({ state }: Props) {
   );
 
   return (
-    <>
+    <div className="grid gap-5">
       <h3 className="text-2xl sm:text-3xl text-center leading-relaxed">
         Stocks
       </h3>
@@ -137,7 +137,7 @@ export default function Stocks({ state }: Props) {
           and donating the cash.
         </li>
       </ul>
-    </>
+    </div>
   );
 }
 
