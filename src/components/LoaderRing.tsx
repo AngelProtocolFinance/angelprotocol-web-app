@@ -21,7 +21,11 @@ export default function LoaderRing({
   ${50 - t} ${50 - t} 0 0 0 0 -${100 - 2 * t}`;
 
   return (
-    <svg viewBox="0 0 100 100" className={`aspect-square ${container}`}>
+    <svg
+      viewBox="0 0 100 100"
+      className={`aspect-square ${container}`}
+      data-testid="loader-ring"
+    >
       <clipPath id="clip">
         <path d={commands} />
       </clipPath>
