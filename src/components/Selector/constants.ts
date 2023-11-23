@@ -4,7 +4,7 @@ export const valueKey: keyof OptionType<any> = "value";
 
 export const styles = {
   selectorButton:
-    "flex items-center field-input min-h-[3rem] justify-between peer-focus:border-gray-d1 peer-focus:dark:border-blue-l2 cursor-pointer",
+    "flex items-center field-input min-h-[3rem] justify-between cursor-pointer",
   error:
     "absolute -bottom-5 right-0 text-right text-xs text-red dark:text-red-l2",
   //FUTURE: import OptionRenderArg once available
