@@ -33,7 +33,7 @@ const awsBaseQuery = retry(
   fetchBaseQuery({
     baseUrl: APIs.aws,
     mode: "cors",
-    async prepareHeaders(headers, { getState }) {
+    prepareHeaders(headers, { getState }) {
       const {
         auth: { user },
       } = getState() as RootState;
