@@ -1,4 +1,6 @@
+import { Link } from "react-router-dom";
 import { AuthenticatedUser } from "slices/auth";
+import { appRoutes } from "constants/routes";
 
 type Props = {
   classes?: string;
@@ -11,6 +13,18 @@ export default function Menu({ classes = "", user, signOut }: Props) {
       className={`${classes} bg-white dark:bg-blue-d6 w-max rounded overflow-hidden`}
     >
       <p className="text-sm p-2 text-gray-d1 dark:text-gray">{user.id}</p>
+
+      <div className="empty:hidden p-4 border-t border-prim">
+        {user.credentials.includes("ap") && (
+          <Link
+            to={appRoutes.applications}
+            className="text-orange hover:text-orange-l2 text-sm uppercase"
+          >
+            applications
+          </Link>
+        )}
+      </div>
+
       <button
         disabled={user.isSigningOut}
         type="button"
