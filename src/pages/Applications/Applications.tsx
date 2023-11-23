@@ -1,10 +1,11 @@
+import withAuth from "components/Auth";
 import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
 import Filter from "./Filter";
 import Table from "./Table";
 import usePaginatedApplications from "./usePaginatedApplications";
 
-export default function Applications() {
+export default withAuth(function Applications({ user }) {
   const {
     data,
     hasMore,
@@ -17,6 +18,10 @@ export default function Applications() {
     setParams,
     isFetching,
   } = usePaginatedApplications();
+
+  if (!user.isAdmin) {
+    return <div>user is not admin</div>;
+  }
 
   const isLoadingOrError = isLoading || isLoadingNextPage || isError;
 
@@ -71,4 +76,4 @@ export default function Applications() {
       </QueryLoader>
     </div>
   );
-}
+});

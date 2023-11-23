@@ -1,4 +1,3 @@
-// RequireAuth.js
 import { PropsWithChildren } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import LoaderRing from "components/LoaderRing";

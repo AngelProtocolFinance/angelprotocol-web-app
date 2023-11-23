@@ -1,13 +1,18 @@
 import { useParams } from "react-router-dom";
 import { useApplicationQuery } from "services/aws/aws";
+import withAuth from "components/Auth";
 import LoaderRing from "components/LoaderRing";
 import QueryLoader from "components/QueryLoader";
 import { ErrorStatus } from "components/Status";
 import Loaded from "./Loaded";
 
-export default function Application() {
+export default withAuth(function Application({ user }) {
   const { id = "" } = useParams();
   const queryState = useApplicationQuery(id, { skip: !id });
+
+  if (!user.isAdmin) {
+    return <div>User is not admin</div>;
+  }
 
   return (
     <div className="grid content-start gap-y-4 lg:gap-y-8 lg:gap-x-3 relative padded-container pt-8 lg:pt-20 pb-8">
@@ -31,4 +36,4 @@ export default function Application() {
       </QueryLoader>
     </div>
   );
-}
+});
