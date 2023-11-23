@@ -20,11 +20,6 @@ export type ProgramDeleteMsg = Pick<
   "id" | "owner" | "program_id"
 >;
 
-export type ProfileUpdatePayload = {
-  unsignedMsg: ProfileUpdateMsg | ProgramDeleteMsg;
-  rawSignature: string;
-};
-
 export function isDeleteMsg(
   msg: ProfileUpdateMsg | ProgramDeleteMsg
 ): msg is ProgramDeleteMsg {

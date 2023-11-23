@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import {
-  ProfileUpdatePayload,
+  ProfileUpdateMsg,
+  ProgramDeleteMsg,
   VersionSpecificWalletProfile,
   isDeleteMsg,
 } from "../types";
@@ -129,13 +130,16 @@ export const aws = createApi({
       query: ({ endowId, programId }) =>
         `/${v(1)}/profile/${network}/program/${endowId}/${programId}`,
     }),
-    editProfile: builder.mutation<EndowmentProfile, ProfileUpdatePayload>({
-      invalidatesTags: (result, error) =>
+    editProfile: builder.mutation<
+      EndowmentProfile,
+      ProfileUpdateMsg | ProgramDeleteMsg
+    >({
+      invalidatesTags: (_, error) =>
         error ? [] : ["endowments", "profile", "walletProfile"],
       query: (payload) => {
         return {
           url: `/${v(1)}/profile/endowment`,
-          method: isDeleteMsg(payload.unsignedMsg) ? "DELETE" : "PUT",
+          method: isDeleteMsg(payload) ? "DELETE" : "PUT",
           body: payload,
         };
       },
