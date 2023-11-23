@@ -18,7 +18,7 @@ export default function useSubmit() {
   async function handleSubmit(ev: FormEvent<HTMLFormElement>) {
     ev.preventDefault();
 
-    const email = user.attributes?.email;
+    const email = user.userId;
     if (!email) {
       throw new Error("Logged in user has no email attribute");
     }

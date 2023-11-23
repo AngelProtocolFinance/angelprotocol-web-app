@@ -14,9 +14,7 @@ export default function Menu({
     <div
       className={`${classes} bg-white dark:bg-blue-d6 w-max rounded overflow-hidden`}
     >
-      <p className="text-sm p-2 text-gray-d1 dark:text-gray">
-        {user?.attributes?.email}
-      </p>
+      <p className="text-sm p-2 text-gray-d1 dark:text-gray">{user.userId}</p>
       <button
         disabled={isLoading}
         type="button"
