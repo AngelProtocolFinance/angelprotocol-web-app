@@ -1,9 +1,12 @@
 import { WithAuthenticatorProps } from "@aws-amplify/ui-react";
+import { Link } from "react-router-dom";
+import { appRoutes } from "constants/routes";
 
 type Props = Required<WithAuthenticatorProps> & {
   classes?: string;
   isLoading: boolean;
 };
+
 export default function Menu({
   classes = "",
   isLoading,
@@ -15,8 +18,9 @@ export default function Menu({
       className={`${classes} bg-white dark:bg-blue-d6 w-max rounded overflow-hidden`}
     >
       <p className="text-sm p-2 text-gray-d1 dark:text-gray">
-        {user?.attributes?.email}
+        Welcome, {user?.attributes?.given_name}!
       </p>
+      <Link to={appRoutes.donations}>My Donations</Link>
       <button
         disabled={isLoading}
         type="button"
