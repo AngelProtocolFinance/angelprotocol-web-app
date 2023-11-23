@@ -67,8 +67,12 @@ export default function App() {
           />
 
           <Route
-            path={`${appRoutes.donations}/:address`}
-            element={<Donations />}
+            path={appRoutes.donations}
+            element={
+              <Protected>
+                <Donations />
+              </Protected>
+            }
           />
           <Route path={`${appRoutes.donate}/:id`} element={<Donate />} />
           <Route

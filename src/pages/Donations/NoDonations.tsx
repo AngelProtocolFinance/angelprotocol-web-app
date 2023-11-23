@@ -12,8 +12,8 @@ export default function NoDonations({ classes = "" }) {
       />
       <h3 className="text-lg self-end">No donations found.</h3>
       <p className="self-start text-gray-d1 dark:text-gray">
-        Sorry! We coudn't find any donations. Try connecting a different wallet
-        ( or adjust any filters applied ).
+        Sorry! We couldn't find any donations. Try to adjust any filters applied
+        or connect with a different user.
       </p>
     </div>
   );
