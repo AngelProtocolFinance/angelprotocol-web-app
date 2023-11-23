@@ -7,17 +7,25 @@ import {
   signOut,
 } from "aws-amplify/auth";
 
-type User = null | "loading" | SignedInUser;
+type User = null | "loading" | AuthenticatedUser;
 
-export type SignedInUser = {
+/** credentials that can be checked before protected page is rendered*/
+export type PreRenderCredential = "ap";
+/** credential that can only be verified once protected page is rendered
+ *  e.g. only after rendering admin:1 can check if user has credential to access admin:1
+ */
+export type PostRenderCredential = number; //EndowmentID
+type Credential = PostRenderCredential | PreRenderCredential;
+
+export type AuthenticatedUser = {
   token: string;
-  isAdmin: boolean;
+  credentials: Credential[];
   id: string; //email or name or username
   isSigningOut: boolean;
 };
 
-export const userIsSignedIn = (user: User): user is SignedInUser =>
-  !!(user as SignedInUser).token;
+export const userIsSignedIn = (user: User): user is AuthenticatedUser =>
+  !!(user as AuthenticatedUser).token;
 
 type State = {
   user: User;
@@ -48,14 +56,16 @@ export const loadSession = createAsyncThunk<User, AuthUser | undefined>(
       const payload = session.tokens.accessToken.payload;
       const token = session.tokens.accessToken.toString();
 
-      const isAdmin = Array.isArray(payload["cognito:groups"])
-        ? payload["cognito:groups"].includes("AngelProtocolAdmin")
-        : false;
+      const credentials = [
+        Array.isArray(payload["cognito:groups"]) &&
+        payload["cognito:groups"].includes("AngelProtocolAdmin")
+          ? ("ap" as Credential)
+          : null,
+      ].filter((item): item is Credential => item !== null);
 
-      console.log({ payload, attributes, _user });
       return {
         token,
-        isAdmin,
+        credentials,
         id: attributes.email || _user.username,
         isSigningOut: false,
       };

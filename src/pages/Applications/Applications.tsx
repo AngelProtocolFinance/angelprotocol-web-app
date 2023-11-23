@@ -5,7 +5,7 @@ import Filter from "./Filter";
 import Table from "./Table";
 import usePaginatedApplications from "./usePaginatedApplications";
 
-export default withAuth(function Applications({ user }) {
+function Applications() {
   const {
     data,
     hasMore,
@@ -18,10 +18,6 @@ export default withAuth(function Applications({ user }) {
     setParams,
     isFetching,
   } = usePaginatedApplications();
-
-  if (!user.isAdmin) {
-    return <div>user is not admin</div>;
-  }
 
   const isLoadingOrError = isLoading || isLoadingNextPage || isError;
 
@@ -76,4 +72,5 @@ export default withAuth(function Applications({ user }) {
       </QueryLoader>
     </div>
   );
-});
+}
+export default withAuth(Applications);

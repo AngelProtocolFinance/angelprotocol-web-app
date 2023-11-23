@@ -1,15 +1,14 @@
-import { useAuthenticator } from "@aws-amplify/ui-react";
 import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { InitReg } from "../types";
 import { useNewApplicationMutation } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
+import { useAuthenticatedUser } from "components/Auth";
 import { storeRegistrationReference } from "helpers";
 import routes from "../routes";
 
 export default function useSubmit() {
-  const { user } = useAuthenticator((context) => [context.user]);
-
+  const { id } = useAuthenticatedUser();
   const [register] = useNewApplicationMutation();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { handleError } = useErrorContext();
@@ -18,14 +17,9 @@ export default function useSubmit() {
   async function handleSubmit(ev: FormEvent<HTMLFormElement>) {
     ev.preventDefault();
 
-    const email = user.userId;
-    if (!email) {
-      throw new Error("Logged in user has no email attribute");
-    }
-
     try {
       setIsSubmitting(true);
-      const res = await register({ email }).unwrap();
+      const res = await register({ email: id }).unwrap();
       const state: InitReg = {
         email: res.ContactPerson.Email,
         reference: res.ContactPerson.PK,

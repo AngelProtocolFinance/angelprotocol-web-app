@@ -1,9 +1,9 @@
-import { SignedInUser } from "slices/auth";
+import { AuthenticatedUser } from "slices/auth";
 
 type Props = {
   classes?: string;
   signOut(): void;
-  user: SignedInUser;
+  user: AuthenticatedUser;
 };
 export default function Menu({ classes = "", user, signOut }: Props) {
   return (
