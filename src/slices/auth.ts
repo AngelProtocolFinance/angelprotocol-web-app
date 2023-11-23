@@ -44,13 +44,18 @@ export const loadSession = createAsyncThunk<User, AuthUser | undefined>(
         user ? Promise.resolve(user) : getCurrentUser(),
       ]);
 
+      //remove standard claims
       const payload = session.tokens.accessToken.payload;
       const token = session.tokens.accessToken.toString();
+
+      const isAdmin = Array.isArray(payload["cognito:groups"])
+        ? payload["cognito:groups"].includes("AngelProtocolAdmin")
+        : false;
 
       console.log({ payload, attributes, _user });
       return {
         token,
-        isAdmin: false,
+        isAdmin,
         id: attributes.email || _user.username,
         isSigningOut: false,
       };
