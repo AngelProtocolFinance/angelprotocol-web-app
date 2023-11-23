@@ -88,6 +88,7 @@ export function MultiSelector<
                     />
                   </div>
                 ) : (
+                  //this will receive focus if search input is not rendered
                   <input
                     aria-disabled={true}
                     className="w-0 h-0 appearance-none"
