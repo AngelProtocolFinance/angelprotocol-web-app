@@ -31,13 +31,13 @@ export default function Dashboard() {
           totalContributions,
         }) => {
           const earningsPayoutsPending = payoutsPending - donationsBal;
-          const earningsPayoutsMade = isNaN(totalEarnings) ? 0 : totalEarnings - earningsPayoutsPending;
+          const earningsPayoutsMade = isNaN(totalEarnings)
+            ? 0
+            : totalEarnings - earningsPayoutsPending;
           const donationsPaidOut =
             payoutsMade - earningsPayoutsMade
               ? payoutsMade - earningsPayoutsMade
               : 0;
-          const earningsPaidOut =
-            payoutsMade - donationsPaidOut ? payoutsMade - donationsPaidOut : 0;
           return (
             <>
               <h3 className="uppercase text-xl mb-2">Account Balances</h3>
@@ -53,7 +53,7 @@ export default function Dashboard() {
                   type="Sustainability Fund"
                   current={sustainabilityFundBal}
                   pending={earningsPayoutsPending}
-                  paidOut={earningsPaidOut}
+                  paidOut={earningsPayoutsMade}
                 />
 
                 {/** General info */}
