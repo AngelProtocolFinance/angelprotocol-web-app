@@ -12,6 +12,8 @@ export default function DAFDirect() {
       <IFrame
         title="DAFDirect Widget"
         src="/dafdirect-widget.html"
+        // maximum widget dimensions
+        // making the value any larger will cause layout issues
         width="180"
         height="300"
         className="justify-self-center"
