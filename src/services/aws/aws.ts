@@ -5,12 +5,17 @@ import {
   isDeleteMsg,
 } from "../types";
 import {
+  Application,
+  ApplicationDetails,
+  ApplicationVerdict,
+  ApplicationsQueryParams,
   EndowListPaginatedAWSQueryRes,
   EndowmentCard,
   EndowmentOption,
   EndowmentProfile,
   EndowmentProfileUpdate,
   EndowmentsQueryParams,
+  PaginatedAWSQueryRes,
   Program,
   WalletProfile,
 } from "types/aws";
@@ -29,7 +34,7 @@ const awsBaseQuery = retry(
     mode: "cors",
     async prepareHeaders(headers) {
       if (headers.get("authorization") === TEMP_JWT) {
-        headers.set("authorization", `Bearer ${await jwtToken()}`);
+        headers.set("authorization", await jwtToken());
       }
       return headers;
     },
@@ -47,6 +52,8 @@ export const aws = createApi({
     "endowments",
     "strategy",
     "program",
+    "applications",
+    "application",
   ],
   reducerPath: "aws",
   baseQuery: awsBaseQuery,
@@ -133,6 +140,38 @@ export const aws = createApi({
         };
       },
     }),
+    applications: builder.query<
+      PaginatedAWSQueryRes<Application[]>,
+      ApplicationsQueryParams
+    >({
+      providesTags: ["applications"],
+      query: (params) => {
+        return {
+          url: `${v(1)}/applications`,
+          params,
+          headers: { authorization: TEMP_JWT },
+        };
+      },
+    }),
+    application: builder.query<ApplicationDetails, string>({
+      providesTags: ["application"],
+      query: (uuid) => ({
+        url: `${v(1)}/applications`,
+        params: { uuid },
+        headers: { authorization: TEMP_JWT },
+      }),
+    }),
+    reviewApplication: builder.mutation<any, ApplicationVerdict>({
+      invalidatesTags: ["application", "applications"],
+      query: (verdict) => {
+        return {
+          url: `${v(1)}/applications`,
+          method: "PUT",
+          headers: { authorization: TEMP_JWT },
+          body: verdict,
+        };
+      },
+    }),
   }),
 });
 
@@ -144,11 +183,15 @@ export const {
   useProfileQuery,
   useProgramQuery,
   useEditProfileMutation,
+  useApplicationsQuery,
+  useApplicationQuery,
+  useReviewApplicationMutation,
 
   endpoints: {
     endowmentCards: { useLazyQuery: useLazyEndowmentCardsQuery },
     endowmentOptions: { useLazyQuery: useLazyEndowmentOptionsQuery },
     profile: { useLazyQuery: useLazyProfileQuery },
+    applications: { useLazyQuery: useLazyApplicationsQuery },
   },
   util: {
     invalidateTags: invalidateAwsTags,

@@ -138,7 +138,7 @@ export type DoneBanking = Append<DoneDocs, BankingDetails, {}>;
 
 export type SubmissionDetails = { Email: string; EndowmentId: number };
 
-type InReview = Append<DoneBanking, SubmissionDetails, {}>;
+export type InReview = Append<DoneBanking, SubmissionDetails, {}>;
 
 export type SavedRegistration =
   | InitApplication
@@ -194,6 +194,23 @@ export type SubmitResult = {
   RegistrationStatus: RegistrationStatus;
   Email: string;
 };
+
+export type Application = InReview["Registration"] & Pick<InitContact, "Email">;
+
+type WiseRecipient = {
+  accountName: string;
+  accountNumber: string;
+  address: string;
+  bankName: string;
+};
+
+export type ApplicationDetails = InReview & { WiseRecipient?: WiseRecipient };
+
+//could be futher simplified to just {verdict: "approved" | string}
+export type ApplicationVerdict = { PK: string } & (
+  | { verdict: "approved" }
+  | { verdict: "rejected"; rejectionReason: string }
+);
 
 /** type guards */
 export function isDoneContact(data: SavedRegistration): data is DoneContact {

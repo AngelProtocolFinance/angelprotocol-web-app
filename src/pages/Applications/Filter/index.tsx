@@ -3,7 +3,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormEventHandler, useRef } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues as FV } from "./types";
-import { DonationsQueryParams } from "types/aws";
+import { ApplicationsQueryParams } from "types/aws";
 import Icon, { DrawerIcon } from "components/Icon";
 import { dateToFormFormat } from "components/form";
 import { cleanObject } from "helpers/cleanObject";
@@ -13,17 +13,11 @@ import { schema } from "./schema";
 
 type Props = {
   classes?: string;
-  setParams: React.Dispatch<React.SetStateAction<DonationsQueryParams>>;
+  setParams: React.Dispatch<React.SetStateAction<ApplicationsQueryParams>>;
   isDisabled: boolean;
-  donorAddress: string;
 };
 
-export default function Filter({
-  setParams,
-  donorAddress,
-  classes = "",
-  isDisabled,
-}: Props) {
+export default function Filter({ setParams, classes = "", isDisabled }: Props) {
   const buttonRef = useRef<HTMLButtonElement | null>(null);
 
   const methods = useForm<FV>({
@@ -32,35 +26,43 @@ export default function Filter({
     resolver: yupResolver(schema),
     defaultValues: {
       //set default value so empty can be tagged as invalid
-      startDate: dateToFormFormat(weeksAgo("now", 5)),
+      startDate: dateToFormFormat(weeksAgo("now", 1)),
       endDate: dateToFormFormat(new Date()),
-      network: { label: "Select network...", value: "" },
-      currency: { label: "Select currency...", value: "" },
-      donorAddress: donorAddress,
-      status: { label: "Select status...", value: "" },
+      hqCountry: { name: "", flag: "", code: "" },
+      status: { label: "Under Review", value: "Under Review" },
     },
   });
 
   const { handleSubmit, reset } = methods;
 
+  function ISOdate(date: string, end?: boolean) {
+    if (!date) return "";
+
+    const output = new Date(date);
+    //include up to the last second of the day
+    if (end) output.setHours(23, 59, 59);
+
+    return output.toISOString();
+  }
+
   async function submit(data: FV) {
-    setParams((prev) => ({
-      id: prev.id,
-      chain_id: prev.chain_id,
-      ...cleanObject({
-        afterDate: data.startDate ? new Date(data.startDate).toISOString() : "",
-        beforeDate: data.endDate ? new Date(data.endDate).toISOString() : "",
-        chainName: data.network.value,
-        denomination: data.currency.value,
-        status: data.status.value,
-      }),
-    }));
+    setParams(
+      cleanObject({
+        regDateStart: ISOdate(data.startDate),
+        regDateEnd: ISOdate(data.endDate, true),
+        regStatus: data.status.value,
+        hqCountry: data.hqCountry.name,
+      })
+    );
     buttonRef.current?.click();
   }
 
   const onReset: FormEventHandler<HTMLFormElement> = () => {
     reset();
-    setParams((prev) => ({ id: prev.id, chain_id: prev.chain_id }));
+    setParams({
+      limit: 10,
+      regStatus: "Under Review",
+    });
     buttonRef.current?.click();
   };
   return (
