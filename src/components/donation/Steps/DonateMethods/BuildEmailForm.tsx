@@ -12,9 +12,9 @@ type Props = {
 };
 
 type FormValues = {
-  emailTo?: string;
-  numberOfShares?: number;
-  stockSymbol?: string;
+  emailTo: string;
+  numberOfShares: number | null;
+  stockSymbol: string;
 };
 
 export default function BuildEmailForm({ charityName, profileUrl }: Props) {
@@ -84,9 +84,9 @@ const schema = object<any, SchemaShape<FormValues>>({
 const openEmailClient = (
   charityName: string,
   profileUrl: string,
-  emailTo = "",
-  numberOfShares?: number,
-  stockSymbol?: string
+  emailTo: string,
+  numberOfShares: number | null,
+  stockSymbol: string
 ) => {
   window.open(`
   mailto:${emailTo}
