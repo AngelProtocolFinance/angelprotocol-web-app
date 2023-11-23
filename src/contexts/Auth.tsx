@@ -7,12 +7,10 @@ import { AuthenticatedUser, PreRenderCredential } from "slices/auth";
 import { appRoutes } from "constants/routes";
 
 export default function withAuth<Props>(
-  Component: ComponentType<Props & { user: AuthenticatedUser }>
+  Component: ComponentType<Props & { user: AuthenticatedUser }>,
+  requiredCredentials?: PreRenderCredential[]
 ) {
-  return function Protected({
-    authorization = [],
-    ...props
-  }: Props & { authorization?: PreRenderCredential[] }) {
+  return function Protected(props: Props) {
     const location = useLocation();
     const user = useGetter((state) => state.auth.user);
 
@@ -30,7 +28,7 @@ export default function withAuth<Props>(
       );
     }
 
-    if (!authorization.every((c) => user.credentials.includes(c))) {
+    if (!requiredCredentials?.every((c) => user.credentials.includes(c))) {
       return (
         <div className="grid content-start place-items-center py-20">
           <Icon type="ExclamationCircleFill" size={80} className="text-red" />
@@ -46,7 +44,7 @@ export default function withAuth<Props>(
      */
     return (
       <Context.Provider value={user}>
-        <Component {...(props as Props)} user={user} />
+        <Component {...props} user={user} />
       </Context.Provider>
     );
   };

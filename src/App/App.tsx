@@ -41,13 +41,10 @@ export default function App() {
             element={<Profile legacy />}
           />
           <Route path={`${appRoutes.admin}/:id/*`} element={<Admin />} />
-          <Route
-            path={appRoutes.applications}
-            element={<Applications authorization={["ap"]} />}
-          />
+          <Route path={appRoutes.applications} element={<Applications />} />
           <Route
             path={appRoutes.applications + "/:id"}
-            element={<Application authorization={["ap"]} />}
+            element={<Application />}
           />
 
           <Route
