@@ -15,12 +15,6 @@ export function useUpdateEndowmentProfile() {
 
       showModal(
         TxPrompt,
-        { loading: "Signing changes.." },
-        { isDismissible: false }
-      );
-
-      showModal(
-        TxPrompt,
         { loading: "Submitting changes.." },
         { isDismissible: false }
       );
