@@ -2,6 +2,8 @@ import { Tab } from "@headlessui/react";
 import { DonaterConfigFromWidget } from "types/widget";
 import { FormStep } from "slices/donation";
 import Donater from "../Donater";
+import DAFDirect from "./DAFDirect";
+import Stocks from "./Stocks";
 import Stripe from "./Stripe";
 
 type Props = {
@@ -23,15 +25,16 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
       className="grid content-start mt-2"
       defaultIndex={state.details?.method === "crypto" ? 1 : 0}
     >
-      <Tab.List as="div" className="grid grid-cols-3 mb-6">
+      <Tab.List className="grid grid-cols-2 sm:grid-cols-4 mb-6">
         <Tab className={({ selected }) => tabClasses(selected)}>
           Credit/Debit
         </Tab>
         <Tab className={({ selected }) => tabClasses(selected)}>Crypto</Tab>
-        <Tab className={({ selected }) => tabClasses(selected)}>Other</Tab>
+        <Tab className={({ selected }) => tabClasses(selected)}>Stocks</Tab>
+        <Tab className={({ selected }) => tabClasses(selected)}>DAF</Tab>
       </Tab.List>
       <Tab.Panels>
-        <Tab.Panel className="grid">
+        <Tab.Panel>
           <Stripe
             widgetConfig={donaterConfig}
             advanceOptDisplay={
@@ -40,16 +43,14 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
             state={state}
           />
         </Tab.Panel>
-        <Tab.Panel className="grid">
+        <Tab.Panel>
           <Donater {...state} config={donaterConfig} />
         </Tab.Panel>
-        <Tab.Panel className="grid">
-          <div>
-            <p className="text-gray-d1 text-sm text-center">
-              Coming Soon! Watch here for donation options with Stock
-              contributions and DAFs.
-            </p>
-          </div>
+        <Tab.Panel>
+          <Stocks state={state} />
+        </Tab.Panel>
+        <Tab.Panel>
+          <DAFDirect />
         </Tab.Panel>
       </Tab.Panels>
     </Tab.Group>

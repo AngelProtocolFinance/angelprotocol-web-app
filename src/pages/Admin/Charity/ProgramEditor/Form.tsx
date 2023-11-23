@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import { FV } from "./types";
+import Group from "components/Group";
 import ImgEditor from "components/ImgEditor";
 import { RichTextEditor } from "components/RichText";
 import { Field, Label } from "components/form";
 import { adminRoutes } from "constants/routes";
-import { Group } from "../common";
 import Milestones from "./Milestones";
 import { MAX_CHARS, VALID_MIME_TYPES } from "./schema";
 import useSubmit from "./useSubmit";
