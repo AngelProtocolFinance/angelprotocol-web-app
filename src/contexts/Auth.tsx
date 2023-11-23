@@ -28,7 +28,9 @@ export default function withAuth<Props>(
       );
     }
 
-    if (!requiredCredentials?.every((c) => user.credentials.includes(c))) {
+    if (
+      !(requiredCredentials || []).every((c) => user.credentials.includes(c))
+    ) {
       return (
         <div className="grid content-start place-items-center py-20">
           <Icon type="ExclamationCircleFill" size={80} className="text-red" />
