@@ -1,5 +1,5 @@
+import withAuth from "contexts/Auth";
 import ModalContext from "contexts/ModalContext";
-import withAuth from "components/Auth";
 import Charity from "./Charity";
 import { Context } from "./Context";
 

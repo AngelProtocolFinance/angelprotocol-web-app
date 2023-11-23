@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useApplicationQuery } from "services/aws/aws";
-import withAuth from "components/Auth";
+import withAuth from "contexts/Auth";
 import LoaderRing from "components/LoaderRing";
 import QueryLoader from "components/QueryLoader";
 import { ErrorStatus } from "components/Status";

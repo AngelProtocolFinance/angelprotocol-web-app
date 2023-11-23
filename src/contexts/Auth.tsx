@@ -1,10 +1,10 @@
 import { ComponentType, createContext, useContext } from "react";
 import { Navigate, useLocation } from "react-router-dom";
+import Icon from "components/Icon";
+import LoaderRing from "components/LoaderRing";
 import { useGetter } from "store/accessors";
 import { AuthenticatedUser, PreRenderCredential } from "slices/auth";
 import { appRoutes } from "constants/routes";
-import Icon from "./Icon";
-import LoaderRing from "./LoaderRing";
 
 export default function withAuth<Props>(
   Component: ComponentType<Props & { user: AuthenticatedUser }>

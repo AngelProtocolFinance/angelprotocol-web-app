@@ -2,8 +2,8 @@ import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { InitReg } from "../types";
 import { useNewApplicationMutation } from "services/aws/registration";
+import { useAuthenticatedUser } from "contexts/Auth";
 import { useErrorContext } from "contexts/ErrorContext";
-import { useAuthenticatedUser } from "components/Auth";
 import { storeRegistrationReference } from "helpers";
 import routes from "../routes";
 

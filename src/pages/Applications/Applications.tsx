@@ -1,4 +1,4 @@
-import withAuth from "components/Auth";
+import withAuth from "contexts/Auth";
 import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
 import Filter from "./Filter";

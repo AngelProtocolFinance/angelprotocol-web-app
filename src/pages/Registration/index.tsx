@@ -1,6 +1,6 @@
 import { Suspense, lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import withAuth from "components/Auth";
+import withAuth from "contexts/Auth";
 import Seo from "components/Seo";
 import { APP_NAME, DAPP_URL } from "constants/env";
 import SignResult from "./SigningResult";
