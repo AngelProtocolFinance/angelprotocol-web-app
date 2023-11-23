@@ -1,5 +1,4 @@
 import { useAuthenticator } from "@aws-amplify/ui-react";
-import { useParams } from "react-router-dom";
 import { DonationMadeByDonor } from "types/aws";
 import { usePaginatedDonationRecords } from "services/apes";
 import CsvExporter from "components/CsvExporter";
