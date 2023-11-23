@@ -12,7 +12,7 @@ export default function Dashboard() {
 
   return (
     <div className="@container w-full max-w-4xl grid content-start mt-6">
-      <Seo title="Endowment Dashboard" />
+      <Seo title="Charity Dashboard" />
       <h3 className="uppercase font-extrabold text-2xl mb-4">Dashboard</h3>
       <QueryLoader
         queryState={queryState}
@@ -32,44 +32,57 @@ export default function Dashboard() {
         }) => {
           const earningsPayoutsPending = payoutsPending - donationsBal;
           const earningsPayoutsMade = totalEarnings - earningsPayoutsPending;
+          const donationsPaidOut =
+            payoutsMade - earningsPayoutsMade
+              ? payoutsMade - earningsPayoutsMade
+              : 0;
+          const earningsPaidOut =
+            payoutsMade - donationsPaidOut ? payoutsMade - donationsPaidOut : 0;
           return (
-            <div className="grid gap-4 @lg:grid-cols-2">
-              {/** Balances */}
-              <Balance
-                type="Donations"
-                current={donationsBal}
-                pending={donationsBal}
-                payedOut={payoutsMade - earningsPayoutsMade}
-              />
-              <Balance
-                type="Sustainability Fund"
-                current={sustainabilityFundBal}
-                pending={earningsPayoutsPending}
-                payedOut={earningsPayoutsMade}
-              />
+            <>
+              <h3 className="uppercase text-xl mb-2">Account Balances</h3>
+              <div className="grid gap-4 @lg:grid-cols-2">
+                {/** Balances */}
+                <Balance
+                  type="Donations"
+                  current={donationsBal}
+                  pending={donationsBal}
+                  paidOut={donationsPaidOut}
+                />
+                <Balance
+                  type="Sustainability Fund"
+                  current={sustainabilityFundBal}
+                  pending={earningsPayoutsPending}
+                  paidOut={earningsPaidOut}
+                />
 
-              {/** General info */}
-              <div className="col-span-2 grid @2xl:grid-cols-3 gap-4">
-                <DataPart>
-                  Pending payout:
-                  <span className="flex items-center gap-1">
-                    {payoutsPending}{" "}
-                    <span className="text-2xs sm:text-xs font-normal">USD</span>
-                  </span>
-                </DataPart>
-                <DataPart>
-                  Total Contributions:
-                  <span className="flex items-center gap-1">
-                    {totalContributions}{" "}
-                    <span className="text-2xs sm:text-xs font-normal">USD</span>
-                  </span>
-                </DataPart>
-                <DataPart>
-                  Contribution Count:
-                  <span>{contributionsCount}</span>
-                </DataPart>
+                {/** General info */}
+                <div className="col-span-2 grid @2xl:grid-cols-3 gap-4">
+                  <DataPart>
+                    Pending payout:
+                    <span className="flex items-center gap-1">
+                      {payoutsPending}{" "}
+                      <span className="text-2xs sm:text-xs font-normal">
+                        USD
+                      </span>
+                    </span>
+                  </DataPart>
+                  <DataPart>
+                    Total Contributions:
+                    <span className="flex items-center gap-1">
+                      {totalContributions}{" "}
+                      <span className="text-2xs sm:text-xs font-normal">
+                        USD
+                      </span>
+                    </span>
+                  </DataPart>
+                  <DataPart>
+                    Contribution Count:
+                    <span>{contributionsCount}</span>
+                  </DataPart>
+                </div>
               </div>
-            </div>
+            </>
           );
         }}
       </QueryLoader>
