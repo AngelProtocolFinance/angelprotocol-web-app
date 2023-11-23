@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Loader from "./Loader";
+import LoaderRing from "./LoaderRing";
 
 type Props = React.IframeHTMLAttributes<HTMLIFrameElement>;
 
@@ -17,12 +17,15 @@ export default function IFrame({
   return (
     <>
       {isLoading && (
-        <div className={className}>
-          <Loader
-            bgColorClass="bg-blue dark:bg-white"
-            gapClass="gap-2"
-            widthClass="w-4"
-          />
+        <div
+          className={`${className} flex justify-center items-center gap-2`}
+          style={{
+            height: rest.height ? `${rest.height}px` : undefined,
+            width: rest.width ? `${rest.width}px` : undefined,
+          }}
+        >
+          <LoaderRing thickness={10} classes="w-8" />
+          Loading...
         </div>
       )}
       <iframe
