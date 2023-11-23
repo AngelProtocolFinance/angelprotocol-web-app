@@ -18,7 +18,7 @@ export default function Menu({
       className={`${classes} bg-white dark:bg-blue-d6 w-max rounded overflow-hidden`}
     >
       <p className="text-sm p-2 text-gray-d1 dark:text-gray">
-        Welcome, {user?.attributes?.given_name}!
+        Welcome, {user?.attributes?.given_name || user?.attributes?.email}!
       </p>
       <Link to={appRoutes.donations}>My Donations</Link>
       {user.attributes?.endowments && (
