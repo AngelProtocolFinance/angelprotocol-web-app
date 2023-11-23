@@ -21,6 +21,18 @@ export default function Menu({
         Welcome, {user?.attributes?.given_name}!
       </p>
       <Link to={appRoutes.donations}>My Donations</Link>
+      {user.attributes?.endowments ? (
+        <Link to={`${appRoutes.admin}/${user?.attributes?.endowments}`}>
+          Endowment Dashboard
+        </Link>
+      ) : (
+        <></>
+      )}
+      {user.attributes?.admin ? (
+        <Link to={appRoutes.applications}>Applications Review</Link>
+      ) : (
+        <></>
+      )}
       <button
         disabled={isLoading}
         type="button"
