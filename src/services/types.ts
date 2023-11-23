@@ -22,7 +22,7 @@ export function isDeleteMsg(
 ): msg is ProgramDeleteMsg {
   return (
     //for edits, program_id is accompanied by program:[]
-    Object.keys(msg).length === 3 && !!(msg as ProgramDeleteMsg).program_id
+    Object.keys(msg).length === 2 && !!(msg as ProgramDeleteMsg).program_id
   );
 }
 
