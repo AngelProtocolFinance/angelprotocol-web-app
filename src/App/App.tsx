@@ -47,14 +47,7 @@ export default function App() {
             element={<Application />}
           />
 
-          <Route
-            path={appRoutes.donations}
-            element={
-              <Protected>
-                <Donations />
-              </Protected>
-            }
-          />
+          <Route path={appRoutes.donations} element={<Donations />} />
           <Route path={`${appRoutes.donate}/:id`} element={<Donate />} />
           <Route
             path={appRoutes.donate_fiat_thanks}

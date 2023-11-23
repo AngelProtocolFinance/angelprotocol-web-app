@@ -20,7 +20,8 @@ type Credential = PostRenderCredential | PreRenderCredential;
 export type AuthenticatedUser = {
   token: string;
   credentials: Credential[];
-  id: string; //email or name or username
+  email: string;
+  firstName?: string;
   isSigningOut: boolean;
 };
 
@@ -46,8 +47,9 @@ export const loadSession = createAsyncThunk<User, AuthUser | undefined>(
       const session = await fetchAuthSession();
       if (!session.tokens) return null;
 
-      const [attributes, _user] = await Promise.all([
+      const [attributes] = await Promise.all([
         fetchUserAttributes(),
+        //user.id may be used in distinguishing my-donations page
         user ? Promise.resolve(user) : getCurrentUser(),
       ]);
 
@@ -65,7 +67,12 @@ export const loadSession = createAsyncThunk<User, AuthUser | undefined>(
       return {
         token,
         credentials,
-        id: attributes.email || _user.username,
+        /**
+         * email is guaranteed as it is the primary verifcation mechanism,
+         * and is always retrieved from federated signin
+         */
+        email: attributes.email!,
+        firstName: attributes.given_name,
         isSigningOut: false,
       };
     } catch (err) {

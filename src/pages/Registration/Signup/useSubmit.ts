@@ -8,7 +8,7 @@ import { storeRegistrationReference } from "helpers";
 import routes from "../routes";
 
 export default function useSubmit() {
-  const { id } = useAuthenticatedUser();
+  const { email } = useAuthenticatedUser();
   const [register] = useNewApplicationMutation();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { handleError } = useErrorContext();
@@ -19,7 +19,7 @@ export default function useSubmit() {
 
     try {
       setIsSubmitting(true);
-      const res = await register({ email: id }).unwrap();
+      const res = await register({ email }).unwrap();
       const state: InitReg = {
         email: res.ContactPerson.Email,
         reference: res.ContactPerson.PK,
