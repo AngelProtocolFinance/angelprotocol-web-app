@@ -8,6 +8,7 @@ export function initAmplify() {
   Amplify.configure({
     Auth: {
       Cognito: {
+        identityPoolId: "us-east-1:8574d806-30d5-4de4-8165-96e72b41cd0e",
         userPoolClientId: "14qre65ehhsh5f6899ikdhk2qj",
         userPoolId: "us-east-1_WO32hDPz3",
         userPoolEndpoint: `https://cognito-idp.us-east-1.amazonaws.com/14qre65ehhsh5f6899ikdhk2qj`,
@@ -55,7 +56,7 @@ export function initAmplify() {
   store.dispatch(loadSession());
 
   Hub.listen("auth", async ({ payload }) => {
-    console.log(payload, payload.event);
+    console.log({ payload });
     switch (payload.event) {
       case "signedIn":
         store.dispatch(loadSession(payload.data));
