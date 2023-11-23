@@ -44,7 +44,6 @@ export const loadSession = createAsyncThunk<User, AuthUser | undefined>(
   async (user) => {
     try {
       const session = await fetchAuthSession();
-      console.log(session);
       if (!session.tokens) return null;
 
       const [attributes, _user] = await Promise.all([
@@ -70,7 +69,6 @@ export const loadSession = createAsyncThunk<User, AuthUser | undefined>(
         isSigningOut: false,
       };
     } catch (err) {
-      console.log(err);
       return null;
     }
   }

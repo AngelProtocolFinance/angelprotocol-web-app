@@ -32,7 +32,6 @@ Amplify.configure(config);
 
 store.dispatch(loadSession());
 Hub.listen("auth", async ({ payload }) => {
-  console.log({ payload });
   switch (payload.event) {
     case "signedIn":
       store.dispatch(loadSession(payload.data));

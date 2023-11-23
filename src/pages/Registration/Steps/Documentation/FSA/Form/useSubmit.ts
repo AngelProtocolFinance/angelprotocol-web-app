@@ -67,7 +67,7 @@ export default function useSubmit({ doc }: Props) {
     }
   };
   return {
-    submit: handleSubmit(submit, (error) => console.log(error)),
+    submit: handleSubmit(submit),
     isSubmitting,
     isRedirecting,
   };
