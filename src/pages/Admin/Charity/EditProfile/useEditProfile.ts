@@ -38,7 +38,7 @@ export default function useEditProfile() {
 
       const update = toProfileUpdate({
         type: "final",
-        data: { ...fv, id, owner: "not relevant anymore" },
+        data: { ...fv, id },
         urls: { image: bannerUrl, logo: logoUrl },
       });
 
@@ -51,7 +51,6 @@ export default function useEditProfile() {
       //only include top level keys that appeared on diff
       const cleanUpdate: ProfileUpdateMsg = {
         id,
-        owner: "not relevant anymore",
       };
       for (const [path] of diffs) {
         const key = path.split(".")[0] as keyof ProfileUpdateMsg;

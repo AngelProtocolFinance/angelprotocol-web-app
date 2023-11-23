@@ -140,6 +140,7 @@ export const aws = createApi({
         return {
           url: `/${v(1)}/profile/endowment`,
           method: isDeleteMsg(payload) ? "DELETE" : "PUT",
+          headers: { authorization: TEMP_JWT },
           body: payload,
         };
       },

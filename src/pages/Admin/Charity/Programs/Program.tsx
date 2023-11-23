@@ -42,7 +42,6 @@ export function Program(props: TProgram) {
           onClick={() =>
             deleteProgram({
               id,
-              owner: "to be removed eventually",
               program_id: props.program_id,
             })
           }

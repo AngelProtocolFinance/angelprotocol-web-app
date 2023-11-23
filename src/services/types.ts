@@ -10,14 +10,11 @@ export type ChainQueryArgs = {
   chainId: string;
 };
 
-export type ProfileUpdateMsg = SemiPartial<
-  EndowmentProfileUpdate,
-  "id" | "owner"
->;
+export type ProfileUpdateMsg = SemiPartial<EndowmentProfileUpdate, "id">;
 
 export type ProgramDeleteMsg = Pick<
   EndowmentProfileUpdate,
-  "id" | "owner" | "program_id"
+  "id" | "program_id"
 >;
 
 export function isDeleteMsg(
