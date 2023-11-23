@@ -36,21 +36,22 @@ export const loadSession = createAsyncThunk<User, AuthUser | undefined>(
   async (user) => {
     try {
       const session = await fetchAuthSession();
+      console.log(session);
       if (!session.tokens) return null;
 
-      const [attributes, _user] = await Promise.all([
-        fetchUserAttributes(),
-        user ? Promise.resolve(user) : getCurrentUser(),
-      ]);
+      // const [attributes, _user] = await Promise.all([
+      //   fetchUserAttributes(),
+      //   user ? Promise.resolve(user) : getCurrentUser(),
+      // ]);
 
       const payload = session.tokens.accessToken.payload;
       const token = session.tokens.accessToken.toString();
 
-      console.log({ payload, attributes, _user });
+      // console.log({ payload, attributes, _user });
       return {
         token,
         isAdmin: false,
-        id: attributes.email || _user.username,
+        id: "hello@world.com",
         isSigningOut: false,
       };
     } catch (err) {
