@@ -34,7 +34,9 @@ export default function useSubmit() {
         bankStatementFile,
       });
 
-      await createRecipientAccount({
+      // we need to pass this variable to `updateReg` in order to update
+      // its the cache registration data once the request is succesful
+      const { wise_recipient_id } = await createRecipientAccount({
         PK: data.contact.PK,
         request,
       }).unwrap();
@@ -43,6 +45,7 @@ export default function useSubmit() {
         reference: data.init.reference,
         type: "banking",
         BankStatementFile: bankStatementPreview.bankStatementFile[0],
+        wise_recipient_id,
       });
 
       if ("error" in result) {

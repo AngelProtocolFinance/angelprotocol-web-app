@@ -63,15 +63,16 @@ const registration_api = aws.injectEndpoints({
           body: payload,
         };
       },
-      transformErrorResponse(res, meta, { type }) {
+      transformErrorResponse(res, _meta, { type }) {
         return {
           status: res.status,
           data: `Failed to update ${type}. Please try again later.`,
         };
       },
       /** pessimistic manual cache update so not to GET fresh data */
-      async onQueryStarted({ type, reference }, { dispatch, queryFulfilled }) {
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
+          const { type, reference } = args;
           const { data } = await queryFulfilled;
           dispatch(
             registration_api.util.updateQueryData("reg", reference, (draft) => {
@@ -93,7 +94,21 @@ const registration_api = aws.injectEndpoints({
 
                 //other updates are to draft.Registration
                 default: {
-                  draft.Registration = Object.assign(draft.Registration, data);
+                  let tempData = data;
+
+                  // since `wise_recipient_id` is not returned as a result of updateReg,
+                  // (only `BankStatementFile` is returned), we need to pass it manually
+                  // and set/update it in the draft.Registration
+                  if (type === "banking") {
+                    tempData = Object.assign({}, data, {
+                      wise_recipient_id: args.wise_recipient_id,
+                    });
+                  }
+
+                  draft.Registration = Object.assign(
+                    draft.Registration,
+                    tempData
+                  );
                 }
               }
             })

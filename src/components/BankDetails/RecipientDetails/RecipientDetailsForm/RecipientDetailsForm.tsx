@@ -16,7 +16,7 @@ type Props = {
     isSubmitting: boolean,
     refreshRequired: boolean
   ) => ReactNode;
-  onCleanup: (formValues: FormValues) => void;
+  onUpdateValues: (formValues: FormValues) => void;
   onRefresh: (request: CreateRecipientRequest) => void;
   onSubmit: (
     request: CreateRecipientRequest,
@@ -31,16 +31,16 @@ export default function RecipientDetailsForm(props: Props) {
     props.defaultValues
   );
 
-  const { onCleanup } = props;
+  const { onUpdateValues } = props;
   const { getValues } = methods;
 
   // save current form values so that they can be preloaded
   // when switching between account requirement types
   useEffect(() => {
     return () => {
-      onCleanup(getValues());
+      onUpdateValues(getValues());
     };
-  }, [getValues, onCleanup]);
+  }, [getValues, onUpdateValues]);
 
   return (
     <FormProvider {...methods}>
@@ -48,7 +48,11 @@ export default function RecipientDetailsForm(props: Props) {
         accountRequirements={props.accountRequirements}
         disabled={props.disabled}
         refreshRequired={props.refreshRequired}
-        onRefresh={props.onRefresh}
+        onRefresh={(request) => {
+          // update current form values prior to refreshing the form (loads new fields)
+          onUpdateValues(getValues());
+          props.onRefresh(request);
+        }}
         onSubmit={props.onSubmit}
         formButtons={props.formButtons}
       />

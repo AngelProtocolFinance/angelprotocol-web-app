@@ -48,7 +48,7 @@ export default function Steps({ classes = "" }: { classes?: string }) {
     return <Navigate to=".." />;
   }
 
-  const regState = getRegistrationState(data);
+  const { state: regState } = getRegistrationState(data);
   const guardProps: Omit<StepGuardProps, "step"> = {
     init: initReg,
     state: regState,

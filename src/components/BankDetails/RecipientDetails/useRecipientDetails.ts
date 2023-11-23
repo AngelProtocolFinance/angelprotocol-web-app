@@ -11,7 +11,7 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";
 import { UnexpectedStateError } from "errors/errors";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
-import getDefaultValues from "./getDefaultValues";
+import { addRequirementGroup, getDefaultValues } from "./helpers";
 
 type RequirementsData = {
   accountRequirements: AccountRequirements;
@@ -132,17 +132,24 @@ export default function useRecipientDetails(
       }).unwrap();
 
       setRequirementsDataArray((prev) => {
-        const updated: RequirementsData[] = newRequirements.map((newReq) => ({
-          accountRequirements: newReq,
-          currentFormValues:
-            prev.find(
-              (prevReq) => prevReq.accountRequirements.type === newReq.type
-            )?.currentFormValues ?? getDefaultValues(newReq, targetCurrency),
-          refreshRequired:
-            prev[selectedIndex].accountRequirements.type === newReq.type
-              ? false // just finished checking requirements for selected type, so no need to do it again
-              : prev[selectedIndex].refreshRequired, // just copy/paste for other types
-        }));
+        const updated: RequirementsData[] = newRequirements.map((newReq) => {
+          // should always be found, but not 100% sure how Wise behaves in all cases
+          const prevReq = prev.find(
+            (x) => x.accountRequirements.type === newReq.type
+          );
+          const currFormValues = !prevReq
+            ? getDefaultValues(newReq, targetCurrency)
+            : getRefreshedFormValues(prevReq, newReq);
+
+          return {
+            accountRequirements: newReq,
+            currentFormValues: currFormValues,
+            refreshRequired:
+              prev[selectedIndex].accountRequirements.type === newReq.type
+                ? false // just finished checking requirements for selected type, so no need to do it again
+                : prev[selectedIndex].refreshRequired, // just copy/paste for other types
+          };
+        });
         return updated;
       });
       setError(false);
@@ -182,4 +189,41 @@ export default function useRecipientDetails(
     setSelectedIndex,
     updateDefaultValues,
   };
+}
+
+/**
+ * Checks whether there are any new requirements to add to the form and if so, adds them and sets them
+ * to the appropriate default value.
+ *
+ * @param currReqData current requirements data
+ * @param newReq new requirements that might include new requirement groups
+ * @returns previous form values with the new requirements included and set to appropriate default value
+ */
+function getRefreshedFormValues(
+  currReqData: RequirementsData,
+  newReq: AccountRequirements
+): FormValues {
+  // get current requirement groups
+  const currGroups = currReqData.accountRequirements.fields.flatMap(
+    (field) => field.group
+  );
+
+  // get only new requirement groups
+  const newGroups = newReq.fields
+    .flatMap((field) => field.group)
+    .filter((ng) => !currGroups.find((cg) => cg.key === ng.key));
+
+  // add new requirement groups (if any) to the current requirements
+  const newRequirements: FormValues["requirements"] = newGroups.reduce(
+    (curr, group) => addRequirementGroup(curr, group),
+    { ...currReqData.currentFormValues.requirements }
+  );
+
+  // update default form values
+  const newFormValues: FormValues = {
+    ...currReqData.currentFormValues,
+    requirements: newRequirements,
+  };
+
+  return newFormValues;
 }
