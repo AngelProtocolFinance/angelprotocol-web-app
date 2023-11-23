@@ -6,11 +6,11 @@ import { useProfileQuery } from "services/aws/aws";
 import { useCreateRecipientAccountMutation } from "services/aws/bankDetails";
 import { useErrorContext } from "contexts/ErrorContext";
 import BankDetails from "components/BankDetails";
+import Group from "components/Group";
 import LoaderRing from "components/LoaderRing";
 import { getFilePreviews } from "helpers";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { EMAIL_SUPPORT } from "constants/env";
-import { Group } from "../common";
 import FormButtons from "./FormButtons";
 import VerificationStatus from "./VerificationStatus";
 

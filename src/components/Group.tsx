@@ -1,19 +1,20 @@
 import { PropsWithChildren } from "react";
 
-export function Group({
+export default function Group({
   description,
-  ...props
+  title,
+  children,
 }: PropsWithChildren<{
-  title: string;
+  title?: string;
   description?: string;
 }>) {
   return (
     <div className="grid gap-6 p-6 border border-prim rounded bg-white dark:bg-blue-d6">
-      <h3 className="text-2xl font-body">{props.title}</h3>
+      {title && <h3 className="text-2xl font-body">{title}</h3>}
       {description && (
         <p className="-mt-4 text-lg font-semibold">{description}</p>
       )}
-      {props.children}
+      {children}
     </div>
   );
 }
