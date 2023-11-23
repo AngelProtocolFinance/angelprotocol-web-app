@@ -16,6 +16,8 @@ type FormValues = {
 
 const schema = object<any, SchemaShape<FormValues>>({
   emailTo: string().email("Invalid email format"),
+  // for making a number field optional using `nullable + transform`,
+  // see https://github.com/jquense/yup/issues/500#issuecomment-818582829
   numberOfShares: number()
     .nullable()
     .positive("must be greater than zero")
