@@ -39,6 +39,11 @@ export default function withAuth<Props>(
       );
     }
 
+    /**
+     * if wish to access user via props wrap component:
+     * withAuth(function Component({user, ...restProps}){
+     * })
+     */
     return (
       <Context.Provider value={user}>
         <Component {...(props as Props)} user={user} />

@@ -1,3 +1,4 @@
+import { Authenticator } from "@aws-amplify/ui-react";
 import * as Sentry from "@sentry/react";
 import { StrictMode, Suspense, lazy } from "react";
 import { createRoot } from "react-dom/client";
@@ -32,7 +33,9 @@ root.render(
       <Provider store={store}>
         <BrowserRouter>
           <Suspense fallback={<LoaderComponent />}>
-            <App />
+            <Authenticator.Provider>
+              <App />
+            </Authenticator.Provider>
           </Suspense>
         </BrowserRouter>
       </Provider>

@@ -12,7 +12,7 @@ const Steps = lazy(() => import("./Steps"));
 const Resume = lazy(() => import("./Resume"));
 const Success = lazy(() => import("./Success"));
 
-export default withAuth(function Registration() {
+function Registration() {
   return (
     <Suspense
       fallback={<div className="place-self-center">Loading page...</div>}
@@ -53,4 +53,6 @@ export default withAuth(function Registration() {
       </Routes>
     </Suspense>
   );
-});
+}
+
+export default withAuth(Registration);
