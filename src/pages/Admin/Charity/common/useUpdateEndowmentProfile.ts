@@ -20,6 +20,7 @@ export function useUpdateEndowmentProfile() {
       );
 
       const result = await submit(msg);
+
       if ("error" in result) {
         return showModal(TxPrompt, { error: "Failed to update profile" });
       }
