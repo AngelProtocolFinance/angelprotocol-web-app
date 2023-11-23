@@ -12,7 +12,7 @@ import Table from "./Table";
 
 export default function Donations() {
   const { user } = useAuthenticator((context) => [context.user]);
-  const donorAddress = user.attributes ? user.attributes?.email : "";
+  const donorAddress = user.attributes?.email ?? "";
   const {
     data,
     hasMore,
