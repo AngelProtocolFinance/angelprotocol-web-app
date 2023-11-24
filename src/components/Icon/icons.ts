@@ -42,6 +42,7 @@ import {
   FaUniversity,
   FaUserCircle,
 } from "react-icons/fa";
+import { FaMoneyBills } from "react-icons/fa6";
 import { FiMenu, FiMoon } from "react-icons/fi";
 import { GoDash, GoLinkExternal, GoSync } from "react-icons/go";
 import { GrFacebookOption } from "react-icons/gr";
@@ -116,6 +117,7 @@ export const icons = {
   MapPin: RiMapPin2Line,
   Medium: AiOutlineMedium,
   Menu: FiMenu,
+  Money: FaMoneyBills,
   Moon: FiMoon,
   Picture: ImFilePicture,
   Plus: AiOutlinePlus,
