@@ -22,6 +22,7 @@ export type AuthenticatedUser = {
   credentials: Credential[];
   email: string;
   firstName?: string;
+  lastName?: string;
   isSigningOut: boolean;
 };
 
@@ -73,6 +74,7 @@ export const loadSession = createAsyncThunk<User, AuthUser | undefined>(
          */
         email: attributes.email!,
         firstName: attributes.given_name,
+        lastName: attributes.family_name,
         isSigningOut: false,
       };
     } catch (err) {

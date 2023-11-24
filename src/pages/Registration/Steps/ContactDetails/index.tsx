@@ -3,6 +3,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { FormValues } from "./types";
 import { ContactRoles, ReferralMethods } from "types/aws";
 import { OptionType } from "types/components";
+import { useAuthenticatedUser } from "contexts/Auth";
 import { useRegState, withStepGuard } from "../StepGuard";
 import Form from "./Form";
 import { referralMethods, roles } from "./constants";
@@ -12,6 +13,8 @@ function ContactDetails() {
   const {
     data: { contact, init },
   } = useRegState<1>();
+
+  const { firstName = "", lastName = "" } = useAuthenticatedUser();
 
   const methods = useForm<FormValues>({
     resolver: yupResolver(schema),
@@ -31,6 +34,8 @@ function ContactDetails() {
             value: "",
             label: referralMethods[""],
           },
+          FirstName: firstName,
+          LastName: lastName,
         },
   });
 
