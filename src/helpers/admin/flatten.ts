@@ -8,7 +8,7 @@ type Flat = Record<string, Primitive>;
 
 export function flatten(obj: Obj, curr: Flat = {}, path = ""): Flat {
   const entries = Object.entries(obj);
-  if (entries.length === 0) return curr;
+  if (isEmpty(entries)) return curr;
 
   return entries.reduce((result, [key, val]) => {
     if (isPrimitive(val)) {

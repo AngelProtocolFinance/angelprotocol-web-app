@@ -1,6 +1,7 @@
 import { AnyObject, ObjectSchema, StringSchema, object, string } from "yup";
 import { Group } from "types/aws";
 import { OptionType } from "types/components";
+import { logger } from "helpers";
 import { requiredString } from "schemas/string";
 
 export function createStringSchema(
@@ -37,8 +38,8 @@ export function createStringSchema(
         fetch(`${url}?${params[0].key}=${val}`)
           .then((res) => res.ok)
           .catch((err) => {
-            console.log("Error fetching accounts requirements");
-            console.log(err);
+            logger.error("Error fetching accounts requirements");
+            logger.error(err);
             return false;
           })
     );

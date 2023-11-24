@@ -8,7 +8,7 @@ import {
   Wallet,
   WalletMeta,
 } from "types/wallet";
-import { injectedProvider, logger } from "helpers";
+import { injectedProvider, isEmpty, logger } from "helpers";
 import { chains } from "constants/chains";
 import { EIPMethods } from "constants/evm";
 import { toPrefixedHex } from "./helpers";
@@ -52,7 +52,7 @@ export default function useInjectedWallet(
   const handleAccountsChange: AccountChangeHandler = (accounts) => {
     setState((prev) => {
       if (prev.status !== "connected") return prev;
-      if (accounts.length <= 0) {
+      if (isEmpty(accounts)) {
         return { status: "disconnected" };
       }
 

@@ -13,7 +13,7 @@ type Props = {
 export default function ProgressIndicator({ step, classes = "" }: Props) {
   const { pathname } = useLocation();
   const paths = pathname.split("/");
-  const currPath = idParamToNum(paths[paths.length - 1]);
+  const currPath = idParamToNum(paths.at(-1));
 
   const [isOtherStepsShown, setIsOtherStepsShown] = useState(true);
 

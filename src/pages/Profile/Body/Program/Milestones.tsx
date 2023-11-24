@@ -2,6 +2,7 @@ import { MileStone as TMilestone } from "types/aws";
 import Image from "components/Image";
 import RichText from "components/RichText";
 import { Info } from "components/Status";
+import { isEmpty } from "helpers";
 import Container from "../common/Container";
 
 type Props = {
@@ -16,7 +17,7 @@ export default function Milestones({ classes = "", milestones }: Props) {
       classes={classes + " w-full lg:w-[29.75rem]"}
       expanded
     >
-      {milestones.length > 0 ? (
+      {!isEmpty(milestones) ? (
         <div className="m-6 sm:m-8">
           {milestones.map((m, idx) => (
             <Milestone {...m} key={idx} />

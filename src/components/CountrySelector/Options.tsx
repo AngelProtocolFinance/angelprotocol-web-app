@@ -1,6 +1,7 @@
 import { Combobox } from "@headlessui/react";
 import React from "react";
 import { Country } from "types/components";
+import { isEmpty } from "helpers";
 
 const containerStyle =
   "absolute top-full mt-2 z-10 w-full bg-white dark:bg-blue-d6 shadow-lg rounded overflow-y-scroll scroller";
@@ -19,7 +20,7 @@ export default function Options({ query, options }: Props) {
       className={containerStyle}
       style={{ height: options.length <= 10 ? "auto" : "10rem" }}
     >
-      {(options.length > 0 &&
+      {(!isEmpty(options) &&
         filtered.map((country) => (
           <Combobox.Option
             as={React.Fragment}

@@ -44,7 +44,7 @@ export default function useEditProfile() {
 
       const diffs = getPayloadDiff(initial, update);
 
-      if (Object.entries(diffs).length <= 0) {
+      if (isEmpty(diffs)) {
         return showModal(TxPrompt, { error: "No changes detected" });
       }
 
