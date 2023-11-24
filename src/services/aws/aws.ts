@@ -5,6 +5,7 @@ import {
   VersionSpecificWalletProfile,
   isDeleteMsg,
 } from "../types";
+import { userIsSignedIn } from "types/auth";
 import {
   Application,
   ApplicationDetails,
@@ -22,7 +23,6 @@ import {
 } from "types/aws";
 import { network } from "services/constants";
 import { RootState } from "store/store";
-import { userIsSignedIn } from "slices/auth";
 import { TEMP_JWT } from "constants/auth";
 import { APIs } from "constants/urls";
 import { version as v } from "../helpers";

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { AuthenticatedUser } from "slices/auth";
+import { AuthenticatedUser } from "types/auth";
+import { groups } from "constants/auth";
 import { appRoutes } from "constants/routes";
 
 type Props = {
@@ -40,7 +41,7 @@ export default function Menu({ classes = "", user, signOut }: Props) {
       </div>
 
       <div className="empty:hidden p-4 border-t border-prim">
-        {user.credentials.includes("ap") && (
+        {user.groups.includes(groups["ap-admin"]) && (
           <Link
             to={appRoutes.applications}
             className="text-orange hover:text-orange-l2 text-sm uppercase"

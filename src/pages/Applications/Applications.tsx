@@ -73,4 +73,4 @@ function Applications() {
     </div>
   );
 }
-export default withAuth(Applications, ["ap"]);
+export default withAuth(Applications, ["ap-admin"]);
