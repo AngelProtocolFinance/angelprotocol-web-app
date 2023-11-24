@@ -7,6 +7,7 @@ import {
   signOut,
 } from "aws-amplify/auth";
 import { User, userIsSignedIn } from "types/auth";
+import { logger } from "helpers";
 
 type State = {
   user: User;
@@ -50,6 +51,7 @@ export const loadSession = createAsyncThunk<User, AuthUser | undefined>(
         isSigningOut: false,
       };
     } catch (err) {
+      logger.error(err);
       return null;
     }
   }

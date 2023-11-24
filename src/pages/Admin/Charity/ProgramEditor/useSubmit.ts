@@ -5,7 +5,7 @@ import { Program } from "types/aws";
 import { useModalContext } from "contexts/ModalContext";
 import { ImgLink } from "components/ImgEditor";
 import { TxPrompt } from "components/Prompt";
-import { isEmpty } from "helpers";
+import { isEmpty, logger } from "helpers";
 import { getPayloadDiff } from "helpers/admin";
 import { getFullURL, uploadFiles } from "helpers/uploadFiles";
 import { useAdminContext } from "../../Context";
@@ -64,7 +64,7 @@ export default function useSubmit() {
       await updateProfile(updates);
       if (!initial) reset(); //for new program, reset form after submit
     } catch (err) {
-      console.log(err);
+      logger.error(err);
       showModal(TxPrompt, {
         error: err instanceof Error ? err.message : "Unknown error occured",
       });

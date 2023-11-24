@@ -1,4 +1,5 @@
 import { APIs } from "constants/urls";
+import { isEmpty } from "./isEmpty";
 import { jwtToken } from "./jwt-token";
 
 export type Bucket = "endow-profiles" | "endow-reg";
@@ -9,7 +10,7 @@ export async function uploadFiles(
   files: File[],
   bucket: Bucket
 ): Promise<string | null> {
-  if (files.length <= 0) return null;
+  if (isEmpty(files)) return null;
 
   const dataURLs = await Promise.all(files.map((f) => toDataURL(f)));
   const timeStamp = Date.now();

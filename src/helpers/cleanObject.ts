@@ -1,3 +1,5 @@
+import { isEmpty } from "./isEmpty";
+
 export function cleanObject<T extends Record<string, any>>(obj: T): T {
   const cleanedObject: any = {};
 
@@ -7,8 +9,8 @@ export function cleanObject<T extends Record<string, any>>(obj: T): T {
       obj.hasOwnProperty(key) && //must be first layer prop
       val != null && // must not be null or undefined
       val !== "" && // must not be empty string
-      (Array.isArray(val) ? val.length > 0 : true) && // if array, must not be empty
-      (typeof val === "object" ? Object.keys(val).length > 0 : true) //if object, must not be empty
+      (!Array.isArray(val) || !isEmpty(val)) && // if array, must not be empty
+      (typeof val !== "object" || !isEmpty(Object.keys(val))) //if object, must not be empty
     ) {
       cleanedObject[key] = val;
     }

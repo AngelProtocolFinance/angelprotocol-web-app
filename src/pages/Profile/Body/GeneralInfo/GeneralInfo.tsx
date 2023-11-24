@@ -1,4 +1,5 @@
 import RichText from "components/RichText";
+import { isEmpty } from "helpers";
 import { useProfileContext } from "../../ProfileContext";
 import Container from "../common/Container";
 import DetailsColumn from "./DetailsColumn";
@@ -18,7 +19,7 @@ export default function GeneralInfo({ className = "" }) {
             readOnly
           />
         </Container>
-        {profile.program.length > 0 && (
+        {!isEmpty(profile.program) && (
           <Container title="Programs">
             <Programs />
           </Container>

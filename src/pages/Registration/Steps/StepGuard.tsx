@@ -1,6 +1,7 @@
 import { FC, createContext, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { InitReg, RegStep, RegistrationState } from "../types";
+import { isEmpty } from "helpers";
 
 export type StepGuardProps = {
   init: InitReg;
@@ -41,7 +42,7 @@ export function useRegState<T extends RegStep>(): Extract<
   { step: T; data: any }
 > {
   const val = useContext(Context);
-  if (Object.entries(val).length <= 0) {
+  if (isEmpty(Object.entries(val))) {
     throw new Error(
       `${useRegState.name} should only be used inside ${withStepGuard.name} context`
     );
