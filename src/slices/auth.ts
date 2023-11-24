@@ -31,7 +31,7 @@ export const loadSession = createAsyncThunk<User, AuthUser | undefined>(
         user ? Promise.resolve(user) : getCurrentUser(),
       ]);
 
-      //remove standard claims
+      //possible state is [] | undefined
       const { endowments = [], "cognito:groups": groups = [] } =
         session.tokens.accessToken.payload;
       const token = session.tokens.accessToken.toString();
