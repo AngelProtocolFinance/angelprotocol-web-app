@@ -15,15 +15,9 @@ type Props = {
   classes?: string;
   setParams: React.Dispatch<React.SetStateAction<DonationsQueryParams>>;
   isDisabled: boolean;
-  donorAddress: string;
 };
 
-export default function Filter({
-  setParams,
-  donorAddress,
-  classes = "",
-  isDisabled,
-}: Props) {
+export default function Filter({ setParams, classes = "", isDisabled }: Props) {
   const buttonRef = useRef<HTMLButtonElement | null>(null);
 
   const methods = useForm<FV>({
@@ -36,7 +30,6 @@ export default function Filter({
       endDate: dateToFormFormat(new Date()),
       network: { label: "Select network...", value: "" },
       currency: { label: "Select currency...", value: "" },
-      donorAddress: donorAddress,
       status: { label: "Select status...", value: "" },
     },
   });

@@ -11,7 +11,6 @@ import NoDonations from "./NoDonations";
 import Table from "./Table";
 
 export default withAuth(function Donations({ user }) {
-  const donorAddress = user.email;
   const {
     data,
     hasMore,
@@ -22,7 +21,7 @@ export default withAuth(function Donations({ user }) {
     loadNextPage,
     onQueryChange,
     setParams,
-  } = usePaginatedDonationRecords({ donorAddress });
+  } = usePaginatedDonationRecords({ email: user.email });
 
   const isLoadingOrError = isLoading || isLoadingNextPage || isError;
 
@@ -58,7 +57,6 @@ export default withAuth(function Donations({ user }) {
       <Filter
         isDisabled={isLoadingOrError}
         setParams={setParams}
-        donorAddress={donorAddress}
         classes="max-lg:col-span-full max-lg:w-full"
       />
       <QueryLoader
