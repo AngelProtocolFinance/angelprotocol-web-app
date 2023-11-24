@@ -1,17 +1,16 @@
 import { Except } from "type-fest";
 import { FV } from "./types";
-import { Profile, profileIsCharity } from "services/types";
-import { EndowmentProfileUpdate } from "types/aws";
+import { EndowmentProfile, EndowmentProfileUpdate } from "types/aws";
 
-type RequiredFields = Pick<EndowmentProfileUpdate, "id" | "owner">;
+type RequiredFields = Pick<EndowmentProfileUpdate, "id">;
 type Arg =
   | {
       type: "initial";
-      data: Profile & RequiredFields;
+      data: EndowmentProfile & RequiredFields;
     }
   | {
       type: "final";
-      data: Except<FV, "id" | "owner" | "initial" | "type"> & RequiredFields;
+      data: Except<FV, "id" | "initial"> & RequiredFields;
       urls: { image: string; logo: string };
     };
 
@@ -20,14 +19,13 @@ export function toProfileUpdate(arg: Arg): EndowmentProfileUpdate {
     const { data: d } = arg;
     return {
       id: d.id,
-      owner: d.owner,
       active_in_countries: d.active_in_countries ?? [],
       categories: { sdgs: d.sdgs ?? [], general: [] },
       charity_navigator_rating: "",
       contact_email: d.contact_email ?? "",
       contributor_verification_required:
         d.contributor_verification_required ?? false,
-      endow_designation: profileIsCharity(d) ? d.endow_designation : "",
+      endow_designation: d.endow_designation ?? "",
       hq_country: d.hq_country ?? "",
       image: d.image ?? "",
       kyc_donors_only: d.kyc_donors_only ?? false,

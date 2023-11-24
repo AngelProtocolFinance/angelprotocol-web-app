@@ -1,5 +1,4 @@
 import { ErrorMessage } from "@hookform/error-message";
-import { useEffect } from "react";
 import {
   FieldValues,
   Path,
@@ -7,32 +6,27 @@ import {
   useController,
   useFormContext,
 } from "react-hook-form";
-import { OnSetAmount, Props } from "./types";
+import { Props } from "./types";
 import { TokenWithAmount } from "types/tx";
-import { humanize } from "helpers";
-import Steps from "./Steps";
 import TokenSelector from "./TokenSelector";
 
 const amountKey: keyof TokenWithAmount = "amount";
+const tokenIDkey: keyof TokenWithAmount = "token_id";
 type BaseFormValue = { [index: string]: TokenWithAmount };
 
 export default function TokenField<T extends FieldValues, K extends Path<T>>({
   label,
-  tokens,
   name,
   classes,
-  scale,
   disabled,
+  selectedChainId,
 
   //flags
-  withGiftcard,
-  withBalance,
   withMininum,
 }: Props<T, K>) {
   const {
+    getValues,
     register,
-    setValue,
-    resetField,
     formState: { errors, isSubmitting },
   } = useFormContext<T>();
   const {
@@ -42,16 +36,7 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
   });
 
   const amountField: any = `${name}.${amountKey}`;
-
-  useEffect(() => {
-    resetField(amountField);
-  }, [token.token_id, amountField, resetField]);
-
-  const onSetAmount: OnSetAmount = (balance) =>
-    setValue(amountField, balance as any, {
-      shouldValidate: true,
-      shouldDirty: true,
-    });
+  const tokenIDField: any = `${name}.${tokenIDkey}`;
 
   return (
     <div className={`grid ${classes?.container ?? ""}`}>
@@ -62,15 +47,6 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
         >
           {label}
         </label>
-        {withBalance && token.type !== "fiat" && (
-          <button
-            type="button"
-            onClick={() => onSetAmount(token.balance)}
-            className="text-right hover:text-blue text-xs flex"
-          >
-            BAL: {humanize(+token.balance, 3)} {token.symbol}
-          </button>
-        )}
       </div>
 
       <div
@@ -89,13 +65,12 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
           className="text-sm py-3 dark:text-gray"
         />
         <TokenSelector
-          tokens={tokens.filter(
-            (t) =>
-              withGiftcard ||
-              !(t.type === "evm-native-gift" || t.type === "erc20-gift")
-          )}
-          token={token}
-          onChange={onChange}
+          selectedChainId={selectedChainId}
+          selectedToken={token}
+          onChange={(token) => {
+            //preserve previously provided amount
+            onChange({ ...token, [amountKey]: getValues(amountField) });
+          }}
         />
       </div>
       <div className="empty:mb-2">
@@ -106,13 +81,19 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
           as="p"
           className="static field-error text-left my-1"
         />
+        <ErrorMessage
+          data-error
+          errors={errors}
+          name={tokenIDField}
+          as="p"
+          className="static field-error text-left my-1"
+        />
       </div>
-      {withMininum && (
+      {withMininum && token.min_donation_amnt !== 0 && (
         <p className="text-xs mb-3">
           Minimal amount: {token.symbol} {token.min_donation_amnt}
         </p>
       )}
-      {scale && <Steps scale={scale} token={token} onSetAmount={onSetAmount} />}
     </div>
   );
 }

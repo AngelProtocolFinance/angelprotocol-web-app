@@ -1,11 +1,10 @@
-import { FC, createContext, useContext, useEffect, useRef } from "react";
+import { FC, createContext, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { InitReg, RegStep, RegistrationState } from "../types";
 
 export type StepGuardProps = {
   init: InitReg;
   state: RegistrationState;
-  stateId: number;
   step: number;
 };
 
@@ -14,27 +13,18 @@ export function withStepGuard<T extends object>(Step: FC<T>) {
     step: thisStep,
     init,
     state,
-    stateId,
     ...props
   }: T & StepGuardProps) {
-    const idRef = useRef(stateId);
     const navigate = useNavigate();
 
     const { step: savedStep } = state;
 
     useEffect(() => {
-      if (idRef.current !== stateId) {
-        /** if reg is complete, mutations should redirect to summary */
-        if (thisStep < savedStep && savedStep === 4) {
-          navigate(`../${savedStep}`, { state: init });
-          /** if not complete, just go to next step */
-        } else if (thisStep < savedStep) {
-          navigate(`../${thisStep + 1}`, { state: init });
-        }
+      if (thisStep > savedStep + 1) {
+        navigate(`../${savedStep}`, { state: init });
       }
-      idRef.current = stateId;
       //eslint-disable-next-line
-    }, [stateId]);
+    }, []);
 
     return (
       <Context.Provider value={state}>

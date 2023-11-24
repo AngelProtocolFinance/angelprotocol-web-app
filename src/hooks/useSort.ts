@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 
-export type SortDirection = "asc" | "desc";
-export type SortKey<T> = keyof T;
+type SortDirection = "asc" | "desc";
+type SortKey<T> = keyof T;
 
 //TODO: remove custom sorter and pass sort params to AWS instead
 export default function useSort<T>(donations: T[], defaultSortKey: keyof T) {

@@ -1,5 +1,5 @@
 import { Primitive } from "type-fest";
-import { isEmpty } from "helpers/isEmpty";
+import { isEmpty } from "../isEmpty";
 
 export type Obj = {
   [index: string]: Primitive | Primitive[] | Obj | Obj[] | (Primitive | Obj)[];

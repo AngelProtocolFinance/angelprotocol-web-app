@@ -6,14 +6,9 @@ import {
 } from "react";
 import Prompt from "components/Prompt";
 import { logger } from "helpers";
-import {
-  APError,
-  AP_ERROR_DISCRIMINATOR,
-  WalletNotInstalledError,
-} from "errors/errors";
+import { APError, AP_ERROR_DISCRIMINATOR } from "errors/errors";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { useModalContext } from "../ModalContext";
-import InstallWallet from "./InstallWalletContent";
 
 type State = { handleError: (error: any, displayMessage?: string) => void };
 
@@ -38,18 +33,6 @@ export default function ErrorContext(props: PropsWithChildren<{}>) {
           type: "error",
           children: error,
         });
-      } else if (instanceOfAPError(error)) {
-        if (error instanceof WalletNotInstalledError) {
-          showModal(Prompt, {
-            headline: "Install Wallet",
-            children: <InstallWallet providerId={error.providerId} />,
-          });
-        } else {
-          showModal(Prompt, {
-            type: "error",
-            children: error.message,
-          });
-        }
       } else if (instanceOfAPError(error.data)) {
         handleError(error.data);
       } else if ("message" in error) {

@@ -7,12 +7,18 @@ export function HeaderButton<T>(
     _activeSortKey: keyof T;
   }
 ) {
-  const { _activeSortKey, _sortKey, _sortDirection, children, ...restProps } =
-    props;
+  const {
+    _activeSortKey,
+    _sortKey,
+    _sortDirection,
+    children,
+    className,
+    ...restProps
+  } = props;
   return (
     <button
       {...restProps}
-      className="flex items-center justify-between gap-1 uppercase"
+      className={`${className} flex items-center justify-between gap-1 uppercase`}
     >
       <span>{children}</span>
 

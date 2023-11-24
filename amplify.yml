@@ -1,4 +1,9 @@
 version: 1
+backend:
+  phases:
+    build:
+      commands:
+        - amplifyPush --simple
 frontend:
   phases:
     preBuild:
@@ -6,25 +11,8 @@ frontend:
         - yarn install
     build:
       commands:
-        - REACT_APP_APES_AUTH_SECRET_KEY=${REACT_APP_APES_AUTH_SECRET_KEY}
-        - REACT_APP_ANGEL_AUTH_SECRET_KEY=${REACT_APP_ANGEL_AUTH_SECRET_KEY}
-        - REACT_APP_KADO_API_KEY=${REACT_APP_KADO_API_KEY}
-        - REACT_APP_NETWORK=${REACT_APP_NETWORK}
-        - REACT_APP_JUNO_LCD_NODE=${REACT_APP_JUNO_LCD_NODE}
-        - REACT_APP_APP_TYPE=${REACT_APP_APP_TYPE}
-        - REACT_APP_APP_NAME=${REACT_APP_APP_NAME}
-        - REACT_APP_BASE_DOMAIN=${REACT_APP_BASE_DOMAIN}
-        - REACT_APP_DAPP_DOMAIN=${REACT_APP_DAPP_DOMAIN}
-        - REACT_APP_EMAIL_SUPPORT=${REACT_APP_EMAIL_SUPPORT}
-        - REACT_APP_SEO_IMAGE=${REACT_APP_SEO_IMAGE}
-        - REACT_APP_LOGO_IMG_DARK=${REACT_APP_LOGO_IMG_DARK}
-        - REACT_APP_LOGO_IMG_LIGHT=${REACT_APP_LOGO_IMG_LIGHT}
+        - REACT_APP_ENVIRONMENT=${REACT_APP_ENVIRONMENT}
         - REACT_APP_SENTRY_DSN=${REACT_APP_SENTRY_DSN}
-        - REACT_APP_SUBGRAPH_API_KEY=${REACT_APP_SUBGRAPH_API_KEY}
-        - REACT_APP_INFURA_ID=${REACT_APP_INFURA_ID}
-        - REACT_APP_WEB3AUTH_CLIENT_ID=${REACT_APP_WEB3AUTH_CLIENT_ID}
-        - IS_TESTNET=${IS_TESTNET}
-        - IS_TEST=${IS_TEST}
         - export NODE_OPTIONS="--max-old-space-size=8192"
         - yarn run build
   artifacts:

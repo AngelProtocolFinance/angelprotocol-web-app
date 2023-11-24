@@ -7,6 +7,7 @@ import { DonationsQueryParams } from "types/aws";
 import Icon, { DrawerIcon } from "components/Icon";
 import { dateToFormFormat } from "components/form";
 import { cleanObject } from "helpers/cleanObject";
+import { weeksAgo } from "helpers/weeksAgo";
 import Form from "./Form";
 import { schema } from "./schema";
 
@@ -31,7 +32,7 @@ export default function Filter({
     resolver: yupResolver(schema),
     defaultValues: {
       //set default value so empty can be tagged as invalid
-      startDate: dateToFormFormat(getYearAgo()),
+      startDate: dateToFormFormat(weeksAgo("now", 5)),
       endDate: dateToFormFormat(new Date()),
       network: { label: "Select network...", value: "" },
       currency: { label: "Select currency...", value: "" },
@@ -89,11 +90,4 @@ export default function Filter({
       </FormProvider>
     </Popover>
   );
-}
-
-function getYearAgo() {
-  const date = new Date();
-  const currYear = date.getFullYear();
-  date.setFullYear(currYear - 1);
-  return date;
 }

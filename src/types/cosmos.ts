@@ -10,7 +10,7 @@ export interface Coin {
   readonly amount: string;
 }
 
-export type WCSignature = StdSignature;
+type WCSignature = StdSignature;
 
 export type WCSignAminoRes = {
   signature: WCSignature;
@@ -21,8 +21,6 @@ export type WCSignDirectRes = {
   signature: WCSignature;
   //signDoc - no need, just return the same doc for broadcasting
 };
-
-export type KeplrWC = Pick<Keplr, "signAmino" | "signDirect">;
 
 interface Attribute {
   readonly key: string;
@@ -59,7 +57,7 @@ export type SimulateRes = {
   };
 };
 
-export type JSONAny<T> = {
+type JSONAny<T> = {
   "@type": string;
 } & T;
 

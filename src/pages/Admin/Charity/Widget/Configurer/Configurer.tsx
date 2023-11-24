@@ -46,7 +46,6 @@ export default function Configurer({ classes = "" }) {
           Configure your widget
         </h2>
         <Form
-          className=""
           onSubmit={handleSubmit(submit)}
           onReset={(e) => {
             e.preventDefault();

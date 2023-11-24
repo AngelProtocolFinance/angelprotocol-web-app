@@ -1,7 +1,8 @@
 import { Listbox } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import { FieldValues, Path, get, useController } from "react-hook-form";
-import { OptionType, Props, ValKey } from "./types";
+import { Props } from "./types";
+import { OptionType, ValKey } from "types/components";
 import { DrawerIcon } from "components/Icon";
 import FocusableInput from "./FocusableInput";
 import { styles, valueKey } from "./constants";
@@ -10,7 +11,14 @@ export function Selector<
   T extends FieldValues,
   K extends Path<T>,
   V extends ValKey,
->({ name, disabled, options, children, classes }: Props<T, K, V>) {
+>({
+  name,
+  disabled,
+  options,
+  children,
+  classes,
+  onOptionChange,
+}: Props<T, K, V>) {
   const { container = "", button = "" } = classes || {};
   const {
     formState: { isSubmitting, errors },
@@ -26,7 +34,10 @@ export function Selector<
         disabled={isDisabled}
         value={selected}
         by={valueKey}
-        onChange={onChange}
+        onChange={(option: OptionType<V>) => {
+          onOptionChange?.();
+          onChange(option);
+        }}
         as="div"
         className={`relative ${container}`}
       >
@@ -35,7 +46,7 @@ export function Selector<
           aria-invalid={!!get(errors, valuePath)?.message}
           aria-disabled={isDisabled}
           as="button"
-          className={`${button} ${styles.selectorButton}`}
+          className={`${button} ${styles.selectorButton} peer-focus:border-gray-d1 peer-focus:dark:border-blue-l2`}
         >
           {({ open }) => (
             <>
