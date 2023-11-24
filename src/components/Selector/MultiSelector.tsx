@@ -65,7 +65,7 @@ export function MultiSelector<
           aria-invalid={!!get(errors, name)?.message}
           aria-disabled={isDisabled}
           as="div"
-          className={`${button} ${styles.selectorButton} p-1`}
+          className={`${button} ${styles.selectorButton} p-1 focus-within:border-gray-d1 focus-within:dark:border-blue-l2`}
         >
           {({ open }) => (
             <>
@@ -78,7 +78,7 @@ export function MultiSelector<
                     onChange={onSelectedChange}
                   />
                 ))}
-                {searchable && (
+                {searchable ? (
                   <div className="inline-flex items-center gap-2 text-gray-d1 dark:text-gray pl-3 bg-white/5 rounded">
                     <Icon type="Search" size={20} />
                     <Combobox.Input
@@ -87,6 +87,12 @@ export function MultiSelector<
                       onChange={(e) => setSearchText(e.target.value)}
                     />
                   </div>
+                ) : (
+                  //this will receive focus if search input is not rendered
+                  <input
+                    aria-disabled={true}
+                    className="w-0 h-0 appearance-none"
+                  />
                 )}
               </span>
               <DrawerIcon
