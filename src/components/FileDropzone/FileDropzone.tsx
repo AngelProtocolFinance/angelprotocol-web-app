@@ -10,6 +10,7 @@ import {
 import { FileDropzoneAsset } from "types/components";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
+import { isEmpty } from "helpers";
 
 type Key = keyof FileDropzoneAsset;
 const filesKey: Key = "files";
@@ -93,8 +94,8 @@ function DropzoneText({
   files,
   previews,
 }: FileDropzoneAsset & { filesId: string; formErrors: any }) {
-  const isFilesEmpty = files.length <= 0;
-  const isPreviewsEmpty = previews.length <= 0;
+  const isFilesEmpty = isEmpty(files);
+  const isPreviewsEmpty = isEmpty(previews);
 
   if (isFilesEmpty && isPreviewsEmpty) {
     return (

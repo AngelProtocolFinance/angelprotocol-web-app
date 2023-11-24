@@ -1,5 +1,6 @@
 import { FileObject } from "types/aws";
 import { FileDropzoneAsset } from "types/components";
+import { isEmpty } from "helpers/isEmpty";
 import { getFullURL, uploadFiles } from "../uploadFiles";
 
 export async function getFilePreviews<
@@ -14,7 +15,7 @@ export async function getFilePreviews<
 
   for (const key in fields) {
     const asset = fields[key];
-    if (asset.files.length > 0 && baseURL) {
+    if (!isEmpty(asset.files) && baseURL) {
       result[key] = asset.files.map<FileObject>((f) => ({
         name: f.name,
         publicUrl: getFullURL(baseURL, f.name),

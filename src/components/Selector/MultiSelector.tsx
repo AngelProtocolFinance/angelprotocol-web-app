@@ -11,6 +11,7 @@ import {
 import { MultiselectorProps } from "./types";
 import { OptionType, ValKey } from "types/components";
 import Icon, { DrawerIcon } from "components/Icon";
+import { isEmpty } from "helpers";
 import FocusableInput from "./FocusableInput";
 import { styles, valueKey } from "./constants";
 
@@ -44,7 +45,7 @@ export function MultiSelector<
         )
       : options;
 
-  const optionsAvailable = searchText ? filteredOptions.length >= 1 : true;
+  const optionsAvailable = !searchText || !isEmpty(filteredOptions);
 
   const isAllSelected = selected.length === options.length;
   const isDisabled = isSubmitting || disabled;

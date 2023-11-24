@@ -2,6 +2,7 @@ import { Combobox } from "@headlessui/react";
 import { useState } from "react";
 import { ChainID } from "types/chain";
 import { useTokensQuery } from "services/apes";
+import { isEmpty } from "helpers";
 import Icon from "../Icon";
 import Image from "../Image";
 import { ErrorStatus, LoadingStatus } from "../Status";
@@ -58,7 +59,7 @@ export default function TokenOptions({ classes = "", selectedChainId }: Props) {
           onChange={(event) => setSearchText(event.target.value)}
         />
       </div>
-      {searchResult.length === 0 && searchText !== "" ? (
+      {isEmpty(searchResult) && searchText !== "" ? (
         <div className="relative cursor-default select-none py-2 px-4 text-sm">
           {searchText} not found
         </div>

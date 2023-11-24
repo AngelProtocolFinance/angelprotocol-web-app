@@ -1,6 +1,7 @@
 import * as Yup from "yup";
 import { FileObject } from "types/aws";
 import { FileDropzoneAsset } from "types/components";
+import { isEmpty } from "helpers";
 
 const MIME_TYPES = {
   JPEG: "image/jpeg",
@@ -23,7 +24,7 @@ export function fileDropzoneAssetShape(
     files: Yup.array(genFileSchema(maxByteSize, validMimeTypes)).when(
       previewsKey,
       ([previews], schema) =>
-        (previews as FileObject[]).length <= 0 && required
+        isEmpty(previews as FileObject[]) && required
           ? schema.min(1, "required")
           : schema
     ),
