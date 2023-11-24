@@ -6,6 +6,7 @@ import {
   getCurrentUser,
   signOut,
 } from "aws-amplify/auth";
+import { logger } from "helpers";
 
 type User = null | "loading" | AuthenticatedUser;
 
@@ -78,6 +79,7 @@ export const loadSession = createAsyncThunk<User, AuthUser | undefined>(
         isSigningOut: false,
       };
     } catch (err) {
+      logger.error(err);
       return null;
     }
   }
