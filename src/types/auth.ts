@@ -4,6 +4,7 @@ export type AuthenticatedUser = {
   endowments: number[];
   email: string;
   firstName?: string;
+  lastName?: string;
   isSigningOut: boolean;
 };
 
