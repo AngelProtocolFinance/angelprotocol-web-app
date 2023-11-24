@@ -4,6 +4,7 @@ import { AuthenticatedUser } from "types/auth";
 import Icon from "components/Icon";
 import { groups } from "constants/auth";
 import { appRoutes } from "constants/routes";
+import EndowmentLink from "./EndowmentLink";
 
 type Props = {
   classes?: string;
@@ -32,17 +33,16 @@ export default function Menu({ classes = "", user, signOut }: Props) {
           <span>My profile (coming soon!)</span>
         </div>
 
-        {/** TODO: temp hidden until user endowments are in jwt claim  */}
-        <div className="hidden p-4 border-t border-prim">
-          <Link
-            to={`${appRoutes.admin}/${1}`}
-            className="text-orange hover:text-orange-l2 text-sm uppercase"
-          >
-            Endowment Dashboard
-          </Link>
+        <div className="hidden [&:has(a)]:grid mt-6 gap-2">
+          <h5 className="uppercase text-xs text-gray-d1 -mb-1">
+            My Endowments
+          </h5>
+          {user.endowments.map((endowId) => (
+            <EndowmentLink key={endowId} endowId={endowId} />
+          ))}
         </div>
 
-        <div className="hidden [&:has(a)]:grid mt-6">
+        <div className="hidden [&:has(a)]:block mt-6">
           <h5 className="uppercase text-xs text-gray-d1 mb-1">BG Admin</h5>
           {user.groups.includes(groups["ap-admin"]) && (
             <Link
