@@ -45,13 +45,20 @@ export default function ExpectedFunds({ disabled, onChange }: Props) {
       <div className="w-60 md:w-80">
         <input
           id="amount"
-          type="number"
+          type="text"
           placeholder="10.000"
-          onChange={(event) => onChange(Number(event.target.value))}
+          onChange={(event) => {
+            const value = Number(event.target.value);
+            if (!isNaN(value)) {
+              onChange(value);
+            }
+          }}
           className="field-input text-field"
           autoComplete="off"
           spellCheck={false}
           disabled={disabled}
+          inputMode="numeric"
+          pattern="[0-9]*"
         />
       </div>
     </div>
