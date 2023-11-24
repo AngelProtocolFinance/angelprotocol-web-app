@@ -13,16 +13,16 @@ type Props = {
 export default function Menu({ classes = "", user, signOut }: Props) {
   return (
     <Popover.Panel
-      className={`${classes} shadow-xl bg-white dark:bg-blue-d6 w-max rounded overflow-hidden`}
+      className={`${classes} shadow-xl bg-gray-l6 dark:bg-blue-d6 w-max rounded overflow-hidden`}
     >
-      <p className="text-sm p-3 border-b border-prim">
+      <p className="text-sm p-3 bg-orange-l6 border-b border-prim">
         Welcome, {user.firstName || user.email}!
       </p>
 
-      <div className="w-64 min-h-[5rem] px-3 pb-3">
+      <div className="w-64 min-h-[5rem] p-3">
         <Link
           to={appRoutes.donations}
-          className="mt-3 hover:text-orange text-sm flex items-center gap-2"
+          className=" hover:text-orange text-sm flex items-center gap-2"
         >
           <Icon type="Money" className="text-lg" />
           <span>My Donations</span>
@@ -42,25 +42,24 @@ export default function Menu({ classes = "", user, signOut }: Props) {
           </Link>
         </div>
 
-        <div className="hidden [&:has(div)]:block mt-6">
-          <h5 className="uppercase text-sm text-gray-d1">BG Admin</h5>
-          <div className="empty:hidden p-4">
-            {user.groups.includes(groups["ap-admin"]) && (
-              <Link
-                to={appRoutes.applications}
-                className="text-orange hover:text-orange-l2 text-sm uppercase"
-              >
-                Applications Review
-              </Link>
-            )}
-          </div>
+        <div className="hidden [&:has(a)]:grid mt-6">
+          <h5 className="uppercase text-xs text-gray-d1 mb-1">BG Admin</h5>
+          {user.groups.includes(groups["ap-admin"]) && (
+            <Link
+              to={appRoutes.applications}
+              className="hover:text-orange text-sm flex items-center gap-1"
+            >
+              <Icon type="SecurityScan" size={22} />
+              <span>Applications Dashboard</span>
+            </Link>
+          )}
         </div>
       </div>
       <button
         disabled={user.isSigningOut}
         type="button"
         onClick={signOut}
-        className="btn-orange rounded-none w-full p-3 text-sm"
+        className="btn-orange rounded-none w-full p-3 text-sm mt-4"
       >
         Sign out
       </button>
