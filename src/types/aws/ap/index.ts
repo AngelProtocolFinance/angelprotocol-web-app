@@ -85,7 +85,6 @@ export type EndowmentOption = Pick<EndowmentBase, "id" | "name">;
 export type EndowmentProfileUpdate = {
   //required
   id: number;
-  owner: string;
 
   /** optional, though set as required in this type
   to force setting of default values - "", [], etc ..*/

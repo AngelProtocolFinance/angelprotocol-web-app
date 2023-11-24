@@ -47,7 +47,7 @@ function FormWithContext(props: TProfile & { id: number }) {
   //
   const init: EndowmentProfileUpdate = toProfileUpdate({
     type: "initial",
-    data: { ...props, id: props.id, owner: "is not relevant anymore" },
+    data: { ...props, id: props.id },
   });
 
   const defaults: FV = {

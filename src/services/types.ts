@@ -10,27 +10,19 @@ export type ChainQueryArgs = {
   chainId: string;
 };
 
-export type ProfileUpdateMsg = SemiPartial<
-  EndowmentProfileUpdate,
-  "id" | "owner"
->;
+export type ProfileUpdateMsg = SemiPartial<EndowmentProfileUpdate, "id">;
 
 export type ProgramDeleteMsg = Pick<
   EndowmentProfileUpdate,
-  "id" | "owner" | "program_id"
+  "id" | "program_id"
 >;
-
-export type ProfileUpdatePayload = {
-  unsignedMsg: ProfileUpdateMsg | ProgramDeleteMsg;
-  rawSignature: string;
-};
 
 export function isDeleteMsg(
   msg: ProfileUpdateMsg | ProgramDeleteMsg
 ): msg is ProgramDeleteMsg {
   return (
     //for edits, program_id is accompanied by program:[]
-    Object.keys(msg).length === 3 && !!(msg as ProgramDeleteMsg).program_id
+    Object.keys(msg).length === 2 && !!(msg as ProgramDeleteMsg).program_id
   );
 }
 

@@ -1,4 +1,5 @@
 import { ProfileUpdateMsg, ProgramDeleteMsg } from "services/types";
+import { useEditProfileMutation } from "services/aws/aws";
 import { useModalContext } from "contexts/ModalContext";
 import { TxPrompt } from "components/Prompt";
 import { cleanObject } from "helpers/cleanObject";
@@ -6,6 +7,7 @@ import { appRoutes } from "constants/routes";
 
 export function useUpdateEndowmentProfile() {
   const { showModal } = useModalContext();
+  const [submit] = useEditProfileMutation();
 
   const updateProfile = async (msg: ProfileUpdateMsg | ProgramDeleteMsg) => {
     try {
@@ -13,17 +15,15 @@ export function useUpdateEndowmentProfile() {
 
       showModal(
         TxPrompt,
-        { loading: "Signing changes.." },
-        { isDismissible: false }
-      );
-
-      showModal(
-        TxPrompt,
         { loading: "Submitting changes.." },
         { isDismissible: false }
       );
 
-      alert("edit profile is WIP");
+      const result = await submit(msg);
+
+      if ("error" in result) {
+        return showModal(TxPrompt, { error: "Failed to update profile" });
+      }
 
       return showModal(TxPrompt, {
         success: {

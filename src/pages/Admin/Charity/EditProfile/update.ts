@@ -2,7 +2,7 @@ import { Except } from "type-fest";
 import { FV } from "./types";
 import { EndowmentProfile, EndowmentProfileUpdate } from "types/aws";
 
-type RequiredFields = Pick<EndowmentProfileUpdate, "id" | "owner">;
+type RequiredFields = Pick<EndowmentProfileUpdate, "id">;
 type Arg =
   | {
       type: "initial";
@@ -10,7 +10,7 @@ type Arg =
     }
   | {
       type: "final";
-      data: Except<FV, "id" | "owner" | "initial"> & RequiredFields;
+      data: Except<FV, "id" | "initial"> & RequiredFields;
       urls: { image: string; logo: string };
     };
 
@@ -19,7 +19,6 @@ export function toProfileUpdate(arg: Arg): EndowmentProfileUpdate {
     const { data: d } = arg;
     return {
       id: d.id,
-      owner: d.owner,
       active_in_countries: d.active_in_countries ?? [],
       categories: { sdgs: d.sdgs ?? [], general: [] },
       charity_navigator_rating: "",

@@ -3,10 +3,11 @@ import { Diff, PrimitiveValue } from "types/utils";
 import { Obj, flatten } from "./flatten";
 
 export const NOT_SET = "not-set";
+
 //NOTE: intended for shallow form objects only atm
-export function getPayloadDiff<T extends object>(prev: T, next: T): Diff[] {
-  const flatPrev = flatten(prev as Obj);
-  const flatNext = flatten(next as Obj);
+export function getPayloadDiff<T extends Obj>(prev: T, next: T): Diff[] {
+  const flatPrev = flatten(prev);
+  const flatNext = flatten(next);
 
   const diffs: Diff[] = [];
   const keys: { [k: string]: true } = {};

@@ -59,7 +59,6 @@ export default function useSubmit() {
 
       const updates: ProfileUpdateMsg = {
         id,
-        owner: "to be removed eventually",
         program: [program],
       };
       await updateProfile(updates);
