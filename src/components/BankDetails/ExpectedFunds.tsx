@@ -1,5 +1,5 @@
 import { Popover, Transition } from "@headlessui/react";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import Icon from "components/Icon";
 import { Label } from "components/form";
 import { APP_NAME } from "constants/env";
@@ -10,6 +10,7 @@ type Props = {
 };
 
 export default function ExpectedFunds({ disabled, onChange }: Props) {
+  const [value, setValue] = useState("");
   return (
     <div className="field">
       <div className="flex sm:gap-2 items-center mb-1">
@@ -22,7 +23,7 @@ export default function ExpectedFunds({ disabled, onChange }: Props) {
             <Popover.Button className="group flex items-center rounded-full text-base font-medium hover:text-orange focus:outline-none">
               <Icon type="Info" className="text-2xl" />
             </Popover.Button>
-            {/** Transition is configured so that the popover appears from the top on smaller screens and from the bottom larger screens*/}
+            {/** Transition is configured so that the popover appears from the top on smaller screens and from the bottom on larger screens*/}
             <Transition
               as={Fragment}
               enter="transition ease-out duration-200"
@@ -46,19 +47,21 @@ export default function ExpectedFunds({ disabled, onChange }: Props) {
         <input
           id="amount"
           type="text"
+          value={value}
           placeholder="10.000"
           onChange={(event) => {
-            const value = Number(event.target.value);
-            if (!isNaN(value)) {
-              onChange(value);
+            const tvalue = Number(event.target.value);
+            if (isNaN(tvalue)) {
+              return event.preventDefault();
             }
+            setValue(event.target.value);
+            onChange(tvalue);
           }}
           className="field-input text-field"
           autoComplete="off"
           spellCheck={false}
           disabled={disabled}
           inputMode="numeric"
-          pattern="[0-9]*"
         />
       </div>
     </div>
