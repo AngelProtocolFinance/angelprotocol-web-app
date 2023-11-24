@@ -52,7 +52,7 @@ export default function useSubmit() {
   };
 
   return {
-    submit: handleSubmit(submit, (error) => console.log(error)),
+    submit: handleSubmit(submit),
     isSubmitting,
   };
 }

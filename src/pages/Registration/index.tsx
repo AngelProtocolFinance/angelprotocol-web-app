@@ -1,5 +1,6 @@
 import { Suspense, lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
+import withAuth from "contexts/Auth";
 import Seo from "components/Seo";
 import { APP_NAME, DAPP_URL } from "constants/env";
 import SignResult from "./SigningResult";
@@ -11,7 +12,7 @@ const Steps = lazy(() => import("./Steps"));
 const Resume = lazy(() => import("./Resume"));
 const Success = lazy(() => import("./Success"));
 
-export default function Registration() {
+function Registration() {
   return (
     <Suspense
       fallback={<div className="place-self-center">Loading page...</div>}
@@ -53,3 +54,5 @@ export default function Registration() {
     </Suspense>
   );
 }
+
+export default withAuth(Registration);

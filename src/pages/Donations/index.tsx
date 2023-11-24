@@ -1,6 +1,6 @@
-import { useAuthenticator } from "@aws-amplify/ui-react";
 import { DonationMadeByDonor } from "types/aws";
 import { usePaginatedDonationRecords } from "services/apes";
+import withAuth from "contexts/Auth";
 import CsvExporter from "components/CsvExporter";
 import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
@@ -10,9 +10,8 @@ import MobileTable from "./MobileTable";
 import NoDonations from "./NoDonations";
 import Table from "./Table";
 
-export default function Donations() {
-  const { user } = useAuthenticator((context) => [context.user]);
-  const donorAddress = user.attributes?.email ?? "";
+export default withAuth(function Donations({ user }) {
+  const donorAddress = user.email;
   const {
     data,
     hasMore,
@@ -97,7 +96,7 @@ export default function Donations() {
       </QueryLoader>
     </div>
   );
-}
+});
 
 const csvHeaders: { key: keyof DonationMadeByDonor; label: string }[] = [
   { key: "amount", label: "Amount" },

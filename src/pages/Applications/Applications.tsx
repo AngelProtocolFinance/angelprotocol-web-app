@@ -1,10 +1,11 @@
+import withAuth from "contexts/Auth";
 import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
 import Filter from "./Filter";
 import Table from "./Table";
 import usePaginatedApplications from "./usePaginatedApplications";
 
-export default function Applications() {
+function Applications() {
   const {
     data,
     hasMore,
@@ -72,3 +73,4 @@ export default function Applications() {
     </div>
   );
 }
+export default withAuth(Applications, ["ap"]);

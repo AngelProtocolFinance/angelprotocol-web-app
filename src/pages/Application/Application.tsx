@@ -1,11 +1,12 @@
 import { useParams } from "react-router-dom";
 import { useApplicationQuery } from "services/aws/aws";
+import withAuth from "contexts/Auth";
 import LoaderRing from "components/LoaderRing";
 import QueryLoader from "components/QueryLoader";
 import { ErrorStatus } from "components/Status";
 import Loaded from "./Loaded";
 
-export default function Application() {
+function Application() {
   const { id = "" } = useParams();
   const queryState = useApplicationQuery(id, { skip: !id });
 
@@ -32,3 +33,5 @@ export default function Application() {
     </div>
   );
 }
+
+export default withAuth(Application, ["ap"]);

@@ -21,7 +21,8 @@ import {
   WalletProfile,
 } from "types/aws";
 import { network } from "services/constants";
-import { jwtToken } from "helpers/jwt-token";
+import { RootState } from "store/store";
+import { userIsSignedIn } from "slices/auth";
 import { TEMP_JWT } from "constants/auth";
 import { APIs } from "constants/urls";
 import { version as v } from "../helpers";
@@ -33,9 +34,13 @@ const awsBaseQuery = retry(
   fetchBaseQuery({
     baseUrl: APIs.aws,
     mode: "cors",
-    async prepareHeaders(headers) {
+    prepareHeaders(headers, { getState }) {
+      const {
+        auth: { user },
+      } = getState() as RootState;
+
       if (headers.get("authorization") === TEMP_JWT) {
-        headers.set("authorization", await jwtToken());
+        headers.set("authorization", userIsSignedIn(user) ? user.token : "");
       }
       return headers;
     },
