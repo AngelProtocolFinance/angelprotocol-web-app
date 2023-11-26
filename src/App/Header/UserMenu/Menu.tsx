@@ -28,10 +28,10 @@ export default function Menu({ classes = "", user, signOut }: Props) {
           <Icon type="Money" className="text-lg" />
           <span>My Donations</span>
         </Link>
-        <div className="mt-2 text-sm flex items-center gap-2 text-gray">
+        {/*<div className="mt-2 text-sm flex items-center gap-2 text-gray">
           <Icon type="User" className="text-lg" />
           <span>My profile (coming soon!)</span>
-        </div>
+        </div>*/}
 
         <div className="hidden [&:has(a)]:grid mt-6 gap-2">
           <h5 className="uppercase text-xs text-gray-d1 -mb-1">
