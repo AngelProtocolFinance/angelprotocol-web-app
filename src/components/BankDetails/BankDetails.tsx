@@ -65,17 +65,18 @@ export default function BankDetails({
         value={targetCurrency}
         currencies={currencies}
         onChange={setTargetCurrency}
-        classes="w-full md:w-80"
+        className="w-full md:w-80"
         disabled={disabled}
       />
       <ExpectedFunds
+        className="md:w-80"
+        disabled={disabled}
         onChange={(value) => {
           // if new value is empty or 0 (zero), no need to debounce, but
           // still call the function itself to cancel the previous debounce call
           const delay = !value ? 0 : 1000;
           debounce(() => setExpectedMontlyDonations(value), delay);
         }}
-        disabled={disabled}
       />
 
       {/* Display disabled form buttons by default, this is necessary 

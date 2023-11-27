@@ -5,12 +5,14 @@ import { Label } from "components/form";
 import { APP_NAME } from "constants/env";
 
 type Props = {
+  className: string;
   disabled: boolean;
   onChange: (expectedFunds: number) => void;
 };
 
-export default function ExpectedFunds({ disabled, onChange }: Props) {
+export default function ExpectedFunds(props: Props) {
   const [value, setValue] = useState("");
+
   return (
     <div className="field">
       <div className="flex sm:gap-2 items-center mb-1">
@@ -43,27 +45,25 @@ export default function ExpectedFunds({ disabled, onChange }: Props) {
           </>
         </Popover>
       </div>
-      <div className="w-full md:w-80">
-        <input
-          id="amount"
-          type="text"
-          value={value}
-          placeholder="10.000"
-          onChange={(event) => {
-            const tvalue = Number(event.target.value);
-            if (isNaN(tvalue)) {
-              return event.preventDefault();
-            }
-            setValue(event.target.value);
-            onChange(tvalue);
-          }}
-          className="field-input text-field"
-          autoComplete="off"
-          spellCheck={false}
-          disabled={disabled}
-          inputMode="numeric"
-        />
-      </div>
+      <input
+        id="amount"
+        type="text"
+        value={value}
+        placeholder="10.000"
+        onChange={(event) => {
+          const tvalue = Number(event.target.value);
+          if (isNaN(tvalue)) {
+            return event.preventDefault();
+          }
+          setValue(event.target.value);
+          props.onChange(tvalue);
+        }}
+        className={`field-input text-field ${props.className}`}
+        autoComplete="off"
+        spellCheck={false}
+        disabled={props.disabled}
+        inputMode="numeric"
+      />
     </div>
   );
 }
