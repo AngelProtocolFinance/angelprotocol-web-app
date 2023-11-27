@@ -19,7 +19,7 @@ export default function Form({
       onReset={onReset}
       className={`${className} grid content-start gap-6 text-sm font-body`}
     >
-      <label className="-mb-4">Endowment name:</label>
+      <label className="-mb-4">Non-profit name:</label>
       <EndowmentSelector />
 
       <CheckField<FV> name="isDescriptionTextHidden">Hide text</CheckField>

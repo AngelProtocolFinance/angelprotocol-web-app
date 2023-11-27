@@ -18,7 +18,7 @@ export default function Dashboard() {
         queryState={queryState}
         messages={{
           loading: <LoaderSkeleton />,
-          error: "Failed to get endowment info",
+          error: "Failed to get non-profit organisation info",
         }}
       >
         {({

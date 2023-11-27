@@ -121,7 +121,7 @@ export default function Form() {
           classes={{ button: "field-input-admin" }}
         />
         <Label className="-mb-4" required>
-          Endowment Designation
+          Organization Designation
         </Label>
         <Selector<FV, "endow_designation", string>
           name="endow_designation"

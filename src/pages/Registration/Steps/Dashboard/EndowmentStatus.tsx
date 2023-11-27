@@ -33,7 +33,7 @@ export default function EndowmentStatus({
               size={20}
             />
             <span className="max-sm:text-center">
-              Your endowment application has been rejected.
+              Your non-profit's application has been rejected.
             </span>
           </p>
           <button
