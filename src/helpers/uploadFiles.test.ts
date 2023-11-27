@@ -1,4 +1,3 @@
-import { afterEach } from "node:test";
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { APIs } from "constant/urls";
 import { Bucket, bucketURL, uploadFiles } from "./uploadFiles";
@@ -12,10 +11,6 @@ vi.mock("./jwt-token", () => ({ jwtToken: () => AUTH_TOKEN }));
 
 beforeEach(() => {
   global.fetch = vi.fn() as any;
-});
-
-afterEach(() => {
-  vi.clearAllMocks();
 });
 
 describe("uploadFiles tests", () => {
