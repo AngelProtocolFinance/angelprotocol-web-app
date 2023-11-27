@@ -32,7 +32,6 @@ export const loadSession = createAsyncThunk<User, AuthUser | undefined>(
         user ? Promise.resolve(user) : getCurrentUser(),
       ]);
 
-      //possible state is [] | undefined
       const { endows, "cognito:groups": groups = [] } =
         session.tokens.idToken?.payload || {};
 
