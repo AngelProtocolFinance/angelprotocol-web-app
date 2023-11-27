@@ -18,6 +18,7 @@ type Props = {
   children: (
     disabled: boolean,
     isSubmitting: boolean,
+    newRequirementsAdded: boolean,
     refreshRequired: boolean
   ) => ReactNode;
   onSubmit: (
@@ -82,7 +83,7 @@ export default function BankDetails({
       {/* Display disabled form buttons by default, this is necessary 
           to be able to show "Back" button during registration */}
       {!expectedMontlyDonations ? (
-        formButtons(true, false, true)
+        formButtons(true, false, false, true)
       ) : (
         <>
           <Divider />

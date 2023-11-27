@@ -16,6 +16,7 @@ import { addRequirementGroup, getDefaultValues } from "./helpers";
 type RequirementsData = {
   accountRequirements: AccountRequirements;
   currentFormValues: FormValues;
+  newRequirementsAdded: boolean;
   /**
    * Indicates whether requirements refresh is necessary.
    * See https://docs.wise.com/api-docs/api-reference/recipient#account-requirements
@@ -38,7 +39,6 @@ export default function useRecipientDetails(
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [quote, setQuote] = useState<Quote>(); // store quote to use to refresh requirements
   const [isLoading, setLoading] = useState(true); // starts in loading state, loads only once
-  const [isSubmitting, setSubmitting] = useState(false);
   const [isError, setError] = useState(false);
 
   const { handleError } = useErrorContext();
@@ -70,6 +70,7 @@ export default function useRecipientDetails(
             const data: RequirementsData = {
               accountRequirements: item,
               currentFormValues: getDefaultValues(item, targetCurrency),
+              newRequirementsAdded: false,
               refreshRequired: item.fields.some((field) =>
                 field.group.some((group) => group.refreshRequirementsOnChange)
               ),
@@ -124,8 +125,6 @@ export default function useRecipientDetails(
         );
       }
 
-      setSubmitting(true);
-
       const newRequirements = await postAccountRequirements({
         quoteId: quote.id,
         request,
@@ -133,17 +132,16 @@ export default function useRecipientDetails(
 
       setRequirementsDataArray((prev) => {
         const updated: RequirementsData[] = newRequirements.map((newReq) => {
-          // should always be found, but not 100% sure how Wise behaves in all cases
-          const prevReq = prev.find(
-            (x) => x.accountRequirements.type === newReq.type
+          const { formValues, newRequirementsAdded } = getRefreshedFormValues(
+            prev,
+            newReq,
+            targetCurrency
           );
-          const currFormValues = !prevReq
-            ? getDefaultValues(newReq, targetCurrency)
-            : getRefreshedFormValues(prevReq, newReq);
 
           return {
             accountRequirements: newReq,
-            currentFormValues: currFormValues,
+            currentFormValues: formValues,
+            newRequirementsAdded,
             refreshRequired:
               prev[selectedIndex].accountRequirements.type === newReq.type
                 ? false // just finished checking requirements for selected type, so no need to do it again
@@ -156,8 +154,6 @@ export default function useRecipientDetails(
     } catch (error) {
       handleError(error, GENERIC_ERROR_MESSAGE);
       setError(true);
-    } finally {
-      setSubmitting(false);
     }
   };
 
@@ -167,14 +163,11 @@ export default function useRecipientDetails(
     isDirty: boolean
   ) => {
     try {
-      setSubmitting(true);
       await onSubmit(request, bankStatementFile, isDirty);
       setError(false);
     } catch (error) {
       handleError(error, GENERIC_ERROR_MESSAGE);
       setError(true);
-    } finally {
-      setSubmitting(false);
     }
   };
 
@@ -182,7 +175,6 @@ export default function useRecipientDetails(
     handleSubmit,
     isError,
     isLoading,
-    isSubmitting,
     refreshRequirements,
     requirementsDataArray,
     selectedIndex,
@@ -197,12 +189,31 @@ export default function useRecipientDetails(
  *
  * @param currReqData current requirements data
  * @param newReq new requirements that might include new requirement groups
- * @returns previous form values with the new requirements included and set to appropriate default value
+ * @param targetCurrency target currency
+ * @returns object containing previous form values with the new requirements included and set to appropriate default values AND
+ * a flag indicating whether any new requirements were added to the form
  */
 function getRefreshedFormValues(
-  currReqData: RequirementsData,
-  newReq: AccountRequirements
-): FormValues {
+  currReqDataArray: RequirementsData[],
+  newReq: AccountRequirements,
+  targetCurrency: string
+): {
+  newRequirementsAdded: boolean;
+  formValues: FormValues;
+} {
+  // should always be found, but not 100% sure how Wise behaves in all cases
+  const currReqData = currReqDataArray.find(
+    (x) => x.accountRequirements.type === newReq.type
+  );
+
+  if (!currReqData) {
+    // as previously said, very unlikely to ever happen
+    return {
+      formValues: getDefaultValues(newReq, targetCurrency),
+      newRequirementsAdded: true, // these are technically new requirements
+    };
+  }
+
   // get current requirement groups
   const currGroups = currReqData.accountRequirements.fields.flatMap(
     (field) => field.group
@@ -225,5 +236,8 @@ function getRefreshedFormValues(
     requirements: newRequirements,
   };
 
-  return newFormValues;
+  return {
+    formValues: newFormValues,
+    newRequirementsAdded: !isEmpty(newGroups),
+  };
 }

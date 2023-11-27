@@ -16,6 +16,7 @@ type Props = {
   formButtons: (
     disabled: boolean,
     isSubmitting: boolean,
+    newRequirementsAdded: boolean,
     refreshRequired: boolean
   ) => ReactNode;
   onSubmit: (
@@ -36,7 +37,6 @@ export default function RecipientDetails({
     handleSubmit,
     isError,
     isLoading,
-    // isSubmitting, // should disable the UI when true
     refreshRequirements,
     requirementsDataArray,
     selectedIndex,
@@ -102,6 +102,7 @@ export default function RecipientDetails({
         defaultValues={requirements.currentFormValues}
         disabled={disabled}
         refreshRequired={requirements.refreshRequired}
+        newRequirementsAdded={requirements.newRequirementsAdded}
         onUpdateValues={updateDefaultValues}
         onSubmit={handleSubmit}
         onRefresh={refreshRequirements}

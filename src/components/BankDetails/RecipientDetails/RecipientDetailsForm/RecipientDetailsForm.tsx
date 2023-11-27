@@ -10,10 +10,12 @@ type Props = {
   accountRequirements: AccountRequirements;
   defaultValues: FormValues;
   disabled: boolean;
+  newRequirementsAdded: boolean;
   refreshRequired: boolean;
   formButtons: (
     disabled: boolean,
     isSubmitting: boolean,
+    newRequirementsAdded: boolean,
     refreshRequired: boolean
   ) => ReactNode;
   onUpdateValues: (formValues: FormValues) => void;
@@ -47,6 +49,7 @@ export default function RecipientDetailsForm(props: Props) {
       <Form
         accountRequirements={props.accountRequirements}
         disabled={props.disabled}
+        newRequirementsAdded={props.newRequirementsAdded}
         refreshRequired={props.refreshRequired}
         onRefresh={async (request) => {
           // update current form values prior to refreshing the form (loads new fields)

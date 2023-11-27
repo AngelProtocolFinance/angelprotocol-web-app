@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
 import { FormValues } from "../types";
 import { AccountRequirements, CreateRecipientRequest } from "types/aws";
@@ -16,10 +16,12 @@ const fileTooltip = `Valid types are: ${VALID_MIME_TYPES.join(
 type Props = {
   accountRequirements: AccountRequirements;
   disabled: boolean;
+  newRequirementsAdded: boolean;
   refreshRequired: boolean;
   formButtons: (
     disabled: boolean,
     isSubmitting: boolean,
+    newRequirementsAdded: boolean,
     refreshRequired: boolean
   ) => ReactNode;
   onRefresh: (request: CreateRecipientRequest) => Promise<void>;
@@ -36,6 +38,8 @@ export default function Form(props: Props) {
     formState: { isSubmitting, isDirty },
   } = useFormContext<FormValues>();
 
+  const form = useRef<HTMLFormElement>(null);
+
   const handleSubmission = handleSubmit(async (formValues) => {
     const { bankStatementFile, ...bankDetails } = formValues;
     const request = formToCreateRecipientRequest(bankDetails);
@@ -46,8 +50,18 @@ export default function Form(props: Props) {
     }
   });
 
+  // this should run only when new requirement fields are added
+  // manually requesting a form submission will run the validation logic
+  // and immediately validate all the newly added fields, clearly marking all the
+  // invalid ones to make it easier for the user to notice them
+  useEffect(() => {
+    if (props.newRequirementsAdded && form.current) {
+      form.current.requestSubmit();
+    }
+  }, [props.newRequirementsAdded]);
+
   return (
-    <form onSubmit={handleSubmission} className="grid gap-6">
+    <form onSubmit={handleSubmission} ref={form} className="grid gap-6">
       {props.accountRequirements.fields
         .flatMap((field) => field.group)
         .map((requirements) => (
@@ -66,7 +80,12 @@ export default function Form(props: Props) {
         />
       </div>
 
-      {props.formButtons(props.disabled, isSubmitting, props.refreshRequired)}
+      {props.formButtons(
+        props.disabled,
+        isSubmitting,
+        props.newRequirementsAdded,
+        props.refreshRequired
+      )}
     </form>
   );
 }
