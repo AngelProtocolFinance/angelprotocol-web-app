@@ -84,7 +84,7 @@ export default function Banking() {
 
   return (
     <Group
-      className="grid gap-5 max-w-4xl justify-self-center"
+      className="max-w-4xl justify-self-center"
       title="Bank account details"
       description="The following information will be used to register your bank account that will be used to withdraw your funds."
     >
