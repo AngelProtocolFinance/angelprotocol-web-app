@@ -22,12 +22,12 @@ type Props = {
     isSubmitting: boolean,
     refreshRequired: boolean
   ) => ReactNode;
-  onRefresh: (request: CreateRecipientRequest) => void;
+  onRefresh: (request: CreateRecipientRequest) => Promise<void>;
   onSubmit: (
     request: CreateRecipientRequest,
     bankStatementFile: FileDropzoneAsset,
     isDirty: boolean
-  ) => void;
+  ) => Promise<void>;
 };
 
 export default function Form(props: Props) {
@@ -36,13 +36,13 @@ export default function Form(props: Props) {
     formState: { isSubmitting, isDirty },
   } = useFormContext<FormValues>();
 
-  const handleSubmission = handleSubmit((formValues) => {
+  const handleSubmission = handleSubmit(async (formValues) => {
     const { bankStatementFile, ...bankDetails } = formValues;
     const request = formToCreateRecipientRequest(bankDetails);
     if (props.refreshRequired) {
-      props.onRefresh(request);
+      await props.onRefresh(request);
     } else {
-      props.onSubmit(request, bankStatementFile, isDirty);
+      await props.onSubmit(request, bankStatementFile, isDirty);
     }
   });
 
