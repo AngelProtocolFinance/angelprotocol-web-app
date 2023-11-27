@@ -95,7 +95,8 @@ export default function Table({
                   {new Date(date).toLocaleDateString()}
                 </span>
                 <ExtLink
-                  href={getTxUrl(chainId, hash)}
+                  //default to ethereum for staging
+                  href={getTxUrl(chainId === "staging" ? "1" : chainId, hash)}
                   className="text-center text-blue cursor-pointer uppercase text-sm"
                 >
                   {maskAddress(hash)}

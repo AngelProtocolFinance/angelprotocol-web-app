@@ -14,7 +14,7 @@ export type KYCData = {
 
 type DonationRecordBase = {
   amount: number;
-  chainId: ChainID;
+  chainId: ChainID | "staging";
   date: string;
   hash: string;
   symbol: string;
