@@ -38,7 +38,6 @@ export default function useRecipientDetails(
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [quote, setQuote] = useState<Quote>(); // store quote to use to refresh requirements
   const [isLoading, setLoading] = useState(true); // starts in loading state, loads only once
-  const [isSubmitting, setSubmitting] = useState(false);
   const [isError, setError] = useState(false);
 
   const { handleError } = useErrorContext();
@@ -124,8 +123,6 @@ export default function useRecipientDetails(
         );
       }
 
-      setSubmitting(true);
-
       const newRequirements = await postAccountRequirements({
         quoteId: quote.id,
         request,
@@ -156,8 +153,6 @@ export default function useRecipientDetails(
     } catch (error) {
       handleError(error, GENERIC_ERROR_MESSAGE);
       setError(true);
-    } finally {
-      setSubmitting(false);
     }
   };
 
@@ -167,14 +162,11 @@ export default function useRecipientDetails(
     isDirty: boolean
   ) => {
     try {
-      setSubmitting(true);
       await onSubmit(request, bankStatementFile, isDirty);
       setError(false);
     } catch (error) {
       handleError(error, GENERIC_ERROR_MESSAGE);
       setError(true);
-    } finally {
-      setSubmitting(false);
     }
   };
 
@@ -182,7 +174,6 @@ export default function useRecipientDetails(
     handleSubmit,
     isError,
     isLoading,
-    isSubmitting,
     refreshRequirements,
     requirementsDataArray,
     selectedIndex,

@@ -36,7 +36,6 @@ export default function RecipientDetails({
     handleSubmit,
     isError,
     isLoading,
-    // isSubmitting, // should disable the UI when true
     refreshRequirements,
     requirementsDataArray,
     selectedIndex,
