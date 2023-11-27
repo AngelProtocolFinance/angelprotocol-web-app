@@ -3,15 +3,14 @@ import { Fragment } from "react";
 import Icon from "components/Icon";
 
 type Props = {
-  className?: string;
   onClick: () => void;
 };
 
 export default function UpdateDetailsButton(props: Props) {
-  const { className = "", onClick } = props;
+  const { onClick } = props;
 
   return (
-    <div className={`flex gap-2 items-center ${className}`}>
+    <div className="flex gap-2 items-center">
       <button
         type="button"
         className="px-2 btn-orange text-xs w-40"

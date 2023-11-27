@@ -54,12 +54,7 @@ export default function BankDetails({
   }
 
   if (!shouldUpdate) {
-    return (
-      <UpdateDetailsButton
-        className="my-4"
-        onClick={() => setShouldUpdate(true)}
-      />
-    );
+    return <UpdateDetailsButton onClick={() => setShouldUpdate(true)} />;
   }
 
   const disabled = !shouldUpdate || isSubmitting;
