@@ -53,16 +53,19 @@ export default function BankDetails({
     return <span>{GENERIC_ERROR_MESSAGE}</span>;
   }
 
+  if (!shouldUpdate) {
+    return (
+      <UpdateDetailsButton
+        className="my-4"
+        onClick={() => setShouldUpdate(true)}
+      />
+    );
+  }
+
   const disabled = !shouldUpdate || isSubmitting;
 
   return (
     <div className="grid gap-6">
-      {!shouldUpdate && (
-        <UpdateDetailsButton
-          className="my-4"
-          onClick={() => setShouldUpdate(true)}
-        />
-      )}
       <CurrencySelector
         value={targetCurrency}
         currencies={currencies}
