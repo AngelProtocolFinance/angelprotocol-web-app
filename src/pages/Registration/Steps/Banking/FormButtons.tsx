@@ -16,13 +16,13 @@ export default function FormButtons({ refreshRequired, ...rest }: Props) {
 function Refresh({ disabled, isSubmitting }: Omit<Props, "refreshRequired">) {
   const { data } = useRegState<5>();
   return (
-    <>
-      <span>
+    <div className="grid gap-4 mt-8">
+      <i className="text-xs sm:text-sm">
         After you fill the form, we may need additional information to be able
         to submit your bank details for validation. Please fill the form and
         click the "Check requirements" button below.
-      </span>
-      <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
+      </i>
+      <div className="grid grid-cols-2 sm:flex gap-2">
         <Link
           aria-disabled={isSubmitting}
           to={`../${steps.docs}`}
@@ -42,7 +42,7 @@ function Refresh({ disabled, isSubmitting }: Omit<Props, "refreshRequired">) {
           </LoadText>
         </button>
       </div>
-    </>
+    </div>
   );
 }
 

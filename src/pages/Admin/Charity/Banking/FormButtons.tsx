@@ -12,12 +12,12 @@ export default function FormButtons({
   refreshRequired,
 }: Props) {
   return refreshRequired ? (
-    <>
-      <span>
+    <div className="grid gap-4 mt-8">
+      <i className="text-xs sm:text-sm">
         After you fill the form, we may need additional information to be able
         to submit your bank details for validation. Please fill the form and
         click the "Check requirements" button below.
-      </span>
+      </i>
       <button
         disabled={disabled || isSubmitting}
         type="submit"
@@ -27,7 +27,7 @@ export default function FormButtons({
           Check Requirements
         </LoadText>
       </button>
-    </>
+    </div>
   ) : (
     <button
       disabled={disabled || isSubmitting}
