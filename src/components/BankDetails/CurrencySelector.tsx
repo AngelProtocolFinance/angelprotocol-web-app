@@ -1,10 +1,8 @@
 import { Combobox, Transition } from "@headlessui/react";
 import { Fragment, memo, useRef, useState } from "react";
-import { Classes } from "components/form/types";
 import { WiseCurrency } from "types/aws";
 import { DrawerIcon } from "components/Icon";
 import { Label } from "components/form";
-import { unpack } from "components/form/helpers";
 import { isEmpty } from "helpers";
 
 export type Currency = {
@@ -13,7 +11,7 @@ export type Currency = {
 };
 
 type Props = {
-  classes?: Classes;
+  classes: { combobox: string };
   disabled: boolean;
   value: Currency;
   currencies: Currency[];
@@ -43,8 +41,6 @@ function CurrencySelector(props: Props) {
       ? props.currencies
       : props.currencies.filter(currencyFilter(query));
 
-  const classes = unpack(props.classes);
-
   return (
     <div className="field">
       <Label htmlFor={inputRef.current?.id} required aria-required>
@@ -56,7 +52,7 @@ function CurrencySelector(props: Props) {
         disabled={props.disabled}
         onChange={props.onChange}
         as="div"
-        className={`relative items-center grid grid-cols-[1fr_auto] field-container ${classes.container}`}
+        className={`relative items-center grid grid-cols-[1fr_auto] field-container ${props.classes.combobox}`}
       >
         <Combobox.Input
           ref={inputRef}

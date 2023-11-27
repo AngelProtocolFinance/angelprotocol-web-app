@@ -43,7 +43,7 @@ export default function BankDetails({
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center gap-2">
+      <div className="flex items-center gap-2">
         <LoaderRing thickness={10} classes="w-6" /> Loading...
       </div>
     );
@@ -54,12 +54,7 @@ export default function BankDetails({
   }
 
   if (!shouldUpdate) {
-    return (
-      <UpdateDetailsButton
-        className="my-4"
-        onClick={() => setShouldUpdate(true)}
-      />
-    );
+    return <UpdateDetailsButton onClick={() => setShouldUpdate(true)} />;
   }
 
   const disabled = !shouldUpdate || isSubmitting;
@@ -70,17 +65,18 @@ export default function BankDetails({
         value={targetCurrency}
         currencies={currencies}
         onChange={setTargetCurrency}
-        classes="w-60 md:w-80"
+        classes={{ combobox: "w-full md:w-80" }}
         disabled={disabled}
       />
       <ExpectedFunds
+        classes={{ input: "md:w-80" }}
+        disabled={disabled}
         onChange={(value) => {
           // if new value is empty or 0 (zero), no need to debounce, but
           // still call the function itself to cancel the previous debounce call
           const delay = !value ? 0 : 1000;
           debounce(() => setExpectedMontlyDonations(value), delay);
         }}
-        disabled={disabled}
       />
 
       {/* Display disabled form buttons by default, this is necessary 

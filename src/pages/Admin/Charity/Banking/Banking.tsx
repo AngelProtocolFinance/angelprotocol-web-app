@@ -83,28 +83,25 @@ export default function Banking() {
   };
 
   return (
-    <div className="grid">
-      <div className="grid gap-5 max-w-4xl justify-self-center">
-        <Group
-          title="Bank account details"
-          description="The following information will be used to register your bank account that will be used to withdraw your funds."
-        >
-          <VerificationStatus status={verif_status} />
-          <BankDetails
-            alreadySubmitted={isSubmitted}
+    <Group
+      className="max-w-4xl justify-self-center"
+      title="Bank account details"
+      description="The following information will be used to register your bank account that will be used to withdraw your funds."
+    >
+      <VerificationStatus status={verif_status} />
+      <BankDetails
+        alreadySubmitted={isSubmitted}
+        isSubmitting={isSubmitting}
+        onSubmit={submit}
+      >
+        {(disabled, isSubmitting, refreshRequired) => (
+          <FormButtons
+            disabled={disabled}
             isSubmitting={isSubmitting}
-            onSubmit={submit}
-          >
-            {(disabled, isSubmitting, refreshRequired) => (
-              <FormButtons
-                disabled={disabled}
-                isSubmitting={isSubmitting}
-                refreshRequired={refreshRequired}
-              />
-            )}
-          </BankDetails>
-        </Group>
-      </div>
-    </div>
+            refreshRequired={refreshRequired}
+          />
+        )}
+      </BankDetails>
+    </Group>
   );
 }
