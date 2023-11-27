@@ -32,9 +32,11 @@ export default function UserMenu() {
         <Icon size={24} type="User" className="text-white disabled:text-gray" />
       </Popover.Button>
 
-      <Popover.Panel className="mt-2 absolute z-10 w-max right-0">
-        <Menu user={user} signOut={() => dispatch(logout())} />
-      </Popover.Panel>
+      <Menu
+        user={user}
+        signOut={() => dispatch(logout())}
+        classes="mt-2 absolute z-10 w-max right-0"
+      />
     </Popover>
   );
 }
