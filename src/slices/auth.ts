@@ -33,14 +33,19 @@ export const loadSession = createAsyncThunk<User, AuthUser | undefined>(
       ]);
 
       //possible state is [] | undefined
-      const { endowments = [], "cognito:groups": groups = [] } =
-        session.tokens.accessToken.payload;
+      const { endows, "cognito:groups": groups = [] } =
+        session.tokens.idToken?.payload || {};
+
       const token = session.tokens.accessToken.toString();
+      const endowments =
+        typeof endows === "string" && endows !== ""
+          ? endows.split(",").map(Number)
+          : [];
 
       return {
         token,
         groups: groups as string[], //AWS generated so there's a level of safety
-        endowments: endowments as number[],
+        endowments: endowments,
         /**
          * email is guaranteed as it is the primary verifcation mechanism,
          * and is always retrieved from federated signin
