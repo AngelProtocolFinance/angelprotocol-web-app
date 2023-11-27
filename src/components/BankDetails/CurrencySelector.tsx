@@ -11,7 +11,7 @@ export type Currency = {
 };
 
 type Props = {
-  className: string;
+  classes: { combobox: string };
   disabled: boolean;
   value: Currency;
   currencies: Currency[];
@@ -52,7 +52,7 @@ function CurrencySelector(props: Props) {
         disabled={props.disabled}
         onChange={props.onChange}
         as="div"
-        className={`relative items-center grid grid-cols-[1fr_auto] field-container ${props.className}`}
+        className={`relative items-center grid grid-cols-[1fr_auto] field-container ${props.classes.combobox}`}
       >
         <Combobox.Input
           ref={inputRef}

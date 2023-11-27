@@ -65,11 +65,11 @@ export default function BankDetails({
         value={targetCurrency}
         currencies={currencies}
         onChange={setTargetCurrency}
-        className="w-full md:w-80"
+        classes={{ combobox: "w-full md:w-80" }}
         disabled={disabled}
       />
       <ExpectedFunds
-        className="md:w-80"
+        classes={{ input: "md:w-80" }}
         disabled={disabled}
         onChange={(value) => {
           // if new value is empty or 0 (zero), no need to debounce, but

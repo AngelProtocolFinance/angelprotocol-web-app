@@ -5,7 +5,7 @@ import { Label } from "components/form";
 import { APP_NAME } from "constants/env";
 
 type Props = {
-  className: string;
+  classes: { input: string };
   disabled: boolean;
   onChange: (expectedFunds: number) => void;
 };
@@ -58,7 +58,7 @@ export default function ExpectedFunds(props: Props) {
           setValue(event.target.value);
           props.onChange(tvalue);
         }}
-        className={`field-input text-field ${props.className}`}
+        className={`field-input text-field ${props.classes.input}`}
         autoComplete="off"
         spellCheck={false}
         disabled={props.disabled}
