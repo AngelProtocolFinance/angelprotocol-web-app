@@ -22,7 +22,7 @@ type Props = {
     request: CreateRecipientRequest,
     bankStatementFile: FileDropzoneAsset,
     isDirty: boolean
-  ) => Promise<any>;
+  ) => Promise<void>;
 };
 
 export default function RecipientDetails({

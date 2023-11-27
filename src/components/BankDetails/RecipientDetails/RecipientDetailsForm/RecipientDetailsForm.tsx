@@ -17,12 +17,12 @@ type Props = {
     refreshRequired: boolean
   ) => ReactNode;
   onUpdateValues: (formValues: FormValues) => void;
-  onRefresh: (request: CreateRecipientRequest) => void;
+  onRefresh: (request: CreateRecipientRequest) => Promise<void>;
   onSubmit: (
     request: CreateRecipientRequest,
     bankStatementFile: FileDropzoneAsset,
     isDirty: boolean
-  ) => void;
+  ) => Promise<void>;
 };
 
 export default function RecipientDetailsForm(props: Props) {
@@ -48,10 +48,10 @@ export default function RecipientDetailsForm(props: Props) {
         accountRequirements={props.accountRequirements}
         disabled={props.disabled}
         refreshRequired={props.refreshRequired}
-        onRefresh={(request) => {
+        onRefresh={async (request) => {
           // update current form values prior to refreshing the form (loads new fields)
           onUpdateValues(getValues());
-          props.onRefresh(request);
+          await props.onRefresh(request);
         }}
         onSubmit={props.onSubmit}
         formButtons={props.formButtons}
