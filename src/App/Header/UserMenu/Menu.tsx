@@ -1,6 +1,10 @@
+import { Popover } from "@headlessui/react";
 import { Link } from "react-router-dom";
-import { AuthenticatedUser } from "slices/auth";
+import { AuthenticatedUser } from "types/auth";
+import Icon from "components/Icon";
+import { groups } from "constants/auth";
 import { appRoutes } from "constants/routes";
+import EndowmentLink from "./EndowmentLink";
 
 type Props = {
   classes?: string;
@@ -9,54 +13,56 @@ type Props = {
 };
 export default function Menu({ classes = "", user, signOut }: Props) {
   return (
-    <div
-      className={`${classes} bg-white dark:bg-blue-d6 w-max rounded overflow-hidden`}
+    <Popover.Panel
+      className={`${classes} shadow-xl bg-gray-l6 dark:bg-blue-d6 w-max rounded overflow-hidden`}
     >
-      <p className="text-sm p-2 text-gray-d1 dark:text-gray">
-        Welcome, {user.firstName || user.email}
+      <p className="text-sm p-3 bg-orange-l6 border-b border-prim">
+        Welcome, {user.firstName || user.email}!
       </p>
 
-      {/**
-       * TODO: temp hidden until donations/:user-id is protected to viewed only
-       * by authenticated user with user-id
-       */}
-      <div className="hidden p-4 border-t border-prim">
+      <div className="w-64 min-h-[5rem] p-3">
         <Link
           to={appRoutes.donations}
-          className="text-orange hover:text-orange-l2 text-sm uppercase"
+          className=" hover:text-orange text-sm flex items-center gap-2"
         >
-          My Donations
+          <Icon type="Money" className="text-lg" />
+          <span>My Donations</span>
         </Link>
-      </div>
+        {/*<div className="mt-2 text-sm flex items-center gap-2 text-gray">
+          <Icon type="User" className="text-lg" />
+          <span>My profile (coming soon!)</span>
+        </div>*/}
 
-      {/** TODO: temp hidden until user endowments are in jwt claim  */}
-      <div className="hidden p-4 border-t border-prim">
-        <Link
-          to={`${appRoutes.admin}/${1}`}
-          className="text-orange hover:text-orange-l2 text-sm uppercase"
-        >
-          Endowment Dashboard
-        </Link>
-      </div>
+        <div className="hidden [&:has(a)]:grid mt-6 gap-2">
+          <h5 className="uppercase text-xs text-gray-d1 -mb-1">
+            My Endowments
+          </h5>
+          {user.endowments.map((endowId) => (
+            <EndowmentLink key={endowId} endowId={endowId} />
+          ))}
+        </div>
 
-      <div className="empty:hidden p-4 border-t border-prim">
-        {user.credentials.includes("ap") && (
-          <Link
-            to={appRoutes.applications}
-            className="text-orange hover:text-orange-l2 text-sm uppercase"
-          >
-            Applications Review
-          </Link>
-        )}
+        <div className="hidden [&:has(a)]:block mt-6">
+          <h5 className="uppercase text-xs text-gray-d1 mb-1">BG Admin</h5>
+          {user.groups.includes(groups["ap-admin"]) && (
+            <Link
+              to={appRoutes.applications}
+              className="hover:text-orange text-sm flex items-center gap-1"
+            >
+              <Icon type="SecurityScan" size={22} />
+              <span>Applications Dashboard</span>
+            </Link>
+          )}
+        </div>
       </div>
       <button
         disabled={user.isSigningOut}
         type="button"
         onClick={signOut}
-        className="btn-orange rounded-none w-full py-1 px-2 tex-sm"
+        className="btn-orange rounded-none w-full p-3 text-sm mt-4"
       >
         Sign out
       </button>
-    </div>
+    </Popover.Panel>
   );
 }
