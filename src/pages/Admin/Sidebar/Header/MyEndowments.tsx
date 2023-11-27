@@ -14,7 +14,7 @@ export default function MyEndowments({ endowments, showEndowments }: Props) {
     >
       <div className="grid py-2 mt-5 gap-3">
         <p className="text-sm text-gray-d1 dark:text-gray font-bold">
-          Other Endowments
+          Other Organizations
         </p>
         <div className="overflow-y-auto max-h-40 scroller grid gap-3">
           {endowments.map((endowment) => (
