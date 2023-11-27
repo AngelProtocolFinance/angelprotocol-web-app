@@ -65,7 +65,7 @@ export default function BankDetails({
         value={targetCurrency}
         currencies={currencies}
         onChange={setTargetCurrency}
-        classes="w-60 md:w-80"
+        classes="w-full md:w-80"
         disabled={disabled}
       />
       <ExpectedFunds
