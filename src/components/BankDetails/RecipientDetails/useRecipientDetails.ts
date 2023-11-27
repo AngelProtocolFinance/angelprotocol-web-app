@@ -16,6 +16,7 @@ import { addRequirementGroup, getDefaultValues } from "./helpers";
 type RequirementsData = {
   accountRequirements: AccountRequirements;
   currentFormValues: FormValues;
+  newRequirementsAdded: boolean;
   /**
    * Indicates whether requirements refresh is necessary.
    * See https://docs.wise.com/api-docs/api-reference/recipient#account-requirements
@@ -69,6 +70,7 @@ export default function useRecipientDetails(
             const data: RequirementsData = {
               accountRequirements: item,
               currentFormValues: getDefaultValues(item, targetCurrency),
+              newRequirementsAdded: false,
               refreshRequired: item.fields.some((field) =>
                 field.group.some((group) => group.refreshRequirementsOnChange)
               ),
@@ -130,17 +132,16 @@ export default function useRecipientDetails(
 
       setRequirementsDataArray((prev) => {
         const updated: RequirementsData[] = newRequirements.map((newReq) => {
-          // should always be found, but not 100% sure how Wise behaves in all cases
-          const prevReq = prev.find(
-            (x) => x.accountRequirements.type === newReq.type
+          const { formValues, newRequirementsAdded } = getRefreshedFormValues(
+            prev,
+            newReq,
+            targetCurrency
           );
-          const currFormValues = !prevReq
-            ? getDefaultValues(newReq, targetCurrency)
-            : getRefreshedFormValues(prevReq, newReq);
 
           return {
             accountRequirements: newReq,
-            currentFormValues: currFormValues,
+            currentFormValues: formValues,
+            newRequirementsAdded,
             refreshRequired:
               prev[selectedIndex].accountRequirements.type === newReq.type
                 ? false // just finished checking requirements for selected type, so no need to do it again
@@ -188,12 +189,31 @@ export default function useRecipientDetails(
  *
  * @param currReqData current requirements data
  * @param newReq new requirements that might include new requirement groups
- * @returns previous form values with the new requirements included and set to appropriate default value
+ * @param targetCurrency target currency
+ * @returns object containing previous form values with the new requirements included and set to appropriate default values AND
+ * a flag indicating whether any new requirements were added to the form
  */
 function getRefreshedFormValues(
-  currReqData: RequirementsData,
-  newReq: AccountRequirements
-): FormValues {
+  currReqDataArray: RequirementsData[],
+  newReq: AccountRequirements,
+  targetCurrency: string
+): {
+  newRequirementsAdded: boolean;
+  formValues: FormValues;
+} {
+  // should always be found, but not 100% sure how Wise behaves in all cases
+  const currReqData = currReqDataArray.find(
+    (x) => x.accountRequirements.type === newReq.type
+  );
+
+  if (!currReqData) {
+    // as previously said, very unlikely to ever happen
+    return {
+      formValues: getDefaultValues(newReq, targetCurrency),
+      newRequirementsAdded: true, // these are technically new requirements
+    };
+  }
+
   // get current requirement groups
   const currGroups = currReqData.accountRequirements.fields.flatMap(
     (field) => field.group
@@ -216,5 +236,8 @@ function getRefreshedFormValues(
     requirements: newRequirements,
   };
 
-  return newFormValues;
+  return {
+    formValues: newFormValues,
+    newRequirementsAdded: !isEmpty(newGroups),
+  };
 }

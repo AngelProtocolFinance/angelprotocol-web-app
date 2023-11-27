@@ -94,10 +94,11 @@ export default function Banking() {
         isSubmitting={isSubmitting}
         onSubmit={submit}
       >
-        {(disabled, isSubmitting, refreshRequired) => (
+        {(disabled, isSubmitting, newRequirementsAdded, refreshRequired) => (
           <FormButtons
             disabled={disabled}
             isSubmitting={isSubmitting}
+            newRequirementsAdded={newRequirementsAdded}
             refreshRequired={refreshRequired}
           />
         )}

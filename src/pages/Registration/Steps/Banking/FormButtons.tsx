@@ -6,6 +6,7 @@ import { useRegState } from "../StepGuard";
 type Props = {
   disabled: boolean;
   isSubmitting: boolean;
+  newRequirementsAdded: boolean;
   refreshRequired: boolean;
 };
 
@@ -46,14 +47,22 @@ function Refresh({ disabled, isSubmitting }: Omit<Props, "refreshRequired">) {
   );
 }
 
-function Submit({ isSubmitting }: { isSubmitting: boolean }) {
+function Submit({
+  isSubmitting,
+  newRequirementsAdded,
+}: {
+  isSubmitting: boolean;
+  newRequirementsAdded: boolean;
+}) {
   const { data } = useRegState<5>();
   return (
     <div className="grid gap-4 mt-8">
       <i className="text-xs sm:text-sm">
-        All requirements are met! Please click continue.
+        {newRequirementsAdded
+          ? "Please check the form again and fill in all the newly added fields."
+          : "All requirements are met! Please click continue."}
       </i>
-      <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
+      <div className="grid grid-cols-2 sm:flex gap-2">
         <Link
           aria-disabled={isSubmitting}
           to={`../${steps.docs}`}

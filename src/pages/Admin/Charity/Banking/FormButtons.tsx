@@ -3,12 +3,14 @@ import { LoadText } from "components/registration";
 type Props = {
   disabled: boolean;
   isSubmitting: boolean;
+  newRequirementsAdded: boolean;
   refreshRequired: boolean;
 };
 
 export default function FormButtons({
   disabled,
   isSubmitting,
+  newRequirementsAdded,
   refreshRequired,
 }: Props) {
   return refreshRequired ? (
@@ -29,9 +31,11 @@ export default function FormButtons({
       </button>
     </div>
   ) : (
-    <div className="grid gap-4 mt-8">
+    <div className="grid gap-4">
       <i className="text-xs sm:text-sm">
-        All requirements are met! Please click continue.
+        {newRequirementsAdded
+          ? "Please check the form again and fill in all the newly added fields."
+          : "All requirements are met! Please click continue."}
       </i>
       <button
         disabled={disabled || isSubmitting}
