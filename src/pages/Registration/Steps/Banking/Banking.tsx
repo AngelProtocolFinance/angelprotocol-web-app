@@ -8,19 +8,24 @@ function Banking() {
   const { submit, isSubmitting } = useSubmit();
 
   return (
-    <BankDetails
-      alreadySubmitted={!!data.banking?.BankStatementFile}
-      isSubmitting={isSubmitting}
-      onSubmit={submit}
-    >
-      {(disabled, isSubmitting, refreshRequired) => (
-        <FormButtons
-          disabled={disabled}
-          isSubmitting={isSubmitting}
-          refreshRequired={refreshRequired}
-        />
-      )}
-    </BankDetails>
+    <>
+      <h2 className="text-center sm:text-left text-xl mb-2">
+        Setup your banking details
+      </h2>
+      <BankDetails
+        alreadySubmitted={!!data.banking?.BankStatementFile}
+        isSubmitting={isSubmitting}
+        onSubmit={submit}
+      >
+        {(disabled, isSubmitting, refreshRequired) => (
+          <FormButtons
+            disabled={disabled}
+            isSubmitting={isSubmitting}
+            refreshRequired={refreshRequired}
+          />
+        )}
+      </BankDetails>
+    </>
   );
 }
 
