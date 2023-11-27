@@ -20,7 +20,7 @@ import {
   BiSun,
 } from "react-icons/bi";
 import {
-  BsDashCircle,
+  BsCheckCircle,
   BsExclamationCircleFill,
   BsFilterLeft,
   BsHourglassSplit,
@@ -42,6 +42,7 @@ import {
   FaUniversity,
   FaUserCircle,
 } from "react-icons/fa";
+import { FaMoneyBills } from "react-icons/fa6";
 import { FiMenu, FiMoon } from "react-icons/fi";
 import { GoDash, GoLinkExternal, GoSync } from "react-icons/go";
 import { GrFacebookOption } from "react-icons/gr";
@@ -62,10 +63,12 @@ import {
   MdOutlineEmail,
   MdOutlineFileDownload,
   MdOutlineFilterAlt,
+  MdOutlineFolder,
   MdOutlineUploadFile,
+  MdSpaceDashboard,
   MdWidgets,
 } from "react-icons/md";
-import { RiMapPin2Line } from "react-icons/ri";
+import { RiMapPin2Line, RiMoneyDollarCircleFill } from "react-icons/ri";
 import { SiHiveBlockchain } from "react-icons/si";
 import { TiArrowUnsorted } from "react-icons/ti";
 import { VscLoading, VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
@@ -77,15 +80,17 @@ export const icons = {
   Back: MdOutlineArrowBackIosNew,
   Blockchain: SiHiveBlockchain,
   Check: BiCheck,
-  CheckCircle: BsDashCircle,
+  CheckCircle: BsCheckCircle,
   CircleMinus: AiOutlineMinusCircle,
   Close: IoClose,
   CloseCircle: IoCloseCircle,
   Copy: MdOutlineContentCopy,
   Crop: IoCrop,
   Dash: GoDash,
+  Dashboard: MdSpaceDashboard,
   Discord: FaDiscord,
   Down: VscTriangleDown,
+  DollarCircle: RiMoneyDollarCircleFill,
   Email: MdOutlineEmail,
   Exclamation: FaExclamation,
   ExclamationCircleFill: BsExclamationCircleFill,
@@ -97,6 +102,7 @@ export const icons = {
   FileUpload: MdOutlineUploadFile,
   Filter: MdOutlineFilterAlt,
   FilterLeft: BsFilterLeft,
+  Folder: MdOutlineFolder,
   Giftcard: MdCardGiftcard,
   Globe: BiGlobe,
   HeartFill: AiFillHeart,
@@ -111,6 +117,7 @@ export const icons = {
   MapPin: RiMapPin2Line,
   Medium: AiOutlineMedium,
   Menu: FiMenu,
+  Money: FaMoneyBills,
   Moon: FiMoon,
   Picture: ImFilePicture,
   Plus: AiOutlinePlus,

@@ -5,8 +5,9 @@ import { useAdminContext } from "pages/Admin/Context";
 import { useModalContext } from "contexts/ModalContext";
 import Image from "components/Image";
 import { TxPrompt } from "components/Prompt";
+import { logger } from "helpers";
 import { adminRoutes } from "constant/routes";
-import useUpdateEndowmentProfile from "../common/useUpdateEndowmentProfile";
+import { useUpdateEndowmentProfile } from "../common";
 
 export function Program(props: TProgram) {
   const { id } = useAdminContext();
@@ -17,7 +18,7 @@ export function Program(props: TProgram) {
     try {
       await updateProfile(msg);
     } catch (err) {
-      console.log(err);
+      logger.error(err);
       showModal(TxPrompt, {
         error: err instanceof Error ? err.message : "Unknown error occured",
       });
@@ -42,7 +43,6 @@ export function Program(props: TProgram) {
           onClick={() =>
             deleteProgram({
               id,
-              owner: "to be removed eventually",
               program_id: props.program_id,
             })
           }

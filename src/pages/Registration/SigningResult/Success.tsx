@@ -15,11 +15,9 @@ export default function Success() {
     try {
       const reference = getSavedRegistrationReference();
       if (!reference) return navigate(appRoutes.register);
-      const { reqId, ...savedRegistration } = await checkPrevRegistration(
-        reference
-      ).unwrap();
-      const state = getRegistrationState(savedRegistration);
-      navigate(`${appRoutes.register}/${routes.steps}/${state.step}`, {
+      const savedRegistration = await checkPrevRegistration(reference).unwrap();
+      const { state, nextStep } = getRegistrationState(savedRegistration);
+      navigate(`${appRoutes.register}/${routes.steps}/${nextStep}`, {
         state: state.data.init,
       });
     } catch (err) {
@@ -31,7 +29,7 @@ export default function Success() {
     <>
       <Icon type="CheckCircle" className="text-green" size={70} />
       <h1 className="text-2xl uppercase text-center mt-10 mb-4">
-        Signature saved!
+        Fiscal Sponsorship Agreement signature was successfully saved!
       </h1>
 
       <button

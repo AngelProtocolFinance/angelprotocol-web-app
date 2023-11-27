@@ -1,8 +1,9 @@
+import withAuth from "contexts/Auth";
 import ModalContext from "contexts/ModalContext";
 import Charity from "./Charity";
 import { Context } from "./Context";
 
-export default function Admin() {
+export default withAuth(function Admin() {
   return (
     <Context>
       <ModalContext>
@@ -10,4 +11,4 @@ export default function Admin() {
       </ModalContext>
     </Context>
   );
-}
+});

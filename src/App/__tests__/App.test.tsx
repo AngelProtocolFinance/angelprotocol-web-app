@@ -28,7 +28,7 @@ vi.mock("services/aws/leaderboard", () => ({
 
 //test comment 3
 
-const heroText = /ANGEL GIVING REDEFINES/i;
+const heroText = /BETTER GIVING REDEFINES/i;
 const marketLink = /marketplace/i;
 const regLink = /register/i;
 // const leadLink = /leaderboard/i;
@@ -100,12 +100,8 @@ describe("App.tsx tests", () => {
     );
     //registration is being lazy loaded
     expect(screen.getByTestId(loaderTestId)).toBeInTheDocument();
-    //registration is finally loaded
-    expect(
-      await screen.findByRole("button", {
-        name: /sign in/i,
-      })
-    ).toBeInTheDocument();
+    //registration auth is loading
+    expect(await screen.findByTestId("loader-ring")).toBeInTheDocument();
     expect(screen.queryByTestId(loaderTestId)).toBeNull();
 
     //user goes back to leaderboard

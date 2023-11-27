@@ -77,13 +77,6 @@ export default function Stripe({
             isInsideWidget ? "justify-center" : "justify-between"
           } font-body mt-4`}
         >
-          <button
-            disabled={isLoading || isRedirecting}
-            className="btn-orange btn-donate w-1/2"
-            type="submit"
-          >
-            {isLoading || isRedirecting ? "Processing..." : "Pay with stripe"}
-          </button>
           {!isInsideWidget && (
             <Link
               className="btn-outline-filled btn-donate w-1/2"
@@ -92,6 +85,13 @@ export default function Stripe({
               back
             </Link>
           )}
+          <button
+            disabled={isLoading || isRedirecting}
+            className="btn-orange btn-donate w-1/2"
+            type="submit"
+          >
+            {isLoading || isRedirecting ? "Processing..." : "Pay with card"}
+          </button>
         </div>
         <p className="text-sm italic text-gray-d2 dark:text-gray mt-4">
           By making a donation, you agree to our{" "}

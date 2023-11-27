@@ -1,73 +1,110 @@
+import { useEffect, useState } from "react";
+import { CreateRecipientRequest } from "types/aws";
+import { FileDropzoneAsset } from "types/components";
+import { useAdminContext } from "pages/Admin/Context";
+import { useProfileQuery } from "services/aws/aws";
+import { useCreateRecipientAccountMutation } from "services/aws/bankDetails";
+import { useErrorContext } from "contexts/ErrorContext";
+import BankDetails from "components/BankDetails";
+import Group from "components/Group";
 import LoaderRing from "components/LoaderRing";
-import { isEmpty } from "helpers";
+import { getFilePreviews } from "helpers";
+import { GENERIC_ERROR_MESSAGE } from "constant/common";
 import { EMAIL_SUPPORT } from "constant/env";
-import CurrencySelector from "./CurrencySelector";
-import RecipientDetails from "./RecipientDetails";
+import FormButtons from "./FormButtons";
 import VerificationStatus from "./VerificationStatus";
-import useBanking from "./useBanking";
+
+const PROFILE_ERROR = `Error loading profile. Please try again later. If the error persists,
+please contact ${EMAIL_SUPPORT}.`;
 
 export default function Banking() {
-  const {
-    currencies,
-    debouncedExpectedFunds,
-    isError,
-    isLoading,
-    targetCurrency,
-    setExpectedFunds,
-    setTargetCurrency,
-  } = useBanking();
+  const { id: endowment_id } = useAdminContext();
 
-  if (isLoading) {
+  const [isSubmitting, setSubmitting] = useState(false);
+
+  const [createRecipientAccount] = useCreateRecipientAccountMutation();
+
+  // load profile
+  const { id } = useAdminContext();
+  const {
+    data: profile,
+    isLoading: isLoadingProfile,
+    isError: isProfileError,
+    error,
+  } = useProfileQuery({ endowId: id });
+
+  const { handleError } = useErrorContext();
+
+  useEffect(() => {
+    if (error) {
+      handleError(error, PROFILE_ERROR);
+    }
+  }, [error, handleError]);
+
+  if (isLoadingProfile) {
     return (
-      <div className="flex items-center gap-2">
+      <div className="flex items-center justify-center gap-2">
         <LoaderRing thickness={10} classes="w-6" /> Loading...
       </div>
     );
   }
 
-  if (isError || !targetCurrency || isEmpty(currencies)) {
-    return (
-      <span>
-        An error occurred. Please try again later. If the error persists, please
-        contact {EMAIL_SUPPORT}.
-      </span>
-    );
+  if (isProfileError || !profile) {
+    return null;
   }
 
+  const verif_status = profile.bank_verification_status;
+
+  const isSubmitted = verif_status !== "Not Submitted";
+
+  const submit = async (
+    request: CreateRecipientRequest,
+    bankStatementFile: FileDropzoneAsset
+  ) => {
+    try {
+      setSubmitting(true);
+      const bankStatementPreview = await getFilePreviews({
+        bankStatementFile,
+      });
+      // TODO: logging just to avoid compiler warnings about unused variable,
+      // will be updated to real logic once possible
+      console.log(
+        `TODO: handle bank statement: ${bankStatementPreview.bankStatementFile[0].publicUrl}`
+      );
+      await createRecipientAccount({
+        endowmentId: endowment_id,
+        request,
+      }).unwrap();
+    } catch (error) {
+      handleError(error, GENERIC_ERROR_MESSAGE);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
-    <div className="grid gap-5 justify-start">
-      <div className="flex gap-2 sm:gap-5">
-        <h3 className="text-xl sm:text-2xl font-body">Bank account details</h3>
-        <VerificationStatus />
+    <div className="grid">
+      <div className="grid gap-5 max-w-4xl justify-self-center">
+        <Group
+          title="Bank account details"
+          description="The following information will be used to register your bank account that will be used to withdraw your funds."
+        >
+          <VerificationStatus status={verif_status} />
+          <BankDetails
+            alreadySubmitted={isSubmitted}
+            isSubmitting={isSubmitting}
+            onSubmit={submit}
+          >
+            {(disabled, isSubmitting, refreshRequired) => (
+              <FormButtons
+                disabled={disabled}
+                isSubmitting={isSubmitting}
+                refreshRequired={refreshRequired}
+              />
+            )}
+          </BankDetails>
+        </Group>
       </div>
-
-      <CurrencySelector
-        value={targetCurrency}
-        currencies={currencies}
-        onChange={setTargetCurrency}
-      />
-
-      <div className="flex flex-col gap-2">
-        <label htmlFor="amount">
-          What is amount of donations you expect to keep on our platform?
-        </label>
-        <input
-          id="amount"
-          type="number"
-          onChange={(event) => setExpectedFunds(Number(event.target.value))}
-          className="field-input"
-        />
-      </div>
-
-      {!!targetCurrency && !!debouncedExpectedFunds && (
-        <RecipientDetails
-          // we need this key to tell React that when any of the fields passed to this component changes,
-          // it needs to reset its state by rerendering the whole component
-          key={`${targetCurrency}${debouncedExpectedFunds}`}
-          targetCurrency={targetCurrency.code}
-          expectedFunds={debouncedExpectedFunds}
-        />
-      )}
     </div>
   );
 }

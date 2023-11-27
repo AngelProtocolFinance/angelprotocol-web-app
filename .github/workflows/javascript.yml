@@ -20,9 +20,5 @@ jobs:
         run: yarn lint
       - name: Test codebase
         run: yarn test --bail=0 --watch=false --passWithNoTests
-        env:
-          VITE_JUNO_LCD_NODE: ${{ secrets.REACT_APP_JUNO_LCD_NODE }}
       - name: Build codebase
         run: yarn build
-        env:
-          VITE_JUNO_LCD_NODE: ${{ secrets.REACT_APP_JUNO_LCD_NODE }}

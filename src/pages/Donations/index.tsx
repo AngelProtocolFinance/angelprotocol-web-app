@@ -1,6 +1,6 @@
-import { useParams } from "react-router-dom";
 import { DonationMadeByDonor } from "types/aws";
 import { usePaginatedDonationRecords } from "services/apes";
+import withAuth from "contexts/Auth";
 import CsvExporter from "components/CsvExporter";
 import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
@@ -10,8 +10,7 @@ import MobileTable from "./MobileTable";
 import NoDonations from "./NoDonations";
 import Table from "./Table";
 
-export default function Donations() {
-  const { address: donorAddress = "" } = useParams<{ address: string }>();
+export default withAuth(function Donations({ user }) {
   const {
     data,
     hasMore,
@@ -22,14 +21,14 @@ export default function Donations() {
     loadNextPage,
     onQueryChange,
     setParams,
-  } = usePaginatedDonationRecords({ donorAddress });
+  } = usePaginatedDonationRecords({ email: user.email });
 
   const isLoadingOrError = isLoading || isLoadingNextPage || isError;
 
   return (
     <div className="grid grid-cols-[1fr_auto] content-start gap-y-4 lg:gap-y-8 lg:gap-x-3 relative padded-container pt-8 lg:pt-20 pb-8">
       <h1 className="text-3xl max-lg:font-work max-lg:text-center max-lg:col-span-full max-lg:mb-4">
-        My donations
+        My Donations
       </h1>
       <CsvExporter
         aria-disabled={isLoadingOrError || !data?.Items || isEmpty(data.Items)}
@@ -58,7 +57,6 @@ export default function Donations() {
       <Filter
         isDisabled={isLoadingOrError}
         setParams={setParams}
-        donorAddress={donorAddress}
         classes="max-lg:col-span-full max-lg:w-full"
       />
       <QueryLoader
@@ -96,7 +94,7 @@ export default function Donations() {
       </QueryLoader>
     </div>
   );
-}
+});
 
 const csvHeaders: { key: keyof DonationMadeByDonor; label: string }[] = [
   { key: "amount", label: "Amount" },

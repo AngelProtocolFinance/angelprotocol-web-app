@@ -1,8 +1,8 @@
 import { Suspense, lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
+import withAuth from "contexts/Auth";
 import Seo from "components/Seo";
 import { APP_NAME, DAPP_URL } from "constant/env";
-import SignNotice from "./SignNotice";
 import SignResult from "./SigningResult";
 import Signup from "./Signup";
 import routes from "./routes";
@@ -12,7 +12,7 @@ const Steps = lazy(() => import("./Steps"));
 const Resume = lazy(() => import("./Resume"));
 const Success = lazy(() => import("./Success"));
 
-export default function Registration() {
+function Registration() {
   return (
     <Suspense
       fallback={<div className="place-self-center">Loading page...</div>}
@@ -43,12 +43,6 @@ export default function Registration() {
           }
         />
         <Route
-          path={routes.sign_notice}
-          element={
-            <SignNotice classes="justify-self-center mt-10 sm:mt-[5.5rem] mb-6 sm:mb-20" />
-          }
-        />
-        <Route
           path={routes.sign_result}
           element={
             <SignResult classes="justify-self-center mt-10 sm:mt-[5.5rem] mb-6 sm:mb-20" />
@@ -60,3 +54,5 @@ export default function Registration() {
     </Suspense>
   );
 }
+
+export default withAuth(Registration);

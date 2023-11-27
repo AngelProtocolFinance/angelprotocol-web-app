@@ -45,10 +45,20 @@ type ValuesAllowed = {
 };
 
 export type CreateRecipientRequest = {
-  currency: string;
-  type: string;
   accountHolderName: string;
-  details: Record<string, string>;
+  currency: string;
+  ownedByCustomer: false;
+  profile: "{{profileId}}";
+  type: string;
+  details: Record<
+    string,
+    // root field values
+    | string
+    // address object field
+    | Record<string, string>
+    // undefined or non-set values
+    | undefined
+  >;
 };
 
 export type Quote = { id: string };

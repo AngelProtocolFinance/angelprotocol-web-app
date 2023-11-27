@@ -69,6 +69,13 @@ module.exports = {
         l4: "#FBCCBB",
         l5: "#FCDACE",
       },
+      yellow: {
+        d2: "#A16207",
+        d1: "#CA8A04",
+        DEFAULT: "#EAB308",
+        l1: "#FACC15",
+        l2: "#FDE047",
+      },
 
       black: "#000101",
       gray: {

@@ -13,9 +13,9 @@ export default function Cards({ classes = "" }: { classes?: string }) {
         isError,
       }}
       messages={{
-        error: "Failed to get endowments",
-        loading: "Getting endowments..",
-        empty: "No endowments found",
+        error: "Failed to get organisations",
+        loading: "Getting organisations..",
+        empty: "No organisations found",
       }}
       classes={{
         container: `${classes} dark:text-white`,

@@ -7,15 +7,7 @@ const AUTH_TOKEN = "test";
 const bucket: Bucket = "endow-profiles";
 const baseURL = `https://${bucket}.${bucketURL}/${TIME_STAMP}`;
 
-beforeEach(() => {
-  global.fetch = vi.fn() as any;
-});
-
-afterAll(() => {
-  vi.clearAllMocks();
-});
-
-vi.mock("./createAuthToken", () => ({ createAuthToken: () => AUTH_TOKEN }));
+jest.mock("./jwt-token", () => ({ jwtToken: () => AUTH_TOKEN }));
 
 describe("uploadFiles tests", () => {
   test("upload multiple files", async () => {
@@ -44,7 +36,7 @@ describe("uploadFiles tests", () => {
         fileName: `${TIME_STAMP}-_test_file_name`,
       }),
       headers: {
-        authorization: AUTH_TOKEN,
+        authorization: `Bearer ${AUTH_TOKEN}`,
       },
     });
   });

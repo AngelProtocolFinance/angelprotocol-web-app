@@ -3,15 +3,13 @@ import { EndowmentType, NetworkType, UNSDG_NUMS } from "../../lists";
 export type EndowmentTierNum = 1 | 2 | 3;
 
 type EndowmentBalances = {
-  // represents total cumulative balances
-  total_liq: number;
-  total_lock: number;
-  overall: number;
-
-  // represents tokens on hand balances (takes into account withdrawn funds)
-  on_hand_liq: number;
-  on_hand_lock: number;
-  on_hand_overall: number;
+  contributionsCount: number;
+  donationsBal: number;
+  payoutsMade: number;
+  payoutsPending: number;
+  sustainabilityFundBal: number;
+  totalContributions: number;
+  totalEarnings: number;
 };
 
 export type MileStone = {
@@ -52,7 +50,11 @@ type EndowmentBase = {
 };
 
 export type EndowmentProfile = EndowmentBase & {
-  bank_verified: "Not Submitted" | "Under Review" | "Approved" | "Rejected";
+  bank_verification_status:
+    | "Not Submitted"
+    | "Under Review"
+    | "Approved"
+    | "Rejected";
   fiscal_sponsored: boolean;
   contact_email: string;
   image: string;
@@ -83,7 +85,6 @@ export type EndowmentOption = Pick<EndowmentBase, "id" | "name">;
 export type EndowmentProfileUpdate = {
   //required
   id: number;
-  owner: string;
 
   /** optional, though set as required in this type
   to force setting of default values - "", [], etc ..*/

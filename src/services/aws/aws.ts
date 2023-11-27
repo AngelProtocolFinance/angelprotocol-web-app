@@ -1,21 +1,29 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import {
-  ProfileUpdatePayload,
+  ProfileUpdateMsg,
+  ProgramDeleteMsg,
   VersionSpecificWalletProfile,
   isDeleteMsg,
 } from "../types";
+import { userIsSignedIn } from "types/auth";
 import {
+  Application,
+  ApplicationDetails,
+  ApplicationVerdict,
+  ApplicationsQueryParams,
   EndowListPaginatedAWSQueryRes,
   EndowmentCard,
   EndowmentOption,
   EndowmentProfile,
   EndowmentProfileUpdate,
   EndowmentsQueryParams,
+  PaginatedAWSQueryRes,
   Program,
   WalletProfile,
 } from "types/aws";
 import { network } from "services/constants";
-import { createAuthToken } from "helpers";
+import { RootState } from "store/store";
+import { TEMP_JWT } from "constant/auth";
 import { APIs } from "constant/urls";
 import { version as v } from "../helpers";
 
@@ -26,11 +34,13 @@ const awsBaseQuery = retry(
   fetchBaseQuery({
     baseUrl: APIs.aws,
     mode: "cors",
-    prepareHeaders(headers) {
-      // As 'prepareHeaders' is called after builder.query returns the request to be sent,
-      // this check allows for custom 'authorization' headers to be set within the builder.query
-      if (!headers.has("authorization")) {
-        headers.append("authorization", createAuthToken("charity-owner"));
+    prepareHeaders(headers, { getState }) {
+      const {
+        auth: { user },
+      } = getState() as RootState;
+
+      if (headers.get("authorization") === TEMP_JWT) {
+        headers.set("authorization", userIsSignedIn(user) ? user.token : "");
       }
       return headers;
     },
@@ -48,6 +58,8 @@ export const aws = createApi({
     "endowments",
     "strategy",
     "program",
+    "applications",
+    "application",
   ],
   reducerPath: "aws",
   baseQuery: awsBaseQuery,
@@ -96,7 +108,6 @@ export const aws = createApi({
           url: `${getWalletProfileQuery(wallet)}/bookmarks`,
           method: type === "add" ? "POST" : "DELETE",
           body: { endowId },
-          headers: { authorization: createAuthToken("app-user") },
         };
       },
       transformResponse: (response: { data: any }) => response,
@@ -108,7 +119,7 @@ export const aws = createApi({
       providesTags: ["profile"],
       query: ({ endowId, isLegacy = false }) => ({
         params: { legacy: isLegacy },
-        url: `/${v(2)}/profile/${network}/endowment/${endowId}`,
+        url: `/${v(1)}/profile/endowment/${endowId}`,
       }),
       transformResponse(r: EndowmentProfile) {
         //transform cloudsearch placeholders
@@ -124,14 +135,50 @@ export const aws = createApi({
       query: ({ endowId, programId }) =>
         `/${v(1)}/profile/${network}/program/${endowId}/${programId}`,
     }),
-    editProfile: builder.mutation<EndowmentProfile, ProfileUpdatePayload>({
-      invalidatesTags: (result, error) =>
+    editProfile: builder.mutation<
+      EndowmentProfile,
+      ProfileUpdateMsg | ProgramDeleteMsg
+    >({
+      invalidatesTags: (_, error) =>
         error ? [] : ["endowments", "profile", "walletProfile"],
       query: (payload) => {
         return {
-          url: `/${v(3)}/profile/${network}/endowment`,
-          method: isDeleteMsg(payload.unsignedMsg) ? "DELETE" : "PUT",
+          url: `/${v(1)}/profile/endowment`,
+          method: isDeleteMsg(payload) ? "DELETE" : "PUT",
+          headers: { authorization: TEMP_JWT },
           body: payload,
+        };
+      },
+    }),
+    applications: builder.query<
+      PaginatedAWSQueryRes<Application[]>,
+      ApplicationsQueryParams
+    >({
+      providesTags: ["applications"],
+      query: (params) => {
+        return {
+          url: `${v(1)}/applications`,
+          params,
+          headers: { authorization: TEMP_JWT },
+        };
+      },
+    }),
+    application: builder.query<ApplicationDetails, string>({
+      providesTags: ["application"],
+      query: (uuid) => ({
+        url: `${v(1)}/applications`,
+        params: { uuid },
+        headers: { authorization: TEMP_JWT },
+      }),
+    }),
+    reviewApplication: builder.mutation<any, ApplicationVerdict>({
+      invalidatesTags: ["application", "applications"],
+      query: (verdict) => {
+        return {
+          url: `${v(1)}/applications`,
+          method: "PUT",
+          headers: { authorization: TEMP_JWT },
+          body: verdict,
         };
       },
     }),
@@ -146,11 +193,15 @@ export const {
   useProfileQuery,
   useProgramQuery,
   useEditProfileMutation,
+  useApplicationsQuery,
+  useApplicationQuery,
+  useReviewApplicationMutation,
 
   endpoints: {
     endowmentCards: { useLazyQuery: useLazyEndowmentCardsQuery },
     endowmentOptions: { useLazyQuery: useLazyEndowmentOptionsQuery },
     profile: { useLazyQuery: useLazyProfileQuery },
+    applications: { useLazyQuery: useLazyApplicationsQuery },
   },
   util: {
     invalidateTags: invalidateAwsTags,

@@ -1,14 +1,12 @@
+import { useProfileContext } from "pages/Profile/ProfileContext";
 import { humanize } from "helpers";
-import { useProfileContext } from "../../../ProfileContext";
 
 export default function Balances() {
-  const { on_hand_liq, on_hand_lock, on_hand_overall } = useProfileContext();
+  const { totalContributions } = useProfileContext();
 
   return (
     <div className="flex flex-col items-center gap-4 w-full">
-      <Balance title="Total Value" amount={on_hand_overall || 0} />
-      <Balance title="Total Endowment Account" amount={on_hand_lock || 0} />
-      <Balance title="Total Current Account" amount={on_hand_liq || 0} />
+      <Balance title="Total Contributions" amount={totalContributions || 0} />
     </div>
   );
 }

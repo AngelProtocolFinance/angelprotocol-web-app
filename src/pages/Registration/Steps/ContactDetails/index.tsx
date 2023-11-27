@@ -2,7 +2,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues } from "./types";
 import { ContactRoles, ReferralMethods } from "types/aws";
-import { OptionType } from "types/utils";
+import { OptionType } from "types/components";
+import { useAuthenticatedUser } from "contexts/Auth";
 import { useRegState, withStepGuard } from "../StepGuard";
 import Form from "./Form";
 import { referralMethods, roles } from "./constants";
@@ -13,23 +14,28 @@ function ContactDetails() {
     data: { contact, init },
   } = useRegState<1>();
 
+  const { firstName = "", lastName = "" } = useAuthenticatedUser();
+
   const methods = useForm<FormValues>({
     resolver: yupResolver(schema),
     defaultValues: contact
       ? {
           ...contact,
-          ref: init.reference,
-          role: toRoleOption(contact.role),
-          referralMethod: toReferralOption(contact.referralMethod),
+          PK: init.reference,
+          Role: toRoleOption(contact.Role),
+          ReferralMethod: toReferralOption(contact.ReferralMethod),
+          OrganizationName: contact.orgName,
         }
       : {
-          ref: init.reference,
-          email: init.email,
-          role: { value: "", label: roles[""] },
-          referralMethod: {
+          PK: init.reference,
+          Email: init.email,
+          Role: { value: "", label: roles[""] },
+          ReferralMethod: {
             value: "",
             label: referralMethods[""],
           },
+          FirstName: firstName,
+          LastName: lastName,
         },
   });
 

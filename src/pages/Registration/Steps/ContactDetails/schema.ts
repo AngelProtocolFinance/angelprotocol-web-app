@@ -2,13 +2,13 @@ import { ObjectSchema, object, string } from "yup";
 import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
 import { ContactRoles, ReferralMethods } from "types/aws";
-import { OptionType } from "types/utils";
+import { OptionType } from "types/components";
 import { optionType } from "schemas/shape";
 import { requiredString } from "schemas/string";
 
 type Key = keyof FormValues;
-const roleKey: Key = "role";
-const referralMethodKey: Key = "referralMethod";
+const roleKey: Key = "Role";
+const referralMethodKey: Key = "ReferralMethod";
 
 const otherRole = string().when(roleKey, ([option], schema) =>
   (option as OptionType<ContactRoles>).value === "other"
@@ -24,14 +24,14 @@ const otherReferralMethod = (referralMethod: ReferralMethods) =>
   );
 
 export const schema = object<any, SchemaShape<FormValues>>({
-  orgName: requiredString,
-  firstName: requiredString,
-  lastName: requiredString,
+  OrganizationName: requiredString,
+  FirstName: requiredString,
+  LastName: requiredString,
   //email: disabled: already validated at signup
-  goals: requiredString,
-  role: optionType({ required: true }),
-  referralMethod: optionType({ required: true }),
-  otherReferralMethod: otherReferralMethod("other"),
-  referralCode: otherReferralMethod("referral"),
-  otherRole: otherRole,
+  Goals: requiredString,
+  Role: optionType({ required: true }),
+  ReferralMethod: optionType({ required: true }),
+  OtherReferralMethod: otherReferralMethod("other"),
+  ReferralCode: otherReferralMethod("referral"),
+  OtherRole: otherRole,
 }) as ObjectSchema<FormValues>;

@@ -3,7 +3,8 @@ import { FormProvider, useForm } from "react-hook-form";
 import { DonateValues } from "./types";
 import { DonaterConfigFromWidget } from "types/widget";
 import { FormStep } from "slices/donation";
-import { polygon } from "constant/chains";
+import { mumbai, polygon } from "constant/chains";
+import { IS_TEST } from "constant/env";
 import Form from "./Form";
 import { initToken } from "./constants";
 import { schema } from "./schema";
@@ -16,7 +17,9 @@ export default function Donater({ config, ...state }: Props) {
   const initial: DonateValues = {
     token: initToken,
     pctLiquidSplit: config?.liquidSplitPct ?? 50,
-    chainId: { label: polygon.name, value: polygon.id },
+    chainId: IS_TEST
+      ? { label: mumbai.name, value: mumbai.id }
+      : { label: polygon.name, value: polygon.id },
     userOptForKYC: false,
   };
 

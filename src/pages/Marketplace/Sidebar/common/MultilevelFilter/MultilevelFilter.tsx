@@ -10,7 +10,7 @@ export type MultiLevelFilterProps<T> = {
 };
 
 export function MultilevelFilter<T>(props: MultiLevelFilterProps<T>) {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   function toggle() {
     setIsOpen((prev) => !prev);

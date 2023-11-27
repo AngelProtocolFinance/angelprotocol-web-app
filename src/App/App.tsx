@@ -7,7 +7,6 @@ import ModalContext from "contexts/ModalContext";
 import useScrollTop from "hooks/useScrollTop";
 import { appRoutes } from "constant/routes";
 import Layout from "./Layout";
-import Protected from "./Protected";
 
 const Admin = lazy(() => import("pages/Admin"));
 const Profile = lazy(() => import("pages/Profile"));
@@ -20,6 +19,8 @@ const DonateFiatThanks = lazy(() => import("pages/DonateFiatThanks"));
 const Gift = lazy(() => import("pages/Gift"));
 const DonateWidget = lazy(() => import("pages/DonateWidget"));
 const Signin = lazy(() => import("pages/Signin"));
+const Applications = lazy(() => import("pages/Applications"));
+const Application = lazy(() => import("pages/Application"));
 
 export default function App() {
   const location = useLocation();
@@ -39,35 +40,22 @@ export default function App() {
             path={`${appRoutes.profile}/:id/*`}
             element={<Profile legacy />}
           />
+          <Route path={`${appRoutes.admin}/:id/*`} element={<Admin />} />
+          <Route path={appRoutes.applications} element={<Applications />} />
           <Route
-            path={`${appRoutes.admin}/:id/*`}
-            element={
-              <Protected>
-                <Admin />
-              </Protected>
-            }
+            path={appRoutes.applications + "/:id"}
+            element={<Application />}
           />
 
-          <Route
-            path={`${appRoutes.donations}/:address`}
-            element={<Donations />}
-          />
+          <Route path={appRoutes.donations} element={<Donations />} />
           <Route path={`${appRoutes.donate}/:id`} element={<Donate />} />
           <Route
             path={appRoutes.donate_fiat_thanks}
             element={<DonateFiatThanks />}
           />
           <Route path={appRoutes.leaderboard} element={<Leaderboard />} />
-          <Route
-            path={`${appRoutes.register}/*`}
-            element={
-              <Protected>
-                <Registration />
-              </Protected>
-            }
-          />
+          <Route path={`${appRoutes.register}/*`} element={<Registration />} />
           <Route path={`${appRoutes.gift}/*`} element={<Gift />} />
-          <Route path={appRoutes.marketplace} element={<Marketplace />} />
           <Route path={appRoutes.signin} element={<Signin />} />
           <Route
             path={appRoutes.auth_redirector}

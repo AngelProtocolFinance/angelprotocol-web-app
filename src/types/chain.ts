@@ -18,6 +18,7 @@ type NativeAtomicUnit = string; //ujunox uluna
 type IBCDenom = string;
 
 export type Chain = {
+  isTest: boolean;
   id: ChainID;
   brand: string; //
   name: string;

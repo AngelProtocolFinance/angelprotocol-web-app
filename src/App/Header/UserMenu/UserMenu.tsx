@@ -1,74 +1,42 @@
-import { useAuthenticator } from "@aws-amplify/ui-react";
 import { Popover } from "@headlessui/react";
-import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import Authenticator from "components/Authenticator";
+import { Link } from "react-router-dom";
 import Icon from "components/Icon";
-import { OAUTH_PATH_STORAGE_KEY } from "constant/o-auth";
+import { useGetter, useSetter } from "store/accessors";
+import { logout } from "slices/auth";
 import { appRoutes } from "constant/routes";
 import Menu from "./Menu";
 
 export default function UserMenu() {
-  const { authStatus, user, signOut, route, isPending } = useAuthenticator(
-    (context) => [
-      context.authStatus,
-      context.user,
-      context.signOut,
-      context.route,
-      context.isPending,
-    ]
-  );
+  const user = useGetter((state) => state.auth.user);
+  const dispatch = useSetter();
 
-  const isLoading =
-    authStatus === "configuring" || route === "transition" || isPending;
+  const location = useLocation();
 
-  const isAuthenticated = authStatus === "authenticated";
+  if (!user || user === "loading") {
+    return (
+      <Link
+        to={appRoutes.signin}
+        state={{ from: location }}
+        className="btn-orange px-3 h-10 rounded-lg text-sm"
+        aria-disabled={user === "loading"}
+      >
+        Login
+      </Link>
+    );
+  }
 
   return (
     <Popover className="relative">
-      {isAuthenticated ? (
-        <Popover.Button
-          disabled={isLoading}
-          className="cursor-pointer contents"
-        >
-          <Icon
-            size={24}
-            type={isLoading ? "Loading" : "User"}
-            className={`text-white disabled:text-gray ${
-              isLoading ? "animate-spin" : ""
-            }`}
-          />
-        </Popover.Button>
-      ) : (
-        <Popover.Button
-          className="btn-orange px-3 h-10 rounded-lg text-sm"
-          disabled={isLoading}
-        >
-          Login
-        </Popover.Button>
-      )}
+      <Popover.Button className="cursor-pointer contents">
+        <Icon size={24} type="User" className="text-white disabled:text-gray" />
+      </Popover.Button>
 
-      {isAuthenticated ? (
-        <Popover.Panel className="mt-2 absolute z-10 w-max right-0">
-          <Menu user={user} signOut={signOut} isLoading={isLoading} />
-        </Popover.Panel>
-      ) : (
-        <AuthenticatorPanel />
-      )}
+      <Menu
+        user={user}
+        signOut={() => dispatch(logout())}
+        classes="mt-2 absolute z-10 w-max right-0"
+      />
     </Popover>
-  );
-}
-
-function AuthenticatorPanel() {
-  const location = useLocation();
-  useEffect(() => {
-    if (location.pathname.startsWith(appRoutes.auth_redirector)) return;
-    localStorage.setItem(OAUTH_PATH_STORAGE_KEY, location.pathname);
-    //eslint-disable-next-line
-  }, [location.pathname]);
-  return (
-    <Popover.Panel className="mt-2 absolute z-10 w-max max-sm:fixed-center sm:right-0">
-      <Authenticator />
-    </Popover.Panel>
   );
 }

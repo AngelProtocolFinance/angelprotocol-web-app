@@ -9,6 +9,7 @@ import {
   Wallet,
   WalletMeta,
 } from "types/wallet";
+import { logger } from "helpers";
 import { _pairing, _session, account } from "helpers/wallet-connect";
 import { EIPMethods } from "constant/evm";
 
@@ -113,7 +114,7 @@ export function useEVMWC(meta: WalletMeta): Wallet {
       client.on("session_delete", onSessionDelete);
       client.on("session_update", onSessionUpdate);
     } catch (err) {
-      console.log(err);
+      logger.error(err);
       setState({ status: "disconnected" });
     } finally {
       unsubscribeRef.current?.();

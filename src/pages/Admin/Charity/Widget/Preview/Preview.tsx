@@ -6,7 +6,7 @@ import DonaterSample from "./DonaterSample";
 export default function Preview({ classes = "" }) {
   const widgetConfig = useGetter((state) => state.widget);
   const { endowment, isDescriptionTextShown } = widgetConfig;
-  const endowName = endowment.name ?? "Endowment name";
+  const endowName = endowment.name ?? "Non-profit name";
   return (
     <section className={classes + " @container/preview"}>
       <h2 className="text-lg @4xl/widget:text-2xl text-center @4xl/widget:text-left mb-3">
@@ -22,7 +22,7 @@ export default function Preview({ classes = "" }) {
         {isDescriptionTextShown && (
           <>
             <p className="px-6 @xl/preview:px-10 font-body text-sm mb-4 text-center @xl/preview:text-left">
-              Donate today to {possesiveForm(endowName)} endowment. Your
+              Donate today to {possesiveForm(endowName)} non-profit. Your
               donation will be protected and compounded in perpetuity to provide{" "}
               {endowName} with a long-term, sustainable runway. Give once, give
               forever!

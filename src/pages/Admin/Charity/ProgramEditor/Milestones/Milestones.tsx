@@ -3,6 +3,7 @@ import { FV } from "../types";
 import Icon from "components/Icon";
 import { Info } from "components/Status";
 import { dateToFormFormat } from "components/form";
+import { isEmpty } from "helpers";
 import Milestone from "./Milestone";
 
 export default function Milestones() {
@@ -37,7 +38,7 @@ export default function Milestones() {
           <span>Add milestone</span>
         </button>
       </div>
-      {fields.length > 0 ? (
+      {!isEmpty(fields) ? (
         <>
           <span className="text-sm text-gray-d1 dark:text-gray">
             Milestones will be publicly displayed in descending order by their

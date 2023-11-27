@@ -13,7 +13,7 @@ type Props = {
 export default function ProgressIndicator({ step, classes = "" }: Props) {
   const { pathname } = useLocation();
   const paths = pathname.split("/");
-  const currPath = idParamToNum(paths[paths.length - 1]);
+  const currPath = idParamToNum(paths.at(-1));
 
   const [isOtherStepsShown, setIsOtherStepsShown] = useState(true);
 
@@ -55,10 +55,16 @@ export default function ProgressIndicator({ step, classes = "" }: Props) {
       {isOtherStepsShown && (
         <>
           <Step isDone={step >= 2} isCurr={currPath === 2}>
-            Documentation
+            Organization
           </Step>
           <Step isDone={step >= 3} isCurr={currPath === 3}>
-            Summary
+            Non-Profit Status
+          </Step>
+          <Step isDone={step >= 4} isCurr={currPath === 4}>
+            Documentation
+          </Step>
+          <Step isDone={step >= 5} isCurr={currPath === 5}>
+            Banking
           </Step>
         </>
       )}

@@ -7,6 +7,7 @@ import { DonaterConfigFromWidget } from "types/widget";
 import { useGetter } from "store/accessors";
 import { setDetails } from "slices/donation";
 import { chainList } from "constant/chains";
+import { IS_TEST } from "constant/env";
 import { appRoutes } from "constant/routes";
 import { Selector } from "../../../../Selector";
 import Split from "../../../../Split";
@@ -49,10 +50,12 @@ export default function Form({ configFromWidget }: Props) {
       </label>
       <Selector<DonateValues, "chainId", ChainID>
         name="chainId"
-        options={chainList.map(({ name, id }) => ({
-          label: name,
-          value: id,
-        }))}
+        options={chainList
+          .filter((chain) => chain.isTest === IS_TEST)
+          .map(({ name, id }) => ({
+            label: name,
+            value: id,
+          }))}
         onOptionChange={() => {
           setValue("token", initToken);
           setValue("token.amount", "0");

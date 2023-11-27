@@ -7,7 +7,6 @@ import { useModalContext } from "contexts/ModalContext";
 import Prompt from "components/Prompt";
 import { RichTextEditor } from "components/RichText";
 import { Field, Label } from "components/form";
-import { createAuthToken } from "helpers";
 import { richTextToHTML } from "helpers/richTextToHtml";
 import { GENERIC_ERROR_MESSAGE } from "constant/common";
 import { APP_NAME } from "constant/env";
@@ -29,7 +28,6 @@ export default function Form({ classes = "" }) {
     try {
       const res = await fetch(APIs.aws + "/v1/giftcard/send-email", {
         method: "POST",
-        headers: { authorization: createAuthToken("angelprotocol-web-app") },
         body: JSON.stringify({
           email: recipient.email,
           secret,

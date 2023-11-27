@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { TxPackage, isTxResultError } from "types/tx";
 import { invalidateApesTags } from "services/apes";
-import { createAuthToken, logger } from "helpers";
+import { logger } from "helpers";
 import { sendTx } from "helpers/tx";
 import { GENERIC_ERROR_MESSAGE } from "constant/common";
 import { EMAIL_SUPPORT } from "constant/env";
@@ -46,9 +46,6 @@ export const purchase = createAsyncThunk<void, Args>(
 
       updateTx({ msg: "Processing giftcard code..." });
       const res = await fetch(APIs.aws + "/v1/giftcard/deposit", {
-        headers: {
-          authorization: createAuthToken("angelprotocol-web-app"),
-        },
         method: "POST",
         body: JSON.stringify({
           secret,

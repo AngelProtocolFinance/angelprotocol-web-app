@@ -24,8 +24,8 @@ export default function Donate() {
       <QueryLoader
         queryState={queryState}
         messages={{
-          loading: "Getting endowment info..",
-          error: "Failed to get endowment info",
+          loading: "Getting non-profit info..",
+          error: "Failed to get non-profit info",
         }}
         classes={{ container: "justify-self-center text-center mt-8" }}
       >

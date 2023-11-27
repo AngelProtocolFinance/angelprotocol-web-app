@@ -3,6 +3,7 @@ export enum appRoutes {
   marketplace = "/marketplace",
   leaderboard = "/leaderboard",
   admin = "/admin",
+  applications = "/applications",
   register = "/register",
   signin = "/signin",
   profile = "/profile",
@@ -15,10 +16,10 @@ export enum appRoutes {
 
 export const adminRoutes = {
   index: "",
-  //charity
   edit_profile: "edit-profile",
   programs: "programs",
   program_editor: "program-editor",
   banking: "banking",
   widget_config: "widget-config",
+  donations: "donations",
 } as const;

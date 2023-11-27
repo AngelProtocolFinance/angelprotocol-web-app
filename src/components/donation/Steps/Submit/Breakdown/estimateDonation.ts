@@ -155,7 +155,7 @@ export async function estimateDonation({
     };
 
     const donationFee: EstimateItem = {
-      name: "Angel Giving Fee",
+      name: "Better Giving Fee",
       fiatAmount: totalFeeDec.toNumber(),
       prettyFiatAmount: prettyDollar(totalFeeDec),
     };

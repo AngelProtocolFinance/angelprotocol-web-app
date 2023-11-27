@@ -20,7 +20,7 @@ export default function Welcome({ classes = "" }: { classes?: string }) {
         Thank you for joining {APP_NAME}!
       </h1>
       <p className="text-center text-gray-d1 dark:text-white/75 w-full text-lg max-w-lg mt-4 mb-8">
-        Your fundraising profile & endowment are just few steps away 😇
+        Your fundraising profile & account are just few steps away 😇
       </p>
       <Link
         className="w-full max-w-[26.25rem] btn-orange btn-reg"

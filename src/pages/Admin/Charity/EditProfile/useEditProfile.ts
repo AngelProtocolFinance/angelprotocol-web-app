@@ -8,7 +8,7 @@ import { isEmpty } from "helpers";
 import { getPayloadDiff } from "helpers/admin";
 import { getFullURL, uploadFiles } from "helpers/uploadFiles";
 import { useAdminContext } from "../../Context";
-import useUpdateEndowmentProfile from "../common/useUpdateEndowmentProfile";
+import { useUpdateEndowmentProfile } from "../common";
 import { toProfileUpdate } from "./update";
 
 export default function useEditProfile() {
@@ -38,25 +38,24 @@ export default function useEditProfile() {
 
       const update = toProfileUpdate({
         type: "final",
-        data: { ...fv, id, owner: "not relevant anymore" },
+        data: { ...fv, id },
         urls: { image: bannerUrl, logo: logoUrl },
       });
 
       const diffs = getPayloadDiff(initial, update);
 
-      if (Object.entries(diffs).length <= 0) {
+      if (isEmpty(diffs)) {
         return showModal(TxPrompt, { error: "No changes detected" });
       }
 
       //only include top level keys that appeared on diff
-      const cleanUpdate: ProfileUpdateMsg = {
-        id,
-        owner: "not relevant anymore",
-      };
-      for (const [path] of diffs) {
-        const key = path.split(".")[0] as keyof ProfileUpdateMsg;
-        (cleanUpdate as any)[key] = update[key];
-      }
+      const cleanUpdate = diffs.reduce<ProfileUpdateMsg>(
+        (result, [path]) => {
+          const key = path.split(".")[0] as keyof ProfileUpdateMsg;
+          return { ...result, [key]: update[key] };
+        },
+        { id }
+      );
 
       await updateProfile(cleanUpdate);
     } catch (err) {

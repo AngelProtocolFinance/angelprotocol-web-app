@@ -1,6 +1,6 @@
 import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
-import { EMAIL_SUPPORT } from "constant/env";
+import { GENERIC_ERROR_MESSAGE } from "constant/common";
 
 export function handleMutationResult<T extends any>(
   result:
@@ -30,9 +30,7 @@ export function handleMutationResult<T extends any>(
         onError(d);
       }
     } else {
-      onError(
-        `An error occured. Please try again later. If the error persists, please contact ${EMAIL_SUPPORT}`
-      );
+      onError(GENERIC_ERROR_MESSAGE);
     }
   } else {
     onSuccess && onSuccess(result.data);

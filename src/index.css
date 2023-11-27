@@ -84,6 +84,10 @@
   );
 }
 
+[data-amplify-authenticator] .amplify-text--error {
+  font-size: theme(fontSize.sm);
+}
+
 html:is(.dark) [data-amplify-authenticator] {
   --amplify-components-divider-label-background-color: theme(colors.blue.d6);
   --amplify-internal-button-color: theme(colors.white);
@@ -229,7 +233,7 @@ html:is(.dark) [data-amplify-authenticator] {
     @apply flex items-center gap-4 cursor-pointer peer-disabled:cursor-default data-[required=true]:after:ml-1 data-[required=true]:after:content-['*'] data-[required=true]:after:text-red;
   }
   .radio > input {
-    @apply cursor-pointer appearance-none h-4 relative aspect-square border rounded-full before:content-[''] before:h-2.5 before:aspect-square before:absolute-center before:rounded-full checked:before:bg-orange disabled:checked:before:bg-gray-l5 disabled:checked:before:dark:bg-bluegray focus:outline-none focus:ring-1 focus:ring-orange;
+    @apply cursor-pointer appearance-none h-4 relative aspect-square border rounded-full before:content-[''] before:h-2.5 before:aspect-square before:absolute-center before:rounded-full checked:before:bg-orange disabled:checked:before:bg-gray-l2 disabled:checked:before:dark:bg-bluegray focus:outline-none focus:ring-1 focus:ring-orange;
   }
 
   .checkbox {
@@ -262,6 +266,9 @@ html:is(.dark) [data-amplify-authenticator] {
   }
   .btn-red {
     @apply btn bg-red disabled:bg-gray aria-disabled:bg-gray text-white enabled:hover:bg-red-l1 active:bg-red-d1 focus-visible:ring-red-l4;
+  }
+  .btn-green {
+    @apply btn bg-green disabled:bg-gray aria-disabled:bg-gray text-white enabled:hover:bg-green-l1 active:bg-green-d1 focus-visible:ring-green-l4;
   }
   .overlay {
     @apply before:content-[''] before:absolute before:inset-0 before:bg-blue/90 before:dark:bg-blue-d3/90;

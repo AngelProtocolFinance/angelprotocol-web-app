@@ -1,7 +1,6 @@
 import { FiscalSponsorhipAgreementSigner } from "../../types";
 import {
   ContactUpdateResult,
-  DocsUpdateResult,
   InitApplication,
   RegistrationUpdate,
   SavedRegistration,
@@ -9,6 +8,7 @@ import {
 } from "types/aws";
 import { adminTags } from "services/aws/tags";
 import { logger } from "helpers";
+import { TEMP_JWT } from "constant/auth";
 import { EMAIL_SUPPORT } from "constant/env";
 import { version as v } from "../../helpers";
 import { aws } from "../aws";
@@ -21,12 +21,13 @@ const registration_api = aws.injectEndpoints({
     >({
       invalidatesTags: [{ type: "admin", id: adminTags.registration }],
       query: ({ email }) => ({
-        url: "v3/registration",
+        url: `${v(4)}/registration`,
         method: "POST",
         body: { Email: email },
+        headers: { authorization: TEMP_JWT },
       }),
     }),
-    reg: builder.query<SavedRegistration & { reqId: number }, string>({
+    reg: builder.query<SavedRegistration, string>({
       providesTags: [{ type: "admin", id: adminTags.registration }],
       query: (uuid) => {
         return {
@@ -42,9 +43,10 @@ const registration_api = aws.injectEndpoints({
       { url: string },
       FiscalSponsorhipAgreementSigner
     >({
+      //no need to invalidate registration as latest would be fetched on redirect/success
       query: (signer) => {
         return {
-          url: `${v(1)}/registration/fiscal-sponsorship-agreement`,
+          url: `${v(2)}/registration/fiscal-sponsorship-agreement`,
           method: "POST",
           body: {
             signer,
@@ -54,28 +56,28 @@ const registration_api = aws.injectEndpoints({
       },
     }),
     updateReg: builder.mutation<any, RegistrationUpdate>({
-      query: ({ type, reference, ...payload }) => {
+      query: ({ reference, ...payload }) => {
         return {
-          url: "v3/registration",
+          url: `v5/registration/${reference}`,
           method: "PUT",
-          params: { uuid: reference },
           body: payload,
         };
       },
-      transformErrorResponse(res, meta, { type }) {
+      transformErrorResponse(res, _meta, { type }) {
         return {
           status: res.status,
           data: `Failed to update ${type}. Please try again later.`,
         };
       },
       /** pessimistic manual cache update so not to GET fresh data */
-      async onQueryStarted({ type, reference }, { dispatch, queryFulfilled }) {
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
+          const { type, reference } = args;
           const { data } = await queryFulfilled;
           dispatch(
             registration_api.util.updateQueryData("reg", reference, (draft) => {
               switch (type) {
-                case "contact details":
+                case "contact-details":
                   {
                     const { ContactPerson, Registration } =
                       data as ContactUpdateResult;
@@ -89,15 +91,26 @@ const registration_api = aws.injectEndpoints({
                     };
                   }
                   break;
-                case "documentation": {
+
+                //other updates are to draft.Registration
+                default: {
+                  let tempData = data;
+
+                  // since `wise_recipient_id` is not returned as a result of updateReg,
+                  // (only `BankStatementFile` is returned), we need to pass it manually
+                  // and set/update it in the draft.Registration
+                  if (type === "banking") {
+                    tempData = Object.assign({}, data, {
+                      wise_recipient_id: args.wise_recipient_id,
+                    });
+                  }
+
                   draft.Registration = Object.assign(
                     draft.Registration,
-                    data as DocsUpdateResult
+                    tempData
                   );
-                  break;
                 }
               }
-              draft.reqId = draft.reqId + 1;
             })
           );
         } catch (err) {
@@ -109,10 +122,10 @@ const registration_api = aws.injectEndpoints({
     submit: builder.mutation<SubmitResult, string>({
       invalidatesTags: [{ type: "admin", id: adminTags.registration }],
       query: (referenceID) => ({
-        url: `${v(4)}/registration/${referenceID}/submit`,
+        url: `${v(5)}/registration/${referenceID}/submit`,
         method: "POST",
       }),
-      transformErrorResponse(err, meta, arg) {
+      transformErrorResponse(err) {
         return {
           status: err.status,
           data: `Registration submission failed. Contact ${EMAIL_SUPPORT}`,

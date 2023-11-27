@@ -117,7 +117,11 @@ export default function Table({
               <>{humanize(row.amount, 3)}</>
               <>{`$${humanize(row.usdValue, 2)}`}</>
               <ExtLink
-                href={getTxUrl(row.chainId, row.hash)}
+                href={getTxUrl(
+                  //default to ethereum for staging
+                  row.chainId === "staging" ? "1" : row.chainId,
+                  row.hash
+                )}
                 className="text-center text-angel-blue cursor-pointer uppercase text-sm"
               >
                 {row.hash}

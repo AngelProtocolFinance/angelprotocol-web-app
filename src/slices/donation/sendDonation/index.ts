@@ -5,7 +5,7 @@ import { isTxResultError } from "types/tx";
 import { invalidateApesTags } from "services/apes";
 import { network } from "services/constants";
 import { version as v } from "services/helpers";
-import { createAuthToken, logger } from "helpers";
+import { logger } from "helpers";
 import { sendTx } from "helpers/tx";
 import { LogDonationFail } from "errors/errors";
 import { chainIds } from "constant/chainIds";
@@ -68,10 +68,8 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
         endowmentId: recipient.id,
       };
 
-      const authToken = createAuthToken("angelprotocol-web-app");
       const response = await fetch(APIs.apes + `/${v(4)}/donation/apes`, {
         method: "POST",
-        headers: { authorization: authToken },
         body: JSON.stringify({
           ...payload,
           ...payload.kycData,

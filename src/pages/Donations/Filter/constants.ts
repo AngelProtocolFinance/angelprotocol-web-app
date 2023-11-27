@@ -1,4 +1,4 @@
-import { OptionType } from "types/utils";
+import { OptionType } from "types/components";
 
 export const statuses: OptionType<string>[] = [
   { label: "RECEIVED", value: "RECEIVED" },
