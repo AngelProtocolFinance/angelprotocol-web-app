@@ -8,7 +8,7 @@ function Banking() {
   const { submit, isSubmitting } = useSubmit();
 
   return (
-    <>
+    <div className="flex flex-col gap-4">
       <h2 className="text-center sm:text-left text-xl mb-2">
         Setup your banking details
       </h2>
@@ -25,7 +25,7 @@ function Banking() {
           />
         )}
       </BankDetails>
-    </>
+    </div>
   );
 }
 
