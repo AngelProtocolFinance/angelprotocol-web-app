@@ -35,7 +35,7 @@ export default function Menu({ classes = "", user, signOut }: Props) {
 
         <div className="hidden [&:has(a)]:grid mt-6 gap-2">
           <h5 className="uppercase text-xs text-gray-d1 -mb-1">
-            My Endowments
+            My Organizations
           </h5>
           {user.endowments.map((endowId) => (
             <EndowmentLink key={endowId} endowId={endowId} />

@@ -7,7 +7,7 @@ export default function Unpublished() {
     <section className="flex flex-col items-center justify-center w-full h-screen gap-2 bg-blue dark:bg-blue-d5 text-red-l4 dark:text-red-l2">
       <Icon type="ExclamationCircleFill" size={30} />
       <p className="text-lg text-center">
-        This Endowment has no public profile
+        This Non-profit has no public profile
       </p>
       <Link
         to={appRoutes.marketplace}
